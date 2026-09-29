@@ -1,0 +1,86 @@
+#ifndef SYS_CONFIG_H
+#define SYS_CONFIG_H
+
+#include "structs.h"
+
+void eeprom_config_reset(void);
+s8 config_bytes_equal(u8* a, u8* b, s32 n);
+void eeprom_config_apply();
+void eeprom_config_save(void);
+void eeprom_config_default(void);
+void eeprom_config_verify(void);
+s32 config_menu_run(void);
+void config_top_default(void);
+void sysconfig_coin(void);
+void sysconfig_chute_mode(void);
+void sysconfig_language(void);
+void sysconfig_win_point(void);
+void sysconfig_win_point_human(void);
+void sysconfig_voice_type_toggle(void);
+void test_menu_print_script_at(const void* script, s16 x, s16 y);
+u32 simmram_slot_to_code(s16 n);
+void sprite_list_shift_x(SPR16* dst, SPR16* src, s16 dx, s32 n);
+u32 simmram_slot_to_cg_no(s16 n);
+s32 polygon2d_queue_quad(u32 a, u32 b, u32 c, u16 lo, u16 hi, s16 pri);
+void config_menu_init(void);
+u32 config_menu_dispatch(void);
+void config_top_page(void);
+u32 sysconfig_page(void);
+void gameconfig_page(void);
+void config_top_draw(void);
+void config_top_select(void);
+void config_top_system(void);
+void config_top_game(void);
+u32 config_top_save_exit(void);
+void sysconfig_draw(void);
+void sysconfig_select(void);
+void sysconfig_continue(void);
+void sysconfig_monitor(void);
+void sysconfig_demo_sound(void);
+void sysconfig_sound_mode(void);
+void sysconfig_exit(void);
+void sysconfig_dispenser(void);
+u32 simmram_small_page_alloc_40(s32 kind);
+void poly_queue_init(s32 offset);
+void dma_src_ack_seq(void);
+void sprite_dma_end_wait(void);
+void poly_bank_flip(void);
+void sprite_bank_flip(void);
+void init_render_lists(void);
+u32 simmram_freelist_init_10(void);
+void menu_cursor_redraw(s32 x, s32 y, s32 cur, s32 old);
+s8 menu_cursor_vtick(s32 x, s32 y, s8 last, s8 row, s8 wrap);
+u32 * eeprom_config_load(void);
+s8 config_modify_step(void);
+s32 polygon2d_submit_line();
+s32 polygon2d_submit_quad();
+void render_list_primary_alloc(void);
+s32 simmram_block_alloc_10(s32 blocks, s32 kind);
+s32 simmram_block_alloc_40(s32 blocks, s32 kind);
+void simmram_block_free_10(s32 blk);
+void simmram_block_free_40(s32 blk);
+u32 simmram_big_page_alloc_40(s32 kind);
+u32 simmram_freelist_init(void);
+u32 simmram_purge_by_owner_10(u32 kind);
+u32 simmram_purge_by_owner_40(u32 kind);
+u32 simmram_slot_addr(s16 no);
+u32 simmram_slot_to_offset(s16 handle);
+void sprite_display_list_build(void);
+SPRITE_ENTRY* sprite_entry_alloc(s8 layer);
+void sprite_entry_push_prio();
+s32 sprite_list_clear(s16 list);
+s32 sprite_list_submit(s16 slot);
+void sprite_poly_queue_drain_try(void);
+void sprite_poly_queue_drain_wait(void);
+void sprite_polygon_flush_queue(s32 kind);
+void sprite_pools_init(void);
+s32 sprite_list_setup(s16 slot, s16 owner, s16* data);
+void sprite_template_chain_init(void);
+void sprite_template_pool_init(void);
+void config_menu_load_settings(void);
+void config_check_changed(void);
+void sysconfig_draw_values(void);
+s32 config_differs_from_default(void);
+void config_print_setting(const TM_STRING* src, s32 y, s16 attr);
+
+#endif

@@ -1,0 +1,116 @@
+/*
+ * EFFD9.C  Effect D9: palette change controller for a player
+ *
+ * effect_D9_init is called by player code (PLPDM.c, PLPCU.c, EFF41.c) with an entry number in
+ * color_table_index. effect_D9_move reads the entry's 1P or 2P colour-step table, flag bits and
+ * timer, then cycles the player's extra_col (or extra_col_2) through the table each frame.
+ * The flags end the effect when the timer runs out, when the player's damage count, pattern or
+ * landing changes, when the super art is no longer active, or when the player's move changes;
+ * on ending it clears the player's extra colour and frees the work.
+ */
+
+#include "structs.h"
+#include "work.h"
+#include "romdata.h"
+#include "extern.h"
+#include "EFFECT.h"
+#include "EFFD9.h"
+
+
+
+void effect_D9_move(WORK_Other* ewk) {
+    PLW* mwk = (PLW*)ewk->my_master;
+    switch (ewk->wu.routine_no[0]) {
+    case 0:
+        ewk->wu.routine_no[0]++;
+        if (ewk->master_id) {
+            ewk->wu.step_xy_table = (s16*)color_table_index[ewk->wu.direction].changetbl_2p;
+        } else {
+            ewk->wu.step_xy_table = (s16*)color_table_index[ewk->wu.direction].changetbl_1p;
+        }
+        ewk->wu.vital_old = color_table_index[ewk->wu.direction].flag;
+        ewk->wu.dir_timer = color_table_index[ewk->wu.direction].timer;
+        ewk->wu.dir_step = 0;
+        ewk->wu.vitality = 0;
+        break;
+    case 1:
+        if (ewk->wu.dead_f == 1) {
+            ewk->wu.routine_no[0]++;
+            break;
+        }
+        if ((ewk->wu.vital_old & 2) == 0 || EXE_flag != 0 || Game_pause != 0 || mwk->wu.hit_stop > 0 ||
+            (--ewk->wu.dir_timer >= 0)) {
+            if ((ewk->wu.vital_old & 4) != 0) {
+                if (ewk->wu.dir_old == mwk->wu.dm_count_up) {
+                    if ((ewk->wu.type != 0) && (ewk->wu.type != 32)) {
+                        if (mwk->wu.xyz[1].disp.pos <= 0) {
+                            goto set_routine_2;
+                        }
+                    } else {
+                        if (mwk->wu.cg_type != 0) {
+                            goto set_routine_2;
+                        }
+                    }
+                } else {
+                    goto set_routine_2;
+                }
+            }
+            if (((ewk->wu.vital_old & 8) == 0 || (mwk->sa->ok == -1)) &&
+                (((ewk->wu.vital_old & 0x10) == 0) || (ewk->wu.total_paring == mwk->wu.kind_of_waza))) {
+                if (--ewk->wu.vitality <= 0) {
+                    ewk->wu.dir_step += 2;
+                    if (ewk->wu.step_xy_table[ewk->wu.dir_step] == 0) {
+                        ewk->wu.dir_step = 0;
+                    }
+                    ewk->wu.vitality = ewk->wu.step_xy_table[ewk->wu.dir_step];
+                    ewk->wu.vital_new = ewk->wu.step_xy_table[ewk->wu.dir_step + 1];
+                }
+                if ((ewk->wu.vital_old & 1) != 0) {
+                    mwk->wu.extra_col = ewk->wu.vital_new;
+                } else {
+                    mwk->wu.extra_col_2 = ewk->wu.vital_new;
+                }
+                break;
+            }
+        }
+    set_routine_2:
+        ewk->wu.routine_no[0] = 2;
+        break;
+    case 2:
+    default:
+        if ((ewk->wu.vital_old & 1) != 0) {
+            mwk->wu.extra_col = 0;
+        } else {
+            mwk->wu.extra_col_2 = 0;
+        }
+        push_effect_work(&ewk->wu);
+        break;
+    }
+}
+
+
+
+s32 effect_D9_init(wk, data)
+PLW* wk;
+u8 data;
+{
+    WORK_Other* ewk;
+    s16 ix;
+    if ((ix = pull_effect_work(3)) == -1) {
+        return -1;
+    }
+    ewk = (WORK_Other*)frw[ix];
+    ewk->wu.be_flag = 1;
+    ewk->wu.id = 139;
+    ewk->wu.work_id = 16;
+    ewk->wu.direction = data;
+    ewk->wu.dir_old = wk->wu.dm_count_up;
+    ewk->wu.dm_attribute = wk->wu.dm_attribute;
+    ewk->wu.type = wk->wu.pat_status;
+    ewk->wu.total_paring = wk->wu.kind_of_waza;
+    ewk->my_master = (u32*)wk;
+    ewk->master_id = wk->wu.id;
+    ewk->master_work_id = wk->wu.work_id;
+    ewk->master_player = wk->player_number;
+    return 0;
+}

@@ -1,0 +1,31 @@
+#ifndef N_INPUT_H
+#define N_INPUT_H
+
+#include "structs.h"
+
+s16 Name_Input(s16 pl_id);
+void Name_Input_init(void);
+s32 name_slang_check(void);
+void define_name_input(void);
+void ranking_state_check(void);
+void ranking_name_entry(void);
+void name_work_init(s16 pl_id);
+void all_name_display(void);
+void start_cut_check(s16 pl_id);
+void Name_Input_wait(void);
+void Name_Scs_Finish(void);
+void Scs_char_move(void);
+void Name_Input_end(void);
+void Name_Scs_Input_init(void);
+s32 Name_Input_comm(void);
+void Name_Finish(void);
+void Name_Scs_Input_comm(void);
+void name_entry_commit_row(s16 pl_id, s16 pos_y);
+s32 Name_Input_sub(void);
+s32 Scs_move_sub(void);
+void current_sc_move2(void);
+void Name_Scs_Input_end(void);
+s32 auto_n_check(u16 chk_lvr, s16 index, u16 sw_data, u16 sw_up_w);
+void show_thank_you_for_playing(void);
+
+#endif

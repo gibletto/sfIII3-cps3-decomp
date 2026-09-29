@@ -1,0 +1,109 @@
+/*
+ * EFFE3.C  Super art flash background (effect E3)
+ *
+ * While a player's Flash_MT is set this effect swaps the stage for a single BG3 picture.
+ * effect_E3_move waits for either player's flash request, turns every stage layer off and
+ * BG3 on (unless an alternate background is already up), holds it for the time given in
+ * effE3_data while effE3_scroll_set positions BG3 and family 4, then restores the stage
+ * layers and clears the request. It yields to the finish screen (akebono_flag) and to the
+ * alternate-background effect (seraph_flag), and flags its own state in sa_pa_flag.
+ */
+
+#include "structs.h"
+#include "work.h"
+#include "romdata.h"
+#include "extern.h"
+#include "sys_test.h"
+#include "fifo.h"
+#include "EFFECT.h"
+#include "aboutspr.h"
+#include "effe3.h"
+
+static void effE3_scroll_set(WORK_Other* ewk);
+
+
+
+/* provisional name */
+static void effE3_scroll_set(WORK_Other* ewk) {
+    s32 x = effE3_data[Flash_MT[ewk->master_id]][0] - bg_w.pos_offset;
+    s32 y = effE3_data[Flash_MT[ewk->master_id]][1];
+    scrn_map_set(3, ake_scrl_w[2].adrs);
+    Scrn_Move_Set(3, x, y);
+    Family_Set_W(4, -x & 0x3FF, (0x300 - (y & 0x3FF)) & 0x3FF);
+}
+
+
+
+s32 effect_E3_move(WORK_Other* ewk) {
+    s16 i;
+    s32 rc;
+    if ((rc = akebono_flag)) {
+        sa_pa_flag = 0;
+        return rc;
+    }
+    switch (rc = ewk->wu.routine_no[0]) {
+    case 0:
+        if (Flash_MT[0]) {
+            ewk->wu.routine_no[0]++;
+            return rc;
+        }
+        if ((rc = Flash_MT[1])) {
+            ewk->wu.routine_no[0]++;
+        }
+        return rc;
+    case 1:
+        ewk->wu.routine_no[0]++;
+        if ((rc = another_bg[0]) || (rc = another_bg[1])) {
+            sa_pa_flag = 0;
+            if (Flash_MT[0]) {
+                Flash_MT[0] = 0;
+            } else {
+                Flash_MT[1] = 0;
+                rc = 0;
+            }
+            ewk->wu.routine_no[0] = 0;
+            return rc;
+        }
+        sa_pa_flag = 1;
+        for (i = 0; i < bg_w.scno; i++) {
+            Bg_Off_W(1 << i);
+        }
+        Bg_On_W(8);
+        if (Flash_MT[0]) {
+            ewk->wu.old_rno[0] = effE3_data[Flash_MT[0]][2];
+            ewk->master_id = 0;
+        } else {
+            ewk->wu.old_rno[0] = effE3_data[Flash_MT[1]][2];
+            ewk->master_id = 1;
+        }
+        effE3_scroll_set(ewk);
+        return;
+    case 2:
+        ewk->wu.old_rno[0]--;
+        if (ewk->wu.old_rno[0] <= 0) {
+            ewk->wu.routine_no[0]++;
+            return rc;
+        }
+        effE3_scroll_set(ewk);
+        return;
+    case 3:
+        ewk->wu.routine_no[0] = 0;
+        Flash_MT[rc = ewk->master_id] = 0;
+        sa_pa_flag = 0;
+        if (akebono_flag) {
+            return rc;
+        }
+        if ((rc = seraph_flag)) {
+            return rc;
+        }
+        for (i = 0; i < bg_w.scno; i++) {
+            Bg_On_W(1 << i);
+        }
+        Bg_Off_W(8);
+        return;
+    default:
+        all_cgps_put_back(ewk);
+        push_effect_work(&ewk->wu);
+        return;
+    }
+}

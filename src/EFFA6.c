@@ -1,0 +1,241 @@
+/*
+ * EFFA6.C  Effect A6: pre-fight dialogue text on the VS screen (move)
+ *
+ * Effect A6 is the dialogue line shown beside a character portrait on the VS screen; it is the
+ * child of an effect 76 plate (orders 0x43 / 0x44) created by next_cpu.c. effect_A6_move reads a
+ * per-character script from effA6_pl2_data_tbl (message number + display time pairs) and for
+ * each line picks the message table by Country and Language (effA6_mes_jp / _en / _es / _pt),
+ * loads the line's graphics and builds its connected sprites. The line slides in from the side of
+ * its portrait and follows the parent's depth. Switch bit 0x1000 of that player skips to the end
+ * (Next_Step); Auto_Cut_Sub cuts the current wait short. Freed on Suicide[3].
+ * The init lives in EFFA6_INIT.C.
+ */
+
+#include "structs.h"
+#include "work.h"
+#include "romdata.h"
+#include "extern.h"
+#include "next_cpu.h"
+#include "aboutspr.h"
+#include "EFFECT.h"
+#include "EFFA6.h"
+
+#pragma inline(check2_A6_shortcut)
+
+s32 check2_A6_shortcut(void) {
+    u16 sw_w;
+    if (Player_id) {
+        sw_w = p2sw_0;
+    } else {
+        sw_w = p1sw_0;
+    }
+    if (sw_w & 0x1000) {
+        return 1;
+    }
+    return 0;
+}
+
+
+
+void effect_A6_move(WORK_Other_CONN* ewk) {
+    WORK_Other* mwk;
+    const EFFA6_MESSAGE* mes;
+    const CONN* conn_data;
+    const u16* chr_data;
+    s32 variant;
+    s16 i;
+    switch (ewk->wu.routine_no[0]) {
+    case 0:
+        if (check2_A6_shortcut() != 0) {
+            Next_Step |= ~0x7F;
+        }
+        if (Auto_Cut_Sub() != 0) {
+            if (ewk->wu.routine_no[6] <= 210) {
+                ewk->wu.routine_no[6] = 1;
+            } else if (ewk->wu.routine_no[6] <= 420) {
+                ewk->wu.routine_no[6] = 210;
+            } else if (ewk->wu.routine_no[6] <= 630) {
+                ewk->wu.routine_no[6] = 420;
+            } else if (ewk->wu.routine_no[6] <= 840) {
+                ewk->wu.routine_no[6] = 630;
+            } else {
+                ewk->wu.routine_no[6] = 840;
+            }
+        }
+        ewk->wu.routine_no[6] = ewk->wu.routine_no[6] - 1;
+        if (ewk->wu.routine_no[6] <= 0) {
+            ewk->wu.routine_no[6] = effA6_pl2_data_tbl[ewk->master_player][ewk->wu.routine_no[5] + 1];
+            if (ewk->wu.routine_no[6] < 0) {
+                Next_Step |= ~0x7F;
+                ewk->wu.routine_no[6] = -1;
+            } else if (!(mmes_already = effA6_pl2_data_tbl[ewk->master_player][ewk->wu.routine_no[5]])) {
+                ewk->wu.disp_flag = 0;
+                ewk->wu.routine_no[5] = ewk->wu.routine_no[5] + 2;
+            } else {
+                ewk->wu.routine_no[5] = ewk->wu.routine_no[5] + 2;
+                switch (Country) {
+                case 1:
+                    mes = &effA6_mes_jp[ewk->master_player][mmes_already];
+                    break;
+                case 4:
+                    mes = &effA6_mes_en[ewk->master_player][mmes_already];
+                    break;
+                default:
+                    mes = &effA6_mes_jp[ewk->master_player][mmes_already];
+                    break;
+                }
+                conn_data = mes->conn;
+                chr_data = mes->chr;
+                variant = (s8)Language;
+                switch (Country) {
+                case 1:
+                    mes = &effA6_mes_jp[ewk->master_player][mmes_already];
+                    conn_data = mes->conn;
+                    chr_data = mes->chr;
+                    break;
+                case 3:
+                    switch (variant) {
+                    case 0:
+                        mes = &effA6_mes_en[ewk->master_player][mmes_already];
+                        conn_data = mes->conn;
+                        chr_data = mes->chr;
+                        break;
+                    case 1:
+                        mes = &effA6_mes_es[ewk->master_player][mmes_already];
+                        conn_data = mes->conn;
+                        chr_data = mes->chr;
+                        break;
+                    case 2:
+                        mes = &effA6_mes_pt[ewk->master_player][mmes_already];
+                        conn_data = mes->conn;
+                        chr_data = mes->chr;
+                        break;
+                    }
+                    break;
+                case 5:
+                    mes = &effA6_mes_es[ewk->master_player][mmes_already];
+                    conn_data = mes->conn;
+                    chr_data = mes->chr;
+                    break;
+                case 6:
+                    mes = &effA6_mes_pt[ewk->master_player][mmes_already];
+                    conn_data = mes->conn;
+                    chr_data = mes->chr;
+                    break;
+                case 7:
+                    switch (variant) {
+                    case 0:
+                        mes = &effA6_mes_en[ewk->master_player][mmes_already];
+                        conn_data = mes->conn;
+                        chr_data = mes->chr;
+                        break;
+                    case 1:
+                        mes = &effA6_mes_es[ewk->master_player][mmes_already];
+                        conn_data = mes->conn;
+                        chr_data = mes->chr;
+                        break;
+                    case 2:
+                        mes = &effA6_mes_pt[ewk->master_player][mmes_already];
+                        conn_data = mes->conn;
+                        chr_data = mes->chr;
+                        break;
+                    }
+                    break;
+                case 2:
+                case 4:
+                default:
+                    mes = &effA6_mes_en[ewk->master_player][mmes_already];
+                    conn_data = mes->conn;
+                    chr_data = mes->chr;
+                    break;
+                }
+                for (i = 0; i < chr_data[0]; i++) {
+                    load_char_gfx(chr_data[i + 1], 1);
+                }
+                ewk->num_of_conn = chr_data[i + 1];
+                ewk->wu.disp_flag = 1;
+                ewk->wu.cg_number = 0;
+                ewk->wu.old_cgnum = 0;
+                for (i = 0; i < ewk->num_of_conn; i++) {
+                    ewk->conn[i].nx = conn_data[i].nx;
+                    ewk->conn[i].ny = conn_data[i].ny;
+                    ewk->conn[i].col = conn_data[i].col;
+                    ewk->conn[i].chr = conn_data[i].chr;
+                }
+                ewk->wu.vitality = 0xF0;
+                ewk->wu.routine_no[1] = 0;
+            }
+        }
+        if (Suicide[3]) {
+            ewk->wu.routine_no[0] = 1;
+            break;
+        }
+        if (!ewk->wu.disp_flag) {
+            break;
+        }
+        switch (ewk->wu.routine_no[1]) {
+        case 0:
+            ewk->wu.routine_no[1]++;
+            switch (ewk->wu.dir_old) {
+            case 0x43:
+                ewk->wu.position_x = ewk->wu.xyz[0].disp.pos = 72;
+                ewk->wu.position_y = ewk->wu.xyz[1].disp.pos = bg_w.bgw[0].xy[1].disp.pos + 186;
+                break;
+            default:
+                ewk->wu.position_x = ewk->wu.xyz[0].disp.pos = 664;
+                ewk->wu.position_y = ewk->wu.xyz[1].disp.pos = bg_w.bgw[0].xy[1].disp.pos + 26;
+                break;
+            }
+        case 1:
+            switch (ewk->wu.dir_old) {
+            case 0x43:
+                ewk->wu.position_x = ewk->wu.xyz[0].disp.pos += 10;
+                if (ewk->wu.position_x >= 320) {
+                    ewk->wu.routine_no[1]++;
+                    ewk->wu.position_x = ewk->wu.xyz[0].disp.pos = 320;
+                }
+                break;
+            default:
+                ewk->wu.position_x = ewk->wu.xyz[0].disp.pos -= 10;
+                if (ewk->wu.position_x <= 392) {
+                    ewk->wu.routine_no[1]++;
+                    ewk->wu.position_x = ewk->wu.xyz[0].disp.pos = 392;
+                }
+                break;
+            }
+            break;
+        case 2:
+            break;
+        }
+        mwk = (WORK_Other*)ewk->my_master;
+        switch (ewk->wu.dir_old) {
+        case 0x43:
+            ewk->wu.position_z = ewk->wu.xyz[2].disp.pos = mwk->wu.position_z - 1;
+            effa6_pos_x_1p = mwk->wu.position_x;
+            effa6_pos_y_1p = mwk->wu.position_y;
+            effa6_pos_z_1p = mwk->wu.position_z;
+            break;
+        default:
+            ewk->wu.position_z = ewk->wu.xyz[2].disp.pos = mwk->wu.position_z - 1;
+            effa6_pos_x_2p = mwk->wu.position_x;
+            effa6_pos_y_2p = mwk->wu.position_y;
+            effa6_pos_y_2p = mwk->wu.position_y;
+            break;
+        }
+        ewk->wu.cg_number = ewk->wu.cg_number + 1;
+        ewk->wu.cg_number &= 0x7FFF;
+        sort_push_request3(&ewk->wu);
+        break;
+    case 1:
+        ewk->wu.routine_no[0]++;
+        ewk->wu.disp_flag = 0;
+        break;
+    case 2:
+        ewk->wu.routine_no[0]++;
+        break;
+    default:
+        all_cgps_put_back(&ewk->wu);
+        push_effect_work(&ewk->wu);
+        break;
+    }
+}

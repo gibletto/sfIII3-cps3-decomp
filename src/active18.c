@@ -1,0 +1,1407 @@
+/*
+ * ACTIVE18.C  CPU opponent action patterns, character 18
+ *
+ * Computer18 is the computer-player routine for character 18, called from Com_Active in
+ * COM_PL. It runs the pattern selected in Pattern_Index through Pattern18_Tbl.
+ * The 83 pattern routines are step scripts indexed by CP_Index: each step issues one CPU
+ * command (walks, approach walks, normal/lever/command attacks, jump and high-jump attacks,
+ * Pierce_On, Lever_On/Off, Provoke, waits and distance or super-art checks) and the final
+ * step calls End_Pattern so COM_PL can choose the next pattern.
+ */
+
+#include "structs.h"
+#include "work.h"
+#include "romdata.h"
+#include "extern.h"
+#include "Com_Sub.h"
+#include "active18.h"
+
+
+
+void Computer18(PLW* wk) {
+    Pattern18_Tbl[(s16)Pattern_Index[wk->wu.id]](wk);
+}
+
+
+
+void Pattern18_0000(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Lever_Off(wk);
+        break;
+    case 1:
+        Look(wk, 0);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0001(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Normal_Attack(wk, 8, 0x10);
+        break;
+    case 1:
+        Normal_Attack(wk, 8, 0x10);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0002(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Approach_Walk(wk, 0x41, 2);
+        break;
+    case 1:
+        Command_Attack(wk, 8, 0x1F, 9, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0003(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Adjust_Attack(wk, 8, 0x10);
+        break;
+    case 1:
+        Normal_Attack(wk, 8, 0x100);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0004(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Command_Attack(wk, 8, 0x1E, 9, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0005(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Approach_Walk(wk, 0x37, 2);
+        break;
+    case 1:
+        Com_Random_Select(wk, 2, 0x3E, 0x3F, 0x40, 0x40, 1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0006(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Wait(wk, 0x1E);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0007(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Search_Back_Term(wk, 0x30, 2, 1);
+        break;
+    case 1:
+        Pierce_On(wk);
+        break;
+    case 2:
+        Command_Attack(wk, 8, 1, 0xB, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0008(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Normal_Attack(wk, 8, 0x100);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0009(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Search_Back_Term(wk, 0x60, 6, 0x10);
+        break;
+    case 1:
+        Jump(wk, 1);
+        break;
+    case 2:
+        Look(wk, 0);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0010(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Normal_Attack(wk, 8, 0x202);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0011(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Normal_Attack(wk, 8, 0x102);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0012(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Normal_Attack(wk, 8, 0x40);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0013(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Normal_Attack(wk, 8, 0x20);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0014(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Jump_Attack_Term(wk, -1, 0x8050, 0xB, 0x20, 2, 0x8060, -1, 0x20);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0015(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Walk(wk, 0, 0x30, 0);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0016(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Walk(wk, 1, 0x30, 0);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0017(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Command_Attack(wk, 8, 0x1E, 0xA, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0018(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Jump_Attack(wk, 8, 8, (0x202), 0);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0019(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Lever_Attack(wk, 8, 0, (0x200));
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0020(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Command_Attack(wk, 8, 0x1C, 9, -1);
+        break;
+    case 1:
+        Command_Attack(wk, 8, 0x1E, 0xA, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0021(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Jump_Attack_Term(wk, -1, -0x7FA0, 0xB, 0x100, 0, -0x7FA0, -1, 0x100);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0022(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Jump_Attack(wk, 8, 0xF, 0x40, 0);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0023(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Approach_Walk(wk, 0x7F, 2);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0024(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Walk(wk, 0, 0x60, 0);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0025(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Walk(wk, 1, 0x60, 0);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0026(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Command_Attack(wk, 8, 0, 0xB, -1);
+        break;
+    case 1:
+        Look(wk, 0);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0027(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Jump(wk, 0);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0028(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Approach_Walk(wk, 0xBF, 2);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0029(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Adjust_Attack(wk, 8, 0x80);
+        break;
+    case 1:
+        Adjust_Attack(wk, 8, 0x100);
+        break;
+    case 2:
+        Adjust_Attack(wk, 8, 0x200);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0030(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Adjust_Attack(wk, 9, 0x80);
+        break;
+    case 1:
+        Adjust_Attack(wk, 8, 0x202);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0031(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Jump_Attack_Term(wk, -1, 0x40, 0xB, 0x40, 0, 0x8060, -1, (0x100));
+        break;
+    case 1:
+        Normal_Attack(wk, 8, (0x100));
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0032(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Adjust_Attack(wk, 0xB, 0x10);
+        break;
+    case 1:
+        Command_Attack(wk, 8, 0x1E, 8, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0033(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Adjust_Attack(wk, 8, 0x10);
+        break;
+    case 1:
+        Command_Attack(wk, 8, 0x1F, 0xA, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0034(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Adjust_Attack(wk, 8, 0x82);
+        break;
+    case 1:
+        Adjust_Attack(wk, 8, 0x82);
+        break;
+    case 2:
+        Adjust_Attack(wk, 8, 0x100);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0035(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Normal_Attack(wk, 8, 0x20);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0036(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Normal_Attack(wk, 8, 0x42);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0037(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Command_Attack(wk, 8, 0x1E, 0xA, -1);
+        break;
+    case 1:
+        Normal_Attack(wk, 8, (0x200));
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0038(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Adjust_Attack(wk, 0xB, 0x20);
+        break;
+    case 1:
+        Normal_Attack(wk, 0xA, (0x102));
+        break;
+    case 2:
+        Lever_Attack(wk, 8, 0, 0x40);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0039(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Command_Attack(wk, 8, 0x1F, 8, -1);
+        break;
+    case 1:
+        Wait(wk, 6);
+        break;
+    case 2:
+        Normal_Attack(wk, 8, 0x40);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0040(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Normal_Attack(wk, 9, (0x102));
+        break;
+    case 1:
+        Command_Attack(wk, 8, 0x1E, 9, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0041(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Normal_Attack(wk, 8, 0x22);
+        break;
+    case 1:
+        Normal_Attack(wk, 8, 0x42);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0042(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Normal_Attack(wk, 8, 0x12);
+        break;
+    case 1:
+        Normal_Attack(wk, 8, 0x12);
+        break;
+    case 2:
+        Normal_Attack(wk, 8, 0x202);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0043(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Search_Back_Term(wk, 0x30, 2, 0xF);
+        break;
+    case 1:
+        Walk(wk, 1, 0x20, 0);
+        break;
+    case 2:
+        Wait(wk, 3);
+        break;
+    case 3:
+        Walk(wk, 0, 0x30, 0);
+        break;
+    case 4:
+        Wait(wk, 9);
+        break;
+    case 5:
+        Walk(wk, 0, 0x20, 0);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0044(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Search_Back_Term(wk, 0x20, 2, 0x1B);
+        break;
+    case 1:
+        Walk(wk, 1, 0x18, 0);
+        break;
+    case 2:
+        Wait(wk, 8);
+        break;
+    case 3:
+        Search_Back_Term(wk, 0x30, 2, 0x1B);
+        break;
+    case 4:
+        Walk(wk, 1, 0x20, 0);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0045(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Walk(wk, 0, 0x20, 0);
+        break;
+    case 1:
+        Search_Back_Term(wk, 0x30, 2, 6);
+        break;
+    case 2:
+        Walk(wk, 1, 0x28, 0);
+        break;
+    case 3:
+        Wait(wk, 8);
+        break;
+    case 4:
+        Walk(wk, 0, 0x20, 0);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0046(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Command_Attack(wk, 8, 0x8014, 0xA, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0047(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Command_Attack(wk, 8, 0x8015, 0xA, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0048(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Command_Attack(wk, 8, 0x8016, 0xA, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0049(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        J_Command_Attack(wk, 8, 0x8016, 8, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0050(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        J_Command_Attack(wk, 8, 0x8016, 9, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0051(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        J_Command_Attack(wk, 8, 0x8016, 0xA, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0052(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        EM_Term(wk, -1, 0x8030, 5, 2, 0);
+        break;
+    case 1:
+        SA_Term(wk, 0x2E, 0x2F, -1, 0);
+        break;
+    case 2:
+        Command_Attack(wk, 8, 0x1F, 0xA, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0053(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        EM_Term(wk, -1, 0x8030, 5, 2, 0);
+        break;
+    case 1:
+        SA_Term(wk, 0x2e, -1, -1, 0);
+        break;
+    case 2:
+        Approach_Walk(wk, 0x7f, 2);
+        break;
+    case 3:
+        SA_Term(wk, -1, 0x2f, -1, 0);
+        break;
+    case 4:
+        Approach_Walk(wk, 0x41, 2);
+        break;
+    case 5:
+        Command_Attack(wk, 8, 0x1f, 10, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0054(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        SA_Term(wk, -1, -1, 0x30, 0);
+        break;
+    case 1:
+        Command_Attack(wk, 8, 0x1C, 0xA, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0055(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Lever_Off(wk);
+        break;
+    case 1:
+        Look(wk, 0);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0056(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Command_Attack(wk, 8, 0x1C, 8, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0057(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Command_Attack(wk, 8, 0x1C, 9, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0058(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Command_Attack(wk, 8, 0x1C, 0xA, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0059(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Command_Attack(wk, 8, 0x1C, 9, (0x380));
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0060(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Command_Attack(wk, 8, 0x1E, 9, 0x70);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0061(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Command_Attack(wk, 8, 0x1D, 0xA, (0x380));
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0062(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Lever_Attack(wk, 8, 0, (0x90));
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0063(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Lever_Attack(wk, 8, 1, (0x90));
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0064(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Normal_Attack(wk, 8, (0x90));
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0065(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Lever_Attack(wk, 8, 0, 0x40);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0066(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Approach_Walk(wk, 0x4B, 2);
+        break;
+    case 1:
+        Command_Attack(wk, 8, 0x21, 0xA, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0067(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Command_Attack(wk, 8, 0x20, 0xA, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0068(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Pierce_On(wk);
+        break;
+    case 1:
+        Command_Attack(wk, 9, 0x1F, 8, -1);
+        break;
+    case 2:
+        Wait(wk, 2);
+        break;
+    case 3:
+        Lever_Attack(wk, 8, 0, (0x20));
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0069(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Pierce_On(wk);
+        break;
+    case 1:
+        Command_Attack(wk, 9, 0x1F, 8, -1);
+        break;
+    case 2:
+        Normal_Attack(wk, 8, 0x40);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0070(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Pierce_On(wk);
+        break;
+    case 1:
+        Command_Attack(wk, 9, 0x1F, 8, -1);
+        break;
+    case 2:
+        Walk(wk, 0, 8, 0);
+        break;
+    case 3:
+        Command_Attack(wk, 8, 0x1E, 0xA, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0071(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Command_Attack(wk, 9, 0x1F, 0xA, -1);
+        break;
+    case 1:
+        Pierce_On(wk);
+        break;
+    case 2:
+        Provoke(wk, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0072(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Command_Attack(wk, 9, 0x1F, 0xA, -1);
+        break;
+    case 1:
+        Pierce_On(wk);
+        break;
+    case 2:
+        Provoke(wk, 1);
+        break;
+    case 3:
+        Com_Random_Select(wk, 6, 0x85, 0x86, 0x87, 0x70, 1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0073(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Check_SA(wk, 2, 0x44);
+        break;
+    case 1:
+        Pierce_On(wk);
+        break;
+    case 2:
+        Command_Attack(wk, 9, 0x1f, 8, -1);
+        break;
+    case 3:
+        Walk(wk, 0, 8, 0);
+        break;
+    case 4:
+        EM_Term(wk, -1, 0x8030, 6, 1, -1);
+        break;
+    case 5:
+        SA_Term(wk, -1, 0x2f, -1, 0);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0074(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Pierce_On(wk);
+        break;
+    case 1:
+        Command_Attack(wk, 9, 0x1F, 8, -1);
+        break;
+    case 2:
+        Walk(wk, 0, 8, 0);
+        break;
+    case 3:
+        EM_Term(wk, -1, 0x8030, 6, 1, -1);
+        break;
+    case 4:
+        Command_Attack(wk, 8, 0x20, 9, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0075(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Pierce_On(wk);
+        break;
+    case 1:
+        Hi_Jump_Attack_Term(wk, -1, 0x40, 8, 0x40, 0, 0x8060, -1, (0x100));
+        break;
+    case 2:
+        Lever_On(wk, 1, -1);
+        break;
+    case 3:
+        Normal_Attack(wk, 8, 0x12);
+        break;
+    case 4:
+        Normal_Attack(wk, 8, 0x12);
+        break;
+    case 5:
+        Command_Attack(wk, 8, 0x1C, 8, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0076(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Lever_On(wk, 1, -1);
+        break;
+    case 1:
+    case 2:
+        Normal_Attack(wk, 8, 0x12);
+        break;
+    case 3:
+        Command_Attack(wk, 8, 0x1C, 0x4008, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0077(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Lever_On(wk, 1, -1);
+        break;
+    case 1:
+        Normal_Attack(wk, 8, (0x82));
+        break;
+    case 2:
+        Normal_Attack(wk, 8, (0x102));
+        break;
+    case 3:
+        Command_Attack(wk, 8, 0x1D, 9, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0078(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Pierce_On(wk);
+        break;
+    case 1:
+        Lever_On(wk, 1, -1);
+        break;
+    case 2:
+        Lever_Attack(wk, 8, 1, (0x202));
+        break;
+    case 3:
+        Command_Attack(wk, 8, 0x1D, 9, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0079(PLW* wk) {
+    s16 none = -1;
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Pierce_On(wk);
+        break;
+    case 1:
+        Hi_Jump_Attack_Term(wk, none, 64, 8, (0x200), 0, 0x8060, none, (0x100));
+        break;
+    case 2:
+        Lever_On(wk, 1, -1);
+        break;
+    case 3:
+        Lever_Attack(wk, 8, 1, (0x202));
+        break;
+    case 4:
+        Command_Attack(wk, 8, 28, 8, none);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0080(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Lever_On(wk, 1, -1);
+        break;
+    case 1:
+        Normal_Attack(wk, 8, 0x12);
+        break;
+    case 2:
+        Normal_Attack(wk, 8, 0x12);
+        break;
+    case 3:
+        Command_Attack(wk, 8, 0x1C, 0x4008, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0081(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Lever_On(wk, 1, -1);
+        break;
+    case 1:
+        Normal_Attack(wk, 8, (0x82));
+        break;
+    case 2:
+        Normal_Attack(wk, 8, (0x102));
+        break;
+    case 3:
+        Command_Attack(wk, 8, 0x1D, 0x9, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+void Pattern18_0082(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Pierce_On(wk);
+        break;
+    case 1:
+        Hi_Jump_Attack_Term(wk, -1, 0x40, 8, (0x200), 0, 0x8060, -1, (0x100));
+        break;
+    case 2:
+        Lever_On(wk, 1, -1);
+        break;
+    case 3:
+        Normal_Attack(wk, 8, 0x12);
+        break;
+    case 4:
+        Normal_Attack(wk, 8, 0x22);
+        break;
+    case 5:
+        Command_Attack(wk, 8, 0x1C, 8, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}

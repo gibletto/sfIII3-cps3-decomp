@@ -1,0 +1,53 @@
+#ifndef BG000_H
+#define BG000_H
+
+#include "structs.h"
+
+void BG020(void);
+void bg_rect_attr_preset(void);
+void bg_rect_attr_add(u16* adrs, s32 x, s16 w, s32 y, s16 h, s16 bits, s16 add);
+void scroll_cell_write();
+void bg_extra_color_trans(void);
+void bg_color_trans(void);
+void BG000(void);
+void bg0001_ctrl(void);
+void BG010(void);
+void bg0101(void);
+void bg0101_init00(void);
+void bg0102(void);
+void bg0103(void);
+void bg0201(void);
+void bg0202(void);
+void bg020_sync_common(void);
+void BG030(void);
+void bg0300(void);
+void bg_main_layer_dispatch(void);
+void bg_back_layer_dispatch(void);
+void bg0000(void);
+void bg0000_demo(void);
+void bg0000_init00(void);
+void bg0201_BG020(void);
+void bg0202_BG020(void);
+void bg020_sync_common_BG020(void);
+void bg020_sync_common_bg020(void);
+void bg020_sync_init(void);
+void bg0300_init00(void);
+void bg0202_init00(void);
+void bg0101_BG010(void);
+void bg0102_BG010(void);
+void bg_chase_step(void);
+s32 capcom_logo_anim(void);
+s16 capcom_logo_color_step(void);
+void bg0001_init00(void);
+void bg_base_move_common(void);
+void bg_move_common(void);
+void bg0102_init00(void);
+void bg0201_init00(void);
+void bg020_sync_move(void);
+void bg_initialize(void);
+void oh_opening_demo(u16* adrs, s32 x, s16 w, s32 y, s16 h, s16 attr, s16 prio);
+void reset_all_char_display_with_backup(void);
+void akebono_initialize(void);
+void bg_etc_write(s16 x);
+
+#endif

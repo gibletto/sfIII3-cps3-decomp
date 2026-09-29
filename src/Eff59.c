@@ -1,0 +1,229 @@
+/*
+ * EFF59.C  Effect 59 and effect 58 helpers: attached select-screen parts, logo
+ *
+ * Effect 59 is a part attached to a master object (from Eff39, EFF69 and EFFA7). effect_59_init
+ * sets its ID, BG family, depth and the EFF59_Correct_Data offset from the master.
+ * effect_59_move keeps it at that offset from the master while it is on screen, hides it when it
+ * leaves the BG range and frees it when the master goes away; Check_Break_Into_59 and
+ * Check_Break_Into_59_ID04 follow the master's pattern and restart the name when a new
+ * challenger breaks in.
+ * The file also holds three effect 58 type routines called from EFF58: EFF58_Type_05 (a marker
+ * following the player), SF33rd_Logo (puts the logo and fades it) and EFF58_Type_11 (steps the
+ * tone palette through six levels).
+ */
+
+#include "structs.h"
+#include "work.h"
+#include "romdata.h"
+#include "extern.h"
+#include "SYS_sub.h"
+#include "sc_logo.h"
+#include "sc_trans.h"
+#include "aboutspr.h"
+#include "EFFECT.h"
+#include "CHARMOVE.h"
+#include "Eff59.h"
+
+
+
+void EFF58_Type_05(WORK_Other* ewk) {
+    s16 x;
+    s32 pl;
+    switch (ewk->wu.routine_no[2]) {
+    case 0:
+        ewk->wu.routine_no[2]++;
+        ewk->wu.cgromtype = 1;
+        ewk->wu.my_col_mode = 0x4200;
+        ewk->wu.my_col_code = 0x2040;
+        ewk->wu.my_family = 2;
+        pl = ewk->wu.dir_old;
+        ewk->wu.my_priority = plw[pl].wu.my_priority - 10;
+        ewk->wu.position_z = plw[ewk->wu.dir_old].wu.position_z - 10;
+        ewk->wu.char_index = 26;
+        ewk->wu.char_table[0] = sel_pl_char_table;
+        ewk->wu.disp_flag = 1;
+        ((void(*)(WORK* wk, s16 koc, s32 index, s32 ip, s16 scf))set_char_move_init2)(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 11, 0);
+        break;
+    case 1:
+        x = Separate_Area[ewk->wu.dir_old][ewk->wu.dir_step - 1];
+        if (plw[ewk->wu.dir_old].wu.rl_waza == 0) {
+            x = -x;
+        }
+        ewk->wu.xyz[0].disp.pos = plw[ewk->wu.dir_old].wu.xyz[0].disp.pos + x;
+        ewk->wu.xyz[1].disp.pos = plw[ewk->wu.dir_old].wu.xyz[1].disp.pos + 32;
+        ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
+        ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
+        sort_push_request4(ewk);
+        break;
+    default:
+        all_cgps_put_back(ewk);
+        push_effect_work(&ewk->wu);
+        break;
+    }
+}
+
+
+
+void SF33rd_Logo(WORK_Other* ewk) {
+    switch (ewk->wu.routine_no[2]) {
+    case 0:
+        ewk->wu.routine_no[2]++;
+        SF3_logo(0);
+        Switch_Screen_Init(5, 5);
+        Stop_SG = 0;
+        break;
+    case 1:
+        if (Switch_Screen_Revival()) {
+            ewk->wu.routine_no[2]++;
+            push_effect_work(&ewk->wu);
+        }
+        break;
+    }
+}
+
+
+
+void EFF58_Type_11(WORK_Other* ewk) {
+    if (Break_Into) {
+        ewk->wu.routine_no[2] = 99;
+    }
+    switch (ewk->wu.routine_no[2]) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+        ToneDown((s8)ewk->wu.routine_no[2] + 10);
+        ewk->wu.routine_no[2]++;
+        break;
+    default:
+        push_effect_work(&ewk->wu);
+        break;
+    }
+}
+
+
+
+void effect_59_move(WORK_Other* ewk) {
+    WORK_Other* mwk = (WORK_Other*)ewk->my_master;
+    if (mwk->wu.be_flag == 0) {
+        ewk->wu.disp_flag = 0;
+        ewk->wu.routine_no[0] = 3;
+        return;
+    }
+    Check_Break_Into_59_ID04(ewk);
+    switch (ewk->wu.routine_no[0]) {
+    case 0:
+        ewk->wu.routine_no[0]++;
+        set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
+        return;
+    case 1:
+        if (Ck_Range_Out_S(ewk, ewk->wu.my_family - 1, 224)) {
+            ewk->wu.position_x = ewk->wu.xyz[0].disp.pos = mwk->wu.position_x + ewk->wu.vital_new;
+        } else {
+            ewk->wu.disp_flag = 1;
+            ewk->wu.routine_no[0]++;
+        }
+        break;
+    case 2:
+        Check_Break_Into_59(ewk);
+        if (Ck_Range_Out_S(ewk, ewk->wu.my_family - 1, 224)) {
+            ewk->wu.disp_flag = 0;
+            ewk->wu.routine_no[0]++;
+            return;
+        }
+        break;
+    case 3:
+        ewk->wu.routine_no[0] = 99;
+        return;
+    case 4:
+        ewk->wu.position_x = bg_w.bgw[ewk->wu.my_family - 1].wxy[0].disp.pos;
+        ewk->wu.position_y = bg_w.bgw[ewk->wu.my_family - 1].wxy[1].disp.pos - 128;
+        sort_push_request4(&ewk->wu);
+        return;
+    default:
+        all_cgps_put_back(ewk);
+        push_effect_work(&ewk->wu);
+        return;
+    }
+    ewk->wu.position_x = ewk->wu.xyz[0].disp.pos = mwk->wu.position_x + ewk->wu.vital_new;
+    ewk->wu.position_y = ewk->wu.xyz[1].disp.pos = mwk->wu.position_y + ewk->wu.vital_old;
+    ewk->wu.position_z = ewk->wu.xyz[2].disp.pos = mwk->wu.position_z + ewk->wu.direction;
+    sort_push_request4(&ewk->wu);
+}
+
+
+
+s32 Check_Break_Into_59(WORK_Other* ewk) {
+    WORK_Other* mwk;
+    if (ewk->wu.dm_vital == 5) {
+        mwk = (WORK_Other*)ewk->my_master;
+        if (ewk->wu.dir_step != mwk->wu.dir_step) {
+            ewk->wu.dir_step = mwk->wu.dir_step;
+            set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
+        }
+    }
+    return 0;
+}
+
+
+
+s32 effect_59_init(WORK_Other* mwk, s16 Synchro_BG, s16 ID, s16 direction) {
+    WORK_Other* ewk;
+    s16 ix;
+    if ((ix = pull_effect_work(4)) == -1) {
+        return -1;
+    }
+    ewk = (WORK_Other*)frw[ix];
+    ewk->wu.be_flag = 1;
+    ewk->wu.id = 59;
+    ewk->wu.work_id = 16;
+    ewk->wu.cgromtype = 1;
+    ewk->wu.my_col_mode = 0x4400;
+    ewk->wu.my_col_code = 0x2000;
+    ewk->wu.my_family = Synchro_BG;
+    *ewk->wu.char_table = sel_pl_char_table;
+    ewk->my_master = (u32*)mwk;
+    ewk->wu.char_index = 19;
+    ewk->wu.dir_step = ID;
+    ewk->wu.dm_vital = ID;
+    ewk->wu.direction = direction;
+    ewk->wu.vital_new = EFF59_Correct_Data[ID][0];
+    ewk->wu.vital_old = EFF59_Correct_Data[ID][1];
+    ewk->wu.position_x = ewk->wu.xyz[0].disp.pos = mwk->wu.xyz[0].disp.pos + ewk->wu.vital_new;
+    ewk->wu.position_y = ewk->wu.xyz[1].disp.pos = mwk->wu.xyz[1].disp.pos + ewk->wu.vital_old;
+    ewk->wu.position_z = ewk->wu.xyz[2].disp.pos = mwk->wu.xyz[2].disp.pos + ewk->wu.direction;
+    switch (ID) {
+    case 4:
+        ewk->wu.my_mr_flag = 1;
+        ewk->wu.my_mr.size.x = 127;
+        ewk->wu.my_mr.size.y = 127;
+        break;
+    case 5:
+        ewk->wu.dm_vital = ID;
+        ewk->wu.char_index = 82;
+        ewk->wu.dir_step = mwk->wu.dir_step;
+        break;
+    }
+    return 0;
+}
+
+
+
+/* provisional name */
+s32 Check_Break_Into_59_ID04(WORK_Other* ewk) {
+    if (ewk->wu.dm_vital != 4 || ewk->wu.routine_no[0] == 4) {
+    no_break:
+        return 0;
+    }
+    if (Break_Into) {
+        ewk->wu.routine_no[0] = 4;
+        ewk->wu.my_family = 1;
+        ewk->wu.position_z = 2;
+        ewk->wu.disp_flag = 1;
+        set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
+        return 1;
+    }
+    goto no_break;
+}

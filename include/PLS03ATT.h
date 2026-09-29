@@ -1,0 +1,30 @@
+#ifndef PLS03ATT_H
+#define PLS03ATT_H
+
+#include "structs.h"
+
+s32 check_jump_pat_status(PLW* wk);
+s32 check_paring_attack(PLW* wk);
+s32 check_lever_up_attack(PLW* wk);
+s32 check_nagenuke_cmd(PLW* wk);
+s32 shot_data_convert(s32 sw);
+s32 check_sp_waza_flag(PLW* wk);
+s32 get_meoshi_lever(s16 lever);
+s32 check_catch_attack(PLW* wk);
+s32 check_meoshi_cancel(PLW* wk);
+s32 check_chouhatsu(PLW* wk);
+s32 check_nm_attack(PLW* wk);
+s32 waza_select();
+s32 check_renda_cancel(PLW* wk);
+s32 cmd_ex_check(s16 px, s16 cx);
+s16 datacmd_conpanecmd(s16 dat);
+s32 decode_wst_data(PLW* wk, u16 cmd, s16 cmd_ex);
+s32 check_dm_shot_attack(PLW* wk);
+s32 get_em_body_range(WORK* wk);
+s32 get_meoshi_shot(u16 shot);
+u16 get_nearing_range(s16 pnum, s16 kos);
+s16 renbanshot_conpaneshot(const s16* dadr, s16 pow);
+void set_attack_routine_number(PLW* wk);
+s16 shot_data_refresh(s16 sw);
+
+#endif

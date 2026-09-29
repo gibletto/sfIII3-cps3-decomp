@@ -1,0 +1,230 @@
+/*
+ * EFF52.C  Effect 52: character name object on the player select screen
+ *
+ * Effect 52 is created by effect_52_init from sel_pl for a player.
+ * Setup_Char_52 picks the graphic: for object 37 a fixed char, otherwise the character under the
+ * player's face-grid cursor (ID_of_Face), with Pattern_Data_52 and the Akuma name check
+ * (chkNameAkuma) choosing the pattern. Setup_Pos_52 positions it.
+ * effect_52_move follows the Order / Order_Timer controls: EFF52_WAIT, EFF52_SLIDE_IN,
+ * EFF52_SLIDE_OUT and EFF52_KILL.
+ */
+
+#include "structs.h"
+#include "work.h"
+#include "romdata.h"
+#include "extern.h"
+#include "SYS_sub.h"
+#include "Eff76_COLOR.h"
+#include "CHARMOVE.h"
+#include "aboutspr.h"
+#include "EFFECT.h"
+#include "Eff52.h"
+
+
+
+void effect_52_move(WORK_Other* ewk) {
+    EFF52_Jmp_Tbl[ewk->wu.routine_no[0]](ewk);
+    ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
+    ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
+    sort_push_request4(&ewk->wu);
+}
+
+
+
+void EFF52_WAIT(WORK_Other* ewk) {
+    if ((ewk->wu.routine_no[0] = Order[ewk->wu.dir_old])) {
+        ewk->wu.routine_no[1] = 0;
+        ewk->wu.routine_no[6] = 0;
+    }
+}
+
+u8 * EFF52_SUDDENLY(WORK_Other* ewk)
+{
+    s16 x;
+
+    switch (ewk->wu.routine_no[6]) {
+    case 0:
+        if (--Order_Timer[ewk->wu.dir_old] != 0) {
+            return (u8*)Order_Timer;
+        }
+        ewk->wu.routine_no[6]++;
+        ewk->wu.disp_flag = 1;
+        ewk->wu.position_z = 72;
+        return (u8*)((s32 (*)())set_char_move_init2)(ewk, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
+    case 1:
+        char_move(&ewk->wu);
+        x = ewk->wu.cg_ix / ewk->wu.cgd_type;
+        if (x < ewk->wu.direction) {
+            return (u8*)0x94;
+        }
+        ewk->wu.routine_no[6]++;
+        /* fall through */
+    case 2:
+        if (Select_Start[ewk->master_id] != 0) {
+            return (u8*)Select_Start;
+        }
+        Order[ewk->wu.dir_old] = 4;
+        ewk->wu.routine_no[0] = 4;
+        ewk->wu.routine_no[1] = 0;
+        Order_Timer[ewk->wu.dir_old] = 1;
+        return (u8*)Order_Timer;
+    default:
+        return (u8*)(s32)ewk->wu.routine_no[6];
+    }
+}
+
+
+
+void EFF52_SLIDE_IN(WORK_Other* ewk) {
+    if (Order[ewk->wu.dir_old] == 4) {
+        ewk->wu.routine_no[0] = 4;
+        ewk->wu.routine_no[1] = 0;
+        return;
+    }
+    switch (ewk->wu.routine_no[6]) {
+    case 0:
+        if (--Order_Timer[ewk->wu.dir_old] == 0) {
+            ewk->wu.routine_no[6]++;
+            ewk->wu.disp_flag = 1;
+            set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
+        }
+        break;
+    default:
+        ewk->wu.xyz[0].cal += ewk->wu.mvxy.a[0].sp;
+        ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;
+        if (0 < ewk->wu.mvxy.a[0].sp) {
+            if (ewk->wu.hit_quake <= ewk->wu.xyz[0].disp.pos) {
+                ewk->wu.routine_no[0] = 0;
+                Order[ewk->wu.dir_old] = 0;
+                ewk->wu.routine_no[6] = 0;
+                ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake;
+            }
+        } else if (ewk->wu.hit_quake >= ewk->wu.xyz[0].disp.pos) {
+            ewk->wu.routine_no[0] = 0;
+            Order[ewk->wu.dir_old] = 0;
+            ewk->wu.routine_no[6] = 0;
+            ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake;
+        }
+        break;
+    }
+}
+
+
+
+void EFF52_SLIDE_OUT(WORK_Other* ewk) {
+    switch (ewk->wu.routine_no[6]) {
+    case 0:
+        if (ewk->wu.disp_flag == 0) {
+            ewk->wu.routine_no[1] = 99;
+        } else if (--Order_Timer[ewk->wu.dir_old]) {
+            break;
+        } else {
+            ewk->wu.routine_no[6]++;
+        }
+        if (Order_Dir[ewk->wu.dir_old] == 4) {
+            ewk->wu.mvxy.a[0].sp = -0xF0000;
+            ewk->wu.mvxy.d[0].sp = 0;
+        } else {
+            ewk->wu.mvxy.a[0].sp = 0xF0000;
+            ewk->wu.mvxy.d[0].sp = 0;
+        }
+        break;
+    case 1:
+        ewk->wu.xyz[0].cal += ewk->wu.mvxy.a[0].sp;
+        ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;
+        if (Ck_Range_Out_S(ewk, 2, 128)) {
+            ewk->wu.routine_no[6]++;
+            ewk->wu.disp_flag = 0;
+        }
+        break;
+    default:
+        all_cgps_put_back(&ewk->wu);
+        push_effect_work(&ewk->wu);
+        break;
+    }
+}
+
+
+
+void EFF52_KILL(WORK_Other* ewk) {
+    switch (ewk->wu.routine_no[1]) {
+    case 0:
+        if (--Order_Timer[ewk->wu.dir_old] == 0) {
+            ewk->wu.routine_no[1]++;
+            ewk->wu.disp_flag = 0;
+        }
+        break;
+    default:
+        all_cgps_put_back(ewk);
+        push_effect_work((WORK*)ewk);
+        break;
+    }
+}
+
+
+
+s32 effect_52_init(s16 PL_id, s16 dir_old) {
+    WORK_Other* ewk;
+    s16 ix;
+    if ((ix = pull_effect_work(4)) == -1) {
+        return -1;
+    }
+    ewk = (WORK_Other*)frw[ix];
+    ewk->wu.be_flag = 1;
+    ewk->wu.id = 52;
+    ewk->wu.work_id = 16;
+    ewk->wu.cgromtype = 1;
+    ewk->wu.sync_suzi = 0;
+    ewk->wu.my_col_mode = 0x4200;
+    ewk->wu.my_col_code = 0x2040;
+    ewk->wu.my_family = 3;
+    ewk->wu.dir_step = 1;
+    *ewk->wu.char_table = sel_pl_char_table;
+    ewk->master_id = PL_id;
+    ewk->wu.dir_old = dir_old;
+    ewk->wu.dir_timer = Order_Timer[dir_old];
+    ewk->wu.rl_flag = PL_id;
+    ewk->wu.position_z = 74;
+    Setup_Char_52(ewk);
+    Setup_Pos_52(ewk);
+    return 0;
+}
+
+
+
+void Setup_Char_52(WORK_Other* ewk) {
+    s16 ix;
+    if (ewk->wu.dir_old == 37) {
+        ewk->wu.char_index = 16;
+    } else {
+        ewk->wu.char_index = 18;
+        ewk->wu.dir_step = ID_of_Face[Cursor_Y[ewk->master_id]][Cursor_X[ewk->master_id]];
+        ix = chkNameAkuma(ewk->wu.dir_step);
+        ewk->wu.dm_vital = Pattern_Data_52[ewk->wu.dir_step + ix][0];
+        ewk->wu.direction = Pattern_Data_52[ewk->wu.dir_step + ix][1];
+    }
+}
+
+
+
+void Setup_Pos_52(WORK_Other* ewk) {
+    s16 ix;
+    if (ewk->wu.dir_old == 37) {
+        ewk->wu.xyz[1].disp.pos = 208;
+        if (ewk->master_id) {
+            ewk->wu.xyz[0].disp.pos = 720;
+            ewk->wu.hit_quake = 502;
+            ewk->wu.mvxy.a[0].sp = -0x11FFFD;
+            ewk->wu.mvxy.d[0].sp = -0x10000;
+        } else {
+            ewk->wu.xyz[0].disp.pos = 304;
+            ewk->wu.hit_quake = 520;
+            ewk->wu.mvxy.a[0].sp = 0x11FFFD;
+            ewk->wu.mvxy.d[0].sp = 0x10000;
+        }
+    } else {
+        ix = chkNameAkuma(ewk->wu.dir_step, 6);
+        ewk->wu.xyz[0].disp.pos = Pos_Data_52[ewk->master_id][ewk->wu.dir_step + ix][0] + 512;
+        ewk->wu.xyz[1].disp.pos = Pos_Data_52[ewk->master_id][ewk->wu.dir_step + ix][1] + 0;
+    }
+}

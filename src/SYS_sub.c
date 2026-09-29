@@ -1,0 +1,802 @@
+/*
+ * SYS_SUB.C  System subroutines for scenes and screens
+ *
+ * General helpers used by the scene and menu code. Convert_BCD packs numbers into BCD.
+ * System_all_clear_Ex empties the effect lists. Request_Fade/Check_Fade_Complete(_SP) run
+ * fades; Switch_Screen_Init(_Panel), Switch_Screen and Switch_Screen_Revival run the screen
+ * wipes built from the patterns in SE. Text_Fill_Upper/Lower fill the fix-layer tilemap.
+ * Ranking entry insertion (insert_ranking_*, Check_Grade_Score, Check_CPU_Grade_Score) and
+ * Setup_Play_Type are here, with scene-cut helpers (Button_Cut_Hold, Button_Cut_EX,
+ * Cut_Cut_Cut and friends) that let a player's button shorten a scene.
+ * Disp_Digit8x16/16x24 draw score digits, Disp_Win_Type the round win marks, and
+ * Disp_Capcom_Rights the copyright lines chosen by Country.
+ */
+
+#include "structs.h"
+#include "work.h"
+#include "romdata.h"
+#include "extern.h"
+#include "aboutspr.h"
+#include "SE.h"
+#include "end_sub.h"
+#include "sc_trans.h"
+#include "EFFECT.h"
+#include "effd3.h"
+#include "sys_test.h"
+#include "fifo.h"
+#include "sc_sub.h"
+#include "sys_config.h"
+#include "n_input.h"
+#include "textsound.h"
+#include "SYS_sub.h"
+#include "cps3.h"
+
+
+
+/* provisional name */
+s32 Convert_BCD(v, digits)
+    s16 v;
+    s16 digits;
+{
+    s16 bcd;
+    switch (digits) {
+    case 2:
+        bcd = (v % 100 / 10) << 4;
+        break;
+    case 3:
+        bcd = ((v % 100 / 10) << 4) + ((v / 100) << 8);
+        break;
+    default:
+        bcd = ((v % 100 / 10) << 4) + ((v / 1000) << 12) + ((v / 100) << 8);
+        break;
+    }
+    return (s16)(bcd + v % 10);
+}
+
+/* provisional name */
+void Scr_all_clear_Wait(void)
+{
+    tilemap_fill_all(0, 0x20);
+    System_all_clear();
+    task_sleep(1);
+}
+
+/* provisional name */
+void System_all_clear_Wait(void)
+{
+    System_all_clear();
+    task_sleep(1);
+}
+
+/* provisional name */
+void System_all_clear_Ex_Wait(void)
+{
+    Text_Fill_Upper(0, 0x20);
+    System_all_clear_Ex();
+    task_sleep(1);
+}
+
+/* provisional name */
+void System_all_clear(void)
+{
+    init_render_lists();
+    init_char_gfx_tables();
+    clear_scroll_layer_state_and_mask();
+    Family_Init();
+    effect_work_quick_clear();
+    load_char_gfx(0x9000, 1);
+    setup_kage_cells();
+    setup_hit_mark_cells();
+    setup_GILL_exsa_obj();
+}
+
+
+
+/* provisional name */
+void System_all_clear_Ex(void) {
+    s16 i;
+    init_render_lists();
+    init_char_gfx_tables();
+    clear_scroll_layer_state_and_mask();
+    Family_Init();
+    for (i = 2; i <= 7; i++) {
+        effect_work_list_init(i, -1);
+    }
+    load_char_gfx(0x9000, 1);
+    setup_kage_cells();
+    setup_hit_mark_cells();
+    setup_GILL_exsa_obj();
+}
+
+/* provisional name */
+void Fade_Cont(void)
+{
+    fade_cont_main();
+}
+
+
+
+s32 Check_Fade_Complete_SP(void) {
+    fade_cont_main();
+    return Fade_Flag ^ 1;
+}
+
+
+
+s32 Check_Fade_Complete(void) {
+    if (Fade_Flag) {
+        fade_cont_main();
+        return 0;
+    }
+    if (Fade_Gap_Timer == 3) {
+        Scrn_Move_Set(4, 0, 0x100);
+    }
+    if (--Fade_Gap_Timer != 0) {
+        return 0;
+    }
+    Forbid_Break = 1;
+    return 1;
+}
+
+
+
+/* Start fade fade_code in mode fade_mode.  Returns 0 if a fade is already running. */
+s32 Request_Fade(u16 fade_code, u8 fade_mode) {
+    if (Fade_Flag == 0) {
+        Fade_Flag = 1;
+        Fade_Mode = fade_mode;
+        Fade_R_No0 = Fade_R_No1 = 0;
+        Fade_Number = fade_code;
+        Forbid_Break = 1;
+        fade_cont_init();
+        Fade_Gap_Timer = 3;
+        return 1;
+    }
+    return 0;
+}
+
+
+
+/* provisional name */
+void Switch_Screen_Init_Panel(s16 kind) {
+    Forbid_Break = 1;
+    Exec_Wipe = 1;
+    Stop_SG = 1;
+    Escape_SS = 1;
+    Text_Page_Y = 32;
+    Wipe_Panel_Count = 5;
+    load_any_color(0x9E);
+    effect_D2_init(0, 0, kind, 1);
+    effect_D2_init(0, 1, kind, 1);
+    effect_D2_init(0, 2, kind, 1);
+    effect_D2_init(0, 3, kind, 1);
+}
+
+
+
+/* Start screen wipe kind, drawn in wipe_mode (see Switch_Screen). */
+void Switch_Screen_Init(s16 kind, u8 wipe_mode) {
+    Forbid_Break = 1;
+    Exec_Wipe = 1;
+    Wipe_Kind = kind;
+    Wipe_Limit = wipe_set_pattern_tbl[kind].limit;
+    Wipe_Mode = wipe_mode;
+    Wipe_Count = 0;
+    Stop_SG = 1;
+    Escape_SS = 1;
+}
+
+
+
+s32 Switch_Screen(void) {
+    switch (((s8)Wipe_Mode)) {
+    case 0:
+        wipe_pattern_set(((s8)Wipe_Kind), Wipe_Count, 0);
+        if (++Wipe_Count >= ((s8)Wipe_Limit)) {
+            Exec_Wipe = 0;
+            Stop_Combo = 0;
+            return 1;
+        }
+        return 0;
+    case 1:
+        wipe_pattern_or_cols(((s8)Wipe_Kind), Wipe_Count);
+        if (++Wipe_Count >= ((s8)Wipe_Limit)) {
+            Exec_Wipe = 0;
+            Stop_Combo = 0;
+            return 1;
+        }
+        return 0;
+    case 2:
+        wipe_pattern_and_low(((s8)Wipe_Kind), Wipe_Count);
+        if (++Wipe_Count >= ((s8)Wipe_Limit)) {
+            Exec_Wipe = 0;
+            Stop_Combo = 0;
+            return 1;
+        }
+        return 0;
+    case 3:
+    case 4:
+        wipe_pattern_or_cols(((s8)Wipe_Kind), Wipe_Count);
+        if (++Wipe_Count >= ((s8)Wipe_Limit)) {
+            Exec_Wipe = 0;
+            Stop_Combo = 0;
+            return 1;
+        }
+        return 0;
+    case 5:
+        wipe_mask_and_cols(((s8)Wipe_Kind), Wipe_Count);
+        if (++Wipe_Count >= ((s8)Wipe_Limit)) {
+            return 1;
+        }
+        return 0;
+    }
+    return 0;
+}
+
+
+
+s32 Switch_Screen_Revival(void) {
+    switch (((s8)Wipe_Mode)) {
+    case 0:
+        wipe_pattern_set(((s8)Wipe_Kind), Wipe_Count, 1);
+        if (++Wipe_Count >= ((s8)Wipe_Limit)) {
+            Exec_Wipe = 0;
+            Escape_SS = 0;
+            return 1;
+        }
+        return 0;
+    case 1:
+        wipe_pattern_restore_cols(((s8)Wipe_Kind), Wipe_Count);
+        if (++Wipe_Count >= ((s8)Wipe_Limit)) {
+            Exec_Wipe = 0;
+            Escape_SS = 0;
+            return 1;
+        }
+        return 0;
+    case 3:
+    case 4:
+        wipe_pattern_restore_cols(((s8)Wipe_Kind), Wipe_Count);
+        if (++Wipe_Count >= ((s8)Wipe_Limit)) {
+            Exec_Wipe = 0;
+            Escape_SS = 0;
+            return 1;
+        }
+        return 0;
+    case 5:
+        wipe_mask_set_cols(((s8)Wipe_Kind), Wipe_Count);
+        if (++Wipe_Count >= ((s8)Wipe_Limit)) {
+            Exec_Wipe = 0;
+            return 1;
+        }
+        return 0;
+    }
+    return 0;
+}
+
+
+
+/* provisional name */
+void Text_Fill_Upper(s16 attr, u16 code) {
+    u16* p = (u16*)SS_RAM;
+    u16 att = attr | ((code & 0x100) >> 8);
+    do {
+        p[0] = code;
+        p[1] = att;
+        p += 2;
+    } while (p < (u16*)(SS_RAM + 0x2000));
+}
+
+
+
+/* Fills the lower text layer with one cell; returns the attribute word written. */
+/* provisional name */
+s32 Text_Fill_Lower(s16 attr, u16 code) {
+    u16* p = (u16*)(SS_RAM + 0x2000);
+    s32 att = attr | ((code & 0x100) >> 8);
+    do {
+        p[0] = code;
+        p[1] = att;
+        p += 2;
+    } while (p < (u16*)(SS_RAM + 0x3FFF));
+    return att;
+}
+
+
+
+/* provisional name */
+void scrn_pos_clear(void) {
+    SCRLPOS* p;
+    for (p = scrn_pos; p < &scrn_pos[4]; p++) {
+        p->set_x.cal = 0;
+        p->cur_x.cal = 0;
+        p->set_y.cal = 0;
+        p->cur_y.cal = 0;
+    }
+}
+
+
+
+void Clear_Flash_No(void) {
+    F_No3[0] = 0;
+    F_No2[0] = 0;
+    F_No1[0] = 0;
+    F_No0[0] = 0;
+    (*(u16*)&(F_No3[1])) = 0;
+    F_No2[1] = 0;
+    F_No1[1] = 0;
+    F_No0[1] = 0;
+    Personal_Disp_Flag = 0;
+}
+
+
+
+void Setup_Play_Type(void) {
+    if (Operator_Status[0] & 0x7F && Operator_Status[1] & 0x7F) {
+        Play_Type = 1;
+    } else {
+        Play_Type = 0;
+    }
+}
+
+/* Build this player's ranking entry and try it against all four ranking tables:
+   score, wins, CPU grade and grade.  Returns 1 if the player made any of them. */
+/* provisional name */
+u32 ranking_insert_all_four(s16 pl)
+{
+  char ix;
+  u8 *p;
+  u8 *cpu_grade;
+  u32 made;
+  char v;
+  char *rank;
+  u32 side;
+  u8 *name;
+  u32 id;
+  p = (u8 *)Present_Data;
+  v = Version_Type;
+  if (v == 3) {
+    made = 0;
+  }
+  else {
+    ix = (char)pl;
+    if ((v != 7) && (v != 5)) {
+      name = Present_Data[ix].name;
+      *name = 0xc;
+      name[1] = 10;
+      name[2] = 0x19;
+    }
+    *(u16 *)(p + (char)(ix * 20) + 4) = (u16)Stock_My_char[pl];
+    p[(char)(ix * 20) + 0x10] = Stock_Player_Color[pl];
+    *(u32 *)(p + (char)(ix * 20) + 8) =
+         (u32)Continue_Coin[pl] + Score[ix][0];
+    cpu_grade = (u8 *)&judge_final[0][0].vs_cpu_grade[12] + 1;
+    *(u16 *)(p + (char)(ix * 20) + 0xe) =
+         Stock_Win_Record[pl];
+    p[(char)(ix * 20) + 0xc] = cpu_grade[(s16)(pl * ((s16)(344)))];
+    p[(char)(ix * 20) + 0xd] = Best_Grade[pl];
+    if (Break_Com[ix][0] == 0) {
+      p[(char)(ix * 20) + 0x11] = 0;
+    }
+    else {
+      p[(char)(ix * 20) + 0x11] = 1;
+    }
+    p = (u8 *)Rank_In;
+    id = (u32)pl;
+    rank = Rank_In[pl];
+    v = insert_ranking_score(id);
+    *rank = v;
+    if ((-1 < *rank) && (-1 < (char)p[(id ^ 1) * 4])) {
+      rank_in_push_other(0,id);
+    }
+    v = insert_ranking_wins(id);
+    p[pl * 4 + 1] = v;
+    if ((-1 < (char)p[pl * 4 + 1]) && (-1 < (char)p[(id ^ 1) * 4 + 1])) {
+      rank_in_push_other(1,id);
+    }
+    v = insert_ranking_cpu_grade(id);
+    p[pl * 4 + 2] = v;
+    if (p[pl * 4 + 2] == 0) {
+      side = id ^ 1;
+    }
+    else {
+      side = (u32)pl;
+    }
+    p[side * 4 + 2] = 0xff;
+    v = insert_ranking_grade(id);
+    p[pl * 4 + 3] = v;
+    if (p[pl * 4 + 3] == 0) {
+      p[(id ^ 1) * 4 + 3] = 0xff;
+    }
+    else {
+      p[pl * 4 + 3] = 0xff;
+    }
+    rank = p + pl * 4;
+    if ((((*rank < 0) && (rank[1] < 0)) && (rank[2] < 0)) && (rank[3] < 0)) {
+      made = 0;
+    }
+    else {
+      made = 1;
+    }
+  }
+  return made;
+}
+
+
+
+/* provisional name */
+void rank_in_push_other(s16 dir_step, s16 PL_id) {
+    if (Rank_In[PL_id][dir_step] > Rank_In[PL_id ^ 1][dir_step]) {
+        return;
+    }
+    if (++Rank_In[PL_id ^ 1][dir_step] > 4) {
+        Rank_In[PL_id ^ 1][dir_step] = -1;
+    }
+}
+
+
+
+/* provisional name */
+s32 insert_ranking_score(s16 PL_id) {
+    s16 i;
+    s16 j;
+    for (i = 0; i < 5; i++) {
+        if (Ranking_Data[i].score < Present_Data[PL_id].score) {
+            for (j = 3; j >= i; j--) {
+                Ranking_Data[j + 1] = Ranking_Data[j];
+            }
+            Ranking_Data[i] = Present_Data[PL_id];
+            return i;
+        }
+    }
+    return -1;
+}
+
+
+
+/* provisional name */
+s32 insert_ranking_wins(s16 PL_id) {
+    s16 i;
+    s16 j;
+    for (i = 0; i < 5; i++) {
+        if (Ranking_Data[i + 5].wins < Present_Data[PL_id].wins) {
+            for (j = 3; j >= i; j--) {
+                Ranking_Data[j + 6] = Ranking_Data[j + 5];
+            }
+            Ranking_Data[i + 5] = Present_Data[PL_id];
+            return i;
+        }
+    }
+    return -1;
+}
+
+
+
+/* provisional name */
+s32 insert_ranking_cpu_grade(s16 PL_id) {
+    s16 i;
+    s16 j;
+    for (i = 0; i < 5; i++) {
+        if (!((s32(*)())Check_CPU_Grade_Score)(PL_id, i)) {
+            continue;
+        }
+        for (j = 3; j >= i; j--) {
+            Ranking_Data[j + 11] = Ranking_Data[j + 10];
+        }
+        Ranking_Data[i + 10] = Present_Data[PL_id];
+        return i;
+    }
+    return -1;
+}
+
+
+
+/* provisional name */
+s32 insert_ranking_grade(s16 PL_id) {
+    s16 i;
+    s16 j;
+    for (i = 0; i < 5; i++) {
+        if (!((s32(*)())Check_Grade_Score)(PL_id, i)) {
+            continue;
+        }
+        for (j = 3; j >= i; j--) {
+            Ranking_Data[j + 16] = Ranking_Data[j + 15];
+        }
+        Ranking_Data[i + 15] = Present_Data[PL_id];
+        return i;
+    }
+    return -1;
+}
+
+
+
+s32 Check_CPU_Grade_Score(s16 PL_id, s16 i) {
+    if (Ranking_Data[i + 10].cpu_grade > Present_Data[PL_id].cpu_grade) {
+        return 0;
+    }
+    if (Ranking_Data[i + 10].cpu_grade < Present_Data[PL_id].cpu_grade) {
+        return 1;
+    }
+    if (Ranking_Data[i + 10].score >= Present_Data[PL_id].score) {
+        return 0;
+    }
+    return 1;
+}
+
+
+
+s32 Check_Grade_Score(s16 PL_id, s16 i) {
+    if (Ranking_Data[i + 15].grade > Present_Data[PL_id].grade) {
+        return 0;
+    }
+    if (Ranking_Data[i + 15].grade < Present_Data[PL_id].grade) {
+        return 1;
+    }
+    if (Ranking_Data[i + 15].wins >= Present_Data[PL_id].wins) {
+        return 0;
+    }
+    return 1;
+}
+
+/* provisional name */
+u8 *set_result_target_loser(void)
+{
+    if (Break_Com[Player_id][0] == 0) {
+        Final_Result_id = LOSER;
+        WGJ_Target = LOSER;
+        WGJ_Win = Win_Record[LOSER];
+        WGJ_Score = Continue_Coin[LOSER] + Score[LOSER][0];
+    }
+}
+
+
+
+/* provisional name */
+s32 Button_Cut_Hold(s16* timer, s16 first, s16 repeat) {
+    s16 side;
+    s16 trig;
+    if (Reserve_Cut) {
+        if (repeat >= *timer) {
+            Reserve_Cut = 0;
+            return 1;
+        }
+        return 0;
+    }
+    side = cut_button_side();
+    if (side) {
+        trig = ~p2sw_1 & p2sw_0;
+    } else {
+        trig = ~p1sw_1 & p1sw_0;
+    }
+    if (trig & 0x3F0) {
+        if (repeat >= *timer) {
+            Reserve_Cut = 0;
+            return 1;
+        }
+        Reserve_Cut = 1;
+        return 0;
+    }
+    if (first < *timer) {
+        return 0;
+    }
+    if (side) {
+        if (p2sw_0 & 0x3F0) {
+            Reserve_Cut = 0;
+            return 1;
+        }
+        return 0;
+    }
+    if (p1sw_0 & 0x3F0) {
+        Reserve_Cut = 0;
+        return 1;
+    }
+    return 0;
+}
+
+
+
+s32 Button_Cut_EX(s16* Timer, s16 Limit_Time) {
+    s16 PL_id = cut_button_side();
+    u16 xx;
+    if (PL_id) {
+        xx = p2sw_0;
+    } else {
+        xx = p1sw_0;
+    }
+    --*Timer;
+    if (*Timer == 0) {
+        return 1;
+    }
+    if ((xx & 0x3F0) && Limit_Time >= *Timer) {
+        return 1;
+    }
+    return 0;
+}
+
+
+
+/* Which side's buttons may cut a scene short: the winner in a two-player match,
+   otherwise the side that is being played (1P unless only 2P is in). */
+/* provisional name */
+int cut_button_side(void)
+{
+    if (Play_Type == 1) {
+        return Winner_id;
+    }
+    if (Round_Operator[0]) {
+        return 0;
+    }
+    return 1;
+}
+
+
+
+/* provisional name */
+void Disp_Digit8x16(u32 value, s16 x, s16 y) {
+    s16 i;
+    s16 First_Digit;
+    s32 xx;
+    s16 Digit[8];
+    s32 t;
+    if (value == 0) {
+        score8x16_put(x, y, 16, 0);
+    }
+    First_Digit = -1;
+    for (i = 7, xx = 10000000; i > 0; i--, xx /= 10) {
+        Digit[i] = value / xx;
+        t = xx;
+        t *= Digit[i];
+        value -= t;
+        if ((First_Digit < 0) && Digit[i]) {
+            First_Digit = i;
+        }
+    }
+    Digit[0] = value;
+    x -= First_Digit;
+    for (i = First_Digit; i >= 0; i--) {
+        score8x16_put(x, y, 16, Digit[i]);
+        x++;
+    }
+}
+
+
+
+void Disp_Digit16x24(u32 value, s32 x_arg, s16 y, s32 attr_arg) {
+    s32 x = (s16)x_arg;
+    s32 attr = (s16)attr_arg;
+    s16 i;
+    s16 First_Digit;
+    s32 xx;
+    s16 Digit[8];
+    s32 t;
+    if (value == 0) {
+        score16x24_put(x, y, 30, 0);
+    }
+    First_Digit = -1;
+    for (i = 7, xx = 10000000; i > 0; i--, xx /= 10) {
+        Digit[i] = value / xx;
+        t = xx;
+        t *= Digit[i];
+        value -= t;
+        if ((First_Digit < 0) && Digit[i]) {
+            First_Digit = i;
+        }
+    }
+    Digit[0] = value;
+    x -= First_Digit * 2;
+    for (i = First_Digit; i >= 0; i--) {
+        score16x24_put(x, y, attr, Digit[i]);
+        x += 2;
+    }
+}
+
+
+
+/* provisional name */
+void Disp_Win_Type(void) {
+    s16 i;
+    for (i = 0; i <= Battle_Round[Play_Type]; i++) {
+        win_mark_put(i, win_type[0][i], 14);
+        win_mark_put(i + 4, win_type[1][i], 14);
+    }
+}
+
+/* provisional name */
+void commit_name_entry_row_both_players(pos_y)
+    s16 pos_y;
+{
+    if (E_Number[0][0] == 2 && name_wk[0].dmm) {
+        name_entry_commit_row(0, pos_y);
+    }
+    if (E_Number[1][0] == 2 && name_wk[1].dmm) {
+        name_entry_commit_row(1, pos_y);
+    }
+}
+
+
+s32 Ck_Range_Out_S(WORK_Other* ewk, s16 BG_No, s16 R) {
+    s16 x;
+    x = ewk->wu.xyz[0].disp.pos - bg_w.bgw[BG_No].wxy[0].disp.pos;
+    if (x < 0) {
+        x = -x;
+    }
+    if (x - R > 192) {
+        return 1;
+    }
+    return 0;
+}
+
+
+
+/* provisional name */
+void Disp_Capcom_Rights(void) {
+    switch (Country) {
+    case 1:
+    case 2:
+    case 3:
+    case 7:
+    case 8:
+        tilemap_print_string_attr(DE_X[0] + 3, Text_Page_Y + 26, 18, Capcom_Rights_msg);
+        break;
+    case 4:
+    case 5:
+    case 6:
+        tilemap_print_string_attr((*&DE_X)[0] + 1, Text_Page_Y + 25, 18, Capcom_Rights_msg2);
+        tilemap_print_string_attr(DE_X[0] + 1, Text_Page_Y + 26, 18, Capcom_USA_Rights_msg);
+        break;
+    }
+}
+
+
+
+s32 Cut_Cut_Cut(void) {
+    if (plw[0].wu.operator && (p1sw_0 & 0x3F0)) {
+        return 1;
+    }
+    if (plw[1].wu.operator && (p2sw_0 & 0x3F0)) {
+        return 1;
+    }
+    return 0;
+}
+
+
+
+s32 Cut_Cut_Sub(s16 cut) {
+    if (plw[0].wu.operator != 0) {
+        if (p1sw_0 & 0x3F0) {
+            return cut;
+        }
+    }
+    if (plw[1].wu.operator != 0) {
+        if (p2sw_0 & 0x3F0) {
+            return cut;
+        }
+    }
+    return 1;
+}
+
+
+
+s8 Cut_Cut_Loser(void) {
+    if (Round_Operator[0]) {
+        if (p1sw_0 & 0x3F0) {
+            return 1;
+        }
+    }
+    if (Round_Operator[1]) {
+        if (p2sw_0 & 0x3F0) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+
+
+/* Counts the scene timer down; returns what is left, 0 when a button cut the scene. */
+s32 Cut_Cut_C_Timer(void) {
+    C_Timer--;
+    if (!Cut_Cut_Cut()) {
+        return C_Timer;
+    }
+    return C_Timer = 0;
+}

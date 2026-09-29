@@ -1,0 +1,87 @@
+/*
+ * HITPLPL.C  Player attack against player
+ *
+ * player_at_vs_player_dm is called from HITCHECK for a hit between the two players. It compares
+ * the attack attributes of both sides, then applies guard or damage and stun
+ * (set_damage_and_piyo), the damage facing (setup_dm_rl) and the hit mark position.
+ */
+
+#include "structs.h"
+#include "work.h"
+#include "romdata.h"
+#include "extern.h"
+#include "HITCHECK.h"
+#include "PLS02.h"
+#include "PLSGAUGE.h"
+#include "HITPLPL.h"
+
+
+
+void player_at_vs_player_dm(s16 ix2, s16 ix) {
+    PLW* as = (PLW*)q_hit_push[ix2];
+    PLW* ds = (PLW*)q_hit_push[ix];
+    s8 gddir;
+    while (1) {
+        if (ix != hs[ix2].my_hit) {
+            continue;
+        }
+        if (!(hs[ix2].flag.results & 1)) {
+            break;
+        }
+        if (ix != hs[ix2].dm_me) {
+            break;
+        }
+        if (as->wu.att.dipsw & 0x40) {
+            if (!(ds->wu.att.dipsw & 0x40)) {
+                goto two;
+            }
+            break;
+        }
+        if (as->wu.att.dipsw & 0x20) {
+            if (!(ds->wu.att.dipsw & 0x40)) {
+                if (ds->wu.att.dipsw & 0x20) {
+                    break;
+                }
+                if (ds->wu.kind_of_waza & 4) {
+                    break;
+                }
+                goto two;
+            }
+        } else if (as->wu.kind_of_waza & 4) {
+            if (!(ds->wu.att.dipsw & 0x40)) {
+                if (ds->wu.att.dipsw & 0x20) {
+                    break;
+                }
+                if (ds->wu.kind_of_waza & 4) {
+                    break;
+                }
+                goto two;
+            }
+        } else if (as->wu.kind_of_waza & 2) {
+            if (!(ds->wu.att.dipsw & 0x60) && !(ds->wu.kind_of_waza & 4)) {
+                if (ds->wu.kind_of_waza & 2) {
+                    break;
+                }
+                goto two;
+            }
+        } else if (!(as->wu.kind_of_waza & 6) && !(ds->wu.att.dipsw & 0x60) && !(ds->wu.kind_of_waza & 4)) {
+            if (!(ds->wu.kind_of_waza & 2)) {
+                break;
+            }
+        }
+        hs[ix2].flag.results &= 0x1101;
+        hs[ix].flag.results &= 0x1110;
+        return;
+    two:
+        hs[ix2].flag.results &= 0x1110;
+        hs[ix].flag.results &= 0x1101;
+        break;
+    }
+    ds->dm_point = hs[ix].dm_body;
+    gddir = get_guard_direction(&as->wu, &ds->wu);
+    setup_saishin_lvdir(ds, gddir);
+    setup_dm_rl(&as->wu, &ds->wu);
+    cal_hit_mark_pos(&as->wu, &ds->wu, ix2, ix);
+    set_damage_and_piyo(as, ds);
+    plef_at_vs_player_damage_union(as, ds, gddir);
+}

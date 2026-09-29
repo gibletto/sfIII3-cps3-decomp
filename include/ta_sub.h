@@ -1,0 +1,46 @@
+#ifndef TA_SUB_H
+#define TA_SUB_H
+
+#include "structs.h"
+
+void disp_pos_trans_entry_rxy(WORK_Other* ewk);
+void disp_pos_trans_entry_rbg(WORK_Other* ewk, s16 bg_no);
+void disp_pos_trans_entry_seraph(WORK_Other* ewk);
+void pl_eff_trans_entry_r(WORK_Other* ewk);
+s32 complete_victory_check(void);
+u32 range_abs_check(s16 a, s16 b, s16 range);
+s32 either_pl_hissatsu_check(void);
+s32 pl_shot_on_check();
+void add_x_sub(WORK_Other* ewk);
+void add_x_sub2(WORK_Other* ewk);
+void add_y_sub(WORK_Other* ewk);
+void add_y_sub2(WORK_Other* ewk);
+s32 compel_dead_check(WORK_Other* ewk);
+void disp_pos_trans_entry(WORK_Other* ewk);
+void disp_pos_trans_entry5(WORK_Other* ewk);
+void disp_pos_trans_entry_r(WORK_Other* ewk);
+void disp_pos_trans_entry_rs(WORK_Other* ewk);
+void disp_pos_trans_entry_s(WORK_Other* ewk);
+s32 eff_hit_check(WORK_Other* ewk, s16 type);
+s16 eff_hit_check2();
+s32 eff_hit_check_sub(WORK_Other* ewk, PLW* pl);
+s32 eff_hit_check_sub2();
+void eff_hit_flag_clear(void);
+void disp_pos_trans_entry_r4(WORK_Other* ewk);
+s32 hit_check_subroutine_yu(WORK* tpl, WORK* tef, s16* hd1, s16* hd2);
+s32 range_x_check(WORK* wk);
+s32 range_x_check3(WORK* wk, s16 w);
+s32 range_xy_check(WORK_Other* ewk);
+s32 range_x_out_y_in_check(WORK_Other* ewk, s16 bg_no);
+s32 range_y_check(WORK* wk);
+s32 obr_disp_off_check(void);
+s32 obr_disp_off(void);
+void pl_eff_trans_entry(WORK_Other* ewk);
+s32 sw_to_lvbt(s32 value);
+void sync_fam_set3(s16 my_fam);
+void sync_fam_set(s16 num_of_bg);
+void sync_fam_set2(s16 num_of_bg);
+void waza_slot_clear_all_p(PLW* pl);
+void win_lose_work_clear(void);
+
+#endif

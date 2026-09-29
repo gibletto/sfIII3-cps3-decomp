@@ -1,0 +1,137 @@
+/*
+ * EFF73.C  Scattering creatures (effect 73)
+ *
+ * Four small creatures that fly up and away from a parent object, drawn from
+ * hkg_char_table. effect_73_init spawns them at the parent's position with speeds from
+ * eff73_sp_tbl; one of the four, chosen at random through eff73_survive_tbl, carries on
+ * into a second rising arc while the others vanish after a random time (eff73_vanish_tbl).
+ * effect_73_move applies speed and gravity, pauses with the game, and frees each one.
+ * Nothing is created while EXE_obroll is set.
+ */
+
+#include "structs.h"
+#include "work.h"
+#include "romdata.h"
+#include "extern.h"
+#include "ta_sub.h"
+#include "CHARMOVE.h"
+#include "EFFECT.h"
+#include "PLS02.h"
+#include "aboutspr.h"
+#include "CHARSET.h"
+#include "bg_sub.h"
+#include "eff73.h"
+
+
+
+void effect_73_move(WORK_Other* ewk) {
+    if (obr_disp_off_check()) {
+        return;
+    }
+    switch (ewk->wu.routine_no[0]) {
+    case 0:
+        ewk->wu.routine_no[0]++;
+        ewk->wu.disp_flag = 1;
+        set_char_move_init(&ewk->wu, 0, 2);
+        break;
+    case 1:
+        if (!EXE_flag && !Game_pause) {
+            char_move(&ewk->wu);
+            add_x_sub(ewk);
+            add_y_sub(ewk);
+            ewk->wu.old_rno[0]--;
+            if (ewk->wu.old_rno[0] < 0) {
+                if (ewk->wu.old_rno[1]) {
+                    ewk->wu.routine_no[0]++;
+                } else {
+                    ewk->wu.routine_no[0] = 99;
+                    ewk->wu.disp_flag = 0;
+                }
+            }
+        }
+        disp_pos_trans_entry_r(ewk);
+        break;
+    case 2:
+        if (!EXE_flag && !Game_pause) {
+            char_move(&ewk->wu);
+            add_x_sub(ewk);
+            add_y_sub(ewk);
+            if (ewk->wu.xyz[1].disp.pos < 64) {
+                ewk->wu.routine_no[0]++;
+                ewk->wu.mvxy.a[0].sp = eff73_sp_tbl[ewk->wu.type][0];
+                ewk->wu.mvxy.d[0].sp = 0;
+                ewk->wu.mvxy.a[1].sp = 0x30000;
+                ewk->wu.mvxy.d[1].sp = -0x4000;
+            }
+        }
+        disp_pos_trans_entry_r(ewk);
+        break;
+    case 3:
+        if (!EXE_flag && !Game_pause) {
+            char_move(&ewk->wu);
+            add_x_sub(ewk);
+            add_y_sub(ewk);
+            if (ewk->wu.xyz[1].disp.pos < 56) {
+                ewk->wu.routine_no[0] = 99;
+                ewk->wu.disp_flag = 0;
+            }
+        }
+        disp_pos_trans_entry_r(ewk);
+        break;
+    default:
+        all_cgps_put_back(&ewk->wu);
+        push_effect_work(&ewk->wu);
+        break;
+    }
+}
+
+
+
+s32 effect_73_init(WORK_Other* oya) {
+    WORK_Other* ewk;
+    s16 ix;
+    s16 i;
+    s16 work;
+    s16 work2;
+    if (EXE_obroll) {
+        return 0;
+    }
+    work = random_16_com();
+    work &= 7;
+    for (i = 0; i < 4; i++) {
+        if ((ix = pull_effect_work(4)) == -1) {
+            return -1;
+        }
+        ewk = (WORK_Other*)frw[ix];
+        ewk->wu.be_flag = 1;
+        ewk->wu.id = 73;
+        ewk->wu.work_id = 16;
+        ewk->my_master = (u32*)oya;
+        ewk->wu.cgromtype = 1;
+        ewk->wu.rl_flag = 0;
+        ewk->wu.type = i;
+        ewk->wu.my_col_mode = 0x4200;
+        ewk->wu.dead_f = 1;
+        ewk->wu.my_family = 2;
+        ewk->wu.my_col_code = 0x2080;
+        ewk->wu.sync_suzi = 0;
+        *ewk->wu.char_table = hkg_char_table;
+        ewk->wu.xyz[0].disp.pos = oya->wu.xyz[0].disp.pos + 0;
+        ewk->wu.xyz[1].disp.pos = oya->wu.xyz[1].disp.pos + 64;
+        ewk->wu.position_z = ewk->wu.my_priority = 80;
+        ewk->wu.mvxy.a[0].sp = eff73_sp_tbl[i][0];
+        ewk->wu.mvxy.a[1].sp = eff73_sp_tbl[i][1];
+        ewk->wu.mvxy.a[1].sp = eff73_sp_tbl[i][2];
+        ewk->wu.mvxy.d[1].sp = -0x4000;
+        if (eff73_survive_tbl[work] == i) {
+            ewk->wu.old_rno[1] = 1;
+        } else {
+            ewk->wu.old_rno[1] = 0;
+        }
+        work2 = random_16_com();
+        work2 &= 7;
+        ewk->wu.old_rno[0] = eff73_vanish_tbl[work2];
+        suzi_offset_set(ewk);
+    }
+    return 0;
+}
