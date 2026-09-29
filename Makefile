@@ -26,11 +26,13 @@ win = '$(subst /,\,$1)'
 
 all: build/prog.bin
 
-# the compiler writes its internal tables to stdout: keep them in a log, show only errors
+# the compiler writes its internal tables to stdout: keep them in a log, show only errors. Each compile gets
+# its own temporary directory: two compilers sharing one fail with an internal error under make -j
 obj/%.obj: %.c | obj
 	@echo $<
-	@$(BIN)/shc.exe $(call win,$<) $(CFLAGS) $(OPT) -object=$(call win,$@) >$(@:.obj=.log) 2>&1 \
-		|| { grep ') : ' $(@:.obj=.log); exit 1; }; rm -f $(@:.obj=.log)
+	@mkdir -p "$(SHC_TMP)/$(*F)"; SHC_TMP='$(SHC_TMP)\$(*F)' \
+		$(BIN)/shc.exe $(call win,$<) $(CFLAGS) $(OPT) -object=$(call win,$@) >$(@:.obj=.log) 2>&1; \
+		r=$$?; rm -rf "$(SHC_TMP)/$(*F)"; [ $$r = 0 ] || { grep ') : ' $(@:.obj=.log); exit 1; }; rm -f $(@:.obj=.log)
 
 obj/%.obj: %.src | obj
 	$(BIN)/asmsh.exe $(call win,$<) -object=$(call win,$@)
