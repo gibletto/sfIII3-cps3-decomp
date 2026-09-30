@@ -3850,11 +3850,11 @@ void Passive15_0197(PLW* wk) {
 
 void Passive15_0198(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Normal_Attack(wk, 8, (0x200));
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -4688,11 +4688,11 @@ void Passive15_0238(PLW* wk) {
 
 void Passive15_0239(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Jump(wk, 0);
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }

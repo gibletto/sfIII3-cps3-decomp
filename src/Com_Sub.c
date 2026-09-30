@@ -45,7 +45,10 @@ void Turn_Over_On(PLW* wk) {
 
 
 
-void Only_Shot(PLW* wk, s16 Lever_Data) {
+void Only_Shot(wk, Lever_Data)
+PLW* wk;
+s16 Lever_Data;
+{
     Lever_Buff[wk->wu.id] = Lever_Data;
     CP_Index[wk->wu.id][0]++;
 }
@@ -99,7 +102,10 @@ void Setup_DENJIN_LEVEL(PLW* wk) {
 
 
 
-void Push_Shot(PLW* wk, s16 Power_Level) {
+void Push_Shot(wk, Power_Level)
+PLW* wk;
+s16 Power_Level;
+{
     s16 xx;
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
@@ -205,7 +211,11 @@ s32 Check_Exit_DENJIN(PLW* wk) {
 
 
 
-void Keep_Away(PLW* wk, s16 Target_Pos, s16 Option) {
+void Keep_Away(wk, Target_Pos, Option)
+PLW* wk;
+s16 Target_Pos;
+s16 Option;
+{
     switch (CP_Index[wk->wu.id][3]) {
     case 0:
         if (Option == 0) {
@@ -259,7 +269,12 @@ void Setup_KA_Walk(PLW* wk) {
 
 
 
-void Search_Back_Term(PLW* wk, s16 Move_Value, s16 Next_Action, s16 Next_Menu) {
+void Search_Back_Term(wk, Move_Value, Next_Action, Next_Menu)
+PLW* wk;
+s16 Move_Value;
+s16 Next_Action;
+s16 Next_Menu;
+{
     if (wk->wu.rl_waza) {
         Move_Value = wk->wu.xyz[0].disp.pos - Move_Value;
         if ((bg_w.bgw[1].l_limit2 - bg_w.pos_offset) > Move_Value) {
@@ -280,7 +295,11 @@ void Search_Back_Term(PLW* wk, s16 Move_Value, s16 Next_Action, s16 Next_Menu) {
 
 
 
-void Approach_Walk(PLW* wk, s16 Target_Pos, s16 Option) {
+void Approach_Walk(wk, Target_Pos, Option)
+PLW* wk;
+s16 Target_Pos;
+s16 Option;
+{
     s16 xx;
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
@@ -320,7 +339,11 @@ void Approach_Walk(PLW* wk, s16 Target_Pos, s16 Option) {
 
 
 
-s32 Check_Arrival(PLW* wk, s16 Target_Pos, s16 Option) {
+s32 Check_Arrival(wk, Target_Pos, Option)
+PLW* wk;
+s16 Target_Pos;
+s16 Option;
+{
     if (Option == 3) {
         if (Target_Pos <= PL_Distance[wk->wu.id]) {
             return 1;
@@ -339,7 +362,10 @@ s32 Check_Arrival(PLW* wk, s16 Target_Pos, s16 Option) {
 
 
 /* provisional name */
-void Approach_Until_Landed(PLW* wk, s16 Target_Pos) {
+void Approach_Until_Landed(wk, Target_Pos)
+PLW* wk;
+s16 Target_Pos;
+{
     WORK* em;
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
@@ -376,7 +402,12 @@ void Approach_Until_Landed(PLW* wk, s16 Target_Pos) {
 
 
 
-void Walk(PLW* wk, u16 Lever, s16 Time, s16 unused) {
+void Walk(wk, Lever, Time, unused)
+PLW* wk;
+u16 Lever;
+s16 Time;
+s16 unused;
+{
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
         CP_Index[wk->wu.id][1]++;
@@ -412,7 +443,10 @@ void Walk(PLW* wk, u16 Lever, s16 Time, s16 unused) {
 
 
 
-void Forced_Guard(PLW* wk, s16 Guard_Type) {
+void Forced_Guard(wk, Guard_Type)
+PLW* wk;
+s16 Guard_Type;
+{
     WORK* em;
     s16 xx;
     em = (WORK*)wk->wu.target_adrs;
@@ -430,7 +464,10 @@ void Forced_Guard(PLW* wk, s16 Guard_Type) {
 
 
 
-void Provoke(PLW* wk, s16 Lever) {
+void Provoke(wk, Lever)
+PLW* wk;
+s16 Lever;
+{
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
         if (Check_Passive(wk) != 0) {
@@ -511,7 +548,12 @@ s32 Small_Jump_Measure(PLW* wk) {
 
 
 
-void Normal_Attack_SP(PLW* wk, s16 Reaction, u16 Lever_Data, s16 Time) {
+void Normal_Attack_SP(wk, Reaction, Lever_Data, Time)
+PLW* wk;
+s16 Reaction;
+u16 Lever_Data;
+s16 Time;
+{
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
         if (Check_Passive(wk) != 0) {
@@ -553,7 +595,11 @@ void Normal_Attack_SP(PLW* wk, s16 Reaction, u16 Lever_Data, s16 Time) {
 
 
 
-void Adjust_Attack(PLW* wk, s16 Reaction, u16 Lever_Data) {
+void Adjust_Attack(wk, Reaction, Lever_Data)
+PLW* wk;
+s16 Reaction;
+u16 Lever_Data;
+{
     u16 xx;
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
@@ -590,7 +636,11 @@ void Adjust_Attack(PLW* wk, s16 Reaction, u16 Lever_Data) {
 
 
 
-s32 Check_Start_Normal_Attack(PLW* wk, s16 Reaction, u16 Lever_Data) {
+s32 Check_Start_Normal_Attack(wk, Reaction, Lever_Data)
+PLW* wk;
+s16 Reaction;
+u16 Lever_Data;
+{
     if (((wk->wu.routine_no[1]) != 4) || ((wk->wu.cg_type) == 0x40)) {
         return 0;
     }
@@ -650,7 +700,13 @@ u16 Lever_Data;
 
 
 
-void Lever_Attack_SP(PLW* wk, s16 Reaction, u16 Lever, u16 Lever_Data, s16 Time) {
+void Lever_Attack_SP(wk, Reaction, Lever, Lever_Data, Time)
+PLW* wk;
+s16 Reaction;
+u16 Lever;
+u16 Lever_Data;
+s16 Time;
+{
     s16 xx;
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
@@ -693,7 +749,10 @@ void Lever_Attack_SP(PLW* wk, s16 Reaction, u16 Lever, u16 Lever_Data, s16 Time)
 
 
 
-s32 Setup_Guard_Lever(PLW* wk, u16 Lever) {
+s32 Setup_Guard_Lever(wk, Lever)
+PLW* wk;
+u16 Lever;
+{
     s32 rnum = 0;
     switch (Lever) {
     case 0:
@@ -716,7 +775,11 @@ s32 Setup_Guard_Lever(PLW* wk, u16 Lever) {
 
 
 
-s32 Check_Start_Lever_Attack(PLW* wk, u16 Lever, u16 Lever_Data) {
+s32 Check_Start_Lever_Attack(wk, Lever, Lever_Data)
+PLW* wk;
+u16 Lever;
+u16 Lever_Data;
+{
     if ((wk->wu.routine_no[1] != 4) || (wk->wu.cg_type == 0x40)) {
         return 0;
     }
@@ -732,7 +795,12 @@ s32 Check_Start_Lever_Attack(PLW* wk, u16 Lever, u16 Lever_Data) {
 
 
 /* provisional name */
-s32 SA_Term_DENJIN_Check(PLW* wk, u16 SA2, u16* xx, u16 Term_No) {
+s32 SA_Term_DENJIN_Check(wk, SA2, xx, Term_No)
+PLW* wk;
+u16 SA2;
+u16* xx;
+u16 Term_No;
+{
     if (plw[wk->wu.id].sa->kind_of_arts != 2) {
         return 0;
     }
@@ -745,7 +813,11 @@ s32 SA_Term_DENJIN_Check(PLW* wk, u16 SA2, u16* xx, u16 Term_No) {
 
 
 /* provisional name */
-s32 SA_Term_YAGYOU_Check(PLW* wk, s16* xx, u16 Term_No) {
+s32 SA_Term_YAGYOU_Check(wk, xx, Term_No)
+PLW* wk;
+s16* xx;
+u16 Term_No;
+{
     if (plw[wk->wu.id].sa->kind_of_arts == 1) {
         if (Term_No == 0) {
             Term_No = YAGYOU_Data[random_16_com()];
@@ -759,7 +831,11 @@ s32 SA_Term_YAGYOU_Check(PLW* wk, s16* xx, u16 Term_No) {
 
 
 /* provisional name */
-s32 SA_Term_Range_Check(PLW* wk, s16 SA_No, u16 Range) {
+s32 SA_Term_Range_Check(wk, SA_No, Range)
+PLW* wk;
+s16 SA_No;
+u16 Range;
+{
     if (plw[wk->wu.id].sa->kind_of_arts != SA_No) {
         return 0;
     }
@@ -853,7 +929,12 @@ u16 Term_No;
 
 
 
-s32 DENJIN_Check(PLW* wk, u16 SA2, u16* xx, u16 Term_No) {
+s32 DENJIN_Check(wk, SA2, xx, Term_No)
+PLW* wk;
+u16 SA2;
+u16* xx;
+u16 Term_No;
+{
     if (plw[wk->wu.id].sa->kind_of_arts != 2) {
         return 0;
     }
@@ -865,7 +946,11 @@ s32 DENJIN_Check(PLW* wk, u16 SA2, u16* xx, u16 Term_No) {
 
 
 
-s32 YAGYOU_Check(PLW* wk, s16* xx, u16 Term_No) {
+s32 YAGYOU_Check(wk, xx, Term_No)
+PLW* wk;
+s16* xx;
+u16 Term_No;
+{
     if (plw[wk->wu.id].sa->kind_of_arts == 1) {
         if (Term_No == 0) {
             Term_No = YAGYOU_Data[random_16_com()];
@@ -878,7 +963,11 @@ s32 YAGYOU_Check(PLW* wk, s16* xx, u16 Term_No) {
 
 
 
-s32 SA_Range_Check(PLW* wk, s16 SA_No, u16 Range) {
+s32 SA_Range_Check(wk, SA_No, Range)
+PLW* wk;
+s16 SA_No;
+u16 Range;
+{
     if (plw[wk->wu.id].sa->kind_of_arts != SA_No) {
         return 0;
     }
@@ -897,7 +986,11 @@ s32 SA_Range_Check(PLW* wk, s16 SA_No, u16 Range) {
 
 
 
-s32 Check_SA(PLW* wk, s16 Next_Action, s16 Next_Menu) {
+s32 Check_SA(wk, Next_Action, Next_Menu)
+PLW* wk;
+s16 Next_Action;
+s16 Next_Menu;
+{
     if (plw[wk->wu.id].sa->ok) {
         CP_Index[wk->wu.id][0]++;
     } else {
@@ -911,7 +1004,11 @@ s32 Check_SA(PLW* wk, s16 Next_Action, s16 Next_Menu) {
 
 
 
-void Check_EX(PLW* wk, s16 Next_Action, s16 Next_Menu) {
+void Check_EX(wk, Next_Action, Next_Menu)
+PLW* wk;
+s16 Next_Action;
+s16 Next_Menu;
+{
     if (plw[wk->wu.id].sa->ex) {
         CP_Index[wk->wu.id][0]++;
     } else {
@@ -924,7 +1021,11 @@ void Check_EX(PLW* wk, s16 Next_Action, s16 Next_Menu) {
 
 
 
-void Check_SA_Full(PLW* wk, s16 Next_Action, s16 Next_Menu) {
+void Check_SA_Full(wk, Next_Action, Next_Menu)
+PLW* wk;
+s16 Next_Action;
+s16 Next_Menu;
+{
     Disposal_Again[wk->wu.id] = 1;
     if (wk->permited_koa & 0x40) {
         CP_Index[wk->wu.id][0]++;
@@ -937,7 +1038,14 @@ void Check_SA_Full(PLW* wk, s16 Next_Action, s16 Next_Menu) {
 
 
 
-void Branch_Unit_Area(PLW* wk, s16 Next_Action, s16 Menu_00, s16 Menu_01, s16 Menu_02, s16 Menu_03) {
+void Branch_Unit_Area(wk, Next_Action, Menu_00, Menu_01, Menu_02, Menu_03)
+PLW* wk;
+s16 Next_Action;
+s16 Menu_00;
+s16 Menu_01;
+s16 Menu_02;
+s16 Menu_03;
+{
     s16 xx[4];
     CP_No[wk->wu.id][0] = Next_Action;
     xx[0] = Menu_00;
@@ -951,7 +1059,15 @@ void Branch_Unit_Area(PLW* wk, s16 Next_Action, s16 Menu_00, s16 Menu_01, s16 Me
 
 
 
-void Com_Random_Select(PLW* wk, s16 Next_Action, s16 Menu_00, s16 Menu_01, s16 Menu_02, s16 Menu_03, s16 Rnd_Type) {
+void Com_Random_Select(wk, Next_Action, Menu_00, Menu_01, Menu_02, Menu_03, Rnd_Type)
+PLW* wk;
+s16 Next_Action;
+s16 Menu_00;
+s16 Menu_01;
+s16 Menu_02;
+s16 Menu_03;
+s16 Rnd_Type;
+{
     s16 xx[4];
     s16 zz;
     zz = Com_Rnd_Select_Data[Rnd_Type][random_16_com()];
@@ -970,7 +1086,13 @@ void Com_Random_Select(PLW* wk, s16 Next_Action, s16 Menu_00, s16 Menu_01, s16 M
 
 
 
-void Branch_Wait_Area(PLW* wk, s16 Time_00, s16 Time_01, s16 Time_02, s16 Time_03) {
+void Branch_Wait_Area(wk, Time_00, Time_01, Time_02, Time_03)
+PLW* wk;
+s16 Time_00;
+s16 Time_01;
+s16 Time_02;
+s16 Time_03;
+{
     s16 xx[4];
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
@@ -1000,7 +1122,10 @@ void Branch_Wait_Area(PLW* wk, s16 Time_00, s16 Time_01, s16 Time_02, s16 Time_0
 
 
 
-void Wait(PLW* wk, s16 Time) {
+void Wait(wk, Time)
+PLW* wk;
+s16 Time;
+{
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
         CP_Index[wk->wu.id][1]++;
@@ -1030,7 +1155,10 @@ void Wait(PLW* wk, s16 Time) {
 
 
 
-void Look(PLW* wk, s16 Time) {
+void Look(wk, Time)
+PLW* wk;
+s16 Time;
+{
     Passive_Flag[wk->wu.id] = 0;
     Lever_Buff[wk->wu.id] = Lever_LR[wk->wu.id];
     switch (CP_Index[wk->wu.id][1]) {
@@ -1068,7 +1196,11 @@ void Look(PLW* wk, s16 Time) {
 
 
 
-void Keep_Status(PLW* wk, u16 Lever_Data, s16 Option_Data) {
+void Keep_Status(wk, Lever_Data, Option_Data)
+PLW* wk;
+u16 Lever_Data;
+s16 Option_Data;
+{
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
         CP_Index[wk->wu.id][1]++;
@@ -1130,7 +1262,10 @@ void VS_Jump_Guard(PLW* wk) {
 
 
 
-void Wait_Lie(PLW* wk, u16 Lever_Data) {
+void Wait_Lie(wk, Lever_Data)
+PLW* wk;
+u16 Lever_Data;
+{
     WORK* em;
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
@@ -1194,7 +1329,10 @@ s16 Option;
 
 
 
-s32 Check_Wait_Term(PLW* wk, s16 Option) {
+s32 Check_Wait_Term(wk, Option)
+PLW* wk;
+s16 Option;
+{
     WORK* em;
     em = (WORK*)wk->wu.target_adrs;
     if (em->routine_no[1] == 1 && em->pat_status == 0x18) {
@@ -1214,7 +1352,11 @@ s32 Check_Wait_Term(PLW* wk, s16 Option) {
 
 
 
-void Wait_Attack_Complete(PLW* wk, u16 Lever_Data, s16 Option) {
+void Wait_Attack_Complete(wk, Lever_Data, Option)
+PLW* wk;
+u16 Lever_Data;
+s16 Option;
+{
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
         CP_Index[wk->wu.id][1]++;
@@ -1246,7 +1388,10 @@ void Wait_Attack_Complete(PLW* wk, u16 Lever_Data, s16 Option) {
 
 
 
-s32 Check_Exit_Guard(PLW* wk, s16 Option) {
+s32 Check_Exit_Guard(wk, Option)
+PLW* wk;
+s16 Option;
+{
     WORK* em;
     if (wk->wu.routine_no[1] == 1) {
         return 1;
@@ -1263,7 +1408,13 @@ s32 Check_Exit_Guard(PLW* wk, s16 Option) {
 
 
 
-void Short_Range_Attack(PLW* wk, s16 Reaction, u16 Lever_Data, s16 Next_Action, s16 Next_Menu) {
+void Short_Range_Attack(wk, Reaction, Lever_Data, Next_Action, Next_Menu)
+PLW* wk;
+s16 Reaction;
+u16 Lever_Data;
+s16 Next_Action;
+s16 Next_Menu;
+{
     u16 xx;
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
@@ -1360,7 +1511,14 @@ s16 Next_Menu;
 
 
 
-void SHELL_Term(PLW* wk, s16 Next_Command, s16 Exit_Number, s16 Next_Action, s16 Next_Menu, s16 unused) {
+void SHELL_Term(wk, Next_Command, Exit_Number, Next_Action, Next_Menu, unused)
+PLW* wk;
+s16 Next_Command;
+s16 Exit_Number;
+s16 Next_Action;
+s16 Next_Menu;
+s16 unused;
+{
     WORK* em;
     WORK_Other* tmw;
     s16 xx;
@@ -1402,7 +1560,11 @@ s32 Correct_Unit_PL(PLW* wk) {
 
 
 
-s32 Check_Term_Sub_Air(PLW* wk, s16 Distance, s16 Range) {
+s32 Check_Term_Sub_Air(wk, Distance, Range)
+PLW* wk;
+s16 Distance;
+s16 Range;
+{
     if (Range == -1) {
         return 1;
     }
@@ -1422,7 +1584,11 @@ s32 Check_Term_Sub_Air(PLW* wk, s16 Distance, s16 Range) {
 
 
 
-s32 Check_Term_Sub(PLW* wk, s16 Distance, s16 Range) {
+s32 Check_Term_Sub(wk, Distance, Range)
+PLW* wk;
+s16 Distance;
+s16 Range;
+{
     if (Range == -1) {
         return 1;
     }
@@ -1441,7 +1607,11 @@ s32 Check_Term_Sub(PLW* wk, s16 Distance, s16 Range) {
 
 
 
-s32 Check_Term_Sub_Y(PLW* wk, s16 Distance, s16 Range) {
+s32 Check_Term_Sub_Y(wk, Distance, Range)
+PLW* wk;
+s16 Distance;
+s16 Range;
+{
     WORK* em;
     if (Range == -1) {
         return 1;
@@ -1465,7 +1635,10 @@ s32 Check_Term_Sub_Y(PLW* wk, s16 Distance, s16 Range) {
 
 
 
-void Jump(PLW* wk, s16 Jump_Dir) {
+void Jump(wk, Jump_Dir)
+PLW* wk;
+s16 Jump_Dir;
+{
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
         Lever_Buff[wk->wu.id] = Lever_LR[wk->wu.id];
@@ -1514,7 +1687,11 @@ void Jump(PLW* wk, s16 Jump_Dir) {
 
 
 
-void Hi_Jump(PLW* wk, s16 Pl_Number, s16 Jump_Dir) {
+void Hi_Jump(wk, Pl_Number, Jump_Dir)
+PLW* wk;
+s16 Pl_Number;
+s16 Jump_Dir;
+{
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
         Lever_Buff[wk->wu.id] = Lever_LR[wk->wu.id];
@@ -1636,7 +1813,10 @@ s32 Check_Air_Guard(PLW* wk) {
 
 
 /* provisional name */
-void Jump_Air_Guard(PLW* wk, s16 Lever) {
+void Jump_Air_Guard(wk, Lever)
+PLW* wk;
+s16 Lever;
+{
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
         if (Check_Passive(wk) != 0) {
@@ -1670,7 +1850,13 @@ void Jump_Air_Guard(PLW* wk, s16 Lever) {
 
 
 
-void Jump_Attack(PLW* wk, s16 Reaction, s16 Time_Data, u16 Lever_Data, s16 Jump_Dir) {
+void Jump_Attack(wk, Reaction, Time_Data, Lever_Data, Jump_Dir)
+PLW* wk;
+s16 Reaction;
+s16 Time_Data;
+u16 Lever_Data;
+s16 Jump_Dir;
+{
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
         Setup_Lever_LR(wk, wk->wu.id, Reaction & 0xF000);
@@ -1832,7 +2018,10 @@ s16 J_Lever_Data;
 
 
 
-s32 Check_SP_Jump_Attack(PLW* wk, s16 Lever_Data) {
+s32 Check_SP_Jump_Attack(wk, Lever_Data)
+PLW* wk;
+s16 Lever_Data;
+{
     u16 xx;
     if (!(Lever_Data & 0x8000)) {
         return Lever_Data;
@@ -1844,7 +2033,12 @@ s32 Check_SP_Jump_Attack(PLW* wk, s16 Lever_Data) {
 
 
 
-s32 Check_VS_Air_Attack(PLW* wk, s16 Range_JX, s16 Range_JY, s16 J_Lever_Data) {
+s32 Check_VS_Air_Attack(wk, Range_JX, Range_JY, J_Lever_Data)
+PLW* wk;
+s16 Range_JX;
+s16 Range_JY;
+s16 J_Lever_Data;
+{
     WORK* em;
     if ((Range_JX == -1) && (Range_JY == -1)) {
         return 0;
@@ -1887,7 +2081,13 @@ s32 Check_VS_Air_Attack(PLW* wk, s16 Range_JX, s16 Range_JY, s16 J_Lever_Data) {
 
 
 
-void Hi_Jump_Attack(PLW* wk, s16 Reaction, s16 Time_Data, u16 Lever_Data, s16 Jump_Dir) {
+void Hi_Jump_Attack(wk, Reaction, Time_Data, Lever_Data, Jump_Dir)
+PLW* wk;
+s16 Reaction;
+s16 Time_Data;
+u16 Lever_Data;
+s16 Jump_Dir;
+{
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
         Setup_Lever_LR(wk, wk->wu.id, Reaction & 0xF000);
@@ -2142,7 +2342,11 @@ s32 Check_Term_ABS_Distance(PLW* wk) {
 
 
 
-s32 Check_Com_Add_Y(PLW* wk, s16 Pos_Y, s16 Range) {
+s32 Check_Com_Add_Y(wk, Pos_Y, Range)
+PLW* wk;
+s16 Pos_Y;
+s16 Range;
+{
     if (Range == -1) {
         return 1;
     }
@@ -2164,7 +2368,19 @@ s32 Check_Com_Add_Y(PLW* wk, s16 Pos_Y, s16 Range) {
 
 
 
-void ORO_JA_Term(PLW* wk, s16 Reaction, s16 Jump_Dir, s16 JY, s16 Jump_Dir2, s16 RX, s16 RY, u16 Lever_Data, s16 RJX, s16 RJY, u16 JLD) {
+void ORO_JA_Term(wk, Reaction, Jump_Dir, JY, Jump_Dir2, RX, RY, Lever_Data, RJX, RJY, JLD)
+PLW* wk;
+s16 Reaction;
+s16 Jump_Dir;
+s16 JY;
+s16 Jump_Dir2;
+s16 RX;
+s16 RY;
+u16 Lever_Data;
+s16 RJX;
+s16 RJY;
+u16 JLD;
+{
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
         Setup_Lever_LR(wk, wk->wu.id, Reaction & 0xF000);
@@ -2273,7 +2489,19 @@ void ORO_JA_Term(PLW* wk, s16 Reaction, s16 Jump_Dir, s16 JY, s16 Jump_Dir2, s16
 
 
 
-void ORO_HJA_Term(PLW* wk, s16 Reaction, s16 Jump_Dir, s16 JY, s16 Jump_Dir2, s16 RX, s16 RY, u16 Lever_Data, s16 RJX, s16 RJY, u16 JLD) {
+void ORO_HJA_Term(wk, Reaction, Jump_Dir, JY, Jump_Dir2, RX, RY, Lever_Data, RJX, RJY, JLD)
+PLW* wk;
+s16 Reaction;
+s16 Jump_Dir;
+s16 JY;
+s16 Jump_Dir2;
+s16 RX;
+s16 RY;
+u16 Lever_Data;
+s16 RJX;
+s16 RJY;
+u16 JLD;
+{
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
         Lever_Buff[wk->wu.id] = Lever_LR[wk->wu.id];
@@ -2521,7 +2749,10 @@ s32 Check_Resume_Lever(PLW* wk) {
 
 
 
-s32 Hadou_Check(PLW* wk, u16 Tech_Number) {
+s32 Hadou_Check(wk, Tech_Number)
+PLW* wk;
+u16 Tech_Number;
+{
     if (Hadou_Check_Data[wk->player_number][0] == 0) {
         return 0;
     }
@@ -2610,7 +2841,13 @@ s16 Ex_Shot;
 
 
 
-void Rapid_Command_Attack(PLW* wk, s16 Reaction, u16 Tech_Number, s16 Shot, u16 Time) {
+void Rapid_Command_Attack(wk, Reaction, Tech_Number, Shot, Time)
+PLW* wk;
+s16 Reaction;
+u16 Tech_Number;
+s16 Shot;
+u16 Time;
+{
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
         dash_flag_clear(wk->wu.id);
@@ -2683,7 +2920,10 @@ void Rapid_Command_Attack(PLW* wk, s16 Reaction, u16 Tech_Number, s16 Shot, u16 
 
 
 
-void Check_Rapid(PLW* wk, u16 Tech_Number) {
+void Check_Rapid(wk, Tech_Number)
+PLW* wk;
+u16 Tech_Number;
+{
     if (!(Tech_Number & 0xF00)) {
         Rapid_No[wk->wu.id][0] = 0;
     } else {
@@ -2701,13 +2941,19 @@ void Check_Rapid(PLW* wk, u16 Tech_Number) {
 
 
 /* provisional name */
-s32 Setup_Rapid_Time(PLW* wk, u16 Tech_Number) {
+s32 Setup_Rapid_Time(wk, Tech_Number)
+PLW* wk;
+u16 Tech_Number;
+{
     return 60;
 }
 
 
 
-void Setup_Rapid_End_Term(PLW* wk, s16 Tech_Number) {
+void Setup_Rapid_End_Term(wk, Tech_Number)
+PLW* wk;
+s16 Tech_Number;
+{
     Rapid_No[wk->wu.id][2] = (Tech_Number & 0xF00) >> 8;
     if ((Tech_Number & 0xF00) == 0x400) {
         Rapid_No[wk->wu.id][3] = Setup_Rapid_Time(wk, Tech_Number);
@@ -2819,7 +3065,11 @@ s32 Check_Rapid_End(PLW* wk) {
 
 
 
-s32 Check_Start_Command_Attack(PLW* wk, s16 Reaction, u16 Tech_Number) {
+s32 Check_Start_Command_Attack(wk, Reaction, Tech_Number)
+PLW* wk;
+s16 Reaction;
+u16 Tech_Number;
+{
     if (Before_Jump[wk->wu.id]) {
         return Before_Jump[wk->wu.id] = 0;
     }
@@ -2849,7 +3099,21 @@ s32 Check_Start_Command_Attack(PLW* wk, s16 Reaction, u16 Tech_Number) {
 
 
 
-void ORO_JCA_Term(PLW* wk, s16 Reaction, s16 Jump_Dir, s16 JY, s16 Jump_Dir2, s16 RX, s16 RY, u16 Tech_Number, s16 Power_Level, s16 Ex_Shot, s16 RJX, s16 RJY, u16 JLD) {
+void ORO_JCA_Term(wk, Reaction, Jump_Dir, JY, Jump_Dir2, RX, RY, Tech_Number, Power_Level, Ex_Shot, RJX, RJY, JLD)
+PLW* wk;
+s16 Reaction;
+s16 Jump_Dir;
+s16 JY;
+s16 Jump_Dir2;
+s16 RX;
+s16 RY;
+u16 Tech_Number;
+s16 Power_Level;
+s16 Ex_Shot;
+s16 RJX;
+s16 RJY;
+u16 JLD;
+{
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
         if (Check_Passive(wk) != 0) {
@@ -2955,7 +3219,21 @@ void ORO_JCA_Term(PLW* wk, s16 Reaction, s16 Jump_Dir, s16 JY, s16 Jump_Dir2, s1
 
 
 
-void ORO_HJCA_Term(PLW* wk, s16 Reaction, s16 Jump_Dir, s16 JY, s16 Jump_Dir2, s16 RX, s16 RY, u16 Tech_Number, s16 Power_Level, s16 Ex_Shot, s16 RJX, s16 RJY, u16 JLD) {
+void ORO_HJCA_Term(wk, Reaction, Jump_Dir, JY, Jump_Dir2, RX, RY, Tech_Number, Power_Level, Ex_Shot, RJX, RJY, JLD)
+PLW* wk;
+s16 Reaction;
+s16 Jump_Dir;
+s16 JY;
+s16 Jump_Dir2;
+s16 RX;
+s16 RY;
+u16 Tech_Number;
+s16 Power_Level;
+s16 Ex_Shot;
+s16 RJX;
+s16 RJY;
+u16 JLD;
+{
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
         Lever_Buff[wk->wu.id] = Lever_LR[wk->wu.id];
@@ -3168,7 +3446,19 @@ u16 JLD;
 
 
 
-void Hi_Jump_Command_Attack_Term(PLW* wk, s16 Reaction, u16 Tech_Number, s16 Power_Level, s16 Ex_Shot, s16 RX, s16 RY, s16 Jump_Dir, s16 JRX, s16 JRY, u16 JLD) {
+void Hi_Jump_Command_Attack_Term(wk, Reaction, Tech_Number, Power_Level, Ex_Shot, RX, RY, Jump_Dir, JRX, JRY, JLD)
+PLW* wk;
+s16 Reaction;
+u16 Tech_Number;
+s16 Power_Level;
+s16 Ex_Shot;
+s16 RX;
+s16 RY;
+s16 Jump_Dir;
+s16 JRX;
+s16 JRY;
+u16 JLD;
+{
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
         Lever_Buff[wk->wu.id] = Lever_LR[wk->wu.id];
@@ -3261,7 +3551,10 @@ void Hi_Jump_Command_Attack_Term(PLW* wk, s16 Reaction, u16 Tech_Number, s16 Pow
 
 
 
-s32 Check_Landed(PLW* wk, s16 Reaction) {
+s32 Check_Landed(wk, Reaction)
+PLW* wk;
+s16 Reaction;
+{
     if ((wk->wu.old_pos[1] != 0) && (wk->wu.xyz[1].disp.pos == 0)) {
         Lever_Buff[wk->wu.id] = 0;
         if (Continue_Menu[wk->wu.id]) {
@@ -3296,7 +3589,10 @@ s32 Check_Landed(PLW* wk, s16 Reaction) {
 
 
 
-s32 Check_Dash_Hit(PLW* wk, u16 Tech_Number) {
+s32 Check_Dash_Hit(wk, Tech_Number)
+PLW* wk;
+u16 Tech_Number;
+{
     WORK_Other* tmw;
     WORK* em;
     s16 i;
@@ -3334,7 +3630,10 @@ s32 Check_Dash_Hit(PLW* wk, u16 Tech_Number) {
 
 
 
-s32 Setup_Front_or_Back(PLW* wk, s16 xx) {
+s32 Setup_Front_or_Back(wk, xx)
+PLW* wk;
+s16 xx;
+{
     if (wk->wu.rl_waza == 0) {
         if (xx >= 0) {
             return 0;
@@ -3350,7 +3649,11 @@ s32 Setup_Front_or_Back(PLW* wk, s16 xx) {
 
 
 
-s32 Check_Hit_Shell(PLW* wk, WORK_Other* tmw, u16 Tech_Number) {
+s32 Check_Hit_Shell(wk, tmw, Tech_Number)
+PLW* wk;
+WORK_Other* tmw;
+u16 Tech_Number;
+{
     s16 xx;
     if (wk->wu.rl_waza == 1) {
         Tech_Number ^= 1;
@@ -3372,7 +3675,10 @@ s32 Check_Hit_Shell(PLW* wk, WORK_Other* tmw, u16 Tech_Number) {
 
 
 
-void Jump_Init(PLW* wk, s16 Jump_Dir) {
+void Jump_Init(wk, Jump_Dir)
+PLW* wk;
+s16 Jump_Dir;
+{
     switch (Jump_Dir) {
     case 0:
         Ck_Distance_LvJ(wk);
@@ -3453,7 +3759,12 @@ s16 Ex_Shot;
 
 
 
-s32 Command_Type_06(PLW* wk, s16 Power_Level, u16 Tech_Number, s16 Ex_Shot) {
+s32 Command_Type_06(wk, Power_Level, Tech_Number, Ex_Shot)
+PLW* wk;
+s16 Power_Level;
+u16 Tech_Number;
+s16 Ex_Shot;
+{
     s16 xx;
     xx = 0;
     if (Tech_Number & 0x8000) {
@@ -3472,7 +3783,11 @@ s32 Command_Type_06(PLW* wk, s16 Power_Level, u16 Tech_Number, s16 Ex_Shot) {
 
 
 
-s32 Command_Type_01(PLW* wk, s16 Power_Level, s16 Ex_Shot) {
+s32 Command_Type_01(wk, Power_Level, Ex_Shot)
+PLW* wk;
+s16 Power_Level;
+s16 Ex_Shot;
+{
     switch (CP_Index[wk->wu.id][2]) {
     case 0:
         CP_Index[wk->wu.id][2]++;
@@ -3543,7 +3858,11 @@ s16 Next_Menu;
 
 
 
-s32 Check_Store_Direction(PLW* wk, u16 lever, s16 time) {
+s32 Check_Store_Direction(wk, lever, time)
+PLW* wk;
+u16 lever;
+s16 time;
+{
     if (wk->wu.rl_waza) {
         if (lever & 0xC) {
             lever ^= 0xC;
@@ -3612,7 +3931,9 @@ s32 Select_Reflection_Time(PLW* wk) {
 
 
 
-s32 Setup_Lv04(s16 xx) {
+s32 Setup_Lv04(xx)
+s16 xx;
+{
     s16 i;
     s16* zz;
     zz = (s16*)Lv04_Time_Data[CC_Type][xx];
@@ -3626,7 +3947,9 @@ s32 Setup_Lv04(s16 xx) {
 
 
 
-s32 Setup_Lv08(s16 xx) {
+s32 Setup_Lv08(xx)
+s16 xx;
+{
     s16 i;
     s16* zz;
     zz = (s16*)((s8*)Lv08_Time_Data + (s8)(CC_Type * 42) + (s8)((xx << 4) - (xx << 1)));
@@ -3640,7 +3963,9 @@ s32 Setup_Lv08(s16 xx) {
 
 
 
-s32 Setup_Lv10(s16 xx) {
+s32 Setup_Lv10(xx)
+s16 xx;
+{
     s16 i;
     s16* zz;
     zz = (s16*)Lv10_Time_Data[CC_Type][xx];
@@ -3654,7 +3979,9 @@ s32 Setup_Lv10(s16 xx) {
 
 
 
-s32 Setup_Lv18(s16 xx) {
+s32 Setup_Lv18(xx)
+s16 xx;
+{
     s16 i;
     s16* zz;
     zz = (s16*)Lv18_Time_Data[CC_Type][xx];
@@ -3806,7 +4133,11 @@ u16 Next_Menu;
 
 
 
-void Reaction_Sub(PLW* wk, s16 Reaction, s16 Power_Level) {
+void Reaction_Sub(wk, Reaction, Power_Level)
+PLW* wk;
+s16 Reaction;
+s16 Power_Level;
+{
     switch (Reaction & 0x7F) {
     case 9:
         if (Stock_Hit_Flag[wk->wu.id]) {
@@ -3918,7 +4249,11 @@ void Reaction_Sub(PLW* wk, s16 Reaction, s16 Power_Level) {
 
 
 
-s32 Check_Meoshi_Attack(PLW* wk, s16 Reaction, s16 Power_Level) {
+s32 Check_Meoshi_Attack(wk, Reaction, Power_Level)
+PLW* wk;
+s16 Reaction;
+s16 Power_Level;
+{
     if (Last_Eftype[wk->wu.id] == wk->wu.cg_meoshi) {
         return 0;
     }
@@ -3976,7 +4311,10 @@ void Reaction_Exit_Sub(PLW* wk) {
 
 
 /* provisional name */
-s32 Check_Stock_Hit_Menu(PLW* wk, s16 Menu) {
+s32 Check_Stock_Hit_Menu(wk, Menu)
+PLW* wk;
+s16 Menu;
+{
     s32 hit;
     switch (Menu) {
     case 8:
@@ -4099,7 +4437,10 @@ void Check_Bullet_Counter(PLW* wk) {
 
 
 
-s32 Check_SA_Active(PLW* wk, s16* pl_id) {
+s32 Check_SA_Active(wk, pl_id)
+PLW* wk;
+s16* pl_id;
+{
     PLW* mw;
     if (wk->sa->ok != -1) {
         return 0;
@@ -4125,7 +4466,10 @@ s32 Check_SA_Active(PLW* wk, s16* pl_id) {
 
 
 
-void Setup_Follow(PLW* wk, s16 Follow_Type) {
+void Setup_Follow(wk, Follow_Type)
+PLW* wk;
+s16 Follow_Type;
+{
     CP_No[wk->wu.id][0] = 3;
     CP_No[wk->wu.id][1] = Follow_Type;
     if (wk->wu.hf.hit.player == 0) {
@@ -4234,7 +4578,9 @@ s32 Select_Passive(PLW* wk) {
 
 
 
-void Devide_Level(s16 xx) {
+void Devide_Level(xx)
+s16 xx;
+{
     switch (xx) {
     case 0:
         Lv = Setup_Lv04(0);
@@ -4265,7 +4611,10 @@ void Setup_Random(PLW* wk) {
 
 
 
-s32 Check_Dramatic(PLW* wk, s16 PL_id) {
+s32 Check_Dramatic(wk, PL_id)
+PLW* wk;
+s16 PL_id;
+{
     if (plw[wk->wu.id].sa->ok) {
         return Rnd | 8;
     }
@@ -4434,7 +4783,11 @@ s32 Flip_Term_Correct(PLW* wk) {
 
 
 
-void Next_Be_Guard(PLW* wk, WORK* em, s16 Type_Of_Guard) {
+void Next_Be_Guard(wk, em, Type_Of_Guard)
+PLW* wk;
+WORK* em;
+s16 Type_Of_Guard;
+{
     CP_No[wk->wu.id][0] = 7;
     CP_No[wk->wu.id][1] = 0;
     CP_No[wk->wu.id][2] = 0;
@@ -4462,7 +4815,10 @@ s32 Check_Flip_Tech(WORK* em) {
 
 
 
-void Next_Be_Flip(PLW* wk, s16 xx) {
+void Next_Be_Flip(wk, xx)
+PLW* wk;
+s16 xx;
+{
     WORK* em;
     em = (WORK*)wk->wu.target_adrs;
     CP_No[wk->wu.id][0] = 0xC;
@@ -4660,7 +5016,11 @@ s32 Decide_Shell_Guard(PLW* wk, WORK_Other* tmw) {
 
 
 
-void Guard_or_Jump_VS_Shell(PLW* wk, WORK_Other* tmw, s16 xx) {
+void Guard_or_Jump_VS_Shell(wk, tmw, xx)
+PLW* wk;
+WORK_Other* tmw;
+s16 xx;
+{
     if (xx <= Shell_Dodge_Data[0][wk->player_number]) {
         if (Check_Flip_Term(wk) != 0) {
             Pattern_Index[wk->wu.id] = 9;
@@ -4707,7 +5067,11 @@ void Next_Be_Shell_Guard(PLW* wk, WORK* tmw) {
 
 
 
-s32 Decide_Shell_Reaction(PLW* wk, WORK_Other* tmw, u16 dir_step) {
+s32 Decide_Shell_Reaction(wk, tmw, dir_step)
+PLW* wk;
+WORK_Other* tmw;
+u16 dir_step;
+{
     if (dir_step == 0xFF) {
         return 0;
     }
@@ -4774,7 +5138,11 @@ s32 Ck_Distance_Wall(PLW* wk) {
 
 
 
-void Setup_Lever_LR(PLW* wk, s16 PL_id, s16 Lever) {
+void Setup_Lever_LR(wk, PL_id, Lever)
+PLW* wk;
+s16 PL_id;
+s16 Lever;
+{
     if (Lever == 0) {
         Lever_LR[PL_id] = 0;
     } else {
@@ -4796,7 +5164,11 @@ void Setup_Lever_LR(PLW* wk, s16 PL_id, s16 Lever) {
 
 
 
-s32 Check_Exit_Term(PLW* wk, WORK* em, s16 Exit_No) {
+s32 Check_Exit_Term(wk, em, Exit_No)
+PLW* wk;
+WORK* em;
+s16 Exit_No;
+{
     s16 xx;
     if (VS_Jump_Term(wk, em, &xx) != 0) {
         return xx;
@@ -4806,7 +5178,11 @@ s32 Check_Exit_Term(PLW* wk, WORK* em, s16 Exit_No) {
 
 
 
-s32 VS_Jump_Term(PLW* wk, WORK* em, s16* xx) {
+s32 VS_Jump_Term(wk, em, xx)
+PLW* wk;
+WORK* em;
+s16* xx;
+{
     if (Attack_Flag[wk->wu.id] == 0) {
         return 0;
     }
@@ -5009,7 +5385,10 @@ s32 Exit_Term_0008(PLW* wk, WORK* em) {
 
 
 
-s32 Check_Drop_Term(WORK* em, s16 Y) {
+s32 Check_Drop_Term(em, Y)
+WORK* em;
+s16 Y;
+{
     if (em->mvxy.a[1].real.h >= 0) {
         return 0;
     }
@@ -5038,7 +5417,11 @@ s32 Check_SHINRYU(PLW* wk) {
 
 
 
-void Check_BOSS(PLW* wk, u32 Next_Action, u16 Next_Menu) {
+void Check_BOSS(wk, Next_Action, Next_Menu)
+PLW* wk;
+u32 Next_Action;
+u16 Next_Menu;
+{
     WORK* em = (WORK*)wk->wu.target_adrs;
     if (Break_Into_CPU == 1) {
         Disposal_Again[wk->wu.id] = 1;
@@ -5056,7 +5439,11 @@ void Check_BOSS(PLW* wk, u32 Next_Action, u16 Next_Menu) {
 
 
 
-void Check_BOSS_EX(PLW* wk, u32 Next_Action, u16 Next_Menu) {
+void Check_BOSS_EX(wk, Next_Action, Next_Menu)
+PLW* wk;
+u32 Next_Action;
+u16 Next_Menu;
+{
     WORK* em = (WORK*)wk->wu.target_adrs;
     if (Break_Into_CPU != 1) {
         Disposal_Again[wk->wu.id] = 1;
@@ -5074,7 +5461,12 @@ void Check_BOSS_EX(PLW* wk, u32 Next_Action, u16 Next_Menu) {
 
 
 
-void ETC_Term(PLW* wk, s16 Exit_No, u32 Next_Action, u16 Next_Menu) {
+void ETC_Term(wk, Exit_No, Next_Action, Next_Menu)
+PLW* wk;
+s16 Exit_No;
+u32 Next_Action;
+u16 Next_Menu;
+{
     s16 xx;
     WORK* em = (WORK*)wk->wu.target_adrs;
     xx = ETC_Term_Tbl[Exit_No](wk, em);

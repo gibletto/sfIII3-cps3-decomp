@@ -1188,11 +1188,11 @@ void Pattern19_0078(PLW* wk) {
 
 void Pattern19_0079(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Normal_Attack(wk, 8, (0x82));
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }

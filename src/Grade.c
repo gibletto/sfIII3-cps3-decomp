@@ -332,16 +332,16 @@ void grade_makeup_stage_parameter(s16 ix) {
         return;
     }
     qc = bs = 0;
-    if (JUDGE_ITEM(ix, pt[1]).round == 0) {
-        JUDGE_ITEM(ix, pt[1]).round = 1;
+    if (judge_item[ix][pt[1]].round == 0) {
+        judge_item[ix][pt[1]].round = 1;
     }
-    JUDGE_ITEM(ix, pt[1]).offence_total /= JUDGE_ITEM(ix, pt[1]).round;
-    JUDGE_ITEM(ix, pt[1]).defence_total /= JUDGE_ITEM(ix, pt[1]).round;
-    JUDGE_ITEM(ix, pt[1]).tech_pts_total /= JUDGE_ITEM(ix, pt[1]).round;
-    JUDGE_ITEM(ix, pt[1]).ex_point_total /= JUDGE_ITEM(ix, pt[1]).round;
-    JUDGE_ITEM(ix, pt[1]).no_lose = 0;
-    if (JUDGE_ITEM(ix, pt[1]).round == JUDGE_ITEM(ix, pt[1]).win_round) {
-        JUDGE_ITEM(ix, pt[1]).no_lose = Straight_Counter[ix];
+    judge_item[ix][pt[1]].offence_total /= judge_item[ix][pt[1]].round;
+    judge_item[ix][pt[1]].defence_total /= judge_item[ix][pt[1]].round;
+    judge_item[ix][pt[1]].tech_pts_total /= judge_item[ix][pt[1]].round;
+    judge_item[ix][pt[1]].ex_point_total /= judge_item[ix][pt[1]].round;
+    judge_item[ix][pt[1]].no_lose = 0;
+    if (judge_item[ix][pt[1]].round == judge_item[ix][pt[1]].win_round) {
+        judge_item[ix][pt[1]].no_lose = Straight_Counter[ix];
     }
     if (ix == WINNER) {
         if (Play_Type == 0) {
@@ -350,8 +350,8 @@ void grade_makeup_stage_parameter(s16 ix) {
                     break;
                 }
             }
-            JUDGE_ITEM(ix, pt[1]).ex_point_total += grade_t_straight[i][1];
-        } else if (JUDGE_ITEM(ix, pt[1]).renshou) {
+            judge_item[ix][pt[1]].ex_point_total += grade_t_straight[i][1];
+        } else if (judge_item[ix][pt[1]].renshou) {
             for (i = 0; i < 7; i++) {
                 if (judge_item[ix][pt[1]].renshou < grade_t_renshou[i + 1][0]) {
                     break;
@@ -367,8 +367,8 @@ void grade_makeup_stage_parameter(s16 ix) {
             point += grade_t_em_renshou[i][1];
         }
     }
-    point = JUDGE_ITEM(ix, pt[1]).offence_total + JUDGE_ITEM(ix, pt[1]).defence_total +
-            JUDGE_ITEM(ix, pt[1]).tech_pts_total + JUDGE_ITEM(ix, pt[1]).ex_point_total;
+    point = judge_item[ix][pt[1]].offence_total + judge_item[ix][pt[1]].defence_total +
+            judge_item[ix][pt[1]].tech_pts_total + judge_item[ix][pt[1]].ex_point_total;
     grade = get_grade_ix(point);
     if (Play_Type == 0) {
         switch (bg_w.stage) {
@@ -378,18 +378,18 @@ void grade_makeup_stage_parameter(s16 ix) {
             break;
         default:
             if ((qc = rannyuu_Q_check((ix + 1) & 1))) {
-                JUDGE_FINAL(ix, Play_Type).vs_cpu_result[15] = point;
-                JUDGE_FINAL(ix, Play_Type).vs_cpu_grade[15] = grade;
-                JUDGE_FINAL(ix, Play_Type).vs_cpu_player[15] = JUDGE_FINAL(ix, Play_Type).vcr_ix;
+                judge_final[ix][Play_Type].vs_cpu_result[15] = point;
+                judge_final[ix][Play_Type].vs_cpu_grade[15] = grade;
+                judge_final[ix][Play_Type].vs_cpu_player[15] = judge_final[ix][Play_Type].vcr_ix;
             } else {
                 em_char = My_char[(ix + 1) & 1];
                 plnum = em_char + chkNameAkuma(em_char);
-                judge_final[ix][Play_Type].vs_cpu_result[JUDGE_FINAL(ix, Play_Type).vcr_ix] = point;
-                JUDGE_FINAL(ix, Play_Type).vs_cpu_grade[JUDGE_FINAL(ix, Play_Type).vcr_ix] = grade;
-                JUDGE_FINAL(ix, Play_Type).vs_cpu_player[JUDGE_FINAL(ix, Play_Type).vcr_ix] = plnum;
+                judge_final[ix][Play_Type].vs_cpu_result[judge_final[ix][Play_Type].vcr_ix] = point;
+                judge_final[ix][Play_Type].vs_cpu_grade[judge_final[ix][Play_Type].vcr_ix] = grade;
+                judge_final[ix][Play_Type].vs_cpu_player[judge_final[ix][Play_Type].vcr_ix] = plnum;
                 judge_final[ix][Play_Type].vcr_ix += 1;
             }
-            JUDGE_ITEM(ix, pt[1]).grade = grade;
+            judge_item[ix][pt[1]].grade = grade;
             break;
         }
         grade_makeup_final_parameter(ix, Play_Type);
@@ -400,14 +400,14 @@ void grade_makeup_stage_parameter(s16 ix) {
             return;
         }
         if (qc) {
-            JUDGE_FINAL(ix, Play_Type).vs_cpu_result[15] = -1;
-            JUDGE_FINAL(ix, Play_Type).vs_cpu_grade[15] = -1;
-            JUDGE_FINAL(ix, Play_Type).vs_cpu_player[15] = -1;
+            judge_final[ix][Play_Type].vs_cpu_result[15] = -1;
+            judge_final[ix][Play_Type].vs_cpu_grade[15] = -1;
+            judge_final[ix][Play_Type].vs_cpu_player[15] = -1;
         } else {
-            JUDGE_FINAL(ix, Play_Type).vcr_ix--;
+            judge_final[ix][Play_Type].vcr_ix--;
         }
     } else {
-        JUDGE_ITEM(ix, pt[1]).grade = grade;
+        judge_item[ix][pt[1]].grade = grade;
     }
 }
 
@@ -516,8 +516,8 @@ s16 get_defence_total(ix, wf)
 s16 ix;
 s16 wf;
 {
-    GradeData* my = &JUDGE_ITEM(ix, Play_Type_low);
-    GradeData* em = &JUDGE_ITEM((ix + 1) & 1, Play_Type_low);
+    GradeData* my = &judge_item[ix][Play_Type_low];
+    GradeData* em = &judge_item[(ix + 1) & 1][Play_Type_low];
     s32 num = 0;
     s16 i;
     s32 point;
@@ -678,7 +678,7 @@ s16 wf;
 {
     s16 i;
     s32 point;
-    GradeData* jd = &JUDGE_ITEM(ix, Play_Type_low);
+    GradeData* jd = &judge_item[ix][Play_Type_low];
     point = 0;
     if (wf) {
         for (i = 0; i < 20; i++) {
@@ -957,8 +957,8 @@ void grade_add_onaji_waza(s16 ix) {
         if (ji_sat[ix][num] != 0xFF) {
             ji_sat[ix][num]++;
         }
-        if (JUDGE_ITEM(ix, Play_Type_low).onaji_waza < ji_sat[ix][num]) {
-            JUDGE_ITEM(ix, Play_Type_low).onaji_waza = ji_sat[ix][num];
+        if (judge_item[ix][Play_Type_low].onaji_waza < ji_sat[ix][num]) {
+            judge_item[ix][Play_Type_low].onaji_waza = ji_sat[ix][num];
         }
     }
 }
@@ -976,19 +976,19 @@ s32 grade_get_my_point_percentage(s16 ix, s16 flag) {
     s32 rnum;
     switch (flag) {
     case 0:
-        rnum = JUDGE_ITEM(ix, Play_Type_low).offence_total * 100;
+        rnum = judge_item[ix][Play_Type_low].offence_total * 100;
         rnum /= 500;
         break;
     case 1:
-        rnum = JUDGE_ITEM(ix, Play_Type_low).defence_total * 100;
+        rnum = judge_item[ix][Play_Type_low].defence_total * 100;
         rnum /= 500;
         break;
     case 2:
-        rnum = JUDGE_ITEM(ix, Play_Type_low).tech_pts_total * 100;
+        rnum = judge_item[ix][Play_Type_low].tech_pts_total * 100;
         rnum /= 500;
         break;
     case 3:
-        rnum = JUDGE_ITEM(ix, Play_Type_low).ex_point_total * 100;
+        rnum = judge_item[ix][Play_Type_low].ex_point_total * 100;
         rnum /= 500;
         break;
     }

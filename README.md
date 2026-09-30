@@ -37,7 +37,7 @@ and loads it over the ROM files.
 
 ## Compiler
 
-The compiler is SHC 5.0 Release 26 with four changes, each one a rule the arcade's own compiler visibly follows
+The compiler is SHC 5.0 Release 26 with seven changes, each one a rule the arcade's own compiler visibly follows
 throughout the ROM but Release 26 doesn't:
 
 - a switch case is tested with `bt case` / `bra default` (Release 26 folds it into `bf default`), and a jump to
@@ -45,15 +45,19 @@ throughout the ROM but Release 26 doesn't:
 - functions keep a separate `rts` at each return (Release 26 merges identical returns; jumps and labels are still
   shared, as in the arcade);
 - a constant loaded into r0 is loaded again after a conditional branch (Release 26 carries it across);
-- constants passed to calls count when deciding which values to keep in a register.
+- a stack load or store never fills a branch delay slot;
+- a value that is only tested takes the lowest free register (Release 26 starts from r3);
+- constants passed to calls count when deciding which values to keep in a register;
+- `sts macl` is never scheduled ahead of the multiply it reads (a Release 26 scheduling fault), so array indexing
+  can be written plainly.
 
-The first three are in `shcpep.exe`, rebuilt from a decompilation of the original; the fourth is a patch to
-`shcmdl.exe`. Setting `SWITCH_ARCADE_BRANCH`, `SWITCH_ARCADE_JUMP`, `XJUMP_OFF`, `PEP_R0_FORGET` and
-`MDL_ARG_CONST` to 0 gives Release 26's behaviour back, identical to the files in `bin/original`.
+`shcpep.exe` and `shcgen.exe` are rebuilt from a decompilation of the originals; `shcmdl.exe` and `shcasm.exe` are
+patched. Setting `SWITCH_ARCADE_BRANCH`, `SWITCH_ARCADE_JUMP`, `XJUMP_OFF`, `PEP_R0_FORGET`, `SLOT_NO_STACK`,
+`GEN_TST_R0` and `MDL_ARG_CONST` to 0 gives Release 26's behaviour back. The original files are in `bin/original`.
 
-With the changes, 6,582 of the 9,822 C routines compile to the arcade's instructions (3,110 with the original
-Release 26), and 4,999 to its exact bytes (1,015). Over 254 Fightcade replays compared with the original ROM,
-244 now keep identical game state throughout (218 before) and 227 identical slowdown (214).
+With the changes, 7,262 of the 9,822 C routines compile to the arcade's instructions (3,110 with the original
+Release 26), and 5,481 to its exact bytes (1,015). Over 254 Fightcade replays compared with the original ROM,
+245 keep identical game state throughout (218 before) and 227 identical slowdown (214).
 
 ## Fightcade replays
 
