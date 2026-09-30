@@ -118,11 +118,11 @@ void Pattern20_0005(PLW* wk) {
 
 void Pattern20_0006(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Wait(wk, 30);
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -150,11 +150,11 @@ void Pattern20_0007(PLW* wk) {
 
 void Pattern20_0008(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Normal_Attack(wk, 8, (0x100));
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -182,11 +182,11 @@ void Pattern20_0009(PLW* wk) {
 
 void Pattern20_0010(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Normal_Attack(wk, 8, (0x202));
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -195,11 +195,11 @@ void Pattern20_0010(PLW* wk) {
 
 void Pattern20_0011(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Normal_Attack(wk, 8, (0x102));
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -208,11 +208,11 @@ void Pattern20_0011(PLW* wk) {
 
 void Pattern20_0012(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Normal_Attack(wk, 8, (0x40));
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -221,11 +221,11 @@ void Pattern20_0012(PLW* wk) {
 
 void Pattern20_0013(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Lever_Attack(wk, 8, 0, (0x100));
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -247,11 +247,11 @@ void Pattern20_0014(PLW* wk) {
 
 void Pattern20_0015(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Walk(wk, 0, 48, 0);
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -260,11 +260,11 @@ void Pattern20_0015(PLW* wk) {
 
 void Pattern20_0016(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Walk(wk, 1, 48, 0);
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -299,11 +299,11 @@ void Pattern20_0018(PLW* wk) {
 
 void Pattern20_0019(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Lever_Attack(wk, 8, 0, (0x200));
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -354,11 +354,11 @@ void Pattern20_0022(PLW* wk) {
 
 void Pattern20_0023(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Approach_Walk(wk, 127, 2);
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -367,11 +367,11 @@ void Pattern20_0023(PLW* wk) {
 
 void Pattern20_0024(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Walk(wk, 0, 96, 0);
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -380,11 +380,11 @@ void Pattern20_0024(PLW* wk) {
 
 void Pattern20_0025(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Walk(wk, 1, 96, 0);
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -409,11 +409,11 @@ void Pattern20_0026(PLW* wk) {
 
 void Pattern20_0027(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Jump(wk, 0);
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -422,11 +422,11 @@ void Pattern20_0027(PLW* wk) {
 
 void Pattern20_0028(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Approach_Walk(wk, 191, 2);
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -537,11 +537,11 @@ void Pattern20_0034(PLW* wk) {
 
 void Pattern20_0035(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Normal_Attack(wk, 8, (0x20));
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -550,11 +550,11 @@ void Pattern20_0035(PLW* wk) {
 
 void Pattern20_0036(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Normal_Attack(wk, 8, (0x42));
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -972,11 +972,11 @@ void Pattern20_0061(PLW* wk) {
 
 void Pattern20_0062(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Lever_Attack(wk, 8, 0, (0x90));
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -985,11 +985,11 @@ void Pattern20_0062(PLW* wk) {
 
 void Pattern20_0063(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Lever_Attack(wk, 8, 1, (0x90));
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -998,11 +998,11 @@ void Pattern20_0063(PLW* wk) {
 
 void Pattern20_0064(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Normal_Attack(wk, 8, (0x90));
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }

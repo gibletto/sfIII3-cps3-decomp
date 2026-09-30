@@ -75,11 +75,11 @@ void Passive20_0002(PLW* wk) {
 
 void Passive20_0003(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         VS_Jump_Guard(wk);
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -104,11 +104,11 @@ void Passive20_0004(PLW* wk) {
 
 void Passive20_0005(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Forced_Guard(wk, 0);
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -198,11 +198,11 @@ void Passive20_0011(PLW* wk) {
 
 void Passive20_0012(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Normal_Attack(wk, 8, (0x200));
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -240,11 +240,11 @@ void Passive20_0014(PLW* wk) {
 
 void Passive20_0015(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Wait_Get_Up(wk, (0x0), -1);
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -328,11 +328,11 @@ void Passive20_0018(PLW* wk) {
 
 void Passive20_0019(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Wait_Get_Up(wk, (0x0), 1);
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -341,11 +341,11 @@ void Passive20_0019(PLW* wk) {
 
 void Passive20_0020(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Wait_Get_Up(wk, (0x3), -1);
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -548,11 +548,11 @@ void Passive20_0030(PLW* wk) {
 
 void Passive20_0031(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Walk(wk, 1, 32, 1);
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -788,11 +788,11 @@ void Passive20_0045(PLW* wk) {
 
 void Passive20_0046(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Keep_Status(wk, (0x2), -1);
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -881,11 +881,11 @@ void Passive20_0051(PLW* wk) {
 
 void Passive20_0052(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Normal_Attack(wk, 8, (0x102));
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -959,11 +959,11 @@ void Passive20_0057(PLW* wk) {
 
 void Passive20_0058(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Keep_Status(wk, (0x2), 1);
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -985,11 +985,11 @@ void Passive20_0059(PLW* wk) {
 
 void Passive20_0060(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Forced_Guard(wk, 0);
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -1052,11 +1052,11 @@ void Passive20_0063(PLW* wk) {
 
 void Passive20_0064(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Normal_Attack(wk, 8, (0x200));
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -1577,11 +1577,11 @@ void Passive20_0093(PLW* wk) {
 
 void Passive20_0094(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Lever_Attack(wk, 8, 0, (0x20));
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -1746,11 +1746,11 @@ void Passive20_0102(PLW* wk) {
 
 void Passive20_0103(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Normal_Attack(wk, 8, (0x42));
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -1817,11 +1817,11 @@ void Passive20_0107(PLW* wk) {
 
 void Passive20_0108(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Hi_Jump(wk, 1, 0);
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -1890,11 +1890,11 @@ void Passive20_0111(PLW* wk) {
 
 void Passive20_0112(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Lever_Attack(wk, 8, 1, (0x200));
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }
@@ -1974,11 +1974,11 @@ void Passive20_0117(PLW* wk) {
 
 void Passive20_0118(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Normal_Attack(wk, 8, (0x100));
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }

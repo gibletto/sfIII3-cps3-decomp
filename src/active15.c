@@ -1384,11 +1384,11 @@ void Pattern15_0074(PLW* wk) {
 
 void Pattern15_0075(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Approach_Walk(wk, 127, 2);
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }

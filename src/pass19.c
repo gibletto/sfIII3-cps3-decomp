@@ -3205,11 +3205,11 @@ void Passive19_0193(PLW* wk) {
 
 void Passive19_0194(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    default:
-        End_Pattern(wk);
-        break;
     case 0:
         Normal_Attack(wk, 8, (0x20));
+        break;
+    default:
+        End_Pattern(wk);
         break;
     }
 }

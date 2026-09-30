@@ -462,16 +462,16 @@ void combo_window_push(s8 PL, s8 KIND) {
 void combo_window_trans(s8 PL) {
     s8 PLS;
     if (cmb_stock[PL] != 0) {
-        if (CMST(PL, cst_read[PL]).pts_flag) {
-            switch (CMST(PL, cst_read[PL]).routine_num) {
+        if ((*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).pts_flag) {
+            switch ((*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).routine_num) {
             case 0:
                 end_flag[PL] = 0;
-                combo_message_set(PL, CMST(PL, cst_read[PL]).kind);
-                switch (CMST(PL, cst_read[PL]).kind) {
+                combo_message_set(PL, (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).kind);
+                switch ((*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).kind) {
                 case 0:
                 case 1:
                 case 2:
-                    combo_hitnum_set(PL, CMST(PL, cst_read[PL]).kind, CMST(PL, cst_read[PL]).hit);
+                    combo_hitnum_set(PL, (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).kind, (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).hit);
                     break;
                 case 3:
                 case 4:
@@ -479,39 +479,39 @@ void combo_window_trans(s8 PL) {
                 case 6:
                     break;
                 }
-                CMST(PL, cst_read[PL]).move[0] = cmb_window_move_tbl[CMST(PL, cst_read[PL]).kind];
-                CMST(PL, cst_read[PL]).x_posnum[0] = 0;
-                CMST(PL, cst_read[PL]).timer[0] = 8;
-                CMST(PL, cst_read[PL]).move[1] = combo_pts_set(PL, CMST(PL, cst_read[PL]).pts);
-                CMST(PL, cst_read[PL]).x_posnum[1] = 0;
-                CMST(PL, cst_read[PL]).routine_num++;
+                (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).move[0] = cmb_window_move_tbl[(*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).kind];
+                (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).x_posnum[0] = 0;
+                (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).timer[0] = 8;
+                (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).move[1] = combo_pts_set(PL, (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).pts);
+                (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).x_posnum[1] = 0;
+                (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).routine_num++;
                 break;
             case 1:
                 if (!(end_flag[PL] & 1)) {
-                    if (CMST(PL, cst_read[PL]).x_posnum[0] < CMST(PL, cst_read[PL]).move[0]) {
+                    if ((*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).x_posnum[0] < (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).move[0]) {
                         combo_window_slide(PL,
-                                                CMB_POS(Game_setting.mode, PL, CMST(PL, cst_read[PL]).x_posnum[0]),
+                                                cmb_pos_tbl[Game_setting.mode][PL][(*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).x_posnum[0]],
                                                 0,
-                                                CMST(PL, cst_read[PL]).x_posnum[0]);
-                        CMST(PL, cst_read[PL]).x_posnum[0]++;
+                                                (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).x_posnum[0]);
+                        (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).x_posnum[0]++;
                     } else {
                         end_flag[PL] |= 1;
                     }
                 }
                 if (!(end_flag[PL] & 2)) {
-                    CMST(PL, cst_read[PL]).timer[0]--;
-                    if (CMST(PL, cst_read[PL]).timer[0] < 0) {
-                        if (CMST(PL, cst_read[PL]).x_posnum[1] < CMST(PL, cst_read[PL]).move[1] + 2) {
-                            if (CMST(PL, cst_read[PL]).x_posnum[1] < CMST(PL, cst_read[PL]).move[1]) {
+                    (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).timer[0]--;
+                    if ((*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).timer[0] < 0) {
+                        if ((*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).x_posnum[1] < (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).move[1] + 2) {
+                            if ((*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).x_posnum[1] < (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).move[1]) {
                                 combo_window_slide(PL,
-                                                        CMB_POS(Game_setting.mode, PL, CMST(PL, cst_read[PL]).x_posnum[1]),
+                                                        cmb_pos_tbl[Game_setting.mode][PL][(*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).x_posnum[1]],
                                                         1,
-                                                        CMST(PL, cst_read[PL]).x_posnum[1]);
+                                                        (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).x_posnum[1]);
                             } else {
                                 combo_window_slide(PL,
-                                                        CMB_POS(Game_setting.mode, PL, CMST(PL, cst_read[PL]).x_posnum[1]),
+                                                        cmb_pos_tbl[Game_setting.mode][PL][(*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).x_posnum[1]],
                                                         1,
-                                                        CMST(PL, cst_read[PL]).move[1] - 1);
+                                                        (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).move[1] - 1);
                             }
                             (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).x_posnum[1]++;
                         } else {
@@ -520,23 +520,23 @@ void combo_window_trans(s8 PL) {
                     }
                 }
                 if ((end_flag[PL] & 3) == 3) {
-                    CMST(PL, cst_read[PL]).routine_num++;
-                    CMST(PL, cst_read[PL]).timer[1] = cmb_window_time_tbl[CMST(PL, cst_read[PL]).kind];
+                    (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).routine_num++;
+                    (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).timer[1] = cmb_window_time_tbl[(*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).kind];
                     if (PL == 0) {
                         PLS = 1;
                     } else {
                         PLS = 0;
                     }
-                    SCORE_PLUS(PLS, CMST(PL, cst_read[PL]).pts);
+                    SCORE_PLUS(PLS, (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).pts);
                     if (plw[PLS].wu.operator) {
                         Disp_Player_Score(PLS);
                     }
                 }
                 break;
             case 2:
-                CMST(PL, cst_read[PL]).timer[1]--;
-                if (CMST(PL, cst_read[PL]).timer[1] == 0) {
-                    combo_window_erase(PL, CMST(PL, cst_read[PL]).kind, 0);
+                (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).timer[1]--;
+                if ((*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).timer[1] == 0) {
+                    combo_window_erase(PL, (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).kind, 0);
                     combo_window_erase(PL, 7, 1);
                     if (cst_read[PL] == 3) {
                         cst_read[PL] = 0;
@@ -548,14 +548,14 @@ void combo_window_trans(s8 PL) {
                 break;
             }
         } else {
-            switch (CMST(PL, cst_read[PL]).routine_num) {
+            switch ((*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).routine_num) {
             case 0:
-                combo_message_set(PL, CMST(PL, cst_read[PL]).kind);
-                switch (CMST(PL, cst_read[PL]).kind) {
+                combo_message_set(PL, (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).kind);
+                switch ((*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).kind) {
                 case 0:
                 case 1:
                 case 2:
-                    combo_hitnum_set(PL, CMST(PL, cst_read[PL]).kind, CMST(PL, cst_read[PL]).hit);
+                    combo_hitnum_set(PL, (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).kind, (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).hit);
                     break;
                 case 3:
                 case 4:
@@ -563,28 +563,28 @@ void combo_window_trans(s8 PL) {
                 case 6:
                     break;
                 }
-                CMST(PL, cst_read[PL]).move[0] = cmb_window_move_tbl[CMST(PL, cst_read[PL]).kind];
-                CMST(PL, cst_read[PL]).x_posnum[0] = 0;
-                CMST(PL, cst_read[PL]).routine_num++;
+                (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).move[0] = cmb_window_move_tbl[(*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).kind];
+                (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).x_posnum[0] = 0;
+                (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).routine_num++;
                 break;
             case 1:
-                if (CMST(PL, cst_read[PL]).x_posnum[0] < CMST(PL, cst_read[PL]).move[0]) {
+                if ((*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).x_posnum[0] < (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).move[0]) {
                     combo_window_slide(PL,
-                                            CMB_POS(Game_setting.mode, PL, CMST(PL, cst_read[PL]).x_posnum[0]),
+                                            cmb_pos_tbl[Game_setting.mode][PL][(*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).x_posnum[0]],
                                             0,
-                                            CMST(PL, cst_read[PL]).x_posnum[0]);
-                    CMST(PL, cst_read[PL]).x_posnum[0]++;
+                                            (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).x_posnum[0]);
+                    (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).x_posnum[0]++;
                 } else {
-                    CMST(PL, cst_read[PL]).timer[1] = 36;
-                    CMST(PL, cst_read[PL]).routine_num++;
+                    (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).timer[1] = 36;
+                    (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).routine_num++;
                 }
                 break;
             case 2:
-                CMST(PL, cst_read[PL]).timer[1]--;
-                if (CMST(PL, cst_read[PL]).timer[1] == 0) {
-                    combo_window_erase(PL, CMST(PL, cst_read[PL]).kind, 0);
-                    if (CMST(PL, cst_read[PL]).pts_flag) {
-                        CMST(PL, cst_read[PL]).routine_num++;
+                (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).timer[1]--;
+                if ((*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).timer[1] == 0) {
+                    combo_window_erase(PL, (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).kind, 0);
+                    if ((*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).pts_flag) {
+                        (*(CMST_WIN_R*)&cmst_buff[PL][cst_read[PL]]).routine_num++;
                         return;
                     }
                     if (cst_read[PL] == 3) {

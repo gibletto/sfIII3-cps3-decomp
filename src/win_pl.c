@@ -706,14 +706,14 @@ void Win_10000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
     case 0:
         if (set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
-            set_field_hosei_flag(&PLAYER(wk->wu.id), bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
+            set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
         }
         win_rno[0] = win_rno[1] = 0;
         wk->wu.routine_no[3]++;
         work = win_select(wk, 3);
         if (Round_num >= (Battle_Round[Play_Type] * 2) ||
             PL_Wins[wk->wu.id] >= Battle_Round[Play_Type] + 1) {
-            work2 = wk->wu.xyz[0].disp.pos - PLAYER(id_w).wu.xyz[0].disp.pos;
+            work2 = wk->wu.xyz[0].disp.pos - plw[id_w].wu.xyz[0].disp.pos;
             if (work2 < 0) {
                 work2 = -work2;
             }
@@ -725,7 +725,7 @@ void Win_10000(PLW* wk) {
                 }
             } else if (work > 1) {
                 if (work & 1) {
-                    if (PLAYER(id_w).wu.char_index != 67) {
+                    if (plw[id_w].wu.char_index != 67) {
                         win_rno[0] = 1;
                     } else {
                         win_rno[0] = 3;
