@@ -10,7 +10,6 @@
  * Type 1 (K7_move_type_1) blinks the player from K7_blink_tbl while the art is active and
  * switches to K7_last_tbl when the gauge is nearly spent.
  * On exit the routine restores colour, display and the default attack/defence values.
- * chkNameExport returns the alternative name spelling index used outside region 1.
  */
 
 #include "structs.h"
@@ -24,18 +23,6 @@
 #include "end_sub.h"
 #include "CHARMOVE.h"
 #include "EFFK7.h"
-/* Outside region 1, name 21 is shown with its alternative spelling, two entries on. */
-/* provisional name */
-s32 chkNameExport(s16 name_no)
-{
-    if (Country != 1 && name_no == 21) {
-        return 2;
-    }
-    return 0;
-}
-
-
-
 void effect_K7_move(WORK_Other* ewk) {
     PLW* mwk = (PLW*)ewk->my_master;
     switch (ewk->wu.routine_no[0]) {

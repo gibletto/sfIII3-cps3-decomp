@@ -10,6 +10,7 @@
  * cal_top_of_position_y / cal_time_of_sign_change / cal_move_dir_forecast predict the top
  * of a jump and its timing.
  * Used by effects and stage objects that fly to target positions.
+ * Convert_BCD packs numbers into BCD.
  */
 
 #include "structs.h"
@@ -506,4 +507,24 @@ s32 cal_move_dir_forecast(WORK* wk, s16 tm) {
     ps[1].dp = wk->mvxy.d[1].sp * (tm * tm / 2);
     ps[1].dp = wk->mvxy.a[1].sp * tm + ps[1].dp + wk->xyz[1].cal;
     return (s16)caldir_pos_032(wk->xyz[0].disp.pos, wk->xyz[1].disp.pos, ps[0].rp.h, ps[1].rp.h);
+}
+
+
+s32 Convert_BCD(v, digits)
+    s16 v;
+    s16 digits;
+{
+    s16 bcd;
+    switch (digits) {
+    case 2:
+        bcd = (v % 100 / 10) << 4;
+        break;
+    case 3:
+        bcd = ((v % 100 / 10) << 4) + ((v / 100) << 8);
+        break;
+    default:
+        bcd = ((v % 100 / 10) << 4) + ((v / 1000) << 12) + ((v / 100) << 8);
+        break;
+    }
+    return (s16)(bcd + v % 10);
 }

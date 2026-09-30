@@ -6,4 +6,6 @@
 s32 check2_A6_shortcut(void);
 void effect_A6_move(WORK_Other_CONN* ewk);
 
+s32 effect_A6_init(WORK_Other* mwk);
+
 #endif

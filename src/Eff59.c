@@ -7,9 +7,8 @@
  * leaves the BG range and frees it when the master goes away; Check_Break_Into_59 and
  * Check_Break_Into_59_ID04 follow the master's pattern and restart the name when a new
  * challenger breaks in.
- * The file also holds three effect 58 type routines called from EFF58: EFF58_Type_05 (a marker
- * following the player), SF33rd_Logo (puts the logo and fades it) and EFF58_Type_11 (steps the
- * tone palette through six levels).
+ * The file also holds two effect 58 type routines called from EFF58: SF33rd_Logo (puts the logo
+ * and fades it) and EFF58_Type_11 (steps the tone palette through six levels).
  */
 
 #include "structs.h"
@@ -23,47 +22,7 @@
 #include "EFFECT.h"
 #include "CHARMOVE.h"
 #include "Eff59.h"
-
-
-
-void EFF58_Type_05(WORK_Other* ewk) {
-    s16 x;
-    s32 pl;
-    switch (ewk->wu.routine_no[2]) {
-    case 0:
-        ewk->wu.routine_no[2]++;
-        ewk->wu.cgromtype = 1;
-        ewk->wu.my_col_mode = 0x4200;
-        ewk->wu.my_col_code = 0x2040;
-        ewk->wu.my_family = 2;
-        pl = ewk->wu.dir_old;
-        ewk->wu.my_priority = plw[pl].wu.my_priority - 10;
-        ewk->wu.position_z = plw[ewk->wu.dir_old].wu.position_z - 10;
-        ewk->wu.char_index = 26;
-        ewk->wu.char_table[0] = sel_pl_char_table;
-        ewk->wu.disp_flag = 1;
-        ((void(*)(WORK* wk, s16 koc, s32 index, s32 ip, s16 scf))set_char_move_init2)(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 11, 0);
-        break;
-    case 1:
-        x = Separate_Area[ewk->wu.dir_old][ewk->wu.dir_step - 1];
-        if (plw[ewk->wu.dir_old].wu.rl_waza == 0) {
-            x = -x;
-        }
-        ewk->wu.xyz[0].disp.pos = plw[ewk->wu.dir_old].wu.xyz[0].disp.pos + x;
-        ewk->wu.xyz[1].disp.pos = plw[ewk->wu.dir_old].wu.xyz[1].disp.pos + 32;
-        ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
-        ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-        sort_push_request4(ewk);
-        break;
-    default:
-        all_cgps_put_back(ewk);
-        push_effect_work(&ewk->wu);
-        break;
-    }
-}
-
-
-
+#include "EFF58.h"
 void SF33rd_Logo(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
     case 0:

@@ -1,7 +1,6 @@
 /*
- * END_18.C  Ending 18 (end_18000), plus ending 17's cell change
+ * END_18.C  Ending 18 (end_18000)
  *
- * end_1100_cell_change rewrites four BG0 cells for ending 17's scene 4 picture.
  * end_18000 runs an eleven-scene ending and then hands over to the staff roll.
  * end_1800_move dispatches the BG0 scene handlers, which place the layer, load palettes,
  * start effect E6 objects and show messages; scene 9 flickers the layer by alternating its
@@ -21,18 +20,6 @@
 #include "effe6.h"
 #include "aboutspr.h"
 #include "end_18.h"
-
-
-
-void end_1100_cell_change(void) {
-    bg_cell_write(0, 0, 11, (u32)end_1100_scrn_data, 0, 0x220);
-    bg_cell_write(0, 0x40, 12, (u32)end_1100_scrn_data, 0, 0x220);
-    bg_cell_write(0, 0x2000, 9, (u32)end_1100_scrn_data, 0, 0x220);
-    bg_cell_write(0, 0x2040, 10, (u32)end_1100_scrn_data, 0, 0x220);
-}
-
-
-
 /* provisional name */
 void end_18000(u16 pl_num) {
     switch (end_w.r_no_1) {

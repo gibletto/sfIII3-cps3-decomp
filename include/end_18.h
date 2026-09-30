@@ -3,7 +3,6 @@
 
 #include "structs.h"
 
-void end_1100_cell_change(void);
 void end_1800_0001(void);
 void end_1800_0005(void);
 void end_1800_0006(void);

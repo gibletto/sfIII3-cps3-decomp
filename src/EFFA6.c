@@ -8,7 +8,10 @@
  * loads the line's graphics and builds its connected sprites. The line slides in from the side of
  * its portrait and follows the parent's depth. Switch bit 0x1000 of that player skips to the end
  * (Next_Step); Auto_Cut_Sub cuts the current wait short. Freed on Suicide[3].
- * The init lives in EFFA6_INIT.C.
+ * effect_A6_init is called by the effect 76 plate for orders 0x43 / 0x44: it creates the work,
+ * records the speaking character (My_char of Player_id) and the parent plate, starts a 60-frame
+ * delay and chooses which half of the character's script (routine_no[5] = 0 or 32) and which x
+ * position to use from the plate side and Player_id.
  */
 
 #include "structs.h"
@@ -19,6 +22,7 @@
 #include "aboutspr.h"
 #include "EFFECT.h"
 #include "EFFA6.h"
+#include "EFFA6_INIT.h"
 
 #pragma inline(check2_A6_shortcut)
 
@@ -238,4 +242,39 @@ void effect_A6_move(WORK_Other_CONN* ewk) {
         push_effect_work(&ewk->wu);
         break;
     }
+}
+
+
+s32 effect_A6_init(WORK_Other* mwk) {
+    WORK_Other_CONN* ewk;
+    s16 ix;
+    if ((ix = pull_effect_work(4)) == -1) {
+        return -1;
+    }
+    ewk = (WORK_Other_CONN*)frw[ix];
+    ewk->wu.routine_no[0] = 0;
+    effA6_work_set(ewk);
+    ewk->master_player = My_char[Player_id];
+    ewk->my_master = (u32*)mwk;
+    ewk->wu.dir_old = mwk->wu.dir_old;
+    ewk->wu.routine_no[6] = 60;
+    switch (ewk->wu.dir_old) {
+    case 0x43:
+        if (!Player_id) {
+            ewk->wu.routine_no[5] = 0;
+        } else {
+            ewk->wu.routine_no[5] = 32;
+        }
+        ewk->wu.position_x = 504;
+        break;
+    default:
+        if (Player_id) {
+            ewk->wu.routine_no[5] = 0;
+        } else {
+            ewk->wu.routine_no[5] = 32;
+        }
+        ewk->wu.position_x = 632;
+        break;
+    }
+    return 0;
 }

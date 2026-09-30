@@ -11,4 +11,6 @@ void get_new_parts_data(WORK_Other* ewk, PLW* mwk);
 void effect_01_move(WORK_Other* ewk);
 void set_parts_disp_flag(WORK_Other* ewk, PLW* mwk);
 
+s32 effect_01_init(WORK* wk, u8 koolc);
+
 #endif

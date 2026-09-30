@@ -8,8 +8,7 @@
  * with a tick rate from the game-speed setting and flashing below 30 and 10.
  * bcount_cont_* and bcounter_* run the 50-second bonus-stage timer and count it down for the
  * result tally.
- * The file starts with end_waku_write, which draws or clears the ending letterbox, and
- * debug_scrfont_view, a debug viewer for scroll characters and palettes.
+ * The file starts with debug_scrfont_view, a debug viewer for scroll characters and palettes.
  */
 
 #include "structs.h"
@@ -20,47 +19,6 @@
 #include "PLS01.h"
 #include "VITAL.h"
 #include "cps3.h"
-
-
-
-/* provisional name */
-void end_waku_write(s8 mode) {
-    switch (mode) {
-    case 0:
-        ToneDown(16);
-        ToneDown(17);
-        sc_trans_src = end_waku_chr;
-        sc_trans_dst = (u16*)(SS_RAM + 0x8800);
-        sc_chr_trans(1);
-        sc_fill_rect(0, 0, 48, 4, 0xAF, 62);
-        sc_fill_rect(0, 4, 48, 18, 31, 62);
-        sc_fill_rect(0, 22, 48, 6, 0xAF, 62);
-        break;
-    case 1:
-        ToneDown(16);
-        ToneDown(17);
-        sc_trans_src = end_waku_chr;
-        sc_trans_dst = (u16*)(SS_RAM + 0x8800);
-        sc_chr_trans(1);
-        sc_fill_rect(0, 0, 48, 4, 0xAF, 62);
-        sc_fill_rect(0, 4, 48, 18, 31, 62);
-        break;
-    case 2:
-        sc_fill_rect(0, 22, 48, 6, 0xAF, 62);
-        break;
-    case -1:
-        ToneDown(18);
-        ToneDown(19);
-        sc_trans_src = sc_blank_chr;
-        sc_trans_dst = (u16*)(SS_RAM + 0x8800);
-        sc_chr_trans(1);
-        tilemap_clear_rect(0, 0, 48, 27);
-        break;
-    }
-}
-
-
-
 /* provisional name */
 void debug_scrfont_view(void) {
     s32 i;

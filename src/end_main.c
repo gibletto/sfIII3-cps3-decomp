@@ -24,6 +24,7 @@
 #include "bg000.h"
 #include "end_sub.h"
 #include "VITAL.h"
+#include "cmb_win.h"
 #include "EFFF9.h"
 #include "fifo.h"
 #include "bg_sub.h"

@@ -11,7 +11,8 @@
  * Player_control is the per-frame player control of a fight, called from Game2_1 (Game_Main) and
  * end_sub: it runs the player_main_process phase, body touch and push-back resolution, quake and
  * hit requests, stores the 48-entry afterimage (zanzou) history, draws both players and runs the
- * super-art and stun gauges.
+ * super-art and stun gauges. plcnt_init is player-control routine 0: it runs the init routine
+ * for the current appear_type from appear_initalize and moves both player works.
  */
 
 #include "structs.h"
@@ -457,4 +458,10 @@ void Player_control(void) {
         spgauge_cont_main();
         stngauge_cont_main();
     }
+}
+
+
+void plcnt_init(void) {
+    appear_initalize[appear_type]();
+    move_player_work();
 }

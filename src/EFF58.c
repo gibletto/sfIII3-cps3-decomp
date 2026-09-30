@@ -7,6 +7,7 @@
  * screen switch or fill, the title logo, sound and BGM requests, set Next_Step, slide a BG
  * layer to its target, set a Suicide flag or move a virtual BG. Used by the game flow,
  * select, continue and ranking screens (Game_Main, Manage, Win, sel_pl, next_cpu, ...).
+ * EFF58_Type_05 is the type routine for a marker that follows the player.
  */
 
 #include "structs.h"
@@ -456,6 +457,43 @@ void EFF58_Type_02(WORK_Other* ewk) {
         break;
     case 2:
         ewk->wu.routine_no[2]++;
+        break;
+    default:
+        all_cgps_put_back(ewk);
+        push_effect_work(&ewk->wu);
+        break;
+    }
+}
+
+
+void EFF58_Type_05(WORK_Other* ewk) {
+    s16 x;
+    s32 pl;
+    switch (ewk->wu.routine_no[2]) {
+    case 0:
+        ewk->wu.routine_no[2]++;
+        ewk->wu.cgromtype = 1;
+        ewk->wu.my_col_mode = 0x4200;
+        ewk->wu.my_col_code = 0x2040;
+        ewk->wu.my_family = 2;
+        pl = ewk->wu.dir_old;
+        ewk->wu.my_priority = plw[pl].wu.my_priority - 10;
+        ewk->wu.position_z = plw[ewk->wu.dir_old].wu.position_z - 10;
+        ewk->wu.char_index = 26;
+        ewk->wu.char_table[0] = sel_pl_char_table;
+        ewk->wu.disp_flag = 1;
+        ((void(*)(WORK* wk, s16 koc, s32 index, s32 ip, s16 scf))set_char_move_init2)(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 11, 0);
+        break;
+    case 1:
+        x = Separate_Area[ewk->wu.dir_old][ewk->wu.dir_step - 1];
+        if (plw[ewk->wu.dir_old].wu.rl_waza == 0) {
+            x = -x;
+        }
+        ewk->wu.xyz[0].disp.pos = plw[ewk->wu.dir_old].wu.xyz[0].disp.pos + x;
+        ewk->wu.xyz[1].disp.pos = plw[ewk->wu.dir_old].wu.xyz[1].disp.pos + 32;
+        ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
+        ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
+        sort_push_request4(ewk);
         break;
     default:
         all_cgps_put_back(ewk);

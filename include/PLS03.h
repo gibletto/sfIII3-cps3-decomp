@@ -3,7 +3,6 @@
 
 #include "structs.h"
 
-s32 short_to_bcd(s16 ix);
 s32 check_full_gauge_attack(PLW* wk, s8 always);
 s32 check_full_gauge_attack2(PLW* wk, s8 always);
 s32 check_leap_attack(PLW* wk);

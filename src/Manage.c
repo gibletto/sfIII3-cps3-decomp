@@ -32,7 +32,7 @@
 #include "textsound.h"
 #include "SE.h"
 #include "Eff81.h"
-#include "EFFB2_INIT.h"
+#include "effb2.h"
 #include "Grade.h"
 #include "appear.h"
 #include "ta_sub.h"

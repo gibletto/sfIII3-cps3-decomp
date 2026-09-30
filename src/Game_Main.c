@@ -39,6 +39,7 @@
 #include "spgauge.h"
 #include "EFFECT.h"
 #include "effJ6.h"
+#include "EFFJ0.h"
 #include "PLCNTDAT.h"
 #include "PLCNT3.h"
 #include "sys_test.h"
@@ -57,6 +58,7 @@
 #include "tate00.h"
 #include "ta_sub.h"
 #include "Game_Main.h"
+#include "eeprom.h"
 
 
 

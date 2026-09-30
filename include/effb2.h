@@ -7,4 +7,6 @@ s32 b3_Break_Into_check(WORK_Other* ewk);
 void effect_B2_move(WORK_Other* ewk);
 s32 fight_col_chg_sub(WORK_Other* ewk);
 
+s32 effect_B2_init(void);
+
 #endif

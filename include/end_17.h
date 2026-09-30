@@ -13,4 +13,6 @@ void end_17000(u16 pl_num);
 void end_1102_move(void);
 void end_1100_cell_set(void);
 
+void end_1100_cell_change(void);
+
 #endif

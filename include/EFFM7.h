@@ -14,4 +14,6 @@ void effm8_move_app(WORK_Other* ewk);
 void effect_M8_move(WORK_Other* ewk);
 void effm8_move_win(WORK_Other* ewk);
 
+void plcnt_init(void);
+
 #endif

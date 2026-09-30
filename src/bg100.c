@@ -17,6 +17,10 @@
 #include "bg000.h"
 #include "EFF29.h"
 #include "bg100.h"
+#include "aboutspr.h"
+#include "eff05.h"
+#include "eff06.h"
+#include "EFF44.h"
 
 
 

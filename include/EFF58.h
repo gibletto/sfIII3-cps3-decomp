@@ -16,4 +16,6 @@ void effect_57_move(WORK_Other* ewk);
 s32 effect_58_init(s16 id, s16 time0, s16 option);
 void effect_58_move(WORK_Other* ewk);
 
+void EFF58_Type_05(WORK_Other* ewk);
+
 #endif

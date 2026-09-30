@@ -39,4 +39,6 @@ void cmsd_x_initial_speed(MotionState* cc);
 void cmsd_y_delta_speed(MotionState* cc);
 void cmsd_y_initial_speed(MotionState* cc);
 
+s32 Convert_BCD();
+
 #endif

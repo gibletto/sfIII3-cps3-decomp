@@ -3,7 +3,6 @@
 
 #include "structs.h"
 
-void end_waku_write(s8 mode);
 void debug_scrfont_view(void);
 void vital_cont_init(void);
 s32 vital_parts_allwrite(s8 pl);
