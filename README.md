@@ -30,10 +30,30 @@ and loads it over the ROM files.
     data/     game tables
     include/  headers
     lib/      the compiler's run-time routines, as linked into the program
-    bin/      Hitachi SHC toolchain
+    bin/      Hitachi SHC toolchain (two stages patched, see below; the originals are in bin/original)
     sf3.sub   link order and section addresses
     functions.tsv  every routine of the arcade program: arcade address, size, name, file
     tools/    cps3rom.py: reads the ROM set, writes the new one
+
+## Compiler
+
+The compiler is SHC 5.0 Release 26 with four changes, each one a rule the arcade's own compiler visibly follows
+throughout the ROM but Release 26 doesn't:
+
+- a switch case is tested with `bt case` / `bra default` (Release 26 folds it into `bf default`), and a jump to
+  a case label that is also the next block is kept;
+- functions keep a separate `rts` at each return (Release 26 merges identical returns; jumps and labels are still
+  shared, as in the arcade);
+- a constant loaded into r0 is loaded again after a conditional branch (Release 26 carries it across);
+- constants passed to calls count when deciding which values to keep in a register.
+
+The first three are in `shcpep.exe`, rebuilt from a decompilation of the original; the fourth is a patch to
+`shcmdl.exe`. Setting `SWITCH_ARCADE_BRANCH`, `SWITCH_ARCADE_JUMP`, `XJUMP_OFF`, `PEP_R0_FORGET` and
+`MDL_ARG_CONST` to 0 gives Release 26's behaviour back, identical to the files in `bin/original`.
+
+With the changes, 6,582 of the 9,822 C routines compile to the arcade's instructions (3,110 with the original
+Release 26), and 4,999 to its exact bytes (1,015). Over 254 Fightcade replays compared with the original ROM,
+244 now keep identical game state throughout (218 before) and 227 identical slowdown (214).
 
 ## Fightcade replays
 
