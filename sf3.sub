@@ -1,8 +1,8 @@
 ROM (D,R)
 START CVECT(06000000),P(06000400),CTBL,D(0613BD98),C(06620000),R,B(02000000),CSNDBANK(06788000),CSND(0678C000),CCDVOL(067FFFE0)
 INPUT obj\fixed_addr.obj
-INPUT obj\vbl_hook.obj
 INPUT obj\intr.obj
+INPUT obj\vbl_hook.obj
 INPUT obj\Game.obj
 INPUT obj\Entry.obj
 INPUT obj\tasksw.obj

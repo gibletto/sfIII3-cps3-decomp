@@ -40,7 +40,7 @@ void After_Bonus_End(void);
 void Select_CPU_1st(void);
 u8 * Select_CPU_3rd(void);
 void Select_CPU_4th(void);
-s16 Next_CPU(void);
+s32 Next_CPU(void);
 s32 Select_CPU_First(void);
 s16 Next_Q(void);
 s32 After_Bonus(void);

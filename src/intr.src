@@ -492,33 +492,6 @@ vbl_display_list:
           MOV.L       @R15+,R0
           RTE
           NOP
-          .ALIGN      4
-p_task_tick_mask:
-          .DATA.L     _task_tick_mask
-p_frame_tick:
-          .DATA.L     _task_sleep_tick
-p_system_ctrl_flag:
-          .DATA.L     _system_ctrl_flag
-p_vblank_user_hook:
-          .DATA.L     _vblank_user_hook
-p_sprite_dma_end_wait:
-          .DATA.L     _sprite_dma_end_wait
-p_bg_vbl_trans_flag:
-          .DATA.L     _bg_vbl_trans_flag
-p_bg_w_E4:
-          .DATA.L     _bg_w+H'E4    ; &bg_w.bgw[1]
-p_oh_opening_demo:
-          .DATA.L     _oh_opening_demo
-p_sprite_display_list_build:
-          .DATA.L     _sprite_display_list_build
-p_frame_ready:
-          .DATA.L     _frame_ready
-p_sound_driver_tick:
-          .DATA.L     _sound_driver_tick
-k_irq12_ack:
-          .DATA.L     IRQ12_ACK
-k_1800:
-          .DATA.W     H'1800
 _irq_spare_ack_intr:
           MOV.L       R0,@-R15
           MOV.L       p_isp_irq_spare,R0
@@ -536,11 +509,6 @@ _irq_spare_ack_intr:
           MOV.L       @R15+,R0
           RTE
           NOP
-          .ALIGN      4
-p_isp_irq_spare:
-          .DATA.L     _isp_irq_spare
-k_irq14_ack:
-          .DATA.L     IRQ14_ACK
 _frt_compare_intr:
           MOV.L       R0,@-R15
           MOV.L       p_isp_frt_compare,R0
@@ -587,17 +555,6 @@ frt_ack:
           MOV.L       @R15+,R0
           RTE
           NOP
-          .ALIGN      4
-p_isp_frt_compare:
-          .DATA.L     _isp_frt_compare
-p_frt_tick_count_2:
-          .DATA.L     _frt_tick_count
-p_test_flag_2:
-          .DATA.L     _test_flag
-p_coin_sw_sample_2:
-          .DATA.L     _coin_sw_sample
-k_sh2_ftcsr:
-          .DATA.W     SH2_FTCSR
 _frt_overflow_intr:
           MOV.L       R0,@-R15
           MOV.L       p_isp_frt_overflow,R0
@@ -608,7 +565,7 @@ _frt_overflow_intr:
           MOV.L       R4,@-R15
           MOV.L       R3,@-R15
           MOV         #1,R3
-          MOV.W       k_sh2_ftcsr_2,R5
+          MOV.W       k_sh2_ftcsr,R5
           MOV.B       @R5,R4
           AND         R3,R4
           MOV.B       R4,@R5
@@ -619,50 +576,53 @@ _frt_overflow_intr:
           MOV.L       @R15+,R0
           RTE
           NOP
+k_1800:
           .DATA.W     H'1800
-k_sh2_ftcsr_2:
+k_sh2_ftcsr:
           .DATA.W     SH2_FTCSR
           .DATA.W     H'0000
-          .DATA.W     H'0200
-          .DATA.W     H'7F04
           .ALIGN      4
-; 06000814-0600088F below: bytes left over from an earlier link, reached by nothing. A copy of this
-; module's literal pool and a small routine, kept as data; the addresses in them are of that older
-; layout (06000824 holds 0600083C, where the routine sat then; it is at 06000864 now).
+p_task_tick_mask:
+          .DATA.L     _task_tick_mask
+p_frame_tick:
           .DATA.L     _task_sleep_tick
-          .DATA.W     H'0200
-          .DATA.W     H'7F08
-          .DATA.W     H'0600
-          .DATA.W     H'083C
-          .DATA.W     H'0613
-          .DATA.W     H'6996
-          .DATA.W     H'0202
-          .DATA.W     H'805C
-          .DATA.W     H'0202
-          .DATA.W     H'6C90
-          .ALIGN      4
+p_system_ctrl_flag:
+          .DATA.L     _system_ctrl_flag
+p_vblank_user_hook:
+          .DATA.L     _vblank_user_hook
+p_sprite_dma_end_wait:
+          .DATA.L     _sprite_dma_end_wait
+p_bg_vbl_trans_flag:
+          .DATA.L     _bg_vbl_trans_flag
+p_bg_w_E4:
+          .DATA.L     _bg_w+H'E4    ; &bg_w.bgw[1]
+p_oh_opening_demo:
           .DATA.L     _oh_opening_demo
+p_sprite_display_list_build:
           .DATA.L     _sprite_display_list_build
-          .DATA.W     H'0206
-          .DATA.W     H'AC90
-          .ALIGN      4
+p_frame_ready:
+          .DATA.L     _frame_ready
+p_sound_driver_tick:
           .DATA.L     _sound_driver_tick
-          .DATA.W     H'2510
-          .DATA.W     H'0000
-          .DATA.W     H'0200
-          .DATA.W     H'007C
-          .DATA.W     H'2512
-          .DATA.W     H'0000
-          .DATA.W     H'0200
-          .DATA.W     H'008C
-          .DATA.W     H'0200
-          .DATA.W     H'0000
-          .DATA.W     H'0200
-          .DATA.W     H'0094
-          .ALIGN      4
+k_irq12_ack:
+          .DATA.L     IRQ12_ACK
+p_isp_irq_spare:
+          .DATA.L     _isp_irq_spare
+k_irq14_ack:
+          .DATA.L     IRQ14_ACK
+p_isp_frt_compare:
+          .DATA.L     _isp_frt_compare
+p_frt_tick_count_2:
+          .DATA.L     _frt_tick_count
+p_test_flag_2:
+          .DATA.L     _test_flag
+p_coin_sw_sample_2:
           .DATA.L     _coin_sw_sample
 p_isp_frt_overflow:
           .DATA.L     _isp_frt_overflow
+; 06000810-0600083B: a small routine that nothing calls, kept as data words. It tests the byte at
+; 020155F7 and stores 3F00 to 0206AAA0 when bit 0 is set and 0010 to 0206AAA4 when bit 7 is set;
+; its literal pool follows it.
           .DATA.W     H'D407
           .DATA.W     H'6040
           .DATA.W     H'C801

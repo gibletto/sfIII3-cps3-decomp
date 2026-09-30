@@ -47,9 +47,7 @@ You'd need a custom FBNeo build that can:
 - run the replay on the original ROM and save a state once the scheduler (`Game_Task`) is idle, so no task is
   halfway through a function;
 - load that state into this build with a patch applied (registers and RAM words), then carry on feeding the
-  replay's inputs from that frame;
-- point the CPS3 idle-loop speedup at this build's `Game_Task` loop instead of the arcade address, or the timing
-  will be off.
+  replay's inputs from that frame.
 
 Making the patch is the fiddly part:
 

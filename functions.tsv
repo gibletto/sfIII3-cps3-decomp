@@ -1,5 +1,5 @@
 # arcade address	size	name (C spelling: the link symbol without its leading _)	file
-06000400	24	exc_trapa	src/intr.src
+06000400	24	exc_trapa	src/fixed_addr.src
 06000418	24	exc_illegal_instr	src/intr.src
 06000430	24	exc_illegal_slot	src/intr.src
 06000448	24	exc_cpu_addr_err	src/intr.src
@@ -9,7 +9,7 @@
 0600071E	32	irq_spare_ack_intr	src/intr.src
 0600073E	88	frt_compare_intr	src/intr.src
 06000796	166	frt_overflow_intr	src/intr.src
-0600083C	4	vblank_user_hook	src/fixed_addr.src
+0600083C	4	vblank_user_hook	src/vbl_hook.c
 06000840	268	Game_Task	src/Game.c
 0600094C	140	task_sleep_tick	src/Game.c
 060009D8	74	init_task_stacks	src/Entry.c

@@ -888,6 +888,7 @@ void zoom_ud_check(void) {
     s16 work;
     s16 work2;
     s16 pos_w;
+    s16 x2;
     if (bg_app) {
         return;
     }
@@ -897,16 +898,19 @@ void zoom_ud_check(void) {
     if (Bonus_Game_Flag) {
         return;
     }
-    work2 = zoom_request_flag & 0xFF;
+    work2 = zoom_request_flag;
+    work2 &= 0xFF;
     bg_w.frame_deff = 64 - zoom_request_level;
-    work = (~(zoom_req_flag_old) & (zoom_request_flag) & 0xFF);
+    work = ~zoom_req_flag_old & zoom_request_flag;
+    work &= 0xFF;
     if (work && !bg_w.frame_flag) {
         bg_w.frame_flag = 1;
         bg_w.old_frame_flag = 1;
         bg_w.center_y = 224 - scr_req_y;
+        x2 = scr_req_x + 512;
         if (scr_req_x < bg_w.bgw[1].l_limit2) {
             if (bg_w.bgw[1].zuubun != 0) {
-                bg_w.center_x = scr_req_x + 512;
+                bg_w.center_x = x2;
                 pos_w = bg_w.bgw[1].wxy[0].disp.pos + 512;
             } else {
                 bg_w.center_x = scr_req_x;
@@ -919,7 +923,7 @@ void zoom_ud_check(void) {
             }
         } else if (bg_w.bgw[1].r_limit2 < scr_req_x) {
             if (bg_w.bgw[1].zuubun != 0) {
-                bg_w.center_x = scr_req_x + 512;
+                bg_w.center_x = x2;
                 pos_w = bg_w.bgw[1].wxy[0].disp.pos + 512;
             } else {
                 bg_w.center_x = scr_req_x;
@@ -1398,6 +1402,7 @@ void Bg_Family_Set(void) {
         x = -x & 0x3FF;
         y = (768 - (y & 0x3FF)) & 0x3FF;
         Family_Set_W(i + 1, x, y);
+        continue;
     }
 }
 
@@ -1496,22 +1501,20 @@ void bg_pos_hosei_sub3(s16 bg_no) {
     s32 pos;
     s32 pos2;
     volatile s16 work;
+    volatile s16 work2;
     pos2 = bg_w.bgw[bg_no].wxy[0].disp.pos;
-    work = bg_w.pos_offset;
     pos = pos2 & 0x3FF;
-    pos -= work;
+    pos -= work = bg_w.pos_offset;
     pos &= 0x3FF;
     pos2 -= work;
-    work = quake_x_tbl[bg_w.quake_x_index];
-    pos += work;
+    pos += work = quake_x_tbl[bg_w.quake_x_index];
     pos2 += work;
     bg_w.bgw[bg_no].position_x = pos & 0x3FF;
     bg_w.bgw[bg_no].abs_x = pos2;
     pos2 = bg_w.bgw[bg_no].xy[1].disp.pos;
     pos = pos2 & 0x3FF;
-    work = quake_y_tbl[bg_w.quake_y_index];
-    pos += work;
-    pos2 += work;
+    pos += work2 = quake_y_tbl[bg_w.quake_y_index];
+    pos2 += work2;
     bg_w.bgw[bg_no].position_y = pos & 0x3FF;
     bg_w.bgw[bg_no].abs_y = pos2;
 }
