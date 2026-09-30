@@ -24,7 +24,7 @@
 #include "CHARMOVE.h"
 #include "PLS00.h"
 #include "PLCNTDAT.h"
-#include "Com_Algo.h"
+#include "SYS_sub.h"
 #include "EFFECT.h"
 #include "bg_sub.h"
 #include "win_pl.h"

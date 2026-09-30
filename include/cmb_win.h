@@ -11,4 +11,6 @@ s16 combo_pts_set(s8 PL, u32 pts);
 void combo_window_slide(s8 PL, s16 x, s16 y, s16 n);
 void combo_window_erase(s8 PL, s8 kind, s16 y);
 
+void end_waku_write(s8 mode);
+
 #endif

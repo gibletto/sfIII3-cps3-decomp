@@ -20,6 +20,7 @@
 #include "Win.h"
 #include "EFFECT.h"
 #include "PLS03.h"
+#include "PLSGAUGE.h"
 #include "PLS02.h"
 #include "CHARMOVE.h"
 #include "PLMAIN.h"

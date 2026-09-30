@@ -15,6 +15,7 @@
 #include "sys_test.h"
 #include "Com_Pl.h"
 #include "VITAL.h"
+#include "cmb_win.h"
 #include "EFFF9.h"
 #include "SE.h"
 #include "bg_sub.h"

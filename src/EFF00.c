@@ -6,7 +6,8 @@
  * the debug editors it shows the edited or looked-up box set instead. effect_00_init is
  * called from the debug screens in CMD_MAIN.
  * effect_01_move runs the overlay-parts work that follows its master's motion, flip and
- * display flag (set_parts_disp_flag); its init is in EFF02.
+ * display flag (set_parts_disp_flag); effect_01_init creates it for one of a character's parts
+ * slots and records it in the master's olc_work_ix.
  */
 
 #include "structs.h"
@@ -321,4 +322,25 @@ void set_parts_disp_flag(WORK_Other* ewk, PLW* mwk) {
         ewk->wu.disp_flag = mwk->wu.disp_flag;
         break;
     }
+}
+
+
+s32 effect_01_init(WORK* wk, u8 koolc) {
+    WORK_Other* ewk;
+    s16 ix;
+    if ((ix = pull_effect_work(1)) == -1) {
+        return -1;
+    }
+    ewk = (WORK_Other*)frw[ix];
+    ewk->wu.be_flag = 1;
+    ewk->wu.id = 1;
+    ewk->wu.work_id = 32;
+    ewk->wu.type = koolc;
+    ewk->wu.my_family = wk->my_family;
+    ewk->wu.blink_timing = wk->blink_timing;
+    ewk->my_master = (u32*)wk;
+    ewk->master_work_id = wk->work_id;
+    ewk->master_id = wk->id;
+    wk->olc_work_ix[koolc] = ewk->wu.myself;
+    return 0;
 }

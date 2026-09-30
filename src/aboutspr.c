@@ -1267,8 +1267,9 @@ s16 get_kage_width(s16 v) {
 /* provisional name */
 void char_sprite_zoom_cells(WORK* wk) {
     CharSpriteK* spr;
+    /* one stack slot holds the cell pointer, then the sprite pointer: the arcade loop keeps i in a
+       register this way, and the loop's cost decides slowdown frames in zoomed scenes */
     CharSpriteK* volatile s;
-    CHAR_CELL* c;
     XY16K pos;
     s16 m[4];
     s16 base_x;
@@ -1313,15 +1314,15 @@ void char_sprite_zoom_cells(WORK* wk) {
         m[3] = 64;
         break;
     }
-    mp = m;
-    pos.l = zoom_cell_position(mp, (u16)wk->cg_ofs_x, wk->spr.cg_ofs_y);
+    pos.l = zoom_cell_position(m, (u16)wk->cg_ofs_x, wk->spr.cg_ofs_y);
     base_x = pos.s.x;
     base_y = pos.s.y;
     switch (wk->spr.sprite_flip) {
     case 0:
+        mp = m;
         for (i = 0; i < wk->spr.gfx_cells; i++) {
-            c = &wk->spr.cells[i];
-            pos.l = zoom_cell_position(mp, (u16)c->x, (u16)c->y);
+            s = (CharSpriteK*)&wk->spr.cells[i];
+            pos.l = zoom_cell_position(mp, (u16)((CHAR_CELL*)s)->x, (u16)((CHAR_CELL*)s)->y);
             s = &spr[i];
             s->x = (pos.s.x + base_x) & 0x3FF;
             s->y = (base_y - pos.s.y) & 0x3FF;
@@ -1330,9 +1331,10 @@ void char_sprite_zoom_cells(WORK* wk) {
         }
         break;
     case 1:
+        mp = m;
         for (i = 0; i < wk->spr.gfx_cells; i++) {
-            c = &wk->spr.cells[i];
-            pos.l = zoom_cell_position(mp, (u16)c->x, (u16)c->y);
+            s = (CharSpriteK*)&wk->spr.cells[i];
+            pos.l = zoom_cell_position(mp, (u16)((CHAR_CELL*)s)->x, (u16)((CHAR_CELL*)s)->y);
             s = &spr[i];
             s->x = (-pos.s.x - base_x) & 0x3FF;
             s->y = (base_y - pos.s.y) & 0x3FF;
@@ -1341,9 +1343,10 @@ void char_sprite_zoom_cells(WORK* wk) {
         }
         break;
     case 2:
+        mp = m;
         for (i = 0; i < wk->spr.gfx_cells; i++) {
-            c = &wk->spr.cells[i];
-            pos.l = zoom_cell_position(mp, (u16)c->x, (u16)c->y);
+            s = (CharSpriteK*)&wk->spr.cells[i];
+            pos.l = zoom_cell_position(mp, (u16)((CHAR_CELL*)s)->x, (u16)((CHAR_CELL*)s)->y);
             s = &spr[i];
             s->x = (pos.s.x + base_x) & 0x3FF;
             s->y = (pos.s.y - base_y) & 0x3FF;
@@ -1352,9 +1355,10 @@ void char_sprite_zoom_cells(WORK* wk) {
         }
         break;
     default:
+        mp = m;
         for (i = 0; i < wk->spr.gfx_cells; i++) {
-            c = &wk->spr.cells[i];
-            pos.l = zoom_cell_position(mp, (u16)c->x, (u16)c->y);
+            s = (CharSpriteK*)&wk->spr.cells[i];
+            pos.l = zoom_cell_position(mp, (u16)((CHAR_CELL*)s)->x, (u16)((CHAR_CELL*)s)->y);
             s = &spr[i];
             s->x = (-pos.s.x - base_x) & 0x3FF;
             s->y = (pos.s.y - base_y) & 0x3FF;

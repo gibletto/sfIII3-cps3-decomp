@@ -1,7 +1,7 @@
 /*
  * EFFB4.C  Effect B3 (round / FIGHT display) and effect B4 (ball hit spark)
  *
- * Effect B3 is the display child of the round-call effect B2 (EFFB2_INIT.C). effect_B3_move
+ * Effect B3 is the display child of the round-call effect B2 (EFFB2.C). effect_B3_move
  * follows its parent's state each frame and dispatches to the display routines:
  *   round_move_init  shows the ROUND pattern at the parent's zoom size
  *   round_move       requests the round-number call (or the final-round call) and places it

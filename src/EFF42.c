@@ -5,6 +5,7 @@
  * Effect 42 is a select-screen object driven through the Order tables: EFF42_SUDDENLY,
  * SLIDE_IN, SLIDE_OUT, KILL and MOVE place it from Pos_Data_69, slide it in from either
  * side, or release it. Used by sel_pl and next_cpu.
+ * zoom_x_step_check steps a work's horizontal zoom toward 0 or 63.
  */
 
 #include "structs.h"
@@ -274,6 +275,24 @@ s32 effect_42_init(s16 type) {
         ewk->wu.dir_step = 10;
         ewk->wu.my_family = 4;
         break;
+    }
+    return 0;
+}
+
+
+s32 zoom_x_step_check(wk)
+WORK* wk;
+{
+    if (wk->mvxy.a[0].sp <= 0) {
+        if ((wk->my_mr.size.x += *(s16*)&wk->mvxy.a[0]) <= 0) {
+            wk->my_mr.size.x = 0;
+            return 1;
+        }
+        return 0;
+    }
+    if ((wk->my_mr.size.x += *(s16*)&wk->mvxy.a[0]) >= 63) {
+        wk->my_mr.size.x = 63;
+        return 1;
     }
     return 0;
 }

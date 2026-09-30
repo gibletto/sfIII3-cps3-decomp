@@ -4,7 +4,7 @@
  * end_17000 runs a seven-scene ending and then hands over to the staff roll.
  * end_1100_move runs the BG0 scene handlers, mostly through end_1100_common, which places
  * the layer and per scene turns layers on or off, starts effect E6 objects, shows the
- * message and in scene 4 rewrites BG0 cells (end_1100_cell_change in END_18);
+ * message and in scene 4 rewrites four BG0 cells (end_1100_cell_change);
  * end_1101_move and end_1102_move handle the other layers.
  * end_1100_cell_set writes the 16 initial BG0 cells.
  */
@@ -239,4 +239,12 @@ void end_1100_cell_set(void) {
     for (i = 0; i < 16; i++) {
         bg_cell_write(0, end_1100_bg0_cell_tbl[i].ofs, end_1100_bg0_cell_tbl[i].cell, (u32)end_1100_scrn_data, 0, 0x220);
     }
+}
+
+
+void end_1100_cell_change(void) {
+    bg_cell_write(0, 0, 11, (u32)end_1100_scrn_data, 0, 0x220);
+    bg_cell_write(0, 0x40, 12, (u32)end_1100_scrn_data, 0, 0x220);
+    bg_cell_write(0, 0x2000, 9, (u32)end_1100_scrn_data, 0, 0x220);
+    bg_cell_write(0, 0x2040, 10, (u32)end_1100_scrn_data, 0, 0x220);
 }

@@ -5,7 +5,7 @@
  * check_super_arts_attack, check_full_gauge_attack/2 and execute_super_arts test the super art
  * commands against the gauge and start the art; check_special_attack tests the special move
  * commands and hissatsu_setup_union sets up the chosen move; check_leap_attack tests the
- * leap attack. short_to_bcd converts a count to BCD digits.
+ * leap attack.
  * These checks are called from the per-state checks in PLS00.
  */
 
@@ -19,29 +19,6 @@
 #include "CMD_MAIN.h"
 #include "ta_sub.h"
 #include "PLS03.h"
-
-
-
-/* provisional name */
-s32 short_to_bcd(s16 num) {
-    u16 bcd = 0;
-    u16 digit = 0x1000;
-    u16 div = 1000;
-    s16 i;
-    for (i = 0; i < 3; i++) {
-        while (num >= div) {
-            num -= div;
-            bcd += digit;
-        }
-        digit >>= 4;
-        div /= 10;
-    }
-    bcd += num;
-    return bcd;
-}
-
-
-
 void hissatsu_setup_union(PLW* wk, s16 rno) {
     wk->wu.routine_no[1] = 4;
     wk->wu.routine_no[2] = rno;

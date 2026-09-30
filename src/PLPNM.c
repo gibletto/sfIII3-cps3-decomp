@@ -6,7 +6,8 @@
  * per-frame guard, throw, parry and cancel flags, the combo power counters are checked, and the
  * routine for routine_no[2] is dispatched through the normal routine table; the draw priority
  * is then set relative to the opponent when the animation asks for it.
- * Normal_00000 is the entry routine that runs appear_player for the round introduction.
+ * Normal_00000 is the entry routine that runs appear_player for the round introduction;
+ * Normal_01000 is the standing routine.
  * Called from the player main routine (PLMAIN/PLMAIN2).
  */
 
@@ -17,6 +18,8 @@
 #include "PLS01.h"
 #include "appear.h"
 #include "PLPNM.h"
+#include "CHARSET.h"
+#include "CHARMOVE.h"
 
 
 
@@ -74,4 +77,20 @@ void setup_normal_process_flags(PLW* wk) {
 
 void Normal_00000(PLW* wk) {
     appear_player(wk);
+}
+
+
+void Normal_01000(PLW* wk) {
+    if (wk->the_same_players) {
+        wk->wu.next_z = wk->wu.my_priority + 1;
+    }
+    switch (wk->wu.routine_no[3]) {
+    case 0:
+        wk->wu.routine_no[3]++;
+        set_char_move_init((WORK*)wk, 0, 0);
+        break;
+    case 1:
+        char_move((WORK*)wk);
+        break;
+    }
 }

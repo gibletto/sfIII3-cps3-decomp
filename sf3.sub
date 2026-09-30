@@ -75,7 +75,6 @@ INPUT obj\SLOWF.obj
 INPUT obj\SE.obj
 INPUT obj\CALDIR.obj
 INPUT obj\SYS_sub.obj
-INPUT obj\Com_Algo.obj
 INPUT obj\EM_Cand.obj
 INPUT obj\PLCNT.obj
 INPUT obj\SYS_sub2.obj
@@ -200,7 +199,6 @@ INPUT obj\EFF71.obj
 INPUT obj\EFF72.obj
 INPUT obj\eff73.obj
 INPUT obj\EFF74.obj
-INPUT obj\EFF75.obj
 INPUT obj\EFF75_ORDER.obj
 INPUT obj\Eff76.obj
 INPUT obj\Eff76_COLOR.obj
@@ -231,7 +229,6 @@ INPUT obj\EFFB0.obj
 INPUT obj\EFFB1.obj
 INPUT obj\EFFB1_INIT.obj
 INPUT obj\effb2.obj
-INPUT obj\EFFB2_INIT.obj
 INPUT obj\EFFB4.obj
 INPUT obj\EFFB5.obj
 INPUT obj\EFFB6.obj
@@ -314,7 +311,6 @@ INPUT obj\effL7.obj
 INPUT obj\effl8.obj
 INPUT obj\effect_L9_move.obj
 INPUT obj\effM0.obj
-INPUT obj\effM0app.obj
 INPUT obj\EFFM1.obj
 INPUT obj\EFFM2.obj
 INPUT obj\EffM3.obj

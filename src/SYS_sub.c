@@ -1,8 +1,8 @@
 /*
  * SYS_SUB.C  System subroutines for scenes and screens
  *
- * General helpers used by the scene and menu code. Convert_BCD packs numbers into BCD.
- * System_all_clear_Ex empties the effect lists. Request_Fade/Check_Fade_Complete(_SP) run
+ * General helpers used by the scene and menu code, and cpu_algorithm, which returns the next
+ * lever/button word of a recorded demonstration input (Demo_Ptr) for PLMAIN. System_all_clear_Ex empties the effect lists. Request_Fade/Check_Fade_Complete(_SP) run
  * fades; Switch_Screen_Init(_Panel), Switch_Screen and Switch_Screen_Revival run the screen
  * wipes built from the patterns in SE. Text_Fill_Upper/Lower fill the fix-layer tilemap.
  * Ranking entry insertion (insert_ranking_*, Check_Grade_Score, Check_CPU_Grade_Score) and
@@ -34,25 +34,6 @@
 
 
 /* provisional name */
-s32 Convert_BCD(v, digits)
-    s16 v;
-    s16 digits;
-{
-    s16 bcd;
-    switch (digits) {
-    case 2:
-        bcd = (v % 100 / 10) << 4;
-        break;
-    case 3:
-        bcd = ((v % 100 / 10) << 4) + ((v / 100) << 8);
-        break;
-    default:
-        bcd = ((v % 100 / 10) << 4) + ((v / 1000) << 12) + ((v / 100) << 8);
-        break;
-    }
-    return (s16)(bcd + v % 10);
-}
-
 /* provisional name */
 void Scr_all_clear_Wait(void)
 {
@@ -799,4 +780,11 @@ s32 Cut_Cut_C_Timer(void) {
         return C_Timer;
     }
     return C_Timer = 0;
+}
+
+
+s32 cpu_algorithm(s16 id) {
+    u16 lvr = *Demo_Ptr[id];
+    Demo_Ptr[id]++;
+    return lvr;
 }

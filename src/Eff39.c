@@ -18,6 +18,7 @@
 #include "SYS_sub.h"
 #include "Eff76_COLOR.h"
 #include "EFFK7.h"
+#include "EffK6.h"
 #include "aboutspr.h"
 #include "Eff59.h"
 #include "EFFECT.h"

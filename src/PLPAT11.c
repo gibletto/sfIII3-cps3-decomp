@@ -2,9 +2,9 @@
  * PLPAT11.C  Player 11 (Ken) special attack routines
  *
  * Character-specific attack routines for player number 11, dispatched by pl11_extra_attack
- * through pl11_exatt_table. The file also holds two slide specials labelled for player 10:
- * Att_PL10_MACH_SLIDE (an earlier, unused version) and Att_PL10_MACH_SLIDE2, which slide by
- * mvxy speed and reload or reset the data once the opponent is reached.
+ * through pl11_exatt_table. The file also holds Att_PL10_MACH_SLIDE2, a slide special labelled
+ * for player 10 that slides by mvxy speed and reloads or resets the data once the opponent is
+ * reached.
  * Att_PL11_TOKUSHUKOUDOU is the personal action: super gauge on cg_type 40, a strike power
  * boost of 10 (capped 10) on cg_type 20, and the grade report on cg_type 64.
  */
@@ -20,60 +20,7 @@
 #include "PLPAT.h"
 #include "CHARSET.h"
 #include "PLPAT11.h"
-
-
-
-/* provisional name */
-void Att_PL10_MACH_SLIDE(PLW* wk) {
-    switch (wk->wu.routine_no[3]) {
-    case 0:
-        wk->wu.routine_no[3]++;
-        hoken_muriyari_chakuchi(wk);
-        wk->wu.rl_flag = wk->wu.rl_waza;
-        wk->rl_save = wk->wu.rl_flag;
-        reset_mvxy_data(&wk->wu);
-        wk->wu.mvxy.index = wk->as->r_no;
-        set_char_move_init(&wk->wu, 5, wk->as->char_ix);
-        break;
-    case 1:
-        char_move(&wk->wu);
-        if (wk->wu.cg_type == 30) {
-            wk->wu.routine_no[3]++;
-            setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
-            wk->wu.mvxy.index++;
-            wk->wu.cg_type = 0;
-        }
-        break;
-    default:
-        char_move(&wk->wu);
-        cal_mvxy_speed(&wk->wu);
-        if (wk->rl_save) {
-            wk->wu.xyz[0].cal += wk->wu.mvxy.a[0].sp;
-        } else {
-            wk->wu.xyz[0].cal -= wk->wu.mvxy.a[0].sp;
-        }
-        wk->wu.xyz[1].cal += wk->wu.mvxy.a[1].sp;
-        wk->wu.rl_flag = wk->wu.rl_waza;
-        if (wk->wu.mvxy.a[0].sp && wk->old_pos_data[0] == wk->old_pos_data[1]) {
-            char_move_z(&wk->wu);
-        }
-        switch (wk->wu.cg_type) {
-        case 30:
-            setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
-            wk->wu.mvxy.index++;
-            wk->wu.cg_type = 0;
-            break;
-        case 21:
-            reset_mvxy_data(&wk->wu);
-            wk->wu.cg_type = 0;
-            break;
-        }
-        break;
-    }
-}
-
-
-
+#include "plpat10.h"
 void Att_PL10_MACH_SLIDE2(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
     case 0:

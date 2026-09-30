@@ -21,6 +21,7 @@
 #include "Com_Pl.h"
 #include "aboutspr.h"
 #include "SYS_sub.h"
+#include "CALDIR.h"
 #include "end_sub.h"
 #include "EFFECT.h"
 #include "EFF00.h"

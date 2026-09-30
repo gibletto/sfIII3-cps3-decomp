@@ -21,6 +21,7 @@
 #include "VITAL.h"
 #include "spgauge.h"
 #include "EFF02.h"
+#include "EFF00.h"
 #include "EFFK5.h"
 #include "effM5.h"
 #include "CMD_MAIN.h"

@@ -2,7 +2,7 @@
  * PLNORMAL.C  Player normal-state routines and win-pose moves
  *
  * The Normal_XXXXX routines are the entries of the player normal table: standing, crouching and
- * turning (Normal_01000 - 04000), forward and back dashes, walking, jump starts and jumps
+ * turning (Normal_02000 - 04000), forward and back dashes, walking, jump starts and jumps
  * (Normal_16000 - 26000), parry (Normal_31000), throw escapes (Normal_47000, Normal_48000), wall
  * jump (Normal_52000), extra jumps and other special movement states.
  * Each sets up its animation and speed data and lands through the jumping process when airborne.
@@ -26,28 +26,7 @@
 #include "win_pl.h"
 #include "PLNORMAL.h"
 
-struct PLW_tag;
-
-
-
-void Normal_01000(PLW* wk) {
-    if (wk->the_same_players) {
-        wk->wu.next_z = wk->wu.my_priority + 1;
-    }
-    switch (wk->wu.routine_no[3]) {
-    case 0:
-        wk->wu.routine_no[3]++;
-        set_char_move_init((WORK*)wk, 0, 0);
-        break;
-    case 1:
-        char_move((WORK*)wk);
-        break;
-    }
-}
-
-
-
-void Normal_02000(PLW* wk) {
+struct PLW_tag;void Normal_02000(PLW* wk) {
     if (wk->the_same_players) {
         wk->wu.next_z = wk->wu.my_priority + 1;
     }

@@ -1,6 +1,7 @@
 /*
- * EFF75_ORDER.C  Effect 75: order-driven states and init
+ * EFF75_ORDER.C  Effect 75: move routine, order-driven states and init
  *
+ * effect_75_move runs the current order state from its jump table and draws the object.
  * The effect 75 states driven through Order / Order_Timer / Order_Dir: EFF75_WAIT, an empty
  * SLIDE_IN, CHAR_CHANGE (switch animation), SUDDENLY (appear on its BG) and DIE (hide and
  * release). effect_75_init creates the object on a target BG with sel_pl_char_table.
@@ -16,6 +17,13 @@
 #include "CHARMOVE.h"
 #include "EFF75_ORDER.h"
 
+
+void effect_75_move(WORK_Other* ewk) {
+    EFF75_Jmp_Tbl[ewk->wu.routine_no[0]](ewk);
+    ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
+    ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
+    sort_push_request4(&ewk->wu);
+}
 
 
 void EFF75_WAIT(WORK_Other_CONN* ewk) {

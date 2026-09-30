@@ -11,7 +11,6 @@ s32 Ck_Range_Out_S(WORK_Other* ewk, s16 BG_No, s16 R);
 s32 Cut_Cut_C_Timer(void);
 s32 Cut_Cut_Cut(void);
 s8 Cut_Cut_Loser(void);
-s32 Convert_BCD();
 void Scr_all_clear_Wait(void);
 void System_all_clear_Wait(void);
 void System_all_clear_Ex_Wait(void);
@@ -44,5 +43,7 @@ u32 ranking_insert_all_four(s16 pl);
 void rank_in_push_other(s16 dir_step, s16 PL_id);
 void Fade_Cont(void);
 void Disp_Digit16x24(u32 value, s32 x_arg, s16 y, s32 attr_arg);
+
+s32 cpu_algorithm(s16 id);
 
 #endif

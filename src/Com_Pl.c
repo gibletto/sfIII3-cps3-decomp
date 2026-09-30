@@ -88,6 +88,7 @@
 #include "Com_Pl.h"
 #include "cps3.h"
 #include "fighter.h"
+#include "RANKING.h"
 
 #pragma noregsave(boot_task)
 #pragma noregsave(test_mode_task)

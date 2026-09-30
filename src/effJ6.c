@@ -1,8 +1,7 @@
 /*
- * EFFJ6.C  Effects J2-J6: connected sprite, background pieces and stage objects
+ * EFFJ6.C  Effects J3-J6: background pieces and stage objects
  *
  * A group of small effects:
- * effect_J2_init builds a two-part connected sprite (id 192) from bbbs_nando_large.
  * effect_J3 plays a one-shot animation at its owner's position and submits a 2D polygon quad.
  * effect_J4 places background pieces from effJ4_data_tbl that scroll with BG1, either for a
  * limited life or permanently (effJ4_piece_set / effJ4_piece_set_stay, effect_J4_init2).
@@ -26,32 +25,6 @@
 #include "sys_config.h"
 #include "CHARSET.h"
 #include "effJ6.h"
-
-
-
-s32 effect_J2_init(s16 delay) {
-    WORK_Other_CONN* ewk;
-    s16 ix;
-    if ((ix = pull_effect_work(4)) == -1) {
-        return -1;
-    }
-    ewk = (WORK_Other_CONN*)frw[ix];
-    ewk->wu.be_flag = 1;
-    ewk->wu.id = 192;
-    ewk->wu.work_id = 16;
-    ewk->wu.my_family = 2;
-    ewk->wu.cgromtype = 1;
-    ewk->wu.my_col_mode = 0x4200;
-    ewk->wu.my_col_code = 92;
-    ewk->wu.dir_timer = delay;
-    ewk->num_of_conn = 2;
-    ewk->conn[0] = bbbs_nando_large[0];
-    ewk->conn[1] = bbbs_nando_large[1];
-    return 0;
-}
-
-
-
 void effect_J3_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
     case 0:

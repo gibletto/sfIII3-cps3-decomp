@@ -8,6 +8,7 @@
  * combo_window_erase blanks one message and combo_window_all_clear clears both players'
  * areas for the current screen mode. sc_vram_to_ram saves the scroll character VRAM rows
  * into the RAM character buffer. Called from CMB_CONT.
+ * end_waku_write draws or clears the ending letterbox.
  */
 
 #include "structs.h"
@@ -147,4 +148,41 @@ void sc_vram_to_ram(void) {
     sc_trans_dst = (u16*)(SS_RAM + 0x8000);
     sc_bak_ptr = sc_chr_ram;
     sc_chr_save(0x200);
+}
+
+
+/* provisional name */
+void end_waku_write(s8 mode) {
+    switch (mode) {
+    case 0:
+        ToneDown(16);
+        ToneDown(17);
+        sc_trans_src = end_waku_chr;
+        sc_trans_dst = (u16*)(SS_RAM + 0x8800);
+        sc_chr_trans(1);
+        sc_fill_rect(0, 0, 48, 4, 0xAF, 62);
+        sc_fill_rect(0, 4, 48, 18, 31, 62);
+        sc_fill_rect(0, 22, 48, 6, 0xAF, 62);
+        break;
+    case 1:
+        ToneDown(16);
+        ToneDown(17);
+        sc_trans_src = end_waku_chr;
+        sc_trans_dst = (u16*)(SS_RAM + 0x8800);
+        sc_chr_trans(1);
+        sc_fill_rect(0, 0, 48, 4, 0xAF, 62);
+        sc_fill_rect(0, 4, 48, 18, 31, 62);
+        break;
+    case 2:
+        sc_fill_rect(0, 22, 48, 6, 0xAF, 62);
+        break;
+    case -1:
+        ToneDown(18);
+        ToneDown(19);
+        sc_trans_src = sc_blank_chr;
+        sc_trans_dst = (u16*)(SS_RAM + 0x8800);
+        sc_chr_trans(1);
+        tilemap_clear_rect(0, 0, 48, 27);
+        break;
+    }
 }

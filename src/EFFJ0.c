@@ -6,8 +6,8 @@
  * flip and graphics at the position the shell had that many frames ago (read from I9's image
  * buffer), and ends with its timer or when the shell starts to finish.
  * effect_J1_move is an empty routine.
- * Effect J2 is the bonus-stage level plate (created by effect_J2_init in effJ6.c, from
- * Game_Main.c): after its delay it shows its connected sprites with the digit for
+ * Effect J2 is the bonus-stage level plate: effect_J2_init (from Game_Main.c) builds a two-part
+ * connected sprite (id 192) from bbbs_nando_large; after its delay it shows its connected sprites with the digit for
  * Bonus_Stage_Level fixed to the BG1 screen position (effJ2_trans) for 60 frames, and
  * disappears early on a break-in (Break_Into).
  */
@@ -169,4 +169,26 @@ void effect_J2_move(WORK_Other_CONN* ewk) {
         push_effect_work(&ewk->wu);
         break;
     }
+}
+
+
+s32 effect_J2_init(s16 delay) {
+    WORK_Other_CONN* ewk;
+    s16 ix;
+    if ((ix = pull_effect_work(4)) == -1) {
+        return -1;
+    }
+    ewk = (WORK_Other_CONN*)frw[ix];
+    ewk->wu.be_flag = 1;
+    ewk->wu.id = 192;
+    ewk->wu.work_id = 16;
+    ewk->wu.my_family = 2;
+    ewk->wu.cgromtype = 1;
+    ewk->wu.my_col_mode = 0x4200;
+    ewk->wu.my_col_code = 92;
+    ewk->wu.dir_timer = delay;
+    ewk->num_of_conn = 2;
+    ewk->conn[0] = bbbs_nando_large[0];
+    ewk->conn[1] = bbbs_nando_large[1];
+    return 0;
 }

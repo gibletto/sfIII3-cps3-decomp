@@ -8,7 +8,8 @@
  * throw escapes, scaled down by the combo count (cal_sa_gauge_waribiki) and added by
  * add_super_arts_gauge; sa_gauge_flash is the gauge flash table.
  * check_buttobi_type, setup_saishin_lvdir and setup_lvdir_after_autodir handle blow-away type
- * and lever direction; dead_voice_request/2 request the KO voice.
+ * and lever direction; dead_voice_request/2 request the KO voice. short_to_bcd converts a count
+ * to BCD digits.
  */
 
 #include "structs.h"
@@ -383,4 +384,23 @@ void dead_voice_request2(PLW* wk) {
     } else {
         sound_effect_request[secd1](wk, secd1 + ks);
     }
+}
+
+
+/* provisional name */
+s32 short_to_bcd(s16 num) {
+    u16 bcd = 0;
+    u16 digit = 0x1000;
+    u16 div = 1000;
+    s16 i;
+    for (i = 0; i < 3; i++) {
+        while (num >= div) {
+            num -= div;
+            bcd += digit;
+        }
+        digit >>= 4;
+        div /= 10;
+    }
+    bcd += num;
+    return bcd;
 }

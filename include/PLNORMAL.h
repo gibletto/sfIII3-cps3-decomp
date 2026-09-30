@@ -31,7 +31,6 @@ void Normal_37000(PLW* wk);
 void Normal_42000(PLW* wk);
 void Normal_air_paring(PLW* wk);
 void Normal_35000(PLW* wk);
-void Normal_01000(PLW* wk);
 void Normal_02000(PLW* wk);
 void Normal_07000(PLW* wk);
 void Normal_08000(PLW* wk);

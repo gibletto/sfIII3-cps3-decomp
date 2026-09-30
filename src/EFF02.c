@@ -1,8 +1,6 @@
 /*
- * EFF02.C  Effect 01 init and effect 02 (hit marks)
+ * EFF02.C  Effect 02 (hit marks)
  *
- * effect_01_init creates an overlay-parts work for one of a character's parts slots and
- * records it in the master's olc_work_ix.
  * Effect 02 is the hit mark shown when an attack connects or is guarded. Its entry in the
  * hmdt table chooses the mark (guard and chip variants), colour, direction, position
  * offset, screen quake and hit sound (urian_guard_se_check). effect_02_init is called
@@ -20,31 +18,6 @@
 #include "CHARSET.h"
 #include "EFF02.h"
 #include "fighter.h"
-
-
-
-s32 effect_01_init(WORK* wk, u8 koolc) {
-    WORK_Other* ewk;
-    s16 ix;
-    if ((ix = pull_effect_work(1)) == -1) {
-        return -1;
-    }
-    ewk = (WORK_Other*)frw[ix];
-    ewk->wu.be_flag = 1;
-    ewk->wu.id = 1;
-    ewk->wu.work_id = 32;
-    ewk->wu.type = koolc;
-    ewk->wu.my_family = wk->my_family;
-    ewk->wu.blink_timing = wk->blink_timing;
-    ewk->my_master = (u32*)wk;
-    ewk->master_work_id = wk->work_id;
-    ewk->master_id = wk->id;
-    wk->olc_work_ix[koolc] = ewk->wu.myself;
-    return 0;
-}
-
-
-
 void effect_02_move(WORK_Other* ewk) {
     const HMDT* tad;
     const EXPLEM* edt;

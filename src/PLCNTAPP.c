@@ -1,8 +1,6 @@
 /*
  * PLCNTAPP.C  Player control start-of-round (appear) phase
  *
- * plcnt_init is player-control routine 0: it runs the init routine for the current
- * appear_type from appear_initalize and moves both player works.
  * init_app_10000 sets up both players at the start of a match (pli_0000 clears the works, loads
  * the combo demo players if needed and calls setup_base_and_other_data), stores the parry
  * counters and waits until both players are ready (pli_1000) before starting the fight.
@@ -25,16 +23,6 @@
 #include "EFFECT.h"
 #include "PLCNTAPP.h"
 #include "fighter.h"
-
-
-
-void plcnt_init(void) {
-    appear_initalize[appear_type]();
-    move_player_work();
-}
-
-
-
 void init_app_10000(void) {
     switch (pcon_rno[1]) {
     case 0:

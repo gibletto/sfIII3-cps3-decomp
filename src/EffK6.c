@@ -3,7 +3,8 @@
  *
  * Effect K6 (id 206) is a name plate created by effect_K6_init from sel_pl and next_cpu.
  * Setup_CharK6 and Setup_K6_Index choose the graphic, Setup_1st_PosK6 / Get_PosK6 the position
- * (Win_Name_Pos_Data, with the Akuma and export name checks).
+ * (Win_Name_Pos_Data, with the Akuma and export name checks); chkNameExport returns the
+ * alternative name spelling index used outside region 1.
  * effect_K6_move follows the Order / Order_Timer controls: EFFK6_WAIT, EFFK6_SLIDE_IN,
  * EFFK6_SLIDE_OUT, EFFK6_SUDDENLY, EFFK6_MOVE and EFFK6_KILL.
  */
@@ -352,4 +353,15 @@ s16 Setup_K6_Index(WORK_Other* ewk) {
     default:
         return ewk->wu.dir_step;
     }
+}
+
+
+/* Outside region 1, name 21 is shown with its alternative spelling, two entries on. */
+/* provisional name */
+s32 chkNameExport(s16 name_no)
+{
+    if (Country != 1 && name_no == 21) {
+        return 2;
+    }
+    return 0;
 }

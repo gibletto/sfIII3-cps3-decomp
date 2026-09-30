@@ -18,4 +18,6 @@ void cat_walk_set(WORK_Other* ewk);
 void mouse_run_set(WORK_Other* ewk);
 void mouse_stand_set(WORK_Other* ewk);
 
+s32 effect_M0_init(u8 pl_rl, u8 animal_type);
+
 #endif

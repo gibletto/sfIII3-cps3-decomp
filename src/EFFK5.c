@@ -205,6 +205,7 @@ void K5_decode_new_hit_index(WORK* wk, MVJ* mvj, u16 mf) {
                 m->rno = 0;
             }
             m->index = wk->cg_ja.boix;
+            continue;
         }
     }
     if (mvj[4].index != (wk->cg_ja.bhix + wk->cg_ja.haix)) {
@@ -243,6 +244,7 @@ void K5_decode_new_hit_index(WORK* wk, MVJ* mvj, u16 mf) {
                 m->rno = 0;
             }
             m->index = wk->cg_ja.bhix + wk->cg_ja.haix;
+            continue;
         }
     }
 }

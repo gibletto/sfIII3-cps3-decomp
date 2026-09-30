@@ -3,7 +3,6 @@
 
 #include "structs.h"
 
-s32 effect_J2_init(s16 delay);
 s32 effJ4_piece_set();
 s32 effJ4_piece_set_stay();
 s32 effect_J4_init2(s16 ix);

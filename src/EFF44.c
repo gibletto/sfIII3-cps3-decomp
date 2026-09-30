@@ -1,7 +1,6 @@
 /*
  * EFF44.C  Effect 43 (select-screen object) and effect 44 (animated stage objects)
  *
- * zoom_x_step_check steps a work's horizontal zoom toward 0 or 63.
  * Effect 43 appears after a delay on a chosen BG and animates (sel_pl, next_cpu).
  * Effect 44 creates the animated objects of scr_obj_data44 for a stage and animates them
  * until killed; it is used by several stages (bg000, bg040, bg050, bg120, bg130).
@@ -22,25 +21,6 @@
 
 
 /* provisional name */
-s32 zoom_x_step_check(wk)
-WORK* wk;
-{
-    if (wk->mvxy.a[0].sp <= 0) {
-        if ((wk->my_mr.size.x += *(s16*)&wk->mvxy.a[0]) <= 0) {
-            wk->my_mr.size.x = 0;
-            return 1;
-        }
-        return 0;
-    }
-    if ((wk->my_mr.size.x += *(s16*)&wk->mvxy.a[0]) >= 63) {
-        wk->my_mr.size.x = 63;
-        return 1;
-    }
-    return 0;
-}
-
-
-
 void effect_43_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
     case 0:
