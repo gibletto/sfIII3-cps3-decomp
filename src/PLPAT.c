@@ -6,8 +6,7 @@
  * 15000: normal, jump and command attacks) or, above 15, to the character's own table of special
  * moves (the PLPATxx modules).
  * Also here: jump-attack recovery timing (get_cjdR), cancel timers (get_cancel_timer), the
- * caught-release setups (scdmd_27000 - 30000) and hoken_muriyari_chakuchi, which forces a
- * landing before a special starts.
+ * hoken_muriyari_chakuchi, which forces a landing before a special starts.
  */
 
 #include "structs.h"
@@ -25,38 +24,6 @@
 #include "CHARSET.h"
 #include "PLSGAUGE.h"
 #include "PLPAT.h"
-
-
-
-void scdmd_27000(PLW* wk) {
-    setup_butt_own_data(&wk->wu);
-    wk->wu.mvxy.a[1].sp = wk->wu.mvxy.d[1].sp = wk->wu.mvxy.kop[1] = 0;
-}
-
-
-
-void scdmd_28000(PLW* wk) {
-    setup_butt_own_data(&wk->wu);
-    cal_initial_speed_y(&wk->wu, buttobi_time_table[wk->wu.char_index][wk->wu.dm_attlv], wk->wu.xyz[1].disp.pos);
-}
-
-
-
-void scdmd_29000(PLW* wk) {}
-
-
-
-void scdmd_30000(PLW* wk) {
-    setup_butt_own_data(&wk->wu);
-    cal_initial_speed_y(&wk->wu, buttobi_time_table[wk->wu.char_index][wk->wu.dm_attlv], 0);
-}
-
-
-
-void scdmd_31000(void) { setup_butt_own_data(); }
-
-
-
 void Player_attack(PLW* wk) {
     wk->wu.next_z = wk->wu.my_priority;
     wk->running_f = 0;

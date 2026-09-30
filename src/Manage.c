@@ -8,8 +8,7 @@
  * handling (Loser_Sub, Be_Continue, Quick_Entry, Check_Break_Into_CPU), and the bonus stage
  * result tallies (Game_Manage_12_x). It also runs BGM_Fade_Sub and BGM_Control each frame.
  * Other routines: stage BGM selection (Check_Stage_BGM), win records (Disp_Win_Record),
- * request_center_message for the centre-screen messages, the ranking insert (Rank_In_sub) and
- * the FBI warning screen (FBI_Warning).
+ * request_center_message for the centre-screen messages and the FBI warning screen (FBI_Warning).
  */
 
 #include "structs.h"
@@ -46,41 +45,6 @@
 #include "end_main.h"
 #include "Entry.h"
 #include "sc_face.h"
-
-static void Rank_In_sub(s16 top, s16 pl);
-
-
-
-/* provisional name */
-static void Rank_In_sub(s16 top, s16 pl) {
-    RANK_DATA* entry = &Present_Data[pl];
-    s16 ix;
-    s16 j;
-    for (ix = 0; ix < 6; ix++) {
-        if (Ranking_Data[top + ix].score < entry->score) {
-            for (j = 4; j >= ix; j--) {
-                Ranking_Data[top + j + 1] = Ranking_Data[top + j];
-            }
-            Ranking_Data[top + ix] = *entry;
-            break;
-        }
-    }
-}
-
-
-
-/* provisional name */
-void Ranking_Init(void) {
-    s16 ix;
-    RANK_DATA* dst = Ranking_Data;
-    const RANK_DATA* src = Rank_Default_Data;
-    for (ix = 0; ix < 20; ix++) {
-        *dst++ = *src++;
-    }
-    if (exsw_3 & 0x80) {
-        Rank_In_sub(0, 0);
-    }
-}
 
 
 

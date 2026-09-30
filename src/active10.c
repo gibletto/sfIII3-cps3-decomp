@@ -6,8 +6,6 @@
  * through Pattern10_Tbl. Each Pattern10_nnnn routine is a short script stepped by
  * CP_Index: walks and approaches, waits, range and area checks, normal, lever, command and jump
  * attacks, random branches to other patterns, and End_Pattern to finish.
- * The dispatcher Computer10 is at the end of active09; this file ends with Computer11, the
- * dispatcher for player 11's patterns in active11.
  */
 
 #include "structs.h"
@@ -17,6 +15,26 @@
 #include "Com_Sub.h"
 #include "active10.h"
 
+
+void Computer10(PLW* wk) {
+    Pattern10_Tbl[(s16)Pattern_Index[wk->wu.id]](wk);
+}
+
+
+
+void Pattern10_0000(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Lever_Off(wk);
+        break;
+    case 1:
+        Look(wk, 0);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
 
 
 void Pattern10_0001(PLW* wk) {
@@ -1131,28 +1149,6 @@ void Pattern10_0069(PLW* wk) {
         break;
     case 1:
         Lever_Attack(wk, 8, 0, 0x20);
-        break;
-    default:
-        End_Pattern(wk);
-        break;
-    }
-}
-
-
-
-void Computer11(PLW* wk) {
-    Pattern11_Tbl[(s16)Pattern_Index[wk->wu.id]](wk);
-}
-
-
-
-void Pattern11_0000(PLW* wk) {
-    switch (CP_Index[wk->wu.id][0]) {
-    case 0:
-        Lever_Off(wk);
-        break;
-    case 1:
-        Look(wk, 0);
         break;
     default:
         End_Pattern(wk);

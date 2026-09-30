@@ -1,8 +1,6 @@
 /*
- * EFF00.C  Effect-init setters, effect 00 (judgement box display) and effect 01 move
+ * EFF00.C  Effect 00 (judgement box display) and effect 01 move
  *
- * setup_dmv_use_flag, setup_disp_flag and setup_command_number are small setters used when
- * effects and players are initialised.
  * Effect 00 draws a character's judgement boxes (body, hand, catch, caught, attack, hosei)
  * over it. Which boxes are shown is chosen by the extra DIP switches or judge_disp_all; in
  * the debug editors it shows the edited or looked-up box set instead. effect_00_init is
@@ -19,27 +17,6 @@
 #include "EFFECT.h"
 #include "EFF00.h"
 #include "fighter.h"
-
-
-
-void setup_dmv_use_flag(PLW* wk, u8 use) {
-    wk->dm_vital_use = use;
-}
-
-
-
-void setup_disp_flag(WORK* wk, s8 flag) {
-    wk->disp_flag = flag;
-}
-
-/* Queue a special command number for the player to perform. */
-void setup_command_number(PLW* wk, u8 cmd_no)
-{
-    wk->cmd_request = cmd_no;
-}
-
-
-
 void effect_00_move(WORK_Other_JUDGE* judge) {
     WORK_Other_JUDGE* ewk = (WORK_Other_JUDGE*)judge;
     u16 dip;

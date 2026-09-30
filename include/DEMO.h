@@ -18,6 +18,5 @@ void Logo_Capcom(void);
 void Logo_Etc(void);
 void Logo_Warning(void);
 void draw_operator_info(s32 y);
-s32 Ck_Coin(void);
 
 #endif

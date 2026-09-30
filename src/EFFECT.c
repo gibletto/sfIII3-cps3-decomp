@@ -10,7 +10,9 @@
  * free whole lists, effect_work_kill marks works dead and search_effect_index finds a work by id.
  * Also here: work_init_zero, the per-player shell list helpers (effect_shell_ix_* ,
  * get_vs_shell_adrs, setup_shell_hit_stop, shell_live_check) and small setters called
- * from character move data (status, caution, extra-BG, BG quake, extra-damage index, step move).
+ * from character move data (status, caution, extra-BG, BG quake, extra-damage index, step move),
+ * and setup_dmv_use_flag, setup_disp_flag and setup_command_number, used when effects and players
+ * are initialised.
  */
 
 #include "structs.h"
@@ -487,4 +489,21 @@ void setup_bg_quake_y(WORK* wk, u8 ix)
 
 void setup_exdm_ix(PLW* wk, u8 ix) {
     wk->exdm_ix = ix;
+}
+
+
+void setup_dmv_use_flag(PLW* wk, u8 use) {
+    wk->dm_vital_use = use;
+}
+
+
+
+void setup_disp_flag(WORK* wk, s8 flag) {
+    wk->disp_flag = flag;
+}
+
+/* Queue a special command number for the player to perform. */
+void setup_command_number(PLW* wk, u8 cmd_no)
+{
+    wk->cmd_request = cmd_no;
 }

@@ -4,7 +4,6 @@
 #include "structs.h"
 
 void BG120(void);
-void bg1001(void);
 void BG110(void);
 void bg1101(void);
 void bg1101_BG110(void);
@@ -16,7 +15,6 @@ void bg1202_init00(void);
 void bg1201_BG120(void);
 void bg1202_BG120(void);
 void bg_fam0C00(void);
-void bg1001_init00(void);
 void bg1101_init00(void);
 void bg1101_move(void);
 void bg1100_init00(void);

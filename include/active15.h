@@ -152,4 +152,7 @@ void Pattern15_0146(PLW* wk);
 void Pattern15_0147(PLW* wk);
 void Pattern15_0148(PLW* wk);
 
+void Computer15(PLW* wk);
+void Pattern15_0000(PLW* wk);
+
 #endif

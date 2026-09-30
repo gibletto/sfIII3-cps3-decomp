@@ -6,8 +6,7 @@
  * through Pattern14_Tbl. Each Pattern14_nnnn routine is a short script stepped by
  * CP_Index: walks and approaches, waits, range and area checks, normal, lever, command and jump
  * attacks, random branches to other patterns, and End_Pattern to finish.
- * Computer14 is at the end of active13; this file ends with Computer15, the dispatcher for
- * player 15's patterns in active15. SA_Term and Check_SA time the super arts.
+ * SA_Term and Check_SA time the super arts.
  */
 
 #include "structs.h"
@@ -17,6 +16,26 @@
 #include "Com_Sub.h"
 #include "active14.h"
 
+
+void Computer14(PLW* wk) {
+    Pattern14_Tbl[(s16)Pattern_Index[wk->wu.id]](wk);
+}
+
+
+
+void Pattern14_0000(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Lever_Off(wk);
+        break;
+    case 1:
+        Look(wk, 0);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
 
 
 void Pattern14_0001(PLW* wk) {
@@ -2856,28 +2875,6 @@ void Pattern14_0150(PLW* wk) {
         break;
     case 2:
         Command_Attack(wk, 8, 0x8019, 0xA, -1);
-        break;
-    default:
-        End_Pattern(wk);
-        break;
-    }
-}
-
-
-
-void Computer15(PLW* wk) {
-    Pattern15_Tbl[(s16)Pattern_Index[wk->wu.id]](wk);
-}
-
-
-
-void Pattern15_0000(PLW* wk) {
-    switch (CP_Index[wk->wu.id][0]) {
-    case 0:
-        Lever_Off(wk);
-        break;
-    case 1:
-        Look(wk, 0);
         break;
     default:
         End_Pattern(wk);

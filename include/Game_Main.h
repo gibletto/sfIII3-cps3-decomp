@@ -39,4 +39,6 @@ s16 Disp_Rank_Sub(s16 PL_id);
 void match_state_0_fight(void);
 void Game2_2(void);
 
+s32 Ck_Coin(void);
+
 #endif
