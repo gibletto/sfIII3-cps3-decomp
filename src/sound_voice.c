@@ -219,9 +219,10 @@ u32 voice_process_primary(SNDVOICE* voice, s8 is_bgm, u32 voice_index) {
             }
             break;
         case 0x0e:
-            relative = *(s16*)argument;
-            cursor += 3;
-            argument = cursor + relative;
+            relative = (s8)*argument++;     /* the offset is read a byte at a time: it can sit at an odd address */
+            relative <<= 8;
+            relative |= *argument++;
+            argument += relative;
             break;
         case 0x0f:
             argument = bgm_voice[(u16)*argument].origin;

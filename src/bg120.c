@@ -1,8 +1,6 @@
 /*
- * BG120.C  Stage backgrounds BG100 (base layer), BG110 and BG120
+ * BG120.C  Stage backgrounds BG110 and BG120
  *
- * bg1001 and bg1001_init00 complete stage BG100: the base layer is placed relative to
- * pos_offset, its graphics loaded and effects 05, 06 and 44 started.
  * BG110 (with bg1100/bg1101 and their init and move routines) and BG120 (bg1201/bg1202)
  * each move their two layers, then run zoom check, display positions and family set.
  * bg1202_init00 loads BG120's graphics and starts effects 05, 06, the stage effect and 12.
@@ -23,33 +21,6 @@
 #include "aboutspr.h"
 #include "ta_sub.h"
 #include "bg120.h"
-
-
-
-void bg1001(void) {
-    void (*bg080_sync_jmp[2])() = { bg1001_init00, bg_base_move_common };
-    bg080_sync_jmp[bgw_ptr->r_no_0]();
-}
-
-
-
-void bg1001_init00(void) {
-    bgw_ptr->r_no_1 = 0;
-    bgw_ptr->r_no_0++;
-    bgw_ptr->zuubun = 0;
-    bgw_ptr->old_pos_x = bgw_ptr->xy[0].disp.pos = bgw_ptr->pos_x_work = 0x200;
-    bgw_ptr->wxy[0].cal = bgw_ptr->xy[0].cal;
-    bgw_ptr->hos_xy[0].disp.pos = bgw_ptr->wxy[0].disp.pos - bg_w.pos_offset;
-    bgw_ptr->hos_xy[0].disp.low = 0;
-    bgw_ptr->xy[1].cal = bgw_ptr->wxy[1].cal = 0;
-    load_char_gfx(0xD990, 1);
-    effect_05_init();
-    effect_06_init();
-    effect_44_init(5);
-}
-
-
-
 void bg1101_BG110(void) {
     void (*bg_jmp[2])() = { bg1101_init00, bg1101_move };
     bg_jmp[bgw_ptr->r_no_0]();

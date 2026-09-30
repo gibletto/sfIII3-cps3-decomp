@@ -28,4 +28,6 @@ void Ranking_00_5th(void);
 void Ranking_00_Last(void);
 void Ranking_01_2nd(void);
 
+void Ranking_Init(void);
+
 #endif

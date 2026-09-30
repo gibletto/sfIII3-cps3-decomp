@@ -8,6 +8,8 @@
  * also sets up the next demo when needed.
  * Setup_Ranking_Obj, Setup_Name, Setup_Face, Setup_grade, Setup_Score/_Small and Setup_Wins
  * spawn the objects for each entry's name, portrait, grade, score and win count.
+ * Ranking_Init loads the default table and, with the extra DIP switch set, inserts player 1's
+ * present score into the top six.
  * Called from the game and attract-mode flow in Game_Main.
  */
 
@@ -608,4 +610,30 @@ void Setup_Score_Obj(void) {
     }
     effect_67_init(24, bg_w.bgw[0].xy[0].disp.pos - 0, bg_w.bgw[0].xy[1].disp.pos + 200, 180, 2, 10, 1, 0);
     effect_67_init(24, bg_w.bgw[0].xy[0].disp.pos - 384, bg_w.bgw[0].xy[1].disp.pos + 200, 180, 3, 10, 1, 0);
+}
+
+
+/* provisional name */
+void Ranking_Init(void) {
+    s16 ix;
+    s16 j;
+    RANK_DATA* dst = Ranking_Data;
+    const RANK_DATA* src = Rank_Default_Data;
+    RANK_DATA* entry;
+    for (ix = 0; ix < 20; ix++) {
+        *dst++ = *src++;
+    }
+    if (exsw_3 & 0x80) {
+        /* insert player 1's present score into the top six */
+        entry = &Present_Data[0];
+        for (ix = 0; ix < 6; ix++) {
+            if (Ranking_Data[ix].score < entry->score) {
+                for (j = 4; j >= ix; j--) {
+                    Ranking_Data[j + 1] = Ranking_Data[j];
+                }
+                Ranking_Data[ix] = *entry;
+                break;
+            }
+        }
+    }
 }

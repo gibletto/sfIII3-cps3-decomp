@@ -34,4 +34,8 @@ s32 shell_live_check(PLW* wk, s16 wix);
 s32 exec_char_asxy(WORK* wk, u8 data);
 s32 get_vs_shell_adrs(WORK* wk, s16 id, s16 ix, WORK_Other** tmw);
 
+void setup_dmv_use_flag(PLW* wk, u8 use);
+void setup_disp_flag(WORK* wk, s8 flag);
+void setup_command_number(PLW* wk, u8 cmd_no);
+
 #endif

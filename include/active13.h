@@ -3,7 +3,6 @@
 
 #include "structs.h"
 
-void Computer14(PLW* wk);
 void Pattern13_0001(PLW* wk);
 void Pattern13_0002(PLW* wk);
 void Pattern13_0003(PLW* wk);
@@ -84,6 +83,8 @@ void Pattern13_0077(PLW* wk);
 void Pattern13_0078(PLW* wk);
 void Pattern13_0079(PLW* wk);
 void Pattern13_0080(PLW* wk);
-void Pattern14_0000(PLW* wk);
+
+void Computer13(PLW* wk);
+void Pattern13_0000(PLW* wk);
 
 #endif

@@ -6,7 +6,7 @@
  * thrower's catch rectangle (index, flip, offset, priority) each frame, or moves the thrower
  * relative to itself for the second catch kind. check_tsukamare_keizoku_check decides whether
  * the hold continues.
- * caught_cg_type_check and the scdmd_12000-scdmd_25000 routines set up the damage state the
+ * caught_cg_type_check and the scdmd_12000-scdmd_31000 routines set up the damage state the
  * victim is released into (blow-away data, vertical speed from buttobi_time_table).
  */
 
@@ -287,3 +287,31 @@ void scdmd_25000(PLW* wk) {}
 
 
 void scdmd_26000(void) { setup_butt_own_data(); }
+
+
+void scdmd_27000(PLW* wk) {
+    setup_butt_own_data(&wk->wu);
+    wk->wu.mvxy.a[1].sp = wk->wu.mvxy.d[1].sp = wk->wu.mvxy.kop[1] = 0;
+}
+
+
+
+void scdmd_28000(PLW* wk) {
+    setup_butt_own_data(&wk->wu);
+    cal_initial_speed_y(&wk->wu, buttobi_time_table[wk->wu.char_index][wk->wu.dm_attlv], wk->wu.xyz[1].disp.pos);
+}
+
+
+
+void scdmd_29000(PLW* wk) {}
+
+
+
+void scdmd_30000(PLW* wk) {
+    setup_butt_own_data(&wk->wu);
+    cal_initial_speed_y(&wk->wu, buttobi_time_table[wk->wu.char_index][wk->wu.dm_attlv], 0);
+}
+
+
+
+void scdmd_31000(void) { setup_butt_own_data(); }

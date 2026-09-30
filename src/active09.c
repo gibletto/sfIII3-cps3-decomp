@@ -6,8 +6,7 @@
  * through Pattern09_Tbl. Each Pattern09_nnnn routine is a short script stepped by
  * CP_Index: walks and approaches, waits, range and area checks, normal, lever, command and jump
  * attacks, random branches to other patterns, and End_Pattern to finish.
- * ORO_JA_Term is used for this character's jump attacks. The file ends with Computer10, the
- * dispatcher for player 10's patterns, which are in active10.
+ * ORO_JA_Term is used for this character's jump attacks.
  */
 
 #include "structs.h"
@@ -1545,28 +1544,6 @@ void Pattern09_0100(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
         Com_Random_Select(wk, 2, 0x36, 0x37, 0x38, 0x39, 1);
-        break;
-    default:
-        End_Pattern(wk);
-        break;
-    }
-}
-
-
-
-void Computer10(PLW* wk) {
-    Pattern10_Tbl[(s16)Pattern_Index[wk->wu.id]](wk);
-}
-
-
-
-void Pattern10_0000(PLW* wk) {
-    switch (CP_Index[wk->wu.id][0]) {
-    case 0:
-        Lever_Off(wk);
-        break;
-    case 1:
-        Look(wk, 0);
         break;
     default:
         End_Pattern(wk);

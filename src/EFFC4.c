@@ -5,7 +5,7 @@
  * come from effC4_sp_tbl: each time it falls below the floor the next phase starts (a bounce),
  * with a landing sound requested on the first landing. After the last bounce it slides left,
  * still animating, and is hidden and freed once it passes x 128. It shows a shadow and uses
- * direct_03_char_table; the init, effect_C4_init, is in EFFC5.C.
+ * direct_03_char_table. effect_C4_init creates it at its master's position with a shadow.
  */
 
 #include "structs.h"
@@ -82,4 +82,34 @@ void effect_C4_move(WORK_Other* ewk) {
         push_effect_work(&ewk->wu);
         break;
     }
+}
+
+
+s32 effect_C4_init(WORK* wk) {
+    WORK_Other* ewk;
+    s16 ix;
+    if ((ix = pull_effect_work(3)) == -1) {
+        return -1;
+    }
+    ewk = (WORK_Other*)frw[ix];
+    ewk->wu.be_flag = 1;
+    ewk->wu.id = 124;
+    ewk->wu.work_id = 16;
+    ewk->wu.type = wk->id;
+    ewk->wu.cgromtype = 1;
+    ewk->wu.disp_flag = 1;
+    ewk->wu.my_family = 2;
+    ewk->wu.char_index = 6;
+    ewk->master_id = wk->id;
+    ewk->wu.my_col_mode = wk->my_col_mode;
+    ewk->wu.my_col_code = wk->my_col_code;
+    ewk->wu.my_priority = ewk->wu.position_z = 16;
+    ewk->wu.xyz[0].cal = wk->xyz[0].cal;
+    ewk->wu.xyz[1].cal = wk->xyz[1].cal;
+    ewk->wu.char_table[0] = direct_03_char_table;
+    ewk->wu.kage_flag = 1;
+    ewk->wu.kage_hx = -9;
+    ewk->wu.kage_hy = -11;
+    ewk->wu.kage_char = 11;
+    ewk->wu.kage_prio = ewk->wu.position_z + 1;
 }

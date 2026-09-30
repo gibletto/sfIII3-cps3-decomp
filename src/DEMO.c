@@ -1,7 +1,6 @@
 /*
  * DEMO.C  Attract mode: logos, title and demonstration play
  *
- * Ck_Coin leaves the attract loop when a coin, service input or free-play start is seen.
  * CAPCOM_Logo runs the warning, CAPCOM logo and other intro screens (Logo_Warning,
  * Logo_Capcom, Logo_Etc); Title and Title_At_a_Dash run the title sequence and opening.
  * Play_Demo runs the current demo step from Demo_Jmp_Data; Setup_Demo_PL, Setup_Demo_Arts
@@ -33,44 +32,6 @@
 #include "SLOWF.h"
 #include "textsound.h"
 #include "DEMO.h"
-
-
-
-s32 Ck_Coin(void) {
-    s16 pl = -1;
-    if (Free_Play) {
-        if (~p1sw_1 & p1sw_0 & 0x1000) {
-            pl = 0;
-        } else if (~p2sw_1 & p2sw_0 & 0x1000) {
-            pl = 1;
-        }
-        if (pl == -1) {
-            return 0;
-        }
-        bg_vbl_trans_flag = 0;
-        bookkeep_freeplay_count();
-        if ((*&Game_setting).set5) {
-            plw[0].wu.operator = 1;
-            plw[1].wu.operator = 1;
-            Operator_Status[0] = 1;
-            Operator_Status[1] = 1;
-            return 1;
-        }
-        plw[pl].wu.operator = 1;
-        Operator_Status[pl] = 1;
-        Champion = pl;
-        plw[pl ^ 1].wu.operator = 0;
-        Operator_Status[pl ^ 1] = 0;
-        return 1;
-    }
-    if (coin_chute1_w[6] | coin_chute2_w[6]) {
-        return 1;
-    }
-    return coin_chute1_w[1] | coin_chute2_w[1] | credit_1p | credit_2p;
-}
-
-
-
 /* provisional name */
 void draw_operator_info(s32 y) {
     s16 y1;

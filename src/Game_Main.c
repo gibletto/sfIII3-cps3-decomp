@@ -8,7 +8,8 @@
  * Game2_1 is the fight frame: round timer (Time_Control), player control
  * (Player_control), vital and combo displays, Game_Management, the seven effect lists and
  * hit_check_main_process. Bonus_Sub does the same for a bonus stage.
- * match_state_0_fight handles a coin during the demo; Loop_Demo_Sub, Before_Select_Sub and
+ * match_state_0_fight handles a coin during the demo (Ck_Coin sees a coin, service input or free-play
+ * start); Loop_Demo_Sub, Before_Select_Sub and
  * Erase_Insert_Coin serve the attract loop; Disp_Ranking and Request_Break_Sub handle the
  * ranking screen and break-in requests.
  */
@@ -1297,4 +1298,38 @@ void Time_Control(void) {
         Time_in_Time = 60;
         Control_Time += 1;
     }
+}
+
+
+s32 Ck_Coin(void) {
+    s16 pl = -1;
+    if (Free_Play) {
+        if (~p1sw_1 & p1sw_0 & 0x1000) {
+            pl = 0;
+        } else if (~p2sw_1 & p2sw_0 & 0x1000) {
+            pl = 1;
+        }
+        if (pl == -1) {
+            return 0;
+        }
+        bg_vbl_trans_flag = 0;
+        bookkeep_freeplay_count();
+        if ((*&Game_setting).set5) {
+            plw[0].wu.operator = 1;
+            plw[1].wu.operator = 1;
+            Operator_Status[0] = 1;
+            Operator_Status[1] = 1;
+            return 1;
+        }
+        plw[pl].wu.operator = 1;
+        Operator_Status[pl] = 1;
+        Champion = pl;
+        plw[pl ^ 1].wu.operator = 0;
+        Operator_Status[pl ^ 1] = 0;
+        return 1;
+    }
+    if (coin_chute1_w[6] | coin_chute2_w[6]) {
+        return 1;
+    }
+    return coin_chute1_w[1] | coin_chute2_w[1] | credit_1p | credit_2p;
 }

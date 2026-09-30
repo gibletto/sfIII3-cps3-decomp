@@ -6,7 +6,7 @@
  * through Pattern15_Tbl. Each Pattern15_nnnn routine is a short script stepped by
  * CP_Index: walks and approaches, waits, range and area checks, normal, lever, command and jump
  * attacks, random branches to other patterns, and End_Pattern to finish.
- * Computer15 is at the end of active14. The set closely follows player 14's.
+ * The set closely follows player 14's.
  */
 
 #include "structs.h"
@@ -16,6 +16,26 @@
 #include "Com_Sub.h"
 #include "active15.h"
 
+
+void Computer15(PLW* wk) {
+    Pattern15_Tbl[(s16)Pattern_Index[wk->wu.id]](wk);
+}
+
+
+
+void Pattern15_0000(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Lever_Off(wk);
+        break;
+    case 1:
+        Look(wk, 0);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
 
 
 void Pattern15_0001(PLW* wk) {

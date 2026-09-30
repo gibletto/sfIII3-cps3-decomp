@@ -6,8 +6,6 @@
  * through Pattern12_Tbl. Each Pattern12_nnnn routine is a short script stepped by
  * CP_Index: walks and approaches, waits, range and area checks, normal, lever, command and jump
  * attacks, random branches to other patterns, and End_Pattern to finish.
- * Computer12 is at the end of active11; this file ends with Computer13, the dispatcher for
- * player 13's patterns in active13.
  */
 
 #include "structs.h"
@@ -17,6 +15,26 @@
 #include "Com_Sub.h"
 #include "active12.h"
 
+
+void Computer12(PLW* wk) {
+    Pattern12_Tbl[(s16)Pattern_Index[wk->wu.id]](wk);
+}
+
+
+
+void Pattern12_0000(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Lever_Off(wk);
+        break;
+    case 1:
+        Look(wk, 0);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
 
 
 void Pattern12_0001(PLW* wk) {
@@ -1357,28 +1375,6 @@ void Pattern12_0085(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
         Lever_Attack(wk, 8, 0, (0x200));
-        break;
-    default:
-        End_Pattern(wk);
-        break;
-    }
-}
-
-
-
-void Computer13(PLW* wk) {
-    Pattern13_Tbl[(s16)Pattern_Index[wk->wu.id]](wk);
-}
-
-
-
-void Pattern13_0000(PLW* wk) {
-    switch (CP_Index[wk->wu.id][0]) {
-    case 0:
-        Lever_Off(wk);
-        break;
-    case 1:
-        Look(wk, 0);
         break;
     default:
         End_Pattern(wk);
