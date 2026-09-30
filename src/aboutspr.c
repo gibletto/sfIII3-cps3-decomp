@@ -1080,7 +1080,6 @@ s32 sort_push_request3(WORK* wk) {
 
 s32 sort_push_request4(WORK* wk) {
     u16* spr;
-    s32 ret;
     if (wk->disp_flag == 0 || wk->cg_number == 0) {
     no_draw:
         return 1;
@@ -1088,8 +1087,8 @@ s32 sort_push_request4(WORK* wk) {
     if (wk->disp_flag == 2 && ((wk->blink_timing + Game_timer) & 1)) {
         goto no_draw;
     }
-    if (!(ret = trans_char_cells(wk))) {
-        return ret;
+    if (trans_char_cells(wk) == 0) {
+        return 0;
     }
     if ((spr = (u16*)sprite_entry_alloc(0)) == 0) {
         return 0;

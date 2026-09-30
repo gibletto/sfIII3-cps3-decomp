@@ -176,7 +176,7 @@ s32 effect_88_init(s16 type) {
    break-in is running, unless it is type 6. */
 void effect_89_move(WORK_Other* ewk)
 {
-    s16 attr;
+    volatile s16 attr;
 
     switch (ewk->wu.routine_no[0]) {
     case 0:

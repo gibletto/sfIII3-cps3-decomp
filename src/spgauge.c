@@ -251,9 +251,7 @@ void spgauge_control(s8 Spg_Num) {
 
 
 void wipe_check(void) {
-    SPG_DAT* spg = spg_dat;
     PLW* pl;
-    s32 i;
     if (Old_Stop_SG) {
         if (((u8)Exec_Wipe)) {
             return;
@@ -262,8 +260,8 @@ void wipe_check(void) {
             return;
         }
         Exec_Wipe_F = 1;
-        if (spg[0].time == 1 && time_clear[0] == 1) {
-            if (spg[0].time_no_clear == 0) {
+        if (spg_dat[0].time == 1 && time_clear[0] == 1) {
+            if (spg_dat[0].time_no_clear == 0) {
                 spgauge_work_clear(0);
                 tilemap_clear_rect(1, 25, 4, 26);
                 spgauge_wipe_write(0);
@@ -271,8 +269,8 @@ void wipe_check(void) {
                 satime_ko_after_clear(0);
             }
         }
-        if (spg[1].time == 1 && time_clear[1] == 1) {
-            if (spg[1].time_no_clear == 0) {
+        if (spg_dat[1].time == 1 && time_clear[1] == 1) {
+            if (spg_dat[1].time_no_clear == 0) {
                 spgauge_work_clear(1);
                 tilemap_clear_rect(43, 25, 46, 26);
                 spgauge_wipe_write(1);
@@ -283,15 +281,19 @@ void wipe_check(void) {
         return;
     }
     pl = plw;
-    for (i = 0; i < 2; i++) {
-        if (pl->sa->ok == -1) {
-            pl->sa->ok = 0;
-            time_clear[i] = 1;
-            pl->sa->gauge.i = 0;
-            spg[i].current_spg = 0;
-            spg[i].spg_level = 0;
-        }
-        pl++;
+    if (pl[0].sa->ok == -1) {
+        pl[0].sa->ok = 0;
+        time_clear[0] = 1;
+        pl[0].sa->gauge.i = 0;
+        spg_dat[0].current_spg = 0;
+        spg_dat[0].spg_level = 0;
+    }
+    if (pl[1].sa->ok == -1) {
+        pl[1].sa->ok = 0;
+        time_clear[1] = 1;
+        pl[1].sa->gauge.i = 0;
+        spg_dat[1].current_spg = 0;
+        spg_dat[1].spg_level = 0;
     }
 }
 

@@ -47,7 +47,7 @@
 
 
 /* provisional name */
-s16 Next_CPU(void) {
+s32 Next_CPU(void) {
     void (*Next_CPU_Tbl[10])() = { Next_CPU_1st, Next_CPU_2nd, Next_CPU_3rd, Next_CPU_4th, Next_CPU_5th, Next_CPU_6th, Next_Bonus_1st, Next_Bonus_2nd, Next_Bonus_3rd, Next_Bonus_End };
     if (Break_Into) {
         return 0;

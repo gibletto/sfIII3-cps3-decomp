@@ -57,7 +57,7 @@ void effect_84_move(WORK_Other* ewk) {
                 Game_pause = -1;
                 ewk->wu.routine_no[1]++;
                 sc_picture_put(2, 0, 0);
-                effect_89_init(3, (*&DE_X)[3] + 12, 9, 23, 4);
+                effect_89_init(3, DE_X[3] + 12, 9, 23, 4);
                 break;
             case 3:
                 if (cmb_all_stock[0] || cmb_calc_now[0] || cmb_calc_now[1]) {
@@ -65,13 +65,13 @@ void effect_84_move(WORK_Other* ewk) {
                 }
                 ewk->wu.routine_no[1]++;
                 sc_picture_put(3, 0, 0);
-                effect_89_init(3, (*&DE_X)[3] + 9, 8, 30, 6);
+                effect_89_init(3, DE_X[3] + 9, 8, 30, 6);
                 break;
             case 4:
             default:
                 ewk->wu.routine_no[1]++;
                 sc_picture_put(4, 0, 0);
-                effect_89_init(1, (*&DE_X)[3] + 12, 9, 24, 4);
+                effect_89_init(1, DE_X[3] + 12, 9, 24, 4);
                 break;
             }
             break;

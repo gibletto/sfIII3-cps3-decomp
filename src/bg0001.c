@@ -23,12 +23,12 @@
    until the next frame. */
 /* provisional name */
 void game_frame_task(void) {
-    do {
-        bg0001();
-        color_trans_dummy();
-        sprite_bank_flip();
-        task_sleep(1);
-    } while (1);
+loop:
+    bg0001();
+    color_trans_dummy();
+    sprite_bank_flip();
+    task_sleep(1);
+    goto loop;
 }
 
 
