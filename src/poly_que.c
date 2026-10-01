@@ -276,6 +276,31 @@ void sprite_polygon_flush_queue(s32 kind) {
 
 
 
+/* provisional name: unreferenced; clears every sprite list (0) or list n-1 */
+void sprite_list_init(s32 list) {
+    s32 j;
+    s32 i;
+    if (list == 0) {
+        for (j = 0; j < 4; j++) {
+            for (i = 0; i < 8; i++) {
+                sprite_list_w[j].rec[i].flag = 0;
+            }
+            sprite_list_w[j].pad0 = 0;
+            sprite_list_w[j].count = 0;
+            sprite_list_w[j].slot = 0;
+        }
+    } else {
+        for (i = 0; i < 8; i++) {
+            sprite_list_w[list - 1].rec[i].flag = 0;
+        }
+        sprite_list_w[list - 1].pad0 = 0;
+        sprite_list_w[list - 1].count = 0;
+        sprite_list_w[list - 1].slot = 0;
+    }
+}
+
+
+
 /* provisional name */
 s32 sprite_list_setup(s16 slot, s16 owner, s16* data) {
     s16 n_grp;

@@ -166,7 +166,7 @@ void Sel_PL_Cont_3rd(void) {
     if (Switch_Screen_Revival()) {
         S_No++;
         Forbid_Break = 0;
-        if (G_No[1] == 1 || Demo_Flag == 0) {
+        if (G_No[1] == 1 || !Demo_Flag) {
             bgm_request(2);
             if (E_Number[0][0] != 2 && E_Number[1][0] != 2) {
                 Ranking_00_6th(0);
@@ -365,7 +365,7 @@ u32 Deley_Shot_Sub(s16 PL_id) {
         sw = ~p2sw_1 & p2sw_0;
     }
     lever = Disposal_Of_Diagonal(sw);
-    sw &= 0x3F0;
+    sw = sw & 0x3F0;
     switch (Deley_Shot_No[PL_id]) {
     case 0:
         if (!(sw & 0x3F0)) {
@@ -382,7 +382,7 @@ u32 Deley_Shot_Sub(s16 PL_id) {
         Deley_Shot_Timer[PL_id] = 3;
         break;
     case 1:
-        Color7[PL_id] |= sw;
+        Color7[PL_id] = Color7[PL_id] | sw;
         if ((Deley_Shot_Timer[PL_id] -= 1) == 0) {
             return lever | Color7[PL_id];
         }
@@ -461,10 +461,10 @@ u16 Disposal_Of_Diagonal(u32 sw_arg) {
 void Sel_PL_Sub(s32 PL_id_arg, u16 sw) {
     s32 PL_id = (s16)PL_id_arg;
     Cursor_Move[PL_id] = 0;
-    if (Sel_PL_Complete[PL_id]) {
+    if (Sel_PL_Complete[PL_id] != 0) {
         return;
     }
-    if (Time_Over) {
+    if (Time_Over != 0) {
         sw = 16;
     }
     if (sw == 0) {
@@ -486,7 +486,7 @@ void Sel_PL_Sub(s32 PL_id_arg, u16 sw) {
             Sel_PL_Sub_CD(PL_id);
         }
     }
-    if (Cursor_Move[PL_id]) {
+    if (Cursor_Move[PL_id] != 0) {
         Sound_SE(ID + 96);
     }
     if (!(sw & 0x3F0)) {
@@ -613,19 +613,15 @@ void Sel_PL_Sub_CD(s16 PL_id) {
 
 
 void Auto_Repeat_Sub(s16 PL_id) {
-    u16 sw;
+    s32 sw;
     s16 raw;
     if (Demo_Flag == 0) {
         return;
     }
-    if (Cursor_Move[PL_id]) {
+    if (Cursor_Move[PL_id] != 0) {
         return;
     }
-    if (PL_id == 0) {
-        raw = p1sw_0;
-    } else {
-        raw = p2sw_0;
-    }
+    raw = (PL_id == 0) ? p1sw_0 : p2sw_0;
     sw = Disposal_Of_Diagonal(raw);
     switch (Auto_No[PL_id]) {
     case 0:
@@ -1060,8 +1056,8 @@ void Move_Face_BG(void) {
 /* provisional name */
 void Player_Select_Control(void) {
     void (*Obj_Tbl[5])() = { PL_Sel_Begin, PL_Sel_2nd, PL_Sel_3rd, PL_Sel_4th, PL_Sel_5th };
-    s16 id = ID2;
-    if (plw[id].wu.operator) {
+    s32 id = ID2;
+    if (plw[id].wu.operator != 0) {
         Obj_Tbl[SP_No[id][1]]();
     }
 }
@@ -1348,7 +1344,11 @@ void Exit_2nd(void) {
         bg_w.stage = Battle_Country;
         bg_w.area = 0;
     } else {
-        Exit_Timer = ((s8)Scene_Cut) ? 1 : 60;
+        if ((s8)Scene_Cut) {
+            Exit_Timer = 1;
+        } else {
+            Exit_Timer = 60;
+        }
         Exit_No++;
         Last_My_char[Player_id] = My_char[Player_id];
         Time_Stop = 2;
@@ -1466,8 +1466,8 @@ void Setup_Face_ID(void) {
 
 
 void Correct_Control_Time(s16 PL_id) {
-    u8 xx;
-    u8 zz;
+    s32 xx;
+    s32 zz;
     if (Play_Type == 1) {
         return;
     }
@@ -1495,7 +1495,7 @@ void Correct_Control_Time(s16 PL_id) {
 
 
 s32 Check_Boss(s16 PL_id) {
-    if (VS_Index[Player_id] >= 9 && Introduce_Boss[Player_id][1] == 0) {
+    if (VS_Index[Player_id] >= 9 && !Introduce_Boss[Player_id][1]) {
         Control_Time = Limit_Time;
         SC_Personal_Time[PL_id] = Control_Time;
         return Break_Into_CPU = 1;
@@ -1506,7 +1506,7 @@ s32 Check_Boss(s16 PL_id) {
 
 
 s32 Setup_Battle_Country(void) {
-    s16 ix;
+    s32 ix;
     if (My_char[0] == PL_Q && My_char[1] == PL_Q) {
         ix = random_16_com() & 1;
         ix += random_16_com() & 1;

@@ -150,6 +150,55 @@ SPRITE_ENTRY* sprite_entry_alloc(s8 layer) {
 
 
 
+/* provisional name: unreferenced; frees the entries of a layer and of every layer after it */
+void sprite_layer_free(s8 layer) {
+    s32 i;
+    switch (layer) {
+    case 1:
+        if (spr_bank) {
+            for (i = 0; i < 63; i++) {
+                spr_entry_b[i + 0x100].flag = 0;
+            }
+        } else {
+            for (i = 0; i < 63; i++) {
+                spr_entry_a[i + 0x100].flag = 0;
+            }
+        }
+    case 2:
+        if (spr_bank) {
+            for (i = 0; i < 63; i++) {
+                spr_entry_b[i + 0x140].flag = 0;
+            }
+        } else {
+            for (i = 0; i < 63; i++) {
+                spr_entry_a[i + 0x140].flag = 0;
+            }
+        }
+    case 3:
+        if (spr_bank) {
+            for (i = 0; i < 63; i++) {
+                spr_entry_b[i + 0x180].flag = 0;
+            }
+        } else {
+            for (i = 0; i < 63; i++) {
+                spr_entry_a[i + 0x180].flag = 0;
+            }
+        }
+    case 4:
+        if (spr_bank) {
+            for (i = 0; i < 63; i++) {
+                spr_entry_b[i + 0x1C0].flag = 0;
+            }
+        } else {
+            for (i = 0; i < 63; i++) {
+                spr_entry_a[i + 0x1C0].flag = 0;
+            }
+        }
+    }
+}
+
+
+
 /* provisional name */
 void sprite_entry_push_prio(entry, level)
 SPRITE_ENTRY* entry;
@@ -181,7 +230,7 @@ void sprite_display_list_build(void) {
     s32 count;
     s32 unused_d;
     s32 unused_e;
-    if (spr_list_ready != 0) {
+    if (spr_list_ready) {
         count = 1;
         total = 16;
         spr_list_ready = 0;
@@ -201,7 +250,7 @@ void sprite_display_list_build(void) {
         if (spr_bank) {
             for (i = 127; i >= 0; i--) {
                 rec = spr_prio_a[i];
-                if (rec != 0) {
+                if (rec) {
                     while (rec->flag) {
                         total += (s16)rec->w0 & 0x1FF;
                         *dst = rec->w0;
@@ -227,7 +276,7 @@ void sprite_display_list_build(void) {
         } else {
             for (i = 127; i >= 0; i--) {
                 rec = spr_prio_b[i];
-                if (rec != 0) {
+                if (rec) {
                     while (rec->flag) {
                         total += (s16)rec->w0 & 0x1FF;
                         *dst = rec->w0;

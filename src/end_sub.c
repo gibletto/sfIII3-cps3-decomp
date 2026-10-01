@@ -62,40 +62,40 @@ u32 card_win_check(s16 vs_mode)
     s8 need;
     s32 ret;
 
-    if (Card_Dispenser == 0) {
+    if (!Card_Dispenser) {
         return 0;
     }
     ret = Country;
     if (ret != 6 && ret != 5) {
         return (u32)ret;
     }
-    if (Play_Type == 0) {
+    if (!Play_Type) {
         win = (SELPL *)((u8 *)card_pl_w + (s8)(Winner_id * sizeof(SELPL)));
-        if (vs_mode == 0) {
+        if (!vs_mode) {
             need = Win_Point_Com - Continue_Coin[Winner_id];
             if (need < 0) {
                 need = 1;
             }
-            win->wins++;
-            if (win->cleared == 0 && need <= win->wins) {
-                win->cleared++;
-                card_out_req++;
+            win->wins += 1;
+            if (!win->cleared && need <= win->wins) {
+                win->cleared += 1;
+                card_out_req += 1;
                 win->flag = 1;
             }
         } else {
-            win->cleared++;
-            card_out_req++;
+            win->cleared += 1;
+            card_out_req += 1;
             win->flag = 1;
         }
         return (u32)memset((u8 *)card_pl_w + (s8)(Loser_id * sizeof(SELPL)), 0, sizeof(SELPL));
     }
     memset((u8 *)card_pl_w + (s8)(Loser_id * sizeof(SELPL)), 0, sizeof(SELPL));
     win = (SELPL *)((u8 *)card_pl_w + (s8)(Winner_id * sizeof(SELPL)));
-    win->vs_wins++;
+    win->vs_wins += 1;
     ret = win->cleared;
-    if (ret == 0 && (ret = win->vs_wins) >= Win_Point_Human) {
-        win->cleared++;
-        card_out_req++;
+    if (!ret && (ret = win->vs_wins) >= Win_Point_Human) {
+        win->cleared += 1;
+        card_out_req += 1;
         win->flag = 1;
         ret = 1;
     }
@@ -171,7 +171,7 @@ void card_msg_disp(void) {
 
 /* provisional name */
 void cd_keep_spinning_tick(void) {
-    if (cd_ready_flag != 0) {
+    if (cd_ready_flag) {
         if (cd_spin_timer == 0) {
             scsi_start_stop_unit(1, 1);
             cd_spin_timer = 600;
@@ -184,7 +184,7 @@ void cd_keep_spinning_tick(void) {
 
 /* provisional name */
 void cd_selftest_periodic(void) {
-    if (cd_ready_flag != 0) {
+    if (cd_ready_flag) {
         _builtin_set_imask(15);
         if (cd_check_drive_inquiry() != 0) {
             cd_error_fatal_hang(0);
@@ -229,7 +229,7 @@ void cd_error_fatal_hang(s32 kind) {
 /* provisional name */
 s32 staff_roll_skip_check(void) {
     u16 sw_w;
-    if (end_no_cut != 0) {
+    if (end_no_cut) {
         return 0;
     }
     if (WINNER) {
@@ -873,7 +873,7 @@ void load_player_color(u16 a, s16 b, s16 c) {
 
 
 void metamor_color_restore(u16 wkid) {
-    s32 zero = 0;
+    s16 zero = 0;
     const u32* p = metamor_color_tbl[wkid][Player_Color[wkid]][0];
     col_trans_result = polygon2d_submit_quad(p[0], p[1], p[2], zero, zero, zero);
     col_trans_result = polygon2d_submit_quad(p[0], p[1] + 0x400, p[2], zero, zero, zero);
@@ -904,7 +904,7 @@ u16 slot;
 
 /* provisional name */
 void load_side_color(u8 side, u16 ix) {
-    s32 zero = 0;
+    s16 zero = 0;
     if (side) {
         polygon2d_submit_quad(side_color_2p_tbl[ix].src, 0xF000, side_color_2p_tbl[ix].size, zero, zero, zero);
     } else {

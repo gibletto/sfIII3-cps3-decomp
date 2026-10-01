@@ -29,7 +29,7 @@
 void Irl_Family(void) {
     volatile u16* reg;
     s32 i;
-    s16 v;
+    u16 v;
     reg = (volatile u16*)VIDEO_REG;
     for (i = 0; i < 8; i++) {
         v = fm_pos[i].cur_x.disp.pos - zoom_adj_x + flip_obj_ofs_x;
@@ -40,6 +40,45 @@ void Irl_Family(void) {
         reg++;
         fm_pos[i].cur_x.cal = fm_pos[i].set_x.cal;
         fm_pos[i].cur_y.cal = fm_pos[i].set_y.cal;
+    }
+}
+
+
+
+/* provisional name: unreferenced; toggles a scroll layer's flip bits and applies them */
+void scrn_flip_set(u16 n, u16 flip) {
+    s32 unused;
+    switch (flip) {
+    case 0:
+        scrn_mode_prm[n][0] ^= 0x800;
+        scrn_mode_prm[n][1] = scrn_mode_prm[n][0];
+        break;
+    case 1:
+        scrn_mode_prm[n][0] ^= 0x400;
+        scrn_mode_prm[n][1] = scrn_mode_prm[n][0];
+        break;
+    case 2:
+        scrn_mode_prm[n][0] ^= 0xC00;
+        scrn_mode_prm[n][1] = scrn_mode_prm[n][0];
+        break;
+    }
+}
+
+
+
+/* provisional name: unreferenced; toggles a scroll layer's flip bits */
+void scrn_flip_toggle(u16 n, u16 flip) {
+    s32 unused;
+    switch (flip) {
+    case 0:
+        scrn_mode_prm[n][0] ^= 0x800;
+        break;
+    case 1:
+        scrn_mode_prm[n][0] ^= 0x400;
+        break;
+    case 2:
+        scrn_mode_prm[n][0] ^= 0xC00;
+        break;
     }
 }
 
@@ -130,6 +169,24 @@ void scroll_layer_commit(void) {
 
 
 
+/* provisional name: unreferenced */
+void scrn_line_set_now(n, v)
+u16 n;
+s16 v;
+{
+    scrn_line_prm[n][0] = v & 0x3FF;
+    scrn_line_prm[n][1] = v & 0x3FF;
+}
+
+
+
+/* provisional name: unreferenced */
+void scrn_line_set(u16 n, s16 v) {
+    scrn_line_prm[n][0] = v & 0x3FF;
+}
+
+
+
 /* provisional name */
 u32 simmram_large_page_addr(void) {
     u32 addr;
@@ -185,6 +242,16 @@ void scrn_linescroll_set_now(u16 n, void* p) {
 
 
 
+/* provisional name: unreferenced */
+void scrn_linescroll_set(n, p)
+u16 n;
+void* p;
+{
+    scrn_map_ptr[n].ptr1 = p;
+}
+
+
+
 /* provisional name */
 void scrn_attr_set(n, attr, bits)
 s16 n;
@@ -217,14 +284,24 @@ void Scrn_Move_Set_R(s32 n, s16 x, s16 y) {
     scrn_pos[n].cur_y.disp.pos = y;
 }
 
+
+
+/* provisional name: unreferenced */
+void Scrn_X_Set_R(ix, x)
+    s32 ix;
+    s16 x;
+{
+    scrn_pos[ix].set_x.disp.pos = x;
+    scrn_pos[ix].cur_x.disp.pos = x;
+}
+
 /* provisional name */
-s32 Scrn_Y_Set_R(ix, y)
+void Scrn_Y_Set_R(ix, y)
     s32 ix;
     s16 y;
 {
     scrn_pos[ix].set_y.disp.pos = y;
     scrn_pos[ix].cur_y.disp.pos = y;
-    return y;
 }
 
 
@@ -238,11 +315,33 @@ s16 y;
     scrn_pos[n].set_y.disp.pos = y;
 }
 
+
+
+/* provisional name: unreferenced */
+void Scrn_X_Set_W(s32 ix, s16 x)
+{
+    scrn_pos[ix].set_x.disp.pos = x;
+}
+
 /* provisional name */
-s32 Scrn_Y_Set_W(s32 ix, s16 y)
+void Scrn_Y_Set_W(s32 ix, s16 y)
 {
     scrn_pos[ix].set_y.disp.pos = y;
-    return y;
+}
+
+
+
+/* provisional name: unreferenced */
+void Scrn_Move_Add(s32 n, s32 dx, s32 dy) {
+    scrn_pos[n].set_x.cal += dx;
+    scrn_pos[n].set_y.cal += dy;
+    if (n == 4) {
+        scrn_pos[n].set_x.disp.pos &= 0x1FF;
+        scrn_pos[n].set_y.disp.pos &= 0x1FF;
+    } else {
+        scrn_pos[n].set_x.disp.pos &= 0x3FF;
+        scrn_pos[n].set_y.disp.pos &= 0x3FF;
+    }
 }
 
 
@@ -422,24 +521,24 @@ void iotest_output_toggle(void) {
     trig1 = ~p1sw_1 & p1sw_0;
     trig2 = ~p2sw_1 & p2sw_0;
     if (trig1 & 0x10) {
-        if (iotest_out1_flag) {
+        if (iotest_out1_flag != 0) {
             iotest_out1_flag = 0;
         } else {
             iotest_out1_flag = 1;
         }
-        if (iotest_out1_flag) {
+        if (iotest_out1_flag != 0) {
             coin_out_latch |= 1;
         } else {
             coin_out_latch &= ~1;
         }
     }
     if (trig2 & 0x10) {
-        if (iotest_out2_flag) {
+        if (iotest_out2_flag != 0) {
             iotest_out2_flag = 0;
         } else {
             iotest_out2_flag = 1;
         }
-        if (iotest_out2_flag) {
+        if (iotest_out2_flag != 0) {
             coin_out_latch |= 2;
         } else {
             coin_out_latch &= ~2;
@@ -454,7 +553,7 @@ void iotest_output_toggle(void) {
         coin_out_latch &= ~0x10;
         coin_out_latch &= ~0x20;
     } else if ((p2sw_0 & 0x20) != 0x20 && (p2sw_1 & 0x20) == 0x20) {
-        if (Card_Dispenser) {
+        if (Card_Dispenser != 0) {
             card_out_req++;
         }
     }
@@ -475,7 +574,7 @@ s32 iotest_output_page(void) {
     case 0:
         tilemap_fill_all(0, 32);
         tilemap_print_string(x, 0, 0xFFFF, iotest_output_scr);
-        if (Card_Dispenser) {
+        if (Card_Dispenser != 0) {
             tilemap_print_string(x, 0, 0xFFFF, iotest_dispenser_str);
         }
         iotest_hold_flag = 0;
@@ -495,7 +594,7 @@ s32 iotest_output_page(void) {
         coin_out_latch &= ~2;
         coin_out_latch &= ~0x10;
         coin_out_latch &= ~0x20;
-        if (iotest_hold_flag) {
+        if (iotest_hold_flag != 0) {
             coin_out_latch &= ~0x10;
             coin_out_latch &= ~0x20;
         }
@@ -884,7 +983,7 @@ void gamedata_print_counters(void) {
     eeprom_read(8, (volatile u16*)(EEP_ROM + 0x160), (u16*)val);
     tilemap_print_hex_block(x + 30, 7, 2, hex_to_bcd(val[0]), 6, 0);
     tilemap_print_hex_block(x + 30, 9, 2, hex_to_bcd(val[1]), 6, 0);
-    if (Free_Play_Enable) {
+    if (Free_Play_Enable != 0) {
         tilemap_print_hex_block(x + 30, 11, 2, hex_to_bcd(val[2]), 6, 0);
         if (Area_Type == 3 || Area_Type == 4) {
             tilemap_print_hex_block(x + 30, 13, 2, hex_to_bcd(val[3]), 6, 0);
@@ -908,7 +1007,7 @@ void gamedata_draw_title(void) {
     }
     tilemap_fill_all(0, 32);
     tilemap_print_string(x, 0, 0xFFFF, gamedata_scr);
-    if (Free_Play_Enable) {
+    if (Free_Play_Enable != 0) {
         tilemap_print_string(x, 0, 0xFFFF, gamedata_freeplay_str);
         if (Area_Type == 3 || Area_Type == 4) {
             tilemap_print_string(x, 2, 0xFFFF, gamedata_card_str);
@@ -982,7 +1081,7 @@ s16 config_menu_page(void) {
         rc = config_menu_run();
         break;
     }
-    if (rc) {
+    if (rc != 0) {
         config_menu_no = 0;
     }
     return rc;
@@ -1468,7 +1567,7 @@ void memtest_cdrom(void) {
     } else {
         col = 0;
     }
-    if (no_cd_flag == 0) {
+    if (!no_cd_flag) {
         tilemap_print_string_attr(col + 30, 15, 2, memtest_checking_str);
         if (cd_check_drive_inquiry() == 0) {
             tilemap_print_string_attr(col + 30, 15, 2, memtest_ok_str);
@@ -1497,7 +1596,7 @@ void memtest_simm_quick(void) {
         col = 0;
     }
     for (slot = 1; slot < 8; slot++) {
-        if (p[0]) {
+        if (p[0] != 0) {
             tilemap_print_string_attr(col + 30, slot + 16, 2, memtest_checking_str);
             _builtin_set_imask(15);
             if (p[0] == 1) {
@@ -1509,7 +1608,7 @@ void memtest_simm_quick(void) {
                 memtest_error = 1;
                 q = ((u8*)0x1FED4);
                 for (j = 1; j < 8; j++) {
-                    if (q[0] && sum % 256 == q[2]) {
+                    if (q[0] != 0 && sum % 256 == q[2]) {
                         break;
                     }
                     q += 4;
@@ -1567,7 +1666,7 @@ void simm_check_run(void) {
     tilemap_fill_all(0, 32);
     tilemap_print_string(col, 0, 0xFFFF, memtest_simm_scr);
     for (slot = 1; slot < 8; slot++) {
-        if (p[0]) {
+        if (p[0] != 0) {
             tilemap_print_string_attr(col + 30, slot * 2 + 3, 2, memtest_checking_str);
             _builtin_set_imask(15);
             if (p[0] == 1) {
@@ -1794,6 +1893,54 @@ u32 simm_full_checksum(s32 rom, s32 wide) {
         }
     }
     return sum;
+}
+
+
+
+/* provisional name: unreferenced; sums one byte of each half of the given graphics SIMM banks */
+s32 simm_bank_checksum(s32 slot, s32 count) {
+    volatile u8* p;
+    s32 i;
+    s32 start;
+    u32 sum;
+    u8 a;
+    u8 b;
+    u8 c;
+    u8 d;
+    if (slot == 0) {
+        start = 0;
+    } else if (slot > 2) {
+        start = (slot - 3) * 8 + 2;
+    } else {
+        return -1;
+    }
+    sum = 0;
+    for (i = start; i < start + count; i++) {
+        *(volatile u16*)(VIDEO_REG + 0x88) = i;
+        p = (volatile u8*)SIMM_WINDOW;
+        while (1) {
+            a = *p;
+            b = *p;
+            c = *p;
+            d = *p;
+            if (a == b && c == d) {
+                break;
+            }
+        }
+        sum += a;
+        p = (volatile u8*)(SIMM_WINDOW + 0x100000);
+        while (1) {
+            a = *p;
+            b = *p;
+            c = *p;
+            d = *p;
+            if (a == b && c == d) {
+                break;
+            }
+        }
+        sum += a;
+    }
+    return sum % 256;
 }
 
 
@@ -2499,7 +2646,7 @@ void service_coin_check(void) {
 
 /* provisional name */
 void coin_lockout_update(void) {
-    if (Free_Play) {
+    if (Free_Play != 0) {
         coin_lock_set(-1);
     } else {
         switch (Chute_Mode) {

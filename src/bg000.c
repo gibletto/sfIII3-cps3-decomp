@@ -106,8 +106,8 @@ void bg_rect_attr_add(u16* adrs, s32 x, s16 w, s32 y, s16 h, s16 bits, s16 add) 
     s16 i;
     s16 j;
     u16* p;
-    adrs += x;
-    adrs += y;
+    adrs = adrs + x;
+    adrs = adrs + y;
     i = 0;
     while (i < h) {
         p = adrs;
@@ -116,7 +116,7 @@ void bg_rect_attr_add(u16* adrs, s32 x, s16 w, s32 y, s16 h, s16 bits, s16 add) 
             *p = (*p | bits) + add;
             p++;
         }
-        adrs += 0x80;
+        adrs = adrs + 0x80;
         i++;
     }
 }
@@ -177,7 +177,7 @@ s32 capcom_logo_anim(void) {
         bg_w.bgw[1].l_limit = 2;
         bg_w.bgw[1].r_limit = 64;
         bg_vbl_trans_flag = 0;
-        if (Demo_Sound || Keep_BGM_Flag) {
+        if (Demo_Sound != 0 || Keep_BGM_Flag != 0) {
             bgm_request(48);
         }
         break;
@@ -286,11 +286,7 @@ void bg_initialize(void) {
     load_bg_color(((s16)bg_palette_no_tbl[bg_w.bg_index]));
     polygon2d_submit_line(gfx->prep, 0, 0, 3);
     polygon2d_submit_line(gfx->src, bg_w.scroll_cg_adr, gfx->size, 1);
-    if ((*&Game_setting).mode) {
-        bg_w.pos_offset = 0xF8;
-    } else {
-        bg_w.pos_offset = 0xC0;
-    }
+    bg_w.pos_offset = ((*&Game_setting).mode) ? 0xF8 : 0xC0;
     for (i = 0; i < 7; i++) {
         bg_w.bgw[i].pos_x_work = bg_w.bgw[i].pos_y_work = 0;
         bg_w.bgw[i].zuubun = 0;
@@ -358,11 +354,7 @@ void bg_initialize(void) {
         bg_w.bgw[i].frame_deff = 0;
         bg_w.bgw[i].max_x_limit = bg_w.bgw[i].speed_x * bg_w.max_x;
     }
-    if (bg_w.stage != 4) {
-        base_y_pos = 40;
-    } else {
-        base_y_pos = 48;
-    }
+    base_y_pos = (bg_w.stage != 4) ? 40 : 48;
     bg_pos_hosei2();
     Bg_Family_Set();
 }
@@ -409,7 +401,7 @@ void akebono_initialize(void) {
 
 void bg_etc_write(s16 type) {
     const BG_GFX* gfx;
-    s16 i;
+    s32 i;
     Family_Init();
     clear_scroll_layer_state_and_mask();
     scrn_pos_clear();
@@ -540,7 +532,7 @@ void bg0001_init00(void) {
     effect_06_init();
     effect_44_init(7);
     effect_60_init(2);
-    if (bg_w.area) {
+    if (bg_w.area != 0) {
         bgw_ptr->r_no_0 = 2;
         return;
     } else if (gill_appear_check()) {
@@ -708,7 +700,7 @@ void bg0102(void) {
 
 
 void bg0102_init00(void) {
-    bgw_ptr->r_no_0 += 1;
+    bgw_ptr->r_no_0 = bgw_ptr->r_no_0 + 1;
     bgw_ptr->old_pos_x = bgw_ptr->xy[0].disp.pos = bgw_ptr->pos_x_work = 0x200;
     bgw_ptr->hos_xy[0].cal = bgw_ptr->wxy[0].cal = bgw_ptr->xy[0].cal;
     bgw_ptr->zuubun = 0;

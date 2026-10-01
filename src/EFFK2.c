@@ -28,7 +28,6 @@
 #include "EFFC2.h"
 #include "EFFK2.h"
 
-#pragma inline(disp_effK2)
 
 
 
@@ -167,35 +166,6 @@ s32 effect_K1_init(s16 side) {
 
 
 
-void disp_effK2(WORK* wk, WORK* mk, DADD* hk) {
-    s16 flag;
-    s16 hz;
-    wk->position_x = wk->xyz[0].disp.pos;
-    wk->position_y = wk->xyz[1].disp.pos;
-    if (wk->dir_old == 0) {
-        flag = hk->pri_use;
-        hz = hk->hzd;
-        if (wk->mvxy.a[1].real.h >= 0) {
-            flag >>= 4;
-            hz = hk->hzr;
-        }
-        flag &= 0xF;
-        switch (flag) {
-        case 1:
-            wk->position_z = hz + 24;
-            break;
-        case 15:
-            wk->position_z = hz + 68;
-            break;
-        default:
-            wk->position_z = hz + mk->position_z;
-            break;
-        }
-    }
-    sort_push_request(wk);
-}
-
-
 void effect_K2_move(WORK_Other* ewk) {
     DADD* hahen = (DADD*)ewk->wu.target_adrs;
     WORK* mwk = (WORK*)ewk->my_master;
@@ -247,6 +217,36 @@ void effect_K2_move(WORK_Other* ewk) {
         push_effect_work(&ewk->wu);
         break;
     }
+}
+
+
+
+void disp_effK2(WORK* wk, WORK* mk, DADD* hk) {
+    s16 flag;
+    s16 hz;
+    wk->position_x = wk->xyz[0].disp.pos;
+    wk->position_y = wk->xyz[1].disp.pos;
+    if (wk->dir_old == 0) {
+        flag = hk->pri_use;
+        hz = hk->hzd;
+        if (wk->mvxy.a[1].real.h >= 0) {
+            flag >>= 4;
+            hz = hk->hzr;
+        }
+        flag &= 0xF;
+        switch (flag) {
+        case 1:
+            wk->position_z = hz + 24;
+            break;
+        case 15:
+            wk->position_z = hz + 68;
+            break;
+        default:
+            wk->position_z = hz + mk->position_z;
+            break;
+        }
+    }
+    sort_push_request(wk);
 }
 
 

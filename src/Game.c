@@ -39,7 +39,7 @@ void Game_Task(void) {
         task_ran_flag = 0;
         do {
             _builtin_set_imask(15);
-            if (vsync_flag) {
+            if (vsync_flag != 0) {
                 break;
             }
             current_task = task = &task_tbl[i];

@@ -15,19 +15,7 @@
 #include "aboutspr.h"
 #include "EFFH0.h"
 
-static void effH0_trans(WORK* ewk);
-
-
-
-static void effH0_trans(WORK* ewk) {
-    ewk->cg_number = (ewk->cg_number + 1) & 0x7FFF;
-    if (ewk->cg_number == 0) {
-        ewk->cg_number = 1;
-    }
-    ewk->position_x = bg_w.bgw[1].wxy[0].disp.pos;
-    ewk->position_y = bg_w.bgw[1].wxy[1].disp.pos;
-    sort_push_request3(ewk);
-}
+void effH0_trans(WORK* ewk);
 
 
 
@@ -70,6 +58,18 @@ void effect_H0_move(WORK_Other_CONN* ewk) {
         push_effect_work((WORK*)ewk);
         break;
     }
+}
+
+
+
+void effH0_trans(WORK* ewk) {
+    ewk->cg_number = (ewk->cg_number + 1) & 0x7FFF;
+    if (ewk->cg_number == 0) {
+        ewk->cg_number = 1;
+    }
+    ewk->position_x = bg_w.bgw[1].wxy[0].disp.pos;
+    ewk->position_y = bg_w.bgw[1].wxy[1].disp.pos;
+    sort_push_request3(ewk);
 }
 
 

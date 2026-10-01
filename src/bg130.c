@@ -210,6 +210,33 @@ void bg1402(void) {
 
 
 
+/* provisional name: unreferenced; waits for bg1403_wait to run out, then lowers the layer to pos_y_work */
+void bg1403(void) {
+    if (EXE_flag || Game_pause) {
+        return;
+    }
+    switch (bgw_ptr->r_no_1) {
+    case 0:
+        if (bgw_ptr->fam_no == 0) {
+            bg1403_wait--;
+        }
+        if (bg1403_wait < 0) {
+            bgw_ptr->r_no_1++;
+        }
+        break;
+    case 1:
+        bgw_ptr->xy[1].cal -= bgw_ptr->speed_y << 2;
+        if (bgw_ptr->xy[1].cal < bgw_ptr->pos_y_work) {
+            bgw_ptr->xy[1].cal = bgw_ptr->pos_y_work;
+            bgw_ptr->r_no_0++;
+            bg_app = 0;
+        }
+        break;
+    }
+}
+
+
+
 void bg1501_BG150(void) {
     void (*bg1601_jmp[2])() = { bg1501_init00, bg_move_common };
     bg1601_jmp[bgw_ptr->r_no_0]();

@@ -640,7 +640,7 @@ void eff09_11000(WORK_Other* ewk) {
             char_move(&ewk->wu);
             add_x_sub(ewk);
             ewk->wu.old_rno[0]--;
-            if (ewk->wu.old_rno[0] <= 0) {
+            if (ewk->wu.old_rno[0] < 1) {
                 ewk->wu.routine_no[1]++;
                 oya_ptr->cmwk[0] = 9;
             }

@@ -8,8 +8,8 @@ CFLAGS = -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -inc
 OPT = -optimize=1 -speed
 
 # modules compiled with other settings
-NOINLINE = Entry SYS_sub sel_pl next_cpu CMD_MAIN ta_sub end_main end_4 sc_trans VITAL sc_sub EFF25 EffD8 effe6 \
-	PLCNTSET PLSGAUGE textsound
+NOINLINE = Entry SYS_sub sel_pl next_cpu CMD_MAIN ta_sub end_main end_4 sc_trans VITAL sc_sub EFF15 EFF25 EffD8 \
+	effe6 PLCNTSET PLSGAUGE textsound
 OPT0 = family sys_test coin_sw eeprom sys_config spr_pool poly_que cram_bank
 
 $(NOINLINE:%=obj/%.obj): OPT += -noinline

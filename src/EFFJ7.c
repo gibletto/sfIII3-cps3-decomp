@@ -87,7 +87,7 @@ void effect_J7_move(WORK_Other* ewk) {
 /* provisional name */
 void get_new_color_data(WORK* wk, ColorCode* trom, s16* tram) {
     const s16* data;
-    s16 i;
+    s32 i;
     wk->dir_timer = trom[wk->dir_step].timer;
     wk->dir_old = trom[wk->dir_step].endcode;
     data = trom[wk->dir_step].adrs;

@@ -78,35 +78,63 @@ void game_config_init_jp(void) {
     Config_Item_jp = 6;
     Config_New_jp = game_config_work.bonus & 1;
     Config_Old_jp = (*&Game_setting).bonus & 1;
-    Config_Attr_jp = (Config_New_jp != Config_Old_jp) ? 8 : 2;
+    if (Config_New_jp != Config_Old_jp) {
+        Config_Attr_jp = 8;
+    } else {
+        Config_Attr_jp = 2;
+    }
     game_config_print_value_jp(Config_Attr_jp, &gcfg_bonus_scr_jp[Config_New_jp]);
     Config_Item_jp = 5;
     Config_New_jp = game_config_work.set5;
-    Config_Attr_jp = (Config_New_jp != (*&Game_setting).set5) ? 8 : 2;
+    if (Config_New_jp != (*&Game_setting).set5) {
+        Config_Attr_jp = 8;
+    } else {
+        Config_Attr_jp = 2;
+    }
     game_config_print_value_jp(Config_Attr_jp, &gcfg_event_scr_jp[Config_New_jp]);
     Config_Item_jp = 4;
     Config_New_jp = game_config_work.set4 / 16;
     Config_New_jp &= 3;
     Config_Org_jp = (*&Game_setting).set4 / 16;
     Config_Org_jp &= 3;
-    Config_Attr_jp = (Config_New_jp != Config_Org_jp) ? 8 : 2;
+    if (Config_New_jp != Config_Org_jp) {
+        Config_Attr_jp = 8;
+    } else {
+        Config_Attr_jp = 2;
+    }
     game_config_print_value_jp(Config_Attr_jp, &gcfg_round_scr_jp[Config_New_jp]);
     Config_Item_jp = 3;
     Config_New_jp = game_config_work.set4 & 3;
     Config_Org_jp = (*&Game_setting).set4 & 3;
-    Config_Attr_jp = (Config_New_jp != Config_Org_jp) ? 8 : 2;
+    if (Config_New_jp != Config_Org_jp) {
+        Config_Attr_jp = 8;
+    } else {
+        Config_Attr_jp = 2;
+    }
     game_config_print_value_jp(Config_Attr_jp, &gcfg_round_scr_jp[Config_New_jp]);
     Config_Item_jp = 2;
     Config_New_jp = game_config_work.set3;
-    Config_Attr_jp = (Config_New_jp != (*&Game_setting).set3) ? 8 : 2;
+    if (Config_New_jp != (*&Game_setting).set3) {
+        Config_Attr_jp = 8;
+    } else {
+        Config_Attr_jp = 2;
+    }
     game_config_print_gauge_jp(Config_New_jp, 0xFFFF, Config_Attr_jp);
     Config_Item_jp = 1;
     Config_New_jp = game_config_work.set2;
-    Config_Attr_jp = (Config_New_jp != (*&Game_setting).set2) ? 8 : 2;
+    if (Config_New_jp != (*&Game_setting).set2) {
+        Config_Attr_jp = 8;
+    } else {
+        Config_Attr_jp = 2;
+    }
     game_config_print_gauge_jp(Config_New_jp, 0xFFFF, Config_Attr_jp);
     Config_Item_jp = 0;
     Config_New_jp = game_config_work.level;
-    Config_Attr_jp = (Config_New_jp != (*&Game_setting).level) ? 8 : 2;
+    if (Config_New_jp != (*&Game_setting).level) {
+        Config_Attr_jp = 8;
+    } else {
+        Config_Attr_jp = 2;
+    }
     game_config_print_gauge_jp(Config_New_jp, 0xFFFF, Config_Attr_jp);
     game_config_print_cursor_jp(gcfg_cursor_scr_jp);
 }
@@ -376,7 +404,7 @@ void game_config_bonus_item_jp(void) {
 
 /* provisional name */
 void game_config_exit_item_jp(void) {
-    u16 sw = ~p1sw_1 & p1sw_0;
+    s16 sw = ~p1sw_1 & p1sw_0;
     if (sw & 0x10) {
         Config_Exit_jp = 1;
     }
@@ -474,7 +502,7 @@ s32 game_config_menu_en(void) {
     SETTING_TBL_T tbl;
     tbl = Game_Config_Jmp_Data;
     tbl.f[Config_No_2]();
-    if (Config_Exit_en) {
+    if (Config_Exit_en != 0) {
         return 1;
     }
     return 0;
@@ -561,8 +589,8 @@ void game_config_screen_item_en(void) {
         }
     }
     if (Config_Move_en) {
-        game_config_work.mode += Config_Move_en;
-        game_config_work.mode &= 1;
+        game_config_work.mode = game_config_work.mode + Config_Move_en;
+        game_config_work.mode = game_config_work.mode & 1;
         Config_New_en = game_config_work.mode;
         set_screen_mode(game_config_work.mode ? 7 : 3);
         screen_flip_offsets_set();
@@ -1014,7 +1042,7 @@ void debug_menu_player_setup(void) {
     dbg_hud_mode = 0;
     ixbfw_cut = 0;
     Game_pause = 0;
-    if (Game_setting.mode) {
+    if (Game_setting.mode != 0) {
         dbg_hud_x = 8;
     } else {
         dbg_hud_x = 0;
@@ -1194,7 +1222,7 @@ void debug_object_look_run(void) {
             set_char_move_init(&dbg_pl->wu, dbg_slot[8], dbg_slot[1] - 1);
         }
         dbg_pl->wu.disp_flag = check_cg_data(dbg_pl->wu.cg_number);
-        if (!dbg_pl->wu.disp_flag) {
+        if (dbg_pl->wu.disp_flag == 0) {
             dbg_pl->wu.old_cgnum = dbg_pl->wu.cg_number;
         }
         Debug_CG_Flip[dbg_pl->wu.id] = dbg_pl->wu.cg_flip;
@@ -1207,7 +1235,7 @@ void debug_object_look_run(void) {
         dbg_pl->wu.meoshi_hit_flag = 1;
         char_move(&dbg_pl->wu);
         dbg_pl->wu.disp_flag = check_cg_data(dbg_pl->wu.cg_number);
-        if (!dbg_pl->wu.disp_flag) {
+        if (dbg_pl->wu.disp_flag == 0) {
             dbg_pl->wu.old_cgnum = dbg_pl->wu.cg_number;
         }
         debug_pattern_timer_update();
@@ -1222,7 +1250,7 @@ void debug_object_look_run(void) {
         dbg_pl->wu.meoshi_hit_flag = 1;
         char_move_z(&dbg_pl->wu);
         dbg_pl->wu.disp_flag = check_cg_data(dbg_pl->wu.cg_number);
-        if (!dbg_pl->wu.disp_flag) {
+        if (dbg_pl->wu.disp_flag == 0) {
             dbg_pl->wu.old_cgnum = dbg_pl->wu.cg_number;
         }
         Debug_CG_Flip[dbg_pl->wu.id] = dbg_pl->wu.cg_flip;
@@ -1426,8 +1454,8 @@ void debug_object_edit_move(void) {
 
 /* provisional name */
 void debug_record_frame_save(void) {
-    s16 i;
-    s16 j;
+    s32 i;
+    s32 j;
     s32 ofs;
     s32 ofs2;
     switch (dbg_save_mode) {
@@ -1874,7 +1902,7 @@ void debug_draw_record_ghosts(void) {
         return;
     }
     if (dbg_save_mode) {
-        if (Debug_Rec_Frame > 0) {
+        if (Debug_Rec_Frame >= 1) {
             for (i = 0; i < 2; i++) {
                 ewk = dbg_ghost_ewk[i][0];
                 ofs = Debug_Rec_Frame;
@@ -1956,7 +1984,7 @@ void debug_hit_judgment_dispatch(void) {
 
 /* provisional name */
 void debug_hit_judgment_init(void) {
-    s16 i;
+    s32 i;
     Debug_Tool_No++;
     tilemap_fill_all(0, 32);
     tilemap_print_string_attr(15, 1, 14, hit_judgment_msg);
@@ -2030,7 +2058,7 @@ void debug_hit_judgment_move(void) {
         Debug_CG_Flip[dbg_pl->wu.id] = dbg_pl->wu.cg_flip;
         dbg_pl->wu.cg_flip ^= Debug_Flip_Mask[dbg_pl->wu.id];
         Debug_RL_Flag[dbg_pl->wu.id] = dbg_pl->wu.rl_flag;
-        if (Debug_PL_id) {
+        if (Debug_PL_id != 0) {
             debug_pattern_timer_update();
             debug_pattern_count();
         } else {
@@ -2046,13 +2074,13 @@ void debug_hit_judgment_move(void) {
             set_char_move_init(&dbg_pl->wu, dbg_slot[8], dbg_slot[1] - 1);
         }
         dbg_pl->wu.disp_flag = check_cg_data(dbg_pl->wu.cg_number);
-        if (!dbg_pl->wu.disp_flag) {
+        if (dbg_pl->wu.disp_flag == 0) {
             dbg_pl->wu.old_cgnum = dbg_pl->wu.cg_number;
         }
         Debug_CG_Flip[dbg_pl->wu.id] = dbg_pl->wu.cg_flip;
         dbg_pl->wu.cg_flip ^= Debug_Flip_Mask[dbg_pl->wu.id];
         Debug_RL_Flag[dbg_pl->wu.id] = dbg_pl->wu.rl_flag;
-        if (Debug_PL_id) {
+        if (Debug_PL_id != 0) {
             debug_pattern_count();
             debug_pattern_timer_update();
         } else {
@@ -2062,17 +2090,17 @@ void debug_hit_judgment_move(void) {
         }
         break;
     case 4:
-        if (Debug_PL_id) {
+        if (Debug_PL_id != 0) {
             char_move(&dbg_pl->wu);
             dbg_pl->wu.disp_flag = check_cg_data(dbg_pl->wu.cg_number);
-            if (!dbg_pl->wu.disp_flag) {
+            if (dbg_pl->wu.disp_flag == 0) {
                 dbg_pl->wu.old_cgnum = dbg_pl->wu.cg_number;
             }
             debug_pattern_timer_update();
         } else {
             debug_pattern_preview_step(&dbg_pl->wu);
             dbg_pl->wu.disp_flag = check_cg_data(dbg_pl->wu.cg_number);
-            if (!dbg_pl->wu.disp_flag) {
+            if (dbg_pl->wu.disp_flag == 0) {
                 dbg_pl->wu.old_cgnum = dbg_pl->wu.cg_number;
             }
             debug_edit_pattern_timer_update();
@@ -2080,10 +2108,10 @@ void debug_hit_judgment_move(void) {
         }
         break;
     case 5:
-        if (Debug_PL_id) {
+        if (Debug_PL_id != 0) {
             char_move_z(&dbg_pl->wu);
             dbg_pl->wu.disp_flag = check_cg_data(dbg_pl->wu.cg_number);
-            if (!dbg_pl->wu.disp_flag) {
+            if (dbg_pl->wu.disp_flag == 0) {
                 dbg_pl->wu.old_cgnum = dbg_pl->wu.cg_number;
             }
             debug_pattern_timer_update();
@@ -2091,7 +2119,7 @@ void debug_hit_judgment_move(void) {
             dbg_pl->wu.cg_ctr = 1;
             debug_pattern_preview_step(&dbg_pl->wu);
             dbg_pl->wu.disp_flag = check_cg_data(dbg_pl->wu.cg_number);
-            if (!dbg_pl->wu.disp_flag) {
+            if (dbg_pl->wu.disp_flag == 0) {
                 dbg_pl->wu.old_cgnum = dbg_pl->wu.cg_number;
             }
             debug_edit_pattern_timer_update();
@@ -2114,7 +2142,7 @@ void debug_hit_judgment_move(void) {
 
 /* provisional name */
 void debug_hit_a_judgement_init(void) {
-    s16 i;
+    s32 i;
     Debug_Tool_No = 3;
     tilemap_fill_all(0, 32);
     tilemap_print_string_attr(15, 1, 2, hit_a_judgement_msg);
@@ -2433,12 +2461,12 @@ void debug_hit_a_judgement_navigate_xy(WORK* wk) {
 s32 debug_hit_a_judgement_edit_grid(WORK* wk) {
     HITA_IX* ixtbl = (HITA_IX*)wk->hit_ix_table;
     HITA_PAT* pat = (HITA_PAT*)wk->set_char_ad;
-    s16 ix = wk->cg_ix / wk->cgd_type;
+    u16 ix = wk->cg_ix / wk->cgd_type;
     HITA_PAT* p = &pat[ix];
     HITA_IX* h = &ixtbl[(s16)(p->bits >> 13)];
     const HIT_KIND* kinds = hit_kind_tbl;
-    s16 step;
-    s16 i;
+    u16 step;
+    u16 i;
     s32 sw;
     s32 ret = 0;
     s32 ofs;
@@ -2756,10 +2784,10 @@ void debug_hit_a_print_counts(WORK* wk) {
 
 /* provisional name */
 void debug_hit_a_print_pattern_rows(WORK* wk, GRID_REC* recs) {
-    s16 i;
-    s16 ix;
-    s16 attr;
-    s16 v;
+    s32 i;
+    s32 ix;
+    s32 attr;
+    s32 v;
     ix = wk->cg_ix / wk->cgd_type - 4;
     for (i = 0; i < 9; i++, ix++) {
         if (ix < 0 || ix >= wk->dmcal_m) {
@@ -2784,9 +2812,9 @@ void debug_hit_a_print_pattern_rows(WORK* wk, GRID_REC* recs) {
 
 /* provisional name */
 void debug_hit_a_print_hit_ix_rows(WORK* wk, GRID9_REC* recs) {
-    s16 i;
-    s16 ix;
-    s16 attr;
+    u16 i;
+    u16 ix;
+    u16 attr;
     ix = wk->cg_hit_ix;
     ix -= 3;
     for (i = 0; i < 7; i++, ix++) {
@@ -2822,7 +2850,7 @@ void debug_hit_a_print_box_values(WORK* wk) {
     HITBOX* box;
     s32 i;
     s16 v;
-    if (dbg_hita_grid_sw && wk->dir_step >= 2 && wk->dir_step != 4 && wk->dir_step != 5) {
+    if (dbg_hita_grid_sw != 0 && wk->dir_step >= 2 && wk->dir_step != 4 && wk->dir_step != 5) {
         switch (wk->dir_step) {
         case 2:
             box = (HITBOX*)wk->h_bod;
@@ -3011,7 +3039,7 @@ void debug_catch_judgment_dispatch(void) {
     dbg_pl = &plw[Debug_PL_id];
     dbg_slot = dbg_slot_w[Debug_PL_id];
     Catch_Tbl[Debug_Tool_No]();
-    if (Debug_PL_id == 0) {
+    if (!Debug_PL_id) {
         dbg_slot = dbg_slot_w[0];
     }
     debug_draw_object_info();
@@ -3024,7 +3052,7 @@ void debug_catch_judgment_dispatch(void) {
 
 /* provisional name */
 void debug_catch_judgment_init(void) {
-    s16 i;
+    s32 i;
     PLW* wk;
     s16* sp;
     Debug_Tool_No++;
@@ -3062,7 +3090,7 @@ void debug_catch_judgment_run(void) {
         debug_slot_char_load();
         debug_motion_list_count();
         Debug_CG_Flip[dbg_pl->wu.id] = dbg_pl->wu.cg_flip;
-        dbg_pl->wu.cg_flip ^= Debug_Flip_Mask[dbg_pl->wu.id];
+        dbg_pl->wu.cg_flip = dbg_pl->wu.cg_flip ^ Debug_Flip_Mask[dbg_pl->wu.id];
         Debug_RL_Flag[dbg_pl->wu.id] = dbg_pl->wu.rl_flag;
         debug_pattern_timer_update();
         debug_pattern_count();
@@ -3074,11 +3102,11 @@ void debug_catch_judgment_run(void) {
             set_char_move_init(&dbg_pl->wu, dbg_slot[8], dbg_slot[1] - 1);
         }
         dbg_pl->wu.disp_flag = check_cg_data(dbg_pl->wu.cg_number);
-        if (!dbg_pl->wu.disp_flag) {
+        if (dbg_pl->wu.disp_flag == 0) {
             dbg_pl->wu.old_cgnum = dbg_pl->wu.cg_number;
         }
         Debug_CG_Flip[dbg_pl->wu.id] = dbg_pl->wu.cg_flip;
-        dbg_pl->wu.cg_flip ^= Debug_Flip_Mask[dbg_pl->wu.id];
+        dbg_pl->wu.cg_flip = dbg_pl->wu.cg_flip ^ Debug_Flip_Mask[dbg_pl->wu.id];
         Debug_RL_Flag[dbg_pl->wu.id] = dbg_pl->wu.rl_flag;
         debug_pattern_timer_update();
         debug_pattern_count();
@@ -3086,12 +3114,12 @@ void debug_catch_judgment_run(void) {
     case 4:
         char_move(&dbg_pl->wu);
         dbg_pl->wu.disp_flag = check_cg_data(dbg_pl->wu.cg_number);
-        if (!dbg_pl->wu.disp_flag) {
+        if (dbg_pl->wu.disp_flag == 0) {
             dbg_pl->wu.old_cgnum = dbg_pl->wu.cg_number;
         }
         if (dbg_slot[2] != dbg_pl->wu.cg_ix / dbg_pl->wu.cgd_type) {
             Debug_CG_Flip[dbg_pl->wu.id] = dbg_pl->wu.cg_flip;
-            dbg_pl->wu.cg_flip ^= Debug_Flip_Mask[dbg_pl->wu.id];
+            dbg_pl->wu.cg_flip = dbg_pl->wu.cg_flip ^ Debug_Flip_Mask[dbg_pl->wu.id];
             Debug_RL_Flag[dbg_pl->wu.id] = dbg_pl->wu.rl_flag;
             dbg_slot[2] = dbg_pl->wu.cg_ix / dbg_pl->wu.cgd_type;
         }
@@ -3101,11 +3129,11 @@ void debug_catch_judgment_run(void) {
     case 5:
         char_move_z(&dbg_pl->wu);
         dbg_pl->wu.disp_flag = check_cg_data(dbg_pl->wu.cg_number);
-        if (!dbg_pl->wu.disp_flag) {
+        if (dbg_pl->wu.disp_flag == 0) {
             dbg_pl->wu.old_cgnum = dbg_pl->wu.cg_number;
         }
         Debug_CG_Flip[dbg_pl->wu.id] = dbg_pl->wu.cg_flip;
-        dbg_pl->wu.cg_flip ^= Debug_Flip_Mask[dbg_pl->wu.id];
+        dbg_pl->wu.cg_flip = dbg_pl->wu.cg_flip ^ Debug_Flip_Mask[dbg_pl->wu.id];
         Debug_RL_Flag[dbg_pl->wu.id] = dbg_pl->wu.rl_flag;
         debug_pattern_timer_update();
         dbg_slot[2] = dbg_pl->wu.cg_ix / dbg_pl->wu.cgd_type;
@@ -3130,7 +3158,7 @@ void debug_char_preview_dispatch(void) {
 
 /* provisional name */
 void debug_char_preview_init(void) {
-    s16 i;
+    s32 i;
     Debug_Tool_No++;
     tilemap_fill_all(0, 32);
     tilemap_print_string(0, 0, 0xFFFF, dbg_all_char_str);
@@ -3182,7 +3210,7 @@ void debug_char_preview_run(void) {
     u16 group;
     u16 code;
     u16 cells;
-    s16 pal;
+    s32 pal;
     u16 shown;
     CharGfxSetHead* set;
     debug_position_by_pad();
@@ -3449,7 +3477,7 @@ void debug_parts_run(void) {
                 set_char_move_init(&dbg_pl->wu, dbg_slot[8], dbg_slot[1] - 1);
             }
             dbg_pl->wu.disp_flag = check_cg_data(dbg_pl->wu.cg_number);
-            if (!dbg_pl->wu.disp_flag) {
+            if (dbg_pl->wu.disp_flag == 0) {
                 dbg_pl->wu.old_cgnum = dbg_pl->wu.cg_number;
             }
             Debug_CG_Flip[dbg_pl->wu.id] = dbg_pl->wu.cg_flip;
@@ -3470,7 +3498,7 @@ void debug_parts_run(void) {
         if (Debug_PL_id == 0) {
             char_move(&dbg_pl->wu);
             dbg_pl->wu.disp_flag = check_cg_data(dbg_pl->wu.cg_number);
-            if (!dbg_pl->wu.disp_flag) {
+            if (dbg_pl->wu.disp_flag == 0) {
                 dbg_pl->wu.old_cgnum = dbg_pl->wu.cg_number;
             }
             debug_pattern_timer_update();
@@ -3490,7 +3518,7 @@ void debug_parts_run(void) {
         if (Debug_PL_id == 0) {
             char_move_z(&dbg_pl->wu);
             dbg_pl->wu.disp_flag = check_cg_data(dbg_pl->wu.cg_number);
-            if (!dbg_pl->wu.disp_flag) {
+            if (dbg_pl->wu.disp_flag == 0) {
                 dbg_pl->wu.old_cgnum = dbg_pl->wu.cg_number;
             }
             Debug_CG_Flip[dbg_pl->wu.id] = dbg_pl->wu.cg_flip;
@@ -3673,6 +3701,46 @@ s32 debug_slot_motion_select(void) {
 
 
 
+/* provisional name: command 4 (step one frame) on P1 button 1, unreferenced */
+s32 debug_check_step(void) {
+    if (dbg_p1sw_0 & 0x10) {
+        return 4;
+    }
+    return 0;
+}
+
+
+
+/* provisional name: command 6 (next recorded frame) on P2 button 1, unreferenced */
+s32 debug_check_rec_step(void) {
+    if (Debug_Rec_Count && (dbg_p2sw_0 & 0x10)) {
+        return 6;
+    }
+    return 0;
+}
+
+
+
+/* provisional name: command 5 on button 2, unreferenced */
+s32 debug_check_step_z(u16 sw) {
+    if (sw & 0x20) {
+        return 5;
+    }
+    return 0;
+}
+
+
+
+/* provisional name: command 7 (restart recorded frame) on button 2, unreferenced */
+s32 debug_check_rec_frame(u16 sw) {
+    if (Debug_Rec_Count && (sw & 0x20)) {
+        return 7;
+    }
+    return 0;
+}
+
+
+
 /* provisional name */
 s32 debug_flip_cycle(u16 sw) {
     s8 keep;
@@ -3745,13 +3813,13 @@ s32 debug_priority_swap(u16 sw) {
 void debug_move_record_start(u16 sw) {
     s16 n;
     if (sw & 0x100) {
-        if (Debug_Rec_Count) {
+        if (Debug_Rec_Count != 0) {
             dbg_rec_menu = 15;
             return;
         }
         dbg_rec_menu = 0;
         n = debug_catch_move_record(dbg_snap_w[0], dbg_snap_w[1]);
-        if (n) {
+        if (n != 0) {
             dbg_rec_exist = 1;
             Debug_Rec_Frame = 1;
         } else {
@@ -3781,12 +3849,12 @@ void debug_record_frame_adjust(u16 sw) {
 /* provisional name */
 void debug_move_record_menu(void)
 {
-    u16 sw;
+    s16 sw;
     s16 i;
     s16 cur;
     s16 next;
 
-    if (Debug_Rec_Count != 0) {
+    if (Debug_Rec_Count) {
         tilemap_print_string(0, 0, 0xFFFF, dbg_rec_menu_str);
     } else {
         tilemap_print_string(0, 0, 0xFFFF, dbg_rec_nodata_str);
@@ -3860,6 +3928,29 @@ void debug_position_by_pad(void) {
     if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, 8, 7)) {
         dbg_pl->wu.xyz[0].disp.pos++;
     }
+}
+
+
+
+/* provisional name: debug_bg_scroll_by_pad for BG layer 0 only, unreferenced */
+void debug_bg0_scroll_by_pad(void) {
+    if (p2sw_0 & 4) {
+        bg_w.bgw[0].position_x--;
+        bg_w.bgw[0].xy[0].disp.pos--;
+    }
+    if (p2sw_0 & 8) {
+        bg_w.bgw[0].position_x++;
+        bg_w.bgw[0].xy[0].disp.pos++;
+    }
+    if (p2sw_0 & 1) {
+        bg_w.bgw[0].position_y++;
+        bg_w.bgw[0].xy[1].disp.pos++;
+    }
+    if (p2sw_0 & 2) {
+        bg_w.bgw[0].position_y--;
+        bg_w.bgw[0].xy[1].disp.pos--;
+    }
+    Bg_Family_Set();
 }
 
 
@@ -4241,7 +4332,7 @@ void debug_memcpy_u16(u16* src, u16* dst, s16 n) {
 /* provisional name */
 void debug_hit_box_copy(void) {
     u16 sw;
-    if (Debug_PL_id == 0) {
+    if (!Debug_PL_id) {
         sw = ~dbg_p2sw_1 & dbg_p2sw_0;
         if (sw & 0x100) {
             Debug_Box_Edit ^= 1;
@@ -4290,7 +4381,7 @@ u32 debug_edit_common_input(void)
 {
     u32 sw;
     u32 ret;
-    s16 i;
+    s32 i;
 
     if (Debug_Menu_No != 4) {
         debug_position_by_pad();
@@ -4453,7 +4544,7 @@ void debug_cmd_panel_run(void) {
     u16 sel = (~dbg_p2sw_1 & dbg_p2sw_0 & 0x3f0) * 16 + (0x3f0 & trg) / 16;
     u16 i;
     s32 y;
-    if (dbg_cmd_panel) {
+    if (dbg_cmd_panel != 0) {
         switch (sel) {
         case 1:
             char_move_cmja(&dbg_pl->wu);
@@ -4478,7 +4569,7 @@ void debug_cmd_panel_run(void) {
             }
             break;
         case 0x400:
-            if (dbg_pl->wu.cmja.pat) {
+            if (dbg_pl->wu.cmja.pat != 0) {
                 char_move_cmja(&dbg_pl->wu);
             } else {
                 tilemap_print_string_attr(20, 2, 2, dbg_no_cmja_str);
@@ -4494,7 +4585,7 @@ void debug_cmd_panel_run(void) {
     dbg_cmd_panel = 0;
     task_sleep(4);
 draw:
-    if (dbg_cmd_panel) {
+    if (dbg_cmd_panel != 0) {
         tilemap_print_string_attr(20, 3, 2, dbg_slot_1p_s1_str);
         tilemap_print_string_attr(20, 4, 2, dbg_slot_1p_s2_str);
         tilemap_print_string_attr(20, 5, 2, dbg_slot_1p_s3_str);
@@ -4694,7 +4785,7 @@ void debug_object_edit_input(void)
         return;
     }
     debug_edit_common_input();
-    if (Debug_Command != 0) {
+    if (Debug_Command) {
         return;
     }
     sw = ~(s16)dbg_p1sw_1 & (s16)dbg_p1sw_0;
@@ -4704,10 +4795,10 @@ void debug_object_edit_input(void)
     debug_move_record_start(sw);
     debug_playback_mode_cycle(sw);
     sw = ~(s16)dbg_p2sw_1 & (s16)dbg_p2sw_0;
-    if ((Debug_Command = (Debug_Rec_Count != 0 && (sw & 0x20)) ? 7 : 0) != 0) {
+    if ((Debug_Command = (Debug_Rec_Count && (sw & 0x20)) ? 7 : 0) != 0) {
         return;
     }
-    if ((Debug_Command = (Debug_Rec_Count != 0 && (dbg_p2sw_0 & 0x10)) ? 6 : 0) != 0) {
+    if ((Debug_Command = (Debug_Rec_Count && (dbg_p2sw_0 & 0x10)) ? 6 : 0) != 0) {
         return;
     }
     if ((Debug_Command = (sw & 0x80) ? 8 : 0) != 0) {
@@ -4790,10 +4881,10 @@ void debug_hit_judgment_input(void) {
     }
     sw = ~dbg_p2sw_1 & dbg_p2sw_0;
     if (sw & 0x1000) {
-        Debug_PL_id ^= 1;
+        Debug_PL_id = Debug_PL_id ^ 1;
     }
     if (Debug_PL_id && (sw & 0x10)) {
-        plw[1].wu.disp_flag ^= 1;
+        plw[1].wu.disp_flag = plw[1].wu.disp_flag ^ 1;
     }
     if ((~dbg_p1sw_1 & dbg_p1sw_0) & 0x100) {
         dbg_col_no++;
@@ -4829,10 +4920,10 @@ void debug_catch_judgment_input(void) {
 
 /* provisional name */
 void debug_parts_input(void) {
-    u16 sw = ~dbg_p1sw_1 & dbg_p1sw_0;
-    u16 sw2;
+    s32 sw = ~dbg_p1sw_1 & dbg_p1sw_0;
+    s32 sw2;
     s16 i;
-    if (Debug_PL_id == 0) {
+    if (!Debug_PL_id) {
         if ((Debug_Command = debug_slot_all_select(sw))) {
             return;
         }
@@ -4872,7 +4963,7 @@ void debug_parts_input(void) {
         Debug_PL_id ^= 1;
     }
     if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, 1, 4)) {
-        if (Debug_PL_id == 0) {
+        if (!Debug_PL_id) {
             plw[0].wu.xyz[1].disp.pos++;
             for (i = 0; i < 4; i++) {
                 dbg_parts_plw[i].wu.xyz[1].disp.pos++;
@@ -4882,7 +4973,7 @@ void debug_parts_input(void) {
         }
     }
     if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, 2, 5)) {
-        if (Debug_PL_id == 0) {
+        if (!Debug_PL_id) {
             plw[0].wu.xyz[1].disp.pos--;
             for (i = 0; i < 4; i++) {
                 dbg_parts_plw[i].wu.xyz[1].disp.pos--;
@@ -4892,7 +4983,7 @@ void debug_parts_input(void) {
         }
     }
     if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, 4, 6)) {
-        if (Debug_PL_id == 0) {
+        if (!Debug_PL_id) {
             plw[0].wu.xyz[0].disp.pos--;
             for (i = 0; i < 4; i++) {
                 dbg_parts_plw[i].wu.xyz[0].disp.pos--;
@@ -4902,7 +4993,7 @@ void debug_parts_input(void) {
         }
     }
     if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, 8, 7)) {
-        if (Debug_PL_id == 0) {
+        if (!Debug_PL_id) {
             plw[0].wu.xyz[0].disp.pos++;
             for (i = 0; i < 4; i++) {
                 dbg_parts_plw[i].wu.xyz[0].disp.pos++;
@@ -5636,9 +5727,9 @@ void debug_snapshot_to_ghost(WORK* wk, SNAPSHOT* rec) {
 s32 debug_hex4_to_bcd(s16 x) {
     s16 digit[4];
     s16* p = digit;
-    s16 i;
-    s16 n;
-    s16 div = 1000;
+    s32 i;
+    s32 n;
+    s32 div = 1000;
     for (i = 0; i < 4; i++) {
         n = 0;
         for (;;) {
@@ -5648,7 +5739,7 @@ s32 debug_hex4_to_bcd(s16 x) {
             n++;
         }
         p[i] = n;
-        x += div;
+        x = x + div;
         div /= 10;
     }
     return (s16)(((p[0] << 12) & 0xF000) | ((digit[1] << 8) & 0xF00) | ((digit[2] << 4) & 0xF0)
@@ -5857,11 +5948,7 @@ void debug_draw_edit_side(void)
 {
     const s8 *str;
 
-    if (Debug_PL_id) {
-        str = dbg_2p_str;
-    } else {
-        str = dbg_1p_str;
-    }
+    str = (Debug_PL_id != 0) ? dbg_2p_str : dbg_1p_str;
     tilemap_print_string_attr(0xB, 0x11, 2, str);
 }
 
@@ -5876,7 +5963,7 @@ void debug_draw_hit_edit_info(void)
 
     /* K&R calls throughout: the arguments are passed as plain ints, as in the original */
     tilemap_rect_fill(dbg_hud_x + 40, ((WORK_Other_JUDGE *)dbg_judge_ewk)->curr_ja + 12, 8, 1, 14, 0xFFFF);
-    if (Debug_Box_Edit == 0) {
+    if (!Debug_Box_Edit) {
         attr = 14;
         str = dbg_free_str;
     } else {
@@ -5884,14 +5971,10 @@ void debug_draw_hit_edit_info(void)
         str = dbg_hold_str;
     }
     tilemap_print_string_attr(dbg_hud_x + 40, 8, attr, str);
-    if (dbg_copy_done == 0) {
+    if (!dbg_copy_done) {
         tilemap_print_string_attr(dbg_hud_x + 40, 9, 14, dbg_copy_str);
     } else {
-        if (dbg_copy_pat == dbg_slot[2] && dbg_pl->wu.char_index == dbg_copy_char) {
-            attr = 6;
-        } else {
-            attr = 14;
-        }
+        attr = (dbg_copy_pat == dbg_slot[2] && dbg_pl->wu.char_index == dbg_copy_char) ? 6 : 14;
         tilemap_print_string_attr(dbg_hud_x + 40, 9, attr, dbg_copy_str);
     }
     str = dbg_define_str;
@@ -5927,7 +6010,7 @@ void debug_draw_hit_edit_info(void)
     tilemap_print_string_attr(5, 24, 2, hit_kind_tbl[hit->mf.half.mv].name);
 
     str = dbg_1p_str;
-    if (Debug_PL_id) {
+    if (Debug_PL_id != 0) {
         str = dbg_2p_str;
     }
     tilemap_print_string_attr(dbg_hud_x + 5, 21, 2, str);
@@ -6225,28 +6308,28 @@ void debug_draw_parts_info(void)
     switch (dbg_parts_sel) {
     case 0:
         tilemap_print_string_attr(1, 23, 6, dbg_parts1_str);
-        if (dbg_parts_olc_ix[0] != 0) {
+        if (dbg_parts_olc_ix[0]) {
             str = dbg_blank8_str;
         }
         tilemap_print_string_attr(8, 23, 6, str);
         break;
     case 1:
         tilemap_print_string_attr(1, 23, 6, dbg_parts2_str);
-        if (dbg_parts_olc_ix[1] != 0) {
+        if (dbg_parts_olc_ix[1]) {
             str = dbg_blank8_str;
         }
         tilemap_print_string_attr(8, 23, 6, str);
         break;
     case 2:
         tilemap_print_string_attr(1, 23, 6, dbg_parts3_str);
-        if (dbg_parts_olc_ix[2] != 0) {
+        if (dbg_parts_olc_ix[2]) {
             str = dbg_blank8_str;
         }
         tilemap_print_string_attr(8, 23, 6, str);
         break;
     case 3:
         tilemap_print_string_attr(1, 23, 6, dbg_parts4_str);
-        if (dbg_parts_olc_ix[3] != 0) {
+        if (dbg_parts_olc_ix[3]) {
             str = dbg_blank8_str;
         }
         tilemap_print_string_attr(8, 23, 6, str);
@@ -6276,7 +6359,7 @@ void debug_char_init(void) {
     dbg_pl->wu.my_family = 1;
     dbg_pl->wu.my_col_mode = 0x4200;
     dbg_pl->wu.work_id = 1;
-    if (dbg_pl->wu.id) {
+    if (dbg_pl->wu.id != 0) {
         x += 0x270;
         dbg_pl->wu.xyz[0].disp.pos = x;
         dbg_pl->wu.position_x = x;
@@ -6305,11 +6388,7 @@ void debug_char_init(void) {
     dbg_pl->wu.cg_flip = 0;
     Debug_CG_Flip[dbg_pl->wu.id] = 0;
     Debug_Flip_Mask[dbg_pl->wu.id] = 0;
-    if (dbg_pl->wu.id) {
-        dbg_pl->wu.my_col_code = 0x2010;
-    } else {
-        dbg_pl->wu.my_col_code = 0x2000;
-    }
+    dbg_pl->wu.my_col_code = (dbg_pl->wu.id != 0) ? 0x2010 : 0x2000;
 }
 
 
@@ -6386,7 +6465,7 @@ void debug_bg_stage_load(void)
         load_any_color(0x17);
         polygon2d_submit_line(0x020B0000, 0, 0, 3);
         polygon2d_submit_line(0x020B0080, bg_w.scroll_cg_adr, 0x1E5F, 1);
-        if (Game_setting.mode == 0) {
+        if (!Game_setting.mode) {
             bg_w.pos_offset = 192;
         } else {
             bg_w.pos_offset = 248;
@@ -6454,7 +6533,7 @@ void debug_bg_stage_load(void)
         break;
     }
 
-    if (Game_setting.mode == 0) {
+    if (!Game_setting.mode) {
         bg_w.pos_offset = 192;
     } else {
         bg_w.pos_offset = 248;
@@ -6644,7 +6723,7 @@ void debug_draw_cg_data(void) {
         on = dbg_cancel_on_str;
         for (i = 0; i < 8; i++) {
             tilemap_print_string(dbg_hud_x, 0, 0xFFFF, (plw[0].wu.cg_cancel & bit) ? on : off);
-            bit <<= 1;
+            bit = bit << 1;
             off++;
             on++;
         }
@@ -7044,7 +7123,7 @@ void cmd_init(PLW* pl) {
 
 
 void cmd_move(void) {
-    s16 j;
+    s32 j;
     intptr_t* adrs;
     cmd_id = cmd_pl->wu.id;
     adrs = pl_CMD[cmd_pl->player_number];
@@ -7397,6 +7476,45 @@ void check_6(void) {
 
 
 
+/* provisional name: steps to the next command entry twice (w_type, w_int, free2, w_lvr, then free1 too), unreferenced */
+void check_6_sub1(void) {
+    cmd_tbl_ptr += 12;
+    waza_ptr->w_type = *cmd_tbl_ptr++;
+    waza_ptr->w_int = *cmd_tbl_ptr++;
+    waza_ptr->free2 = *cmd_tbl_ptr++;
+    waza_ptr->w_lvr = *cmd_tbl_ptr++;
+    waza_ptr->w_ptr = cmd_tbl_ptr;
+    waza_ptr->uni0.tame.flag = 0;
+    waza_ptr->free3 = 0;
+    waza_ptr->w_type = *cmd_tbl_ptr++;
+    waza_ptr->w_int = *cmd_tbl_ptr++;
+    waza_ptr->free1 = *cmd_tbl_ptr;
+    waza_ptr->free2 = *cmd_tbl_ptr++;
+    waza_ptr->w_lvr = *cmd_tbl_ptr++;
+    waza_ptr->w_ptr = cmd_tbl_ptr;
+    waza_ptr->uni0.tame.flag = 0;
+    waza_ptr->uni0.tame.shot_flag = 0;
+    waza_ptr->uni0.tame.shot_flag2 = 0;
+    waza_ptr->shot_ok = 0;
+    waza_ptr->free3 = 0;
+}
+
+
+
+/* provisional name: steps to the next command entry (w_type, w_int, free1, w_lvr), unreferenced */
+void check_6_sub2(void) {
+    cmd_tbl_ptr += 12;
+    waza_ptr->w_type = *cmd_tbl_ptr++;
+    waza_ptr->w_int = *cmd_tbl_ptr++;
+    waza_ptr->free1 = *cmd_tbl_ptr++;
+    waza_ptr->w_lvr = *cmd_tbl_ptr++;
+    waza_ptr->w_ptr = cmd_tbl_ptr;
+    waza_ptr->uni0.tame.shot_flag = 0;
+    waza_ptr->shot_ok = 0;
+}
+
+
+
 void check_7(void) {
     s16 i;
     s16 w_flag;
@@ -7696,7 +7814,7 @@ void check_12(void) {
         }
         break;
     case 1:
-        if (cmd_pl->wu.xyz[1].disp.pos > 0 && (chk_pl->now_lvbt & 0xF) != 0) {
+        if (cmd_pl->wu.xyz[1].disp.pos >= 1 && (chk_pl->now_lvbt & 0xF) != 0) {
             if (chk_pl->sw_lever == waza_ptr->w_lvr) {
                 waza_ptr->shot_ok++;
                 wcp[cmd_id].waza_flag[waza_type[cmd_id]] = wcp[cmd_id].reset[waza_type[cmd_id]];
@@ -7783,7 +7901,7 @@ void check_12(void) {
     case 2:
         waza_ptr->w_int--;
         waza_ptr->free3--;
-        if (waza_ptr->w_int > 0) {
+        if (waza_ptr->w_int >= 1) {
             if (chk_pl->sw_lever == 0) {
                 waza_ptr->shot_ok++;
                 break;
@@ -7860,7 +7978,7 @@ void check_14(void) {
             waza_ptr->uni0.tame.flag++;
         }
     } else if (chk_pl->sw_now & 0x700) {
-        waza_ptr->uni0.tame.flag += 1;
+        waza_ptr->uni0.tame.flag = waza_ptr->uni0.tame.flag + 1;
     }
     if (WCP_AT(ofs = cmd_id * (s16)sizeof(WORK_CP)).waza_flag[waza_type[cmd_id]]) {
         if (waza_ptr->w_int <= 0) {
@@ -8020,7 +8138,7 @@ void check_18(void) {
 
 
 void check_19(void) {
-    u16 sw_lever;
+    s16 sw_lever;
     waza_ptr->w_int--;
     if (waza_ptr->w_int < 0) {
         waza_ptr->w_type = 0;
@@ -8063,8 +8181,8 @@ void check_21(void) {
     if (!dead_lvr_check()) {
         if (waza_ptr->w_lvr & 0x8000) {
             sw_work = waza_ptr->w_lvr & 0xF;
-            if (sw_work == 0) {
-                if (sw_lever == 0) {
+            if (!sw_work) {
+                if (!sw_lever) {
                     if (((*waza_ptr->w_ptr)) == 0x1C) {
                         command_ok();
                         return;
@@ -8080,8 +8198,8 @@ void check_21(void) {
                     check_next();
                 }
             }
-        } else if (waza_ptr->w_lvr == 0) {
-            if (sw_lever == 0) {
+        } else if (!waza_ptr->w_lvr) {
+            if (!sw_lever) {
                 if (*waza_ptr->w_ptr == 28) {
                     command_ok();
                     return;
@@ -8470,11 +8588,7 @@ void sw_pick_up(void) {
     wcp[cmd_id].sw_off = chk_pl->shot_down;
     if ((i = wcp[cmd_id].sw_lvbt & 0xC)) {
         if (cmd_pl->wu.rl_flag) {
-            if (i & 8) {
-                wcp[cmd_id].lever_dir = 1;
-            } else {
-                wcp[cmd_id].lever_dir = 2;
-            }
+            wcp[cmd_id].lever_dir = (i & 8) ? 1 : 2;
         } else if (i & 4) {
             wcp[cmd_id].lever_dir = 1;
         } else {
@@ -8483,11 +8597,7 @@ void sw_pick_up(void) {
     } else {
         wcp[cmd_id].lever_dir = 0;
     }
-    if ((chk_pl->left_cnt != 0) && (chk_pl->left_cnt < 12)) {
-        wcp[cmd_id].calf = 1;
-    } else {
-        wcp[cmd_id].calf = 0;
-    }
+    wcp[cmd_id].calf = ((chk_pl->left_cnt != 0) && (chk_pl->left_cnt < 12)) ? 1 : 0;
     if ((chk_pl->right_cnt != 0) && (chk_pl->right_cnt < 12)) {
         wcp[cmd_id].calr = 1;
         return;

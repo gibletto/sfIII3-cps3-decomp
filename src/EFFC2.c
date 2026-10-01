@@ -155,65 +155,6 @@ void effect_C2_move(WORK_Other* ewk) {
 
 
 
-void effc2_parts_work_chain_check(s16 flag) {
-    WORK* adr0;
-    WORK* adr1;
-    WORK* adr2;
-    WORK* adr3;
-    s16 wix = search_effect_index(1, 0, 0x7B);
-    s16 bff;
-    s16 bhf;
-    s16 bf[4];
-    s16 bh[4];
-    if (wix == -1) {
-        return;
-    }
-    while (wix != -1) {
-        adr1 = (WORK*)frw[wix];
-        if (adr1->type == 4 || adr1->type == 5) {
-            goto jump;
-        }
-        wix = adr1->behind;
-    }
-    return;
-jump:
-    if (flag) {
-        if (adr1->type == 4) {
-            return;
-        }
-    } else if (adr1->type == 5) {
-        return;
-    }
-    if (adr1->behind == -1) {
-        return;
-    }
-    adr2 = (WORK*)frw[adr1->behind];
-    if (flag) {
-        if (adr2->type != 4) {
-            return;
-        }
-    } else if (adr2->type != 5) {
-        return;
-    }
-    bff = bhf = 0;
-    adr0 = (WORK*)frw[adr1->before];
-    adr3 = (WORK*)frw[adr2->behind];
-    bf[1] = adr1->before;
-    bf[2] = adr2->before;
-    bf[3] = adr3->before;
-    bh[0] = adr0->behind;
-    bh[1] = adr1->behind;
-    bh[2] = adr2->behind;
-    adr0->behind = bh[1];
-    adr1->behind = bh[2];
-    adr2->behind = bh[0];
-    adr1->before = bf[3];
-    adr2->before = bf[1];
-    adr3->before = bf[2];
-}
-
-
-
 /* provisional name */
 void effC2_main_process_first(WORK_Other* ewk, PLW* twk) {
     if (EXE_flag == 0 && Game_pause == 0) {
@@ -336,6 +277,65 @@ void effC2_main_process_first(WORK_Other* ewk, PLW* twk) {
     if (!ewk->wu.dir_timer) {
         effc2_parts_work_chain_check(ewk->wu.vital_new);
     }
+}
+
+
+
+void effc2_parts_work_chain_check(s16 flag) {
+    WORK* adr0;
+    WORK* adr1;
+    WORK* adr2;
+    WORK* adr3;
+    s16 wix = search_effect_index(1, 0, 0x7B);
+    s16 bff;
+    s16 bhf;
+    s16 bf[4];
+    s16 bh[4];
+    if (wix == -1) {
+        return;
+    }
+    while (wix != -1) {
+        adr1 = (WORK*)frw[wix];
+        if (adr1->type == 4 || adr1->type == 5) {
+            goto jump;
+        }
+        wix = adr1->behind;
+    }
+    return;
+jump:
+    if (flag) {
+        if (adr1->type == 4) {
+            return;
+        }
+    } else if (adr1->type == 5) {
+        return;
+    }
+    if (adr1->behind == -1) {
+        return;
+    }
+    adr2 = (WORK*)frw[adr1->behind];
+    if (flag) {
+        if (adr2->type != 4) {
+            return;
+        }
+    } else if (adr2->type != 5) {
+        return;
+    }
+    bff = bhf = 0;
+    adr0 = (WORK*)frw[adr1->before];
+    adr3 = (WORK*)frw[adr2->behind];
+    bf[1] = adr1->before;
+    bf[2] = adr2->before;
+    bf[3] = adr3->before;
+    bh[0] = adr0->behind;
+    bh[1] = adr1->behind;
+    bh[2] = adr2->behind;
+    adr0->behind = bh[1];
+    adr1->behind = bh[2];
+    adr2->behind = bh[0];
+    adr1->before = bf[3];
+    adr2->before = bf[1];
+    adr3->before = bf[2];
 }
 
 
@@ -636,7 +636,7 @@ WORK_Other* ewk;
 
 void c3_new_damage(WORK* wk) {
     WORK* c2wk;
-    s32 cal_m;
+    s16 cal_m;
     s16 ix;
     s16 brlv;
     if (Time_Over) {
@@ -718,7 +718,7 @@ void setup_parts_break2(WORK* wk) {
 
 /* provisional name */
 void disp_bs2_parts_debug(WORK* wk) {
-    s16 i;
+    s32 i;
     if (Version_Type != 7 || !(exsw_2 & 0x10)) {
         return;
     }
@@ -803,9 +803,9 @@ void clear_bs2_floor(WORK_Other* wk) {
 /* Floor of the second bonus stage back at its resting height (448), push boxes cleared. */
 /* provisional name */
 void init_bs2_floor(void) {
-    bs2_floor[1] = bs2_floor[0] = 0x1C0;
+    bs2_floor[0] = bs2_floor[1] = 0x1C0;
     bs2_floor[2] = 0;
-    bs2_hosei[2] = bs2_hosei[1] = bs2_hosei[0] = 0;
+    bs2_hosei[0] = bs2_hosei[1] = bs2_hosei[2] = 0;
 }
 
 

@@ -76,8 +76,8 @@ s32 home_visitor_check(PLW* wk) {
 void appear_data_set(PLW* wk, s16* data) {
     APPEAR_DATA* dtbl = (APPEAR_DATA*)data;
     s8* flag;
-    if (wk->wu.id == 0) {
-        if (Game_setting.mode == 0) {
+    if (!wk->wu.id) {
+        if (!Game_setting.mode) {
             wk->wu.xyz[0].disp.pos = bg_w.bgw[1].pos_x_work + dtbl->hx;
         } else {
             wk->wu.xyz[0].disp.pos = dtbl->whx + bg_w.bgw[1].pos_x_work;
@@ -87,7 +87,7 @@ void appear_data_set(PLW* wk, s16* data) {
         wk->wu.rl_flag = dtbl->rl;
         wk->wu.routine_no[4] = dtbl->rno;
     } else {
-        if (Game_setting.mode == 0) {
+        if (!Game_setting.mode) {
             wk->wu.xyz[0].disp.pos = bg_w.bgw[1].pos_x_work - dtbl->hx;
         } else {
             wk->wu.xyz[0].disp.pos = bg_w.bgw[1].pos_x_work - dtbl->whx;
@@ -691,7 +691,7 @@ void Appear_11000(PLW* wk) {
             wk->wu.routine_no[2] = 1;
             wk->wu.routine_no[3] = 1;
             Appear_end++;
-            if (Demo_Sound || Demo_Flag) {
+            if (Demo_Sound != 0 || Demo_Flag != 0) {
                 sound_request_pan(0x2A9, 0x40, 0x40, 0, 2);
             }
         }
@@ -1107,7 +1107,7 @@ void Appear_20000(PLW* wk) {
 
 
 void Appear_21000(PLW* wk) {
-    s16 work;
+    s32 work;
     switch (wk->wu.routine_no[3]) {
     case 0:
         wk->wu.routine_no[3] += 1;
@@ -1195,7 +1195,7 @@ void Appear_23000(PLW* wk) {
 
 
 void Appear_24000(PLW* wk) {
-    if (!wk->wu.operator) {
+    if (wk->wu.operator == 0) {
         if (wk->wu.id) {
             if (Game_setting.mode) {
                 wk->wu.xyz[0].disp.pos = bg_w.bgw[1].pos_x_work + 200;
@@ -1429,8 +1429,8 @@ void Appear_29000(PLW* wk) {
         }
         break;
     case 4:
-        app_counter[wk->wu.id]--;
-        if (app_counter[wk->wu.id] < 1) {
+        app_counter[wk->wu.id] -= 1;
+        if (app_counter[wk->wu.id] <= 0) {
             wk->wu.routine_no[3]++;
             set_char_move_init2(&wk->wu, 9, 0xb, 5, 0);
             wk->wu.xyz[1].disp.pos = 0;

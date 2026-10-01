@@ -62,7 +62,7 @@ void effect_B1_move(WORK_Other_CONN* ewk) {
         }
         switch (ewk->wu.routine_no[1]) {
         case 0:
-            if (Bonus_Game_result) {
+            if (Bonus_Game_result != 0) {
                 for (i = 0; i < Bonus_Game_result; i++) {
                     if (!ewk->conn[i + 20].nx) {
                         ewk->conn[i + 20].nx = 1;
@@ -95,6 +95,8 @@ void effect_B1_move(WORK_Other_CONN* ewk) {
         break;
     }
 }
+
+
 
 void effB1_trans(WORK* ewk) {
     ewk->cg_number = (ewk->cg_number + 1) & 0x7FFF;
@@ -134,7 +136,7 @@ void effB1_mark_change(WORK_Other_CONN* ewk) {
 
 
 void effB1_mark_exchange(WORK_Other_CONN* ewk) {
-    s16 i;
+    s32 i;
     for (i = 0; i < ewk->wu.direction; i++) {
         if (ewk->conn[i + 20].nx == 0 || ewk->conn[i + 20].nx == 1) {
             continue;

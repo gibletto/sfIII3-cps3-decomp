@@ -359,7 +359,7 @@ void Catch_08000(PLW* wk) {
 
 
 void subtract_cu_vital(PLW* wk) {
-    if (wk->wu.dm_vital != 0) {
+    if (wk->wu.dm_vital) {
         if (wk->dead_flag == 0) {
             if (wk->wu.dm_vital) {
                 Additinal_Score_DM((WORK_Other*)wk->wu.dmg_adrs, wk->wu.dm_ten_ix);

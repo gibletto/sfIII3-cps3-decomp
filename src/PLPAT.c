@@ -292,7 +292,7 @@ void check_ja_nmj_dummy_RTNM(PLW* wk) {
 s32 get_cjdR(PLW* wk) {
     s16 w_ix = (wk->wu.kind_of_waza & 6);
     w_ix += ((wk->wu.hf.hit.player & 0xA2) != 0);
-    if (wk->wu.att_hit_ok || (wk->wu.hf.hit.player == 0)) {
+    if (wk->wu.att_hit_ok || (!wk->wu.hf.hit.player)) {
         goto case0;
     }
     if (wk->wu.hf.hit.player & 3) {
@@ -559,7 +559,7 @@ s32 Attack_10000(PLW* wk) {
         }
         return rc;
     case 3:
-        if (--wk->wu.dir_timer > 0) {
+        if (--wk->wu.dir_timer >= 1) {
             return 0x9A;
         }
         wk->wu.routine_no[3] = 4;

@@ -144,7 +144,7 @@ void end_700_2000(void) {
 
 
 void end_700_cell_set(void) {
-    s16 i;
+    u16 i;
     for (i = 0; i < 10; i++) {
         bg_cell_write(0, end_700_bg0_cell_tbl[i].ofs, end_700_bg0_cell_tbl[i].cell, (u32)end_700_scrn_data, 0, 0x220);
     }

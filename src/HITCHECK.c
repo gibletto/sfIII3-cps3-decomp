@@ -488,48 +488,6 @@ void set_paring_status(PLW* as, PLW* ds) {
 
 
 
-s16 get_sky_nm_damage(u16 ix) {
-    ix -= 32;
-    return sky_nm_damage_tbl[ix];
-}
-
-
-
-s16 get_sky_sp_damage(u16 ix) {
-    ix -= 32;
-    return sky_sp_damage_tbl[ix];
-}
-
-
-
-s16 get_kagami_damage(u16 ix) {
-    ix -= 32;
-    return kagami_damage_tbl[ix];
-}
-
-
-
-s16 get_grd_hand_damage(u16 ix) {
-    ix -= 32;
-    return grd_hand_damage_tbl[ix];
-}
-
-
-
-u8 check_head_damage(s16 ix) {
-    ix -= 32;
-    return hddm_damage_tbl[ix];
-}
-
-
-
-u8 check_trunk_damage(s16 ix) {
-    ix -= 32;
-    return trdm_damage_tbl[ix];
-}
-
-
-
 void plef_at_vs_player_damage_union(PLW* as, PLW* ds, s8 gddir) {
     ds->wu.dm_guard_success = -1;
     if (ds->guard_flag == 3 || as->wu.att.guard == 0 || ds->py->flag != 0) {
@@ -1175,7 +1133,7 @@ void dm_status_copy(WORK* as, WORK* ds) {
 void add_combo_work(PLW* as, PLW* ds) {
     s16* kow;
     s16* cal;
-    if (ds->kezurijini_flag) {
+    if (ds->kezurijini_flag != 0) {
         return;
     }
     ds->kizetsu_kow = ds->cb->new_dm = as->wu.kind_of_waza;
@@ -1228,12 +1186,12 @@ void cal_combo_waribiki(PLW* as, PLW* ds) {
     for (i = 0; i < 9; i++) {
         for (j = 0; j < 4; j++) {
             k = ds->rp->kind_of[i][j][0] + ds->rp->kind_of[i][j][1];
-            if (k) {
+            if (k != 0) {
                 tbl.ixl += k * koatt->step[i][j] * 256;
             }
         }
     }
-    if (tbl.ixs.l) {
+    if (tbl.ixs.l != 0) {
         tbl.ixs.h++;
     }
     power = (POWER*)exchange_pow[as->wu.kind_of_waza >> 1];
@@ -1636,7 +1594,7 @@ void hit_push_request(WORK* hpr_wk) {
 
 
 void clear_hit_queue(void) {
-    s16 i;
+    s32 i;
     hpq_in = 0;
     for (i = 0; i < 32; i++) {
         mkm_wk[i] = 0;
@@ -1672,6 +1630,64 @@ s32 change_damage_attribute(PLW* as, u16 atr, u16 ix) {
         break;
     }
     return ix;
+}
+
+
+
+s16 get_sky_nm_damage(u16 ix) {
+    ix -= 32;
+    return sky_nm_damage_tbl[ix];
+}
+
+
+
+/* provisional name: unreferenced */
+s16 get_sky_nm2_damage(u16 ix) {
+    ix -= 32;
+    return sky_nm2_damage_tbl[ix];
+}
+
+
+
+s16 get_sky_sp_damage(u16 ix) {
+    ix -= 32;
+    return sky_sp_damage_tbl[ix];
+}
+
+
+
+s16 get_kagami_damage(u16 ix) {
+    ix -= 32;
+    return kagami_damage_tbl[ix];
+}
+
+
+
+/* provisional name: unreferenced */
+s16 get_kagami2_damage(u16 ix) {
+    ix -= 32;
+    return kagami2_damage_tbl[ix];
+}
+
+
+
+s16 get_grd_hand_damage(u16 ix) {
+    ix -= 32;
+    return grd_hand_damage_tbl[ix];
+}
+
+
+
+s32 check_head_damage(s16 ix) {
+    ix -= 32;
+    return hddm_damage_tbl[ix];
+}
+
+
+
+s32 check_trunk_damage(s16 ix) {
+    ix -= 32;
+    return trdm_damage_tbl[ix];
 }
 
 

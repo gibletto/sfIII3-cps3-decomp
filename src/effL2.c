@@ -31,8 +31,8 @@ void effect_L2_move(WORK_Other* ewk) {
         set_char_move_init2(&ewk->wu, 0, 0, 1, 0);
         break;
     case 1:
-        if (Allow_a_battle_f == 0 && Conclusion_Flag == 1 && *C_No >= 2) {
-            if (!(Complete_Victory == 0) && Conclusion_Flag) {
+        if (!Allow_a_battle_f && Conclusion_Flag == 1 && *C_No >= 2) {
+            if (!(!Complete_Victory) && Conclusion_Flag != 0) {
                 ewk->wu.routine_no[0]++;
                 ewk->wu.old_rno[0] = 0;
                 if (Winner_id != ewk->master_id) {
@@ -49,10 +49,10 @@ void effect_L2_move(WORK_Other* ewk) {
         sort_push_request(&ewk->wu);
         break;
     case 2:
-        if (Exec_Wipe) {
+        if (Exec_Wipe != 0) {
             ewk->wu.old_rno[0] = 1;
         }
-        if (ewk->wu.old_rno[0] && !Exec_Wipe) {
+        if (ewk->wu.old_rno[0] != 0 && !Exec_Wipe) {
             ewk->wu.routine_no[0] = 0;
         }
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;

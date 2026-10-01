@@ -130,7 +130,7 @@ s32 effect_10_init(WORK* wk, u8 type) {
     s16 ix;
     s16 i;
     const s16* data;
-    if (scr_obj_num10[type] == 0) {
+    if (!scr_obj_num10[type]) {
         return 0;
     }
     data = scr_obj_data10[type];

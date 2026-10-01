@@ -148,7 +148,7 @@ void scfont_lnput(s16 x, s16 y, u16 w, u16 h, s16 attr, s16 code)
 {
     u16 row;
     u16 col;
-    s32 n;
+    s16 n;
 
     n = 0;
     for (row = 0; row < h; row++) {
@@ -164,7 +164,7 @@ void scfont_lnput_rev(s16 x, s16 y, u16 w, u16 h, s16 attr, s16 code)
 {
     u16 row;
     u16 col;
-    s32 cx;
+    s16 cx;
     u16 n;
 
     n = 0;
@@ -262,9 +262,9 @@ void sc_chr_sheet_to_ram(u16 chr, u16 pos, u16 w, u16 h) {
                 sc_trans_src++;
             }
         }
-        src += 0x200;
+        src = src + 0x200;
         sc_trans_src = src;
-        sc_bak_ptr += 0x200;
+        sc_bak_ptr = sc_bak_ptr + 0x200;
     }
 }
 
@@ -450,7 +450,7 @@ void score8x16_put(u16 x, u16 y, u16 attr, u16 code) {
 
 
 void score16x24_put(s16 x, s16 y, s16 attr, s16 n) {
-    s16 code = n * 6 + 0x130;
+    s32 code = n * 6 + 0x130;
     tilemap_put_cell(x, y, attr, code);
     tilemap_put_cell(x + 1, y, attr, code + 1);
     tilemap_put_cell(x, y + 1, attr, code + 2);
@@ -816,7 +816,7 @@ void win_mark_put(s16 pl, u16 n, s16 attr) {
 
 /* provisional name */
 void win_mark_ram_clear(void) {
-    u16 i;
+    s32 i;
     u8* dst = &sc_chr_ram[0x200];
     volatile s32 blank = 0xBDC0;
     for (i = 0; i < 8; i++) {

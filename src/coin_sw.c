@@ -446,7 +446,7 @@ void dispenser_sw_read(void) {
 char * dispenser_init(void)
 {
     char *ret;
-    u16 sw;
+    s32 sw;
     s32 latch;
     card_out_req = 0;
     ret = (char *)&Card_Dispenser;

@@ -24,7 +24,7 @@
 
 void effect_97_move(WORK_Other* ewk) {
     s16* rno;
-    s32 ofs;
+    s16 ofs;
     switch (ewk->wu.routine_no[0]) {
     case 0:
         ewk->wu.routine_no[0]++;

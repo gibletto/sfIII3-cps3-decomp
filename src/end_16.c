@@ -29,7 +29,7 @@
 
 /* provisional name */
 void end_e00_cell_set(void) {
-    s16 i;
+    s32 i;
     for (i = 0; i < 16; i++) {
         bg_cell_write(0, end_e00_bg0_cell_tbl[i].ofs, end_e00_bg0_cell_tbl[i].cell, (u32)end_e00_scrn_data, 0, 0x220);
     }

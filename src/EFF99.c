@@ -81,7 +81,7 @@ void effect_99_move(WORK_Other* ewk) {
         ewk->wu.disp_flag = 1;
         break;
     case 1:
-        if (!Disp_PERFECT) {
+        if (Disp_PERFECT == 0) {
             ewk->wu.disp_flag = 0;
             ewk->wu.routine_no[0] = 99;
             return;

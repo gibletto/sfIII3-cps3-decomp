@@ -31,7 +31,7 @@
 void set_char_move_init2(WORK* wk, s16 koc, s16 index, s16 ip, s16 scf) {
     u32* dst;
     u32* src;
-    s16 i;
+    s32 i;
     u8 pst;
     u8 kow;
     pst = wk->pat_status;
@@ -296,7 +296,7 @@ void char_move_cmhs(PLW* wk) {
 
 
 
-static void char_move_next(WORK* wk);
+void char_move_next(WORK* wk);
 
 void char_move(WORK* wk) {
     wk->K5_exec_ok = 1;
@@ -306,7 +306,7 @@ void char_move(WORK* wk) {
     char_move_next(wk);
 }
 
-static void char_move_next(WORK* wk) {
+void char_move_next(WORK* wk) {
     CHAR_CMD* cpc;
     if (wk->cg_next_ix) {
         wk->cg_ix = (wk->cg_next_ix - 1) * wk->cgd_type;
@@ -730,11 +730,7 @@ s32 comm_ps_y(WORK* wk, CHAR_CMD* ctc) {
     if (wk->work_id == 1) {
         switch (ctc->koc) {
         case 0:
-            if (bg_w.stage == 21 && ((PLW*)wk)->bs2_on_car && ctc->pat < bs2_floor[2]) {
-                wk->xyz[1].disp.pos = bs2_floor[2];
-            } else {
-                wk->xyz[1].disp.pos = ctc->pat;
-            }
+            wk->xyz[1].disp.pos = (bg_w.stage == 21 && ((PLW*)wk)->bs2_on_car && ctc->pat < bs2_floor[2]) ? bs2_floor[2] : ctc->pat;
             break;
         case 2:
             wk->xyz[1].disp.pos = ctc->pat;
@@ -2348,7 +2344,7 @@ s32 check_cgd_patdat(WORK* wk) {
 
 
 u32 check_xcopy_filter_se_req(WORK* wk) {
-    u16 voif;
+    s32 voif;
     if ((voif = wk->cg_se) < 0x160) {
         return voif;
     }
@@ -2386,7 +2382,7 @@ void check_cgd_patdat2(WORK* wk) {
         wk->cg_att_ix >>= 6;
         st.l *= 8;
         wk->cg_hit_ix = st.w.h & 0x1FF;
-        if (wk->cg_att_ix) {
+        if (wk->cg_att_ix != 0) {
             set_new_attnum(wk);
         }
         break;

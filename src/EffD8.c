@@ -22,7 +22,7 @@
 
 
 void effect_D8_move(WORK_Other* ewk) {
-    s16 offset_x;
+    s32 offset_x;
     ewk->wu.hit_quake += 1;
     switch (ewk->wu.routine_no[0]) {
     case 0:

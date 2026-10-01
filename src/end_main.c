@@ -521,7 +521,7 @@ void op_111_move(void) {
 void op_112_move(void) {
     switch (op_w.r_no_2) {
     case 0:
-        op_w.r_no_2 += 1;
+        op_w.r_no_2 = op_w.r_no_2 + 1;
         op_work_clear();
         op_w.index = 70;
         opening_bg_move_broadcast(70);
@@ -537,7 +537,7 @@ void op_112_move(void) {
         break;
     case 1:
         if (gSeqStatus[0] >= op_112_tbl[op_w.r_no_2] && gSeqStatus[0] != 112) {
-            op_w.r_no_2 += 1;
+            op_w.r_no_2 = op_w.r_no_2 + 1;
             op_work_clear();
             op_w.index = 71;
             op_w.mv_ctr = 0;
@@ -546,9 +546,9 @@ void op_112_move(void) {
         opening_bg_move_broadcast(70);
         break;
     case 2:
-        op_w.mv_ctr += 1;
+        op_w.mv_ctr = op_w.mv_ctr + 1;
         if (op_w.mv_ctr >= op_112_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+            op_w.r_no_2 = op_w.r_no_2 + 1;
             op_work_clear();
             op_w.index = 72;
             break;
@@ -556,9 +556,9 @@ void op_112_move(void) {
         opening_bg_move_broadcast(71);
         break;
     case 3:
-        op_w.mv_ctr += 1;
+        op_w.mv_ctr = op_w.mv_ctr + 1;
         if (op_w.mv_ctr >= op_112_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+            op_w.r_no_2 = op_w.r_no_2 + 1;
             op_work_clear();
             op_w.index = 73;
             op_obj_disp = 0;
@@ -568,9 +568,9 @@ void op_112_move(void) {
         opening_bg_move_broadcast(72);
         break;
     case 4:
-        op_w.mv_ctr += 1;
+        op_w.mv_ctr = op_w.mv_ctr + 1;
         if (op_w.mv_ctr >= op_112_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+            op_w.r_no_2 = op_w.r_no_2 + 1;
             op_work_clear();
             op_w.index = 74;
             op_obj_disp = 1;
@@ -579,9 +579,9 @@ void op_112_move(void) {
         opening_bg_move_broadcast(73);
         break;
     case 5:
-        op_w.mv_ctr += 1;
+        op_w.mv_ctr = op_w.mv_ctr + 1;
         if (op_w.mv_ctr >= op_112_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+            op_w.r_no_2 = op_w.r_no_2 + 1;
             op_work_clear();
             op_w.index = 75;
             break;
@@ -589,9 +589,9 @@ void op_112_move(void) {
         opening_bg_move_broadcast(74);
         break;
     case 6:
-        op_w.mv_ctr += 1;
+        op_w.mv_ctr = op_w.mv_ctr + 1;
         if (op_w.mv_ctr >= op_112_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+            op_w.r_no_2 = op_w.r_no_2 + 1;
             op_work_clear();
             op_w.index = 76;
             op_obj_disp = 0;
@@ -601,9 +601,9 @@ void op_112_move(void) {
         opening_bg_move_broadcast(75);
         break;
     case 7:
-        op_w.mv_ctr += 1;
+        op_w.mv_ctr = op_w.mv_ctr + 1;
         if (op_w.mv_ctr >= op_112_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+            op_w.r_no_2 = op_w.r_no_2 + 1;
             op_work_clear();
             op_w.index = 77;
             op_obj_disp = 1;
@@ -612,9 +612,9 @@ void op_112_move(void) {
         opening_bg_move_broadcast(76);
         break;
     case 8:
-        op_w.mv_ctr += 1;
+        op_w.mv_ctr = op_w.mv_ctr + 1;
         if (op_w.mv_ctr >= op_112_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+            op_w.r_no_2 = op_w.r_no_2 + 1;
             op_work_clear();
             op_w.index = 78;
             break;
@@ -882,7 +882,7 @@ void op_118_move(void) {
     case 5:
         op_end_flag = 1;
         Bg_Off_W(0xFE);
-        if ((Demo_Sound == 0 && Demo_Flag == 0) || Keep_BGM_Flag != 0) {
+        if ((Demo_Sound == 0 && Demo_Flag == 0) || Keep_BGM_Flag) {
             sound_reg_level_set(0, 0);
         }
         opening_bg_move_broadcast(93);
@@ -1096,7 +1096,7 @@ void op_bg0_0002(s16 r_index) {
 void op_bg0_0003(s16 r_index) {
     switch (opw_ptr->r_no_0) {
     case 0:
-        opw_ptr->r_no_0 += 1;
+        opw_ptr->r_no_0 = opw_ptr->r_no_0 + 1;
         bgw_ptr->free = 1;
         bgw_ptr->frame_deff = 0;
         Bg_On_W(1);
@@ -1538,7 +1538,9 @@ void op_bg1_move(s16 r_index) {
 
 
 
-void op_bg1_0000(s16 r_index) {
+void op_bg1_0000(r_index)
+s16 r_index;
+{
     switch (opw_ptr->r_no_0) {
     case 0:
         opw_ptr->r_no_0 += 1;
@@ -1554,7 +1556,9 @@ void op_bg1_0000(s16 r_index) {
 
 
 
-void op_bg1_0001(s16 r_index) {
+void op_bg1_0001(r_index)
+s16 r_index;
+{
     switch (opw_ptr->r_no_0) {
     case 0:
         opw_ptr->r_no_0 += 1;
@@ -1649,34 +1653,89 @@ void op_bg1_0003_move(s16 r_index) {
     }
 }
 
-s32 op_bg2_move(s16 r_index)
-{
-    s32 ret;
-
+void op_bg2_move(s16 r_index) {
     opw_ptr = &op_w.bgw[2];
     bgw_ptr = &bg_w.bgw[2];
-    ret = opw_ptr->r_no_0;
-    if (ret == 0) {
+    switch (r_index) {
+    case 0:
+    case 24:
+        op_bg2_0000();
+        break;
+    case 2:
+        op_bg2_0002();
+        break;
+    case 28:
+        op_bg2_0003();
+        break;
+    default:
+        op_bg2_0001();
+        break;
+    }
+}
+
+
+
+void op_bg2_0000(void) {
+    switch (opw_ptr->r_no_0) {
+    case 0:
         opw_ptr->r_no_0 += 1;
         bgw_ptr->wxy[0].disp.pos = 512;
         bgw_ptr->xy[1].disp.pos = 0;
-        return 0;
+        break;
+    case 1:
+        bgw_ptr->wxy[0].cal -= 0x10000;
+        break;
+    case 2:
+        break;
     }
-    if (ret == 1) {
-        switch (r_index) {
-        case 0:
-        case 24:
-            ret = bgw_ptr->wxy[0].cal -= 0x10000;
-            break;
-        case 2:
-            ret = bgw_ptr->xy[1].cal += 0x10000;
-            break;
-        case 28:
-            ret = bgw_ptr->wxy[0].cal += 0x10000;
-            break;
-        }
+}
+
+
+
+void op_bg2_0001(void) {
+    switch (opw_ptr->r_no_0) {
+    case 0:
+        opw_ptr->r_no_0 += 1;
+        bgw_ptr->wxy[0].disp.pos = 512;
+        bgw_ptr->xy[1].disp.pos = 0;
+        break;
+    case 1:
+        break;
     }
-    return ret;
+}
+
+
+
+void op_bg2_0002(void) {
+    switch (opw_ptr->r_no_0) {
+    case 0:
+        opw_ptr->r_no_0 += 1;
+        bgw_ptr->wxy[0].disp.pos = 512;
+        bgw_ptr->xy[1].disp.pos = 0;
+        break;
+    case 1:
+        bgw_ptr->xy[1].cal += 0x10000;
+        break;
+    case 2:
+        break;
+    }
+}
+
+
+
+void op_bg2_0003(void) {
+    switch (opw_ptr->r_no_0) {
+    case 0:
+        opw_ptr->r_no_0 += 1;
+        bgw_ptr->wxy[0].disp.pos = 512;
+        bgw_ptr->xy[1].disp.pos = 0;
+        break;
+    case 1:
+        bgw_ptr->wxy[0].cal += 0x10000;
+        break;
+    case 2:
+        break;
+    }
 }
 
 
@@ -1849,7 +1908,7 @@ void normal_ending(s16 pl_num) {
     s32 ofs;
     switch (end_w.r_no_0) {
     case 0:
-        end_w.r_no_0++;
+        end_w.r_no_0 += 1;
         System_all_clear_Wait();
         load_any_color(0x8D);
         load_any_color(0x94);
@@ -1859,7 +1918,7 @@ void normal_ending(s16 pl_num) {
         break;
     case 1:
         if (!(Cover_Timer -= 1)) {
-            end_w.r_no_0++;
+            end_w.r_no_0 += 1;
             load_any_color(end_color_tbl[end_w.type]);
             tilemap_fill_all(0, 32);
             Redisp_Continue_Count(0);
@@ -1874,7 +1933,7 @@ void normal_ending(s16 pl_num) {
         break;
     case 2:
         if (Switch_Screen_Revival()) {
-            end_w.r_no_0++;
+            end_w.r_no_0 += 1;
             Ignore_Entry[LOSER] = 0;
             Forbid_Break = -1;
         }
@@ -1884,7 +1943,7 @@ void normal_ending(s16 pl_num) {
         end_fade_bgm();
         card_msg_disp();
         if (end_w.end_flag) {
-            end_w.r_no_0++;
+            end_w.r_no_0 += 1;
             end_no_cut = 1;
             effect_work_kill(4, 0x9F);
         } else if (Cut_Cut_Cut_t()) {
@@ -1900,19 +1959,19 @@ void normal_ending(s16 pl_num) {
         if (end_no_cut == 0) {
             fadeout_to_staff_roll();
         } else {
-            end_w.r_no_0++;
+            end_w.r_no_0 += 1;
         }
         Forbid_Break = -1;
         break;
     case 5:
         if (end_fade_complete()) {
-            end_w.r_no_0++;
-            end_w.r_no_2++;
+            end_w.r_no_0 += 1;
+            end_w.r_no_2 += 1;
             if (end_w.type == 4) {
                 Zoomf_Init();
                 effect_E9_init();
             } else {
-                end_w.r_no_0++;
+                end_w.r_no_0 += 1;
             }
             end_no_cut = 1;
             bg_w.bgw[0].xy[0].disp.pos = 256;
@@ -1931,18 +1990,18 @@ void normal_ending(s16 pl_num) {
         Forbid_Break = -1;
         break;
     case 6:
-        end_w.r_no_0++;
+        end_w.r_no_0 += 1;
         end_waku_write(-1);
         break;
     case 7:
-        end_w.r_no_0++;
+        end_w.r_no_0 += 1;
         Request_Fade(end_fade_tbl[end_w.type], 0);
         end_no_cut = 1;
         Forbid_Break = -1;
         break;
     case 8:
         if (end_fade_complete()) {
-            end_w.r_no_0++;
+            end_w.r_no_0 += 1;
             end_no_cut = 0;
         }
         Forbid_Break = -1;
@@ -1950,11 +2009,11 @@ void normal_ending(s16 pl_num) {
     case 9:
         Forbid_Break = 0;
         if (staff_roll_main(end_staff_flag)) {
-            end_w.r_no_0++;
+            end_w.r_no_0 += 1;
         }
         break;
     case 10:
-        end_w.r_no_0++;
+        end_w.r_no_0 += 1;
         ofs = WINNER;
         ofs *= sizeof(NAME_WK);
         timer = (s16*)((u8*)name_wk + (s8)ofs + 0x1C);
@@ -1971,7 +2030,7 @@ void normal_ending(s16 pl_num) {
     case 11:
         end_w.timer--;
         if (end_w.timer < 0) {
-            end_w.r_no_0++;
+            end_w.r_no_0 += 1;
             ending_all_end = 1;
         }
         Forbid_Break = 0;
@@ -2033,11 +2092,7 @@ void common_end_init00(s16 pl_num) {
         ake_scrl_w[0].handle = simmram_big_page_alloc_40(1);
         ake_scrl_w[0].adrs = (u32)simmram_slot_addr(ake_scrl_w[0].handle);
     }
-    if ((*&Game_setting).mode) {
-        bg_w.pos_offset = 0xF8;
-    } else {
-        bg_w.pos_offset = 0xC0;
-    }
+    bg_w.pos_offset = ((*&Game_setting).mode) ? 0xF8 : 0xC0;
     base_y_pos = 40;
     for (i = 0; i < 7; i++) {
         bg_w.bgw[i].r_no_0 = 0;
@@ -2067,7 +2122,7 @@ void common_end_init00(s16 pl_num) {
 
 
 void common_end_init01(void) {
-    s32 i;
+    s16 i;
     for (i = 0; i < bg_w.scno; i++) {
         scrn_attr_set(i, 0, 31);
         scrn_reg_w[i].ctrl &= 0xFE7F;

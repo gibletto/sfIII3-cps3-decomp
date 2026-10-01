@@ -354,11 +354,7 @@ void Setup_Pos_76(WORK_Other* ewk) {
         break;
     case 0x37:
     case 0x55:
-        if (ewk->wu.dir_old == 0x37) {
-            my_char = My_char[Winner_id];
-        } else {
-            my_char = Ranking_Data[Order_Dir[ewk->wu.dir_old]].player;
-        }
+        my_char = (ewk->wu.dir_old == 0x37) ? My_char[Winner_id] : Ranking_Data[Order_Dir[ewk->wu.dir_old]].player;
         ewk->wu.xyz[0].disp.pos = bg_w.bgw[0].wxy[0].disp.pos + EFF76_Face_Pos_Data[my_char][0] - 48;
         ewk->wu.hit_quake = bg_w.bgw[0].wxy[0].disp.pos + EFF76_Face_Pos_Data[my_char][0];
         ewk->wu.xyz[1].disp.pos = bg_w.bgw[0].wxy[1].disp.pos + EFF76_Face_Pos_Data[my_char][1];
@@ -382,11 +378,7 @@ void Setup_Pos_76(WORK_Other* ewk) {
     case 0x4D:
     case 0x4E:
     case 0x4F:
-        if (Perfect_Flag) {
-            ix = 1;
-        } else {
-            ix = 0;
-        }
+        ix = (Perfect_Flag) ? 1 : 0;
         ewk->wu.hit_quake =
             bg_w.bgw[ewk->wu.my_family - 1].wxy[0].disp.pos + EFF76_Score_Pos_Data[ix][Order_Dir[ewk->wu.dir_old]][0];
         ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake + 0x1A0;

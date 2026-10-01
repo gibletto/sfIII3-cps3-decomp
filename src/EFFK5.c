@@ -79,7 +79,7 @@ void effect_K5_move(WORK_Other* ewk) {
 
 /* provisional name */
 void K5_main_process(WORK* ewk, WORK* mwk, MVJ* mvj) {
-    s16 i;
+    s32 i;
     switch (ewk->routine_no[1]) {
     case 0:
         get_okuri_time(ewk, mwk, mvj);
@@ -306,7 +306,7 @@ void get_master_table_address(WORK* ewk, WORK* mwk) {
 
 
 void K5_init_data(WORK* mwk, MVJ* mvj, u16* ixtbl) {
-    s16 i;
+    s32 i;
     for (i = 0; i < 8; i++) {
         mvj[i].rno = 0;
         mvj[i].index = ixtbl[lookup_index[i]];
@@ -318,7 +318,7 @@ void K5_init_data(WORK* mwk, MVJ* mvj, u16* ixtbl) {
 
 
 void K5_init_data_copy(MVJ* mvj, K5Data* dad, s16 num) {
-    s16 i;
+    s32 i;
     MVJ* mv;
     K5Data* dd;
     for (i = 0; i < num; i++) {

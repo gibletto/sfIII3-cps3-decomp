@@ -82,11 +82,55 @@ void destroy_current_task(void) {
 
 
 
+/* provisional name: stop another task (1 = it is the running task, 2 = not active) */
+s32 kill_task(TCB* task) {
+    if (task == current_task) {
+        return 1;
+    }
+    if (task->status == 0) {
+        return 2;
+    }
+    task->status = 0;
+    task_free_count++;
+    return 0;
+}
+
+
+
+/* provisional name: put a task to sleep until woken (2 = not active) */
+s32 suspend_task(TCB* task) {
+    if (task->status == 0) {
+        return 2;
+    }
+    task->status = 5;
+    return 0;
+}
+
+
+
+/* provisional name: hand a task a value from the running task, mode 1 also sets it waiting */
+s32 post_task(TCB* task, u32 arg, s32 mode) {
+    if (task == current_task) {
+        return 1;
+    }
+    if (task->status == 0) {
+        return 2;
+    }
+    if (mode == 1) {
+        task->status = 2;
+    }
+    task->creator = current_task;
+    task->wait = arg;
+    return 0;
+}
+
+
+
 /* provisional name */
 void kill_tasks_by_func(void (*func)()) {
     s32 i;
     for (i = 0; i < 8; i++) {
-        if (task_tbl[i].status != 0 && task_tbl[i].func == func && &task_tbl[i] != current_task) {
+        if (task_tbl[i].status && task_tbl[i].func == func && &task_tbl[i] != current_task) {
             task_tbl[i].status = 0;
             task_free_count++;
         }
@@ -158,7 +202,7 @@ void dbg_memory_dump_rows(u16* tbl) {
 /* provisional name */
 void dbg_disasm_rows(u16* tbl) {
     s16 y;
-    s32 i;
+    s16 i;
     s8 buf[128];
     tilemap_print_string(1, 0, 0xFFFF, dbg_disasm_title);
     for (i = 0; i < 10; i++) {
@@ -323,7 +367,7 @@ void Entry_00(void) {
         Text_Page_Y = 0;
         break;
     case 1:
-        E_No[1] += 1;
+        E_No[1] = E_No[1] + 1;
         E_Timer = 50;
         if (Free_Play) {
             tilemap_print_string_attr(DE_X[3] + 14, Text_Page_Y + Insert_Y, 18, msg_free_play);
@@ -347,7 +391,7 @@ void Entry_00(void) {
         break;
     case 2:
         if (--E_Timer == 0) {
-            E_No[1] += 1;
+            E_No[1] = E_No[1] + 1;
             E_Timer = 30;
             tilemap_print_string_attr(DE_X[3] + 14, Text_Page_Y + Insert_Y, 18, msg_blank);
             if (G_No[1] == 3 || G_No[1] == 5) {
@@ -358,7 +402,7 @@ void Entry_00(void) {
         break;
     case 3:
         if (--E_Timer == 0) {
-            E_No[1] -= 1;
+            E_No[1] = E_No[1] - 1;
             E_Timer = 50;
             if (Free_Play) {
                 tilemap_print_string_attr(DE_X[3] + 14, Text_Page_Y + Insert_Y, 18, msg_free_play);
@@ -598,7 +642,7 @@ void Entry_04_2nd(void) {
             G_No[1] = 1;
             G_No[2] = 0;
             G_No[3] = 0;
-            if (E_No[3] == -1 && Continue_Flag) {
+            if (E_No[3] == -1 && Continue_Flag != 0) {
                 E_Number[LOSER][0] = 1;
                 E_Number[LOSER][1] = 0;
                 E_Number[LOSER][2] = 0;
@@ -659,13 +703,13 @@ s32 Entry_06_2nd(void) {
     }
     switch (E_No[2]) {
     case 0:
-        E_No[2] += 1;
+        E_No[2] = E_No[2] + 1;
         sc_vram_to_ram();
         Switch_Screen_Init(0, 1);
         break;
     case 1:
         if ((rc = Switch_Screen()) != 0) {
-            E_No[2] += 1;
+            E_No[2] = E_No[2] + 1;
             Cover_Timer = 23;
             Switch_Screen_Init(0, 1);
             return;
@@ -743,7 +787,7 @@ void Entry_07_2nd(void) {
     switch (E_No[2]) {
     case 0:
         if (!--E_Timer) {
-            E_No[2] += 1;
+            E_No[2] = E_No[2] + 1;
             sc_vram_to_ram();
             Switch_Screen_Init(0, 1);
         }
@@ -1197,7 +1241,7 @@ s16 Jump_Index;
 
 s32 Loser_Sub_1P(void) {
     s8 status;
-    if (Two_Coin_Start && Request_Break[0] == 0 && credit_1p < 2) {
+    if (Two_Coin_Start != 0 && !Request_Break[0] && credit_1p < 2) {
         status = 99;
     } else {
         status = Request_Break[0] | credit_1p;
@@ -1205,9 +1249,9 @@ s32 Loser_Sub_1P(void) {
     switch (status) {
     default:
         if (Ck_Break_Into(p1sw_0, p1sw_1, 0) == 0) {
-            if (Request_Break[0]) {
+            if (Request_Break[0] != 0) {
                 tilemap_print_string_attr(DE_X[Entry_Mes_Wide[0]] + Entry_Mes_X[0], Text_Page_Y, 18, msg_blank);
-            } else if (LOSER == 0) {
+            } else if (!LOSER) {
                 tilemap_print_string_attr(DE_X[Entry_Mes_Wide[0]] + Entry_Mes_X[0], Text_Page_Y, 18, msg_continue);
             } else {
                 Flash_Start(0, Entry_Msg_X_Data[1][0][Game_setting.mode]);
@@ -1299,7 +1343,7 @@ s32 Credit_Sub_2P(void) {
     } else {
         credits = credit_2p;
     }
-    if (Two_Coin_Start && Request_Break[1] == 0 && credits < 2) {
+    if (Two_Coin_Start != 0 && Request_Break[1] == 0 && credits < 2) {
         status = 99;
     } else {
         status = Request_Break[1] | credits;
@@ -1317,7 +1361,7 @@ s32 Credit_Sub_2P(void) {
         }
         break;
     case 99:
-        if (credits) {
+        if (credits != 0) {
             Flash_More_Coins(1, Entry_Msg_X_Data[2][1][Game_setting.mode], 1);
         } else {
             Flash_Insert_Coin(1, Entry_Msg_X_Data[0][1][Game_setting.mode]);
@@ -1325,7 +1369,7 @@ s32 Credit_Sub_2P(void) {
         break;
     default:
         if (Ck_Break_Into(p2sw_0, p2sw_1, 1) == 0) {
-            if (Request_Break[1]) {
+            if (Request_Break[1] != 0) {
                 Flash_Please(1);
             } else {
                 Flash_Start(1, Entry_Msg_X_Data[1][1][Game_setting.mode]);
@@ -1353,11 +1397,7 @@ s32 Credit_Continue_1P(void) {
 s32 Credit_Continue_2P(void) {
     s8* credit;
     s8 state;
-    if (Chute_Mode < 2) {
-        credit = &credit_1p;
-    } else {
-        credit = &credit_2p;
-    }
+    credit = (Chute_Mode < 2) ? &credit_1p : &credit_2p;
     state = Request_Break[1] | *credit;
     switch (state) {
     case 0:
@@ -1372,7 +1412,7 @@ s32 Credit_Continue_2P(void) {
 void Entry_Continue_Sub(s16 PL_id) {
     switch (E_Number[PL_id][1]) {
     case 0:
-        if (Continue_Count_Down[PL_id] == 0) {
+        if (!Continue_Count_Down[PL_id]) {
             E_Number[PL_id][1]++;
             Personal_Disp_Flag = 1;
             Personal_Timer[PL_id] = 60;
@@ -1381,7 +1421,7 @@ void Entry_Continue_Sub(s16 PL_id) {
         }
         break;
     case 1:
-        if (Personal_Disp_Flag == 0) {
+        if (!Personal_Disp_Flag) {
             Personal_Disp_Flag = 1;
             Personal_Timer[PL_id] = 60;
             tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18, msg_continue_cnt);
@@ -1409,7 +1449,7 @@ void Entry_Continue_Sub(s16 PL_id) {
 
 
 void Setup_Next_Step(s16 PL_id) {
-    s16 xx;
+    s32 xx;
     E_Number[PL_id][1] = 0;
     E_Number[PL_id][2] = 0;
     E_Number[PL_id][3] = 0;
@@ -1462,7 +1502,7 @@ s32 In_Game_Sub(s16 PL_id) {
     s32 rc;
     switch (E_Number[PL_id][2]) {
     case 0:
-        E_Number[PL_id][2] += 1;
+        E_Number[PL_id][2] = E_Number[PL_id][2] + 1;
         Personal_Timer[PL_id] = 30;
         if ((rc = ((s8 *)&Game_setting)[5])) {
             return rc;
@@ -1473,7 +1513,7 @@ s32 In_Game_Sub(s16 PL_id) {
         if (--Personal_Timer[PL_id] != 0) {
             return PL_id;
         }
-        E_Number[PL_id][2] += 1;
+        E_Number[PL_id][2] = E_Number[PL_id][2] + 1;
         Personal_Timer[PL_id] = 60;
         if ((rc = ((s8 *)&Game_setting)[5])) {
             return rc;
@@ -1493,7 +1533,7 @@ s32 In_Game_Sub(s16 PL_id) {
         if (--Personal_Timer[PL_id] != 0) {
             return PL_id;
         }
-        E_Number[PL_id][2] += 1;
+        E_Number[PL_id][2] = E_Number[PL_id][2] + 1;
         Personal_Timer[PL_id] = 30;
         if ((rc = ((s8 *)&Game_setting)[5])) {
             return rc;
@@ -1827,7 +1867,11 @@ void Disp_Start_Message(void) {
     s8 needed;
     const s8* blank = msg_blank25;
     const s8* one_more = msg_insert_1_more;
-    credits = (Two_Coin_Start && credit_1p < 2) ? 99 : credit_1p;
+    if (Two_Coin_Start && credit_1p < 2) {
+        credits = 99;
+    } else {
+        credits = credit_1p;
+    }
     switch (Chute_Mode) {
     case 0:
     case 1:
@@ -1868,7 +1912,11 @@ void Disp_Start_Message(void) {
         }
         break;
     }
-    credits = (Two_Coin_Start && credit_2p < 2) ? 99 : credit_2p;
+    if (Two_Coin_Start && credit_2p < 2) {
+        credits = 99;
+    } else {
+        credits = credit_2p;
+    }
     switch (credits) {
     case 0:
         tilemap_print_string_attr(DE_X[0] + 25, 21, 18, blank);
@@ -2037,7 +2085,7 @@ void Break_Into_02(s16 PL_id) {
 
 void Break_Into_04(s16 PL_id) {
     Break_Into = 1;
-    E_No[1] += 1;
+    E_No[1] = E_No[1] + 1;
     E_No[2] = 0;
     E_Timer = 150;
     E_Number[New_Challenger][0] = 0;
@@ -2055,7 +2103,7 @@ void Break_Into_04(s16 PL_id) {
 void Break_Into_05(s16 PL_id) {
     Break_Into = 1;
     Stop_Combo = 1;
-    E_No[1] += 1;
+    E_No[1] = E_No[1] + 1;
     E_No[2] = 0;
     E_Number[New_Challenger][0] = 0;
     E_Number[New_Challenger][1] = 0;
@@ -2091,7 +2139,7 @@ void Break_Into_07(s16 PL_id) {
     if (E_07_Flag[0] != 0 && E_07_Flag[1] != 0) {
         return;
     }
-    E_No[1] += 1;
+    E_No[1] = E_No[1] + 1;
     E_No[2] = 0;
     Break_Into = 1;
 }

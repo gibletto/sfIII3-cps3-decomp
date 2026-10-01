@@ -90,6 +90,26 @@ void Pierce_On(PLW* wk) {
 
 
 
+/* provisional name */
+void Pierce_Off(PLW* wk) {
+    CP_Index[wk->wu.id][0]++;
+    Pierce_Menu[wk->wu.id] = 0;
+    Disposal_Again[wk->wu.id] = 1;
+    Lever_Buff[wk->wu.id] = Lever_LR[wk->wu.id];
+}
+
+
+
+/* provisional name: a second copy of Pierce_Off */
+void Pierce_Off_2(PLW* wk) {
+    CP_Index[wk->wu.id][0]++;
+    Pierce_Menu[wk->wu.id] = 0;
+    Disposal_Again[wk->wu.id] = 1;
+    Lever_Buff[wk->wu.id] = Lever_LR[wk->wu.id];
+}
+
+
+
 void Setup_DENJIN_LEVEL(PLW* wk) {
     u16 xx;
     Disposal_Again[wk->wu.id] = 1;
@@ -794,66 +814,6 @@ u16 Lever_Data;
 
 
 
-/* provisional name */
-s32 SA_Term_DENJIN_Check(wk, SA2, xx, Term_No)
-PLW* wk;
-u16 SA2;
-u16* xx;
-u16 Term_No;
-{
-    if (plw[wk->wu.id].sa->kind_of_arts != 2) {
-        return 0;
-    }
-    DENJIN_No[wk->wu.id] = Term_No;
-    DENJIN_Term[wk->wu.id] = SA2;
-    xx[0] = 0x37;
-    return 1;
-}
-
-
-
-/* provisional name */
-s32 SA_Term_YAGYOU_Check(wk, xx, Term_No)
-PLW* wk;
-s16* xx;
-u16 Term_No;
-{
-    if (plw[wk->wu.id].sa->kind_of_arts == 1) {
-        if (Term_No == 0) {
-            Term_No = YAGYOU_Data[random_16_com()];
-            Term_No += 0x64;
-        }
-        xx[0] = Term_No;
-        return 1;
-    }
-}
-
-
-
-/* provisional name */
-s32 SA_Term_Range_Check(wk, SA_No, Range)
-PLW* wk;
-s16 SA_No;
-u16 Range;
-{
-    if (plw[wk->wu.id].sa->kind_of_arts != SA_No) {
-        return 0;
-    }
-    if (Range & 0x8000) {
-        if ((PL_Distance[wk->wu.id]) < (Range & 0x7FFF)) {
-            CP_Index[wk->wu.id][0]++;
-            return 1;
-        }
-    }
-    else if (PL_Distance[wk->wu.id] > Range) {
-        CP_Index[wk->wu.id][0]++;
-        return 1;
-    }
-    return 0;
-}
-
-
-
 void SA_Term(wk, SA0, SA1, SA2, Term_No)
 PLW* wk;
 u16 SA0;
@@ -876,14 +836,14 @@ u16 Term_No;
         if ((Term_No != -1) || (Term_No != 0)) {
             switch (wk->player_number) {
             case PL_RYU:
-                if (SA_Term_Range_Check(wk, 1, Term_No) != 0) {
+                if (SA_Range_Check(wk, 1, Term_No) != 0) {
                     return;
                 }
-                SA_Term_DENJIN_Check(wk, xx[2], (u16*)&xx[2], Term_No);
+                DENJIN_Check(wk, xx[2], (u16*)&xx[2], Term_No);
                 break;
             case PL_KEN:
             case PL_ALEX:
-                if (SA_Term_Range_Check(wk, 1, Term_No) != 0) {
+                if (SA_Range_Check(wk, 1, Term_No) != 0) {
                     return;
                 }
                 break;
@@ -892,12 +852,12 @@ u16 Term_No;
                     CP_Index[wk->wu.id][0]++;
                     return;
                 }
-                if (SA_Term_Range_Check(wk, 1, Term_No) != 0) {
+                if (SA_Range_Check(wk, 1, Term_No) != 0) {
                     return;
                 }
                 break;
             case PL_HUGO:
-                if (SA_Term_Range_Check(wk, 0, Term_No) != 0) {
+                if (SA_Range_Check(wk, 0, Term_No) != 0) {
                     return;
                 }
                 break;
@@ -908,14 +868,14 @@ u16 Term_No;
                 CP_Index[wk->wu.id][0]++;
                 return;
             case PL_ORO:
-                SA_Term_YAGYOU_Check(wk, &xx[1], Term_No);
+                YAGYOU_Check(wk, &xx[1], Term_No);
                 break;
             case PL_GOUKI1:
             case PL_GOUKI2:
-                if (SA_Term_Range_Check(wk, 1, Term_No) != 0) {
+                if (SA_Range_Check(wk, 1, Term_No) != 0) {
                     return;
                 }
-                if (SA_Term_Range_Check(wk, 2, Term_No) != 0) {
+                if (SA_Range_Check(wk, 2, Term_No) != 0) {
                     return;
                 }
                 break;
@@ -1034,6 +994,23 @@ s16 Next_Menu;
         Next_Another_Menu(wk, Next_Action, Next_Menu);
     }
     Lever_Buff[wk->wu.id] = Lever_LR[wk->wu.id];
+}
+
+
+
+/* provisional name */
+void Check_SA_Range(wk, SA_No, Range, Next_Action, Next_Menu)
+PLW* wk;
+s16 SA_No;
+s16 Range;
+s16 Next_Action;
+s16 Next_Menu;
+{
+    Disposal_Again[wk->wu.id] = 1;
+    if (plw[wk->wu.id].sa->kind_of_arts == SA_No && PL_Distance[wk->wu.id] > Range) {
+        CP_No[wk->wu.id][0] = Next_Action;
+        Next_Another_Menu(wk, Next_Action, Next_Menu);
+    }
 }
 
 
@@ -1553,13 +1530,6 @@ s16 unused;
 
 
 
-/* provisional name */
-s32 Correct_Unit_PL(PLW* wk) {
-    return Correct_VS_Air_Data[My_char[Player_id]];
-}
-
-
-
 s32 Check_Term_Sub_Air(wk, Distance, Range)
 PLW* wk;
 s16 Distance;
@@ -1603,6 +1573,13 @@ s16 Range;
         }
         return 0;
     }
+}
+
+
+
+/* provisional name */
+s32 Correct_Unit_PL(PLW* wk) {
+    return Correct_VS_Air_Data[My_char[Player_id]];
 }
 
 
@@ -2731,6 +2708,21 @@ s16 Ex_Shot;
 
 
 
+s32 Hadou_Check(wk, Tech_Number)
+PLW* wk;
+u16 Tech_Number;
+{
+    if (Hadou_Check_Data[wk->player_number][0] == 0) {
+        return 0;
+    }
+    if (Tech_Number != Hadou_Check_Data[wk->player_number][1]) {
+        return 0;
+    }
+    return Check_Resume_Lever(wk);
+}
+
+
+
 s32 Check_Resume_Lever(PLW* wk) {
     u16 Target_Lever;
     s16 xx;
@@ -2745,21 +2737,6 @@ s32 Check_Resume_Lever(PLW* wk) {
         }
     }
     return 0;
-}
-
-
-
-s32 Hadou_Check(wk, Tech_Number)
-PLW* wk;
-u16 Tech_Number;
-{
-    if (Hadou_Check_Data[wk->player_number][0] == 0) {
-        return 0;
-    }
-    if (Tech_Number != Hadou_Check_Data[wk->player_number][1]) {
-        return 0;
-    }
-    return Check_Resume_Lever(wk);
 }
 
 
@@ -2940,16 +2917,6 @@ u16 Tech_Number;
 
 
 
-/* provisional name */
-s32 Setup_Rapid_Time(wk, Tech_Number)
-PLW* wk;
-u16 Tech_Number;
-{
-    return 60;
-}
-
-
-
 void Setup_Rapid_End_Term(wk, Tech_Number)
 PLW* wk;
 s16 Tech_Number;
@@ -2958,6 +2925,16 @@ s16 Tech_Number;
     if ((Tech_Number & 0xF00) == 0x400) {
         Rapid_No[wk->wu.id][3] = Setup_Rapid_Time(wk, Tech_Number);
     }
+}
+
+
+
+/* provisional name */
+s32 Setup_Rapid_Time(wk, Tech_Number)
+PLW* wk;
+u16 Tech_Number;
+{
+    return 60;
 }
 
 
@@ -3895,7 +3872,7 @@ s32 Select_Combo_Speed(PLW* wk) {
     s8 zz;
     xx = (u8)random_32_com();
     Lv = Setup_Lv18(8);
-    Lv += CC_Value[0];
+    Lv = Lv + CC_Value[0];
     if (Break_Into_CPU == 2) {
         Lv = 0x13;
     }
@@ -4628,7 +4605,7 @@ s16 PL_id;
 
 s32 Check_Passive(PLW* wk) {
     WORK* em;
-    if ((Counter_Attack[wk->wu.id] != 0) || (Pierce_Menu[wk->wu.id] != 0)) {
+    if ((Counter_Attack[wk->wu.id]) || (Pierce_Menu[wk->wu.id])) {
         return 0;
     }
     em = (WORK*)wk->wu.target_adrs;

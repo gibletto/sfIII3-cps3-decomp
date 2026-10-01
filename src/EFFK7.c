@@ -27,7 +27,7 @@ void effect_K7_move(WORK_Other* ewk) {
     PLW* mwk = (PLW*)ewk->my_master;
     switch (ewk->wu.routine_no[0]) {
     case 0:
-        if (ewk->wu.type) {
+        if (ewk->wu.type != 0) {
             ewk->wu.routine_no[0] = 1;
             break;
         }
@@ -39,10 +39,10 @@ void effect_K7_move(WORK_Other* ewk) {
             ewk->wu.routine_no[0] = 2;
             break;
         }
-        if (EXE_flag || Game_pause) {
+        if (EXE_flag != 0 || Game_pause != 0) {
             break;
         }
-        if (ewk->wu.type) {
+        if (ewk->wu.type != 0) {
             K7_move_type_1(ewk, mwk);
         } else {
             K7_move_type_0(ewk, mwk);
@@ -59,17 +59,6 @@ void effect_K7_move(WORK_Other* ewk) {
     default:
         push_effect_work(&ewk->wu);
         break;
-    }
-}
-
-
-
-/* provisional name */
-void K7_col_mode_flip(WORK* wk) {
-    if (wk->my_col_mode == 0x4400) {
-        wk->my_col_mode = 0x4200;
-    } else {
-        wk->my_col_mode = 0x4400;
     }
 }
 
@@ -145,6 +134,17 @@ void K7_move_type_1(WORK_Other* ewk, PLW* mwk) {
             K7_col_mode_flip(&mwk->wu);
         }
         break;
+    }
+}
+
+
+
+/* provisional name */
+void K7_col_mode_flip(WORK* wk) {
+    if (wk->my_col_mode == 0x4400) {
+        wk->my_col_mode = 0x4200;
+    } else {
+        wk->my_col_mode = 0x4400;
     }
 }
 

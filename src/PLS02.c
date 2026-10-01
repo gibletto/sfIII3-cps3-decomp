@@ -267,12 +267,12 @@ void remake_mvxy_PoGR(WORK* wk) {
 void check_body_touch(void) {
     PLW* p1w = &plw[0];
     PLW* p2w = &plw[1];
-    s16 meri;
+    s32 meri;
     if (p1w->wu.h_hos->hos_box[0] != 0 && p2w->wu.h_hos->hos_box[0] != 0) {
         meri = hit_check_subroutine(&p1w->wu, &p2w->wu, &p1w->wu.h_hos->hos_box[0], &p2w->wu.h_hos->hos_box[0]);
         if (meri != 0) {
             meri = meri_case_switch(meri);
-            if (p1w->wu.old_pos[1] < 1 && p2w->wu.old_pos[1] < 1) {
+            if (p1w->wu.old_pos[1] <= 0 && p2w->wu.old_pos[1] <= 0) {
                 if (ichikannkei) {
                     goto one;
                 }
@@ -438,9 +438,9 @@ s16 check_work_position_bonus(WORK* hm, s16 tx) {
 
 s32 set_field_hosei_flag(PLW* pl, s16 pos, s16 ix) {
     s16 hami;
-    if (ix) {
+    if (ix != 0) {
         hami = pl->wu.xyz[0].disp.pos + satse[pl->player_number] - pos;
-        if (hami) {
+        if (hami != 0) {
             if (hami >= 0) {
                 pl->wu.xyz[0].disp.pos -= hami;
                 pl->micchaku_flag = 1;
@@ -456,7 +456,7 @@ s32 set_field_hosei_flag(PLW* pl, s16 pos, s16 ix) {
         }
     } else {
         hami = pl->wu.xyz[0].disp.pos - satse[pl->player_number] - pos;
-        if (hami) {
+        if (hami != 0) {
             if (hami <= 0) {
                 pl->wu.xyz[0].disp.pos -= hami;
                 pl->micchaku_flag = 2;
@@ -482,8 +482,8 @@ no_hosei:
 
 
 s16 check_work_position(WORK* p1, WORK* p2) {
-    s16 result = p1->xyz[0].disp.pos - p2->xyz[0].disp.pos;
-    s16 num;
+    s32 result = p1->xyz[0].disp.pos - p2->xyz[0].disp.pos;
+    s32 num;
     if (result) {
         if (result > 0) {
             num = 1;

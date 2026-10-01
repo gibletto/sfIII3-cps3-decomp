@@ -101,11 +101,7 @@ void combo_control(s32 pl_arg) {
     s16 cmb_flag;
     s8 PLS;
     cmb_flag = check_combo_end(PL);
-    if (cmb_flag) {
-        cmb_calc_now[PL] = 1;
-    } else {
-        cmb_calc_now[PL] = 0;
-    }
+    cmb_calc_now[PL] = (cmb_flag) ? 1 : 0;
     if (reversal_check(PL) != 0) {
         return;
     }
@@ -136,11 +132,7 @@ void combo_control(s32 pl_arg) {
         first_attack = 3;
         return;
     }
-    if (PL == 0) {
-        PLS = 1;
-    } else {
-        PLS = 0;
-    }
+    PLS = (PL == 0) ? 1 : 0;
     hit_num = (*(ComboType**)((u8*)((void*)&(*(ComboType **)&(plw[0].cb))) + (s16)((PL) * 0x498)))->total;
     if (hit_num > 99) {
         hit_num = 99;
@@ -348,7 +340,7 @@ u32 SCORE_CALCULATION(s8 PL) {
 
 void SCORE_PLUS(s8 pl, u32 pts) {
     Score[pl][2] += pts;
-    if (Play_Type == 0) {
+    if (!Play_Type) {
         Score[pl][0] += pts;
         if (Score[pl][0] >= 99999900) {
             Score[pl][0] = 99999900;

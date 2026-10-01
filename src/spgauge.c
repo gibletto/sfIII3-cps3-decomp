@@ -207,7 +207,7 @@ void spgauge_control(s8 Spg_Num) {
         if (plw[Spg_Num].sa->ok == -1 || plw[Spg_Num].sa->mp == -1) {
             spg_dat[Spg_Num].sa_flag = 1;
             spg_dat[Spg_Num].timer = 60;
-            if (Conclusion_Flag) {
+            if (Conclusion_Flag != 0) {
                 spg_dat[Spg_Num].time_no_clear = 1;
                 if (My_char[Spg_Num] == PL_GILL && plw[Spg_Num].sa->ok == -1) {
                     spg_dat[Spg_Num].sa_mukou = 0;
@@ -217,7 +217,7 @@ void spgauge_control(s8 Spg_Num) {
             }
             sa_gauge_flash[Spg_Num] &= ~4;
         } else if (plw[Spg_Num].sa->ex == -1) {
-            if (Conclusion_Flag) {
+            if (Conclusion_Flag != 0) {
                 spg_dat[Spg_Num].sa_mukou = 1;
             }
             spg_dat[Spg_Num].ex_flag = 1;
@@ -228,16 +228,16 @@ void spgauge_control(s8 Spg_Num) {
             sa_gauge_flash[Spg_Num] &= ~1;
         }
     }
-    if (spg_dat[Spg_Num].max) {
+    if (spg_dat[Spg_Num].max != 0) {
         sast_control(Spg_Num);
-    } else if (spg_dat[Spg_Num].flag) {
+    } else if (spg_dat[Spg_Num].flag != 0) {
         samoji_control(Spg_Num);
     }
     if (plw[Spg_Num].sa->ex != 0 || spg_dat[Spg_Num].ex_flag == 1 || spg_dat[Spg_Num].sa_flag == 1) {
         sagauge_color_chenge(Spg_Num);
     }
     if (spg_dat[Spg_Num].current_spg != plw[Spg_Num].sa->gauge.s.h || spg_dat[Spg_Num].max != 0) {
-        if (spg_dat[Spg_Num].max) {
+        if (spg_dat[Spg_Num].max != 0) {
             spg_dat[Spg_Num].current_spg = spg_dat[Spg_Num].spg_dotlen;
         } else {
             spg_dat[Spg_Num].current_spg = plw[Spg_Num].sa->gauge.s.h;
@@ -490,7 +490,7 @@ void sa_gauge_color_set(s8 pl) {
             spg_dat[1].spgcol_number = 156;
         }
         return;
-    } else if (plw[pl].sa->store) {
+    } else if (plw[pl].sa->store != 0) {
         spg_col = 1;
         if (pl == 0) {
             spg_dat[0].spgcol_number = 36;
@@ -683,7 +683,7 @@ void satime_stock_clear(void) {
 
 
 void spgauge_wipe_write(s8 Stpl_Num) {
-    if (Stpl_Num == 0) {
+    if (!Stpl_Num) {
         tilemap_put_cell(3, 25, 26, 0xD1);
         tilemap_put_cell(3, 26, 26, 0xD2);
     } else {
@@ -699,7 +699,7 @@ void spgauge_wipe_write(s8 Stpl_Num) {
 void sa_gauge_trans(s8 Stpl_Num, s16 Spg_Col) {
     s8 lpy;
     sc_ram_to_vram(Stpl_Num + (Spg_Col * 2) + 6, 0, 0);
-    if (Stpl_Num == 0) {
+    if (!Stpl_Num) {
         for (lpy = 0; lpy < spg_dat[0].spg_len; lpy++) {
             tilemap_put_cell(lpy + 6, 27, sa_color_data2_tbl[Spg_Col][0], 0xCF);
         }

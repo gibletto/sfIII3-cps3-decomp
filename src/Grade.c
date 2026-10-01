@@ -125,8 +125,8 @@ void grade_makeup_final_parameter(s32 ix_arg, s32 pt_arg) {
 
 void renew_judge_final_work(s16 ix, s16 pt) {
     GradeFinalData* jf;
-    s32 row = ix;
-    s32 col = pt;
+    s16 row = ix;
+    s16 col = pt;
     u32* frsd;
     s16 i;
     row *= 0x158;
@@ -147,8 +147,8 @@ void makeup_final_grade(s16 ix, s16 pt) {
     s16 i;
     s16 tt = 0;
     s16 dt;
-    s32 row = ix;
-    s32 col = pt;
+    s16 row = ix;
+    s16 col = pt;
     GradeFinalData* jf;
     row *= sizeof(judge_final[0]);
     col *= sizeof(judge_final[0][0]);
@@ -325,7 +325,7 @@ void grade_makeup_stage_parameter(s16 ix) {
     s16 point = 0;
     s16 bs;
     s16 qc;
-    u8 em_char;
+    s32 em_char;
     u8* pt = (u8*)&Play_Type;
     if (Round_Operator[ix] == 0) {
         grade_makeup_stage_para_com(ix);
@@ -1035,7 +1035,7 @@ s32 grade_get_cm_point_percentage(s16 ix, s16 flag) {
 /* provisional name */
 s16 grade_scale_to_percent(s16 value) {
     s16 scaled;
-    s32 work;
+    s16 work;
     if (value == 0) {
         return 0;
     }

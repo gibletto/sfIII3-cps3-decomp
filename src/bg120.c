@@ -21,14 +21,14 @@
 #include "aboutspr.h"
 #include "ta_sub.h"
 #include "bg120.h"
-void bg1101_BG110(void) {
+static void bg1101_BG110(void) {
     void (*bg_jmp[2])() = { bg1101_init00, bg1101_move };
     bg_jmp[bgw_ptr->r_no_0]();
 }
 
 
 
-void bg1100_BG110(void) {
+static void bg1100_BG110(void) {
     void (*bg_jmp[2])() = { bg1100_init00, bg1100_move };
     bg_jmp[bgw_ptr->r_no_0]();
 }
@@ -95,14 +95,14 @@ void bg1100_move(void) {
 
 
 
-void bg1201_BG120(void) {
+static void bg1201_BG120(void) {
     void (*bg1201_jmp[2])() = { bg1201_init00, bg_move_common };
     bg1201_jmp[bgw_ptr->r_no_0]();
 }
 
 
 
-void bg1202_BG120(void) {
+static void bg1202_BG120(void) {
     void (*bg1202_jmp[2])() = { bg1202_init00, bg_base_move_common };
     bg1202_jmp[bgw_ptr->r_no_0]();
 }

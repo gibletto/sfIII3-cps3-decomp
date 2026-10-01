@@ -184,10 +184,10 @@ void tilemap_print_string_attr(u16 x, u16 y, u16 attr, const s8* str) {
 /* provisional name */
 s32 tilemap_rect_fill(u16 x, u16 y, u16 w, u16 h, u16 attr, u16 code) {
     u16* p;
-    s32 skip;
-    s32 row;
-    s32 col;
-    s32 ret = 42;
+    s16 skip;
+    s16 row;
+    s16 col;
+    s16 ret = 42;
     u16 bank;
     u16 v;
     if (attr == 0xFFFF && code == 0xFFFF) {
@@ -449,8 +449,12 @@ void tilemap_print_script_seq(u16 x, u16 y, u16 pal, const TMSCRIPT* scr) {
                 s = line->str;
             }
             dst[0] = *s;
-            dst[1] = (pal == 0xFFFF) ? line->attr : pal;
-            dst += 2;
+            if (pal == 0xFFFF) {
+                dst[1] = line->attr;
+            } else {
+                dst[1] = pal;
+            }
+            dst = dst + 2;
             if (dst > ((u16*)(SS_RAM + 0x3FFF))) {
                 dst = ((u16*)SS_RAM);
             }
@@ -463,7 +467,7 @@ void tilemap_print_script_seq(u16 x, u16 y, u16 pal, const TMSCRIPT* scr) {
             if (x + y != 0) {
                 dst = (u16*)((u8*)dst + ofs);
             }
-            blk += 4;
+            blk = blk + 4;
             for (i = 0; i < n; i++) {
                 d = *blk;
                 w = ((d & 0xE00) >> 9) + 1;
@@ -476,7 +480,7 @@ void tilemap_print_script_seq(u16 x, u16 y, u16 pal, const TMSCRIPT* scr) {
                         } else {
                             dst[1] = ((d & 0x100) >> 8) | pal;
                         }
-                        dst += 2;
+                        dst = dst + 2;
                         d++;
                         if (dst > ((u16*)(SS_RAM + 0x3FFF))) {
                             dst = ((u16*)SS_RAM);

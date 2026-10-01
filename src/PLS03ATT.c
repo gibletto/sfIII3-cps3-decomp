@@ -23,12 +23,6 @@
 
 
 
-s16 shot_data_refresh(s16 sw) {
-    return shot_refresh[sw];
-}
-
-
-
 s32 check_nm_attack(PLW* wk) {
     s16 kos;
     s16 koa;
@@ -104,7 +98,7 @@ s32 check_jump_pat_status(PLW* wk) {
     if (!(wk->cp->sw_lvbt & 1)) {
         return 0;
     }
-    if (((Bonus_Game_Flag != 21) || !wk->bs2_on_car) && (wk->wu.xyz[1].disp.pos > 0)) {
+    if (((Bonus_Game_Flag != 21) || !wk->bs2_on_car) && (wk->wu.xyz[1].disp.pos >= 1)) {
         return 0;
     }
     hoken_muriyari_chakuchi(wk);
@@ -480,6 +474,12 @@ s32 shot_data_convert(s32 sw) {
         }
     }
     return rnum;
+}
+
+
+
+s16 shot_data_refresh(s16 sw) {
+    return shot_refresh[sw];
 }
 
 

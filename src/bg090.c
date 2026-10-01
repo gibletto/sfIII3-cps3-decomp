@@ -54,7 +54,7 @@ void BG090(void) {
 
 void bg0901(void) {
     void (*bg0901_jmp[3])() = { bg0901_init00, demo90_base, bg_move_common };
-    if (win_sp_flag) {
+    if (win_sp_flag != 0) {
         jijii_win_bg2();
         return;
     }
@@ -146,7 +146,7 @@ s32 bg090_demo_check(void) {
     if ((plw->player_number != PL_ORO) && (plw[1].player_number != PL_ORO)) {
         return bgw_ptr->r_no_0 = 2;
     }
-    if (bg_w.area != 0) {
+    if (bg_w.area) {
         return bgw_ptr->r_no_0 = 2;
     }
     bgw_ptr->r_no_0 = 1;

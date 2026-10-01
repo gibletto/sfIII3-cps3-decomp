@@ -93,7 +93,7 @@
 #pragma noregsave(boot_task)
 #pragma noregsave(test_mode_task)
 
-static s32 Check_Hamari(PLW* wk);
+s32 Check_Hamari(PLW* wk);
 
 
 
@@ -149,7 +149,7 @@ void text_clear_task_exit(void) {
 void mode_init_task(void) {
     s16 wait;
     u8 region;
-    s32 color;
+    s16 color;
 
     region_setup();
     CC_Type = region_cc_type_tbl[Country - 1];
@@ -207,11 +207,7 @@ void mode_init_task(void) {
 
     /* title and region name, in the region's colour */
     region = bios_region_code & 15;
-    if (region >= 8) {
-        region = 8;
-    } else {
-        region &= 7;
-    }
+    region = (region >= 8) ? 8 : region & 7;
     if (region >= 8) {
         color = 2;
     } else if ((color = region & 7) == 0) {
@@ -468,7 +464,7 @@ void test_menu_run(void) {
         done = memtest_page();
         break;
     case 9:
-        if (no_cd_flag) {
+        if (no_cd_flag != 0) {
             test_rno += 1;
             break;
         }
@@ -478,7 +474,7 @@ void test_menu_run(void) {
         test_rno += 1;
         break;
     }
-    if (done) {
+    if (done != 0) {
         test_rno = 1;
     }
 }
@@ -521,7 +517,7 @@ void test_mode_exit(void)
     coin_lock_set(-1);
     Cd_Error_Flag = 1;
     switch_read(1);
-    if (Game_setting.mode == 0) {
+    if (!Game_setting.mode) {
         set_screen_mode(3);
     } else {
         set_screen_mode(7);
@@ -735,7 +731,7 @@ s32 Frame_Down(u16 x, u16 y, s16 add_x, s16 add_y) {
 /* Recomputes the zoom frame offsets; returns the vertical offset as first computed (before -32 is nudged to -31). */
 s32 Frame_Adgjust(u16 pos_x, u16 pos_y) {
     u16 buff;
-    s32 adj;
+    s16 adj;
     if (Monitor_Flip) {
         pos_y = 0xD0 - pos_y;
         if (screen_mode != 7) {
@@ -744,20 +740,20 @@ s32 Frame_Adgjust(u16 pos_x, u16 pos_y) {
     }
     if (zoom_frame[0].zoom >= 0x40) {
         buff = zoom_frame[0].zoom;
-        buff -= 0x40;
+        buff = buff - 0x40;
         buff *= pos_x;
-        buff >>= 6;
-        buff &= 0x1FF;
+        buff = buff >> 6;
+        buff = buff & 0x1FF;
         zoom_adj_x = -buff;
         if (Monitor_Flip && screen_mode != 7) {
             flip_zoom_ofs_x = 0x80 - buff * 2;
         }
     } else {
         buff = 0x40;
-        buff -= zoom_frame[0].zoom;
+        buff = buff - zoom_frame[0].zoom;
         buff *= pos_x;
-        buff >>= 6;
-        buff &= 0x1FF;
+        buff = buff >> 6;
+        buff = buff & 0x1FF;
         if (Monitor_Flip) {
             zoom_adj_x = -buff;
         } else {
@@ -766,29 +762,29 @@ s32 Frame_Adgjust(u16 pos_x, u16 pos_y) {
     }
     if (zoom_frame[1].zoom >= 0x40) {
         buff = zoom_frame[1].zoom;
-        buff -= 0x40;
+        buff = buff - 0x40;
         buff *= pos_y + 0x21;
-        buff >>= 6;
-        buff &= 0x1FF;
+        buff = buff >> 6;
+        buff = buff & 0x1FF;
         if (!Monitor_Flip) {
             buff = -buff;
         }
         zoom_adj_y = buff;
         if ((adj = zoom_adj_y) == -0x20) {
-            zoom_adj_y += 1;
+            zoom_adj_y = zoom_adj_y + 1;
         }
     } else {
         buff = 0x40;
-        buff -= zoom_frame[1].zoom;
+        buff = buff - zoom_frame[1].zoom;
         buff *= pos_y + 0x21;
-        buff >>= 6;
-        buff &= 0x1FF;
+        buff = buff >> 6;
+        buff = buff & 0x1FF;
         if (Monitor_Flip) {
             buff = -buff;
         }
         zoom_adj_y = buff;
         if ((adj = zoom_adj_y) == -0x20) {
-            zoom_adj_y += 1;
+            zoom_adj_y = zoom_adj_y + 1;
         }
     }
     return adj;
@@ -799,7 +795,7 @@ s32 Frame_Adgjust(u16 pos_x, u16 pos_y) {
 /* provisional name */
 void zoom_regs_update(void) {
     SCROLL_WINDOW* win;
-    if (zoom_req_flag) {
+    if (zoom_req_flag != 0) {
         zoom_req_flag = 0;
         win = zoom_frame;
         *(s16*)(VIDEO_REG + 0x68) = (win->pos + flip_zoom_ofs_x) & 0x3FF;
@@ -964,7 +960,7 @@ void Com_Before_Passive(PLW* wk) {
     if (Check_Flip(wk)) {
         return;
     }
-    if (!Limited_Flag[wk->wu.id] && !Counter_Attack[wk->wu.id]) {
+    if (Limited_Flag[wk->wu.id] == 0 && Counter_Attack[wk->wu.id] == 0) {
         if (Check_Guard(wk)) {
             return;
         }
@@ -1008,7 +1004,7 @@ void Com_Guard(PLW* wk) {
     Passive_Mode = 4;
     if (Ck_Passive_Term(wk)) {
         Select_Passive(wk);
-        Counter_Attack[wk->wu.id] |= 2;
+        Counter_Attack[wk->wu.id] = Counter_Attack[wk->wu.id] | 2;
         return;
     }
     if (!Check_Counter_Attack(wk)) {
@@ -1018,32 +1014,6 @@ void Com_Guard(PLW* wk) {
     if (Select_Passive(wk) == -1) {
         Next_Be_Free(wk);
     }
-}
-
-
-
-static s32 Check_Hamari(PLW* wk) {
-    u8 tech;
-    s16 Rnd;
-    s16 limit;
-    s16 xx;
-    if (Area_Number[wk->wu.id] >= 2) {
-        return 0;
-    }
-    tech = Attack_Count_Buff[wk->wu.id][0];
-    Rnd = random_32_com() & 1;
-    limit = Rnd + 3;
-    if (((PLW*)wk->wu.target_adrs)->player_number == PL_DUDLEY && tech == 3) {
-        limit--;
-    } else if (tech != 0 && tech != 1) {
-        return 0;
-    }
-    for (xx = 1; xx < limit; xx++) {
-        if (tech != Attack_Count_Buff[wk->wu.id][xx]) {
-            return 0;
-        }
-    }
-    return VS_Tech[wk->wu.id] = 32;
 }
 
 
@@ -1073,6 +1043,32 @@ s32 Check_Counter_Attack(PLW* wk) {
         return;
     }
     return Check_Hamari(wk);
+}
+
+
+
+s32 Check_Hamari(PLW* wk) {
+    u8 tech;
+    s16 Rnd;
+    s16 limit;
+    s16 xx;
+    if (Area_Number[wk->wu.id] >= 2) {
+        return 0;
+    }
+    tech = Attack_Count_Buff[wk->wu.id][0];
+    Rnd = random_32_com() & 1;
+    limit = Rnd + 3;
+    if (((PLW*)wk->wu.target_adrs)->player_number == PL_DUDLEY && tech == 3) {
+        limit--;
+    } else if (tech != 0 && tech != 1) {
+        return 0;
+    }
+    for (xx = 1; xx < limit; xx++) {
+        if (tech != Attack_Count_Buff[wk->wu.id][xx]) {
+            return 0;
+        }
+    }
+    return VS_Tech[wk->wu.id] = 32;
 }
 
 
@@ -1759,7 +1755,7 @@ void Flip_2nd(PLW* wk) {
             }
             return;
         }
-        if (em->wu.total_att_set > em->total_att_hit_ok && Attack_Flag[wk->wu.id]) {
+        if (em->wu.total_att_set > em->total_att_hit_ok && Attack_Flag[wk->wu.id] != 0) {
             return;
         }
         if (Check_Flip_Attack(wk) != 0) {
@@ -1784,7 +1780,7 @@ void Flip_2nd(PLW* wk) {
 
 
 void Flip_3rd(PLW* wk) {
-    s16 next_disposal;
+    s32 next_disposal;
     if (PL_Damage_Data[wk->wu.routine_no[2]] == 0) {
         return;
     }
@@ -2191,7 +2187,7 @@ void Check_At_Count(PLW* wk) {
 
 
 void Shift_Resume_Lv(PLW* wk) {
-    s16 xx;
+    s32 xx;
     for (xx = 18; xx >= 0; xx--) {
         Resume_Lever[wk->wu.id][xx + 1] = Resume_Lever[wk->wu.id][xx];
     }

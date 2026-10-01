@@ -26,12 +26,12 @@ void debug_scrfont_view(void) {
     s32 code = 0;
     if ((p1sw_0 & 0x3F0) == 0xA0) {
         if ((~p1sw_1 & p1sw_0 & 15) == 1) {
-            scrfont_view_attr += 2;
+            scrfont_view_attr = scrfont_view_attr + 2;
         }
         if ((~p1sw_1 & p1sw_0 & 15) == 2) {
-            scrfont_view_attr -= 2;
+            scrfont_view_attr = scrfont_view_attr - 2;
         }
-        scrfont_view_attr &= 62;
+        scrfont_view_attr = scrfont_view_attr & 62;
     }
     for (i = 0; i < 16; i++) {
         for (j = 0; j < 16; j++) {
@@ -269,12 +269,12 @@ s32 count_cont_main(void) {
 
 
 void counter_control(void) {
-    s16 hi;
+    s32 hi;
     const COUNT_WORK* cw = &count_work;
     if (Counter_hi == 0) {
         return;
     }
-    if (flash_r_num) {
+    if (flash_r_num != 0) {
         if (Counter_hi == 10 && Counter_low == cw->hoji_counter) {
             flash_timer = 0;
             counter_flash(1);
@@ -299,7 +299,7 @@ void counter_control(void) {
     }
     round_timer.half.h = Counter_hi;
     hi = (u16)Counter_hi / 10;
-    if (Counter_hi) {
+    if (Counter_hi != 0) {
         count_digit_trans(0, hi, Counter_hi - hi * 10);
     } else {
         count_digit_trans(0, 0, 0);
@@ -391,7 +391,7 @@ s32 bcounter_control(void) {
 
 s16 bcounter_down(u8 stop) {
     u16 hi;
-    s16 lo;
+    u16 lo;
     if (Counter_hi == 0) {
         return 0;
     }

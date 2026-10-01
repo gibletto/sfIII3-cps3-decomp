@@ -138,9 +138,84 @@ s16 caldir_wk_8(WORK* wk, WORK* emwk) {
 
 
 
+/* provisional name */
+void add_pos_dir_256(WORK* wk, s16 sp) {
+    wk->xyz[0].cal += (rate_256_table[wk->direction][0] * sp) >> 8;
+    wk->xyz[1].cal += (rate_256_table[wk->direction][1] * sp) >> 8;
+}
+
+
+
+/* provisional name */
+void add_pos_dir_128(WORK* wk, s16 sp) {
+    wk->xyz[0].cal += (rate_256_table[wk->direction * 2][0] * sp) >> 8;
+    wk->xyz[1].cal += (rate_256_table[wk->direction * 2][1] * sp) >> 8;
+}
+
+
+
 void add_pos_dir_064(WORK* wk, s16 sp) {
-    wk->xyz[0].cal += (sp * rate_256_table[wk->direction * 4][0]) >> 8;
-    wk->xyz[1].cal += (sp * rate_256_table[wk->direction * 4][1]) >> 8;
+    wk->xyz[0].cal += (rate_256_table[wk->direction * 4][0] * sp) >> 8;
+    wk->xyz[1].cal += (rate_256_table[wk->direction * 4][1] * sp) >> 8;
+}
+
+
+
+/* provisional name */
+void add_pos_dir_032(WORK* wk, s16 sp) {
+    wk->xyz[0].cal += (rate_256_table[wk->direction * 8][0] * sp) >> 8;
+    wk->xyz[1].cal += (rate_256_table[wk->direction * 8][1] * sp) >> 8;
+}
+
+
+
+/* provisional name */
+void add_pos_dir_016(WORK* wk, s16 sp) {
+    wk->xyz[0].cal += (rate_256_table[wk->direction * 16][0] * sp) >> 8;
+    wk->xyz[1].cal += (rate_256_table[wk->direction * 16][1] * sp) >> 8;
+}
+
+
+
+/* provisional name */
+void add_pos_dir_008(WORK* wk, s16 sp) {
+    wk->xyz[0].cal += (rate_256_table[wk->direction * 32][0] * sp) >> 8;
+    wk->xyz[1].cal += (rate_256_table[wk->direction * 32][1] * sp) >> 8;
+}
+
+
+
+/* provisional name */
+s16 dir256_to_128(s16 dir) {
+    return dir >> 1;
+}
+
+
+
+/* provisional name */
+s16 dir256_to_064(s16 dir) {
+    return (dir + 2) >> 2 & 63;
+}
+
+
+
+/* provisional name */
+s16 dir256_to_032(s16 dir) {
+    return (dir + 4) >> 3 & 31;
+}
+
+
+
+/* provisional name */
+s16 dir256_to_016(s16 dir) {
+    return (dir + 8) >> 4 & 15;
+}
+
+
+
+/* provisional name */
+s16 dir256_to_008(s16 dir) {
+    return (dir + 16) >> 5 & 7;
 }
 
 

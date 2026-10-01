@@ -616,7 +616,7 @@ void nm_17000(PLW* wk) {
     if (check_super_arts_attack(wk)) {
         return;
     }
-    if (wk->high_jump_flag) {
+    if (wk->high_jump_flag != 0) {
         return;
     }
     if (check_special_attack(wk)) {
@@ -640,7 +640,7 @@ void check_jump_rl_dir(PLW* wk) {
 
 
 void set_new_jpdir(PLW* wk) {
-    if ((wk->cp->sw_lvbt & 1) && wk->cp->lever_dir) {
+    if ((wk->cp->sw_lvbt & 1) && wk->cp->lever_dir != 0) {
         wk->jpdir = wk->cp->lever_dir;
     }
 }

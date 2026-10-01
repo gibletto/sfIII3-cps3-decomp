@@ -398,7 +398,7 @@ u8 *end_501_0009(void)
     case 1:
         end_5_bg1_back_sub();
         end_5_bg1_cell_sub(1);
-        if (end_etc_flag == 0) {
+        if (!end_etc_flag) {
             return 0;
         }
         bgw_ptr->r_no_1++;
@@ -514,7 +514,7 @@ void end_5_bg1_cell_sub(s8 dir) {
 
 
 void end_500_cell_set(void) {
-    s16 i;
+    s32 i;
     for (i = 0; i < 12; i++) {
         bg_cell_write(0, end_500_bg0_cell_tbl[i].ofs, end_500_bg0_cell_tbl[i].cell, (u32)end_500_scrn_data, 0, 0x220);
     }

@@ -20,9 +20,9 @@
 #include "SE.h"
 #include "cps3.h"
 
-static void mix_or_128(void);
+void mix_or_128(void);
 
-static void mix_put_128(void);
+void mix_put_128(void);
 
 
 
@@ -36,7 +36,7 @@ void wipe_pattern_or_cols(s16 kind, s16 row) {
     s16 ofs;
     s16 x;
     s16 y;
-    s32 width;
+    s16 width;
     width = wipe_column_tbl[kind].w;
     src = wipe_column_tbl[kind].adr + width * row;
     map = wipe_set_pattern_tbl[kind].adr + row * 32;
@@ -117,7 +117,25 @@ void mix_put_512(void) {
 
 
 /* provisional name */
-static void mix_or_128(void) {
+void wipe_pattern_set(s16 kind, s16 row, s16 mix) {
+    wipe_pat_top = wipe_set_pattern_tbl[kind].adr;
+    if (mix) {
+        wipe_pat_top = wipe_clear_pattern_tbl[kind].adr;
+    }
+    wipe_pat_top += row * 32;
+    wipe_dst_ptr = (u16*)(SS_RAM + 0x8000);
+    if (!mix) {
+        mix_or_128();
+    } else {
+        wipe_back_ptr = sc_chr_ram;
+        mix_put_128();
+    }
+}
+
+
+
+/* provisional name */
+void mix_or_128(void) {
     s32 i;
     s32 j;
     for (i = 0; i < 128; i++) {
@@ -133,7 +151,7 @@ static void mix_or_128(void) {
 
 
 /* provisional name */
-static void mix_put_128(void) {
+void mix_put_128(void) {
     s32 i;
     s32 j;
     for (i = 0; i < 128; i++) {
@@ -144,24 +162,6 @@ static void mix_put_128(void) {
             wipe_pat_ptr++;
             wipe_back_ptr++;
         }
-    }
-}
-
-
-
-/* provisional name */
-void wipe_pattern_set(s16 kind, s16 row, s16 mix) {
-    wipe_pat_top = wipe_set_pattern_tbl[kind].adr;
-    if (mix) {
-        wipe_pat_top = wipe_clear_pattern_tbl[kind].adr;
-    }
-    wipe_pat_top += row * 32;
-    wipe_dst_ptr = (u16*)(SS_RAM + 0x8000);
-    if (mix == 0) {
-        mix_or_128();
-    } else {
-        wipe_back_ptr = sc_chr_ram;
-        mix_put_128();
     }
 }
 
@@ -186,6 +186,28 @@ void wipe_pattern_and_low(s16 kind, s16 row) {
 
 
 /* provisional name */
+void wipe_and_row(void) {
+    s32 j;
+    wipe_pat_ptr = wipe_pat_top;
+    for (j = 0; j < 32; j++) {
+        *wipe_dst_ptr = *wipe_pat_ptr & *wipe_dst_ptr;
+        wipe_dst_ptr++;
+        wipe_pat_ptr++;
+    }
+}
+
+
+
+/* provisional name */
+void wipe_and_dot(void) {
+    *wipe_dst_ptr = *wipe_pat_ptr & *wipe_dst_ptr;
+    wipe_dst_ptr++;
+    wipe_pat_ptr++;
+}
+
+
+
+/* provisional name */
 void wipe_mask_set_cols(s16 kind, s16 row) {
     u8* src;
     u8* map;
@@ -194,7 +216,7 @@ void wipe_mask_set_cols(s16 kind, s16 row) {
     s16 x;
     s16 y;
     s16 i;
-    s32 width;
+    s16 width;
     width = wipe_column_tbl[kind].w;
     src = wipe_column_tbl[kind].adr + width * row;
     map = wipe_set_pattern_tbl[kind].adr + row * 32;
@@ -221,7 +243,7 @@ void wipe_mask_and_cols(s16 kind, s16 row) {
     s16 x;
     s16 y;
     s16 i;
-    s32 width;
+    s16 width;
     width = wipe_column_tbl[kind].w;
     src = wipe_column_tbl[kind].adr + width * row;
     map = wipe_clear_pattern_tbl[kind].adr + row * 32;
@@ -242,7 +264,7 @@ void Stage_BGM(u16 Stage_Number, s32 Round_Number) {
     if (Demo_Sound == 0 && Demo_Flag == 0) {
         return;
     }
-    if (Keep_BGM_Flag != 0) {
+    if (Keep_BGM_Flag) {
         return;
     }
     gSeqStatus[0] = 0;
@@ -253,7 +275,7 @@ void Stage_BGM(u16 Stage_Number, s32 Round_Number) {
 
 /* provisional name */
 void bgm_fade_in_stage(s16 x) {
-    if (Keep_BGM_Flag == 0) {
+    if (!Keep_BGM_Flag) {
         sound_fade_in_submit(stage_bgm_tbl[bg_w.stage], 0x8000 / x);
     }
 }
@@ -363,7 +385,7 @@ void Se_Myself_Die(WORK_Other* ewk, u16 Code) {
 s32 Se_Let(WORK_Other* ewk, u16 Code) {
     s16 xx;
     s16 uid;
-    if (!Demo_Sound && !Demo_Flag) {
+    if (Demo_Sound == 0 && Demo_Flag == 0) {
         return (s32)&Demo_Flag;
     }
     if (Combo_Demo_Flag & 0x80) {

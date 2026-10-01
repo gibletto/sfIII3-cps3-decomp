@@ -43,7 +43,7 @@ void effect_55_move(WORK_Other* ewk) {
         set_char_move_init(&ewk->wu, 0, 3);
         break;
     case 1:
-        if (EXE_flag == 0 && Game_pause == 0) {
+        if (!EXE_flag && !Game_pause) {
             ewk->wu.xyz[1].cal += 0x3000;
             if (ewk->wu.xyz[1].disp.pos >= 128) {
                 ewk->wu.routine_no[0]++;
@@ -53,7 +53,7 @@ void effect_55_move(WORK_Other* ewk) {
         disp_pos_trans_entry(ewk);
         break;
     case 2:
-        if (EXE_flag == 0 && Game_pause == 0) {
+        if (!EXE_flag && !Game_pause) {
             ewk->wu.old_rno[0]--;
             if (ewk->wu.old_rno[0] < 0) {
                 ewk->wu.routine_no[0]++;
@@ -62,7 +62,7 @@ void effect_55_move(WORK_Other* ewk) {
         disp_pos_trans_entry(ewk);
         break;
     case 3:
-        if (EXE_flag == 0 && Game_pause == 0) {
+        if (!EXE_flag && !Game_pause) {
             ewk->wu.xyz[1].cal -= 0x4000;
             if (ewk->wu.xyz[1].disp.pos <= 96) {
                 ewk->wu.routine_no[0]++;
@@ -72,7 +72,7 @@ void effect_55_move(WORK_Other* ewk) {
         disp_pos_trans_entry(ewk);
         break;
     case 4:
-        if (EXE_flag == 0 && Game_pause == 0) {
+        if (!EXE_flag && !Game_pause) {
             ewk->wu.old_rno[0]--;
             if (ewk->wu.old_rno[0] < 0) {
                 ewk->wu.routine_no[0] = 1;
@@ -244,13 +244,13 @@ void effect_58_move(WORK_Other* ewk) {
             push_effect_work(&ewk->wu);
             break;
         case 8:
-            if ((Demo_Sound || Demo_Flag) && Keep_BGM_Flag == 0) {
+            if ((Demo_Sound || Demo_Flag) && !Keep_BGM_Flag) {
                 bgm_request(ewk->wu.direction);
             }
             push_effect_work(&ewk->wu);
             break;
         case 9:
-            if ((Demo_Sound || Demo_Flag) && Keep_BGM_Flag == 0) {
+            if ((Demo_Sound || Demo_Flag) && !Keep_BGM_Flag) {
                 sound_fade_in_submit(ewk->wu.direction, 0x222);
             }
             push_effect_work(&ewk->wu);
@@ -262,7 +262,7 @@ void effect_58_move(WORK_Other* ewk) {
             EFF58_Type_11(ewk);
             break;
         case 12:
-            if (Cut_Scroll == 0) {
+            if (!Cut_Scroll) {
                 xx = 3;
             } else {
                 xx = Cut_Cut_Sub(3);
@@ -286,7 +286,7 @@ void effect_58_move(WORK_Other* ewk) {
             }
             break;
         case 13:
-            if (Cut_Scroll == 0) {
+            if (!Cut_Scroll) {
                 xx = 5;
             } else {
                 xx = Cut_Cut_Sub(5);
@@ -447,7 +447,7 @@ void EFF58_Type_02(WORK_Other* ewk) {
         set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
         break;
     case 1:
-        if (Suicide[0]) {
+        if (Suicide[0] != 0) {
             ewk->wu.routine_no[2]++;
             break;
         }

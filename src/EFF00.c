@@ -20,9 +20,9 @@
 #include "fighter.h"
 void effect_00_move(WORK_Other_JUDGE* judge) {
     WORK_Other_JUDGE* ewk = (WORK_Other_JUDGE*)judge;
-    u16 dip;
-    ewk->fade_cja.l += 0x2000;
-    ewk->fade_cja.w &= 3;
+    s16 dip;
+    ewk->fade_cja.l = ewk->fade_cja.l + 0x2000;
+    ewk->fade_cja.w = ewk->fade_cja.w & 3;
     switch (ewk->wu.routine_no[0]) {
     case 0:
         ewk->wu.routine_no[0]++;

@@ -73,7 +73,7 @@ u32 voice_process_primary(SNDVOICE* voice, s8 is_bgm, u32 voice_index) {
         argument = cursor + 1;
         if (event < 0xC0) {
             u8** bank;
-            s16 note_resolved = 1;
+            s32 note_resolved = 1;
             voice->velocity = (u8)((event & 0x3f) << 1);
             note = (u16)(*argument & 0x7f);
             voice->control_70 = (u8)note;
@@ -94,7 +94,7 @@ u32 voice_process_primary(SNDVOICE* voice, s8 is_bgm, u32 voice_index) {
                     }
                     patch++;
                 }
-                if (patch == 0) {
+                if (!patch) {
                     note_resolved = 0;
                 } else {
                     ((volatile SNDVOICE*)voice)->patch = patch;
@@ -238,11 +238,11 @@ u32 voice_process_primary(SNDVOICE* voice, s8 is_bgm, u32 voice_index) {
         case 0x16:
         case 0x17:
             loop_index = event - 0xd4;
-            if (voice->loop_count[loop_index] == 0) {
+            if (!voice->loop_count[loop_index]) {
                 voice->loop_count[loop_index] = *argument;
             } else {
                 voice->loop_count[loop_index]--;
-                if (voice->loop_count[loop_index] == 0) {
+                if (!voice->loop_count[loop_index]) {
                     argument = cursor + 2;
                     break;
                 }
@@ -334,7 +334,7 @@ decode_event_ticks:
         ticks *= 0x100;
         voice->event_ticks += ticks;
         voice->cursor = argument + consumed;
-    } while (ticks < 1);
+    } while (ticks <= 0);
     voice->status |= 0x20;
     return 0x5e;
 }
@@ -379,7 +379,7 @@ u32 sound_voice_volume_compute(u16 level, u32 pan_scale, s8 pan, SOUND_VOICE* v)
     a = (a * ((v->expression + 64) & 127)) >> 6;
     a = (a * ((v->track[2] + 64) & 127)) >> 6;
     t = (a * ((snd_master_vol + 64) & 127)) >> 6;
-    if (v->no_master == 0) {
+    if (!v->no_master) {
         t = (t * ((bgm_master_vol + 64) & 127)) >> 6;
     }
     out = (level * (t + 1)) >> 15;
@@ -397,7 +397,7 @@ u32 sound_voice_volume_compute(u16 level, u32 pan_scale, s8 pan, SOUND_VOICE* v)
     }
     ctrl = snd_ctrl;
     if ((u8)ctrl.b[1] & 1) {
-        if (v->no_master == 0) {
+        if (!v->no_master) {
             t = (out * (u16)((u32)snd_fade_level >> 8)) >> 7;
             return t;
         }
@@ -422,14 +422,14 @@ u32 sound_voice_volume_compute(u16 level, u32 pan_scale, s8 pan, SOUND_VOICE* v)
 
 /* provisional name */
 u32 voice_process_secondary(SNDVOICE* voice, u8 voice_index, u8 is_bgm) {
-    u8 owns_hardware_voice = 1;
+    s32 owns_hardware_voice = 1;
     volatile SNDREGS* regs;
     u32 result;
-    u8 status;
+    s32 status;
     s32 next;
     u32 depth;
     s32 step;
-    u8 pan;
+    s32 pan;
     s8 output_pan;
     u16 key_clear_mask;
     s8 key_state_changed = 0;
@@ -458,10 +458,10 @@ u32 voice_process_secondary(SNDVOICE* voice, u8 voice_index, u8 is_bgm) {
             voice->note_ticks -= se_tick_step[voice_index];
         }
     }
-    if (voice->event_ticks < 1) {
+    if (voice->event_ticks <= 0) {
         voice->status &= 0xdf;
     }
-    if (voice->note_ticks < 1 && voice->duration_enabled) {
+    if (voice->note_ticks <= 0 && voice->duration_enabled) {
         voice->duration_enabled = 0;
         voice->release_pending = 0;
         if (owns_hardware_voice) {

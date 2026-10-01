@@ -19,14 +19,7 @@
 #include "CHARSET.h"
 #include "EFFJ9.h"
 
-#pragma inline(effJ9_trans)
 
-
-
-void effJ9_trans(WORK* wk) {
-    wk->position_x = wk->xyz[0].disp.pos + wk->next_x;
-    sort_push_request(wk);
-}
 
 
 void effect_J9_move(WORK_Other* ewk) {
@@ -78,6 +71,13 @@ void effect_J9_move(WORK_Other* ewk) {
         push_effect_work(&ewk->wu);
         break;
     }
+}
+
+
+
+void effJ9_trans(WORK* wk) {
+    wk->position_x = wk->xyz[0].disp.pos + wk->next_x;
+    sort_push_request(wk);
 }
 
 

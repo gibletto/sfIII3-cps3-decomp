@@ -342,7 +342,7 @@ void Game01(void) {
     Setup_Play_Type();
     switch (G_No[2]) {
     case 0:
-        G_No[2] += 1;
+        G_No[2] = G_No[2] + 1;
         S_No = 0;
         S_Sub_No = 0;
         S_Sub2_No = 0;
@@ -354,7 +354,7 @@ void Game01(void) {
         break;
     case 1:
         if (Select_Player()) {
-            G_No[2] += 1;
+            G_No[2] = G_No[2] + 1;
             Bonus_Game_Flag = 0;
             load_any_color(2);
             Game01_Sub();
@@ -367,7 +367,7 @@ void Game01(void) {
         if (Switch_Screen()) {
             Cover_Timer = 24;
             appear_type = 1;
-            if (Demo_Flag) {
+            if (Demo_Flag != 0) {
                 G_No[1] = 2;
                 G_No[2] = 0;
                 E_No[0] = 4;
@@ -383,13 +383,13 @@ void Game01(void) {
                 Operator_Status[1] = 0;
             }
             purge_char_gfx(0x9060);
-            if (plw[0].wu.operator) {
+            if (plw[0].wu.operator != 0) {
                 Sel_Arts_Complete[0] = -1;
             }
-            if (plw[1].wu.operator) {
+            if (plw[1].wu.operator != 0) {
                 Sel_Arts_Complete[1] = -1;
             }
-            if (plw[0].wu.operator && plw[1].wu.operator) {
+            if (plw[0].wu.operator != 0 && plw[1].wu.operator != 0) {
                 Play_Type = 1;
             } else {
                 Play_Type = 0;
@@ -458,7 +458,7 @@ void Game05(void) {
     case 1:
         if (Next_CPU()) {
             G_No[2]++;
-            if (Bonus_Type == 0) {
+            if (!Bonus_Type) {
                 Game01_Sub();
             }
             sc_vram_to_ram();
@@ -470,7 +470,7 @@ void Game05(void) {
         if (Switch_Screen()) {
             Cover_Timer = 24;
             voice_all_off();
-            if (Bonus_Type == 0) {
+            if (!Bonus_Type) {
                 G_No[1] = 2;
                 G_No[2] = 0;
                 E_No[0] = 4;
@@ -640,7 +640,7 @@ void Game2_3(void) {
 
 
 void Game2_4(void) {
-    if (G_No[3] == 0) {
+    if (!G_No[3]) {
         G_No[3]++;
         System_all_clear_Wait();
         vital_cont_init();
@@ -730,14 +730,14 @@ char *Game03(void)
     move_effect_work(4);
     move_effect_work(5);
     result = (char *)G_No[2];
-    if (result == 0) {
+    if (!result) {
         if (Winner_Scene() == 0) {
             result = 0;
         } else {
             result = (char *)Check_Short_Ending();
-            if (result == 0) {
+            if (!result) {
                 event = Game_setting.set5;
-                if (event == 0) {
+                if (!event) {
                     G_No[1] = 5;
                     G_No[2] = 0;
                     G_No[3] = 0;
@@ -847,11 +847,7 @@ void Game09(void) {
         win_lose_work_clear();
         bg_w.stage = Bonus_Type;
         bg_w.area = 0;
-        if (Bonus_Game_Flag == 22) {
-            My_char[COM_id] = 12;
-        } else {
-            My_char[COM_id] = My_char[Player_id];
-        }
+        My_char[COM_id] = (Bonus_Game_Flag == 22) ? 12 : My_char[Player_id];
         Setup_Com_Color();
         Setup_PL_Color(COM_id, Com_Color_Shot);
         TATE00();
@@ -1305,7 +1301,7 @@ void Time_Control(void) {
 
 s32 Ck_Coin(void) {
     s16 pl = -1;
-    if (Free_Play) {
+    if (Free_Play != 0) {
         if (~p1sw_1 & p1sw_0 & 0x1000) {
             pl = 0;
         } else if (~p2sw_1 & p2sw_0 & 0x1000) {

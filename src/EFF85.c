@@ -253,7 +253,7 @@ void eff85_0200(WORK_Other* ewk)
 s32 effect_85_init(void) {
     WORK_Other* ewk;
     s16 ix;
-    if (EXE_obroll == 0) {
+    if (!EXE_obroll) {
         if ((ix = pull_effect_work(4)) == -1) {
             return -1;
         }

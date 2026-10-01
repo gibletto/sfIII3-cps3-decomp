@@ -31,7 +31,7 @@ void effect_74_move(WORK_Other* ewk) {
         Scrn_Y_Set_R(1, ewk->wu.old_rno[1]);
         break;
     case 1:
-        if (EXE_flag == 0 && Game_pause == 0) {
+        if (!EXE_flag && !Game_pause) {
             ewk->wu.cg_ctr--;
             if (ewk->wu.cg_ctr <= 0) {
                 ewk->wu.cg_ix++;
@@ -82,8 +82,8 @@ void eff74_pattern_set(WORK_Other* ewk) {
 
 /* provisional name */
 void eff74_cell_trans(void) {
-    s16 i;
-    s16 j;
+    s32 i;
+    s32 j;
     const CELL_REQ* p;
     for (i = 0; i < 3; i++) {
         for (j = 0; j < 16; j++) {

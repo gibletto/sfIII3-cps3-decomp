@@ -45,7 +45,7 @@ void effect_G6_move(WORK_Other* ewk) {
             return;
         }
         if (((ewk->wu.dmcal_m & 1) && (ewk->wu.old_pos[1] != mwk->xyz[1].disp.pos)) ||
-            ((ewk->wu.dmcal_m & 2) && (mwk->disp_flag == 0)) ||
+            ((ewk->wu.dmcal_m & 2) && (!mwk->disp_flag)) ||
             ((ewk->wu.dmcal_m & 4) && (ewk->wu.dm_vital != mwk->dm_count_up)) ||
             ((ewk->wu.dmcal_m & 8) &&
              ((ewk->wu.old_rno[0] != mwk->routine_no[0]) || (ewk->wu.old_rno[1] != mwk->routine_no[1]) ||
@@ -66,7 +66,7 @@ void effect_G6_move(WORK_Other* ewk) {
             break;
         }
         if (ewk->wu.dmcal_m & 0x20) {
-            if ((mwk->hit_stop == 0) && (ewk->wu.old_pos[0] == mwk->xyz[0].disp.pos) &&
+            if ((!mwk->hit_stop) && (ewk->wu.old_pos[0] == mwk->xyz[0].disp.pos) &&
                 (ewk->wu.old_pos[1] == mwk->xyz[1].disp.pos)) {
                 goto block_22;
             }

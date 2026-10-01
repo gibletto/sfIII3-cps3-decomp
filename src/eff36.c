@@ -22,7 +22,47 @@
 #include "aboutspr.h"
 #include "eff36.h"
 
-#pragma inline(eff36_move00, eff36_move01, eff36_move02, eff36_move03, eff36_move04, eff36_move05, eff36_move06)
+
+
+void effect_36_move(WORK_Other* ewk) {
+    switch (ewk->wu.routine_no[0]) {
+    case 0:
+        if (ewk->wu.old_rno[1] <= op_w.index) {
+            ewk->wu.routine_no[0] += 1;
+        } else if (ewk->wu.old_rno[2] <= op_w.index) {
+            switch (ewk->wu.routine_no[1]) {
+            case 0:
+                eff36_move00(ewk);
+                break;
+            case 1:
+                eff36_move01(ewk);
+                break;
+            case 2:
+                eff36_move02(ewk);
+                break;
+            case 3:
+                eff36_move03(ewk);
+                break;
+            case 4:
+                eff36_move04(ewk);
+                break;
+            case 5:
+                eff36_move05(ewk);
+                break;
+            case 6:
+                eff36_move06(ewk);
+                break;
+            default:
+                break;
+            }
+        }
+        break;
+    default:
+        all_cgps_put_back(ewk);
+        push_effect_work(&ewk->wu);
+        break;
+    }
+}
 
 
 
@@ -201,7 +241,7 @@ void eff36_move06(WORK_Other* ewk) {
         break;
     case 1:
         ewk->wu.old_rno[6] -= 1;
-        if (ewk->wu.old_rno[6] < 1) {
+        if (ewk->wu.old_rno[6] <= 0) {
             ewk->wu.old_rno[6] = 2;
             ewk->wu.my_mr.size.x += 1;
             ewk->wu.my_mr.size.y += 1;
@@ -213,46 +253,6 @@ void eff36_move06(WORK_Other* ewk) {
         }
     case 2:
         disp_pos_trans_entry5(ewk);
-        break;
-    }
-}
-
-void effect_36_move(WORK_Other* ewk) {
-    switch (ewk->wu.routine_no[0]) {
-    case 0:
-        if (ewk->wu.old_rno[1] <= op_w.index) {
-            ewk->wu.routine_no[0] += 1;
-        } else if (ewk->wu.old_rno[2] <= op_w.index) {
-            switch (ewk->wu.routine_no[1]) {
-            case 0:
-                eff36_move00(ewk);
-                break;
-            case 1:
-                eff36_move01(ewk);
-                break;
-            case 2:
-                eff36_move02(ewk);
-                break;
-            case 3:
-                eff36_move03(ewk);
-                break;
-            case 4:
-                eff36_move04(ewk);
-                break;
-            case 5:
-                eff36_move05(ewk);
-                break;
-            case 6:
-                eff36_move06(ewk);
-                break;
-            default:
-                break;
-            }
-        }
-        break;
-    default:
-        all_cgps_put_back(ewk);
-        push_effect_work(&ewk->wu);
         break;
     }
 }

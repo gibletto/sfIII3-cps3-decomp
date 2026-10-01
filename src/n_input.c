@@ -510,7 +510,7 @@ s32 Scs_move_sub(void) {
     }
     if (name_ptr->old_code[nsc_ptr->type] != name_ptr->code[nsc_ptr->type]) {
         s8 type;
-        s16 id;
+        s32 id;
         nsc_ptr->n_disp_flag = 0;
         nsc_ptr->f_cnt = 0;
         type = nsc_ptr->type;

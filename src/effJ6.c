@@ -208,9 +208,9 @@ void effect_J5_move(WORK_Other* ewk) {
         Scrn_Y_Set_R(0, effJ5_frame_tbl[ewk->wu.cg_ix].y);
         break;
     case 1:
-        if (EXE_flag == 0 && Game_pause == 0) {
+        if (!EXE_flag && !Game_pause) {
             ewk->wu.cg_ctr--;
-            if (ewk->wu.cg_ctr <= 0) {
+            if (ewk->wu.cg_ctr < 1) {
                 ewk->wu.cg_ix++;
                 ewk->wu.cg_ix &= 3;
                 ewk->wu.cg_ctr = effJ5_frame_tbl[ewk->wu.cg_ix].timer;
@@ -231,8 +231,8 @@ void effect_J5_move(WORK_Other* ewk) {
 
 /* provisional name */
 void effJ5_bg_write(void) {
-    s16 i;
-    s16 j;
+    s32 i;
+    s32 j;
     for (i = 0; i < 2; i++) {
         for (j = 0; j < 16; j++) {
             scroll_cell_write(i, effJ5_cell_tbl[i][j].a, effJ5_cell_tbl[i][j].b, effJ5_scrn_data);

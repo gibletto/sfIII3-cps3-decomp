@@ -44,7 +44,7 @@ void Shell14_0012(PLW* wk) {
 
 /* provisional name */
 void init_char_gfx_tables(void) {
-    s16 i;
+    s32 i;
     cg_data_list = cg_data_tbl;
     for (i = 0; i < 512; i++) {
         cg_slot_tbl[i].addr = cg_slot_tbl[i].handle = 0;
@@ -70,7 +70,7 @@ void setup_kage_cells(void) {
     s16* handles;
     s16 ix;
     s16 i;
-    if (kage_gfx_ofs[0] != 0) {
+    if (kage_gfx_ofs[0]) {
         return;
     }
     if (!load_char_gfx(0x9020, 1)) {
@@ -103,7 +103,7 @@ void setup_kage_cells(void) {
     push_effect_work(tmp);
     return;
 fail:
-    if (i != 0) {
+    if (i) {
         for (i--; i >= 0; i--) {
             simmram_block_free_40(handles[i]);
         }
@@ -183,7 +183,7 @@ s32 setup_GILL_exsa_obj(void) {
     s16* handles;
     s16 ix;
     s16 i;
-    if (seraph_gfx_ofs[0] != 0) {
+    if (seraph_gfx_ofs[0]) {
         return seraph_gfx_ofs[0];
     }
     if (!load_char_gfx(0xB478, 1)) {
@@ -217,7 +217,7 @@ s32 setup_GILL_exsa_obj(void) {
     push_effect_work(ewk);
     return push_effect_work(tmp);
 fail:
-    if (i != 0) {
+    if (i) {
         for (i--; i >= 0; i--) {
             simmram_block_free_40(handles[i]);
         }
@@ -233,7 +233,7 @@ s32 setup_bonus_car_parts(void) {
     s16* handles;
     s16 ix;
     s16 i;
-    if (car_gfx_ofs[0] != 0) {
+    if (car_gfx_ofs[0]) {
         return car_gfx_ofs[0];
     }
     if (!load_char_gfx(0xB0C8, 1)) {
@@ -263,7 +263,7 @@ s32 setup_bonus_car_parts(void) {
     push_effect_work(ewk);
     return push_effect_work(tmp);
 fail:
-    if (i != 0) {
+    if (i) {
         for (i--; i >= 0; i--) {
             simmram_block_free_40(handles[i]);
         }
@@ -445,14 +445,14 @@ s32 trans_char_cells(WORK* wk) {
             return 0;
         }
         dst = (CHAR_SPRITE*)simmram_slot_addr(blk40);
-        if (wk->spr.gfx_blk10[2] != 0) {
+        if (wk->spr.gfx_blk10[2]) {
             ((void(*)(s16 handle))simmram_block_free_10)(wk->spr.gfx_blk10[2]);
         }
         wk->spr.gfx_blk10[2] = wk->spr.gfx_blk10[1];
         wk->spr.gfx_blk10[1] = wk->spr.gfx_blk10[0];
         wk->spr.gfx_blk10[0] = blk10;
     }
-    if (wk->spr.gfx_blk40[2] != 0) {
+    if (wk->spr.gfx_blk40[2]) {
         ((void(*)(s16 handle))simmram_block_free_40)(wk->spr.gfx_blk40[2]);
     }
     wk->spr.gfx_blk40[2] = wk->spr.gfx_blk40[1];
@@ -569,12 +569,12 @@ void make_char_cells_xy(WORK* wk, CHAR_CELL* cell, CHAR_SPRITE* spr, u16 count, 
 
 /* provisional name */
 s32 char_cell_flip_none(WORK* wk) {
-    if (wk->spr.gfx_blk10[2] != 0) {
+    if (wk->spr.gfx_blk10[2]) {
         simmram_block_free_10(wk->spr.gfx_blk10[2]);
     }
     wk->spr.gfx_blk10[2] = wk->spr.gfx_blk10[1];
     wk->spr.gfx_blk10[1] = 0;
-    if (wk->spr.gfx_blk40[2] != 0) {
+    if (wk->spr.gfx_blk40[2]) {
         simmram_block_free_40(wk->spr.gfx_blk40[2]);
     }
     wk->spr.gfx_blk40[2] = wk->spr.gfx_blk40[1];
@@ -586,12 +586,12 @@ s32 char_cell_flip_none(WORK* wk) {
 
 /* provisional name */
 s32 char_cell_push_block(WORK* wk, s16 handle) {
-    if (wk->spr.gfx_blk10[2] != 0) {
+    if (wk->spr.gfx_blk10[2]) {
         simmram_block_free_10(wk->spr.gfx_blk10[2]);
     }
     wk->spr.gfx_blk10[2] = wk->spr.gfx_blk10[1];
     wk->spr.gfx_blk10[1] = 0;
-    if (wk->spr.gfx_blk40[2] != 0) {
+    if (wk->spr.gfx_blk40[2]) {
         simmram_block_free_40(wk->spr.gfx_blk40[2]);
     }
     wk->spr.gfx_blk40[2] = wk->spr.gfx_blk40[1];
@@ -825,7 +825,7 @@ s32 set_conn_sprite(WORK_Other_CONN* wk) {
         return 0;
     }
     base = (u16 *)simmram_slot_addr(blk);
-    if (wk->wu.spr.gfx_blk40[2] != 0) {
+    if (wk->wu.spr.gfx_blk40[2]) {
         simmram_block_free_40(wk->wu.spr.gfx_blk40[2]);
     }
     wk->wu.spr.gfx_blk40[2] = wk->wu.spr.gfx_blk40[1];
@@ -880,17 +880,17 @@ void count_conn_cells(WORK_Other_CONN* ewk) {
 
 /* provisional name */
 s32 make_conn_cells(WORK_Other_CONN* ewk) {
-    s16 handle;
+    s32 handle;
     CharSpriteK* dst;
     CharSpriteK* s;
     CHAR_CELL* cells;
     CHAR_CELL* c;
     CharGfxSet* set;
-    s16 base;
+    s32 base;
     u16 chr;
-    s16 i;
-    s16 j;
-    s16 n;
+    s32 i;
+    s32 j;
+    s32 n;
     s32 blocks;
     if (ewk->wu.old_cgnum == ewk->wu.cg_number) {
         return 1;
@@ -908,7 +908,7 @@ s32 make_conn_cells(WORK_Other_CONN* ewk) {
         return 0;
     }
     dst = (CharSpriteK*)simmram_slot_addr(handle);
-    if (ewk->wu.spr.gfx_blk40[2] != 0) {
+    if (ewk->wu.spr.gfx_blk40[2]) {
         simmram_block_free_40(ewk->wu.spr.gfx_blk40[2]);
     }
     ewk->wu.spr.gfx_blk40[2] = ewk->wu.spr.gfx_blk40[1];
@@ -947,11 +947,11 @@ s32 make_conn_cells(WORK_Other_CONN* ewk) {
 void all_cgps_put_back(WORK* wk) {
     s16 i;
     for (i = 0; i < 3; i++) {
-        if (wk->spr.gfx_blk10[i] != 0) {
+        if (wk->spr.gfx_blk10[i]) {
             simmram_block_free_10(wk->spr.gfx_blk10[i]);
         }
         wk->spr.gfx_blk10[i] = 0;
-        if (wk->spr.gfx_blk40[i] != 0) {
+        if (wk->spr.gfx_blk40[i]) {
             simmram_block_free_40(wk->spr.gfx_blk40[i]);
         }
         wk->spr.gfx_blk40[i] = 0;
@@ -966,7 +966,7 @@ void all_cgps_put_back(WORK* wk) {
 void release_char_cell_blocks(WORK* wk) {
     s16 i;
     for (i = 0; i < 3; i++) {
-        if (wk->spr.gfx_blk40[i] != 0) {
+        if (wk->spr.gfx_blk40[i]) {
             simmram_block_free_40(wk->spr.gfx_blk40[i]);
         }
         wk->spr.gfx_blk40[i] = 0;
@@ -990,14 +990,14 @@ s32 sort_push_request(WORK* wk) {
         return 0;
     }
     wk->spr.disp_colcd = wk->current_colcd;
-    if (wk->extra_col_2 != 0) {
+    if (wk->extra_col_2) {
         wk->spr.disp_colcd = wk->extra_col_2;
     }
-    if (wk->extra_col != 0) {
+    if (wk->extra_col) {
         wk->spr.disp_colcd = wk->extra_col;
     }
     push_char_sprite(wk, spr, base_y_pos);
-    if (wk->my_mr_flag != 0 && *(u32*)&wk->spr.old_mr != *(u32*)&wk->my_mr) {
+    if (wk->my_mr_flag && *(u32*)&wk->spr.old_mr != *(u32*)&wk->my_mr) {
         char_sprite_zoom_cells(wk);
     }
     if (wk->work_id == 1 && (wk->spr.sprite_flip & 1)) {
@@ -1018,7 +1018,7 @@ s32 sort_push_request(WORK* wk) {
 s32 sort_push_request2(WORK_Other* wk) {
     u16* spr;
     u16* cell;
-    s16 i;
+    s32 i;
     if (wk->wu.disp_flag == 0 && wk->master_work_id == 1) {
         return 1;
     }
@@ -1047,7 +1047,7 @@ s32 sort_push_request2(WORK_Other* wk) {
 s32 sort_push_request3(WORK* wk) {
     u16* spr;
     u16* cell;
-    s16 i;
+    s32 i;
     if (wk->disp_flag == 0) {
         return 1;
     }
@@ -1064,13 +1064,13 @@ s32 sort_push_request3(WORK* wk) {
     push_char_sprite(wk, spr, base_y_pos);
     if (wk->spr.done_rl != wk->rl_flag) {
         wk->spr.done_rl = wk->rl_flag;
-        spr[4] ^= 0x1000;
+        spr[4] = spr[4] ^ 0x1000;
         cell = (u16*)(SPRITE_RAM + wk->spr.gfx_ofs * 16);
         for (i = 0; i < wk->spr.gfx_cells; i++) {
             cell[i * 8 + 2] = -cell[i * 8 + 2] & 0x3FF;
         }
     } else if (wk->spr.done_rl) {
-        spr[4] |= 0x1000;
+        spr[4] = spr[4] | 0x1000;
     }
     if (wk->kage_flag) {
         shadow_drawing(wk, base_y_pos);
@@ -1094,14 +1094,14 @@ s32 sort_push_request4(WORK* wk) {
         return 0;
     }
     wk->spr.disp_colcd = wk->current_colcd;
-    if (wk->extra_col_2 != 0) {
+    if (wk->extra_col_2) {
         wk->spr.disp_colcd = wk->extra_col_2;
     }
-    if (wk->extra_col != 0) {
+    if (wk->extra_col) {
         wk->spr.disp_colcd = wk->extra_col;
     }
     push_char_sprite(wk, spr, 0);
-    if (wk->my_mr_flag != 0 && *(u32*)&wk->spr.old_mr != *(u32*)&wk->my_mr) {
+    if (wk->my_mr_flag && *(u32*)&wk->spr.old_mr != *(u32*)&wk->my_mr) {
         char_sprite_zoom_cells(wk);
     }
     if (wk->kage_flag) {
@@ -1271,9 +1271,9 @@ void char_sprite_zoom_cells(WORK* wk) {
     CharSpriteK* volatile s;
     XY16K pos;
     s16 m[4];
-    s16 base_x;
-    s16 base_y;
-    s16 i;
+    s32 base_x;
+    s32 base_y;
+    s32 i;
     s16* volatile mp;
     spr = (CharSpriteK*)(SPRITE_RAM + (u16)wk->spr.gfx_ofs * 16);
     *(u32*)&wk->spr.old_mr = *(u32*)&wk->my_mr;

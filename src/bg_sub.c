@@ -126,7 +126,7 @@ void bg_debug_scroll_layers(void) {
 /* provisional name */
 void bg_test_stage_select(void) {
     u16 sw;
-    s16 changed;
+    s32 changed;
     s8 save_27;
     s8 save_entry;
     changed = 0;
@@ -375,7 +375,7 @@ void check_cg_zoom(void) {
    and, while the background is chasing, apply it. */
 void bg_chase_move(void)
 {
-    if (Bonus_Game_Flag == 0) {
+    if (!Bonus_Game_Flag) {
         chase_start_check();
         if (bg_w.chase_flag) {
             chase_xy_move();
@@ -654,6 +654,48 @@ void scr_12_22(void) {
     }
     meri = meri - (ideal_w.iw[0].disp.pos + bg_w.pos_offset - 0x3F);
     x_right_check(meri);
+}
+
+
+
+/* provisional name: an unreferenced copy of scr_11_22 */
+void scr_11_22_2(void) {
+    s16 meri;
+    s16 meri2;
+    meri = (satse[plw[1].player_number] - satse[plw[0].player_number]);
+    meri >>= 1;
+    meri2 = plw[0].wu.scr_mv_x + plw[1].wu.scr_mv_x;
+    meri2 >>= 1;
+    meri2 += meri;
+    meri2 -= ideal_w.iw[0].disp.pos;
+    if (meri2 < 0) {
+        if (plw[1].micchaku_flag != 1) {
+            x_left_check(meri2);
+        }
+    } else if (plw[0].micchaku_flag != 2) {
+        x_right_check(meri2);
+    }
+}
+
+
+
+/* provisional name: an unreferenced copy of scr_12_21 */
+void scr_12_21_2(void) {
+    s16 meri;
+    s16 meri2;
+    meri = (satse[plw[0].player_number] - satse[plw[1].player_number]);
+    meri >>= 1;
+    meri2 = plw[0].wu.scr_mv_x + plw[1].wu.scr_mv_x;
+    meri2 >>= 1;
+    meri2 += meri;
+    meri2 -= ideal_w.iw[0].disp.pos;
+    if (meri2 < 0) {
+        if (plw[0].micchaku_flag != 1) {
+            x_left_check(meri2);
+        }
+    } else if (plw[1].micchaku_flag != 2) {
+        x_right_check(meri2);
+    }
 }
 
 
@@ -1009,8 +1051,8 @@ void zoom_x_width_check(void) {
 
 /* provisional name */
 s32 zoom_y_width_check(void) {
-    s32 f;
-    s32 flag;
+    s16 f;
+    s16 flag;
     if (Game_setting.mode) {
         return Game_setting.mode;
     }
@@ -1147,13 +1189,13 @@ s32 suzi_line_calc_fill(s16 bg_num) {
     s32* line;
     u16* dst;
     u16 top;
-    s16 dist;
-    s16 count;
-    s16 i;
-    if (bg_stop) {
+    s32 dist;
+    s32 count;
+    s32 i;
+    if (bg_stop != 0) {
         return bg_stop;
     }
-    if (bg_app_stop) {
+    if (bg_app_stop != 0) {
         return bg_app_stop;
     }
     bgw = &bg_w.bgw[bg_num];
@@ -1232,13 +1274,13 @@ s32 suzi_line_calc_flat(s16 bg_num) {
     s32* line;
     u16* dst;
     u16 top;
-    s16 dist;
-    s16 count;
-    s16 i;
-    if (bg_stop) {
+    s32 dist;
+    s32 count;
+    s32 i;
+    if (bg_stop != 0) {
         return bg_stop;
     }
-    if (bg_app_stop) {
+    if (bg_app_stop != 0) {
         return bg_app_stop;
     }
     bgw = &bg_w.bgw[bg_num];
@@ -1302,8 +1344,8 @@ s32 suzi_line_calc2(s16 bg_no)
     BGW *bgw;
     u16 *dst;
     u16 *src;
-    s16 pos;
-    s16 i;
+    s32 pos;
+    s32 i;
     s32 ret;
 
     if ((ret = bg_stop) != 0 || (ret = bg_app_stop) != 0) {
@@ -1435,8 +1477,8 @@ void Bg_Family_Set_2(void) {
 
 
 void Bg_Family_Set_2_appoint(s32 num_of_bg) {
-    s16 x;
-    s16 y;
+    s32 x;
+    s32 y;
     x = bg_w.bgw[num_of_bg].position_x;
     y = bg_w.bgw[num_of_bg].position_y;
     y += 8;
@@ -1450,8 +1492,8 @@ void Bg_Family_Set_2_appoint(s32 num_of_bg) {
 
 /* provisional name */
 void ake_Family_Set(void) {
-    s16 pos_work_x = bg_w.bgw[3].position_x;
-    s16 pos_work_y = bg_w.bgw[3].position_y;
+    s32 pos_work_x = bg_w.bgw[3].position_x;
+    s32 pos_work_y = bg_w.bgw[3].position_y;
     Scrn_Move_Set(3, pos_work_x, pos_work_y);
     pos_work_x = -pos_work_x & 0x3FF;
     pos_work_y = (768 - (pos_work_y & 0x3FF)) & 0x3FF;
@@ -1461,8 +1503,8 @@ void ake_Family_Set(void) {
 
 
 void ake_Family_Set2(void) {
-    s16 x = bg_w.bgw[3].position_x;
-    s16 y = bg_w.bgw[3].position_y;
+    s32 x = bg_w.bgw[3].position_x;
+    s32 y = bg_w.bgw[3].position_y;
     Scrn_Move_Set(3, x, y);
     x = 512 - bg_w.pos_offset;
     y = 0;
@@ -1475,8 +1517,8 @@ void ake_Family_Set2(void) {
 
 void bg_pos_hosei_sub2(s16 bg_no) {
     u16 pos;
-    s16 pos2;
-    s16 work;
+    u16 pos2;
+    u16 work;
     pos2 = bg_w.bgw[bg_no].wxy[0].disp.pos;
     pos = pos2 & 0x3FF;
     pos -= bg_w.pos_offset;
@@ -1628,7 +1670,7 @@ void blit_16x16_xflip(u16* src, s16 code, u16* dst, s16 attr) {
             *d = *s + attr;
             *d++ |= 0x1000;
         }
-        dst += 0x80;
+        dst = dst + 0x80;
     }
 }
 
@@ -1682,8 +1724,8 @@ void bg_cell_write_yflip(s16 bg, s32 ofs, s32 cell, u32 src, s16 u5, s16 attr) {
 
 /* provisional name */
 void blit_16x16_xyflip(u16* src, s16 code, u16* dst, s16 attr) {
-    u16 i;
-    u16 j;
+    s16 i;
+    s16 j;
     u16* s;
     u16* d;
     for (i = 0; i < 16; i++) {
@@ -1735,11 +1777,7 @@ void bg_scr_write(void) {
     HUD_CELL* c;
     s16 i;
     s16 j;
-    if (Country == 8) {
-        set = bg_cell_set_tbl[bg_w.stage];
-    } else {
-        set = 0;
-    }
+    set = (Country == 8) ? bg_cell_set_tbl[bg_w.stage] : 0;
     cells = bg_rewrite_cell_tbl[set];
     for (i = 0; i < bg_w.scno; i++) {
         bg_cell_fill(i, attr);

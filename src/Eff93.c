@@ -142,7 +142,7 @@ s32 effect_88_init(s16 type) {
     s16 lp_cnt = eff88_loop_tbl[type][bg_w.compel_flag];
     s16 i;
     const s16* data_ptr;
-    if (lp_cnt == 0) {
+    if (!lp_cnt) {
         return;
     }
     for (data_ptr = scr_obj_data88[type][bg_w.compel_flag], i = 0; i < lp_cnt; i++) {
@@ -455,7 +455,7 @@ void Eff93_SLIDE_L(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
     case 0:
         if (--ewk->wu.dir_timer == 0) {
-            ewk->wu.routine_no[1] += 1;
+            ewk->wu.routine_no[1]++;
             ewk->wu.hit_quake = 0x25C;
             ewk->wu.xyz[0].disp.pos = bg_w.bgw[1].wxy[0].disp.pos;
             ewk->wu.xyz[1].disp.pos = bg_w.bgw[1].xy[1].disp.pos = bg_w.bgw[1].wxy[1].disp.pos;

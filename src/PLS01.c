@@ -45,7 +45,7 @@ void check_my_tk_power_off(PLW* wk) {
         wk->tk_dageki = 0;
         wk->tk_nage = 0;
         wk->tk_kizetsu = 0;
-    } else if (wk->wu.old_rno[1] == 3 && wk->wu.routine_no[1] == 0 && wk->wu.routine_no[2] < 51) {
+    } else if (wk->wu.old_rno[1] == 3 && !wk->wu.routine_no[1] && wk->wu.routine_no[2] < 51) {
         if (wk->wu.routine_no[2] > 46) {
         }
     }
@@ -258,7 +258,7 @@ void remake_sankaku_tobi_mvxy(WORK* wk, u8 kabe) {
     if (kabe == 2) {
         wk->rl_flag = 1;
     }
-    if (kabe == 0) {
+    if (!kabe) {
         if (wk->position_x > get_center_position()) {
             wk->rl_flag = 0;
         } else {
@@ -503,6 +503,38 @@ s32 check_walking_lv_dir(PLW* wk) {
         break;
     case 2:
         if (wk->wu.routine_no[2] != 4) {
+            rnum = 1;
+        }
+        break;
+    default:
+        rnum = 1;
+        break;
+    }
+    if (rnum) {
+        if (wk->wu.pat_status < 32) {
+            wk->wu.routine_no[2] = 1;
+        } else {
+            wk->wu.routine_no[2] = 9;
+        }
+        wk->wu.routine_no[1] = 0;
+        wk->wu.routine_no[3] = 0;
+    }
+    return rnum;
+}
+
+
+
+/* provisional name: check_walking_lv_dir for the other walk states (11/12), unreferenced */
+s32 check_walking_lv_dir2(PLW* wk) {
+    s16 rnum = 0;
+    switch (wk->cp->lever_dir) {
+    case 1:
+        if (wk->wu.routine_no[2] != 11) {
+            rnum = 1;
+        }
+        break;
+    case 2:
+        if (wk->wu.routine_no[2] != 12) {
             rnum = 1;
         }
         break;

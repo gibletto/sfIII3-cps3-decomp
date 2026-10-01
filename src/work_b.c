@@ -901,7 +901,7 @@ s16 scrl;  /* 02016DAA */
 s16 scrr;  /* 02016DAC */
 u8 bbbs_type;  /* 02016DAE */
 u8 Straight_Flag[2];  /* 02016DAF */
-u8 Straight_Flag_tail[1];  /* after Straight_Flag; nothing refers to it by name or address */
+u8 kakushi_on;  /* 02016DB1 */
 u8 kakushi_ix;  /* 02016DB2 */
 u8 kakushi_op;  /* 02016DB3 */
 u8 RO_backup[2];  /* 02016DB4 */
@@ -1094,7 +1094,9 @@ s8 bg_vbl_trans_flag;  /* 0202805C */
 u8 bg_vbl_trans_flag_tail[3];  /* after bg_vbl_trans_flag; nothing refers to it by name or address */
 s16 ls_cnt1;  /* 02028060 */
 BG_ADRS eff_bg_adrs[3];  /* 02028064 */
-u8 eff_bg_adrs_tail[60];  /* after eff_bg_adrs; nothing refers to it by name or address */
+u8 eff_bg_adrs_tail[56];  /* after eff_bg_adrs; nothing refers to it by name or address */
+s16 bg1403_wait;  /* 020280B4 */
+u8 bg1403_wait_tail[2];  /* after bg1403_wait; nothing refers to it by name or address */
 s16 Name_00[2];  /* 020280B8 */
 NAME_WK name_wk[2];  /* 020280BC */
 NAME_WK * name_ptr;  /* 02028128 */

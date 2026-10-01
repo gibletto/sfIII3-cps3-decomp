@@ -542,8 +542,8 @@ void make_speed_xy_att(WORK* ewk, WORK* mwk, s16 tm, u8 xsw, u8 ysw) {
 
 
 void make_speed_xy_back(WORK* ewk, WORK* mwk, TAMA* twk) {
-    s16 bx;
-    s16 by;
+    u16 bx;
+    u16 by;
     ewk->dmcal_m = ewk->xyz[0].disp.pos;
     ewk->dmcal_d = ewk->xyz[1].disp.pos;
     ewk->mvxy.d[0].sp = 0;

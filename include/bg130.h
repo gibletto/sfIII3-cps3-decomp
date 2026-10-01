@@ -11,6 +11,7 @@ void BG140(void);
 void bg1401(void);
 void bg1400(void);
 void bg1402(void);
+void bg1403(void);
 void BG150(void);
 void bg1501(void);
 void bg1502(void);

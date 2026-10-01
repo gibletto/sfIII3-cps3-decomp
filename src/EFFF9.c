@@ -151,7 +151,7 @@ u32 effect_F8_move(WORK_Other* ewk)
         ewk->wu.disp_flag = 1;
         ewk->wu.xyz[2].disp.pos = 26;
         ewk->wu.next_z = mwk->position_z;
-        if (mwk->rl_flag == 0) {
+        if (!mwk->rl_flag) {
             ewk->wu.position_x = mwk->position_x - mark_tbl[ewk->wu.direction][ewk->master_player][0];
         } else {
             ewk->wu.position_x = mwk->position_x + mark_tbl[ewk->wu.direction][ewk->master_player][0];
@@ -170,7 +170,7 @@ u32 effect_F8_move(WORK_Other* ewk)
             ewk->wu.routine_no[0]++;
             return 0;
         }
-        if (EXE_flag == 0 && Game_pause == 0) {
+        if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             if (ewk->wu.cg_type == 0xFF) {
                 ewk->wu.disp_flag = 0;
@@ -283,11 +283,7 @@ void effect_F9_move(WORK_Other* owk) {
         }
         ewk->num_of_conn = chr_data[i + 1];
         ewk->wu.old_rno[4] = chr_data[i + 1];
-        if (ewk->wu.old_rno[4] == 0) {
-            ewk->wu.old_rno[5] = 0;
-        } else {
-            ewk->wu.old_rno[5] = 1;
-        }
+        ewk->wu.old_rno[5] = (ewk->wu.old_rno[4] == 0) ? 0 : 1;
         ewk->wu.old_rno[6] = 1;
         ewk->wu.disp_flag = 1;
         ewk->wu.old_cgnum = ewk->wu.cg_number = 0;

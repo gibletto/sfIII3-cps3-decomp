@@ -166,8 +166,8 @@ s32 pull_effect_work(s16 index) {
 
 /* provisional name */
 s16 effect_work_pull_link(s16 index, s16 before, s16 aix) {
-    s16 qix;
-    s16 link;
+    s32 qix;
+    s32 link;
     WORK* tadr;
     WORK* wrk;
     if (aix == -1) {
@@ -311,7 +311,7 @@ void work_init_zero(s32* adrs_int, s32 xx) {
 
 void write_my_shell_ix(WORK* wk, s16 ix) {
     s32 i;
-    for (i = 7; i > 0; i -= 1) {
+    for (i = 7; i >= 1; i -= 1) {
         wk->shell_ix[i] = wk->shell_ix[i - 1];
     }
     wk->shell_ix[0] = ix;

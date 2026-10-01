@@ -216,7 +216,7 @@ void effl6_flont(WORK_Other* ewk) {
         add_x_sub(ewk);
         add_y_sub(ewk);
         ewk->wu.old_rno[0]--;
-        if (ewk->wu.old_rno[0] <= 0) {
+        if (ewk->wu.old_rno[0] < 1) {
             ewk->wu.routine_no[1]++;
             set_char_move_init(&ewk->wu, 0, 1);
         }
@@ -254,7 +254,7 @@ void effl6_back(WORK_Other* ewk) {
         add_x_sub(ewk);
         add_y_sub(ewk);
         ewk->wu.old_rno[0]--;
-        if (ewk->wu.old_rno[0] <= 0) {
+        if (ewk->wu.old_rno[0] < 1) {
             ewk->wu.routine_no[1]++;
             set_char_move_init(&ewk->wu, 0, 1);
         }
@@ -319,18 +319,10 @@ s32 effect_L6_init(WORK* wk, u8 typel6) {
     } else {
         ewk->wu.rl_flag = wk->rl_flag;
         if (wk->rl_flag) {
-            if (wk->xyz[0].disp.pos < bg_w.bgw[1].wxy[0].disp.pos) {
-                ewk->wu.xyz[0].disp.pos = wk->xyz[0].disp.pos - 256;
-            } else {
-                ewk->wu.xyz[0].disp.pos = bg_w.bgw[1].wxy[0].disp.pos - (bg_w.pos_offset + 32);
-            }
+            ewk->wu.xyz[0].disp.pos = (wk->xyz[0].disp.pos < bg_w.bgw[1].wxy[0].disp.pos) ? wk->xyz[0].disp.pos - 256 : bg_w.bgw[1].wxy[0].disp.pos - (bg_w.pos_offset + 32);
             ewk->wu.old_rno[1] = wk->xyz[0].disp.pos - 32;
         } else {
-            if (wk->xyz[0].disp.pos > bg_w.bgw[1].wxy[0].disp.pos) {
-                ewk->wu.xyz[0].disp.pos = wk->xyz[0].disp.pos + 256;
-            } else {
-                ewk->wu.xyz[0].disp.pos = bg_w.bgw[1].wxy[0].disp.pos + (bg_w.pos_offset + 32);
-            }
+            ewk->wu.xyz[0].disp.pos = (wk->xyz[0].disp.pos > bg_w.bgw[1].wxy[0].disp.pos) ? wk->xyz[0].disp.pos + 256 : bg_w.bgw[1].wxy[0].disp.pos + (bg_w.pos_offset + 32);
             ewk->wu.old_rno[1] = wk->xyz[0].disp.pos + 32;
         }
         ewk->wu.old_rno[0] = 80;

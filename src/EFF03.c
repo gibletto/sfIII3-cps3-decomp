@@ -29,11 +29,7 @@ void effect_03_move(WORK_Other* ewk) {
         if (plef_data[ewk->wu.type].sel_rl) {
             ewk->wu.rl_flag = ewk->wu.rl_waza;
         }
-        if (ewk->wu.rl_flag) {
-            ewk->wu.position_x = ewk->wu.xyz[0].disp.pos + plef_data[ewk->wu.type].hx;
-        } else {
-            ewk->wu.position_x = ewk->wu.xyz[0].disp.pos - plef_data[ewk->wu.type].hx;
-        }
+        ewk->wu.position_x = (ewk->wu.rl_flag) ? ewk->wu.xyz[0].disp.pos + plef_data[ewk->wu.type].hx : ewk->wu.xyz[0].disp.pos - plef_data[ewk->wu.type].hx;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos + plef_data[ewk->wu.type].hy;
         ewk->wu.position_z = ewk->wu.xyz[2].disp.pos + plef_data[ewk->wu.type].hz;
         if (plef_data[ewk->wu.type].sel_pri) {

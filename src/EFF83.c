@@ -41,7 +41,7 @@ void effect_83_move(WORK_Other* ewk) {
         cal_all_speed_data(&ewk->wu, ewk->wu.old_rno[0], oya_ptr->xyz[0].disp.pos, ewk->wu.xyz[1].disp.pos, 2, 2);
         break;
     case 1:
-        if (EXE_flag == 0 && Game_pause == 0) {
+        if (!EXE_flag && !Game_pause) {
             ewk->wu.old_rno[0]--;
             add_x_sub(ewk);
             add_y_sub(ewk);
@@ -59,7 +59,7 @@ void effect_83_move(WORK_Other* ewk) {
         sort_push_request(&ewk->wu);
         break;
     case 2:
-        if (EXE_flag == 0 && Game_pause == 0) {
+        if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             add_x_sub(ewk);
             add_y_sub(ewk);
@@ -74,7 +74,7 @@ void effect_83_move(WORK_Other* ewk) {
         sort_push_request(&ewk->wu);
         break;
     case 3:
-        if (EXE_flag == 0 && Game_pause == 0) {
+        if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
         }
         suzi_sync_pos_set(ewk);
