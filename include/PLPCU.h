@@ -18,7 +18,7 @@ void scdmd_23000(WORK* wk);
 void Caught_01000(PLW* wk, PLW* emwk);
 void Caught_02000(PLW* wk, PLW* emwk);
 void scdmd_12000(PLW* wk);
-void scdmd_18000(PLW* wk);
+s32 scdmd_18000(PLW* wk);
 void scdmd_24000(PLW* wk);
 void scdmd_20000(void);
 void scdmd_26000(void);

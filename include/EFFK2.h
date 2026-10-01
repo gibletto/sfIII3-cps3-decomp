@@ -18,7 +18,7 @@ void effect_K1_move(WORK_Other* ewk);
 s32 effect_K2_init(WORK_Other* wk, u32* dad);
 void effect_K2_move(WORK_Other* ewk);
 void illegal_setup_effK2(WORK* wk, s16 ix);
-void set_next_next_y();
+void set_next_next_y(WORK* wk, u8 flag);
 void setup_effK2(WORK* wk);
 void setup_effK2_sync_bomb(WORK* wk);
 

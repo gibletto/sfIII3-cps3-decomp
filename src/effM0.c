@@ -64,9 +64,9 @@ void animal_init(WORK_Other* ewk) {
         ewk->wu.kage_char = 3;
         if (ewk->wu.rl_flag) {
             ewk->wu.xyz[0].disp.pos = work_l;
-        } else {
-            ewk->wu.xyz[0].disp.pos = work_r;
+            break;
         }
+        ewk->wu.xyz[0].disp.pos = work_r;
         break;
     case 2:
         ewk->wu.kage_flag = 1;
@@ -89,9 +89,9 @@ void animal_init(WORK_Other* ewk) {
         ewk->wu.kage_char = 8;
         if (ewk->wu.rl_flag) {
             ewk->wu.xyz[0].disp.pos = work_l;
-        } else {
-            ewk->wu.xyz[0].disp.pos = work_r;
+            break;
         }
+        ewk->wu.xyz[0].disp.pos = work_r;
         break;
     default:
         if (ewk->wu.rl_flag) {

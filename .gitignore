@@ -1,0 +1,8 @@
+/obj/
+/build/
+/sf3.abs
+/sf3.map
+/sf3.bin
+/rom/*
+!/rom/README
+__pycache__/

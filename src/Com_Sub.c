@@ -5476,18 +5476,13 @@ s32 ETC_Term_0000(PLW* wk, WORK* em) {
 
 
 s32 ETC_Term_0001(PLW* wk, WORK* em) {
-    s16 k;
     if (wk->sa->ok != -1) {
         return 1;
     }
     if (My_char[wk->wu.id] != PL_ORO) {
         return 1;
     }
-    k = plw[wk->wu.id].sa->kind_of_arts;
-    if (k == 0) {
-        return 0;
-    }
-    return k;
+    return plw[wk->wu.id].sa->kind_of_arts;
 }
 
 

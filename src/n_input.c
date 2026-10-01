@@ -66,48 +66,52 @@ void Name_Input_init(void) {
 }
 
 /* provisional name */
-void Name_Input_comm(void) {
+s32 Name_Input_comm(void)
+{
+    NAME_WK *nw = *(NAME_WK **)&name_ptr;
     s16 cmd;
     s16 i;
-    name_ptr->timer--;
-    name_limit_timer[name_ptr->id]--;
-    if (name_limit_timer[name_ptr->id] < 0 || name_ptr->timer < 0) {
-        name_ptr->r_no_0 = 6;
-        for (i = name_ptr->index; i < 4; i++) {
-            name_ptr->code[i] = 0x2C;
+
+    nw->timer--;
+    name_limit_timer[nw->id]--;
+    if (name_limit_timer[nw->id] < 0 || nw->timer < 0) {
+        cmd = 3;
+    } else {
+        cmd = Name_Input_sub();
+        nw = *(NAME_WK **)&name_ptr;
+        switch (cmd) {
+        case 1:
+            nw->r_no_0++;
+            nw->timer += 420;
+            nw->end_flag[nw->index] = 1;
+            nw->index++;
+            nw->index &= 3;
+            nw->wait_cnt = 10;
+            nw->code[nw->index] = nw->code[nw->index - 1];
+            return (nw->index - 1) * 2;
+        case 2:
+            nw->timer += 420;
+            nw->index--;
+            nw->r_no_0 -= 2;
+            if (nw->index < 0) {
+                nw->index = 0;
+                nw->r_no_0 = 0;
+            } else {
+                nw->code[nw->index + 1] = 0x2F;
+            }
+            nw->end_flag[nw->index] = 0;
+            return nw->index;
+        case 3:
+            break;
+        default:
+            return cmd;
         }
-        return;
     }
-    cmd = Name_Input_sub();
-    switch (cmd) {
-    case 1:
-        name_ptr->r_no_0++;
-        name_ptr->timer += 420;
-        name_ptr->end_flag[name_ptr->index] = 1;
-        name_ptr->index++;
-        name_ptr->index &= 3;
-        name_ptr->wait_cnt = 10;
-        name_ptr->code[name_ptr->index] = name_ptr->code[name_ptr->index - 1];
-        break;
-    case 2:
-        name_ptr->timer += 420;
-        name_ptr->index--;
-        name_ptr->r_no_0 -= 2;
-        if (name_ptr->index < 0) {
-            name_ptr->index = 0;
-            name_ptr->r_no_0 = 0;
-        } else {
-            name_ptr->code[name_ptr->index + 1] = 0x2F;
-        }
-        name_ptr->end_flag[name_ptr->index] = 0;
-        break;
-    case 3:
-        name_ptr->r_no_0 = 6;
-        for (i = name_ptr->index; i < 4; i++) {
-            name_ptr->code[i] = 0x2C;
-        }
-        break;
+    nw->r_no_0 = 6;
+    for (i = nw->index; i < 4; i++) {
+        nw->code[i] = 0x2C;
     }
+    return (s32)nw;
 }
 
 
@@ -307,12 +311,7 @@ s32 Name_Input_sub(void) {
 
 
 
-s32 auto_n_check(chk_lvr, index, sw_data, sw_up_w)
-u16 chk_lvr;
-s16 index;
-u16 sw_data;
-u16 sw_up_w;
-{
+s32 auto_n_check(u16 chk_lvr, s16 index, u16 sw_data, u16 sw_up_w) {
     if (sw_up_w & chk_lvr) {
         name_ptr->count1[index] = 0;
         name_ptr->count2[index] = 0;
@@ -413,9 +412,7 @@ void ranking_name_entry(void) {
 
 
 
-void name_work_init(pl_id)
-s16 pl_id;
-{
+void name_work_init(s16 pl_id) {
     s16 j;
     (*&name_wk)[pl_id].r_no_0 = 0;
     (*&name_wk)[pl_id].r_no_1 = 0;
@@ -567,9 +564,7 @@ void all_name_display(void) {
 
 
 
-void start_cut_check(pl_id)
-s16 pl_id;
-{
+void start_cut_check(s16 pl_id) {
     s16 i;
     if (Naming_Cut[pl_id]) {
         if (name_ptr->r_no_0 < 6) {

@@ -12,7 +12,7 @@ void Attack_05000(PLW* wk);
 void Attack_06000(PLW* wk);
 void Attack_07000(PLW* wk);
 void Attack_08000(PLW* wk);
-void Attack_10000(PLW* wk);
+s32 Attack_10000(PLW* wk);
 void Attack_14000(PLW* wk);
 void Attack_15000(PLW* wk);
 s32 get_cjdR(PLW* wk);

@@ -70,7 +70,7 @@ s32 Next_CPU(void) {
 
 
 void Next_CPU_1st(void) {
-    volatile u16 Rnd;
+    u16 Rnd;
     SC_No[0]++;
     Target_BG_X[3] = bg_w.bgw[3].wxy[0].disp.pos + 458;
     Offset_BG_X[3] = 0;
@@ -1016,8 +1016,8 @@ u16 sw;
 
 void Setup_EM_List(void)
 {
-    EM_List[Player_id][0] = EM_Candidate[Player_id][0][VS_Index[Player_id]];
-    EM_List[Player_id][1] = EM_Candidate[Player_id][1][VS_Index[Player_id]];
+    EM_List[Player_id][0] = ((u8 *)EM_Candidate)[VS_Index[Player_id] + (s8)(Player_id * 20)];
+    EM_List[Player_id][1] = ((u8 *)EM_Candidate)[VS_Index[Player_id] + (s8)(Player_id * 20) + 10];
 }
 
 

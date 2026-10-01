@@ -31,11 +31,12 @@
 
 
 
-void effect_A7_move(WORK_Other* ewk) {
+s32 effect_A7_move(WORK_Other* ewk) {
     const HMDT* tad;
     const EXPLEM* edt;
     s32 index;
-    switch (ewk->wu.routine_no[0]) {
+    s32 rc;
+    switch (rc = ewk->wu.routine_no[0]) {
     case 0:
         ewk->wu.routine_no[0]++;
         *ewk->wu.char_table = ef01_char_table;
@@ -109,40 +110,42 @@ void effect_A7_move(WORK_Other* ewk) {
             index = tad->hits + ewk->wu.dir_old;
         }
         set_char_move_init(&ewk->wu, 0, index);
-        if (Pause_Hit_Marks) {
-            return;
+        if ((rc = (s8)Pause_Hit_Marks)) {
+            return rc;
         }
-        break;
+        sort_push_request8(&ewk->wu);
+        return;
     case 1:
         if (ewk->wu.dead_f == 1) {
             ewk->wu.disp_flag = 0;
             ewk->wu.routine_no[0]++;
-            return;
+            return 0;
         }
-        if (Pause_Hit_Marks) {
-            return;
+        if ((rc = (s8)Pause_Hit_Marks)) {
+            return rc;
         }
         if (EXE_flag == 0 && Game_pause == 0) {
             char_move(&ewk->wu);
             if (ewk->wu.cg_type == 0xFF) {
                 ewk->wu.disp_flag = 0;
                 ewk->wu.routine_no[0]++;
-                return;
+                return 0;
             }
             if (ewk->wu.scr_mv_x && --ewk->wu.scr_mv_x == 0) {
                 bg_w.quake_y_index = ewk->wu.scr_mv_y;
             }
         }
-        break;
+        sort_push_request8(&ewk->wu);
+        return;
     case 2:
         ewk->wu.routine_no[0] = 3;
-        return;
+        return rc;
     default:
         all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
         return;
     }
-    sort_push_request8(&ewk->wu);
+    return rc;
 }
 
 

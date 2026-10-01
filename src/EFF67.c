@@ -111,7 +111,7 @@ void eff64_02(WORK_Other* ewk) {
 
 /* provisional name */
 void eff64_04(WORK_Other* ewk) {
-    s16 ix;
+    s32 ix;
     switch (ewk->wu.routine_no[2]) {
     case 0:
         eff64_data_set(ewk, 0);
@@ -198,7 +198,8 @@ void eff64_data_set(WORK_Other* ewk, s16 keep) {
         ewk->wu.old_rno[1] = *data++;
     }
     ewk->wu.old_rno[2] = *data++;
-    ewk->wu.rl_flag = *data++;
+    ewk->wu.rl_flag = *data;
+    data++;
     ewk->wu.mvxy.a[0].real.h = *data++;
     ewk->wu.mvxy.a[0].real.l = *data++;
     ewk->wu.mvxy.d[0].real.h = *data++;

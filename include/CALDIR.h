@@ -9,7 +9,6 @@ s16 caldir_pos_64(s16 x1, s16 x2, s16 y1, s16 y2);
 s16 caldir_pos_032(s16 x1, s16 x2, s16 y1, s16 y2);
 s16 caldir_pos_16(s16 x1, s16 x2, s16 y1, s16 y2);
 s16 caldir_pos_8(s16 x1, s16 x2, s16 y1, s16 y2);
-s32 caldir_wk_256(WORK* wk, WORK* emwk);
 s16 caldir_wk_128(WORK* wk, WORK* emwk);
 s16 caldir_wk_64(WORK* wk, WORK* emwk);
 s16 caldir_wk_32(WORK* wk, WORK* emwk);

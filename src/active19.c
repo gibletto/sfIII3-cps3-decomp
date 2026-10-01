@@ -1201,11 +1201,11 @@ void Pattern19_0079(PLW* wk) {
 
 void Pattern19_0080(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
-    case 0:
-        Com_Random_Select(wk, 2, 81, 81, 82, 83, 0);
-        break;
     default:
         End_Pattern(wk);
+        break;
+    case 0:
+        Com_Random_Select(wk, 2, 81, 81, 82, 83, 0);
         break;
     }
 }

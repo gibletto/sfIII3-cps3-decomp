@@ -269,43 +269,46 @@ s32 add_super_arts_gauge(wk, ix, asag, mf)
     s16 asag;
     u8 mf;
 {
-    if (!test_flag) {
-        if (mf) {
-            return 0;
-        }
-        if (wk->ok == -1) {
-            return 0;
-        }
-        if (pcon_dp_flag) {
-            return 0;
-        }
-        if (Bonus_Game_Flag) {
-            return 0;
-        }
-        if (wk->store == wk->store_max) {
-            return 0;
-        }
-        asag = asag * 120 / 100;
-        if (Battle_Round[Play_Type] == 0) {
-            asag = asag * 150 / 100;
-        }
-        wk->gauge.s.h += asag;
-        wk->gauge.s.l = -1;
-        if (wk->gauge.s.h > wk->gauge_len) {
-            wk->store += 1;
-            if (wk->store < wk->store_max) {
-                wk->gauge.s.h -= wk->gauge_len;
-            } else {
-                wk->store = wk->store_max;
-                if (wk->gauge_type == 1) {
-                    wk->gauge.s.h = wk->gauge_len;
-                } else {
-                    wk->gauge.i = 0;
-                }
-            }
-            sa_gauge_flash[ix] |= 1;
-        }
+    if (test_flag) {
+        return;
     }
+    if (mf) {
+        return 0;
+    }
+    if (wk->ok == -1) {
+        return 0;
+    }
+    if (pcon_dp_flag) {
+        return 0;
+    }
+    if (Bonus_Game_Flag) {
+        return 0;
+    }
+    if (wk->store == wk->store_max) {
+        return 0;
+    }
+    asag = asag * 120 / 100;
+    if (Battle_Round[Play_Type] == 0) {
+        asag = asag * 150 / 100;
+    }
+    wk->gauge.s.h += asag;
+    wk->gauge.s.l = -1;
+    if (wk->gauge.s.h > wk->gauge_len) {
+        wk->store += 1;
+        if (wk->store < wk->store_max) {
+            wk->gauge.s.h -= wk->gauge_len;
+        } else {
+            wk->store = wk->store_max;
+            if (wk->gauge_type == 1) {
+                wk->gauge.s.h = wk->gauge_len;
+            } else {
+                wk->gauge.i = 0;
+            }
+        }
+        sa_gauge_flash[ix] |= 1;
+        return (s32)sa_gauge_flash;
+    }
+    return wk->gauge_len;
 }
 
 

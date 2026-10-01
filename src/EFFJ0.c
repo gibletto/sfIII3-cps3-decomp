@@ -142,7 +142,7 @@ void effect_J2_move(WORK_Other_CONN* ewk) {
         ewk->conn[0].chr += Bonus_Stage_Level % 10;
         break;
     case 1:
-        if (ewk->wu.dead_f == 1 || Break_Into || --ewk->wu.dir_timer <= 0) {
+        if (ewk->wu.dead_f == 1 || Break_Into || --ewk->wu.dir_timer < 1) {
             ewk->wu.disp_flag = 0;
             ewk->wu.routine_no[0] = 2;
         } else {

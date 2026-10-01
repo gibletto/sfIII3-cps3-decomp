@@ -32,21 +32,18 @@ void effect_I5_move(WORK_Other* ewk) {
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, 54);
         ewk->wu.old_rno[0] = 0;
-        disp_pos_trans_entry(ewk);
         break;
     case 1:
         if (end_obj_sync) {
             ewk->wu.routine_no[0]++;
             ewk->wu.old_rno[1] = 180;
         }
-        disp_pos_trans_entry(ewk);
         break;
     case 2:
         ewk->wu.old_rno[1]--;
         if (ewk->wu.old_rno[1] <= 0) {
             ewk->wu.routine_no[0]++;
         }
-        disp_pos_trans_entry(ewk);
         break;
     case 3:
         work = effI5_fade_tbl[ewk->wu.old_rno[0]];
@@ -55,7 +52,6 @@ void effect_I5_move(WORK_Other* ewk) {
         if (ewk->wu.old_rno[0] > 14) {
             ewk->wu.routine_no[0]++;
         }
-        disp_pos_trans_entry(ewk);
         break;
     case 4:
         ewk->wu.routine_no[0]++;
@@ -66,7 +62,6 @@ void effect_I5_move(WORK_Other* ewk) {
             ewk->wu.routine_no[0]++;
             end_obj_sync = 2;
         }
-        disp_pos_trans_entry(ewk);
         break;
     case 6:
         char_move(&ewk->wu);
@@ -74,16 +69,15 @@ void effect_I5_move(WORK_Other* ewk) {
         if (ewk->wu.xyz[1].disp.pos < 20) {
             ewk->wu.routine_no[0]++;
         }
-        disp_pos_trans_entry(ewk);
         break;
     case 7:
-        disp_pos_trans_entry(ewk);
         break;
     default:
         all_cgps_put_back(ewk);
         push_effect_work((WORK*)ewk);
         return;
     }
+    disp_pos_trans_entry(ewk);
 }
 
 

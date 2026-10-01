@@ -509,8 +509,9 @@ void Attack_09000(PLW* wk) {
 
 
 
-void Attack_10000(PLW* wk) {
-    switch (wk->wu.routine_no[3]) {
+s32 Attack_10000(PLW* wk) {
+    s32 rc;
+    switch (rc = wk->wu.routine_no[3]) {
     case 0:
         wk->wu.routine_no[3]++;
         hoken_muriyari_chakuchi(wk);
@@ -523,51 +524,53 @@ void Attack_10000(PLW* wk) {
             wk->wu.routine_no[3] = 2;
         }
         grade_add_leap_attack(wk->wu.id);
-        break;
+        return;
     case 1:
         char_move(&wk->wu);
-        if (wk->wu.cg_type != 20) {
-            break;
+        if ((rc = wk->wu.cg_type) != 20) {
+            return rc;
         }
         wk->wu.routine_no[3]++;
     case 2:
         jumping_union_process(&wk->wu, 4);
-        if (wk->wu.routine_no[3] == 4) {
-            break;
+        if ((rc = wk->wu.routine_no[3]) == 4) {
+            return rc;
         }
-        if (!wk->wu.hf.hit.player) {
-            break;
+        if ((rc = wk->wu.hf.hit.player) == 0) {
+            return rc;
         }
-        if (wk->wu.hf.hit.player & 3) {
+        if ((wk->wu.hf.hit.player & 3) != 0) {
             wk->wu.mvxy.a[0].sp /= 4;
             wk->wu.routine_no[3] = 4;
-            break;
+            return 42;
         }
-        if (wk->wu.hf.hit.player & 0x30) {
+        if ((wk->wu.hf.hit.player & 0x30) != 0) {
             wk->wu.mvxy.a[0].sp /= 4;
             wk->wu.mvxy.a[1].sp = 0;
             wk->wu.routine_no[3] = 3;
-            break;
+            return 42;
         }
-        if (wk->wu.hf.hit.player & 0xC0) {
+        if ((rc = wk->wu.hf.hit.player & 0xC0) != 0) {
             wk->wu.mvxy.a[0].sp /= 2;
             wk->wu.mvxy.a[0].sp = -wk->wu.mvxy.a[0].sp;
             wk->wu.mvxy.a[1].sp = 0;
             wk->wu.routine_no[3] = 4;
+            return 42;
         }
-        break;
+        return rc;
     case 3:
-        if (--wk->wu.dir_timer > 0) {
-            break;
+        if (--wk->wu.dir_timer >= 1) {
+            return 0x9A;
         }
         wk->wu.routine_no[3] = 4;
     case 4:
         jumping_union_process(&wk->wu, 5);
-        break;
+        return;
     case 5:
         char_move(&wk->wu);
-        break;
+        return;
     }
+    return rc;
 }
 
 

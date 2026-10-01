@@ -3,7 +3,7 @@
 
 #include "structs.h"
 
-void eff25_00(WORK_Other* ewk);
+s32 eff25_00(WORK_Other* ewk);
 void eff25_02(WORK_Other* ewk);
 void eff25_04(WORK_Other* ewk);
 void eff25_06(WORK_Other* ewk);

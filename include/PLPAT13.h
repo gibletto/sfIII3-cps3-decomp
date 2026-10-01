@@ -6,7 +6,7 @@
 void Att_MOONSALT_KNEE_DROP2(PLW* wk);
 void Att_PL13_TOKUSHUKOUDOU(PLW* wk);
 void Att_RESURRECTION2(PLW* wk);
-s32 get_life_add_point2();
+s32 get_life_add_point2(u8 cg_type, s16 rate);
 void pl13_extra_attack(PLW* wk);
 
 #endif
