@@ -22,9 +22,7 @@ const s16 eff47_data_tbl[12] = {
     30, -37, 70, 30,
 };
 
-/* The initial values of eff48_jp (effect_48_move) in EFF48.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of eff48_jp (effect_48_move) in EFF48.c. */
 const u32 eff48_jp_init[3] = {
     (u32)eff48_0000,
     (u32)eff48_1000,

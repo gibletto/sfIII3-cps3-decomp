@@ -137,38 +137,40 @@ void effect_88_move(WORK_Other* ewk) {
 
 
 s32 effect_88_init(s16 type) {
-    WORK_Other* ewk;
-    s16 ix;
-    s16 lp_cnt = eff88_loop_tbl[type][bg_w.compel_flag];
+    s16 n;
     s16 i;
-    const s16* data_ptr;
-    if (!lp_cnt) {
-        return;
-    }
-    for (data_ptr = scr_obj_data88[type][bg_w.compel_flag], i = 0; i < lp_cnt; i++) {
-        if ((ix = pull_effect_work(4)) == -1) {
-            return -1;
+    s16 s;
+    const s16* t;
+    WORK_Other* o;
+    n = eff88_loop_tbl[type][bg_w.compel_flag];
+    if (n != 0) {
+        t = scr_obj_data88[type][bg_w.compel_flag];
+        for (i = 0; i < n; i++) {
+            s = pull_effect_work(4);
+            if (s == -1) {
+                return -1;
+            }
+            o = (WORK_Other*)frw[s];
+            o->wu.be_flag = 1;
+            o->wu.id = 88;
+            o->wu.work_id = 16;
+            o->wu.cgromtype = 1;
+            o->wu.rl_flag = 0;
+            o->wu.my_col_mode = 0x4200;
+            o->wu.dead_f = *t++;
+            o->wu.my_family = *t++;
+            o->wu.my_col_code = *t++;
+            o->wu.xyz[0].disp.pos = *t++;
+            o->wu.xyz[1].disp.pos = *t++;
+            o->wu.my_priority = o->wu.position_z = *t++;
+            o->wu.char_index = *t++;
+            o->wu.hit_stop = *t++;
+            o->wu.sync_suzi = *t++;
+            o->wu.char_table[0] = char_add[bg_w.bg_index];
+            suzi_offset_set(o);
         }
-        ewk = (WORK_Other*)frw[ix];
-        ewk->wu.be_flag = 1;
-        ewk->wu.id = 88;
-        ewk->wu.work_id = 16;
-        ewk->wu.cgromtype = 1;
-        ewk->wu.rl_flag = 0;
-        ewk->wu.my_col_mode = 0x4200;
-        ewk->wu.dead_f = *data_ptr++;
-        ewk->wu.my_family = *data_ptr++;
-        ewk->wu.my_col_code = *data_ptr++;
-        ewk->wu.xyz[0].disp.pos = *data_ptr++;
-        ewk->wu.xyz[1].disp.pos = *data_ptr++;
-        ewk->wu.my_priority = ewk->wu.position_z = *data_ptr++;
-        ewk->wu.char_index = *data_ptr++;
-        ewk->wu.hit_stop = *data_ptr++;
-        ewk->wu.sync_suzi = *data_ptr++;
-        ewk->wu.char_table[0] = char_add[bg_w.bg_index];
-        suzi_offset_set(ewk);
+        return 0;
     }
-    return 0;
 }
 
 /* Animated text-layer panel: steps through its attribute script, repainting
@@ -324,23 +326,21 @@ void effect_91_move(WORK_Other* ewk) {
         ewk->wu.step_xy_table = &EFF91_Step_Data[ewk->wu.direction];
         ewk->wu.move_xy_table = ewk->wu.step_xy_table;
     case 1:
-        if (--ewk->wu.dir_timer != 0) {
-            return;
+        if (--ewk->wu.dir_timer == 0) {
+            eff91_cell_data_set(ewk);
+            if (--ewk->wu.dir_step == 0) {
+                if (ewk->wu.dir_old) {
+                    ewk->wu.dir_step = ewk->wu.vitality;
+                    ewk->wu.move_xy_table = ewk->wu.step_xy_table;
+                } else {
+                    ewk->wu.routine_no[0] = 2;
+                }
+            }
         }
-        eff91_cell_data_set(ewk);
-        if (--ewk->wu.dir_step != 0) {
-            return;
-        }
-        if (ewk->wu.dir_old) {
-            ewk->wu.dir_step = ewk->wu.vitality;
-            ewk->wu.move_xy_table = ewk->wu.step_xy_table;
-            return;
-        }
-        ewk->wu.routine_no[0] = 2;
         break;
     default:
         all_cgps_put_back(ewk);
-        push_effect_work((WORK*)ewk);
+        push_effect_work(&ewk->wu);
         break;
     }
 }

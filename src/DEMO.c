@@ -42,9 +42,9 @@ void draw_operator_info(s32 y) {
             tilemap_print_string_attr(DE_X[18] + 31, y1 = y + 21, 18, Income_msg);
             tilemap_print_string_attr(DE_X[18] + 31, y2 = y + 22, 18, Service_msg);
             tilemap_print_string_attr(DE_X[18] + 31, y + 23, 18, Card_msg);
-            tilemap_print_hex_block(DE_X[18] + 41, y1, 18, hex_to_bcd(book_coin_count[0]), 6, 0);
-            tilemap_print_hex_block(DE_X[18] + 41, y2, 18, hex_to_bcd(book_coin_count[1]), 6, 0);
-            tilemap_print_hex_block(DE_X[18] + 41, y + 23, 18, hex_to_bcd(book_coin_count[3]), 6, 0);
+            tilemap_print_hex_block(DE_X[18] + 41, y1, 18, hex_to_bcd(book_coin_count), 6, 0);
+            tilemap_print_hex_block(DE_X[18] + 41, y2, 18, hex_to_bcd(book_service_count), 6, 0);
+            tilemap_print_hex_block(DE_X[18] + 41, y + 23, 18, hex_to_bcd(book_card_count), 6, 0);
         } else {
             tilemap_clear_rect(DE_X[18] + 31, y + 20, DE_X[18] + 49, y + 23);
         }
@@ -66,7 +66,7 @@ void Set_Mode_Pos(s16* value, s16 add, s16 init) {
 s32 CAPCOM_Logo(void) {
     void (*jmp_tbl[3])() = { Logo_Capcom, Logo_Warning, Logo_Etc };
     Next_Demo = 0;
-    jmp_tbl[D_No[0]]();
+    jmp_tbl[D_No0]();
     return Next_Demo;
 }
 
@@ -74,9 +74,9 @@ s32 CAPCOM_Logo(void) {
 
 /* provisional name */
 void Logo_Capcom(void) {
-    switch (D_No[1]) {
+    switch (D_No1) {
     case 0:
-        D_No[1]++;
+        D_No1++;
         tilemap_fill_all(0, 32);
         System_all_clear_Wait();
         bg_etc_write(4);
@@ -87,40 +87,40 @@ void Logo_Capcom(void) {
         break;
     case 1:
         if (Request_Fade(93, 0)) {
-            D_No[1]++;
+            D_No1++;
         }
         break;
     case 2:
         if (Check_Fade_Complete()) {
-            D_No[1]++;
+            D_No1++;
         }
         break;
     case 3:
         if (--D_Timer <= 0) {
-            D_No[1]++;
+            D_No1++;
             ToneDown(0);
         }
         break;
     case 4:
         if (capcom_logo_anim()) {
-            D_No[1]++;
+            D_No1++;
             D_Timer = 0x100;
         }
         break;
     case 5:
         if (--D_Timer <= 0) {
-            D_No[1]++;
+            D_No1++;
         }
         break;
     case 6:
         if (Request_Fade(36, 0)) {
-            D_No[1]++;
-            Text_Fill_Lower(62, 30);
+            D_No1++;
+            scfont_page1_fill(62, 30);
         }
         break;
     case 7:
         if (Check_Fade_Complete()) {
-            D_No[1]++;
+            D_No1++;
         }
         break;
     default:
@@ -133,17 +133,17 @@ void Logo_Capcom(void) {
 
 /* provisional name */
 void Logo_Warning(void) {
-    switch (D_No[1]) {
+    switch (D_No1) {
     case 0:
-        D_No[1]++;
+        D_No1++;
         D_Timer = 10;
         load_any_color(2);
-        Text_Fill_Upper(0, 32);
+        scfont_page0_fill(0, 32);
         tilemap_print_string(DE_X[3], 0, 0xFFFF, parental_advisory_msg);
         break;
     case 1:
         if (--D_Timer == 0) {
-            D_No[1]++;
+            D_No1++;
             D_Timer = 120;
             Scrn_Move_Set(4, 0, 0);
         }
@@ -151,7 +151,7 @@ void Logo_Warning(void) {
     case 2:
         if (--D_Timer == 0) {
             if (Request_Fade(34, 0)) {
-                D_No[1]++;
+                D_No1++;
             } else {
                 D_Timer = 1;
             }
@@ -159,7 +159,7 @@ void Logo_Warning(void) {
         break;
     case 3:
         if (Check_Fade_Complete()) {
-            D_No[1]++;
+            D_No1++;
         }
         break;
     default:
@@ -172,11 +172,11 @@ void Logo_Warning(void) {
 
 /* provisional name */
 void Logo_Etc(void) {
-    switch (D_No[1]) {
+    switch (D_No1) {
     case 0:
-        D_No[1]++;
+        D_No1++;
         D_Timer = 10;
-        Text_Fill_Upper(0, 32);
+        scfont_page0_fill(0, 32);
         System_all_clear_Wait();
         bg_etc_write(3);
         bg_pos_hosei2();
@@ -184,7 +184,7 @@ void Logo_Etc(void) {
         break;
     case 1:
         if (--D_Timer == 0) {
-            D_No[1]++;
+            D_No1++;
             D_Timer = 120;
             Scrn_Move_Set(4, 0, 0);
         }
@@ -192,7 +192,7 @@ void Logo_Etc(void) {
     case 2:
         if (--D_Timer == 0) {
             if (Request_Fade(36, 0)) {
-                D_No[1]++;
+                D_No1++;
             } else {
                 D_Timer = 1;
             }
@@ -200,7 +200,7 @@ void Logo_Etc(void) {
         break;
     case 3:
         if (Check_Fade_Complete()) {
-            D_No[1]++;
+            D_No1++;
         }
         break;
     default:
@@ -212,9 +212,9 @@ void Logo_Etc(void) {
 
 
 s32 Title(void) {
-    switch (D_No[1]) {
+    switch (D_No1) {
     case 0:
-        D_No[1]++;
+        D_No1++;
         D_Timer = 10;
         wipe_pattern_set(0, 7, 0);
         tilemap_fill_all(0, 32);
@@ -222,7 +222,7 @@ s32 Title(void) {
         load_any_color(2);
         Text_Page_Y = 32;
         Scrn_Move_Set(4, 0, 0x100);
-        E_No[1] = 1;
+        E_No1 = 1;
         op_w.r_no_0 = 0;
         op_w.r_no_1 = 0;
         op_w.r_no_2 = 0;
@@ -231,27 +231,27 @@ s32 Title(void) {
         Get_Demo_Index = 0;
         break;
     case 1:
-        D_No[1]++;
+        D_No1++;
         load_char_eff_color(My_char[0], 0);
         load_char_eff_color(My_char[1], 1);
         break;
     case 2:
         set_EXE_flag();
         if (opening_demo_tick()) {
-            D_No[1]++;
+            D_No1++;
             D_Timer = 40;
         }
         break;
     case 3:
         if (--D_Timer == 0) {
-            D_No[1]++;
+            D_No1++;
             sc_vram_to_ram();
             Switch_Screen_Init(0, 1);
         }
         break;
     case 4:
         if (Switch_Screen()) {
-            D_No[1]++;
+            D_No1++;
             Cover_Timer = 22;
             Scrn_Move_Set(4, 0, 0);
         }
@@ -265,9 +265,9 @@ s32 Title(void) {
 
 
 s32 Title_At_a_Dash(void) {
-    switch (D_No[1]) {
+    switch (D_No1) {
     case 0:
-        D_No[1]++;
+        D_No1++;
         Scrn_Move_Set(4, 0, 0);
         System_all_clear_Wait();
         load_any_color(39);
@@ -280,7 +280,7 @@ s32 Title_At_a_Dash(void) {
         break;
     case 1:
         if (opening_demo_tick()) {
-            D_No[1]++;
+            D_No1++;
             D_Timer = 20;
             credit_display_render(1);
             Disp_Start_Message();
@@ -302,19 +302,15 @@ s32 Play_Demo(void) {
     DEMO_JMP2 jmp_tbl;
     jmp_tbl = Demo_Jmp_Data;
     Next_Demo = 0;
-    jmp_tbl.f[D_No[0]]();
+    jmp_tbl.f[D_No0]();
     return Next_Demo;
 }
 
-s32 Demo00(void)
-{
-    s32 ret;
-
-    ret = D_No[1];
-    switch (ret) {
+void Demo00(void) {
+    switch (D_No1) {
     case 0:
-        D_No[1]++;
-        G_No[2] = 0;
+        D_No1++;
+        G_No2 = 0;
         Game_pause = 0;
         Conclusion_Flag = 0;
         appear_type = 1;
@@ -322,19 +318,19 @@ s32 Demo00(void)
         Round_Level = 7;
         Text_Page_Y = 0;
         Weak_PL = random_16_com() & 1;
-        return Text_Fill_Lower(0, 32);
+        scfont_page1_fill(0, 32);
+        break;
     case 1:
-        ret = ((s32 (*)())Game02)();
+        Game02();
         if (--Cover_Timer == 0) {
-            D_No[1]++;
-            ret = ((s32 (*)())Switch_Screen_Init)(3, 3);
+            D_No1++;
+            Switch_Screen_Init(3, 3);
         }
         break;
     case 2:
         Game02();
-        ret = Switch_Screen_Revival();
-        if (ret != 0) {
-            D_No[1]++;
+        if (Switch_Screen_Revival()) {
+            D_No1++;
             D_Timer = 1800;
             Stop_SG = 0;
         }
@@ -342,44 +338,38 @@ s32 Demo00(void)
     case 3:
         Game02();
         if (--D_Timer == 1) {
-            D_No[1]++;
+            D_No1++;
             Stop_Combo = 1;
-            ret = 1;
-        } else {
-            ret = Conclusion_Flag;
-            if (ret != 0) {
-                D_No[1]++;
-                Stop_Combo = 1;
-                D_Timer = 90;
-            }
+        } else if (Conclusion_Flag) {
+            D_No1++;
+            Stop_Combo = 1;
+            D_Timer = 90;
         }
         break;
     case 4:
-        ret = ((s32 (*)())Game02)();
+        Game02();
         if (--D_Timer == 0) {
-            D_No[1]++;
+            D_No1++;
             Game_pause = 1;
-            ret = ((s32 (*)())Switch_Screen_Init)(5, 5);
+            Switch_Screen_Init(5, 5);
         }
         break;
     case 5:
         Game02();
-        ret = 0;
         if (Switch_Screen()) {
-            D_No[1]++;
+            D_No1++;
             sc_vram_to_ram();
             tilemap_clear_rect(DE_X[3] + 16, 10, DE_X[3] + 35, 20);
-            ret = ((s32 (*)())Switch_Screen_Init)(3, 3);
+            Switch_Screen_Init(3, 3);
         }
         break;
     case 6:
         Game02();
-        ret = 0;
         if (Switch_Screen()) {
-            D_No[1]++;
+            D_No1++;
             Demo_Flag = 0;
             Cover_Timer = 23;
-            ret = ((s32 (*)())voice_all_off)();
+            voice_all_off();
             if (++Select_Demo_Index > 3) {
                 Select_Demo_Index = 0;
             }
@@ -389,19 +379,18 @@ s32 Demo00(void)
         Next_Demo = 1;
         break;
     }
-    return ret;
 }
 
 
 
 void Demo01(void) {
-    switch (D_No[1]) {
+    switch (D_No1) {
     case 0:
-        D_No[1]++;
+        D_No1++;
         Game_pause = 0;
         Demo_Step_Flag = 0;
         Text_Page_Y = 32;
-        Text_Fill_Lower(0, 32);
+        scfont_page1_fill(0, 32);
         Before_Select_Sub();
         Setup_Select_Demo_PL();
         Setup_Demo_Arts();
@@ -416,21 +405,21 @@ void Demo01(void) {
     case 1:
         Game01();
         if (Demo_Step_Flag) {
-            D_No[1]++;
-            G_No[2] = 0;
+            D_No1++;
+            G_No2 = 0;
         }
         break;
     case 2:
         Game02();
         if (--Cover_Timer == 0) {
-            D_No[1]++;
+            D_No1++;
             Switch_Screen_Init(3, 3);
         }
         break;
     case 3:
         Game02();
         if (Switch_Screen_Revival()) {
-            D_No[1]++;
+            D_No1++;
             D_Timer = 1200;
             Stop_SG = 0;
         }
@@ -443,7 +432,7 @@ void Demo01(void) {
             return;
         }
         if (D_Timer == 0) {
-            D_No[1]++;
+            D_No1++;
             Demo_Step_Flag = 1;
             Game_pause = 1;
         }
@@ -451,7 +440,7 @@ void Demo01(void) {
     case 5:
         Game02();
         if (Switch_Screen()) {
-            D_No[1]++;
+            D_No1++;
             sc_vram_to_ram();
             tilemap_clear_rect(DE_X[3] + 16, 10, DE_X[3] + 35, 20);
             Switch_Screen_Init(3, 3);
@@ -460,7 +449,7 @@ void Demo01(void) {
     case 6:
         Game02();
         if (Switch_Screen()) {
-            D_No[1]++;
+            D_No1++;
             Cover_Timer = 23;
             voice_all_off();
         }
@@ -508,5 +497,5 @@ void Setup_Select_Demo_PL(void) {
     Operator_Status[0] = 0;
     Operator_Status[1] = 0;
     plw[Demo_PL_Data[Select_Demo_Index]].wu.operator = 1;
-    Operator_Status[Demo_PL_Data[Select_Demo_Index]] = 1;
+    (&Operator_Status[0])[Demo_PL_Data[Select_Demo_Index]] = 1;
 }

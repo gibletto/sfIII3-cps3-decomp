@@ -648,36 +648,38 @@ void set_new_jpdir(PLW* wk) {
 
 
 void nm_18000(PLW* wk) {
-    if (wk->wu.routine_no[3] < 2 && wk->wu.xyz[1].disp.pos > 0) {
-        if (check_full_gauge_attack(wk, 0)) {
-            return;
-        }
-        if (check_full_gauge_attack2(wk, 0)) {
-            return;
-        }
-        if (check_super_arts_attack(wk)) {
-            return;
-        }
-        if (check_special_attack(wk)) {
-            return;
-        }
-        if (check_chouhatsu(wk)) {
-            return;
-        }
-        if (check_catch_attack(wk)) {
-            return;
-        }
-        if (check_nm_attack(wk)) {
-            return;
-        }
-        if (check_cg_cancel_data(wk)) {
-            return;
-        }
-        if (check_sankaku_tobi(wk)) {
-            return;
-        }
-        if (check_air_jump(wk)) {
-            return;
+    if (wk->wu.routine_no[3] < 2) {
+        if (wk->wu.xyz[1].disp.pos > 0) {
+            if (check_full_gauge_attack(wk, 0)) {
+                return;
+            }
+            if (check_full_gauge_attack2(wk, 0)) {
+                return;
+            }
+            if (check_super_arts_attack(wk)) {
+                return;
+            }
+            if (check_special_attack(wk)) {
+                return;
+            }
+            if (check_chouhatsu(wk)) {
+                return;
+            }
+            if (check_catch_attack(wk)) {
+                return;
+            }
+            if (check_nm_attack(wk)) {
+                return;
+            }
+            if (check_cg_cancel_data(wk)) {
+                return;
+            }
+            if (check_sankaku_tobi(wk)) {
+                return;
+            }
+            if (check_air_jump(wk)) {
+                return;
+            }
         }
     }
     jumping_cg_type_check(wk);
@@ -1023,20 +1025,20 @@ void nm_27_cg_type_check(PLW* wk) {
     if (wk->sa_stop_flag == 1) {
         return;
     }
-    switch (wk->wu.cg_type) {
+    switch ((u8)wk->wu.cg_type) {
     case 1:
         check_defense_kind(wk);
         break;
     case 2:
         if (check_em_catt(wk) == 0) {
-            break;
+            return;
         }
         if (check_defense_kind(wk) != 0) {
-            break;
+            return;
         }
         wk->wu.cg_ix -= wk->wu.cgd_type;
         char_move_z(&wk->wu);
-        break;
+        return;
     case 64:
         if (wk->wu.routine_no[2] == 29) {
             wk->wu.routine_no[2] = 37;
@@ -1045,7 +1047,7 @@ void nm_27_cg_type_check(PLW* wk) {
         }
         wk->wu.routine_no[3] = 0;
         wk->wu.cg_type = 0;
-        break;
+        return;
     }
 }
 
@@ -1115,42 +1117,42 @@ void nm_31000(PLW* wk) {
     if (wk->wu.routine_no[3] == 0) {
         return;
     }
-    switch (wk->wu.cg_type) {
+    switch ((u8)wk->wu.cg_type) {
     case 0:
         if (check_full_gauge_attack(wk, 0)) {
-            break;
+            return;
         }
         if (check_full_gauge_attack2(wk, 0)) {
-            break;
+            return;
         }
         if (check_super_arts_attack(wk)) {
-            break;
+            return;
         }
         if (check_special_attack(wk)) {
-            break;
+            return;
         }
         if (check_chouhatsu(wk)) {
-            break;
+            return;
         }
         if (check_catch_attack(wk)) {
-            break;
+            return;
         }
         if (check_leap_attack(wk)) {
-            break;
+            return;
         }
         if (check_nm_attack(wk)) {
             return;
         }
         break;
     case 64:
-        if (wk->wu.pat_status < 32) {
+        if ((u8)wk->wu.pat_status < 32) {
             TO_nm_36000((WORK*)wk);
             break;
         }
         TO_nm_37000((WORK*)wk);
         break;
     case 0xFF:
-        if (wk->wu.pat_status < 32) {
+        if ((u8)wk->wu.pat_status < 32) {
             TO_nm_01000((WORK*)wk);
             break;
         }
@@ -1162,23 +1164,21 @@ void nm_31000(PLW* wk) {
 
 
 void nm_34000(PLW* wk) {
-    if (wk->wu.routine_no[3] == 0) {
-        return;
-    }
-    switch (wk->wu.cg_type) {
-    case 0xFF:
-    case 64:
-        TO_nm_18000_01((WORK*)wk);
-        break;
-    default:
-        if (wk->wu.routine_no[3] >= 3) {
-            if (wk->wu.pat_status < 32) {
-                TO_nm_36000((WORK*)wk);
-                return;
+    if (wk->wu.routine_no[3] != 0) {
+        switch ((u8)wk->wu.cg_type) {
+        case 64:
+        case 0xFF:
+            TO_nm_18000_01((WORK*)wk);
+            break;
+        default:
+            if (wk->wu.routine_no[3] >= 3) {
+                if ((u8)wk->wu.pat_status < 32) {
+                    TO_nm_36000((WORK*)wk);
+                } else {
+                    TO_nm_37000((WORK*)wk);
+                }
             }
-            TO_nm_37000((WORK*)wk);
         }
-        break;
     }
 }
 
@@ -1427,10 +1427,10 @@ void dm_04000(PLW* wk) {
                 break;
             }
             TO_nm_37000((WORK*)wk);
-            break;
+        } else {
+            wk->wu.routine_no[2] = 19;
+            wk->wu.routine_no[3] = 0;
         }
-        wk->wu.routine_no[2] = 19;
-        wk->wu.routine_no[3] = 0;
         break;
     case 0xFF:
         if (wk->py->flag == 0) {
@@ -1440,10 +1440,10 @@ void dm_04000(PLW* wk) {
                 break;
             }
             TO_nm_09000((WORK*)wk);
-            break;
+        } else {
+            wk->wu.routine_no[2] = 19;
+            wk->wu.routine_no[3] = 0;
         }
-        wk->wu.routine_no[2] = 19;
-        wk->wu.routine_no[3] = 0;
         break;
     }
 }
@@ -1548,21 +1548,23 @@ void process_catch(PLW* wk) {
 
 
 void nm_91000(PLW* wk) {
-    switch (wk->wu.cg_type) {
+    switch ((u8)wk->wu.cg_type) {
     case 64:
-        if (wk->wu.pat_status < 32) {
+        if ((u8)wk->wu.pat_status < 32) {
             TO_nm_36000((WORK*)wk);
-            break;
+        } else {
+            TO_nm_37000((WORK*)wk);
         }
-        TO_nm_37000((WORK*)wk);
         break;
     case 0xFF:
-        if (wk->wu.pat_status < 32) {
+        if ((u8)wk->wu.pat_status < 32) {
             TO_nm_01000((WORK*)wk);
-            break;
+        } else {
+            TO_nm_09000((WORK*)wk);
         }
-        TO_nm_09000((WORK*)wk);
         break;
+    default:
+        return;
     }
 }
 

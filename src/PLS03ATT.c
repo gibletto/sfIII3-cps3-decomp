@@ -278,20 +278,22 @@ void set_attack_routine_number(PLW* wk) {
 
 
 
-u16 get_nearing_range(s16 pnum, s16 kos) {
+s32 get_nearing_range(s16 pnum, s16 kos) {
+    u16 nrange;
     const u16* asstbl;
-    u16 nrange = 0;
     u16 lwork;
+    nrange = 0;
     if ((kos = shot_data_convert(kos)) < 0) {
-        return nrange;
+        return 0;
     }
-    asstbl = asstbl_lv_0000[pnum][kos];
+    {
+        const u8* row = (const u8*)asstbl_lv_0000 + (s16)(pnum * sizeof(asstbl_lv_0000[0]));
+        asstbl = (const u16*)(row + kos * 4);
+    }
     if ((lwork = asstbl[0] & 0x7FF)) {
         nrange = lwork;
-    } else {
-        if ((lwork = asstbl[1] & 0x7FF)) {
-            nrange = lwork;
-        }
+    } else if ((lwork = asstbl[1] & 0x7FF)) {
+        nrange = lwork;
     }
     return nrange;
 }
@@ -490,9 +492,10 @@ s16 renbanshot_conpaneshot(const s16* dadr, s16 pow) {
 
 
 
-s16 datacmd_conpanecmd(s16 dat) {
-    dat = (dat & 0x700) >> 1 | (dat & 0x7F);
-    return dat;
+s32 datacmd_conpanecmd(s16 dat) {
+    s16 r;
+    r = (dat & 0x700) >> 1 | dat & 0x7F;
+    return r;
 }
 
 
@@ -630,7 +633,6 @@ s32 get_meoshi_lever(s16 lever)
     return gml_real_lever_data[lever & 0xF];
 }
 
-s32 get_meoshi_shot(u16 shot)
-{
-    return ((s16)(shot & 0x700) >> 1) + (shot & 0x70);
+s32 get_meoshi_shot(s16 shot) {
+    return ((shot & 0x700) >> 1) + (shot & 0x70);
 }

@@ -70,9 +70,10 @@ void end_16000(u16 pl_num) {
                 end_bg_pos_hosei2();
                 end_fam_set2();
                 return;
+            } else {
+                end_w.timer = timer_16_tbl[end_w.r_no_2];
+                bg_w.bgw[0].r_no_1 = 0;
             }
-            end_w.timer = timer_16_tbl[end_w.r_no_2];
-            bg_w.bgw[0].r_no_1 = 0;
         }
         end_1600_move();
     case 2:
@@ -123,10 +124,11 @@ void end_1600_1000(void) {
     case 0:
         bgw_ptr->r_no_1++;
     case 1:
-        if (Request_Fade(80, 0)) {
-            bgw_ptr->r_no_1++;
-            end_no_cut = 1;
+        if (Request_Fade(80, 0) == 0) {
+            break;
         }
+        bgw_ptr->r_no_1++;
+        end_no_cut = 1;
         break;
     case 2:
         if (end_fade_complete()) {

@@ -144,7 +144,7 @@ void Pattern15_0138(PLW* wk);
 void Pattern15_0139(PLW* wk);
 void Pattern15_0140(PLW* wk);
 void Pattern15_0141(PLW* wk);
-u32 Pattern15_0142(PLW* wk);
+void Pattern15_0142(PLW* wk);
 void Pattern15_0143(PLW* wk);
 void Pattern15_0144(PLW* wk);
 void Pattern15_0145(PLW* wk);

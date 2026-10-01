@@ -57,48 +57,50 @@ void appear_work_clear(void) {
 s32 home_visitor_check(PLW* wk) {
     s32 hv_type;
     s32 pl_num;
+    s16 num;
     hv_type = 0;
     if (wk->wu.id) {
-        pl_num = plw[0].player_number;
+        num = plw[0].player_number;
     } else {
-        pl_num = plw[1].player_number;
+        num = plw[1].player_number;
     }
-    if (Play_Type) {
+    if (pl_num = num, Play_Type) {
         if (Champion == wk->wu.id && wk->player_number == pl_num && pl_num != 8) {
             hv_type = 1;
         }
-    } else if (wk->wu.operator && wk->player_number == pl_num && pl_num != 8) {
-        hv_type = 1;
+    } else {
+        if (wk->wu.operator && wk->player_number == pl_num && pl_num != 8) {
+            hv_type = 1;
+        }
     }
     return hv_type;
 }
 
 void appear_data_set(PLW* wk, s16* data) {
     APPEAR_DATA* dtbl = (APPEAR_DATA*)data;
-    s8* flag;
-    if (!wk->wu.id) {
-        if (!Game_setting.mode) {
-            wk->wu.xyz[0].disp.pos = bg_w.bgw[1].pos_x_work + dtbl->hx;
-        } else {
-            wk->wu.xyz[0].disp.pos = dtbl->whx + bg_w.bgw[1].pos_x_work;
-        }
-        flag = &Appear_flag[1];
-        wk->wu.xyz[1].disp.pos = dtbl->hy;
-        wk->wu.rl_flag = dtbl->rl;
-        wk->wu.routine_no[4] = dtbl->rno;
-    } else {
-        if (!Game_setting.mode) {
-            wk->wu.xyz[0].disp.pos = bg_w.bgw[1].pos_x_work - dtbl->hx;
-        } else {
+    if (wk->wu.id) {
+        if (Game_setting.mode) {
             wk->wu.xyz[0].disp.pos = bg_w.bgw[1].pos_x_work - dtbl->whx;
+        } else {
+            wk->wu.xyz[0].disp.pos = bg_w.bgw[1].pos_x_work - dtbl->hx;
         }
-        flag = &Appear_flag[0];
         wk->wu.xyz[1].disp.pos = dtbl->hy;
         wk->wu.rl_flag = (dtbl->rl + 1) & 1;
         wk->wu.routine_no[4] = dtbl->rno;
+        Appear_flag[0] = dtbl->ixod;
+        wk->wu.char_index = dtbl->char_index;
+    } else {
+        if (Game_setting.mode) {
+            wk->wu.xyz[0].disp.pos = bg_w.bgw[1].pos_x_work + dtbl->whx;
+        } else {
+            wk->wu.xyz[0].disp.pos = bg_w.bgw[1].pos_x_work + dtbl->hx;
+        }
+        wk->wu.xyz[1].disp.pos = dtbl->hy;
+        wk->wu.rl_flag = dtbl->rl;
+        wk->wu.routine_no[4] = dtbl->rno;
+        Appear_flag[1] = dtbl->ixod;
+        wk->wu.char_index = dtbl->char_index;
     }
-    *flag = dtbl->ixod;
-    wk->wu.char_index = dtbl->char_index;
 }
 
 
@@ -107,16 +109,14 @@ void appear_data_init_set(PLW* wk) {
     APPEAR_DATA* dtbl;
     s8 ap_work;
     s16 id_work;
-    s16 vs;
     Appear_hv[wk->wu.id] = home_visitor_check(wk);
     id_work = wk->wu.id ^ 1;
-    vs = plw[id_work].player_number;
     if (bg_w.area) {
         ap_work = 0;
     } else if (Appear_hv[wk->wu.id]) {
-        ap_work = appear_type_hv_tbl[wk->player_number][vs][bg_w.stage];
+        ap_work = appear_type_hv_tbl[wk->player_number][plw[id_work].player_number][bg_w.stage];
     } else {
-        ap_work = appear_type_tbl[wk->player_number][vs][bg_w.stage];
+        ap_work = appear_type_tbl[wk->player_number][plw[id_work].player_number][bg_w.stage];
     }
     dtbl = (APPEAR_DATA*)&appear_data[ap_work];
     appear_data_set(wk, dtbl);
@@ -201,14 +201,15 @@ void Appear_03000(PLW* wk) {
         wk->wu.disp_flag = 1;
         set_char_move_init(&wk->wu, 9, wk->wu.char_index);
         bg_app_stop = 1;
-        return;
+        break;
     case 1:
         char_move(&wk->wu);
-        if (wk->wu.cg_type == 0xFF) {
+        if ((u8)wk->wu.cg_type == 0xFF) {
             wk->wu.routine_no[2] = 1;
             wk->wu.routine_no[3] = 0;
             Appear_end++;
         }
+        break;
     }
 }
 

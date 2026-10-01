@@ -166,14 +166,14 @@ void bg_test_stage_select(void) {
 /* provisional name */
 void bg_layers_off(void) {
     s16 i;
-    i = 0;
-    while (i < bg_w.scno) {
-        if (scrn_reg_w[i].ctrl & 0x8000) {
-            Bg_Off_W(1 << i);
+
+    for (i = 0; i < bg_w.scno; i++) {
+        if ((((SCROLL_CTRL*)((u8*)scrn_reg_w + (s8)(i * sizeof(SCROLL_CTRL))))->ctrl & 0x8000) == 0) {
+            continue;
         }
-        i++;
+        Bg_Off_W(1 << i);
     }
-    if (scrn_reg_w[3].ctrl & 0x8000) {
+    if ((scrn_reg_w[3].ctrl & 0x8000) != 0) {
         Bg_Off_W(8);
     }
 }
@@ -876,18 +876,18 @@ void bg_x_move_check(void) {
 
 
 void bg_y_move_check(void) {
-    if (bg_w.chase_flag & 0xF0) {
-        bgw_ptr->chase_xy[1].cal = bgw_ptr->speed_y * bg_w.bg2_sp_y;
+    BGW* l;
+    s32 k;
+    if (l = bgw_ptr, k = bg_w.bg2_sp_y, (s8)bg_w.chase_flag & 0xF0) {
+        l->chase_xy[1].cal = l->speed_y * k;
         if (bgw_ptr->y_limit2 < bgw_ptr->chase_xy[1].disp.pos) {
-            bgw_ptr->chase_xy[1].disp.pos = bgw_ptr->y_limit2;
-            bgw_ptr->chase_xy[1].disp.low = 0;
+            bgw_ptr->chase_xy[1].disp.pos = bgw_ptr->y_limit2, bgw_ptr->chase_xy[1].disp.low = 0;
         }
         bgw_ptr->chase_xy[1].disp.pos += bgw_ptr->pos_y_work;
     } else {
-        bgw_ptr->xy[1].cal = bgw_ptr->speed_y * bg_w.bg2_sp_y;
+        l->xy[1].cal = l->speed_y * k;
         if (bgw_ptr->y_limit2 < bgw_ptr->xy[1].disp.pos) {
-            bgw_ptr->xy[1].disp.pos = bgw_ptr->y_limit2;
-            bgw_ptr->xy[1].disp.low = 0;
+            bgw_ptr->xy[1].disp.pos = bgw_ptr->y_limit2, bgw_ptr->xy[1].disp.low = 0;
         }
         bgw_ptr->xy[1].disp.pos += bgw_ptr->pos_y_work;
         bgw_ptr->wxy[1].cal = bgw_ptr->xy[1].cal;
@@ -1396,11 +1396,10 @@ s32 suzi_line_calc2(s16 bg_no)
 
 
 
-s32 suzi_offset_set(WORK* wk) {
-    if (wk->sync_suzi != 1) {
-        return wk->sync_suzi;
+void suzi_offset_set(WORK* wk) {
+    if (wk->sync_suzi == 1) {
+        suzi_offset_set_sub(wk);
     }
-    return suzi_offset_set_sub(wk);
 }
 
 u32 suzi_offset_set_sub(WORK* wk)
@@ -1423,7 +1422,8 @@ void suzi_sync_pos_set(WORK_Other* ewk) {
         if (ewk->wu.sync_suzi == 2) {
             suzi_offset_set_sub((WORK*)ewk);
         }
-        sub = *ewk->wu.suzi_offset - 512;
+        sub = *ewk->wu.suzi_offset;
+        sub -= 0x200;
     } else {
         sub = 0;
     }
@@ -1692,19 +1692,27 @@ void bg_cell_write_xflip(s16 bg, s32 ofs, s32 cell, u32 src, s16 u5, s16 attr) {
 /* provisional name */
 void blit_16x16_yflip(u16* src, s16 code, u16* dst, s16 attr) {
     u16 i;
+    u16* pi = &i;
     u16 j;
-    u16* s;
+    s32 off;
     u16* d;
-    for (i = 0; i < 16; i++) {
+    register u16* s;
+    s32 q = (s32)src + -0x440;
+    i = 0;
+    off = 0x800;
+    do {
         d = dst;
-        for (j = 0; j < 16; j++) {
-            s = src + (15 - i) * 32 + j * 2;
+        for (j = 0; j < 16; j = j + 1) {
+            s = (u16*)(off + q);
             *d++ = *s++ + code;
             *d = *s + attr;
             *d++ |= 0x800;
+            q += 4;
         }
         dst += 0x80;
-    }
+        i++;
+        off += -0x80;
+    } while (i < 16);
 }
 
 

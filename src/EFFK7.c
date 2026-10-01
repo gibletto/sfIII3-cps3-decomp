@@ -222,17 +222,22 @@ void K7_move_type_0(WORK_Other* ewk, PLW* mwk) {
 
 
 
-s16 K7_mt0_rebirth_check(PLW* mwk) {
+s32 K7_mt0_rebirth_check(PLW* mwk) {
     s16 num = 0;
+
     switch (mwk->wu.routine_no[1]) {
     case 0:
         if (pcon_dp_flag) {
             if (mwk->wu.routine_no[2] == 1 && mwk->wu.routine_no[3] != 0) {
                 num = 1;
             }
-        } else if (mwk->guard_flag != 3 && !mwk->wu.hit_stop) {
-            num = 1;
+        } else {
+            if ((u8)mwk->guard_flag != 3 && !mwk->wu.hit_stop) {
+                num = 1;
+            }
         }
+        break;
+    default:
         break;
     }
     return num;

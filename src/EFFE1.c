@@ -22,16 +22,15 @@
 void effect_E1_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
     case 0:
-        ewk->wu.routine_no[0] += 1;
+        ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
     case 1:
         ewk->wu.my_mr.size.x = 63;
         ewk->wu.my_mr.size.y = 63;
-        break;
     }
-    ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
-    ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
+    ewk->wu.position_x = (u16)ewk->wu.xyz[0].disp.pos & 0x3FF;
+    ewk->wu.position_y = (u16)ewk->wu.xyz[1].disp.pos & 0x3FF;
     sort_push_request4(ewk);
 }
 

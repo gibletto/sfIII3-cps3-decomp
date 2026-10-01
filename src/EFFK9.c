@@ -22,6 +22,7 @@
 
 void effect_K9_move(WORK_Other* ewk) {
     WORK* mwk = (WORK*)ewk->my_master;
+
     switch (ewk->wu.routine_no[0]) {
     case 0:
         ewk->wu.routine_no[0]++;
@@ -29,20 +30,26 @@ void effect_K9_move(WORK_Other* ewk) {
         ewk->wu.my_priority = ewk->wu.position_z = 32;
         set_char_move_init(&ewk->wu, 0, 0x90);
     case 1:
-        if (ewk->wu.dead_f == 0 && ewk->wu.dir_old == mwk->now_koc && ewk->wu.dir_step == mwk->char_index) {
-            char_move(&ewk->wu);
-            if (ewk->wu.cg_type != 0xFF) {
-                ewk->wu.position_x = bg_w.pos_offset + bg_w.bgw[1].position_x - 232;
-                ewk->wu.position_y = bg_w.bgw[1].position_y + 208;
-                sort_push_request(ewk);
-                return;
-            }
+        if (ewk->wu.dead_f != 0) {
+            goto hide;
         }
+        if (ewk->wu.dir_old != mwk->now_koc || ewk->wu.dir_step != mwk->char_index) {
+            goto hide;
+        }
+        char_move(&ewk->wu);
+        if (ewk->wu.cg_type == 0xFF) {
+            goto hide;
+        }
+        ewk->wu.position_x = bg_w.bgw[1].position_x + bg_w.pos_offset - 232;
+        ewk->wu.position_y = bg_w.bgw[1].position_y + 208;
+        sort_push_request(ewk);
+        return;
+    hide:
         ewk->wu.disp_flag = 0;
         ewk->wu.routine_no[0] = 2;
-        return;
-    default:
+        break;
     case 2:
+    default:
         push_effect_work(&ewk->wu);
         return;
     }

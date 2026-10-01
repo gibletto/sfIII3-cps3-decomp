@@ -463,9 +463,10 @@ void score16x24_put(s16 x, s16 y, s16 attr, s16 n) {
 
 /* provisional name */
 void sc_celllist_put(u8 ix) {
-    const CELL_ENTRY* const* tbl = &sc_celllist_tbl[ix];
+    const CELL_ENTRY* const* tbl = sc_celllist_tbl + (ix & 0xFF);
     const CELL_ENTRY* p = *tbl;
-    while (p->x != 100) {
+    u16 x;
+    for (x = p->x; x != 100; x = p->x) {
         tilemap_put_cell(p->x, p->y, p->attr, p->code);
         p++;
     }
@@ -475,11 +476,13 @@ void sc_celllist_put(u8 ix) {
 
 /* provisional name */
 void sc_celllist_put_scr(u8 ix) {
-    const CELL_ENTRY* cell = sc_celllist_tbl[ix];
-    s16* pos = &DE_X[sc_celllist_scr_tbl[ix]];
-    while (cell->x != 100) {
-        tilemap_put_cell(cell->x + *pos, cell->y, cell->attr, cell->code);
-        cell++;
+    const CELL_ENTRY* const* tbl = sc_celllist_tbl + ix;
+    s8 k = sc_celllist_scr_tbl[ix];
+    const CELL_ENTRY* p = *tbl;
+    u16 x;
+    for (x = p->x; x != 100; x = p->x) {
+        tilemap_put_cell(DE_X[k] + p->x, p->y, p->attr, p->code);
+        p++;
     }
 }
 
@@ -487,10 +490,12 @@ void sc_celllist_put_scr(u8 ix) {
 
 /* provisional name */
 void sc_celllist_put_pos(u8 kind, u8 dx, u8 dy) {
-    const CELL_ENTRY* p = sc_celllist_tbl[kind];
-    s16* ofs = &DE_X[sc_celllist_scr_tbl[kind]];
-    while (p->x != 100) {
-        tilemap_put_cell(dx + (*ofs + p->x), p->y + dy, p->attr, p->code);
+    const CELL_ENTRY* const* tbl = sc_celllist_tbl + kind;
+    s8 k = sc_celllist_scr_tbl[kind];
+    const CELL_ENTRY* p = *tbl;
+    u16 x;
+    for (x = p->x; x != 100; x = p->x) {
+        tilemap_put_cell(DE_X[k] + p->x + dx, p->y + dy, p->attr, p->code);
         p++;
     }
 }

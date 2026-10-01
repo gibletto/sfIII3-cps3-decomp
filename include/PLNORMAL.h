@@ -15,7 +15,7 @@ void Normal_48000(PLW* wk);
 void Normal_55000(PLW* wk);
 void Normal_03000(PLW* wk);
 void Normal_11000(PLW* wk);
-void Normal_18000_init_unit(PLW* wk, u8 ps);
+void Normal_18000_init_unit();
 void Normal_50000(PLW* wk);
 void Normal_53000(PLW* wk);
 void Normal_54000(PLW* wk);

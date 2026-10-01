@@ -171,7 +171,7 @@ s32 Setup_WT_Data(PLW* wk);
 void Short_Range_Attack();
 s32 Small_Jump_Measure(PLW* wk);
 void Turn_Over_On(PLW* wk);
-void VS_Jump_Guard(PLW* wk);
+s32 VS_Jump_Guard(PLW* wk);
 s32 VS_Jump_Term();
 void Wait();
 void Wait_Attack_Complete();

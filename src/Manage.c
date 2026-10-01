@@ -52,7 +52,7 @@
 void FBI_Warning(void) {
     JMP_TBL2 jmp_tbl;
     jmp_tbl = FBI_Warning_Jmp_Data;
-    jmp_tbl.fn[D_No[0]]();
+    jmp_tbl.fn[D_No0]();
 }
 
 
@@ -60,35 +60,35 @@ void FBI_Warning(void) {
 /* provisional name */
 void FBI_Warning_1st(void) {
     s16 x;
-    switch (D_No[1]) {
+    switch (D_No1) {
     case 0:
-        D_No[1]++;
+        D_No1++;
         D_Timer = 120;
         Set_Mode_Pos(&x, 8, 21);
         tilemap_print_string_attr(x, 8, 18, FBI_msg);
         break;
     case 1:
         if (--D_Timer == 0) {
-            D_No[1]++;
-            Text_Fill_Upper(0, 32);
+            D_No1++;
+            scfont_page0_fill(0, 32);
             D_Timer = 40;
         }
         break;
     case 2:
         if (--D_Timer == 0) {
-            if (G_No[1] == 12) {
-                G_No[1] = 1;
-                D_No[3] = 0;
-                D_No[2] = 0;
-                D_No[1] = 0;
-                D_No[0] = 0;
+            if (G_No1 == 12) {
+                G_No1 = 1;
+                D_No3 = 0;
+                D_No2 = 0;
+                D_No1 = 0;
+                D_No0 = 0;
                 return;
             }
-            G_No[1]++;
-            D_No[3] = 0;
-            D_No[2] = 0;
-            D_No[1] = 0;
-            D_No[0] = 0;
+            G_No1++;
+            D_No3 = 0;
+            D_No2 = 0;
+            D_No1 = 0;
+            D_No0 = 0;
         }
         break;
     }
@@ -107,7 +107,7 @@ s32 Game_Management(void) {
         return 0;
     }
     MANAGE_X = 0;
-    Management_Jmp_Tbl[C_No[0]]();
+    Management_Jmp_Tbl[C_No0]();
     BGM_Fade_Sub();
     BGM_Control();
     return MANAGE_X;
@@ -118,9 +118,9 @@ s32 Game_Management(void) {
 void Game_Manage_1st(void) {
     EXE_obroll = 0;
     if (bg_w.stage == 22 || bg_w.stage == 21) {
-        C_No[0] = 11;
+        C_No0 = 11;
     } else {
-        C_No[0] = 1;
+        C_No0 = 1;
     }
     win_pause_go = 0;
     if (bg_w.bgw[1].zuubun) {
@@ -165,7 +165,7 @@ void Game_Manage_1st(void) {
     Check_Stage_BGM();
     Fade_Flag = 0;
     Clear_Flash_No();
-    Text_Fill_Lower(0, 32);
+    scfont_page1_fill(0, 32);
     commit_name_entry_row_both_players(32);
     grade_check_work_stage_init(0);
     grade_check_work_stage_init(1);
@@ -193,7 +193,7 @@ void Clear_1Stage_Work(void) {
 
 void Game_Manage_2nd(void) {
     void (*SC2_Jmp_Tbl[5])() = { Game_Manage_2_0, Game_Manage_2_1, Game_Manage_2_2, Game_Manage_2_3, Game_Manage_2_4 };
-    SC2_Jmp_Tbl[C_No[1]]();
+    SC2_Jmp_Tbl[C_No1]();
 }
 
 
@@ -201,11 +201,11 @@ void Game_Manage_2nd(void) {
 void Game_Manage_2_0(void) {
     request_message = 0;
     if (Demo_Flag == 0) {
-        C_No[1] = 2;
+        C_No1 = 2;
         return;
     }
     if (--Cover_Timer == 0) {
-        C_No[1]++;
+        C_No1++;
         Switch_Screen_Init(3, 3);
     }
 }
@@ -214,7 +214,7 @@ void Game_Manage_2_0(void) {
 
 void Game_Manage_2_1(void) {
     if (Switch_Screen_Revival()) {
-        C_No[1]++;
+        C_No1++;
         Stage_Intro_Flag = 0;
     }
 }
@@ -226,7 +226,7 @@ void Game_Manage_2_2(void) {
     if (effect_84_init()) {
         return;
     }
-    C_No[1]++;
+    C_No1++;
     Forbid_Break = 0;
     Extra_Break = 0;
     Complete_Victory = 0;
@@ -269,27 +269,31 @@ void Game_Manage_2_3(void) {
     if (pcon_rno[1] != 1) {
         return;
     }
-    C_No[1]++;
+    C_No1++;
     effect_B2_init();
 }
 
 
 
 void Game_Manage_2_4(void) {
-    switch (C_No[2]) {
+    switch (C_No2) {
     case 0:
         if (Round_num) {
-            C_No[2] = 3;
+            C_No2 = 3;
         } else {
-            C_No[2]++;
+            C_No2++;
             C_Timer = 1;
             Forbid_Break = 1;
-            Text_Fill_Lower(60, 175);
+            /* The white flash before the first round: the intro shows text page 1, and this fills all of it with
+               cell 175 in palette 60, a solid white cell over the whole screen. Next frame (case 1) the text layer
+               scrolls back to page 0 for the fight HUD; with the scroll applied at the following vblank the screen
+               stays white for 3 frames. Filling with (0, 32), blank cells, removes the flash and changes no timing. */
+            scfont_page1_fill(60, 175);
         }
         break;
     case 1:
         if (--C_Timer == 0) {
-            C_No[2]++;
+            C_No2++;
             Text_Page_Y = 0;
             Clear_Flash_No();
             commit_name_entry_row_both_players(0);
@@ -297,7 +301,7 @@ void Game_Manage_2_4(void) {
         }
         break;
     case 2:
-        C_No[2]++;
+        C_No2++;
         Forbid_Break = 0;
         Stage_Intro_Flag = 0x80;
         break;
@@ -305,9 +309,9 @@ void Game_Manage_2_4(void) {
         if (!Next_Step) {
             break;
         }
-        C_No[0]++;
-        C_No[1] = 0;
-        C_No[2] = 0;
+        C_No0++;
+        C_No1 = 0;
+        C_No2 = 0;
         Allow_a_battle_f = 1;
         if (!Play_Type && !EM_id) {
             u8* boss = Introduce_Boss[Player_id];
@@ -329,7 +333,7 @@ void Game_Manage_2_4(void) {
 
 void Game_Manage_3rd(void) {
     if (Demo_Flag != 0 && Conclusion_Flag != 0) {
-        C_No[0]++;
+        C_No0++;
         Forbid_Break = -1;
         Allow_a_battle_f = 0;
         counter_color_clear();
@@ -372,7 +376,7 @@ void setFinishType(void) {
 void Game_Manage_4th(void) {
     switch (Conclusion_Type) {
     case 0:
-        C_No[0] = 6;
+        C_No0 = 6;
         Setup_Win_Mark();
         Check_Perfect(Winner_id);
         PL_Wins[Winner_id]++;
@@ -384,10 +388,10 @@ void Game_Manage_4th(void) {
         sound_request(121);
         sound_request(139);
         if (Judge_Next_Disposal()) {
-            C_No[0] = 4;
+            C_No0 = 4;
             break;
         }
-        C_No[0] = 5;
+        C_No0 = 5;
         Round_Result |= 1024;
         win_type[0][PL_Wins[0]] = 5;
         win_type[1][PL_Wins[1]] = 5;
@@ -410,7 +414,7 @@ void Game_Manage_4th(void) {
     default:
         sound_request(143);
         if (plw[0].wu.vital_new != plw[1].wu.vital_new) {
-            C_No[0] = 6;
+            C_No0 = 6;
             Round_Result |= 1;
             win_type[Winner_id][PL_Wins[Winner_id]] = 1;
             Check_Perfect(Winner_id);
@@ -420,7 +424,7 @@ void Game_Manage_4th(void) {
             Update_Level_Control();
             break;
         }
-        C_No[0] = 4;
+        C_No0 = 4;
         break;
     }
 }
@@ -494,14 +498,14 @@ s32 Update_BI_Term(void)
 
 void Game_Manage_5th(void) {
     void (*SC5_Jmp_Tbl[8])() = { Game_Manage_5_0, Game_Manage_5_1, Game_Manage_5_2, Game_Manage_5_3, Game_Manage_5_4, Game_Manage_5_5, Game_Manage_5_6, Game_Manage_5_7 };
-    SC5_Jmp_Tbl[C_No[1]]();
+    SC5_Jmp_Tbl[C_No1]();
 }
 
 
 
 void Game_Manage_5_0(void) {
     if (Complete_Victory || --G_Timer == 0) {
-        C_No[1]++;
+        C_No1++;
         C_Timer = 30;
         Judge_Round_Flag = 1;
         Event_Judge_Gals = 0;
@@ -520,7 +524,7 @@ void request_center_message_p2_Manage(s16 Kind_of_Message) {
 
 void Game_Manage_5_1(void) {
     if (Button_Cut_EX(&C_Timer, 10)) {
-        C_No[1]++;
+        C_No1++;
         request_center_message_p2_Manage(3);
         sound_request(154);
     }
@@ -530,7 +534,7 @@ void Game_Manage_5_1(void) {
 
 void Game_Manage_5_2(void) {
     if (!request_message) {
-        C_No[1]++;
+        C_No1++;
         C_Timer = 30;
     }
 }
@@ -539,7 +543,7 @@ void Game_Manage_5_2(void) {
 
 void Game_Manage_5_3(void) {
     if (Button_Cut_EX(&C_Timer, 10)) {
-        C_No[1]++;
+        C_No1++;
         Judge_Winner();
         sc_vram_to_ram();
         Stop_Combo = 1;
@@ -551,7 +555,7 @@ void Game_Manage_5_3(void) {
 
 void Game_Manage_5_4(void) {
     if (Switch_Screen()) {
-        C_No[1]++;
+        C_No1++;
         Switch_Screen_Init(3, 3);
         Cover_Timer = 5;
         reset_all_char_display_with_backup();
@@ -570,7 +574,7 @@ void Game_Manage_5_4(void) {
 
 void Game_Manage_5_5(void) {
     if (--Cover_Timer == 0) {
-        C_No[1]++;
+        C_No1++;
         pcon_rno[1] = 3;
         pcon_rno[2] = 1;
         Clear_Flash_No();
@@ -582,7 +586,7 @@ void Game_Manage_5_5(void) {
 
 void Game_Manage_5_6(void) {
     if (Switch_Screen_Revival()) {
-        C_No[1]++;
+        C_No1++;
         C_Timer = 60;
         Stop_SG = 0;
         BGM_No[0] = 3;
@@ -596,8 +600,8 @@ void Game_Manage_5_7(void) {
     if (--C_Timer != 0) {
         return;
     }
-    C_No[0] = 6;
-    C_No[1] = 7;
+    C_No0 = 6;
+    C_No1 = 7;
     C_Timer = 30;
     Fade_Half_Flag = 1;
     Complete_Judgement = 1;
@@ -614,12 +618,12 @@ void Game_Manage_5_7(void) {
 
 s32 Game_Manage_6th(void) {
     s32 rc;
-    switch (rc = C_No[1]) {
+    switch (rc = C_No1) {
     case 0:
         if (Complete_Victory == 0 && (rc = --G_Timer) != 0) {
             break;
         }
-        C_No[1]++;
+        C_No1++;
         C_Timer = 60;
         pcon_rno[1] = 3;
         pcon_rno[2] = 0;
@@ -629,8 +633,8 @@ s32 Game_Manage_6th(void) {
         return effect_92_init(1, win_type[1][PL_Wins[1] - 1]);
     case 1:
         if (--C_Timer == 0) {
-            C_No[0] = 7;
-            C_No[1] = 0;
+            C_No0 = 7;
+            C_No1 = 0;
             Round_num++;
             return ((s32(*)(void))Quick_Entry)();
         }
@@ -643,14 +647,14 @@ s32 Game_Manage_6th(void) {
 
 void Game_Manage_7th(void) {
     void (*SC7_Jmp_Tbl[10])() = { Game_Manage_7_0, Game_Manage_7_1, Game_Manage_7_2, Game_Manage_7_3, Game_Manage_7_4, Game_Manage_7_5, Game_Manage_7_6, Game_Manage_7_7, Game_Manage_7_8, Game_Manage_7_9 };
-    SC7_Jmp_Tbl[C_No[1]]();
+    SC7_Jmp_Tbl[C_No1]();
 }
 
 
 
 void Game_Manage_7_0(void) {
     if (Complete_Victory != 0 || --G_Timer == 0) {
-        C_No[1]++;
+        C_No1++;
         C_Timer = 1;
         grade_makeup_round_parameter(Winner_id);
         effect_92_init(Winner_id, win_type[Winner_id][PL_Wins[Winner_id] - 1]);
@@ -662,7 +666,7 @@ void Game_Manage_7_0(void) {
 
 void Game_Manage_7_1(void) {
     if (--C_Timer == 0) {
-        C_No[1]++;
+        C_No1++;
         C_Timer = 10;
     }
 }
@@ -677,7 +681,7 @@ void Game_Manage_7_2(void) {
         C_Timer = 1;
         return;
     }
-    C_No[1]++;
+    C_No1++;
     if (Check_Disp_Winner() == 0) {
         C_Timer = 50;
     } else {
@@ -715,11 +719,11 @@ void Game_Manage_7_3(void) {
     }
     tilemap_clear_rect(DE_X[3] + 8, 9, DE_X[1] + 47, 16);
     if (Perfect_Flag) {
-        C_No[1]++;
+        C_No1++;
         C_Timer = 10;
     } else {
-        C_No[0]++;
-        C_No[1] = 0;
+        C_No0++;
+        C_No1 = 0;
         Event_Judge_Gals = -1;
     }
 }
@@ -728,7 +732,7 @@ void Game_Manage_7_3(void) {
 
 void Game_Manage_7_4(void) {
     if (--C_Timer == 0) {
-        C_No[1]++;
+        C_No1++;
         request_center_message_p2_Manage(4);
         effect_58_init(6, 1, 155);
         effect_58_init(6, 60, 156);
@@ -739,7 +743,7 @@ void Game_Manage_7_4(void) {
 
 void Game_Manage_7_5(void) {
     if (!request_message) {
-        C_No[1]++;
+        C_No1++;
         C_Timer = 6;
         Event_Judge_Gals = -1;
     }
@@ -753,8 +757,8 @@ s32 Game_Manage_7_6(void) {
         C_Timer = 1;
     }
     if (--C_Timer == 0) {
-        C_No[0]++;
-        C_No[1] = 0;
+        C_No0++;
+        C_No1 = 0;
     }
     return cut;
 }
@@ -763,7 +767,7 @@ s32 Game_Manage_7_6(void) {
 
 void Game_Manage_7_7(void) {
     if (--C_Timer == 0) {
-        C_No[1]++;
+        C_No1++;
         Event_Judge_Gals = 3;
     }
 }
@@ -772,7 +776,7 @@ void Game_Manage_7_7(void) {
 
 void Game_Manage_7_8(void) {
     if (Event_Judge_Gals == 0) {
-        C_No[1]++;
+        C_No1++;
         C_Timer = 30;
         Ck_Win_Record();
     }
@@ -782,7 +786,7 @@ void Game_Manage_7_8(void) {
 
 void Game_Manage_7_9(void) {
     if (--C_Timer == 0) {
-        C_No[1] = 0;
+        C_No1 = 0;
     }
 }
 
@@ -790,7 +794,7 @@ void Game_Manage_7_9(void) {
 
 void Game_Manage_8th(void) {
     void (*SC8_Jmp_Tbl[4])() = { Game_Manage_8_0, Game_Manage_8_1, Game_Manage_8_2, Game_Manage_8_3 };
-    SC8_Jmp_Tbl[C_No[1]]();
+    SC8_Jmp_Tbl[C_No1]();
 }
 
 
@@ -801,18 +805,18 @@ void Game_Manage_8_0(void) {
     if (Round_Operator[Winner_id]) {
         Pool_Score(WINNER);
         if (PL_Wins[Winner_id] >= Battle_Round[Play_Type] + 1) {
-            C_No[1]++;
+            C_No1++;
             Additional_Bonus(WINNER);
             grade_makeup_stage_parameter(WINNER);
             grade_makeup_stage_parameter(LOSER);
             Check_Break_Into_CPU(WINNER);
             return;
         }
-        C_No[1] = 3;
+        C_No1 = 3;
         C_Timer = 1;
         return;
     }
-    C_No[1] = 3;
+    C_No1 = 3;
     C_Timer = 30;
     if (PL_Wins[Winner_id] >= Battle_Round[Play_Type] + 1) {
         grade_makeup_stage_parameter(WINNER);
@@ -824,7 +828,7 @@ void Game_Manage_8_0(void) {
 
 void Game_Manage_8_1(void) {
     void (*SC81_Jmp_Tbl[4])() = { Game_Manage_81_0, Game_Manage_81_1, Game_Manage_81_2, Game_Manage_81_3 };
-    SC81_Jmp_Tbl[C_No[2]]();
+    SC81_Jmp_Tbl[C_No2]();
 }
 
 
@@ -835,7 +839,7 @@ void Game_Manage_81_0(void) {
     s16 pos_id;
     s16 pos_id2;
     Check_Fade_Out_BGM(546);
-    C_No[2]++;
+    C_No2++;
     C_Timer = 20;
     Forbid_Break = -1;
     load_char_gfx(0xBD28, 1);
@@ -884,7 +888,7 @@ void Game_Manage_81_0(void) {
 
 void Game_Manage_81_1(void) {
     if (Order_Dir[80] == 0) {
-        C_No[2]++;
+        C_No2++;
         C_Timer = 20;
     }
 }
@@ -898,7 +902,7 @@ void Game_Manage_81_2(void) {
     if (--C_Timer != 0) {
         return;
     }
-    C_No[2]++;
+    C_No2++;
     Disp_Player_Score(Winner_id);
     Order_Dir[80] = 1;
     Order[81] = 1;
@@ -912,8 +916,8 @@ void Game_Manage_81_2(void) {
 
 void Game_Manage_81_3(void) {
     if (Order_Dir[80] == 0) {
-        C_No[1]++;
-        C_No[2] = 0;
+        C_No1++;
+        C_No2 = 0;
         C_Timer = 50;
     }
 }
@@ -946,8 +950,8 @@ void Game_Manage_8_2(void) {
     Suicide[2] = 1;
     gauge_stop_flag[0] = 1;
     gauge_stop_flag[1] = 1;
-    C_No[0]++;
-    C_No[1] = 0;
+    C_No0++;
+    C_No1 = 0;
     C_Timer = 30;
 }
 
@@ -959,8 +963,8 @@ s32 Game_Manage_8_3(void) {
         C_Timer = 1;
     }
     if (--C_Timer == 0) {
-        C_No[0]++;
-        C_No[1] = 0;
+        C_No0++;
+        C_No1 = 0;
     }
     return cut;
 }
@@ -1019,19 +1023,19 @@ u32 Setup_Comp_Bonus(void) {
 
 
 void Game_Manage_9th(void) {
-    switch (C_No[1]) {
+    switch (C_No1) {
     case 0:
         if (PL_Wins[Winner_id] >= Battle_Round[Play_Type] + 1) {
-            C_No[0]++;
-            C_No[1] = 0;
+            C_No0++;
+            C_No1 = 0;
             C_Timer = 75;
             sc_vram_to_ram();
             if (Play_Type != 1 && Round_Operator[WINNER] && Battle_Q[WINNER]) {
-                C_No[0] = 10;
+                C_No0 = 10;
             }
             break;
         }
-        C_No[1]++;
+        C_No1++;
         C_Timer = 60;
         satime_stock_clear();
         sc_vram_to_ram();
@@ -1045,19 +1049,19 @@ void Game_Manage_9th(void) {
         if (--C_Timer > 0) {
             break;
         }
-        C_No[1]++;
+        C_No1++;
         Game_pause = 1;
         Switch_Screen_Init(3, 3);
     default:
         if (Switch_Screen()) {
             BGM_No[0] = 1;
             BGM_Timer[0] = 1;
-            G_No[2] = 5;
-            G_No[3] = 0;
+            G_No2 = 5;
+            G_No3 = 0;
             G_Timer = 4;
             Cover_Timer = 5;
-            C_No[0] = 1;
-            C_No[1] = C_No[2] = C_No[3] = 0;
+            C_No0 = 1;
+            C_No1 = C_No2 = C_No3 = 0;
             Suicide[0] = 1;
         }
         break;
@@ -1067,10 +1071,10 @@ void Game_Manage_9th(void) {
 
 
 void Game_Manage_10th(void) {
-    switch (C_No[1]) {
+    switch (C_No1) {
     case 0:
         if (Button_Cut_EX(&C_Timer, 0x7FFF)) {
-            C_No[1]++;
+            C_No1++;
             Cover_Timer = 25;
             sc_vram_to_ram();
             Stop_Combo = 1;
@@ -1091,32 +1095,32 @@ void Game_Manage_10th(void) {
             appear_type = 1;
             Continue_Coin2[WINNER] = 0;
             if (Round_Operator[WINNER]) {
-                G_No[1] = 3;
-                G_No[2] = 0;
-                G_No[3] = 0;
+                G_No1 = 3;
+                G_No2 = 0;
+                G_No3 = 0;
                 M_No[0] = 0;
                 M_No[1] = 0;
                 M_No[2] = 0;
                 M_No[3] = 0;
-                E_No[0] = 5;
-                E_No[1] = 0;
-                E_No[2] = 0;
-                E_No[3] = 0;
+                E_No0 = 5;
+                E_No1 = 0;
+                E_No2 = 0;
+                E_No3 = 0;
                 Check_Ending();
                 Continue_Coin2[WINNER] = 0;
                 Clear_Flash_No();
             } else {
-                G_No[1] = 4;
-                G_No[2] = 0;
-                G_No[3] = 0;
+                G_No1 = 4;
+                G_No2 = 0;
+                G_No3 = 0;
                 M_No[0] = 0;
                 M_No[1] = 0;
                 M_No[2] = 0;
                 M_No[3] = 0;
-                E_No[0] = 6;
-                E_No[1] = 0;
-                E_No[2] = 0;
-                E_No[3] = 0;
+                E_No0 = 6;
+                E_No1 = 0;
+                E_No2 = 0;
+                E_No3 = 0;
                 E_07_Flag[0] = 0;
                 E_07_Flag[1] = 0;
                 Clear_Flash_No();
@@ -1129,10 +1133,10 @@ void Game_Manage_10th(void) {
 
 
 void Game_Manage_11th(void) {
-    switch (C_No[1]) {
+    switch (C_No1) {
     case 0:
         Forbid_Break = -1;
-        C_No[1]++;
+        C_No1++;
         EM_Rank = 2;
         Q_Country = Battle_Country;
         C_Timer = 90;
@@ -1140,20 +1144,20 @@ void Game_Manage_11th(void) {
         break;
     case 1:
         if (--C_Timer == 0) {
-            C_No[1]++;
+            C_No1++;
             C_Timer = 150;
             C_Timer = 60;
         }
         break;
     case 2:
         if (--C_Timer == 0) {
-            C_No[1]++;
+            C_No1++;
             Switch_Screen_Init(0, 2);
         }
         break;
     case 3:
         if (Switch_Screen()) {
-            C_No[1]++;
+            C_No1++;
             tilemap_clear_rect(DE_X[3], Text_Page_Y + 11, (*&DE_X)[3] + 47, Text_Page_Y + 13);
             sc_vram_to_ram();
             Switch_Screen_Init(3, 1);
@@ -1161,13 +1165,13 @@ void Game_Manage_11th(void) {
         break;
     case 4:
         if (Switch_Screen()) {
-            G_No[1] = 11;
-            G_No[2] = 0;
-            G_No[3] = 0;
-            E_No[0] = 9;
-            E_No[1] = 0;
-            E_No[2] = 0;
-            E_No[3] = 0;
+            G_No1 = 11;
+            G_No2 = 0;
+            G_No3 = 0;
+            E_No0 = 9;
+            E_No1 = 0;
+            E_No2 = 0;
+            E_No3 = 0;
             effect_work_quick_init();
             Cover_Timer = 21;
         }
@@ -1194,7 +1198,7 @@ void Check_Naming(s16 id) {
 
 void Game_Manage_12th(void) {
     void (*SC12_Jmp_Tbl[10])() = { Game_Manage_12_0, Game_Manage_12_1, Game_Manage_12_7, Game_Manage_12_3, Game_Manage_12_4, Game_Manage_12_5, Game_Manage_12_1, Game_Manage_12_2, Game_Manage_12_8, Game_Manage_12_5 };
-    SC12_Jmp_Tbl[C_No[1]]();
+    SC12_Jmp_Tbl[C_No1]();
 }
 
 
@@ -1204,7 +1208,7 @@ void Game_Manage_12_0(void) {
     if (effect_84_init()) {
         return;
     }
-    C_No[1]++;
+    C_No1++;
     Extra_Break = 0;
     request_message = 0;
     Complete_Victory = 0;
@@ -1229,7 +1233,7 @@ void Game_Manage_12_0(void) {
     Stock_Score[Player_id] = Score[Player_id][0];
     load_any_color(179);
     if (Bonus_Type == 21) {
-        C_No[1] = 6;
+        C_No1 = 6;
         Time_Stop = 1;
         Time_Over = 0;
         Exit_No = 0;
@@ -1243,9 +1247,9 @@ void Game_Manage_12_0(void) {
 
 void Game_Manage_12_1(void) {
     if (Next_Step != 0) {
-        C_No[1]++;
-        C_No[2] = 0;
-        C_No[3] = 0;
+        C_No1++;
+        C_No2 = 0;
+        C_No3 = 0;
         Allow_a_battle_f = 1;
         load_char_eff_color(My_char[0], 0);
         load_char_eff_color(My_char[1], 1);
@@ -1260,8 +1264,8 @@ s32 Game_Manage_12_7(void) {
     if (!(rc = ((u8)Bonus_Game_Complete))) {
         return rc;
     }
-    C_No[1]++;
-    C_No[2] = 0;
+    C_No1++;
+    C_No2 = 0;
     C_Timer = 30;
     Forbid_Break = -1;
     Completion_Bonus[Player_id][1] = -128;
@@ -1276,7 +1280,7 @@ s32 Game_Manage_12_7(void) {
         C_Timer = 20;
         return rc;
     }
-    C_No[1] = 4;
+    C_No1 = 4;
     return 4;
 }
 
@@ -1284,10 +1288,10 @@ s32 Game_Manage_12_7(void) {
 
 s32 Game_Manage_12_3(void) {
     s16 rc;
-    switch (rc = C_No[2]) {
+    switch (rc = C_No2) {
     case 0:
         if ((rc = Cut_Cut_C_Timer()) == 0) {
-            C_No[2]++;
+            C_No2++;
             C_Timer = 10;
             request_message = 1;
             message_index = 4;
@@ -1297,13 +1301,13 @@ s32 Game_Manage_12_3(void) {
         break;
     case 1:
         if (request_message == 0) {
-            C_No[2]++;
+            C_No2++;
             C_Timer = 6;
         }
         break;
     case 2:
         if (--C_Timer == 0) {
-            C_No[2]++;
+            C_No2++;
             C_Timer = 20;
             ToneDown(8);
             return ToneDown(9);
@@ -1311,9 +1315,9 @@ s32 Game_Manage_12_3(void) {
         break;
     case 3:
         if ((rc = Cut_Cut_C_Timer()) == 0) {
-            C_No[1]++;
-            C_No[2] = 0;
-            C_No[3] = 0;
+            C_No1++;
+            C_No2 = 0;
+            C_No3 = 0;
             C_Timer = 30;
         }
         break;
@@ -1324,10 +1328,10 @@ s32 Game_Manage_12_3(void) {
 
 
 void Game_Manage_12_4(void) {
-    switch (C_No[2]) {
+    switch (C_No2) {
     case 0:
         if (Bonus_Cut_Sub() == 0 && --C_Timer == 0) {
-            C_No[2]++;
+            C_No2++;
             C_Timer = 20;
             sc_ram_to_vram_opc(27, Game_setting.mode * 7, 1, 30);
             Disp_Digit16x24(Bonus_Score, DE_X[3] + 35, 11, 30);
@@ -1335,7 +1339,7 @@ void Game_Manage_12_4(void) {
         break;
     case 1:
         if (Bonus_Cut_Sub() == 0 && --C_Timer == 0) {
-            C_No[2]++;
+            C_No2++;
             C_Timer = 1;
             Bonus_Score = 0;
         }
@@ -1343,7 +1347,7 @@ void Game_Manage_12_4(void) {
     case 2:
         if (Bonus_Cut_Sub() == 0 && --C_Timer == 0) {
             if (Bonus_Game_result == 0 && !(PB_Status & 2)) {
-                C_No[2] = 4;
+                C_No2 = 4;
                 C_Timer = 30;
                 break;
             }
@@ -1356,13 +1360,13 @@ void Game_Manage_12_4(void) {
                 Sound_SE(100);
             }
             if (--Bonus_Game_result == 0) {
-                C_No[2]++;
+                C_No2++;
                 if (PB_Status) {
-                    C_No[3] = 1;
+                    C_No3 = 1;
                     C_Timer = 10;
                     break;
                 }
-                C_No[3] = 0;
+                C_No3 = 0;
                 C_Timer = 20;
                 break;
             }
@@ -1370,24 +1374,24 @@ void Game_Manage_12_4(void) {
         }
         break;
     case 3:
-        switch (C_No[3]) {
+        switch (C_No3) {
         case 0:
             if (Bonus_Cut_Sub() == 0 && --C_Timer == 0) {
-                C_No[2]++;
+                C_No2++;
                 C_Timer = 30;
                 Bonus_Game_result = Stock_Bonus_Game_Result;
             }
             break;
         case 1:
             if (Bonus_Cut_Sub() == 0 && --C_Timer == 0) {
-                C_No[3]++;
+                C_No3++;
                 C_Timer = 10;
                 Disp_Bonus_Perfect();
             }
             break;
         case 2:
             if (Bonus_Cut_Sub() == 0 && --C_Timer == 0) {
-                C_No[3]++;
+                C_No3++;
                 C_Timer = 40;
                 if (PB_Status & 1) {
                     Score[Player_id][0] += Ball_Perfect_PTS[0][Bonus_Stage_Level];
@@ -1404,7 +1408,7 @@ void Game_Manage_12_4(void) {
             break;
         default:
             if (--C_Timer == 0) {
-                C_No[2]++;
+                C_No2++;
                 C_Timer = 30;
             }
             break;
@@ -1412,9 +1416,9 @@ void Game_Manage_12_4(void) {
         break;
     default:
         if (Cut_Cut_C_Timer() == 0) {
-            C_No[1]++;
-            C_No[2] = 0;
-            C_No[3] = 0;
+            C_No1++;
+            C_No2 = 0;
+            C_No3 = 0;
             C_Timer = 10;
             Forbid_Break = 0;
             tilemap_clear_rect(1, 8, (*&DE_X)[1] + 47, 21);
@@ -1427,10 +1431,10 @@ void Game_Manage_12_4(void) {
 
 
 void Game_Manage_12_5(void) {
-    switch (C_No[2]) {
+    switch (C_No2) {
     case 0:
         if (--C_Timer == 0) {
-            C_No[2]++;
+            C_No2++;
             C_Timer = 20;
         }
         break;
@@ -1439,7 +1443,7 @@ void Game_Manage_12_5(void) {
             C_Timer = 1;
         }
         if (--C_Timer == 0) {
-            C_No[2]++;
+            C_No2++;
         }
         break;
     default:
@@ -1458,9 +1462,9 @@ void Game_Manage_12_2(void) {
     if (!Bonus_Game_Complete) {
         return;
     }
-    C_No[1]++;
-    C_No[2] = 0;
-    C_No[3] = 0;
+    C_No1++;
+    C_No2 = 0;
+    C_No3 = 0;
     C_Timer = 30;
     Forbid_Break = -1;
     Completion_Bonus[Player_id][0] = -128;
@@ -1474,18 +1478,18 @@ void Game_Manage_12_2(void) {
 
 
 void Game_Manage_12_8(void) {
-    switch (C_No[2]) {
+    switch (C_No2) {
     case 0:
-        switch (C_No[3]) {
+        switch (C_No3) {
         case 0:
             Next_Step = 0;
             if (effect_35_init(60, 10) == 0) {
-                C_No[3]++;
+                C_No3++;
             }
             break;
         case 1:
             if (Next_Step) {
-                C_No[3]++;
+                C_No3++;
                 C_Timer = 20;
             }
             break;
@@ -1494,8 +1498,8 @@ void Game_Manage_12_8(void) {
                 C_Timer = 1;
             }
             if (--C_Timer == 0) {
-                C_No[2]++;
-                C_No[3] = 0;
+                C_No2++;
+                C_No3 = 0;
                 C_Timer = 30;
             }
             break;
@@ -1503,27 +1507,27 @@ void Game_Manage_12_8(void) {
         break;
     case 1:
         if (Bonus_Cut_Sub() == 0 && --C_Timer == 0) {
-            C_No[2]++;
+            C_No2++;
             C_Timer = 20;
             Score[Player_id][0] += Bonus_Score;
             sc_ram_to_vram_opc(27, Game_setting.mode * 7, 1, 30);
             Disp_Digit16x24(Bonus_Score, 35, 11, 30);
             if (Bonus_Game_result == 0) {
-                C_No[2] = 99;
+                C_No2 = 99;
                 C_Timer = 120;
             }
         }
         break;
     case 2:
         if (Bonus_Cut_Sub() == 0 && --C_Timer == 0) {
-            C_No[2]++;
+            C_No2++;
             C_Timer = 1;
         }
         break;
     case 3:
         if (Bonus_Cut_Sub() == 0 && --C_Timer == 0) {
             if (bcounter_down(0) == 0) {
-                C_No[2]++;
+                C_No2++;
                 C_Timer = 3;
                 Bonus_Score += 1000;
                 Score[Player_id][0] += 1000;
@@ -1538,15 +1542,15 @@ void Game_Manage_12_8(void) {
         break;
     case 4:
         if (--C_Timer == 0) {
-            C_No[2]++;
+            C_No2++;
             C_Timer = 30;
         }
         break;
     default:
         if (Cut_Cut_C_Timer() == 0) {
-            C_No[1]++;
-            C_No[2] = 0;
-            C_No[3] = 0;
+            C_No1++;
+            C_No2 = 0;
+            C_No3 = 0;
             C_Timer = 10;
             Forbid_Break = 0;
             tilemap_clear_rect(1, 8, DE_X[1] + 47, 21);
@@ -1594,16 +1598,18 @@ void Disp_Bonus_Perfect(void) {
 
 
 void Flash_Bonus_Perfect(void) {
+    s32 (*fp)() = effect_89_init;
+    register s16* py = &DE_X[1];
     switch (PB_Status) {
     case 1:
-        effect_89_init(10, 1, 15, DE_X[1] + 36, 3);
+        fp(10, 1, 15, *py + 36, 3);
         break;
     case 2:
-        effect_89_init(9, 1, 15, (*&DE_X)[1] + 36, 3);
+        fp(9, 1, 15, *py + 36, 3);
         break;
     case 3:
-        effect_89_init(10, 1, 15, (*&DE_X)[1] + 36, 3);
-        effect_89_init(9, 1, 19, DE_X[1] + 36, 3);
+        fp(10, 1, 15, *py + 36, 3);
+        fp(9, 1, 19, *py + 36, 3);
         break;
     }
 }
@@ -1667,14 +1673,14 @@ s32 Bonus_Cut_Sub(void) {
             Disp_Digit16x24(Stock_Bonus_Game_Result * 1000, 35, 11, 30);
             Disp_Bonus_Perfect();
             Flash_Bonus_Perfect();
-            C_No[2] = 3;
-            C_No[3] = 99;
+            C_No2 = 3;
+            C_No3 = 99;
             return C_Timer = 90;
         }
         bcounter_down(1);
         Disp_Digit16x24(Bonus_Score_Plus, 35, 11, 30);
-        C_No[2] = 4;
-        C_No[3] = 99;
+        C_No2 = 4;
+        C_No3 = 99;
         return C_Timer = 90;
     }
     return 0;
@@ -1684,10 +1690,10 @@ s32 Bonus_Cut_Sub(void) {
 
 s32 Check_Time_Over(void) {
     s16 ret = 0;
-    switch (C_No[2]) {
+    switch (C_No2) {
     case 0:
         if (Time_Over) {
-            C_No[2]++;
+            C_No2++;
             C_Timer = 60;
             Game_pause = 1;
             sc_picture_put(2, 0, 0);
@@ -1697,7 +1703,7 @@ s32 Check_Time_Over(void) {
         break;
     case 1:
         if (--C_Timer == 0) {
-            C_No[2]++;
+            C_No2++;
             Game_pause = 0;
             tilemap_clear_rect(DE_X[3] + 8, 9, DE_X[1] + 47, 16);
         }
@@ -1840,19 +1846,20 @@ s32 Check_Disp_Winner(void) {
 
 
 void Disp_Winner(void) {
-    s8 w = Winner_id;
     if (Play_Type == 1) {
-        winner_name_put(My_char[w]);
+        winner_name_put((s32)(s8)My_char[Winner_id]);
         effect_89_init(1, DE_X[3] + 10, 9, 29, 4);
         sound_request(0x8D);
-    } else if (Round_Operator[w] != 0) {
-        sc_picture_put(5, 0, 0);
-        effect_89_init(1, DE_X[3] + 11, 9, 25, 4);
-        sound_request(0x8D);
     } else {
-        sc_picture_put(6, 0, 0);
-        effect_89_init(2, (*&DE_X)[3] + 11, 9, 24, 4);
-        sound_request(0x8E);
+        if ((&Round_Operator[0])[Winner_id] != 0) {
+            sc_picture_put(5, 0, 0);
+            effect_89_init(1, DE_X[3] + 11, 9, 25, 4);
+            sound_request(0x8D);
+        } else {
+            sc_picture_put(6, 0, 0);
+            effect_89_init(2, DE_X[3] + 11, 9, 24, 4);
+            sound_request(0x8E);
+        }
     }
 }
 
@@ -1860,17 +1867,17 @@ void Disp_Winner(void) {
 
 void Update_Level_Control(void) {
     if (Round_Operator[Winner_id]) {
-        if ((Round_Operator[Loser_id]) != 0) {
-            return;
+        if (!Round_Operator[Loser_id]) {
+            Control_Time += 40;
+            if (Control_Time > Limit_Time) {
+                Control_Time = Limit_Time;
+                return;
+            }
         }
-        Control_Time += 40;
-        if (Control_Time > Limit_Time) {
-            Control_Time = Limit_Time;
+    } else {
+        if ((Control_Time -= 40) < 0) {
+            Control_Time = 0;
         }
-        return;
-    }
-    if ((Control_Time -= 40) < 0) {
-        Control_Time = 0;
     }
 }
 
@@ -1884,10 +1891,11 @@ void request_center_message(s16 Kind_of_Message) {
 
 
 s32 Judge_Next_Disposal(void) {
-    if (PL_Wins[0] != PL_Wins[1]) {
+    s16* p;
+    if (*(p = &PL_Wins[0]) != PL_Wins[1]) {
         return 0;
     }
-    if (PL_Wins[0] >= Battle_Round[Play_Type]) {
+    if (*p >= Battle_Round[Play_Type]) {
         return 1;
     }
     return 0;
@@ -1896,13 +1904,14 @@ s32 Judge_Next_Disposal(void) {
 
 
 void Check_Perfect(s16 PL_id) {
-    if (plw[PL_id].wu.vitality != plw[PL_id].wu.vital_new) {
-        return;
+    PLW* f = &plw[PL_id];
+
+    if (f->wu.vitality == f->wu.vital_new) {
+        Perfect_Flag = 1;
+        Perfect_Counter[Winner_id]++;
+        Round_Result |= 2;
+        win_type[PL_id][PL_Wins[PL_id]] = 3;
     }
-    Perfect_Flag = 1;
-    Perfect_Counter[Winner_id]++;
-    Round_Result |= 2;
-    win_type[PL_id][PL_Wins[PL_id]] = 3;
 }
 
 
@@ -1937,9 +1946,9 @@ s32 Check_Ending(void) {
         return 0;
     }
     if (Check_Ending_Sub()) {
-        G_No[1] = 8;
-        G_No[2] = 0;
-        E_No[0] = 10;
+        G_No1 = 8;
+        G_No2 = 0;
+        E_No0 = 10;
         End_PL = My_char[WINNER];
         plw[WINNER].wu.operator = 0;
         Operator_Status[WINNER] = 0;
@@ -2027,17 +2036,17 @@ void Loser_Sub(void) {
 
 
 void Be_Continue(void) {
-    s8 id = LOSER;
+    s8 s = LOSER;
     if (Continue_Flag != 0 && Game_setting.set5 == 0) {
-        Continue_Count_Down[id] = 0;
+        Continue_Count_Down[s] = 0;
         Continue_Count[LOSER] = 9;
         E_Number[LOSER][0] = 5;
         E_Number[LOSER][1] = 0;
         E_Number[LOSER][2] = 0;
         E_Number[LOSER][3] = 0;
-        return;
+    } else {
+        Setup_Next_Step(s);
     }
-    Setup_Next_Step(id);
 }
 
 
@@ -2094,14 +2103,12 @@ void Update_VS_Data(void) {
 
 
 void Check_Fade_Out_BGM(s16 Time) {
-    if (BGM_Fade_Out_Flag) {
-        return;
+    if (!BGM_Fade_Out_Flag) {
+        if (PL_Wins[Winner_id] >= Battle_Round[Play_Type] + 1) {
+            BGM_Fade_Out_Flag = 1;
+            bgm_fade_out(Time);
+        }
     }
-    if (PL_Wins[Winner_id] < Battle_Round[Play_Type] + 1) {
-        return;
-    }
-    BGM_Fade_Out_Flag = 1;
-    bgm_fade_out(Time);
 }
 
 void Control_Music_Fade(s16 time)
@@ -2168,15 +2175,12 @@ void BGM_Control(void) {
     }
 }
 
-s32 Setup_BGM_Fade_In(u8 time)
-{
-    s8 keep;
-    keep = Keep_BGM_Flag;
-    if (!keep) {
-        BGM_No[1] = 1;
-        BGM_Timer[1] = time;
+void Setup_BGM_Fade_In(u8 time) {
+    if (Keep_BGM_Flag) {
+        return;
     }
-    return keep;
+    BGM_No[1] = 1;
+    BGM_Timer[1] = time;
 }
 
 void complete_victory_pause(void)

@@ -50,8 +50,21 @@ const s16 end_5_pos[11][2] = {
     { 256, 768 },
 };
 
-const END_500_JP end_500_jp_tbl[1] = {
-    { { end_500_comm, end_500_0001, end_500_0001, end_500_comm, end_500_comm, end_500_comm, end_500_0006, end_500_0007, end_500_0008, end_X_com01, end_X_com01, end_500_0011, end_X_com01 } },
+/* Initial values of jmp_tbl (end_500_move) in end_5.c. */
+const u32 end_500_jmp_tbl_init[13] = {
+    (u32)end_500_comm,
+    (u32)end_500_0001,
+    (u32)end_500_0001,
+    (u32)end_500_comm,
+    (u32)end_500_comm,
+    (u32)end_500_comm,
+    (u32)end_500_0006,
+    (u32)end_500_0007,
+    (u32)end_500_0008,
+    (u32)end_X_com01,
+    (u32)end_X_com01,
+    (u32)end_500_0011,
+    (u32)end_X_com01,
 };
 
 const s16 necro_quake_tbl[32][2] = {
@@ -72,9 +85,7 @@ const s16 end_500_quake_tbl[8] = {
     2, 4, -2, -4, -2, -4, 2, 4,
 };
 
-/* The initial values of end_500_jp (end_501_move) in end_5.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of end_500_jp (end_501_move) in end_5.c. */
 const u32 end_500_jp_init[13] = {
     (u32)end_X_com01,
     (u32)end_X_com01,

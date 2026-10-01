@@ -1033,6 +1033,7 @@ const u8 debug_charset_tbl[24] = {
     18, 19, 20, 21, 22, 6, 6, 6,
 };
 
+/* Read by debug_menu_select_dispatch. */
 const STAGE_TBL_T debug_select_jmp_data[1] = {
     { { debug_menu_select_init, debug_menu_select_run } },
 };
@@ -1041,9 +1042,7 @@ const char debug_cursor_msg[4] = "T";
 
 const char debug_space_msg[4] = " ";
 
-/* The initial values of Debug_Tbl (debug_main_dispatch), BG_Tbl (debug_bg_select_dispatch) in CMD_MAIN.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of Debug_Tbl (debug_main_dispatch), BG_Tbl (debug_bg_select_dispatch) in CMD_MAIN.c. */
 const u32 CMD_MAIN_local_init[16] = {
     (u32)debug_bg_select_dispatch,
     (u32)debug_object_look_dispatch,
@@ -1065,9 +1064,7 @@ const u32 CMD_MAIN_local_init[16] = {
 
 const char bg_select_msg[12] = "BG SELECT";
 
-/* The initial values of Look_Tbl (debug_object_look_dispatch) in CMD_MAIN.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of Look_Tbl (debug_object_look_dispatch) in CMD_MAIN.c. */
 const u32 Look_Tbl_init[2] = {
     (u32)debug_object_look_init,
     (u32)debug_object_look_run,
@@ -1075,8 +1072,10 @@ const u32 Look_Tbl_init[2] = {
 
 const char object_look_msg[12] = "OBJECT LOOK";
 
-const ROUTINES2 object_edit_jmp_data[1] = {
-    { { debug_object_edit_init, debug_object_edit_move } },
+/* Initial values of Edit_Tbl (debug_object_edit_dispatch) in CMD_MAIN.c. */
+const u32 Edit_Tbl_init[2] = {
+    (u32)debug_object_edit_init,
+    (u32)debug_object_edit_move,
 };
 
 const char object_edit_msg[12] = "OBJECT EDIT";
@@ -1085,9 +1084,7 @@ const char no_edit_erase_msg[8] = "       ";
 
 const char no_edit_msg[8] = "NO EDIT";
 
-/* The initial values of All_Tbl (debug_object_edit_all_char_dispatch) in CMD_MAIN.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of All_Tbl (debug_object_edit_all_char_dispatch) in CMD_MAIN.c. */
 const u32 All_Tbl_init[2] = {
     (u32)debug_object_edit_all_char_init,
     (u32)debug_object_edit_all_char_move,
@@ -1095,9 +1092,7 @@ const u32 All_Tbl_init[2] = {
 
 const char object_edit_all_msg[32] = "OBJECT EDIT  -ALL CHAR VERSION-";
 
-/* The initial values of Hit_Tbl (debug_hit_judgment_dispatch) in CMD_MAIN.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of Hit_Tbl (debug_hit_judgment_dispatch) in CMD_MAIN.c. */
 const u32 Hit_Tbl_init[6] = {
     (u32)debug_hit_judgment_init,
     (u32)debug_hit_judgment_move,
@@ -1143,9 +1138,7 @@ const char dbg_hitbox_row_str[20] = " 000,000, 000,000";
 
 const char dbg_minus_str[4] = "-";
 
-/* The initial values of Catch_Tbl (debug_catch_judgment_dispatch) in CMD_MAIN.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of Catch_Tbl (debug_catch_judgment_dispatch) in CMD_MAIN.c. */
 const u32 Catch_Tbl_init[2] = {
     (u32)debug_catch_judgment_init,
     (u32)debug_catch_judgment_run,
@@ -1153,17 +1146,17 @@ const u32 Catch_Tbl_init[2] = {
 
 const char dbg_catch_judge_title[16] = "CATCH JUDJEMENT";
 
-const JMP_TBL2 preview_jmp_tbl[1] = {
-    { { debug_char_preview_init, debug_char_preview_run } },
+/* Initial values of Preview_Tbl (debug_char_preview_dispatch) in CMD_MAIN.c. */
+const u32 Preview_Tbl_init[2] = {
+    (u32)debug_char_preview_init,
+    (u32)debug_char_preview_run,
 };
 
 const char dbg_tikuji_str[8] = "TIKUJI";
 
 const char dbg_ikkatu_str[8] = "IKKATU";
 
-/* The initial values of Parts_Tbl (debug_parts_dispatch) in CMD_MAIN.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of Parts_Tbl (debug_parts_dispatch) in CMD_MAIN.c. */
 const u32 Parts_Tbl_init[2] = {
     (u32)debug_parts_init,
     (u32)debug_parts_run,

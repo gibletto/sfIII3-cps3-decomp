@@ -34,17 +34,18 @@ void effect_62_move(WORK_Other* ewk) {
             ewk->wu.xyz[1].cal -= ewk->wu.mvxy.a[1].sp;
             ewk->wu.disp_flag = 1;
             ewk->wu.cg_flip = 2;
+            disp_pos_trans_entry_seraph(ewk);
             break;
         case 1:
             ewk->wu.xyz[1].cal += ewk->wu.mvxy.a[1].sp;
             ewk->wu.disp_flag = 1;
             ewk->wu.cg_flip = 0;
+            disp_pos_trans_entry_seraph(ewk);
             break;
         default:
             ewk->wu.disp_flag = 0;
-            return;
+            break;
         }
-        disp_pos_trans_entry_seraph(ewk);
         break;
     default:
         all_cgps_put_back(ewk);

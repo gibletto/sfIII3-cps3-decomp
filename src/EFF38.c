@@ -205,8 +205,9 @@ void EFF38_SHIFT(WORK_Other* ewk) {
 
 
 s32 Shift_38(WORK_Other* ewk) {
-    s16 ix;
     s16 loop;
+    s16 t[2];
+    s16 ix;
     if (Scene_Cut) {
         loop = 3;
     } else {
@@ -227,7 +228,7 @@ s32 Shift_38(WORK_Other* ewk) {
 s32 Move_X_Sub_38(WORK_Other* ewk) {
     ewk->wu.xyz[0].cal += ewk->wu.mvxy.a[0].sp;
     ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;
-    if (0 < ewk->wu.mvxy.a[0].sp) {
+    if (ewk->wu.mvxy.a[0].sp > 0) {
         if (ewk->wu.hit_quake <= ewk->wu.xyz[0].disp.pos) {
             ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake;
             ewk->wu.mvxy.a[0].sp = 0;
@@ -235,8 +236,7 @@ s32 Move_X_Sub_38(WORK_Other* ewk) {
             return 1;
         }
         return 0;
-    }
-    if (ewk->wu.hit_quake >= ewk->wu.xyz[0].disp.pos) {
+    } else if (ewk->wu.hit_quake >= ewk->wu.xyz[0].disp.pos) {
         ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake;
         ewk->wu.mvxy.a[0].sp = 0;
         ewk->wu.mvxy.d[0].sp = 0;

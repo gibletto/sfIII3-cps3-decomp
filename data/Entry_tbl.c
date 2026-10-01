@@ -877,9 +877,7 @@ const char str_R13[4] = "R13";
 const char str_R14[4] = "R14";
 const char str_SP[4] = "SP";
 
-/* The initial values of Main_Jmp_Tbl (entry_main) in Entry.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of Main_Jmp_Tbl (entry_main) in Entry.c. */
 const u32 Main_Jmp_Tbl_init[11] = {
     (u32)Entry_00,
     (u32)Entry_01,

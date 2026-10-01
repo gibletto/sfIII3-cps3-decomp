@@ -27,19 +27,6 @@
 
 
 /* provisional name */
-void end_ake_cell_put(s8 map, s32 ofs, s32 cell, u32 src) {
-    u16* dst;
-    u16* s;
-    u16 code = 0;
-    dst = (u16*)(ake_scrl_w[map].adrs + ofs);
-    s = (u16*)((cell << 10) + src);
-    code += bg_w.ake_cg_adr >> 7;
-    ((void(*)())blit_16x16_tile)(s, code, dst, 0x220);
-}
-
-
-
-/* provisional name */
 void end_01000(u16 pl_num) {
     switch (end_w.r_no_1) {
     case 0:
@@ -149,19 +136,20 @@ void end_100_0000(void) {
 void end_100_0001(void) {
     switch (bgw_ptr->r_no_1) {
     case 0:
-        if (Request_Fade(111, 1)) {
-            bgw_ptr->r_no_1 = bgw_ptr->r_no_1 + 1;
-            end_no_cut = 1;
-            bgw_ptr->xy[0].disp.pos = end_1_pos[end_w.r_no_2][0];
-            bgw_ptr->xy[1].disp.pos = end_1_pos[end_w.r_no_2][1];
-            bgw_ptr->abs_x = 512;
-            effect_E6_init(0xA3);
-            Rewrite_End_Message(2);
+        if (Request_Fade(0x6F, 1) == 0) {
+            break;
         }
+        bgw_ptr->r_no_1++;
+        end_no_cut = 1;
+        bgw_ptr->xy[0].disp.pos = end_1_pos[end_w.r_no_2][0];
+        bgw_ptr->xy[1].disp.pos = end_1_pos[end_w.r_no_2][1];
+        bgw_ptr->abs_x = 0x200;
+        effect_E6_init(0xA3);
+        Rewrite_End_Message(2);
         break;
     case 1:
         if (end_fade_complete()) {
-            bgw_ptr->r_no_1 = bgw_ptr->r_no_1 + 1;
+            bgw_ptr->r_no_1++;
             end_no_cut = 0;
         }
         break;

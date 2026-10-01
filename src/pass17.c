@@ -2013,7 +2013,7 @@ void Passive17_0115(PLW* wk) {
 void Passive17_0116(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Jump_Attack_Term(wk, -1, -0x7FA0, 0xB, 0x200, 0, -0x7FA0, -1, 0x20);
+        Jump_Attack_Term(wk, -1, 0x8060, 0xB, 0x200, 0, 0x8060, -1, 0x20);
         break;
     default:
         End_Pattern(wk);

@@ -39,14 +39,13 @@ s32 sa_stop_check(void) {
 
 void check_my_tk_power_off(PLW* wk) {
     if (wk->wu.old_rno[1] == 1) {
-        if (wk->wu.old_rno[2] < 8 && wk->wu.old_rno[2] > 3) {
-            return;
+        if (wk->wu.old_rno[2] >= 8 || wk->wu.old_rno[2] <= 3) {
+            wk->tk_dageki = 0;
+            wk->tk_nage = 0;
+            wk->tk_kizetsu = 0;
         }
-        wk->tk_dageki = 0;
-        wk->tk_nage = 0;
-        wk->tk_kizetsu = 0;
-    } else if (wk->wu.old_rno[1] == 3 && !wk->wu.routine_no[1] && wk->wu.routine_no[2] < 51) {
-        if (wk->wu.routine_no[2] > 46) {
+    } else if (wk->wu.old_rno[1] == 3) {
+        if (wk->wu.routine_no[1] == 0 && wk->wu.routine_no[2] < 0x33 && wk->wu.routine_no[2] > 0x2E) {
         }
     }
 }
@@ -285,42 +284,47 @@ void remake_sankaku_tobi_mvxy(WORK* wk, u8 kabe) {
 
 
 s32 check_F_R_dash(PLW* wk) {
+    s16* q;
     s16 num;
     s16 rnum;
-    if (Bonus_Game_Flag != 21 || !wk->bs2_on_car) {
-        if (wk->wu.xyz[1].disp.pos > 0) {
-            return 0;
-        }
+    if (Bonus_Game_Flag == 21 && wk->bs2_on_car) {
+        goto ok;
     }
-    num = (wk->cp->waza_flag[0] != 0) + (wk->cp->waza_flag[1] != 0) * 2;
+    if (wk->wu.xyz[1].disp.pos > 0) {
+        return 0;
+    }
+ok:
+    q = &wk->cp->waza_flag[0];
+    num = (q[0] != 0);
+    num += (q[1] != 0) * 2;
     rnum = 0;
 loop:
     switch (num) {
     case 1:
-        if (!(wk->spmv_ng_flag & 4)) {
-            wk->wu.routine_no[1] = 0;
-            wk->wu.routine_no[2] = 5;
-            wk->wu.routine_no[3] = 0;
-            rnum = 1;
+        if (wk->spmv_ng_flag & 4) {
+            break;
         }
+        wk->wu.routine_no[1] = 0;
+        wk->wu.routine_no[2] = 5;
+        wk->wu.routine_no[3] = 0;
+        rnum = 1;
         break;
     case 2:
-        if (!(wk->spmv_ng_flag & 8)) {
-            wk->wu.routine_no[1] = 0;
-            wk->wu.routine_no[2] = 6;
-            wk->wu.routine_no[3] = 0;
-            rnum = 1;
+        if (wk->spmv_ng_flag & 8) {
+            break;
         }
+        wk->wu.routine_no[1] = 0;
+        wk->wu.routine_no[2] = 6;
+        wk->wu.routine_no[3] = 0;
+        rnum = 1;
         break;
     case 3:
         if (wk->cp->lever_dir < 2) {
             num = 1;
-            goto loop;
         } else {
             num = 2;
-            goto loop;
         }
-        break;
+        goto loop;
     }
     if (rnum) {
         grade_add_command_waza(wk->wu.id);
@@ -401,22 +405,22 @@ s32 check_bend_myself(PLW* wk) {
 
 
 s32 check_F_R_walk(PLW* wk) {
-    s16 rnum = 0;
+    s16 r = 0;
     switch (wk->cp->lever_dir) {
     case 1:
         wk->wu.routine_no[1] = 0;
         wk->wu.routine_no[2] = 3;
         wk->wu.routine_no[3] = 0;
-        rnum = 1;
+        r = 1;
         break;
     case 2:
-        rnum = 1;
         wk->wu.routine_no[1] = 0;
         wk->wu.routine_no[2] = 4;
+        r = 1;
         wk->wu.routine_no[3] = 0;
         break;
     }
-    return rnum;
+    return r;
 }
 
 
@@ -746,15 +750,13 @@ s32 check_ashimoto(PLW* wk) {
 s32 check_floor_2(PLW* wk) {
     WORK* efw;
     if (wk->bs2_on_car == 0) {
-    no_floor:
+        return 0;
+    } else if (wk->bs2_area_car != 0) {
         return 0;
     }
-    if (wk->bs2_area_car) {
-        goto no_floor;
-    }
     efw = (WORK*)((WORK*)wk->wu.target_adrs)->my_effadrs;
-    if (hit_check_x_only(&wk->wu, efw, &wk->wu.hosei_adrs->hos_box[4], &efw->h_hos->hos_box[0]) != 0) {
-        goto no_floor;
+    if (hit_check_x_only(&wk->wu, efw, &wk->wu.hosei_adrs->hos_box[4], &efw->h_hos->hos_box[0])) {
+        return 0;
     }
     return 1;
 }

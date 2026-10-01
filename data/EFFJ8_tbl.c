@@ -22,9 +22,7 @@ const s16 effj8_y_tbl[8] = {
     128, 80, 96, 160, 176, 112, 144, 168,
 };
 
-/* The initial values of dragonfly_move_jp1 (dragonfly_move) in EFFJ8.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of dragonfly_move_jp1 (dragonfly_move) in EFFJ8.c. */
 const u32 dragonfly_move_jp1_init[8] = {
     (u32)dragonfly_move_0000,
     (u32)dragonfly_move_0001,

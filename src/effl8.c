@@ -21,16 +21,18 @@
 
 
 s32 effect_L8_move(WORK_Other* ewk) {
-    PLW* mwk = (PLW*)ewk->my_master;
-    s16* save_old_col_ptr = (s16*)&ewk->wu.zu_flag;
-    s32 rc;
+    PLW* mwk;
+    s16* save_old_col_ptr;
+
+    mwk = (PLW*)ewk->my_master;
+    save_old_col_ptr = (s16*)&ewk->wu.zu_flag;
     ewk->wu.rl_flag = mwk->wu.rl_flag;
     switch (ewk->wu.routine_no[0]) {
     case 0:
-        ewk->wu.routine_no[0] += 1;
+        ewk->wu.routine_no[0]++;
         ewk->wu.hit_adrs = (u32*)effL8_data_tbl[ewk->wu.type];
-        ewk->wu.step_xy_table = (s16*)(COLOR_RAM + (ewk->master_id == 1) * 0x800);
-        ewk->wu.move_xy_table = ewk->wu.step_xy_table + 512;
+        ewk->wu.step_xy_table = (s16*)((ewk->master_id == 1) * 0x800 + COLOR_RAM);
+        ewk->wu.move_xy_table = (s16*)((u8*)ewk->wu.step_xy_table + 0x400);
         ewk->wu.dir_timer = 0;
         ewk->wu.dir_step = 0;
         ewk->wu.dir_old = 1;
@@ -38,17 +40,20 @@ s32 effect_L8_move(WORK_Other* ewk) {
         check_new_color_data_L8(&ewk->wu);
         mwk->att_plus = 14;
         spmv_ng_save = mwk->spmv_ng_flag;
-        mwk->spmv_ng_flag = (mwk->spmv_ng_flag | 16);
-        return 0x3BC;
+        mwk->spmv_ng_flag |= 16;
+        break;
     case 1:
-        if ((rc = ewk->wu.dead_f) == 1) {
-            ewk->wu.routine_no[0] += 1;
-        } else if ((rc = mwk->sa->ok) != -1) {
-            ewk->wu.routine_no[0] += 1;
+        if (ewk->wu.dead_f == 1) {
+            ewk->wu.routine_no[0]++;
+            break;
         }
-        return rc;
+        if (mwk->sa->ok != -1) {
+            ewk->wu.routine_no[0]++;
+            break;
+        }
+        break;
     case 2:
-        ewk->wu.routine_no[0] += 1;
+        ewk->wu.routine_no[0]++;
         load_old_color_data(save_old_col_ptr, ewk->wu.step_xy_table);
         load_old_color_data(save_old_col_ptr, ewk->wu.move_xy_table);
         mwk->att_plus = 8;

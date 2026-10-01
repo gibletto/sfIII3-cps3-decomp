@@ -23,7 +23,7 @@ void load_player_color_fade(u16 a, s16 b, s16 c, u8 d, u8 e, u8 f);
 void load_char_eff_color();
 void load_side_color(u8 side, u16 ix);
 void load_player_sub_color(void);
-s32 load_opt_color(u16 ix);
+void load_opt_color(u16 ix);
 void card_msg_disp(void);
 void cd_error_fatal_hang(s32 kind);
 void cd_keep_spinning_tick(void);

@@ -28,7 +28,7 @@ void cram_bank_init(void) {
 
 /* provisional name */
 s16 cram_bank_set(s16 bank) {
-    if (bank == cram_bank_now) {
+    if (cram_bank_now == bank) {
         return cram_bank_now;
     }
     cram_bank_old = cram_bank_now;

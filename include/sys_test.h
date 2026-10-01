@@ -81,7 +81,7 @@ u16 * memtest_pattern_byte_lane(u16 *start, u32 size);
 u32 memtest_pattern_masked_word(volatile u16* addr, u32 size);
 u32 memtest_pattern_stride_8(volatile u16* addr, u32 size);
 u16 * switch_work_clear(char level);
-char * dispenser_init(void);
+void dispenser_init(void);
 void screentest_draw_crosshatch(void);
 void scroll_layer_commit(void);
 void scrn_line_set_now();

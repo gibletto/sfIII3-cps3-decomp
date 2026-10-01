@@ -565,7 +565,7 @@ hang_loop:
 ; (exception_regs) in three columns, lists the code at the saved pc (dbg_disasm_rows), waits
 ; for the input word to read CFFF and restarts through vector_restart. It uses r11-r14 as if the routine
 ; had set them up, but nothing does: the loop above stands where that setup would be, so an exception
-; always ends in the loop. Kept as the ROM has it.
+; always ends in the loop.
 crash_screen_regs:
           MOV.L       R14,@-R15
           MOV.L       @R13,R7

@@ -153,18 +153,22 @@ void makeup_bonus_game_level(s16 ix) {
 
 
 s32 set_bonus_game_difficulty(s16 emid) {
-    s16 grade = judge_final[emid][0].vs_cpu_grade[11];
-    if (grade < 9) {
+    s16 s;
+
+    s = judge_final[emid][0].vs_cpu_grade[11];
+    if (s < 9) {
         return 0;
-    } else if (grade < 15) {
-        return 1;
-    } else if (grade < 18) {
-        return 2;
-    } else if (grade < 21) {
-        return 3;
-    } else {
-        return 4;
     }
+    if (s < 0xf) {
+        return 1;
+    }
+    if (s < 0x12) {
+        return 2;
+    }
+    if (s < 0x15) {
+        return 3;
+    }
+    return 4;
 }
 
 
@@ -203,11 +207,15 @@ s32 set_bonus_game_nando(u16 swdat) {
 
 
 s32 katteni_bonus_nando(u16 swdat) {
-    if (swdat & 1 && swdat & 0x70) {
-        return 1;
+    if (swdat & 1) {
+        if (swdat & 0x70) {
+            return 1;
+        }
     }
-    if (swdat & 2 && swdat & 0x380) {
-        return 1;
+    if (swdat & 2) {
+        if (swdat & 0x380) {
+            return 1;
+        }
     }
     return 0;
 }

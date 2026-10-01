@@ -28,9 +28,7 @@ const s16 end_d_pos[8][2] = {
     { 256, 0 }, { 256, 768 }, { 256, 768 }, { 256, 512 }, { 192, 256 }, { 256, 512 }, { 256, 0 }, { 256, 0 },
 };
 
-/* The initial values of end_101_jp (end_d00_move), end_d01_jp (end_d01_move) in end_13.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of end_101_jp (end_d00_move), end_d01_jp (end_d01_move) in end_13.c. */
 const u32 end_13_local_init[16] = {
     (u32)end_d00_1000,
     (u32)end_d00_1000,

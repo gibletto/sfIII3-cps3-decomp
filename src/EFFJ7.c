@@ -21,13 +21,20 @@
 
 
 void effect_J7_move(WORK_Other* ewk) {
-    PLW* mwk = (PLW*)ewk->my_master;
+    PLW* mwk;
+
+    mwk = (PLW*)ewk->my_master;
     ewk->wu.rl_flag = mwk->wu.rl_flag;
     switch (ewk->wu.routine_no[0]) {
     case 0:
-        if (mwk->gill_ccch_go == 0 && (mwk->wu.routine_no[1] != 0 || mwk->wu.routine_no[2] != 1)) {
+        if (mwk->gill_ccch_go) {
+        } else {
+            if (mwk->wu.routine_no[1] == 0 && mwk->wu.routine_no[2] == 1) {
+                goto go;
+            }
             break;
         }
+    go:
         ewk->wu.routine_no[0]++;
         ewk->wu.hit_adrs = (u32*)pl00_cctbl[ewk->wu.type][0];
         ewk->wu.dmg_adrs = (u32*)pl00_cctbl[ewk->wu.type][1];
@@ -36,18 +43,26 @@ void effect_J7_move(WORK_Other* ewk) {
         ewk->wu.dir_timer = 0;
         ewk->wu.dir_step = 0;
         ewk->wu.dir_old = 1;
-        do { if (--(&ewk->wu)->dir_timer < 0) { if ((&ewk->wu)->dir_old) { (&ewk->wu)->dir_step = 1; } else { (&ewk->wu)->dir_step++; } if ((&ewk->wu)->rl_flag) { get_new_color_data((&ewk->wu), (ColorCode*)(&ewk->wu)->hit_adrs, (&ewk->wu)->step_xy_table); get_new_color_data((&ewk->wu), (ColorCode*)(&ewk->wu)->dmg_adrs, (&ewk->wu)->move_xy_table); } else { get_new_color_data((&ewk->wu), (ColorCode*)(&ewk->wu)->dmg_adrs, (&ewk->wu)->move_xy_table); get_new_color_data((&ewk->wu), (ColorCode*)(&ewk->wu)->hit_adrs, (&ewk->wu)->step_xy_table); } } } while (0);
-        break;
+        J7_color_step(&ewk->wu);
+        return;
     case 1:
         if (ewk->wu.dead_f == 1) {
             ewk->wu.routine_no[0] = 3;
-        } else if (mwk->wu.vital_new < 0) {
+            break;
+        }
+        if (mwk->wu.vital_new < 0) {
             ewk->wu.routine_no[0] = 2;
             ewk->wu.routine_no[1] = 0;
-        } else if (EXE_flag == 0 && Game_pause == 0) {
-            do { if (--(&ewk->wu)->dir_timer < 0) { if ((&ewk->wu)->dir_old) { (&ewk->wu)->dir_step = 1; } else { (&ewk->wu)->dir_step++; } if ((&ewk->wu)->rl_flag) { get_new_color_data((&ewk->wu), (ColorCode*)(&ewk->wu)->hit_adrs, (&ewk->wu)->step_xy_table); get_new_color_data((&ewk->wu), (ColorCode*)(&ewk->wu)->dmg_adrs, (&ewk->wu)->move_xy_table); } else { get_new_color_data((&ewk->wu), (ColorCode*)(&ewk->wu)->dmg_adrs, (&ewk->wu)->move_xy_table); get_new_color_data((&ewk->wu), (ColorCode*)(&ewk->wu)->hit_adrs, (&ewk->wu)->step_xy_table); } } } while (0);
+            break;
         }
-        break;
+        if (EXE_flag != 0) {
+            break;
+        }
+        if (Game_pause != 0) {
+            break;
+        }
+        J7_color_step(&ewk->wu);
+        return;
     case 2:
         switch (ewk->wu.routine_no[1]) {
         case 0:
@@ -62,23 +77,43 @@ void effect_J7_move(WORK_Other* ewk) {
                 get_new_color_data(&ewk->wu, (ColorCode*)ewk->wu.dmg_adrs, ewk->wu.move_xy_table);
                 get_new_color_data(&ewk->wu, (ColorCode*)ewk->wu.hit_adrs, ewk->wu.step_xy_table);
             }
-            break;
+            return;
         case 1:
             if (mwk->wu.routine_no[1] == 4 && mwk->wu.routine_no[2] == 21) {
                 ewk->wu.routine_no[1]++;
             }
             break;
         case 2:
-            if (mwk->wu.routine_no[1] != 4 || mwk->wu.routine_no[2] != 21) {
-                ewk->wu.routine_no[0] = 1;
-                ewk->wu.routine_no[1] = 0;
+            if (mwk->wu.routine_no[1] == 4 && mwk->wu.routine_no[2] == 21) {
+                break;
             }
+            ewk->wu.routine_no[0] = 1;
+            ewk->wu.routine_no[1] = 0;
             break;
         }
         break;
     default:
         push_effect_work(&ewk->wu);
-        break;
+        return;
+    }
+}
+
+
+/* The colour step of effect_J7_move (called from cases 0 and 1). */
+void J7_color_step(WORK* wk) {
+    if (--wk->dir_timer < 0) {
+        if (wk->dir_old) {
+            wk->dir_step = 1;
+        } else {
+            wk->dir_step++;
+        }
+        if (wk->rl_flag) {
+            get_new_color_data(wk, (ColorCode*)wk->hit_adrs, wk->step_xy_table);
+            get_new_color_data(wk, (ColorCode*)wk->dmg_adrs, wk->move_xy_table);
+        } else {
+            get_new_color_data(wk, (ColorCode*)wk->dmg_adrs, wk->move_xy_table);
+            get_new_color_data(wk, (ColorCode*)wk->hit_adrs, wk->step_xy_table);
+        }
     }
 }
 
@@ -86,8 +121,9 @@ void effect_J7_move(WORK_Other* ewk) {
 
 /* provisional name */
 void get_new_color_data(WORK* wk, ColorCode* trom, s16* tram) {
+    s16 i;
     const s16* data;
-    s32 i;
+
     wk->dir_timer = trom[wk->dir_step].timer;
     wk->dir_old = trom[wk->dir_step].endcode;
     data = trom[wk->dir_step].adrs;

@@ -104,9 +104,7 @@ const APPEAR_DATA appear_data[55] = {
     { -88, 0, -88, 0, 1, 3, 17 },
 };
 
-/* The initial values of appear_jmp_tbl (appear_player) in appear.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of appear_jmp_tbl (appear_player) in appear.c. */
 const u32 appear_jmp_tbl_init[42] = {
     (u32)Appear_00000,
     (u32)Appear_01000,

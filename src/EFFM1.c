@@ -97,9 +97,11 @@ void effm1_move(WORK_Other* ewk) {
 
 
 s32 effect_M1_init(WORK* wk) {
-    WORK_Other* ewk;
     s16 ix;
-    if ((ix = pull_effect_work(4)) == -1) {
+    WORK_Other* ewk;
+
+    ix = pull_effect_work(4);
+    if (ix == -1) {
         return -1;
     }
     ewk = (WORK_Other*)frw[ix];
@@ -126,9 +128,11 @@ s32 effect_M1_init(WORK* wk) {
     *ewk->wu.char_table = etc3_char_table;
     ewk->wu.sync_suzi = 0;
     if (wk->rl_flag) {
-        ewk->wu.old_rno[1] = bg_w.bgw[1].wxy[0].disp.pos - (bg_w.pos_offset + 32);
+        ewk->wu.old_rno[1] = bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset - 32;
     } else {
-        ewk->wu.old_rno[1] = bg_w.bgw[1].wxy[0].disp.pos + (bg_w.pos_offset + 32);
+        s16 v = bg_w.pos_offset + bg_w.bgw[1].wxy[0].disp.pos;
+        v += 32;
+        ewk->wu.old_rno[1] = v;
     }
     suzi_offset_set(ewk);
     return 0;

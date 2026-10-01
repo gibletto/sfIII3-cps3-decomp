@@ -74,40 +74,38 @@ void Player_catch(PLW* wk) {
 
 
 
+/* A reserved throw break skips the hazusenai test. */
 void check_nagenuke(PLW* wk, PLW* tk) {
     if (tk->wu.work_id != 1) {
         return;
     }
-    if (!tk->cat_break_reserve && tk->hazusenai_flag) {
+    if (tk->cat_break_reserve) {
+        goto ok;
+    }
+    if (tk->hazusenai_flag) {
         return;
     }
-    if (!wk->cat_break_ok_timer) {
-        return;
+ok:
+    if (wk->cat_break_ok_timer && wk->wu.routine_no[1] == 2 && check_nagenuke_cmd(tk)) {
+        if (wk->wu.xyz[1].disp.pos > 8) {
+            wk->wu.routine_no[2] = 50;
+        } else {
+            wk->wu.routine_no[2] = 48;
+        }
+        wk->wu.routine_no[1] = 0;
+        wk->wu.routine_no[3] = 0;
+        wk->wu.hit_stop = 0;
+        wk->wu.dm_stop = 0;
+        if (tk->wu.xyz[1].disp.pos > 8) {
+            tk->wu.routine_no[2] = 49;
+        } else {
+            tk->wu.routine_no[2] = 47;
+        }
+        tk->wu.routine_no[1] = 0;
+        tk->wu.routine_no[3] = 0;
+        tk->wu.hit_stop = 1;
+        tk->wu.dm_stop = 0;
     }
-    if (wk->wu.routine_no[1] != 2) {
-        return;
-    }
-    if (!check_nagenuke_cmd(tk)) {
-        return;
-    }
-    if (wk->wu.xyz[1].disp.pos > 8) {
-        wk->wu.routine_no[2] = 50;
-    } else {
-        wk->wu.routine_no[2] = 48;
-    }
-    wk->wu.routine_no[1] = 0;
-    wk->wu.routine_no[3] = 0;
-    wk->wu.hit_stop = 0;
-    wk->wu.dm_stop = 0;
-    if (tk->wu.xyz[1].disp.pos > 8) {
-        tk->wu.routine_no[2] = 49;
-    } else {
-        tk->wu.routine_no[2] = 47;
-    }
-    tk->wu.routine_no[1] = 0;
-    tk->wu.routine_no[3] = 0;
-    tk->wu.hit_stop = 1;
-    tk->wu.dm_stop = 0;
 }
 
 
@@ -173,17 +171,19 @@ void Catch_04000(PLW* wk) {
         break;
     case 1:
         char_move(&wk->wu);
-        if (wk->wu.cg_type == 20) {
+        if ((u8)wk->wu.cg_type == 20) {
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
             wk->wu.routine_no[3] = 2;
             wk->wu.cg_type = 0;
         }
         catch_cg_type_check(wk);
+        return;
+    default:
         break;
     case 2:
         jumping_union_process(&wk->wu, 1);
-        if (wk->wu.cg_type == 30) {
+        if ((u8)wk->wu.cg_type == 30) {
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.routine_no[3] = 3;
             wk->wu.cg_type = 0;
@@ -197,13 +197,14 @@ void Catch_04000(PLW* wk) {
     case 4:
         char_move(&wk->wu);
         catch_cg_type_check(wk);
-        break;
+        return;
     }
 }
 
 
 
 void Catch_05000(PLW* wk) {
+    s8 zero = 0;
     switch (wk->wu.routine_no[3]) {
     case 0:
         wk->wu.routine_no[3]++;
@@ -211,43 +212,45 @@ void Catch_05000(PLW* wk) {
         break;
     case 1:
         char_move(&wk->wu);
-        switch (wk->wu.cg_type) {
+        switch ((u8)wk->wu.cg_type) {
         case 1:
             wk->wu.routine_no[3] = 2;
-            wk->wu.cg_type = 0;
+            wk->wu.cg_type = zero;
             break;
-        case 20:
+        case 0x14:
             add_to_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
-            wk->wu.cg_type = 0;
+            wk->wu.cg_type = zero;
             break;
-        case 22:
+        case 0x16:
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
-            wk->wu.cg_type = 0;
-            break;
+            wk->wu.cg_type = zero;
+            goto next1;
         }
+    next1:
         catch_cg_type_check(wk);
         break;
     case 2:
         jumping_union_process(&wk->wu, 1);
-        switch (wk->wu.cg_type) {
+        switch ((u8)wk->wu.cg_type) {
         case 1:
             wk->wu.routine_no[3] = 1;
-            wk->wu.cg_type = 0;
-            break;
-        case 20:
+            wk->wu.cg_type = zero;
+            goto next2;
+        case 0x14:
             add_to_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
-            wk->wu.cg_type = 0;
+            wk->wu.cg_type = zero;
             break;
         }
+    next2:
         catch_cg_type_check(wk);
         break;
     case 3:
         char_move(&wk->wu);
         catch_cg_type_check(wk);
-        break;
+        return;
     }
 }
 

@@ -195,7 +195,7 @@ void super_arts_last_check(s8 PL) {
 
 
 void first_attack_pts_check(s8 PL) {
-    if (first_attack - 1 == plw[PL].wu.id) {
+    if (plw[PL].wu.id == first_attack - 1) {
         first_attack = 3;
         bonus_pts[PL] += 2;
     }

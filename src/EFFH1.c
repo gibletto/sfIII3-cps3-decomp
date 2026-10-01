@@ -47,7 +47,6 @@ void effect_H1_move(WORK_Other* ewk) {
 
 
 void eff_h1_move(WORK_Other* ewk) {
-    s16 work;
     switch (ewk->wu.routine_no[1]) {
     case 0:
         ewk->wu.old_rno[0]--;
@@ -60,21 +59,25 @@ void eff_h1_move(WORK_Other* ewk) {
         break;
     case 1:
         char_move(&ewk->wu);
-        if (range_x_check(ewk) && ewk->wu.xyz[1].disp.pos > -8) {
-            disp_pos_trans_entry(ewk);
-            break;
+        if (range_x_check(ewk) != 0) {
+            if (ewk->wu.xyz[1].disp.pos > -8) {
+                disp_pos_trans_entry(ewk);
+                return;
+            }
         }
-        if (ewk->wu.type > 4) {
+        if ((u8)ewk->wu.type > 4) {
             ewk->wu.routine_no[0]++;
-            break;
+        } else {
+            ewk->wu.routine_no[1] = 0;
+            ewk->wu.disp_flag = 0;
+            {
+                u16 work = random_16_com();
+                work &= 7;
+                ewk->wu.old_rno[0] = effh1_wait_timer[(s16)work];
+            }
+            ewk->wu.xyz[0].disp.pos = effh1_data_tbl[ewk->wu.type][0];
+            ewk->wu.xyz[1].disp.pos = effh1_data_tbl[ewk->wu.type][1];
         }
-        ewk->wu.routine_no[1] = 0;
-        ewk->wu.disp_flag = 0;
-        work = random_16_com();
-        work &= 7;
-        ewk->wu.old_rno[0] = effh1_wait_timer[work];
-        ewk->wu.xyz[0].disp.pos = effh1_data_tbl[ewk->wu.type][0];
-        ewk->wu.xyz[1].disp.pos = effh1_data_tbl[ewk->wu.type][1];
         break;
     }
 }

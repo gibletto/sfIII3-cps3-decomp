@@ -258,7 +258,7 @@ void effect_D6_move(WORK_Other* ewk) {
     case 0:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
-        add_pos_dir_064(&ewk->wu, ewk->wu.dir_old * 2);
+        add_pos_dir_064(&ewk->wu, ewk->wu.dir_old << 1);
         set_char_move_init(&ewk->wu, 0, 0x7D);
     case 1:
         if (ewk->wu.dead_f == 1 || Suicide[0] != 0) {
@@ -266,7 +266,8 @@ void effect_D6_move(WORK_Other* ewk) {
             ewk->wu.routine_no[0]++;
             break;
         }
-        if (sa_stop_check() == 0) {
+        if (!(sa_stop_check() == 0)) {
+        } else {
             if (EXE_flag == 0 && Game_pause == 0) {
                 switch (ewk->wu.routine_no[1]) {
                 case 0:
@@ -307,7 +308,7 @@ void effect_D6_move(WORK_Other* ewk) {
     default:
         all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
-        break;
+        return;
     }
 }
 

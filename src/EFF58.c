@@ -29,6 +29,7 @@
 #include "CHARMOVE.h"
 #include "bg_sub.h"
 #include "EFF58.h"
+#include "sc_logo.h"
 
 
 
@@ -501,3 +502,47 @@ void EFF58_Type_05(WORK_Other* ewk) {
         break;
     }
 }
+
+
+
+void SF33rd_Logo(WORK_Other* ewk) {
+    switch (ewk->wu.routine_no[2]) {
+    case 0:
+        ewk->wu.routine_no[2]++;
+        SF3_logo(0);
+        Switch_Screen_Init(5, 5);
+        Stop_SG = 0;
+        break;
+    case 1:
+        if (Switch_Screen_Revival()) {
+            ewk->wu.routine_no[2]++;
+            push_effect_work(&ewk->wu);
+        }
+        break;
+    }
+}
+
+
+
+void EFF58_Type_11(WORK_Other* ewk) {
+    if (Break_Into) {
+        ewk->wu.routine_no[2] = 99;
+    }
+    switch (ewk->wu.routine_no[2]) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+        ToneDown((s8)ewk->wu.routine_no[2] + 10);
+        ewk->wu.routine_no[2]++;
+        break;
+    default:
+        push_effect_work(&ewk->wu);
+        break;
+    }
+}
+
+
+

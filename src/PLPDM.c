@@ -138,7 +138,8 @@ void Damage_01000(PLW* wk) {
 
 
 void Damage_04000(PLW* wk) {
-    wk->guard_flag = 0;
+    s32 z = 0;
+    wk->guard_flag = z;
     wk->guard_chuu = guard_kind[wk->wu.routine_no[2] - 4];
     set_dm_hos_flag_grd(wk);
     switch (wk->wu.routine_no[3]) {
@@ -150,18 +151,18 @@ void Damage_04000(PLW* wk) {
         }
         set_char_move_init(&wk->wu, 1, wk->as->char_ix);
         wk->dm_step_tbl = dm_step_data[select_grd_dsd[wk->wu.dm_impact][get_weight_point(&wk->wu)]];
-        wk->zuru_timer = 0;
-        wk->zuru_ix_counter = 0;
+        wk->zuru_timer = z;
+        wk->zuru_ix_counter = z;
         break;
     case 1:
         wk->wu.routine_no[3]++;
         setup_smoke_type(wk);
         wk->wu.cmwk[14] = guard_pause_table[0][wk->wu.dm_attlv];
         char_move_wca(&wk->wu);
-        add_dm_step_tbl(wk, 1);
+        add_dm_step_tbl(wk);
         break;
     case 2:
-        add_dm_step_tbl(wk, 1);
+        add_dm_step_tbl(wk);
         if (--wk->wu.cmwk[14] <= 0) {
             wk->wu.routine_no[3]++;
             char_move_wca(&wk->wu);
@@ -308,10 +309,10 @@ void Damage_12000(PLW* wk) {
             wk->wu.cmwk[14] = damage_pause_table[2][wk->wu.dm_attlv];
         }
         char_move_wca((WORK*)wk);
-        add_dm_step_tbl(wk, 1);
+        add_dm_step_tbl(wk);
         break;
     case 2:
-        add_dm_step_tbl(wk, 1);
+        add_dm_step_tbl(wk);
         if (--wk->wu.cmwk[14] <= 0) {
             wk->wu.routine_no[3]++;
             char_move_wca((WORK*)wk);
@@ -599,23 +600,27 @@ void Damage_24000(PLW* wk) {
         wk->wu.routine_no[3]++;
         wk->wu.rl_flag = (wk->wu.dm_rl + 1) & 1;
         wk->dm_step_tbl = dm_step_data[select_hit_dsd[wk->wu.dm_impact][get_weight_point(&wk->wu)]];
-        if (wk->as->char_ix == 0x44 && (wk->dm_point == 2 || wk->dm_point == 3)) {
-            char_ix = 0x45;
-        } else {
-            wk->zuru_timer = 0;
-            wk->zuru_ix_counter = 0;
-            char_ix = wk->as->char_ix;
+        if (wk->as->char_ix == 0x44) {
+            s32 k = wk->dm_point;
+            if (k == 2 || k == 3) {
+                char_ix = 0x45;
+                goto call;
+            }
         }
+        wk->zuru_timer = 0;
+        wk->zuru_ix_counter = 0;
+        char_ix = wk->as->char_ix;
+    call:
         set_char_move_init(&wk->wu, 1, char_ix);
         break;
     case 1:
         wk->wu.routine_no[3]++;
         wk->wu.cmwk[14] = damage_pause_table[0][wk->wu.dm_attlv];
         char_move_wca(&wk->wu);
-        add_dm_step_tbl(wk, 1);
+        add_dm_step_tbl(wk);
         break;
     case 2:
-        add_dm_step_tbl(wk, 1);
+        add_dm_step_tbl(wk);
         if (--wk->wu.cmwk[14] <= 0) {
             wk->wu.routine_no[3]++;
             char_move_wca(&wk->wu);
@@ -918,15 +923,20 @@ void Damage_31000(PLW* wk) {
 
 /* provisional name */
 void set_dm_char_by_pat_status(WORK* wk) {
-    if (wk->pat_status < 14) {
-        set_char_move_init(wk, 1, 40);
-        return;
+    void (*a)() = set_char_move_init;
+    if (wk->pat_status >= 14) {
+        goto m;
     }
+    a(wk, 1, 40);
+    goto e;
+m:
     if (wk->pat_status >= 32) {
-        set_char_move_init(wk, 1, 56);
-        return;
+        a(wk, 1, 56);
+        goto e;
     }
-    set_char_move_init(wk, 6, 10);
+    a(wk, 6, 10);
+e:
+    ;
 }
 
 
@@ -1055,7 +1065,7 @@ void setup_smoke_type(PLW* wk) {
 
 
 
-void add_dm_step_tbl(PLW* wk, s8 _p1) {
+void add_dm_step_tbl(PLW* wk) {
     if (wk->wu.dm_rl) {
         wk->wu.xyz[0].disp.pos += *wk->dm_step_tbl++;
         return;
@@ -1131,8 +1141,11 @@ void get_sky_dm_timer(PLW* wk) {
 
 void subtract_dm_vital(PLW* wk) {
     if (wk->dead_flag == 0) {
-        if (wk->wu.dm_vital && (wk->wu.routine_no[1] != 1 || wk->wu.routine_no[2] > 11 || wk->wu.routine_no[3] != 0)) {
-            Additinal_Score_DM((WORK_Other*)wk->wu.dmg_adrs, wk->wu.dm_ten_ix);
+        if (wk->wu.dm_vital != 0) {
+            s16* p = wk->wu.routine_no;
+            if (p[1] != 1 || p[2] > 11 || p[3] != 0) {
+                Additinal_Score_DM((WORK_Other*)wk->wu.dmg_adrs, wk->wu.dm_ten_ix);
+            }
         }
         add_sp_arts_gauge_hit_dm(wk);
         if (wk->atemi_flag) {
@@ -1175,8 +1188,11 @@ void subtract_dm_vital(PLW* wk) {
 
 void subtract_dm_vital_aiuchi(PLW* wk) {
     if (wk->dead_flag == 0) {
-        if (wk->wu.dm_vital && (wk->wu.routine_no[1] != 1 || wk->wu.routine_no[2] > 11 || wk->wu.routine_no[3] != 0)) {
-            Additinal_Score_DM((WORK_Other*)wk->wu.dmg_adrs, wk->wu.dm_ten_ix);
+        if (wk->wu.dm_vital != 0) {
+            s16* p = wk->wu.routine_no;
+            if (p[1] != 1 || p[2] > 11 || p[3] != 0) {
+                Additinal_Score_DM((WORK_Other*)wk->wu.dmg_adrs, wk->wu.dm_ten_ix);
+            }
         }
         if (wk->atemi_flag) {
             wk->dm_vital_backup = wk->wu.dm_vital;

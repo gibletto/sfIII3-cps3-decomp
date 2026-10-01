@@ -197,11 +197,12 @@ void effD2_pos_set(WORK_Other* ewk) {
 
 
 void effect_D3_move(WORK_Other* ewk) {
-    if (ewk->wu.type == 0) {
-        akebono_finish(ewk);
-    } else {
+    if (ewk->wu.type) {
         syungoku_finish(ewk);
+        return;
     }
+    akebono_finish(ewk);
+    return;
 }
 
 

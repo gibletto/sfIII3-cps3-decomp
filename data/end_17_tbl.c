@@ -38,9 +38,7 @@ const s16 end_11_pos[7][2] = {
     { 768, 256 },
 };
 
-/* The initial values of end_1102_move_jp (end_1100_move) in end_17.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of end_1102_move_jp (end_1100_move) in end_17.c. */
 void (*const end_1102_move_jp_init[7])() = {
     end_1100_common,
     end_1100_common,

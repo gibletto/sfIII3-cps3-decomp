@@ -355,70 +355,85 @@ void Se_Shock(WORK_Other* ewk, u16 Code) {
 
 
 void Se_Myself(WORK_Other* ewk, u16 Code) {
-    s16 xx;
-    if ((Demo_Sound || Demo_Flag) && !(Combo_Demo_Flag & 0x80)) {
-        Code = Check_Voice_SE(Code);
-        if (Code) {
-            Code += ewk->wu.id * 0x300;
+    s32 se;
+    s16 pos;
+
+    if ((Demo_Sound != 0 || Demo_Flag != 0) && (Combo_Demo_Flag & 0x80) == 0) {
+        se = Check_Voice_SE(Code);
+        if ((u16)se) {
+            se += ewk->wu.id * 0x300;
         }
-        xx = Get_Position((PLW*)ewk);
-        sound_request_pan(Code, xx, xx, 0, 2);
+        pos = Get_Position((PLW*)ewk);
+        sound_request_pan(se, pos, pos, 0, 2);
     }
 }
 
 
 
 void Se_Myself_Die(WORK_Other* ewk, u16 Code) {
-    s16 xx;
-    if ((Demo_Sound || Demo_Flag) && !(Combo_Demo_Flag & 0x80) && ewk->wu.vital_new >= 0) {
-        Code = Check_Voice_SE(Code);
-        if (Code) {
-            Code += ewk->wu.id * 0x300;
-        }
-        xx = Get_Position((PLW*)ewk);
-        sound_request_pan(Code, xx, xx, 0, 2);
+    s32 se;
+    s16 pos;
+
+    if (Demo_Sound == 0 && Demo_Flag == 0) {
+        return;
     }
+    if (Combo_Demo_Flag & 0x80) {
+        return;
+    }
+    if (ewk->wu.vital_new < 0) {
+        return;
+    }
+    se = Check_Voice_SE(Code);
+    if ((u16)se) {
+        se += ewk->wu.id * 0x300;
+    }
+    pos = Get_Position((PLW*)ewk);
+    sound_request_pan(se, pos, pos, 0, 2);
 }
 
 
 
-s32 Se_Let(WORK_Other* ewk, u16 Code) {
-    s16 xx;
-    s16 uid;
+void Se_Let(WORK_Other* ewk, u16 Code) {
+    s32 se;
+    s32 uid;
+    s16 pos;
+    volatile s16 code = Code;
+
     if (Demo_Sound == 0 && Demo_Flag == 0) {
-        return (s32)&Demo_Flag;
+        return;
     }
     if (Combo_Demo_Flag & 0x80) {
-        return Combo_Demo_Flag;
+        return;
     }
-    Code = Check_Voice_SE(Code);
-    Code = Check_Bonus_SE(Code);
+    code = Check_Voice_SE((u16)code);
+    se = Check_Bonus_SE((u16)code);
     if (ewk->wu.work_id == 1) {
         uid = ewk->wu.id;
     } else {
         uid = ewk->master_id;
     }
-    if (Code) {
-        Code += uid * 0x300;
+    if ((u16)se) {
+        se += uid * 0x300;
     }
-    xx = Get_Position((PLW*)ewk);
-    return ((s32 (*)(u16, s16, s16, s32, s32))sound_request_pan)(Code, xx, xx, 0, 2);
+    pos = Get_Position((PLW*)ewk);
+    sound_request_pan(se, pos, pos, 0, 2);
 }
 
 
 
 void Se_Let_SP(WORK_Other* ewk, u16 Code) {
+    s32 uid;
     PLW* em;
-    s16 xx;
-    s16 uid;
-    if ((Demo_Sound || Demo_Flag) && !(Combo_Demo_Flag & 0x80)) {
+    s16 pos;
+
+    if ((Demo_Sound != 0 || Demo_Flag != 0) && (Combo_Demo_Flag & 0x80) == 0) {
+        em = (PLW*)ewk->wu.target_adrs;
         if (ewk->wu.work_id == 1) {
             uid = ewk->wu.id;
         } else {
             uid = ewk->master_id;
         }
-        em = (PLW*)ewk->wu.target_adrs;
-        if ((em->wu.work_id == 1) && (em->wu.vital_new < 0)) {
+        if (em->wu.work_id == 1 && em->wu.vital_new < 0) {
             if (Code == 0x14B) {
                 Code = 0x158;
             }
@@ -429,8 +444,8 @@ void Se_Let_SP(WORK_Other* ewk, u16 Code) {
         if (Code) {
             Code += uid * 0x300;
         }
-        xx = Get_Position((PLW*)ewk);
-        sound_request_pan(Code, xx, xx, 0, 2);
+        pos = Get_Position((PLW*)ewk);
+        sound_request_pan(Code, pos, pos, 0, 2);
     }
 }
 
@@ -448,40 +463,44 @@ void Call_Se(WORK_Other* ewk, u16 Code) {
 /* Sound handler: plays Code (with the character's voice replacement) at the
    object's screen position, but stays silent while the object is dropping
    at a height of 64 or less. */
-void Se_Term(WORK_Other* ewk, u16 Code)
-{
-    s16 xx;
+s32 Se_Term(WORK_Other* ewk, u16 Code) {
+    s32 se;
+    s16 pos;
 
-    if ((Demo_Sound || Demo_Flag) && !(Combo_Demo_Flag & 0x80)) {
-        if (ewk->wu.mvxy.a[1].sp < 0 && ewk->wu.xyz[1].disp.pos <= 64) {
-            return;
-        }
-        Code = Check_Voice_SE(Code);
-        if (Code) {
-            Code += ewk->wu.id * 0x300;
-        }
-        xx = Get_Position((PLW*)ewk);
-        sound_request_pan(Code, xx, xx, 0, 2);
+    if (Demo_Sound == 0 && Demo_Flag == 0) {
+        return;
     }
+    if (Combo_Demo_Flag & 0x80) {
+        return;
+    }
+    if (ewk->wu.mvxy.a[1].sp < 0 && ewk->wu.xyz[1].disp.pos <= 64) {
+        return 0;
+    }
+    se = Check_Voice_SE(Code);
+    if ((u16)se) {
+        se += ewk->wu.id * 0x300;
+    }
+    pos = Get_Position((PLW*)ewk);
+    sound_request_pan(se, pos, pos, 0, 2);
 }
 
 
 
 void Finish_SE(void) {
+    s32 se;
+    s16 pos;
     PLW* wk;
-    s16 xx;
-    s16 Code;
-    if ((Demo_Sound || Demo_Flag) && !(Combo_Demo_Flag & 0x80)) {
-        Code = Check_Finish_SE();
-        if (Code == -1) {
-            return;
+
+    if ((Demo_Sound != 0 || Demo_Flag != 0) && (Combo_Demo_Flag & 0x80) == 0) {
+        se = Check_Finish_SE();
+        if ((s16)se != -1) {
+            wk = &plw[Winner_id];
+            if ((s16)se) {
+                se += wk->wu.id * 0x300;
+            }
+            pos = Get_Position(wk);
+            sound_request_pan(se, pos, pos, 0, 2);
         }
-        wk = &plw[Winner_id];
-        if (Code) {
-            Code += (wk->wu.id * 0x300);
-        }
-        xx = Get_Position(wk);
-        sound_request_pan(Code, xx, xx, 0, 2);
     }
 }
 
@@ -490,9 +509,11 @@ void Finish_SE(void) {
 s32 Check_Finish_SE(void) {
     s16 xx;
     for (xx = 0; xx < 7; xx++) {
-        if (Last_Called_SE == Finish_SE_Data[0][xx]) {
-            return Finish_SE_Data[1][xx];
+        if (Finish_SE_Data[0][xx] == Last_Called_SE) {
+        } else {
+            continue;
         }
+        return Finish_SE_Data[1][xx];
     }
     return -1;
 }
@@ -531,8 +552,7 @@ s16 code;
 s32 Check_Bonus_SE(Code)
 s16 Code;
 {
-    s32 ix;
-    if ((Bonus_Game_Flag == 0) || (Bonus_Type != 21)) {
+    if (Bonus_Game_Flag == 0 || Bonus_Type != 21) {
         return Code;
     }
     if (Code < 0x100) {
@@ -541,9 +561,11 @@ s16 Code;
     if (Code >= 0x760) {
         return Code;
     }
-    ix = Code - 0x100;
-    if (Voice_Type == 0) {
-        return Bonus_SE_Data[ix];
+    {
+        s32 ofs = (Code - 0x100) * 2;
+        if (Voice_Type == 0) {
+            return *(u16*)((s32)Bonus_SE_Data + ofs);
+        }
+        return *(u16*)((s32)Bonus_SE_Voice_Data + ofs);
     }
-    return Bonus_SE_Voice_Data[ix];
 }

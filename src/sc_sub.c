@@ -455,15 +455,20 @@ void stun_gauge_waku_write(s8 pl) {
 
 
 void stngauge_work_clear(void) {
-    s16 i;
-    for (i = 0; i < 2; i++) {
-        sdat[i].cstn = 0;
-        sdat[i].ostn = 0;
-        sdat[i].sflag = 0;
-        sdat[i].osflag = 0;
-        sdat[i].g_or_s = 0;
-        sdat[i].stimer = 2;
-        sdat[i].proccess_dead = 0;
-        stun_mark_write(i, i);
-    }
+    sdat[0].cstn = 0;
+    sdat[0].ostn = 0;
+    sdat[0].sflag = 0;
+    sdat[0].osflag = 0;
+    sdat[0].g_or_s = 0;
+    sdat[0].stimer = 2;
+    sdat[0].proccess_dead = 0;
+    stun_mark_write(0, 0);
+    sdat[1].cstn = 0;
+    sdat[1].ostn = 0;
+    sdat[1].sflag = 0;
+    sdat[1].osflag = 0;
+    sdat[1].g_or_s = 0;
+    sdat[1].stimer = 2;
+    sdat[1].proccess_dead = 0;
+    stun_mark_write(1, 1);
 }

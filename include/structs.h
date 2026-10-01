@@ -1662,10 +1662,6 @@ typedef struct {
 } SCROLL_WINDOW;
 
 typedef struct {
-    void (*fn[13])();
-} END_500_JP;
-
-typedef struct {
     u16 slot;
     u16 size;
     u16 count;
@@ -2172,10 +2168,6 @@ typedef struct {
 typedef struct {
     s16 slot[9];
 } EDIT_SLOTS;
-
-typedef struct {
-    void (*f[2])();
-} ROUTINES2;
 
 typedef struct {
     void (*f[7])();

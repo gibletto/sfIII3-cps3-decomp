@@ -29,6 +29,8 @@
 
 
 void effect_L4_move(WORK_Other* ewk) {
+    s16 v;
+
     switch (ewk->wu.routine_no[0]) {
     case 0:
         ewk->wu.routine_no[0]++;
@@ -38,7 +40,9 @@ void effect_L4_move(WORK_Other* ewk) {
     case 1:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
-            ewk->wu.disp_flag = ewk->wu.cg_type & 1;
+            v = (s8)ewk->wu.cg_type;
+            v &= 1;
+            ewk->wu.disp_flag = v;
         }
         disp_pos_trans_entry_r(ewk);
         break;

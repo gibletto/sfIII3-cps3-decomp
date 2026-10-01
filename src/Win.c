@@ -48,9 +48,9 @@ s32 Check_Short_Ending(void) {
         return 0;
     }
     if (Version_Type == 3 && VS_Index[WINNER] >= 6) {
-        G_No[1] = 8;
-        G_No[2] = 4;
-        E_No[0] = 10;
+        G_No1 = 8;
+        G_No2 = 4;
+        E_No0 = 10;
         GO_No[0] = 0;
         GO_No[1] = 0;
         End_PL = My_char[WINNER];
@@ -171,7 +171,7 @@ void Win_3rd(void) {
             tilemap_fill_all(0, 32);
             Clear_Flash_No();
             commit_name_entry_row_both_players(Text_Page_Y);
-            if (G_No[1] == 3) {
+            if (G_No1 == 3) {
                 Scrn_Move_Set(4, 0, 0x100);
             }
             Switch_Screen_Init(0, 1);
@@ -298,7 +298,7 @@ void Lose_3rd(void) {
             tilemap_fill_all(0, 32);
             Clear_Flash_No();
             commit_name_entry_row_both_players(Text_Page_Y);
-            if (G_No[1] == 3) {
+            if (G_No1 == 3) {
                 Scrn_Move_Set(4, 0, 0x100);
             }
             Switch_Screen_Init(0, 1);

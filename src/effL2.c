@@ -31,7 +31,7 @@ void effect_L2_move(WORK_Other* ewk) {
         set_char_move_init2(&ewk->wu, 0, 0, 1, 0);
         break;
     case 1:
-        if (!Allow_a_battle_f && Conclusion_Flag == 1 && *C_No >= 2) {
+        if (!Allow_a_battle_f && Conclusion_Flag == 1 && C_No0 >= 2) {
             if (!(!Complete_Victory) && Conclusion_Flag != 0) {
                 ewk->wu.routine_no[0]++;
                 ewk->wu.old_rno[0] = 0;
@@ -69,12 +69,15 @@ void effect_L2_move(WORK_Other* ewk) {
 
 
 void effl2_dir_check(WORK_Other* ewk) {
-    s16 work = (plw[ewk->master_id].wu.xyz[0].disp.pos);
-    work >>= 6;
+    s16 work;
+    s32 z;
+
+    work = plw[ewk->master_id].wu.xyz[0].disp.pos >> 6;
     work &= 15;
-    if (ewk->wu.direction != effl2_dir_tbl[ewk->master_id][work]) {
+    if (effl2_dir_tbl[ewk->master_id][work] != ewk->wu.direction) {
         ewk->wu.direction = effl2_dir_tbl[ewk->master_id][work];
-        set_char_move_init2(&ewk->wu, 0, 0, ewk->wu.direction + 1, 0);
+        z = 0;
+        set_char_move_init2(&ewk->wu, z, z, ewk->wu.direction + 1, z);
     }
 }
 

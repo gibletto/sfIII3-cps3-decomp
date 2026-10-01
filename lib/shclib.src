@@ -492,10 +492,9 @@ p_quick_mvn_1:
           .DATA.W     H'000B
           .DATA.W     H'63F6
           .DATA.W     H'0009
-; The jump table below is stale in the ROM: its entries are 0612D76A-0612D7AA, where this unrolled
-; run sat in an earlier link, not the run above (that address is now inside boot_selftest code).
-; Copies of 64 bytes or less would jump there; every caller copies more (84, 124, 168, 376 bytes)
-; and takes the loop below, so the table is never used. Kept as the numbers the ROM holds.
+; The jump table below is stale: its entries (0612D76A-0612D7AA) are not the run above but an address
+; inside boot_selftest. Copies of 64 bytes or less would jump there; every caller copies more
+; (84, 124, 168, 376 bytes) and takes the loop below, so the table is never used.
 quick_mvn_1:
           .DATA.W     H'0612
           .DATA.W     H'D7AA

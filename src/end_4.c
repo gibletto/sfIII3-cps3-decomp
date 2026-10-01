@@ -53,8 +53,7 @@ void end_04000(u16 pl_num) {
                 end_fam_set2();
                 bgm_request(0x2E);
                 return;
-            }
-            if (end_w.r_no_2 == 2) {
+            } else if (end_w.r_no_2 == 2) {
                 end_no_cut = 1;
             }
             end_w.timer = timer_4_tbl[end_w.r_no_2];
@@ -73,12 +72,9 @@ void end_04000(u16 pl_num) {
     }
 }
 
-void end_400_move(void)
-{
-    void (**jp)() = end_400_jp;
-
+void end_400_move(void) {
     bgw_ptr = &bg_w.bgw[0];
-    jp[end_w.r_no_2]();
+    end_400_jp[end_w.r_no_2]();
 }
 
 
@@ -143,12 +139,9 @@ void end_400_1000(void) {
     }
 }
 
-void end_401_move(void)
-{
-    void (**jp)() = end_401_jp;
-
+void end_401_move(void) {
     bgw_ptr = &bg_w.bgw[1];
-    jp[end_w.r_no_2]();
+    end_401_jp[end_w.r_no_2]();
 }
 
 
@@ -170,7 +163,7 @@ void end_401_0000(void) {
             bgw_ptr->r_no_1++;
         }
         bgw_ptr->abs_x = bgw_ptr->xy[0].disp.pos;
-        break;
+        return;
     case 2:
         break;
     }
@@ -354,7 +347,7 @@ void end_402_0000(void) {
             bgw_ptr->r_no_1++;
         }
         bgw_ptr->abs_x = bgw_ptr->xy[0].disp.pos;
-        break;
+        return;
     case 2:
         break;
     }

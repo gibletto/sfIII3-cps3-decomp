@@ -32,27 +32,25 @@ void effect_A3_move(WORK_Other* ewk) {
         ewk->wu.step_xy_table = &EFF91_Step_Data[ewk->wu.direction];
         ewk->wu.move_xy_table = ewk->wu.step_xy_table;
     case 1:
-        if (--ewk->wu.dir_timer != 0) {
-            return;
+        if (--ewk->wu.dir_timer == 0) {
+            effA3_cell_put(ewk);
+            if (--ewk->wu.dir_step == 0) {
+                if (ewk->wu.dir_old) {
+                    if (--ewk->wu.hit_quake == 0) {
+                        ewk->wu.routine_no[0] = 2;
+                    } else {
+                        ewk->wu.dir_step = ewk->wu.vitality;
+                        ewk->wu.move_xy_table = ewk->wu.step_xy_table;
+                    }
+                } else {
+                    ewk->wu.routine_no[0] = 2;
+                }
+            }
         }
-        effA3_cell_put(ewk);
-        if (--ewk->wu.dir_step != 0) {
-            return;
-        }
-        if (ewk->wu.dir_old == 0) {
-            ewk->wu.routine_no[0] = 2;
-            return;
-        }
-        if (--ewk->wu.hit_quake == 0) {
-            ewk->wu.routine_no[0] = 2;
-            return;
-        }
-        ewk->wu.dir_step = ewk->wu.vitality;
-        ewk->wu.move_xy_table = ewk->wu.step_xy_table;
         break;
     default:
         effA3_area_clear(ewk);
-        push_effect_work((WORK*)ewk);
+        push_effect_work(&ewk->wu);
         break;
     }
 }

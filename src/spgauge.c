@@ -556,42 +556,38 @@ void sagauge_color_chenge(s8 Stpl_Num) {
 
 
 
-void sa_moji_trans(Stpl_Num, Kind, OnOff)
-    s8 Stpl_Num;
-    s8 Kind;
-    s8 OnOff;
-{
+void sa_moji_trans(s32 Stpl_Num, s8 Kind, s8 OnOff) {
     SPG_DAT* spg;
     switch (Kind) {
     case 0:
         if (OnOff) {
-            spg = &spg_dat[Stpl_Num];
+            spg = (SPG_DAT*)((s8*)spg_dat + (s8)((s8)Stpl_Num * sizeof(SPG_DAT)));
             spg->current_spg = spg->spg_dotlen;
-            ((void(*)(s8 pl, s8 pl2))sa_waku_trans)(Stpl_Num, Stpl_Num);
-            ((void(*)(s8 pl, s16 len, u16 mchar, u16 mass_len, s8 mass_odd))max_mark_write)(Stpl_Num, spg->spg_len, spg->mchar, spg->mass_len, spg->mass_odd);
-            break;
+            sa_waku_trans(Stpl_Num, Stpl_Num);
+            max_mark_write(Stpl_Num, spg->spg_len, (s16)spg->mchar, (s16)spg->mass_len, spg->mass_odd);
+        } else {
+            sa_waku_trans(Stpl_Num, Stpl_Num);
         }
-        ((void(*)(s8 pl, s8 pl2))sa_waku_trans)(Stpl_Num, Stpl_Num);
         break;
-    default:
     case 1:
-        if (Stpl_Num == 0) {
+    default:
+        if ((s8)Stpl_Num == 0) {
             if (OnOff) {
-                scfont_lnput(1, 25, 4, 2, 22, 0x100);
-                scfont_lnput(1, 27, 2, 1, 22, 0xCD);
-                break;
+                scfont_lnput(1, 0x19, 4, 2, 0x16, 0x100);
+                scfont_lnput(1, 0x1B, 2, 1, 0x16, 0xCD);
+            } else {
+                tilemap_clear_rect(1, 0x19, 4, 0x1A);
+                tilemap_clear_rect(1, 0x1B, 2, 0x1B);
             }
-            tilemap_clear_rect(1, 25, 4, 26);
-            tilemap_clear_rect(1, 27, 2, 27);
-            break;
+        } else {
+            if (OnOff) {
+                scfont_lnput(0x2B, 0x19, 4, 2, 0x16, 0x108);
+                scfont_lnput_rev(0x2D, 0x1B, 2, 1, 0x16, 0xCD);
+            } else {
+                tilemap_clear_rect(0x2B, 0x19, 0x2E, 0x1A);
+                tilemap_clear_rect(0x2D, 0x1B, 0x2E, 0x1B);
+            }
         }
-        if (OnOff) {
-            scfont_lnput(43, 25, 4, 2, 22, 0x108);
-            scfont_lnput_rev(45, 27, 2, 1, 22, 0xCD);
-            break;
-        }
-        tilemap_clear_rect(43, 25, 46, 26);
-        tilemap_clear_rect(45, 27, 46, 27);
         break;
     }
 }
@@ -682,8 +678,9 @@ void satime_stock_clear(void) {
 
 
 
-void spgauge_wipe_write(s8 Stpl_Num) {
-    if (!Stpl_Num) {
+void spgauge_wipe_write(s32 Stpl_Num) {
+    s32 s = (s8)Stpl_Num;
+    if (s == 0) {
         tilemap_put_cell(3, 25, 26, 0xD1);
         tilemap_put_cell(3, 26, 26, 0xD2);
     } else {
@@ -691,7 +688,8 @@ void spgauge_wipe_write(s8 Stpl_Num) {
         tilemap_put_cell(44, 26, 26, 0xD5);
     }
     sa_waku_trans(Stpl_Num, Stpl_Num);
-    sa_gauge_trans(Stpl_Num, 0);
+    sa_gauge_trans(s, 0);
+    return;
 }
 
 

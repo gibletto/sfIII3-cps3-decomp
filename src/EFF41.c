@@ -166,7 +166,8 @@ void eff41_process_00(WORK_Other* ewk, PLW* mwk) {
 
 
 void eff41_process_01(WORK_Other* ewk, PLW* mwk) {
-    switch (ewk->wu.cg_type) {
+    const s16 (*t)[5];
+    switch ((u8)ewk->wu.cg_type) {
     case 1:
         gauge_minus(ewk, mwk);
         ewk->wu.routine_no[1] = 1;
@@ -175,6 +176,7 @@ void eff41_process_01(WORK_Other* ewk, PLW* mwk) {
         ewk->wu.routine_no[1] = 2;
         break;
     }
+    t = sa_sign_data;
     switch (ewk->wu.routine_no[1]) {
     case 1:
         ewk->wu.position_x = mwk->wu.position_x;
@@ -182,16 +184,16 @@ void eff41_process_01(WORK_Other* ewk, PLW* mwk) {
         break;
     case 2:
         ewk->wu.position_x = bg_w.bgw[1].position_x + bg_w.pos_offset;
-        ewk->wu.position_y = mwk->wu.position_y + sa_sign_data[ewk->wu.type][1];
+        ewk->wu.position_y = mwk->wu.position_y + t[ewk->wu.type][1];
         break;
     default:
         ewk->wu.position_x = mwk->wu.position_x;
         if (mwk->wu.rl_flag) {
-            ewk->wu.position_x -= sa_sign_data[ewk->wu.type][0];
+            ewk->wu.position_x -= t[ewk->wu.type][0];
         } else {
-            ewk->wu.position_x += sa_sign_data[ewk->wu.type][0];
+            ewk->wu.position_x += t[ewk->wu.type][0];
         }
-        ewk->wu.position_y = mwk->wu.position_y + sa_sign_data[ewk->wu.type][1];
+        ewk->wu.position_y = mwk->wu.position_y + t[ewk->wu.type][1];
         break;
     }
 }

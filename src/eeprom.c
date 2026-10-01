@@ -181,8 +181,8 @@ void eeprom_error_halt(void)
 
 /* provisional name */
 void bookkeep_coin_count(void) {
-    book_coin_count[0]++;
-    if (eeprom_write(2, (volatile u16*)(EEP_ROM + 0xE0), &book_coin_count[0])) {
+    book_coin_count++;
+    if (eeprom_write(2, (u16*)(EEP_ROM + 0xE0), (u16*)&book_coin_count)) {
         eeprom_error_halt();
     }
 }
@@ -191,8 +191,8 @@ void bookkeep_coin_count(void) {
 
 /* provisional name */
 void bookkeep_service_count(void) {
-    book_coin_count[1]++;
-    if (eeprom_write(2, (volatile u16*)(EEP_ROM + 0xE4), &book_coin_count[1])) {
+    book_service_count++;
+    if (eeprom_write(2, (u16*)(EEP_ROM + 0xE4), (u16*)&book_service_count)) {
         eeprom_error_halt();
     }
 }
@@ -201,8 +201,8 @@ void bookkeep_service_count(void) {
 
 /* provisional name */
 void bookkeep_freeplay_count(void) {
-    book_coin_count[2]++;
-    if (eeprom_write(2, (volatile u16*)(EEP_ROM + 0xE8), (u16*)&book_coin_count[2])) {
+    book_free_count++;
+    if (eeprom_write(2, (u16*)(EEP_ROM + 0xE8), (u16*)&book_free_count)) {
         eeprom_error_halt();
     }
 }
@@ -211,8 +211,8 @@ void bookkeep_freeplay_count(void) {
 
 /* provisional name */
 void bookkeep_card_count(void) {
-    book_coin_count[3]++;
-    if (eeprom_write(2, (volatile u16*)(EEP_ROM + 0xEC), (u16*)&book_coin_count[3])) {
+    book_card_count++;
+    if (eeprom_write(2, (u16*)(EEP_ROM + 0xEC), (u16*)&book_card_count)) {
         eeprom_error_halt();
     }
 }
@@ -222,10 +222,10 @@ void bookkeep_card_count(void) {
 /* provisional name */
 void bookkeep_clear_all(void) {
     u32 buf[4];
-    book_coin_count[0] = buf[0] = 0;
-    book_coin_count[1] = buf[1] = 0;
-    book_coin_count[2] = buf[2] = 0;
-    book_coin_count[3] = buf[3] = 0;
+    buf[0] = book_coin_count = 0;
+    buf[1] = book_service_count = 0;
+    buf[2] = book_free_count = 0;
+    buf[3] = book_card_count = 0;
     if (eeprom_write(8, (u16*)(EEP_ROM + 0xE0), (u16*)buf)) {
         eeprom_error_halt();
     }
@@ -234,11 +234,34 @@ void bookkeep_clear_all(void) {
 
 
 /* provisional name */
+/* Nothing is returned (no caller reads the result). */
 s32 bookkeep_flush(void) {
-    s32 r;
-    if (bookkeep_add[0] != 0) { book_coin_count[0] += bookkeep_add[0]; if ((r = eeprom_write(2, (volatile u16*)((EEP_ROM + 0xE0) + (0) * 4), &book_coin_count[0])) != 0) { eeprom_error_halt(); } bookkeep_add[0] = 0; } else { r = 0; };
-    if (bookkeep_add[1] != 0) { book_coin_count[1] += bookkeep_add[1]; if ((r = eeprom_write(2, (volatile u16*)((EEP_ROM + 0xE0) + (1) * 4), &book_coin_count[1])) != 0) { eeprom_error_halt(); } bookkeep_add[1] = 0; } else { r = 0; };
-    if (bookkeep_add[2] != 0) { book_coin_count[2] += bookkeep_add[2]; if ((r = eeprom_write(2, (volatile u16*)((EEP_ROM + 0xE0) + (2) * 4), &book_coin_count[2])) != 0) { eeprom_error_halt(); } bookkeep_add[2] = 0; } else { r = 0; };
-    if (bookkeep_add[3] != 0) { book_coin_count[3] += bookkeep_add[3]; if ((r = eeprom_write(2, (volatile u16*)((EEP_ROM + 0xE0) + (3) * 4), &book_coin_count[3])) != 0) { eeprom_error_halt(); } bookkeep_add[3] = 0; } else { r = 0; };
-    return r;
+    if (bookkeep_add0 > 0) {
+        book_coin_count += bookkeep_add0;
+        if (eeprom_write(2, (u16*)(EEP_ROM + 0xE0), (u16*)&book_coin_count)) {
+            eeprom_error_halt();
+        }
+        bookkeep_add0 = 0;
+    }
+    if (bookkeep_add1 > 0) {
+        book_service_count += bookkeep_add1;
+        if (eeprom_write(2, (u16*)(EEP_ROM + 0xE4), (u16*)&book_service_count)) {
+            eeprom_error_halt();
+        }
+        bookkeep_add1 = 0;
+    }
+    if (bookkeep_add2 > 0) {
+        book_free_count += bookkeep_add2;
+        if (eeprom_write(2, (u16*)(EEP_ROM + 0xE8), (u16*)&book_free_count)) {
+            eeprom_error_halt();
+        }
+        bookkeep_add2 = 0;
+    }
+    if (bookkeep_add3 > 0) {
+        book_card_count += bookkeep_add3;
+        if (eeprom_write(2, (u16*)(EEP_ROM + 0xEC), (u16*)&book_card_count)) {
+            eeprom_error_halt();
+        }
+        bookkeep_add3 = 0;
+    }
 }

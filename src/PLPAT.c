@@ -108,11 +108,10 @@ void Attack_01000(PLW* wk) {
         break;
     case 1:
         char_move(&wk->wu);
-        if (wk->wu.cg_type == 1) {
+        if ((u8)wk->wu.cg_type == 1) {
             add_mvxy_speed(&wk->wu);
             wk->wu.routine_no[3] = 2;
             wk->wu.cg_type = 0;
-            break;
         }
         break;
     case 2:
@@ -143,7 +142,6 @@ void Attack_02000(PLW* wk) {
             add_mvxy_speed(&wk->wu);
             wk->wu.routine_no[3] = 2;
             wk->wu.cg_type = 0;
-            break;
         }
         break;
     case 2:
@@ -170,29 +168,31 @@ void Attack_03000(PLW* wk) {
             hoken_muriyari_chakuchi(wk);
             wk->wu.rl_flag = wk->wu.rl_waza;
             setup_lvdir_after_autodir(wk);
-            Normal_18000_init_unit(wk, wk->wu.pat_status);
+            Normal_18000_init_unit(wk, (u8)wk->wu.pat_status);
         }
         set_char_move_init(&wk->wu, 4, wk->as->char_ix);
         break;
     case 1:
-        if ((wk->wu.mvxy.a[1].sp > 0) && (wk->wu.xyz[1].disp.pos < 16)) {
-            add_mvxy_speed(&wk->wu);
-            cal_mvxy_speed(&wk->wu);
-            break;
+        if (wk->wu.mvxy.a[1].sp > 0) {
+            if (wk->wu.xyz[1].disp.pos < 16) {
+                add_mvxy_speed(&wk->wu);
+                cal_mvxy_speed(&wk->wu);
+                break;
+            }
         }
         wk->wu.routine_no[3]++;
     case 2:
         jumping_union_process(&wk->wu, 3);
-        if (wk->wu.routine_no[3] != 3) {
-            check_ja_nmj_dummy_RTNM(wk);
-            if (wk->wu.cg_type == 0x40) {
-                if (!(wk->spmv_ng_flag & 0x100000) && ja_nmj_rno_change(&wk->wu)) {
-                    wk->wu.routine_no[1] = 0;
-                    wk->wu.routine_no[3] = 1;
-                }
-                wk->wu.cg_type = 0;
-                break;
+        if (wk->wu.routine_no[3] == 3) {
+            break;
+        }
+        check_ja_nmj_dummy_RTNM(wk);
+        if ((u8)wk->wu.cg_type == 0x40) {
+            if (!(wk->spmv_ng_flag & 0x100000) && ja_nmj_rno_change(&wk->wu)) {
+                wk->wu.routine_no[1] = 0;
+                wk->wu.routine_no[3] = 1;
             }
+            wk->wu.cg_type = 0;
         }
         break;
     case 3:
@@ -203,9 +203,9 @@ void Attack_03000(PLW* wk) {
 
 
 
-s16 ja_nmj_rno_change(WORK* wk) {
+s32 ja_nmj_rno_change(WORK* wk) {
     s16 rnum = 0;
-    switch (wk->pat_status) {
+    switch ((u8)wk->pat_status) {
     case 20:
         wk->routine_no[2] = 21;
         rnum = 1;
@@ -241,8 +241,9 @@ s16 ja_nmj_rno_change(WORK* wk) {
     case 30:
         wk->routine_no[2] = 26;
         rnum = 1;
-        break;
+        goto out;
     }
+out:
     return rnum;
 }
 
@@ -290,19 +291,20 @@ void check_ja_nmj_dummy_RTNM(PLW* wk) {
 
 
 s32 get_cjdR(PLW* wk) {
-    s16 w_ix = (wk->wu.kind_of_waza & 6);
-    w_ix += ((wk->wu.hf.hit.player & 0xA2) != 0);
-    if (wk->wu.att_hit_ok || (!wk->wu.hf.hit.player)) {
+    s16 w_ix = (wk->wu.kind_of_waza & 6) + ((wk->wu.hf.hit.player & 0xA2) != 0);
+    if (wk->wu.att_hit_ok) {
         goto case0;
     }
-    if (wk->wu.hf.hit.player & 3) {
-        goto case1;
-    }
-    if (wk->wu.hf.hit.player & 0xC0) {
-        goto case2;
-    }
-    if (wk->wu.hf.hit.player & 0x30) {
-        goto case3;
+    if (wk->wu.hf.hit.player != 0) {
+        if (wk->wu.hf.hit.player & 3) {
+            goto case1;
+        }
+        if (wk->wu.hf.hit.player & 0xC0) {
+            goto case2;
+        }
+        if (wk->wu.hf.hit.player & 0x30) {
+            goto case3;
+        }
     }
 case0:
     return cjdr_karaburi_table[wk->player_number][w_ix];
@@ -355,12 +357,11 @@ void Attack_05000(PLW* wk) {
         break;
     case 1:
         char_move(&wk->wu);
-        if (wk->wu.cg_type == 1) {
+        if ((u8)wk->wu.cg_type == 1) {
             add_mvxy_speed(&wk->wu);
             wk->wu.routine_no[3] = 2;
             wk->wu.cg_type = 0;
             effect_G6_init(&wk->wu, wk->wu.weight_level);
-            break;
         }
         break;
     case 2:
@@ -376,26 +377,7 @@ void Attack_05000(PLW* wk) {
 
 void Attack_06000(PLW* wk) {
     wk->scr_pos_set_flag = 0;
-    switch (wk->wu.routine_no[3]) {
-    case 0:
-        wk->wu.routine_no[3]++;
-        hoken_muriyari_chakuchi(wk);
-        get_cancel_timer(wk);
-        set_char_move_init(&wk->wu, 5, wk->as->char_ix);
-        if (wk->wu.cg_type == 20) {
-            wk->wu.cg_type = 0;
-            wk->wu.rl_flag = wk->wu.rl_waza;
-            break;
-        }
-        break;
-    case 1:
-        char_move(&wk->wu);
-        if (wk->wu.cg_type == 20) {
-            wk->wu.cg_type = 0;
-            wk->wu.rl_flag = wk->wu.rl_waza;
-        }
-        break;
-    }
+    Attack_07000(wk);
 }
 
 
@@ -432,35 +414,33 @@ void Attack_08000(PLW* wk) {
         if (wk->wu.xyz[1].disp.pos <= 0) {
             wk->wu.rl_flag = wk->wu.rl_waza;
             wk->wu.xyz[1].disp.pos = 0;
-            ixx = ((wk->wu.pat_status - 20) / 2 & 3) + 9;
+            ixx = (((u8)wk->wu.pat_status - 20) / 2 & 3) + 9;
             if (ixx > 11) {
                 ixx = 10;
             }
             setup_mvxy_data(&wk->wu, ixx);
         }
         get_cancel_timer(wk);
-        set_char_move_init(&wk->wu, 4, (s16)((wk->as->char_ix)));
+        set_char_move_init(&wk->wu, 4, wk->as->char_ix);
         wk->wu.mvxy.index = wk->as->data_ix;
         break;
     case 1:
         char_move(&wk->wu);
-        if (wk->wu.cg_type == 1) {
+        if ((u8)wk->wu.cg_type == 1) {
             wk->wu.routine_no[3]++;
         }
-        if (wk->wu.cg_type == 20) {
+        if ((u8)wk->wu.cg_type == 20) {
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.cg_type = 0;
             wk->wu.mvxy.index++;
-            break;
         }
         break;
     case 2:
         jumping_union_process(&wk->wu, 3);
-        if ((wk->wu.routine_no[3] != 3) && (wk->wu.cg_type == 20)) {
+        if ((wk->wu.routine_no[3] != 3) && ((u8)wk->wu.cg_type == 20)) {
             add_to_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.cg_type = 0;
             wk->wu.mvxy.index++;
-            break;
         }
         break;
     case 3:
@@ -479,23 +459,21 @@ void Attack_09000(PLW* wk) {
         get_cancel_timer(wk);
         set_char_move_init(&wk->wu, 5, wk->as->char_ix);
         setup_mvxy_data(&wk->wu, wk->as->data_ix);
-        if (wk->wu.cg_type == 20) {
+        if ((u8)wk->wu.cg_type == 20) {
             wk->wu.cg_type = 0;
             wk->wu.rl_flag = wk->wu.rl_waza;
-            break;
         }
         break;
     case 1:
         char_move(&wk->wu);
-        if (wk->wu.cg_type == 20) {
+        if ((u8)wk->wu.cg_type == 20) {
             wk->wu.cg_type = 0;
             wk->wu.rl_flag = wk->wu.rl_waza;
         }
-        if (wk->wu.cg_type == 1) {
+        if ((u8)wk->wu.cg_type == 1) {
             add_mvxy_speed(&wk->wu);
             wk->wu.routine_no[3] = 2;
             wk->wu.cg_type = 0;
-            break;
         }
         break;
     case 2:
@@ -509,9 +487,8 @@ void Attack_09000(PLW* wk) {
 
 
 
-s32 Attack_10000(PLW* wk) {
-    s32 rc;
-    switch (rc = wk->wu.routine_no[3]) {
+void Attack_10000(PLW* wk) {
+    switch (wk->wu.routine_no[3]) {
     case 0:
         wk->wu.routine_no[3]++;
         hoken_muriyari_chakuchi(wk);
@@ -524,53 +501,51 @@ s32 Attack_10000(PLW* wk) {
             wk->wu.routine_no[3] = 2;
         }
         grade_add_leap_attack(wk->wu.id);
-        return;
+        break;
     case 1:
         char_move(&wk->wu);
-        if ((rc = wk->wu.cg_type) != 20) {
-            return rc;
+        if (wk->wu.cg_type != 20) {
+            break;
         }
         wk->wu.routine_no[3]++;
     case 2:
         jumping_union_process(&wk->wu, 4);
-        if ((rc = wk->wu.routine_no[3]) == 4) {
-            return rc;
+        if (wk->wu.routine_no[3] == 4) {
+            break;
         }
-        if ((rc = wk->wu.hf.hit.player) == 0) {
-            return rc;
+        if (!wk->wu.hf.hit.player) {
+            break;
         }
-        if ((wk->wu.hf.hit.player & 3) != 0) {
+        if (wk->wu.hf.hit.player & 3) {
             wk->wu.mvxy.a[0].sp /= 4;
             wk->wu.routine_no[3] = 4;
-            return 42;
+            break;
         }
-        if ((wk->wu.hf.hit.player & 0x30) != 0) {
+        if (wk->wu.hf.hit.player & 0x30) {
             wk->wu.mvxy.a[0].sp /= 4;
             wk->wu.mvxy.a[1].sp = 0;
             wk->wu.routine_no[3] = 3;
-            return 42;
+            break;
         }
-        if ((rc = wk->wu.hf.hit.player & 0xC0) != 0) {
+        if (wk->wu.hf.hit.player & 0xC0) {
             wk->wu.mvxy.a[0].sp /= 2;
             wk->wu.mvxy.a[0].sp = -wk->wu.mvxy.a[0].sp;
             wk->wu.mvxy.a[1].sp = 0;
             wk->wu.routine_no[3] = 4;
-            return 42;
         }
-        return rc;
+        break;
     case 3:
-        if (--wk->wu.dir_timer >= 1) {
-            return 0x9A;
+        if (--wk->wu.dir_timer > 0) {
+            break;
         }
         wk->wu.routine_no[3] = 4;
     case 4:
         jumping_union_process(&wk->wu, 5);
-        return;
+        break;
     case 5:
         char_move(&wk->wu);
-        return;
+        break;
     }
-    return rc;
 }
 
 

@@ -20,47 +20,38 @@
 
 
 void effect_53_move(WORK_Other* ewk) {
-    s16 work;
-    if (obr_disp_off_check()) {
-        return;
-    }
-    if (EXE_flag || Game_pause || !EXE_obroll) {
-        return;
-    }
-    switch (ewk->wu.routine_no[0]) {
-    case 0:
-        ewk->wu.old_rno[2]--;
-        if (ewk->wu.old_rno[2] <= 0) {
-            ewk->wu.routine_no[0]++;
-            ewk->wu.old_rno[0] = 30;
-            ewk->wu.old_rno[1] = 0;
-            ewk->wu.disp_flag = 1;
-        }
-        break;
-    case 1:
-        ewk->wu.old_rno[0]--;
-        if (ewk->wu.old_rno[0] > 0) {
+    s32 k;
+    if (!obr_disp_off_check() && !EXE_flag && !Game_pause && EXE_obroll) {
+        switch (ewk->wu.routine_no[0]) {
+        case 0:
+            ewk->wu.old_rno[2]--;
+            if (ewk->wu.old_rno[2] <= 0) {
+                ewk->wu.routine_no[0]++;
+                ewk->wu.old_rno[0] = 30;
+                ewk->wu.old_rno[1] = 0;
+                ewk->wu.disp_flag = 1;
+            }
             break;
-        }
-        ewk->wu.disp_flag ^= 1;
-        ewk->wu.old_rno[0] = 30;
-        if (ewk->wu.disp_flag) {
+        case 1:
+            ewk->wu.old_rno[0]--;
+            if (ewk->wu.old_rno[0] <= 0) {
+                ewk->wu.disp_flag ^= 1;
+                ewk->wu.old_rno[0] = 30;
+                if (!ewk->wu.disp_flag) {
+                    ewk->wu.old_rno[1]++;
+                    if (ewk->wu.old_rno[1] >= 6) {
+                        ewk->wu.routine_no[0] = 0;
+                        k = random_16_com();
+                        ewk->wu.old_rno[2] = eff53_vanish_time[(s16)(k & 7)];
+                        ewk->wu.disp_flag = 0;
+                    }
+                }
+            }
             break;
+        default:
+            all_cgps_put_back(&ewk->wu);
+            push_effect_work(&ewk->wu);
         }
-        ewk->wu.old_rno[1]++;
-        if (ewk->wu.old_rno[1] < 6) {
-            break;
-        }
-        ewk->wu.routine_no[0] = 0;
-        work = random_16_com();
-        work &= 7;
-        ewk->wu.old_rno[2] = eff53_vanish_time[work];
-        ewk->wu.disp_flag = 0;
-        break;
-    default:
-        all_cgps_put_back(&ewk->wu);
-        push_effect_work(&ewk->wu);
-        break;
     }
 }
 

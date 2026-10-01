@@ -37,9 +37,7 @@ const s16 timer_3_tbl[6] = {
     660, 420, 1080, 900, 720, 1020,
 };
 
-/* The initial values of end_1000_jp (end_300_move) in end_3.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of end_1000_jp (end_300_move) in end_3.c. */
 const u32 end_1000_jp_init[6] = {
     (u32)end_300_0000,
     (u32)end_300_0000,

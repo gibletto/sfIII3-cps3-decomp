@@ -100,11 +100,15 @@ void effect_77_move(WORK_Other* ewk) {
 
 /* provisional name */
 void eff77_scroll_set(WORK_Other* ewk) {
-    s32 x = eff77_data_tbl[ewk->wu.type][1] - bg_w.pos_offset;
-    s32 y = eff77_data_tbl[ewk->wu.type][2];
+    s32 x;
+    s32 y;
+    x = *(s16*)((u8*)eff77_data_tbl + 2 + (s8)(ewk->wu.type * 6)) - bg_w.pos_offset;
+    y = *(s16*)((u8*)eff77_data_tbl + 4 + (s8)(ewk->wu.type * 6));
     scrn_map_set(3, ake_scrl_w[2].adrs);
     Scrn_Move_Set(3, x, y);
-    Family_Set_W(4, -x & 0x3FF, (0x300 - (y & 0x3FF)) & 0x3FF);
+    x = -x & 0x3FF;
+    y = (0x300 - (y & 0x3FF)) & 0x3FF;
+    Family_Set_W(4, x, y);
 }
 
 

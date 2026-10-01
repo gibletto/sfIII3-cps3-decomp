@@ -87,8 +87,9 @@ void Player_move(PLW* wk, u16 lv_data) {
 
 void player_mv_0000(PLW* wk) {
     s16 i;
-    for (i = 0; i < 8; i++) {
-        wk->old_pos_data[i] = 0;
+    s32 k;
+    for (i = 0, k = 0; i < 8; i++, k += 2) {
+        *(s16*)((s32)wk->old_pos_data + k) = 0;
     }
     setup_vitality(&wk->wu, (wk->player_number));
     set_player_shadow(wk);
@@ -106,9 +107,12 @@ void player_mv_0000(PLW* wk) {
     wk->uot_cd_ok_flag = 0;
     wk->ukemi_success = 0;
     clear_my_shell_ix(&wk->wu);
-    wk->sa->mp = wk->sa->mp_rno = 0;
-    wk->sa->ok = wk->sa->sa_rno = 0;
-    wk->sa->ex = wk->sa->ex_rno = 0;
+    wk->sa->mp_rno = 0;
+    wk->sa->mp = 0;
+    wk->sa->sa_rno = 0;
+    wk->sa->ok = 0;
+    wk->sa->ex_rno = 0;
+    wk->sa->ex = 0;
     wk->metamorphose = 0;
     wk->metamor_over = 0;
     wk->sa_healing = 0;
@@ -205,9 +209,9 @@ void player_mv_3000(void)
 {
     if (gouki_app) {
         jijii_nebukuro();
-        return;
+    } else {
+        Player_normal();
     }
-    Player_normal();
 }
 
 
@@ -241,16 +245,17 @@ void player_mv_4000(PLW* wk) {
 
 
 s32 check_hit_stop(PLW* wk) {
-    s16 num;
+    s16 zero = 0;
     WORK* emwk = (WORK*)wk->wu.target_adrs;
-    num = 0;
-    if ((wk->wu.dm_stop != 0) && (wk->wu.hit_stop != 0)) {
-        if (wk->wu.routine_no[3]) {
+    s16 num = zero;
+    s32 rno;
+    if (wk->wu.dm_stop != 0 && wk->wu.hit_stop != 0) {
+        if (wk->wu.routine_no[3] != 0) {
             wk->wu.hit_stop = select_hit_stop(wk->wu.hit_stop, wk->wu.dm_stop);
-            wk->wu.dm_stop = 0;
+            wk->wu.dm_stop = zero;
         } else {
             wk->wu.dm_stop = select_hit_stop(wk->wu.dm_stop, wk->wu.hit_stop);
-            wk->wu.hit_stop = 0;
+            wk->wu.hit_stop = zero;
             return 0;
         }
     }
@@ -271,11 +276,16 @@ s32 check_hit_stop(PLW* wk) {
             wk->wu.hit_stop++;
             char_move(&wk->wu);
         }
-        if ((wk->wu.routine_no[3] == 0) && ((wk->wu.routine_no[1] == 1) || (wk->wu.routine_no[1] == 3)) &&
-            (emwk->routine_no[1] != 1) && (emwk->routine_no[1] != 3)) {
-            num = 0;
+        if (wk->wu.routine_no[3] == 0) {
+            rno = wk->wu.routine_no[1];
+            if (rno == 1 || rno == 3) {
+                rno = emwk->routine_no[1];
+                if (rno != 1 && rno != 3) {
+                    num = zero;
+                }
+            }
         }
-        if ((wk->wu.hit_stop == 0) && (wk->hsjp_ok != 0)) {
+        if (wk->wu.hit_stop == 0 && wk->hsjp_ok != 0) {
             char_move_cmhs(wk);
         }
     }
@@ -688,8 +698,9 @@ void get_saikinnno_idouryou(PLW* wk) {
 
 void clear_attack_num(WORK* wk) {
     s16 i;
-    for (i = 0; i < 4; i++) {
-        wk->uketa_att[i] = 0;
+    register s32 k;
+    for (i = 0, k = 0; i < 4; i++, k += 2) {
+        *(s16*)((s32)wk->uketa_att + k) = 0;
     }
     wk->attack_num = 0;
 }

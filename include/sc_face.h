@@ -9,6 +9,6 @@ void player_grade_char_set();
 void player_face_default_set(s8 pl);
 void player_face(void);
 void rank_mark_set(s8 pl, s8 rank);
-s32 naming_set(s8 pl, s16 place, u16 chr);
+void naming_set(s8 pl, s16 place, u16 chr);
 
 #endif

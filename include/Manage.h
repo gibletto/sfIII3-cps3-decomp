@@ -98,7 +98,7 @@ s32 Check_Break_Into_CPU(s16 PL_id);
 void Check_Stage_BGM(void);
 s32 Check_Disp_Winner(void);
 void Judge_Winner(void);
-s32 Setup_BGM_Fade_In(u8 time);
+void Setup_BGM_Fade_In(u8 time);
 void Update_Level_Control(void);
 void request_center_message(s16 Kind_of_Message);
 

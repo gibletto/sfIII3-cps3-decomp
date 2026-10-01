@@ -44,13 +44,11 @@ void Att_PL12_TOKUSHUKOUDOU(PLW* wk) {
         wk->tk_success++;
         if (wk->metamorphose) {
             set_char_move_init(&wk->wu, 5, wk->as->char_ix + 1);
-            break;
-        }
-        if (effect_D7_init(wk)) {
+        } else if (effect_D7_init(wk)) {
             set_char_move_init(&wk->wu, 5, wk->as->char_ix + 1);
-            break;
+        } else {
+            set_char_move_init(&wk->wu, 5, wk->as->char_ix);
         }
-        set_char_move_init(&wk->wu, 5, wk->as->char_ix);
         break;
     case 1:
         char_move(&wk->wu);

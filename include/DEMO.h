@@ -10,7 +10,7 @@ void Setup_Demo_PL(void);
 void Setup_Demo_Arts(void);
 void Setup_Demo_Stage(void);
 void Setup_Select_Demo_PL(void);
-s32 Demo00(void);
+void Demo00(void);
 s32 Play_Demo(void);
 void Demo01(void);
 s32 Title_At_a_Dash(void);

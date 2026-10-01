@@ -1,11 +1,10 @@
 /*
  * PLPCU.C  Player caught (being thrown) process
  *
- * Runs a player who is held by the opponent's throw. Player_caught sets up the state flags with
- * setup_caught_process_flags and dispatches Caught_00000-Caught_03000: the victim follows the
- * thrower's catch rectangle (index, flip, offset, priority) each frame, or moves the thrower
- * relative to itself for the second catch kind. check_tsukamare_keizoku_check decides whether
- * the hold continues.
+ * Runs a player who is held by the opponent's throw. Player_caught clears the state flags and
+ * dispatches Caught_00000-Caught_03000: the victim follows the thrower's catch rectangle (index,
+ * flip, offset, priority) each frame, or moves the thrower relative to itself for the second
+ * catch kind. check_tsukamare_keizoku_check decides whether the hold continues.
  * caught_cg_type_check and the scdmd_12000-scdmd_31000 routines set up the damage state the
  * victim is released into (blow-away data, vertical speed from buttobi_time_table).
  */
@@ -24,11 +23,8 @@
 #include "EFFE2.h"
 #include "PLPCU.h"
 
-#pragma inline(setup_caught_process_flags)
-
-static void setup_caught_process_flags(PLW* wk);
-
-static void setup_caught_process_flags(PLW* wk) {
+void Player_caught(PLW* wk) {
+    PLW* emwk = (PLW*)wk->wu.dmg_adrs;
     wk->wu.next_z = wk->wu.my_priority;
     wk->running_f = 0;
     wk->guard_flag = 3;
@@ -48,13 +44,6 @@ static void setup_caught_process_flags(PLW* wk) {
     wk->cmd_request = 0;
     wk->hsjp_ok = 0;
     wk->high_jump_flag = 0;
-}
-
-
-
-void Player_caught(PLW* wk) {
-    PLW* emwk = (PLW*)wk->wu.dmg_adrs;
-    setup_caught_process_flags(wk);
     if (wk->wu.routine_no[3] == 0) {
         wk->ukemi_ok_timer = wk->backup_ok_timer = emwk->wu.cmyd.koc;
         wk->uot_cd_ok_flag = 0;
@@ -233,18 +222,15 @@ void scdmd_17000(PLW* wk) {
 
 
 
-s32 scdmd_18000(PLW* wk) {
-    s32 rc;
+void scdmd_18000(PLW* wk) {
     setup_butt_own_data(&wk->wu);
     cal_initial_speed_y(&wk->wu, buttobi_time_table[wk->wu.char_index][wk->wu.dm_attlv], wk->wu.xyz[1].disp.pos);
-    if (!(rc = (s16)wk->wu.dm_attribute)) {
-        return rc;
+    if (wk->wu.dm_attribute) {
+        setup_accessories(wk, wk->wu.pat_status);
+        if (wk->wu.dm_attribute != 2) {
+            effect_D9_init(wk, (u8)wk->wu.dm_attribute);
+        }
     }
-    setup_accessories(wk, wk->wu.pat_status);
-    if ((rc = wk->wu.dm_attribute) == 2) {
-        return rc;
-    }
-    effect_D9_init(wk, (u8)wk->wu.dm_attribute);
 }
 
 

@@ -30,7 +30,7 @@ void setup_smoke_type(PLW* wk);
 void set_dm_hos_flag_grd(PLW* wk);
 void get_catch_off_data(PLW* wk, s16 ix);
 void Player_damage(PLW* wk);
-void add_dm_step_tbl(PLW* wk, s8 flag);
+void add_dm_step_tbl(PLW* wk);
 void buttobi_add_y_check(PLW* wk);
 void buttobi_chakuchi_cg_type_check(PLW* wk);
 void check_bullet_damage(PLW* wk);

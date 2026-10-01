@@ -49,7 +49,8 @@ void eff46_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
     case 0:
         char_move(&ewk->wu);
-        if (!eff46_appear_check(ewk)) {
+        if (eff46_appear_check(ewk)) {
+        } else {
             break;
         }
         ewk->wu.routine_no[1]++;

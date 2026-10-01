@@ -40,9 +40,6 @@
 #include "bg000.h"
 #include "fighter.h"
 
-#pragma inline(bg_chase_step)
-
-static void bg_chase_step(void);
 
 
 
@@ -75,7 +72,8 @@ void reset_all_char_display_with_backup(void) {
 
 /* provisional name */
 void bg_rect_attr_preset(void) {
-    oh_opening_demo(scrn_map_ptr[0].ptr2, 32, 32, 0x1800, 16, 64, 36);
+    u16* p = (u16*)scrn_map_ptr[0].ptr2;
+    oh_opening_demo(p, 0x20, 0x20, 0x1800, 0x10, 0x40, 0x24);
 }
 
 
@@ -242,22 +240,19 @@ void bg_extra_color_trans(void)
     load_bg_color(0x2d);
 }
 
-/* provisional name */
-static void bg_chase_step(void) {
-    if (!Bonus_Game_Flag) {
-        chase_start_check();
-        if (bg_w.chase_flag) {
-            chase_xy_move();
-        }
-    }
-}
-
-
-
 void bg_base_move_common(void) {
+    s32 r;
     bg_base_x_move_check();
     bg_base_y_move_check();
-    bg_chase_step();
+    if (Bonus_Game_Flag) {
+        goto end;
+    }
+    chase_start_check();
+    if (bg_w.chase_flag) {
+        r = chase_xy_move();
+    }
+end:
+    ;
 }
 
 
@@ -841,35 +836,3 @@ void bg020_sync_move(void) {
 
 
 
-void BG030(void) {
-    bgw_ptr = &bg_w.bgw[1];
-    {
-        void (*bg0301_jmp[2])() = { bg0301_init, bg_base_move_common };
-        bg0301_jmp[bgw_ptr->r_no_0]();
-    }
-    bgw_ptr = &bg_w.bgw[0];
-    {
-        void (*bg0300_jmp[2])() = { bg0300_init00, bg_move_common };
-        bg0300_jmp[bgw_ptr->r_no_0]();
-    }
-    zoom_ud_check();
-    bg_pos_hosei2();
-    Bg_Family_Set();
-}
-
-
-
-void bg0300(void) {
-    void (*bg0602_jmp[2])() = { bg0300_init00, bg_move_common };
-    bg0602_jmp[bgw_ptr->r_no_0]();
-}
-
-
-
-void bg0300_init00(void) {
-    bgw_ptr->r_no_0++;
-    bgw_ptr->old_pos_x = bgw_ptr->xy[0].disp.pos = bgw_ptr->pos_x_work = 0x200;
-    bgw_ptr->hos_xy[0].cal = bgw_ptr->wxy[0].cal = bgw_ptr->xy[0].cal;
-    bgw_ptr->zuubun = 0;
-    effect_14_init(5);
-}

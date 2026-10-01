@@ -125,7 +125,6 @@ void end_1800_0001(void) {
 
 
 void end_1800_0005(void) {
-
     switch (bgw_ptr->r_no_1) {
     case 0:
         bgw_ptr->r_no_1++;
@@ -147,7 +146,11 @@ void end_1800_0005(void) {
         if (bgw_ptr->free <= 0) {
             bgw_ptr->free = 2;
             bgw_ptr->l_limit ^= 1;
-            load_any_color(bgw_ptr->l_limit ? 53 : 54);
+            if (bgw_ptr->l_limit) {
+                load_any_color(53);
+            } else {
+                load_any_color(54);
+            }
         }
         break;
     }
@@ -231,7 +234,6 @@ void end_1800_0009(void) {
 
 
 void end_1800_0010(void) {
-
     switch (bgw_ptr->r_no_1) {
     case 0:
         bgw_ptr->r_no_1++;
@@ -250,7 +252,11 @@ void end_1800_0010(void) {
             bgw_ptr->free = 1;
             bgw_ptr->l_limit++;
             bgw_ptr->l_limit &= 1;
-            load_any_color(bgw_ptr->l_limit ? 37 : 38);
+            if (bgw_ptr->l_limit) {
+                load_any_color(37);
+            } else {
+                load_any_color(38);
+            }
         }
         break;
     }

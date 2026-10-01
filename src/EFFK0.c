@@ -28,21 +28,19 @@ void effect_K0_move(WORK_Other* ewk) {
         }
         break;
     case 1:
-        if (--Unit_Of_Timer) {
-            break;
-        }
-        Unit_Of_Timer = 60;
-        bcdext = 0;
-        if ((Select_Timer = sbcd(1, Select_Timer)) == 0) {
-            ewk->wu.routine_no[0]++;
+        if (--Unit_Of_Timer == 0) {
+            Unit_Of_Timer = 60;
+            bcdext = 0;
+            if ((Select_Timer = sbcd(1, Select_Timer)) == 0) {
+                ewk->wu.routine_no[0]++;
+            }
         }
         break;
     case 2:
-        if (--Unit_Of_Timer) {
-            break;
+        if (--Unit_Of_Timer == 0) {
+            Time_Over = 1;
+            ewk->wu.routine_no[0]++;
         }
-        Time_Over = 1;
-        ewk->wu.routine_no[0]++;
         break;
     case 3:
         break;

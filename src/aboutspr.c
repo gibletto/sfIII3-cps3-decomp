@@ -29,20 +29,6 @@
 
 
 
-void Shell14_0012(PLW* wk) {
-    switch (CP_Index[wk->wu.id][0]) {
-    case 0:
-        Jump_Command_Attack_Term(wk, 8, 0x20, 0xA, (0x380), -1, 0x30, 0, -1, -1, -1);
-        break;
-    default:
-        End_Pattern(wk);
-        break;
-    }
-}
-
-
-
-/* provisional name */
 void init_char_gfx_tables(void) {
     s32 i;
     cg_data_list = cg_data_tbl;
@@ -486,14 +472,13 @@ s32 trans_char_cells(WORK* wk) {
 /* provisional name */
 void make_char_cells_n(WORK* wk, CHAR_CELL* cell, CHAR_SPRITE* spr, u16 count, s16 x, s16 y) {
     s16 i;
-    u16 size;
-    CHAR_CELL* c;
-    CHAR_SPRITE* s;
+
     for (i = 0; i < count; i++) {
-        s = &spr[i];
-        c = &cell[i];
-        s->x = x + c->code;
-        s->y = y + c->col;
+        CHAR_SPRITE* s;
+        CHAR_CELL* c;
+        u16 size;
+        (s = &spr[i])->x = (c = &cell[i])->code + x;
+        s->y = c->col + y;
         s->sx = (c->x + wk->cg_ofs_x) & 0x3FF;
         s->sy = (-c->y + wk->spr.cg_ofs_y) & 0x3FF;
         size = *((u8*)c + 6) >> 4;
@@ -507,14 +492,13 @@ void make_char_cells_n(WORK* wk, CHAR_CELL* cell, CHAR_SPRITE* spr, u16 count, s
 /* provisional name */
 void make_char_cells_x(WORK* wk, CHAR_CELL* cell, CHAR_SPRITE* spr, u16 count, s16 x, s16 y) {
     s16 i;
-    u16 size;
-    CHAR_CELL* c;
-    CHAR_SPRITE* s;
+
     for (i = 0; i < count; i++) {
-        s = &spr[i];
-        c = &cell[i];
-        s->x = x + c->code;
-        s->y = y + c->col;
+        CHAR_SPRITE* s;
+        CHAR_CELL* c;
+        u16 size;
+        (s = &spr[i])->x = (c = &cell[i])->code + x;
+        s->y = c->col + y;
         s->sx = (-c->x - wk->cg_ofs_x) & 0x3FF;
         s->sy = (-c->y + wk->spr.cg_ofs_y) & 0x3FF;
         size = *((u8*)c + 6) >> 4;
@@ -528,14 +512,13 @@ void make_char_cells_x(WORK* wk, CHAR_CELL* cell, CHAR_SPRITE* spr, u16 count, s
 /* provisional name */
 void make_char_cells_y(WORK* wk, CHAR_CELL* cell, CHAR_SPRITE* spr, u16 count, s16 x, s16 y) {
     s16 i;
-    u16 size;
-    CHAR_CELL* c;
-    CHAR_SPRITE* s;
+
     for (i = 0; i < count; i++) {
-        s = &spr[i];
-        c = &cell[i];
-        s->x = x + c->code;
-        s->y = y + c->col;
+        CHAR_SPRITE* s;
+        CHAR_CELL* c;
+        u16 size;
+        (s = &spr[i])->x = (c = &cell[i])->code + x;
+        s->y = c->col + y;
         s->sx = (c->x + wk->cg_ofs_x) & 0x3FF;
         s->sy = (c->y - wk->spr.cg_ofs_y) & 0x3FF;
         size = *((u8*)c + 6) >> 4;
@@ -549,14 +532,13 @@ void make_char_cells_y(WORK* wk, CHAR_CELL* cell, CHAR_SPRITE* spr, u16 count, s
 /* provisional name */
 void make_char_cells_xy(WORK* wk, CHAR_CELL* cell, CHAR_SPRITE* spr, u16 count, s16 x, s16 y) {
     s16 i;
-    u16 size;
-    CHAR_CELL* c;
-    CHAR_SPRITE* s;
+
     for (i = 0; i < count; i++) {
-        s = &spr[i];
-        c = &cell[i];
-        s->x = x + c->code;
-        s->y = y + c->col;
+        CHAR_SPRITE* s;
+        CHAR_CELL* c;
+        u16 size;
+        (s = &spr[i])->x = (c = &cell[i])->code + x;
+        s->y = c->col + y;
         s->sx = (-c->x - wk->cg_ofs_x) & 0x3FF;
         s->sy = (c->y - wk->spr.cg_ofs_y) & 0x3FF;
         size = *((u8*)c + 6) >> 4;
@@ -821,7 +803,8 @@ s32 set_conn_sprite(WORK_Other_CONN* wk) {
     if (wk->wu.spr.gfx_cells == 0) {
         return 0;
     }
-    if ((blk = simmram_block_alloc_40((((wk->wu.spr.gfx_cells < 0) ? wk->wu.spr.gfx_cells + 15 : wk->wu.spr.gfx_cells) >> 4) + 1, 1)) == 0) {
+    blk = simmram_block_alloc_40(wk->wu.spr.gfx_cells / 16 + 1, 1);
+    if (blk == 0) {
         return 0;
     }
     base = (u16 *)simmram_slot_addr(blk);
@@ -1081,11 +1064,10 @@ s32 sort_push_request3(WORK* wk) {
 s32 sort_push_request4(WORK* wk) {
     u16* spr;
     if (wk->disp_flag == 0 || wk->cg_number == 0) {
-    no_draw:
         return 1;
     }
     if (wk->disp_flag == 2 && ((wk->blink_timing + Game_timer) & 1)) {
-        goto no_draw;
+        return 1;
     }
     if (trans_char_cells(wk) == 0) {
         return 0;
@@ -1266,8 +1248,6 @@ s16 get_kage_width(s16 v) {
 /* provisional name */
 void char_sprite_zoom_cells(WORK* wk) {
     CharSpriteK* spr;
-    /* one stack slot holds the cell pointer, then the sprite pointer: the arcade loop keeps i in a
-       register this way, and the loop's cost decides slowdown frames in zoomed scenes */
     CharSpriteK* volatile s;
     XY16K pos;
     s16 m[4];
@@ -1373,23 +1353,23 @@ void char_sprite_zoom_cells(WORK* wk) {
 /* provisional name */
 s32 zoom_cell_position(m, x, y)
     s16 *m;
-    s16 x;
-    s16 y;
+    u16 x;
+    u16 y;
 {
     XY16 pos;
-    if (x & 0x200) {
+
+    if ((s16)x & 0x200) {
         x |= 0xFC00;
     } else {
         x &= 0x3FF;
     }
-    if (y & 0x200) {
+    if ((s16)y & 0x200) {
         y |= 0xFC00;
     } else {
         y &= 0x3FF;
     }
-    pos.s.x = m[0] * x / m[1];
-    m += 2;
-    pos.s.y = m[0] * y / m[1];
+    pos.s.x = m[0] * (s16)x / m[1];
+    pos.s.y = m[2] * (s16)y / m[3];
     return pos.l;
 }
 
@@ -1397,15 +1377,20 @@ s32 zoom_cell_position(m, x, y)
 
 /* provisional name */
 s32 get_cell_zoom(lo, hi, rows)
-    u16 lo;
+    register u16 lo;
     u16 hi;
-    u16 rows;
+    register u16 rows;
 {
-    volatile s16 lo_row = rows & 3;
-    s16 hi_row = (rows & 12) >> 2;
-    s32 value = cell_zoom_tbl[hi_row][hi] << 8;
+    s16 lo_row;
+    s16 hi_row;
+    s32 value;
+
+    lo_row = rows & 3;
+    hi_row = (s32)(rows & 12) >> 2;
+    value = (s16)cell_zoom_tbl[hi_row][hi] << 8;
     if (lo < 4) {
         lo = 4;
     }
-    return (s16)(value | cell_zoom_tbl[lo_row][lo]);
+    value |= (s16)cell_zoom_tbl[lo_row][lo];
+    return (s16)value;
 }

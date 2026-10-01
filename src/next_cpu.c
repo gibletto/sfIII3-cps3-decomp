@@ -70,7 +70,7 @@ s32 Next_CPU(void) {
 
 
 void Next_CPU_1st(void) {
-    u16 Rnd;
+    volatile u16 Rnd;
     SC_No[0]++;
     Target_BG_X[3] = bg_w.bgw[3].wxy[0].disp.pos + 458;
     Offset_BG_X[3] = 0;
@@ -169,55 +169,49 @@ void Next_CPU_3rd(void) {
     }
 }
 
-s32 Next_CPU_4th(void)
-{
-    s32 ret;
-
+s32 Next_CPU_4th(void) {
     switch (SC_No[1]) {
     case 0:
-        if (Request_Fade(0x41, 0) == 0) {
-            return 0;
+        if (Request_Fade(65, 0)) {
+            SC_No[1]++;
+            Forbid_Break = 0;
+            bgm_request(3);
+            S_Timer = 0xB2;
+            Exit_Timer = 2;
+            bg_w.bgw[0].wxy[1].disp.pos = 0x200;
+            bg_w.bgw[1].wxy[1].disp.pos = 0x200;
+            bg_w.bgw[3].wxy[1].disp.pos += 0x200;
+            Setup_VS_OBJ(0);
+            effect_58_init(15, 5, 0);
         }
-        SC_No[1]++;
-        Forbid_Break = 0;
-        bgm_request(3);
-        S_Timer = 178;
-        Exit_Timer = 2;
-        bg_w.bgw[0].wxy[1].disp.pos = 512;
-        bg_w.bgw[1].wxy[1].disp.pos = 512;
-        bg_w.bgw[3].wxy[1].disp.pos += 512;
-        Setup_VS_OBJ(0);
-        return effect_58_init(15, 5, 0);
+        break;
     case 1:
-        ret = Check_Fade_Complete_SP();
+        Check_Fade_Complete_SP();
         if (--Exit_Timer == 0) {
             SC_No[1]++;
             Setup_Virtual_BG(0, bg_w.bgw[0].wxy[0].disp.pos, bg_w.bgw[0].wxy[1].disp.pos);
             Setup_Virtual_BG(1, bg_w.bgw[1].wxy[0].disp.pos, bg_w.bgw[1].wxy[1].disp.pos);
-            ret = ((s32 (*)())Setup_Virtual_BG)(3, bg_w.bgw[3].wxy[0].disp.pos, bg_w.bgw[3].wxy[1].disp.pos);
+            Setup_Virtual_BG(3, bg_w.bgw[3].wxy[0].disp.pos, bg_w.bgw[3].wxy[1].disp.pos);
         }
-        return ret;
+        break;
     case 2:
         S_Timer--;
-        if (Check_Fade_Complete_SP() == 0) {
-            return 0;
+        if (Check_Fade_Complete_SP()) {
+            SC_No[1]++;
+            if (S_Timer < 0) {
+                S_Timer = 1;
+            }
         }
-        ret = (s8)SC_No[1] + 1;
-        SC_No[1]++;
-        if (S_Timer < 0) {
-            S_Timer = 1;
-        }
-        return ret;
+        break;
     default:
-        ret = (s8)Scene_Cut;
-        if (ret != 0) {
+        if (Scene_Cut) {
             S_Timer = 1;
         }
         if (--S_Timer == 0) {
             SC_No[0] = 5;
             SEL_CPU_X = 1;
         }
-        return ret;
+        break;
     }
 }
 
@@ -363,9 +357,10 @@ void After_Bonus_1st(void) {
 
 
 void After_Bonus_2nd(void) {
-    switch (SC_No[1]) {
+    u8* p = &SC_No[1];
+    switch (*p) {
     case 0:
-        (*&SC_No)[1]++;
+        (*p)++;
         load_any_color(5);
         effect_76_init(55);
         Order[55] = 3;
@@ -385,8 +380,8 @@ void After_Bonus_2nd(void) {
         break;
     case 2:
         if (Switch_Screen_Revival()) {
-            (*&SC_No)[0]++;
-            (*&SC_No)[1] = 0;
+            SC_No[0]++;
+            SC_No[1] = 0;
             S_Timer = 30;
             bgm_request(7);
             Forbid_Break = 0;
@@ -454,10 +449,10 @@ void After_Bonus_6th(void) {
     switch (SC_No[1]) {
     case 0:
         if (Request_Fade(65, 0)) {
-            (*&SC_No)[1]++;
+            SC_No[1]++;
             Forbid_Break = 0;
             bgm_request(3);
-            S_Timer = 178;
+            S_Timer = 0xB2;
             Exit_Timer = 2;
             bg_w.bgw[0].wxy[1].disp.pos = 0x200;
             bg_w.bgw[1].wxy[1].disp.pos = 0x200;
@@ -468,7 +463,7 @@ void After_Bonus_6th(void) {
         break;
     case 1:
         if (--Exit_Timer == 0) {
-            (*&SC_No)[1]++;
+            SC_No[1]++;
             Setup_Virtual_BG(0, bg_w.bgw[0].wxy[0].disp.pos, bg_w.bgw[0].wxy[1].disp.pos);
             Setup_Virtual_BG(1, bg_w.bgw[1].wxy[0].disp.pos, bg_w.bgw[1].wxy[1].disp.pos);
             Setup_Virtual_BG(3, bg_w.bgw[3].wxy[0].disp.pos, bg_w.bgw[3].wxy[1].disp.pos);
@@ -477,18 +472,18 @@ void After_Bonus_6th(void) {
     case 2:
         S_Timer--;
         if (Check_Fade_Complete_SP()) {
-            (*&SC_No)[1]++;
+            SC_No[1]++;
             if (S_Timer < 0) {
                 S_Timer = 1;
             }
         }
         break;
     default:
-        if (((s8)Scene_Cut)) {
+        if (Scene_Cut) {
             S_Timer = 1;
         }
         if (--S_Timer == 0) {
-            (*&SC_No)[0]++;
+            SC_No[0]++;
             SEL_CPU_X = 1;
         }
         break;
@@ -551,10 +546,11 @@ void Select_CPU_1st(void) {
 
 s32 Select_CPU_2nd(void) {
     u16 xx;
-    s32 st = SC_No[1];
+    u8* p = SC_No;
+    s32 st = p[1];
     switch (st) {
     case 0:
-        (*&SC_No)[1]++;
+        p[1]++;
         Order[Aborigine + 13] = 5;
         Order_Timer[Aborigine + 13] = 1;
         Order[Aborigine + 31] = 5;
@@ -571,8 +567,8 @@ s32 Select_CPU_2nd(void) {
     case 1:
         Check_Auto_Cut();
         if (Next_Step) {
-            (*&SC_No)[0]++;
-            (*&SC_No)[1] = 0;
+            p[0]++;
+            p[1] = 0;
             Time_Stop = 0;
         }
         return 0;
@@ -582,7 +578,7 @@ s32 Select_CPU_2nd(void) {
 
 u8 *Select_CPU_3rd(void)
 {
-    u32 rv; /* the value each path leaves in R0 */
+    u32 rv;
     u16 sw_on;
     s8 pid;
 
@@ -745,30 +741,26 @@ void Next_Bonus_1st(void) {
     effect_58_init(16, 5, 2);
 }
 
-u32 Next_Bonus_2nd(void)
-{
-    u32 rv;
-
-    rv = SC_No[1];
-    if (rv == 0) {
-        rv = Check_Auto_Cut();
-        if (Next_Step != 0) {
+u32 Next_Bonus_2nd(void) {
+    switch (SC_No[1]) {
+    case 0:
+        Check_Auto_Cut();
+        if (Next_Step) {
             SC_No[1]++;
             S_Timer = 90;
-            return effect_58_init(6, 5, 160);
+            effect_58_init(6, 5, 0xA0);
         }
-    } else if (rv == 1) {
-        rv = (s8)Scene_Cut;
-        if (rv != 0) {
+        break;
+    case 1:
+        if (Scene_Cut) {
             S_Timer = 1;
         }
         if (--S_Timer == 0) {
-            rv = 0;
             SC_No[0]++;
             SC_No[1] = 0;
         }
+        break;
     }
-    return rv;
 }
 
 s32 Next_Bonus_3rd(void)
@@ -879,12 +871,14 @@ void Next_Q_1st(void) {
 
 
 void Next_Q_2nd(void) {
-    switch (SC_No[1]) {
+    s8* pb = &Cover_Timer;
+    u8* p = &SC_No[1];
+    switch (*p) {
     case 0:
-        (*&SC_No)[1]++;
+        (*p)++;
         load_any_color(5);
     case 1:
-        if (--Cover_Timer == 5) {
+        if (--*pb == 5) {
             SC_No[1]++;
             tilemap_fill_all(0, 32);
             Setup_Next_Fighter();
@@ -893,8 +887,8 @@ void Next_Q_2nd(void) {
         }
         break;
     case 2:
-        if (--Cover_Timer == 0) {
-            (*&SC_No)[1]++;
+        if (--*pb == 0) {
+            SC_No[1]++;
             Clear_Flash_No();
             commit_name_entry_row_both_players(Text_Page_Y);
             Setup_VS_OBJ(1);
@@ -904,8 +898,8 @@ void Next_Q_2nd(void) {
         break;
     case 3:
         if (Switch_Screen_Revival()) {
-            (*&SC_No)[0]++;
-            (*&SC_No)[1] = 0;
+            SC_No[0]++;
+            SC_No[1] = 0;
             S_Timer = 10;
             bgm_request(7);
             Forbid_Break = 0;
@@ -918,10 +912,10 @@ void Next_Q_2nd(void) {
 
 
 void Next_Q_3rd(void) {
-    switch ((s8)SC_No[1]) {
+    switch (SC_No[1]) {
     case 0:
         if (--S_Timer == 0) {
-            (*&SC_No)[1]++;
+            SC_No[1]++;
         }
         break;
     case 1:
@@ -932,23 +926,24 @@ void Next_Q_3rd(void) {
             bgm_request(3);
             S_Timer = 180;
             effect_58_init(15, 5, 0);
+            return;
         }
         break;
     case 2:
         S_Timer--;
         if (Check_Fade_Complete_SP()) {
-            (*&SC_No)[1]++;
+            SC_No[1]++;
             if (S_Timer < 0) {
                 S_Timer = 1;
             }
         }
         break;
     default:
-        if (((s8)Scene_Cut)) {
+        if (Scene_Cut) {
             S_Timer = 1;
         }
         if (--S_Timer == 0) {
-            (*&SC_No)[0]++;
+            SC_No[0]++;
             SEL_CPU_X = 1;
         }
         break;
@@ -1016,8 +1011,8 @@ u16 sw;
 
 void Setup_EM_List(void)
 {
-    EM_List[Player_id][0] = ((u8 *)EM_Candidate)[VS_Index[Player_id] + (s8)(Player_id * 20)];
-    EM_List[Player_id][1] = ((u8 *)EM_Candidate)[VS_Index[Player_id] + (s8)(Player_id * 20) + 10];
+    EM_List[Player_id][0] = EM_Candidate[Player_id][0][VS_Index[Player_id]];
+    EM_List[Player_id][1] = EM_Candidate[Player_id][1][VS_Index[Player_id]];
 }
 
 
@@ -1252,10 +1247,10 @@ void Setup_VS_OBJ(s16 Option) {
 
 s8 Check_Bonus_Stage(void) {
     Setup_ID();
-    if (!((*&Game_setting).bonus & 1)) {
+    if ((Game_setting.bonus & 1) == 0) {
         return 0;
     }
-    Bonus_Type = ((u8(*)(void))Check_Bonus_Type)();
+    Bonus_Type = Check_Bonus_Type();
     if (Bonus_Type == 0) {
         return 0;
     }
@@ -1293,14 +1288,11 @@ void Setup_Next_Stage(s16 dir_step) {
 
 /* A button press counts Cut_Scroll down (not below 0); returns non-zero when a player pressed one. */
 s32 Check_Auto_Cut(void) {
-    s32 rv;
-    if (!(rv = Auto_Cut_Sub())) {
-        return rv;
+    if (Auto_Cut_Sub() != 0) {
+        if (--Cut_Scroll < 0) {
+            Cut_Scroll = 0;
+        }
     }
-    if ((Cut_Scroll -= 1) < 0) {
-        Cut_Scroll = 0;
-    }
-    return rv;
 }
 
 

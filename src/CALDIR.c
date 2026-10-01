@@ -56,8 +56,7 @@ s16 y2;
     }
     tent += dir_sel_table[y1][y2];
     if (yhan) {
-        tent = -tent;
-        tent &= 0xFF;
+        tent = (u8)-tent;
     }
     return tent;
 }
@@ -94,6 +93,13 @@ s16 caldir_pos_16(s16 x1, s16 x2, s16 y1, s16 y2) {
 /* provisional name */
 s16 caldir_pos_8(s16 x1, s16 x2, s16 y1, s16 y2) {
     return (caldir_pos_256(x1, x2, y1, y2) + 16) >> 5 & 7;
+}
+
+
+
+/* provisional name: unreferenced */
+s32 caldir_wk_256(WORK* wk, WORK* emwk) {
+    return caldir_pos_256(wk->xyz[0].disp.pos, wk->xyz[1].disp.pos, emwk->xyz[0].disp.pos, emwk->xyz[1].disp.pos);
 }
 
 
@@ -368,10 +374,8 @@ void cmsd_x_initial_speed(MotionState* cc) {
 
 
 void cmsd_y_initial_speed(MotionState* cc) {
-    s32 t = cc->timer2;
-    t *= cc->dly;
-    cc->amy = cc->y.pl - t;
-    cc->spy = cc->dly + (cc->amy / cc->timer);
+    cc->amy = cc->y.pl - cc->timer2 * cc->dly;
+    cc->spy = cc->amy / cc->timer + cc->dly;
     cc->amy %= cc->timer;
 }
 
@@ -379,9 +383,7 @@ void cmsd_y_initial_speed(MotionState* cc) {
 
 void cmsd_x_delta_speed(MotionState* cc) {
     if (cc->spx != 0) {
-        s32 t = cc->timer;
-        t *= cc->spx;
-        cc->amx = cc->x.pl - t;
+        cc->amx = cc->x.pl - cc->timer * cc->spx;
         cc->dlx = cc->amx / cc->timer2;
         cc->amx %= cc->timer2;
         cc->spx += cc->dlx;

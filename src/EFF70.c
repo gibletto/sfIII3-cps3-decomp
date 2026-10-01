@@ -18,70 +18,78 @@
 #include "EFF70.h"
 
 void effect_70_move(WORK_Other* ewk) {
-    s16* complete = Sel_PL_Complete;
     if (Suicide[0] == 1) {
         ewk->wu.routine_no[0] = 99;
         ewk->wu.disp_flag = 0;
-        return;
-    }
-    switch (ewk->wu.routine_no[0]) {
-    case 0:
-        if (--ewk->wu.dir_timer == 0) {
-            ewk->wu.routine_no[0]++;
-            ewk->wu.disp_flag = 1;
-            ewk->wu.position_z = 62;
-            ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
-            ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-            ewk->wu.position_z = ewk->wu.xyz[2].disp.pos & 0x3FF;
-            set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
+    } else {
+        switch (ewk->wu.routine_no[0]) {
+        case 0:
+            if (--ewk->wu.dir_timer == 0) {
+                ewk->wu.routine_no[0]++;
+                ewk->wu.disp_flag = 1;
+                ewk->wu.position_z = 62;
+                ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
+                ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
+                ewk->wu.position_z = ewk->wu.xyz[2].disp.pos & 0x3FF;
+                set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
+                sort_push_request4(&ewk->wu);
+            }
+            break;
+        case 1:
+            char_move(&ewk->wu);
+            if (ewk->wu.cg_type) {
+                s32 kind;
+                Complete_Face--;
+                ewk->wu.routine_no[0]++;
+                ewk->wu.char_index = 0;
+                kind = 0;
+                set_char_move_init2(&ewk->wu, kind, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
+            }
             sort_push_request4(&ewk->wu);
-        }
-        break;
-    case 1:
-        char_move(&ewk->wu);
-        if (ewk->wu.cg_type) {
-            Complete_Face--;
-            ewk->wu.routine_no[0]++;
-            ewk->wu.char_index = 0;
-            set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
-        }
-        sort_push_request4(&ewk->wu);
-    case 2:
-        if (Play_Type == 1 && complete[0] & 0x8000 && complete[1] & 0x8000) {
-            ewk->wu.routine_no[0]++;
-            ewk->wu.dir_timer = 30;
-        }
-        sort_push_request4(&ewk->wu);
-        break;
-    case 3:
-        if (--ewk->wu.dir_timer == 0) {
-            ewk->wu.routine_no[0]++;
-            ewk->wu.my_mr_flag = 1;
-            ewk->wu.my_mr.size.x = 63;
-            ewk->wu.my_mr.size.y = 63;
-            ewk->wu.mvxy.a[0].sp = 0x80000;
-        }
-        sort_push_request4(&ewk->wu);
-        break;
-    case 4:
-        if ((ewk->wu.my_mr.size.x -= ewk->wu.mvxy.a[0].real.h) <= 0) {
-            ewk->wu.my_mr.size.x = 0;
-        }
-        if ((ewk->wu.my_mr.size.y -= ewk->wu.mvxy.a[0].real.h) <= 0) {
-            ewk->wu.my_mr.size.y = 0;
-        }
-        if (ewk->wu.my_mr.size.x <= 0 && ewk->wu.my_mr.size.y <= 0) {
-            ewk->wu.routine_no[1]++;
-            ewk->wu.my_mr_flag = 0;
-            ewk->wu.disp_flag = 0;
+            /* fallthrough */
+        case 2:
+            if (Play_Type == 1) {
+                s16* complete;
+                s32 mask;
+                mask = 0x8000;
+                complete = Sel_PL_Complete;
+                if ((complete[0] & mask) && (complete[1] & mask)) {
+                    ewk->wu.routine_no[0]++;
+                    ewk->wu.dir_timer = 30;
+                }
+            }
+            sort_push_request4(&ewk->wu);
+            break;
+        case 3:
+            if (--ewk->wu.dir_timer == 0) {
+                ewk->wu.routine_no[0]++;
+                ewk->wu.my_mr_flag = 1;
+                ewk->wu.my_mr.size.x = 63;
+                ewk->wu.my_mr.size.y = 63;
+                ewk->wu.mvxy.a[0].sp = 0x80000;
+            }
+            sort_push_request4(&ewk->wu);
+            break;
+        case 4:
+            if ((ewk->wu.my_mr.size.x -= *(s16*)((u8*)ewk + 124)) <= 0) {
+                ewk->wu.my_mr.size.x = 0;
+            }
+            if ((ewk->wu.my_mr.size.y -= *(s16*)((u8*)ewk + 124)) <= 0) {
+                ewk->wu.my_mr.size.y = 0;
+            }
+            if (ewk->wu.my_mr.size.x <= 0 && ewk->wu.my_mr.size.y <= 0) {
+                ewk->wu.routine_no[1]++;
+                ewk->wu.my_mr_flag = 0;
+                *(volatile u8*)&ewk->wu.disp_flag = 0;
+                return;
+            }
+            sort_push_request4(&ewk->wu);
+            break;
+        default:
+            all_cgps_put_back(ewk);
+            push_effect_work(&ewk->wu);
             break;
         }
-        sort_push_request4(&ewk->wu);
-        break;
-    default:
-        all_cgps_put_back(ewk);
-        push_effect_work(&ewk->wu);
-        break;
     }
 }
 

@@ -32,9 +32,7 @@ const s8 Demo_PL_Data[4] = {
     0, 1, 0, 1,
 };
 
-/* The initial values of jmp_tbl (Ranking_Main), jmp_tbl (Ranking_00), jmp_tbl (Ranking_01) in RANKING.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of jmp_tbl (Ranking_Main), jmp_tbl (Ranking_00), jmp_tbl (Ranking_01) in RANKING.c. */
 const u32 RANKING_local_init[13] = {
     (u32)Ranking_01, (u32)Ranking_00, (u32)Ranking_00_1st, (u32)Ranking_00_2nd,
     (u32)Ranking_00_3rd, (u32)Ranking_00_4th, (u32)Ranking_00_5th, (u32)Ranking_00_Last,

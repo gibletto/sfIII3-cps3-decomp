@@ -330,7 +330,7 @@ void Pattern18_0020(PLW* wk) {
 void Pattern18_0021(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Jump_Attack_Term(wk, -1, -0x7FA0, 0xB, 0x100, 0, -0x7FA0, -1, 0x100);
+        Jump_Attack_Term(wk, -1, 0x8060, 0xB, 0x100, 0, 0x8060, -1, 0x100);
         break;
     default:
         End_Pattern(wk);

@@ -396,14 +396,18 @@ void move_P1_move_P2(void) {
     if (plw[0].do_not_move == 0) {
         Player_move(&plw[0], sw_to_lvbt(p1sw_0));
     }
-    if (bg_app_stop == 0 && bg_app == 0 && set_field_hosei_flag(&plw[0], scrr, 1) != 0) {
-        set_field_hosei_flag(&plw[0], scrl, 0);
+    if (bg_app_stop == 0 && bg_app == 0) {
+        if (set_field_hosei_flag(&plw[0], scrr, 1)) {
+            set_field_hosei_flag(&plw[0], scrl, 0);
+        }
     }
     if (plw[1].do_not_move == 0) {
         Player_move(&plw[1], sw_to_lvbt(p2sw_0));
     }
-    if (bg_app_stop == 0 && bg_app == 0 && set_field_hosei_flag(&plw[1], scrr, 1) != 0) {
-        set_field_hosei_flag(&plw[1], scrl, 0);
+    if (bg_app_stop == 0 && bg_app == 0) {
+        if (set_field_hosei_flag(&plw[1], scrr, 1)) {
+            set_field_hosei_flag(&plw[1], scrl, 0);
+        }
     }
 }
 
@@ -595,12 +599,15 @@ s32 check_sa_type_rebirth(PLW* wk) {
     return 1;
 }
 
-s32 nekorobi_check(char pl)
-{
+s32 nekorobi_check(char pl) {
     s16 result;
     result = 0;
-    if (plw[pl].wu.routine_no[1] == 1 && plw[pl].wu.routine_no[2] == 0 && plw[pl].wu.routine_no[3] > 2) {
-        result = 1;
+    if (plw[pl].wu.routine_no[1] == 1) {
+        if (plw[pl].wu.routine_no[2] == 0) {
+            if (plw[pl].wu.routine_no[3] > 2) {
+                result = 1;
+            }
+        }
     }
     return result;
 }

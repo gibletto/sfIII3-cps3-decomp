@@ -20,16 +20,16 @@ void sprite_pools_init(void)
     s32 i;
     s32 unused;
     spr_pool_busy = 1;
-    spr_entry_cnt[0][0] = 0;
-    spr_entry_cnt[0][1] = 0;
-    spr_entry_cnt[1][0] = 0;
-    spr_entry_cnt[1][1] = 0;
-    spr_entry_cnt[2][0] = 0;
-    spr_entry_cnt[2][1] = 0;
-    spr_entry_cnt[3][0] = 0;
-    spr_entry_cnt[3][1] = 0;
-    spr_entry_cnt[4][0] = 0;
-    spr_entry_cnt[4][1] = 0;
+    spr_cnt0_a = 0;
+    spr_cnt0_b = 0;
+    spr_cnt1_a = 0;
+    spr_cnt1_b = 0;
+    spr_cnt2_a = 0;
+    spr_cnt2_b = 0;
+    spr_cnt3_a = 0;
+    spr_cnt3_b = 0;
+    spr_cnt4_a = 0;
+    spr_cnt4_b = 0;
     spr_list_ready = 0;
     for (i = 0; i < 128; i++) {
         spr_prio_a[i] = 0;
@@ -51,89 +51,89 @@ SPRITE_ENTRY* sprite_entry_alloc(s8 layer) {
     switch (layer) {
     case 0:
         if (spr_bank) {
-            ix = spr_entry_cnt[0][1];
+            ix = spr_cnt0_b;
             if (ix > 255) {
                 return 0;
             }
-            spr_entry_cnt[0][1]++;
+            spr_cnt0_b++;
             break;
         } else {
-            ix = spr_entry_cnt[0][0];
+            ix = spr_cnt0_a;
             if (ix > 255) {
                 return 0;
             }
-            spr_entry_cnt[0][0]++;
+            spr_cnt0_a++;
         }
         break;
     case 1:
         if (spr_bank) {
-            ix = spr_entry_cnt[1][1];
+            ix = spr_cnt1_b;
             if (ix > 63) {
                 return 0;
             }
-            spr_entry_cnt[1][1]++;
+            spr_cnt1_b++;
             ix += 0x100;
             break;
         } else {
-            ix = spr_entry_cnt[1][0];
+            ix = spr_cnt1_a;
             if (ix > 63) {
                 return 0;
             }
-            spr_entry_cnt[1][0]++;
+            spr_cnt1_a++;
             ix += 0x100;
         }
         break;
     case 2:
         if (spr_bank) {
-            ix = spr_entry_cnt[2][1];
+            ix = spr_cnt2_b;
             if (ix > 63) {
                 return 0;
             }
-            spr_entry_cnt[2][1]++;
+            spr_cnt2_b++;
             ix += 0x140;
             break;
         } else {
-            ix = spr_entry_cnt[2][0];
+            ix = spr_cnt2_a;
             if (ix > 63) {
                 return 0;
             }
-            spr_entry_cnt[2][0]++;
+            spr_cnt2_a++;
             ix += 0x140;
         }
         break;
     case 3:
         if (spr_bank) {
-            ix = spr_entry_cnt[3][1];
+            ix = spr_cnt3_b;
             if (ix > 63) {
                 return 0;
             }
-            spr_entry_cnt[3][1]++;
+            spr_cnt3_b++;
             ix += 0x180;
             break;
         } else {
-            ix = spr_entry_cnt[3][0];
+            ix = spr_cnt3_a;
             if (ix > 63) {
                 return 0;
             }
-            spr_entry_cnt[3][0]++;
+            spr_cnt3_a++;
             ix += 0x180;
         }
         break;
     case 4:
         if (spr_bank) {
-            ix = spr_entry_cnt[4][1];
+            ix = spr_cnt4_b;
             if (ix > 63) {
                 return 0;
             }
-            spr_entry_cnt[4][1]++;
+            spr_cnt4_b++;
             ix += 0x1C0;
             break;
         } else {
-            ix = spr_entry_cnt[4][0];
+            ix = spr_cnt4_a;
             if (ix > 63) {
                 return 0;
             }
-            spr_entry_cnt[4][0]++;
+            spr_cnt4_a++;
             ix += 0x1C0;
         }
         break;
@@ -341,11 +341,11 @@ void sprite_bank_flip(void) {
         for (i = 0; i < 0x200; i++) {
             spr_entry_b[i].flag = 0;
         }
-        spr_entry_cnt[0][1] = 0;
-        spr_entry_cnt[1][1] = 0;
-        spr_entry_cnt[2][1] = 0;
-        spr_entry_cnt[3][1] = 0;
-        spr_entry_cnt[4][1] = 0;
+        spr_cnt0_b = 0;
+        spr_cnt1_b = 0;
+        spr_cnt2_b = 0;
+        spr_cnt3_b = 0;
+        spr_cnt4_b = 0;
         for (i = 0; i < 0x80; i++) {
             spr_prio_b[i] = 0;
         }
@@ -396,11 +396,11 @@ void sprite_bank_flip(void) {
         for (i = 0; i < 0x200; i++) {
             spr_entry_a[i].flag = 0;
         }
-        spr_entry_cnt[0][0] = 0;
-        spr_entry_cnt[1][0] = 0;
-        spr_entry_cnt[2][0] = 0;
-        spr_entry_cnt[3][0] = 0;
-        spr_entry_cnt[4][0] = 0;
+        spr_cnt0_a = 0;
+        spr_cnt1_a = 0;
+        spr_cnt2_a = 0;
+        spr_cnt3_a = 0;
+        spr_cnt4_a = 0;
         for (i = 0; i < 0x80; i++) {
             spr_prio_a[i] = 0;
         }

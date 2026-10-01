@@ -38,9 +38,7 @@ const s16 end_2_pos[5][2] = {
     { 320, 256 },
 };
 
-/* The initial values of end_100_jp (end_200_move) in end_2.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of end_100_jp (end_200_move) in end_2.c. */
 void (*const end_100_jp_init[5])() = {
     end_200_0000,
     end_200_1000,
@@ -53,9 +51,7 @@ const s16 end_200_1000_anm_tbl[4] = {
     12, 13, 14, 15,
 };
 
-/* The initial values of end_202_jp (end_201_move) in end_2.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of end_202_jp (end_201_move) in end_2.c. */
 void (*const end_202_jp_init[5])() = {
     end_X_com01,
     end_201_1000,
@@ -69,9 +65,7 @@ const s16 end_201_anm_tbl[10] = {
     24, 25,
 };
 
-/* The initial values of end_202_jp (end_202_move) in end_2.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of end_202_jp (end_202_move) in end_2.c. */
 void (*const end_202_jp_init_2[5])() = {
     end_X_com01,
     end_202_1000,

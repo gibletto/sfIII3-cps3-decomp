@@ -2705,22 +2705,24 @@ void Pattern15_0141(PLW* wk) {
     }
 }
 
-u32 Pattern15_0142(PLW* wk) {
-    s16 action;
-    action = CP_Index[wk->wu.id][0];
-    if (action == 0) {
-        return ((u32(*)())Approach_Walk)(wk, 0x57, 3);
+void Pattern15_0142(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Approach_Walk(wk, 0x57, 3);
+        break;
+    case 1:
+        Turn_Over_On(wk);
+        break;
+    case 2:
+        Jump_Attack_Term(wk, -1, 0x49, 9, 0x102, 0, 0x8080, -1, 0x40);
+        break;
+    case 3:
+        Com_Random_Select(wk, 2, 0x89, 0x8A, 0x8B, 0x8C, 0);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
     }
-    if (action == 1) {
-        return ((u32(*)())Turn_Over_On)();
-    }
-    if (action == 2) {
-        return ((u32(*)())Jump_Attack_Term)(wk, -1, 0x49, 9, 0x102, 0, 0x8080, -1, 0x40);
-    }
-    if (action == 3) {
-        return ((u32(*)())Com_Random_Select)(wk, 2, 0x89, 0x8A, 0x8B, 0x8C, 0);
-    }
-    return ((u32(*)())End_Pattern)();
 }
 
 

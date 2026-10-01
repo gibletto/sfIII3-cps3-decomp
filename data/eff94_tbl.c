@@ -28,9 +28,7 @@ const s16 eff94_data_tbl[5][10] = {
     { 2, 8320, 352, 272, 10, 2, 2, 0, 3, 0 },
 };
 
-/* The initial values of eff94_move_jp (effect_94_move) in eff94.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of eff94_move_jp (effect_94_move) in eff94.c. */
 const u32 eff94_move_jp_init[5] = {
     (u32)eff94_0000,
     (u32)eff94_1000,
@@ -43,9 +41,7 @@ const s16 eff94_2000_tbl[8] = {
     288, 336, 320, 288, 328, 296, 344, 304,
 };
 
-/* The initial values of eff94_2000_jp (eff94_2000) in eff94.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of eff94_2000_jp (eff94_2000) in eff94.c. */
 const u32 eff94_2000_jp_init[5] = {
     (u32)eff94_2000_0,
     (u32)eff94_2000_1,
@@ -59,9 +55,7 @@ const s8 eff94_2000_1_tbl[16] = {
     1, 1, 0, 0, 1, 1, 0, 1,
 };
 
-/* The initial values of eff94_jp (eff94_3000) in eff94.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of eff94_jp (eff94_3000) in eff94.c. */
 const u32 eff94_jp_init[4] = {
     (u32)eff94_3000_0,
     (u32)eff94_2000_2,

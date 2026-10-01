@@ -21,39 +21,47 @@
 
 
 void effect_03_move(WORK_Other* ewk) {
+    const PLEF* plef;
+    s16* pos;
     switch (ewk->wu.routine_no[0]) {
     case 0:
+        plef = plef_data;
         ewk->wu.routine_no[0]++;
-        ewk->wu.disp_flag = plef_data[ewk->wu.type].dspf;
+        ewk->wu.disp_flag = plef[ewk->wu.type].dspf;
         ewk->wu.blink_timing = ewk->master_id;
-        if (plef_data[ewk->wu.type].sel_rl) {
+        if (plef[ewk->wu.type].sel_rl) {
             ewk->wu.rl_flag = ewk->wu.rl_waza;
         }
-        ewk->wu.position_x = (ewk->wu.rl_flag) ? ewk->wu.xyz[0].disp.pos + plef_data[ewk->wu.type].hx : ewk->wu.xyz[0].disp.pos - plef_data[ewk->wu.type].hx;
-        ewk->wu.position_y = ewk->wu.xyz[1].disp.pos + plef_data[ewk->wu.type].hy;
-        ewk->wu.position_z = ewk->wu.xyz[2].disp.pos + plef_data[ewk->wu.type].hz;
-        if (plef_data[ewk->wu.type].sel_pri) {
-            ewk->wu.position_z = plef_data[ewk->wu.type].hz;
-        }
-        if (plef_data[ewk->wu.type].sel_col) {
-            ewk->wu.my_col_code = plef_data[ewk->wu.type].color | 0x2000;
+        if (ewk->wu.rl_flag) {
+            ewk->wu.position_x = ewk->wu.xyz[0].disp.pos + plef[ewk->wu.type].hx;
         } else {
-            ewk->wu.my_col_code += plef_data[ewk->wu.type].color;
+            ewk->wu.position_x = ewk->wu.xyz[0].disp.pos - plef[ewk->wu.type].hx;
         }
-        if (plef_data[ewk->wu.type].mts) {
+        ewk->wu.position_y = plef[ewk->wu.type].hy + ewk->wu.xyz[1].disp.pos;
+        ewk->wu.position_z = ewk->wu.xyz[2].disp.pos + plef[ewk->wu.type].hz;
+        if (plef[ewk->wu.type].sel_pri) {
+            ewk->wu.position_z = plef[ewk->wu.type].hz;
+        }
+        if (plef[ewk->wu.type].sel_col) {
+            ewk->wu.my_col_code = plef[ewk->wu.type].color | 0x2000;
+        } else {
+            ewk->wu.my_col_code += plef[ewk->wu.type].color;
+        }
+        if (plef[ewk->wu.type].mts) {
             ewk->wu.kage_flag = 1;
-            ewk->wu.kage_hx = plef_kage_data[plef_data[ewk->wu.type].mts][0];
-            ewk->wu.kage_hy = plef_kage_data[plef_data[ewk->wu.type].mts][1];
-            ewk->wu.kage_prio = plef_kage_data[plef_data[ewk->wu.type].mts][2];
-            ewk->wu.kage_char = plef_kage_data[plef_data[ewk->wu.type].mts][3];
+            ewk->wu.kage_hx = plef_kage_data[plef[ewk->wu.type].mts][0];
+            ewk->wu.kage_hy = plef_kage_data[plef[ewk->wu.type].mts][1];
+            ewk->wu.kage_prio = plef_kage_data[plef[ewk->wu.type].mts][2];
+            ewk->wu.kage_char = plef_kage_data[plef[ewk->wu.type].mts][3];
         }
-        set_char_move_init(&ewk->wu, 0, plef_data[ewk->wu.type].chix);
-        if (plef_data[ewk->wu.type].ichi) {
-            ewk->wu.xyz[0].disp.pos = plef_data[ewk->wu.type].hx;
-            ewk->wu.xyz[1].disp.pos = plef_data[ewk->wu.type].hy;
-            ewk->wu.xyz[2].disp.pos = plef_data[ewk->wu.type].hz;
-            if (ewk->wu.rl_flag == 0) {
-                ewk->wu.xyz[0].disp.pos = -ewk->wu.xyz[0].disp.pos;
+        set_char_move_init(&ewk->wu, 0, plef[ewk->wu.type].chix);
+        if (plef[ewk->wu.type].ichi) {
+            ewk->wu.xyz[0].disp.pos = plef[ewk->wu.type].hx;
+            ewk->wu.xyz[1].disp.pos = plef[ewk->wu.type].hy;
+            ewk->wu.xyz[2].disp.pos = plef[ewk->wu.type].hz;
+            if (!ewk->wu.rl_flag) {
+                pos = &ewk->wu.xyz[0].disp.pos;
+                *pos = -*pos;
             }
         } else {
             ewk->wu.xyz[0].disp.pos = ewk->wu.position_x;
@@ -89,7 +97,6 @@ void effect_03_move(WORK_Other* ewk) {
     default:
         all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
-        break;
     }
 }
 
@@ -99,10 +106,10 @@ void eff03_disp_pos(WORK* ewk, WORK* mwk) {
         ewk->position_x = mwk->position_x + ewk->xyz[0].disp.pos;
         ewk->position_y = mwk->position_y + ewk->xyz[1].disp.pos;
         ewk->position_z = mwk->position_z + ewk->xyz[2].disp.pos;
-        return;
+    } else {
+        ewk->position_x = ewk->xyz[0].disp.pos;
+        ewk->position_y = ewk->xyz[1].disp.pos;
     }
-    ewk->position_x = ewk->xyz[0].disp.pos;
-    ewk->position_y = ewk->xyz[1].disp.pos;
 }
 
 

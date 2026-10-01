@@ -18,7 +18,7 @@ void end_500_0011(void);
 void end_500_comm(void);
 void end_500_quake_y_sub(void);
 void end_501_0007(void);
-u8 * end_501_0009(void);
+void end_501_0009(void);
 void end_5_bg0_move_sub(void);
 void end_05000(u16 pl_num);
 void end_500_move(void);

@@ -123,9 +123,7 @@ const s8 str_INSERT_COIN_2[12] = "INSERT COIN";
 const s8 str_blank_3[12] = "           ";
 const s8 str_PUSH_1_OR_2_START_BUTTON[28] = "PUSH 1 OR 2 START BUTTON";
 
-/* The initial values of Management_Jmp_Tbl (Game_Management), SC2_Jmp_Tbl (Game_Manage_2nd), SC5_Jmp_Tbl (Game_Manage_5th), SC7_Jmp_Tbl (Game_Manage_7th), SC8_Jmp_Tbl (Game_Manage_8th), SC81_Jmp_Tbl (Game_Manage_8_1) in Manage.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of Management_Jmp_Tbl (Game_Management), SC2_Jmp_Tbl (Game_Manage_2nd), SC5_Jmp_Tbl (Game_Manage_5th), SC7_Jmp_Tbl (Game_Manage_7th), SC8_Jmp_Tbl (Game_Manage_8th), SC81_Jmp_Tbl (Game_Manage_8_1) in Manage.c. */
 const u32 Manage_local_init[43] = {
     (u32)Game_Manage_1st,
     (u32)Game_Manage_2nd,
@@ -196,9 +194,7 @@ const u8 Break_Into_Level_Data[9] = {
     0,
 };
 
-/* The initial values of Scene_Tbl (Winner_Scene), Scene_Tbl (Loser_Scene) in Win.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of Scene_Tbl (Winner_Scene), Scene_Tbl (Loser_Scene) in Win.c. */
 const u32 Win_local_init[12] = {
     (u32)Win_1st,
     (u32)Win_2nd,
@@ -242,9 +238,7 @@ const s16 EFFA3_Area_Data[2][2][4] = {
     { { 0, 15, 48, 16 }, { 8, 15, 62, 16 } },
 };
 
-/* The initial values of Scene_Tbl (Game_Over), Scene_Tbl (Continue_Scene) in Win.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of Scene_Tbl (Game_Over), Scene_Tbl (Continue_Scene) in Win.c. */
 const u32 Win_local_init_2[8] = {
     (u32)GameOver_1st,
     (u32)GameOver_2nd,

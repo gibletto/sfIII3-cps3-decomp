@@ -67,13 +67,12 @@ void eff85_1000(WORK_Other* ewk) {
         ewk->wu.xyz[1].cal = 0x2C0000;
         break;
     case 1:
-        if (!swallow_sprize_check(ewk)) {
-            break;
-        }
-        char_move(&ewk->wu);
-        if (ewk->wu.cg_type == 0xFF) {
-            ewk->wu.routine_no[1]++;
-            ewk->wu.routine_no[2] = 0;
+        if (swallow_sprize_check(ewk)) {
+            char_move(&ewk->wu);
+            if (ewk->wu.cg_type == 0xFF) {
+                ewk->wu.routine_no[1]++;
+                ewk->wu.routine_no[2] = 0;
+            }
         }
         break;
     }
@@ -134,13 +133,12 @@ void eff85_5000(WORK_Other* ewk) {
         set_char_move_init(&ewk->wu, 0, eff85_char_index_tbl[ewk->wu.routine_no[1]]);
         break;
     case 1:
-        if (!swallow_sprize_check(ewk)) {
-            break;
-        }
-        char_move(&ewk->wu);
-        if (ewk->wu.cg_type == 0xFF) {
-            ewk->wu.routine_no[1]++;
-            ewk->wu.routine_no[2] = 0;
+        if (swallow_sprize_check(ewk)) {
+            char_move(&ewk->wu);
+            if (ewk->wu.cg_type == 0xFF) {
+                ewk->wu.routine_no[1]++;
+                ewk->wu.routine_no[2] = 0;
+            }
         }
         break;
     }

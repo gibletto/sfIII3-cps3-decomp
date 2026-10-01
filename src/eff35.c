@@ -35,11 +35,12 @@ void eff35_0000(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
     case 0:
         ewk->wu.old_rno[1]--;
-        if (ewk->wu.old_rno[1] <= 0) {
-            ewk->wu.routine_no[1]++;
-            ewk->wu.disp_flag = 1;
-            set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.old_rno[3], 0);
+        if (ewk->wu.old_rno[1] > 0) {
+            break;
         }
+        ewk->wu.routine_no[1]++;
+        ewk->wu.disp_flag = 1;
+        set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.old_rno[3], 0);
         break;
     case 1:
         disp_pos_trans_entry(ewk);
@@ -47,7 +48,6 @@ void eff35_0000(WORK_Other* ewk) {
     default:
         all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
-        break;
     }
 }
 
@@ -61,14 +61,15 @@ void eff35_0001(WORK_Other* ewk) {
             break;
         }
         ewk->wu.old_rno[1]--;
-        if (ewk->wu.old_rno[1] <= 0) {
-            ewk->wu.routine_no[1]++;
-            ewk->wu.disp_flag = 1;
-            ewk->wu.my_mr_flag = 1;
-            ewk->wu.my_mr.size.x = 127;
-            ewk->wu.my_mr.size.y = 63;
-            set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.old_rno[3], 0);
+        if (ewk->wu.old_rno[1] > 0) {
+            break;
         }
+        ewk->wu.routine_no[1]++;
+        ewk->wu.disp_flag = 1;
+        ewk->wu.my_mr_flag = 1;
+        ewk->wu.my_mr.size.x = 0x7F;
+        ewk->wu.my_mr.size.y = 0x3F;
+        set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.old_rno[3], 0);
         break;
     case 1:
         if (Break_Into) {
@@ -88,9 +89,9 @@ void eff35_0001(WORK_Other* ewk) {
             break;
         }
         ewk->wu.my_mr.size.x += 12;
-        if (ewk->wu.my_mr.size.x >= 63) {
+        if (ewk->wu.my_mr.size.x >= 0x3F) {
             ewk->wu.routine_no[1]++;
-            ewk->wu.my_mr.size.x = 63;
+            ewk->wu.my_mr.size.x = 0x3F;
         }
         disp_pos_trans_entry5(ewk);
         break;
@@ -113,7 +114,6 @@ void eff35_0001(WORK_Other* ewk) {
     default:
         all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
-        break;
     }
 }
 
@@ -127,12 +127,13 @@ void eff35_0002(WORK_Other* ewk) {
             break;
         }
         ewk->wu.old_rno[1]--;
-        if (ewk->wu.old_rno[1] <= 0) {
-            ewk->wu.routine_no[1]++;
-            ewk->wu.disp_flag = 1;
-            set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.old_rno[3], 0);
-            effect_58_init(6, 4, 0xA8);
+        if (ewk->wu.old_rno[1] > 0) {
+            break;
         }
+        ewk->wu.routine_no[1]++;
+        ewk->wu.disp_flag = 1;
+        set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.old_rno[3], 0);
+        effect_58_init(6, 4, 0xA8);
         break;
     case 1:
         if (Break_Into) {
@@ -152,7 +153,6 @@ void eff35_0002(WORK_Other* ewk) {
     default:
         all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
-        break;
     }
 }
 
@@ -230,11 +230,12 @@ void eff35_0004(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
     case 0:
         ewk->wu.old_rno[1]--;
-        if (ewk->wu.old_rno[1] <= 0) {
-            ewk->wu.routine_no[1]++;
-            ewk->wu.disp_flag = 1;
-            set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.old_rno[3], 0);
+        if (ewk->wu.old_rno[1] > 0) {
+            break;
         }
+        ewk->wu.routine_no[1]++;
+        ewk->wu.disp_flag = 1;
+        set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.old_rno[3], 0);
         break;
     case 1:
         if (pcon_rno[0] == 2 && pcon_rno[2] >= 3) {
@@ -250,7 +251,7 @@ void eff35_0004(WORK_Other* ewk) {
         break;
     case 2:
         char_move(&ewk->wu);
-        if (ewk->wu.cg_type == 9) {
+        if ((u8)ewk->wu.cg_type == 9) {
             ewk->wu.routine_no[1]++;
             set_char_move_init(&ewk->wu, 0, 8);
         }
@@ -263,7 +264,6 @@ void eff35_0004(WORK_Other* ewk) {
     default:
         all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
-        break;
     }
 }
 
@@ -277,12 +277,13 @@ void eff35_0005(WORK_Other* ewk) {
             break;
         }
         ewk->wu.old_rno[1]--;
-        if (ewk->wu.old_rno[1] <= 0) {
-            ewk->wu.routine_no[1]++;
-            ewk->wu.disp_flag = 1;
-            ewk->wu.my_col_code = 0x5C;
-            set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.old_rno[3], 0);
+        if (ewk->wu.old_rno[1] > 0) {
+            break;
         }
+        ewk->wu.routine_no[1]++;
+        ewk->wu.disp_flag = 1;
+        ewk->wu.my_col_code = 0x5C;
+        set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.old_rno[3], 0);
         break;
     case 1:
         if (Break_Into) {
@@ -304,7 +305,6 @@ void eff35_0005(WORK_Other* ewk) {
     default:
         all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
-        break;
     }
 }
 
@@ -318,12 +318,13 @@ void eff35_0006(WORK_Other* ewk) {
             break;
         }
         ewk->wu.old_rno[1]--;
-        if (ewk->wu.old_rno[1] <= 0) {
-            ewk->wu.routine_no[1]++;
-            ewk->wu.disp_flag = 1;
-            ewk->wu.my_col_code = 0x5C;
-            set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.old_rno[3], 0);
+        if (ewk->wu.old_rno[1] > 0) {
+            break;
         }
+        ewk->wu.routine_no[1]++;
+        ewk->wu.disp_flag = 1;
+        ewk->wu.my_col_code = 0x5C;
+        set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.old_rno[3], 0);
         break;
     case 1:
         if (Break_Into) {
@@ -346,7 +347,6 @@ void eff35_0006(WORK_Other* ewk) {
     default:
         all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
-        break;
     }
 }
 

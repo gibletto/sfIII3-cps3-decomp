@@ -392,9 +392,7 @@ const u16 Correct_Lv_Data[22] = {
     288, 0, 265, 0, 0, 0,
 };
 
-/* The initial values of Com_Jmp_Tbl (Main_Program), Char_Jmp_Tbl (Com_Active), Follow_Jmp_Tbl (Com_Follow), Passive_Jmp_Tbl (Com_Passive), VS_Shell_Jmp_Tbl (Com_VS_Shell), Damage_Jmp_Tbl (Com_Damage), Float_Jmp_Tbl (Com_Float), Flip_Jmp_Tbl (Com_Flip) in Com_Pl.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of Com_Jmp_Tbl (Main_Program), Char_Jmp_Tbl (Com_Active), Follow_Jmp_Tbl (Com_Follow), Passive_Jmp_Tbl (Com_Passive), VS_Shell_Jmp_Tbl (Com_VS_Shell), Damage_Jmp_Tbl (Com_Damage), Float_Jmp_Tbl (Com_Float), Flip_Jmp_Tbl (Com_Flip) in Com_Pl.c. */
 const u32 Com_Pl_local_init[119] = {
     (u32)Com_Initialize, (u32)Com_Free, (u32)Com_Active, (u32)Com_Before_Follow,
     (u32)Com_Follow, (u32)Com_Before_Passive, (u32)Com_Passive, (u32)Com_Guard,

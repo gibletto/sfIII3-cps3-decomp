@@ -104,8 +104,8 @@ void effect_08_move(WORK_Other* ewk) {
 void effect_08_build_tile_grid()
 {
     const GRID_CELL* cell;
-    s32 i;
-    s32 j;
+    s16 i;
+    s16 j;
     for (i = 0; i < 2; i++) {
         for (j = 0; j < 16; j++) {
             cell = &eff08_cell_tbl[i][j];

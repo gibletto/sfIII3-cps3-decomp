@@ -73,10 +73,9 @@ void end_05000(u16 pl_num) {
 
 
 void end_500_move(void) {
-    END_500_JP end_500_jp;
-    end_500_jp = end_500_jp_tbl;
+    void (*jmp_tbl[13])() = { end_500_comm, end_500_0001, end_500_0001, end_500_comm, end_500_comm, end_500_comm, end_500_0006, end_500_0007, end_500_0008, end_X_com01, end_X_com01, end_500_0011, end_X_com01 };
     bgw_ptr = &bg_w.bgw[0];
-    end_500_jp.fn[end_w.r_no_2]();
+    jmp_tbl[end_w.r_no_2]();
 }
 
 
@@ -161,16 +160,17 @@ void end_500_0001(void) {
 void end_500_0006(void) {
     switch (bgw_ptr->r_no_1) {
     case 0:
-        if (Request_Fade(16, 0)) {
-            bgw_ptr->r_no_1++;
-            end_no_cut = 1;
+        if (Request_Fade(0x10, 0) == 0) {
+            break;
         }
+        bgw_ptr->r_no_1++;
+        end_no_cut = 1;
         break;
     case 1:
         if (end_fade_complete()) {
-            bgw_ptr->r_no_1 += 1;
+            bgw_ptr->r_no_1++;
             end_no_cut = 0;
-            end_w.timer = 30;
+            end_w.timer = 0x1E;
         }
         break;
     case 3:
@@ -348,17 +348,18 @@ void end_501_0007(void) {
     switch (bgw_ptr->r_no_1) {
     case 0:
         bgw_ptr->r_no_1++;
-        bgw_ptr->xy[0].disp.pos = 512;
-        bgw_ptr->xy[1].disp.pos = 768;
+        bgw_ptr->xy[0].disp.pos = 0x200;
+        bgw_ptr->xy[1].disp.pos = 0x300;
         bgw_ptr->abs_x = bgw_ptr->xy[0].disp.pos;
         end5_col_ix = 0;
         end5_pal_ix = 0;
-        end5_bg1_pos = 512;
+        end5_bg1_pos = 0x200;
     case 1:
-        if (Request_Fade(17, 0)) {
-            bgw_ptr->r_no_1++;
-            end_no_cut = 1;
+        if (Request_Fade(0x11, 0) == 0) {
+            break;
         }
+        bgw_ptr->r_no_1++;
+        end_no_cut = 1;
         break;
     case 2:
         bgw_ptr->r_no_1++;
@@ -388,24 +389,21 @@ void end_501_0008(void) {
     }
 }
 
-u8 *end_501_0009(void)
-{
+void end_501_0009(void) {
     switch (bgw_ptr->r_no_1) {
     case 0:
         bgw_ptr->r_no_1++;
         end5_pal_ix--;
-        return (u8 *)1;
+        break;
     case 1:
         end_5_bg1_back_sub();
         end_5_bg1_cell_sub(1);
-        if (!end_etc_flag) {
-            return 0;
+        if (end_etc_flag) {
+            bgw_ptr->r_no_1++;
+            end_w.timer = 0;
         }
-        bgw_ptr->r_no_1++;
-        end_w.timer = 0;
-        return (u8 *)&end_w.timer;
+        break;
     }
-    return (u8 *)bgw_ptr->r_no_1;
 }
 
 
@@ -415,16 +413,17 @@ void end_501_0010(void) {
     end_5_bg1_cell_sub(1);
     switch (bgw_ptr->r_no_1) {
     case 0:
-        if (Request_Fade(21, 0)) {
-            bgw_ptr->r_no_1++;
-            end_no_cut = 1;
+        if (Request_Fade(0x15, 0) == 0) {
+            break;
         }
+        bgw_ptr->r_no_1++;
+        end_no_cut = 1;
         break;
     case 1:
         if (end_fade_complete()) {
-            bgw_ptr->r_no_1 += 1;
+            bgw_ptr->r_no_1++;
             end_no_cut = 0;
-            end_w.timer = 30;
+            end_w.timer = 0x1E;
         }
         break;
     case 2:

@@ -443,26 +443,16 @@ void dispenser_sw_read(void) {
 }
 
 /* provisional name */
-char * dispenser_init(void)
-{
-    char *ret;
-    s32 sw;
-    s32 latch;
+void dispenser_init(void) {
     card_out_req = 0;
-    ret = (char *)&Card_Dispenser;
     if (Card_Dispenser != 0) {
         card_out_busy = 0;
         coin_out_latch &= ~4;
-        sw = card_sw_0;
-        ret = (char *)(u32)sw;
-        if (sw & 4) {
+        if (card_sw_0 & 4) {
             card_out_busy = 4;
-            latch = (s8)coin_out_latch | 4;
-            coin_out_latch = latch;
-            ret = (char *)latch;
+            coin_out_latch |= 4;
         }
     }
-    return ret;
 }
 
 
@@ -478,8 +468,8 @@ void dispenser_control(void) {
         card_empty_flag = 0;
     }
     if (card_out_busy == 4) {
-        if (~card_sw_1 & card_sw_0 & 0x40) {
-            if (test_flag == 0) {
+        if ((~card_sw_1 & card_sw_0) & 0x40) {
+            if (!test_flag) {
                 bookkeep_card_count();
             }
             card_out_busy = 0;

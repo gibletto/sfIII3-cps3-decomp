@@ -45,9 +45,7 @@ const s16 efff5_data_tbl[22][6] = {
     { 11, 864, 120, 54, 92, 0 },
 };
 
-/* The initial values of efff5_jp (effect_F5_move) in efff5.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of efff5_jp (effect_F5_move) in efff5.c. */
 const u32 efff5_jp_init[12] = {
     (u32)efff5_0000,
     (u32)efff5_0001,

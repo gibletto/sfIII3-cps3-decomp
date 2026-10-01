@@ -50,9 +50,7 @@ const s16 effH5_data_tbl[11][8] = {
     { 1, 32, 27, 143, 56, 81, 5, 0 },
 };
 
-/* The initial values of H5_Jmp_Tbl (effect_H5_move) in EFFH3.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of H5_Jmp_Tbl (effect_H5_move) in EFFH3.c. */
 const u32 H5_Jmp_Tbl_init[5] = {
     (u32)effH5_0000,
     (u32)effH5_0001,

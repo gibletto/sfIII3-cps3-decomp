@@ -24,39 +24,6 @@
 
 
 
-s32 effect_D0_init(PLW* oya) {
-    WORK_Other* ewk;
-    s16 ix;
-    if ((ix = pull_effect_work(3)) == -1) {
-        return -1;
-    }
-    ewk = (WORK_Other*)frw[ix];
-    ewk->wu.be_flag = 1;
-    ewk->wu.id = 130;
-    ewk->wu.work_id = 16;
-    ewk->wu.cgromtype = 1;
-    ewk->wu.disp_flag = 0;
-    ewk->my_master = (u32*)oya;
-    ewk->wu.my_family = 2;
-    ewk->wu.char_index = 14;
-    ewk->wu.my_col_mode = 0x4200;
-    ewk->wu.my_priority = ewk->wu.position_z = oya->wu.my_priority + 1;
-    ewk->wu.sync_suzi = 1;
-    ewk->master_id = oya->wu.id;
-    ewk->wu.xyz[0].cal = oya->wu.xyz[0].cal;
-    ewk->wu.xyz[1].cal = oya->wu.xyz[1].cal;
-    ewk->wu.rl_flag = oya->wu.rl_flag;
-    *ewk->wu.char_table = etc_char_table;
-    if (oya->wu.id) {
-        ewk->wu.my_col_code = 22;
-    } else {
-        ewk->wu.my_col_code = 6;
-    }
-    ewk->wu.no_death_attack = 0;
-}
-
-
-
 void effect_D1_move(WORK_Other* ewk) {
     if (Exec_Wipe) {
         ewk->wu.no_death_attack = 1;
