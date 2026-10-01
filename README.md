@@ -88,3 +88,8 @@ Making the patch is the fiddly part:
 To compare the two runs, hash the game variables every logic frame (not every video frame) and treat code
 addresses as zero, since they'll always differ. Expect the odd drift where the arcade drops a frame and this build
 doesn't. The code doesn't take exactly the same cycles yet, so that's timing, not a logic bug.
+
+## Thanks
+
+Thanks to the 3sx Team and Artem for the 3s-decomp, which helped recover a large amount of this code style, and to
+DrewDos for his matching work and help.
