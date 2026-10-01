@@ -58,7 +58,7 @@ output as Release 26. Setting `SWITCH_ARCADE_BRANCH`, `SWITCH_ARCADE_JUMP`, `XJU
 original files are in `bin/original`.
 
 With the changes, 7,406 of the 9,942 C routines compile to the arcade's instructions (3,110 of 9,822 with the
-original Release 26), and 5,560 to its exact bytes (1,015). Over 254 Fightcade replays compared with the original ROM,
+original Release 26), and 6,564 to its exact bytes (1,015). Over 254 Fightcade replays compared with the original ROM,
 240 keep identical game state throughout (218 before) and 231 identical slowdown (214).
 
 ## Fightcade replays
