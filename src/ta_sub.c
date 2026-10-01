@@ -23,9 +23,8 @@
 #include "HITCHECK.h"
 #include "ta_sub.h"
 
-#pragma inline(obr_disp_off)
+#pragma inline(obr_disp_off_check)
 
-static s32 obr_disp_off(void);
 
 struct PLW_tag;
 
@@ -113,21 +112,20 @@ void sync_fam_set3(s16 bg_no) {
 s32 range_x_check(WORK* wk) {
     s16 x;
     s16 left;
-    s16 right;
-    if (bg_w.chase_flag & 0xF) {
+    if ((s8)bg_w.chase_flag & 0xF) {
         x = bg_w.bgw[wk->my_family - 1].chase_xy[0].disp.pos;
     } else {
         x = bg_w.bgw[wk->my_family - 1].wxy[0].disp.pos;
     }
     left = x - 193;
-    right = x + 193;
+    x += 193;
     if (left > wk->xyz[0].disp.pos) {
         return 0;
-    } else if (wk->xyz[0].disp.pos > right) {
-        return 0;
-    } else {
-        return 1;
     }
+    if (wk->xyz[0].disp.pos > x) {
+        return 0;
+    }
+    return 1;
 }
 
 
@@ -156,21 +154,20 @@ s32 range_x_check2(WORK* wk) {
 s32 range_x_check3(WORK* wk, s16 w) {
     s16 x;
     s16 left;
-    s16 right;
-    if (bg_w.chase_flag & 0xF) {
+    if ((s8)bg_w.chase_flag & 0xF) {
         x = bg_w.bgw[wk->my_family - 1].chase_xy[0].disp.pos;
     } else {
         x = bg_w.bgw[wk->my_family - 1].wxy[0].disp.pos;
     }
     left = x - w - 192;
-    right = x + w + 192;
+    w = w + x + 192;
     if (left > wk->xyz[0].disp.pos) {
         return 0;
-    } else if (wk->xyz[0].disp.pos > right) {
-        return 0;
-    } else {
-        return 1;
     }
+    if (wk->xyz[0].disp.pos > w) {
+        return 0;
+    }
+    return 1;
 }
 
 
@@ -212,22 +209,24 @@ s32 range_xy_check(WORK_Other* ewk) {
 
 /* provisional name */
 s32 range_x_out_y_in_check(WORK_Other* ewk, s16 bg_no) {
+    BGW* bgw;
     s16 pos_y_work;
     s16 work2;
-    s16 work3;
     if (range_x_check(ewk)) {
         return 0;
     }
-    if (bg_w.chase_flag & 0xF) {
-        pos_y_work = bg_w.bgw[bg_no].chase_xy[1].disp.pos;
+    bgw = (BGW*)((u8*)bg_w.bgw + (s16)(bg_no * sizeof(BGW)));
+    if ((s8)bg_w.chase_flag & 0xF) {
+        pos_y_work = bgw->chase_xy[1].disp.pos;
     } else {
-        pos_y_work = bg_w.bgw[bg_no].wxy[1].disp.pos;
+        pos_y_work = bgw->wxy[1].disp.pos;
     }
     work2 = pos_y_work + 256;
-    work3 = pos_y_work - 32;
+    pos_y_work -= 32;
     if (work2 < ewk->wu.xyz[1].disp.pos) {
         return 0;
-    } else if (work3 > ewk->wu.xyz[1].disp.pos) {
+    }
+    if (pos_y_work > ewk->wu.xyz[1].disp.pos) {
         return 0;
     }
     return 1;
@@ -271,18 +270,11 @@ s32 obr_disp_off_check(void) {
     return 0;
 }
 
-/* provisional name */
-static s32 obr_disp_off(void) {
-    if (seraph_flag | akebono_flag | sa_pa_flag) {
-        return 1;
-    }
-    return 0;
-}
 
 
 
 void disp_pos_trans_entry(WORK_Other* ewk) {
-    if (obr_disp_off()) {
+    if (obr_disp_off_check()) {
         return;
     }
     ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
@@ -293,7 +285,7 @@ void disp_pos_trans_entry(WORK_Other* ewk) {
 
 
 void disp_pos_trans_entry5(WORK_Other* ewk) {
-    if (obr_disp_off()) {
+    if (obr_disp_off_check()) {
         return;
     }
     ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
@@ -304,7 +296,7 @@ void disp_pos_trans_entry5(WORK_Other* ewk) {
 
 
 void disp_pos_trans_entry_r(WORK_Other* ewk) {
-    if (obr_disp_off() == 0) {
+    if (obr_disp_off_check() == 0) {
         if (range_x_check((WORK*)ewk) != 0) {
             ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
             ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
@@ -317,7 +309,7 @@ void disp_pos_trans_entry_r(WORK_Other* ewk) {
 
 /* provisional name */
 void disp_pos_trans_entry_rxy(WORK_Other* ewk) {
-    if (obr_disp_off() == 0) {
+    if (obr_disp_off_check() == 0) {
         if (range_xy_check(ewk) != 0) {
             ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
             ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
@@ -329,7 +321,7 @@ void disp_pos_trans_entry_rxy(WORK_Other* ewk) {
 
 
 void disp_pos_trans_entry_r4(WORK_Other* ewk) {
-    if (obr_disp_off() == 0) {
+    if (obr_disp_off_check() == 0) {
         if (range_y_check((WORK*)ewk) != 0) {
             ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
             ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
@@ -342,7 +334,7 @@ void disp_pos_trans_entry_r4(WORK_Other* ewk) {
 
 /* provisional name */
 void disp_pos_trans_entry_rbg(WORK_Other* ewk, s16 bg_no) {
-    if (obr_disp_off() == 0) {
+    if (obr_disp_off_check() == 0) {
         if (range_x_out_y_in_check(ewk, bg_no) != 0) {
             ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
             ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
@@ -352,7 +344,7 @@ void disp_pos_trans_entry_rbg(WORK_Other* ewk, s16 bg_no) {
 }
 
 void disp_pos_trans_entry_s(WORK_Other* ewk) {
-    if (obr_disp_off() == 0) {
+    if (obr_disp_off_check() == 0) {
         suzi_sync_pos_set(ewk);
         sort_push_request4(&ewk->wu);
     }
@@ -361,7 +353,7 @@ void disp_pos_trans_entry_s(WORK_Other* ewk) {
 
 
 void disp_pos_trans_entry_rs(WORK_Other* ewk) {
-    if (obr_disp_off() == 0) {
+    if (obr_disp_off_check() == 0) {
         if (range_x_check((WORK*)ewk) != 0) {
             suzi_sync_pos_set(ewk);
             sort_push_request4(ewk);
@@ -381,7 +373,7 @@ void disp_pos_trans_entry_seraph(WORK_Other* ewk)
 
 
 void pl_eff_trans_entry(WORK_Other* ewk) {
-    if (obr_disp_off() == 0) {
+    if (obr_disp_off_check() == 0) {
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
         sort_push_request(&ewk->wu);
@@ -392,7 +384,7 @@ void pl_eff_trans_entry(WORK_Other* ewk) {
 
 /* provisional name */
 void pl_eff_trans_entry_r(WORK_Other* ewk) {
-    if (obr_disp_off() == 0) {
+    if (obr_disp_off_check() == 0) {
         if (range_x_check((WORK*)ewk) != 0) {
             ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
             ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
@@ -517,7 +509,7 @@ void eff_hit_flag_clear(void) {
 
 /* provisional name */
 s32 complete_victory_check(void) {
-    if (!Allow_a_battle_f && Conclusion_Flag == 1 && C_No[0] >= 2 && Complete_Victory) {
+    if (!Allow_a_battle_f && Conclusion_Flag == 1 && C_No0 >= 2 && Complete_Victory) {
         return 1;
     }
     return 0;

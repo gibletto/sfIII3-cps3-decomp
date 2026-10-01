@@ -1035,9 +1035,7 @@ const char staff_Y_S_I_I_O_A_O_O[24] = "     Y S I I O A O O";
 const char staff_O_H_K_K_M_T[20] = "      O H K   K M T";
 const char staff_blank_11[4] = "   ";
 
-/* The initial values of the jmp_tbl of debug_play07 .. debug_play13 in end_sub.c,
-   where the arcade build placed them. The routines copy their tables from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of the jmp_tbl of debug_play07 .. debug_play13 in end_sub.c. */
 const u32 end_sub_local_init[14] = {
     (u32)debug_play07_init, (u32)debug_play07_move,
     (u32)debug_play08_init, (u32)debug_play08_move,

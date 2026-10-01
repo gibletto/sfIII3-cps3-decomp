@@ -95,17 +95,13 @@ void win_player(PLW* wk) {
     void (*win_jp_tbl[16])(PLW*) = { Win_00000, Win_01000, Win_02000, Win_03000, Win_04000, Win_05000, Win_06000, Win_07000, Win_08000, Win_09000, Win_10000, Win_11000, Win_12000, Win_13000, Win_14000, Win_15000 };
     if (My_char[wk->wu.id] != wk->player_number) {
         meta_win_pause(wk);
-        return;
-    }
-    if (Bonus_Game_Flag) {
+    } else if (Bonus_Game_Flag) {
         bonus_game_win_pause(wk);
-        return;
-    }
-    if (pcon_rno[0] == 2 && pcon_rno[1] == 3) {
+    } else if (pcon_rno[0] == 2 && pcon_rno[1] == 3) {
         Judge_normal_winner(wk);
-        return;
+    } else {
+        win_jp_tbl[win_type_tbl[wk->player_number]](wk);
     }
-    win_jp_tbl[win_type_tbl[wk->player_number]](wk);
 }
 
 

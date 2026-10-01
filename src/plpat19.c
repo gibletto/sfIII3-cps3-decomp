@@ -46,16 +46,20 @@ void Att_METAMORPHOSE(PLW* wk) {
         reset_mvxy_data(&wk->wu);
         wk->metamorphose = 0;
         wk->metamor_over = 0;
-        if ((Bonus_Game_Flag != 0x15) && (effect_K7_init(wk) != -1)) {
+        if (Bonus_Game_Flag == 0x15) {
+            goto alt;
+        }
+        if (effect_K7_init(wk) != -1) {
             set_char_move_init(&wk->wu, 5, wk->as->char_ix);
             break;
         }
+    alt:
         set_char_move_init(&wk->wu, 5, wk->as->char_ix + 2);
         wk->wu.routine_no[3] = 9;
         break;
     case 1:
         char_move(&wk->wu);
-        if (wk->wu.cg_type == 20) {
+        if ((u8)wk->wu.cg_type == 20) {
             wk->wu.routine_no[2] = 32;
             wk->wu.routine_no[3] = 1;
         }
@@ -397,28 +401,26 @@ void Att_pl19_TOKUSHUKOUDOU(PLW* wk) {
         if (wk->sa->ok == -1) {
             wk->wu.routine_no[3] = 2;
             set_char_move_init((WORK*)wk, 5, 62);
-            break;
-        }
-        if (wk->wu.disp_flag != 1 || wk->wu.my_col_mode != 0x4200) {
+        } else if (wk->wu.disp_flag != 1 || wk->wu.my_col_mode != 0x4200) {
             wk->wu.routine_no[3] = 2;
             set_char_move_init((WORK*)wk, 5, 64);
-            break;
+        } else {
+            set_char_move_init((WORK*)wk, 5, 63);
         }
-        set_char_move_init((WORK*)wk, 5, 63);
         break;
     case 1:
         char_move((WORK*)wk);
-        switch (wk->wu.cg_type) {
+        switch ((u8)wk->wu.cg_type) {
         case 40:
             wk->wu.cg_type = 0;
             add_sp_arts_gauge_tokushu(wk);
-            break;
+            return;
         case 0xFF:
             grade_add_personal_action(wk->wu.id);
             effect_L0_init((WORK*)wk, 180);
-            break;
+            return;
         }
-        break;
+        return;
     case 2:
         char_move((WORK*)wk);
         break;

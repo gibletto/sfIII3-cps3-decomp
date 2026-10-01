@@ -422,7 +422,7 @@ s32 staff_roll_main(void) {
 /* provisional name */
 void debug_play07(void) {
     void (*jmp_tbl[2])() = { debug_play07_init, debug_play07_move };
-    jmp_tbl[G_No[2]]();
+    jmp_tbl[G_No2]();
 }
 
 
@@ -430,7 +430,7 @@ void debug_play07(void) {
 /* provisional name */
 void debug_play07_init(void) {
     tilemap_fill_all(0, 0x20);
-    G_No[2]++;
+    G_No2++;
     System_all_clear_Wait();
     Play_Type = 1;
     Operator_Status[0] = 1;
@@ -444,7 +444,7 @@ void debug_play07_init(void) {
     set_kizetsu_status(1);
     set_super_arts_status(0);
     set_super_arts_status(1);
-    C_No[0] = 0;
+    C_No0 = 0;
     Game_timer = 0;
     Game_pause = 0;
     Round_num = 0;
@@ -479,7 +479,7 @@ void debug_play07_move(void)
 /* provisional name */
 void debug_play08(void) {
     void (*jmp_tbl[2])() = { debug_play08_init, debug_play08_move };
-    jmp_tbl[G_No[2]]();
+    jmp_tbl[G_No2]();
 }
 
 
@@ -487,7 +487,7 @@ void debug_play08(void) {
 /* provisional name */
 void debug_play08_init(void) {
     tilemap_fill_all(0, 0x20);
-    G_No[2]++;
+    G_No2++;
     System_all_clear_Wait();
     Play_Type = 1;
     Operator_Status[0] = 1;
@@ -501,7 +501,7 @@ void debug_play08_init(void) {
     set_kizetsu_status(1);
     set_super_arts_status(0);
     set_super_arts_status(1);
-    C_No[0] = 0;
+    C_No0 = 0;
     Game_timer = 0;
     Game_pause = 0;
     Round_num = 0;
@@ -536,7 +536,7 @@ void debug_play08_move(void)
 /* provisional name */
 void debug_play09(void) {
     void (*jmp_tbl[2])() = { debug_play09_init, debug_play09_move };
-    jmp_tbl[G_No[2]]();
+    jmp_tbl[G_No2]();
 }
 
 
@@ -544,7 +544,7 @@ void debug_play09(void) {
 /* provisional name */
 void debug_play09_init(void) {
     tilemap_fill_all(0, 0x20);
-    G_No[2]++;
+    G_No2++;
     System_all_clear_Wait();
     Play_Type = 1;
     Operator_Status[0] = 1;
@@ -558,7 +558,7 @@ void debug_play09_init(void) {
     set_kizetsu_status(1);
     set_super_arts_status(0);
     set_super_arts_status(1);
-    C_No[0] = 0;
+    C_No0 = 0;
     Game_timer = 0;
     Game_pause = 0;
     Round_num = 0;
@@ -593,7 +593,7 @@ void debug_play09_move(void)
 /* provisional name */
 void debug_play10(void) {
     void (*jmp_tbl[2])() = { debug_play10_init, debug_play10_move };
-    jmp_tbl[G_No[2]]();
+    jmp_tbl[G_No2]();
 }
 
 
@@ -601,7 +601,7 @@ void debug_play10(void) {
 /* provisional name */
 void debug_play10_init(void) {
     tilemap_fill_all(0, 0x20);
-    G_No[2]++;
+    G_No2++;
     System_all_clear_Wait();
     Play_Type = 1;
     Operator_Status[0] = 1;
@@ -615,7 +615,7 @@ void debug_play10_init(void) {
     set_kizetsu_status(1);
     set_super_arts_status(0);
     set_super_arts_status(1);
-    C_No[0] = 0;
+    C_No0 = 0;
     Game_timer = 0;
     Game_pause = 0;
     Round_num = 0;
@@ -650,7 +650,7 @@ void debug_play10_move(void)
 /* provisional name */
 void debug_play11(void) {
     void (*jmp_tbl[2])() = { debug_play11_init, debug_play11_move };
-    jmp_tbl[G_No[2]]();
+    jmp_tbl[G_No2]();
 }
 
 
@@ -658,7 +658,7 @@ void debug_play11(void) {
 /* provisional name */
 void debug_play11_init(void) {
     tilemap_fill_all(0, 0x20);
-    G_No[2]++;
+    G_No2++;
     System_all_clear_Wait();
     Play_Type = 1;
     Operator_Status[0] = 1;
@@ -672,7 +672,7 @@ void debug_play11_init(void) {
     set_kizetsu_status(1);
     set_super_arts_status(0);
     set_super_arts_status(1);
-    C_No[0] = 0;
+    C_No0 = 0;
     Game_timer = 0;
     Game_pause = 0;
     Round_num = 0;
@@ -707,14 +707,14 @@ void debug_play11_move(void)
 /* provisional name */
 void debug_play12(void) {
     void (*jmp_tbl[2])() = { debug_play12_init, debug_play12_move };
-    jmp_tbl[G_No[2]]();
+    jmp_tbl[G_No2]();
 }
 
 
 
 /* provisional name */
 void debug_play12_init(void) {
-    G_No[2]++;
+    G_No2++;
     dbg_play12_w[0] = dbg_play12_w[1] = dbg_play12_w[2] = dbg_play12_w[3] = 0;
     effect_work_quick_init();
     bg_work_clear();
@@ -730,7 +730,7 @@ void debug_play12_move(void) { hit_check_main_process(); }
 /* provisional name */
 void debug_play13(void) {
     void (*jmp_tbl[2])() = { debug_play13_init, debug_play13_move };
-    jmp_tbl[G_No[2]]();
+    jmp_tbl[G_No2]();
 }
 
 
@@ -738,7 +738,7 @@ void debug_play13(void) {
 /* provisional name */
 void debug_play13_init(void) {
     tilemap_fill_all(0, 0x20);
-    G_No[2]++;
+    G_No2++;
     System_all_clear_Wait();
     Play_Type = 1;
     Operator_Status[0] = 1;
@@ -752,7 +752,7 @@ void debug_play13_init(void) {
     set_kizetsu_status(1);
     set_super_arts_status(0);
     set_super_arts_status(1);
-    C_No[0] = 0;
+    C_No0 = 0;
     Game_timer = 0;
     Game_pause = 0;
     Round_num = 0;
@@ -922,11 +922,9 @@ void load_player_sub_color(void)
 
 
 /* provisional name */
-s32 load_opt_color(u16 ix) {
+void load_opt_color(u16 ix) {
     const u32* p = &opt_color_tbl[ix];
-    s32 rc;
-    if ((rc = *p) != 0) {
-        return polygon2d_submit_quad(*p, 0x2980, 0x80, 0, 0, 0);
+    if (*p != 0) {
+        polygon2d_submit_quad(*p, 0x2980, 0x80, 0, 0, 0);
     }
-    return rc;
 }

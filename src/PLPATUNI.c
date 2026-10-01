@@ -35,19 +35,23 @@ void Att_METAMOR_WAIT(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
     case 1:
         char_move(&wk->wu);
-        if (wk->wu.cg_type == 30) {
+        if ((u8)wk->wu.cg_type == 0x1E) {
             wk->wu.routine_no[3] = 2;
         }
         break;
     case 2:
         char_move(&wk->wu);
-        if (wk->wu.cg_type != 30) {
-            wk->wu.routine_no[3] = 3;
-            wk->wu.mvxy.a[0].sp = 0;
-            wk->wu.mvxy.a[1].sp = 0;
-            wk->wu.mvxy.d[0].sp = 0;
-            wk->wu.mvxy.d[1].sp = -0x8000;
-            wk->wu.mvxy.kop[0] = wk->wu.mvxy.kop[1] = 0;
+        if ((u8)wk->wu.cg_type == 0x1E) {
+            break;
+        }
+        wk->wu.routine_no[3] = 3;
+        wk->wu.mvxy.a[0].sp = 0;
+        wk->wu.mvxy.a[1].sp = 0;
+        wk->wu.mvxy.d[0].sp = 0;
+        wk->wu.mvxy.d[1].sp = -0x8000;
+        {
+            s16* kop = &wk->wu.mvxy.kop[0];
+            *kop = kop[1] = 0;
         }
         break;
     case 3:
@@ -324,11 +328,13 @@ void Att_SHOURYUUREPPA(PLW* wk) {
             wk->wu.routine_no[3] = 3;
             wk->wu.cg_type = 0;
         }
-        if (wk->wu.cg_type == 40 && (wk->cp->sw_new & 0x770) == 0x70) {
-            wk->wu.routine_no[1] = 0;
-            wk->wu.routine_no[2] = 6;
-            wk->wu.routine_no[3] = 0;
-            wk->wu.cg_type = 0;
+        if (wk->wu.cg_type == 40) {
+            if ((wk->cp->sw_new & 0x770) == 0x70) {
+                wk->wu.routine_no[1] = 0;
+                wk->wu.routine_no[2] = 6;
+                wk->wu.routine_no[3] = 0;
+                wk->wu.cg_type = 0;
+            }
         }
         break;
     case 2:

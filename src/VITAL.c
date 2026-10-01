@@ -322,17 +322,18 @@ void counter_flash(s8 ix) {
 }
 
 /* provisional name */
-u32 counter_color_clear(void) {
-    return ((u32(*)())sq_paint_chenge)(0x16, 0, 4, 5, 8);
+void counter_color_clear(void) {
+    sq_paint_chenge(0x16, 0, 4, 5, 8);
 }
 
 
 
+/* Counter_hi goes to the high half of round_timer. */
 void bcount_cont_init(u8 pl) {
     count_work.hoji_counter = 60;
     Counter_hi = 50;
     Counter_low = count_work.hoji_counter;
-    round_timer.half.h = Counter_hi;
+    *(s16*)&round_timer = Counter_hi;
     bcount_digit_trans(pl, 5, 0);
     bcount_mark_trans(pl);
     sc_ram_to_vram(29, 0, 0);
@@ -356,7 +357,16 @@ void bcount_cont_reset(void) {
 
 
 void bcount_cont_main(void) {
-    if (Break_Into || sa_stop_check() || Time_Stop || EXE_flag || Game_pause) {
+    if (Break_Into) {
+        return;
+    }
+    if (sa_stop_check()) {
+        return;
+    }
+    if (Time_Stop) {
+        return;
+    }
+    if (EXE_flag || Game_pause) {
         return;
     }
     bcounter_control();

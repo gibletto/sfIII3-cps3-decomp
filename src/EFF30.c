@@ -22,7 +22,6 @@
 
 
 void effect_30_move(WORK_Other* ewk) {
-    WORK* oya_ptr = (WORK*)ewk->my_master;
     switch (ewk->wu.routine_no[0]) {
     case 0:
         ewk->wu.routine_no[0]++;
@@ -37,7 +36,7 @@ void effect_30_move(WORK_Other* ewk) {
         cal_initial_speed(&ewk->wu, ewk->wu.old_rno[0], ewk->wu.old_rno[1], ewk->wu.xyz[1].disp.pos);
         break;
     case 1:
-        if (EXE_flag == 0 && Game_pause == 0) {
+        if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             add_x_sub(ewk);
             add_y_sub(ewk);
@@ -51,17 +50,23 @@ void effect_30_move(WORK_Other* ewk) {
         sort_push_request(&ewk->wu);
         break;
     case 2:
-        if (EXE_flag == 0 && Game_pause == 0 && (char_move(&ewk->wu), ewk->wu.cg_type == 0xFF)) {
-            ewk->wu.routine_no[0]++;
-            set_char_move_init(&ewk->wu, 0, 2);
+        if (!EXE_flag && !Game_pause) {
+            char_move(&ewk->wu);
+            if (ewk->wu.cg_type == 0xFF) {
+                ewk->wu.routine_no[0]++;
+                set_char_move_init(&ewk->wu, 0, 2);
+            }
         }
         suzi_sync_pos_set(ewk);
         sort_push_request(&ewk->wu);
         break;
     case 3:
-        if (EXE_flag == 0 && Game_pause == 0 && (char_move(&ewk->wu), ewk->wu.cg_type == 10)) {
-            ewk->wu.cg_type = 0;
-            ewk->wu.kage_hx -= 4;
+        if (!EXE_flag && !Game_pause) {
+            char_move(&ewk->wu);
+            if (ewk->wu.cg_type == 10) {
+                ewk->wu.cg_type = 0;
+                ewk->wu.kage_hx -= 4;
+            }
         }
         suzi_sync_pos_set(ewk);
         sort_push_request(&ewk->wu);
@@ -76,7 +81,6 @@ void effect_30_move(WORK_Other* ewk) {
         break;
     default:
         push_effect_work(&ewk->wu);
-        break;
     }
 }
 
@@ -85,7 +89,8 @@ void effect_30_move(WORK_Other* ewk) {
 s32 effect_30_init(WORK* wk) {
     WORK_Other* ewk;
     s16 ix;
-    if ((ix = pull_effect_work(4)) == -1) {
+    ix = pull_effect_work(4);
+    if (ix == -1) {
         return -1;
     }
     ewk = (WORK_Other*)frw[ix];
@@ -108,14 +113,17 @@ s32 effect_30_init(WORK* wk) {
         if (wk->xyz[0].disp.pos < bg_w.bgw[1].wxy[0].disp.pos) {
             ewk->wu.xyz[0].disp.pos = wk->xyz[0].disp.pos - 256;
         } else {
-            ewk->wu.xyz[0].disp.pos = bg_w.bgw[1].wxy[0].disp.pos - (bg_w.pos_offset + 32);
+            ewk->wu.xyz[0].disp.pos = bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset - 32;
         }
         ewk->wu.old_rno[1] = wk->xyz[0].disp.pos - 32;
     } else {
         if (wk->xyz[0].disp.pos > bg_w.bgw[1].wxy[0].disp.pos) {
             ewk->wu.xyz[0].disp.pos = wk->xyz[0].disp.pos + 256;
         } else {
-            ewk->wu.xyz[0].disp.pos = bg_w.bgw[1].wxy[0].disp.pos + (bg_w.pos_offset + 32);
+            s16 pos = bg_w.pos_offset;
+            pos += bg_w.bgw[1].wxy[0].disp.pos;
+            pos += 32;
+            ewk->wu.xyz[0].disp.pos = pos;
         }
         ewk->wu.old_rno[1] = wk->xyz[0].disp.pos + 32;
     }

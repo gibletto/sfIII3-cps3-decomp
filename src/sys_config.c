@@ -53,11 +53,11 @@ u32 *eeprom_config_load(void)
         }
         eeprom_config_apply((u32)eeprom_w);
         /* the bookkeeping counters follow the two config copies in the EEPROM image */
-        book_coin_count[0] = *(u32 *)&eeprom_w[0x60];
-        book_coin_count[1] = *(u32 *)&eeprom_w[0x64];
-        book_coin_count[2] = *(u32 *)&eeprom_w[0x68];
+        book_coin_count = *(u32 *)&eeprom_w[0x60];
+        book_service_count = *(u32 *)&eeprom_w[0x64];
+        book_free_count = *(u32 *)&eeprom_w[0x68];
         rv = (u32 *)&eeprom_w[0x6C];
-        book_coin_count[3] = *rv;
+        book_card_count = *rv;
     } else {
         rv = ((u32 *(*)())eeprom_config_reset)();
     }
@@ -356,13 +356,9 @@ void config_menu_init(void) {
 }
 
 /* provisional name */
-u32 config_menu_dispatch(void)
-{
-    u32 rv;
-
+void config_menu_dispatch(void) {
     /* per-page handler table in work RAM (02007E04), indexed by Config_No_1 */
-    rv = config_page_tbl[Config_No_1]();
-    return rv;
+    config_page_tbl[Config_No_1]();
 }
 
 /* Configuration top page: draw it, then run its menu (step Config_No_2). */
@@ -579,11 +575,8 @@ u32 config_top_save_exit(void)
 }
 
 /* provisional name */
-u32 sysconfig_page(void)
-{
-    s32 (**page_tbl)();
-    page_tbl = sysconfig_step_tbl;
-    return page_tbl[Config_No_2]();
+void sysconfig_page(void) {
+    sysconfig_step_tbl[Config_No_2]();
 }
 
 

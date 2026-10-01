@@ -805,9 +805,9 @@ void soundtest_print_level_bar(s32 x, s32 y, s32 level) {
     s32 i;
     for (i = 0; i < 8; i++) {
         if (i < level) {
-            tilemap_put_char(i + x, y, 2, 17);
+            tilemap_put_char(x + i, y, 2, 17);
         } else {
-            tilemap_put_char(i + x, y, 2, 45);
+            tilemap_put_char(x + i, y, 2, 45);
         }
     }
 }
@@ -1033,8 +1033,8 @@ void gamedata_show_counters(void) {
 /* provisional name */
 void gamedata_clear_card_counter(void) {
     if ((p1sw_0 & 0x100) && (p1sw_0 & 0x200) && (p1sw_0 & 0x400)) {
-        book_coin_count[3] = 0;
-        if (eeprom_write(2, (volatile u16*)(EEP_ROM + 0x170), (u16*)&book_coin_count[3])) {
+        book_card_count = 0;
+        if (eeprom_write(2, (volatile u16*)(EEP_ROM + 0x170), (u16*)&book_card_count)) {
             eeprom_error_halt();
         }
         backup_test_no--;
@@ -1127,44 +1127,46 @@ u32 memtest_pattern_word(volatile u16* addr, u32 size) {
 }
 
 /* provisional name */
-u16 * memtest_pattern_byte_lane(u16 *start, u32 size)
-{
-    volatile u16 *addr;
-    u16 save;
-    u16 read;
-    u32 i;
-    addr = start;
+u16* memtest_pattern_byte_lane(u16* start, u32 size) {
+    register u16 r;
+    register u16 save;
+    register u32 i;
+    register u16* p;
     i = 0;
-    do {
-        save = *addr;
-        *addr = 0xFFFF;
-        read = *addr;
-        *addr = save;
-        if ((read & 0xFF) != 0xFF) {
-            return (u16 *)addr;
+    p = start;
+    for (;;) {
+        save = *p;
+        *p = 0xFFFF;
+        r = *p;
+        *p = save;
+        if (((u32)r % 256) != 0xFF) {
+            return p;
         }
-        *addr = 0xAAAA;
-        read = *addr;
-        *addr = save;
-        if ((read & 0xFF) != 0xAA && read != 0xAAAA) {
-            return (u16 *)addr;
+        *p = 0xAAAA;
+        r = *p;
+        *p = save;
+        if (((u32)r % 256) != 0xAA && r != 0xAAAA) {
+            return p;
         }
-        *addr = 0x5555;
-        read = *addr;
-        *addr = save;
-        if ((read & 0xFF) != 0x55) {
-            return (u16 *)addr;
+        *p = 0x5555;
+        r = *p;
+        *p = save;
+        if (((u32)r % 256) != 0x55) {
+            return p;
         }
-        *addr = 0;
-        read = *addr;
-        *addr = save;
-        if ((read & 0xFF) != 0) {
-            return (u16 *)addr;
+        *p = 0;
+        r = *p;
+        *p = save;
+        if ((u32)r % 256) {
+            return p;
         }
         i++;
-        addr++;
-    } while (i < (size >> 1));
-    return (u16 *)0;
+        p++;
+        if (i >= size >> 1) {
+            break;
+        }
+    }
+    return 0;
 }
 
 
@@ -1358,23 +1360,23 @@ void memtest_character_ram(void) {
 
 /* provisional name */
 void memtest_ss_ram(void) {
-    register s32 err;
-    register s32 col;
+    register u16* bad;
+    register s32 x;
     if (screen_mode == 7) {
-        col = 4;
+        x = 4;
     } else {
-        col = 0;
+        x = 0;
     }
-    tilemap_print_string_attr(col + 30, 11, 2, memtest_checking_str);
+    tilemap_print_string_attr(x + 30, 11, 2, memtest_checking_str);
     _builtin_set_imask(15);
-    err = ((u32(*)(volatile u16* addr, u32 size))memtest_pattern_byte_lane)((volatile u16*)SS_RAM, 0xC800);
+    bad = memtest_pattern_byte_lane((u16*)SS_RAM, 0xC800);
     _builtin_set_imask(1);
-    if (err) {
-        tilemap_print_string_attr(col + 30, 11, 8, memtest_ng_str);
-        tilemap_print_hex_block(col + 33, 11, 2, err, 8, 0);
+    if (bad) {
+        tilemap_print_string_attr(x + 30, 11, 8, memtest_ng_str);
+        tilemap_print_hex_block(x + 33, 11, 2, (u32)bad, 8, 0);
         memtest_error = 1;
     } else {
-        tilemap_print_string_attr(col + 30, 11, 2, memtest_ok_str);
+        tilemap_print_string_attr(x + 30, 11, 2, memtest_ok_str);
     }
 }
 
@@ -1783,19 +1785,20 @@ s32 memtest_page(void) {
 
 
 /* provisional name */
+/* The SRAM byte is read as a halfword (the low byte is the data). */
 u8 sram_read_byte(u32 addr) {
-    volatile u8* p;
-    u8 v;
+    u16* p;
+    s8 c;
     if (addr >= 0x200) {
-        p = (volatile u8*)(SRAM + 0x3FE);
+        p = (u16*)(SRAM + 0x3FE);
     } else {
-        p = (volatile u8*)(addr * 2 + SRAM);
+        p = (u16*)(addr * 2 + SRAM);
     }
     sram_bus_slow();
-    v = p[1];
+    c = *p;
     delay_cycles(2);
     sram_bus_normal();
-    return v;
+    return c;
 }
 
 

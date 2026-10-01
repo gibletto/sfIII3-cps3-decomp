@@ -3,8 +3,7 @@
  *
  * fifo_init sets up a ring buffer of 32-bit entries (size, buffer top, read pointer, count,
  * write pointer) and fifo_get takes the next entry, wrapping the read pointer at the end of the
- * buffer and returning 0 when the queue is empty. Built with optimisation, as the arcade program's
- * code for these routines is (the scroll family setters that follow them are in family.c, opt0).
+ * buffer and returning 0 when the queue is empty.
  */
 
 #include "structs.h"

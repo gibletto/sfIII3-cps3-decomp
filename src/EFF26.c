@@ -64,14 +64,14 @@ void effect_26_move(WORK_Other* ewk) {
 
 
 void eff26_00(WORK_Other* ewk) {
-    WORK_Other* oya = (WORK_Other*)ewk->my_master;
-    if (oya->wu.routine_no[1] > 1) {
-        ewk->wu.routine_no[0] = 2;
-        piece_set(ewk);
+    WORK_Other* self = ewk;
+    ewk = (WORK_Other*)self->my_master;
+    if (ewk->wu.routine_no[1] > 1) {
+        self->wu.routine_no[0] = 2;
+        piece_set(self);
         return;
-    }
-    if (ewk->wu.hit_stop && !EXE_obroll) {
-        char_move(&ewk->wu);
+    } else if (self->wu.hit_stop && !EXE_obroll) {
+        char_move(&self->wu);
     }
 }
 
@@ -146,10 +146,8 @@ void eff26_02(WORK_Other* ewk) {
     }
 }
 
-u32 eff26_03(WORK_Other* ewk)
-{
+void eff26_03(WORK_Other* ewk) {
     WORK_Other* oya = (WORK_Other*)ewk->my_master;
-    u32 ret;
 
     switch (ewk->wu.routine_no[1]) {
     case 0:
@@ -159,50 +157,43 @@ u32 eff26_03(WORK_Other* ewk)
             set_char_move_init(&ewk->wu, 0, ewk->wu.old_rno[1]);
             goto case_3;
         }
-        /* fall through */
     case 1:
-        if (ewk->wu.hit_stop && EXE_obroll == 0) {
+        if (ewk->wu.hit_stop && !EXE_obroll) {
             char_move(&ewk->wu);
         }
-        if (oya->wu.routine_no[1] < 2) {
-            return 0x26;
+        if (oya->wu.routine_no[1] > 1) {
+            ewk->wu.routine_no[1]++;
+            piece_set(ewk);
+            set_char_move_init(&ewk->wu, 0, ewk->wu.old_rno[1]);
+            return;
         }
-        ewk->wu.routine_no[1]++;
-        piece_set(ewk);
-        return ((u32 (*)())set_char_move_init)(ewk, 0, ewk->wu.old_rno[1]);
+        break;
     case 2:
-        if (EXE_obroll == 0) {
+        if (!EXE_obroll) {
             char_move(&ewk->wu);
         }
-        if (ewk->wu.cg_type != 1) {
-            return ewk->wu.cg_type;
+        if (ewk->wu.cg_type == 1) {
+            ewk->wu.routine_no[1]++;
         }
-        ewk->wu.routine_no[1]++;
-        return 0x26;
+        break;
     case 3:
     case_3:
         ewk->wu.routine_no[1]++;
         if (eff_hit_flag[ewk->wu.type]) {
             ewk->wu.routine_no[0] = 99;
-            return (u32)ewk->wu.type * 2;
+            break;
         }
         ewk->wu.disp_flag = 1;
-        /* fall through */
     case 4:
-        ret = 0;
-        if (eff_hit_check(ewk, ewk->wu.old_rno[4]) != 0) {
-            ret = 0x38;
+        if (eff_hit_check(ewk, ewk->wu.old_rno[4])) {
             if (ewk->wu.old_rno[2] & 1) {
-                ret = 0x3E;
-                if (ewk->wu.old_rno[5] >= 1) {
-                    ret = effect_27_init(ewk, ewk->wu.old_rno[5]);
+                if (ewk->wu.old_rno[5] > 0) {
+                    effect_27_init(ewk, ewk->wu.old_rno[5]);
                 }
             }
             ewk->wu.routine_no[0] = 2;
         }
-        return ret;
-    default:
-        return ewk->wu.routine_no[1];
+        break;
     }
 }
 
@@ -243,8 +234,10 @@ void eff26_04(WORK_Other* ewk) {
     case 3:
         if (eff_hit_check(ewk, ewk->wu.old_rno[4])) {
             ewk->wu.routine_no[1]++;
-            if (ewk->wu.old_rno[2] & 1 && ewk->wu.old_rno[5] > 0) {
-                effect_27_init(ewk, ewk->wu.old_rno[5]);
+            if (ewk->wu.old_rno[2] & 1) {
+                if (ewk->wu.old_rno[5] > 0) {
+                    effect_27_init(ewk, ewk->wu.old_rno[5]);
+                }
             }
             set_char_move_init(&ewk->wu, 0, ewk->wu.old_rno[3]);
         }
@@ -263,6 +256,8 @@ void eff26_04(WORK_Other* ewk) {
 
 void eff26_05(WORK_Other* ewk) {
     WORK_Other* oya = (WORK_Other*)ewk->my_master;
+    s8* obroll = &EXE_obroll;
+
     switch (ewk->wu.routine_no[1]) {
     case 0:
         ewk->wu.routine_no[1]++;
@@ -282,7 +277,7 @@ void eff26_05(WORK_Other* ewk) {
         }
         break;
     case 2:
-        if (!EXE_obroll) {
+        if (!*obroll) {
             char_move(&ewk->wu);
         }
         if (ewk->wu.cg_type == 1) {
@@ -299,25 +294,28 @@ void eff26_05(WORK_Other* ewk) {
             break;
         }
     case 4:
-        if (!eff_hit_check(ewk, ewk->wu.old_rno[4])) {
-            break;
+        if (eff_hit_check(ewk, ewk->wu.old_rno[4])) {
+            ewk->wu.routine_no[1]++;
+            if (ewk->wu.old_rno[2] & 1) {
+                if (ewk->wu.old_rno[5] > 0) {
+                    effect_27_init(ewk, ewk->wu.old_rno[5]);
+                }
+            }
+            set_char_move_init(&ewk->wu, 0, ewk->wu.old_rno[3]);
         }
-        ewk->wu.routine_no[1]++;
-        if (ewk->wu.old_rno[2] & 1 && ewk->wu.old_rno[5] > 0) {
-            effect_27_init(ewk, ewk->wu.old_rno[5]);
-        }
-        set_char_move_init(&ewk->wu, 0, ewk->wu.old_rno[3]);
         break;
     case 5:
-        if (!EXE_obroll) {
+        if (!*obroll) {
             char_move(&ewk->wu);
         }
         if (ewk->wu.cg_type == 1) {
             ewk->wu.routine_no[1]++;
         }
         break;
+    case 6:
+        break;
     case 7:
-        if (!EXE_obroll) {
+        if (!*obroll) {
             char_move(&ewk->wu);
         }
         break;

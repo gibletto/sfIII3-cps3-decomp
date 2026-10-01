@@ -37,15 +37,14 @@ void effect_E9_move(WORK_Other* ewk) {
             ewk->wu.routine_no[0]++;
             ewk->wu.disp_flag = 0;
         }
-        break;
     case 2:
+        disp_pos_trans_entry(ewk);
         break;
     default:
         all_cgps_put_back(ewk);
         push_effect_work(&ewk->wu);
-        return;
+        break;
     }
-    disp_pos_trans_entry(ewk);
 }
 
 
@@ -56,7 +55,8 @@ s32 effect_E9_init(void) {
     s16 ix;
     s16 i;
     for (i = 0; i < 2; i++) {
-        if ((ix = pull_effect_work(4)) == -1) {
+        ix = pull_effect_work(4);
+        if (ix == -1) {
             return -1;
         }
         ewk = (WORK_Other*)frw[ix];
@@ -74,5 +74,4 @@ s32 effect_E9_init(void) {
         ewk->wu.char_index = *data++;
         ewk->wu.my_priority = ewk->wu.position_z = *data++;
     }
-    return 0;
 }

@@ -40,9 +40,7 @@ const u8 op_scr_record_data[4][56] = {
     { 0, 4, 0, 88, 0, 127, 127, 0, 0, 60, 0, 255, 127, 0, 0, 60, 1, 127, 127, 0, 0, 60, 1, 255, 127, 0, 0, 60, 2, 127, 127, 0, 0, 60, 2, 255, 127, 0, 0, 60, 3, 127, 127, 0, 0, 60, 3, 255, 127, 0, 0, 60, 255, 255, 255, 255 },
 };
 
-/* The initial values of opening_demo_jp (opening_demo_tick) in lose_pl.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of opening_demo_jp (opening_demo_tick) in lose_pl.c. */
 const u32 opening_demo_jp_init[3] = {
     (u32)opening_init2,
     (u32)opening_move,

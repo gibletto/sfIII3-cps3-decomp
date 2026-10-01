@@ -12,7 +12,7 @@ void Attack_05000(PLW* wk);
 void Attack_06000(PLW* wk);
 void Attack_07000(PLW* wk);
 void Attack_08000(PLW* wk);
-s32 Attack_10000(PLW* wk);
+void Attack_10000(PLW* wk);
 void Attack_14000(PLW* wk);
 void Attack_15000(PLW* wk);
 s32 get_cjdR(PLW* wk);
@@ -21,6 +21,6 @@ void check_ja_nmj_dummy_RTNM(PLW* wk);
 void Attack_09000(PLW* wk);
 void get_cancel_timer(PLW* wk);
 void hoken_muriyari_chakuchi(PLW* wk);
-s16 ja_nmj_rno_change(WORK* wk);
+s32 ja_nmj_rno_change(WORK* wk);
 
 #endif

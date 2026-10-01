@@ -23,15 +23,15 @@
 
 
 void setup_vitality(WORK* wk, s16 pno) {
-    s32 ix;
-    if (wk->operator) {
-        ix = 2;
+    s16 ix;
+    if (wk->operator == 0) {
+        ix = Game_setting.level + CC_Value[1];
     } else {
-        ix = CC_Value[1] + (*&Game_setting).level;
+        ix = 2;
     }
-    wk->original_vitality = Com_Vital_Unit_Data[pno][(*&Game_setting).set2][ix];
+    wk->original_vitality = Com_Vital_Unit_Data[pno][Game_setting.set2][ix];
     wk->dmcal_m = 32;
-    wk->dmcal_d = (wk->original_vitality << 5) / Max_vitality;
+    wk->dmcal_d = wk->original_vitality * 32 / Max_vitality;
     wk->vitality = wk->vital_new = wk->vital_old = Max_vitality;
     wk->dm_vital = 0;
 }
@@ -166,27 +166,25 @@ s32 cal_sa_gauge_waribiki(PLW* wk, s16 asag) {
 
 
 void add_sp_arts_gauge_paring(PLW* wk) {
-    PLW* emwk;
-    s16 asag;
-    if (wk->wu.work_id != 1) {
-        return;
+    u16 asag;
+    if (wk->wu.work_id == 1) {
+        PLW* emwk = (PLW*)wk->wu.target_adrs;
+        asag = add_arts_gauge[emwk->player_number][wk->wu.dm_arts_point][3];
+        if ((s16)asag != 0) {
+            if (wk->wu.operator == 0) {
+                if (Country & 2) {
+                    asag += asagh_zuru2[Game_setting.level];
+                } else {
+                    asag += asagh_zuru[Game_setting.level];
+                }
+            }
+            if ((s16)asag <= 0) {
+                asag = 1;
+            }
+            add_super_arts_gauge(wk->sa, wk->wu.id, (s16)asag, wk->metamorphose);
+        }
+        wk->wu.dm_arts_point = 0;
     }
-    emwk = (PLW*)wk->wu.target_adrs;
-    asag = add_arts_gauge[emwk->player_number][wk->wu.dm_arts_point][3];
-    if (asag) {
-        if (wk->wu.operator == 0) {
-            if (Country & 2) {
-            asag += asagh_zuru2[(*&Game_setting).level];
-        } else {
-            asag += asagh_zuru[(*&Game_setting).level];
-        }
-        }
-        if (asag <= 0) {
-            asag = 1;
-        }
-        add_super_arts_gauge(wk->sa, wk->wu.id, asag, wk->metamorphose);
-    }
-    wk->wu.dm_arts_point = 0;
 }
 
 
@@ -216,7 +214,7 @@ void add_sp_arts_gauge_tokushu(PLW* wk) {
 
 
 void add_sp_arts_gauge_ukemi(PLW* wk) {
-    s32 asag;
+    s16 asag;
     if (wk->wu.work_id != 1) {
         return;
     }
@@ -226,15 +224,15 @@ void add_sp_arts_gauge_ukemi(PLW* wk) {
     }
     if (wk->wu.operator == 0) {
         if (Country & 2) {
-            asag += asagh_zuru2[(*&Game_setting).level];
+            asag += asagh_zuru2[Game_setting.level];
         } else {
-            asag += asagh_zuru[(*&Game_setting).level];
+            asag += asagh_zuru[Game_setting.level];
         }
     }
     if (asag <= 0) {
         asag = 1;
     }
-    ((void(*)(SA_WORK* wk, s16 ix, s16 asag, u16 mf))add_super_arts_gauge)(wk->sa, wk->wu.id, asag, wk->metamorphose);
+    add_super_arts_gauge(wk->sa, wk->wu.id, asag, wk->metamorphose);
 }
 
 
@@ -269,46 +267,43 @@ s32 add_super_arts_gauge(wk, ix, asag, mf)
     s16 asag;
     u8 mf;
 {
-    if (test_flag) {
-        return;
-    }
-    if (mf) {
-        return 0;
-    }
-    if (wk->ok == -1) {
-        return 0;
-    }
-    if (pcon_dp_flag) {
-        return 0;
-    }
-    if (Bonus_Game_Flag) {
-        return 0;
-    }
-    if (wk->store == wk->store_max) {
-        return 0;
-    }
-    asag = asag * 120 / 100;
-    if (Battle_Round[Play_Type] == 0) {
-        asag = asag * 150 / 100;
-    }
-    wk->gauge.s.h += asag;
-    wk->gauge.s.l = -1;
-    if (wk->gauge.s.h > wk->gauge_len) {
-        wk->store += 1;
-        if (wk->store < wk->store_max) {
-            wk->gauge.s.h -= wk->gauge_len;
-        } else {
-            wk->store = wk->store_max;
-            if (wk->gauge_type == 1) {
-                wk->gauge.s.h = wk->gauge_len;
-            } else {
-                wk->gauge.i = 0;
-            }
+    if (!test_flag) {
+        if (mf) {
+            return 0;
         }
-        sa_gauge_flash[ix] |= 1;
-        return (s32)sa_gauge_flash;
+        if (wk->ok == -1) {
+            return 0;
+        }
+        if (pcon_dp_flag) {
+            return 0;
+        }
+        if (Bonus_Game_Flag) {
+            return 0;
+        }
+        if (wk->store == wk->store_max) {
+            return 0;
+        }
+        asag = asag * 120 / 100;
+        if (Battle_Round[Play_Type] == 0) {
+            asag = asag * 150 / 100;
+        }
+        wk->gauge.s.h += asag;
+        wk->gauge.s.l = -1;
+        if (wk->gauge.s.h > wk->gauge_len) {
+            wk->store += 1;
+            if (wk->store < wk->store_max) {
+                wk->gauge.s.h -= wk->gauge_len;
+            } else {
+                wk->store = wk->store_max;
+                if (wk->gauge_type == 1) {
+                    wk->gauge.s.h = wk->gauge_len;
+                } else {
+                    wk->gauge.i = 0;
+                }
+            }
+            sa_gauge_flash[ix] |= 1;
+        }
     }
-    return wk->gauge_len;
 }
 
 
@@ -347,11 +342,15 @@ void setup_saishin_lvdir(PLW* ds) {
 
 
 void setup_lvdir_after_autodir(PLW* wk) {
+    const u8* p = convert_saishin_lvdir[0];
     if (wk->wu.rl_flag) {
-        wk->cp->lever_dir = convert_saishin_lvdir[1][wk->cp->sw_lvbt & 0xC];
-        return;
+        p += wk->cp->sw_lvbt & 0xC;
+        p += 16;
+        wk->cp->lever_dir = *p;
+    } else {
+        p += wk->cp->sw_lvbt & 0xC;
+        wk->cp->lever_dir = *p;
     }
-    wk->cp->lever_dir = convert_saishin_lvdir[0][wk->cp->sw_lvbt & 0xC];
 }
 
 
@@ -390,16 +389,23 @@ void dead_voice_request2(PLW* wk) {
 /* provisional name */
 s32 short_to_bcd(s16 num) {
     u16 bcd = 0;
-    u16 digit = 0x1000;
     u16 div = 1000;
+    u16 digit = 0x1000;
     s16 i;
-    for (i = 0; i < 3; i++) {
-        while (num >= div) {
-            num -= div;
-            bcd += digit;
-        }
-        digit >>= 4;
-        div /= 10;
+    i = 0;
+    goto test;
+body:
+    if (num >= div) {
+        num -= div;
+        bcd += digit;
+        goto body;
+    }
+    digit >>= 4;
+    div /= 10;
+    i++;
+test:
+    if (i < 3) {
+        goto body;
     }
     bcd += num;
     return bcd;

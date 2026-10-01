@@ -2,7 +2,7 @@
  * BG0001.C  Game task jump
  *
  * bg0001 copies the main game jump table Main_Jmp_Data and calls the routine selected by the
- * current top-level game number G_No[0].
+ * current top-level game number G_No0.
  */
 
 #include "structs.h"
@@ -36,5 +36,5 @@ loop:
 void bg0001(void) {
     GAME_TASK_JMP Main_Jmp_Tbl;
     Main_Jmp_Tbl = Main_Jmp_Data;
-    Main_Jmp_Tbl.jmp[(*(s16(*)[4])&G_No[0])[0]]();
+    Main_Jmp_Tbl.jmp[(*(s16(*)[4])&G_No0)[0]]();
 }

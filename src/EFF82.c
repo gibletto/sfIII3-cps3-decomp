@@ -85,7 +85,8 @@ void effect_82_move(WORK_Other* ewk) {
 s32 effect_82_init(WORK* wk) {
     WORK_Other* ewk;
     s16 ix;
-    if ((ix = pull_effect_work(4)) == -1) {
+    ix = pull_effect_work(4);
+    if (ix == -1) {
         return -1;
     }
     ewk = (WORK_Other*)frw[ix];
@@ -102,14 +103,17 @@ s32 effect_82_init(WORK* wk) {
         if (wk->xyz[0].disp.pos > bg_w.bgw[1].wxy[0].disp.pos) {
             ewk->wu.xyz[0].disp.pos = wk->xyz[0].disp.pos + 256;
         } else {
-            ewk->wu.xyz[0].disp.pos = bg_w.bgw[1].wxy[0].disp.pos + (bg_w.pos_offset + 32);
+            s16 pos = bg_w.pos_offset;
+            pos += bg_w.bgw[1].wxy[0].disp.pos;
+            pos += 32;
+            ewk->wu.xyz[0].disp.pos = pos;
         }
         ewk->wu.old_rno[1] = wk->xyz[0].disp.pos + 56;
     } else {
         if (wk->xyz[0].disp.pos < bg_w.bgw[1].wxy[0].disp.pos) {
             ewk->wu.xyz[0].disp.pos = wk->xyz[0].disp.pos - 256;
         } else {
-            ewk->wu.xyz[0].disp.pos = bg_w.bgw[1].wxy[0].disp.pos - (bg_w.pos_offset + 32);
+            ewk->wu.xyz[0].disp.pos = bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset - 32;
         }
         ewk->wu.old_rno[1] = wk->xyz[0].disp.pos - 56;
     }

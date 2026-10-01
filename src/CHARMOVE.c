@@ -256,16 +256,14 @@ s32 char_move_cmms3(PLW* wk) {
     *--to_ram = *--src;
     *--to_ram = *--src;
     wk->wu.cg_ix = wk->wu.cmms.pat * wk->wu.cgd_type - wk->wu.cgd_type;
-    while (1) {
-        cpc = (CHAR_CMD*)&wk->wu.set_char_ad[wk->wu.cg_ix];
-        if (cpc->code >= 0x100) {
-            break;
-        }
+loop:
+    cpc = (CHAR_CMD*)&wk->wu.set_char_ad[wk->wu.cg_ix];
+    if (cpc->code < 0x100) {
         if (comm_jmp_tbl[cpc->code](wk, cpc) != 0) {
             wk->wu.cg_ix += wk->wu.cgd_type;
-        } else if (wk->meoshi_jump_flag != 0) {
-            break;
-        } else {
+            goto loop;
+        }
+        if (wk->meoshi_jump_flag == 0) {
             return 0;
         }
     }
@@ -273,6 +271,7 @@ s32 char_move_cmms3(PLW* wk) {
         to_ram = (u32*)&wk->wu.cg_wca_ix;
         for (i = 0; i < now_cgd - wk->wu.cgd_type; i++) {
             *--to_ram = 0;
+            continue;
         }
     }
     wk->wu.cg_ix -= wk->wu.cgd_type;
@@ -726,17 +725,25 @@ s32 comm_ps_x(WORK* wk, CHAR_CMD* ctc) {
 
 
 s32 comm_ps_y(WORK* wk, CHAR_CMD* ctc) {
-    WORK* emwk;
     if (wk->work_id == 1) {
         switch (ctc->koc) {
         case 0:
-            wk->xyz[1].disp.pos = (bg_w.stage == 21 && ((PLW*)wk)->bs2_on_car && ctc->pat < bs2_floor[2]) ? bs2_floor[2] : ctc->pat;
+            if (bg_w.stage == 21) {
+                if (((PLW*)wk)->bs2_on_car) {
+                    s16* fc = &bs2_floor[2];
+                    if (ctc->pat < *fc) {
+                        wk->xyz[1].disp.pos = *fc;
+                        break;
+                    }
+                }
+            }
+            wk->xyz[1].disp.pos = ctc->pat;
             break;
         case 2:
             wk->xyz[1].disp.pos = ctc->pat;
         default:
-            emwk = (WORK*)wk->target_adrs;
-            emwk->xyz[1].disp.pos = ctc->pat;
+            wk = (WORK*)wk->target_adrs;
+            wk->xyz[1].disp.pos = ctc->pat;
             break;
         }
         return 1;
@@ -748,8 +755,8 @@ s32 comm_ps_y(WORK* wk, CHAR_CMD* ctc) {
     case 2:
         wk->xyz[1].disp.pos = ctc->pat;
     default:
-        emwk = (WORK*)wk->target_adrs;
-        emwk->xyz[1].disp.pos = ctc->pat;
+        wk = (WORK*)wk->target_adrs;
+        wk->xyz[1].disp.pos = ctc->pat;
         break;
     }
     return 1;
@@ -1701,33 +1708,38 @@ s32 comm_retmj(PLW* wk, CHAR_CMD* ctc) {
 
 s32 comm_sstx(WORK* wk, CHAR_CMD* ctc) {
     SST sstx;
-    sstx.patl = 0;
-    sstx.pats.h = ctc->pat;
-    sstx.patl >>= 8;
+    SST* p;
+    s32 x;
+
+    p = &sstx;
+    p->patl = 0;
+    p->pats.h = ctc->pat;
+    p->patl = p->patl >> 8;
+    x = p->patl;
     switch (ctc->koc) {
     case 0:
         switch (ctc->ix) {
         case 0:
         default:
-            wk->mvxy.a[0].sp = sstx.patl;
+            wk->mvxy.a[0].sp = x;
             break;
         case 1:
-            wk->mvxy.a[0].sp &= sstx.patl;
+            wk->mvxy.a[0].sp &= x;
             break;
         case 2:
-            wk->mvxy.a[0].sp |= sstx.patl;
+            wk->mvxy.a[0].sp |= x;
             break;
         case 3:
-            wk->mvxy.a[0].sp += sstx.patl;
+            wk->mvxy.a[0].sp += x;
             break;
         case 4:
-            wk->mvxy.a[0].sp -= sstx.patl;
+            wk->mvxy.a[0].sp -= x;
             break;
         case 5:
-            wk->mvxy.a[0].sp *= sstx.patl;
+            wk->mvxy.a[0].sp *= x;
             break;
         case 6:
-            wk->mvxy.a[0].sp /= sstx.patl;
+            wk->mvxy.a[0].sp /= x;
             break;
         }
         break;
@@ -1735,50 +1747,50 @@ s32 comm_sstx(WORK* wk, CHAR_CMD* ctc) {
         switch (ctc->ix) {
         case 0:
         default:
-            wk->mvxy.a[0].sp = sstx.patl;
+            wk->mvxy.a[0].sp = x;
             break;
         case 1:
-            wk->mvxy.a[0].sp &= sstx.patl;
+            wk->mvxy.a[0].sp &= x;
             break;
         case 2:
-            wk->mvxy.a[0].sp |= sstx.patl;
+            wk->mvxy.a[0].sp |= x;
             break;
         case 3:
-            wk->mvxy.a[0].sp += sstx.patl;
+            wk->mvxy.a[0].sp += x;
             break;
         case 4:
-            wk->mvxy.a[0].sp -= sstx.patl;
+            wk->mvxy.a[0].sp -= x;
             break;
         case 5:
-            wk->mvxy.a[0].sp *= sstx.patl;
+            wk->mvxy.a[0].sp *= x;
             break;
         case 6:
-            wk->mvxy.a[0].sp /= sstx.patl;
+            wk->mvxy.a[0].sp /= x;
             break;
         }
     case 1:
         switch (ctc->ix) {
         case 0:
         default:
-            wk->mvxy.d[0].sp = sstx.patl;
+            wk->mvxy.d[0].sp = p->patl;
             break;
         case 1:
-            wk->mvxy.d[0].sp &= sstx.patl;
+            wk->mvxy.d[0].sp &= p->patl;
             break;
         case 2:
-            wk->mvxy.d[0].sp |= sstx.patl;
+            wk->mvxy.d[0].sp |= p->patl;
             break;
         case 3:
-            wk->mvxy.d[0].sp += sstx.patl;
+            wk->mvxy.d[0].sp += p->patl;
             break;
         case 4:
-            wk->mvxy.d[0].sp -= sstx.patl;
+            wk->mvxy.d[0].sp -= p->patl;
             break;
         case 5:
-            wk->mvxy.d[0].sp *= sstx.patl;
+            wk->mvxy.d[0].sp *= p->patl;
             break;
         case 6:
-            wk->mvxy.d[0].sp /= sstx.patl;
+            wk->mvxy.d[0].sp /= p->patl;
             break;
         }
         break;
@@ -1793,33 +1805,38 @@ s32 comm_sstx(WORK* wk, CHAR_CMD* ctc) {
 
 s32 comm_ssty(WORK* wk, CHAR_CMD* ctc) {
     SST ssty;
-    ssty.patl = 0;
-    ssty.pats.h = ctc->pat;
-    ssty.patl >>= 8;
+    SST* p;
+    s32 x;
+
+    p = &ssty;
+    p->patl = 0;
+    p->pats.h = ctc->pat;
+    p->patl = p->patl >> 8;
+    x = p->patl;
     switch (ctc->koc) {
     case 0:
         switch (ctc->ix) {
         case 0:
         default:
-            wk->mvxy.a[1].sp = ssty.patl;
+            wk->mvxy.a[1].sp = x;
             break;
         case 1:
-            wk->mvxy.a[1].sp &= ssty.patl;
+            wk->mvxy.a[1].sp &= x;
             break;
         case 2:
-            wk->mvxy.a[1].sp |= ssty.patl;
+            wk->mvxy.a[1].sp |= x;
             break;
         case 3:
-            wk->mvxy.a[1].sp += ssty.patl;
+            wk->mvxy.a[1].sp += x;
             break;
         case 4:
-            wk->mvxy.a[1].sp -= ssty.patl;
+            wk->mvxy.a[1].sp -= x;
             break;
         case 5:
-            wk->mvxy.a[1].sp *= ssty.patl;
+            wk->mvxy.a[1].sp *= x;
             break;
         case 6:
-            wk->mvxy.a[1].sp /= ssty.patl;
+            wk->mvxy.a[1].sp /= x;
             break;
         }
         break;
@@ -1827,50 +1844,50 @@ s32 comm_ssty(WORK* wk, CHAR_CMD* ctc) {
         switch (ctc->ix) {
         case 0:
         default:
-            wk->mvxy.a[1].sp = ssty.patl;
+            wk->mvxy.a[1].sp = x;
             break;
         case 1:
-            wk->mvxy.a[1].sp &= ssty.patl;
+            wk->mvxy.a[1].sp &= x;
             break;
         case 2:
-            wk->mvxy.a[1].sp |= ssty.patl;
+            wk->mvxy.a[1].sp |= x;
             break;
         case 3:
-            wk->mvxy.a[1].sp += ssty.patl;
+            wk->mvxy.a[1].sp += x;
             break;
         case 4:
-            wk->mvxy.a[1].sp -= ssty.patl;
+            wk->mvxy.a[1].sp -= x;
             break;
         case 5:
-            wk->mvxy.a[1].sp *= ssty.patl;
+            wk->mvxy.a[1].sp *= x;
             break;
         case 6:
-            wk->mvxy.a[1].sp /= ssty.patl;
+            wk->mvxy.a[1].sp /= x;
             break;
         }
     case 1:
         switch (ctc->ix) {
         case 0:
         default:
-            wk->mvxy.d[1].sp = ssty.patl;
+            wk->mvxy.d[1].sp = p->patl;
             break;
         case 1:
-            wk->mvxy.d[1].sp &= ssty.patl;
+            wk->mvxy.d[1].sp &= p->patl;
             break;
         case 2:
-            wk->mvxy.d[1].sp |= ssty.patl;
+            wk->mvxy.d[1].sp |= p->patl;
             break;
         case 3:
-            wk->mvxy.d[1].sp += ssty.patl;
+            wk->mvxy.d[1].sp += p->patl;
             break;
         case 4:
-            wk->mvxy.d[1].sp -= ssty.patl;
+            wk->mvxy.d[1].sp -= p->patl;
             break;
         case 5:
-            wk->mvxy.d[1].sp *= ssty.patl;
+            wk->mvxy.d[1].sp *= p->patl;
             break;
         case 6:
-            wk->mvxy.d[1].sp /= ssty.patl;
+            wk->mvxy.d[1].sp /= p->patl;
             break;
         }
         break;
@@ -2165,12 +2182,12 @@ s32 get_comm_if_lever(WORK* wk) {
 
 
 
-u16 get_comm_if_shot(WORK* wk) {
+s32 get_comm_if_shot(WORK* wk) {
     u16 num;
     if (wk->work_id == 1) {
-        num = wcp[wk->id].sw_new & 0x770;
+        num = wcp[(s16)wk->id].sw_new & 0x770;
     } else {
-        num = wcp[((WORK_Other*)wk)->master_id & 1].sw_new & 0x770;
+        num = wcp[(s16)(((WORK_Other*)wk)->master_id & 1)].sw_new & 0x770;
     }
     return num;
 }
@@ -2196,24 +2213,24 @@ s32 get_comm_if_shot_now_off(WORK* wk) {
 
 
 
-u16 get_comm_if_shot_now(WORK* wk) {
+s32 get_comm_if_shot_now(WORK* wk) {
     u16 num;
     if (wk->work_id == 1) {
-        num = wcp[wk->id].sw_now & 0x770;
+        num = wcp[(s16)wk->id].sw_now & 0x770;
     } else {
-        num = wcp[((WORK_Other*)wk)->master_id & 1].sw_now & 0x770;
+        num = wcp[(s16)(((WORK_Other*)wk)->master_id & 1)].sw_now & 0x770;
     }
     return num;
 }
 
 
 
-u16 get_comm_if_lvsh(WORK* wk) {
+s32 get_comm_if_lvsh(WORK* wk) {
     u16 num;
     if (wk->work_id == 1) {
-        num = wcp[wk->id].sw_new & 0x77F;
+        num = wcp[(s16)wk->id].sw_new & 0x77F;
     } else {
-        num = wcp[((WORK_Other*)wk)->master_id & 1].sw_new & 0x77F;
+        num = wcp[(s16)(((WORK_Other*)wk)->master_id & 1)].sw_new & 0x77F;
     }
     return num;
 }
@@ -2469,17 +2486,8 @@ void set_jugde_area(WORK* wk) {
 }
 
 /* provisional name */
-void set_char_olc_data(WORK* wk)
-{
-    OLC_IX *dst;
-    OLC_IX *src;
-
-    dst = &wk->cg_olc;
-    src = &wk->olc_ix_table[wk->cg_olc_ix];
-    dst->olc_ix[0] = src->olc_ix[0];
-    dst->olc_ix[1] = src->olc_ix[1];
-    dst->olc_ix[2] = src->olc_ix[2];
-    dst->olc_ix[3] = src->olc_ix[3];
+void set_char_olc_data(WORK* wk) {
+    wk->cg_olc = wk->olc_ix_table[wk->cg_olc_ix];
 }
 
 

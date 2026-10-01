@@ -3,9 +3,8 @@
  *
  * 02007EEC-02079C97, right after the initialised variables of work.c: reset_entry clears it (B_BGN,
  * B_END in sections.src). Section B, placed after section R by the linker. A <name>_tail table holds the
- * bytes between <name> and the next variable that nothing in the program refers to by name or address
- * (no literal in the code points into them, and none is padding the compiler would add): variables whose
- * names are not known, or more of <name> reached through an index past its end.
+ * bytes between <name> and the next named variable: unnamed variables, or more of <name> reached
+ * through an index past its end.
  */
 
 #include "types.h"
@@ -529,9 +528,15 @@ s8 Personal_Timer[2];  /* 02015430 */
 s8 Request_E_No;  /* 02015432 */
 s8 Request_G_No;  /* 02015433 */
 s16 G_Timer;  /* 02015434 */
-s16 G_No[4];  /* 02015436 */
+s16 G_No0;  /* 02015436 */
+s16 G_No1;
+s16 G_No2;
+s16 G_No3;
 s16 D_Timer;  /* 0201543E */
-s16 D_No[4];  /* 02015440 */
+s16 D_No0;  /* 02015440 */
+s16 D_No1;
+s16 D_No2;
+s16 D_No3;
 u8 Present_Rank[2];  /* 02015448 */
 s8 Rank_In[2][4];  /* 0201544A */
 s8 Request_Disp_Rank[2][4];  /* 02015452 */
@@ -546,7 +551,10 @@ s8 Rank_X;  /* 02015462 */
 s16 Rank_Pos_X;  /* 02015464 */
 s16 Rank_Pos_Y;  /* 02015466 */
 s16 E_Timer;  /* 02015468 */
-s16 E_No[4];  /* 0201546A */
+s16 E_No0;  /* 0201546A */
+s16 E_No1;
+s16 E_No2;
+s16 E_No3;
 s16 F_No0[2];  /* 02015472 */
 s16 F_No1[2];  /* 02015476 */
 s16 F_No2[2];  /* 0201547A */
@@ -556,7 +564,10 @@ u8 F_Timer_tail[12];  /* after F_Timer; nothing refers to it by name or address 
 s16 E_Number[2][4];  /* 02015492 */
 s16 ENTRY_X;  /* 020154A2 */
 s16 C_Timer;  /* 020154A4 */
-s16 C_No[4];  /* 020154A6 */
+s16 C_No0;  /* 020154A6 */
+s16 C_No1;
+s16 C_No2;
+s16 C_No3;
 s8 Complete_Victory;  /* 020154AE */
 s8 Demo_Flag;  /* 020154AF */
 s8 Next_Demo;  /* 020154B0 */
@@ -1365,11 +1376,10 @@ u8 coin_sw_now_tail[2];  /* after coin_sw_now; nothing refers to it by name or a
 s16 card_out_req;  /* 0206AAC4 */
 u16 card_out_busy;  /* 0206AAC6 */
 u8 card_out_busy_tail[128];  /* after card_out_busy; nothing refers to it by name or address */
-/* book_coin_count: declared 16 bytes; the code reads it on into the variables after it */
-u8 book_coin_count[4];  /* 0206AB48 */
-u8 book_service_count[4];  /* 0206AB4C */
-u8 book_free_count[4];  /* 0206AB50 */
-u8 book_card_count[4];  /* 0206AB54 */
+u32 book_coin_count;  /* 0206AB48 */
+u32 book_service_count;  /* 0206AB4C */
+u32 book_free_count;  /* 0206AB50 */
+u32 book_card_count;  /* 0206AB54 */
 u16 eep_dummy;  /* 0206AB58 */
 u16 eep_strobe_0;  /* 0206AB5A */
 u16 eep_strobe_1;  /* 0206AB5C */
@@ -1412,17 +1422,16 @@ SPRITE_ENTRY spr_entry_a[512];  /* 0206AC94 */
 SPRITE_ENTRY spr_entry_b[512];  /* 0206D494 */
 SPRITE_ENTRY * spr_prio_a[0x80];  /* 0206FC94 */
 SPRITE_ENTRY * spr_prio_b[0x80];  /* 0206FE94 */
-/* spr_entry_cnt: declared 20 bytes; the code reads it on into the variables after it */
-u8 spr_entry_cnt[2];  /* 02070094 */
-u8 spr_cnt0_b[2];  /* 02070096 */
-u8 spr_cnt1_a[2];  /* 02070098 */
-u8 spr_cnt1_b[2];  /* 0207009A */
-u8 spr_cnt2_a[2];  /* 0207009C */
-u8 spr_cnt2_b[2];  /* 0207009E */
-u8 spr_cnt3_a[2];  /* 020700A0 */
-u8 spr_cnt3_b[2];  /* 020700A2 */
-u8 spr_cnt4_a[2];  /* 020700A4 */
-u8 spr_cnt4_b[2];  /* 020700A6 */
+u16 spr_cnt0_a;  /* 02070094 */
+u16 spr_cnt0_b;  /* 02070096 */
+u16 spr_cnt1_a;  /* 02070098 */
+u16 spr_cnt1_b;  /* 0207009A */
+u16 spr_cnt2_a;  /* 0207009C */
+u16 spr_cnt2_b;  /* 0207009E */
+u16 spr_cnt3_a;  /* 020700A0 */
+u16 spr_cnt3_b;  /* 020700A2 */
+u16 spr_cnt4_a;  /* 020700A4 */
+u16 spr_cnt4_b;  /* 020700A6 */
 u8 spr_bank;  /* 020700A8 */
 s8 spr_list_ready;  /* 020700A9 */
 u8 spr_list_ready_tail[2];  /* after spr_list_ready; nothing refers to it by name or address */

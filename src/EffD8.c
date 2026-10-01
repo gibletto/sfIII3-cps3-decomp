@@ -97,11 +97,13 @@ void effect_D8_move(WORK_Other* ewk) {
 
 
 /* provisional name */
+/* PL_id is reused for the face offset. */
 s32 effect_D8_entry(s16 PL_id, s16 Type) {
-    WORK_Other* ewk;
     s16 ix;
-    s16 offset_x;
-    if ((ix = pull_effect_work(4)) == -1) {
+    WORK_Other* ewk;
+
+    ix = pull_effect_work(4);
+    if (ix == -1) {
         return -1;
     }
     ewk = (WORK_Other*)frw[ix];
@@ -120,8 +122,9 @@ s32 effect_D8_entry(s16 PL_id, s16 Type) {
     ewk->wu.position_z = D8_Priority_Data[Type];
     ewk->wu.direction = Type;
     ewk->wu.hit_quake = 0;
-    offset_x = Setup_Face_Offset_X(Play_Type_1st);
-    effect_D8_init(ewk, offset_x);
+    PL_id = Setup_Face_Offset_X(Play_Type_1st);
+L1:
+    effect_D8_init(ewk, PL_id);
     return 0;
 }
 

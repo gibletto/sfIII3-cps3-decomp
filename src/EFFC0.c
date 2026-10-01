@@ -23,43 +23,51 @@
 
 void effect_C0_move(WORK_Other* ewk) {
     PLW* mwk = (PLW*)ewk->my_master;
+    const u8* t = (const u8*)plhos_data;
     s16 i;
     s16 hok;
+
     switch (ewk->wu.routine_no[0]) {
     case 0:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.my_col_mode = 0x4200;
         ewk->wu.my_col_code = 0x2020;
-        set_char_move_init(&ewk->wu, 0, plhos_data[mwk->player_number][2]);
+        set_char_move_init(&ewk->wu, 0, *(s16*)(t + (u8)((s8)mwk->player_number * 6) + 4));
     case 1:
         if (ewk->wu.dead_f == 1 || Suicide[0] != 0) {
             ewk->wu.disp_flag = 0;
             ewk->wu.routine_no[0]++;
             break;
         }
-        if (mwk->wu.routine_no[1] != 1 || mwk->wu.routine_no[2] != 25) {
-            ewk->wu.disp_flag = 0;
-            ewk->wu.routine_no[0]++;
-            break;
-        }
-        if (!EXE_flag && !Game_pause && mwk->sa_stop_flag != 1) {
-            if (mwk->cp->lgp > 13) {
-                hok = 3;
-            } else {
-                hok = hok_table_ef[mwk->cp->lgp / 2];
+        {
+            s16* r = mwk->wu.routine_no;
+            if (r[1] != 1 || r[2] != 25) {
+                ewk->wu.disp_flag = 0;
+                ewk->wu.routine_no[0]++;
+                break;
             }
-            for (i = 0; i < hok; i++) {
-                char_move(&ewk->wu);
+        }
+        if (EXE_flag == 0 && Game_pause == 0) {
+            if (mwk->sa_stop_flag != 1) {
+                i = 0;
+                if (mwk->cp->lgp > 13) {
+                    hok = 3;
+                } else {
+                    hok = hok_table_ef[mwk->cp->lgp / 2];
+                }
+                for (; i < hok; i++) {
+                    char_move(&ewk->wu);
+                }
             }
         }
         ewk->wu.position_x = mwk->wu.position_x;
         if (mwk->wu.rl_flag) {
-            ewk->wu.position_x += plhos_data[mwk->player_number][0];
+            ewk->wu.position_x += *(s16*)(t + (u8)((s8)mwk->player_number * 6));
         } else {
-            ewk->wu.position_x -= plhos_data[mwk->player_number][0];
+            ewk->wu.position_x -= *(s16*)(t + (u8)((s8)mwk->player_number * 6));
         }
-        ewk->wu.position_y = mwk->wu.position_y + plhos_data[mwk->player_number][1];
+        ewk->wu.position_y = mwk->wu.position_y + *(s16*)(t + (u8)((s8)mwk->player_number * 6) + 2);
         ewk->wu.position_z = mwk->wu.position_z - 4;
         sort_push_request(ewk);
         break;
@@ -69,7 +77,6 @@ void effect_C0_move(WORK_Other* ewk) {
     default:
         all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
-        break;
     }
 }
 

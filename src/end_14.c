@@ -271,10 +271,11 @@ void end_e00_3000(void) {
         }
         break;
     case 3:
-        if (Request_Fade(29, 0)) {
-            end_no_cut = 1;
-            bgw_ptr->r_no_1++;
+        if (Request_Fade(29, 0) == 0) {
+            break;
         }
+        end_no_cut = 1;
+        bgw_ptr->r_no_1++;
         break;
     case 4:
         if (end_fade_complete()) {
@@ -374,10 +375,11 @@ void end_e00_6000(void) {
         }
         break;
     case 3:
-        if (Request_Fade(29, 0)) {
-            end_no_cut = 1;
-            bgw_ptr->r_no_1++;
+        if (Request_Fade(29, 0) == 0) {
+            break;
         }
+        end_no_cut = 1;
+        bgw_ptr->r_no_1++;
         break;
     case 4:
         if (end_fade_complete()) {
@@ -604,7 +606,7 @@ void end_e02_3000(void) {
             bgw_ptr->xy[1].cal = 0x1600000;
         }
         bgw_ptr->abs_y = bgw_ptr->xy[1].disp.pos;
-        break;
+        return;
     case 2:
         break;
     }

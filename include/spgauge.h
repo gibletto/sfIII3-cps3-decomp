@@ -18,7 +18,7 @@ void spgauge_cont_demo_init(void);
 void spgauge_cont_main(void);
 void spgauge_control(s8 Spg_Num);
 void spgauge_sound_request(s8 pl);
-void spgauge_wipe_write(s8 Stpl_Num);
+void spgauge_wipe_write(s32 Stpl_Num);
 void spgauge_work_clear(s8 Stpl_Num);
 void wipe_check(void);
 void satime_ko_after_clear(s8 Stpl_Num);

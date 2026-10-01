@@ -44,7 +44,7 @@ void Att_PL20_AT1(PLW* wk) {
         char_move(&wk->wu);
         add_mvxy_speed(&wk->wu);
         cal_mvxy_speed(&wk->wu);
-        switch (wk->wu.cg_type) {
+        switch ((u8)wk->wu.cg_type) {
         case 20:
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
@@ -64,15 +64,16 @@ void Att_PL20_AT1(PLW* wk) {
             wk->wu.mvxy.index++;
             wk->wu.routine_no[3] = 2;
             wk->wu.cg_type = 0;
-            break;
+            goto out;
         }
+    out:
         break;
     case 2:
         jumping_union_process(&wk->wu, 3);
         break;
     case 3:
         char_move(&wk->wu);
-        if (wk->wu.cg_type == 20) {
+        if ((u8)wk->wu.cg_type == 20) {
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
             wk->wu.routine_no[3] = 1;
@@ -149,13 +150,14 @@ void Att_PL20_AT3(PLW* wk) {
         emwk = (PLW*)wk->wu.target_adrs;
         if (emwk->wu.hit_mark_y < 32) {
             set_char_move_init((WORK*)wk, 5, 55);
+            return;
         }
         break;
     case 1:
         char_move((WORK*)wk);
         add_mvxy_speed((WORK*)wk);
         cal_mvxy_speed((WORK*)wk);
-        switch (wk->wu.cg_type) {
+        switch ((u8)wk->wu.cg_type) {
         case 20:
             setup_mvxy_data((WORK*)wk, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
@@ -175,15 +177,16 @@ void Att_PL20_AT3(PLW* wk) {
             wk->wu.mvxy.index++;
             wk->wu.routine_no[3] = 2;
             wk->wu.cg_type = 0;
-            break;
+            goto out;
         }
+    out:
         break;
     case 2:
         jumping_union_process((WORK*)wk, 3);
         break;
     case 3:
         char_move((WORK*)wk);
-        if (wk->wu.cg_type == 20) {
+        if ((u8)wk->wu.cg_type == 20) {
             setup_mvxy_data((WORK*)wk, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
             wk->wu.routine_no[3] = 1;

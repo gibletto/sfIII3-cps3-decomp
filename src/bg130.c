@@ -156,15 +156,17 @@ void bg1401(void) {
 
 
 void bg1401_init00(void) {
+    void* zero;
     bgw_ptr->r_no_0++;
     bgw_ptr->old_pos_x = bgw_ptr->xy[0].disp.pos = bgw_ptr->pos_x_work = 0x200;
     bgw_ptr->hos_xy[0].cal = bgw_ptr->wxy[0].cal = bgw_ptr->xy[0].cal;
-    bgw_ptr->zuubun = 0;
-    bg_app = 0;
+    zero = 0;
+    bgw_ptr->zuubun = (s32)zero;
+    bg_app = (s32)zero;
     load_char_gfx(0xDA30, 1);
     effect_05_init();
     effect_06_init();
-    effect_12_init(0);
+    effect_12_init((s32)zero);
     effect_14_init(10);
 }
 
@@ -289,19 +291,20 @@ void bg1502(void) {
 
 
 void bg1502_init00(void) {
-
+    void* zero;
     bgw_ptr->r_no_0++;
     bgw_ptr->old_pos_x = bgw_ptr->xy[0].disp.pos = bgw_ptr->pos_x_work = 0x200;
     bgw_ptr->hos_xy[0].cal = bgw_ptr->wxy[0].cal = bgw_ptr->xy[0].cal;
-    bgw_ptr->zuubun = 0;
+    zero = 0;
+    bgw_ptr->zuubun = (s32)zero;
     load_char_gfx(0xDE10, 1);
     load_char_gfx(0xE0A0, 1);
     effect_05_init();
     effect_12_init(5);
     effect_06_init();
     effect_44_init(8);
-    effect_25_init(0);
-    effect_94_init(0);
+    effect_25_init((s32)zero);
+    effect_94_init((s32)zero);
     effect_94_init(1);
     effect_I4_init();
     effect_85_init();
@@ -620,7 +623,11 @@ void bns11_init00(void) {
     load_char_gfx(0xDFA0, 1);
     effect_05_init();
     effect_12_init(4);
-    effect_35_init(2, plw[0].wu.operator ? 0 : 1);
+    if (plw[0].wu.operator == 0) {
+        effect_35_init(2, 1);
+    } else {
+        effect_35_init(2, 0);
+    }
     effect_35_init(12, 2);
     effect_35_init(18, 3);
     effect_35_init(2, 4);

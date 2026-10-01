@@ -276,7 +276,7 @@ void end_202_1000(void) {
     switch (bgw_ptr->r_no_1) {
     case 0:
         bgw_ptr->r_no_1++;
-        bgw_ptr->xy[0].disp.pos = 512;
+        bgw_ptr->xy[0].disp.pos = 0x200;
         bgw_ptr->xy[1].disp.pos = end_2_pos[end_w.r_no_2][1];
         bgw_ptr->abs_x = bgw_ptr->xy[0].disp.pos;
         bgw_ptr->speed_x = 0xC000;
@@ -284,7 +284,7 @@ void end_202_1000(void) {
         break;
     case 1:
         bgw_ptr->xy[0].cal -= bgw_ptr->speed_x;
-        if (bgw_ptr->xy[0].disp.pos < 129) {
+        if (bgw_ptr->xy[0].disp.pos <= 0x80) {
             bgw_ptr->r_no_1++;
         }
         bgw_ptr->abs_x = bgw_ptr->xy[0].disp.pos;
@@ -312,7 +312,7 @@ void end_202_3000(void) {
             bgw_ptr->r_no_1++;
         }
         bgw_ptr->abs_x = bgw_ptr->xy[0].disp.pos;
-        break;
+        return;
     case 2:
         break;
     }

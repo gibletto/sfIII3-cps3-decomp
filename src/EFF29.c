@@ -59,37 +59,40 @@ void effect_28_move(WORK_Other* ewk) {
 s32 effect_28_init(type28)
 u8 type28;
 {
-    WORK_Other* ewk;
-    s16 ix;
-    s16 lp_cnt = scr_obj_num28[type28];
+    const s16* t;
+    s16 s;
+    s16 n;
     s16 i;
-    const s16* data_ptr;
-    if (lp_cnt == 0) {
+    WORK_Other* o;
+    n = scr_obj_num28[type28];
+    if (n == 0) {
         return;
     }
-    for (data_ptr = scr_obj_data28[type28], i = 0; i < lp_cnt; i++) {
-        if ((ix = pull_effect_work(4)) == -1) {
+    t = scr_obj_data28[type28];
+    for (i = 0; i < n; i++) {
+        s = pull_effect_work(4);
+        if (s == -1) {
             return -1;
         }
-        ewk = (WORK_Other*)frw[ix];
-        ewk->wu.be_flag = 1;
-        ewk->wu.id = 28;
-        ewk->wu.work_id = 16;
-        ewk->wu.cgromtype = 1;
-        ewk->wu.rl_flag = 0;
-        ewk->wu.my_col_mode = 0x4200;
-        ewk->wu.type = i;
-        ewk->wu.dead_f = *data_ptr++;
-        ewk->wu.my_family = *data_ptr++;
-        ewk->wu.my_col_code = *data_ptr++;
-        ewk->wu.xyz[0].disp.pos = *data_ptr++;
-        ewk->wu.xyz[1].disp.pos = *data_ptr++;
-        ewk->wu.my_priority = ewk->wu.position_z = *data_ptr++;
-        ewk->wu.char_index = *data_ptr++;
-        ewk->wu.sync_suzi = *data_ptr++;
-        ewk->wu.dir_step = *data_ptr++;
-        ewk->wu.char_table[0] = char_add[bg_w.bg_index];
-        suzi_offset_set(ewk);
+        o = (WORK_Other*)frw[s];
+        o->wu.be_flag = 1;
+        o->wu.id = 28;
+        o->wu.work_id = 16;
+        o->wu.cgromtype = 1;
+        o->wu.rl_flag = 0;
+        o->wu.my_col_mode = 0x4200;
+        o->wu.type = i;
+        o->wu.dead_f = *t++;
+        o->wu.my_family = *t++;
+        o->wu.my_col_code = *t++;
+        o->wu.xyz[0].disp.pos = *t++;
+        o->wu.xyz[1].disp.pos = *t++;
+        o->wu.my_priority = o->wu.position_z = *t++;
+        o->wu.char_index = *t++;
+        o->wu.sync_suzi = *t++;
+        o->wu.dir_step = *t++;
+        o->wu.char_table[0] = char_add[bg_w.bg_index];
+        suzi_offset_set(o);
     }
     return 0;
 }

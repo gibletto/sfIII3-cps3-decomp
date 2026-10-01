@@ -4,7 +4,8 @@
  * General helpers used by the scene and menu code, and cpu_algorithm, which returns the next
  * lever/button word of a recorded demonstration input (Demo_Ptr) for PLMAIN. System_all_clear_Ex empties the effect lists. Request_Fade/Check_Fade_Complete(_SP) run
  * fades; Switch_Screen_Init(_Panel), Switch_Screen and Switch_Screen_Revival run the screen
- * wipes built from the patterns in SE. Text_Fill_Upper/Lower fill the fix-layer tilemap.
+ * wipes built from the patterns in SE. scfont_page0_fill / scfont_page1_fill fill a whole page of the text (SS)
+ * layer.
  * Ranking entry insertion (insert_ranking_*, Check_Grade_Score, Check_CPU_Grade_Score) and
  * Setup_Play_Type are here, with scene-cut helpers (Button_Cut_Hold, Button_Cut_EX,
  * Cut_Cut_Cut and friends) that let a player's button shorten a scene.
@@ -52,7 +53,7 @@ void System_all_clear_Wait(void)
 /* provisional name */
 void System_all_clear_Ex_Wait(void)
 {
-    Text_Fill_Upper(0, 0x20);
+    scfont_page0_fill(0, 0x20);
     System_all_clear_Ex();
     task_sleep(1);
 }
@@ -256,10 +257,15 @@ s32 Switch_Screen_Revival(void) {
 
 
 
-/* provisional name */
-void Text_Fill_Upper(s16 attr, u16 code) {
-    u16* p = (u16*)SS_RAM;
-    u16 att = attr | ((code & 0x100) >> 8);
+/* The text (SS) layer is one 64-row tilemap in SS RAM, 4 bytes per cell (code, attribute): page 0 is rows 0-31
+ * (+0x0000-0x1FFF), page 1 rows 32-63 (+0x2000-0x3FFF). The layer is scrolled to show one page: Text_Page_Y (0 or 32)
+ * is the row text is printed on, and Scrn_Move_Set(4, 0, 0 / 0x100) shows page 0 / page 1. Bit 8 of the cell code
+ * goes into the attribute's low bit. These two fill a whole page with one cell: (0, 32) clears it with spaces. */
+void scfont_page0_fill(u32 attr, u16 code) {
+    u16 att;
+    u16* p;
+    att = (s32)(code & 0x100) >> 8 | attr;
+    p = (u16*)SS_RAM;
     do {
         p[0] = code;
         p[1] = att;
@@ -269,17 +275,17 @@ void Text_Fill_Upper(s16 attr, u16 code) {
 
 
 
-/* Fills the lower text layer with one cell; returns the attribute word written. */
-/* provisional name */
-s32 Text_Fill_Lower(s16 attr, u16 code) {
-    u16* p = (u16*)(SS_RAM + 0x2000);
-    s16 att = attr | ((code & 0x100) >> 8);
+/* Page 1 of the text layer (see scfont_page0_fill). Returns the attribute word: DEMO.c passes it on as its own result. */
+void scfont_page1_fill(u32 attr, u16 code) {
+    u16 att;
+    u16* p;
+    att = (s32)(code & 0x100) >> 8 | attr;
+    p = (u16*)(SS_RAM + 0x2000);
     do {
         p[0] = code;
         p[1] = att;
         p += 2;
     } while (p < (u16*)(SS_RAM + 0x3FFF));
-    return att;
 }
 
 
@@ -710,19 +716,22 @@ s32 Ck_Range_Out_S(WORK_Other* ewk, s16 BG_No, s16 R) {
 
 /* provisional name */
 void Disp_Capcom_Rights(void) {
+    s16* py = &Text_Page_Y;
+    void (*fp)(s32 x, s32 y, s32 attr, const s8* str) = (void (*)(s32, s32, s32, const s8*))tilemap_print_string_attr;
+    register s16* px = &DE_X[0];
     switch (Country) {
     case 1:
     case 2:
     case 3:
     case 7:
     case 8:
-        tilemap_print_string_attr(DE_X[0] + 3, Text_Page_Y + 26, 18, Capcom_Rights_msg);
+        fp(*px + 3, *py + 26, 18, Capcom_Rights_msg);
         break;
     case 4:
     case 5:
     case 6:
-        tilemap_print_string_attr((*&DE_X)[0] + 1, Text_Page_Y + 25, 18, Capcom_Rights_msg2);
-        tilemap_print_string_attr(DE_X[0] + 1, Text_Page_Y + 26, 18, Capcom_USA_Rights_msg);
+        fp(*px + 1, *py + 25, 18, Capcom_Rights_msg2);
+        fp(*px + 1, *py + 26, 18, Capcom_USA_Rights_msg);
         break;
     }
 }
@@ -730,10 +739,12 @@ void Disp_Capcom_Rights(void) {
 
 
 s32 Cut_Cut_Cut(void) {
-    if (plw[0].wu.operator && (p1sw_0 & 0x3F0)) {
+    s32 m = 0x3F0;
+    PLW* pl = plw;
+    if (pl[0].wu.operator && (p1sw_0 & m)) {
         return 1;
     }
-    if (plw[1].wu.operator && (p2sw_0 & 0x3F0)) {
+    if (pl[1].wu.operator && (p2sw_0 & m)) {
         return 1;
     }
     return 0;

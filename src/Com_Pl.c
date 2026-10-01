@@ -191,8 +191,8 @@ void mode_init_task(void) {
     Get_Demo_Index = Request_Break[0] = Request_Break[1] = 0;
     Battle_Round[0] = Game_setting.set4 & 3;
     Battle_Round[1] = (Game_setting.set4 / 16) & 3;
-    G_No[0] = G_No[1] = G_No[2] = G_No[3] = 0;
-    E_No[0] = E_No[1] = E_No[2] = E_No[3] = 0;
+    G_No0 = G_No1 = G_No2 = G_No3 = 0;
+    E_No0 = E_No1 = E_No2 = E_No3 = 0;
     S_No = S_Sub_No = S_Sub2_No = S_Sub3_No = 0;
     Fade_R_No0 = Fade_R_No1 = 0;
     Fade_Flag = 0;
@@ -1124,22 +1124,19 @@ s32 Check_No12_Shell_Passed(PLW* wk, WORK_Other* tmw) {
 
 
 
-void Check_Guard_Type(PLW* wk, WORK* em) {
-    Lever_Buff[wk->wu.id] = Setup_Guard_Lever(wk, 1);
+void Check_Guard_Type(register PLW* wk, register WORK* em) {
+    u16* lever = Lever_Buff;
+    lever[wk->wu.id] = Setup_Guard_Lever(wk, 1);
     switch (Guard_Type[wk->wu.id]) {
     case 0:
-        if (em->pat_status >= 0xE && em->pat_status <= 0x1E) {
-            break;
+        if ((em->pat_status < 0xE || em->pat_status > 0x1E) && !(em->att.guard & 16) && (em->att.guard & 8)) {
+            lever[wk->wu.id] |= 2;
         }
-        if (em->att.guard & 16 || !(em->att.guard & 8)) {
-            break;
-        }
-        Lever_Buff[wk->wu.id] |= 2;
         break;
     case 1:
         break;
     case 2:
-        Lever_Buff[wk->wu.id] |= 2;
+        lever[wk->wu.id] |= 2;
         break;
     }
 }
@@ -1181,7 +1178,8 @@ s32 Ck_Exit_Guard_Sub(PLW* wk, WORK* em) {
     if (Attack_Flag[wk->wu.id] == 0) {
         return 0;
     }
-    if (wk->wu.routine_no[1] == 1) {
+    if (wk->wu.routine_no[1] != 1) {
+    } else {
         if (wk->wu.routine_no[3] == 0) {
             return 1;
         }
@@ -1710,10 +1708,13 @@ s32 Check_Flip_GO(PLW* wk, s16 xx) {
         } else {
             Lever_Buff[wk->wu.id] = Setup_Guard_Lever(wk, 0);
         }
-        if (xx == 0 && Resume_Lever[wk->wu.id][0] == Lever_Buff[wk->wu.id]) {
-            Next_Be_Guard(wk, em, 0);
-            Flip_Counter[wk->wu.id] = 255;
-            return 0;
+        if (xx == 0) {
+            s16 id = wk->wu.id;
+            if (Resume_Lever[id][0] == Lever_Buff[id]) {
+                Next_Be_Guard(wk, em, 0);
+                Flip_Counter[wk->wu.id] = 255;
+                return 0;
+            }
         }
         Flip_Counter[wk->wu.id]++;
         return 1;
@@ -1896,32 +1897,28 @@ s32 Check_Flip(PLW* wk) {
     return 1;
 }
 
-s32 Check_Flip_Attack(PLW* wk)
-{
-    s32 flip;
+s32 Check_Flip_Attack(PLW* wk) {
     s16 lv;
     s16 rnd;
-    s16 term;
     s16 rank;
 
     lv = Setup_Lv08(0);
     if (Break_Into_CPU == 2) {
         lv = 8;
     }
-    if (Demo_Flag == 0 && Weak_PL == (u16)wk->wu.id) {
+    if (Demo_Flag == 0 && Weak_PL == wk->wu.id) {
         lv = 0;
     }
     rnd = random_32_com();
-    term = Flip_Term_Correct(wk);
+    rnd -= Flip_Term_Correct(wk);
     rank = Setup_EM_Rank_Index(wk);
-    /* Flip_Attack_Data[CC_Type][rank][lv] (s8, 21 ranks of 8 levels per type) */
-    flip = (s16)(rnd - term) < Flip_Attack_Data[CC_Type][rank][lv];
-    if (flip) {
-        Flip_Flag[wk->wu.id] = 0;
-        VS_Tech[wk->wu.id] = 13;
-        Counter_Attack[wk->wu.id] = 1;
+    if (rnd >= Flip_Attack_Data[CC_Type][rank][lv]) {
+        return 0;
     }
-    return flip;
+    Flip_Flag[wk->wu.id] = 0;
+    VS_Tech[wk->wu.id] = 13;
+    Counter_Attack[wk->wu.id] = 1;
+    return 1;
 }
 
 
@@ -2187,7 +2184,7 @@ void Check_At_Count(PLW* wk) {
 
 
 void Shift_Resume_Lv(PLW* wk) {
-    s32 xx;
+    s16 xx;
     for (xx = 18; xx >= 0; xx--) {
         Resume_Lever[wk->wu.id][xx + 1] = Resume_Lever[wk->wu.id][xx];
     }

@@ -129,10 +129,10 @@ void reset_fight_status(void) {
 /* provisional name */
 void reset_round_and_screen(void) {
     System_all_clear_Wait();
-    Text_Fill_Upper(0, 32);
+    scfont_page0_fill(0, 32);
     load_any_color(2);
     count_cont_reset();
-    Round_num = G_No[2] = appear_type = pcon_rno[0] = pcon_rno[1] = pcon_rno[2] = pcon_rno[3] = 0;
+    Round_num = G_No2 = appear_type = pcon_rno[0] = pcon_rno[1] = pcon_rno[2] = pcon_rno[3] = 0;
 }
 
 

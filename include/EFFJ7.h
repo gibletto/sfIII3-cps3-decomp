@@ -6,5 +6,6 @@
 s32 effect_J7_init(PLW* wk);
 void effect_J7_move(WORK_Other* ewk);
 void get_new_color_data(WORK* wk, ColorCode* trom, s16* tram);
+void J7_color_step(WORK* wk);
 
 #endif

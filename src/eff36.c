@@ -28,7 +28,7 @@ void effect_36_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
     case 0:
         if (ewk->wu.old_rno[1] <= op_w.index) {
-            ewk->wu.routine_no[0] += 1;
+            ewk->wu.routine_no[0]++;
         } else if (ewk->wu.old_rno[2] <= op_w.index) {
             switch (ewk->wu.routine_no[1]) {
             case 0:
@@ -52,15 +52,13 @@ void effect_36_move(WORK_Other* ewk) {
             case 6:
                 eff36_move06(ewk);
                 break;
-            default:
-                break;
             }
         }
         break;
     default:
         all_cgps_put_back(ewk);
         push_effect_work(&ewk->wu);
-        break;
+        return;
     }
 }
 

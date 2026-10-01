@@ -405,19 +405,19 @@ void Check_Priority(WORK_Other* ewk) {
 s32 EFF79_Move_X(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[5]) {
     case 0:
-        if (!Move_X_Sub(ewk, ewk->wu.vital_new, 1)) {
-            break;
+        if (Move_X_Sub(ewk, ewk->wu.vital_new, 1)) {
+            ewk->wu.routine_no[5]++;
+            return 1;
         }
-        ewk->wu.routine_no[5]++;
-        return 1;
+        break;
     case 1:
         return 1;
     case 2:
-        if (!Move_X_Sub(ewk, ewk->wu.vital_new, 1)) {
-            break;
+        if (Move_X_Sub(ewk, ewk->wu.vital_new, 1)) {
+            ewk->wu.routine_no[5]++;
+            return 1;
         }
-        ewk->wu.routine_no[5]++;
-        return 1;
+        break;
     default:
         return 1;
     }

@@ -24,8 +24,7 @@
 
 
 s32 effect_G5_move(WORK_Other* ewk) {
-    s32 rc;
-    switch (rc = ewk->wu.routine_no[0]) {
+    switch (ewk->wu.routine_no[0]) {
     case 0:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
@@ -37,10 +36,10 @@ s32 effect_G5_move(WORK_Other* ewk) {
         if (ewk->wu.dead_f == 1) {
             ewk->wu.disp_flag = 0;
             ewk->wu.routine_no[0]++;
-            return 0;
+            break;
         }
-        if ((rc = (s8)Pause_Hit_Marks)) {
-            return rc;
+        if (Pause_Hit_Marks) {
+            break;
         }
         if (EXE_flag == 0 && Game_pause == 0) {
             ewk->wu.dir_old += ewk->wu.dir_step;
@@ -52,22 +51,21 @@ s32 effect_G5_move(WORK_Other* ewk) {
             if (ewk->wu.cg_type == 0xFF || ewk->wu.dir_old < 0) {
                 ewk->wu.disp_flag = 0;
                 ewk->wu.routine_no[0]++;
-                return 0;
+                break;
             }
         }
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos;
         sort_push_request8(&ewk->wu);
-        return;
+        break;
     case 2:
         ewk->wu.routine_no[0] = 3;
-        return rc;
+        break;
     default:
         all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
-        return;
+        break;
     }
-    return rc;
 }
 
 

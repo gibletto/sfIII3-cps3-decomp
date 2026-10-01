@@ -15,6 +15,11 @@
 #include "extern.h"
 #include "Com_Sub.h"
 #include "SHELL14.h"
+#include "end_sub.h"
+#include "sys_config.h"
+#include "EFFECT.h"
+#include "aboutspr.h"
+#include "cps3.h"
 
 
 
@@ -213,3 +218,20 @@ void Shell14_0011(PLW* wk) {
         break;
     }
 }
+
+
+
+void Shell14_0012(PLW* wk) {
+    switch (CP_Index[wk->wu.id][0]) {
+    case 0:
+        Jump_Command_Attack_Term(wk, 8, 0x20, 0xA, (0x380), -1, 0x30, 0, -1, -1, -1);
+        break;
+    default:
+        End_Pattern(wk);
+        break;
+    }
+}
+
+
+
+/* provisional name */

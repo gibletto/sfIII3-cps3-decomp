@@ -23,15 +23,15 @@
 #include "EFFECT.h"
 
 void move_effect_work(s16 index) {
-    WORK* c_addr;
     s16 curr_ix;
     s16 next_ix;
-    exec_tm[index] += 1;
-    curr_ix = head_ix[index];
+    WORK* c_addr;
+    exec_tm[index]++;
+    curr_ix = (&head_ix[0])[index];
     while (curr_ix != -1) {
         c_addr = (WORK*)frw[curr_ix];
         next_ix = c_addr->behind;
-        if (c_addr->timing != exec_tm[index]) {
+        if (c_addr->timing != (s16)exec_tm[index]) {
             c_addr->timing = exec_tm[index];
             effmovejptbl[c_addr->id](c_addr);
         }
@@ -110,10 +110,14 @@ void effect_work_list_release(s16 lix, s16 iid) {
 
 
 
-void effect_work_list_init(s16 lix, s16 iid) {
+void effect_work_list_init(lix, iid)
+s16 lix;
+s16 iid;
+{
     WORK* c_addr;
     s16 curr_ix;
     s16 next_ix;
+
     curr_ix = head_ix[lix];
     if (iid == -1) {
         while (curr_ix != -1) {
@@ -122,7 +126,7 @@ void effect_work_list_init(s16 lix, s16 iid) {
             push_effect_work(c_addr);
             curr_ix = next_ix;
         }
-        exec_tm[lix] = 0;
+        (&exec_tm[0])[lix] = 0;
     } else {
         while (curr_ix != -1) {
             c_addr = (WORK*)frw[curr_ix];
@@ -343,7 +347,10 @@ s32 get_my_shell_ix(WORK* wk, s16 ix, WORK** tmw) {
         return 0;
     }
     *tmw = (WORK*)frw[wk->shell_ix[ix]];
-    return ((*tmw)->be_flag != 0) ? 1 : 0;
+    if ((*tmw)->be_flag) {
+        return 1;
+    }
+    return 0;
 }
 
 

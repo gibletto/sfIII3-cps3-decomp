@@ -379,7 +379,7 @@ void effL1_suuchi_bunkai_sub(WORK_Other_CONN* ewk, u32 tsc) {
     s16 i;
     for (i = 7; i > 0; i--) {
         ewk->wu.shell_ix[i] = tsc / bunkai_table_l1[i];
-        tsc %= bunkai_table_l1[i];
+        tsc = tsc % bunkai_table_l1[i];
     }
     ewk->wu.shell_ix[i] = tsc;
 }

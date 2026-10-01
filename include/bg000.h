@@ -35,7 +35,6 @@ void bg0300_init00(void);
 void bg0202_init00(void);
 void bg0101_BG010(void);
 void bg0102_BG010(void);
-void bg_chase_step(void);
 s32 capcom_logo_anim(void);
 s16 capcom_logo_color_step(void);
 void bg0001_init00(void);

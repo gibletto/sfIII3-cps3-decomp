@@ -77,9 +77,7 @@ const s8 Face_Order_Data[19] = {
     18, 19, 20,
 };
 
-/* The initial values of Sel_PL_Jmp_Tbl (Sel_PL) in sel_pl.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of Sel_PL_Jmp_Tbl (Sel_PL) in sel_pl.c. */
 const u32 Sel_PL_Jmp_Tbl_init[6] = {
     (u32)Sel_PL_1st,
     (u32)Sel_PL_2nd,
@@ -120,9 +118,7 @@ const SEL_EXIT_TBL Sel_Exit_Jmp_Data[4] = {
     { { Next_CPU_3rd, After_Bonus_6th, After_Bonus_End, Select_CPU_1st, Select_CPU_2nd, Select_CPU_3rd, Select_CPU_4th } },
 };
 
-/* The initial values of Next_Q_Tbl (Next_Q) in next_cpu.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of Next_Q_Tbl (Next_Q) in next_cpu.c. */
 const u32 Next_Q_Tbl_init[4] = {
     (u32)Next_Q_1st,
     (u32)Next_Q_2nd,

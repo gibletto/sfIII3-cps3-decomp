@@ -210,7 +210,6 @@ s32 effect_E5_init(PLW* wk) {
 
 
 void effect_e7_e8_init_union(WORK_Other* nwk, WORK_Other* ek, PLW* mk) {
-    s16 dir_timer;
     nwk->wu.old_rno[4] = ek->wu.old_rno[4];
     nwk->wu.old_rno[3] = ek->wu.old_rno[3];
     nwk->wu.old_rno[1] = ek->wu.old_rno[1];
@@ -222,9 +221,7 @@ void effect_e7_e8_init_union(WORK_Other* nwk, WORK_Other* ek, PLW* mk) {
     nwk->wu.my_col_mode = mk->wu.my_col_mode;
     nwk->wu.my_col_code = mk->wu.my_col_code;
     nwk->wu.my_ext_pri = mk->wu.my_ext_pri;
-    dir_timer = ek->wu.dmcal_m;
-    dir_timer *= ek->wu.dmcal_d;
-    nwk->wu.dir_timer = dir_timer;
+    nwk->wu.dir_timer = ek->wu.dmcal_d * ek->wu.dmcal_m;
     nwk->wu.dmcal_d = ek->wu.dmcal_d;
     nwk->wu.dmcal_m = ek->wu.dmcal_m;
     nwk->wu.blink_timing = mk->wu.blink_timing;
@@ -270,11 +267,10 @@ void get_attdata_of_illusion(WORK_Other* ewk) {
 
 /* Turn on after-images from illusion_setup_table[ix]: { who, image data }.
    who 0 = this player, 1 = the opponent, anything else = both. */
-void setup_after_images(PLW* wk, u8 ix)
-{
+void setup_after_images(PLW* wk, u8 ix) {
     PLW* tk = (PLW*)wk->wu.target_adrs;
 
-    switch (illusion_setup_table[ix][0]) {
+    switch ((u16)illusion_setup_table[ix][0]) {
     case 0:
         wk->image_setup_flag = 1;
         wk->image_data_index = illusion_setup_table[ix][1];
@@ -286,7 +282,6 @@ void setup_after_images(PLW* wk, u8 ix)
     case 1:
         tk->image_setup_flag = 1;
         tk->image_data_index = illusion_setup_table[ix][1];
-        break;
     }
 }
 

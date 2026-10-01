@@ -88,14 +88,14 @@ s16 dragonfly_l_move_2(WORK_Other* ewk) {
     char_move(&ewk->wu);
     add_x_sub(ewk);
     add_y_sub(ewk);
-    if (ewk->wu.xyz[0].disp.pos <= bg_w.bgw[1].l_limit2 - bg_w.pos_offset - 24) {
+    if (ewk->wu.xyz[0].disp.pos <= (bg_w.bgw[1].l_limit2 - bg_w.pos_offset) + -24) {
         dragonfly_stop_timer(ewk);
         return 99;
-    }
-    if (ewk->wu.mvxy.a[0].sp <= -0x30000) {
+    } else if (ewk->wu.mvxy.a[0].sp <= -0x30000) {
         return 1;
+    } else {
+        return 0;
     }
-    return 0;
 }
 
 
@@ -103,12 +103,11 @@ s16 dragonfly_l_move_2(WORK_Other* ewk) {
 s16 dragonfly_l_move_3(WORK_Other* ewk) {
     add_x_sub(ewk);
     add_y_sub(ewk);
-    if (ewk->wu.xyz[0].disp.pos <= bg_w.bgw[1].l_limit2 - bg_w.pos_offset - 24) {
+    if (ewk->wu.xyz[0].disp.pos <= (bg_w.bgw[1].l_limit2 - bg_w.pos_offset) + -24) {
         dragonfly_stop_timer(ewk);
         set_char_move_init(&ewk->wu, 0, 6);
         return 99;
-    }
-    if (ewk->wu.mvxy.a[0].sp >= 0) {
+    } else if (ewk->wu.mvxy.a[0].sp >= 0) {
         dragonfly_stop_timer(ewk);
         set_char_move_init(&ewk->wu, 0, 6);
         return 1;
@@ -195,14 +194,14 @@ s16 dragonfly_r_move_2(WORK_Other* ewk) {
     char_move(&ewk->wu);
     add_x_sub(ewk);
     add_y_sub(ewk);
-    if (ewk->wu.xyz[0].disp.pos > bg_w.bgw[1].r_limit2 + bg_w.pos_offset + 24) {
+    if (ewk->wu.xyz[0].disp.pos > (bg_w.bgw[1].r_limit2 + bg_w.pos_offset) + 24) {
         dragonfly_stop_timer(ewk);
         return 99;
-    }
-    if (ewk->wu.mvxy.a[0].sp <= 0x30000) {
+    } else if (ewk->wu.mvxy.a[0].sp <= 0x30000) {
         return 1;
+    } else {
+        return 0;
     }
-    return 0;
 }
 
 
@@ -210,12 +209,11 @@ s16 dragonfly_r_move_2(WORK_Other* ewk) {
 s16 dragonfly_r_move_3(WORK_Other* ewk) {
     add_x_sub(ewk);
     add_y_sub(ewk);
-    if (ewk->wu.xyz[0].disp.pos >= bg_w.bgw[1].r_limit2 + bg_w.pos_offset + 24) {
+    if (ewk->wu.xyz[0].disp.pos >= (bg_w.bgw[1].r_limit2 + bg_w.pos_offset) + 24) {
         dragonfly_stop_timer(ewk);
         set_char_move_init(&ewk->wu, 0, 6);
         return 99;
-    }
-    if (ewk->wu.mvxy.a[0].sp <= 0) {
+    } else if (ewk->wu.mvxy.a[0].sp <= 0) {
         dragonfly_stop_timer(ewk);
         set_char_move_init(&ewk->wu, 0, 6);
         return 1;

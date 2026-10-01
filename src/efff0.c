@@ -207,17 +207,18 @@ void effF0_scroll_set(WORK_Other* ewk) {
 
 
 s32 effect_F0_init(WORK* wk) {
-    WORK_Other* ewk;
     s16 ix;
-    if ((ix = pull_effect_work(4)) == -1) {
+    WORK_Other* ewk;
+    s32 zero = 0;
+
+    ix = pull_effect_work(4);
+    if (ix == -1) {
         return -1;
     }
     ewk = (WORK_Other*)frw[ix];
     ewk->wu.id = 150;
-    another_bg[1] = 0;
-    another_bg[0] = 0;
-    another_bg[1] = 0;
-    another_bg_old[0] = 0;
-    effect_B6_init(ewk, 0);
+    another_bg[1] = another_bg[0] = another_bg[1] = zero;
+    another_bg_old[0] = zero;
+    effect_B6_init(ewk, zero);
     return effect_B6_init(ewk, 1);
 }

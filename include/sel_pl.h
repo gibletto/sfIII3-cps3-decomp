@@ -63,7 +63,7 @@ void PL_Sel_Begin(void);
 u16 * Exit_1st(void);
 void Exit_3rd(void);
 void Exit_4th(void);
-s32 Exit_6th(void);
+void Exit_6th(void);
 void sel_pl_disp_char_effect_trio(s8 PL_id, s16 Time);
 void PL_Sel_5th(void);
 void sel_pl_face_control(void);

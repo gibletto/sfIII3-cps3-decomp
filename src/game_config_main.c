@@ -14,21 +14,63 @@
 #include "extern.h"
 #include "CMD_MAIN.h"
 #include "game_config_main.h"
+#include "bg_sub.h"
+#include "Com_Pl.h"
+#include "aboutspr.h"
+#include "SYS_sub.h"
+#include "CALDIR.h"
+#include "end_sub.h"
+#include "EFFECT.h"
+#include "EFF00.h"
+#include "EFF02.h"
+#include "EFFK5.h"
+#include "textsound.h"
+#include "CHARMOVE.h"
+#include "PLS01.h"
+#include "sys_test.h"
+#include "fifo.h"
+#include "sys_config.h"
+#include "bg000.h"
+#include "HITCHECK.h"
+#include "CHARSET.h"
+#include "PLCNTDAT.h"
+#include "cps3.h"
 
 
 
 /* provisional name */
 s32 game_config_main(void) {
     void (*Setting_Tbl[2])() = { game_config_init_jp, game_config_move_jp };
+
     if (Country == 1) {
         Setting_Tbl[Config_No_2]();
         if (Config_Exit_jp) {
             return 1;
         }
         return 0;
+    } else {
+        if (game_config_menu_en()) {
+            return 1;
+        }
+        return 0;
     }
-    if (game_config_menu_en()) {
+}
+
+
+
+s32 game_config_menu(void) {
+    void (*Setting_Tbl[2])() = { game_config_init_jp, game_config_move_jp };
+    if (Country == 1) {
+        Setting_Tbl[Config_No_2]();
+    } else {
+        game_config_menu_en();
+    }
+    if (Config_Exit_jp) {
         return 1;
     }
     return 0;
 }
+
+
+
+/* provisional name */

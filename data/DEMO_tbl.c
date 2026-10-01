@@ -21,9 +21,7 @@ const s8 Service_msg[8] = "SERVICE";
 
 const s8 Card_msg[8] = "CARD";
 
-/* The initial values of jmp_tbl (CAPCOM_Logo) in DEMO.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of jmp_tbl (CAPCOM_Logo) in DEMO.c. */
 const u32 jmp_tbl_init[3] = {
     (u32)Logo_Capcom,
     (u32)Logo_Warning,

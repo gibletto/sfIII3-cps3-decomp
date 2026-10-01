@@ -301,16 +301,16 @@ void set_parts_disp_flag(WORK_Other* ewk, PLW* mwk) {
     case 1:
         if (mwk->wu.disp_flag) {
             ewk->wu.disp_flag = 1;
-            break;
+        } else {
+            ewk->wu.disp_flag = 0;
         }
-        ewk->wu.disp_flag = 0;
         break;
     case 2:
         if (mwk->wu.disp_flag) {
             ewk->wu.disp_flag = 2;
-            break;
+        } else {
+            ewk->wu.disp_flag = 0;
         }
-        ewk->wu.disp_flag = 0;
         break;
     case 11:
         ewk->wu.disp_flag = 1;

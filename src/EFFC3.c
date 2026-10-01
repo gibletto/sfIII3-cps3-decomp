@@ -109,9 +109,9 @@ void bs2_display_C3(WORK* wk) {
     set_parts_priority(wk);
     if (wk->type < 3) {
         disp_car_parts_cells(wk);
-        return;
+    } else {
+        sort_push_request(wk);
     }
-    sort_push_request(wk);
 }
 
 

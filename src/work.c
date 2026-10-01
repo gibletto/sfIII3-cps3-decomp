@@ -5,8 +5,8 @@
  * RAM 02000000-02007EEB (D_ROM, D_BGN, D_END in sections.src). The linker's ROM (D,R) option keeps
  * the image in ROM (section D, after the game tables) and gives the variables their addresses in work
  * RAM (section R). The work RAM that starts cleared (from 02007EEC) is in work_b.c. A <name>_tail table
- * holds bytes after <name> that nothing in the program refers to by name or address: the initial values
- * of variables whose names are not known, or more of <name> read through an index past its end.
+ * holds the initial values of the bytes between <name> and the next named variable: unnamed variables,
+ * or more of <name> read through an index past its end.
  */
 
 #include "types.h"
@@ -6073,9 +6073,10 @@ void* coin_count_ptr_tbl[4] = {
 };
 s32 card_empty_flag = 0;  /* 02007D3C */
 /* 02007D40 */
-u32 bookkeep_add[4] = {
-    0, 0, 0, 0,
-};
+u32 bookkeep_add0 = 0;
+u32 bookkeep_add1 = 0;
+u32 bookkeep_add2 = 0;
+u32 bookkeep_add3 = 0;
 s8 event_off_flag = 1;  /* 02007D50 */
 /* 02007D54 */
 void* coin_setting_str_tbl[19] = {

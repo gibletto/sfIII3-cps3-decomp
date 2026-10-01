@@ -31,18 +31,20 @@ void set_conclusion_slow(void) {
 
 void set_EXE_flag(void) {
     s16 tmw;
-    if (!Game_pause) {
-        if (SLOW_timer) {
-            if (--SLOW_timer) {
-                tmw = SLOW_timer / 8;
-                if (tmw > 31) {
-                    tmw = 31;
-                }
-                SLOW_flag = slow_timer_to_flag[tmw];
-            } else {
-                SLOW_flag = 0;
-            }
-        }
-        EXE_flag = Game_timer % (SLOW_flag + 1);
+
+    if (Game_pause) {
+        return;
     }
+    if (SLOW_timer) {
+        if (--SLOW_timer != 0) {
+            tmw = SLOW_timer / 8;
+            if (tmw > 31) {
+                tmw = 31;
+            }
+            SLOW_flag = slow_timer_to_flag[tmw];
+        } else {
+            SLOW_flag = 0;
+        }
+    }
+    EXE_flag = Game_timer % (SLOW_flag + 1);
 }

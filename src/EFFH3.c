@@ -151,9 +151,9 @@ void effH5_0000(WORK_Other* ewk) {
     case 1:
         if (ewk->wu.old_rno[0] != end_w.r_no_2) {
             ewk->wu.routine_no[1] = 99;
-            break;
+        } else {
+            disp_pos_trans_entry(ewk);
         }
-        disp_pos_trans_entry(ewk);
         break;
     default:
         all_cgps_put_back(ewk);

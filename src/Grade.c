@@ -124,19 +124,14 @@ void grade_makeup_final_parameter(s32 ix_arg, s32 pt_arg) {
 
 
 void renew_judge_final_work(s16 ix, s16 pt) {
-    GradeFinalData* jf;
-    s16 row = ix;
-    s16 col = pt;
-    u32* frsd;
     s16 i;
-    row *= 0x158;
-    col *= 0xAC;
-    jf = (GradeFinalData*)((u8*)judge_final + (s16)row + (s16)col);
-    jf->all_clear = 0;
-    jf->keizoku = 0;
-    jf->sp_point = 0;
-    jf->fr_ix = 0;
-    frsd = (u32*)jf->fr_sort_data;
+    u32* frsd;
+
+    judge_final[ix][pt].all_clear = 0;
+    frsd = (u32*)judge_final[ix][pt].fr_sort_data;
+    judge_final[ix][pt].keizoku = 0;
+    judge_final[ix][pt].sp_point = 0;
+    judge_final[ix][pt].fr_ix = 0;
     for (i = 0; i < 16; i++) {
         *frsd++ = 0;
     }
@@ -147,64 +142,58 @@ void makeup_final_grade(s16 ix, s16 pt) {
     s16 i;
     s16 tt = 0;
     s16 dt;
-    s16 row = ix;
-    s16 col = pt;
-    GradeFinalData* jf;
-    row *= sizeof(judge_final[0]);
-    col *= sizeof(judge_final[0][0]);
-    jf = (GradeFinalData*)((u8*)judge_final + (s16)row + (s16)col);
-    if ((dt = jf->vcr_ix) == 0) {
+    if ((dt = judge_final[ix][pt].vcr_ix) == 0) {
         dt = 1;
     }
-    for (i = 0; i < jf->vcr_ix; i++) {
-        tt += jf->vs_cpu_result[i];
+    for (i = 0; i < judge_final[ix][pt].vcr_ix; i++) {
+        tt += judge_final[ix][pt].vs_cpu_result[i];
     }
     if (Version_Type == 3) {
         tt /= 6;
     } else {
-        if (jf->vs_cpu_result[15] != -1) {
-            tt += jf->vs_cpu_result[15];
+        if (judge_final[ix][pt].vs_cpu_result[15] != -1) {
+            tt += judge_final[ix][pt].vs_cpu_result[15];
             dt += 1;
         }
-        jf->vs_cpu_result[11] = tt / dt;
-        jf->vs_cpu_grade[11] = get_grade_ix(tt / *(volatile s16*)&dt);
-        if (jf->vs_cpu_result[15] != -1) {
+        judge_final[ix][pt].vs_cpu_result[11] = tt / dt;
+        judge_final[ix][pt].vs_cpu_grade[11] = get_grade_ix(tt / *(volatile s16*)&dt);
+        if (judge_final[ix][pt].vs_cpu_result[15] != -1) {
             tt /= 11;
         } else {
             tt /= 10;
         }
     }
     for (i = 0; i < 3; i++) {
-        if (jf->vcr_ix < grade_t_f_stage[i + 1][0]) {
+        if (judge_final[ix][pt].vcr_ix < grade_t_f_stage[i + 1][0]) {
             break;
         }
     }
     tt += grade_t_f_stage[i][1];
-    if (jf->all_clear) {
-        tt += grade_t_f_all_clear[jf->all_clear];
+    if (judge_final[ix][pt].all_clear) {
+        tt += grade_t_f_all_clear[judge_final[ix][pt].all_clear];
         for (i = 0; i < 10; i++) {
-            if (jf->keizoku < grade_t_f_continue[i + 1][0]) {
+            if (judge_final[ix][pt].keizoku < grade_t_f_continue[i + 1][0]) {
                 break;
             }
         }
         tt += grade_t_f_continue[i][1];
         for (i = 0; i < 10; i++) {
-            if (jf->sp_point < grade_t_f_gradeup[i + 1][0]) {
+            if (judge_final[ix][pt].sp_point < grade_t_f_gradeup[i + 1][0]) {
                 break;
             }
         }
         tt += grade_t_f_gradeup[i][1];
-        if (jf->vs_cpu_grade[13] != -1) {
+        if (judge_final[ix][pt].vs_cpu_grade[13] != -1) {
             for (i = 0; i < 3; i++) {
-                if (jf->vs_cpu_grade[13] < grade_t_f_bss_ball[i + 1][0]) {
+                if (judge_final[ix][pt].vs_cpu_grade[13] < grade_t_f_bss_ball[i + 1][0]) {
                     break;
                 }
             }
             tt += grade_t_f_bss_ball[i][1];
         }
-        if (jf->vs_cpu_grade[14] != -1) {
+        if (judge_final[ix][pt].vs_cpu_grade[14] != -1) {
             for (i = 0; i < 3; i++) {
-                if (jf->vs_cpu_grade[14] < grade_t_f_bss_car[i + 1][0]) {
+                if (judge_final[ix][pt].vs_cpu_grade[14] < grade_t_f_bss_car[i + 1][0]) {
                     break;
                 }
             }
@@ -214,8 +203,8 @@ void makeup_final_grade(s16 ix, s16 pt) {
     if (tt < 0) {
         tt = 0;
     }
-    jf->vs_cpu_result[12] = tt;
-    jf->vs_cpu_grade[12] = jf->grade = get_grade_ix(tt);
+    judge_final[ix][pt].vs_cpu_result[12] = tt;
+    judge_final[ix][pt].vs_cpu_grade[12] = judge_final[ix][pt].grade = get_grade_ix(tt);
 }
 
 
@@ -769,19 +758,17 @@ void grade_add_guard_success(s16 ix) {
 
 
 void grade_add_em_stun(s16 ix) {
-    GradeData* gd = &judge_item[ix][Play_Type];
-    gd->em_stun++;
-    if (gd->em_stun > 4) {
-        gd->em_stun = 4;
+    judge_item[ix][Play_Type].em_stun += 1;
+    if (judge_item[ix][Play_Type].em_stun > 4) {
+        judge_item[ix][Play_Type].em_stun = 4;
     }
 }
 
 
 
 void grade_max_combo_check(s16 ix, s16 num) {
-    GradeData* jd = &judge_item[ix][Play_Type_low];
-    if (jd->max_combo < num) {
-        jd->max_combo = num;
+    if (judge_item[ix][(u16)(s8)Play_Type].max_combo < num) {
+        judge_item[ix][(u16)(s8)Play_Type].max_combo = num;
     }
 }
 

@@ -111,7 +111,7 @@ void eff64_02(WORK_Other* ewk) {
 
 /* provisional name */
 void eff64_04(WORK_Other* ewk) {
-    s32 ix;
+    s16 ix;
     switch (ewk->wu.routine_no[2]) {
     case 0:
         eff64_data_set(ewk, 0);
@@ -145,15 +145,17 @@ void eff64_04(WORK_Other* ewk) {
 
 /* provisional name */
 void eff64_08(WORK_Other* ewk) {
+    s16 ix;
+    BGW* bgwp = &bg_w.bgw[1];
     switch (ewk->wu.routine_no[2]) {
     case 0:
-        if (bg_w.bgw[1].xy[0].disp.pos < -64) {
+        if (bgwp->xy[0].disp.pos < -64) {
             eff64_data_set(ewk, 0);
         }
         ewk->wu.routine_no[2] = 2;
         break;
     case 1:
-        if (bg_w.bgw[1].xy[0].disp.pos < -64) {
+        if (bgwp->xy[0].disp.pos < -64) {
             eff64_data_set(ewk, 1);
         }
         break;
@@ -165,7 +167,8 @@ void eff64_08(WORK_Other* ewk) {
             char_move(&ewk->wu);
             if (ewk->wu.xyz[0].disp.pos < ewk->wu.old_rno[0]) {
                 ewk->wu.routine_no[2] = 1;
-                ewk->wu.old_rno[1] = eff64_move2_tbl[(s16)random_16_com()];
+                ix = random_16_com();
+                ewk->wu.old_rno[1] = eff64_move2_tbl[ix];
             }
         }
         disp_pos_trans_entry_rs(ewk);
@@ -198,8 +201,7 @@ void eff64_data_set(WORK_Other* ewk, s16 keep) {
         ewk->wu.old_rno[1] = *data++;
     }
     ewk->wu.old_rno[2] = *data++;
-    ewk->wu.rl_flag = *data;
-    data++;
+    ewk->wu.rl_flag = *data++;
     ewk->wu.mvxy.a[0].real.h = *data++;
     ewk->wu.mvxy.a[0].real.l = *data++;
     ewk->wu.mvxy.d[0].real.h = *data++;
@@ -231,9 +233,7 @@ s32 eff64_goal_check(WORK_Other* ewk) {
         if (ewk->wu.xyz[0].disp.pos < ewk->wu.old_rno[0]) {
             return 1;
         }
-        return 0;
-    }
-    if (ewk->wu.xyz[0].disp.pos > ewk->wu.old_rno[0]) {
+    } else if (ewk->wu.xyz[0].disp.pos > ewk->wu.old_rno[0]) {
         return 1;
     }
     return 0;

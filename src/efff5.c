@@ -41,11 +41,11 @@ void efff5_0000(WORK_Other* ewk) {
             ewk->wu.routine_no[1]++;
             op_w.free_work = 1;
             ewk->wu.disp_flag = 0;
-            break;
+        } else {
+            ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
+            ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
+            sort_push_request4(ewk);
         }
-        ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
-        ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-        sort_push_request4(ewk);
         break;
     default:
         all_cgps_put_back(ewk);
@@ -374,11 +374,12 @@ s32 effect_F5_init(s16 type) {
     WORK_Other* ewk;
     s16 ix;
     const s16* data_ptr;
-    if ((ix = pull_effect_work(3)) == -1) {
+    ix = pull_effect_work(3);
+    if (ix == -1) {
         return -1;
     }
-    ewk = (WORK_Other*)frw[ix];
     data_ptr = (const s16*)((const u8*)efff5_data_tbl + (s16)(type * sizeof(efff5_data_tbl[0])));
+    ewk = (WORK_Other*)frw[ix];
     ewk->wu.id = 155;
     ewk->wu.be_flag = 1;
     ewk->wu.work_id = 16;

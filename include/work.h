@@ -254,7 +254,10 @@ extern void * coin_sw_tbl[4][2];
 extern s8 * credit_ptr_tbl[4];
 extern s8 * coin_count_ptr_tbl[4];
 extern s32 card_empty_flag;
-extern u32 bookkeep_add[4];
+extern u32 bookkeep_add0;
+extern u32 bookkeep_add1;
+extern u32 bookkeep_add2;
+extern u32 bookkeep_add3;
 extern s8 event_off_flag;
 extern const TM_STRING * coin_setting_str_tbl[];
 extern const TM_STRING * chute_mode_str_tbl[];
@@ -386,9 +389,15 @@ extern s8 Personal_Timer[2];
 extern s8 Request_E_No;
 extern s8 Request_G_No;
 extern s16 G_Timer;
-extern s16 G_No[4];
+extern s16 G_No0;
+extern s16 G_No1;
+extern s16 G_No2;
+extern s16 G_No3;
 extern s16 D_Timer;
-extern s16 D_No[4];
+extern s16 D_No0;
+extern s16 D_No1;
+extern s16 D_No2;
+extern s16 D_No3;
 extern u8 Present_Rank[2];
 extern s8 Rank_In[2][4];
 extern s8 Request_Disp_Rank[2][4];
@@ -401,7 +410,10 @@ extern s8 Rank_X;
 extern s16 Rank_Pos_X;
 extern s16 Rank_Pos_Y;
 extern s16 E_Timer;
-extern s16 E_No[4];
+extern s16 E_No0;
+extern s16 E_No1;
+extern s16 E_No2;
+extern s16 E_No3;
 extern s16 F_No0[2];
 extern s16 F_No1[2];
 extern s16 F_No2[2];
@@ -409,7 +421,10 @@ extern s16 F_Timer[2];
 extern s16 E_Number[2][4];
 extern s16 ENTRY_X;
 extern s16 C_Timer;
-extern s16 C_No[4];
+extern s16 C_No0;
+extern s16 C_No1;
+extern s16 C_No2;
+extern s16 C_No3;
 extern s8 Complete_Victory;
 extern s8 Demo_Flag;
 extern s8 Demo_Stage_Index;
@@ -1164,14 +1179,26 @@ extern SCROLL_CTRL scrn_reg_w[4];
 extern SPRPTR scrn_map_ptr[];
 extern s16 scsi_cdb_len;
 extern u16 card_out_busy;
-extern u32 book_coin_count[4];
+extern u32 book_coin_count;
+extern u32 book_service_count;
+extern u32 book_free_count;
+extern u32 book_card_count;
 extern u8 eeprom_w[128];
 extern SETTINGS Game_setting;
 extern SPRITE_ENTRY spr_entry_a[512];
 extern SPRITE_ENTRY spr_entry_b[512];
 extern SPRITE_ENTRY * spr_prio_a[0x80];
 extern SPRITE_ENTRY * spr_prio_b[0x80];
-extern u16 spr_entry_cnt[5][2];
+extern u16 spr_cnt0_a;
+extern u16 spr_cnt0_b;
+extern u16 spr_cnt1_a;
+extern u16 spr_cnt1_b;
+extern u16 spr_cnt2_a;
+extern u16 spr_cnt2_b;
+extern u16 spr_cnt3_a;
+extern u16 spr_cnt3_b;
+extern u16 spr_cnt4_a;
+extern u16 spr_cnt4_b;
 extern u32 poly_line_cnt[2];
 extern POLYCMD poly_quad_buf[2][32];
 extern u32 poly_quad_cnt[2];
@@ -1298,11 +1325,8 @@ extern u32 palette_base;
 #define JUDGE_FINAL(x, j) (*(GradeFinalData*)((u8*)judge_final + ((s16)(((x) << 8) + ((x) << 6) + ((x) << 4) + ((x) << 3))) + ((s16)(((j) << 7) + ((j) << 5) + ((j) << 3) + ((j) << 2)))))
 #define CMST(x, j) (*(CMST_WIN_R*)((u8*)cmst_buff + (u8)((x) * 112) + (s8)(((j) << 5) - ((j) << 2))))
 #define SE_VOICE(x) (*(SNDVOICE*)((u8*)se_voice + (s16)((x) * sizeof(SNDVOICE))))
-/* Per-use record offsets the way the arcade computes them (muls.w, then sts macl). SHC r26 schedules
-   `sts macl` with no dependency on the multiply; the read lands after it only when the product goes
-   back into the register that held the multiplicand, which a single s16 `ofs = n; ofs *= size`
-   gives (macl_check.py proves each use). WCP_OFS(ofs, n) sets the offset, WCP_AT(ofs) is the record,
-   WCP_MUL(ofs, n) does both in one expression (one use per full expression). */
+/* Record offsets computed per use: WCP_OFS(ofs, n) sets ofs to the offset of record n, WCP_AT(ofs)
+   is the record, WCP_MUL(ofs, n) does both in one expression (one use per full expression). */
 #define WCP_OFS(ofs, n) ((ofs) = (n), (ofs) *= (s16)sizeof(WORK_CP))
 #define WCP_AT(ofs) (*(WORK_CP*)((u8*)wcp + (ofs)))
 #define WCP_MUL(ofs, n) WCP_AT((WCP_OFS(ofs, n), (ofs)))

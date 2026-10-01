@@ -19,9 +19,7 @@ const s16 lose_type_tbl[24] = {
     0, 0, 0, 0,
 };
 
-/* The initial values of lose_jp_tbl (lose_player) in lose_pl.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of lose_jp_tbl (lose_player) in lose_pl.c. */
 const u32 lose_jp_tbl_init[4] = {
     (u32)Lose_00000, (u32)Lose_10000, (u32)Lose_20000, (u32)Lose_30000,
 };

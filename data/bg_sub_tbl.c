@@ -17,9 +17,7 @@ const s8 bg_test_stage_tbl[14][2] = {
     { 8, 0 }, { 9, 9 }, { 13, 0 }, { 20, 0 }, { 21, 0 }, { 0, 0 },
 };
 
-/* The initial values of jump_tbl (TATE00) in tate00.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of jump_tbl (TATE00) in tate00.c. */
 const u32 jump_tbl_init[4] = {
     (u32)ta0_init00, (u32)ta0_init01, (u32)ta0_init02, (u32)ta0_move,
 };

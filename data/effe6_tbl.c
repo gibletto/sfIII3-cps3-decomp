@@ -209,9 +209,7 @@ const s16 effe6_data_tbl[168][8] = {
     { 1, 1, 68, 544, 135, 76, 1, 3 },
 };
 
-/* The initial values of effe6_jp (effect_E6_move) in effe6.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of effe6_jp (effect_E6_move) in effe6.c. */
 const u32 effe6_jp_init[31] = {
     (u32)effe6_0000,
     (u32)effe6_0001,

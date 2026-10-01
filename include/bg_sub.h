@@ -66,7 +66,7 @@ void scr_10_22(void);
 void scr_11_21(void);
 void scr_12_20(void);
 void bg_pos_hosei_sub2(s16 bg_no);
-s32 suzi_offset_set(WORK* wk);
+void suzi_offset_set(WORK* wk);
 u32 suzi_offset_set_sub(WORK* wk);
 void suzi_sync_pos_set(WORK_Other* ewk);
 void Bg_mv_tw_appoint(s16 bg_num, s32 dx, s32 dy);

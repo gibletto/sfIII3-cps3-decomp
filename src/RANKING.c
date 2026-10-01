@@ -39,7 +39,7 @@
 s32 Ranking_Main(void) {
     void (*jmp_tbl[2])() = { Ranking_01, Ranking_00 };
     Ranking_X = 0;
-    jmp_tbl[D_No[0]]();
+    jmp_tbl[D_No0]();
     return Ranking_X;
 }
 
@@ -48,12 +48,12 @@ s32 Ranking_Main(void) {
 void Ranking_00(void) {
     void (*jmp_tbl[6])() = { Ranking_00_1st, Ranking_00_2nd, Ranking_00_3rd, Ranking_00_4th, Ranking_00_5th, Ranking_00_Last };
     Ranking_X = 0;
-    jmp_tbl[D_No[1]]();
+    jmp_tbl[D_No1]();
 }
 
 void Ranking_00_1st(void)
 {
-    D_No[1]++;
+    D_No1++;
     Rank_Demo_Loop = 0;
     Flash_Sign[0] = 1;
     Ranking_Sub();
@@ -63,7 +63,7 @@ void Ranking_00_1st(void)
 
 void Ranking_00_2nd(void) {
     s16 Char_Index;
-    D_No[1]++;
+    D_No1++;
     D_Timer = 1;
     Rank_X = 0;
     Flash_Rank_Time = 0;
@@ -143,9 +143,9 @@ void Ranking_00_2nd(void) {
             Flash_Rank_Time = 0;
         }
         if ((Present_Rank[0] < 5) || (Present_Rank[1] < 5)) {
-            D_No[1] += 1;
+            D_No1 += 1;
         } else {
-            D_No[1] = 4;
+            D_No1 = 4;
         }
     }
     switch (Rank_Type) {
@@ -169,7 +169,7 @@ void Ranking_00_2nd(void) {
 
 void Ranking_00_3rd(void) {
     if (Flash_Sign[0] == 1) {
-        D_No[1] = D_No[1] + 1;
+        D_No1 = D_No1 + 1;
         D_Timer = 1;
     }
 }
@@ -178,7 +178,7 @@ void Ranking_00_3rd(void) {
 
 void Ranking_00_4th(void) {
     if (!(--D_Timer)) {
-        D_No[1]++;
+        D_No1++;
         D_Timer = 30;
         Flash_Sign[0] = 0;
         Flash_Sign[1] = 1;
@@ -188,7 +188,7 @@ void Ranking_00_4th(void) {
 void Ranking_00_5th(void)
 {
     if (--D_Timer == 0) {
-        D_No[1]++;
+        D_No1++;
         D_Timer = 300;
         Flash_Sign[1] = 0;
     }
@@ -201,10 +201,9 @@ void Ranking_00_Last(void) {
     if (--D_Timer == 0) {
         D_Timer = 1;
         Ranking_X = 1;
-        return;
-    }
-    if (D_Timer == 60) {
+    } else if (D_Timer == 0x3C) {
         bgm_fade_out(0x222);
+        return;
     }
 }
 
@@ -213,13 +212,13 @@ void Ranking_00_Last(void) {
 void Ranking_01(void) {
     void (*jmp_tbl[5])() = { Ranking_01_1st, Ranking_01_2nd, Ranking_00_3rd, Ranking_01_4th, Ranking_01_5th };
     Ranking_X = 0;
-    jmp_tbl[D_No[1]]();
+    jmp_tbl[D_No1]();
 }
 
 
 
 void Ranking_01_1st(void) {
-    D_No[1] = D_No[1] + 1;
+    D_No1 = D_No1 + 1;
     Suicide[0] = 0;
     tilemap_fill_all(0, 32);
     Present_Rank[0] = 99;
@@ -233,7 +232,7 @@ void Ranking_01_1st(void) {
 
 void Ranking_01_2nd(void) {
     s16 Char_Index;
-    D_No[1]++;
+    D_No1++;
     D_Timer = 420;
     Rank_X = 0;
     Flash_Rank_Time = 0;
@@ -318,9 +317,9 @@ void Ranking_01_2nd(void) {
     }
     Rank -= 10;
     if ((Present_Rank[0] < 5) || (Present_Rank[1] < 5)) {
-        D_No[1]++;
+        D_No1++;
     } else {
-        D_No[1] = 4;
+        D_No1 = 4;
     }
 }
 
@@ -328,7 +327,7 @@ void Ranking_01_2nd(void) {
 
 void Ranking_01_4th(void) {
     if (!(--D_Timer)) {
-        D_No[1]++;
+        D_No1++;
         D_Timer = 240;
     }
 }
@@ -336,10 +335,10 @@ void Ranking_01_4th(void) {
 
 
 void Ranking_01_5th(void) {
-    switch (D_No[2]) {
+    switch (D_No2) {
     case 0:
         if (--D_Timer == 0) {
-            D_No[2]++;
+            D_No2++;
             if ((Demo_Flag == 0) && (Rank_Demo_Loop == 0)) {
                 Text_Page_Y = 0;
                 Setup_Demo_PL();
@@ -356,7 +355,7 @@ void Ranking_01_5th(void) {
         break;
     case 1:
         if (Switch_Screen() != 0) {
-            D_No[2]++;
+            D_No2++;
             Cover_Timer = 24;
         }
         break;

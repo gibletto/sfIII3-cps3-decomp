@@ -162,12 +162,15 @@ s32 effect_M2_init(WORK* wk, u8 data) {
     s16 ix;
     if (data) {
         if (Win_Record[wk->id] <= 3) {
-            return 0;
+            return;
         }
-    } else if (Win_Record[wk->id] <= 2) {
-        return 0;
+    } else {
+        if (Win_Record[wk->id] <= 2) {
+            return;
+        }
     }
-    if ((ix = pull_effect_work(4)) == -1) {
+    ix = pull_effect_work(4);
+    if (ix == -1) {
         return -1;
     }
     ewk = (WORK_Other*)frw[ix];

@@ -20,12 +20,12 @@
 #include "sound_voice.h"
 #include "cps3.h"
 /* provisional name */
-u32 sound_envelope_rate(u32 level, u32 index, const u16* table)
-{
+u32 sound_envelope_rate(u32 level, u32 index, const u16* table) {
     u32 rate;
 
-    rate = (table[index & 0xFF] + 1) * (level & 0xFFFF) >> 16;
-    if (rate != 0) {
+    table += (u8)index;
+    rate = (u32)((u16)level * (*table + 1)) >> 16;
+    if (rate) {
         return rate;
     }
     return 1;
@@ -344,7 +344,7 @@ decode_event_ticks:
 /* provisional name */
 s32 sound_note_to_pitch(s32 note) {
     s8 oct = 0;
-    s32 pitch;
+
     while (note >= 3072) {
         note -= 3072;
         oct++;
@@ -353,16 +353,19 @@ s32 sound_note_to_pitch(s32 note) {
         note += 3072;
         oct--;
     }
-    pitch = snd_pitch_tbl[note] + 1;
+    note = *(s16*)((s32)snd_pitch_tbl + (note << 1));
+    note++;
     while (oct > 0) {
-        pitch <<= 1;
+        note <<= 1;
         oct--;
     }
     while (oct < 0) {
-        pitch = (u16)pitch >> 1;
+        note &= 0xFFFF;
+        note = (u32)note >> 1;
         oct++;
     }
-    return pitch - 1;
+    note--;
+    return note;
 }
 
 

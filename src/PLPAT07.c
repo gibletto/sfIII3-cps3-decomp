@@ -43,7 +43,7 @@ void Att_PL07_BOUND_JUMP(PLW* wk) {
         break;
     case 1:
         char_move(&wk->wu);
-        if (wk->wu.cg_type == 1) {
+        if ((u8)wk->wu.cg_type == 1) {
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
             wk->wu.routine_no[3] = 2;
@@ -52,7 +52,7 @@ void Att_PL07_BOUND_JUMP(PLW* wk) {
         break;
     case 2:
         jumping_union_process(&wk->wu, 1);
-        if (wk->wu.cg_type == 8) {
+        if ((u8)wk->wu.cg_type == 8) {
             wk->wu.routine_no[3] = 3;
             wk->wu.cg_type = 0;
         }
@@ -62,7 +62,7 @@ void Att_PL07_BOUND_JUMP(PLW* wk) {
         break;
     case 4:
         char_move(&wk->wu);
-        if (wk->wu.cg_type == 10) {
+        if ((u8)wk->wu.cg_type == 10) {
             reset_mvxy_data(&wk->wu);
             wk->wu.routine_no[3] = 5;
             wk->wu.cg_type = 0;
@@ -76,6 +76,8 @@ void Att_PL07_BOUND_JUMP(PLW* wk) {
         case 20:
             setup_mvxy_data(&wk->wu, 97);
             wk->wu.cg_type = 0;
+            return;
+        default:
             break;
         case 30:
             setup_mvxy_data(&wk->wu, 98);
@@ -109,7 +111,7 @@ void Att_PL07_SA2(PLW* wk) {
         char_move((WORK*)wk);
         cal_mvxy_speed((WORK*)wk);
         add_mvxy_speed((WORK*)wk);
-        switch (wk->wu.cg_type) {
+        switch ((u8)wk->wu.cg_type) {
         case 20:
             setup_mvxy_data((WORK*)wk, wk->wu.mvxy.index);
             wk->wu.cg_type = 0;
@@ -122,7 +124,7 @@ void Att_PL07_SA2(PLW* wk) {
         case 88:
             reset_mvxy_data((WORK*)wk);
             wk->wu.cg_type = 0;
-            break;
+            return;
         }
         break;
     }
@@ -190,25 +192,26 @@ void Att_PL07_AT1(PLW* wk) {
         char_move((WORK*)wk);
         cal_mvxy_speed((WORK*)wk);
         add_mvxy_speed((WORK*)wk);
-        switch (wk->wu.cg_type) {
+        switch ((u8)wk->wu.cg_type) {
         case 20:
             setup_mvxy_data((WORK*)wk, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
-            wk->wu.cg_type = 0;
-            break;
+            goto clear;
         case 21:
             reset_mvxy_data((WORK*)wk);
+        clear:
             wk->wu.cg_type = 0;
             break;
         case 30:
             wk->wu.routine_no[3] = 2;
             wk->wu.cg_type = 0;
-            break;
+            goto out;
         }
+    out:
         break;
     case 2:
         char_move((WORK*)wk);
-        if (wk->wu.cg_type == 1) {
+        if ((u8)wk->wu.cg_type == 1) {
             setup_mvxy_data((WORK*)wk, wk->wu.mvxy.index);
             wk->wu.routine_no[3] = 3;
             wk->wu.cg_type = 0;

@@ -28,49 +28,6 @@
 
 
 
-void EFF98_DIE(WORK_Other* ewk) {
-    switch (ewk->wu.routine_no[1]) {
-    case 0:
-        if (--Order_Timer[ewk->wu.dir_old] == 0) {
-            ewk->wu.routine_no[1] += 1;
-            ewk->wu.disp_flag = 0;
-        }
-        break;
-    default:
-        all_cgps_put_back(&ewk->wu);
-        push_effect_work(&ewk->wu);
-        break;
-    }
-}
-
-
-
-s32 effect_98_init(s16 PL_id, s16 dir_old, s16 master_player, s16 Target_BG) {
-    WORK_Other* ewk;
-    s16 ix;
-    if ((ix = pull_effect_work(4)) == -1) {
-        return -1;
-    }
-    ewk = (WORK_Other*)frw[ix];
-    ewk->master_player = master_player;
-    ewk->wu.be_flag = 1;
-    ewk->wu.id = 98;
-    ewk->wu.work_id = 16;
-    ewk->wu.cgromtype = 1;
-    ewk->wu.my_col_mode = 0x4200;
-    ewk->wu.my_col_code = 0x2040;
-    ewk->wu.my_family = Target_BG + 1;
-    *ewk->wu.char_table = sel_pl_char_table;
-    ewk->master_id = PL_id;
-    ewk->wu.dir_old = dir_old;
-    ewk->wu.char_index = 14;
-    ewk->wu.dir_step = 30;
-    ewk->wu.position_z = 35;
-    return 0;
-}
-
-
-
 void effect_99_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
     case 0:
@@ -93,7 +50,7 @@ void effect_99_move(WORK_Other* ewk) {
         return;
     }
     ewk->wu.position_x = bg_w.bgw[1].xy[0].disp.pos + ewk->wu.dm_vital;
-    ewk->wu.position_y = base_y_pos + bg_w.bgw[1].xy[1].disp.pos + 136;
+    ewk->wu.position_y = bg_w.bgw[1].xy[1].disp.pos + base_y_pos + 136;
     sort_push_request4(ewk);
 }
 

@@ -24,11 +24,15 @@
 
 
 
-/* Draws one name-entry character for a player; returns the number of bytes copied. */
-s32 naming_set(s8 pl, s16 place, u16 chr) {
-    sc_trans_src = (u8*)sc_chr_data + chr * 32 + 0x7000;
-    sc_trans_dst = (u16*)(place * 64 + (pl == 0 ? (SS_RAM + 0x9E80) : (SS_RAM + 0xCA80)));
-    return sc_chr_trans(1);
+/* Draws one name-entry character for a player. */
+void naming_set(s8 pl, s16 place, u16 chr) {
+    sc_trans_src = (u8*)&sc_chr_data[chr * 16] + 0x7000;
+    if (pl == 0) {
+        sc_trans_dst = (u16*)(place * 64 + (SS_RAM + 0x9E80));
+    } else {
+        sc_trans_dst = (u16*)(place * 64 + (SS_RAM + 0xCA80));
+    }
+    sc_chr_trans(1);
 }
 
 
@@ -44,7 +48,7 @@ void rank_mark_set(s8 row, s8 n) {
     if (Escape_SS == 0) {
         sc_chr_trans(2);
     } else {
-        sc_bak_ptr = &sc_chr_ram[row * 64 + 0xD40];
+        sc_bak_ptr = &sc_chr_ram[row * 64] + 0xD40;
         sc_chr_to_ram(64);
     }
 }

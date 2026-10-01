@@ -448,10 +448,10 @@ void eff09_6000(WORK_Other* ewk) {
         if (ewk->wu.cg_type == 0xFF) {
             ewk->wu.routine_no[1]++;
             ewk->wu.disp_flag = 0;
-            break;
+        } else {
+            suzi_sync_pos_set(ewk);
+            sort_push_request(&ewk->wu);
         }
-        suzi_sync_pos_set(ewk);
-        sort_push_request(&ewk->wu);
         break;
     case 3:
         ewk->wu.routine_no[1]++;
@@ -459,7 +459,6 @@ void eff09_6000(WORK_Other* ewk) {
     default:
         all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
-        break;
     }
 }
 
@@ -1171,6 +1170,7 @@ void eff09_22000(WORK_Other* ewk) {
                 set_char_move_init(&ewk->wu, 0, 62);
             } else if (oya_ptr->cg_ix != ewk->wu.cg_ix) {
                 work = oya_ptr->cg_ix / oya_ptr->cgd_type;
+            set_pat:
                 set_char_move_init2(&ewk->wu, 0, 61, work + 1, 0);
                 ewk->wu.cg_ix = oya_ptr->cg_ix;
             }
@@ -1190,7 +1190,6 @@ void eff09_22000(WORK_Other* ewk) {
     default:
         all_cgps_put_back(ewk);
         push_effect_work(&ewk->wu);
-        break;
     }
 }
 

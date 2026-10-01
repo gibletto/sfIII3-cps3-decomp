@@ -25,6 +25,8 @@
 void effect_J9_move(WORK_Other* ewk) {
 
     WORK* c2wk = (WORK*)ewk->my_master;
+    s32 k;
+
     switch (ewk->wu.routine_no[0]) {
     case 0:
         ewk->wu.routine_no[0]++;
@@ -46,14 +48,16 @@ void effect_J9_move(WORK_Other* ewk) {
         case 0:
             ewk->wu.routine_no[1]++;
             ewk->wu.disp_flag = 1;
-            set_char_move_init(&ewk->wu, 0, 0x44);
-            break;
+            k = 0x44;
+            goto bind;
         case 1:
             ewk->wu.next_x = get_c2_quake(c2wk);
             if (c2wk->char_index == 0x47) {
                 ewk->wu.next_x = 0;
+                k = 0x45;
                 ewk->wu.routine_no[1]++;
-                set_char_move_init(&ewk->wu, 0, 0x45);
+            bind:
+                set_char_move_init(&ewk->wu, 0, k);
             }
             break;
         default:

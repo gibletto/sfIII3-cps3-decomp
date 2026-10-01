@@ -137,9 +137,9 @@ void eff94_2000_0(WORK_Other* ewk) {
         ewk->wu.routine_no[2]++;
         if (bg_w.quake_y_index >= 24) {
             ewk->wu.old_rno[3] = 1;
-            return;
+        } else {
+            ewk->wu.old_rno[3] = 0;
         }
-        ewk->wu.old_rno[3] = 0;
     }
 }
 
@@ -244,12 +244,11 @@ void eff94_4000(WORK_Other* ewk) {
         break;
     case 2:
         char_move(&ewk->wu);
-        if (ewk->wu.cg_type == 9) {
+        if ((u8)ewk->wu.cg_type == 9) {
             if (bg_w.quake_y_index > 3) {
                 ewk->wu.routine_no[2] = 1;
-                break;
             }
-        } else if (ewk->wu.cg_type == 0xFF) {
+        } else if ((u8)ewk->wu.cg_type == 0xFF) {
             ewk->wu.routine_no[2] = 0;
             set_char_move_init(&ewk->wu, 0, ewk->wu.old_rno[0]);
         }

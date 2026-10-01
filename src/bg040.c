@@ -25,6 +25,57 @@
 #include "effL2.h"
 #include "aboutspr.h"
 #include "bg040.h"
+#include "sys_test.h"
+#include "SYS_sub.h"
+#include "end_sub.h"
+#include "EFF61.h"
+#include "EFF78.h"
+#include "SE.h"
+#include "fifo.h"
+#include "bg120.h"
+#include "EFF07.h"
+#include "EFF11.h"
+#include "eff14.h"
+#include "appear.h"
+#include "sys_config.h"
+#include "Com_Pl.h"
+#include "ta_sub.h"
+#include "fighter.h"
+
+
+
+void BG030(void) {
+    bgw_ptr = &bg_w.bgw[1];
+    {
+        void (*bg0301_jmp[2])() = { bg0301_init, bg_base_move_common };
+        bg0301_jmp[bgw_ptr->r_no_0]();
+    }
+    bgw_ptr = &bg_w.bgw[0];
+    {
+        void (*bg0300_jmp[2])() = { bg0300_init00, bg_move_common };
+        bg0300_jmp[bgw_ptr->r_no_0]();
+    }
+    zoom_ud_check();
+    bg_pos_hosei2();
+    Bg_Family_Set();
+}
+
+
+
+void bg0300(void) {
+    void (*bg0602_jmp[2])() = { bg0300_init00, bg_move_common };
+    bg0602_jmp[bgw_ptr->r_no_0]();
+}
+
+
+
+void bg0300_init00(void) {
+    bgw_ptr->r_no_0++;
+    bgw_ptr->old_pos_x = bgw_ptr->xy[0].disp.pos = bgw_ptr->pos_x_work = 0x200;
+    bgw_ptr->hos_xy[0].cal = bgw_ptr->wxy[0].cal = bgw_ptr->xy[0].cal;
+    bgw_ptr->zuubun = 0;
+    effect_14_init(5);
+}
 
 
 

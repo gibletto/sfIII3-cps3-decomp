@@ -80,32 +80,36 @@ void Player_move_bonus(PLW* wk, u16 lv_data) {
 
 void player_mvbs_0000(PLW* wk) {
     s16 i;
-    SA_WORK* sa;
-    for (i = 0; i < 8; i++) {
-        wk->old_pos_data[i] = 0;
+    s32 k;
+
+    for (i = 0, k = 0; i < 8; i++, k += 2) {
+        *(s16*)((s32)wk->old_pos_data + k) = 0;
     }
     setup_vitality(&wk->wu, wk->player_number);
     set_player_shadow(wk);
-    wk->bullet_hcnt = wk->bhcnt_timer = 0;
+    wk->bhcnt_timer = 0;
+    wk->bullet_hcnt = 0;
     wk->auto_guard = 1;
-    wk->wu.hit_stop = wk->wu.dm_stop = 0;
-    wk->wu.hit_quake = wk->wu.dm_quake = 0;
+    wk->wu.dm_stop = 0;
+    wk->wu.hit_stop = 0;
+    wk->wu.dm_quake = 0;
+    wk->wu.hit_quake = 0;
     wk->tsukamarenai_flag = 0;
     wk->zuru_timer = 0;
     wk->zuru_flag = 0;
-    wk->tsukami_f = wk->tsukamare_f = 0;
+    wk->tsukamare_f = 0;
+    wk->tsukami_f = 0;
     clear_kizetsu_point(wk);
     wk->ukemi_ok_timer = 0;
     wk->uot_cd_ok_flag = 0;
     wk->ukemi_success = 0;
     clear_my_shell_ix(&wk->wu);
-    sa = wk->sa;
-    sa->mp_rno = 0;
-    sa->mp = 0;
-    sa->sa_rno = 0;
-    sa->ok = 0;
-    sa->ex_rno = 0;
-    sa->ex = 0;
+    wk->sa->mp_rno = 0;
+    wk->sa->mp = 0;
+    wk->sa->sa_rno = 0;
+    wk->sa->ok = 0;
+    wk->sa->ex_rno = 0;
+    wk->sa->ex = 0;
     wk->metamorphose = 0;
     wk->metamor_over = 0;
     wk->sa_healing = 0;
@@ -116,7 +120,8 @@ void player_mvbs_0000(PLW* wk) {
     wk->bs2_area_car = 0;
     wk->bs2_over_car = 0;
     wk->bs2_on_car = 0;
-    wk->wu.extra_col = wk->wu.extra_col_2 = 0;
+    wk->wu.extra_col_2 = 0;
+    wk->wu.extra_col = 0;
     wk->sa_stop_flag = 0;
     clear_tk_flags(wk);
     wk->wu.routine_no[0] = 1;
@@ -153,12 +158,14 @@ void player_mvbs_1000(PLW* wk) {
         appear_data_init_set(wk);
         break;
     }
-    if ((wk->wu.operator == 0) && (Bonus_Game_Flag == 21)) {
-        wk->wu.routine_no[1] = 0;
-        wk->wu.routine_no[2] = 51;
-        wk->wu.routine_no[3] = 0;
-        wk->wu.xyz[0].disp.pos = 468;
-        wk->wu.xyz[1].disp.pos = 0;
+    if (!wk->wu.operator) {
+        if (Bonus_Game_Flag == 21) {
+            wk->wu.routine_no[1] = 0;
+            wk->wu.routine_no[2] = 51;
+            wk->wu.routine_no[3] = 0;
+            wk->wu.xyz[0].disp.pos = 468;
+            wk->wu.xyz[1].disp.pos = 0;
+        }
     }
     Player_normal(wk);
 }
@@ -220,11 +227,13 @@ void player_mvbs_4000(PLW* wk) {
         check_lever_data(wk);
     }
     if (wk->tsukamare_f) {
-        wk->wu.hit_stop = wk->wu.dm_stop = 0;
+        wk->wu.dm_stop = 0;
+        wk->wu.hit_stop = 0;
     }
-    if (!check_hit_stop(wk)) {
+    if (check_hit_stop(wk) != 0) {
+    } else {
         plmain_lv_02[wk->wu.routine_no[1]](wk);
-        if ((Timer_Freeze == 0) && (wk->wu.hit_stop == 0) && (wk->zuru_timer > 0)) {
+        if (Timer_Freeze == 0 && wk->wu.hit_stop == 0 && wk->zuru_timer > 0) {
             wk->zuru_timer -= 2;
         }
         if (wk->zuru_timer < 0) {

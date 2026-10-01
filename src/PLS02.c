@@ -22,6 +22,10 @@
 
 struct PLW_tag;
 
+/* stored after parabora_own_table (after its remy entry) */
+extern const u32 parabora_own_table_tail[];
+#define parabora_ex_table ((s16 (*)[][24][4][4][6])&parabora_own_table_tail[1])
+
 
 
 void add_to_mvxy_data(wk, ix)
@@ -73,6 +77,23 @@ void setup_mvxy_data(wk, ix)
     read_adrs_store_mvxy(wk, &wk->move_xy_table[ix * 6]);
 }
 
+/* Unreferenced: blow-away movement taken from the table stored after parabora_own_table, by the
+   attacker's character and our weight. */
+void setup_butt_own_data_ex(WORK* wk, s16 ix) {
+    s16* adrs;
+    wk->mvxy.index = ix;
+    adrs = (*parabora_ex_table)[ix][((PLW*)wk->target_adrs)->player_number][wk->weight_level][(s8)wk->dm_attlv];
+    read_adrs_store_mvxy(wk, adrs);
+}
+
+/* Unreferenced: as above, by our character and the attacker's weight. */
+void setup_butt_own_data_ex2(WORK* wk, s16 ix) {
+    s16* adrs;
+    wk->mvxy.index = ix;
+    adrs = (*parabora_ex_table)[ix][((PLW*)wk)->player_number][((WORK*)wk->target_adrs)->weight_level][(s8)wk->dm_attlv];
+    read_adrs_store_mvxy(wk, adrs);
+}
+
 
 
 void setup_butt_own_data(WORK* wk) {
@@ -102,40 +123,32 @@ s32 get_weight_point(WORK* wk)
 
 
 
-s32 cal_mvxy_speed(WORK* wk) {
+void cal_mvxy_speed(WORK* wk) {
     s16 i;
-    s32 rc;
     for (i = 0; i < 2; i++) {
         switch (wk->mvxy.kop[i]) {
         case 0:
             wk->mvxy.a[i].sp += wk->mvxy.d[i].sp;
-            rc = i * 4;
+            break;
+        default:
             break;
         case 1:
             if (wk->mvxy.a[i].sp >= 0) {
                 wk->mvxy.a[i].sp += wk->mvxy.d[i].sp;
-                rc = (s32)&wk->mvxy.a[i].sp;
                 if (wk->mvxy.a[i].sp < 0) {
                     wk->mvxy.d[i].sp = 0;
                     wk->mvxy.a[i].sp = 0;
-                    rc = i * 4;
                 }
             } else {
                 wk->mvxy.a[i].sp += wk->mvxy.d[i].sp;
-                rc = (s32)&wk->mvxy.a[i].sp;
                 if (wk->mvxy.a[i].sp >= 0) {
                     wk->mvxy.d[i].sp = 0;
                     wk->mvxy.a[i].sp = 0;
-                    rc = i * 4;
                 }
             }
             break;
-        default:
-            rc = wk->mvxy.kop[i];
-            break;
         }
     }
-    return rc;
 }
 
 
@@ -217,11 +230,8 @@ void setup_air_paring_mvxy(WORK* wk) {
 
 
 void remake_mvxy_PoSB(WORK* wk) {
-    s32 v;
     if (wk->mvxy.a[1].sp < 0) {
-        v = wk->mvxy.a[1].sp;
-        v *= 30;
-        wk->mvxy.a[1].sp = v / 100;
+        wk->mvxy.a[1].sp = wk->mvxy.a[1].sp * 30 / 100;
         wk->mvxy.a[1].sp = -wk->mvxy.a[1].sp;
     }
 }
@@ -391,7 +401,7 @@ two:
 
 s32 hoseishitemo_eenka(WORK* wk, s16 tx) {
     s16 rnum = 0;
-    if (cal_top_of_position_y(wk) + wk->cg_jphos > bs2_floor[2] || wk->mvxy.a[1].real.h < 0) {
+    if (((s32 (*)(WORK*))cal_top_of_position_y)(wk) + wk->cg_jphos > bs2_floor[2] || wk->mvxy.a[1].real.h < 0) {
         switch ((wk->xyz[0].disp.pos < tx) + (wk->rl_flag != 0) * 2) {
         case 1:
         case 2:
@@ -440,7 +450,7 @@ s32 set_field_hosei_flag(PLW* pl, s16 pos, s16 ix) {
     s16 hami;
     if (ix != 0) {
         hami = pl->wu.xyz[0].disp.pos + satse[pl->player_number] - pos;
-        if (hami != 0) {
+        if (hami) {
             if (hami >= 0) {
                 pl->wu.xyz[0].disp.pos -= hami;
                 pl->micchaku_flag = 1;
@@ -456,7 +466,7 @@ s32 set_field_hosei_flag(PLW* pl, s16 pos, s16 ix) {
         }
     } else {
         hami = pl->wu.xyz[0].disp.pos - satse[pl->player_number] - pos;
-        if (hami != 0) {
+        if (hami) {
             if (hami <= 0) {
                 pl->wu.xyz[0].disp.pos -= hami;
                 pl->micchaku_flag = 2;
@@ -541,7 +551,7 @@ s32 random_32_ex_com(void)
 {
     Random_ix32_ex_com++;
     Random_ix32_ex_com &= 0x1F;
-    return random_tbl_32_ex[Random_ix32_ex_com];
+    return random_tbl_32_ex[(s16)Random_ix32_ex_com];
 }
 
 /* Next value from the CPU's 16-entry extra random table. */

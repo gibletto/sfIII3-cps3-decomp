@@ -31,9 +31,7 @@ const s16 win_type_tbl[24] = {
     15, 0, 0, 0,
 };
 
-/* The initial values of win_jp_tbl (win_player) in win_pl.c,
-   where the arcade build placed them. The routine copies its table from the compiler's
-   own image, so nothing reads this one; it keeps the tables after it at their addresses. */
+/* Initial values of win_jp_tbl (win_player) in win_pl.c. */
 const u32 win_jp_tbl_init[16] = {
     (u32)Win_00000, (u32)Win_01000, (u32)Win_02000, (u32)Win_03000,
     (u32)Win_04000, (u32)Win_05000, (u32)Win_06000, (u32)Win_07000,

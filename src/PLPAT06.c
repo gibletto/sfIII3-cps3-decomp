@@ -41,7 +41,7 @@ void Att_PL06_HASHIRI_NAGE(PLW* wk) {
         break;
     case 1:
         char_move(&wk->wu);
-        switch (wk->wu.cg_type) {
+        switch ((u8)wk->wu.cg_type) {
         case 20:
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
@@ -68,17 +68,21 @@ void Att_PL06_HASHIRI_NAGE(PLW* wk) {
             wk->wu.routine_no[3] = 4;
             wk->wu.cg_type = 0;
             break;
+        default:
+            break;
         }
         add_mvxy_speed(&wk->wu);
         cal_mvxy_speed(&wk->wu);
         break;
     case 2:
         jumping_union_process(&wk->wu, 3);
-        if (wk->wu.routine_no[3] != 3 && wk->wu.cg_type == 30) {
+        if (wk->wu.routine_no[3] == 3) {
+            break;
+        }
+        if ((u8)wk->wu.cg_type == 30) {
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
             wk->wu.cg_type = 0;
-            break;
         }
         break;
     case 3:
@@ -86,7 +90,7 @@ void Att_PL06_HASHIRI_NAGE(PLW* wk) {
         break;
     case 4:
         char_move(&wk->wu);
-        switch (wk->wu.cg_type) {
+        switch ((u8)wk->wu.cg_type) {
         case 20:
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
@@ -112,13 +116,16 @@ void Att_PL06_HASHIRI_NAGE(PLW* wk) {
             wk->wu.cg_type = 0;
             wk->wu.routine_no[3] = 1;
             break;
+        default:
+            break;
         }
         add_mvxy_speed(&wk->wu);
         cal_mvxy_speed(&wk->wu);
-        if (wk->wu.routine_no[3] != 1 && wk->hos_fi_flag | wk->hos_em_flag) {
-            char_move_cmj4(&wk->wu);
-            wk->wu.routine_no[3] = 1;
+        if (wk->wu.routine_no[3] == 1 || (wk->hos_fi_flag | wk->hos_em_flag) == 0) {
+            break;
         }
+        char_move_cmj4(&wk->wu);
+        wk->wu.routine_no[3] = 1;
         break;
     }
 }

@@ -147,10 +147,11 @@ void end_C00_1000(void) {
 void end_C00_2000(void) {
     switch (bgw_ptr->r_no_1) {
     case 0:
-        if (Request_Fade(39, 0)) {
-            end_no_cut = 1;
-            bgw_ptr->r_no_1++;
+        if (Request_Fade(39, 0) == 0) {
+            break;
         }
+        end_no_cut = 1;
+        bgw_ptr->r_no_1++;
         break;
     case 1:
         if (end_fade_complete()) {
@@ -172,10 +173,11 @@ void end_C00_3000(void) {
         bgw_ptr->xy[1].disp.pos = end_c_pos[end_w.r_no_2][1];
         Rewrite_End_Message(3);
     case 1:
-        if (Request_Fade(44, 0)) {
-            end_no_cut = 1;
-            bgw_ptr->r_no_1++;
+        if (Request_Fade(44, 0) == 0) {
+            break;
         }
+        end_no_cut = 1;
+        bgw_ptr->r_no_1++;
         break;
     case 2:
         if (end_fade_complete()) {

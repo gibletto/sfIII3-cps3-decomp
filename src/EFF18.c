@@ -91,15 +91,17 @@ void eff17_close(WORK_Other* ewk) {
     WORK* oya = (WORK*)ewk->my_master;
     switch (ewk->wu.routine_no[2]) {
     case 0:
-        ewk->wu.my_mr.size.y -= 7;
+        ewk->wu.my_mr.size.y = ewk->wu.my_mr.size.y + -7;
         if (ewk->wu.my_mr.size.y <= 0) {
             ewk->wu.my_mr.size.y = 0;
             ewk->wu.routine_no[2]++;
-            if (ewk->wu.type == 8) {
+            if ((u8)ewk->wu.type == 8) {
                 oya->old_rno[2] = 1;
             }
         }
         disp_pos_trans_entry5(ewk);
+        break;
+    case 1:
         break;
     }
 }
@@ -145,25 +147,24 @@ void effect_18_move(WORK_Other* ewk) {
     if (compel_dead_check(ewk)) {
         ewk->wu.routine_no[0] = 99;
         ewk->wu.disp_flag = 0;
-        return;
-    }
-    switch (ewk->wu.routine_no[0]) {
-    case 0:
-        ewk->wu.routine_no[0]++;
-    case 1:
-        if (!EXE_flag && !Game_pause) {
-            eff18_jp_tbl[ewk->wu.routine_no[1]](ewk);
-        }
-        if (ewk->wu.old_rno[0]) {
-            disp_pos_trans_entry_rs(ewk);
+    } else {
+        switch (ewk->wu.routine_no[0]) {
+        case 0:
+            ewk->wu.routine_no[0]++;
+        case 1:
+            if (!EXE_flag && !Game_pause) {
+                eff18_jp_tbl[ewk->wu.routine_no[1]](ewk);
+            }
+            if (ewk->wu.old_rno[0]) {
+                disp_pos_trans_entry_rs(ewk);
+            } else {
+                disp_pos_trans_entry_s(ewk);
+            }
             break;
+        default:
+            all_cgps_put_back(ewk);
+            push_effect_work((WORK*)ewk);
         }
-        disp_pos_trans_entry_s(ewk);
-        break;
-    default:
-        all_cgps_put_back(ewk);
-        push_effect_work((WORK*)ewk);
-        break;
     }
 }
 
@@ -203,7 +204,8 @@ void eff18_00(WORK* wk) {
         }
         break;
     case 3:
-        if (--wk->dir_timer < 0) {
+        wk->dir_timer--;
+        if (wk->dir_timer < 0) {
             wk->routine_no[2]++;
             set_char_move_init(wk, 0, wk->dir_step);
         }
@@ -255,16 +257,20 @@ void eff18_01(WORK* wk) {
 
 
 s32 effect_18_init(s16 disp_index, s16 cursor_id, s16 sync_bg, s16 master_player) {
-    WORK_Other* ewk;
-    s16 ix;
-    s16 lp_cnt = scr_obj_num18[disp_index][bg_w.compel_flag];
     s16 i;
+    s16 ix;
+    s16 lp_cnt;
     const s16* data_ptr;
-    if (lp_cnt == 0) {
+    WORK_Other* ewk;
+
+    lp_cnt = scr_obj_num18[disp_index][bg_w.compel_flag];
+    if (!lp_cnt) {
         return;
     }
-    for (data_ptr = scr_obj_data18[disp_index][bg_w.compel_flag], i = 0; i < lp_cnt; i++) {
-        if ((ix = pull_effect_work(4)) == -1) {
+    data_ptr = scr_obj_data18[disp_index][bg_w.compel_flag];
+    for (i = 0; i < lp_cnt; i++) {
+        ix = pull_effect_work(4);
+        if (ix == -1) {
             return -1;
         }
         ewk = (WORK_Other*)frw[ix];

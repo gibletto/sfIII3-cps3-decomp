@@ -350,9 +350,9 @@ void set_catch_hit_mark_pos(WORK* as, WORK* ds) {
             as->hit_mark_x = as->xyz[0].disp.pos + hit_mark_hosei_table[as->att.mkh_ix][0];
         }
         as->hit_mark_y = as->xyz[1].disp.pos + hit_mark_hosei_table[as->att.mkh_ix][1];
-        return;
+    } else {
+        cal_hit_mark_position(ds, as, (s16*)ds->h_cau, (s16*)as->h_cat);
     }
-    cal_hit_mark_position(ds, as, (s16*)ds->h_cau, (s16*)as->h_cat);
 }
 
 
@@ -931,12 +931,17 @@ s32 defense_sky(PLW* as, PLW* ds, s8 gddir) {
 
 
 void blocking_point_count_up(PLW* wk) {
+    s16 v;
     wk->kind_of_blocking = 0;
-    if (wk->wu.routine_no[1] == 0 && wk->wu.routine_no[2] > 30 && wk->wu.routine_no[2] < 36) {
-        wk->kind_of_blocking = 1;
+    if (wk->wu.routine_no[1] == 0) {
+        if ((v = wk->wu.routine_no[2]) > 30 && v < 36) {
+            wk->kind_of_blocking = 1;
+        }
     }
-    if (wk->wu.routine_no[1] == 1 && wk->wu.routine_no[2] > 3 && wk->wu.routine_no[2] < 8) {
-        wk->kind_of_blocking = 2;
+    if (wk->wu.routine_no[1] == 1) {
+        if ((v = wk->wu.routine_no[2]) > 3 && v < 8) {
+            wk->kind_of_blocking = 2;
+        }
     }
     grade_add_blocking(wk);
 }
@@ -1069,30 +1074,32 @@ s32 defense_ground(PLW* as, PLW* ds, s8 gddir) {
 
 
 void setup_dm_rl(WORK* as, WORK* ds) {
-    s16 pw;
-    if (as->work_id != 1 || check_aiuchi_pat(as->att.reaction)) {
+    s16 dx;
+    XY* pd;
+    XY* pf;
+    if (as->work_id != 1 || check_aiuchi_pat(as->att.reaction) != 0) {
         ds->dm_rl = as->rl_flag;
         return;
     }
-    pw = ds->xyz[0].disp.pos - as->xyz[0].disp.pos;
-    switch ((ds->xyz[1].disp.pos > 0) + ((as->xyz[1].disp.pos > 0) * 2)) {
+    dx = (pd = &ds->xyz[0])->disp.pos - (pf = &as->xyz[0])->disp.pos;
+    switch ((pd[1].disp.pos > 0) + (pf[1].disp.pos > 0) * 2) {
     case 0:
     case 2:
         if (!(as->att.dipsw & 0x60)) {
             ds->dm_rl = as->rl_flag;
-            return;
+            break;
         }
-        break;
-    }
-    if (pw) {
-        if (pw > 0) {
-            ds->dm_rl = 1;
-            return;
+    default:
+        if (dx) {
+            if (dx > 0) {
+                ds->dm_rl = 1;
+            } else {
+                ds->dm_rl = 0;
+            }
+        } else {
+            ds->dm_rl = as->rl_flag;
         }
-        ds->dm_rl = 0;
-        return;
     }
-    ds->dm_rl = as->rl_flag;
 }
 
 
@@ -1531,56 +1538,51 @@ void cal_hit_mark_position(WORK* wk1, WORK* wk2, s16* hd1, s16* hd2) {
 
 void get_target_att_position(WORK* wk, s16* tx, s16* ty) {
     s16 i;
-    s16(*ta)[4];
+    s16* ta;
     *tx = wk->xyz[0].disp.pos;
     *ty = wk->xyz[1].disp.pos;
-    ta = &wk->h_att->att_box[0];
-    for (i = 0; i < 3; ta++, i++) {
-        if (!ta[0][0]) {
-            continue;
+    ta = wk->h_att->att_box[0];
+    for (i = 0; i < 3; ta += 4, i++) {
+        if (ta[0]) {
+            if (wk->rl_flag) {
+                *tx -= ta[0] + (ta[1] / 2);
+            } else {
+                *tx += ta[0] + (ta[1] / 2);
+            }
+            *ty += ta[2] + (ta[3] / 2);
+            break;
         }
-        if (wk->rl_flag) {
-            *tx -= ta[0][0] + (ta[0][1] / 2);
-        } else {
-            *tx += ta[0][0] + (ta[0][1] / 2);
-        }
-        *ty += ta[0][2] + (ta[0][3] / 2);
-        break;
     }
 }
 
 
 
 s32 get_att_head_position(WORK* wk) {
-    s16* ta;
-    s16 kx;
-    s16 tx;
+    s16 v = wk->xyz[0].disp.pos;
+    s32 b = v;
     s16 i;
-    tx = wk->xyz[0].disp.pos;
+    s16* p;
     if (wk->cg_ja.atix == 0) {
-        return tx;
+        return b;
     }
-    ta = &wk->h_att->att_box[0][0];
-    for (i = 0; i < 3; i++) {
-        if (*ta) {
+    p = &wk->h_att->att_box[0][0];
+    for (i = 0; i < 3; i++, p += 4) {
+        if (*p) {
             if (wk->rl_flag) {
-                kx = tx - *ta;
-                if (tx < kx) {
-                    tx = kx;
+                s16 t = v - *p;
+                if (b < t) {
+                    v = t;
                 }
-                break;
             } else {
-                kx = tx + *ta;
-                if (tx > kx) {
-                    tx = kx;
+                s16 t = *p + v;
+                if (b > t) {
+                    v = t;
                 }
-                break;
             }
-        } else {
-            ta += 4;
+            break;
         }
     }
-    return tx;
+    return v;
 }
 
 

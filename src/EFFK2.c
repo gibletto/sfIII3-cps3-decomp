@@ -403,11 +403,12 @@ void effK2_parts_move_type_4(WORK_Other* ewk, DADD* arg1) {
         break;
     case 1:
         char_move(&ewk->wu);
-        if (--ewk->wu.kage_prio <= 0) {
-            char_move_cmja(&ewk->wu);
-            ewk->wu.routine_no[1] = 0;
-            ewk->wu.routine_no[2] = 0;
+        if (--ewk->wu.kage_prio > 0) {
+            break;
         }
+        char_move_cmja(&ewk->wu);
+        ewk->wu.routine_no[1] = 0;
+        ewk->wu.routine_no[2] = 0;
         break;
     }
 }
@@ -536,7 +537,10 @@ void effK2_parts_move_type_8(WORK_Other* ewk, DADD* hahen) {
 
 
 
-void set_next_next_y(WORK* wk, u8 flag) {
+void set_next_next_y(wk, flag)
+WORK* wk;
+u8 flag;
+{
     if (flag) {
         wk->next_y -= (random_16_com() & 4) + 2;
     } else {

@@ -16,7 +16,8 @@
 
 
 void set_char_base_data(WORK* wk) {
-    const CHAR_INIT_ROM* cdat = &char_init_data[wk->charset_id];
+    s16 k = wk->charset_id * sizeof(CHAR_INIT_ROM);
+    const CHAR_INIT_ROM* cdat = (const CHAR_INIT_ROM*)((u8*)char_init_data + k);
     wk->char_table[0] = cdat->nmca;
     wk->char_table[1] = cdat->dmca;
     wk->char_table[6] = cdat->btca;

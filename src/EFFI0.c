@@ -23,7 +23,7 @@
 void effect_I0_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
     case 0:
-        ewk->wu.routine_no[0] += 1;
+        ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.my_col_mode = 0x4200;
         ewk->wu.my_col_code = 0x2020;
@@ -31,16 +31,16 @@ void effect_I0_move(WORK_Other* ewk) {
     case 1:
         if (ewk->wu.dead_f == 1) {
             ewk->wu.disp_flag = 0;
-            ewk->wu.routine_no[0] += 1;
+            ewk->wu.routine_no[0]++;
             break;
         }
-        if ((EXE_flag == 0) && (Game_pause == 0)) {
+        if (EXE_flag == 0 && Game_pause == 0) {
             switch (ewk->wu.routine_no[1]) {
             case 0:
                 add_mvxy_speed(&ewk->wu);
                 cal_mvxy_speed(&ewk->wu);
                 if (ewk->wu.mvxy.a[1].sp <= 0) {
-                    ewk->wu.routine_no[1] += 1;
+                    ewk->wu.routine_no[1]++;
                 }
                 char_move(&ewk->wu);
                 break;
@@ -48,15 +48,15 @@ void effect_I0_move(WORK_Other* ewk) {
                 add_mvxy_speed(&ewk->wu);
                 cal_mvxy_speed(&ewk->wu);
                 if (ewk->wu.xyz[1].disp.pos <= ewk->wu.next_y) {
-                    ewk->wu.routine_no[1] += 1;
+                    ewk->wu.routine_no[1]++;
                     char_move_wca(&ewk->wu);
-                } else {
-                default:
-                    char_move(&ewk->wu);
-                    if (ewk->wu.cg_type == 0xFF) {
-                        ewk->wu.disp_flag = 0;
-                        ewk->wu.routine_no[0] += 1;
-                    }
+                    break;
+                }
+            default:
+                char_move(&ewk->wu);
+                if (ewk->wu.cg_type == 0xFF) {
+                    ewk->wu.disp_flag = 0;
+                    ewk->wu.routine_no[0]++;
                 }
                 break;
             }
@@ -64,13 +64,13 @@ void effect_I0_move(WORK_Other* ewk) {
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos;
         sort_push_request(ewk);
-        return;
+        break;
     case 2:
         ewk->wu.routine_no[0] = 3;
-        return;
+        break;
     default:
         all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
-        return;
+        break;
     }
 }
