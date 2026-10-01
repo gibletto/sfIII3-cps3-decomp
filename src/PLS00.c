@@ -1427,10 +1427,10 @@ void dm_04000(PLW* wk) {
                 break;
             }
             TO_nm_37000((WORK*)wk);
-            break;
+        } else {
+            wk->wu.routine_no[2] = 19;
+            wk->wu.routine_no[3] = 0;
         }
-        wk->wu.routine_no[2] = 19;
-        wk->wu.routine_no[3] = 0;
         break;
     case 0xFF:
         if (wk->py->flag == 0) {
@@ -1440,10 +1440,10 @@ void dm_04000(PLW* wk) {
                 break;
             }
             TO_nm_09000((WORK*)wk);
-            break;
+        } else {
+            wk->wu.routine_no[2] = 19;
+            wk->wu.routine_no[3] = 0;
         }
-        wk->wu.routine_no[2] = 19;
-        wk->wu.routine_no[3] = 0;
         break;
     }
 }

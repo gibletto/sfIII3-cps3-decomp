@@ -107,16 +107,14 @@ void appear_data_init_set(PLW* wk) {
     APPEAR_DATA* dtbl;
     s8 ap_work;
     s16 id_work;
-    s16 vs;
     Appear_hv[wk->wu.id] = home_visitor_check(wk);
     id_work = wk->wu.id ^ 1;
-    vs = plw[id_work].player_number;
     if (bg_w.area) {
         ap_work = 0;
     } else if (Appear_hv[wk->wu.id]) {
-        ap_work = appear_type_hv_tbl[wk->player_number][vs][bg_w.stage];
+        ap_work = appear_type_hv_tbl[wk->player_number][plw[id_work].player_number][bg_w.stage];
     } else {
-        ap_work = appear_type_tbl[wk->player_number][vs][bg_w.stage];
+        ap_work = appear_type_tbl[wk->player_number][plw[id_work].player_number][bg_w.stage];
     }
     dtbl = (APPEAR_DATA*)&appear_data[ap_work];
     appear_data_set(wk, dtbl);

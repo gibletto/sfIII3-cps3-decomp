@@ -23,9 +23,8 @@
 #include "HITCHECK.h"
 #include "ta_sub.h"
 
-#pragma inline(obr_disp_off)
+#pragma inline(obr_disp_off_check)
 
-static s32 obr_disp_off(void);
 
 struct PLW_tag;
 
@@ -271,18 +270,11 @@ s32 obr_disp_off_check(void) {
     return 0;
 }
 
-/* provisional name */
-static s32 obr_disp_off(void) {
-    if (seraph_flag | akebono_flag | sa_pa_flag) {
-        return 1;
-    }
-    return 0;
-}
 
 
 
 void disp_pos_trans_entry(WORK_Other* ewk) {
-    if (obr_disp_off()) {
+    if (obr_disp_off_check()) {
         return;
     }
     ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
@@ -293,7 +285,7 @@ void disp_pos_trans_entry(WORK_Other* ewk) {
 
 
 void disp_pos_trans_entry5(WORK_Other* ewk) {
-    if (obr_disp_off()) {
+    if (obr_disp_off_check()) {
         return;
     }
     ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
@@ -304,7 +296,7 @@ void disp_pos_trans_entry5(WORK_Other* ewk) {
 
 
 void disp_pos_trans_entry_r(WORK_Other* ewk) {
-    if (obr_disp_off() == 0) {
+    if (obr_disp_off_check() == 0) {
         if (range_x_check((WORK*)ewk) != 0) {
             ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
             ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
@@ -317,7 +309,7 @@ void disp_pos_trans_entry_r(WORK_Other* ewk) {
 
 /* provisional name */
 void disp_pos_trans_entry_rxy(WORK_Other* ewk) {
-    if (obr_disp_off() == 0) {
+    if (obr_disp_off_check() == 0) {
         if (range_xy_check(ewk) != 0) {
             ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
             ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
@@ -329,7 +321,7 @@ void disp_pos_trans_entry_rxy(WORK_Other* ewk) {
 
 
 void disp_pos_trans_entry_r4(WORK_Other* ewk) {
-    if (obr_disp_off() == 0) {
+    if (obr_disp_off_check() == 0) {
         if (range_y_check((WORK*)ewk) != 0) {
             ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
             ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
@@ -342,7 +334,7 @@ void disp_pos_trans_entry_r4(WORK_Other* ewk) {
 
 /* provisional name */
 void disp_pos_trans_entry_rbg(WORK_Other* ewk, s16 bg_no) {
-    if (obr_disp_off() == 0) {
+    if (obr_disp_off_check() == 0) {
         if (range_x_out_y_in_check(ewk, bg_no) != 0) {
             ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
             ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
@@ -352,7 +344,7 @@ void disp_pos_trans_entry_rbg(WORK_Other* ewk, s16 bg_no) {
 }
 
 void disp_pos_trans_entry_s(WORK_Other* ewk) {
-    if (obr_disp_off() == 0) {
+    if (obr_disp_off_check() == 0) {
         suzi_sync_pos_set(ewk);
         sort_push_request4(&ewk->wu);
     }
@@ -361,7 +353,7 @@ void disp_pos_trans_entry_s(WORK_Other* ewk) {
 
 
 void disp_pos_trans_entry_rs(WORK_Other* ewk) {
-    if (obr_disp_off() == 0) {
+    if (obr_disp_off_check() == 0) {
         if (range_x_check((WORK*)ewk) != 0) {
             suzi_sync_pos_set(ewk);
             sort_push_request4(ewk);
@@ -381,7 +373,7 @@ void disp_pos_trans_entry_seraph(WORK_Other* ewk)
 
 
 void pl_eff_trans_entry(WORK_Other* ewk) {
-    if (obr_disp_off() == 0) {
+    if (obr_disp_off_check() == 0) {
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
         sort_push_request(&ewk->wu);
@@ -392,7 +384,7 @@ void pl_eff_trans_entry(WORK_Other* ewk) {
 
 /* provisional name */
 void pl_eff_trans_entry_r(WORK_Other* ewk) {
-    if (obr_disp_off() == 0) {
+    if (obr_disp_off_check() == 0) {
         if (range_x_check((WORK*)ewk) != 0) {
             ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
             ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;

@@ -233,18 +233,15 @@ void scdmd_17000(PLW* wk) {
 
 
 
-s32 scdmd_18000(PLW* wk) {
-    s32 rc;
+void scdmd_18000(PLW* wk) {
     setup_butt_own_data(&wk->wu);
     cal_initial_speed_y(&wk->wu, buttobi_time_table[wk->wu.char_index][wk->wu.dm_attlv], wk->wu.xyz[1].disp.pos);
-    if (!(rc = (s16)wk->wu.dm_attribute)) {
-        return rc;
+    if (wk->wu.dm_attribute) {
+        setup_accessories(wk, wk->wu.pat_status);
+        if (wk->wu.dm_attribute != 2) {
+            effect_D9_init(wk, (u8)wk->wu.dm_attribute);
+        }
     }
-    setup_accessories(wk, wk->wu.pat_status);
-    if ((rc = wk->wu.dm_attribute) == 2) {
-        return rc;
-    }
-    effect_D9_init(wk, (u8)wk->wu.dm_attribute);
 }
 
 

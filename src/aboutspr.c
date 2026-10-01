@@ -821,7 +821,8 @@ s32 set_conn_sprite(WORK_Other_CONN* wk) {
     if (wk->wu.spr.gfx_cells == 0) {
         return 0;
     }
-    if ((blk = simmram_block_alloc_40((((wk->wu.spr.gfx_cells < 0) ? wk->wu.spr.gfx_cells + 15 : wk->wu.spr.gfx_cells) >> 4) + 1, 1)) == 0) {
+    blk = simmram_block_alloc_40(wk->wu.spr.gfx_cells / 16 + 1, 1);
+    if (blk == 0) {
         return 0;
     }
     base = (u16 *)simmram_slot_addr(blk);

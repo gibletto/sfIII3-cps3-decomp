@@ -625,10 +625,9 @@ WORK_Other* ewk;
     const BS2* row;
     s16 i;
     row = bs2_data_table;
-    for (i = 0; i < 8; i++) {
+    for (i = 0; i < 8; i++, row++) {
         ewk->wu.shell_ix[i] = row->vital;
         ewk->wu.cmwk[i] = 0;
-        row++;
     }
 }
 
@@ -666,6 +665,16 @@ void c3_new_damage(WORK* wk) {
     }
     wk->dm_vital = 0;
     bs2_current_damage = wk->type;
+}
+
+/* provisional name: unreferenced */
+s32 bs2_get_hit_stop(WORK* wk) {
+    return ((WORK*)wk->my_effadrs)->hit_stop;
+}
+
+/* provisional name: unreferenced */
+s32 bs2_get_parts_vital(s32 ix) {
+    return bs2_data_table[(u8)ix].vital;
 }
 
 

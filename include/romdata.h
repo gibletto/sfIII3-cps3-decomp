@@ -105,7 +105,7 @@ extern void (*const Passive16_Tbl[164])(PLW*);
 extern void (*const Passive17_Tbl[167])(PLW*);
 extern void (*const Passive18_Tbl[182])(PLW*);
 extern void (*const Passive19_Tbl[204])(PLW*);
-extern char Passive20_Tbl[];
+extern void (*const Passive20_Tbl[176])(PLW*);
 extern const u8 Passive_A_Unit_Data_04[21][32][4][16];
 extern const u8 Passive_B_Unit_Data_04[21][32][4][16];
 extern const u8 Passive_C_Unit_Data_04[21][32][4][16];

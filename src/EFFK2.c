@@ -536,7 +536,10 @@ void effK2_parts_move_type_8(WORK_Other* ewk, DADD* hahen) {
 
 
 
-void set_next_next_y(WORK* wk, u8 flag) {
+void set_next_next_y(wk, flag)
+WORK* wk;
+u8 flag;
+{
     if (flag) {
         wk->next_y -= (random_16_com() & 4) + 2;
     } else {

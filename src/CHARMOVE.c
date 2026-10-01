@@ -256,22 +256,21 @@ s32 char_move_cmms3(PLW* wk) {
     *--to_ram = *--src;
     *--to_ram = *--src;
     wk->wu.cg_ix = wk->wu.cmms.pat * wk->wu.cgd_type - wk->wu.cgd_type;
-    while (1) {
-        cpc = (CHAR_CMD*)&wk->wu.set_char_ad[wk->wu.cg_ix];
-        if (cpc->code >= 0x100) {
-            break;
-        }
+loop:
+    cpc = (CHAR_CMD*)&wk->wu.set_char_ad[wk->wu.cg_ix];
+    if (cpc->code < 0x100) {
         if (comm_jmp_tbl[cpc->code](wk, cpc) != 0) {
             wk->wu.cg_ix += wk->wu.cgd_type;
-        } else if (wk->meoshi_jump_flag != 0) {
-            break;
-        } else {
+            goto loop;
+        }
+        if (wk->meoshi_jump_flag == 0) {
             return 0;
         }
     }
     if (now_cgd > wk->wu.cgd_type) {
         to_ram = (u32*)&wk->wu.cg_wca_ix;
         for (i = 0; i < now_cgd - wk->wu.cgd_type; i++) {
+            if (0) continue;
             *--to_ram = 0;
         }
     }

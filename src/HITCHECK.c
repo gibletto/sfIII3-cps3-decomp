@@ -1531,21 +1531,20 @@ void cal_hit_mark_position(WORK* wk1, WORK* wk2, s16* hd1, s16* hd2) {
 
 void get_target_att_position(WORK* wk, s16* tx, s16* ty) {
     s16 i;
-    s16(*ta)[4];
+    s16* ta;
     *tx = wk->xyz[0].disp.pos;
     *ty = wk->xyz[1].disp.pos;
-    ta = &wk->h_att->att_box[0];
-    for (i = 0; i < 3; ta++, i++) {
-        if (!ta[0][0]) {
-            continue;
+    ta = wk->h_att->att_box[0];
+    for (i = 0; i < 3; ta += 4, i++) {
+        if (ta[0]) {
+            if (wk->rl_flag) {
+                *tx -= ta[0] + (ta[1] / 2);
+            } else {
+                *tx += ta[0] + (ta[1] / 2);
+            }
+            *ty += ta[2] + (ta[3] / 2);
+            break;
         }
-        if (wk->rl_flag) {
-            *tx -= ta[0][0] + (ta[0][1] / 2);
-        } else {
-            *tx += ta[0][0] + (ta[0][1] / 2);
-        }
-        *ty += ta[0][2] + (ta[0][3] / 2);
-        break;
     }
 }
 

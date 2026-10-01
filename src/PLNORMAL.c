@@ -137,7 +137,6 @@ void nm_05_0100(PLW* wk) {
             add_mvxy_speed((WORK*)wk);
             wk->wu.routine_no[3]++;
             wk->wu.cg_type = 0;
-            break;
         }
         break;
     case 1:
@@ -146,7 +145,6 @@ void nm_05_0100(PLW* wk) {
             add_mvxy_speed((WORK*)wk);
             wk->wu.routine_no[3]++;
             wk->wu.cg_type = 0;
-            break;
         }
         break;
     case 2:
@@ -205,9 +203,9 @@ void nm_06_0100(PLW* wk) {
         if (wk->wu.cg_type == 1) {
             add_mvxy_speed((WORK*)wk);
             wk->wu.routine_no[3]++;
-            break;
+        } else {
+            char_move((WORK*)wk);
         }
-        char_move((WORK*)wk);
         break;
     case 2:
         jumping_union_process((WORK*)wk, 3);
@@ -231,7 +229,6 @@ void nm_06_0200(PLW* wk) {
             add_mvxy_speed((WORK*)wk);
             wk->wu.routine_no[3]++;
             wk->wu.cg_type = 0;
-            break;
         }
         break;
     case 1:
@@ -240,7 +237,6 @@ void nm_06_0200(PLW* wk) {
             add_mvxy_speed((WORK*)wk);
             wk->wu.routine_no[3]++;
             wk->wu.cg_type = 0;
-            break;
         }
         break;
     case 2:
@@ -664,7 +660,6 @@ void Normal_42000(PLW* wk) {
         set_hit_stop_hit_quake((WORK*)wk);
         if (wk->wu.hit_stop > 0) {
             wk->wu.hit_stop = -wk->wu.hit_stop;
-            break;
         }
         break;
     case 1:
@@ -1042,7 +1037,6 @@ void Normal_57000(PLW* wk) {
             wk->wu.routine_no[3]++;
             add_mvxy_speed(&wk->wu);
             effect_G6_init(&wk->wu, wk->wu.weight_level);
-            break;
         }
         break;
     case 2:

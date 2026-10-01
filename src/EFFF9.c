@@ -280,10 +280,15 @@ void effect_F9_move(WORK_Other* owk) {
         }
         for (i = 0; i < chr_data[0]; i++) {
             load_char_gfx(chr_data[i + 1], 1);
+            continue;
         }
         ewk->num_of_conn = chr_data[i + 1];
         ewk->wu.old_rno[4] = chr_data[i + 1];
-        ewk->wu.old_rno[5] = (ewk->wu.old_rno[4] == 0) ? 0 : 1;
+        if (ewk->wu.old_rno[4] == 0) {
+            ewk->wu.old_rno[5] = 0;
+        } else {
+            ewk->wu.old_rno[5] = 1;
+        }
         ewk->wu.old_rno[6] = 1;
         ewk->wu.disp_flag = 1;
         ewk->wu.old_cgnum = ewk->wu.cg_number = 0;
@@ -292,6 +297,7 @@ void effect_F9_move(WORK_Other* owk) {
             ewk->conn[i].ny = conn_data[i].ny;
             ewk->conn[i].col = conn_data[i].col;
             ewk->conn[i].chr = conn_data[i].chr;
+            continue;
         }
         efff9_suicide = 0;
         ewk->wu.vitality = 240;
