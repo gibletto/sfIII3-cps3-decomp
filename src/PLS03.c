@@ -36,8 +36,8 @@ void hissatsu_setup_union(PLW* wk, s16 rno) {
 s32 check_full_gauge_attack(PLW* wk, s8 always) {
     u16* conpane;
     s16 j;
-    u16 cusw;
-    u16 exsw;
+    s32 cusw;
+    s32 exsw;
     if (wk->sa->mp != 1) {
         return 0;
     }
@@ -58,7 +58,7 @@ s32 check_full_gauge_attack(PLW* wk, s8 always) {
             return 0;
         }
         if (wk->cancel_timer == 0) {
-            wk->permited_koa |= 0x40;
+            wk->permited_koa = wk->permited_koa | 0x40;
         }
         if (wk->cp->btix[wk->sa->exsa_g_ix] & 0x4000) {
             if (Version_Type == 3) {
@@ -109,7 +109,7 @@ s32 check_full_gauge_attack(PLW* wk, s8 always) {
         return 0;
     }
     if (wk->cancel_timer == 0) {
-        wk->permited_koa |= 0x40;
+        wk->permited_koa = wk->permited_koa | 0x40;
     }
     if (wk->cp->btix[wk->sa->exsa_a_ix] & 0x4000) {
         if (Version_Type == 3) {
@@ -153,8 +153,8 @@ s32 check_full_gauge_attack(PLW* wk, s8 always) {
 s32 check_full_gauge_attack2(PLW* wk, s8 always) {
     u16* conpane;
     s16 j;
-    u16 cusw;
-    u16 exsw;
+    s32 cusw;
+    s32 exsw;
     if (wk->sa->mp != 1) {
         return 0;
     }
@@ -270,8 +270,8 @@ s32 check_full_gauge_attack2(PLW* wk, s8 always) {
 s32 check_super_arts_attack(PLW* wk) {
     u16* conpane;
     s16 j;
-    u16 cusw;
-    u16 exsw;
+    s16 cusw;
+    s16 exsw;
     if (wk->sa->ok != 1) {
         return 0;
     }
@@ -281,7 +281,7 @@ s32 check_super_arts_attack(PLW* wk) {
     if (wk->cancel_timer == 0) {
         wk->permited_koa |= 1;
     }
-    if (((Bonus_Game_Flag == 21) && (wk->bs2_on_car)) || (wk->wu.xyz[1].disp.pos <= 0)) {
+    if (((Bonus_Game_Flag == 21) && (wk->bs2_on_car)) || (wk->wu.xyz[1].disp.pos < 1)) {
         if (wk->spmv_ng_flag & 0x40000000) {
             return 0;
         }

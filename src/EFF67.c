@@ -59,7 +59,7 @@ void eff64_00(WORK_Other* ewk) {
         eff64_wait(ewk);
         break;
     case 2:
-        if (EXE_flag == 0 && Game_pause == 0 && EXE_obroll == 0) {
+        if (!EXE_flag && !Game_pause && !EXE_obroll) {
             if (ewk->wu.hit_stop) {
                 char_move(&ewk->wu);
             }
@@ -91,7 +91,7 @@ void eff64_02(WORK_Other* ewk) {
         eff64_wait(ewk);
         break;
     case 3:
-        if (EXE_flag == 0 && Game_pause == 0 && EXE_obroll == 0) {
+        if (!EXE_flag && !Game_pause && !EXE_obroll) {
             if (ewk->wu.hit_stop) {
                 char_move(&ewk->wu);
             }
@@ -111,7 +111,7 @@ void eff64_02(WORK_Other* ewk) {
 
 /* provisional name */
 void eff64_04(WORK_Other* ewk) {
-    s16 ix;
+    s32 ix;
     switch (ewk->wu.routine_no[2]) {
     case 0:
         eff64_data_set(ewk, 0);
@@ -124,7 +124,7 @@ void eff64_04(WORK_Other* ewk) {
         eff64_wait(ewk);
         break;
     case 3:
-        if (EXE_flag == 0 && Game_pause == 0 && EXE_obroll == 0) {
+        if (!EXE_flag && !Game_pause && !EXE_obroll) {
             if (ewk->wu.hit_stop) {
                 char_move(&ewk->wu);
             }
@@ -161,7 +161,7 @@ void eff64_08(WORK_Other* ewk) {
         eff64_wait(ewk);
         break;
     case 3:
-        if (EXE_flag == 0 && Game_pause == 0 && EXE_obroll == 0) {
+        if (!EXE_flag && !Game_pause && !EXE_obroll) {
             char_move(&ewk->wu);
             if (ewk->wu.xyz[0].disp.pos < ewk->wu.old_rno[0]) {
                 ewk->wu.routine_no[2] = 1;
@@ -301,7 +301,7 @@ void effect_66_move(WORK_Other* ewk) {
         if (!EXE_flag && !Game_pause && !EXE_obroll) {
             eff66_jp_tbl[ewk->wu.routine_no[1]](ewk);
         }
-        if (ewk->wu.old_rno[2] == 0 || range_x_check(ewk)) {
+        if (!ewk->wu.old_rno[2] || range_x_check(ewk)) {
             disp_pos_trans_entry_s(ewk);
         }
         break;

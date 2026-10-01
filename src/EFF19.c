@@ -49,7 +49,7 @@ u8 * eff19_quake_sub(WORK_Other* ewk)
     const s8* sel_tbl;
     s16 rnd;
     s8 sel;
-    s32 hit;
+    s16 hit;
 
     switch (ewk->wu.routine_no[1]) {
     case 0:
@@ -66,7 +66,7 @@ u8 * eff19_quake_sub(WORK_Other* ewk)
             }
             sel = sel_tbl[rnd];
         }
-        if (sel == 0) {
+        if (!sel) {
             ewk->wu.routine_no[1]++;
             ewk->wu.routine_no[2] = 1;
             ewk->wu.old_rno[0] = 60;
@@ -80,7 +80,7 @@ u8 * eff19_quake_sub(WORK_Other* ewk)
         ewk->wu.old_rno[0] = eff19_wait_tbl[rnd];
         return (u8*)eff19_wait_tbl;
     case 1:
-        if (ewk->wu.routine_no[2] == 0) {
+        if (!ewk->wu.routine_no[2]) {
             ewk->wu.old_rno[0]--;
             if (ewk->wu.old_rno[0] < 0) {
                 ewk->wu.routine_no[1]++;
@@ -103,14 +103,14 @@ u8 * eff19_quake_sub(WORK_Other* ewk)
         return (u8*)0x68;
     case 3:
         char_move(&ewk->wu);
-        if (ewk->wu.cg_type != 0) {
+        if (ewk->wu.cg_type) {
             ewk->wu.routine_no[1]++;
             ewk->wu.disp_flag = 0;
         }
         return (u8*)0;
     case 4:
         hit = range_x_check(&ewk->wu);
-        if (hit != 0) {
+        if (hit) {
             return (u8*)hit;
         }
         ewk->wu.routine_no[1] = 0;

@@ -21,11 +21,32 @@
 #include "CHARSET.h"
 #include "EFFH1.h"
 
-static void eff_h1_move(WORK_Other* ewk);
+void eff_h1_move(WORK_Other* ewk);
 
 
 
-static void eff_h1_move(WORK_Other* ewk) {
+void effect_H1_move(WORK_Other* ewk) {
+    switch (ewk->wu.routine_no[0]) {
+    case 0:
+        if (ewk->wu.old_rno[6] < end_w.r_no_2) {
+            ewk->wu.routine_no[1] = 99;
+            break;
+        }
+        eff_h1_move(ewk);
+        break;
+    case 1:
+        ewk->wu.routine_no[0]++;
+        break;
+    default:
+        all_cgps_put_back(ewk);
+        push_effect_work((WORK*)ewk);
+        break;
+    }
+}
+
+
+
+void eff_h1_move(WORK_Other* ewk) {
     s16 work;
     switch (ewk->wu.routine_no[1]) {
     case 0:
@@ -54,27 +75,6 @@ static void eff_h1_move(WORK_Other* ewk) {
         ewk->wu.old_rno[0] = effh1_wait_timer[work];
         ewk->wu.xyz[0].disp.pos = effh1_data_tbl[ewk->wu.type][0];
         ewk->wu.xyz[1].disp.pos = effh1_data_tbl[ewk->wu.type][1];
-        break;
-    }
-}
-
-
-
-void effect_H1_move(WORK_Other* ewk) {
-    switch (ewk->wu.routine_no[0]) {
-    case 0:
-        if (ewk->wu.old_rno[6] < end_w.r_no_2) {
-            ewk->wu.routine_no[1] = 99;
-            break;
-        }
-        eff_h1_move(ewk);
-        break;
-    case 1:
-        ewk->wu.routine_no[0]++;
-        break;
-    default:
-        all_cgps_put_back(ewk);
-        push_effect_work((WORK*)ewk);
         break;
     }
 }

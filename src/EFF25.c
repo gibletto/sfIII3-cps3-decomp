@@ -58,14 +58,14 @@ s32 eff25_00(WORK_Other* ewk)
 
     switch (ewk->wu.routine_no[1]) {
     case 0:
-        if (eff_hit_flag[ewk->wu.type] == 0) {
+        if (!eff_hit_flag[ewk->wu.type]) {
             return ((s32 (*)())eff25_char_set)(ewk);
         }
         ewk->wu.routine_no[0] = 4;
         return ewk->wu.type * 2;
     case 1:
         if (eff_hit_check(ewk, ewk->wu.old_rno[4]) == 0) {
-            if (ewk->wu.hit_stop != 0 && EXE_obroll == 0) {
+            if (ewk->wu.hit_stop && !EXE_obroll) {
                 return ((s32 (*)())char_move)(ewk);
             }
             return 0x44;
@@ -75,11 +75,11 @@ s32 eff25_00(WORK_Other* ewk)
         ewk->wu.routine_no[1]++;
         return 0x26;
     case 2:
-        if (EXE_obroll == 0) {
+        if (!EXE_obroll) {
             char_move(&ewk->wu);
         }
         ret = 0;
-        if (ewk->wu.cg_type != 0) {
+        if (ewk->wu.cg_type) {
             ret = 0x26;
             ewk->wu.routine_no[1]++;
         }

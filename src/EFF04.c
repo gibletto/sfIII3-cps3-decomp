@@ -58,7 +58,7 @@ void effect_04_move(WORK_Other* ewk) {
         ewk->wu.old_rno[3]++;
         if (ewk->wu.old_rno[3] < 6) {
             ewk->wu.extra_col = eff04_col_tbl[ewk->wu.old_rno[3]];
-            ewk->wu.extra_col |= 0x2000;
+            ewk->wu.extra_col = ewk->wu.extra_col | 0x2000;
             break;
         }
         ewk->wu.routine_no[0]++;

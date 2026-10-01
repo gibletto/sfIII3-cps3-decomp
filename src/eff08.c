@@ -38,12 +38,12 @@ void effect_08_move(WORK_Other* ewk) {
         Scrn_Y_Set_R(1, eff08_anm_tbl[(s8)ewk->wu.cg_ix].y);
         break;
     case 1:
-        if (EXE_flag == 0 && Game_pause == 0) {
+        if (!EXE_flag && !Game_pause) {
             ewk->wu.cg_ctr--;
             if (ewk->wu.cg_ctr <= 0) {
                 ewk->wu.cg_ix++;
                 ewk->wu.cg_ix &= 7;
-                if (ewk->wu.cg_ix == 0) {
+                if (!ewk->wu.cg_ix) {
                     rounds = random_16_com();
                     rounds = eff08_loop_tbl[rounds];
                 }
@@ -66,12 +66,12 @@ void effect_08_move(WORK_Other* ewk) {
         Scrn_Y_Set_R(1, pos_y);
         break;
     case 2:
-        if (EXE_flag == 0 && Game_pause == 0) {
+        if (!EXE_flag && !Game_pause) {
             ewk->wu.cg_ctr--;
             if (ewk->wu.cg_ctr <= 0) {
                 ewk->wu.cg_ix++;
                 ewk->wu.cg_ix &= 3;
-                if (ewk->wu.cg_ix == 0) {
+                if (!ewk->wu.cg_ix) {
                     ewk->wu.dir_step--;
                     if (ewk->wu.dir_step <= 0) {
                         ewk->wu.routine_no[0] = 1;
@@ -104,8 +104,8 @@ void effect_08_move(WORK_Other* ewk) {
 void effect_08_build_tile_grid()
 {
     const GRID_CELL* cell;
-    s16 i;
-    s16 j;
+    s32 i;
+    s32 j;
     for (i = 0; i < 2; i++) {
         for (j = 0; j < 16; j++) {
             cell = &eff08_cell_tbl[i][j];

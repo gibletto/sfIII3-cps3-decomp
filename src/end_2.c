@@ -22,7 +22,7 @@
 #include "aboutspr.h"
 #include "end_2.h"
 
-static void end_201_1000_anim(void);
+void end_201_1000_anim(void);
 
 
 
@@ -202,21 +202,6 @@ void end_201_move(void) {
 
 
 
-static void end_201_1000_anim(void) {
-    bgw_ptr->free--;
-    if (bgw_ptr->free <= 0) {
-        bgw_ptr->free = 4;
-        bgw_ptr->l_limit++;
-        if (bgw_ptr->l_limit >= 10) {
-            bgw_ptr->l_limit = 0;
-        }
-        bgw_ptr->r_limit = end_201_anm_tbl[bgw_ptr->l_limit];
-        end_bg_block_attr_set(1, 0, 32, 0x1000, 32);
-    }
-}
-
-
-
 void end_201_1000(void) {
     switch (bgw_ptr->r_no_1) {
     case 0:
@@ -243,6 +228,21 @@ void end_201_1000(void) {
 
 
 
+void end_201_1000_anim(void) {
+    bgw_ptr->free--;
+    if (bgw_ptr->free <= 0) {
+        bgw_ptr->free = 4;
+        bgw_ptr->l_limit++;
+        if (bgw_ptr->l_limit >= 10) {
+            bgw_ptr->l_limit = 0;
+        }
+        bgw_ptr->r_limit = end_201_anm_tbl[bgw_ptr->l_limit];
+        end_bg_block_attr_set(1, 0, 32, 0x1000, 32);
+    }
+}
+
+
+
 void end_201_3000(void) {
     switch (bgw_ptr->r_no_1) {
     case 0:
@@ -257,16 +257,7 @@ void end_201_3000(void) {
         break;
     case 1:
     case 2:
-        bgw_ptr->free--;
-        if (bgw_ptr->free <= 0) {
-            bgw_ptr->free = 4;
-            bgw_ptr->l_limit++;
-            if (bgw_ptr->l_limit >= 10) {
-                bgw_ptr->l_limit = 0;
-            }
-            bgw_ptr->r_limit = end_201_anm_tbl[bgw_ptr->l_limit];
-            end_bg_block_attr_set(1, 0, 32, 0x1000, 32);
-        }
+        end_201_1000_anim();
         break;
     }
 }
@@ -346,7 +337,7 @@ void end_202_4000(void) {
 
 
 void end_200_cell_set(void) {
-    s16 i;
+    s32 i;
     for (i = 0; i < 6; i++) {
         bg_cell_write(0, end_200_panel0[i].ofs, end_200_panel0[i].cell, (u32)end_200_scrn_data, 0, 0x220);
     }

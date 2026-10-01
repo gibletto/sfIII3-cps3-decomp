@@ -131,6 +131,28 @@ void effl3_0001(WORK_Other* ewk) {
 
 
 
+void effl3_0002(WORK_Other* ewk) {
+    s16 work;
+    switch (ewk->wu.routine_no[3]) {
+    case 0:
+        ewk->wu.routine_no[3]++;
+        ewk->wu.disp_flag = 1;
+        work = random_16_com();
+        ewk->wu.old_rno[4] = effl3_wait_timer[work];
+        ewk->wu.old_rno[3] = ewk->wu.type & 1;
+        break;
+    case 1:
+        if (ewk->wu.old_rno[3]) {
+            effl3_tobi(ewk);
+            break;
+        }
+        effl3_kie(ewk);
+        break;
+    }
+}
+
+
+
 /* provisional name */
 void effl3_tobi(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[4]) {
@@ -197,28 +219,6 @@ void effl3_kie(WORK_Other* ewk) {
         if (ewk->wu.cg_type == 0xFF) {
             ewk->wu.routine_no[0] = 99;
         }
-        break;
-    }
-}
-
-
-
-void effl3_0002(WORK_Other* ewk) {
-    s16 work;
-    switch (ewk->wu.routine_no[3]) {
-    case 0:
-        ewk->wu.routine_no[3]++;
-        ewk->wu.disp_flag = 1;
-        work = random_16_com();
-        ewk->wu.old_rno[4] = effl3_wait_timer[work];
-        ewk->wu.old_rno[3] = ewk->wu.type & 1;
-        break;
-    case 1:
-        if (ewk->wu.old_rno[3]) {
-            effl3_tobi(ewk);
-            break;
-        }
-        effl3_kie(ewk);
         break;
     }
 }

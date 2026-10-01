@@ -19,7 +19,6 @@
 #include "EFF38.h"
 #include "fighter.h"
 
-#pragma inline(Exit_Slide_in_38)
 
 
 
@@ -52,27 +51,6 @@ void EFF38_SUDDENLY(WORK_Other* ewk) {
 }
 
 
-
-/* provisional name */
-void Exit_Slide_in_38(WORK_Other* ewk) {
-    ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake;
-    if (--Select_Start[ewk->master_id] < 0) {
-        Select_Start[ewk->master_id] = 0;
-    }
-    ewk->wu.routine_no[1] = 0;
-    ewk->wu.routine_no[6] = 0;
-    if (Order[ewk->wu.dir_old] != 1) {
-        ewk->wu.routine_no[0] = Order[ewk->wu.dir_old];
-        return;
-    }
-    if (ewk->wu.vital_old == 0x7F) {
-        ewk->wu.routine_no[0] = 5;
-        Order[ewk->wu.dir_old] = 5;
-        return;
-    }
-    ewk->wu.routine_no[0] = 0;
-    Order[ewk->wu.dir_old] = 0;
-}
 
 void EFF38_SLIDE_IN(WORK_Other* ewk) {
     u16 cut = Cut_Cut_Sub(3);
@@ -107,6 +85,29 @@ void EFF38_SLIDE_IN(WORK_Other* ewk) {
         }
         break;
     }
+}
+
+
+
+/* provisional name */
+void Exit_Slide_in_38(WORK_Other* ewk) {
+    ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake;
+    if (--Select_Start[ewk->master_id] < 0) {
+        Select_Start[ewk->master_id] = 0;
+    }
+    ewk->wu.routine_no[1] = 0;
+    ewk->wu.routine_no[6] = 0;
+    if (Order[ewk->wu.dir_old] != 1) {
+        ewk->wu.routine_no[0] = Order[ewk->wu.dir_old];
+        return;
+    }
+    if (ewk->wu.vital_old == 0x7F) {
+        ewk->wu.routine_no[0] = 5;
+        Order[ewk->wu.dir_old] = 5;
+        return;
+    }
+    ewk->wu.routine_no[0] = 0;
+    Order[ewk->wu.dir_old] = 0;
 }
 
 

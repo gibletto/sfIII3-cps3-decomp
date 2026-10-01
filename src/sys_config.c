@@ -469,9 +469,9 @@ void config_top_default(void) {
     s8* dst;
     if ((p1sw_0 & 0x30) == 0x30 && (p1sw_1 & 0x30) != 0x30) {
         table = sys_cfg_default_tbl[Cabinet_Type];
-        if (Area_Type) {
+        if (Area_Type != 0) {
             ix = Area_Type;
-        } else if (Area_Alt_Flag) {
+        } else if (Area_Alt_Flag != 0) {
             ix = 6;
         } else {
             ix = Area_Type;
@@ -506,7 +506,7 @@ void config_top_default(void) {
         Config_No_1 = 0;
         Config_No_2 = 0;
     }
-    if (Area_Type) {
+    if (Area_Type != 0) {
         tilemap_print_string(0, 0, 0xFFFF, (TM_STRING*)config_reset_guide_scr);
     } else {
         tilemap_print_script_seq(0, 0, 0xFFFF, (TMSCRIPT*)cfg_top_guide_jp);
@@ -522,7 +522,7 @@ u32 config_top_save_exit(void)
     s8 *dst;
     u32 ret;
     if ((~p1sw_1 & p1sw_0 & 0x10) == 0) {
-        if (Area_Type == 0) {
+        if (!Area_Type) {
             return ((s32 (*)())tilemap_print_script_seq)(0, 0, 0xFFFF, cfg_top_guide_jp);
         }
         return ((s32 (*)())tilemap_print_string)(0, 0, 0xFFFF, config_top_guide_scr);
@@ -564,7 +564,7 @@ u32 config_top_save_exit(void)
     }
     ret = 0;
     if (cfg_changed != 0) {
-        if (Area_Type == 0) {
+        if (!Area_Type) {
             tilemap_chunk_copy_16b((s16 *)(SS_RAM + 0x8000), (char *)sys_font_cg, 140);
         }
         tilemap_fill_all(0, 0x20);
@@ -639,7 +639,7 @@ void sysconfig_draw(void) {
 
 /* provisional name */
 void sysconfig_select(void) {
-    if (Area_Type) {
+    if (Area_Type != 0) {
         cfg_cursor = menu_cursor_vtick(1, 5, cfg_item_max, cfg_cursor, 1);
     } else {
         cfg_cursor = menu_cursor_vtick(2, 4, cfg_item_max, cfg_cursor, 1);
@@ -663,7 +663,7 @@ void sysconfig_select(void) {
             if (cfg_cursor > cfg_cursor_old) {
                 cfg_cursor_old = cfg_cursor;
                 cfg_cursor++;
-                if (Win_Point_Split) {
+                if (Win_Point_Split != 0) {
                     cfg_cursor++;
                 }
             } else {
@@ -683,7 +683,7 @@ void sysconfig_select(void) {
             } else {
                 cfg_cursor_old = cfg_cursor;
                 cfg_cursor--;
-                if (Win_Point_Split) {
+                if (Win_Point_Split != 0) {
                     cfg_cursor--;
                 }
             }
@@ -769,10 +769,10 @@ void sysconfig_coin(void) {
                 cfg_coin = cfg_coin_sel;
             }
         } else {
-            if (Free_Play_Enable) {
+            if (Free_Play_Enable != 0) {
                 step = config_modify_step();
                 cfg_coin += step;
-                if (event_off_flag) {
+                if (event_off_flag != 0) {
                     if (cfg_coin < 0) {
                         cfg_coin = 18;
                     }
@@ -797,7 +797,7 @@ void sysconfig_coin(void) {
             } else {
                 step = config_modify_step();
                 cfg_coin += step;
-                if (event_off_flag) {
+                if (event_off_flag != 0) {
                     if (cfg_coin < 0) {
                         cfg_coin = 17;
                     }
@@ -818,17 +818,17 @@ void sysconfig_coin(void) {
                     cfg_cont_forced = 1;
                     cfg_continue = 1;
                 }
-            } else if (Free_Play_Enable && cfg_coin == 18) {
+            } else if (Free_Play_Enable != 0 && cfg_coin == 18) {
                 cfg_coin_special = 1;
                 cfg_cont_forced = 0;
-            } else if (cfg_cont_forced) {
+            } else if (cfg_cont_forced != 0) {
                 cfg_cont_forced = 0;
                 cfg_continue = 0;
             }
         }
         break;
     }
-    if (Area_Type) {
+    if (Area_Type != 0) {
         tilemap_print_string(0, 0, 0xFFFF, sysconfig_modify_guide);
     } else {
         tilemap_print_script_seq(0, 0, 0xFFFF, sys_cfg_item_guide_jp);

@@ -26,7 +26,7 @@ void metamor_color_trans(s16 pl, s16 ix) {
     u16* src;
     u16* src2;
     s16 i;
-    if (ix != 0) {
+    if (ix) {
         src = metamor_color_ptr_tbl[ix] + Player_Color[pl] * 64;
         for (i = 0; i < 64; i++) {
             *dst++ = *src;
@@ -53,7 +53,7 @@ void metamor_color_copy(s16 page) {
     dst = (u16*)COLOR_RAM + (page == 1) * 0x400;
     dst += 0x40;
     dst2 = dst + 0x200;
-    src = (u16*)COLOR_RAM + (page == 0) * 0x400;
+    src = (u16*)COLOR_RAM + (!page) * 0x400;
     src += 0x40;
     src2 = src + 0x200;
     for (i = 0; i < 0x180; i++) {
@@ -67,7 +67,7 @@ void metamor_color_copy(s16 page) {
 void metamor_color_store(s16 pl) {
     u16* src = (u16*)COLOR_RAM + (pl == 1) * 0x400;
     u16* src2;
-    s16 i;
+    s32 i;
     src += 0x40;
     src2 = src + 0x80;
     for (i = 0; i < 64; i++) {

@@ -273,7 +273,7 @@ void Text_Fill_Upper(s16 attr, u16 code) {
 /* provisional name */
 s32 Text_Fill_Lower(s16 attr, u16 code) {
     u16* p = (u16*)(SS_RAM + 0x2000);
-    s32 att = attr | ((code & 0x100) >> 8);
+    s16 att = attr | ((code & 0x100) >> 8);
     do {
         p[0] = code;
         p[1] = att;
@@ -355,7 +355,7 @@ u32 ranking_insert_all_four(s16 pl)
          Stock_Win_Record[pl];
     p[(char)(ix * 20) + 0xc] = cpu_grade[(s16)(pl * ((s16)(344)))];
     p[(char)(ix * 20) + 0xd] = Best_Grade[pl];
-    if (Break_Com[ix][0] == 0) {
+    if (!Break_Com[ix][0]) {
       p[(char)(ix * 20) + 0x11] = 0;
     }
     else {
@@ -376,7 +376,7 @@ u32 ranking_insert_all_four(s16 pl)
     }
     v = insert_ranking_cpu_grade(id);
     p[pl * 4 + 2] = v;
-    if (p[pl * 4 + 2] == 0) {
+    if (!p[pl * 4 + 2]) {
       side = id ^ 1;
     }
     else {
@@ -385,7 +385,7 @@ u32 ranking_insert_all_four(s16 pl)
     p[side * 4 + 2] = 0xff;
     v = insert_ranking_grade(id);
     p[pl * 4 + 3] = v;
-    if (p[pl * 4 + 3] == 0) {
+    if (!p[pl * 4 + 3]) {
       p[(id ^ 1) * 4 + 3] = 0xff;
     }
     else {
@@ -473,8 +473,8 @@ s32 insert_ranking_cpu_grade(s16 PL_id) {
 
 /* provisional name */
 s32 insert_ranking_grade(s16 PL_id) {
-    s16 i;
-    s16 j;
+    s32 i;
+    s32 j;
     for (i = 0; i < 5; i++) {
         if (!((s32(*)())Check_Grade_Score)(PL_id, i)) {
             continue;
@@ -658,7 +658,7 @@ void Disp_Digit16x24(u32 value, s32 x_arg, s16 y, s32 attr_arg) {
         t = xx;
         t *= Digit[i];
         value -= t;
-        if ((First_Digit < 0) && Digit[i]) {
+        if ((First_Digit < 0) && Digit[i] != 0) {
             First_Digit = i;
         }
     }
@@ -742,12 +742,12 @@ s32 Cut_Cut_Cut(void) {
 
 
 s32 Cut_Cut_Sub(s16 cut) {
-    if (plw[0].wu.operator != 0) {
+    if (plw[0].wu.operator) {
         if (p1sw_0 & 0x3F0) {
             return cut;
         }
     }
-    if (plw[1].wu.operator != 0) {
+    if (plw[1].wu.operator) {
         if (p2sw_0 & 0x3F0) {
             return cut;
         }

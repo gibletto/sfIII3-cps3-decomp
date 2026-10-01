@@ -76,11 +76,7 @@ void set_init_posspeed_effK3(WORK* wk) {
     flag = (random_32_com() * 2) - 32;
     wk->xyz[0].disp.pos += flag;
     wk->xyz[1].disp.pos += random_16_com();
-    if (flag < 0) {
-        flag = 2;
-    } else {
-        flag = 0;
-    }
+    flag = (flag < 0) ? 2 : 0;
     ix = random_16_com() & 1;
     data[0] = effK3_isp_table[wk->dm_attlv][flag + ix][0];
     data[2] = effK3_isp_table[wk->dm_attlv][flag + ix][1];

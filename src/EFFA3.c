@@ -126,7 +126,7 @@ s32 effect_A3_init(s16 type, s16 a, s16 b, s16 c, s16 d, s16 e, s16 f, s16 g, s1
 s32 effect_A4_move(WORK_Other* ewk)
 {
 
-    if (ewk->wu.routine_no[0] != 0) {
+    if (ewk->wu.routine_no[0]) {
         return ewk->wu.routine_no[0];
     }
     if (--ewk->wu.dir_timer != 0) {

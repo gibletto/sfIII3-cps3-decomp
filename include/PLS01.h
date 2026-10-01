@@ -31,6 +31,7 @@ s32 check_sankaku_tobi(PLW* wk);
 s32 check_stand_up(PLW* wk);
 s32 check_turn_to_back(PLW* wk);
 s32 check_walking_lv_dir(PLW* wk);
+s32 check_walking_lv_dir2(PLW* wk);
 s32 check_F_R_step(PLW* wk);
 void jumping_union_process(WORK* wk, s16 num);
 void remake_sankaku_tobi_mvxy(WORK* wk, u8 kabe);

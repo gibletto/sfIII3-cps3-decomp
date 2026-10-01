@@ -264,7 +264,7 @@ void end_e00_3000(void) {
         break;
     case 2:
         bgw_ptr->free--;
-        if (bgw_ptr->free < 1) {
+        if (bgw_ptr->free <= 0) {
             bgw_ptr->r_no_1++;
         } else {
             Frame_Up(0xC0, 0x30, 1, 1);

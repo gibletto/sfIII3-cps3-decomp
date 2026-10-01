@@ -104,6 +104,19 @@ void cal_bg_speed_data_y(s16 bg_num, s16 tm, s16 dummy) {
 
 
 
+/* provisional name: a human player has just pressed a button, unreferenced */
+s32 pl_shot_trg_check(void) {
+    if (plw[0].wu.operator && ((u16)(~p1sw_1 & p1sw_0) & 0x3F0)) {
+        return 1;
+    }
+    if (plw[1].wu.operator && ((u16)(~p2sw_1 & p2sw_0) & 0x3F0)) {
+        return 1;
+    }
+    return 0;
+}
+
+
+
 void TATE00(void) {
     void (*jump_tbl[4])() = { ta0_init00, ta0_init01, ta0_init02, ta0_move };
     jump_tbl[bg_w.bg_routine]();

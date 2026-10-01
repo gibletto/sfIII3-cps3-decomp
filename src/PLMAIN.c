@@ -522,7 +522,7 @@ void sag_normal(PLW* wk) {
 void sag_timer(PLW* wk) {
     switch (wk->sa->sa_rno) {
     case 0:
-        if (wk->sa->store) {
+        if (wk->sa->store != 0) {
             wk->sa->sa_rno = 1;
             wk->sa->ok = 1;
             wk->sa->id_arts++;
@@ -562,7 +562,7 @@ void sag_timer(PLW* wk) {
         }
         break;
     case 3:
-        if (Timer_Freeze) {
+        if (Timer_Freeze != 0) {
             break;
         }
         wk->sa->sa_rno = 4;

@@ -88,9 +88,8 @@ const s16 sky_nm_damage_tbl[83] = {
     112, 113, 114,
 };
 
-/* Stored after sky_nm_damage_tbl. Nothing in the program refers to it by name or address; if it is read,
-   it is through an index past the end of sky_nm_damage_tbl. */
-const s16 sky_nm_damage_tbl_tail[83] = {
+/* read by get_sky_nm2_damage, which nothing calls */
+const s16 sky_nm2_damage_tbl[83] = {
     88, 88, 88, 88, 88, 88, 88, 88,
     88, 88, 88, 88, 88, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0,
@@ -132,9 +131,8 @@ const s16 kagami_damage_tbl[83] = {
     112, 113, 114,
 };
 
-/* Stored after kagami_damage_tbl. Nothing in the program refers to it by name or address; if it is read,
-   it is through an index past the end of kagami_damage_tbl. */
-const s16 kagami_damage_tbl_tail[83] = {
+/* read by get_kagami2_damage, which nothing calls */
+const s16 kagami2_damage_tbl[83] = {
     64, 64, 64, 64, 64, 64, 64, 64,
     64, 64, 67, 68, 69, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0,

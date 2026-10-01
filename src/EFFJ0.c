@@ -20,7 +20,6 @@
 #include "EFFECT.h"
 #include "EFFJ0.h"
 
-#pragma inline(effJ2_trans)
 
 
 
@@ -117,17 +116,6 @@ void effect_J1_move(void)
   return;
 }
 
-/* provisional name */
-void effJ2_trans(WORK* ewk) {
-    ewk->cg_number = (ewk->cg_number + 1) & 0x7FFF;
-    if (ewk->cg_number == 0) {
-        ewk->cg_number = 1;
-    }
-    ewk->position_x = bg_w.bgw[1].wxy[0].disp.pos;
-    ewk->position_y = bg_w.bgw[1].wxy[1].disp.pos;
-    sort_push_request3(ewk);
-}
-
 
 
 void effect_J2_move(WORK_Other_CONN* ewk) {
@@ -154,7 +142,7 @@ void effect_J2_move(WORK_Other_CONN* ewk) {
         ewk->conn[0].chr += Bonus_Stage_Level % 10;
         break;
     case 1:
-        if (ewk->wu.dead_f == 1 || Break_Into || --ewk->wu.dir_timer <= 0) {
+        if (ewk->wu.dead_f == 1 || Break_Into || --ewk->wu.dir_timer < 1) {
             ewk->wu.disp_flag = 0;
             ewk->wu.routine_no[0] = 2;
         } else {
@@ -169,6 +157,19 @@ void effect_J2_move(WORK_Other_CONN* ewk) {
         push_effect_work(&ewk->wu);
         break;
     }
+}
+
+
+
+/* provisional name */
+void effJ2_trans(WORK* ewk) {
+    ewk->cg_number = (ewk->cg_number + 1) & 0x7FFF;
+    if (ewk->cg_number == 0) {
+        ewk->cg_number = 1;
+    }
+    ewk->position_x = bg_w.bgw[1].wxy[0].disp.pos;
+    ewk->position_y = bg_w.bgw[1].wxy[1].disp.pos;
+    sort_push_request3(ewk);
 }
 
 

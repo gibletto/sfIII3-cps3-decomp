@@ -98,7 +98,7 @@ void effect_B5_move(WORK_Other* ewk) {
 
 s16 * current_name_move(WORK_Other* ewk, NAME_WK* np)
 {
-    s32 pat;
+    s16 pat;
     s16 r_no;
 
     if (np->index != ewk->wu.old_rno[2]) {

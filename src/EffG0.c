@@ -133,8 +133,8 @@ void Flash_G0(WORK_Other_CONN* ewk) {
 
 /* provisional name */
 s16 score_bunkai_G0(WORK_Other_CONN* ewk, u32 tsc) {
-    s16 noobjans = 0;
-    s16 i;
+    s32 noobjans = 0;
+    s32 i;
     s16 ixs[6];
     s16 ixa[6];
     for (i = 5; i > 0; i--) {

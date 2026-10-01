@@ -171,7 +171,7 @@ void pli_3000(void) {
     if (plw[0].player_number == PL_URIEN || plw[1].player_number == PL_URIEN) {
         effect_M4_init(7);
     }
-    if (!plw[0].player_number || !plw[1].player_number) {
+    if (plw[0].player_number == 0 || plw[1].player_number == 0) {
         effect_M4_init(0);
     }
     effect_M4_init(3);

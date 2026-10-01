@@ -48,6 +48,8 @@ void scr_11_20(void);
 void scr_11_22(void);
 void scr_12_21(void);
 void scr_12_22(void);
+void scr_11_22_2(void);
+void scr_12_21_2(void);
 s32 suzi_line_calc(s16 bg_num);
 s32 suzi_line_calc_fill(s16 bg_num);
 s32 suzi_line_calc_flat(s16 bg_num);

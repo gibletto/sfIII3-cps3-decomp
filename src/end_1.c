@@ -150,7 +150,7 @@ void end_100_0001(void) {
     switch (bgw_ptr->r_no_1) {
     case 0:
         if (Request_Fade(111, 1)) {
-            bgw_ptr->r_no_1 += 1;
+            bgw_ptr->r_no_1 = bgw_ptr->r_no_1 + 1;
             end_no_cut = 1;
             bgw_ptr->xy[0].disp.pos = end_1_pos[end_w.r_no_2][0];
             bgw_ptr->xy[1].disp.pos = end_1_pos[end_w.r_no_2][1];
@@ -161,7 +161,7 @@ void end_100_0001(void) {
         break;
     case 1:
         if (end_fade_complete()) {
-            bgw_ptr->r_no_1 += 1;
+            bgw_ptr->r_no_1 = bgw_ptr->r_no_1 + 1;
             end_no_cut = 0;
         }
         break;

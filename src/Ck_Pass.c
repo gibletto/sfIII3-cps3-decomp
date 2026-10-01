@@ -38,7 +38,7 @@ s32 ETC_Term_0008(PLW* wk)
 
 s32 ETC_Term_0009(PLW* wk)
 {
-    s32 ofs;
+    s16 ofs;
 
     /* returns the (s16-truncated) byte offset of this player's plw[] entry, or 0 */
     ofs = (s16)(wk->wu.id * sizeof(PLW));
@@ -509,6 +509,24 @@ s32 Check_Attack_Direction(PLW* wk, WORK* em) {
 
 
 /* provisional name */
+/* provisional name */
+s32 Check_Special_Tech_ID(PLW* wk, WORK* em, s16 VS_Technique, u8 SP_Tech_ID, s16 Option) {
+    if (Option == 8 && Attack_Flag[wk->wu.id]) {
+        return 0;
+    }
+    if (em->kind_of_waza & 0xF8) {
+        return 0;
+    }
+    if (em->sp_tech_id == SP_Tech_ID) {
+        Counter_Attack[wk->wu.id] = 1;
+        VS_Tech[wk->wu.id] = VS_Technique;
+        return PASSIVE_X = 1;
+    }
+    return 0;
+}
+
+
+
 s32 Check_VS_Jump(wk, em, Option, Height)
 PLW* wk;
 PLW* em;
@@ -699,9 +717,9 @@ s32 Setup_Next_Stand_Timer(PLW* wk) {
 
 /* provisional name */
 s32 Check_Turn_Over(PLW* wk, WORK* em, s16 VS_Technique) {
-    if (Attack_Flag[wk->wu.id] == 0) {
-        if (em->routine_no[1] == 0) {
-            if (em->xyz[1].disp.pos == 0) {
+    if (!Attack_Flag[wk->wu.id]) {
+        if (!em->routine_no[1]) {
+            if (!em->xyz[1].disp.pos) {
                 if (Ck_Distance_XX(wk) != 0) {
                     if (--Turn_Over_Timer[wk->wu.id] != 0) {
                         return 0;

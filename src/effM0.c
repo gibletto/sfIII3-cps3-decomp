@@ -27,6 +27,30 @@
 
 
 
+void effect_M0_move(WORK_Other* ewk) {
+    switch (ewk->wu.routine_no[0]) {
+    case 0:
+        ewk->wu.routine_no[0]++;
+        animal_init(ewk);
+        break;
+    case 1:
+        if (!EXE_flag && !Game_pause) {
+            animal_control(ewk);
+        }
+        disp_pos_trans_entry(ewk);
+        break;
+    case 99:
+        ewk->wu.routine_no[0]++;
+        break;
+    default:
+        all_cgps_put_back(ewk);
+        push_effect_work(&ewk->wu);
+        break;
+    }
+}
+
+
+
 /* provisional name */
 void animal_init(WORK_Other* ewk) {
     s16 work_l = bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset;
@@ -81,30 +105,6 @@ void animal_init(WORK_Other* ewk) {
         ewk->wu.kage_prio = 71;
         ewk->wu.kage_char = 0;
         ewk->wu.rl_flag ^= 1;
-        break;
-    }
-}
-
-
-
-void effect_M0_move(WORK_Other* ewk) {
-    switch (ewk->wu.routine_no[0]) {
-    case 0:
-        ewk->wu.routine_no[0]++;
-        animal_init(ewk);
-        break;
-    case 1:
-        if (!EXE_flag && !Game_pause) {
-            animal_control(ewk);
-        }
-        disp_pos_trans_entry(ewk);
-        break;
-    case 99:
-        ewk->wu.routine_no[0]++;
-        break;
-    default:
-        all_cgps_put_back(ewk);
-        push_effect_work(&ewk->wu);
         break;
     }
 }

@@ -18,13 +18,23 @@
 #include "bg_sub.h"
 #include "EFF15.h"
 
-static void eff15_kemuri(WORK_Other* ewk);
+void eff15_kemuri(WORK_Other* ewk);
 
-static void eff15_koishi(WORK_Other* ewk);
+void eff15_koishi(WORK_Other* ewk);
 
 
 
-static void eff15_kemuri(WORK_Other* ewk) {
+void effect_15_move(WORK_Other* ewk) {
+    if (ewk->wu.type) {
+        eff15_koishi(ewk);
+    } else {
+        eff15_kemuri(ewk);
+    }
+}
+
+
+
+void eff15_kemuri(WORK_Other* ewk) {
     WORK* oya_ptr;
     (void)ewk;
     (void)oya_ptr;
@@ -32,7 +42,7 @@ static void eff15_kemuri(WORK_Other* ewk) {
 
 
 
-static void eff15_koishi(WORK_Other* ewk) {
+void eff15_koishi(WORK_Other* ewk) {
     WORK* oya_ptr = (WORK*)ewk->my_master;
     switch (ewk->wu.routine_no[0]) {
     case 0:
@@ -86,16 +96,6 @@ static void eff15_koishi(WORK_Other* ewk) {
         all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
         break;
-    }
-}
-
-
-
-void effect_15_move(WORK_Other* ewk) {
-    if (ewk->wu.type) {
-        eff15_koishi(ewk);
-    } else {
-        eff15_kemuri(ewk);
     }
 }
 

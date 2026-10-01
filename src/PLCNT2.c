@@ -29,16 +29,16 @@
 #include "EFFECT.h"
 #include "PLCNT2.h"
 
-static void move_P1_move_P2_bonus(s16* field_work);
+void move_P1_move_P2_bonus(s16* field_work);
 
-static void move_P2_move_P1_bonus(s16* field_work);
+void move_P2_move_P1_bonus(s16* field_work);
 
 
 
 s32 Player_control_bonus(void) {
     s16 i;
     pl_eff_disp_stop = 0;
-    if (pcon_rno[0] + pcon_rno[1] == 0 || (!Game_pause && !EXE_flag)) {
+    if (pcon_rno[0] + pcon_rno[1] == 0 || (!Game_pause && EXE_flag == 0)) {
         pcon_timer++;
         pcon_timer &= 0x7FFF;
         player_bonus_process[pcon_rno[0]]();
@@ -56,7 +56,7 @@ s32 Player_control_bonus(void) {
         add_next_position(&plw[1]);
         check_cg_zoom();
     }
-    for (i = 47; i > 0; i--) {
+    for (i = 47; i >= 1; i--) {
         zanzou_table[0][i] = zanzou_table[0][i - 1];
         zanzou_table[1][i] = zanzou_table[1][i - 1];
     }
@@ -255,38 +255,6 @@ void setup_bs_scrrrl_bs2(void) {
 
 
 
-static void move_P1_move_P2_bonus(s16* field_work) {
-    Player_move_bonus(&plw[0], sw_to_lvbt(p1sw_0));
-    if (set_field_hosei_flag(&plw[0], field_work[0], 1) != 0) {
-        set_field_hosei_flag(&plw[0], field_work[1], 0);
-    }
-    Player_move_bonus(&plw[1], sw_to_lvbt(p2sw_0));
-    if (set_field_hosei_flag(&plw[1], field_work[2], 1) != 0) {
-        set_field_hosei_flag(&plw[1], field_work[3], 0);
-    }
-    if (Bonus_Game_Flag == 21) {
-        plw[1].wu.disp_flag = 0;
-    }
-}
-
-
-
-static void move_P2_move_P1_bonus(s16* field_work) {
-    Player_move_bonus(&plw[1], sw_to_lvbt(p2sw_0));
-    if (set_field_hosei_flag(&plw[1], field_work[2], 1) != 0) {
-        set_field_hosei_flag(&plw[1], field_work[3], 0);
-    }
-    Player_move_bonus(&plw[0], sw_to_lvbt(p1sw_0));
-    if (set_field_hosei_flag(&plw[0], field_work[0], 1) != 0) {
-        set_field_hosei_flag(&plw[0], field_work[1], 0);
-    }
-    if (Bonus_Game_Flag == 21) {
-        plw[0].wu.disp_flag = 0;
-    }
-}
-
-
-
 void move_player_work_bonus(void) {
     ichikannkei = check_work_position(&plw->wu, &plw[1].wu);
     set_rl_waza(&plw[0]);
@@ -308,6 +276,38 @@ void move_player_work_bonus(void) {
         return;
     }
     move_P2_move_P1_bonus(*bs_scrrrl);
+}
+
+
+
+void move_P1_move_P2_bonus(s16* field_work) {
+    Player_move_bonus(&plw[0], sw_to_lvbt(p1sw_0));
+    if (set_field_hosei_flag(&plw[0], field_work[0], 1) != 0) {
+        set_field_hosei_flag(&plw[0], field_work[1], 0);
+    }
+    Player_move_bonus(&plw[1], sw_to_lvbt(p2sw_0));
+    if (set_field_hosei_flag(&plw[1], field_work[2], 1) != 0) {
+        set_field_hosei_flag(&plw[1], field_work[3], 0);
+    }
+    if (Bonus_Game_Flag == 21) {
+        plw[1].wu.disp_flag = 0;
+    }
+}
+
+
+
+void move_P2_move_P1_bonus(s16* field_work) {
+    Player_move_bonus(&plw[1], sw_to_lvbt(p2sw_0));
+    if (set_field_hosei_flag(&plw[1], field_work[2], 1) != 0) {
+        set_field_hosei_flag(&plw[1], field_work[3], 0);
+    }
+    Player_move_bonus(&plw[0], sw_to_lvbt(p1sw_0));
+    if (set_field_hosei_flag(&plw[0], field_work[0], 1) != 0) {
+        set_field_hosei_flag(&plw[0], field_work[1], 0);
+    }
+    if (Bonus_Game_Flag == 21) {
+        plw[0].wu.disp_flag = 0;
+    }
 }
 
 

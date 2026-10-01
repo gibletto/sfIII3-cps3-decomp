@@ -110,7 +110,7 @@ s32 effe6_0003(WORK_Other* ewk)
         return ((s32 (*)())effe6_init_common)(ewk);
     case 1:
         char_move(&ewk->wu);
-        if (ewk->wu.cg_type == 0) {
+        if (!ewk->wu.cg_type) {
             return ((s32 (*)())disp_pos_trans_entry)(ewk);
         }
         ewk->wu.routine_no[2] = 99;

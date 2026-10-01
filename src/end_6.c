@@ -373,7 +373,7 @@ void end_601_3000(void) {
 
 
 void end_600_cell_set(void) {
-    s16 i;
+    s32 i;
     for (i = 0; i < 12; i++) {
         bg_cell_write(0, end_600_bg0_cell_tbl[i].ofs, end_600_bg0_cell_tbl[i].cell, (u32)end_600_scrn_data, 0, 0x220);
     }

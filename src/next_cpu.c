@@ -326,7 +326,7 @@ void Next_CPU_6th(void)
 /* provisional name */
 s32 After_Bonus(void) {
     void (*After_Bonus_Tbl[7])() = { After_Bonus_1st, After_Bonus_2nd, After_Bonus_3rd, After_Bonus_4th, Next_CPU_3rd, After_Bonus_6th, After_Bonus_End };
-    if (Break_Into) {
+    if (Break_Into != 0) {
         return 0;
     }
     SEL_CPU_X = 0;
@@ -608,7 +608,7 @@ u8 *Select_CPU_3rd(void)
             }
         }
         rv = (u32)Sel_EM_Complete;
-        if (Sel_EM_Complete[Player_id] != 0) {
+        if (Sel_EM_Complete[Player_id]) {
             SC_No[1]++;
             Setup_Next_Fighter();
             rv = (u32)VS_Index;
@@ -639,7 +639,7 @@ u8 *Select_CPU_3rd(void)
         break;
 
     case 3:
-        if (Scene_Cut != 0) {
+        if (Scene_Cut) {
             S_Timer = 1;
         }
         if (--S_Timer == 0) {
@@ -655,7 +655,7 @@ u8 *Select_CPU_3rd(void)
         effect_38_init(COM_id, COM_id + 11, My_char[COM_id], 1, 2);
         Order[COM_id + 11] = 1;
         Order_Timer[COM_id + 11] = 1;
-        if (EM_id != 0) {
+        if (EM_id) {
             effect_98_init(COM_id, COM_id + 40, Super_Arts[COM_id], 2);
             Order[COM_id + 40] = 1;
             Order_Timer[COM_id + 40] = 1;
@@ -702,7 +702,7 @@ u8 *Select_CPU_3rd(void)
         break;
 
     case 7:
-        if (Scene_Cut != 0) {
+        if (Scene_Cut) {
             S_Timer = 1;
         }
         if (--S_Timer == 0) {
@@ -840,7 +840,7 @@ void Next_Bonus_End(void) {
 
 s16 Next_Q(void) {
     void (*Next_Q_Tbl[4])() = { Next_Q_1st, Next_Q_2nd, Next_Q_3rd, PL_Sel_1st };
-    if (Break_Into) {
+    if (Break_Into != 0) {
         return 0;
     }
     SEL_CPU_X = 0;

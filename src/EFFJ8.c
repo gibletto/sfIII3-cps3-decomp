@@ -373,7 +373,7 @@ void dragonfly_move_0004(WORK_Other* ewk) {
         break;
     case 1:
         ewk->wu.dir_timer--;
-        if (ewk->wu.dir_timer <= 0) {
+        if (ewk->wu.dir_timer < 1) {
             ewk->wu.routine_no[2]++;
             ewk->wu.dir_timer = 180;
             ewk->wu.mvxy.a[0].sp = 0x364FA;
@@ -384,7 +384,7 @@ void dragonfly_move_0004(WORK_Other* ewk) {
         break;
     case 2:
         ewk->wu.dir_timer--;
-        if (ewk->wu.dir_timer <= 0) {
+        if (ewk->wu.dir_timer < 1) {
             dragonfly_move_next(ewk);
             ewk->wu.xyz[0].disp.pos = 627;
             ewk->wu.xyz[0].disp.low = 0;

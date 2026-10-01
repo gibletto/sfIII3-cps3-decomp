@@ -369,7 +369,7 @@ void opening_init2(void) {
 
 
 void opning_init_00000(void) {
-    s16 i;
+    u16 i;
     op_w.r_no_1++;
     op_end_flag = 0;
     bg_vbl_trans_flag = 0;
@@ -467,7 +467,7 @@ void opning_init_02000(void) {
     op_w.index = 0;
     op_sound_status = 0;
     op_plmove_timer = 0;
-    if ((Demo_Sound == 0 && Demo_Flag == 0) || Keep_BGM_Flag != 0) {
+    if ((Demo_Sound == 0 && Demo_Flag == 0) || Keep_BGM_Flag) {
         sound_reg_level_set(0, 128);
     } else {
         sound_reg_level_set(0, 0);

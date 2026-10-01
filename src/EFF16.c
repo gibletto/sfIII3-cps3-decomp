@@ -16,25 +16,6 @@
 #include "aboutspr.h"
 #include "EFF16.h"
 
-#pragma inline(eff16_trans)
-
-
-
-/* provisional name */
-void eff16_trans(WORK* ewk) {
-    ewk->cg_number = (ewk->cg_number + 1) & 0x7FFF;
-    if (ewk->cg_number == 0) {
-        ewk->cg_number = 1;
-    }
-    ewk->position_x = bg_w.bgw[1].wxy[0].disp.pos;
-    ewk->position_y = bg_w.bgw[1].wxy[1].disp.pos;
-    if (ewk->position_z == ewk->next_z) {
-        ewk->position_z = ewk->my_priority;
-    } else {
-        ewk->position_z = ewk->next_z;
-    }
-    sort_push_request3(ewk);
-}
 
 
 
@@ -84,6 +65,24 @@ void effect_16_move(WORK_Other* ewk) {
         push_effect_work(&ewk->wu);
         break;
     }
+}
+
+
+
+/* provisional name */
+void eff16_trans(WORK* ewk) {
+    ewk->cg_number = (ewk->cg_number + 1) & 0x7FFF;
+    if (ewk->cg_number == 0) {
+        ewk->cg_number = 1;
+    }
+    ewk->position_x = bg_w.bgw[1].wxy[0].disp.pos;
+    ewk->position_y = bg_w.bgw[1].wxy[1].disp.pos;
+    if (ewk->position_z == ewk->next_z) {
+        ewk->position_z = ewk->my_priority;
+    } else {
+        ewk->position_z = ewk->next_z;
+    }
+    sort_push_request3(ewk);
 }
 
 

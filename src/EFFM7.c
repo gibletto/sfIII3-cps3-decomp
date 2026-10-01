@@ -404,10 +404,10 @@ s32 effect_M8_init(WORK* oya, u8 data) {
 
 
 void Player_control(void) {
-    s32 i;
-    s32 j;
+    s16 i;
+    s16 j;
     pl_eff_disp_stop = 0;
-    if (((pcon_rno[0] + pcon_rno[1]) == 0) || (!Game_pause && !EXE_flag)) {
+    if (((pcon_rno[0] + pcon_rno[1]) == 0) || (!Game_pause && EXE_flag == 0)) {
         pcon_timer++;
         pcon_timer &= 0x7FFF;
         set_scrrrl();

@@ -767,11 +767,7 @@ void Damage_29000(PLW* wk) {
         }
         wk->wu.routine_no[3]++;
         datadrs = exdm_ix_data[wk->wu.dm_exdm_ix][wk->player_number];
-        if (twk->wu.rl_flag) {
-            wk->wu.xyz[0].disp.pos = twk->wu.xyz[0].disp.pos - datadrs[0];
-        } else {
-            wk->wu.xyz[0].disp.pos = twk->wu.xyz[0].disp.pos + datadrs[0];
-        }
+        wk->wu.xyz[0].disp.pos = (twk->wu.rl_flag) ? twk->wu.xyz[0].disp.pos - datadrs[0] : twk->wu.xyz[0].disp.pos + datadrs[0];
         wk->wu.xyz[1].disp.pos = twk->wu.xyz[1].disp.pos + datadrs[1];
         wk->wu.rl_flag = (wk->wu.dm_rl + datadrs[2]) & 1;
         wk->wu.cg_olc_ix = datadrs[3];
@@ -813,7 +809,7 @@ void check_dmpat_to_dmpat_sky(PLW* _p0) {}
 
 
 s32 Damage_30000(PLW* wk) {
-    s32 rc;
+    s16 rc;
     switch (rc = wk->wu.routine_no[3]) {
     case 0:
         wk->wu.routine_no[3]++;
@@ -1258,6 +1254,8 @@ void get_damage_reaction_data(PLW* wk) {
         }
     }
 }
+
+
 
 void damage_atemi_setup(PLW* wk, PLW* ek) {
     wk->wu.routine_no[1] = wk->wu.cmmd.koc;

@@ -20,9 +20,9 @@
 
 
 void effect_23_move(WORK_Other_CONN* ewk) {
-    s16 i;
-    s16 j;
-    s16 slot;
+    s32 i;
+    s32 j;
+    s32 slot;
     switch (ewk->wu.routine_no[0]) {
     case 0:
         ewk->wu.routine_no[0]++;
@@ -38,7 +38,7 @@ void effect_23_move(WORK_Other_CONN* ewk) {
         Scrn_Y_Set_R(0, eff23_anm_tbl[ewk->wu.cg_ix].y);
         break;
     case 1:
-        if (EXE_flag == 0 && Game_pause == 0) {
+        if (!EXE_flag && !Game_pause) {
             ewk->wu.cg_ctr--;
             if (ewk->wu.cg_ctr <= 0) {
                 ewk->wu.cg_ix++;

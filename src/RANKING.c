@@ -169,7 +169,7 @@ void Ranking_00_2nd(void) {
 
 void Ranking_00_3rd(void) {
     if (Flash_Sign[0] == 1) {
-        D_No[1] += 1;
+        D_No[1] = D_No[1] + 1;
         D_Timer = 1;
     }
 }
@@ -219,7 +219,7 @@ void Ranking_01(void) {
 
 
 void Ranking_01_1st(void) {
-    D_No[1] += 1;
+    D_No[1] = D_No[1] + 1;
     Suicide[0] = 0;
     tilemap_fill_all(0, 32);
     Present_Rank[0] = 99;
@@ -615,8 +615,8 @@ void Setup_Score_Obj(void) {
 
 /* provisional name */
 void Ranking_Init(void) {
-    s16 ix;
-    s16 j;
+    u16 ix;
+    u16 j;
     RANK_DATA* dst = Ranking_Data;
     const RANK_DATA* src = Rank_Default_Data;
     RANK_DATA* entry;

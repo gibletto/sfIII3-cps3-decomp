@@ -54,8 +54,8 @@ s32 sw_to_lvbt(s32 value) {
 
 /* provisional name */
 void sync_fam_set(s16 num_of_bg) {
-    s16 x;
-    s16 y;
+    s32 x;
+    s32 y;
     bg_pos_hosei_sub3(num_of_bg);
     x = bg_w.bgw[num_of_bg].position_x;
     y = bg_w.bgw[num_of_bg].position_y;
@@ -68,8 +68,8 @@ void sync_fam_set(s16 num_of_bg) {
 
 /* provisional name */
 void sync_fam_set2(s16 num_of_bg) {
-    s16 x;
-    s16 y;
+    s32 x;
+    s32 y;
     bg_pos_hosei_sub2(num_of_bg);
     x = bg_w.bgw[num_of_bg].position_x;
     y = bg_w.bgw[num_of_bg].position_y;
@@ -83,20 +83,12 @@ void sync_fam_set2(s16 num_of_bg) {
 void sync_fam_set3(s16 bg_no) {
     BGW* bgw_ptr = &bg_w.bgw[bg_no];
     u16 pos;
-    s16 pos2;
-    s16 posy2;
-    s16 x;
-    s16 y;
-    if (bg_w.chase_flag & 0xF) {
-        pos2 = bgw_ptr->chase_xy[0].disp.pos;
-    } else {
-        pos2 = bgw_ptr->wxy[0].disp.pos;
-    }
-    if (bg_w.chase_flag & 0xF0) {
-        posy2 = bgw_ptr->chase_xy[1].disp.pos;
-    } else {
-        posy2 = bgw_ptr->xy[1].disp.pos;
-    }
+    u16 pos2;
+    u16 posy2;
+    u16 x;
+    u16 y;
+    pos2 = (bg_w.chase_flag & 0xF) ? bgw_ptr->chase_xy[0].disp.pos : bgw_ptr->wxy[0].disp.pos;
+    posy2 = (bg_w.chase_flag & 0xF0) ? bgw_ptr->chase_xy[1].disp.pos : bgw_ptr->xy[1].disp.pos;
     pos = pos2 & 0x3FF;
     pos -= bg_w.pos_offset;
     pos2 -= bg_w.pos_offset;
@@ -136,6 +128,27 @@ s32 range_x_check(WORK* wk) {
     } else {
         return 1;
     }
+}
+
+
+
+/* provisional name */
+s32 range_x_check2(WORK* wk) {
+    s16 left;
+    s16 right;
+    s16 w;
+    left = bg_w.bgw[wk->my_family - 1].abs_x;
+    w = 320;
+    left -= w;
+    if (left > wk->xyz[0].disp.pos) {
+        return 0;
+    }
+    right = bg_w.bgw[wk->my_family - 1].wxy[0].disp.pos;
+    right += w;
+    if (wk->xyz[0].disp.pos > right) {
+        return 0;
+    }
+    return 1;
 }
 
 
@@ -359,7 +372,7 @@ void disp_pos_trans_entry_rs(WORK_Other* ewk) {
 /* provisional name */
 void disp_pos_trans_entry_seraph(WORK_Other* ewk)
 {
-    if (seraph_flag != 0) {
+    if (seraph_flag) {
         suzi_sync_pos_set(ewk);
         sort_push_request4(&ewk->wu);
     }
@@ -540,7 +553,7 @@ s32 either_pl_hissatsu_check(void) {
 
 
 s32 compel_dead_check(WORK_Other* ewk) {
-    if (bg_w.compel_on[0] && ewk->wu.dead_f) {
+    if (bg_w.compel_on[0] != 0 && ewk->wu.dead_f != 0) {
         return 1;
     }
     return 0;

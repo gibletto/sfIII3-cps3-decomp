@@ -30,7 +30,7 @@ and loads it over the ROM files.
     data/     game tables
     include/  headers
     lib/      the compiler's run-time routines, as linked into the program
-    bin/      Hitachi SHC toolchain (two stages patched, see below; the originals are in bin/original)
+    bin/      Hitachi SHC toolchain (four stages rebuilt, see below; the originals are in bin/original)
     sf3.sub   link order and section addresses
     functions.tsv  every routine of the arcade program: arcade address, size, name, file
     tools/    cps3rom.py: reads the ROM set, writes the new one
@@ -51,13 +51,15 @@ throughout the ROM but Release 26 doesn't:
 - `sts macl` is never scheduled ahead of the multiply it reads (a Release 26 scheduling fault), so array indexing
   can be written plainly.
 
-`shcpep.exe` and `shcgen.exe` are rebuilt from a decompilation of the originals; `shcmdl.exe` and `shcasm.exe` are
-patched. Setting `SWITCH_ARCADE_BRANCH`, `SWITCH_ARCADE_JUMP`, `XJUMP_OFF`, `PEP_R0_FORGET`, `SLOT_NO_STACK`,
-`GEN_TST_R0` and `MDL_ARG_CONST` to 0 gives Release 26's behaviour back. The original files are in `bin/original`.
+The four changed stages (`shcmdl.exe`, `shcgen.exe`, `shcpep.exe` and `shcasm.exe`) are rebuilt from a C
+decompilation of the originals, and each rule is a setting in that source. With every rule off they give the same
+output as Release 26. Setting `SWITCH_ARCADE_BRANCH`, `SWITCH_ARCADE_JUMP`, `XJUMP_OFF`, `PEP_R0_FORGET`,
+`SLOT_NO_STACK`, `GEN_TST_R0`, `MDL_ARG_CONST` and `ASM_SPECREG` to 0 gives Release 26's behaviour back. The
+original files are in `bin/original`.
 
-With the changes, 7,262 of the 9,822 C routines compile to the arcade's instructions (3,110 with the original
-Release 26), and 5,481 to its exact bytes (1,015). Over 254 Fightcade replays compared with the original ROM,
-245 keep identical game state throughout (218 before) and 227 identical slowdown (214).
+With the changes, 7,406 of the 9,942 C routines compile to the arcade's instructions (3,110 of 9,822 with the
+original Release 26), and 5,560 to its exact bytes (1,015). Over 254 Fightcade replays compared with the original ROM,
+240 keep identical game state throughout (218 before) and 231 identical slowdown (214).
 
 ## Fightcade replays
 

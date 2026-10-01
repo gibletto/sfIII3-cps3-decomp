@@ -43,7 +43,7 @@ void effect_C0_move(WORK_Other* ewk) {
             ewk->wu.routine_no[0]++;
             break;
         }
-        if (EXE_flag == 0 && Game_pause == 0 && mwk->sa_stop_flag != 1) {
+        if (!EXE_flag && !Game_pause && mwk->sa_stop_flag != 1) {
             if (mwk->cp->lgp > 13) {
                 hok = 3;
             } else {

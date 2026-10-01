@@ -312,7 +312,7 @@ shc src\EFF13_KOTP.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -n
 if errorlevel 1 goto fail
 shc src\eff14.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\eff14.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\EFF15.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\EFF15.obj >obj\shc.log 2>&1
+shc src\EFF15.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -noinline -object=obj\EFF15.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\EFF16.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\EFF16.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail

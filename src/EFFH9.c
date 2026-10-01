@@ -343,7 +343,7 @@ s32 effect_H9_init(PLW* wk) {
     ewk->wu.my_col_mode = 0x4200;
     ewk->wu.my_col_code = 92;
     ewk->num_of_conn = 3;
-    if (wk->wu.rl_flag) {
+    if (wk->wu.rl_flag != 0) {
         ix = 1;
     } else {
         ix = 0;

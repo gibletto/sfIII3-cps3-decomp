@@ -23,37 +23,6 @@
 
 
 
-/* provisional name */
-void effE2_sort_push(WORK* ewk, WORK* mwk) {
-    if (ewk->rl_flag) {
-        ewk->position_x = mwk->xyz[0].disp.pos + ewk->old_pos[0];
-    } else {
-        ewk->position_x = mwk->xyz[0].disp.pos - ewk->old_pos[0];
-    }
-    ewk->position_y = mwk->xyz[1].disp.pos + ewk->old_pos[1];
-    ewk->position_z = mwk->xyz[2].disp.pos + ewk->old_pos[2];
-    ewk->xyz[0].disp.pos = ewk->position_x;
-    ewk->xyz[1].disp.pos = ewk->position_y;
-    ewk->xyz[2].disp.pos = ewk->position_z;
-    sort_push_request8(ewk);
-}
-
-
-
-/* provisional name */
-void effe2_erase_or_die(WORK* wk) {
-    if (wk->cg_wca_ix != 0) {
-        wk->routine_no[1] = 1;
-        char_move_wca(wk);
-        sort_push_request8(wk);
-    } else {
-        wk->disp_flag = 0;
-        wk->routine_no[0] = 2;
-    }
-}
-
-
-
 void effect_E2_move(WORK_Other* ewk) {
     PLW* mwk = (PLW*)ewk->my_master;
     ewk->wu.hit_stop = mwk->wu.hit_stop;
@@ -132,6 +101,37 @@ void effect_E2_move(WORK_Other* ewk) {
         all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
         break;
+    }
+}
+
+
+
+/* provisional name */
+void effE2_sort_push(WORK* ewk, WORK* mwk) {
+    if (ewk->rl_flag) {
+        ewk->position_x = mwk->xyz[0].disp.pos + ewk->old_pos[0];
+    } else {
+        ewk->position_x = mwk->xyz[0].disp.pos - ewk->old_pos[0];
+    }
+    ewk->position_y = mwk->xyz[1].disp.pos + ewk->old_pos[1];
+    ewk->position_z = mwk->xyz[2].disp.pos + ewk->old_pos[2];
+    ewk->xyz[0].disp.pos = ewk->position_x;
+    ewk->xyz[1].disp.pos = ewk->position_y;
+    ewk->xyz[2].disp.pos = ewk->position_z;
+    sort_push_request8(ewk);
+}
+
+
+
+/* provisional name */
+void effe2_erase_or_die(WORK* wk) {
+    if (wk->cg_wca_ix != 0) {
+        wk->routine_no[1] = 1;
+        char_move_wca(wk);
+        sort_push_request8(wk);
+    } else {
+        wk->disp_flag = 0;
+        wk->routine_no[0] = 2;
     }
 }
 

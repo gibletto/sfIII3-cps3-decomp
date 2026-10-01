@@ -118,7 +118,7 @@ s32 set_tenguiwa(PLW* wk, u8 data) {
     s16 i;
     s16 j;
     u16 num;
-    s32 rv;
+    s16 rv;
     const u8* tengu;
     WORK* tmw;
     if (!data) {
@@ -259,8 +259,8 @@ void Att_JINNCHUUWATARI_EX(PLW* wk) {
 void mvxy_table_reader(PLW* wk) {
     PLW* twk = (PLW*)wk->wu.target_adrs;
     const s16* curr_kop = &homing_kop[wk->wu.kow][0];
-    s16 ex;
-    s16 ey;
+    u16 ex;
+    u16 ey;
     if (wk->wu.cg_type == 30) {
         setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
         wk->wu.mvxy.index++;

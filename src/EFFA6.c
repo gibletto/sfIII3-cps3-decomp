@@ -46,7 +46,7 @@ void effect_A6_move(WORK_Other_CONN* ewk) {
     const EFFA6_MESSAGE* mes;
     const CONN* conn_data;
     const u16* chr_data;
-    s32 variant;
+    s16 variant;
     s16 i;
     switch (ewk->wu.routine_no[0]) {
     case 0:

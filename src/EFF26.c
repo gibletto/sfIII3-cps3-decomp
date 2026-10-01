@@ -154,14 +154,14 @@ u32 eff26_03(WORK_Other* ewk)
     switch (ewk->wu.routine_no[1]) {
     case 0:
         ewk->wu.routine_no[1]++;
-        if (eff_hit_flag[oya->wu.type] != 0) {
+        if (eff_hit_flag[oya->wu.type]) {
             ewk->wu.routine_no[1] = 3;
             set_char_move_init(&ewk->wu, 0, ewk->wu.old_rno[1]);
             goto case_3;
         }
         /* fall through */
     case 1:
-        if (ewk->wu.hit_stop != 0 && EXE_obroll == 0) {
+        if (ewk->wu.hit_stop && EXE_obroll == 0) {
             char_move(&ewk->wu);
         }
         if (oya->wu.routine_no[1] < 2) {
@@ -182,7 +182,7 @@ u32 eff26_03(WORK_Other* ewk)
     case 3:
     case_3:
         ewk->wu.routine_no[1]++;
-        if (eff_hit_flag[ewk->wu.type] != 0) {
+        if (eff_hit_flag[ewk->wu.type]) {
             ewk->wu.routine_no[0] = 99;
             return (u32)ewk->wu.type * 2;
         }
@@ -194,7 +194,7 @@ u32 eff26_03(WORK_Other* ewk)
             ret = 0x38;
             if (ewk->wu.old_rno[2] & 1) {
                 ret = 0x3E;
-                if (ewk->wu.old_rno[5] > 0) {
+                if (ewk->wu.old_rno[5] >= 1) {
                     ret = effect_27_init(ewk, ewk->wu.old_rno[5]);
                 }
             }
@@ -335,7 +335,7 @@ s32 effect_26_init(WORK_Other* oya, s16 type26) {
     if (!lp_cnt) {
         return 0;
     }
-    if (type26 == 0) {
+    if (!type26) {
         effect_28_init(oya);
     }
     for (data_ptr = scr_obj_data26[type26], i = 0; i < lp_cnt; i++) {

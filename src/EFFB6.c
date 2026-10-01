@@ -54,7 +54,7 @@ s32 effect_B5_init(s16 PL_id) {
         ewk->wu.xyz[0].disp.low = 0;
         ewk->wu.char_index = 6;
         ewk->wu.char_table[0] = etc_char_table;
-        x += 24;
+        x = x + 24;
     }
     return 0;
 }

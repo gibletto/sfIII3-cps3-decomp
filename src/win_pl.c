@@ -370,8 +370,8 @@ void Win_03000(PLW* wk) {
 
 
 void Win_04000(PLW* wk) {
-    s16 work;
-    s16 work2;
+    s32 work;
+    s32 work2;
     bg_app_stop = 1;
     if (set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
         set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
@@ -412,7 +412,7 @@ void Win_04000(PLW* wk) {
 
 
 void Normal_normal_Winner(PLW* wk) {
-    s16 work;
+    u16 work;
     bg_app_stop = 1;
     if (set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
         set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
@@ -649,7 +649,7 @@ void Win_09000(PLW* wk) {
             PL_Wins[wk->wu.id] < Battle_Round[Play_Type] + 1) {
             break;
         }
-        if (poison_flag[wk->wu.id]) {
+        if (poison_flag[wk->wu.id] != 0) {
             break;
         }
         switch (work) {
@@ -674,11 +674,11 @@ void Win_09000(PLW* wk) {
         }
         break;
     default:
-        if (win_rno[0]) {
+        if (win_rno[0] != 0) {
             switch (win_rno[1]) {
             case 0:
                 char_move(&wk->wu);
-                if (wk->wu.cmwk[0]) {
+                if (wk->wu.cmwk[0] != 0) {
                     win_rno[1]++;
                     set_char_move_init(&wk->wu, 9, 39);
                 }
@@ -697,9 +697,9 @@ void Win_09000(PLW* wk) {
 
 
 void Win_10000(PLW* wk) {
-    s16 work;
-    s16 work2;
-    s16 id_w;
+    u16 work;
+    u16 work2;
+    u16 id_w;
     bg_app_stop = 1;
     id_w = wk->wu.id ^ 1;
     wk->wu.position_z = wk->wu.next_z = plw[id_w].wu.position_z + 1;
@@ -767,7 +767,7 @@ s16 q_em_distance_chk(PLW* wk) {
     s16 work;
     s16 id_w = wk->wu.id ^ 1;
     s16 rl_w = wk->wu.rl_flag ^ plw[id_w].wu.rl_flag;
-    if (wk->wu.rl_flag) {
+    if (wk->wu.rl_flag != 0) {
         work = wk->wu.xyz[0].disp.pos - plw[id_w].wu.xyz[0].disp.pos;
         if (work >= q_em_distance_tbl[plw[id_w].player_number][rl_w]) {
             return 1;
@@ -825,7 +825,7 @@ void q_keeping_action(PLW* wk) {
         }
         win_rno[1] = 1;
         set_char_move_init(&wk->wu, 9, 40);
-        wk->wu.rl_flag ^= 1;
+        wk->wu.rl_flag = wk->wu.rl_flag ^ 1;
         break;
     case 1:
         char_move(&wk->wu);
@@ -867,7 +867,7 @@ void q_keeping_action(PLW* wk) {
 
 s32 q_leave_after_action(PLW* wk) {
     s16 work;
-    s32 rc;
+    s16 rc;
     switch (rc = win_rno[1]) {
     case 0:
         if ((rc = q_em_dir(wk)) == 0) {
@@ -889,11 +889,7 @@ s32 q_leave_after_action(PLW* wk) {
         win_rno[1]++;
         set_char_move_init(&wk->wu, 9, 41);
         wk->wu.mvxy.d[0].sp = 0;
-        if (wk->wu.rl_flag) {
-            wk->wu.mvxy.a[0].sp = 0x1C000;
-        } else {
-            wk->wu.mvxy.a[0].sp = -0x1C000;
-        }
+        wk->wu.mvxy.a[0].sp = (wk->wu.rl_flag) ? 0x1C000 : -0x1C000;
         return 124;
     case 3:
         char_move(&wk->wu);
@@ -916,11 +912,7 @@ s32 q_leave_after_action(PLW* wk) {
         win_rno[1]++;
         set_char_move_init(&wk->wu, 9, 41);
         wk->wu.mvxy.d[0].sp = 0;
-        if (wk->wu.rl_flag) {
-            wk->wu.mvxy.a[0].sp = 0x1C000;
-        } else {
-            wk->wu.mvxy.a[0].sp = -0x1C000;
-        }
+        wk->wu.mvxy.a[0].sp = (wk->wu.rl_flag) ? 0x1C000 : -0x1C000;
         return 124;
     case 5:
         char_move(&wk->wu);

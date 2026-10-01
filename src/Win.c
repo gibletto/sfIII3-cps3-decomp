@@ -432,7 +432,7 @@ s32 GameOver_1st(void) {
         }
         return (s32)Break_Com;
     case 1:
-        if (Next_Step) {
+        if (Next_Step != 0) {
             GO_No[1]++;
             G_Timer = 240;
         }
@@ -715,7 +715,7 @@ s32 Continue_3rd(void) {
     s16 exit;
     exit = Check_Exit_Continue();
     Cont_Timer = exit;
-    if (exit != 0) {
+    if (exit) {
         Cont_No++;
     }
     return exit;
@@ -960,7 +960,7 @@ void Additinal_Score_DM(WORK_Other* wk, u32 ix) {
     pl = id;
     Score[pl][2] += score_tbl[ix & 0xFFFF];
     if (plw[id].wu.operator) {
-        if (Play_Type == 0) {
+        if (!Play_Type) {
             Score[pl][0] += score_tbl[ix & 0xFFFF];
             if (Score[pl][0] >= 99999900) {
                 Score[pl][0] = 99999900;
@@ -990,7 +990,7 @@ void Disp_Player_Score(s16 id) {
         t = digit[i];
         t *= div;
         score -= t;
-        if (top < 0 && digit[i] != 0) {
+        if (top < 0 && digit[i]) {
             top = i;
         }
         div /= 10;
@@ -1008,7 +1008,7 @@ void Disp_Player_Score(s16 id) {
 void Score_Sub(void) {
     u16 num;
     s32 tens;
-    if (plw[0].wu.operator && Demo_Flag) {
+    if (plw[0].wu.operator != 0 && Demo_Flag != 0) {
         tilemap_clear_rect(Score_X_Pos_Data[0][(*&Game_setting).mode] - 7, 0, Score_X_Pos_Data[0][(*&Game_setting).mode], 1);
         Disp_Player_Score(0);
         num = Continue_Coin[0];
@@ -1016,7 +1016,7 @@ void Score_Sub(void) {
         score8x16_put(Score_X_Pos_Data[0][(*&Game_setting).mode] - 1, 0, 16, tens);
         score8x16_put(Score_X_Pos_Data[0][(*&Game_setting).mode], 0, 16, num - tens * 10);
     }
-    if (plw[1].wu.operator && Demo_Flag) {
+    if (plw[1].wu.operator != 0 && Demo_Flag != 0) {
         tilemap_clear_rect(Score_X_Pos_Data[1][(*&Game_setting).mode] - 7, 0, Score_X_Pos_Data[1][(*&Game_setting).mode], 1);
         Disp_Player_Score(1);
         num = Continue_Coin[1];

@@ -99,7 +99,7 @@ u32 effect_M4_init(s16 type)
 void effect_M5_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
     case 0:
-        if (EXE_flag == 0 && Game_pause == 0) {
+        if (!EXE_flag && !Game_pause) {
             ewk->wu.routine_no[0]++;
             ewk->wu.disp_flag = 1;
             set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
@@ -107,14 +107,14 @@ void effect_M5_move(WORK_Other* ewk) {
         }
         break;
     case 1:
-        if (EXE_flag == 0 && Game_pause == 0) {
+        if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             ewk->wu.old_rno[0]--;
             if (ewk->wu.old_rno[0] <= 0) {
                 ewk->wu.routine_no[0]++;
                 Appear_car_stop[ewk->master_id] = 1;
                 set_char_move_init(&ewk->wu, 0, 0x68);
-                if (Demo_Sound || Demo_Flag) {
+                if (Demo_Sound != 0 || Demo_Flag != 0) {
                     sound_request_pan(0x135, 0x40, 0x40, 0, 2);
                 }
             } else {
@@ -125,7 +125,7 @@ void effect_M5_move(WORK_Other* ewk) {
         sort_push_request(&ewk->wu);
         break;
     case 2:
-        if (EXE_flag == 0 && Game_pause == 0) {
+        if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             if (ewk->wu.cg_type == 1) {
                 ewk->wu.routine_no[0]++;
@@ -138,12 +138,12 @@ void effect_M5_move(WORK_Other* ewk) {
         sort_push_request(&ewk->wu);
         break;
     case 3:
-        if (EXE_flag == 0 && Game_pause == 0) {
+        if (!EXE_flag && !Game_pause) {
             ewk->wu.old_rno[0]--;
             if (ewk->wu.old_rno[0] < 0) {
                 ewk->wu.routine_no[0]++;
                 ewk->wu.old_rno[0] = 0x30;
-                if (ewk->wu.rl_flag) {
+                if (ewk->wu.rl_flag != 0) {
                     ewk->wu.mvxy.a[0].sp = -0x20000;
                     ewk->wu.mvxy.d[0].sp = -0x1000;
                 } else {
@@ -156,7 +156,7 @@ void effect_M5_move(WORK_Other* ewk) {
         sort_push_request(&ewk->wu);
         break;
     case 4:
-        if (EXE_flag == 0 && Game_pause == 0) {
+        if (!EXE_flag && !Game_pause) {
             ewk->wu.old_rno[0]--;
             if (ewk->wu.old_rno[0] < 0) {
                 ewk->wu.routine_no[0]++;

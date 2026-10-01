@@ -38,7 +38,7 @@ void effect_C4_move(WORK_Other* ewk) {
     case 1:
     case 2:
     case 3:
-        if (EXE_flag == 0 && Game_pause == 0) {
+        if (!EXE_flag && !Game_pause) {
             if (ewk->wu.cg_type != 2) {
                 char_move(&ewk->wu);
             }
@@ -62,7 +62,7 @@ void effect_C4_move(WORK_Other* ewk) {
         sort_push_request(ewk);
         break;
     case 4:
-        if (EXE_flag == 0 && Game_pause == 0) {
+        if (!EXE_flag && !Game_pause) {
             add_x_sub(ewk);
             char_move(&ewk->wu);
             if (ewk->wu.xyz[0].disp.pos < 128) {

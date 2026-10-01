@@ -34,7 +34,7 @@ s32 effect_D0_move(WORK_Other* ewk) {
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
     case 1:
-        if ((rc = ewk->wu.no_death_attack) != 0 && Exec_Wipe == 0) {
+        if ((rc = ewk->wu.no_death_attack) != 0 && !Exec_Wipe) {
             ewk->wu.routine_no[0] = 99;
             return rc;
         }
@@ -53,7 +53,7 @@ s32 effect_D0_move(WORK_Other* ewk) {
         pl_eff_trans_entry(ewk);
         break;
     case 2:
-        if ((rc = ewk->wu.no_death_attack) != 0 && Exec_Wipe == 0) {
+        if ((rc = ewk->wu.no_death_attack) != 0 && !Exec_Wipe) {
             ewk->wu.routine_no[0] = 99;
             return rc;
         }
@@ -72,7 +72,7 @@ s32 effect_D0_move(WORK_Other* ewk) {
         pl_eff_trans_entry(ewk);
         break;
     case 3:
-        if ((rc = ewk->wu.no_death_attack) != 0 && Exec_Wipe == 0) {
+        if ((rc = ewk->wu.no_death_attack) != 0 && !Exec_Wipe) {
             ewk->wu.routine_no[0] = 99;
             return rc;
         }
@@ -83,7 +83,7 @@ s32 effect_D0_move(WORK_Other* ewk) {
         pl_eff_trans_entry(ewk);
         break;
     case 4:
-        if ((rc = ewk->wu.no_death_attack) != 0 && Exec_Wipe == 0) {
+        if ((rc = ewk->wu.no_death_attack) != 0 && !Exec_Wipe) {
             ewk->wu.routine_no[0] = 99;
             return rc;
         }

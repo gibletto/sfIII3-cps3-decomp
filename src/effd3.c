@@ -207,7 +207,7 @@ void effect_D3_move(WORK_Other* ewk) {
 
 
 void akebono_finish(WORK_Other* ewk) {
-    s16 i;
+    u16 i;
     switch (ewk->wu.routine_no[0]) {
     case 0:
         ewk->wu.routine_no[0] += 1;
@@ -312,7 +312,7 @@ void syungoku_finish(WORK_Other* ewk) {
         break;
     case 1:
         ewk->wu.dir_timer -= 1;
-        if (ewk->wu.dir_timer <= 0) {
+        if (ewk->wu.dir_timer < 1) {
             ewk->wu.routine_no[0] += 1;
             ewk->wu.old_rno[0] = 0;
             effect_20_init(ewk);

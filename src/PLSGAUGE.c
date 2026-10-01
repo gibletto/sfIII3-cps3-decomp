@@ -23,7 +23,7 @@
 
 
 void setup_vitality(WORK* wk, s16 pno) {
-    s16 ix;
+    s32 ix;
     if (wk->operator) {
         ix = 2;
     } else {
@@ -41,7 +41,7 @@ void setup_vitality(WORK* wk, s16 pno) {
 void cal_dm_vital_gauge_hosei(PLW* wk) {
     s32 v;
     s16 cnjix;
-    if (wk->wu.dm_vital == 0) {
+    if (!wk->wu.dm_vital) {
         return;
     }
     v = Max_vitality;
@@ -127,7 +127,7 @@ void add_sp_arts_gauge_hit_dm(PLW* wk) {
     }
     emwk = (PLW*)wk->wu.target_adrs;
     asag = add_arts_gauge[emwk->player_number][wk->wu.dm_arts_point][2];
-    if (asag != 0) {
+    if (asag) {
         add_super_arts_gauge(wk->sa, wk->wu.id, asag / 3, wk->metamorphose);
         if (emwk->wu.operator == 0) {
             asag += (((Country & 2) ? asagh_zuru2 : asagh_zuru)[Game_setting.level]);
@@ -173,7 +173,7 @@ void add_sp_arts_gauge_paring(PLW* wk) {
     }
     emwk = (PLW*)wk->wu.target_adrs;
     asag = add_arts_gauge[emwk->player_number][wk->wu.dm_arts_point][3];
-    if (asag != 0) {
+    if (asag) {
         if (wk->wu.operator == 0) {
             if (Country & 2) {
             asag += asagh_zuru2[(*&Game_setting).level];
@@ -192,15 +192,15 @@ void add_sp_arts_gauge_paring(PLW* wk) {
 
 
 void add_sp_arts_gauge_tokushu(PLW* wk) {
-    s16 asag;
+    s32 asag;
     if (wk->wu.work_id != 1) {
         return;
     }
     asag = apagt_table[wk->player_number];
-    if (asag == 0) {
+    if (!asag) {
         return;
     }
-    if (wk->wu.operator == 0) {
+    if (!wk->wu.operator) {
         if (Country & 2) {
             asag += asagh_zuru2[(*&Game_setting).level];
         } else {
@@ -216,7 +216,7 @@ void add_sp_arts_gauge_tokushu(PLW* wk) {
 
 
 void add_sp_arts_gauge_ukemi(PLW* wk) {
-    s16 asag;
+    s32 asag;
     if (wk->wu.work_id != 1) {
         return;
     }
@@ -240,15 +240,15 @@ void add_sp_arts_gauge_ukemi(PLW* wk) {
 
 
 void add_sp_arts_gauge_nagenuke(PLW* wk) {
-    s16 asag;
+    s32 asag;
     if (wk->wu.work_id != 1) {
         return;
     }
     asag = nagenuke_apagt_table[wk->player_number];
-    if (asag == 0) {
+    if (!asag) {
         return;
     }
-    if (wk->wu.operator == 0) {
+    if (!wk->wu.operator) {
         if (Country & 2) {
             asag += asagh_zuru2[(*&Game_setting).level];
         } else {
@@ -403,4 +403,30 @@ s32 short_to_bcd(s16 num) {
     }
     bcd += num;
     return bcd;
+}
+
+
+
+/* provisional name: unreferenced; picks the player whose grade the hidden display shows */
+void kakushi_setup(s16 pl) {
+    u16 sw;
+    s16 other = (pl + 1) & 1;
+    if (!PT_backup) {
+        kakushi_op = 0;
+        if (RO_backup[pl]) {
+            kakushi_ix = other;
+        } else {
+            kakushi_ix = pl;
+        }
+        kakushi_on = 0;
+        return;
+    }
+    kakushi_op = 1;
+    kakushi_ix = pl;
+    if (pl) {
+        sw = p2sw_0;
+    } else {
+        sw = p1sw_0;
+    }
+    kakushi_on = (sw == 0xF6);
 }

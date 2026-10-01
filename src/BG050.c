@@ -232,14 +232,14 @@ void bg180_sync_move(void) {
 
 
 
-void bg0601_BG060(void) {
+static void bg0601_BG060(void) {
     void (*bg1601_jmp[2])() = { bg0601_init00, bg_move_common };
     bg1601_jmp[bgw_ptr->r_no_0]();
 }
 
 
 
-void bg0602_BG060(void) {
+static void bg0602_BG060(void) {
     void (*bg1602_jmp[2])() = { bg0602_init00, bg_base_move_common };
     bg1602_jmp[bgw_ptr->r_no_0]();
 }
@@ -330,14 +330,14 @@ void bg0603(void) {
 
 
 
-void bg0701_BG070(void) {
+static void bg0701_BG070(void) {
     void (*bg1601_jmp[2])() = { bg0701_init00, bg0701_move00 };
     bg1601_jmp[bgw_ptr->r_no_0]();
 }
 
 
 
-void bg0702_BG070(void) {
+static void bg0702_BG070(void) {
     void (*bg1602_jmp[2])() = { bg0702_init00, bg_base_move_common };
     bg1602_jmp[bgw_ptr->r_no_0]();
 }
@@ -435,45 +435,33 @@ void bg0703(void) {
 
 
 
-void bg0801_BG080(void) {
+static void bg0801_BG080(void) {
     void (*bg0801_jmp[2])() = { bg0801_init00, bg_move_common };
     bg0801_jmp[bgw_ptr->r_no_0]();
 }
 
 
 
-void bg0802_BG080(void) {
+static void bg0802_BG080(void) {
     void (*bg0802_jmp[2])() = { bg0802_init00, bg_base_move_common };
     bg0802_jmp[bgw_ptr->r_no_0]();
 }
 
 
 
-void bg080_sync_common_BG080(void) {
+static void bg080_sync_common_BG080(void) {
     void (*bg080_sync_jmp[2])() = { bg080_sync_init, bg080_sync_move };
     bg080_sync_jmp[bgw_ptr->r_no_0]();
 }
 
 
 
-void bg0801_bg080(void) {
-    void (*bg0801_jmp[2])() = { bg0801_init00, bg_move_common };
-    bg0801_jmp[bgw_ptr->r_no_0]();
-}
 
 
 
-void bg0802_bg080(void) {
-    void (*bg0802_jmp[2])() = { bg0802_init00, bg_base_move_common };
-    bg0802_jmp[bgw_ptr->r_no_0]();
-}
 
 
 
-void bg080_sync_common_bg080(void) {
-    void (*bg080_sync_jmp[2])() = { bg080_sync_init, bg080_sync_move };
-    bg080_sync_jmp[bgw_ptr->r_no_0]();
-}
 
 
 
@@ -507,7 +495,7 @@ void bg0801_init00(void) {
     bgw_ptr->old_pos_x = bgw_ptr->xy[0].disp.pos = bgw_ptr->pos_x_work = 0x200;
     bgw_ptr->hos_xy[0].cal = bgw_ptr->wxy[0].cal = bgw_ptr->xy[0].cal;
     bgw_ptr->zuubun = 0;
-    if (bgw_ptr->fam_no == 0) {
+    if (!bgw_ptr->fam_no) {
         effect_45_init();
     }
 }

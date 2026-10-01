@@ -174,7 +174,7 @@ void Game_Manage_1st(void) {
 
 
 void Clear_1Stage_Work(void) {
-    s16 xx;
+    s32 xx;
     for (xx = 0; xx < 2; xx++) {
         Vital_Bonus[xx] = 0;
         Time_Bonus[xx] = 0;
@@ -237,7 +237,7 @@ void Game_Manage_2_2(void) {
     Next_Step = 0;
     Judge_Round_Flag = 0;
     Stop_Combo = 0;
-    if (Demo_Flag) {
+    if (Demo_Flag != 0) {
         Stop_SG = 0;
     }
     Complete_Judgement = 0;
@@ -302,23 +302,23 @@ void Game_Manage_2_4(void) {
         Stage_Intro_Flag = 0x80;
         break;
     case 3:
-        if (Next_Step == 0) {
+        if (!Next_Step) {
             break;
         }
         C_No[0]++;
         C_No[1] = 0;
         C_No[2] = 0;
         Allow_a_battle_f = 1;
-        if (Play_Type == 0 && EM_id == 0) {
+        if (!Play_Type && !EM_id) {
             u8* boss = Introduce_Boss[Player_id];
             if (!(boss[1] & 0x80)) {
-                boss[1] |= 0x80;
+                boss[1] = boss[1] | 0x80;
                 Check_Stage_BGM();
             }
         }
         load_char_eff_color(My_char[0], 0);
         load_char_eff_color(My_char[1], 1);
-        if (Demo_Flag == 0) {
+        if (!Demo_Flag) {
             effect_58_init(10, 60, -1);
         }
         break;
@@ -328,7 +328,7 @@ void Game_Manage_2_4(void) {
 
 
 void Game_Manage_3rd(void) {
-    if (Demo_Flag && Conclusion_Flag) {
+    if (Demo_Flag != 0 && Conclusion_Flag != 0) {
         C_No[0]++;
         Forbid_Break = -1;
         Allow_a_battle_f = 0;
@@ -471,7 +471,7 @@ s32 Update_BI_Term(void)
     }
     pl = Winner_id;
     wk = &plw[pl];
-    if (wk->sa_healing) {
+    if (wk->sa_healing != 0) {
         Super_Arts_Finish[pl]++;
         Stage_SA_Finish[Winner_id]++;
     } else if (wk->wu.vitality == wk->wu.vital_new) {
@@ -616,7 +616,7 @@ s32 Game_Manage_6th(void) {
     s32 rc;
     switch (rc = C_No[1]) {
     case 0:
-        if (!Complete_Victory && (rc = --G_Timer) != 0) {
+        if (Complete_Victory == 0 && (rc = --G_Timer) != 0) {
             break;
         }
         C_No[1]++;
@@ -649,7 +649,7 @@ void Game_Manage_7th(void) {
 
 
 void Game_Manage_7_0(void) {
-    if (Complete_Victory || --G_Timer == 0) {
+    if (Complete_Victory != 0 || --G_Timer == 0) {
         C_No[1]++;
         C_Timer = 1;
         grade_makeup_round_parameter(Winner_id);
@@ -1179,7 +1179,7 @@ void Game_Manage_11th(void) {
 
 void Check_Naming(s16 id) {
     s32 num;
-    if (Game_setting.set5 == 0) {
+    if (!Game_setting.set5) {
         num = E_Number[id][0];
         if (num != 2 && num != 3) {
             Rank_In[id][0] = -1;
@@ -1215,7 +1215,7 @@ void Game_Manage_12_0(void) {
     Next_Step = 0;
     Judge_Round_Flag = 0;
     Stop_Combo = 0;
-    if (Demo_Flag) {
+    if (Demo_Flag != 0) {
         Stop_SG = 0;
     }
     Complete_Judgement = 0;
@@ -1255,7 +1255,7 @@ void Game_Manage_12_1(void) {
 
 
 s32 Game_Manage_12_7(void) {
-    s32 rc;
+    s16 rc;
     bcount_cont_main();
     if (!(rc = ((u8)Bonus_Game_Complete))) {
         return rc;
@@ -1283,7 +1283,7 @@ s32 Game_Manage_12_7(void) {
 
 
 s32 Game_Manage_12_3(void) {
-    s32 rc;
+    s16 rc;
     switch (rc = C_No[2]) {
     case 0:
         if ((rc = Cut_Cut_C_Timer()) == 0) {
@@ -1805,7 +1805,7 @@ void Disp_Win_Record(void) {
     }
     num -= digit * 100;
     digit = num / 10;
-    if (shown || digit > 0) {
+    if (shown != 0 || digit > 0) {
         tilemap_print_hex_block(x - 3, 0, 18, (s8)digit, 1, 1);
     }
     tilemap_print_hex_block(x - 2, 0, 18, (s8)(num - digit * 10), 1, 1);
@@ -1845,7 +1845,7 @@ void Disp_Winner(void) {
         winner_name_put(My_char[w]);
         effect_89_init(1, DE_X[3] + 10, 9, 29, 4);
         sound_request(0x8D);
-    } else if (Round_Operator[w]) {
+    } else if (Round_Operator[w] != 0) {
         sc_picture_put(5, 0, 0);
         effect_89_init(1, DE_X[3] + 11, 9, 25, 4);
         sound_request(0x8D);
@@ -2028,7 +2028,7 @@ void Loser_Sub(void) {
 
 void Be_Continue(void) {
     s8 id = LOSER;
-    if (Continue_Flag && Game_setting.set5 == 0) {
+    if (Continue_Flag != 0 && Game_setting.set5 == 0) {
         Continue_Count_Down[id] = 0;
         Continue_Count[LOSER] = 9;
         E_Number[LOSER][0] = 5;
@@ -2051,7 +2051,7 @@ void Update_VS_Data(void) {
         if (Play_Type != 0) {
             return;
         }
-        if (Round_Operator[WINNER]) {
+        if (Round_Operator[WINNER] != 0) {
             SC_Personal_Time[WINNER] = Control_Time;
             Stage_Continue[WINNER] = 0;
             Request_Disp_Rank[LOSER][0] = -1;
@@ -2061,14 +2061,14 @@ void Update_VS_Data(void) {
             Stock_Com_Color[WINNER] = -1;
             Stock_Com_Arts[WINNER] = -1;
             EM_History[WINNER][VS_Index[WINNER]] = EM_id;
-            Result_Disp_Timer[WINNER] += 30;
+            Result_Disp_Timer[WINNER] = Result_Disp_Timer[WINNER] + 30;
             if (EM_id == 18) {
                 Break_Com[WINNER][EM_id] = (s8)VS_Index[WINNER];
             } else {
                 VS_Index[WINNER]++;
                 Break_Com[WINNER][EM_id] = 1;
             }
-            if (PL_Wins[LOSER]) {
+            if (PL_Wins[LOSER] != 0) {
                 Straight_Counter[WINNER] = 0;
                 Straight_Flag[WINNER] = 1;
             }
@@ -2084,7 +2084,7 @@ void Update_VS_Data(void) {
         Straight_Flag[LOSER] = 1;
         return;
     }
-    if (Round_Operator[Winner_id]) {
+    if (Round_Operator[Winner_id] != 0) {
         Pool_Score(Winner_id);
         return;
     }
@@ -2172,7 +2172,7 @@ s32 Setup_BGM_Fade_In(u8 time)
 {
     s8 keep;
     keep = Keep_BGM_Flag;
-    if (keep == 0) {
+    if (!keep) {
         BGM_No[1] = 1;
         BGM_Timer[1] = time;
     }

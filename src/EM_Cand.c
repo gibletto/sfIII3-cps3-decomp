@@ -169,8 +169,8 @@ s16 ix;
 
 
 void Check_Same_CPU(s16 PL_id) {
-    s16 ix;
-    s16 ok_urien;
+    s32 ix;
+    s32 ok_urien;
     if (VS_Index[PL_id] >= 9) {
         return;
     }

@@ -41,7 +41,7 @@ static void zanzou_store(ZanzouTableEntry* zt, PLW* wk) {
 s32 Player_control_bonus2(void) {
     s16 i;
     pl_eff_disp_stop = 0;
-    if (((pcon_rno[0] + pcon_rno[1]) == 0) || (!Game_pause && !EXE_flag)) {
+    if (((pcon_rno[0] + pcon_rno[1]) == 0) || (!Game_pause && EXE_flag == 0)) {
         pcon_timer++;
         pcon_timer &= 0x7FFF;
         player_bonus2_process[pcon_rno[0]]();

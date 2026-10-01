@@ -35,7 +35,7 @@ void effect_E0_move(WORK_Other* ewk) {
         }
         break;
     case 1:
-        if (Sel_EM_Complete[Player_id]) {
+        if (Sel_EM_Complete[Player_id] != 0) {
             if (VS_Index[Player_id] >= 8) {
                 ewk->wu.routine_no[0] = 4;
             } else {

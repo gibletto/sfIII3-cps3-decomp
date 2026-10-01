@@ -53,7 +53,7 @@ void win_mark_control(s16 pl) {
         if (win_mark_phase[pl] == 2) {
             win_mark_phase[pl] = 0;
         } else {
-            win_mark_phase[pl] += 2;
+            win_mark_phase[pl] = win_mark_phase[pl] + 2;
         }
         return;
     default:
@@ -127,7 +127,7 @@ u32 win_mark_all_write(u32 pl)
     win_mark_phase[side] = 0;
     rv = ((u32 (*)())win_mark_pos_set)(pl);
     cell = (u16 *)((SS_RAM + 0x400) + win_mark_pos[side] * 4);
-    if (side == 0) {
+    if (!side) {
         count = Battle_Round[Play_Type] + 1;
         n = count * 2;
         rv = 0;
@@ -276,7 +276,7 @@ s32 fade_cont_main(void)
 
 
 void stngauge_cont_init(void) {
-    s16 i;
+    s32 i;
     for (i = 0; i < 2; i++) {
         sdat[i].cstn = 0;
         sdat[i].ostn = 0;
@@ -301,7 +301,7 @@ void stngauge_cont_init(void) {
 
 
 void stngauge_cont_main(void) {
-    if (EXE_flag == 0) {
+    if (!EXE_flag) {
         if (((s16)gauge_stop_flag[0]) == 0) {
             stngauge_control(0);
         }

@@ -82,11 +82,7 @@ s16 combo_pts_set(s8 PL, u32 pts) {
     tilemap_put_cell(x + 2, y + 1, 16, 0xD6);
     tilemap_put_cell(x + 3, y, 16, 32);
     tilemap_put_cell(x + 3, y + 1, 16, 0xD7);
-    if (PL == 0) {
-        x2 = x + 4;
-    } else {
-        x2 = 14 - first;
-    }
+    x2 = (PL == 0) ? x + 4 : 14 - first;
     tilemap_put_cell(x2, y, 16, 32);
     tilemap_put_cell(x2, y + 1, 16, 32);
     return first + 6;
@@ -100,11 +96,7 @@ void combo_window_slide(s8 pl, s16 x, s16 y, s16 n) {
     u32* dst = (u32*)((SS_RAM + 0x700) + x * 4 + ((y * 3) << 8));
     s32 d;
     u16 i;
-    if (pl == 0) {
-        d = 1;
-    } else {
-        d = -1;
-    }
+    d = (pl == 0) ? 1 : -1;
     for (i = 0; i < n + 1; i++) {
         dst[0] = src[0];
         dst[0x40] = src[0x40];

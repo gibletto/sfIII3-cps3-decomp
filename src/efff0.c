@@ -36,7 +36,7 @@ void effect_F0_move(WORK_Other* ewk) {
             scrn_map_set_now(3, ake_scrl_w[0].adrs);
         case 1:
             seraph_flag = 0;
-            if (akebono_flag == 0 && sa_pa_flag == 0) {
+            if (!akebono_flag && !sa_pa_flag) {
                 for (i = 0; i < bg_w.scno; i++) {
                     Bg_On_W(1 << i);
                 }
@@ -45,14 +45,18 @@ void effect_F0_move(WORK_Other* ewk) {
             ewk->wu.routine_no[0]++;
             ewk->wu.dir_old = 0;
         case 2:
-            if (another_bg[0] == 0 && another_bg[1] == 0) {
+            if (!another_bg[0] && !another_bg[1]) {
                 break;
             }
             ewk->wu.routine_no[0]++;
-            if (another_bg[0] != 0 && another_bg[1] != 0) {
+            if (another_bg[0] && another_bg[1]) {
                 ewk->wu.type = 0;
             } else {
-                ewk->wu.type = (another_bg[0] != 0) ? 0 : 1;
+                if (another_bg[0]) {
+                    ewk->wu.type = 0;
+                } else {
+                    ewk->wu.type = 1;
+                }
             }
             seraph_flag = 1;
             break;
@@ -74,17 +78,17 @@ void effect_F0_move(WORK_Other* ewk) {
             sound_reg_level_set(0, 0xF0);
         case 4:
             if (ewk->wu.type) {
-                if (another_bg[0] != 0 && another_bg_old[0] == 0) {
+                if (another_bg[0] && !another_bg_old[0]) {
                     ewk->wu.type = 0;
                 }
-            } else if (another_bg[1] != 0 && another_bg_old[1] == 0) {
+            } else if (another_bg[1] && !another_bg_old[1]) {
                 ewk->wu.type = 1;
             }
             if (ewk->wu.type) {
-                if (another_bg[1] == 0 && another_bg[0] != 0) {
+                if (!another_bg[1] && another_bg[0]) {
                     ewk->wu.type = 0;
                 }
-            } else if (another_bg[0] == 0 && another_bg[1] != 0) {
+            } else if (!another_bg[0] && another_bg[1]) {
                 ewk->wu.type = 1;
             }
             Bg_Off_W(8);
@@ -94,20 +98,20 @@ void effect_F0_move(WORK_Other* ewk) {
                 adrs = ake_scrl_w[3].adrs;
                 break;
             case 4:
-                if (ewk->wu.dir_old == 0) {
+                if (!ewk->wu.dir_old) {
                     ewk->wu.dir_old = 1;
                 }
                 adrs = ake_scrl_w[4].adrs;
                 break;
             default:
-                if (ewk->wu.dir_old == 0) {
+                if (!ewk->wu.dir_old) {
                     ewk->wu.dir_old = 1;
                 }
                 adrs = ake_scrl_w[0].adrs;
                 break;
             }
             scrn_map_set(3, adrs);
-            if (another_bg[0] == 0 && another_bg[1] == 0) {
+            if (!another_bg[0] && !another_bg[1]) {
                 ewk->wu.routine_no[0] = 5;
                 sound_reg_level_set(0, 0);
                 another_bg_old[0] = another_bg_old[1] = 0;
@@ -140,7 +144,7 @@ void effect_F0_move(WORK_Other* ewk) {
 void effF0_scroll_reset(WORK_Other* ewk) {
     s16 i;
     seraph_flag = 0;
-    if (sa_pa_flag == 0) {
+    if (!sa_pa_flag) {
         Bg_Off_W(8);
         for (i = 0; i < bg_w.scno; i++) {
             Bg_On_W(1 << i);
