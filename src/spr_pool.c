@@ -453,6 +453,12 @@ void sprite_bank_flip(void) {
 
 
 /* provisional name */
+u32 simmram_slot_to_page_offset(s16 slot) {
+    return (slot - 1) << 8;
+}
+
+
+/* provisional name */
 u32 simmram_slot_addr(s16 slot) {
     return ((slot - 1) << 8) + (SPRITE_RAM + 0x2000);
 }

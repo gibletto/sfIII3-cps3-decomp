@@ -260,8 +260,8 @@ void effe6_0009(WORK_Other* ewk) {
         break;
     case 1:
         ewk->wu.xyz[0].cal -= 0xB000;
-        ewk->wu.xyz[1].cal += -0x1A000;
-        if (ewk->wu.xyz[1].disp.pos < -199) {
+        ewk->wu.xyz[1].cal -= 0x1A000;
+        if (ewk->wu.xyz[1].disp.pos <= -200) {
             ewk->wu.routine_no[1]++;
             bg_w.bgw[0].r_no_1++;
             bg_w.bgw[1].r_no_1++;
@@ -1006,20 +1006,20 @@ void effe6_0029(WORK_Other* ewk) {
         char_move(&ewk->wu);
         if (ewk->wu.xyz[0].disp.pos < 224) {
             ewk->wu.routine_no[2] = 99;
-            break;
-        }
-        ewk->wu.old_rno[2]--;
-        if (ewk->wu.old_rno[2] <= 0) {
-            ewk->wu.old_rno[2] = 5;
-            ewk->wu.my_mr.size.x++;
-            ewk->wu.my_mr.size.y++;
-            if (ewk->wu.my_mr.size.x >= 127) {
-                ewk->wu.routine_no[1]++;
-                ewk->wu.my_mr.size.x = 127;
-                ewk->wu.my_mr.size.y = 127;
+        } else {
+            ewk->wu.old_rno[2]--;
+            if (ewk->wu.old_rno[2] <= 0) {
+                ewk->wu.old_rno[2] = 5;
+                ewk->wu.my_mr.size.x++;
+                ewk->wu.my_mr.size.y++;
+                if (ewk->wu.my_mr.size.x >= 127) {
+                    ewk->wu.routine_no[1]++;
+                    ewk->wu.my_mr.size.x = 127;
+                    ewk->wu.my_mr.size.y = 127;
+                }
             }
+            disp_pos_trans_entry5(ewk);
         }
-        disp_pos_trans_entry5(ewk);
         break;
     case 2:
         disp_pos_trans_entry5(ewk);

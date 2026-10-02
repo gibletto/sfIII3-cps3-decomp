@@ -337,11 +337,12 @@ void end_202_4000(void) {
 
 
 void end_200_cell_set(void) {
-    s32 i;
-    for (i = 0; i < 6; i++) {
-        bg_cell_write(0, end_200_panel0[i].ofs, end_200_panel0[i].cell, (u32)end_200_scrn_data, 0, 0x220);
+    s16 i;
+    const PANEL* p;
+    for (p = end_200_panel0, i = 0; i < 6; i++, p++) {
+        bg_cell_write(0, p->ofs, p->cell, (u32)end_200_scrn_data, 0, 0x220);
     }
-    for (i = 0; i < 2; i++) {
-        bg_cell_write(1, end_200_panel1[i].ofs, end_200_panel1[i].cell, (u32)end_200_scrn_data, 0, 0x220);
+    for (i = 0, p = end_200_panel1; i < 2; i++, p++) {
+        bg_cell_write(1, p->ofs, p->cell, (u32)end_200_scrn_data, 0, 0x220);
     }
 }

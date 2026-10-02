@@ -435,17 +435,14 @@ void stun_mark_write(s8 pl, s8 kind) {
 
 
 void stun_gauge_waku_write(s8 pl) {
-    STN_DAT* g;
     s8 i;
     if (pl == 0) {
-        g = &sdat[0];
-        for (i = 0; i < 9 - g->slen; i++) {
+        for (i = 0; i < 9 - sdat[0].slen; i++) {
             tilemap_put_cell(i + 11, 3, 2, 63);
         }
         tilemap_put_cell(i + 11, 3, 2, 110);
     } else {
-        g = &sdat[1];
-        for (i = 0; i < 9 - g->slen; i++) {
+        for (i = 0; i < 9 - sdat[1].slen; i++) {
             tilemap_put_cell(36 - i, 3, 2, 63);
         }
         tilemap_put_cell(36 - i, 3, 130, 110);

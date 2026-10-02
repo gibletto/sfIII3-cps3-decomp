@@ -19,17 +19,24 @@
 
 
 void effect_D9_move(WORK_Other* ewk) {
-    PLW* mwk = (PLW*)ewk->my_master;
+    PLW* mwk;
+    const ColorTableIndex* t, *r;
+
+    mwk = (PLW*)ewk->my_master;
     switch (ewk->wu.routine_no[0]) {
     case 0:
         ewk->wu.routine_no[0]++;
+        t = color_table_index;
+        r = t;
         if (ewk->master_id) {
-            ewk->wu.step_xy_table = (s16*)color_table_index[ewk->wu.direction].changetbl_2p;
+            r += ewk->wu.direction;
+            ewk->wu.step_xy_table = (s16*)r->changetbl_2p;
         } else {
-            ewk->wu.step_xy_table = (s16*)color_table_index[ewk->wu.direction].changetbl_1p;
+            r += ewk->wu.direction;
+            ewk->wu.step_xy_table = (s16*)r->changetbl_1p;
         }
-        ewk->wu.vital_old = color_table_index[ewk->wu.direction].flag;
-        ewk->wu.dir_timer = color_table_index[ewk->wu.direction].timer;
+        ewk->wu.vital_old = t[ewk->wu.direction].flag;
+        ewk->wu.dir_timer = t[ewk->wu.direction].timer;
         ewk->wu.dir_step = 0;
         ewk->wu.vitality = 0;
         break;
@@ -38,53 +45,61 @@ void effect_D9_move(WORK_Other* ewk) {
             ewk->wu.routine_no[0]++;
             break;
         }
-        if ((ewk->wu.vital_old & 2) == 0 || EXE_flag != 0 || Game_pause != 0 || mwk->wu.hit_stop > 0 ||
-            (--ewk->wu.dir_timer >= 0)) {
-            if ((ewk->wu.vital_old & 4) != 0) {
-                if (ewk->wu.dir_old == mwk->wu.dm_count_up) {
-                    if ((ewk->wu.type != 0) && (ewk->wu.type != 32)) {
-                        if (mwk->wu.xyz[1].disp.pos <= 0) {
-                            goto set_routine_2;
-                        }
-                    } else {
-                        if (mwk->wu.cg_type != 0) {
-                            goto set_routine_2;
-                        }
-                    }
-                } else {
-                    goto set_routine_2;
-                }
-            }
-            if (((ewk->wu.vital_old & 8) == 0 || (mwk->sa->ok == -1)) &&
-                (((ewk->wu.vital_old & 0x10) == 0) || (ewk->wu.total_paring == mwk->wu.kind_of_waza))) {
-                if (--ewk->wu.vitality <= 0) {
-                    ewk->wu.dir_step += 2;
-                    if (ewk->wu.step_xy_table[ewk->wu.dir_step] == 0) {
-                        ewk->wu.dir_step = 0;
-                    }
-                    ewk->wu.vitality = ewk->wu.step_xy_table[ewk->wu.dir_step];
-                    ewk->wu.vital_new = ewk->wu.step_xy_table[ewk->wu.dir_step + 1];
-                }
-                if ((ewk->wu.vital_old & 1) != 0) {
-                    mwk->wu.extra_col = ewk->wu.vital_new;
-                } else {
-                    mwk->wu.extra_col_2 = ewk->wu.vital_new;
-                }
-                break;
+        if ((ewk->wu.vital_old & 2) && EXE_flag == 0 && Game_pause == 0 && mwk->wu.hit_stop <= 0) {
+            if (--ewk->wu.dir_timer < 0) {
+                goto kill;
             }
         }
-    set_routine_2:
+        if (ewk->wu.vital_old & 4) {
+            if (ewk->wu.dir_old != mwk->wu.dm_count_up) {
+                goto kill;
+            }
+            if (ewk->wu.type != 0 && ewk->wu.type != 32) {
+                if (mwk->wu.xyz[1].disp.pos <= 0) {
+                    goto kill;
+                }
+            } else {
+                if (mwk->wu.cg_type != 0) {
+                    goto kill;
+                }
+            }
+        }
+        if (ewk->wu.vital_old & 8) {
+            if (mwk->sa->ok != -1) {
+                goto kill;
+            }
+        }
+        if (ewk->wu.vital_old & 16) {
+            if (ewk->wu.total_paring != mwk->wu.kind_of_waza) {
+                goto kill;
+            }
+        }
+        if (--ewk->wu.vitality <= 0) {
+            ewk->wu.dir_step += 2;
+            if (ewk->wu.step_xy_table[ewk->wu.dir_step] == 0) {
+                ewk->wu.dir_step = 0;
+            }
+            ewk->wu.vitality = ewk->wu.step_xy_table[ewk->wu.dir_step];
+            ewk->wu.vital_new = ewk->wu.step_xy_table[ewk->wu.dir_step + 1];
+        }
+        if (ewk->wu.vital_old & 1) {
+            mwk->wu.extra_col = ewk->wu.vital_new;
+        } else {
+            mwk->wu.extra_col_2 = ewk->wu.vital_new;
+        }
+        break;
+    kill:
         ewk->wu.routine_no[0] = 2;
         break;
     case 2:
     default:
-        if ((ewk->wu.vital_old & 1) != 0) {
+        if (ewk->wu.vital_old & 1) {
             mwk->wu.extra_col = 0;
         } else {
             mwk->wu.extra_col_2 = 0;
         }
         push_effect_work(&ewk->wu);
-        break;
+        return;
     }
 }
 

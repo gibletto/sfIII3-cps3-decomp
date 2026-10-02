@@ -171,8 +171,8 @@ void combo_rp_clear_check(s8 PL) {
 
 
 void super_arts_finish_check(s8 PL) {
-    if (arts_finish_check2(PL) != 0) {
-        if ((plw[PL].cb->new_dm & 0x3F) < 48) {
+    if (arts_finish_check2(PL)) {
+        if ((plw[PL].cb->new_dm & 0x3F) <= 0x2F) {
             sa_kind = 2;
         } else {
             sa_kind = 3;
@@ -231,6 +231,12 @@ void reversal_continue_check(s8 PL) {
     } else {
         return;
     }
+}
+
+
+/* provisional name */
+void bonus_pts_inc(s8 id) {
+    bonus_pts[id]++;
 }
 
 

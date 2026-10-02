@@ -84,7 +84,7 @@ void player_face_char_set(s8 pl) {
     sc_chr_slot_trans(pl + 2, My_char[pl] * 16 + 0x208, 0);
 }
 
-void player_grade_char_set(pl) u8 pl; {
+void player_grade_char_set(pl) s8 pl; {
     u16 grade;
     if (Play_Type == 0) {
         return;

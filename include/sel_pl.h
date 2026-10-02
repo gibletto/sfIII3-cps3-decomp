@@ -60,7 +60,7 @@ s16 Setup_Face_Y(void);
 void Setup_ID(void);
 void Setup_Select_Status(void);
 void PL_Sel_Begin(void);
-u16 * Exit_1st(void);
+void Exit_1st(void);
 void Exit_3rd(void);
 void Exit_4th(void);
 void Exit_6th(void);

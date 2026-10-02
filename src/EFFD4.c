@@ -149,8 +149,9 @@ void effect_D4_move(WORK_Other* ewk) {
 
 
 s32 distance2speed(WORK_Other* ewk, WORK* wk, s32 dir) {
-    s32 y = 0;
-    s32 x = 0;
+    s32 x, y;
+
+    x = y = 0;
     if (ewk->wu.xyz[0].disp.pos < wk->xyz[0].disp.pos) {
         x = wk->xyz[0].disp.pos - ewk->wu.xyz[0].disp.pos;
     } else if (ewk->wu.xyz[0].disp.pos > wk->xyz[0].disp.pos) {
@@ -167,7 +168,7 @@ s32 distance2speed(WORK_Other* ewk, WORK* wk, s32 dir) {
         y = 191;
     }
     y >>= 4;
-    if (dir == 0) {
+    if (!dir) {
         return swallow_areas_x[y][x];
     }
     return swallow_areas_y[y][x];

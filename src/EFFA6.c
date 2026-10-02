@@ -1,3 +1,5 @@
+#include "EFFA6.h"
+
 /*
  * EFFA6.C  Effect A6: pre-fight dialogue text on the VS screen (move)
  *
@@ -21,8 +23,6 @@
 #include "next_cpu.h"
 #include "aboutspr.h"
 #include "EFFECT.h"
-#include "EFFA6.h"
-#include "EFFA6_INIT.h"
 
 #pragma inline(check2_A6_shortcut)
 
@@ -277,4 +277,26 @@ s32 effect_A6_init(WORK_Other* mwk) {
         break;
     }
     return 0;
+}
+
+/*
+ * effA6_work_set fills the fixed fields of an effect A6 dialogue work (id 106, palette 0x160,
+ * family 1, priority 35) for effect_A6_init.
+ */
+
+/* provisional name */
+void effA6_work_set(WORK* wk) {
+    wk->be_flag = 1;
+    wk->id = 106;
+    wk->work_id = 16;
+    wk->rl_flag = 0;
+    wk->cgromtype = 1;
+    wk->sync_suzi = 0;
+    wk->my_col_mode = 0x4200;
+    wk->my_col_code = 0x160;
+    wk->my_family = 1;
+    wk->my_priority = 35;
+    wk->position_x = 0x238;
+    wk->position_y = 24;
+    wk->position_z = 35;
 }

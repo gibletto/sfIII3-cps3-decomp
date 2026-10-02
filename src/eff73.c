@@ -93,45 +93,44 @@ s32 effect_73_init(WORK_Other* oya) {
     s16 i;
     s16 work;
     s16 work2;
-    if (EXE_obroll) {
-        return 0;
-    }
-    work = random_16_com();
-    work &= 7;
-    for (i = 0; i < 4; i++) {
-        if ((ix = pull_effect_work(4)) == -1) {
-            return -1;
+    if (EXE_obroll == 0) {
+        work = random_16_com();
+        work &= 7;
+        for (i = 0; i < 4; i++) {
+            if ((ix = pull_effect_work(4)) == -1) {
+                return -1;
+            }
+            ewk = (WORK_Other*)frw[ix];
+            ewk->wu.be_flag = 1;
+            ewk->wu.id = 73;
+            ewk->wu.work_id = 16;
+            ewk->my_master = (u32*)oya;
+            ewk->wu.cgromtype = 1;
+            ewk->wu.rl_flag = 0;
+            ewk->wu.type = i;
+            ewk->wu.my_col_mode = 0x4200;
+            ewk->wu.dead_f = 1;
+            ewk->wu.my_family = 2;
+            ewk->wu.my_col_code = 0x2080;
+            ewk->wu.sync_suzi = 0;
+            *ewk->wu.char_table = hkg_char_table;
+            ewk->wu.xyz[0].disp.pos = oya->wu.xyz[0].disp.pos + 0;
+            ewk->wu.xyz[1].disp.pos = oya->wu.xyz[1].disp.pos + 64;
+            ewk->wu.position_z = ewk->wu.my_priority = 80;
+            ewk->wu.mvxy.a[0].sp = eff73_sp_tbl[i][0];
+            ewk->wu.mvxy.a[1].sp = eff73_sp_tbl[i][1];
+            ewk->wu.mvxy.a[1].sp = eff73_sp_tbl[i][2];
+            ewk->wu.mvxy.d[1].sp = -0x4000;
+            if (eff73_survive_tbl[work] == i) {
+                ewk->wu.old_rno[1] = 1;
+            } else {
+                ewk->wu.old_rno[1] = 0;
+            }
+            work2 = random_16_com();
+            work2 &= 7;
+            ewk->wu.old_rno[0] = eff73_vanish_tbl[work2];
+            suzi_offset_set(ewk);
         }
-        ewk = (WORK_Other*)frw[ix];
-        ewk->wu.be_flag = 1;
-        ewk->wu.id = 73;
-        ewk->wu.work_id = 16;
-        ewk->my_master = (u32*)oya;
-        ewk->wu.cgromtype = 1;
-        ewk->wu.rl_flag = 0;
-        ewk->wu.type = i;
-        ewk->wu.my_col_mode = 0x4200;
-        ewk->wu.dead_f = 1;
-        ewk->wu.my_family = 2;
-        ewk->wu.my_col_code = 0x2080;
-        ewk->wu.sync_suzi = 0;
-        *ewk->wu.char_table = hkg_char_table;
-        ewk->wu.xyz[0].disp.pos = oya->wu.xyz[0].disp.pos + 0;
-        ewk->wu.xyz[1].disp.pos = oya->wu.xyz[1].disp.pos + 64;
-        ewk->wu.position_z = ewk->wu.my_priority = 80;
-        ewk->wu.mvxy.a[0].sp = eff73_sp_tbl[i][0];
-        ewk->wu.mvxy.a[1].sp = eff73_sp_tbl[i][1];
-        ewk->wu.mvxy.a[1].sp = eff73_sp_tbl[i][2];
-        ewk->wu.mvxy.d[1].sp = -0x4000;
-        if (eff73_survive_tbl[work] == i) {
-            ewk->wu.old_rno[1] = 1;
-        } else {
-            ewk->wu.old_rno[1] = 0;
-        }
-        work2 = random_16_com();
-        work2 &= 7;
-        ewk->wu.old_rno[0] = eff73_vanish_tbl[work2];
-        suzi_offset_set(ewk);
     }
     return 0;
 }

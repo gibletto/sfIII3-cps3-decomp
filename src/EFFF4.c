@@ -146,3 +146,7 @@ void effect_F4_move(WORK_Other* ewk) {
 
 
 void effect_F4_init(WORK_Other* ewk) {}
+
+
+/* provisional name */
+void effect_F4_dummy(void) {}

@@ -22,7 +22,7 @@ void disp_pos_trans_entry_r(WORK_Other* ewk);
 void disp_pos_trans_entry_rs(WORK_Other* ewk);
 void disp_pos_trans_entry_s(WORK_Other* ewk);
 s32 eff_hit_check(WORK_Other* ewk, s16 type);
-s16 eff_hit_check2();
+s32 eff_hit_check2();
 s32 eff_hit_check_sub(WORK_Other* ewk, PLW* pl);
 s32 eff_hit_check_sub2();
 void eff_hit_flag_clear(void);

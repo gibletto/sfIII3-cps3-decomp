@@ -141,6 +141,7 @@ s32 Request_Fade(u16 fade_code, u8 fade_mode) {
 
 /* provisional name */
 void Switch_Screen_Init_Panel(s16 kind) {
+    s16 k;
     Forbid_Break = 1;
     Exec_Wipe = 1;
     Stop_SG = 1;
@@ -148,10 +149,22 @@ void Switch_Screen_Init_Panel(s16 kind) {
     Text_Page_Y = 32;
     Wipe_Panel_Count = 5;
     load_any_color(0x9E);
-    effect_D2_init(0, 0, kind, 1);
-    effect_D2_init(0, 1, kind, 1);
-    effect_D2_init(0, 2, kind, 1);
-    effect_D2_init(0, 3, kind, 1);
+    k = kind;
+    effect_D2_init(0, 0, k, 1);
+    effect_D2_init(0, 1, k, 1);
+    effect_D2_init(0, 2, k, 1);
+    effect_D2_init(0, 3, k, 1);
+}
+
+
+/* provisional name */
+s32 Switch_Screen_Wipe_End(void) {
+    if (Wipe_Panel_Count == 0) {
+        Exec_Wipe = 0;
+        Stop_Combo = 0;
+        return 1;
+    }
+    return 0;
 }
 
 
@@ -684,6 +697,7 @@ void Disp_Win_Type(void) {
     for (i = 0; i <= Battle_Round[Play_Type]; i++) {
         win_mark_put(i, win_type[0][i], 14);
         win_mark_put(i + 4, win_type[1][i], 14);
+        continue;
     }
 }
 
@@ -710,6 +724,17 @@ s32 Ck_Range_Out_S(WORK_Other* ewk, s16 BG_No, s16 R) {
         return 1;
     }
     return 0;
+}
+
+
+/* provisional name */
+s32 Count_Tens(s16 x) {
+    s16 n = 0;
+    while (x > 10) {
+        x -= 10;
+        n++;
+    }
+    return n;
 }
 
 

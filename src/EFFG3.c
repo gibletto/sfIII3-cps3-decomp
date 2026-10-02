@@ -39,6 +39,12 @@ void effect_G2_move(void)
 }
 
 
+/* provisional name */
+s32 effect_G2_dummy(void) {
+    return 0;
+}
+
+
 
 void effect_G3_move(WORK_Other* ewk) {
     WORK_Other* mwk;

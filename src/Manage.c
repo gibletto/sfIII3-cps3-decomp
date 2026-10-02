@@ -202,9 +202,7 @@ void Game_Manage_2_0(void) {
     request_message = 0;
     if (Demo_Flag == 0) {
         C_No1 = 2;
-        return;
-    }
-    if (--Cover_Timer == 0) {
+    } else if (--Cover_Timer == 0) {
         C_No1++;
         Switch_Screen_Init(3, 3);
     }
@@ -465,17 +463,17 @@ void Setup_Win_Mark(void) {
     Finish_SE();
 }
 
-s32 Update_BI_Term(void)
+void Update_BI_Term(void)
 {
     PLW *wk;
     s16 pl;
 
     if (Play_Type == 1) {
-        return 1;
+        return;
     }
     pl = Winner_id;
     wk = &plw[pl];
-    if (wk->sa_healing != 0) {
+    if (wk->sa_healing) {
         Super_Arts_Finish[pl]++;
         Stage_SA_Finish[Winner_id]++;
     } else if (wk->wu.vitality == wk->wu.vital_new) {
@@ -751,16 +749,14 @@ void Game_Manage_7_5(void) {
 
 
 
-s32 Game_Manage_7_6(void) {
-    s32 cut = ((s8)Scene_Cut);
-    if (cut) {
+void Game_Manage_7_6(void) {
+    if (Scene_Cut) {
         C_Timer = 1;
     }
     if (--C_Timer == 0) {
         C_No0++;
         C_No1 = 0;
     }
-    return cut;
 }
 
 
@@ -810,17 +806,17 @@ void Game_Manage_8_0(void) {
             grade_makeup_stage_parameter(WINNER);
             grade_makeup_stage_parameter(LOSER);
             Check_Break_Into_CPU(WINNER);
-            return;
+        } else {
+            C_No1 = 3;
+            C_Timer = 1;
         }
+    } else {
         C_No1 = 3;
-        C_Timer = 1;
-        return;
-    }
-    C_No1 = 3;
-    C_Timer = 30;
-    if (PL_Wins[Winner_id] >= Battle_Round[Play_Type] + 1) {
-        grade_makeup_stage_parameter(WINNER);
-        grade_makeup_stage_parameter(LOSER);
+        C_Timer = 30;
+        if (PL_Wins[Winner_id] >= Battle_Round[Play_Type] + 1) {
+            grade_makeup_stage_parameter(WINNER);
+            grade_makeup_stage_parameter(LOSER);
+        }
     }
 }
 
@@ -957,16 +953,14 @@ void Game_Manage_8_2(void) {
 
 
 
-s32 Game_Manage_8_3(void) {
-    s32 cut = ((s8)Scene_Cut);
-    if (cut) {
+void Game_Manage_8_3(void) {
+    if (Scene_Cut) {
         C_Timer = 1;
     }
     if (--C_Timer == 0) {
         C_No0++;
         C_No1 = 0;
     }
-    return cut;
 }
 
 
@@ -1158,7 +1152,7 @@ void Game_Manage_11th(void) {
     case 3:
         if (Switch_Screen()) {
             C_No1++;
-            tilemap_clear_rect(DE_X[3], Text_Page_Y + 11, (*&DE_X)[3] + 47, Text_Page_Y + 13);
+            tilemap_clear_rect(DE_X[3], (s16)(Text_Page_Y + 11), (*&DE_X)[3] + 47, Text_Page_Y + 13);
             sc_vram_to_ram();
             Switch_Screen_Init(3, 1);
         }
@@ -1717,11 +1711,11 @@ void Ck_Win_Record(void) {
         return;
     }
     if (Play_Type == 1) {
-        if (++Win_Record[Winner_id] > 999) {
-            Win_Record[Winner_id] = 999;
-        } else {
+        if (++Win_Record[Winner_id] <= 999) {
             Disp_Win_Record_Sub(Winner_id);
             Erase_Win_Record(Loser_id);
+        } else {
+            Win_Record[Winner_id] = 999;
         }
         Stock_Win_Record[Winner_id] = Win_Record[Winner_id];
     } else {
@@ -1796,10 +1790,13 @@ void Disp_Win_Record(void) {
             x = 43;
         }
     }
-    if (Win_Record[pl] == 1) {
+    switch (Win_Record[pl]) {
+    case 1:
         str = Game_Manage_7_2_sub0_table;
-    } else {
+        break;
+    default:
         str = Wins_msg;
+        break;
     }
     tilemap_print_string_attr(x, 0, 18, str);
     shown = 0;
@@ -1974,6 +1971,7 @@ u32 Check_Ending_Sub(void)
 
 void Quick_Entry(void) {
     s16 grade;
+    s8* best;
     if (Check_Entry_Again()) {
         Forbid_Break = 0;
         Extra_Break = 0;
@@ -1984,10 +1982,10 @@ void Quick_Entry(void) {
             Be_Continue();
         }
         if (Play_Type == 1) {
-            GradeData* gd = (GradeData*)((u8*)&judge_item[0][1] + (s16)((Winner_id << 7) + (Winner_id << 4) + (Winner_id << 3)));
-            grade = gd->grade;
-            if ((s8)grade > Best_Grade[Winner_id]) {
-                Best_Grade[Winner_id] = grade;
+            grade = ((GradeData*)((u8*)&judge_item[0][1] + (s16)(Winner_id * sizeof(judge_item[0]))))->grade;
+            best = &Best_Grade[Winner_id];
+            if ((s8)grade > *best) {
+                *best = grade;
             }
         }
         sc_vram_to_ram();
@@ -2098,6 +2096,14 @@ void Update_VS_Data(void) {
         return;
     }
     Score[Loser_id][0] = ((s32)Stock_Score[Loser_id]);
+}
+
+
+/* provisional name */
+void Update_Personal_Time(s16 id) {
+    if (Continue_Coin2[id] == 0) {
+        SC_Personal_Time[id] = Control_Time;
+    }
 }
 
 

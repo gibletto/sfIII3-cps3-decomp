@@ -71,6 +71,12 @@ void cal_dm_vital_gauge_hosei(PLW* wk) {
 }
 
 
+/* provisional name */
+s16 get_sa_gauge_len(s16 id) {
+    return plw[id].sa->gauge_len;
+}
+
+
 
 void set_hit_stop_hit_quake(WORK* wk) {
     if (wk->dm_stop) {
@@ -162,6 +168,10 @@ s32 cal_sa_gauge_waribiki(PLW* wk, s16 asag) {
     }
     return asag;
 }
+
+
+/* provisional name */
+void cal_sa_gauge_dummy(void) {}
 
 
 
@@ -414,25 +424,27 @@ test:
 
 
 /* provisional name: unreferenced; picks the player whose grade the hidden display shows */
-void kakushi_setup(s16 pl) {
+void kakushi_setup(s32 pl) {
     u16 sw;
-    s16 other = (pl + 1) & 1;
-    if (!PT_backup) {
+    s32 other = 1 & (pl + 1);
+    s16 q = pl;
+    if (PT_backup == 0) {
         kakushi_op = 0;
-        if (RO_backup[pl]) {
+        if (RO_backup[(s16)pl]) {
             kakushi_ix = other;
         } else {
             kakushi_ix = pl;
         }
         kakushi_on = 0;
         return;
-    }
-    kakushi_op = 1;
-    kakushi_ix = pl;
-    if (pl) {
-        sw = p2sw_0;
     } else {
-        sw = p1sw_0;
+        kakushi_op = 1;
+        kakushi_ix = pl;
+        if (q) {
+            sw = p2sw_0;
+        } else {
+            sw = p1sw_0;
+        }
+        kakushi_on = sw == 0xF6;
     }
-    kakushi_on = (sw == 0xF6);
 }

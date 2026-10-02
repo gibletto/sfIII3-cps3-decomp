@@ -5,7 +5,7 @@
 
 void effect_work_quick_init(void);
 void effect_work_quick_clear(void);
-s16 effect_work_pull_link(s16 index, s16 before, s16 aix);
+s32 effect_work_pull_link(s16 index, s16 before, s16 aix);
 s32 search_effect_index(s16 index, s16 flag, s16 tid);
 void effect_work_init(void);
 void effect_work_kill(s16 index, s16 kill_id);

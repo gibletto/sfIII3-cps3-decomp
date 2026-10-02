@@ -94,8 +94,7 @@ s32 Winner_Scene(void) {
 
 
 
-s32 Win_1st(void) {
-    s32 ret;
+void Win_1st(void) {
     M_No[0]++;
     M_No[1] = 0;
     Cover_Timer = 23;
@@ -110,12 +109,10 @@ s32 Win_1st(void) {
     load_any_color(0x86);
     load_any_color(124);
     load_char_gfx(0x9560, 1);
-    ret = load_char_gfx(0x95E0, 1);
+    load_char_gfx(0x95E0, 1);
     if (Play_Type == 0) {
         Last_Selected_EM[Winner_id] = 1;
-        return (s32)Last_Selected_EM;
     }
-    return ret;
 }
 
 
@@ -643,7 +640,7 @@ s32 Short_Ending_Scene(void) {
 
 
 
-s16 Continue_Scene(void) {
+s32 Continue_Scene(void) {
     void (*Scene_Tbl[5])() = { Continue_1st, Continue_2nd, Continue_3rd, Continue_4th, Continue_5th };
     CONTINUE_X = 0;
     Scene_Tbl[Cont_No]();

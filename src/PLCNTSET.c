@@ -347,6 +347,10 @@ void settle_type_60000(void) {
 }
 
 
+/* provisional name */
+void settle_type_70000(void) {}
+
+
 
 void move_player_work(void) {
     ichikannkei = check_work_position(&plw[0].wu, &plw[1].wu);

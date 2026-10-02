@@ -95,25 +95,15 @@ void bg1100_move(void) {
 
 
 
-static void bg1201_BG120(void) {
-    void (*bg1201_jmp[2])() = { bg1201_init00, bg_move_common };
-    bg1201_jmp[bgw_ptr->r_no_0]();
-}
-
-
-
-static void bg1202_BG120(void) {
-    void (*bg1202_jmp[2])() = { bg1202_init00, bg_base_move_common };
-    bg1202_jmp[bgw_ptr->r_no_0]();
-}
+#pragma inline(bg1201, bg1202)
 
 
 
 void BG120(void) {
     bgw_ptr = &bg_w.bgw[1];
-    bg1202_BG120();
+    bg1202();
     bgw_ptr = &bg_w.bgw[0];
-    bg1201_BG120();
+    bg1201();
     bgw_ptr = &bg_w.bgw[2];
     bg_fam0C00();
     bgw_ptr = &bg_w.bgw[6];

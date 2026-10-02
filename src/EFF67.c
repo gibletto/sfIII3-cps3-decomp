@@ -201,8 +201,9 @@ void eff64_data_set(WORK_Other* ewk, s16 keep) {
         ewk->wu.old_rno[1] = *data++;
     }
     ewk->wu.old_rno[2] = *data++;
-    ewk->wu.rl_flag = *data++;
-    ewk->wu.mvxy.a[0].real.h = *data++;
+    ewk->wu.rl_flag = *data;
+    data++;
+    *(s16*)&ewk->wu.mvxy.a[0] = *data++;
     ewk->wu.mvxy.a[0].real.l = *data++;
     ewk->wu.mvxy.d[0].real.h = *data++;
     ewk->wu.mvxy.d[0].real.l = *data++;

@@ -480,9 +480,12 @@ void name_entry_commit_row(s16 pl_id, s16 pos_y) {
 
 void Scs_char_move(void) {
     s16 i;
+    s8 ofs;
+    ofs = 0;
     for (i = 0; i < 4; i++) {
-        nsc_ptr = (SC_NAME_WK*)((u8*)sc_name_wk + (s8)(name_ptr->id * 40) + (s8)(i * 10));
+        nsc_ptr = &sc_name_wk[name_ptr->id][ofs];
         Scs_move_sub();
+        ofs++;
     }
 }
 

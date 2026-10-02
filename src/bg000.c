@@ -263,6 +263,10 @@ void bg_move_common(void) {
 }
 
 
+/* provisional name */
+void bg_move_common_dummy(void) {}
+
+
 
 /* provisional name */
 void bg_initialize(void) {
@@ -578,18 +582,18 @@ void bg0000_init00(void) {
     if (gill_appear_check()) {
         bgw_ptr->r_no_0 = 2;
         bg_app = 0;
-        return;
+    } else {
+        bg_app = 1;
+        if (plw[0].player_number == PL_GILL) {
+            bgw_ptr->u_line = 0;
+            bgw_ptr->xy[0].cal += bgw_ptr->speed_x * 0xE0;
+            bgw_ptr->old_pos_x = bgw_ptr->hos_xy[0].cal = bgw_ptr->wxy[0].cal = bgw_ptr->xy[0].cal;
+        } else {
+            bgw_ptr->u_line = 1;
+            bgw_ptr->xy[0].cal -= bgw_ptr->speed_x * 0xC0;
+            bgw_ptr->old_pos_x = bgw_ptr->hos_xy[0].cal = bgw_ptr->wxy[0].cal = bgw_ptr->xy[0].cal;
+        }
     }
-    bg_app = 1;
-    if (plw->player_number == PL_GILL) {
-        bgw_ptr->u_line = 0;
-        bgw_ptr->xy[0].cal += bgw_ptr->speed_x * 0xE0;
-        bgw_ptr->old_pos_x = bgw_ptr->hos_xy[0].cal = bgw_ptr->wxy[0].cal = bgw_ptr->xy[0].cal;
-        return;
-    }
-    bgw_ptr->u_line = 1;
-    bgw_ptr->xy[0].cal -= bgw_ptr->speed_x * 0xC0;
-    bgw_ptr->old_pos_x = bgw_ptr->hos_xy[0].cal = bgw_ptr->wxy[0].cal = bgw_ptr->xy[0].cal;
 }
 
 

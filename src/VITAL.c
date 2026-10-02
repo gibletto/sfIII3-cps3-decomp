@@ -249,21 +249,10 @@ void count_cont_reset(void) {
 
 
 
-s32 count_cont_main(void) {
-    s32 stop;
-    if ((stop = Break_Into) != 0) {
-        return stop;
+void count_cont_main(void) {
+    if (!Break_Into && !sa_stop_check() && !EXE_flag && !Game_pause) {
+        counter_control();
     }
-    if ((stop = sa_stop_check()) != 0) {
-        return stop;
-    }
-    if ((stop = EXE_flag) != 0) {
-        return stop;
-    }
-    if ((stop = Game_pause) != 0) {
-        return stop;
-    }
-    return ((s32(*)(void))counter_control)();
 }
 
 

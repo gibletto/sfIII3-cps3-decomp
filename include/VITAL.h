@@ -16,7 +16,7 @@ s32 bcounter_control(void);
 s16 bcounter_down(u8 stop);
 void counter_color_clear(void);
 void bcount_cont_main(void);
-s32 count_cont_main(void);
+void count_cont_main(void);
 void vital_cont_main(void);
 s32 vital_control(s8 pl);
 

@@ -33,7 +33,7 @@ void dbg_memory_dump_rows(u16* tbl);
 void Entry_03(void);
 void Entry_04(void);
 void Entry_06(void);
-s32 Entry_06_2nd(void);
+void Entry_06_2nd(void);
 void Entry_07(void);
 void Entry_07_2nd(void);
 void Entry_08(void);

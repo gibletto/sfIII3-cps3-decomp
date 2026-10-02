@@ -32,6 +32,8 @@
 #include "ta_sub.h"
 #include "bg130.h"
 
+#pragma inline(bg1501, bg1502, bg1601, bg1602)
+
 
 
 void bg1300_BG130(void) {
@@ -239,25 +241,11 @@ void bg1403(void) {
 
 
 
-void bg1501_BG150(void) {
-    void (*bg1601_jmp[2])() = { bg1501_init00, bg_move_common };
-    bg1601_jmp[bgw_ptr->r_no_0]();
-}
-
-
-
-void bg1502_BG150(void) {
-    void (*bg1602_jmp[2])() = { bg1502_init00, bg_base_move_common };
-    bg1602_jmp[bgw_ptr->r_no_0]();
-}
-
-
-
 void BG150(void) {
     bgw_ptr = &bg_w.bgw[1];
-    bg1502_BG150();
+    bg1502();
     bgw_ptr = &bg_w.bgw[0];
-    bg1501_BG150();
+    bg1501();
     bgw_ptr = &bg_w.bgw[2];
     bg1502_sync_common();
     zoom_ud_check();
@@ -337,25 +325,11 @@ void bg1502_sync_common(void) {
 
 
 
-void bg1601_BG160(void) {
-    void (*bg1601_jmp[2])() = { bg1601_init00, bg_move_common };
-    bg1601_jmp[bgw_ptr->r_no_0]();
-}
-
-
-
-void bg1602_BG160(void) {
-    void (*bg1602_jmp[2])() = { bg1602_init00, bg_base_move_common };
-    bg1602_jmp[bgw_ptr->r_no_0]();
-}
-
-
-
 void BG160(void) {
     bgw_ptr = &bg_w.bgw[1];
-    bg1602_BG160();
+    bg1602();
     bgw_ptr = &bg_w.bgw[0];
-    bg1601_BG160();
+    bg1601();
     bgw_ptr = &bg_w.bgw[2];
     bg1602_sync_common();
     zoom_ud_check();
@@ -592,15 +566,9 @@ void bns02_move(void) {
 
 void Bonus_bg2(void) {
     bgw_ptr = &bg_w.bgw[1];
-    {
-        void (*jmp1[2])() = { bns11_init00, bns11_move };
-        jmp1[bgw_ptr->r_no_0]();
-    }
+    bns11();
     bgw_ptr = &bg_w.bgw[0];
-    {
-        void (*jmp0[2])() = { bns12_init00, bns12_move };
-        jmp0[bgw_ptr->r_no_0]();
-    }
+    bns12();
     bg_pos_hosei2();
     Bg_Family_Set();
 }

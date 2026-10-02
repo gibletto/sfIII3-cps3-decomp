@@ -16,7 +16,6 @@
 #include "romdata.h"
 #include "extern.h"
 #include "SYS_sub.h"
-#include "EFFA6_INIT.h"
 #include "EFFA6.h"
 #include "Eff76_COLOR.h"
 #include "aboutspr.h"

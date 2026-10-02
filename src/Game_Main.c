@@ -1205,6 +1205,19 @@ s16 Disp_Rank_Sub(s16 PL_id) {
 
 
 
+/* provisional name */
+s32 Check_Disp_Rank_Request(void) {
+    if (Request_Disp_Rank[0][0] >= 0 || Request_Disp_Rank[0][1] >= 0) {
+        return 1;
+    }
+    if (Request_Disp_Rank[1][0] >= 0 || Request_Disp_Rank[1][1] >= 0) {
+        return 1;
+    }
+    return 0;
+}
+
+
+
 void Request_Break_Sub(s16 PL_id) {
     if (Request_Break[PL_id]) {
         if (Ck_Break_Into(0, 0, PL_id)) {
@@ -1287,17 +1300,14 @@ void Game_Dummy(void) {
 
 
 void Time_Control(void) {
-    if (Allow_a_battle_f == 0 || Demo_Step_Flag != 0 || Bonus_Game_Flag != 0) {
-        return;
-    }
-    count_cont_main();
-    if (Control_Time >= Limit_Time) {
-        Control_Time = Limit_Time;
-        return;
-    }
-    if (--Time_in_Time == 0) {
-        Time_in_Time = 60;
-        Control_Time += 1;
+    if (Allow_a_battle_f != 0 && Demo_Step_Flag == 0 && Bonus_Game_Flag == 0) {
+        count_cont_main();
+        if (Control_Time >= Limit_Time) {
+            Control_Time = Limit_Time;
+        } else if (--Time_in_Time == 0) {
+            Time_in_Time = 60;
+            Control_Time++;
+        }
     }
 }
 

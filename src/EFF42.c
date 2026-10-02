@@ -289,10 +289,20 @@ WORK* wk;
             return 1;
         }
         return 0;
+    } else {
+        if ((wk->my_mr.size.x += *(s16*)&wk->mvxy.a[0]) >= 63) {
+            wk->my_mr.size.x = 63;
+            return 1;
+        }
+        return 0;
     }
-    if ((wk->my_mr.size.x += *(s16*)&wk->mvxy.a[0]) >= 63) {
-        wk->my_mr.size.x = 63;
-        return 1;
+}
+
+
+/* provisional name */
+s32 Order_Timer_Dec(WORK_Other* ewk) {
+    if (ewk->wu.direction == 0) {
+        Order_Timer[ewk->wu.dir_old]--;
     }
-    return 0;
+    return Order_Timer[ewk->wu.dir_old];
 }

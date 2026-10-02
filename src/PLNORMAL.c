@@ -836,20 +836,20 @@ void Normal_52000(PLW* wk) {
     }
     switch (wk->wu.routine_no[3]) {
     case 0:
-        wk->wu.routine_no[3]++;
+        wk->wu.routine_no[3] = wk->wu.routine_no[3] + 1;
         wk->extra_jump = 1;
-        remake_sankaku_tobi_mvxy((WORK*)wk, wk->micchaku_flag);
-        set_char_move_init((WORK*)wk, 0, 48);
-        effect_I3_init((WORK*)wk, 0);
+        remake_sankaku_tobi_mvxy(&wk->wu, wk->micchaku_flag);
+        set_char_move_init(&wk->wu, 0, 48);
+        effect_I3_init(&wk->wu, 0);
         break;
     case 1:
-        char_move((WORK*)wk);
-        if (wk->wu.cg_type == 0xFF) {
+        char_move(&wk->wu);
+        if ((u8)wk->wu.cg_type == 0xFF) {
             wk->wu.routine_no[2] = 21;
             wk->wu.routine_no[3] = 1;
-            set_char_move_init((WORK*)wk, 0, 14);
-            char_move_z((WORK*)wk);
-            add_mvxy_speed((WORK*)wk);
+            set_char_move_init(&wk->wu, 0, 14);
+            char_move_z(&wk->wu);
+            add_mvxy_speed(&wk->wu);
         }
         break;
     }
@@ -957,7 +957,7 @@ void make_nm55_init_sp(PLW* wk) {
     if (isp < 3) {
         isp = 3;
     }
-    wk->wu.mvxy.a[0].real.h = isp;
+    *(s16*)&wk->wu.mvxy.a[0] = isp;
     efw = (WORK*)((WORK*)wk->wu.target_adrs)->my_effadrs;
     ix = get_sel_hosei_tbl_ix(wk->player_number) + 1;
     dad = efw->hosei_adrs[ix].hos_box;
@@ -1061,7 +1061,7 @@ void nm57_dir_select(PLW* wk) {
     ix = get_sel_hosei_tbl_ix(wk->player_number) + 1;
     dad = (s16*)efw->hosei_adrs[ix].hos_box;
     wk->wu.rl_flag = 1;
-    if (check_work_position_bonus((WORK*)wk, dad[0] + efw->xyz[0].disp.pos + (dad[1] / 2))) {
+    if (check_work_position_bonus((WORK*)wk, efw->xyz[0].disp.pos + dad[0] + (dad[1] / 2))) {
         wk->wu.rl_flag = 0;
     }
 }

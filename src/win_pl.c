@@ -135,11 +135,14 @@ void Win_01000(PLW* wk) {
                 break;
             }
             set_char_move_init(&wk->wu, 9, win_10000_tbl[work + 8]);
+            if (work == 4) {
+                win_rno[0] = 2;
+            }
         } else {
             set_char_move_init(&wk->wu, 9, win_10000_tbl[work]);
-        }
-        if (work == 4) {
-            win_rno[0] = 2;
+            if (work == 4) {
+                win_rno[0] = 2;
+            }
         }
         break;
     case 1:
@@ -810,48 +813,42 @@ s32 q_em_dir(PLW* wk) {
 
 
 void q_keeping_action(PLW* wk) {
-    switch (win_rno[1]) {
+    s16* p = &win_rno[1];
+    switch (*p) {
     case 0:
-        if (!q_em_dir(wk)) {
-            break;
+        if (q_em_dir(wk) != 0) {
+            if (wk->wu.direction == wk->wu.rl_flag) {
+                win_rno[1] = 2;
+            } else {
+                win_rno[1] = 1;
+                set_char_move_init(&wk->wu, 9, 40);
+                wk->wu.rl_flag ^= 1;
+            }
         }
-        if (wk->wu.direction == wk->wu.rl_flag) {
-            win_rno[1] = 2;
-            break;
-        }
-        win_rno[1] = 1;
-        set_char_move_init(&wk->wu, 9, 40);
-        wk->wu.rl_flag = wk->wu.rl_flag ^ 1;
         break;
     case 1:
         char_move(&wk->wu);
-        if (wk->wu.cg_type == 0xFF) {
+        if ((u8)wk->wu.cg_type == 0xFF) {
             win_rno[1]++;
-            break;
         }
         break;
     case 2:
-        win_rno[1]++;
+        (*p)++;
         set_char_move_init(&wk->wu, 9, 41);
         wk->wu.mvxy.d[0].sp = 0;
         if (wk->wu.rl_flag) {
             wk->wu.mvxy.a[0].sp = 0x1C000;
-            break;
+        } else {
+            wk->wu.mvxy.a[0].sp = -0x1C000;
         }
-        wk->wu.mvxy.a[0].sp = -0x1C000;
         break;
     case 3:
         char_move(&wk->wu);
         add_x_sub((WORK_Other*)wk);
-        if (!q_em_distance_chk(wk)) {
-            break;
+        if (q_em_distance_chk(wk)) {
+            win_rno[1]++;
+            set_char_move_init(&wk->wu, 9, win_rno[0] == 1 ? 36 : 37);
         }
-        win_rno[1]++;
-        if (win_rno[0] == 1) {
-            set_char_move_init(&wk->wu, 9, 36);
-            break;
-        }
-        set_char_move_init(&wk->wu, 9, 37);
         break;
     case 4:
         char_move(&wk->wu);

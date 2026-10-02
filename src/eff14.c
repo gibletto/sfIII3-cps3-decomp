@@ -22,7 +22,12 @@ static void effect_14_write(WORK_Other* ewk);
 
 
 
-s32 effect_14_init(s16 id, s16 x, s16 y, s16 atr) {
+s32 effect_14_init(id, x, y, atr)
+    s16 id;
+    s16 x;
+    s16 y;
+    s16 atr;
+{
     WORK_Other* ewk;
     s16 ix;
     if ((ix = pull_effect_work(3)) == -1) {

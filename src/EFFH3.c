@@ -134,6 +134,12 @@ void effect_H4_move(WORK_Other* ewk) {
 }
 
 
+/* provisional name */
+s32 effect_H4_dummy(void) {
+    return 0;
+}
+
+
 
 void effect_H5_move(WORK_Other* ewk) {
     void (*H5_Jmp_Tbl[5])(WORK_Other*) = { effH5_0000, effH5_0001, effH5_0002, effH5_0003, effH5_0004 };
@@ -348,6 +354,23 @@ s32 effect_H5_init(u8 type) {
     ewk->wu.char_index = *data_ptr++;
     ewk->wu.old_rno[1] = ewk->wu.char_index - 1;
     ewk->wu.routine_no[0] = *data_ptr;
+    return 0;
+}
+
+
+/* provisional name */
+s32 end_cut_check(void) {
+    u16 sw;
+    if (!end_no_cut) {
+        if (WINNER) {
+            sw = p2sw_0;
+        } else {
+            sw = p1sw_0;
+        }
+        if (sw & 0x3F0) {
+            return 1;
+        }
+    }
     return 0;
 }
 

@@ -22,8 +22,10 @@
 
 void effect_80_move(WORK_Other* ewk) {
     WORK_Other* mwk = (WORK_Other*)ewk->my_master;
+    s16 z = 0;
+
     if (mwk->wu.be_flag == 0) {
-        ewk->wu.disp_flag = 0;
+        ewk->wu.disp_flag = z;
         ewk->wu.routine_no[0] = 3;
         return;
     }
@@ -31,14 +33,14 @@ void effect_80_move(WORK_Other* ewk) {
     case 0:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
-        set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
-        break;
+        set_char_move_init2(&ewk->wu, z, ewk->wu.char_index, ewk->wu.dir_step + 1, z);
+        goto tail;
     case 1:
-        if (Ck_Range_Out_S(ewk, 2, 96)) {
-            ewk->wu.disp_flag = 0;
-            ewk->wu.routine_no[0]++;
-            return;
+        if (Ck_Range_Out_S(ewk, 2, 96) == 0) {
+            goto tail;
         }
+        ewk->wu.disp_flag = z;
+        ewk->wu.routine_no[0]++;
         break;
     case 2:
         ewk->wu.routine_no[0] = 99;
@@ -48,6 +50,8 @@ void effect_80_move(WORK_Other* ewk) {
         push_effect_work(&ewk->wu);
         return;
     }
+    return;
+tail:
     ewk->wu.disp_flag = Disp_Command_Name[ewk->master_id][ewk->master_player];
     ewk->wu.position_x = ewk->wu.xyz[0].disp.pos = mwk->wu.position_x;
     ewk->wu.position_y = ewk->wu.xyz[1].disp.pos = mwk->wu.position_y;

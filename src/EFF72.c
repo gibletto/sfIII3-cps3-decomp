@@ -55,34 +55,33 @@ void effect_72_move(WORK_Other* ewk) {
 s32 effect_72_init(WORK_Other* oya, u8 type_id) {
     WORK_Other* ewk;
     s16 ix;
-    if (EXE_obroll) {
+    if (EXE_obroll == 0) {
+        if ((ix = pull_effect_work(4)) == -1) {
+            return -1;
+        }
+        ewk = (WORK_Other*)frw[ix];
+        ewk->wu.be_flag = 1;
+        ewk->wu.id = 72;
+        ewk->wu.type = type_id;
+        ewk->wu.work_id = 16;
+        ewk->wu.cgromtype = 1;
+        ewk->wu.rl_flag = 0;
+        ewk->wu.my_col_mode = 0x4200;
+        ewk->my_master = (u32*)oya;
+        ewk->wu.my_family = 2;
+        ewk->wu.my_col_code = 0x2080;
+        ewk->wu.char_table[0] = hkg_char_table;
+        ewk->wu.xyz[0].disp.pos = 511;
+        ewk->wu.xyz[1].disp.pos = 0;
+        if (type_id) {
+            ewk->wu.position_z = ewk->wu.my_priority = 10;
+            ewk->wu.char_index = 8;
+        } else {
+            ewk->wu.position_z = ewk->wu.my_priority = 72;
+            ewk->wu.char_index = 9;
+        }
+        ewk->wu.sync_suzi = 0;
+        suzi_offset_set(ewk);
         return 0;
     }
-    if ((ix = pull_effect_work(4)) == -1) {
-        return -1;
-    }
-    ewk = (WORK_Other*)frw[ix];
-    ewk->wu.be_flag = 1;
-    ewk->wu.id = 72;
-    ewk->wu.type = type_id;
-    ewk->wu.work_id = 16;
-    ewk->wu.cgromtype = 1;
-    ewk->wu.rl_flag = 0;
-    ewk->wu.my_col_mode = 0x4200;
-    ewk->my_master = (u32*)oya;
-    ewk->wu.my_family = 2;
-    ewk->wu.my_col_code = 0x2080;
-    ewk->wu.char_table[0] = hkg_char_table;
-    ewk->wu.xyz[0].disp.pos = 511;
-    ewk->wu.xyz[1].disp.pos = 0;
-    if (type_id) {
-        ewk->wu.position_z = ewk->wu.my_priority = 10;
-        ewk->wu.char_index = 8;
-    } else {
-        ewk->wu.position_z = ewk->wu.my_priority = 72;
-        ewk->wu.char_index = 9;
-    }
-    ewk->wu.sync_suzi = 0;
-    suzi_offset_set(ewk);
-    return 0;
 }

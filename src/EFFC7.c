@@ -5,7 +5,7 @@
  * and the player's character (ef01_char_table). effect_C7_move places it on its first frame at
  * the offset for that type and character in paring_mark_data (mirrored for facing) and chooses
  * its depth against the player, then plays the mark's pattern in the list-8 sort queue and frees
- * itself when the pattern ends or the work is killed. effc7_sort_push / _push2 queue the sprite.
+ * itself when the pattern ends or the work is killed. effc7_sort_push2 queues the sprite.
  */
 
 #include "structs.h"
@@ -20,9 +20,7 @@
 
 
 
-void effc7_sort_push(WORK* ewk, WORK* _p1) {
-    sort_push_request8(ewk);
-}
+#pragma inline(effc7_sort_push2)
 
 
 
@@ -46,7 +44,7 @@ void effect_C7_move(WORK_Other* ewk) {
             ewk->wu.position_z = ewk->wu.xyz[2].disp.pos;
         }
         set_char_move_init(&ewk->wu, 0, 0);
-        effc7_sort_push(&ewk->wu, mwk);
+        effc7_sort_push2(&ewk->wu, mwk);
         break;
     case 1:
         if (ewk->wu.dead_f == 1) {
@@ -62,7 +60,7 @@ void effect_C7_move(WORK_Other* ewk) {
                 break;
             }
         }
-        effc7_sort_push(&ewk->wu, mwk);
+        effc7_sort_push2(&ewk->wu, mwk);
         break;
     case 2:
         ewk->wu.routine_no[0] = 3;

@@ -693,8 +693,7 @@ void Entry_06_1st(void) {
 
 
 
-s32 Entry_06_2nd(void) {
-    s32 rc;
+void Entry_06_2nd(void) {
     if (E_07_Flag[0] == 0) {
         Entry_Main_Sub(0, 7);
     }
@@ -703,20 +702,19 @@ s32 Entry_06_2nd(void) {
     }
     switch (E_No2) {
     case 0:
-        E_No2 = E_No2 + 1;
+        E_No2 += 1;
         sc_vram_to_ram();
         Switch_Screen_Init(0, 1);
         break;
     case 1:
-        if ((rc = Switch_Screen()) != 0) {
+        if (Switch_Screen() != 0) {
             E_No2 = E_No2 + 1;
             Cover_Timer = 23;
             Switch_Screen_Init(0, 1);
-            return;
         }
-        return rc;
+        break;
     default:
-        if ((rc = Switch_Screen()) != 0) {
+        if (Switch_Screen() != 0) {
             G_No1 = 1;
             G_No2 = 0;
             G_No3 = 0;
@@ -741,11 +739,11 @@ s32 Entry_06_2nd(void) {
             }
             E_07_Flag[0] = 0;
             E_07_Flag[1] = 0;
-            if ((rc = E_Number[LOSER][0]) == 5 && Continue_Flag) {
+            if (E_Number[LOSER][0] == 5 && Continue_Flag) {
                 E_Number[LOSER][0] = 1;
             }
         }
-        return rc;
+        break;
     }
 }
 
@@ -2087,7 +2085,7 @@ void Break_Into_02(s16 PL_id) {
 
 void Break_Into_04(s16 PL_id) {
     Break_Into = 1;
-    E_No1 = E_No1 + 1;
+    E_No1++;
     E_No2 = 0;
     E_Timer = 150;
     E_Number[New_Challenger][0] = 0;
@@ -2097,7 +2095,7 @@ void Break_Into_04(s16 PL_id) {
     effect_A2_init(0);
     effect_89_init(6, 0, Text_Page_Y + 11, 48, 3);
     bgm_request(5);
-    tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18, msg_blank);
+    tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + (&Entry_Mes_X[0])[PL_id], Text_Page_Y, 18, msg_blank);
 }
 
 
@@ -2127,7 +2125,7 @@ void Break_Into_05(s16 PL_id) {
         effect_89_init(6, 0, Text_Page_Y + 11, 48, 3);
         bgm_request(5);
     }
-    tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18, msg_blank);
+    tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + (&Entry_Mes_X[0])[PL_id], Text_Page_Y, 18, msg_blank);
 }
 
 

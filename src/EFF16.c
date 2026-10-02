@@ -108,7 +108,10 @@ s16 score_bunkai_eff16(WORK_Other_CONN* ewk, u32 tsc) {
 
 
 
-s32 effect_16_init(PLW* wk, s16 flag) {
+s32 effect_16_init(wk, flag)
+    PLW* wk;
+    s16 flag;
+{
     WORK_Other_CONN* ewk;
     s16 ix;
     s16 i;

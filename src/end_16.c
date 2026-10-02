@@ -238,14 +238,17 @@ void end_1600_5000(void) {
     }
 }
 
-void end_1600_cell_set(void)
-{
-    const PANEL *tbl = (const PANEL *)end_1600_bg0_cell_tbl;
+void end_1600_cell_set(void) {
     s16 i;
+    const PANEL* p;
 
-    for (i = 0; i < 13; i++) {
-        bg_cell_write(0, tbl[i].ofs, tbl[i].cell, (u32)end_1600_scrn_data, 0, 0x220);
-    }
+    p = (const PANEL*)end_1600_bg0_cell_tbl;
+    i = 0;
+    do {
+        bg_cell_write(0, p->ofs, p->cell, (u32)end_1600_scrn_data, 0, 0x220);
+        i++;
+        p++;
+    } while (i < 13);
 }
 
 

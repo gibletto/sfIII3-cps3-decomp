@@ -102,6 +102,18 @@ void eff48_1000(WORK_Other* ewk) {
 }
 
 
+/* provisional name */
+void eff48_dummy_1(void) {}
+
+
+/* provisional name */
+void eff48_dummy_2(void) {}
+
+
+/* provisional name */
+void eff48_dummy_3(void) {}
+
+
 
 s32 effect_48_init(s16 type) {
     WORK_Other* ewk;

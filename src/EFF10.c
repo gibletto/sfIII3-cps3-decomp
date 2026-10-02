@@ -161,6 +161,7 @@ s32 effect_10_init(WORK* wk, u8 type) {
         ewk->wu.char_index = *data++;
         ewk->wu.sync_suzi = 0;
         suzi_offset_set(ewk);
+        continue;
     }
     return 0;
 }

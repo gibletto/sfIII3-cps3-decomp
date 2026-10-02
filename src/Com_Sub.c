@@ -490,8 +490,8 @@ s16 Lever;
 {
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
-        if (Check_Passive(wk) != 0) {
-            break;
+        if (Check_Passive(wk)) {
+            return;
         }
         CP_Index[wk->wu.id][1]++;
         if (Lever != -1) {
@@ -503,13 +503,17 @@ s16 Lever;
             CP_Index[wk->wu.id][1]++;
             Lever_Buff[wk->wu.id] = 0x240;
         }
-        break;
+        return;
     default:
-        Lever_Buff[wk->wu.id] = Lever_LR[wk->wu.id];
-        if ((wk->wu.routine_no[1] != 4) || (wk->wu.routine_no[2] != 0x1E)) {
-            Reaction_Exit_Sub(wk);
+        {
+            s32 j = wk->wu.id;
+            Lever_Buff[j] = Lever_LR[j];
         }
-        break;
+        if (wk->wu.routine_no[1] == 4 && wk->wu.routine_no[2] == 0x1E) {
+            return;
+        }
+        Reaction_Exit_Sub(wk);
+        return;
     }
 }
 
@@ -652,6 +656,15 @@ u16 Lever_Data;
         Reaction_Sub(wk, Reaction, 0);
         break;
     }
+}
+
+
+/* provisional name */
+s32 Check_Target_Pat_Status(WORK* wk) {
+    if (((WORK*)wk->target_adrs)->pat_status == 32) {
+        return 0;
+    }
+    return 2;
 }
 
 
@@ -1100,6 +1113,7 @@ void Wait(wk, Time)
 PLW* wk;
 s16 Time;
 {
+    s32 k;
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
         CP_Index[wk->wu.id][1]++;
@@ -1110,21 +1124,21 @@ s16 Time;
         }
         break;
     default:
-        if (--Timer_00[wk->wu.id]) {
-            break;
-        }
-        CP_Index[wk->wu.id][0]++;
-        CP_Index[wk->wu.id][1] = 0;
-        CP_Index[wk->wu.id][2] = 0;
-        CP_Index[wk->wu.id][3] = 0;
-        Flip_Flag[wk->wu.id] = 0;
-        Limited_Flag[wk->wu.id] = 0;
-        if (CP_No[wk->wu.id][0] != 6) {
-            Passive_Flag[wk->wu.id] = 0;
+        if (--Timer_00[wk->wu.id] == 0) {
+            CP_Index[wk->wu.id][0]++;
+            CP_Index[wk->wu.id][1] = 0;
+            CP_Index[wk->wu.id][2] = 0;
+            CP_Index[wk->wu.id][3] = 0;
+            Flip_Flag[wk->wu.id] = 0;
+            Limited_Flag[wk->wu.id] = 0;
+            if (CP_No[wk->wu.id][0] != 6) {
+                Passive_Flag[wk->wu.id] = 0;
+            }
         }
         break;
     }
-    Lever_Buff[wk->wu.id] = Lever_LR[wk->wu.id];
+    k = wk->wu.id;
+    Lever_Buff[k] = Lever_LR[k];
 }
 
 
@@ -1333,16 +1347,21 @@ s16 Option;
     case 0:
         CP_Index[wk->wu.id][1]++;
         dash_flag_clear(wk->wu.id);
-        if (Lever_Data != 0) {
+        if (Lever_Data) {
             Lever_LR[wk->wu.id] = Setup_Guard_Lever(wk, 1);
             Lever_LR[wk->wu.id] |= Lever_Data & 2;
             Guard_Flag[wk->wu.id] = 1;
         } else {
             Lever_LR[wk->wu.id] = 0;
         }
-    default:
-        Lever_Buff[wk->wu.id] = Lever_LR[wk->wu.id];
-        if (Check_Exit_Guard(wk, Option) == 0) {
+    }
+    {
+        s32 j = wk->wu.id;
+        Lever_Buff[j] = Lever_LR[j];
+    }
+    {
+        s32 k = Option;
+        if (!Check_Exit_Guard(wk, k)) {
             CP_Index[wk->wu.id][0]++;
             CP_Index[wk->wu.id][1] = 0;
             CP_Index[wk->wu.id][2] = 0;
@@ -1350,11 +1369,10 @@ s16 Option;
             Guard_Flag[wk->wu.id] = 0;
             Flip_Flag[wk->wu.id] = 0;
             Limited_Flag[wk->wu.id] = 0;
-            if (Option == 0) {
+            if (!k) {
                 Passive_Flag[wk->wu.id] = 0;
             }
         }
-        break;
     }
 }
 

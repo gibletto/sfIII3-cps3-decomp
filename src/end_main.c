@@ -256,10 +256,14 @@ void op_101_move(void) {
 
 
 void op_102_move(void) {
-    switch (op_w.r_no_2) {
+    register OP_W* r = &op_w;
+    register s8 s = r->r_no_2;
+    u8* g = gSeqStatus;
+    s16* t = &op_102_tbl[s];
+    switch (s) {
     case 0:
-        op_w.r_no_2 += 1;
-        op_w.index = 2;
+        r->r_no_2++;
+        r->index = 2;
         effect_F6_init(2);
         effect_F6_init(3);
         effect_F6_init(4);
@@ -269,25 +273,25 @@ void op_102_move(void) {
         opening_bg_move_broadcast(2);
         break;
     case 1:
-        if (gSeqStatus[0] >= op_102_tbl[op_w.r_no_2] && gSeqStatus[0] != 102) {
-            op_w.r_no_2 += 1;
-            op_w.index = 3;
+        if (*g >= *t && *g != 102) {
+            r->r_no_2++;
+            r->index = 3;
             op_obj_disp = 1;
             op_work_clear();
             opening_bg_move_broadcast(3);
-            return;
+        } else {
+            opening_bg_move_broadcast(2);
         }
-        opening_bg_move_broadcast(2);
         break;
     case 2:
-        if (gSeqStatus[0] >= op_102_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
-            op_w.index = 4;
+        if (*g >= *t) {
+            r->r_no_2++;
+            r->index = 4;
             op_work_clear();
             opening_bg_move_broadcast(4);
-            return;
+        } else {
+            opening_bg_move_broadcast(3);
         }
-        opening_bg_move_broadcast(3);
         break;
     default:
         opening_bg_move_broadcast(4);
@@ -298,6 +302,8 @@ void op_102_move(void) {
 
 
 void op_103_move(void) {
+    u8* seq = gSeqStatus;
+    const s16* lim = &op_103_tbl[op_w.r_no_2];
     switch (op_w.r_no_2) {
     case 0:
         op_w.r_no_2 += 1;
@@ -312,7 +318,7 @@ void op_103_move(void) {
         opening_bg_move_broadcast(5);
         break;
     case 1:
-        if (((*(u8(*)[])&gSeqStatus[0])[0] >= op_103_tbl[op_w.r_no_2]) && ((*(u8(*)[])&gSeqStatus[0])[0] != 0x67)) {
+        if ((*seq >= *lim) && (*seq != 0x67)) {
             op_w.r_no_2 += 1;
             op_w.index = 6;
             op_work_clear();
@@ -322,94 +328,94 @@ void op_103_move(void) {
             effect_F6_init(14);
             effect_F6_init(15);
             effect_F6_init(16);
-            return;
+        } else {
+            opening_bg_move_broadcast(5);
         }
-        opening_bg_move_broadcast(5);
         break;
     case 2:
-        if ((*(u8(*)[])&gSeqStatus[0])[0] >= op_103_tbl[op_w.r_no_2]) {
+        if (*seq >= *lim) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 7;
             op_obj_disp = 0;
             effect_48_init(8);
-            return;
+        } else {
+            opening_bg_move_broadcast(6);
         }
-        opening_bg_move_broadcast(6);
         break;
     case 3:
-        if ((*(u8(*)[])&gSeqStatus[0])[0] >= op_103_tbl[op_w.r_no_2]) {
+        if (*seq >= *lim) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 8;
             op_obj_disp = 1;
             op_scrn_end = 0;
             effect_36_init(22);
-            return;
+        } else {
+            opening_bg_move_broadcast(7);
         }
-        opening_bg_move_broadcast(7);
         break;
     case 4:
-        if ((*(u8(*)[])&gSeqStatus[0])[0] >= op_103_tbl[op_w.r_no_2]) {
+        if (*seq >= *lim) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 9;
-            return;
+        } else {
+            opening_bg_move_broadcast(8);
         }
-        opening_bg_move_broadcast(8);
         break;
     case 5:
-        if ((*(u8(*)[])&gSeqStatus[0])[0] >= op_103_tbl[op_w.r_no_2]) {
+        if (*seq >= *lim) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 10;
-            return;
+        } else {
+            opening_bg_move_broadcast(9);
         }
-        opening_bg_move_broadcast(9);
         break;
     case 6:
-        if ((*(u8(*)[])&gSeqStatus[0])[0] >= op_103_tbl[op_w.r_no_2]) {
+        if (*seq >= *lim) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 11;
-            return;
+        } else {
+            opening_bg_move_broadcast(10);
         }
-        opening_bg_move_broadcast(10);
         break;
     case 7:
-        if ((*(u8(*)[])&gSeqStatus[0])[0] >= op_103_tbl[op_w.r_no_2]) {
+        if (*seq >= *lim) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 12;
             op_obj_disp = 0;
             effect_48_init(9);
-            return;
+        } else {
+            opening_bg_move_broadcast(11);
         }
-        opening_bg_move_broadcast(11);
         break;
     case 8:
-        if ((*(u8(*)[])&gSeqStatus[0])[0] >= op_103_tbl[op_w.r_no_2]) {
+        if (*seq >= *lim) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 13;
             op_obj_disp = 1;
-            return;
+        } else {
+            opening_bg_move_broadcast(12);
         }
-        opening_bg_move_broadcast(12);
         break;
     case 9:
-        if ((*(u8(*)[])&gSeqStatus[0])[0] >= op_103_tbl[op_w.r_no_2]) {
+        if (*seq >= *lim) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 14;
             op_scrn_end = 0;
             effect_36_init(23);
-            return;
+        } else {
+            opening_bg_move_broadcast(13);
         }
-        opening_bg_move_broadcast(13);
         break;
     case 10:
-        if ((*(u8(*)[])&gSeqStatus[0])[0] >= op_103_tbl[op_w.r_no_2]) {
+        if (*seq >= *lim) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 15;
@@ -417,13 +423,13 @@ void op_103_move(void) {
         opening_bg_move_broadcast(14);
         break;
     case 11:
-        if ((*(u8(*)[])&gSeqStatus[0])[0] >= op_103_tbl[op_w.r_no_2]) {
+        if (*seq >= *lim) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 16;
-            return;
+        } else {
+            opening_bg_move_broadcast(15);
         }
-        opening_bg_move_broadcast(15);
         break;
     default:
         opening_bg_move_broadcast(16);
@@ -434,11 +440,16 @@ void op_103_move(void) {
 
 
 void op_104_move(void) {
-    switch (op_w.r_no_2) {
+    s16* e = &op_obj_disp;
+    OP_W* r = &op_w;
+    s8 s = r->r_no_2;
+    u8* g = gSeqStatus;
+    s16* t = &op_104_sound[s];
+    switch (s) {
     case 0:
-        op_w.r_no_2 += 1;
+        r->r_no_2++;
         op_work_clear();
-        op_w.index = 17;
+        r->index = 17;
         opening_bg_move_broadcast(17);
         effect_F6_init(17);
         effect_F6_init(18);
@@ -449,66 +460,68 @@ void op_104_move(void) {
         effect_F6_init(23);
         break;
     case 1:
-        if (gSeqStatus[0] >= op_104_sound[op_w.r_no_2] && gSeqStatus[0] != 104) {
-            op_w.r_no_2 += 1;
+        if (*g >= *t && *g != 104) {
+            r->r_no_2++;
             op_work_clear();
-            op_w.index = 18;
-            break;
+            r->index = 18;
+        } else {
+            opening_bg_move_broadcast(17);
         }
-        opening_bg_move_broadcast(17);
         break;
     case 2:
-        if (gSeqStatus[0] >= op_104_sound[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+        if (*g >= *t) {
+            r->r_no_2++;
             op_work_clear();
-            op_w.index = 19;
-            op_obj_disp = 0;
+            r->index = 19;
+            *e = 0;
             effect_48_init(10);
-            break;
+        } else {
+            opening_bg_move_broadcast(18);
         }
-        opening_bg_move_broadcast(18);
         break;
     case 3:
-        if (gSeqStatus[0] >= op_104_sound[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+        if (*g >= *t) {
+            r->r_no_2++;
             op_work_clear();
-            op_w.index = 20;
-            op_obj_disp = 1;
-            break;
+            r->index = 20;
+            *e = 1;
+        } else {
+            opening_bg_move_broadcast(19);
         }
-        opening_bg_move_broadcast(19);
         break;
     case 4:
-        if (gSeqStatus[0] >= op_104_sound[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+        if (*g >= *t) {
+            r->r_no_2++;
             op_work_clear();
-            op_w.index = 21;
-            op_obj_disp = 0;
+            r->index = 21;
+            *e = 0;
             effect_48_init(11);
-            break;
+        } else {
+            opening_bg_move_broadcast(20);
         }
-        opening_bg_move_broadcast(20);
         break;
     case 5:
-        if (gSeqStatus[0] >= op_104_sound[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+        if (*g >= *t) {
+            r->r_no_2++;
             op_work_clear();
-            op_w.index = 22;
-            op_obj_disp = 1;
-            break;
+            r->index = 22;
+            *e = 1;
+        } else {
+            opening_bg_move_broadcast(21);
         }
-        opening_bg_move_broadcast(21);
         break;
     case 6:
-        if (gSeqStatus[0] >= op_104_sound[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+        if (*g >= *t) {
+            r->r_no_2++;
             op_work_clear();
-            op_w.index = 23;
-            break;
+            r->index = 23;
+        } else {
+            opening_bg_move_broadcast(22);
         }
-        opening_bg_move_broadcast(22);
         break;
     case 7:
+        opening_bg_move_broadcast(23);
+        break;
     default:
         opening_bg_move_broadcast(23);
         break;
@@ -540,11 +553,15 @@ void op_105_move(void) {
 
 
 void op_106_move(void) {
-    switch (op_w.r_no_2) {
+    OP_W* r = &op_w;
+    u8* g = gSeqStatus;
+    s8 s = r->r_no_2;
+    s16* t = &op_106_tbl[s];
+    switch (s) {
     case 0:
-        op_w.r_no_2 += 1;
+        r->r_no_2++;
         op_work_clear();
-        op_w.index = 25;
+        r->index = 25;
         op_obj_disp = 1;
         opening_bg_move_broadcast(25);
         effect_F6_init(25);
@@ -557,33 +574,33 @@ void op_106_move(void) {
         effect_36_init(21);
         break;
     case 1:
-        if (gSeqStatus[0] >= op_106_tbl[op_w.r_no_2] && gSeqStatus[0] != 106) {
-            op_w.r_no_2 += 1;
+        if (*g >= *t && *g != 106) {
+            r->r_no_2++;
             op_work_clear();
-            op_w.index = 26;
-            return;
+            r->index = 26;
+        } else {
+            opening_bg_move_broadcast(25);
         }
-        opening_bg_move_broadcast(25);
         break;
     case 2:
-        if (gSeqStatus[0] >= op_106_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+        if (*g >= *t) {
+            r->r_no_2++;
             op_work_clear();
-            op_w.index = 27;
-            return;
+            r->index = 27;
+        } else {
+            opening_bg_move_broadcast(26);
         }
-        opening_bg_move_broadcast(26);
         break;
     case 3:
-        if (gSeqStatus[0] >= op_106_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+        if (*g >= *t) {
+            r->r_no_2++;
             op_work_clear();
-            op_w.index = 28;
+            r->index = 28;
             op_obj_disp = 0;
             effect_48_init(15);
-            return;
+        } else {
+            opening_bg_move_broadcast(27);
         }
-        opening_bg_move_broadcast(27);
         break;
     default:
         opening_bg_move_broadcast(28);
@@ -594,10 +611,14 @@ void op_106_move(void) {
 
 
 void op_107_move(void) {
-    switch (op_w.r_no_2) {
+    s16* e = &op_obj_disp;
+    s8 s = op_w.r_no_2;
+    register u8* g = gSeqStatus;
+    s16* t = &op_107_tbl[s];
+    switch (s) {
     case 0:
-        op_obj_disp = 1;
-        op_w.r_no_2 += 1;
+        *e = 1;
+        op_w.r_no_2++;
         op_work_clear();
         op_w.index = 29;
         opening_bg_move_broadcast(29);
@@ -609,47 +630,47 @@ void op_107_move(void) {
         effect_F6_init(34);
         break;
     case 1:
-        if (((*(u8(*)[])&gSeqStatus[0])[0] >= op_107_tbl[op_w.r_no_2]) && ((*(u8(*)[])&gSeqStatus[0])[0] != 0x6B)) {
-            op_w.r_no_2 += 1;
+        if (*g >= *t && *g != 107) {
+            op_w.r_no_2++;
             op_work_clear();
             op_w.index = 30;
-            return;
+        } else {
+            opening_bg_move_broadcast(29);
         }
-        opening_bg_move_broadcast(29);
         break;
     case 2:
-        if ((*(u8(*)[])&gSeqStatus[0])[0] >= op_107_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+        if (*g >= *t) {
+            op_w.r_no_2++;
             op_work_clear();
             op_w.index = 31;
-            return;
+        } else {
+            opening_bg_move_broadcast(30);
         }
-        opening_bg_move_broadcast(30);
         break;
     case 3:
-        if ((*(u8(*)[])&gSeqStatus[0])[0] >= op_107_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+        if (*g >= *t) {
+            op_w.r_no_2++;
             op_work_clear();
             op_w.index = 32;
-            op_obj_disp = 0;
+            *e = 0;
             effect_48_init(13);
-            return;
+        } else {
+            opening_bg_move_broadcast(31);
         }
-        opening_bg_move_broadcast(31);
         break;
     case 4:
-        if ((*(u8(*)[])&gSeqStatus[0])[0] >= op_107_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+        if (*g >= *t) {
+            op_w.r_no_2++;
             op_work_clear();
             op_w.index = 33;
-            op_obj_disp = 1;
-            return;
+            *e = 1;
+        } else {
+            opening_bg_move_broadcast(32);
         }
-        opening_bg_move_broadcast(32);
         break;
     case 5:
-        if ((*(u8(*)[])&gSeqStatus[0])[0] >= op_107_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+        if (*g >= *t) {
+            op_w.r_no_2++;
             op_work_clear();
             op_w.index = 34;
             effect_F6_init(35);
@@ -658,66 +679,66 @@ void op_107_move(void) {
             effect_F6_init(38);
             effect_F6_init(39);
             effect_F6_init(40);
-            return;
+        } else {
+            opening_bg_move_broadcast(33);
         }
-        opening_bg_move_broadcast(33);
         break;
     case 6:
-        if ((*(u8(*)[])&gSeqStatus[0])[0] >= op_107_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+        if (*g >= *t) {
+            op_w.r_no_2++;
             op_work_clear();
             op_w.index = 35;
-            return;
+        } else {
+            opening_bg_move_broadcast(34);
         }
-        opening_bg_move_broadcast(34);
-        return;
+        break;
     case 7:
-        if ((*(u8(*)[])&gSeqStatus[0])[0] >= op_107_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+        if (*g >= *t) {
+            op_w.r_no_2++;
             op_work_clear();
             op_w.index = 36;
-            op_obj_disp = 0;
+            *e = 0;
             effect_48_init(14);
-            return;
+        } else {
+            opening_bg_move_broadcast(35);
         }
-        opening_bg_move_broadcast(35);
         break;
     case 8:
-        if ((*(u8(*)[])&gSeqStatus[0])[0] >= op_107_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+        if (*g >= *t) {
+            op_w.r_no_2++;
             op_work_clear();
             op_w.index = 37;
-            op_obj_disp = 1;
-            return;
+            *e = 1;
+        } else {
+            opening_bg_move_broadcast(36);
         }
-        opening_bg_move_broadcast(36);
         break;
     case 9:
-        if ((*(u8(*)[])&gSeqStatus[0])[0] >= op_107_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+        if (*g >= *t) {
+            op_w.r_no_2++;
             op_work_clear();
             op_w.index = 38;
-            return;
+        } else {
+            opening_bg_move_broadcast(37);
         }
-        opening_bg_move_broadcast(37);
         break;
     case 10:
-        if ((*(u8(*)[])&gSeqStatus[0])[0] >= op_107_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+        if (*g >= *t) {
+            op_w.r_no_2++;
             op_work_clear();
             op_w.index = 39;
-            return;
+        } else {
+            opening_bg_move_broadcast(38);
         }
-        opening_bg_move_broadcast(38);
         break;
     case 11:
-        if ((*(u8(*)[])&gSeqStatus[0])[0] >= op_107_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+        if (*g >= *t) {
+            op_w.r_no_2++;
             op_work_clear();
             op_w.index = 40;
-            return;
+        } else {
+            opening_bg_move_broadcast(39);
         }
-        opening_bg_move_broadcast(39);
         break;
     default:
         opening_bg_move_broadcast(40);
@@ -729,16 +750,18 @@ void op_107_move(void) {
 
 /* provisional name */
 void op_108_move(void) {
-    switch (op_w.r_no_2) {
+    s16* t = op_108_tbl;
+    OP_W* r = &op_w;
+    switch (r->r_no_2) {
     case 0:
-        op_w.r_no_2 += 1;
+        r->r_no_2++;
         purge_char_gfx(0xE528);
         load_char_gfx(0xE530, 1);
         load_char_gfx(0xE538, 1);
         op_work_clear();
-        op_w.index = 41;
+        r->index = 41;
         opening_bg_move_broadcast(41);
-        op_w.mv_ctr = 0;
+        r->mv_ctr = 0;
         effect_36_init(0);
         effect_36_init(1);
         effect_36_init(2);
@@ -749,21 +772,20 @@ void op_108_move(void) {
         effect_36_init(7);
         break;
     case 1:
-        op_w.mv_ctr += 1;
-        if (op_w.mv_ctr >= op_108_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+        r->mv_ctr++;
+        if (r->mv_ctr >= t[r->r_no_2]) {
+            r->r_no_2++;
             op_work_clear();
-            op_w.index = 42;
+            r->index = 42;
             opening_bg_move_broadcast(42);
-            return;
         }
         break;
     case 2:
-        op_w.mv_ctr += 1;
-        if (op_w.mv_ctr >= op_108_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+        r->mv_ctr++;
+        if (r->mv_ctr >= t[r->r_no_2]) {
+            r->r_no_2++;
             op_work_clear();
-            op_w.index = 43;
+            r->index = 43;
             opening_bg_move_broadcast(43);
             effect_36_init(8);
             effect_36_init(9);
@@ -773,107 +795,96 @@ void op_108_move(void) {
             effect_36_init(13);
             effect_36_init(14);
             effect_36_init(15);
-            return;
         }
         break;
     case 3:
-        op_w.mv_ctr += 1;
-        if (op_w.mv_ctr >= op_108_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+        r->mv_ctr++;
+        if (r->mv_ctr >= t[r->r_no_2]) {
+            r->r_no_2++;
             op_work_clear();
-            op_w.index = 44;
+            r->index = 44;
             opening_bg_move_broadcast(44);
-            return;
         }
         break;
     case 4:
-        op_w.mv_ctr += 1;
-        if (op_w.mv_ctr >= op_108_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+        r->mv_ctr++;
+        if (r->mv_ctr >= t[r->r_no_2]) {
+            r->r_no_2++;
             op_work_clear();
-            op_w.index = 45;
+            r->index = 45;
             opening_bg_move_broadcast(45);
-            return;
         }
         break;
     case 5:
-        op_w.mv_ctr += 1;
-        if (op_w.mv_ctr >= op_108_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+        r->mv_ctr++;
+        if (r->mv_ctr >= t[r->r_no_2]) {
+            r->r_no_2++;
             op_work_clear();
-            op_w.index = 46;
+            r->index = 46;
             opening_bg_move_broadcast(46);
-            return;
         }
         break;
     case 6:
-        op_w.mv_ctr += 1;
-        if (op_w.mv_ctr >= op_108_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+        r->mv_ctr++;
+        if (r->mv_ctr >= t[r->r_no_2]) {
+            r->r_no_2++;
             op_work_clear();
-            op_w.index = 47;
+            r->index = 47;
             opening_bg_move_broadcast(47);
-            return;
         }
         break;
     case 7:
-        op_w.mv_ctr += 1;
-        if (op_w.mv_ctr >= op_108_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+        r->mv_ctr++;
+        if (r->mv_ctr >= t[r->r_no_2]) {
+            r->r_no_2++;
             op_work_clear();
-            op_w.index = 48;
+            r->index = 48;
             opening_bg_move_broadcast(48);
-            return;
         }
         break;
     case 8:
-        op_w.mv_ctr += 1;
-        if (op_w.mv_ctr >= op_108_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+        r->mv_ctr++;
+        if (r->mv_ctr >= t[r->r_no_2]) {
+            r->r_no_2++;
             op_work_clear();
-            op_w.index = 49;
+            r->index = 49;
             opening_bg_move_broadcast(49);
-            return;
         }
         break;
     case 9:
-        op_w.mv_ctr += 1;
-        if (op_w.mv_ctr >= op_108_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+        r->mv_ctr++;
+        if (r->mv_ctr >= t[r->r_no_2]) {
+            r->r_no_2++;
             op_work_clear();
-            op_w.index = 50;
+            r->index = 50;
             opening_bg_move_broadcast(50);
-            return;
         }
         break;
     case 10:
-        op_w.mv_ctr += 1;
-        if (op_w.mv_ctr >= op_108_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+        r->mv_ctr++;
+        if (r->mv_ctr >= t[r->r_no_2]) {
+            r->r_no_2++;
             op_work_clear();
-            op_w.index = 51;
+            r->index = 51;
             opening_bg_move_broadcast(51);
-            return;
         }
         break;
     case 11:
-        op_w.mv_ctr += 1;
-        if (op_w.mv_ctr >= op_108_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+        r->mv_ctr++;
+        if (r->mv_ctr >= t[r->r_no_2]) {
+            r->r_no_2++;
             op_work_clear();
-            op_w.index = 52;
+            r->index = 52;
             opening_bg_move_broadcast(52);
-            return;
         }
         break;
     case 12:
-        op_w.mv_ctr += 1;
-        if (op_w.mv_ctr >= op_108_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+        r->mv_ctr++;
+        if (r->mv_ctr >= t[r->r_no_2]) {
+            r->r_no_2++;
             op_work_clear();
-            op_w.index = 53;
+            r->index = 53;
             opening_bg_move_broadcast(53);
-            return;
         }
         break;
     }
@@ -943,6 +954,8 @@ void op_109_move(void) {
 
 
 void op_110_move(void) {
+    u8* seq = gSeqStatus;
+    const s16* lim = &op_110_tbl[op_w.r_no_2];
     switch (op_w.r_no_2) {
     case 0:
         op_w.r_no_2 += 1;
@@ -953,56 +966,56 @@ void op_110_move(void) {
         effect_48_init(2);
         break;
     case 1:
-        if (((*(u8(*)[])&gSeqStatus[0])[0] >= op_110_tbl[op_w.r_no_2]) && ((*(u8(*)[])&gSeqStatus[0])[0] != 0x6E)) {
+        if ((*seq >= *lim) && (*seq != 0x6E)) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 60;
             op_obj_disp = 1;
-            return;
+        } else {
+            opening_bg_move_broadcast(59);
         }
-        opening_bg_move_broadcast(59);
         break;
     case 2:
-        if ((*(u8(*)[])&gSeqStatus[0])[0] >= op_110_tbl[op_w.r_no_2]) {
+        if (*seq >= *lim) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 61;
             op_obj_disp = 0;
             effect_48_init(3);
-            return;
+        } else {
+            opening_bg_move_broadcast(60);
         }
-        opening_bg_move_broadcast(60);
         break;
     case 3:
-        if ((*(u8(*)[])&gSeqStatus[0])[0] >= op_110_tbl[op_w.r_no_2]) {
+        if (*seq >= *lim) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 62;
             op_obj_disp = 1;
-            return;
+        } else {
+            opening_bg_move_broadcast(61);
         }
-        opening_bg_move_broadcast(61);
         break;
     case 4:
-        if ((*(u8(*)[])&gSeqStatus[0])[0] >= op_110_tbl[op_w.r_no_2]) {
+        if (*seq >= *lim) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 63;
             op_obj_disp = 0;
             effect_48_init(4);
-            return;
+        } else {
+            opening_bg_move_broadcast(62);
         }
-        opening_bg_move_broadcast(62);
         break;
     case 5:
-        if ((*(u8(*)[])&gSeqStatus[0])[0] >= op_110_tbl[op_w.r_no_2]) {
+        if (*seq >= *lim) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 64;
             op_obj_disp = 1;
-            return;
+        } else {
+            opening_bg_move_broadcast(63);
         }
-        opening_bg_move_broadcast(63);
         break;
     default:
         opening_bg_move_broadcast(64);
@@ -1013,54 +1026,58 @@ void op_110_move(void) {
 
 
 void op_111_move(void) {
-    switch (op_w.r_no_2) {
+    OP_W* r = &op_w;
+    u8* g = gSeqStatus;
+    s8 s = r->r_no_2;
+    s16* t = &op_111_tbl[s];
+    switch (s) {
     case 0:
-        op_w.r_no_2 += 1;
+        r->r_no_2++;
         op_work_clear();
-        op_w.index = 65;
-        opening_bg_move_broadcast(65);
-        effect_F6_init(41);
-        effect_F6_init(42);
-        effect_F6_init(43);
+        r->index = 0x41;
+        opening_bg_move_broadcast(0x41);
+        effect_F6_init(0x29);
+        effect_F6_init(0x2A);
+        effect_F6_init(0x2B);
         break;
     case 1:
-        if (gSeqStatus[0] >= op_111_tbl[op_w.r_no_2] && gSeqStatus[0] != 111) {
-            op_w.r_no_2 += 1;
+        if (*g >= *t && *g != 0x6F) {
+            r->r_no_2++;
             op_work_clear();
-            op_w.index = 66;
-            break;
+            r->index = 0x42;
+        } else {
+            opening_bg_move_broadcast(0x41);
         }
-        opening_bg_move_broadcast(65);
         break;
     case 2:
-        if (gSeqStatus[0] >= op_111_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+        if (*g >= *t) {
+            r->r_no_2++;
             op_work_clear();
-            op_w.index = 67;
-            break;
+            r->index = 0x43;
+        } else {
+            opening_bg_move_broadcast(0x42);
         }
-        opening_bg_move_broadcast(66);
         break;
     case 3:
-        if (gSeqStatus[0] >= op_111_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+        if (*g >= *t) {
+            r->r_no_2++;
             op_work_clear();
-            op_w.index = 68;
-            break;
+            r->index = 0x44;
+        } else {
+            opening_bg_move_broadcast(0x43);
         }
-        opening_bg_move_broadcast(67);
         break;
     case 4:
-        if (gSeqStatus[0] >= op_111_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 += 1;
+        if (*g >= *t) {
+            r->r_no_2++;
             op_work_clear();
-            op_w.index = 69;
-            break;
+            r->index = 0x45;
+        } else {
+            opening_bg_move_broadcast(0x44);
         }
-        opening_bg_move_broadcast(68);
         break;
     default:
-        opening_bg_move_broadcast(69, &op_111_tbl[op_w.r_no_2]);
+        opening_bg_move_broadcast(0x45);
         break;
     }
 }
@@ -1090,85 +1107,85 @@ void op_112_move(void) {
             op_work_clear();
             op_w.index = 71;
             op_w.mv_ctr = 0;
-            break;
+        } else {
+            opening_bg_move_broadcast(70);
         }
-        opening_bg_move_broadcast(70);
         break;
     case 2:
-        op_w.mv_ctr = op_w.mv_ctr + 1;
+        op_w.mv_ctr++;
         if (op_w.mv_ctr >= op_112_tbl[op_w.r_no_2]) {
             op_w.r_no_2 = op_w.r_no_2 + 1;
             op_work_clear();
             op_w.index = 72;
-            break;
+        } else {
+            opening_bg_move_broadcast(71);
         }
-        opening_bg_move_broadcast(71);
         break;
     case 3:
-        op_w.mv_ctr = op_w.mv_ctr + 1;
+        op_w.mv_ctr++;
         if (op_w.mv_ctr >= op_112_tbl[op_w.r_no_2]) {
             op_w.r_no_2 = op_w.r_no_2 + 1;
             op_work_clear();
             op_w.index = 73;
             op_obj_disp = 0;
             effect_48_init(18);
-            break;
+        } else {
+            opening_bg_move_broadcast(72);
         }
-        opening_bg_move_broadcast(72);
         break;
     case 4:
-        op_w.mv_ctr = op_w.mv_ctr + 1;
+        op_w.mv_ctr++;
         if (op_w.mv_ctr >= op_112_tbl[op_w.r_no_2]) {
             op_w.r_no_2 = op_w.r_no_2 + 1;
             op_work_clear();
             op_w.index = 74;
             op_obj_disp = 1;
-            break;
+        } else {
+            opening_bg_move_broadcast(73);
         }
-        opening_bg_move_broadcast(73);
         break;
     case 5:
-        op_w.mv_ctr = op_w.mv_ctr + 1;
+        op_w.mv_ctr++;
         if (op_w.mv_ctr >= op_112_tbl[op_w.r_no_2]) {
             op_w.r_no_2 = op_w.r_no_2 + 1;
             op_work_clear();
             op_w.index = 75;
-            break;
+        } else {
+            opening_bg_move_broadcast(74);
         }
-        opening_bg_move_broadcast(74);
         break;
     case 6:
-        op_w.mv_ctr = op_w.mv_ctr + 1;
+        op_w.mv_ctr++;
         if (op_w.mv_ctr >= op_112_tbl[op_w.r_no_2]) {
             op_w.r_no_2 = op_w.r_no_2 + 1;
             op_work_clear();
             op_w.index = 76;
             op_obj_disp = 0;
             effect_48_init(19);
-            break;
+        } else {
+            opening_bg_move_broadcast(75);
         }
-        opening_bg_move_broadcast(75);
         break;
     case 7:
-        op_w.mv_ctr = op_w.mv_ctr + 1;
+        op_w.mv_ctr++;
         if (op_w.mv_ctr >= op_112_tbl[op_w.r_no_2]) {
             op_w.r_no_2 = op_w.r_no_2 + 1;
             op_work_clear();
             op_w.index = 77;
             op_obj_disp = 1;
-            break;
+        } else {
+            opening_bg_move_broadcast(76);
         }
-        opening_bg_move_broadcast(76);
         break;
     case 8:
-        op_w.mv_ctr = op_w.mv_ctr + 1;
+        op_w.mv_ctr++;
         if (op_w.mv_ctr >= op_112_tbl[op_w.r_no_2]) {
             op_w.r_no_2 = op_w.r_no_2 + 1;
             op_work_clear();
             op_w.index = 78;
-            break;
+        } else {
+            opening_bg_move_broadcast(77);
         }
-        opening_bg_move_broadcast(77);
         break;
     default:
         opening_bg_move_broadcast(78);
@@ -1179,6 +1196,8 @@ void op_112_move(void) {
 
 
 void op_113_move(void) {
+    u8* seq = gSeqStatus;
+    const s16* lim = &op_113_tbl[op_w.r_no_2];
     switch (op_w.r_no_2) {
     case 0:
         op_w.r_no_2 += 1;
@@ -1193,36 +1212,36 @@ void op_113_move(void) {
         effect_48_init(20);
         break;
     case 1:
-        if (((*(u8(*)[])&gSeqStatus[0])[0] >= op_113_tbl[op_w.r_no_2]) && ((*(u8(*)[])&gSeqStatus[0])[0] != 0x71)) {
+        if ((*seq >= *lim) && (*seq != 0x71)) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 80;
             op_obj_disp = 1;
-            return;
+        } else {
+            opening_bg_move_broadcast(79);
         }
-        opening_bg_move_broadcast(79);
         break;
     case 2:
-        if ((*(u8(*)[])&gSeqStatus[0])[0] >= op_113_tbl[op_w.r_no_2]) {
+        if (*seq >= *lim) {
             op_w.r_no_2 += 1;
             op_scrn_end = 0;
             op_work_clear();
             op_w.index = 81;
             op_obj_disp = 0;
             effect_48_init(21);
-            return;
+        } else {
+            opening_bg_move_broadcast(80);
         }
-        opening_bg_move_broadcast(80);
         break;
     case 3:
-        if ((*(u8(*)[])&gSeqStatus[0])[0] >= op_113_tbl[op_w.r_no_2]) {
+        if (*seq >= *lim) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 82;
             op_obj_disp = 1;
-            return;
+        } else {
+            opening_bg_move_broadcast(81);
         }
-        opening_bg_move_broadcast(81);
         break;
     default:
         opening_bg_move_broadcast(82);
@@ -1233,6 +1252,8 @@ void op_113_move(void) {
 
 
 void op_114_move(void) {
+    u8* seq = gSeqStatus;
+    const s16* lim = &op_114_tbl[op_w.r_no_2];
     switch (op_w.r_no_2) {
     case 0:
         op_w.r_no_2 += 1;
@@ -1243,56 +1264,56 @@ void op_114_move(void) {
         effect_48_init(5);
         break;
     case 1:
-        if (((*(u8(*)[])&gSeqStatus[0])[0] >= op_114_tbl[op_w.r_no_2]) && ((*(u8(*)[])&gSeqStatus[0])[0] != 0x72)) {
+        if ((*seq >= *lim) && (*seq != 0x72)) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 84;
             op_obj_disp = 1;
-            return;
+        } else {
+            opening_bg_move_broadcast(83);
         }
-        opening_bg_move_broadcast(83);
         break;
     case 2:
-        if ((*(u8(*)[])&gSeqStatus[0])[0] >= op_114_tbl[op_w.r_no_2]) {
+        if (*seq >= *lim) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 85;
             op_obj_disp = 0;
             effect_48_init(6);
-            return;
+        } else {
+            opening_bg_move_broadcast(84);
         }
-        opening_bg_move_broadcast(84);
         break;
     case 3:
-        if ((*(u8(*)[])&gSeqStatus[0])[0] >= op_114_tbl[op_w.r_no_2]) {
+        if (*seq >= *lim) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 86;
             op_obj_disp = 1;
-            return;
+        } else {
+            opening_bg_move_broadcast(85);
         }
-        opening_bg_move_broadcast(85);
         break;
     case 4:
-        if ((*(u8(*)[])&gSeqStatus[0])[0] >= op_114_tbl[op_w.r_no_2]) {
+        if (*seq >= *lim) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 87;
             op_obj_disp = 0;
             effect_48_init(7);
-            return;
+        } else {
+            opening_bg_move_broadcast(86);
         }
-        opening_bg_move_broadcast(86);
         break;
     case 5:
-        if ((*(u8(*)[])&gSeqStatus[0])[0] >= op_114_tbl[op_w.r_no_2]) {
+        if (*seq >= *lim) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 88;
             op_obj_disp = 1;
-            return;
+        } else {
+            opening_bg_move_broadcast(87);
         }
-        opening_bg_move_broadcast(87);
         break;
     default:
         opening_bg_move_broadcast(88);
@@ -1326,45 +1347,45 @@ void op_115_move(void) {
     }
 }
 
-void op_116_move(void)
-{
+void op_116_move(void) {
     switch (op_w.r_no_2) {
     case 0:
         op_w.r_no_2++;
         op_work_clear();
-        op_w.index = 91;
-        opening_bg_move_broadcast(91);
-        effect_36_init(17);
-        effect_36_init(28);
-        op_w.mv_ctr = 88;
+        op_w.index = 0x5B;
+        opening_bg_move_broadcast(0x5B);
+        effect_36_init(0x11);
+        effect_36_init(0x1C);
+        op_w.mv_ctr = 0x58;
         break;
     case 1:
-        opening_bg_move_broadcast(91);
-        if (--op_w.mv_ctr > 0) {
+        opening_bg_move_broadcast(0x5B);
+        op_w.mv_ctr--;
+        if (op_w.mv_ctr > 0) {
             break;
         }
         op_w.r_no_2++;
-        /* fall through */
     case 2:
-        if (Request_Fade(0x29, 0) != 0) {
-            op_w.r_no_2++;
-            effect_F6_init(0x37);
-            effect_F6_init(0x38);
-            effect_F6_init(0x39);
-            effect_F6_init(0x3A);
-            effect_F6_init(0x3B);
-            effect_F6_init(0x3C);
-            opening_bg_move_broadcast(91);
+        if (Request_Fade(0x29, 0) == 0) {
+            break;
         }
+        op_w.r_no_2++;
+        effect_F6_init(0x37);
+        effect_F6_init(0x38);
+        effect_F6_init(0x39);
+        effect_F6_init(0x3A);
+        effect_F6_init(0x3B);
+        effect_F6_init(0x3C);
+        opening_bg_move_broadcast(0x5B);
         break;
     case 3:
         if (Check_Fade_Complete() != 0) {
             op_w.r_no_2++;
         }
-        opening_bg_move_broadcast(91);
+        opening_bg_move_broadcast(0x5B);
         break;
     default:
-        opening_bg_move_broadcast(91);
+        opening_bg_move_broadcast(0x5B);
         break;
     }
 }
@@ -1438,6 +1459,10 @@ void op_118_move(void) {
         break;
     }
 }
+
+
+/* provisional name */
+void op_119_move(void) {}
 
 
 
@@ -1823,29 +1848,34 @@ void op_bg0_0007(s16 r_index) {
 
 
 void op_bg0_0008(s16 r_index) {
+    BGW** pp = &bgw_ptr;
+
     switch (opw_ptr->r_no_0) {
     case 0:
-        opw_ptr->r_no_0 += 1;
-        bgw_ptr->free = 1;
-        bgw_ptr->frame_deff = 0;
+        opw_ptr->r_no_0++;
+        (*pp)->free = 1;
+        (*pp)->frame_deff = 0;
         Bg_On_W(1);
-        bgw_ptr->wxy[0].cal = 0x2300000;
-        bgw_ptr->xy[1].cal = 0xFFF00000;
-        bg_cell_write_xflip(0, 0x3080, 22, (u32)op_bg0_scrn_data, 0, 0x2C1);
-        bg_cell_write_xflip(0, 0x3040, 23, (u32)op_bg0_scrn_data, 0, 0x2C1);
+        (*pp)->wxy[0].cal = 0x2300000;
+        (*pp)->xy[1].cal = 0xFFF00000;
+        bg_cell_write_xflip(0, 0x3080, 0x16, (u32)op_bg0_scrn_data, 0, 0x2C1);
+        bg_cell_write_xflip(0, 0x3040, 0x17, (u32)&op_bg0_scrn_data[0], 0, 0x2C1);
     case 1:
-        if (bgw_ptr->wxy[0].disp.pos > 0x200) {
-            bgw_ptr->wxy[0].cal -= 0xC000;
-        } else {
-            bgw_ptr->wxy[0].cal = 0x2000000;
-        }
-        if (bgw_ptr->xy[1].disp.pos < 0) {
-            bgw_ptr->xy[1].cal += 0x4000;
-        } else {
-            bgw_ptr->xy[1].cal = 0;
-        }
         break;
+    default:
+        goto out;
     }
+    if ((*pp)->wxy[0].disp.pos > 0x200) {
+        (*pp)->wxy[0].cal -= 0xC000;
+    } else {
+        (*pp)->wxy[0].cal = 0x2000000;
+    }
+    if ((*pp)->xy[1].disp.pos < 0) {
+        (*pp)->xy[1].cal += 0x4000;
+    } else {
+        (*pp)->xy[1].cal = 0;
+    }
+out:
     opening_bgw_commit_pos(0);
 }
 
@@ -2760,6 +2790,7 @@ void end_bg_pos_hosei2(void) {
         bg_w.bgw[bg_no].position_x = pos_work & 0x3FF;
         pos_work = bg_w.bgw[bg_no].abs_y & 0x3FF;
         bg_w.bgw[bg_no].position_y = pos_work;
+        continue;
     }
 }
 
@@ -2789,16 +2820,19 @@ void end_scn_pos_set2(void) {
 
 /* provisional name */
 void end_bg_block_attr_set(s16 ix, s32 x, s16 w, s32 y, s16 h) {
-    BGW* bgw = &bg_w.bgw[ix];
-    u16* adrs = bgw->bg_address;
+    BGW* bgw;
+    u16* adrs;
+    adrs = (bgw = &bg_w.bgw[ix])->bg_address;
     oh_opening_demo(adrs, x, w, y, h, 0x220, bgw->r_limit);
 }
 
 
 /* provisional name */
 void end_bg_block_attr_add(s16 bg, s32 ofs, s16 w, s32 cell, s16 h) {
-    BGW* bgw = &bg_w.bgw[bg];
-    bg_rect_attr_add(bgw->bg_address, ofs, w, cell, h, 0x220, bgw->r_limit);
+    BGW* bgw;
+    u16* adrs;
+    adrs = (bgw = &bg_w.bgw[bg])->bg_address;
+    bg_rect_attr_add(adrs, ofs, w, cell, h, 0x220, bgw->r_limit);
 }
 
 
@@ -2807,8 +2841,9 @@ void end_reset_etc(void) {
     s16 i;
     for (i = 0; i < bg_w.scno; i++) {
         bg_w.bgw[i].r_no_1 = 0;
-        bg_w.bgw[i].abs_x = bg_w.bgw[i].xy[0].disp.pos = 512;
+        bg_w.bgw[i].abs_x = bg_w.bgw[i].xy[0].disp.pos = 0x200;
         bg_w.bgw[i].abs_y = bg_w.bgw[i].xy[1].disp.pos = 0;
+        continue;
     }
 }
 
@@ -2867,15 +2902,22 @@ s32 Cut_Cut_Cut_t(void) {
 }
 
 
+/* provisional name */
+void Cut_Cut_Cut_dummy(void) {}
+
+
 
 void end_ake_cell_put(s8 map, s32 ofs, s32 cell, u32 src) {
     u16* dst;
     u16* s;
-    u16 code = 0;
-    dst = (u16*)(ake_scrl_w[map].adrs + ofs);
-    s = (u16*)((cell << 10) + src);
-    code += bg_w.ake_cg_adr >> 7;
-    ((void(*)())blit_16x16_tile)(s, code, dst, 0x220);
+    s32 x;
+    ofs += ake_scrl_w[map].adrs;
+    dst = (u16*)ofs;
+    x = 0;
+    x += bg_w.ake_cg_adr >> 7;
+    cell = (cell << 10) + src;
+    s = (u16*)cell;
+    ((void(*)())blit_16x16_tile)(s, (u16)x, dst, 0x220);
 }
 
 

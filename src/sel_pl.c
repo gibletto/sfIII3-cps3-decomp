@@ -1084,6 +1084,24 @@ void PL_Sel_Begin(void) {
 }
 
 
+/* provisional name */
+s32 PL_Sel_Mode_1(void) {
+    if (ID2 == 0) {
+        return 8;
+    }
+    return 4;
+}
+
+
+/* provisional name */
+s32 PL_Sel_Mode_2(void) {
+    if (ID2 == 0) {
+        return 4;
+    }
+    return 8;
+}
+
+
 
 void PL_Sel_2nd(void) {
     if (Sel_PL_Complete[ID2]) {
@@ -1302,20 +1320,12 @@ void Check_Exit(void) {
     Exit_Tbl[Exit_No]();
 }
 
-u16 *Exit_1st(void)
-{
-    u16 *rv;
-
-    /* rv: the operator flag, the fixed 1179 or E_No, whichever each path last loaded */
-    rv = (u16 *)(s32)(s8)plw[0].wu.operator;
-    if (rv != 0 && Sel_Arts_Complete[0] >= 0) {
-        return rv;
+void Exit_1st(void) {
+    if (plw[0].wu.operator && Sel_Arts_Complete[0] >= 0) {
+        return;
     }
-    if (plw[1].wu.operator != 0) {
-        rv = (u16 *)1179;
-        if (Sel_Arts_Complete[1] >= 0) {
-            return rv;
-        }
+    if (plw[1].wu.operator != 0 && Sel_Arts_Complete[1] >= 0) {
+        return;
     }
     Go_Away_Red_Lines();
     Order[4] = 4;
@@ -1325,15 +1335,12 @@ u16 *Exit_1st(void)
     Order_Timer[7] = 1;
     Order_Timer[8] = 1;
     Exit_No++;
-    rv = 0;
-    if (Demo_Flag != 0) {
+    if (Demo_Flag) {
         E_No0 = 3;
         E_No1 = 0;
         E_No2 = 0;
         E_No3 = 0;
-        rv = (u16 *)&E_No0;
     }
-    return rv;
 }
 
 
@@ -1453,11 +1460,11 @@ void Exit_7th(void) {
 
 
 void Setup_Face_ID(void) {
-    s16 x;
-    s16 y;
-    for (y = 0; y < 3; y++) {
-        for (x = 0; x < 7; x++) {
-            ID_of_Face[y][x]= Face_Cursor_Data[y][x];
+    s16 i, j;
+
+    for (i = 0; i < 3; i++) {
+        for (j = 0; j < 7; j++) {
+            (&ID_of_Face[i][0])[j] = Face_Cursor_Data[i][j];
         }
     }
 }
@@ -1494,12 +1501,24 @@ void Correct_Control_Time(s16 PL_id) {
 
 
 s32 Check_Boss(s16 PL_id) {
-    if (VS_Index[Player_id] >= 9 && !Introduce_Boss[Player_id][1]) {
-        Control_Time = Limit_Time;
-        SC_Personal_Time[PL_id] = Control_Time;
-        return Break_Into_CPU = 1;
+    if (VS_Index[Player_id] >= 9) {
+        if (Introduce_Boss[Player_id][1] == 0) {
+            Control_Time = Limit_Time;
+            SC_Personal_Time[PL_id] = Control_Time;
+            return Break_Into_CPU = 1;
+        }
     }
     return Break_Into_CPU = 0;
+}
+
+
+/* provisional name */
+void Setup_Play_Type_1st(void) {
+    if (Play_Type == 1) {
+        Play_Type_1st = 99;
+    } else {
+        Play_Type_1st = Aborigine;
+    }
 }
 
 

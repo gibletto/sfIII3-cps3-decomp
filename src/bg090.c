@@ -42,20 +42,11 @@
 
 void BG180(void) {
     bgw_ptr = &bg_w.bgw[1];
-    {
-        void (*jmp1[2])() = { bg1802_init00, bg1802_move };
-        jmp1[bgw_ptr->r_no_0]();
-    }
+    bg1802();
     bgw_ptr = &bg_w.bgw[0];
-    {
-        void (*jmp0[2])() = { bg1801_init00, bg1801_move };
-        jmp0[bgw_ptr->r_no_0]();
-    }
+    bg1801();
     bgw_ptr = &bg_w.bgw[2];
-    {
-        void (*jmp2[2])() = { bg180_sync_init, bg180_sync_move };
-        jmp2[bgw_ptr->r_no_0]();
-    }
+    bg180_sync_common();
     zoom_ud_check();
     bg_pos_hosei2();
     Bg_Family_Set();
@@ -589,17 +580,15 @@ void bg_fam0900(void) {
 
 
 
-s32 bg090_demo_check(void) {
-    s16 pos_w;
+void bg090_demo_check(void) {
     if ((plw->player_number != PL_ORO) && (plw[1].player_number != PL_ORO)) {
-        return bgw_ptr->r_no_0 = 2;
+        bgw_ptr->r_no_0 = 2;
+    } else if (bg_w.area) {
+        bgw_ptr->r_no_0 = 2;
+    } else {
+        bgw_ptr->r_no_0 = 1;
+        bgw_ptr->xy[1].cal = bgw_ptr->wxy[1].cal = bgw_ptr->speed_y * 0xC0;
     }
-    if (bg_w.area) {
-        return bgw_ptr->r_no_0 = 2;
-    }
-    bgw_ptr->r_no_0 = 1;
-    pos_w = 0xC0;
-    return bgw_ptr->xy[1].cal = bgw_ptr->wxy[1].cal = bgw_ptr->speed_y * pos_w;
 }
 
 

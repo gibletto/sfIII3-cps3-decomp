@@ -284,6 +284,10 @@ s16 cal_move_quantity3(WORK* wk, s16 tm) {
 }
 
 
+/* provisional name */
+void cal_move_quantity_dummy(void) {}
+
+
 
 void cmsd_all_x_speed_data(MotionState* cc) {
     switch (cc->swx) {
@@ -551,15 +555,14 @@ void cal_initial_speed_y0(WORK* wk, s16 tm) {
 
 
 s16 cal_top_of_position_y(WORK* wk) {
-    s32 num = cal_time_of_sign_change(wk);
+    register s32 num;
     s32 num2;
     PS_UNI ps_uni;
-    if (num == 0) {
+    if ((num = cal_time_of_sign_change(wk)) == 0) {
         return wk->xyz[1].disp.pos;
     }
     num2 = num * (num - 1) / 2;
-    *(volatile s32*)&ps_uni.psy = num * wk->mvxy.a[1].sp;
-    ps_uni.psy += (num2 * wk->mvxy.d[1].sp) + wk->xyz[1].cal;
+    ps_uni.psy = num * wk->mvxy.a[1].sp + num2 * wk->mvxy.d[1].sp + wk->xyz[1].cal;
     return ps_uni.psys.h;
 }
 

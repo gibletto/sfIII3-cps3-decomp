@@ -81,7 +81,10 @@ void effect_work_quick_clear(void) {
 
 
 /* provisional name */
-void effect_work_list_release(s16 lix, s16 iid) {
+void effect_work_list_release(lix, iid)
+    s16 lix;
+    s16 iid;
+{
     WORK* c_addr;
     s16 curr_ix;
     s16 next_ix;
@@ -169,9 +172,8 @@ s32 pull_effect_work(s16 index) {
 
 
 /* provisional name */
-s16 effect_work_pull_link(s16 index, s16 before, s16 aix) {
-    s32 qix;
-    s32 link;
+s32 effect_work_pull_link(s16 index, s16 before, s16 aix) {
+    s16 qix;
     WORK* tadr;
     WORK* wrk;
     if (aix == -1) {
@@ -180,21 +182,17 @@ s16 effect_work_pull_link(s16 index, s16 before, s16 aix) {
     if (frwctr < 1) {
         return -1;
     }
-    qix = frwque[(frwctr -= 1)];
+    qix = frwque[--frwctr];
     tadr = (WORK*)frw[qix];
     wrk = (WORK*)frw[aix];
-    if (before) {
-        link = wrk->before;
-        tadr->before = link;
-        if (link == -1) {
+    if (before != 0) {
+        if ((tadr->before = wrk->before) == -1) {
             head_ix[index] = qix;
         }
         tadr->behind = aix;
         wrk->before = qix;
     } else {
-        link = wrk->behind;
-        tadr->behind = link;
-        if (link == -1) {
+        if ((tadr->behind = wrk->behind) == -1) {
             tail_ix[index] = qix;
         }
         tadr->before = aix;
@@ -275,23 +273,28 @@ s32 push_effect_work(WORK* wkhd) {
 
 
 void effect_work_kill(s16 index, s16 kill_id) {
+    s16 aix;
     WORK* c_addr;
-    s16 aix = head_ix[index];
+    aix = head_ix[index];
     if (kill_id == -1) {
-        while (aix != -1) {
+        for (; aix != -1; aix = c_addr->behind) {
             c_addr = (WORK*)frw[aix];
             c_addr->dead_f = 1;
-            aix = c_addr->behind;
         }
-        return;
-    }
-    while (aix != -1) {
-        c_addr = (WORK*)frw[aix];
-        if (c_addr->id == kill_id) {
-            c_addr->dead_f = 1;
+    } else {
+        for (; aix != -1; aix = c_addr->behind) {
+            c_addr = (WORK*)frw[aix];
+            if (c_addr->id == kill_id) {
+                c_addr->dead_f = 1;
+            }
         }
-        aix = c_addr->behind;
     }
+}
+
+
+/* provisional name */
+s16 get_frwctr(void) {
+    return frwctr;
 }
 
 
@@ -327,14 +330,16 @@ s32 erase_my_shell_ix(WORK* wk, s16 ix) {
     s32 i;
     s32 j;
     for (i = 0; i < 8; i++) {
-        if (wk->shell_ix[i] == ix) {
-            goto ok;
+        if (wk->shell_ix[i] != ix) {
+            continue;
         }
+        goto ok;
     }
     return 0;
 ok:
     for (j = i; j < 7; j++) {
-        wk->shell_ix[j] = wk->shell_ix[j + 1];
+        s16* p = &wk->shell_ix[j];
+        p[0] = p[1];
     }
     wk->shell_ix[7] = -1;
     return 1;

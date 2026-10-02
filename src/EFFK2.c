@@ -605,7 +605,10 @@ void setup_effK2_sync_bomb(WORK* wk) {
     s16 j;
     s16 num;
     for (j = wk->vital_old + 1; j < 8; j++) {
-        if (!(num = hahen_data[j][wk->type].kosuu) || hahen_data[j][wk->type].bomb != 0) {
+        if (!(num = hahen_data[j][wk->type].kosuu)) {
+            continue;
+        }
+        if (hahen_data[j][wk->type].bomb != 0) {
             continue;
         }
         dhead = hahen_data[j][wk->type].dadd;

@@ -291,7 +291,7 @@ void set_second_hop(WORK_Other* ewk) {
     ptr = scr_obj_data27[ewk->wu.type];
     ptr += 11;
     ptr += ewk->wu.direction * 19;
-    ewk->wu.mvxy.a[0].real.h = *ptr++;
+    *(s16*)&ewk->wu.mvxy.a[0] = *ptr++;
     ewk->wu.mvxy.a[0].real.l = *ptr++;
     ptr += 2;
     ewk->wu.mvxy.a[1].real.h = *ptr++;
@@ -312,52 +312,55 @@ void dead_check27(WORK_Other* ewk) {
 
 
 s32 effect_27_init(WORK_Other* oya, s16 type) {
-    WORK_Other* ewk;
-    s16 ix;
-    s16 lp_cnt = scr_obj_num27[type];
+    s16 lp_cnt;
     s16 i;
+    s16 ix;
     const s16* data_ptr;
-    if (!lp_cnt) {
-        return;
-    }
-    for (data_ptr = scr_obj_data27[type], i = 0; i < lp_cnt; i++) {
-        if ((ix = pull_effect_work(4)) == -1) {
-            return -1;
+    WORK_Other* ewk;
+
+    lp_cnt = scr_obj_num27[type];
+    if (lp_cnt) {
+        data_ptr = scr_obj_data27[type];
+        for (i = 0; i < lp_cnt; i++) {
+            ix = pull_effect_work(4);
+            if (ix == -1) {
+                return -1;
+            }
+            ewk = (WORK_Other*)frw[ix];
+            ewk->my_master = (u32*)oya;
+            ewk->wu.be_flag = 1;
+            ewk->wu.id = 0x1B;
+            ewk->wu.work_id = 0x10;
+            ewk->wu.cgromtype = 1;
+            ewk->wu.rl_flag = 0;
+            ewk->wu.my_col_mode = 0x4200;
+            ewk->wu.type = type;
+            ewk->wu.direction = i;
+            ewk->wu.dead_f = 1;
+            ewk->wu.my_family = *data_ptr++;
+            ewk->wu.my_col_code = *data_ptr++;
+            ewk->wu.xyz[0].disp.pos = *data_ptr++;
+            ewk->wu.xyz[1].disp.pos = *data_ptr++;
+            ewk->wu.xyz[0].disp.pos += oya->wu.xyz[0].disp.pos;
+            ewk->wu.xyz[1].disp.pos += oya->wu.xyz[1].disp.pos;
+            ewk->wu.my_priority = ewk->wu.position_z = *data_ptr++;
+            ewk->wu.char_index = *data_ptr++;
+            ewk->wu.hit_stop = *data_ptr++;
+            ewk->wu.sync_suzi = *data_ptr++;
+            ewk->wu.old_rno[0] = *data_ptr++;
+            ewk->wu.old_rno[1] = *data_ptr++;
+            ewk->wu.old_rno[2] = *data_ptr++;
+            ewk->wu.mvxy.a[0].real.h = *data_ptr++;
+            ewk->wu.mvxy.a[0].real.l = *data_ptr++;
+            ewk->wu.mvxy.d[0].real.h = *data_ptr++;
+            ewk->wu.mvxy.d[0].real.l = *data_ptr++;
+            ewk->wu.mvxy.a[1].real.h = *data_ptr++;
+            ewk->wu.mvxy.a[1].real.l = *data_ptr++;
+            ewk->wu.mvxy.d[1].real.h = *data_ptr++;
+            ewk->wu.mvxy.d[1].real.l = *data_ptr++;
+            ewk->wu.char_table[0] = char_add[bg_w.bg_index];
+            suzi_offset_set(ewk);
         }
-        ewk = (WORK_Other*)frw[ix];
-        ewk->my_master = (u32*)oya;
-        ewk->wu.be_flag = 1;
-        ewk->wu.id = 0x1B;
-        ewk->wu.work_id = 0x10;
-        ewk->wu.cgromtype = 1;
-        ewk->wu.rl_flag = 0;
-        ewk->wu.my_col_mode = 0x4200;
-        ewk->wu.type = type;
-        ewk->wu.direction = i;
-        ewk->wu.dead_f = 1;
-        ewk->wu.my_family = *data_ptr++;
-        ewk->wu.my_col_code = *data_ptr++;
-        ewk->wu.xyz[0].disp.pos = *data_ptr++;
-        ewk->wu.xyz[1].disp.pos = *data_ptr++;
-        ewk->wu.xyz[0].disp.pos += oya->wu.xyz[0].disp.pos;
-        ewk->wu.xyz[1].disp.pos += oya->wu.xyz[1].disp.pos;
-        ewk->wu.my_priority = ewk->wu.position_z = *data_ptr++;
-        ewk->wu.char_index = *data_ptr++;
-        ewk->wu.hit_stop = *data_ptr++;
-        ewk->wu.sync_suzi = *data_ptr++;
-        ewk->wu.old_rno[0] = *data_ptr++;
-        ewk->wu.old_rno[1] = *data_ptr++;
-        ewk->wu.old_rno[2] = *data_ptr++;
-        ewk->wu.mvxy.a[0].real.h = *data_ptr++;
-        ewk->wu.mvxy.a[0].real.l = *data_ptr++;
-        ewk->wu.mvxy.d[0].real.h = *data_ptr++;
-        ewk->wu.mvxy.d[0].real.l = *data_ptr++;
-        ewk->wu.mvxy.a[1].real.h = *data_ptr++;
-        ewk->wu.mvxy.a[1].real.l = *data_ptr++;
-        ewk->wu.mvxy.d[1].real.h = *data_ptr++;
-        ewk->wu.mvxy.d[1].real.l = *data_ptr++;
-        ewk->wu.char_table[0] = char_add[bg_w.bg_index];
-        suzi_offset_set(ewk);
+        return 0;
     }
-    return 0;
 }

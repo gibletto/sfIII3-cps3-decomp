@@ -144,7 +144,7 @@ void debug_draw_position_delta(void);
 void debug_draw_cg_group_offset();
 void debug_hit_a_print_pattern_rows(WORK* wk, GRID_REC* recs);
 void debug_hit_a_print_hit_ix_rows(WORK* wk, GRID9_REC* recs);
-u32 debug_held_pad_repeat(u16 sw_now, u16 sw_old, u16 mask, u16 ix);
+u32 debug_held_pad_repeat();
 s32 debug_hex4_to_bcd(s16 x);
 u32 debug_hit_a_judgement_alloc_slot(u32 *slot);
 void debug_hit_a_judgement_build_table(void);

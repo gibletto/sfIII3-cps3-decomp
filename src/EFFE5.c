@@ -32,6 +32,10 @@ void effect_E4_move(void)
 }
 
 
+/* provisional name */
+void effect_E4_dummy(void) {}
+
+
 
 void effect_E5_move(WORK_Other* ewk) {
     PLW* mwk = (PLW*)ewk->my_master;

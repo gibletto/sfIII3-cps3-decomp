@@ -312,25 +312,23 @@ void satime_ko_after_clear(s8 pl) {
 
 
 void sa_time_moji_send(void) {
-    if (time_flag[0] == 0 && time_flag[1] == 0) {
-        return;
+    if (time_flag[0] != 0 || time_flag[1] != 0) {
+        time_timer--;
+        if (time_timer == 0) {
+            if (time_flag[0]) {
+                sc_chr_block_trans((u16)sa_time_data_tbl[time_num][0], 0x100, 8, 1);
+            }
+            if (time_flag[1]) {
+                sc_chr_block_trans((u16)sa_time_data_tbl[time_num][1], 0x108, 8, 1);
+            }
+            time_timer = 3;
+            if (time_num == 5) {
+                time_num = 0;
+            } else {
+                time_num++;
+            }
+        }
     }
-    time_timer--;
-    if (time_timer != 0) {
-        return;
-    }
-    if (time_flag[0]) {
-        sc_chr_block_trans(sa_time_data_tbl[time_num][0], 0x100, 8, 1);
-    }
-    if (time_flag[1]) {
-        sc_chr_block_trans(sa_time_data_tbl[time_num][1], 0x108, 8, 1);
-    }
-    time_timer = 3;
-    if (time_num == 5) {
-        time_num = 0;
-        return;
-    }
-    time_num++;
 }
 
 
@@ -556,7 +554,11 @@ void sagauge_color_chenge(s8 Stpl_Num) {
 
 
 
-void sa_moji_trans(s32 Stpl_Num, s8 Kind, s8 OnOff) {
+void sa_moji_trans(Stpl_Num, Kind, OnOff)
+    s32 Stpl_Num;
+    s8 Kind;
+    s8 OnOff;
+{
     SPG_DAT* spg;
     switch (Kind) {
     case 0:

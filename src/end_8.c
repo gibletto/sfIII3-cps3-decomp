@@ -153,7 +153,10 @@ void end_8000_0002(void) {
 
 void end_800_cell_set(void) {
     s16 i;
-    for (i = 0; i < 11; i++) {
-        bg_cell_write(0, end_800_bg0_cell_tbl[i].ofs, end_800_bg0_cell_tbl[i].cell, (u32)end_800_scrn_data, 0, 0x220);
+    const PANEL* p;
+
+    p = end_800_bg0_cell_tbl;
+    for (i = 0; i < 11; i++, p++) {
+        bg_cell_write(0, p->ofs, p->cell, (u32)end_800_scrn_data, 0, 0x220);
     }
 }

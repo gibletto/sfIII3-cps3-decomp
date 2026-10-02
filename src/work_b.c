@@ -148,7 +148,6 @@
 #include "EFFA2_MAIN.h"
 #include "EFFA3.h"
 #include "EFFA6.h"
-#include "EFFA6_INIT.h"
 #include "EFFA7.h"
 #include "EFFB0.h"
 #include "EFFB1.h"
