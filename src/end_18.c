@@ -224,9 +224,9 @@ void end_1800_0009(void) {
         bgw_ptr->free &= 1;
         if (bgw_ptr->free) {
             bgw_ptr->xy[0].disp.pos = end_18_pos[end_w.r_no_2][0];
-            break;
+        } else {
+            bgw_ptr->xy[0].disp.pos = end_18_pos[end_w.r_no_2][0] + 512;
         }
-        bgw_ptr->xy[0].disp.pos = end_18_pos[end_w.r_no_2][0] + 512;
         break;
     }
 }

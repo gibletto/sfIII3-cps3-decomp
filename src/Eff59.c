@@ -132,7 +132,6 @@ s32 effect_59_init(WORK_Other* mwk, s16 Synchro_BG, s16 ID, s16 direction) {
 /* provisional name */
 s32 Check_Break_Into_59_ID04(WORK_Other* ewk) {
     if (ewk->wu.dm_vital != 4 || ewk->wu.routine_no[0] == 4) {
-    no_break:
         return 0;
     }
     if (Break_Into) {
@@ -143,5 +142,5 @@ s32 Check_Break_Into_59_ID04(WORK_Other* ewk) {
         set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
         return 1;
     }
-    goto no_break;
+    return 0;
 }

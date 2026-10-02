@@ -187,7 +187,7 @@ void Damage_07000(PLW* wk) {
             wk->wu.dm_quake = 4;
         }
         set_char_move_init(&wk->wu, 1, wk->as->char_ix);
-        wk->wu.cmwk[14] = (*(const s16(*)[])&(guard_pause_table[1]))[wk->wu.dm_attlv];
+        wk->wu.cmwk[14] = guard_pause_table[1][wk->wu.dm_attlv];
         setup_butt_own_data(&wk->wu);
         wk->zuru_timer = 0;
         wk->zuru_ix_counter = 0;
@@ -200,19 +200,17 @@ void Damage_07000(PLW* wk) {
         jumping_union_process(&wk->wu, 3);
         set_dm_hos_flag_sky(wk);
         wk->wu.cmwk[14]--;
-        if (wk->wu.routine_no[3] == 3) {
+        if (wk->wu.routine_no[3] != 3) {
             if (wk->wu.cmwk[14] <= 0) {
-                wk->wu.cmwk[14] = 1;
+                wk->wu.routine_no[1] = 0;
+                wk->wu.routine_no[2] = 38;
+                wk->wu.routine_no[3] = 1;
+                wk->wu.cg_type = 0;
+                wk->wu.cg_next_ix = 0;
+                char_move_wca(&wk->wu);
             }
-            break;
-        }
-        if (wk->wu.cmwk[14] <= 0) {
-            wk->wu.routine_no[1] = 0;
-            wk->wu.routine_no[2] = 38;
-            wk->wu.routine_no[3] = 1;
-            wk->wu.cg_type = 0;
-            wk->wu.cg_next_ix = 0;
-            char_move_wca(&wk->wu);
+        } else if (wk->wu.cmwk[14] <= 0) {
+            wk->wu.cmwk[14] = 1;
         }
         break;
     case 3:
@@ -229,13 +227,12 @@ void Damage_07000(PLW* wk) {
         cal_mvxy_speed(&wk->wu);
         add_mvxy_speed(&wk->wu);
         set_dm_hos_flag_sky(wk);
-        if (--wk->wu.cmwk[14] <= 0) {
+        wk->wu.cmwk[14]--;
+        if (wk->wu.cmwk[14] <= 0) {
             wk->wu.routine_no[3]++;
             char_move_wca(&wk->wu);
             break;
         }
-        char_move(&wk->wu);
-        break;
     case 5:
         char_move(&wk->wu);
         break;
@@ -940,6 +937,10 @@ e:
 }
 
 
+/* provisional name */
+void set_dm_char_dummy(void) {}
+
+
 
 void first_flight_union(PLW* wk, s16 num, s16 dv) {
     jumping_union_process(&wk->wu, num);
@@ -1068,10 +1069,14 @@ void setup_smoke_type(PLW* wk) {
 void add_dm_step_tbl(PLW* wk) {
     if (wk->wu.dm_rl) {
         wk->wu.xyz[0].disp.pos += *wk->dm_step_tbl++;
-        return;
+    } else {
+        wk->wu.xyz[0].disp.pos -= *wk->dm_step_tbl++;
     }
-    wk->wu.xyz[0].disp.pos -= *wk->dm_step_tbl++;
 }
+
+
+/* provisional name */
+void add_dm_step_dummy(void) {}
 
 
 

@@ -78,14 +78,18 @@ void end_1100_move(void) {
 
 
 void end_1100_common(void) {
+    const s16 (*tp)[2];
+    END_W* ew;
     switch (bgw_ptr->r_no_1) {
     case 0:
         bgw_ptr->r_no_1++;
-        bgw_ptr->xy[0].disp.pos = end_11_pos[end_w.r_no_2][0];
-        bgw_ptr->xy[1].disp.pos = end_11_pos[end_w.r_no_2][1];
+        tp = end_11_pos;
+        ew = &end_w;
+        bgw_ptr->xy[0].disp.pos = tp[ew->r_no_2][0];
+        bgw_ptr->xy[1].disp.pos = tp[ew->r_no_2][1];
         bgw_ptr->abs_x = 512;
         bgw_ptr->abs_y = 0;
-        switch (end_w.r_no_2) {
+        switch (ew->r_no_2) {
         case 0:
             Bg_On_W(1);
             effect_E6_init(0);
@@ -205,9 +209,9 @@ void end_1101_2(void) {
             bgw_ptr->speed_y = 0;
             if (bgw_ptr->fam_no == 1) {
                 bgw_ptr->speed_x = -0x8000;
-                break;
+            } else {
+                bgw_ptr->speed_x = 0x8000;
             }
-            bgw_ptr->speed_x = 0x8000;
             break;
         case 3:
             bgw_ptr->speed_x = 0;

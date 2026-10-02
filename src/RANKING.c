@@ -467,17 +467,16 @@ void Setup_Score(s16 y) {
     s16 First_Digit;
     u32 xx;
     u32 Score_Buff;
-    u32 t;
     s16 Digit[8];
     Score_Buff = Ranking_Data[Rank].score;
     First_Digit = -1;
     for (i = 7, xx = 10000000; i > 0; i--, xx /= 10) {
         Digit[i] = Score_Buff / xx;
-        t = xx;
-        t *= Digit[i];
-        Score_Buff -= t;
-        if ((First_Digit < 0) && Digit[i]) {
-            First_Digit = i;
+        Score_Buff -= Digit[i] * xx;
+        if (First_Digit < 0) {
+            if (Digit[i]) {
+                First_Digit = i;
+            }
         }
     }
     Digit[0] = Score_Buff;
@@ -487,9 +486,10 @@ void Setup_Score(s16 y) {
     for (i = 0, xx = 7; i < 8; i++, xx--) {
         Flash_Rank_Time += Flash_Rank_Interval;
         Rank_Pos_X += 16;
-        if (First_Digit >= xx) {
-            effect_67_init(26, Rank_Pos_X, Rank_Pos_Y, 180, Digit[xx] + 75, 10, y, 0);
+        if (First_Digit < xx) {
+            continue;
         }
+        effect_67_init(26, Rank_Pos_X, Rank_Pos_Y, 180, Digit[xx] + 75, 10, y, 0);
     }
     Rank_Pos_X += 24;
 }
@@ -502,17 +502,16 @@ void Setup_Score_Small(s16 y) {
     s16 First_Digit;
     u32 xx;
     u32 Score_Buff;
-    u32 t;
     s16 Digit[7];
     Score_Buff = Ranking_Data[Rank].score;
     First_Digit = -1;
     for (i = 6, xx = 1000000; i > 0; i--, xx /= 10) {
         Digit[i] = Score_Buff / xx;
-        t = xx;
-        t *= Digit[i];
-        Score_Buff -= t;
-        if ((First_Digit < 0) && Digit[i]) {
-            First_Digit = i;
+        Score_Buff -= Digit[i] * xx;
+        if (First_Digit < 0) {
+            if (Digit[i]) {
+                First_Digit = i;
+            }
         }
     }
     Digit[0] = Score_Buff;
@@ -522,9 +521,10 @@ void Setup_Score_Small(s16 y) {
     for (i = 0, xx = 6; i < 7; i++, xx--) {
         Flash_Rank_Time += Flash_Rank_Interval;
         Rank_Pos_X += 8;
-        if (First_Digit >= xx) {
-            effect_67_init(26, Rank_Pos_X, Rank_Pos_Y, 180, Digit[xx] + 87, 10, y, 0);
+        if (First_Digit < xx) {
+            continue;
         }
+        effect_67_init(26, Rank_Pos_X, Rank_Pos_Y, 180, Digit[xx] + 87, 10, y, 0);
     }
     Rank_Pos_X += 32;
 }

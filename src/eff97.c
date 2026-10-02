@@ -23,8 +23,8 @@
 
 
 void effect_97_move(WORK_Other* ewk) {
-    s16* rno;
-    s16 ofs;
+    s32 kc = 16;
+
     switch (ewk->wu.routine_no[0]) {
     case 0:
         ewk->wu.routine_no[0]++;
@@ -33,12 +33,9 @@ void effect_97_move(WORK_Other* ewk) {
     case 1:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
-            ofs = ewk->master_id;
-            ofs *= (s32)sizeof(PLW);
-            rno = (s16*)((u8*)(*(s16(*)[])&(plw[0].wu.routine_no)) + (s16)ofs);
-            if (rno[2] == 1 && rno[3] == 0) {
+            if (plw[ewk->master_id].wu.routine_no[2] == 1 && plw[ewk->master_id].wu.routine_no[3] == 0) {
                 ewk->wu.routine_no[0]++;
-                ewk->wu.old_rno[0] = 16;
+                ewk->wu.old_rno[0] = kc;
             }
         }
         suzi_sync_pos_set(ewk);
@@ -51,12 +48,10 @@ void effect_97_move(WORK_Other* ewk) {
                 ewk->wu.routine_no[0]++;
                 ewk->wu.rl_flag ^= 1;
                 set_char_move_init(&ewk->wu, 0, 45);
-                ewk->wu.old_rno[0] = 16;
+                ewk->wu.old_rno[0] = kc;
                 ewk->wu.mvxy.a[1].sp = 0xE8000;
                 ewk->wu.mvxy.d[1].sp = -0x6000;
-                ofs = ewk->master_id;
-                ofs *= (s32)sizeof(PLW);
-                if (*(s16*)((u8*)((void*)&(*(s16*)&(plw[0].wu.id))) + (s16)ofs)) {
+                if (plw[ewk->master_id].wu.id) {
                     ewk->wu.mvxy.a[0].sp = -0xA8000;
                     ewk->wu.mvxy.d[0].sp = -0x1000;
                 } else {
@@ -88,7 +83,6 @@ void effect_97_move(WORK_Other* ewk) {
     default:
         all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
-        break;
     }
 }
 

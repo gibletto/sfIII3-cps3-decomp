@@ -211,7 +211,10 @@ void end_100_0004(void) {
 
 void end_100_cell_set(void) {
     s16 i;
-    for (i = 0; i < 11; i++) {
-        bg_cell_write(0, end_100_panel[i].ofs, end_100_panel[i].cell, (u32)end_100_scrn_data, 0, 0x220);
+    const PANEL* p;
+
+    p = end_100_panel;
+    for (i = 0; i < 11; i++, p++) {
+        bg_cell_write(0, p->ofs, p->cell, (u32)end_100_scrn_data, 0, 0x220);
     }
 }

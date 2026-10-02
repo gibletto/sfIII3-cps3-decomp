@@ -501,6 +501,10 @@ void Setup_Command_Name(WORK_Other* ewk) {
 }
 
 
+/* provisional name */
+void Setup_Command_Name_dummy(void) {}
+
+
 
 /* provisional name */
 s32 Select_End_Sub_79(WORK_Other* ewk) {

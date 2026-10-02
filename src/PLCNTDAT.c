@@ -116,7 +116,8 @@ void reset_piyori_and_fight(void)
 
 /* provisional name */
 void reset_fight_status(void) {
-    appear_type = pcon_rno[0] = pcon_rno[1] = pcon_rno[2] = pcon_rno[3] = 0;
+    s16 rno = 0;
+    appear_type = pcon_rno[0] = pcon_rno[1] = pcon_rno[2] = pcon_rno[3] = rno;
     count_cont_reset();
     set_super_arts_status(0);
     set_super_arts_status(1);

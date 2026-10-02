@@ -911,21 +911,15 @@ s32 defense_sky(PLW* as, PLW* ds, s8 gddir) {
     if (!(as->wu.att.guard & 32)) {
         return 2;
     }
-    if (ds->guard_flag & 1) {
-        return 2;
+    if (!(ds->guard_flag & 1) && !(ds->spmv_ng_flag & 32) && (ds->saishin_lvdir & gddir)) {
+        as->wu.hf.hit.player = 0x20;
+        ds->wu.routine_no[2] = 7;
+        if (check_dm_att_guard(&as->wu, &ds->wu, 2)) {
+            return 2;
+        }
+        return 1;
     }
-    if (ds->spmv_ng_flag & 32) {
-        return 2;
-    }
-    if (!(ds->saishin_lvdir & gddir)) {
-        return 2;
-    }
-    as->wu.hf.hit.player = 0x20;
-    ds->wu.routine_no[2] = 7;
-    if (check_dm_att_guard(&as->wu, &ds->wu, 2)) {
-        return 2;
-    }
-    return 1;
+    return 2;
 }
 
 
@@ -1110,6 +1104,9 @@ void dm_status_copy(WORK* as, WORK* ds) {
     ds->dm_dir = as->dir_atthit;
     ds->dm_stop = as->att.hs_you;
     ds->dm_quake = as->att.hs_you;
+    if (ds->dm_quake < 0) {
+        ds->dm_quake = -ds->dm_quake;
+    }
     ds->dm_weight = as->weight_level;
     ds->dm_butt_type = as->att.but_ix;
     ds->dm_zuru = as->att_zuru;
@@ -1123,9 +1120,6 @@ void dm_status_copy(WORK* as, WORK* ds) {
     ds->dm_kind_of_waza = as->kind_of_waza;
     ds->dm_nodeathattack = as->no_death_attack;
     ds->dm_jump_att_flag = as->jump_att_flag;
-    if (ds->dm_quake < 0) {
-        ds->dm_quake = -ds->dm_quake;
-    }
     if (as->work_id == 1) {
         ds->dm_exdm_ix = ((PLW*)as)->exdm_ix;
         ds->dm_plnum = ((PLW*)as)->player_number;
@@ -1138,19 +1132,19 @@ void dm_status_copy(WORK* as, WORK* ds) {
 
 
 void add_combo_work(PLW* as, PLW* ds) {
-    s16* kow;
-    s16* cal;
-    if (ds->kezurijini_flag != 0) {
+    s16* r;
+    s16* c;
+    if (ds->kezurijini_flag) {
         return;
     }
     ds->kizetsu_kow = ds->cb->new_dm = as->wu.kind_of_waza;
-    kow = &ds->cb->kind_of[0][0][0];
-    cal = &calc_hit[ds->wu.id][0];
-    kow[as->wu.kind_of_waza]++;
-    cal[(as->wu.kind_of_waza & 120) / 8]++;
+    c = &ds->cb->kind_of[0][0][0];
+    r = (s16*)((u8*)calc_hit + (s8)(ds->wu.id * 20));
+    c[as->wu.kind_of_waza]++;
+    r[(as->wu.kind_of_waza & 0x78) / 8]++;
     ds->cb->total++;
-    kow = &ds->rp->kind_of[0][0][0];
-    kow[as->wu.kind_of_waza]++;
+    c = &ds->rp->kind_of[0][0][0];
+    c[as->wu.kind_of_waza]++;
     ds->rp->total++;
 }
 
@@ -1596,14 +1590,28 @@ void hit_push_request(WORK* hpr_wk) {
 
 
 void clear_hit_queue(void) {
-    s32 i;
+    s16 i;
+    s16* p;
+    WORK** q;
     hpq_in = 0;
-    for (i = 0; i < 32; i++) {
-        mkm_wk[i] = 0;
-    }
-    for (i = 0; i < 32; i++) {
-        q_hit_push[i] = 0;
-    }
+    p = mkm_wk;
+    i = 0;
+    do {
+        *p = 0;
+        i += 2;
+        p++;
+        *p = 0;
+        p++;
+    } while (i < 0x20);
+    q = q_hit_push;
+    i = 0;
+    do {
+        *q = 0;
+        i += 2;
+        q++;
+        *q = 0;
+        q++;
+    } while (i < 0x20);
     work_init_zero((s32*)hs, sizeof(hs));
 }
 

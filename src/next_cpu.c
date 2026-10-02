@@ -1260,14 +1260,19 @@ s8 Check_Bonus_Stage(void) {
 
 
 u8 Check_Bonus_Type(void) {
-    if (VS_Index[Player_id] >= 6) {
-        if (Completion_Bonus[Player_id][1] & 0x80) {
+    s32 m = 0x80;
+    s16* w;
+    s8* p;
+    w = &VS_Index[Player_id];
+    p = Completion_Bonus[Player_id];
+    if (*w >= 6) {
+        if (p[1] & m) {
             return 0;
         }
         return 22;
     }
-    if (VS_Index[Player_id] >= 3) {
-        if (Completion_Bonus[Player_id][0] & 0x80) {
+    if (*w >= 3) {
+        if (p[0] & m) {
             return 0;
         }
         return 21;

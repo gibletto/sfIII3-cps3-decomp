@@ -83,6 +83,10 @@ void effect_I1_move(void)
 }
 
 
+/* provisional name */
+void effect_I1_dummy(void) {}
+
+
 
 s32 effect_I2_init(void) {
     WORK_Other* ewk;
@@ -108,7 +112,7 @@ void effect_I2_move(WORK_Other* ewk) {
         if (Suicide[0]) {
             all_cgps_put_back(ewk);
             push_effect_work((WORK*)ewk);
-            break;
+            return;
         }
         ewk->wu.type--;
         if (ewk->wu.type == 0) {
@@ -118,12 +122,13 @@ void effect_I2_move(WORK_Other* ewk) {
             }
             ewk->wu.type = effI2_timer_tbl[ewk->wu.operator];
             load_any_color(effI2_col_tbl[ewk->wu.operator]);
+            return;
         }
         break;
     case 2:
     default:
         push_effect_work((WORK*)ewk);
-        break;
+        return;
     }
 }
 

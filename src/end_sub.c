@@ -172,9 +172,9 @@ void card_msg_disp(void) {
 /* provisional name */
 void cd_keep_spinning_tick(void) {
     if (cd_ready_flag) {
-        if (cd_spin_timer == 0) {
+        if (!cd_spin_timer) {
             scsi_start_stop_unit(1, 1);
-            cd_spin_timer = 600;
+            cd_spin_timer = 0x258;
         }
         cd_spin_timer--;
     }
@@ -228,17 +228,16 @@ void cd_error_fatal_hang(s32 kind) {
 
 /* provisional name */
 s32 staff_roll_skip_check(void) {
-    u16 sw_w;
-    if (end_no_cut) {
-        return 0;
-    }
-    if (WINNER) {
-        sw_w = p2sw_0;
-    } else {
-        sw_w = p1sw_0;
-    }
-    if (sw_w & 0x3F0) {
-        return 1;
+    u16 v;
+    if (!end_no_cut) {
+        if (WINNER) {
+            v = p2sw_0;
+        } else {
+            v = p1sw_0;
+        }
+        if (v & 0x3f0) {
+            return 1;
+        }
     }
     return 0;
 }
@@ -726,6 +725,10 @@ void debug_play12_init(void) {
 void debug_play12_move(void) { hit_check_main_process(); }
 
 
+/* provisional name */
+void debug_play12_dummy(void) {}
+
+
 
 /* provisional name */
 void debug_play13(void) {
@@ -859,7 +862,11 @@ void color_trans_dummy(void)
 
 
 /* provisional name */
-void load_player_color(u16 a, s16 b, s16 c) {
+void load_player_color(a, b, c)
+    u16 a;
+    s16 b;
+    s16 c;
+{
     s32 zero = 0;
     const XFER* p = player_color_tbl[a][b][c];
     s8 i;

@@ -148,6 +148,7 @@ void effF0_scroll_reset(WORK_Other* ewk) {
         Bg_Off_W(8);
         for (i = 0; i < bg_w.scno; i++) {
             Bg_On_W(1 << i);
+            continue;
         }
     }
     ake_scrl_w[0].xy[0].cal = 0x2000000;

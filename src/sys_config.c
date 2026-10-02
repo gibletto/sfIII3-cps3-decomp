@@ -24,44 +24,43 @@
 #include "sys_config.h"
 #include "cps3.h"
 /* provisional name */
-u32 *eeprom_config_load(void)
-{
-    u32 *rv;
-    s16 i;
-    s8 ix;
-    u8 *name;
-    u8 *ref;
-
+void eeprom_config_load(void) {
+    register s8 side;
+    register s16 i;
+    u32 tbl;
+    u8* q;
+    u8* p;
     eeprom_config_verify();
+    tbl = sys_cfg_default_tbl[Cabinet_Type];
     if (Area_Type) {
-        ix = Area_Type;
+        side = Area_Type;
     } else if (Area_Alt_Flag) {
-        ix = 6;
+        side = 6;
     } else {
-        ix = Area_Type;
+        side = Area_Type;
     }
-    if ((s8)eeprom_w[0] == **(s8 **)(sys_cfg_default_tbl[Cabinet_Type] + ix * 4)) {
-        ref = eeprom_game_cfg + 8;
-        name = game_cfg_default_tbl[ix] + 8;
-        for (i = 0; i < 8; i++) {
-            if (*ref != *name) {
-                rv = ((u32 *(*)())eeprom_config_reset)();
-                return rv;
-            }
-            ref++;
-            name++;
+    p = ((u8**)tbl)[side];
+    if ((s8)*eeprom_w != (s8)*p) {
+        eeprom_config_reset();
+        return;
+    }
+    q = eeprom_game_cfg + 8;
+    p = game_cfg_default_tbl[side];
+    p = p + 8;
+    for (i = 0; i < 8; i++) {
+        if (*q != *p) {
+            eeprom_config_reset();
+            return;
         }
-        eeprom_config_apply((u32)eeprom_w);
-        /* the bookkeeping counters follow the two config copies in the EEPROM image */
-        book_coin_count = *(u32 *)&eeprom_w[0x60];
-        book_service_count = *(u32 *)&eeprom_w[0x64];
-        book_free_count = *(u32 *)&eeprom_w[0x68];
-        rv = (u32 *)&eeprom_w[0x6C];
-        book_card_count = *rv;
-    } else {
-        rv = ((u32 *(*)())eeprom_config_reset)();
+        q++;
+        p++;
     }
-    return rv;
+    eeprom_config_apply((u32)eeprom_w);
+    /* the bookkeeping counters follow the two config copies in the EEPROM image */
+    book_coin_count = *(u32*)&eeprom_w[0x60];
+    book_service_count = *(u32*)&eeprom_w[0x64];
+    book_free_count = *(u32*)&eeprom_w[0x68];
+    book_card_count = *(u32*)&eeprom_w[0x6C];
 }
 
 
@@ -511,67 +510,67 @@ void config_top_default(void) {
 }
 
 /* provisional name */
-u32 config_top_save_exit(void)
-{
+void config_top_save_exit(void) {
+    u16 e;
     s32 i;
-    s8 *src;
-    s8 *dst;
-    u32 ret;
-    if ((~p1sw_1 & p1sw_0 & 0x10) == 0) {
-        if (!Area_Type) {
-            return ((s32 (*)())tilemap_print_script_seq)(0, 0, 0xFFFF, cfg_top_guide_jp);
+    s32 u;
+    s8* s;
+    s8* d;
+    s32 v;
+    e = ~p1sw_1 & p1sw_0;
+    if (e & 0x10) {
+        config_check_changed();
+        Free_Play = cfg_coin_special;
+        Two_Coin_Start = cfg_free_play;
+        Coin_Mode = cfg_coin;
+        Chute_Mode = cfg_chute;
+        Continue_Flag = cfg_continue;
+        cfg_flip_old = Monitor_Flip;
+        Demo_Sound = cfg_demo_sound;
+        Sound_Mode = cfg_sound_mode;
+        Language = cfg_voice;
+        Card_Dispenser = cfg_dispenser;
+        Win_Point_Com = cfg_win_point;
+        Win_Point_Human = cfg_win_point_vs;
+        Voice_Type = cfg_extra;
+        s = (s8*)&game_config_work;
+        d = (s8*)&Game_setting;
+        for (i = 0; i < 16; i++) {
+            *d = *s;
+            s++;
+            d++;
         }
-        return ((s32 (*)())tilemap_print_string)(0, 0, 0xFFFF, config_top_guide_scr);
-    }
-    config_check_changed();
-    Free_Play = cfg_coin_special;
-    Two_Coin_Start = cfg_free_play;
-    Coin_Mode = cfg_coin;
-    Chute_Mode = cfg_chute;
-    Continue_Flag = cfg_continue;
-    cfg_flip_old = Monitor_Flip;
-    Demo_Sound = cfg_demo_sound;
-    Sound_Mode = cfg_sound_mode;
-    Language = cfg_voice;
-    Card_Dispenser = cfg_dispenser;
-    Win_Point_Com = cfg_win_point;
-    Win_Point_Human = cfg_win_point_vs;
-    Voice_Type = cfg_extra;
-    src = (s8 *)&game_config_work;
-    dst = (s8 *)&Game_setting;
-    for (i = 0; i < 16; i++) {
-        *dst = *src;
-        src++;
-        dst++;
-    }
-    coin_chute1_w[2] = coin_rate_tbl[Coin_Mode][0];
-    coin_chute1_w[3] = coin_rate_tbl[Coin_Mode][1];
-    coin_chute2_w[2] = coin_rate_tbl[Coin_Mode][0];
-    coin_chute2_w[3] = coin_rate_tbl[Coin_Mode][1];
-    coin3_coin_rate = coin_rate_tbl[Coin_Mode][0];
-    coin3_credit_rate = coin_rate_tbl[Coin_Mode][1];
-    coin4_coin_rate = coin_rate_tbl[Coin_Mode][0];
-    coin4_credit_rate = coin_rate_tbl[Coin_Mode][1];
-    if (Coin_Mode == 17) {
-        Two_Coin_Start = 1;
-        Continue_Flag = 1;
+        coin_chute1_w[2] = coin_rate_tbl[Coin_Mode][0];
+        coin_chute1_w[3] = coin_rate_tbl[Coin_Mode][1];
+        coin_chute2_w[2] = coin_rate_tbl[Coin_Mode][0];
+        coin_chute2_w[3] = coin_rate_tbl[Coin_Mode][1];
+        coin3_coin_rate = coin_rate_tbl[Coin_Mode][0];
+        coin3_credit_rate = coin_rate_tbl[Coin_Mode][1];
+        coin4_coin_rate = coin_rate_tbl[Coin_Mode][0];
+        coin4_credit_rate = coin_rate_tbl[Coin_Mode][1];
+        if (Coin_Mode != 17) {
+            Two_Coin_Start = 0;
+        } else {
+            Two_Coin_Start = 1;
+            Continue_Flag = 1;
+        }
+        if (cfg_changed) {
+            if (Area_Type == 0) {
+                tilemap_chunk_copy_16b((s16*)(SS_RAM + 0x8000), (char*)sys_font_cg, 140);
+            }
+            tilemap_fill_all(0, 0x20);
+            tilemap_print_string(0, 0, 0xFFFF, config_saving_scr);
+            task_sleep(1);
+            eeprom_config_save();
+            task_sleep(1);
+            tilemap_fill_all(0, 0x20);
+        }
+        cfg_reserve = 1;
+    } else if (Area_Type) {
+        tilemap_print_string(0, 0, 0xFFFF, config_top_guide_scr);
     } else {
-        Two_Coin_Start = 0;
+        tilemap_print_script_seq(0, 0, 0xFFFF, cfg_top_guide_jp);
     }
-    ret = 0;
-    if (cfg_changed != 0) {
-        if (!Area_Type) {
-            tilemap_chunk_copy_16b((s16 *)(SS_RAM + 0x8000), (char *)sys_font_cg, 140);
-        }
-        tilemap_fill_all(0, 0x20);
-        tilemap_print_string(0, 0, 0xFFFF, config_saving_scr);
-        task_sleep(1);
-        eeprom_config_save();
-        task_sleep(1);
-        ret = ((s32 (*)())tilemap_fill_all)(0, 0x20);
-    }
-    cfg_reserve = 1;
-    return ret;
 }
 
 /* provisional name */

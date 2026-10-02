@@ -44,7 +44,7 @@ void effect_C2_move(WORK_Other* ewk) {
         ewk->wu.routine_no[2] = 0;
         ewk->wu.routine_no[3] = 2;
         Bonus_Game_result = 0;
-        ewk->wu.charset_id = 0x17;
+        ewk->wu.charset_id = 23;
         set_char_base_data(&ewk->wu);
         ewk->wu.vital_new = ewk->master_id == 0;
         setup_prio_ix(ewk);
@@ -67,7 +67,7 @@ void effect_C2_move(WORK_Other* ewk) {
         ewk->wu.routine_no[1] = 0;
         ewk->wu.routine_no[2] = 0;
         effect_J9_init(ewk, 8);
-        break;
+        return;
     case 1:
         if (ewk->wu.dead_f == 1) {
             ewk->wu.disp_flag = 0;
@@ -82,7 +82,7 @@ void effect_C2_move(WORK_Other* ewk) {
             effC2_main_process_first(ewk, (PLW*)ewk->wu.target_adrs);
         }
         set_bs2_floor(ewk);
-        break;
+        return;
     case 2:
         switch (ewk->wu.routine_no[1]) {
         case 0:
@@ -105,27 +105,31 @@ void effect_C2_move(WORK_Other* ewk) {
                 char_move(&ewk->wu);
                 add_mvxy_speed(&ewk->wu);
                 cal_mvxy_speed(&ewk->wu);
-                if (ewk->wu.mvxy.a[1].sp <= 0 && (ewk->wu.xyz[1].disp.pos <= ewk->wu.next_y)) {
+                if (ewk->wu.mvxy.a[1].sp > 0) {
+                    break;
+                }
+                if (ewk->wu.xyz[1].disp.pos <= ewk->wu.next_y) {
                     ewk->wu.xyz[1].disp.pos = ewk->wu.next_y;
                     ewk->wu.routine_no[2] = 1;
                     char_move_cmja(&ewk->wu);
+                    break;
                 }
                 break;
             case 1:
                 char_move(&ewk->wu);
-                switch (ewk->wu.cg_type) {
+                switch ((u8)ewk->wu.cg_type) {
                 case 1:
                     if (ewk->wu.mvxy.a[0].sp > 0) {
-                        add_mvxy_speed_direct(&ewk->wu, 128, 0);
+                        add_mvxy_speed_direct(&ewk->wu, 0x80, 0);
                     } else {
-                        add_mvxy_speed_direct(&ewk->wu, -128, 0);
+                        add_mvxy_speed_direct(&ewk->wu, -0x80, 0);
                     }
                     break;
                 case 2:
                     if (ewk->wu.mvxy.a[0].sp > 0) {
-                        add_mvxy_speed_direct(&ewk->wu, 256, 0);
+                        add_mvxy_speed_direct(&ewk->wu, 0x100, 0);
                     } else {
-                        add_mvxy_speed_direct(&ewk->wu, -256, 0);
+                        add_mvxy_speed_direct(&ewk->wu, -0x100, 0);
                     }
                     break;
                 case 0xFF:
@@ -149,7 +153,7 @@ void effect_C2_move(WORK_Other* ewk) {
     default:
         all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
-        break;
+        return;
     }
 }
 
@@ -622,12 +626,13 @@ void set_parts_priority(WORK* wk) {
 void setup_vital_bonus2(ewk)
 WORK_Other* ewk;
 {
-    const BS2* row;
     s16 i;
-    row = bs2_data_table;
-    for (i = 0; i < 8; i++, row++) {
-        ewk->wu.shell_ix[i] = row->vital;
-        ewk->wu.cmwk[i] = 0;
+    s32 k;
+    const BS2* row;
+    for (i = 0, k = 0, row = bs2_data_table; i < 8; i++, k++) {
+        ewk->wu.shell_ix[k] = row->vital;
+        ewk->wu.cmwk[k] = 0;
+        row++;
     }
 }
 

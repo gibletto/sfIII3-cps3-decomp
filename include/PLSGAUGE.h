@@ -23,6 +23,6 @@ void setup_saishin_lvdir();
 void setup_vitality(WORK* wk, s16 pno);
 
 s32 short_to_bcd(s16 ix);
-void kakushi_setup(s16 pl);
+void kakushi_setup(s32 pl);
 
 #endif

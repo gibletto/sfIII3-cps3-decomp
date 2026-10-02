@@ -25,29 +25,37 @@
 #include "EFFK7.h"
 void effect_K7_move(WORK_Other* ewk) {
     PLW* mwk = (PLW*)ewk->my_master;
+
     switch (ewk->wu.routine_no[0]) {
     case 0:
-        if (ewk->wu.type != 0) {
+        if (ewk->wu.type) {
             ewk->wu.routine_no[0] = 1;
             break;
         }
         ewk->wu.routine_no[0] = 1;
         metamor_color_store(mwk->wu.id);
-        break;
+        return;
     case 1:
-        if (ewk->wu.dead_f == 1 || mwk->metamor_index != ewk->wu.myself) {
+        if (ewk->wu.dead_f == 1) {
             ewk->wu.routine_no[0] = 2;
             break;
         }
-        if (EXE_flag != 0 || Game_pause != 0) {
+        if (mwk->metamor_index != ewk->wu.myself) {
+            ewk->wu.routine_no[0] = 2;
             break;
         }
-        if (ewk->wu.type != 0) {
-            K7_move_type_1(ewk, mwk);
-        } else {
-            K7_move_type_0(ewk, mwk);
+        if (EXE_flag != 0) {
+            break;
         }
-        break;
+        if (Game_pause != 0) {
+            break;
+        }
+        if (ewk->wu.type) {
+            K7_move_type_1(ewk, mwk);
+            return;
+        }
+        K7_move_type_0(ewk, mwk);
+        return;
     case 2:
         mwk->metamorphose = 0;
         mwk->metamor_over = 0;
@@ -58,7 +66,7 @@ void effect_K7_move(WORK_Other* ewk) {
         mwk->wu.disp_flag = 1;
     default:
         push_effect_work(&ewk->wu);
-        break;
+        return;
     }
 }
 

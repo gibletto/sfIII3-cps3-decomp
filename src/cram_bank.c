@@ -79,3 +79,15 @@ u32 cram_bank_slot_offset(s16 slot) {
     }
     return ((slot - 1) << 12) & 0xFFFFF;
 }
+
+
+/* provisional name */
+s16 cram_bank_now_get(void) {
+    return cram_bank_now;
+}
+
+
+/* provisional name */
+s16 cram_bank_old_get(void) {
+    return cram_bank_old;
+}

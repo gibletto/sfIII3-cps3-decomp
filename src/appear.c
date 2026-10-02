@@ -1108,7 +1108,7 @@ void Appear_20000(PLW* wk) {
 
 
 void Appear_21000(PLW* wk) {
-    s32 work;
+    s16 work;
     switch (wk->wu.routine_no[3]) {
     case 0:
         wk->wu.routine_no[3] += 1;

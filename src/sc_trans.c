@@ -68,20 +68,30 @@ void sc_chr_load(u16 rows) {
 
 /* provisional name */
 void sc_chr_block_trans(u16 chr, u16 pos, u16 w, u16 h) {
-    u16 i;
-    u16 j;
-    u16 k;
+    s32 i, j, k;
     u16* dst;
     sc_trans_src = (u8*)&sc_chr_data[chr * 32 / 2];
-    dst = (u16*)((SS_RAM + 0x8000) + pos * 64);
-    sc_trans_dst = dst;
-    for (j = 0; j < h; j++) {
-        for (i = 0; i < w; i++) {
-            for (k = 0; k < 32; k++) {
-                *sc_trans_dst = *sc_trans_src;
-                sc_trans_src++;
+    sc_trans_dst = (u16*)(pos * 64 + (SS_RAM + 0x8000));
+    dst = sc_trans_dst;
+    i = 0;
+    for (; (u16)i < h; i++) {
+        for (j = 0; (u16)j < w; j++) {
+            k = 0;
+            do {
+                k += 2;
+                {
+                    u16 v = *sc_trans_src;
+                    *sc_trans_dst = v;
+                }
                 sc_trans_dst++;
-            }
+                sc_trans_src++;
+                {
+                    u16 v = *sc_trans_src;
+                    *sc_trans_dst = v;
+                }
+                sc_trans_dst++;
+                sc_trans_src++;
+            } while ((u16)k < 32);
             continue;
         }
         dst += 0x200;
@@ -94,27 +104,38 @@ void sc_chr_block_trans(u16 chr, u16 pos, u16 w, u16 h) {
 
 /* provisional name */
 void sc_chr_sheet_trans(u16 chr, u16 pos, u16 w, u16 h) {
-    u16 i;
-    u16 j;
-    u16 k;
+    s32 i, j, k;
     u8* src;
     u16* dst;
     sc_trans_src = (u8*)&sc_chr_data[chr * 32 / 2];
-    dst = (u16*)((SS_RAM + 0x8000) + pos * 64);
-    sc_trans_dst = dst;
+    sc_trans_dst = (u16*)(pos * 64 + (SS_RAM + 0x8000));
+    dst = sc_trans_dst;
     src = sc_trans_src;
-    for (j = 0; j < h; j++) {
-        for (i = 0; i < w; i++) {
-            for (k = 0; k < 32; k++) {
-                *sc_trans_dst = *sc_trans_src;
+    i = 0;
+    for (; (u16)i < h; i++) {
+        for (j = 0; (u16)j < w; j++) {
+            k = 0;
+            do {
+                k += 2;
+                {
+                    u16 v = *sc_trans_src;
+                    *sc_trans_dst = v;
+                }
                 sc_trans_dst++;
                 sc_trans_src++;
-            }
+                {
+                    u16 v = *sc_trans_src;
+                    *sc_trans_dst = v;
+                }
+                sc_trans_dst++;
+                sc_trans_src++;
+            } while ((u16)k < 32);
+            continue;
         }
         src += 0x200;
         sc_trans_src = src;
-        dst += 0x200;
-        sc_trans_dst = dst;
+        dst = sc_trans_dst = dst + 0x200;
+        continue;
     }
 }
 
@@ -247,24 +268,36 @@ void sc_chr_to_ram(u16 n) {
 
 /* provisional name */
 void sc_chr_sheet_to_ram(u16 chr, u16 pos, u16 w, u16 h) {
-    u16 i;
-    u16 j;
-    u16 k;
+    s32 i, j, k;
     u8* src;
     sc_trans_src = (u8*)&sc_chr_data[chr * 32 / 2];
-    sc_bak_ptr = sc_chr_ram + pos * 32;
+    sc_bak_ptr = &sc_chr_ram[pos * 32];
+    i = 0;
     src = sc_trans_src;
-    for (j = 0; j < h; j++) {
-        for (i = 0; i < w; i++) {
-            for (k = 0; k < 32; k++) {
-                *sc_bak_ptr = *sc_trans_src;
+    for (; (u16)i < h; i++) {
+        for (j = 0; (u16)j < w; j++) {
+            k = 0;
+            do {
+                k += 2;
+                {
+                    u8 v = *sc_trans_src;
+                    *sc_bak_ptr = v;
+                }
                 sc_bak_ptr++;
                 sc_trans_src++;
-            }
+                {
+                    u16 v = *sc_trans_src;
+                    *sc_bak_ptr = v;
+                }
+                sc_bak_ptr++;
+                sc_trans_src++;
+            } while ((u16)k < 32);
+            continue;
         }
-        src = src + 0x200;
-        sc_trans_src = src;
-        sc_bak_ptr = sc_bak_ptr + 0x200;
+        sc_trans_src = src + 0x200;
+        src = sc_trans_src;
+        sc_bak_ptr += 0x200;
+        continue;
     }
 }
 

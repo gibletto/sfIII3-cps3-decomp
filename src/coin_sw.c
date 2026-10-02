@@ -88,18 +88,18 @@ void coin_credit_add(s8 n, s8 m) {
 
 /* provisional name */
 void coin_counter_drive(s8 n) {
-    COINCHUTE* cc;
-    s8* coins;
-    cc = coin_chute_tbl[n];
-    coins = coin_count_ptr_tbl[n];
-    if (cc->lockout) {
-        cc->lockout = cc->lockout - 1;
-        if (cc->lockout == 32) {
-            coin_out_latch &= (u8)coin_counter_off_mask;
+    COINCHUTE* p;
+    s8* q;
+    p = coin_chute_tbl[n];
+    q = coin_count_ptr_tbl[n];
+    if (p->lockout) {
+        p->lockout = p->lockout - 1;
+        if (p->lockout == 0x20) {
+            coin_out_latch &= coin_counter_off_mask;
         }
-    } else if (*coins) {
-        *coins = *coins - 1;
-        cc->lockout = 64;
+    } else if (*q != 0) {
+        *q = *q - 1;
+        p->lockout = 0x40;
         coin_out_latch |= coin_counter_on_bit;
     }
 }
@@ -285,17 +285,14 @@ s32 credit_use(s8 n) {
 }
 
 /* provisional name */
-u16 * switch_work_clear(char level)
-{
+void switch_work_clear(char level) {
     switch (level) {
     case 2:
         p4sw_0 = 0;
         p4sw_1 = 0;
-        /* fall through */
     case 1:
         p3sw_0 = 0;
         p3sw_1 = 0;
-        /* fall through */
     case 0:
         p2sw_0 = 0;
         p2sw_1 = 0;
@@ -305,17 +302,11 @@ u16 * switch_work_clear(char level)
     }
     syssw_0 = 0;
     syssw_1 = 0;
-    coin_sw_now[0] = 0;
-    coin_sw_hist[0] = 0;
-    coin_sw_now[1] = 0;
-    coin_sw_hist[1] = 0;
-    coin_sw_now[2] = 0;
-    coin_sw_hist[2] = 0;
-    coin_sw_now[3] = 0;
-    coin_sw_hist[3] = 0;
-    card_sw_1 = 0;
-    card_sw_0 = 0;
-    return &coin_sw_hist[3];
+    coin_sw_hist[0] = coin_sw_now[0] = 0;
+    coin_sw_hist[1] = coin_sw_now[1] = 0;
+    coin_sw_hist[2] = coin_sw_now[2] = 0;
+    coin_sw_hist[3] = coin_sw_now[3] = 0;
+    card_sw_0 = card_sw_1 = 0;
 }
 
 

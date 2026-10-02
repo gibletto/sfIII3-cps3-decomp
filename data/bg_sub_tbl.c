@@ -22,9 +22,8 @@ const u32 jump_tbl_init[4] = {
     (u32)ta0_init00, (u32)ta0_init01, (u32)ta0_init02, (u32)ta0_move,
 };
 
-/* Stored after bg_test_stage_tbl. Nothing in the program refers to it by name or address; if it is read,
-   it is through an index past the end of bg_test_stage_tbl. */
-const u32 jump_tbl_tail[4] = {
-    0x1000100, 0x3000100, 0x1000000, 0x3000000,
+/* Scroll positions (x, y) for akebono_scrn_move (bg_sub.c). */
+const s16 akebono_scrn_pos_tbl[4][2] = {
+    { 0x100, 0x100 }, { 0x300, 0x100 }, { 0x100, 0 }, { 0x300, 0 },
 };
 

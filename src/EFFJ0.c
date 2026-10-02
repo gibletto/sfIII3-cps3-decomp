@@ -117,6 +117,12 @@ void effect_J1_move(void)
 }
 
 
+/* provisional name */
+s32 effect_J1_dummy(void) {
+    return 0;
+}
+
+
 
 void effect_J2_move(WORK_Other_CONN* ewk) {
     switch (ewk->wu.routine_no[0]) {

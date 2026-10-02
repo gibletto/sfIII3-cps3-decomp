@@ -196,17 +196,17 @@ void effect_A8_move(WORK_Other* ewk) {
         break;
     case 1:
         if (Fade_Flag) {
-            fade_cont_main(ewk);
-            break;
+            fade_cont_main();
+        } else {
+            ewk->wu.routine_no[0]++;
+            end_no_cut = 0;
         }
-        ewk->wu.routine_no[0]++;
-        end_no_cut = 0;
-        break;
-    case 2:
         break;
     default:
         all_cgps_put_back(ewk);
         push_effect_work((WORK*)ewk);
+        break;
+    case 2:
         break;
     }
 }

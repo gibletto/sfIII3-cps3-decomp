@@ -50,6 +50,14 @@ s32 sw_to_lvbt(s32 value) {
 }
 
 
+/* provisional name */
+void sw_dummy_1(void) {}
+
+
+/* provisional name */
+void sw_dummy_2(void) {}
+
+
 
 /* provisional name */
 void sync_fam_set(s16 num_of_bg) {
@@ -67,14 +75,16 @@ void sync_fam_set(s16 num_of_bg) {
 
 /* provisional name */
 void sync_fam_set2(s16 num_of_bg) {
-    s32 x;
-    s32 y;
+    s16 x;
+    s16 y;
+    s16 y2;
     bg_pos_hosei_sub2(num_of_bg);
     x = bg_w.bgw[num_of_bg].position_x;
-    y = bg_w.bgw[num_of_bg].position_y;
+    y2 = bg_w.bgw[num_of_bg].position_y;
     x = -x & 0x3FF;
-    y = (0x300 - ((y + 8) & 0x3FF)) & 0x3FF;
-    Family_Set_W(num_of_bg + 1, x, y);
+    y2 += 8;
+    y2 = (0x300 - (y2 & 0x3FF)) & 0x3FF;
+    Family_Set_W(num_of_bg + 1, x, y2);
 }
 
 
@@ -175,21 +185,20 @@ s32 range_x_check3(WORK* wk, s16 w) {
 s32 range_y_check(WORK* wk) {
     s16 y;
     s16 top;
-    s16 bottom;
-    if (bg_w.chase_flag & 0xF) {
+    if ((s8)bg_w.chase_flag & 0xF) {
         y = bg_w.bgw[wk->my_family - 1].chase_xy[1].disp.pos;
     } else {
         y = bg_w.bgw[wk->my_family - 1].wxy[1].disp.pos;
     }
     top = y + 256;
-    bottom = y - 32;
+    y -= 32;
     if (top < wk->xyz[1].disp.pos) {
         return 0;
-    } else if (bottom > wk->xyz[1].disp.pos) {
-        return 0;
-    } else {
-        return 1;
     }
+    if (y > wk->xyz[1].disp.pos) {
+        return 0;
+    }
+    return 1;
 }
 
 
@@ -426,7 +435,7 @@ s32 eff_hit_check_sub(WORK_Other* ewk, PLW* pl) {
     return 0;
 }
 
-s16 eff_hit_check2(ewk, type, where_type)
+s32 eff_hit_check2(ewk, type, where_type)
 WORK_Other* ewk;
 s16 type;
 s16 where_type;
@@ -513,6 +522,18 @@ s32 complete_victory_check(void) {
         return 1;
     }
     return 0;
+}
+
+
+/* provisional name */
+s16 get_winner_player_number(void) {
+    return plw[Winner_id].player_number;
+}
+
+
+/* provisional name */
+s8 get_winner_id(void) {
+    return Winner_id;
 }
 
 /* provisional name */

@@ -8,7 +8,7 @@ void bg0902_init00(void);
 void bg0901(void);
 void bg0901_init00(void);
 void bg0902(void);
-s32 bg090_demo_check(void);
+void bg090_demo_check(void);
 void bg_fam0900(void);
 void bg080_sync_move(void);
 void demo90_base(void);

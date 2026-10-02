@@ -161,6 +161,7 @@ s32 get_comm_if_shot_now_off(WORK* wk);
 void set_char_move_init2(WORK* wk, s16 koc, s16 index, s16 ip, s16 scf);
 void set_jugde_area(WORK* wk);
 void set_new_attnum(WORK* wk);
+void kezuri_pow_init(WORK* wk);
 void setup_comm_abbak(WORK* wk);
 void setup_comm_back(WORK* wk);
 void setup_comm_retmj(WORK* wk);

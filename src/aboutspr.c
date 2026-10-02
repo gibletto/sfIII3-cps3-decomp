@@ -704,35 +704,32 @@ s32 char_cell_unflip_xy(WORK* wk) {
 
 s32 set_judge_area_sprite(WORK_Other* owk) {
     WORK_Other_JUDGE* wk = (WORK_Other_JUDGE*)owk;
-    SPR_LIST_HEAD* g = (SPR_LIST_HEAD*)&wk->wu.spr.done_flip;
-    u16* base;
-    u16* dst;
+    GFX_CELL* base;
     s16 blk;
     s16 base_code;
     s16 cell;
     s16 y_ofs;
     s16 i;
     s16 k;
-    u32 bit;
-    if (g->gfx_cells == 0) {
+    if (wk->wu.spr.gfx_cells == 0) {
         return 0;
     }
     base_code = cg_slot_tbl[(u16)cg_data_list[wk->wu.cg_number].set->slot].addr;
-    if ((blk = simmram_block_alloc_40((((g->gfx_cells < 0) ? g->gfx_cells + 15 : g->gfx_cells) >> 4) + 1, 1)) == 0) {
+    if ((blk = simmram_block_alloc_40(wk->wu.spr.gfx_cells / 16 + 1, 1)) == 0) {
         return 0;
     }
-    base = ((u16 *(*)(s16 handle))simmram_slot_addr)(blk);
-    if (g->gfx_blk40[2] != 0) {
-        simmram_block_free_40(g->gfx_blk40[2]);
+    base = ((GFX_CELL *(*)(s16 handle))simmram_slot_addr)(blk);
+    if (wk->wu.spr.gfx_blk40[2] != 0) {
+        simmram_block_free_40(wk->wu.spr.gfx_blk40[2]);
     }
-    g->gfx_blk40[2] = g->gfx_blk40[1];
-    g->gfx_blk40[1] = g->gfx_blk40[0];
-    g->gfx_blk40[0] = blk;
-    g->gfx_ofs = simmram_slot_to_code(blk);
-    g->done_rl = 0;
+    wk->wu.spr.gfx_blk40[2] = wk->wu.spr.gfx_blk40[1];
+    wk->wu.spr.gfx_blk40[1] = wk->wu.spr.gfx_blk40[0];
+    wk->wu.spr.gfx_blk40[0] = blk;
+    wk->wu.spr.gfx_ofs = simmram_slot_to_code(blk);
+    wk->wu.spr.done_rl = 0;
     cell = 0;
-    for (i = 0, bit = 1; i < 14; i++, bit <<= 1) {
-        if (!(wk->ja_disp_bit & bit)) {
+    for (i = 0; i < 14; i++) {
+        if (!(wk->ja_disp_bit & (1 << i))) {
             continue;
         }
         y_ofs = 0;
@@ -740,41 +737,38 @@ s32 set_judge_area_sprite(WORK_Other* owk) {
             y_ofs = wk->fade_cja.w * 2;
         }
         for (k = 0; k < 4; k++) {
-            dst = base + cell * 8;
+            base[cell].w[0] = judge_area_code_tbl[i] + base_code + y_ofs;
+            base[cell].w[1] = flip_attr_tbl[k];
+            base[cell].w[2] = wk->ja[i * 4 + k][0] & 0x3FF;
+            base[cell].w[3] = wk->ja[i * 4 + k][1] & 0x3FF;
+            base[cell].w[5] = 0x305;
+            base[cell].w[4] = cell_size_tbl[5];
             cell++;
-            dst[0] = judge_area_code_tbl[i] + base_code + y_ofs;
-            dst[1] = flip_attr_tbl[k];
-            dst[2] = (&wk->ja[i * 4])[k][0] & 0x3FF;
-            dst[3] = (&wk->ja[i * 4])[k][1] & 0x3FF;
-            dst[5] = 0x305;
-            dst[4] = cell_size_tbl[5];
         }
     }
     if (wk->ja_disp_bit & 0x4000) {
         for (k = 0; k < 4; k++) {
-            dst = base + cell * 8;
+            base[cell].w[0] = judge_area_code_tbl[14] + base_code;
+            base[cell].w[1] = flip_attr_tbl[k];
+            base[cell].w[2] = wk->ja[56 + k][0] & 0x3FF;
+            base[cell].w[3] = wk->ja[56 + k][1] & 0x3FF;
+            base[cell].w[5] = 0x305;
+            base[cell].w[4] = cell_size_tbl[5];
             cell++;
-            dst[0] = judge_area_code_tbl[14] + base_code;
-            dst[1] = flip_attr_tbl[k];
-            dst[2] = wk->ja[56 + k][0] & 0x3FF;
-            dst[3] = wk->ja[56 + k][1] & 0x3FF;
-            dst[5] = 0x305;
-            dst[4] = cell_size_tbl[5];
         }
     }
     if (wk->ja_disp_bit & 0x8000) {
         for (k = 0; k < 2; k++) {
-            dst = base + cell * 8;
+            base[cell].w[0] = judge_area_code_tbl[15 + k] + base_code;
+            base[cell].w[1] = flip_attr_tbl[0];
+            base[cell].w[2] = wk->ja[60 + k][0] & 0x3FF;
+            base[cell].w[3] = wk->ja[60 + k][1] & 0x3FF;
+            base[cell].w[5] = 0x305;
+            base[cell].w[4] = cell_size_tbl[5];
             cell++;
-            dst[0] = judge_area_code_tbl[15 + k] + base_code;
-            dst[1] = flip_attr_tbl[0];
-            dst[2] = wk->ja[60 + k][0] & 0x3FF;
-            dst[3] = wk->ja[60 + k][1] & 0x3FF;
-            dst[5] = 0x305;
-            dst[4] = cell_size_tbl[5];
         }
     }
-    if (cell == g->gfx_cells) {
+    if (cell == wk->wu.spr.gfx_cells) {
         return 1;
     }
     return 2;
@@ -1000,8 +994,9 @@ s32 sort_push_request(WORK* wk) {
 
 s32 sort_push_request2(WORK_Other* wk) {
     u16* spr;
-    u16* cell;
-    s32 i;
+    s16 i;
+    CHAR_SPRITE* cell;
+
     if (wk->wu.disp_flag == 0 && wk->master_work_id == 1) {
         return 1;
     }
@@ -1015,9 +1010,9 @@ s32 sort_push_request2(WORK_Other* wk) {
     if (wk->wu.spr.done_rl != wk->wu.rl_flag) {
         wk->wu.spr.done_rl = wk->wu.rl_flag;
         spr[4] ^= 0x1000;
-        cell = (u16*)(SPRITE_RAM + wk->wu.spr.gfx_ofs * 16);
+        cell = (CHAR_SPRITE*)SPRITE_RAM + wk->wu.spr.gfx_ofs;
         for (i = 0; i < wk->wu.spr.gfx_cells; i++) {
-            cell[i * 8 + 2] = -cell[i * 8 + 2] & 0x3FF;
+            cell[i].sx = -cell[i].sx & 0x3FF;
         }
     } else if (wk->wu.spr.done_rl) {
         spr[4] ^= 0x1000;
@@ -1029,8 +1024,9 @@ s32 sort_push_request2(WORK_Other* wk) {
 
 s32 sort_push_request3(WORK* wk) {
     u16* spr;
-    u16* cell;
-    s32 i;
+    s16 i;
+    CHAR_SPRITE* cell;
+
     if (wk->disp_flag == 0) {
         return 1;
     }
@@ -1047,13 +1043,13 @@ s32 sort_push_request3(WORK* wk) {
     push_char_sprite(wk, spr, base_y_pos);
     if (wk->spr.done_rl != wk->rl_flag) {
         wk->spr.done_rl = wk->rl_flag;
-        spr[4] = spr[4] ^ 0x1000;
-        cell = (u16*)(SPRITE_RAM + wk->spr.gfx_ofs * 16);
+        spr[4] ^= 0x1000;
+        cell = (CHAR_SPRITE*)SPRITE_RAM + wk->spr.gfx_ofs;
         for (i = 0; i < wk->spr.gfx_cells; i++) {
-            cell[i * 8 + 2] = -cell[i * 8 + 2] & 0x3FF;
+            cell[i].sx = -cell[i].sx & 0x3FF;
         }
     } else if (wk->spr.done_rl) {
-        spr[4] = spr[4] | 0x1000;
+        spr[4] |= 0x1000;
     }
     if (wk->kage_flag) {
         shadow_drawing(wk, base_y_pos);

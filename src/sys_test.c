@@ -47,7 +47,7 @@ void Irl_Family(void) {
 
 /* provisional name: unreferenced; toggles a scroll layer's flip bits and applies them */
 void scrn_flip_set(u16 n, u16 flip) {
-    s32 unused;
+    s32 r;
     switch (flip) {
     case 0:
         scrn_mode_prm[n][0] ^= 0x800;
@@ -60,7 +60,6 @@ void scrn_flip_set(u16 n, u16 flip) {
     case 2:
         scrn_mode_prm[n][0] ^= 0xC00;
         scrn_mode_prm[n][1] = scrn_mode_prm[n][0];
-        break;
     }
 }
 
@@ -68,7 +67,7 @@ void scrn_flip_set(u16 n, u16 flip) {
 
 /* provisional name: unreferenced; toggles a scroll layer's flip bits */
 void scrn_flip_toggle(u16 n, u16 flip) {
-    s32 unused;
+    s32 r;
     switch (flip) {
     case 0:
         scrn_mode_prm[n][0] ^= 0x800;
@@ -78,7 +77,6 @@ void scrn_flip_toggle(u16 n, u16 flip) {
         break;
     case 2:
         scrn_mode_prm[n][0] ^= 0xC00;
-        break;
     }
 }
 
@@ -1531,8 +1529,7 @@ s32 cd_check_disc_id(void) {
     if ((scsi_toc_buf[5] & 0xF) == 4) {
         while (1) {
             rc = scsi_read_10(16, 1, last, 1, cd_sector_buf);
-            rc = scsi_decode_sense_key(rc);
-            if (rc == -1) {
+            if ((rc = scsi_decode_sense_key(rc)) == -1) {
                 return -1;
             }
             if (rc == 0) {

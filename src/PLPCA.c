@@ -360,9 +360,17 @@ void Catch_08000(PLW* wk) {
 }
 
 
+/* provisional name */
+void Catch_09000(void) {}
+
+
+
+#pragma inline(check_dm_vital)
+
+s32 check_dm_vital(PLW* wk);
 
 void subtract_cu_vital(PLW* wk) {
-    if (wk->wu.dm_vital) {
+    if (check_dm_vital(wk)) {
         if (wk->dead_flag == 0) {
             if (wk->wu.dm_vital) {
                 Additinal_Score_DM((WORK_Other*)wk->wu.dmg_adrs, wk->wu.dm_ten_ix);
@@ -391,6 +399,16 @@ void subtract_cu_vital(PLW* wk) {
     }
     wk->wu.dm_vital = 0;
     wk->wu.dm_piyo = 0;
+}
+
+
+
+/* provisional name */
+s32 check_dm_vital(PLW* wk) {
+    if (wk->wu.dm_vital == 0) {
+        return 0;
+    }
+    return 1;
 }
 
 

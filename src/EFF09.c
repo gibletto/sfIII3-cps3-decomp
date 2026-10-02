@@ -1196,8 +1196,8 @@ void eff09_22000(WORK_Other* ewk) {
 
 
 void eff09_23000(WORK_Other* ewk) {
-    WORK* oya_ptr;
-    oya_ptr = (WORK*)ewk->my_master;
+    WORK* oya_ptr = (WORK*)ewk->my_master;
+    s16* exe = &EXE_flag;
     switch (ewk->wu.routine_no[1]) {
     case 0:
         ewk->wu.routine_no[1]++;
@@ -1211,13 +1211,15 @@ void eff09_23000(WORK_Other* ewk) {
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
     case 1:
-        if (!EXE_flag && !Game_pause && oya_ptr->cg_type == 1) {
-            ewk->wu.routine_no[1]++;
+        if (!*exe && !Game_pause) {
+            if (oya_ptr->cg_type == 1) {
+                ewk->wu.routine_no[1]++;
+            }
         }
         pl_eff_trans_entry(ewk);
         break;
     case 2:
-        if (!EXE_flag && !Game_pause) {
+        if (!*exe && !Game_pause) {
             char_move(&ewk->wu);
             if (ewk->wu.cg_type == 0xFF) {
                 ewk->wu.routine_no[1]++;
@@ -1233,7 +1235,7 @@ void eff09_23000(WORK_Other* ewk) {
         pl_eff_trans_entry(ewk);
         break;
     case 3:
-        if (!EXE_flag && !Game_pause) {
+        if (!*exe && !Game_pause) {
             char_move(&ewk->wu);
             add_x_sub(ewk);
             if (range_x_check3(ewk, 64) == 0) {
@@ -1243,17 +1245,19 @@ void eff09_23000(WORK_Other* ewk) {
         pl_eff_trans_entry(ewk);
         break;
     default:
-        all_cgps_put_back(ewk);
-        push_effect_work(&ewk->wu);
-        break;
+        goto dflt;
     }
+    return;
+dflt:
+    all_cgps_put_back(ewk);
+    push_effect_work(&ewk->wu);
 }
 
 
 
 void eff09_24000(WORK_Other* ewk) {
-    WORK* oya_ptr;
-    oya_ptr = (WORK*)ewk->my_master;
+    WORK* oya_ptr = (WORK*)ewk->my_master;
+
     switch (ewk->wu.routine_no[1]) {
     case 0:
         ewk->wu.routine_no[1]++;
@@ -1265,14 +1269,16 @@ void eff09_24000(WORK_Other* ewk) {
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         return;
     case 1:
-        if (!EXE_flag && !Game_pause && (oya_ptr->cg_type == 1)) {
-            ewk->wu.routine_no[1]++;
-            if (ewk->wu.type == 38) {
-                ewk->wu.routine_no[1] = 99;
+        if (!EXE_flag && !Game_pause) {
+            if (oya_ptr->cg_type == 1) {
+                ewk->wu.routine_no[1]++;
+                if (ewk->wu.type == 38) {
+                    ewk->wu.routine_no[1] = 99;
+                }
             }
         }
         pl_eff_trans_entry(ewk);
-        return;
+        break;
     case 2:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
@@ -1285,13 +1291,14 @@ void eff09_24000(WORK_Other* ewk) {
                     ewk->wu.mvxy.a[0].sp = -0x18000;
                 }
                 if (ewk->wu.rl_flag) {
-                    ewk->wu.mvxy.a[0].sp = -ewk->wu.mvxy.a[0].sp;
+                    s32* sp = &ewk->wu.mvxy.a[0].sp;
+                    *sp = -*sp;
                 }
                 ewk->wu.mvxy.d[0].sp = 0;
             }
         }
         pl_eff_trans_entry(ewk);
-        return;
+        break;
     case 3:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
@@ -1300,17 +1307,21 @@ void eff09_24000(WORK_Other* ewk) {
                 if (range_x_check3(ewk, 176) == 0) {
                     ewk->wu.routine_no[1]++;
                 }
-            } else if (range_x_check3(ewk, 88) == 0) {
-                ewk->wu.routine_no[1]++;
+            } else {
+                if (range_x_check3(ewk, 88) == 0) {
+                    ewk->wu.routine_no[1]++;
+                }
             }
         }
         pl_eff_trans_entry(ewk);
-        return;
+        break;
     default:
-        all_cgps_put_back(ewk);
-        push_effect_work(&ewk->wu);
-        return;
+        goto dflt;
     }
+    return;
+dflt:
+    all_cgps_put_back(ewk);
+    push_effect_work(&ewk->wu);
 }
 
 

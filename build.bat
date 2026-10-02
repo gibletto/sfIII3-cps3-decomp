@@ -25,6 +25,9 @@ asmsh src\tasksw.src -object=obj\tasksw.obj
 if errorlevel 1 goto fail
 shc src\coin_cont.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\coin_cont.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
+shc src\mode_init.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\mode_init.obj >obj\shc.log 2>&1
+shc src\test_mode.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\test_mode.obj >obj\shc.log 2>&1
+shc src\scrn_ctrl.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\scrn_ctrl.obj >obj\shc.log 2>&1
 shc src\Com_Pl.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\Com_Pl.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\Com_Sub.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\Com_Sub.obj >obj\shc.log 2>&1
@@ -459,7 +462,6 @@ shc src\EFFA3.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortne
 if errorlevel 1 goto fail
 shc src\EFFA6.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\EFFA6.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\EFFA6_INIT.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\EFFA6_INIT.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\EFFA7.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\EFFA7.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail

@@ -108,6 +108,7 @@ void Flash_G0(WORK_Other_CONN* ewk) {
         ewk->wu.dir_timer = 3;
         for (ix = 0; ix < ewk->num_of_conn; ix++) {
             ewk->conn[ix].chr += 10;
+            continue;
         }
         break;
     case 2:
@@ -116,6 +117,7 @@ void Flash_G0(WORK_Other_CONN* ewk) {
         }
         for (ix = 0; ix < ewk->num_of_conn; ix++) {
             ewk->conn[ix].chr -= 10;
+            continue;
         }
         if (--ewk->wu.vital_new == 0) {
             Order[ewk->wu.dir_old] = 0;
@@ -155,7 +157,12 @@ s16 score_bunkai_G0(WORK_Other_CONN* ewk, u32 tsc) {
 
 
 
-s32 effect_G0_init(s16 Order, s16 Time, u32 Score, s16 Pos_Index) {
+s32 effect_G0_init(Order, Time, Score, Pos_Index)
+    s16 Order;
+    s16 Time;
+    u32 Score;
+    s16 Pos_Index;
+{
     WORK_Other_CONN* ewk;
     s16 ix;
     if ((ix = pull_effect_work(4)) == -1) {

@@ -594,11 +594,21 @@ s32 check_leap_attack(PLW* wk) {
     if (wk->cp->sw_lvbt & 0xF) {
         return 0;
     }
-    if (((Bonus_Game_Flag != 21) || !wk->bs2_on_car) && (wk->wu.xyz[1].disp.pos > 0)) {
+    if (Bonus_Game_Flag == 21 && wk->bs2_on_car) {
+        goto go;
+    }
+    if (wk->wu.xyz[1].disp.pos > 0) {
         return 0;
     }
+go:
     setup_comm_back(&wk->wu);
     wk->as = &asstbl_lv_D010[wk->player_number][0].as;
     hissatsu_setup_union(wk, wk->cp->waza_r[14][0]);
     return 1;
+}
+
+
+/* provisional name */
+s32 check_leap_dummy(void) {
+    return 0;
 }

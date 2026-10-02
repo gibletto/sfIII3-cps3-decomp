@@ -316,6 +316,12 @@ void effect_90_move(WORK_Other* ewk) {
 }
 
 
+/* provisional name */
+s32 effect_90_dummy(void) {
+    return 0;
+}
+
+
 
 void effect_91_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {

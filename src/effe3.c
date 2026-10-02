@@ -107,3 +107,11 @@ s32 effect_E3_move(WORK_Other* ewk) {
         return;
     }
 }
+
+
+/* provisional name */
+void effect_E3_dummy_1(void) {}
+
+
+/* provisional name */
+void effect_E3_dummy_2(void) {}

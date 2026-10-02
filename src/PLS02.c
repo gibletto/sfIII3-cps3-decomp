@@ -207,14 +207,9 @@ void reset_mvxy_data(WORK* wk) {
 
 /* provisional name */
 void setup_air_paring_mvxy(WORK* wk) {
-    s32 t;
-    t = wk->mvxy.a[0].sp;
-    t *= 60;
-    wk->mvxy.a[0].sp = t / 100;
-    t = wk->mvxy.a[1].sp;
-    t *= 40;
-    wk->mvxy.a[1].sp = t / 100;
-    switch (((wk->mvxy.a[0].sp < 0) * 2) + (wk->mvxy.a[0].sp > 0)) {
+    wk->mvxy.a[0].sp = wk->mvxy.a[0].sp * 60 / 100;
+    wk->mvxy.a[1].sp = wk->mvxy.a[1].sp * 40 / 100;
+    switch ((wk->mvxy.a[0].sp < 0) * 2 + (wk->mvxy.a[0].sp > 0)) {
     case 0:
     case 1:
         wk->mvxy.a[0].sp = -wk->mvxy.a[0].sp;
@@ -223,7 +218,6 @@ void setup_air_paring_mvxy(WORK* wk) {
         if (wk->mvxy.a[0].real.h > -2) {
             wk->mvxy.a[0].real.h = -2;
         }
-        break;
     }
 }
 
@@ -429,7 +423,7 @@ s16 get_sel_hosei_tbl_ix(s16 plnum) {
 
 
 
-s16 check_work_position_bonus(WORK* hm, s16 tx) {
+s32 check_work_position_bonus(WORK* hm, s16 tx) {
     s16 result = hm->xyz[0].disp.pos - tx;
     s16 num;
     if (result) {
@@ -492,42 +486,42 @@ no_hosei:
 
 
 s16 check_work_position(WORK* p1, WORK* p2) {
-    s32 result = p1->xyz[0].disp.pos - p2->xyz[0].disp.pos;
-    s32 num;
-    if (result) {
-        if (result > 0) {
-            num = 1;
+    s16 r;
+    s16 d = p1->xyz[0].disp.pos - p2->xyz[0].disp.pos;
+    if (d) {
+        if (d > 0) {
+            r = 1;
         } else {
-            num = 0;
+            r = 0;
         }
-    } else if (p1->rl_flag + p2->rl_flag & 1) {
+    } else if ((p1->rl_flag + p2->rl_flag) & 1) {
         if (p1->rl_flag) {
-            num = 0;
+            r = 0;
         } else {
-            num = 1;
+            r = 1;
         }
     } else {
         switch ((p1->xyz[1].disp.pos == 0) + (p2->xyz[1].disp.pos == 0) * 2) {
         case 1:
             if (p1->rl_flag) {
-                num = 0;
+                r = 0;
             } else {
-                num = 1;
+                r = 1;
             }
             break;
         case 2:
             if (p2->rl_flag) {
-                num = 0;
+                r = 0;
             } else {
-                num = 1;
+                r = 1;
             }
             break;
         default:
-            num = 0;
+            r = 0;
             break;
         }
     }
-    return num;
+    return r;
 }
 
 

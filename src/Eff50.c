@@ -86,6 +86,14 @@ void effect_50_move(WORK_Other* ewk) {
 }
 
 
+/* provisional name */
+void effect_50_char_move(WORK_Other* ewk) {
+    if (ewk->wu.dm_vital == 0) {
+        char_move(&ewk->wu);
+    }
+}
+
+
 
 s32 effect_50_init(s16 PL_id, s16 Direction, s16 dm_vital) {
     WORK_Other* ewk;

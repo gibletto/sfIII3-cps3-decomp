@@ -41,20 +41,11 @@
 
 void BG050(void) {
     bgw_ptr = &bg_w.bgw[1];
-    {
-        void (*bg0502_jmp[2])() = { bg0502_init00, bg_base_move_common };
-        bg0502_jmp[bgw_ptr->r_no_0]();
-    }
+    bg0502();
     bgw_ptr = &bg_w.bgw[0];
-    {
-        void (*bg0501_jmp[2])() = { bg0501_init00, bg_move_common };
-        bg0501_jmp[bgw_ptr->r_no_0]();
-    }
+    bg0501();
     bgw_ptr = &bg_w.bgw[2];
-    {
-        void (*bg050_sync_jmp[2])() = { bg050_sync_init, bg050_sync_move };
-        bg050_sync_jmp[bgw_ptr->r_no_0]();
-    }
+    bg050_sync_common();
     zoom_ud_check();
     bg_pos_hosei2();
     Bg_Family_Set();

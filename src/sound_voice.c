@@ -43,14 +43,13 @@ void voice_process_null(void)
 
 /* provisional name */
 u32 voice_process_primary(SNDVOICE* voice, s8 is_bgm, u32 voice_index) {
-    u8* cursor;
+    u8 voice_status = voice->status;
     u8* argument;
     u8 event;
-    u8 slot;
-    u8 voice_status = voice->status;
+    u8 loop_index;
     u16 note;
-    u16 event_mask = 0x80;
-    u32 loop_index;
+    u32 event_mask = 0x80;
+    s16 note_resolved;
     s32 consumed;
     s32 ticks;
     s32 relative;
@@ -62,127 +61,62 @@ u32 voice_process_primary(SNDVOICE* voice, s8 is_bgm, u32 voice_index) {
     if (voice_status & 0x60) {
         return voice_status;
     }
-    slot = (u8)voice_index;
-    paired_bgm_voice = &bgm_voice[slot];
-    automation = &se_pan_ramp[slot];
-    sfx_ticks = &se_tick_step[slot];
+    paired_bgm_voice = &bgm_voice[(u8)voice_index];
+    automation = &se_pan_ramp[(u8)voice_index];
+    sfx_ticks = &se_tick_step[(u8)voice_index];
     bgm_ticks = &bgm_tick_step;
-    do {
-        cursor = voice->cursor;
-        event = *cursor;
-        argument = cursor + 1;
-        if (event < 0xC0) {
-            u8** bank;
-            s32 note_resolved = 1;
-            voice->velocity = (u8)((event & 0x3f) << 1);
-            note = (u16)(*argument & 0x7f);
-            voice->control_70 = (u8)note;
-            bank = &snd_bank_tbl[voice->instrument_bank];
-            if (*bank == 0) {
-                note_resolved = 0;
-            } else if (((u16*)*bank)[voice->program_index] == 0) {
-                note_resolved = 0;
-            } else {
-                patch = (SNDPATCH*)(((u16*)*bank)[voice->program_index] + *bank);
-                for (;;) {
-                    if (patch->note_ceiling == -1) {
-                        patch = 0;
-                        break;
-                    }
-                    if ((s16)note <= patch->note_ceiling) {
-                        break;
-                    }
-                    patch++;
-                }
-                if (!patch) {
-                    note_resolved = 0;
-                } else {
-                    ((volatile SNDVOICE*)voice)->patch = patch;
-                    ((volatile SNDVOICE*)voice)->sample = snd_sample_tbl;
-                    ((volatile SNDVOICE*)voice)->decoded_pitch = (s16)(((note - (((volatile SNDVOICE*)voice)->sample += ((volatile SNDVOICE*)voice)->patch->sample_index & 0x7FFF)->base_pitch + ((volatile SNDVOICE*)voice)->transpose + 7) << 8) +
-                                              event_mask + ((volatile SNDVOICE*)voice)->patch->pitch_bias);
-                    ((volatile SNDVOICE*)voice)->attack_peak = ((volatile SNDVOICE*)voice)->velocity << 8;
-                    ((volatile SNDVOICE*)voice)->sustain_level = (u32)((((volatile SNDVOICE*)voice)->patch->velocity_scale + 1) * ((volatile SNDVOICE*)voice)->attack_peak) >> 7;
-                    ((volatile SNDVOICE*)voice)->attack_rate = sound_envelope_rate(((volatile SNDVOICE*)voice)->attack_peak, ((volatile SNDVOICE*)voice)->patch->attack_curve, snd_attack_ptr);
-                    ((volatile SNDVOICE*)voice)->attack_rate = (u32)((((volatile SNDVOICE*)voice)->velocity + 1) * ((volatile SNDVOICE*)voice)->attack_rate) >> 7;
-                    ((volatile SNDVOICE*)voice)->decay_rate = sound_envelope_rate(((volatile SNDVOICE*)voice)->attack_peak, ((volatile SNDVOICE*)voice)->patch->decay_curve, snd_decay_ptr);
-                    ((volatile SNDVOICE*)voice)->release_rate = sound_envelope_rate(((volatile SNDVOICE*)voice)->sustain_level, ((volatile SNDVOICE*)voice)->patch->release_curve, snd_decay_ptr);
-                    voice->note_event_pending = 1;
-                }
-            }
-            if (!note_resolved) {
-                voice->note_event_pending = 0;
-                voice->duration_enabled = 0;
-                voice->key_on_pending = 0;
-                voice->tie = 0;
-            } else {
-                voice->key_on_pending = voice->tie ? 0 : 1;
-                if ((event_mask & *argument) == 0) {
-                    voice->duration_enabled = 1;
-                    voice->tie = 0;
-                } else {
-                    voice->duration_enabled = 0;
-                    voice->tie = 1;
-                }
-            }
-            cursor += 2;
-            consumed = midi_vlq_decode_leading(cursor, &ticks);
-            ticks <<= 8;
-            voice->note_ticks = ticks;
-            argument = cursor + consumed;
-            goto decode_event_ticks;
-        }
+next_event:
+    argument = voice->cursor;
+    event = *argument++;
+    if (event >= 0xC0) {
         switch (event - 0xC0) {
         case 0:
             break;
         case 1:
-            if (!is_bgm) {
-                *sfx_ticks = (u32)*argument << 8;
-                argument = cursor + 3;
-                *sfx_ticks += cursor[2];
+            if (is_bgm) {
+                *bgm_ticks = *argument++ << 8;
+                *bgm_ticks += *argument++;
             } else {
-                *bgm_ticks = (u32)*argument << 8;
-                argument = cursor + 3;
-                *bgm_ticks += cursor[2];
+                *sfx_ticks = *argument++ << 8;
+                *sfx_ticks += *argument++;
             }
             break;
         case 2:
-            voice->instrument_bank = *argument & 0x0f;
-            argument = cursor + 2;
+            voice->instrument_bank = *argument++ & 0x0f;
             break;
         case 3:
-            voice->coarse_pitch_bend = (s8)*argument;
-            argument = cursor + 2;
+            voice->coarse_pitch_bend = *argument++;
+            break;
+        case 0x27:
+            voice->fine_pitch_control = *argument++;
+            break;
+        case 0x28:
+            event = *argument++;
+            (*(u8(*)[])&gSeqStatus[0])[event] = *argument++;
             break;
         case 4:
-            voice->program_index = *argument & 0x7f;
-            argument = cursor + 2;
+            voice->program_index = *argument++ & 0x7f;
             break;
         case 5:
-            voice->pitch_lfo_depth = snd_pitch_lfo_ptr[*argument];
-            argument = cursor + 2;
+            voice->pitch_lfo_depth = snd_pitch_lfo_ptr[*argument++];
             break;
         case 6:
-            voice->volume = *argument;
-            argument = cursor + 2;
+            voice->volume = *argument++;
             break;
         case 7:
-            voice->pan_override = *argument;
-            argument = cursor + 2;
+            voice->pan_override = *argument++;
             break;
         case 8:
-            voice->expression = *argument;
-            argument = cursor + 2;
+            voice->expression = *argument++;
             break;
         case 9:
             voice->saved_portamento_step = voice->portamento_step;
-            event = *argument;
-            argument = cursor + 2;
+            event = *argument++;
             if (event != 0) {
-                voice->portamento_step = (u16)((event + 1) * 2);
+                voice->portamento_step = (event + 1) * 2;
                 voice->saved_portamento_step = voice->portamento_step;
             } else {
-                voice->status &= (u8)~0x02;
+                voice->status &= ~0x02;
                 voice->portamento_step = 0;
             }
             break;
@@ -200,32 +134,31 @@ u32 voice_process_primary(SNDVOICE* voice, s8 is_bgm, u32 voice_index) {
             break;
         case 0x0c:
             if (!voice->loop_latch) {
-                relative = (s8)*argument * 0x100 + cursor[2] + 2;
+                relative = (s8)argument[0] * 0x100 + argument[1] + 2;
                 argument += relative;
                 voice->loop_latch = 1;
             } else {
-                argument = cursor + 3;
+                argument += 2;
             }
             break;
         case 0x0d:
             if (voice->loop_latch) {
-                event = *argument;
-                argument = cursor + 3;
-                relative = (s8)event * 0x100 + (s8)cursor[2];
+                relative = (s8)*argument++ * 0x100;
+                relative += (s8)*argument++;
                 argument += relative;
                 voice->loop_latch = 1;
             } else {
-                argument = cursor + 3;
+                argument += 2;
             }
             break;
         case 0x0e:
-            relative = (s8)*argument++;     /* the offset is read a byte at a time: it can sit at an odd address */
+            relative = (s8)*argument++;
             relative <<= 8;
             relative |= *argument++;
             argument += relative;
             break;
         case 0x0f:
-            argument = bgm_voice[(u16)*argument].origin;
+            argument = bgm_voice[*argument].origin;
             break;
         case 0x10:
         case 0x11:
@@ -238,14 +171,14 @@ u32 voice_process_primary(SNDVOICE* voice, s8 is_bgm, u32 voice_index) {
         case 0x16:
         case 0x17:
             loop_index = event - 0xd4;
-            if (!voice->loop_count[loop_index]) {
-                voice->loop_count[loop_index] = *argument;
-            } else {
+            if (voice->loop_count[loop_index]) {
                 voice->loop_count[loop_index]--;
                 if (!voice->loop_count[loop_index]) {
-                    argument = cursor + 2;
+                    argument++;
                     break;
                 }
+            } else {
+                voice->loop_count[loop_index] = *argument;
             }
             argument = voice->loop_cursor[loop_index];
             break;
@@ -256,66 +189,47 @@ u32 voice_process_primary(SNDVOICE* voice, s8 is_bgm, u32 voice_index) {
             loop_index = event - 0xd8;
             if (voice->loop_count[loop_index] == 1) {
                 voice->loop_count[loop_index] = 0;
-                relative = (u32)*argument * 0x100 + cursor[2];
-                cursor += 3;
-                argument = cursor + relative;
+                relative = (argument[0] << 8) + argument[1];
+                argument += 2;
+                argument += relative;
             } else {
-                argument = cursor + 3;
+                argument += 2;
             }
             break;
         case 0x1c:
-            voice->transpose = (s8)*argument;
-            argument = cursor + 2;
+            voice->transpose = (s8)*argument++;
             break;
         case 0x1d:
-            voice->transpose += (s8)*argument;
-            argument = cursor + 2;
+            voice->transpose += (s8)*argument++;
             break;
         case 0x1e:
-            voice->fine_tune = (s8)*argument;
-            argument = cursor + 2;
+            voice->fine_tune = (s8)*argument++;
             break;
         case 0x1f:
-            voice->fine_tune += (s8)*argument;
-            argument = cursor + 2;
+            voice->fine_tune += (s8)*argument++;
             break;
         case 0x20:
-            if (*argument == 0) {
-                voice->status &= (u8)~0x01;
-            } else {
+            if (*argument++) {
                 voice->status |= 0x01;
+            } else {
+                voice->status &= ~0x01;
             }
-            argument = cursor + 2;
             break;
         case 0x21:
-            voice->lfo_rate = snd_lfo_rate_ptr[*argument];
-            argument = cursor + 2;
+            voice->lfo_rate = snd_lfo_rate_ptr[*argument++];
             break;
         case 0x22:
-            voice->volume_lfo_depth = snd_vol_lfo_ptr[*argument];
-            argument = cursor + 2;
+            voice->volume_lfo_depth = snd_vol_lfo_ptr[*argument++];
             break;
         case 0x23:
-            voice->priority_flags = *argument;
-            argument = cursor + 2;
+            voice->priority_flags = *argument++;
             break;
         case 0x24:
         case 0x25:
-            argument = cursor + 3;
+            argument += 2;
             break;
         case 0x26:
-            argument = cursor + 2;
-            break;
-        case 0x27:
-            voice->fine_pitch_control = (s8)*argument;
-            argument = cursor + 2;
-            break;
-        case 0x28:
-            event = *argument;
-            argument = cursor + 3;
-            (*(u8(*)[])&gSeqStatus[0])[event] = cursor[2];
-            break;
-        default:
+            argument++;
             break;
         case 0x3f:
             voice->status |= 0x40;
@@ -328,13 +242,76 @@ u32 voice_process_primary(SNDVOICE* voice, s8 is_bgm, u32 voice_index) {
             }
             automation->mode = -1;
             return 0xffffffff;
+        default:
+            break;
         }
-decode_event_ticks:
-        consumed = midi_vlq_decode_while(argument, &ticks);
-        ticks *= 0x100;
-        voice->event_ticks += ticks;
-        voice->cursor = argument + consumed;
-    } while (ticks <= 0);
+    } else {
+        u8** bank;
+        note_resolved = 1;
+        voice->velocity = (event & 0x3f) << 1;
+        note = *argument & 0x7f;
+        voice->control_70 = note;
+        bank = &snd_bank_tbl[voice->instrument_bank];
+        if (*bank == 0) {
+            note_resolved = 0;
+        } else if (((u16*)*bank)[voice->program_index] == 0) {
+            note_resolved = 0;
+        } else {
+            patch = (SNDPATCH*)(((u16*)*bank)[voice->program_index] + *bank);
+            for (;;) {
+                if (patch->note_ceiling == -1) {
+                    patch = 0;
+                    break;
+                }
+                if ((s16)note <= patch->note_ceiling) {
+                    break;
+                }
+                patch++;
+            }
+            if (!patch) {
+                note_resolved = 0;
+            } else {
+                voice->patch = patch;
+                voice->sample = snd_sample_tbl;
+                voice->decoded_pitch = (s16)(((note - (voice->sample += voice->patch->sample_index & 0x7FFF)->base_pitch + voice->transpose + 7) << 8) + event_mask + voice->patch->pitch_bias);
+                voice->attack_peak = voice->velocity << 8;
+                voice->sustain_level = ((voice->patch->velocity_scale + 1) * voice->attack_peak) >> 7;
+                voice->attack_rate = sound_envelope_rate(voice->attack_peak, voice->patch->attack_curve, snd_attack_ptr);
+                voice->attack_rate = ((voice->velocity + 1) * voice->attack_rate) >> 7;
+                voice->decay_rate = sound_envelope_rate(voice->attack_peak, voice->patch->decay_curve, snd_decay_ptr);
+                voice->release_rate = sound_envelope_rate(voice->sustain_level, voice->patch->release_curve, snd_decay_ptr);
+                voice->note_event_pending = 1;
+            }
+        }
+        if (note_resolved) {
+            voice->key_on_pending = voice->tie ? 0 : 1;
+            if (!(*argument++ & event_mask)) {
+                voice->duration_enabled = 1;
+                voice->tie = 0;
+            } else {
+                voice->duration_enabled = 0;
+                voice->tie = 1;
+            }
+        } else {
+            argument++;
+            voice->note_event_pending = 0;
+            voice->duration_enabled = 0;
+            voice->key_on_pending = 0;
+            voice->tie = 0;
+        }
+        consumed = midi_vlq_decode_leading(argument, &ticks);
+        ticks <<= 8;
+        voice->note_ticks = ticks;
+        argument += consumed;
+    }
+    consumed = midi_vlq_decode_while(argument, &ticks);
+    ticks <<= 8;
+    voice->event_ticks += ticks;
+    argument += consumed;
+    voice->cursor = argument;
+    if (ticks <= 0) {
+        goto next_event;
+    }
     voice->status |= 0x20;
     return 0x5e;
 }
@@ -425,7 +402,7 @@ u32 sound_voice_volume_compute(u16 level, u32 pan_scale, s8 pan, SOUND_VOICE* v)
 
 /* provisional name */
 u32 voice_process_secondary(SNDVOICE* voice, u8 voice_index, u8 is_bgm) {
-    s32 owns_hardware_voice = 1;
+    u8 owns_hardware_voice = 1;
     volatile SNDREGS* regs;
     u32 result;
     s32 status;
@@ -483,15 +460,7 @@ u32 voice_process_secondary(SNDVOICE* voice, u8 voice_index, u8 is_bgm) {
         voice->note_event_pending = 0;
         voice->current_pitch = voice->target_pitch;
         voice->target_pitch = voice->decoded_pitch;
-        if (!voice->key_on_pending) {
-            if (!voice->portamento_step) {
-                voice->status &= 0xfd;
-                voice->current_pitch = voice->target_pitch;
-            } else {
-                voice->status |= 0x02;
-            }
-            voice->envelope_phase = 3;
-        } else {
+        if (voice->key_on_pending) {
             voice->key_on_pending = 0;
             voice->release_pending = 1;
             voice->envelope_level = 0;
@@ -511,6 +480,14 @@ u32 voice_process_secondary(SNDVOICE* voice, u8 voice_index, u8 is_bgm) {
                 voice->pitch_lfo = 0;
                 voice->volume_lfo = 0;
             }
+        } else {
+            if (!voice->portamento_step) {
+                voice->status &= 0xfd;
+                voice->current_pitch = voice->target_pitch;
+            } else {
+                voice->status |= 0x02;
+            }
+            voice->envelope_phase = 3;
         }
         key_state_changed = 1;
     }
@@ -747,7 +724,10 @@ u32 voice_process_secondary(SNDVOICE* voice, u8 voice_index, u8 is_bgm) {
 void sound_reg_write_verify(s16 *reg, s16 value)
 {
     *reg = value;
-    while ((u16)value != *(volatile u16 *)reg) {
+    for (;;) {
+        if ((u16)value == *(volatile u16 *)reg) {
+            break;
+        }
         *reg = value;
     }
 }
@@ -763,6 +743,7 @@ u32* out;
     u32 val = 0;
     while (!(*p & 0x80)) {
         val = (val << 7) + *p++;
+        continue;
     }
     *out = val;
     return p - start;

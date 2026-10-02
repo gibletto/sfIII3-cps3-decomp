@@ -640,6 +640,15 @@ s16 Range;
 }
 
 
+/* provisional name */
+s32 Check_Com_Add_Y_Sub(PLW* wk) {
+    if (wk->wu.routine_no[1] == 4 && (u8)wk->wu.cg_type == 64) {
+        return 1;
+    }
+    return 0;
+}
+
+
 
 void ORO_JA_Term(wk, Reaction, Jump_Dir, JY, Jump_Dir2, RX, RY, Lever_Data, RJX, RJY, JLD)
 PLW* wk;
@@ -2233,7 +2242,7 @@ s16 xx;
 {
     s16 i;
     s16* zz;
-    zz = (s16*)((s8*)Lv08_Time_Data + (s8)(CC_Type * 42) + (s8)((xx << 4) - (xx << 1)));
+    zz = (s16*)((s8*)Lv08_Time_Data + (s8)(CC_Type * 42) + (s8)(xx * 14));
     for (i = 0; i < 7; i++) {
         if (Control_Time <= zz[i]) {
             break;
@@ -2398,7 +2407,7 @@ s32 Next_End(PLW* wk) {
 void Next_Another_Menu(wk, Next_Action, Next_Menu)
 PLW* wk;
 s16 Next_Action;
-u16 Next_Menu;
+s16 Next_Menu;
 {
     if (Next_Action != 1) {
         CP_No[wk->wu.id][0] = Next_Action;
@@ -2722,24 +2731,22 @@ s32 Check_SA_Active(wk, pl_id)
 PLW* wk;
 s16* pl_id;
 {
-    PLW* mw;
     if (wk->sa->ok != -1) {
         return 0;
     }
-    mw = (PLW*)((s8*)plw + (s16)(wk->wu.id * sizeof(PLW)));
     if (My_char[wk->wu.id] == PL_ORO) {
-        if (mw->sa->kind_of_arts == 0) {
+        if (plw[wk->wu.id].sa->kind_of_arts == 0) {
             return *pl_id = 3;
         }
         return *pl_id = 2;
     }
-    if ((My_char[wk->wu.id] == PL_YUN) && (mw->sa->kind_of_arts == 2)) {
+    if (My_char[wk->wu.id] == PL_YUN && plw[wk->wu.id].sa->kind_of_arts == 2) {
         return *pl_id = 1;
     }
-    if ((My_char[wk->wu.id] == 0xA) && (mw->sa->kind_of_arts == 2)) {
+    if (My_char[wk->wu.id] == 0xA && plw[wk->wu.id].sa->kind_of_arts == 2) {
         return *pl_id = 1;
     }
-    if ((My_char[wk->wu.id] == 0x12) && (mw->sa->kind_of_arts == 2)) {
+    if (My_char[wk->wu.id] == 0x12 && plw[wk->wu.id].sa->kind_of_arts == 2) {
         return *pl_id = 4;
     }
     return 0;
@@ -3380,6 +3387,16 @@ u16 dir_step;
 }
 
 
+/* provisional name */
+s32 calc_abs_diff(s16 a, s16 b) {
+    a -= b;
+    if (a < 0) {
+        a = -a;
+    }
+    return a;
+}
+
+
 
 s32 Check_Behind(PLW* wk, WORK_Other* tmw) {
     if (!wk->wu.rl_waza) {
@@ -3712,7 +3729,7 @@ s32 Check_SHINRYU(PLW* wk) {
 void Check_BOSS(wk, Next_Action, Next_Menu)
 PLW* wk;
 u32 Next_Action;
-u16 Next_Menu;
+s16 Next_Menu;
 {
     WORK* em = (WORK*)wk->wu.target_adrs;
     if (Break_Into_CPU == 1) {
@@ -3734,7 +3751,7 @@ u16 Next_Menu;
 void Check_BOSS_EX(wk, Next_Action, Next_Menu)
 PLW* wk;
 u32 Next_Action;
-u16 Next_Menu;
+s16 Next_Menu;
 {
     WORK* em = (WORK*)wk->wu.target_adrs;
     if (Break_Into_CPU != 1) {
@@ -3757,7 +3774,7 @@ void ETC_Term(wk, Exit_No, Next_Action, Next_Menu)
 PLW* wk;
 s16 Exit_No;
 u32 Next_Action;
-u16 Next_Menu;
+s16 Next_Menu;
 {
     s16 xx;
     WORK* em = (WORK*)wk->wu.target_adrs;
@@ -3942,120 +3959,143 @@ s32 Ck_Passive_Term(PLW* wk) {
 
 s32 KEN_vs(PLW* wk) {
     WORK* em = (WORK*)wk->wu.target_adrs;
-    s32 rv;
     switch (Area_Number[wk->wu.id] + Passive_Mode) {
     case 0:
-        return Check_Dash(wk, em, 1);
+        if (Check_Dash(wk, em, 1)) {
+            break;
+        }
+        break;
     case 1:
-        return Check_Dash(wk, em, 1);
+        if (Check_Dash(wk, em, 1)) {
+            break;
+        }
+        break;
     case 2:
-        return Check_Dash(wk, em, 1);
+        if (Check_Dash(wk, em, 1)) {
+            break;
+        }
+        break;
     case 3:
-        return Check_Dash(wk, em, 1);
+        if (Check_Dash(wk, em, 1)) {
+            break;
+        }
+        break;
     case 4:
         if (Attack_Flag[wk->wu.id]) {
-            if ((rv = Check_PL_Unit_A(wk))) {
-                return rv;
+            if (Check_PL_Unit_A(wk)) {
+                break;
             }
-            if ((rv = Check_Limited_Attack(wk, em, 12, 32, 3, 0))) {
-                return rv;
+            if (Check_Limited_Attack(wk, em, 12, 32, 3, 0)) {
+                break;
             }
-            if ((rv = Check_Limited_Attack(wk, em, 7, 32, 5, 0))) {
-                return rv;
+            if (Check_Limited_Attack(wk, em, 7, 32, 5, 0)) {
+                break;
             }
             if (Check_Special_Technique(wk, em, 15, 0, 33, 1, -1)) {
                 return 1;
             }
         } else {
-            if ((rv = Check_PL_Unit_AS(wk))) {
-                return rv;
+            if (Check_PL_Unit_AS(wk)) {
+                break;
             }
-            if ((rv = Check_After_Attack(wk, em, 28))) {
-                return rv;
+            if (Check_After_Attack(wk, em, 28)) {
+                break;
             }
-            if ((rv = Check_VS_Squat(wk, em, 29, 33, 32))) {
-                return rv;
+            if (Check_VS_Squat(wk, em, 29, 33, 32)) {
+                break;
             }
-            if ((rv = Check_Stand(wk, em, 4105))) {
-                return rv;
+            if (Check_Stand(wk, em, 4105)) {
+                break;
             }
         }
-        if ((rv = Check_VS_Jump(wk, em, 16))) {
-            return rv;
+        if (Check_VS_Jump(wk, em, 16)) {
+            break;
         }
-        return Check_Personal_Action(wk, em);
+        if (Check_Personal_Action(wk, em)) {
+            break;
+        }
+        break;
     case 5:
         if (Attack_Flag[wk->wu.id]) {
-            if ((rv = Check_PL_Unit_B(wk))) {
-                return rv;
+            if (Check_PL_Unit_B(wk)) {
+                break;
             }
-            if ((rv = Check_Limited_Attack(wk, em, 12, 32, 3, 0))) {
-                return rv;
+            if (Check_Limited_Attack(wk, em, 12, 32, 3, 0)) {
+                break;
             }
-            if ((rv = Check_Limited_Attack(wk, em, 7, 32, 5, 0))) {
-                return rv;
+            if (Check_Limited_Attack(wk, em, 7, 32, 5, 0)) {
+                break;
             }
             if (Check_Special_Technique(wk, em, 15, 0, 33, 1, -1)) {
                 return 1;
             }
         } else {
-            if ((rv = Check_PL_Unit_BS(wk))) {
-                return rv;
+            if (Check_PL_Unit_BS(wk)) {
+                break;
             }
-            if ((rv = Check_After_Attack(wk, em, 28))) {
-                return rv;
+            if (Check_After_Attack(wk, em, 28)) {
+                break;
             }
-            if ((rv = Check_VS_Squat(wk, em, 29, 33, 32))) {
-                return rv;
+            if (Check_VS_Squat(wk, em, 29, 33, 32)) {
+                break;
             }
-            if ((rv = Check_Stand(wk, em, 4105))) {
-                return rv;
+            if (Check_Stand(wk, em, 4105)) {
+                break;
             }
         }
-        if ((rv = Check_VS_Jump(wk, em, 32))) {
-            return rv;
+        if (Check_VS_Jump(wk, em, 32)) {
+            break;
         }
-        return Check_Personal_Action(wk, em);
+        if (Check_Personal_Action(wk, em)) {
+            break;
+        }
+        break;
     case 6:
         if (Attack_Flag[wk->wu.id]) {
-            if ((rv = Check_PL_Unit_C(wk))) {
-                return rv;
+            if (Check_PL_Unit_C(wk)) {
+                break;
             }
-            if ((rv = Check_Limited_Attack(wk, em, 12, 32, 3, 0))) {
-                return rv;
+            if (Check_Limited_Attack(wk, em, 12, 32, 3, 0)) {
+                break;
             }
-            if ((rv = Check_Limited_Attack(wk, em, 7, 32, 5, 0))) {
-                return rv;
+            if (Check_Limited_Attack(wk, em, 7, 32, 5, 0)) {
+                break;
             }
         } else {
-            if ((rv = Check_PL_Unit_CS(wk))) {
-                return rv;
+            if (Check_PL_Unit_CS(wk)) {
+                break;
             }
-            if ((rv = Check_After_Attack(wk, em, 28))) {
-                return rv;
+            if (Check_After_Attack(wk, em, 28)) {
+                break;
             }
-            if ((rv = Check_Stand(wk, em, 4105))) {
-                return rv;
+            if (Check_Stand(wk, em, 4105)) {
+                break;
             }
         }
-        if ((rv = Check_VS_Jump(wk, em, 64))) {
-            return rv;
+        if (Check_VS_Jump(wk, em, 64)) {
+            break;
         }
-        return Check_Personal_Action(wk, em);
+        if (Check_Personal_Action(wk, em)) {
+            break;
+        }
+        break;
     default:
         if (Attack_Flag[wk->wu.id]) {
-            if ((rv = Check_PL_Unit_D(wk))) {
-                return rv;
+            if (Check_PL_Unit_D(wk)) {
+                break;
             }
         } else {
-            if ((rv = Check_PL_Unit_DS(wk))) {
-                return rv;
+            if (Check_PL_Unit_DS(wk)) {
+                break;
             }
-            if ((rv = Check_Stand(wk, em, 4105))) {
-                return rv;
+            if (Check_Stand(wk, em, 4105)) {
+                break;
             }
         }
-        return Check_Personal_Action(wk, em);
+        if (Check_Personal_Action(wk, em)) {
+            break;
+        }
+        break;
     }
 }
 

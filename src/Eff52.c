@@ -38,38 +38,34 @@ void EFF52_WAIT(WORK_Other* ewk) {
     }
 }
 
-u8 * EFF52_SUDDENLY(WORK_Other* ewk)
-{
+void EFF52_SUDDENLY(WORK_Other* ewk) {
     s16 x;
-
     switch (ewk->wu.routine_no[6]) {
     case 0:
-        if (--Order_Timer[ewk->wu.dir_old] != 0) {
-            return (u8*)Order_Timer;
+        if (--Order_Timer[ewk->wu.dir_old] == 0) {
+            ewk->wu.routine_no[6]++;
+            ewk->wu.disp_flag = 1;
+            ewk->wu.position_z = 72;
+            set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
         }
-        ewk->wu.routine_no[6]++;
-        ewk->wu.disp_flag = 1;
-        ewk->wu.position_z = 72;
-        return (u8*)((s32 (*)())set_char_move_init2)(ewk, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
+        break;
     case 1:
         char_move(&ewk->wu);
         x = ewk->wu.cg_ix / ewk->wu.cgd_type;
-        if (x < ewk->wu.direction) {
-            return (u8*)0x94;
+        if (x >= ewk->wu.direction) {
+            ewk->wu.routine_no[6]++;
+            goto start_check;
         }
-        ewk->wu.routine_no[6]++;
-        /* fall through */
+        break;
     case 2:
-        if (Select_Start[ewk->master_id] != 0) {
-            return (u8*)Select_Start;
+    start_check:
+        if (Select_Start[ewk->master_id] == 0) {
+            Order[ewk->wu.dir_old] = 4;
+            ewk->wu.routine_no[0] = 4;
+            ewk->wu.routine_no[1] = 0;
+            Order_Timer[ewk->wu.dir_old] = 1;
         }
-        Order[ewk->wu.dir_old] = 4;
-        ewk->wu.routine_no[0] = 4;
-        ewk->wu.routine_no[1] = 0;
-        Order_Timer[ewk->wu.dir_old] = 1;
-        return (u8*)Order_Timer;
-    default:
-        return (u8*)(s32)ewk->wu.routine_no[6];
+        break;
     }
 }
 

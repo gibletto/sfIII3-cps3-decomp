@@ -28,8 +28,11 @@ void effect_L2_move(WORK_Other* ewk) {
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         effl2_dir_check(ewk);
-        set_char_move_init2(&ewk->wu, 0, 0, 1, 0);
-        break;
+        {
+            s32 z = 0;
+            set_char_move_init2(&ewk->wu, z, z, 1, z);
+        }
+        return;
     case 1:
         if (!Allow_a_battle_f && Conclusion_Flag == 1 && C_No0 >= 2) {
             if (!(!Complete_Victory) && Conclusion_Flag != 0) {
@@ -47,7 +50,7 @@ void effect_L2_move(WORK_Other* ewk) {
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos;
         sort_push_request(&ewk->wu);
-        break;
+        return;
     case 2:
         if (Exec_Wipe != 0) {
             ewk->wu.old_rno[0] = 1;
@@ -62,7 +65,7 @@ void effect_L2_move(WORK_Other* ewk) {
     default:
         all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
-        break;
+        return;
     }
 }
 

@@ -303,6 +303,7 @@ void syungoku_finish(WORK_Other* ewk) {
         Pause_Hit_Marks = 1;
         for (i = 0; i < bg_w.scno; i++) {
             Bg_Off_W(1 << i);
+            continue;
         }
         Bg_On_W(8);
         bg_w.bgw[3].position_x = 256 - bg_w.pos_offset;
@@ -313,7 +314,7 @@ void syungoku_finish(WORK_Other* ewk) {
         break;
     case 1:
         ewk->wu.dir_timer -= 1;
-        if (ewk->wu.dir_timer < 1) {
+        if (ewk->wu.dir_timer <= 0) {
             ewk->wu.routine_no[0] += 1;
             ewk->wu.old_rno[0] = 0;
             effect_20_init(ewk);
@@ -342,6 +343,7 @@ void syungoku_finish(WORK_Other* ewk) {
         ewk->wu.routine_no[0] += 1;
         for (i = 0; i < bg_w.scno; i++) {
             Bg_On_W(1 << i);
+            continue;
         }
         Bg_Off_W(8);
         Conclusion_Flag = 1;

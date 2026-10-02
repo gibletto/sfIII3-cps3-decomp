@@ -7,6 +7,9 @@ INPUT obj\Game.obj
 INPUT obj\Entry.obj
 INPUT obj\tasksw.obj
 INPUT obj\coin_cont.obj
+INPUT obj\mode_init.obj
+INPUT obj\test_mode.obj
+INPUT obj\scrn_ctrl.obj
 INPUT obj\Com_Pl.obj
 INPUT obj\Com_Sub.obj
 INPUT obj\Ck_Pass.obj
@@ -223,7 +226,6 @@ INPUT obj\EFFA1.obj
 INPUT obj\EFFA2_MAIN.obj
 INPUT obj\EFFA3.obj
 INPUT obj\EFFA6.obj
-INPUT obj\EFFA6_INIT.obj
 INPUT obj\EFFA7.obj
 INPUT obj\EFFB0.obj
 INPUT obj\EFFB1.obj

@@ -155,7 +155,10 @@ void end_1900_common(void) {
 
 void end_1900_cell_set(void) {
     s16 i;
+    const PANEL* p;
+    p = end_1900_bg0_cell_tbl;
     for (i = 0; i < 10; i++) {
-        bg_cell_write(0, end_1900_bg0_cell_tbl[i].ofs, end_1900_bg0_cell_tbl[i].cell, (u32)end_1900_scrn_data, 0, 0x220);
+        bg_cell_write(0, p->ofs, p->cell, (u32)end_1900_scrn_data, 0, 0x220);
+        p++;
     }
 }

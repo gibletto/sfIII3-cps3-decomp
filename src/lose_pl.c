@@ -329,5 +329,15 @@ void meta_lose_pause(PLW* wk) {
 }
 
 
+/* provisional name */
+void op_w_clear(void) {
+    op_w.r_no_0 = 0;
+    op_w.r_no_1 = 0;
+    op_w.r_no_2 = 0;
+    op_w.index = 0;
+    op_w.mv_ctr = 0;
+}
+
+
 
 /* provisional name */

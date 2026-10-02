@@ -99,14 +99,19 @@ void effect_A0_move(WORK_Other* ewk) {
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         ewk->wu.old_rno[0] = 40;
         cal_all_speed_data(&ewk->wu, ewk->wu.old_rno[0], ewk->wu.old_rno[1], ewk->wu.xyz[1].disp.pos, 2, 2);
-        return;
+        break;
     case 1:
         add_x_sub(ewk);
         add_y_sub(ewk);
         ewk->wu.old_rno[0]--;
-        if (*(volatile s16*)&ewk->wu.old_rno[0] <= 0) {
+        if (ewk->wu.old_rno[0] <= 0) {
             ewk->wu.routine_no[0]++;
             char_move_z(&ewk->wu);
+        }
+        ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;
+        ewk->wu.position_y = ewk->wu.xyz[1].disp.pos;
+        if (!obr_disp_off_check()) {
+            sort_push_request(ewk);
         }
         break;
     case 2:
@@ -114,6 +119,11 @@ void effect_A0_move(WORK_Other* ewk) {
         ewk->wu.disp_flag = 0;
         ewk->wu.kage_flag = 0;
         ewk->wu.routine_no[0]++;
+        ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;
+        ewk->wu.position_y = ewk->wu.xyz[1].disp.pos;
+        if (!obr_disp_off_check()) {
+            sort_push_request(ewk);
+        }
         break;
     case 3:
         char_move(&ewk->wu);
@@ -130,35 +140,50 @@ void effect_A0_move(WORK_Other* ewk) {
             ewk->wu.kage_flag = 1;
             ewk->wu.cg_type = 0;
         }
+        ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;
+        ewk->wu.position_y = ewk->wu.xyz[1].disp.pos;
+        if (!obr_disp_off_check()) {
+            sort_push_request(ewk);
+        }
         break;
     case 4:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
             ewk->wu.routine_no[0]++;
         }
+        ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;
+        ewk->wu.position_y = ewk->wu.xyz[1].disp.pos;
+        if (!obr_disp_off_check()) {
+            sort_push_request(ewk);
+        }
         break;
     case 5:
         Next_Step = 1;
         ewk->wu.routine_no[0]++;
+        ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;
+        ewk->wu.position_y = ewk->wu.xyz[1].disp.pos;
+        if (!obr_disp_off_check()) {
+            sort_push_request(ewk);
+        }
         break;
     case 6:
+        ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;
+        ewk->wu.position_y = ewk->wu.xyz[1].disp.pos;
+        if (!obr_disp_off_check()) {
+            sort_push_request(ewk);
+        }
         break;
     case 7:
         ewk->wu.disp_flag = 0;
         ewk->wu.kage_flag = 0;
         ewk->wu.routine_no[0]++;
-        return;
+        break;
     case 8:
         ewk->wu.routine_no[0]++;
-        return;
+        break;
     default:
         push_effect_work(&ewk->wu);
         return;
-    }
-    ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;
-    ewk->wu.position_y = ewk->wu.xyz[1].disp.pos;
-    if (!obr_disp_off_check()) {
-        sort_push_request(ewk);
     }
 }
 

@@ -149,19 +149,13 @@ s32 saishin_bs2_area_car(PLW* wk) {
     if (pcon_dp_flag) {
         return 1;
     }
-    if (wk->wu.xyz[0].disp.pos >= bs2_floor[0] && !(wk->wu.xyz[0].disp.pos > bs2_floor[1])) {
+    if (wk->wu.xyz[0].disp.pos >= bs2_floor[0] && wk->wu.xyz[0].disp.pos <= bs2_floor[1]) {
         wk->bs2_area_car2 = 1;
     }
-    if (!(wk->wu.xyz[1].disp.pos + wk->wu.cg_jphos <= bs2_floor[2])) {
+    if (wk->wu.xyz[1].disp.pos + wk->wu.cg_jphos > bs2_floor[2]) {
         wk->bs2_over_car2 = 1;
     }
-    if (wk->bs2_over_car != 1) {
-        return 1;
-    }
-    if (wk->bs2_over_car2) {
-        return 1;
-    }
-    if (wk->bs2_area_car2 != 1) {
+    if (wk->bs2_over_car != 1 || wk->bs2_over_car2 != 0 || wk->bs2_area_car2 != 1) {
         return 1;
     }
     return 0;
@@ -170,8 +164,10 @@ s32 saishin_bs2_area_car(PLW* wk) {
 
 
 s8 saishin_bs2_on_car(PLW* wk) {
-    if (wk->bs2_on_car && (wk->wu.xyz[1].disp.pos > (bs2_floor[2] + 2))) {
-        wk->bs2_on_car = 0;
+    if (wk->bs2_on_car) {
+        if (wk->wu.xyz[1].disp.pos > bs2_floor[2] + 2) {
+            wk->bs2_on_car = 0;
+        }
     }
     return wk->bs2_on_car;
 }
@@ -257,8 +253,8 @@ void remake_sankaku_tobi_mvxy(WORK* wk, u8 kabe) {
     if (kabe == 2) {
         wk->rl_flag = 1;
     }
-    if (!kabe) {
-        if (wk->position_x > get_center_position()) {
+    if (kabe == 0) {
+        if (wk->position_x > (s16)get_center_position()) {
             wk->rl_flag = 0;
         } else {
             wk->rl_flag = 1;
@@ -268,16 +264,17 @@ void remake_sankaku_tobi_mvxy(WORK* wk, u8 kabe) {
         wk->mvxy.a[0].sp = -wk->mvxy.a[0].sp;
         wk->mvxy.d[0].sp = -wk->mvxy.d[0].sp;
     }
+    kabe = 4;
     if (wk->mvxy.a[1].real.h <= 0) {
-        wk->mvxy.a[1].real.h = 4;
-        wk->mvxy.a[0].real.h = (wk->mvxy.a[0].real.h * 5 / wk->mvxy.a[1].real.h);
+        wk->mvxy.a[1].real.h = kabe;
+        wk->mvxy.a[0].real.h = wk->mvxy.a[0].real.h * 5 / kabe;
     } else {
-        wk->mvxy.a[1].real.h = ((wk->mvxy.a[1].real.h << 2) / 3);
-        wk->mvxy.a[0].real.h = (wk->mvxy.a[0].real.h * 5 / 4);
-        wk->mvxy.a[1].real.h += 2;
+        wk->mvxy.a[1].real.h = wk->mvxy.a[1].real.h * 4 / 3;
+        wk->mvxy.a[0].real.h = wk->mvxy.a[0].real.h * 5 / 4;
+        wk->mvxy.a[1].real.h = wk->mvxy.a[1].real.h + 2;
     }
-    if (wk->mvxy.a[1].real.h < 4) {
-        wk->mvxy.a[1].real.h = 4;
+    if (wk->mvxy.a[1].real.h < kabe) {
+        wk->mvxy.a[1].real.h = kabe;
     }
 }
 
@@ -615,7 +612,7 @@ s32 check_em_catt(PLW* wk) {
 
 
 
-s16 check_attbox_dir(PLW* wk) {
+s32 check_attbox_dir(PLW* wk) {
     s16 target_pos_x;
     s16 target_pos_y;
     s16 emdir;

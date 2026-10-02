@@ -640,8 +640,10 @@ void check_jump_rl_dir(PLW* wk) {
 
 
 void set_new_jpdir(PLW* wk) {
-    if ((wk->cp->sw_lvbt & 1) && wk->cp->lever_dir != 0) {
-        wk->jpdir = wk->cp->lever_dir;
+    if (wk->cp->sw_lvbt & 1) {
+        if (wk->cp->lever_dir) {
+            wk->jpdir = wk->cp->lever_dir;
+        }
     }
 }
 

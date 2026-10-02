@@ -46,15 +46,9 @@
 
 void BG030(void) {
     bgw_ptr = &bg_w.bgw[1];
-    {
-        void (*bg0301_jmp[2])() = { bg0301_init, bg_base_move_common };
-        bg0301_jmp[bgw_ptr->r_no_0]();
-    }
+    bg0301();
     bgw_ptr = &bg_w.bgw[0];
-    {
-        void (*bg0300_jmp[2])() = { bg0300_init00, bg_move_common };
-        bg0300_jmp[bgw_ptr->r_no_0]();
-    }
+    bg0300();
     zoom_ud_check();
     bg_pos_hosei2();
     Bg_Family_Set();

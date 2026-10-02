@@ -12,7 +12,7 @@ s32 check_F_R_walk(PLW* wk);
 s32 check_air_jump(PLW* wk);
 s32 check_ashimoto(PLW* wk);
 s32 check_ashimoto_ex(PLW* wk);
-s16 check_attbox_dir(PLW* wk);
+s32 check_attbox_dir(PLW* wk);
 s32 check_bend_myself(PLW* wk);
 s32 check_defense_kind(PLW* wk);
 s32 check_defense_lever(PLW* wk);

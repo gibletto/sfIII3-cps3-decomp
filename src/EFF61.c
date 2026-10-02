@@ -171,3 +171,7 @@ void effect_61_move(WORK_Other_CONN* ewk) {
         break;
     }
 }
+
+
+/* provisional name */
+void effect_61_dummy(void) {}

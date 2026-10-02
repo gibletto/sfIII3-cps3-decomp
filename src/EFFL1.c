@@ -71,6 +71,7 @@ void effect_L1_move(WORK_Other_CONN* ewk) {
                 ewk->wu.direction = (ewk->wu.direction + 1) & ewk->wu.dir_old;
                 for (i = 0; i < ewk->num_of_conn; i++) {
                     ewk->conn[i].chr = ewk->conn[ewk->num_of_conn + ewk->wu.direction].chr;
+                    continue;
                 }
             }
             break;

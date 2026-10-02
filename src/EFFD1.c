@@ -124,6 +124,15 @@ void fall_data_set(WORK_Other* ewk) {
 }
 
 
+/* provisional name */
+void fall_data_restore(WORK_Other* ewk) {
+    ewk->wu.xyz[0].disp.pos = ewk->wu.old_rno[1];
+    ewk->wu.xyz[1].disp.pos = ewk->wu.old_rno[2];
+    ewk->wu.routine_no[0] = 99;
+    set_char_move_init(&ewk->wu, 0, 0);
+}
+
+
 
 s32 effect_D1_init(WORK_Other* oya, s32 _p1) {
     WORK_Other* ewk;

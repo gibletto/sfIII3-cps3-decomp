@@ -237,23 +237,23 @@ void wipe_mask_set_cols(s16 kind, s16 row) {
 
 /* provisional name */
 void wipe_mask_and_cols(s16 kind, s16 row) {
-    u8* src;
-    u8* map;
-    u16* dst;
     s16 x;
     s16 y;
     s16 i;
-    s16 width;
-    width = wipe_column_tbl[kind].w;
-    src = wipe_column_tbl[kind].adr + width * row;
-    map = wipe_clear_pattern_tbl[kind].adr + row * 32;
+    u8* src;
+    u8* map;
+    u16* dst;
+
+    src = wipe_column_tbl[kind].adr;
+    src += wipe_column_tbl[kind].w * row;
+    map = wipe_clear_pattern_tbl[kind].adr;
+    map += row * 32;
     dst = (u16*)(SS_RAM + 0xE000);
     for (i = 0; i < 6; i++) {
-        for (y = 0; y < 16; y++) {
+        for (y = 0; y < 16; y++, dst += 32) {
             for (x = 0; x < wipe_column_tbl[kind].w; x++) {
                 dst[src[x]] &= map[src[x]];
             }
-            dst += 32;
         }
     }
 }
@@ -283,19 +283,29 @@ void bgm_fade_in_stage(s16 x) {
 void Sound_SE(Code)
     s16 Code;
 {
-    if ((Demo_Sound || Demo_Flag) && !(Combo_Demo_Flag & 0x80)) {
+    if ((Demo_Sound != 0 || Demo_Flag != 0) && (Combo_Demo_Flag & 0x80) == 0) {
         sound_request(Code);
     }
+}
+
+
+/* provisional name */
+void sound_bgm_fade_out(s16 speed) {
+    bgm_fade_out(speed);
 }
 
 /* provisional name */
 void bgm_request(bgm_code)
 s16 bgm_code;
 {
-    if ((Demo_Sound || Demo_Flag) && Keep_BGM_Flag == 0) {
-        sound_reg_level_set(0, 0);
-        sound_request(bgm_code);
+    if (Demo_Sound == 0 && Demo_Flag == 0) {
+        return;
     }
+    if (Keep_BGM_Flag) {
+        return;
+    }
+    sound_reg_level_set(0, 0);
+    sound_request(bgm_code);
 }
 
 
@@ -322,12 +332,15 @@ void Se_Dummy(WORK_Other* ewk, u16 Code) {
 
 
 void Se_Shock(WORK_Other* ewk, u16 Code) {
+    u16 se;
+    s16 pos;
     PLW* em;
+    s32 uid;
     s16 xx;
-    s16 zz;
-    s16 uid;
-    if ((Demo_Sound || Demo_Flag) && !(Combo_Demo_Flag & 0x80)) {
-        Code = Check_Bonus_SE(Code);
+    s32 zz;
+
+    if ((Demo_Sound != 0 || Demo_Flag != 0) && (Combo_Demo_Flag & 0x80) == 0) {
+        se = Check_Bonus_SE(Code);
         if (ewk->wu.work_id == 1) {
             em = (PLW*)ewk->wu.target_adrs;
             uid = ewk->wu.id;
@@ -336,19 +349,21 @@ void Se_Shock(WORK_Other* ewk, u16 Code) {
             uid = ewk->master_id;
         }
         if (em->wu.work_id == 1 && em->wu.vital_new < 0) {
-            for (xx = 0, zz = 0x27; xx < 7; xx++) {
-                if (Code == SE_Shock_Data[xx]) {
+            xx = 0;
+            zz = 0x27;
+            for (; xx < 7; xx++) {
+                if (se == SE_Shock_Data[xx]) {
                     zz = 0;
                     break;
                 }
             }
-            Code += zz;
+            se += zz;
         }
-        if (Code) {
-            Code += uid * 0x300;
+        if (se) {
+            se += uid * 0x300;
         }
-        xx = Get_Position((PLW*)ewk);
-        sound_request_pan(Code, xx, xx, 0, 2);
+        pos = Get_Position((PLW*)ewk);
+        sound_request_pan(se, pos, pos, 0, 2);
     }
 }
 
@@ -452,11 +467,11 @@ void Se_Let_SP(WORK_Other* ewk, u16 Code) {
 
 
 void Call_Se(WORK_Other* ewk, u16 Code) {
-    s16 xx;
-    u16 code = Code;
-    if ((Demo_Sound || Demo_Flag) && !(Combo_Demo_Flag & 0x80)) {
-        xx = Get_Position((PLW*)&code);
-        sound_request_pan(code, xx, xx, 0, 2);
+    s16 code = Code;
+    s16 pos;
+    if ((Demo_Sound != 0 || Demo_Flag != 0) && (Combo_Demo_Flag & 0x80) == 0) {
+        pos = Get_Position((PLW*)&code);
+        sound_request_pan(code, pos, pos, 0, 2);
     }
 }
 

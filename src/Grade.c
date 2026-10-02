@@ -666,43 +666,42 @@ s16 ix;
 s16 wf;
 {
     s16 i;
-    s32 point;
-    GradeData* jd = &judge_item[ix][Play_Type_low];
-    point = 0;
-    if (wf) {
+    s16 point = 0;
+
+    if (wf != 0) {
         for (i = 0; i < 20; i++) {
-            if (jd->tairyokusa < grade_t_tairyokusa[i + 1][0]) {
+            if (judge_item[ix][(u16)(s8)Play_Type].tairyokusa < grade_t_tairyokusa[i + 1][0]) {
                 break;
             }
         }
         point += grade_t_tairyokusa[i][1];
-        point += grade_t_kimarite[jd->kimarite];
+        point += grade_t_kimarite[judge_item[ix][(u16)(s8)Play_Type].kimarite];
     }
     for (i = 0; i < 5; i++) {
-        if (jd->onaji_waza < grade_t_onaji_waza[i + 1][0]) {
+        if (judge_item[ix][(u16)(s8)Play_Type].onaji_waza < grade_t_onaji_waza[i + 1][0]) {
             break;
         }
     }
     point += grade_t_onaji_waza[i][1];
-    if (jd->app_nml_block != -1) {
+    if (judge_item[ix][(u16)(s8)Play_Type].app_nml_block != -1) {
         for (i = 0; i < 6; i++) {
-            if (jd->app_nml_block < grade_t_app_nmlblock[i + 1][0]) {
+            if (judge_item[ix][(u16)(s8)Play_Type].app_nml_block < grade_t_app_nmlblock[i + 1][0]) {
                 break;
             }
         }
         point += grade_t_app_nmlblock[i][1];
     }
-    if (jd->app_rpd_block != -1) {
+    if (judge_item[ix][(u16)(s8)Play_Type].app_rpd_block != -1) {
         for (i = 0; i < 6; i++) {
-            if (jd->app_rpd_block < grade_t_app_rpdblock[i + 1][0]) {
+            if (judge_item[ix][(u16)(s8)Play_Type].app_rpd_block < grade_t_app_rpdblock[i + 1][0]) {
                 break;
             }
         }
         point += grade_t_app_rpdblock[i][1];
     }
-    if (jd->app_grd_block != -1) {
+    if (judge_item[ix][(u16)(s8)Play_Type].app_grd_block != -1) {
         for (i = 0; i < 6; i++) {
-            if (jd->app_grd_block < grade_t_app_grdblock[i + 1][0]) {
+            if (judge_item[ix][(u16)(s8)Play_Type].app_grd_block < grade_t_app_grdblock[i + 1][0]) {
                 break;
             }
         }
@@ -803,7 +802,7 @@ void grade_add_quick_stand(s16 ix) {
 
 void grade_add_nml_nage(WORK* wk) {
     s16 ix;
-    if (check_normal_attack(wk->kind_of_waza)) {
+    if (((s32(*)())check_normal_attack)(wk->kind_of_waza)) {
         ix = wk->id;
         judge_item[ix][Play_Type].nml_nage += 1;
         if (judge_item[ix][Play_Type].nml_nage > 0xC) {

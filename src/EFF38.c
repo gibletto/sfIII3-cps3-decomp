@@ -99,15 +99,13 @@ void Exit_Slide_in_38(WORK_Other* ewk) {
     ewk->wu.routine_no[6] = 0;
     if (Order[ewk->wu.dir_old] != 1) {
         ewk->wu.routine_no[0] = Order[ewk->wu.dir_old];
-        return;
-    }
-    if (ewk->wu.vital_old == 0x7F) {
+    } else if (ewk->wu.vital_old == 0x7F) {
         ewk->wu.routine_no[0] = 5;
         Order[ewk->wu.dir_old] = 5;
-        return;
+    } else {
+        ewk->wu.routine_no[0] = 0;
+        Order[ewk->wu.dir_old] = 0;
     }
-    ewk->wu.routine_no[0] = 0;
-    Order[ewk->wu.dir_old] = 0;
 }
 
 

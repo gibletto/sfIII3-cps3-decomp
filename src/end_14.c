@@ -102,7 +102,7 @@ void end_e00_0000(void) {
     case 2:
         bgw_ptr->xy[1].cal -= 0x18000;
         bgw_ptr->abs_y = bgw_ptr->xy[1].disp.pos;
-        if (bgw_ptr->xy[1].disp.pos < 273) {
+        if (bgw_ptr->xy[1].disp.pos <= 0x110) {
             bgw_ptr->r_no_1++;
             effect_E6_init(0x19);
             bg_cell_write(0, 0, 6, (u32)end_e00_scrn_data, 0, 0x220);
@@ -129,7 +129,7 @@ void end_e00_0000(void) {
         }
     case 6:
         bgw_ptr->xy[1].cal -= 0x4000;
-        if (bgw_ptr->xy[1].disp.pos < -311) {
+        if (bgw_ptr->xy[1].disp.pos <= -0x138) {
             bgw_ptr->r_no_1++;
             bgw_ptr->xy[1].cal = 0xFEC80000;
             end_w.timer = 20;
@@ -398,7 +398,7 @@ void end_e00_6000(void) {
 void end_e00_7000(void) {
     switch (bgw_ptr->r_no_1) {
     case 0:
-        bgw_ptr->r_no_1++;
+        bgw_ptr->r_no_1 = bgw_ptr->r_no_1 + 1;
         bg_cell_write(0, 0, 2, (u32)end_e00_scrn_data, 0, 0x220);
         bg_cell_write(0, 0x40, 3, (u32)end_e00_scrn_data, 0, 0x220);
         bg_cell_write(0, 0x1000, 4, (u32)end_e00_scrn_data, 0, 0x220);
@@ -413,10 +413,11 @@ void end_e00_7000(void) {
         end_fade_timer = timer_e_tbl[end_w.r_no_2] - 120;
         Rewrite_End_Message(5);
     case 1:
-        if (Request_Fade(49, 0)) {
-            end_no_cut = 1;
-            bgw_ptr->r_no_1++;
+        if (Request_Fade(49, 0) == 0) {
+            break;
         }
+        end_no_cut = 1;
+        bgw_ptr->r_no_1++;
         break;
     case 2:
         if (end_fade_complete()) {
@@ -425,7 +426,7 @@ void end_e00_7000(void) {
         }
     case 3:
         bgw_ptr->xy[1].cal -= 0x3000;
-        if (bgw_ptr->xy[1].disp.pos < 697) {
+        if (bgw_ptr->xy[1].disp.pos <= 0x2B8) {
             bgw_ptr->r_no_1++;
             bgw_ptr->xy[1].cal = 0x2B80000;
         }

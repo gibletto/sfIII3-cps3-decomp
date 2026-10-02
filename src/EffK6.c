@@ -270,7 +270,11 @@ s16 Get_PosK6(WORK_Other* ewk, s16 Who, s16 Get_Type, s16 Play_Style) {
         case 25:
         case 29:
             Who += chkNameAkuma(Who);
-            Who += (Country != 1 && Who == 21) ? 2 : 0;
+            {
+                s16 x = Who;
+                x = (Country != 1 && x == 21) ? 2 : 0;
+                Who += x;
+            }
             return Win_Name_Pos_Data[ewk->master_id][Play_Style][Who][Get_Type];
         case 31:
         case 35:
@@ -280,13 +284,12 @@ s16 Get_PosK6(WORK_Other* ewk, s16 Who, s16 Get_Type, s16 Play_Style) {
                 } else {
                     return 44;
                 }
+            } else if (Get_Type == 0) {
+                return -152;
             } else {
-                if (Get_Type == 0) {
-                    return -152;
-                } else {
-                    return 208;
-                }
+                return 208;
             }
+            break;
         }
     } else {
         switch (ewk->wu.direction) {
@@ -302,13 +305,12 @@ s16 Get_PosK6(WORK_Other* ewk, s16 Who, s16 Get_Type, s16 Play_Style) {
                 } else {
                     return 189;
                 }
+            } else if (Get_Type == 0) {
+                return -152;
             } else {
-                if (Get_Type == 0) {
-                    return -152;
-                } else {
-                    return 208;
-                }
+                return 208;
             }
+            break;
         }
     }
 }

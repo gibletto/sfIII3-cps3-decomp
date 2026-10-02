@@ -230,10 +230,10 @@ void end_d00_6000(void) {
         if (bgw_ptr->free) {
             bgw_ptr->xy[1].disp.pos += 8;
             bgw_ptr->abs_y += 8;
-            break;
+        } else {
+            bgw_ptr->xy[1].disp.pos -= 8;
+            bgw_ptr->abs_y -= 8;
         }
-        bgw_ptr->xy[1].disp.pos -= 8;
-        bgw_ptr->abs_y -= 8;
         break;
     }
 }

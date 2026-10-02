@@ -3990,7 +3990,7 @@ void Passive12_0221(PLW* wk) {
 void Passive12_0222(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        ETC_Term(wk, 5, 1, 0xFFFF);
+        ETC_Term(wk, 5, 1, -1);
         break;
     case 1:
         Command_Attack(wk, 8, 1, -1, -1);

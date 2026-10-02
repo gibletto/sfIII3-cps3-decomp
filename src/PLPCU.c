@@ -138,6 +138,26 @@ void Caught_02000(PLW* wk, PLW* emwk) {
 void Caught_03000(PLW* wk) {}
 
 
+/* provisional name */
+void Caught_04000(PLW* wk) {}
+
+
+/* provisional name */
+void Caught_05000(PLW* wk) {}
+
+
+/* provisional name */
+void Caught_06000(PLW* wk) {}
+
+
+/* provisional name */
+void Caught_07000(PLW* wk) {}
+
+
+/* provisional name */
+void Caught_08000(PLW* wk) {}
+
+
 
 void caught_cg_type_check(PLW* wk, PLW* emwk) {
     switch (wk->wu.cg_type) {

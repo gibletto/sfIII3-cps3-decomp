@@ -83,6 +83,7 @@ void exset_char_move_init(WORK* wk, s16 koc, s16 index) {
     src = wk->set_char_ad + wk->cg_ix;
     for (i = 0; i < wk->cgd_type; i++) {
         *dst++ = *src++;
+        continue;
     }
     wk->cg_ctr = now_ctr;
     wk->cmoa.koc = wk->now_koc;
@@ -101,6 +102,13 @@ void char_move_z(WORK* wk) {
     wk->cg_ctr = 1;
     wk->K5_init_flag = 1;
     char_move(wk);
+}
+
+
+/* provisional name */
+void char_move_reset_ctr(WORK* wk) {
+    wk->cg_next_ix = 0;
+    wk->cg_ctr = 1;
 }
 
 
@@ -140,10 +148,35 @@ void char_move_index(WORK* wk, s16 ix) {
 }
 
 
+/* provisional name */
+void char_move_index_set(WORK* wk, s16 ix) {
+    wk->cg_next_ix = 0;
+    wk->cg_ix = (ix - 1) * wk->cgd_type - wk->cgd_type;
+    wk->cg_ctr = 1;
+    wk->K5_init_flag = 1;
+}
+
+
+/* provisional name */
+void set_cmja_data(WORK* wk, s16 koc, s16 ix, s16 pat) {
+    wk->cmja.koc = koc;
+    wk->cmja.ix = ix;
+    wk->cmja.pat = pat;
+}
+
+
 
 void char_move_cmja(WORK* wk) {
     setup_comm_back(wk);
     set_char_move_init2(wk, wk->cmja.koc, wk->cmja.ix, wk->cmja.pat, 0);
+}
+
+
+/* provisional name */
+void set_cmj2_data(WORK* wk, s16 koc, s16 ix, s16 pat) {
+    wk->cmj2.koc = koc;
+    wk->cmj2.ix = ix;
+    wk->cmj2.pat = pat;
 }
 
 
@@ -155,6 +188,14 @@ void char_move_cmj2(WORK* wk) {
 }
 
 
+/* provisional name */
+void set_cmj3_data(WORK* wk, s16 koc, s16 ix, s16 pat) {
+    wk->cmj3.koc = koc;
+    wk->cmj3.ix = ix;
+    wk->cmj3.pat = pat;
+}
+
+
 
 /* provisional name */
 void char_move_cmj3(WORK* wk) {
@@ -163,10 +204,26 @@ void char_move_cmj3(WORK* wk) {
 }
 
 
+/* provisional name */
+void set_cmj4_data(WORK* wk, s16 koc, s16 ix, s16 pat) {
+    wk->cmj4.koc = koc;
+    wk->cmj4.ix = ix;
+    wk->cmj4.pat = pat;
+}
+
+
 
 void char_move_cmj4(WORK* wk) {
     setup_comm_back(wk);
     set_char_move_init2(wk, wk->cmj4.koc, wk->cmj4.ix, wk->cmj4.pat, 0);
+}
+
+
+/* provisional name */
+void set_cmj5_data(WORK* wk, s16 koc, s16 ix, s16 pat) {
+    wk->cmj5.koc = koc;
+    wk->cmj5.ix = ix;
+    wk->cmj5.pat = pat;
 }
 
 
@@ -178,11 +235,27 @@ void char_move_cmj5(WORK* wk) {
 }
 
 
+/* provisional name */
+void set_cmj6_data(WORK* wk, s16 koc, s16 ix, s16 pat) {
+    wk->cmj6.koc = koc;
+    wk->cmj6.ix = ix;
+    wk->cmj6.pat = pat;
+}
+
+
 
 /* provisional name */
 void char_move_cmj6(WORK* wk) {
     setup_comm_back(wk);
     set_char_move_init2(wk, wk->cmj6.koc, wk->cmj6.ix, wk->cmj6.pat, 0);
+}
+
+
+/* provisional name */
+void set_cmj7_data(WORK* wk, s16 koc, s16 ix, s16 pat) {
+    wk->cmj7.koc = koc;
+    wk->cmj7.ix = ix;
+    wk->cmj7.pat = pat;
 }
 
 
@@ -198,6 +271,14 @@ void char_move_cmj7(WORK* wk) {
 /* provisional name */
 s32 char_move_cmoa(WORK* wk, CHAR_CMD* _p1) {
     set_char_move_init2(wk, wk->cmoa.koc, wk->cmoa.ix, wk->cmoa.pat, 0);
+}
+
+
+/* provisional name */
+void set_cmms_data(WORK* wk, s16 koc, s16 ix, s16 pat) {
+    wk->cmms.koc = koc;
+    wk->cmms.ix = ix;
+    wk->cmms.pat = pat;
 }
 
 
@@ -284,6 +365,15 @@ loop:
 }
 
 
+/* provisional name */
+void set_cmhs_data(PLW* wk, s16 koc, s16 ix, s16 pat) {
+    wk->wu.cmhs.koc = koc;
+    wk->wu.cmhs.ix = ix;
+    wk->wu.cmhs.pat = pat;
+    wk->hsjp_ok = 0;
+}
+
+
 
 void char_move_cmhs(PLW* wk) {
     if (wk->hsjp_ok != 0) {
@@ -317,11 +407,11 @@ next:
     if (cpc->code >= 0x100) {
         check_cgd_patdat(wk);
         return;
+    } else if (comm_jmp_tbl[cpc->code]((PLW*)wk, cpc) == 0) {
+        return;
     }
-    if (comm_jmp_tbl[cpc->code]((PLW*)wk, cpc)) {
-        wk->cg_ix += wk->cgd_type;
-        goto next;
-    }
+    wk->cg_ix += wk->cgd_type;
+    goto next;
 }
 
 u32 comm_dummy(void)
@@ -2471,6 +2561,14 @@ void set_new_attnum(WORK* wk) {
     wk->dir_atthit = cal_attdir(wk);
     if (aag_sw) {
         add_sp_arts_gauge_init((PLW*)wk);
+    }
+}
+
+
+/* provisional name */
+void kezuri_pow_init(WORK* wk) {
+    if (wk->kezuri_pow == 0) {
+        wk->kezuri_pow = kezuri_pow_table[3];
     }
 }
 
