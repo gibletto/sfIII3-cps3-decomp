@@ -238,7 +238,7 @@ void eff18_01(WORK* wk) {
         if (complete_victory_check()) {
             wk->routine_no[2]++;
         }
-        if (wk->hit_stop != 0 && !EXE_obroll) {
+        if (wk->hit_stop && !EXE_obroll) {
             char_move(wk);
         }
         break;

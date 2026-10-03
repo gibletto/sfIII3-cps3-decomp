@@ -93,7 +93,7 @@ s32 effect_73_init(WORK_Other* oya) {
     s16 i;
     s16 work;
     s16 work2;
-    if (EXE_obroll == 0) {
+    if (!EXE_obroll) {
         work = random_16_com();
         work &= 7;
         for (i = 0; i < 4; i++) {

@@ -22,21 +22,15 @@
 #include "eff06.h"
 #include "EFF44.h"
 
+#pragma inline(bg1000, bg1001)
+
 
 
 void BG100(void) {
     bgw_ptr = &bg_w.bgw[1];
-    {
-        BG_JMP2 bg1001_jmp;
-        bg1001_jmp = bg1001_jmp_tbl;
-        bg1001_jmp.f[bgw_ptr->r_no_0]();
-    }
+    bg1001();
     bgw_ptr = &bg_w.bgw[0];
-    {
-        BG_JMP2 bg1000_jmp;
-        bg1000_jmp = bg1000_jmp_tbl;
-        bg1000_jmp.f[bgw_ptr->r_no_0]();
-    }
+    bg1000();
     zoom_ud_check();
     bg_pos_hosei2();
     Bg_Family_Set();

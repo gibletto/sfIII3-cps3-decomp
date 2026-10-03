@@ -95,7 +95,7 @@ void Pierce_Off(PLW* wk) {
     CP_Index[wk->wu.id][0]++;
     Pierce_Menu[wk->wu.id] = 0;
     Disposal_Again[wk->wu.id] = 1;
-    Lever_Buff[wk->wu.id] = Lever_LR[wk->wu.id];
+    Lever_Buff[wk->wu.id] = (&Lever_LR[0])[wk->wu.id];
 }
 
 
@@ -310,7 +310,7 @@ s16 Next_Menu;
             CP_Index[wk->wu.id][0]++;
         }
     }
-    Lever_Buff[wk->wu.id] = Lever_LR[wk->wu.id];
+    Lever_Buff[wk->wu.id] = (&Lever_LR[0])[wk->wu.id];
 }
 
 
@@ -328,7 +328,7 @@ s16 Option;
         Timer_00[wk->wu.id] = 0x78;
     case 1:
         xx = Standing_Timer[wk->wu.id];
-        if (Lie_Flag[wk->wu.id] == 0) {
+        if ((&Lie_Flag[0])[wk->wu.id] == 0) {
             if (Check_Passive(wk) != 0) {
                 break;
             }
@@ -455,7 +455,7 @@ s16 unused;
             if ((Timer_01[wk->wu.id] != (s16)wk->wu.rl_flag) || (wk->micchaku_flag != 0) || (wk->hos_em_flag != 0)) {
                 Next_Be_Free(wk);
             }
-            Lever_Buff[wk->wu.id] = Free_Lever[wk->wu.id];
+            Lever_Buff[wk->wu.id] = (&Free_Lever[0])[wk->wu.id];
         }
         break;
     }
@@ -599,7 +599,7 @@ s16 Time;
             CP_Index[wk->wu.id][1]++;
             Timer_00[wk->wu.id]--;
         } else {
-            Lever_Buff[wk->wu.id] = Lever_Squat[wk->wu.id];
+            Lever_Buff[wk->wu.id] = (&Lever_Squat[0])[wk->wu.id];
         }
         break;
     case 2:
@@ -1088,7 +1088,7 @@ s16 Time_03;
         xx[1] = Time_01;
         xx[2] = Time_02;
         xx[3] = Time_03;
-        Timer_00[wk->wu.id] = xx[Area_Number[wk->wu.id]];
+        Timer_00[wk->wu.id] = xx[(&Area_Number[0])[wk->wu.id]];
         break;
     default:
         if (--Timer_00[wk->wu.id]) {
@@ -1194,7 +1194,7 @@ s16 Option_Data;
         if (Option_Data != -1) {
             Free_Lever[wk->wu.id] |= Setup_Guard_Lever(wk, Option_Data);
         }
-        Lever_Buff[wk->wu.id] = Free_Lever[wk->wu.id];
+        Lever_Buff[wk->wu.id] = (&Free_Lever[0])[wk->wu.id];
         break;
     default:
         Lever_Buff[wk->wu.id] = Free_Lever[wk->wu.id];
@@ -1265,7 +1265,7 @@ u16 Lever_Data;
             Free_Lever[wk->wu.id] = 0;
         }
     default:
-        Lever_Buff[wk->wu.id] = Free_Lever[wk->wu.id];
+        Lever_Buff[wk->wu.id] = (&Free_Lever[0])[wk->wu.id];
         em = (WORK*)wk->wu.target_adrs;
         if ((Check_Blow_Off(wk, em, 0) == 0) || (Lie_Flag[wk->wu.id] != 0)) {
             CP_Index[wk->wu.id][0]++;
@@ -1298,7 +1298,7 @@ s16 Option;
             Lever_LR[wk->wu.id] = 0;
         }
     default:
-        Lever_Buff[wk->wu.id] = Lever_LR[wk->wu.id];
+        Lever_Buff[wk->wu.id] = (&Lever_LR[0])[wk->wu.id];
         if (Check_Wait_Term(wk, Option) != 0) {
             CP_Index[wk->wu.id][0]++;
             CP_Index[wk->wu.id][1] = 0;
@@ -1631,7 +1631,7 @@ s16 Jump_Dir;
 {
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
-        Lever_Buff[wk->wu.id] = Lever_LR[wk->wu.id];
+        Lever_Buff[wk->wu.id] = (&Lever_LR[0])[wk->wu.id];
         if (Check_Passive(wk) != 0) {
             break;
         }

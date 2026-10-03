@@ -39,11 +39,532 @@
 #include "ta_sub.h"
 #include "bg000.h"
 #include "fighter.h"
+#include "tate00.h"
 
+#pragma inline(bg0101, bg0102)
+
+/* provisional name */
+void Bg_Family_Set_appoint(s32 num_of_bg) {
+    s32 x = bg_w.bgw[num_of_bg].position_x;
+    s32 y = bg_w.bgw[num_of_bg].position_y;
+    Scrn_Move_Set(num_of_bg, x, y);
+    x = -x & 0x3FF;
+    y = (768 - (y & 0x3FF)) & 0x3FF;
+    Family_Set_W(num_of_bg + 1, x, y);
+}
+
+
+
+void Bg_Family_Set_2(void) {
+    s32 i;
+    s32 a, b, x, y;
+    for (i = 0; i < bg_w.scno; i++) {
+        x = bg_w.bgw[i].position_x;
+        y = bg_w.bgw[i].position_y;
+        y += 8;
+        Scrn_Move_Set(i, x, y);
+        a = -x & 0x3FF;
+        b = (0x300 - (y & 0x3FF)) & 0x3FF;
+        Family_Set_W(i + 1, a, b);
+    }
+}
+
+
+
+void Bg_Family_Set_2_appoint(s32 num_of_bg) {
+    s32 x;
+    s32 y;
+    x = bg_w.bgw[num_of_bg].position_x;
+    y = bg_w.bgw[num_of_bg].position_y;
+    y += 8;
+    Scrn_Move_Set(num_of_bg, x, y);
+    x = -x & 0x3FF;
+    y = (768 - (y & 0x3FF)) & 0x3FF;
+    Family_Set_W(num_of_bg + 1, x, y);
+}
 
 
 
 /* provisional name */
+void ake_Family_Set(void) {
+    s32 pos_work_x = bg_w.bgw[3].position_x;
+    s32 pos_work_y = bg_w.bgw[3].position_y;
+    Scrn_Move_Set(3, pos_work_x, pos_work_y);
+    pos_work_x = -pos_work_x & 0x3FF;
+    pos_work_y = (768 - (pos_work_y & 0x3FF)) & 0x3FF;
+    Family_Set_W(4, pos_work_x, pos_work_y);
+}
+
+
+
+void ake_Family_Set2(void) {
+    s32 x = bg_w.bgw[3].position_x;
+    s32 y = bg_w.bgw[3].position_y;
+    Scrn_Move_Set(3, x, y);
+    x = 512 - bg_w.pos_offset;
+    y = 0;
+    x = -x & 0x3FF;
+    y = (768 - (y & 0x3FF)) & 0x3FF;
+    Family_Set_W(4, x, y);
+}
+
+
+
+void bg_pos_hosei_sub2(s16 bg_no) {
+    u16 pos;
+    u16 pos2;
+    u16 work;
+    pos2 = bg_w.bgw[bg_no].wxy[0].disp.pos;
+    pos = pos2 & 0x3FF;
+    pos -= bg_w.pos_offset;
+    pos &= 0x3FF;
+    pos += quake_x_tbl[bg_w.quake_x_index];
+    bg_w.bgw[bg_no].position_x = pos & 0x3FF;
+    pos2 -= bg_w.pos_offset;
+    pos2 += quake_x_tbl[bg_w.quake_x_index];
+    bg_w.bgw[bg_no].abs_x = pos2;
+    pos2 = bg_w.bgw[bg_no].xy[1].disp.pos;
+    pos = pos2 & 0x3FF;
+    work = quake_y_tbl[bg_w.quake_y_index];
+    pos += work;
+    pos2 += work;
+    bg_w.bgw[bg_no].position_y = pos & 0x3FF;
+    bg_w.bgw[bg_no].abs_y = pos2;
+}
+
+
+
+void bg_pos_hosei_sub3(s16 bg_no) {
+    s32 pos;
+    s32 pos2;
+    volatile s16 work;
+    volatile s16 work2;
+    pos2 = bg_w.bgw[bg_no].wxy[0].disp.pos;
+    pos = pos2 & 0x3FF;
+    pos -= work = bg_w.pos_offset;
+    pos &= 0x3FF;
+    pos2 -= work;
+    pos += work = quake_x_tbl[bg_w.quake_x_index];
+    pos2 += work;
+    bg_w.bgw[bg_no].position_x = pos & 0x3FF;
+    bg_w.bgw[bg_no].abs_x = pos2;
+    pos2 = bg_w.bgw[bg_no].xy[1].disp.pos;
+    pos = pos2 & 0x3FF;
+    pos += work2 = quake_y_tbl[bg_w.quake_y_index];
+    pos2 += work2;
+    bg_w.bgw[bg_no].position_y = pos & 0x3FF;
+    bg_w.bgw[bg_no].abs_y = pos2;
+}
+
+void bg_pos_hosei2(void)
+{
+    s16 x;
+    s16 y;
+    s16 quake;
+    s16 i;
+
+    for (i = 0; i < bg_w.scno; i++) {
+        if (bg_w.chase_flag & 0xF) {
+            x = bg_w.bgw[i].chase_xy[0].disp.pos;
+        } else {
+            x = bg_w.bgw[i].wxy[0].disp.pos;
+        }
+        bg_w.bgw[i].position_x = ((x & 0x3FF) - bg_w.pos_offset & 0x3FF) + quake_x_tbl[bg_w.quake_x_index] & 0x3FF;
+        bg_w.bgw[i].abs_x = x - bg_w.pos_offset + quake_x_tbl[bg_w.quake_x_index];
+        if (bg_w.chase_flag & 0xF0) {
+            y = bg_w.bgw[i].chase_xy[1].disp.pos;
+        } else {
+            y = bg_w.bgw[i].xy[1].disp.pos;
+        }
+        quake = quake_y_tbl[bg_w.quake_y_index];
+        bg_w.bgw[i].position_y = (y & 0x3FF) + quake & 0x3FF;
+        bg_w.bgw[i].abs_y = y + quake;
+        continue;
+    }
+}
+
+
+
+s16 get_center_position(void) {
+    if (Bonus_Game_Flag == 0x16) {
+        return 0x200;
+    }
+    return bg_w.bgw[1].wxy[0].disp.pos;
+}
+
+
+
+s32 get_height_position(void) {
+    BGW* blk = &bg_w.bgw[1];
+    return blk->xy[1].disp.pos;
+}
+
+
+/* provisional name */
+void bg_quake_x_index_set(s16 ix) {
+    bg_w.quake_x_index = ix;
+}
+
+
+/* provisional name */
+void bg_quake_y_index_set(s16 ix) {
+    bg_w.quake_y_index = ix;
+}
+
+
+
+/* provisional name */
+void blit_16x16_tile(u16* src, s16 code, u16* dst, s16 attr) {
+    u16 i;
+    u16 j;
+    u16* d;
+    for (i = 0; i < 16; i++) {
+        d = dst;
+        for (j = 0; j < 16; j++) {
+            *d++ = *src++ + code;
+            *d++ = *src++ + attr;
+        }
+        dst += 0x80;
+    }
+}
+
+
+
+/* provisional name */
+void blit_8x16_tile(u16* src, s16 code, u16* dst, s16 attr) {
+    u16 i;
+    u16 j;
+    u16* d;
+    u16* s;
+    for (i = 0; i < 16; i++) {
+        d = dst;
+        s = src;
+        for (j = 0; j < 8; j++) {
+            *d++ = *s++ + code;
+            *d++ = *s++ + attr;
+        }
+        dst += 0x80;
+        src += 0x20;
+    }
+}
+
+
+
+/* provisional name */
+void bg_cell_write(s16 bg, s32 ofs, s32 cell, u32 src, s16 u5, s16 attr) {
+    u32 dst;
+    u32 s;
+    u16 code;
+    dst = (u32)bg_w.bgw[bg].bg_address + ofs;
+    s = (cell << 10) + src;
+    code = (u32)bg_w.scroll_cg_adr >> 7;
+    blit_16x16_tile((u16*)s, code, (u16*)dst, attr);
+}
+
+
+
+/* provisional name */
+void blit_16x16_xflip(u16* src, s16 code, u16* dst, s16 attr) {
+    u16 i;
+    u16 j;
+    u16* s;
+    u16* d;
+    for (i = 0; i < 16; i++) {
+        d = dst;
+        for (j = 0; j < 16; j++) {
+            s = &src[i * 32 + 30 - j * 2];
+            *d++ = *s++ + code;
+            *d = *s + attr;
+            *d++ |= 0x1000;
+        }
+        dst = dst + 0x80;
+    }
+}
+
+
+
+/* provisional name */
+void bg_cell_write_xflip(s16 bg, s32 ofs, s32 cell, u32 src, s16 u5, s16 attr) {
+    u16* dst;
+    u16* s;
+    u16 code = 0;
+    dst = (u16*)((u32)bg_w.bgw[bg].bg_address + ofs);
+    s = (u16*)((cell << 10) + src);
+    code += bg_w.scroll_cg_adr >> 7;
+    blit_16x16_xflip(s, code, dst, attr);
+}
+
+
+
+/* provisional name */
+void blit_16x16_yflip(u16* src, s16 code, u16* dst, s16 attr) {
+    u16 i;
+    u16* pi = &i;
+    u16 j;
+    s32 off;
+    u16* d;
+    register u16* s;
+    s32 q = (s32)src + -0x440;
+    i = 0;
+    off = 0x800;
+    do {
+        d = dst;
+        for (j = 0; j < 16; j = j + 1) {
+            s = (u16*)(off + q);
+            *d++ = *s++ + code;
+            *d = *s + attr;
+            *d++ |= 0x800;
+            q += 4;
+        }
+        dst += 0x80;
+        i++;
+        off += -0x80;
+    } while (i < 16);
+}
+
+
+
+/* provisional name */
+void bg_cell_write_yflip(s16 bg, s32 ofs, s32 cell, u32 src, s16 u5, s16 attr) {
+    u16* dst;
+    u16* s;
+    u16 code = 0;
+    dst = (u16*)((u32)bg_w.bgw[bg].bg_address + ofs);
+    s = (u16*)((cell << 10) + src);
+    code += bg_w.scroll_cg_adr >> 7;
+    blit_16x16_yflip(s, code, dst, attr);
+}
+
+
+
+/* provisional name */
+void blit_16x16_xyflip(u16* src, s16 code, u16* dst, s16 attr) {
+    s16 i;
+    s16 j;
+    u16* s;
+    u16* d;
+    for (i = 0; i < 16; i++) {
+        d = dst;
+        for (j = 0; j < 16; j++) {
+            s = &src[(15 - i) * 32 + (15 - j) * 2];
+            *d++ = s[0] + code;
+            *d = s[1] + attr;
+            *d++ |= 0x1800;
+        }
+        dst += 0x80;
+    }
+}
+
+
+
+/* provisional name */
+void bg_cell_write_xyflip(s16 bg, s32 ofs, s32 cell, u32 src, s16 u5, s16 attr) {
+    u16* dst;
+    u16* s;
+    u16 code = 0;
+    dst = (u16*)((u32)bg_w.bgw[bg].bg_address + ofs);
+    s = (u16*)((cell << 10) + src);
+    code += bg_w.scroll_cg_adr >> 7;
+    blit_16x16_xyflip(s, code, dst, attr);
+}
+
+
+
+/* provisional name */
+void bg_cell_fill(s16 bg, s16 attr) {
+    bg_cell_write(bg, 0, 0, bg_cg_src_tbl[bg_w.bg_index], 0, attr);
+    bg_cell_write(bg, 0x40, 0, bg_cg_src_tbl[bg_w.bg_index], 0, attr);
+    bg_cell_write(bg, 0x80, 0, bg_cg_src_tbl[bg_w.bg_index], 0, attr);
+    bg_cell_write(bg, 0xC0, 0, bg_cg_src_tbl[bg_w.bg_index], 0, attr);
+    bg_cell_write(bg, 0x1000, 0, bg_cg_src_tbl[bg_w.bg_index], 0, attr);
+    bg_cell_write(bg, 0x1040, 0, bg_cg_src_tbl[bg_w.bg_index], 0, attr);
+    bg_cell_write(bg, 0x1080, 0, bg_cg_src_tbl[bg_w.bg_index], 0, attr);
+    bg_cell_write(bg, 0x10C0, 0, bg_cg_src_tbl[bg_w.bg_index], 0, attr);
+}
+
+
+
+/* provisional name */
+void bg_scr_write(void) {
+    s16 attr = bg_attr_tbl[bg_w.bg_index] + bg_attr_add_tbl[bg_w.bg_index];
+    s16 set;
+    HUD_CELL** cells;
+    HUD_CELL* c;
+    s16 i;
+    s16 j;
+    set = (Country == 8) ? bg_cell_set_tbl[bg_w.stage] : 0;
+    cells = bg_rewrite_cell_tbl[set];
+    for (i = 0; i < bg_w.scno; i++) {
+        bg_cell_fill(i, attr);
+        for (j = 0; j < bg_cell_cnt_tbl[bg_w.bg_index][i]; j++) {
+            c = &cells[i][j];
+            bg_cell_write(i, c->ofs, c->cell, bg_cg_src_tbl[bg_w.bg_index], 0, attr);
+        }
+    }
+}
+
+
+
+/* provisional name */
+void ake_cell_write(s8 map, s32 ofs, s32 cell, u32 src) {
+    u16* dst;
+    u16* s;
+    u16 code = 0;
+    dst = (u16*)(ake_scrl_w[map].adrs + ofs);
+    s = (u16*)((cell << 10) + src);
+    code += bg_w.ake_cg_adr >> 7;
+    blit_16x16_tile(s, code, dst, 0x3C0);
+}
+
+
+
+/* provisional name */
+void ake_cell_write_attr(s8 map, s32 ofs, s32 cell, u32 src, s16 attr) {
+    u16* dst;
+    u16* s;
+    u16 code = 0;
+    dst = (u16*)(ake_scrl_w[map].adrs + ofs);
+    s = (u16*)((cell << 10) + src);
+    code += bg_w.ake_cg_adr >> 7;
+    blit_16x16_tile(s, code, dst, attr + 0x3C0);
+}
+
+
+
+/* provisional name */
+void akebono_cell_fill(void) {
+    ake_cell_write(1, 0x2000, 1, (u32)ake_scrn_data);
+    ake_cell_write(1, 0x2040, 2, (u32)ake_scrn_data);
+    ake_cell_write(1, 0x2080, 3, (u32)ake_scrn_data);
+    ake_cell_write(1, 0x20C0, 4, (u32)ake_scrn_data);
+    ake_cell_write(1, 0x3000, 5, (u32)ake_scrn_data);
+    ake_cell_write(1, 0x3040, 6, (u32)ake_scrn_data);
+    ake_cell_write(1, 0x3080, 7, (u32)ake_scrn_data);
+    ake_cell_write(1, 0x30C0, 8, (u32)ake_scrn_data);
+}
+
+
+/* provisional name */
+void akebono_scrn_move(s16 ix) {
+    const s16* p = akebono_scrn_pos_tbl[ix];
+    s32 x = p[0] - bg_w.pos_offset;
+    Scrn_Move_Set(0, x, p[1]);
+}
+
+/* provisional name */
+void akebono_scr_write(void)
+{
+    s16 *attr = (s16 *)ake_attr_tbl;
+    PANEL *cell;
+    s16 i;
+
+    cell = (PANEL *)ake_cell1_data;
+    for (i = 0; i < 16; i++) {
+        ake_cell_write_attr(1, cell->ofs, cell->cell, (u32)ake_scrn_data, *attr);
+        attr++;
+        cell++;
+    }
+    cell = (PANEL *)ake_cell2_data;
+    for (i = 0; i < 8; i++) {
+        ake_cell_write(2, cell->ofs, cell->cell, (u32)ake_scrn_data);
+        cell++;
+    }
+}
+
+
+
+/* provisional name */
+void bg_etc_scr_write(s16 n) {
+    s16 i;
+    s16 j;
+    TILEREQ* t;
+    s16 attr;
+
+    for (i = 0; i < bg_w.scno; i++) {
+        j = 0;
+        while (j < etc_bg_cell_cnt_tbl[n][(s16)i]) {
+            t = bg_etc_cell_tbl[n][i];
+            t += j;
+            attr = etc_bg_attr_tbl[n] + t->attr;
+            bg_cell_write(i, t->ofs, t->cell, etc_bg_cg_src_tbl[n], 0, attr);
+            j++;
+        }
+    }
+}
+
+
+
+/* provisional name */
+void bg_scr_clear_all(void) {
+    s32 i;
+    s32 j;
+    s32 k;
+    for (i = 0; i < bg_w.scno; i++) {
+        for (j = 0; j < bg_w.scno; j++) {
+            u32 dst = (u32)bg_w.bgw[(s16)i].bg_address + (j << 12);
+            for (k = 0; k < 4; k++) {
+                blit_16x16_tile((u16*)bg_cg_src_tbl[bg_w.bg_index], bg_w.scroll_cg_adr >> 7, (u16*)(dst + k * 0x40), 0);
+            }
+        }
+    }
+}
+
+
+
+void bg_work_clear(void) {
+    s16 i;
+    bg_w.bg_routine = 0;
+    bg_w.bg_r_1 = 0;
+    bg_w.bg_r_2 = 0;
+    bg_w.compel_on[0] = 0;
+    win_sp_flag = 0;
+    bg_stop = 0;
+    bg_stop2 = 0;
+    akebono_flag = 0;
+    seraph_flag = 0;
+    aku_flag = 0;
+    sa_pa_flag = 0;
+    bg_app = 0;
+    bg_app_stop = 0;
+    for (i = 0; i < 7; i++) {
+        bg_w.bgw[i].r_no_0 = 0;
+        bg_w.bgw[i].r_no_1 = 0;
+        bg_w.bgw[i].r_no_2 = 0;
+    }
+}
+
+
+/* provisional name */
+void bg_work_clear_dummy(void) {}
+
+
+
+/* provisional name */
+void compel_bg_init_position(void) {
+    s16 i;
+    bg_w.compel_on[0] = 1;
+    Zoomf_Init();
+    bg_w.bg_f_x = 64;
+    bg_w.old_bg_f[0] = 64;
+    bg_w.bg_f_y = 64;
+    bg_w.old_bg_f[1] = 64;
+    bg_w.scr_stop = 0;
+    bg_w.frame_flag = 0;
+    bg_w.dmm0[0] = 0;
+    bg_w.bg2_sp_x2 = bg_w.bg2_sp_x = 0;
+    for (i = 0; i < 7; i++) {
+        bg_w.bgw[i].xy[0].disp.pos = bg_w.bgw[i].wxy[0].disp.pos = bg_w.bgw[i].pos_x_work;
+        bg_w.bgw[i].xy[1].disp.pos = bg_w.bgw[i].wxy[1].disp.pos = bg_w.bgw[i].pos_y_work;
+        bg_w.bgw[i].xy[0].disp.low = bg_w.bgw[i].wxy[0].disp.low = 0;
+        bg_w.bgw[i].xy[0].disp.low = bg_w.bgw[i].wxy[0].disp.low = 0;
+        if (bg_w.bgw[i].zuubun) {
+            suzi_line_clear(i);
+        }
+    }
+}
+
+
+
 void reset_all_char_display_with_backup(void) {
     s16 i;
     bg_w.compel_on[0] = 0;
@@ -642,25 +1163,11 @@ void bg0000_demo(void) {
 
 
 
-void bg0101_BG010(void) {
-    void (*bg1601_jmp[2])() = { bg0101_init00, bg_move_common };
-    bg1601_jmp[bgw_ptr->r_no_0]();
-}
-
-
-
-void bg0102_BG010(void) {
-    void (*bg1602_jmp[2])() = { bg0102_init00, bg_base_move_common };
-    bg1602_jmp[bgw_ptr->r_no_0]();
-}
-
-
-
 void BG010(void) {
     bgw_ptr = &bg_w.bgw[1];
-    bg0102_BG010();
+    bg0102();
     bgw_ptr = &bg_w.bgw[0];
-    bg0101_BG010();
+    bg0101();
     bgw_ptr = &bg_w.bgw[2];
     bg0103();
     zoom_ud_check();
@@ -699,7 +1206,7 @@ void bg0102(void) {
 
 
 void bg0102_init00(void) {
-    bgw_ptr->r_no_0 = bgw_ptr->r_no_0 + 1;
+    bgw_ptr->r_no_0++;
     bgw_ptr->old_pos_x = bgw_ptr->xy[0].disp.pos = bgw_ptr->pos_x_work = 0x200;
     bgw_ptr->hos_xy[0].cal = bgw_ptr->wxy[0].cal = bgw_ptr->xy[0].cal;
     bgw_ptr->zuubun = 0;

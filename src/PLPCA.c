@@ -305,7 +305,7 @@ void Catch_07000(PLW* wk) {
         break;
     case 3:
         jumping_union_process(&wk->wu, 6);
-        if (--wk->wu.dir_timer <= 0) {
+        if (--wk->wu.dir_timer < 1) {
             wk->wu.routine_no[3] = 4;
         }
         break;

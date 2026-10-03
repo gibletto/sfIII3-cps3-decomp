@@ -42,7 +42,7 @@
 #include "ta_sub.h"
 #include "fighter.h"
 
-
+#pragma inline(bg0401, bg0402)
 
 void BG030(void) {
     bgw_ptr = &bg_w.bgw[1];
@@ -94,32 +94,11 @@ void bg0301_init(void) {
 
 
 
-void bg0401_BG040(void) {
-    void (*bg0401_jmp[3])() = { bg0401_init00, bg0401_init01, bg_move_common };
-    bg0401_jmp[bgw_ptr->r_no_0]();
-}
-
-
-
-void bg0402_BG040(void) {
-    void (*bg0402_jmp[3])() = { bg0402_init00, bg0402_init01, bg_base_move_common };
-    bg0402_jmp[bgw_ptr->r_no_0]();
-}
-
-
-
-void bg0402_bg040(void) {
-    void (*bg0402_jmp[3])() = { bg0402_init00, bg0402_init01, bg_base_move_common };
-    bg0402_jmp[bgw_ptr->r_no_0]();
-}
-
-
-
 void BG040(void) {
     bgw_ptr = &bg_w.bgw[1];
-    bg0402_BG040();
+    bg0402();
     bgw_ptr = &bg_w.bgw[0];
-    bg0401_BG040();
+    bg0401();
     zoom_ud_check();
     bg_pos_hosei2();
     Bg_Family_Set_2();

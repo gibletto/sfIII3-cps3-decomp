@@ -27,8 +27,6 @@
 #include "HITEFPL.h"
 #include "HITPLEF.h"
 #include "HITPLPL.h"
-#include "HITHEAD.h"
-#include "HITTRUNK.h"
 #include "ta_sub.h"
 #include "EFFECT.h"
 #include "HITCHECK.h"

@@ -379,7 +379,7 @@ void Appear_05000(PLW* wk) {
         char_move(&wk->wu);
         if ((wk->wu.cg_type) == 9) {
             wk->wu.routine_no[3]++;
-            wk->wu.rl_flag ^= 1;
+            wk->wu.rl_flag = wk->wu.rl_flag ^ 1;
             return;
         }
         break;

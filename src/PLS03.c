@@ -58,7 +58,7 @@ s32 check_full_gauge_attack(PLW* wk, s8 always) {
             return 0;
         }
         if (wk->cancel_timer == 0) {
-            wk->permited_koa = wk->permited_koa | 0x40;
+            wk->permited_koa |= 0x40;
         }
         if (wk->cp->btix[wk->sa->exsa_g_ix] & 0x4000) {
             if (Version_Type == 3) {
@@ -109,7 +109,7 @@ s32 check_full_gauge_attack(PLW* wk, s8 always) {
         return 0;
     }
     if (wk->cancel_timer == 0) {
-        wk->permited_koa = wk->permited_koa | 0x40;
+        wk->permited_koa |= 0x40;
     }
     if (wk->cp->btix[wk->sa->exsa_a_ix] & 0x4000) {
         if (Version_Type == 3) {

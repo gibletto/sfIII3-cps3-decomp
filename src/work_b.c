@@ -274,10 +274,8 @@
 #include "HITCHECK.h"
 #include "HITEFEF.h"
 #include "HITEFPL.h"
-#include "HITHEAD.h"
 #include "HITPLEF.h"
 #include "HITPLPL.h"
-#include "HITTRUNK.h"
 #include "lose_pl.h"
 #include "Manage.h"
 #include "meta_col.h"
@@ -1172,7 +1170,9 @@ s16 roll_stop;  /* 0202828C */
 s16 name_timer;  /* 0202828E */
 s8 dbg_play12_w[4];  /* 02028290 */
 u8 col_trans_req_tbl[256];  /* 02028294 */
-s16 col_trans_req_cnt[3];  /* 02028394 */
+s16 col_trans_req_cnt0;  /* 02028394 */
+s16 col_trans_req_cnt1;  /* 02028396 */
+s16 col_trans_req_cnt2;  /* 02028398 */
 s32 col_trans_result;  /* 0202839C */
 u16 * sc_trans_dst;  /* 020283A0 */
 u8 * sc_bak_ptr;  /* 020283A4 */

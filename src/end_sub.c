@@ -788,9 +788,9 @@ void debug_play13_move(void)
 void init_color_trans_req(void)
 {
     /* colour transfer request work: 256-byte request table and its three counters */
-    col_trans_req_cnt[0] = 0;
-    col_trans_req_cnt[1] = 0;
-    col_trans_req_cnt[2] = 0;
+    col_trans_req_cnt0 = 0;
+    col_trans_req_cnt1 = 0;
+    col_trans_req_cnt2 = 0;
     memset(col_trans_req_tbl, 0, 256);
 }
 
