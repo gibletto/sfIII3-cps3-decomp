@@ -2126,24 +2126,26 @@ void Control_Music_Fade(s16 time)
 
 
 void BGM_Fade_Sub(void) {
+    s8* v = &BGM_Fade_Level;
+    u8* p = &BGM_Timer[1];
     switch (BGM_No[1]) {
     case 1:
-        if (--BGM_Timer[1] == 0) {
+        if (--*p == 0) {
             BGM_No[1]++;
             BGM_Timer[1] = 1;
-            BGM_Fade_Level = -128;
+            *v = -128;
         }
         break;
-    case 0:
-        break;
     default:
-        if (--BGM_Timer[1] == 0) {
+        if (--*p == 0) {
             BGM_Timer[1] = 2;
-            if (++BGM_Fade_Level == 0) {
+            if (++*v == 0) {
                 BGM_No[1] = 0;
             }
         }
-        sound_reg_level_set(0, BGM_Fade_Level);
+        sound_reg_level_set(0, *v);
+        break;
+    case 0:
         break;
     }
 }
@@ -2164,7 +2166,7 @@ void BGM_Control(void) {
             if (Play_Type == 0 && EM_id == 18) {
                 Stage_BGM(18, Round_num);
             } else {
-                Stage_BGM(bg_w.stage, Round_num);
+                Stage_BGM((u16)bg_w.stage, Round_num);
             }
         }
         break;

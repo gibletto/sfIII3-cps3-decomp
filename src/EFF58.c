@@ -1,8 +1,7 @@
 /*
- * EFF58.C  Effects 55-57 and effect 58 (timed screen commands)
+ * EFF58.C  Effects 56-57 and effect 58 (timed screen commands)
  *
- * Effect 55 is a bg120 object that slides down, holds, slides up and repeats. Effect 56
- * steps through eight palette steps. Effect 57 is an animation that starts after a delay.
+ * Effect 56 steps through eight palette steps. Effect 57 is an animation that starts after a delay.
  * Effect 58 is a timer: after time0 frames it performs one screen command - stop a scroll,
  * screen switch or fill, the title logo, sound and BGM requests, set Next_Step, slide a BG
  * layer to its target, set a Suicide flag or move a virtual BG. Used by the game flow,
@@ -33,90 +32,6 @@
 
 
 
-void effect_55_move(WORK_Other* ewk) {
-    if (obr_disp_off_check()) {
-        return;
-    }
-    switch (ewk->wu.routine_no[0]) {
-    case 0:
-        ewk->wu.routine_no[0]++;
-        ewk->wu.disp_flag = 1;
-        set_char_move_init(&ewk->wu, 0, 3);
-        break;
-    case 1:
-        if (!EXE_flag && !Game_pause) {
-            ewk->wu.xyz[1].cal += 0x3000;
-            if (ewk->wu.xyz[1].disp.pos >= 128) {
-                ewk->wu.routine_no[0]++;
-                ewk->wu.old_rno[0] = 300;
-            }
-        }
-        disp_pos_trans_entry(ewk);
-        break;
-    case 2:
-        if (!EXE_flag && !Game_pause) {
-            ewk->wu.old_rno[0]--;
-            if (ewk->wu.old_rno[0] < 0) {
-                ewk->wu.routine_no[0]++;
-            }
-        }
-        disp_pos_trans_entry(ewk);
-        break;
-    case 3:
-        if (!EXE_flag && !Game_pause) {
-            ewk->wu.xyz[1].cal -= 0x4000;
-            if (ewk->wu.xyz[1].disp.pos <= 96) {
-                ewk->wu.routine_no[0]++;
-                ewk->wu.old_rno[0] = 480;
-            }
-        }
-        disp_pos_trans_entry(ewk);
-        break;
-    case 4:
-        if (!EXE_flag && !Game_pause) {
-            ewk->wu.old_rno[0]--;
-            if (ewk->wu.old_rno[0] < 0) {
-                ewk->wu.routine_no[0] = 1;
-            }
-        }
-        disp_pos_trans_entry(ewk);
-        break;
-    default:
-        all_cgps_put_back(ewk);
-        push_effect_work((WORK*)ewk);
-        break;
-    }
-}
-
-
-
-s32 effect_55_init(void) {
-    WORK_Other* ewk;
-    s16 ix;
-    if ((ix = pull_effect_work(4)) == -1) {
-        return -1;
-    }
-    ewk = (WORK_Other*)frw[ix];
-    ewk->wu.be_flag = 1;
-    ewk->wu.id = 55;
-    ewk->wu.work_id = 16;
-    ewk->wu.cgromtype = 1;
-    ewk->wu.rl_flag = 0;
-    ewk->wu.my_col_mode = 0x4200;
-    ewk->wu.my_family = 2;
-    ewk->wu.my_col_code = 0x2080;
-    ewk->wu.xyz[0].disp.pos = 511;
-    ewk->wu.xyz[1].disp.pos = 96;
-    ewk->wu.my_priority = 86;
-    ewk->wu.position_z = 86;
-    ewk->wu.hit_stop = 0;
-    ewk->wu.sync_suzi = 0;
-    ewk->wu.char_table[0] = brz_char_table;
-    suzi_offset_set(ewk);
-    return 0;
-}
-
-/* Start the flashing palette effect for one side (rl_flag 0 or 1). */
 s32 effect_56_init(s8 side)
 {
     WORK_Other* ewk;

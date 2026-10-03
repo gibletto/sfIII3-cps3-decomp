@@ -1,7 +1,6 @@
 /*
- * END_16.C  Ending 16 (end_16000), plus ending 14's cell setup
+ * END_16.C  Ending 16 (end_16000)
  *
- * end_e00_cell_set writes ending 14's initial cells on BG0, the overlay map and BG2.
  * end_16000 runs a six-scene ending and then hands over to the staff roll.
  * end_1600_move dispatches the BG0 scene handlers: a rightward scroll with the first
  * message, a fade, and scenes that place the layer, start effect E6 objects with their
@@ -24,23 +23,6 @@
 #include "aboutspr.h"
 #include "bg000.h"
 #include "end_16.h"
-
-
-
-/* provisional name */
-void end_e00_cell_set(void) {
-    s32 i;
-    for (i = 0; i < 16; i++) {
-        bg_cell_write(0, end_e00_bg0_cell_tbl[i].ofs, end_e00_bg0_cell_tbl[i].cell, (u32)end_e00_scrn_data, 0, 0x220);
-    }
-    for (i = 0; i < 14; i++) {
-        end_ake_cell_put(0, end_e00_ake_cell_tbl[i].ofs, end_e00_ake_cell_tbl[i].cell, (u32)end_ake_scrn_data);
-    }
-    for (i = 0; i < 8; i++) {
-        bg_cell_write(2, end_e00_bg2_cell_tbl[i].ofs, end_e00_bg2_cell_tbl[i].cell, (u32)end_e00_scrn_data, 0, 0x220);
-    }
-    oh_opening_demo(bg_w.bgw[2].bg_address, 64, 32, 0x800, 32, 0x220, 23);
-}
 
 
 

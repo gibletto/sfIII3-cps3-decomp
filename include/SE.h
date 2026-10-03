@@ -23,7 +23,7 @@ s32 Check_Voice_SE();
 void Finish_SE(void);
 u16 Get_Position(PLW* wk);
 void Se_Let(WORK_Other* ewk, u16 Code);
-void Stage_BGM(u16 Stage_Number, s32 Round_Number);
+void Stage_BGM();
 void bgm_request();
 void Se_Shock(WORK_Other* ewk, u16 Code);
 void Sound_SE();

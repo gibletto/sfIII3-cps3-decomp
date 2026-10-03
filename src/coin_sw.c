@@ -1,7 +1,8 @@
 /*
  * coin_sw.c  Coins, credits and switches
  *
- * Coin chute detection, credit add and credit_use, the coin counter and lockout coils,
+ * coin_work_init (first in the file) clears the coin chute and credit work. Coin chute detection,
+ * credit add and credit_use, the coin counter and lockout coils,
  * the player switch reads (normal and six-button panels, extended inputs), coin switch sampling and
  * the card dispenser.
  */
@@ -16,6 +17,24 @@
 #include "textsound.h"
 #include "sys_test.h"
 #include "cps3.h"
+
+
+
+/* provisional name */
+void coin_work_init(void) {
+    register s32 unused;
+    register u32 j;
+    register s32 i;
+    s8* p;
+    for (i = 0; i < 4; i++) {
+        p = (s8*)coin_chute_tbl[i];
+        for (j = 0; j < 8; j++) {
+            *p++ = 0;
+        }
+        p = credit_ptr_tbl[i];
+        *p = 0;
+    }
+}
 
 
 

@@ -3,6 +3,6 @@
 
 #include "structs.h"
 
-s32 game_config_main(void);
+s8 game_config_main(void);
 
 #endif

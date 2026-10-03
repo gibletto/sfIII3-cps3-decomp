@@ -5,7 +5,6 @@
  * drives in from the screen edge with a computed speed and engine sound, stops
  * (Appear_car_stop), plays its stop animation while raising demo_car_flag, then drives off
  * and frees itself. effect_M5_init also starts its companion part effect_M6.
- * effect_M3_init creates a sprite at one conn entry of a connected effect, 40 dots lower.
  * effect_M4 steps a timed palette script from effM4_dir_tbl through load_any_color.
  */
 
@@ -25,26 +24,6 @@
 #include "SE.h"
 #include "bg_sub.h"
 #include "effM5.h"
-
-
-
-s32 effect_M3_init(WORK_Other_CONN* wk, s16 num) {
-    WORK_Other* ewk;
-    s16 ix;
-    if ((ix = pull_effect_work(4)) == -1) {
-        return -1;
-    }
-    ewk = (WORK_Other*)frw[ix];
-    ewk->wu.be_flag = 1;
-    ewk->wu.id = 223;
-    ewk->wu.work_id = 16;
-    ewk->wu.cgromtype = 1;
-    ewk->wu.type = num;
-    ewk->wu.xyz[0].disp.pos = wk->conn[num].nx;
-    ewk->wu.xyz[1].disp.pos = wk->conn[num].ny + 40;
-    ewk->wu.cg_number = wk->conn[num].chr;
-    return 0;
-}
 
 
 

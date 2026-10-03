@@ -271,7 +271,7 @@ void remake_mvxy_PoGR(WORK* wk) {
 void check_body_touch(void) {
     PLW* p1w = &plw[0];
     PLW* p2w = &plw[1];
-    s32 meri;
+    s16 meri;
     if (p1w->wu.h_hos->hos_box[0] != 0 && p2w->wu.h_hos->hos_box[0] != 0) {
         meri = hit_check_subroutine(&p1w->wu, &p2w->wu, &p1w->wu.h_hos->hos_box[0], &p2w->wu.h_hos->hos_box[0]);
         if (meri != 0) {
@@ -485,7 +485,7 @@ no_hosei:
 
 
 
-s16 check_work_position(WORK* p1, WORK* p2) {
+s32 check_work_position(WORK* p1, WORK* p2) {
     s16 r;
     s16 d = p1->xyz[0].disp.pos - p2->xyz[0].disp.pos;
     if (d) {

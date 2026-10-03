@@ -1,7 +1,8 @@
 /*
  * EFFM3.C  Effect M3: zooming grade letter on the result screen
  *
- * Effect M3 is created by the EFFL1 grade plate (effect_M3_init in effM5) once per grade letter.
+ * Effect M3 is created by the EFFL1 grade plate (effect_M3_init, at the end of this file) once per
+ * grade letter; it creates a sprite at one conn entry of a connected effect, 40 dots lower.
  * effect_M3_move waits for Next_Step, then shrinks the letter from a large size to normal using
  * the M3_bahn_data speed and damping values; when the first letter lands it clears Next_Step and
  * calls the follow-up routine. effM3_trans places the letter on its BG family and draws it.
@@ -15,6 +16,16 @@
 #include "aboutspr.h"
 #include "EFFECT.h"
 #include "EffM3.h"
+#include "end_sub.h"
+#include "EFFM7.h"
+#include "ta_sub.h"
+#include "CALDIR.h"
+#include "CHARMOVE.h"
+#include "CHARSET.h"
+#include "textsound.h"
+#include "SE.h"
+#include "bg_sub.h"
+#include "effM5.h"
 
 
 
@@ -96,3 +107,26 @@ void effM3_trans(WORK* ewk) {
     ewk->position_y += ewk->xyz[1].disp.pos;
     sort_push_request4(ewk);
 }
+
+
+
+s32 effect_M3_init(WORK_Other_CONN* wk, s16 num) {
+    WORK_Other* ewk;
+    s16 ix;
+    if ((ix = pull_effect_work(4)) == -1) {
+        return -1;
+    }
+    ewk = (WORK_Other*)frw[ix];
+    ewk->wu.be_flag = 1;
+    ewk->wu.id = 223;
+    ewk->wu.work_id = 16;
+    ewk->wu.cgromtype = 1;
+    ewk->wu.type = num;
+    ewk->wu.xyz[0].disp.pos = wk->conn[num].nx;
+    ewk->wu.xyz[1].disp.pos = wk->conn[num].ny + 40;
+    ewk->wu.cg_number = wk->conn[num].chr;
+    return 0;
+}
+
+
+

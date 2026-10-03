@@ -707,14 +707,18 @@ void move_P2_move_P1(void) {
     if (plw[1].do_not_move == 0) {
         Player_move(&plw[1], sw_to_lvbt(p2sw_0));
     }
-    if (bg_app_stop == 0 && bg_app == 0 && set_field_hosei_flag(&plw[1], scrr, 1) != 0) {
-        set_field_hosei_flag(&plw[1], scrl, 0);
+    if (bg_app_stop == 0 && bg_app == 0) {
+        if (set_field_hosei_flag(&plw[1], scrr, 1)) {
+            set_field_hosei_flag(&plw[1], scrl, 0);
+        }
     }
     if (plw[0].do_not_move == 0) {
         Player_move(&plw[0], sw_to_lvbt(p1sw_0));
     }
-    if (bg_app_stop == 0 && bg_app == 0 && set_field_hosei_flag(&plw[0], scrr, 1) != 0) {
-        set_field_hosei_flag(&plw[0], scrl, 0);
+    if (bg_app_stop == 0 && bg_app == 0) {
+        if (set_field_hosei_flag(&plw[0], scrr, 1)) {
+            set_field_hosei_flag(&plw[0], scrl, 0);
+        }
     }
 }
 

@@ -224,19 +224,31 @@ void setup_bs_scrrrl_bs(void) {
     switch (plw[0].wu.operator + (plw[1].wu.operator * 2)) {
     case 1:
         bs_scrrrl[0][0] = scrc + bsmr_range_table[1][0][0];
-        bs_scrrrl[0][1] = scrc - bsmr_range_table[1][0][1];
+        {
+            s16* d = &bs_scrrrl[0][1];
+            const s16* q = &bsmr_range_table[1][0][1];
+            *d = scrc - *q;
+        }
         bs_scrrrl[1][0] = scrc + bsmr_range_table[1][1][0];
         bs_scrrrl[1][1] = scrc - bsmr_range_table[1][1][1];
         break;
     case 2:
         bs_scrrrl[0][0] = scrc + bsmr_range_table[2][0][0];
-        bs_scrrrl[0][1] = scrc - bsmr_range_table[2][0][1];
+        {
+            s16* d = &bs_scrrrl[0][1];
+            const s16* q = &bsmr_range_table[2][0][1];
+            *d = scrc - *q;
+        }
         bs_scrrrl[1][0] = scrc + bsmr_range_table[2][1][0];
         bs_scrrrl[1][1] = scrc - bsmr_range_table[2][1][1];
         break;
     default:
         bs_scrrrl[0][0] = scrc + bsmr_range_table[0][0][0];
-        bs_scrrrl[0][1] = scrc - bsmr_range_table[0][0][1];
+        {
+            s16* d = &bs_scrrrl[0][1];
+            const s16* q = &bsmr_range_table[0][0][1];
+            *d = scrc - *q;
+        }
         bs_scrrrl[1][0] = scrc + bsmr_range_table[0][1][0];
         bs_scrrrl[1][1] = scrc - bsmr_range_table[0][1][1];
         break;

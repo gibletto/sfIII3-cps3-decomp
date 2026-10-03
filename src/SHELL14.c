@@ -6,7 +6,7 @@
  * it runs the pattern in Pattern_Index through Shell14_Tbl. Each Shell14_nnnn routine is
  * a script stepped by CP_Index: SHELL_Term waits for the projectile, then the player jumps or
  * jump-attacks over it, follows up with normal or command attacks and ends with End_Pattern.
- * The last entry, Shell14_0012, is placed at the head of aboutspr.
+ * The last entry, the empty Shell14_0013, is placed at the head of aboutspr.
  */
 
 #include "structs.h"
@@ -232,10 +232,3 @@ void Shell14_0012(PLW* wk) {
     }
 }
 
-
-/* provisional name */
-void Shell14_0013(void) {}
-
-
-
-/* provisional name */

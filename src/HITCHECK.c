@@ -73,6 +73,7 @@ void set_char_base_data_init(WORK* wk) {
 
 
 
+/* provisional name */
 void hit_check_main_process(void) {
     aiuchi_flag = 0;
     if (hpq_in > 1) {

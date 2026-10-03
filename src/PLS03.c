@@ -608,7 +608,3 @@ go:
 }
 
 
-/* provisional name */
-s32 check_leap_dummy(void) {
-    return 0;
-}

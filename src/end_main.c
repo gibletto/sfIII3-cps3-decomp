@@ -2747,25 +2747,34 @@ void common_end_init01(void) {
 
 
 void end_fam_set(s16 i) {
-    s16 pos_work_x = bg_w.bgw[i].position_x;
-    s16 pos_work_y = bg_w.bgw[i].position_y;
-    pos_work_x = -pos_work_x & 0x3FF;
-    pos_work_y = (768 - (pos_work_y & 0x3FF)) & 0x3FF;
-    Family_Set_W(i + 1, pos_work_x, pos_work_y);
+    BGW* l = &bg_w.bgw[i];
+    s32 a, b, m;
+    a = l->position_x;
+    b = l->position_y;
+    a = -a;
+    m = 0x3FF;
+    a &= m;
+    b &= m;
+    b = (0x300 - b) & m;
+    Family_Set_W(i + 1, a, b);
 }
 
 
 
 void end_fam_set2(void) {
     s16 i;
-    s16 pos_work_x;
-    s16 pos_work_y;
     for (i = 0; i < bg_w.scno; i++) {
-        pos_work_x = bg_w.bgw[i].position_x;
-        pos_work_y = bg_w.bgw[i].position_y;
-        pos_work_x = -pos_work_x & 0x3FF;
-        pos_work_y = (768 - (pos_work_y & 0x3FF)) & 0x3FF;
-        Family_Set_W(i + 1, pos_work_x, pos_work_y);
+        BGW* l = &bg_w.bgw[i];
+        s32 a, b, m;
+        a = l->position_x;
+        b = l->position_y;
+        a = -a;
+        m = 0x3FF;
+        a &= m;
+        b &= m;
+        b = (0x300 - b) & m;
+        Family_Set_W(i + 1, a, b);
+        continue;
     }
 }
 

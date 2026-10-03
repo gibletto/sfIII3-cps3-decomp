@@ -9,7 +9,7 @@ void eeprom_config_apply();
 void eeprom_config_save(void);
 void eeprom_config_default(void);
 void eeprom_config_verify(void);
-s32 config_menu_run(void);
+s8 config_menu_run(void);
 void config_top_default(void);
 void sysconfig_coin(void);
 void sysconfig_chute_mode(void);

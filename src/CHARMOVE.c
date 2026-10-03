@@ -1742,10 +1742,8 @@ s32 comm_emhp(WORK* wk, CHAR_CMD* ctc) {
     return 1;
 }
 
-u32 comm_exbgs(u32 wk_adrs, CHAR_CMD* ctc, u32 arg2, u32 arg3)
-{
-
-    effect_F1_init(wk_adrs, (char)ctc->koc, arg2, arg3, ctc);
+u32 comm_exbgs(u32 wk_adrs, CHAR_CMD* ctc, u32 arg2, u32 arg3) {
+    effect_F1_init(wk_adrs, (u8)ctc->koc);
     return 1;
 }
 

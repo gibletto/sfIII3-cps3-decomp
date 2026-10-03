@@ -47,3 +47,17 @@ s16 y;
     fm_pos[plane].set_x.disp.pos = x;
     fm_pos[plane].set_y.disp.pos = y;
 }
+
+
+
+/* provisional name */
+void Family_Add_W(n, dx, dy)
+s32 n;
+s32 dx;
+s32 dy;
+{
+    fm_pos[n].set_x.cal += dx;
+    fm_pos[n].set_y.cal += dy;
+    fm_pos[n].set_x.disp.pos &= 0x3FF;
+    fm_pos[n].set_y.disp.pos &= 0x3FF;
+}

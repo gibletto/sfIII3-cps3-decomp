@@ -894,24 +894,19 @@ void cal_damage_vitality(PLW* as, PLW* ds) {
     u16 xx = as->wu.att.pow;
     s16 yy;
     s16 power = Damage_Power_Data[xx];
-    s32 t;
+    s32 d;
     if (as->player_number == PL_GOUKI2) {
         yy = Damage_Rate_Data[1][Round_Level];
     } else {
         yy = Damage_Rate_Data[0][Round_Level];
     }
-    t = power;
-    t *= yy;
-    ds->wu.dm_vital = t / 100;
+    ds->wu.dm_vital = power * yy / 100;
+    d = 8;
     if (as->wu.work_id == 1) {
-        t = ds->wu.dm_vital;
-        t *= as->att_plus;
-        ds->wu.dm_vital = t / 8;
+        ds->wu.dm_vital = ds->wu.dm_vital * as->att_plus / d;
     }
     if (ds->wu.work_id == 1) {
-        t = ds->wu.dm_vital;
-        t *= ds->def_plus;
-        ds->wu.dm_vital = t / 8;
+        ds->wu.dm_vital = ds->wu.dm_vital * ds->def_plus / d;
     }
 }
 

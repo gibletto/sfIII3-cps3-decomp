@@ -1,6 +1,9 @@
 /*
  * PLS03ATT.C  Normal attack, taunt, throw and cancel checks
  *
+ * The file begins with check_leap_dummy, an empty routine that follows check_leap_attack in
+ * PLS03.c.
+ *
  * Checks the player's buttons for normal attacks and related actions. check_nm_attack starts
  * standing, crouching and jumping normals; check_paring_attack and check_lever_up_attack handle
  * parry follow-ups and lever-up attacks; check_chouhatsu starts the taunt (personal action);
@@ -20,6 +23,17 @@
 #include "Grade.h"
 #include "PLPAT.h"
 #include "PLS03ATT.h"
+#include "EFFECT.h"
+#include "CMD_MAIN.h"
+#include "ta_sub.h"
+#include "PLS03.h"
+
+
+
+/* provisional name */
+s32 check_leap_dummy(void) {
+    return 0;
+}
 
 
 

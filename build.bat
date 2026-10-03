@@ -391,8 +391,6 @@ shc src\EFF58.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortne
 if errorlevel 1 goto fail
 shc src\Eff59.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\Eff59.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\EFF61.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\EFF61.obj >obj\shc.log 2>&1
-if errorlevel 1 goto fail
 shc src\EFF62.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\EFF62.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\EFF63.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\EFF63.obj >obj\shc.log 2>&1

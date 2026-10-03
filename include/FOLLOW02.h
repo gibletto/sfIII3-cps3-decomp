@@ -86,7 +86,7 @@ void Pattern20_0073(PLW* wk);
 void Pattern20_0074(PLW* wk);
 void Pattern20_0075(PLW* wk);
 void Pattern20_0076(PLW* wk);
-u32 Pattern20_0077(PLW* wk);
+void Pattern20_0077(PLW* wk);
 void Pattern20_0078(PLW* wk);
 void Follow01_0000(PLW* wk);
 void Follow01_0001(PLW* wk);

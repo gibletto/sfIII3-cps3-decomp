@@ -2,8 +2,7 @@
  * PLPAT09.C  Player 09 (Oro) special attack routines
  *
  * Character-specific attack routines for player number 9, dispatched by pl09_extra_attack
- * through pl09_exatt_table. The file begins with Att_PL08_TOKUSHUKOUDOU, player 8's personal
- * action (super gauge and a stun power boost of 6, capped 24).
+ * through pl09_exatt_table.
  * Att_SP_YAGYOUDAMA is the projectile super; set_tenguiwa, Att_PL09_EX_TENGUIWA and
  * Att_PL09_EX_KISHINRIKI handle the rock-summon and other extra moves, and
  * Att_JINNCHUUWATARI_EX the jumping special, with mvxy_table_reader stepping the move data.
@@ -27,37 +26,6 @@
 #include "CHARSET.h"
 #include "PLPAT09.h"
 
-
-
-void Att_PL08_TOKUSHUKOUDOU(PLW* wk) {
-    wk->scr_pos_set_flag = 0;
-    switch (wk->wu.routine_no[3]) {
-    case 0:
-        wk->wu.routine_no[3]++;
-        wk->wu.rl_flag = wk->wu.rl_waza;
-        hoken_muriyari_chakuchi(wk);
-        set_char_move_init((WORK*)wk, 5, wk->as->char_ix);
-        break;
-    case 1:
-        char_move((WORK*)wk);
-        if (wk->wu.cg_type == 40) {
-            wk->wu.cg_type = 0;
-            add_sp_arts_gauge_tokushu(wk);
-        }
-        if (wk->wu.cg_type == 64) {
-            wk->wu.routine_no[3]++;
-            wk->tk_kizetsu += 6;
-            if (wk->tk_kizetsu > 24) {
-                wk->tk_kizetsu = 24;
-            }
-            grade_add_personal_action(wk->wu.id);
-        }
-        break;
-    default:
-        char_move((WORK*)wk);
-        break;
-    }
-}
 
 
 void pl09_extra_attack(PLW* wk) {

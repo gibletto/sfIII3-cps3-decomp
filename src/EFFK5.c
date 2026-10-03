@@ -319,7 +319,7 @@ void K5_init_data(WORK* mwk, MVJ* mvj, u16* ixtbl) {
 
 
 void K5_init_data_copy(MVJ* mvj, K5Data* dad, s16 num) {
-    s32 i;
+    s16 i;
     MVJ* mv;
     K5Data* dd;
     for (i = 0; i < num; i++) {
@@ -335,14 +335,13 @@ void K5_init_data_copy(MVJ* mvj, K5Data* dad, s16 num) {
 
 /* provisional name */
 void K5_init_data_copy2(K5Data* dad, MVJ* mvj, s16 num) {
-    s32 i;
-    K5Data* d;
-    MVJ* m;
+    s16 i;
     for (i = 0; i < num; i++) {
-        d = &dad[i];
-        m = &mvj[i];
-        d->mvxy_lv[0] = m->r[0].pos.h;
+        K5Data* d = &dad[i];
+        MVJ* m = mvj;
+        dad[i].mvxy_lv[0] = mvj->r[0].pos.h;
         d->mvxy_lv[1] = m->r[1].pos.h;
+        mvj++;
         d->mvxy_lv[2] = m->r[2].pos.h;
         d->mvxy_lv[3] = m->r[3].pos.h;
     }

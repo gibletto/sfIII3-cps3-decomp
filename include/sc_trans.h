@@ -6,7 +6,7 @@
 s32 sc_chr_trans();
 void sc_chr_save(u16 rows);
 void sc_chr_load(u16 rows);
-void sc_chr_block_trans(u16 chr, u16 pos, u16 w, u16 h);
+void sc_chr_block_trans();
 void sc_chr_sheet_trans(u16 chr, u16 pos, u16 w, u16 h);
 void scfont_sqput(s16 x, s16 y, u16 w, u16 h, s16 attr, s16 code);
 void scfont_sqput_rev(s16 x, s16 y, u16 w, u16 h, s16 attr, s16 code);

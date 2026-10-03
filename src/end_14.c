@@ -6,7 +6,7 @@
  * to the staff roll. Scenes include a 12-step colour animation that rewrites the BG0 cell
  * block every 7 frames (end_e00_0000_col_sub), a fade and downward scroll, a scene that
  * waits for end_etc_flag before its fade, and layer placements with effect E6 objects and
- * the ending messages. Its initial cells are written by end_e00_cell_set in END_16.
+ * the ending messages. Its initial cells are written by end_e00_cell_set, at the end of this file.
  */
 
 #include "structs.h"
@@ -25,6 +25,8 @@
 #include "end_16.h"
 #include "aboutspr.h"
 #include "end_14.h"
+#include "end_sub.h"
+#include "bg000.h"
 
 
 
@@ -659,3 +661,23 @@ void end_e02_7000(void) {
         break;
     }
 }
+
+
+
+/* provisional name */
+void end_e00_cell_set(void) {
+    s32 i;
+    for (i = 0; i < 16; i++) {
+        bg_cell_write(0, end_e00_bg0_cell_tbl[i].ofs, end_e00_bg0_cell_tbl[i].cell, (u32)end_e00_scrn_data, 0, 0x220);
+    }
+    for (i = 0; i < 14; i++) {
+        end_ake_cell_put(0, end_e00_ake_cell_tbl[i].ofs, end_e00_ake_cell_tbl[i].cell, (u32)end_ake_scrn_data);
+    }
+    for (i = 0; i < 8; i++) {
+        bg_cell_write(2, end_e00_bg2_cell_tbl[i].ofs, end_e00_bg2_cell_tbl[i].cell, (u32)end_e00_scrn_data, 0, 0x220);
+    }
+    oh_opening_demo(bg_w.bgw[2].bg_address, 64, 32, 0x800, 32, 0x220, 23);
+}
+
+
+
