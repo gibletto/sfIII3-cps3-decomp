@@ -640,9 +640,8 @@ WORK_Other* ewk;
 
 void c3_new_damage(WORK* wk) {
     WORK* c2wk;
-    s16 cal_m;
-    s16 ix;
     s16 brlv;
+    s16 ix;
     if (Time_Over) {
         wk->dm_vital = 0;
     }
@@ -657,8 +656,7 @@ void c3_new_damage(WORK* wk) {
     if (c2wk->dm_stop < 0) {
         c2wk->dm_stop = -c2wk->dm_stop;
     }
-    cal_m = wk->dmcal_m;
-    wk->dm_vital = (wk->dm_vital * cal_m) / wk->dmcal_d;
+    wk->dm_vital = wk->dm_vital * wk->dmcal_m / wk->dmcal_d;
     ix = ix_exchange[wk->type];
     brlv = dm_copy_to_master[wk->type];
     c2wk->shell_ix[ix] -= wk->dm_vital;

@@ -11,7 +11,8 @@
  * match_state_0_fight handles a coin during the demo (Ck_Coin sees a coin, service input or free-play
  * start); Loop_Demo_Sub, Before_Select_Sub and
  * Erase_Insert_Coin serve the attract loop; Disp_Ranking and Request_Break_Sub handle the
- * ranking screen and break-in requests.
+ * ranking screen and break-in requests. draw_operator_info and Set_Mode_Pos, at the head of the
+ * file, place operator text for the current screen mode.
  */
 
 #include "structs.h"
@@ -59,6 +60,10 @@
 #include "ta_sub.h"
 #include "Game_Main.h"
 #include "eeprom.h"
+#include "meta_col.h"
+#include "PLCNT.h"
+#include "lose_pl.h"
+#include "PLS02.h"
 
 
 
@@ -1091,3 +1096,37 @@ s32 Ck_Coin(void) {
     }
     return coin_chute1_w[1] | coin_chute2_w[1] | credit_1p | credit_2p;
 }
+
+
+
+/* provisional name */
+void draw_operator_info(s32 y) {
+    s16 y1;
+    s16 y2;
+    if (Country == 6 || Country == 5) {
+        if (p1sw_0 & 0x10) {
+            tilemap_print_string_attr(DE_X[18] + 36, y + 20, 18, Game_Data_msg);
+            tilemap_print_string_attr(DE_X[18] + 31, y1 = y + 21, 18, Income_msg);
+            tilemap_print_string_attr(DE_X[18] + 31, y2 = y + 22, 18, Service_msg);
+            tilemap_print_string_attr(DE_X[18] + 31, y + 23, 18, Card_msg);
+            tilemap_print_hex_block(DE_X[18] + 41, y1, 18, hex_to_bcd(book_coin_count), 6, 0);
+            tilemap_print_hex_block(DE_X[18] + 41, y2, 18, hex_to_bcd(book_service_count), 6, 0);
+            tilemap_print_hex_block(DE_X[18] + 41, y + 23, 18, hex_to_bcd(book_card_count), 6, 0);
+        } else {
+            tilemap_clear_rect(DE_X[18] + 31, y + 20, DE_X[18] + 49, y + 23);
+        }
+    }
+}
+
+
+
+/* provisional name */
+void Set_Mode_Pos(s16* value, s16 add, s16 init) {
+    *value = init;
+    if (Game_setting.mode) {
+        *value += add;
+    }
+}
+
+
+

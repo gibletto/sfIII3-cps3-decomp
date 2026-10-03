@@ -61,34 +61,24 @@ void setup_vitality(WORK* wk, s16 pno) {
 
 
 void cal_dm_vital_gauge_hosei(PLW* wk) {
-    s32 v;
     s16 cnjix;
-    if (!wk->wu.dm_vital) {
-        return;
-    }
-    v = Max_vitality;
-    v *= 6;
-    if (wk->wu.vital_new < v / 10) {
-        if (Max_vitality == 192) {
-            cnjix = wk->wu.vital_new / 19;
-        } else {
-            cnjix = wk->wu.vital_new / 16;
+    if (wk->wu.dm_vital != 0) {
+        if (wk->wu.vital_new < Max_vitality * 6 / 10) {
+            if (Max_vitality == 192) {
+                cnjix = wk->wu.vital_new / 19;
+            } else {
+                cnjix = wk->wu.vital_new / 16;
+            }
+            if (cnjix > 5) {
+                cnjix = 5;
+            }
+            wk->wu.dm_vital = wk->wu.dm_vital * konjyou_tbl[wk->player_number][cnjix] / wk->wu.dmcal_m;
         }
-        if (cnjix > 5) {
-            cnjix = 5;
+        wk->wu.dm_vital = wk->wu.dm_vital * (32 - wk->tk_konjyou) / wk->wu.dmcal_m;
+        wk->wu.dm_vital = wk->wu.dm_vital * wk->wu.dmcal_m / wk->wu.dmcal_d;
+        if (wk->wu.dm_vital <= 0) {
+            wk->wu.dm_vital = 1;
         }
-        v = wk->wu.dm_vital;
-        v *= konjyou_tbl[wk->player_number][cnjix];
-        wk->wu.dm_vital = v / wk->wu.dmcal_m;
-    }
-    v = wk->wu.dm_vital;
-    v *= 32 - wk->tk_konjyou;
-    wk->wu.dm_vital = v / wk->wu.dmcal_m;
-    v = wk->wu.dm_vital;
-    v *= wk->wu.dmcal_m;
-    wk->wu.dm_vital = v / wk->wu.dmcal_d;
-    if (wk->wu.dm_vital <= 0) {
-        wk->wu.dm_vital = 1;
     }
 }
 
@@ -222,25 +212,25 @@ void add_sp_arts_gauge_paring(PLW* wk) {
 
 
 void add_sp_arts_gauge_tokushu(PLW* wk) {
-    s32 asag;
+    s16 asag;
     if (wk->wu.work_id != 1) {
         return;
     }
     asag = apagt_table[wk->player_number];
-    if (!asag) {
+    if (asag == 0) {
         return;
     }
-    if (!wk->wu.operator) {
+    if (wk->wu.operator == 0) {
         if (Country & 2) {
-            asag += asagh_zuru2[(*&Game_setting).level];
+            asag += asagh_zuru2[Game_setting.level];
         } else {
-            asag += asagh_zuru[(*&Game_setting).level];
+            asag += asagh_zuru[Game_setting.level];
         }
     }
     if (asag <= 0) {
         asag = 1;
     }
-    ((void(*)(SA_WORK* wk, s16 ix, s16 asag, u16 mf))add_super_arts_gauge)(wk->sa, wk->wu.id, asag, wk->metamorphose);
+    add_super_arts_gauge(wk->sa, wk->wu.id, asag, wk->metamorphose);
 }
 
 
@@ -270,25 +260,25 @@ void add_sp_arts_gauge_ukemi(PLW* wk) {
 
 
 void add_sp_arts_gauge_nagenuke(PLW* wk) {
-    s32 asag;
+    s16 asag;
     if (wk->wu.work_id != 1) {
         return;
     }
     asag = nagenuke_apagt_table[wk->player_number];
-    if (!asag) {
+    if (asag == 0) {
         return;
     }
-    if (!wk->wu.operator) {
+    if (wk->wu.operator == 0) {
         if (Country & 2) {
-            asag += asagh_zuru2[(*&Game_setting).level];
+            asag += asagh_zuru2[Game_setting.level];
         } else {
-            asag += asagh_zuru[(*&Game_setting).level];
+            asag += asagh_zuru[Game_setting.level];
         }
     }
     if (asag <= 0) {
         asag = 1;
     }
-    ((void(*)(SA_WORK* wk, s16 ix, s16 asag, u16 mf))add_super_arts_gauge)(wk->sa, wk->wu.id, asag, wk->metamorphose);
+    add_super_arts_gauge(wk->sa, wk->wu.id, asag, wk->metamorphose);
 }
 
 

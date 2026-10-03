@@ -32,6 +32,7 @@ s32 Cut_Cut_Sub(s16 xx);
 void Setup_Play_Type(void);
 u8 * set_result_target_loser(void);
 void scrn_pos_clear(void);
+void challenger_banner_clear(void);
 void commit_name_entry_row_both_players();
 void Clear_Flash_No(void);
 s32 insert_ranking_wins(s16 PL_id);

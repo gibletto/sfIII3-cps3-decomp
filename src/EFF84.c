@@ -96,21 +96,24 @@ void effect_84_move(WORK_Other* ewk) {
 
 /* provisional name */
 void eff84_message_clear(void) {
+    void (*fp)() = tilemap_clear_rect;
+    s16* p = &DE_X[3];
+    s16* q = p;
     switch (message_index) {
     case 0:
-        tilemap_clear_rect(DE_X[3] + 14, 9, DE_X[3] + 32, 17);
+        fp(*p + 14, 9, *q + 32, 17);
         break;
     case 1:
-        tilemap_clear_rect(DE_X[3] + 12, 9, DE_X[3] + 35, 13);
+        fp(*p + 12, 9, *q + 35, 13);
         break;
     case 2:
-        tilemap_clear_rect(DE_X[3] + 12, 9, DE_X[3] + 35, 13);
+        fp(*p + 12, 9, *q + 35, 13);
         break;
     case 3:
-        tilemap_clear_rect(DE_X[3] + 8, 8, DE_X[3] + 40, 14);
+        fp(*p + 8, 8, *q + 40, 14);
         break;
     default:
-        tilemap_clear_rect(DE_X[3] + 12, 9, DE_X[3] + 35, 13);
+        fp(*p + 12, 9, *q + 35, 13);
         break;
     }
 }

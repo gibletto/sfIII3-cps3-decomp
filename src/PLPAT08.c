@@ -5,7 +5,8 @@
  * routine numbers 16 and up through pl08_exatt_table.
  * Att_PL08_HEALING runs the healing super art: while the animation plays it restores 1-3 points
  * of vitality per frame (by cg_type) up to full, and a button listed in pl08_hcs_tbl cuts the
- * pose short. The character's personal action routine is placed at the head of PLPAT09.
+ * pose short. Att_PL08_TOKUSHUKOUDOU, at the end of the file, is the character's personal action
+ * (super gauge and a stun power boost of 6, capped 24).
  */
 
 #include "structs.h"
@@ -15,6 +16,15 @@
 #include "CHARMOVE.h"
 #include "CHARSET.h"
 #include "PLPAT08.h"
+#include "PLS02.h"
+#include "PLSGAUGE.h"
+#include "CALDIR.h"
+#include "EFF13_KOTP.h"
+#include "EFFECT.h"
+#include "Grade.h"
+#include "PLPAT.h"
+#include "PLS01.h"
+#include "PLPAT09.h"
 
 
 void pl08_extra_attack(PLW* wk) {
@@ -61,3 +71,37 @@ void Att_PL08_HEALING(PLW* wk) {
         break;
     }
 }
+
+
+
+void Att_PL08_TOKUSHUKOUDOU(PLW* wk) {
+    wk->scr_pos_set_flag = 0;
+    switch (wk->wu.routine_no[3]) {
+    case 0:
+        wk->wu.routine_no[3]++;
+        wk->wu.rl_flag = wk->wu.rl_waza;
+        hoken_muriyari_chakuchi(wk);
+        set_char_move_init((WORK*)wk, 5, wk->as->char_ix);
+        break;
+    case 1:
+        char_move((WORK*)wk);
+        if (wk->wu.cg_type == 40) {
+            wk->wu.cg_type = 0;
+            add_sp_arts_gauge_tokushu(wk);
+        }
+        if (wk->wu.cg_type == 64) {
+            wk->wu.routine_no[3]++;
+            wk->tk_kizetsu += 6;
+            if (wk->tk_kizetsu > 24) {
+                wk->tk_kizetsu = 24;
+            }
+            grade_add_personal_action(wk->wu.id);
+        }
+        break;
+    default:
+        char_move((WORK*)wk);
+        break;
+    }
+}
+
+

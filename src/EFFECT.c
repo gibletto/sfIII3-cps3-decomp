@@ -53,7 +53,9 @@ void effect_work_init(void) {
     }
     frwctr = 128;
     for (i = 0; i < 8; i++) {
-        head_ix[i] = tail_ix[i] = -1;
+        s16* t = &tail_ix[i];
+        head_ix[i] = -1;
+        *t = -1;
         exec_tm[i] = 0;
     }
 }

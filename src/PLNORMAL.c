@@ -857,10 +857,9 @@ void Normal_52000(PLW* wk) {
 
 
 
-void Normal_53000(PLW* wk) {
-    if (wk->the_same_players) {
-        wk->wu.next_z = wk->wu.my_priority + 1;
-    }
+void Normal_53000(PLW* wk)
+{
+    if (wk->the_same_players) wk->wu.next_z = wk->wu.my_priority + 1;
     switch (wk->wu.routine_no[3]) {
     case 0:
         wk->wu.routine_no[3]++;
@@ -870,25 +869,18 @@ void Normal_53000(PLW* wk) {
     case 1:
         char_move(&wk->wu);
         set_new_jpdir(wk);
-        if (wk->wu.cg_type == 0xFF) {
+        if ((u8)wk->wu.cg_type == 0xFF) {
             check_jump_rl_dir(wk);
             switch (wk->jpdir) {
-            case 1:
-                wk->wu.routine_no[2] = 21;
-                break;
-            case 2:
-                wk->wu.routine_no[2] = 23;
-                break;
-            default:
-                wk->wu.routine_no[2] = 22;
-                break;
+            case 1: wk->wu.routine_no[2] = 21; break;
+            case 2: wk->wu.routine_no[2] = 23; break;
+            default: wk->wu.routine_no[2] = 22; break;
             }
             wk->wu.routine_no[3] = 1;
             set_char_move_init(&wk->wu, 0, jpdat_tbl[wk->wu.routine_no[2] - 18][0]);
             char_move_z(&wk->wu);
             setup_mvxy_data(&wk->wu, jpdat_tbl[wk->wu.routine_no[2] - 18][1]);
-            wk->wu.mvxy.a[0].real.h = (wk->wu.mvxy.a[0].real.h * 6) / 10;
-            wk->wu.mvxy.a[1].real.h = (wk->wu.mvxy.a[1].real.h << 3) / 10;
+            { int d = 10; { s16 *p = &wk->wu.mvxy.a[0].real.h; *p = *p * 6 / d; } { s16 *p = &wk->wu.mvxy.a[1].real.h; *p = *p * 8 / d; } }
             add_mvxy_speed(&wk->wu);
         }
         break;
@@ -912,7 +904,7 @@ void Normal_54000(PLW* wk) {
             wk->wu.cg_type = 0;
             wk->wu.routine_no[2] = 18;
             wk->wu.routine_no[3] = 0;
-            if (wk->wu.rl_flag != check_work_position((WORK*)wk, (WORK*)wk->wu.target_adrs)) {
+            if (check_work_position((WORK*)wk, (WORK*)wk->wu.target_adrs) != wk->wu.rl_flag) {
                 wk->wu.routine_no[2] = 20;
             }
         }

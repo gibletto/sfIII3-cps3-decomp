@@ -9,6 +9,8 @@
  * challenger breaks in.
  * The file also holds two effect 58 type routines called from EFF58: SF33rd_Logo (puts the logo
  * and fades it) and EFF58_Type_11 (steps the tone palette through six levels).
+ * Effect 60, at the end of the file, is a flashing stage object: effect_60_init creates it from
+ * flash_obj_data61 and it blinks with a fixed period and animates (used by bg000 and bg050).
  */
 
 #include "structs.h"
@@ -23,6 +25,10 @@
 #include "CHARMOVE.h"
 #include "Eff59.h"
 #include "EFF58.h"
+#include "ta_sub.h"
+#include "CHARSET.h"
+#include "bg_sub.h"
+#include "EFF61.h"
 void effect_59_move(WORK_Other* ewk) {
     WORK_Other* mwk = (WORK_Other*)ewk->my_master;
     if (mwk->wu.be_flag == 0) {
@@ -144,3 +150,77 @@ s32 Check_Break_Into_59_ID04(WORK_Other* ewk) {
     }
     return 0;
 }
+
+
+
+void effect_60_move(WORK_Other* ewk) {
+    switch (ewk->wu.routine_no[0]) {
+    case 0:
+        ewk->wu.routine_no[0]++;
+        set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
+        ewk->wu.disp_flag = 1;
+        break;
+    case 1:
+        if (compel_dead_check(ewk)) {
+            ewk->wu.routine_no[0]++;
+            ewk->wu.disp_flag = 0;
+            break;
+        }
+        if (!EXE_flag && !Game_pause && !EXE_obroll) {
+            ewk->wu.old_rno[1]--;
+            if (ewk->wu.old_rno[1] <= 0) {
+                ewk->wu.disp_flag ^= 1;
+                ewk->wu.old_rno[1] = ewk->wu.old_rno[0];
+                if (ewk->wu.hit_stop) {
+                    char_move(&ewk->wu);
+                }
+            }
+        }
+        disp_pos_trans_entry_rs(ewk);
+        break;
+    case 2:
+        ewk->wu.routine_no[0]++;
+        break;
+    default:
+        all_cgps_put_back(ewk);
+        push_effect_work((WORK*)ewk);
+        break;
+    }
+}
+
+
+
+s32 effect_60_init(s16 type) {
+    WORK_Other* ewk;
+    s16 ix;
+    const s16* data_ptr;
+    if ((ix = pull_effect_work(4)) == -1) {
+        return -1;
+    }
+    data_ptr = flash_obj_data61[type];
+    ewk = (WORK_Other*)frw[ix];
+    ewk->wu.be_flag = 1;
+    ewk->wu.id = 60;
+    ewk->wu.work_id = 16;
+    ewk->wu.cgromtype = 1;
+    ewk->wu.rl_flag = 0;
+    ewk->wu.my_col_mode = 0x4200;
+    ewk->wu.type = type;
+    ewk->wu.dead_f = *data_ptr++;
+    ewk->wu.my_family = *data_ptr++;
+    ewk->wu.my_col_code = *data_ptr++;
+    ewk->wu.xyz[0].disp.pos = *data_ptr++;
+    ewk->wu.xyz[1].disp.pos = *data_ptr++;
+    ewk->wu.my_priority = ewk->wu.position_z = *data_ptr++;
+    ewk->wu.char_index = *data_ptr++;
+    ewk->wu.hit_stop = *data_ptr++;
+    ewk->wu.sync_suzi = *data_ptr++;
+    ewk->wu.old_rno[0] = *data_ptr++;
+    ewk->wu.old_rno[1] = ewk->wu.old_rno[0];
+    ewk->wu.char_table[0] = char_add[bg_w.bg_index];
+    suzi_offset_set(ewk);
+    return 0;
+}
+
+
+

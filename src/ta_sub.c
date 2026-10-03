@@ -1,6 +1,9 @@
 /*
  * ta_sub.c  Stage background object helpers
  *
+ * The file begins with cal_bg_speed_data_x, the x counterpart of the BG chase speed routines in
+ * tate00.c.
+ *
  * Shared routines for the stage background tasks and their objects (effects that live in the
  * stage). sync_fam_set / sync_fam_set2 / sync_fam_set3 set a plane's family position
  * from its BG position. range_x_check / y_range / xy_range decide whether an object is on
@@ -22,6 +25,9 @@
 #include "aboutspr.h"
 #include "HITCHECK.h"
 #include "ta_sub.h"
+#include "bg000.h"
+#include "PLS02.h"
+#include "tate00.h"
 
 #pragma inline(obr_disp_off_check)
 
@@ -602,3 +608,29 @@ void win_lose_work_clear(void) {
     lose_rno[1] = 0;
     lose_free[1] = 0;
 }
+
+
+
+void cal_bg_speed_data_x(s16 bg_num, s16 tm, s16 dummy) {
+    MotionState ms;
+    bg_w.bgw[bg_num].chase_xy[0].disp.low = 0;
+    ms.timer = tm;
+    ms.timer2 = (ms.timer - 1) * ms.timer / 2 + ms.timer;
+    ms.x.ps.h = chase_x - bg_w.bgw[bg_num].chase_xy[0].disp.pos;
+    ms.x.ps.l = 0;
+    if (!ms.timer) {
+        ms.amx = 0;
+        ms.dlx = 0;
+        ms.spx = 0;
+    } else {
+        ms.amx = ms.x.pl % ms.timer2;
+        ms.spx = ms.dlx = ms.x.pl / ms.timer2;
+    }
+    bg_mvxy.a[0].sp = ms.spx;
+    bg_mvxy.d[0].sp = ms.dlx;
+    bg_w.bgw[bg_num].chase_xy[0].cal += ms.amx;
+    bg_mvxy.kop[0] = 0;
+}
+
+
+

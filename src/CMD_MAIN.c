@@ -678,15 +678,15 @@ void game_config_damage_item_en(void) {
 /* provisional name */
 void game_config_timer_item_en(void) {
     Config_Move_en = 0;
-    if (((s8)game_config_lever_repeat_en(4, 2))) {
+    if (game_config_lever_repeat_en(4, 2)) {
         Config_Move_en = -1;
-    } else if (((s8)game_config_lever_repeat_en(8, 3))) {
+    } else if (game_config_lever_repeat_en(8, 3)) {
         Config_Move_en = 1;
     } else {
-        if (~p1sw_1 & p1sw_0 & 0x10) {
+        if ((p1sw_0 & ~p1sw_1) & 0x10) {
             Config_Move_en = -1;
         }
-        if (~p1sw_1 & p1sw_0 & 0x20) {
+        if ((p1sw_0 & ~p1sw_1) & 0x20) {
             Config_Move_en = 1;
         }
     }
@@ -695,8 +695,8 @@ void game_config_timer_item_en(void) {
         game_config_work.set3 += Config_Move_en;
         game_config_work.set3 &= 3;
         Config_New_en = game_config_work.set3;
-        Config_Attr_en = (Config_New_en != (*&Game_setting).set3) ? 8 : 2;
-        ((void(*)(s16 newv, u16 oldv, s16 attr))game_config_print_gauge_en)(Config_New_en, Config_Old_en, Config_Attr_en);
+        Config_Attr_en = Config_New_en != Game_setting.set3 ? 8 : 2;
+        game_config_print_gauge_en(Config_New_en, Config_Old_en, Config_Attr_en);
     }
 }
 
@@ -3619,13 +3619,16 @@ void debug_char_slot_init(s16 id) {
 /* provisional name */
 void debug_edit_slots_reset(void) {
     s16 i;
+    s16* sp = dbg_slot_w[0];
+
     for (i = 0; i < 2; i++) {
-        dbg_slot_w[i][0] = 1;
-        dbg_slot_w[i][1] = 1;
-        dbg_slot_w[i][2] = 0;
-        dbg_slot_w[i][3] = 1;
-        dbg_slot_w[i][8] = 0;
-        continue;
+        s16* p = sp;
+        sp[0] = 1;
+        p[1] = 1;
+        p[2] = 0;
+        p[3] = 1;
+        p[8] = 0;
+        sp += 9;
     }
 }
 

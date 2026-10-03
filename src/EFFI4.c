@@ -8,6 +8,7 @@
  *   kotp_07000  shell whose flight changes on frame type 20, turned toward the opponent
  *   kotp_08000 / kotp_09000  shells that fly until the timer, screen edge or floor
  *   kotp_11000  shell that falls to the floor and plays its landing pattern
+ *   kotp_12000 / kotp_13000  further shell processes, at the end of the file
  * Hits reduce the shell's vitality: a light hit spawns an effect 96 flash, enough damage plays
  * the defeat / hit / explode pattern (erdf / erht / erex); some shells change owner when
  * reflected. kotp_10000 plays a pattern to its end and finishes the shell.
@@ -25,6 +26,9 @@
 #include "EFF96.h"
 #include "CHARSET.h"
 #include "EFFI4.h"
+#include "EFFECT.h"
+#include "EFF13_KOTP.h"
+#include "fighter.h"
 
 
 
@@ -506,3 +510,183 @@ void kotp_11000(WORK_Other* ewk, TAMA* twk) {
         ewk->wu.position_z = ewk->wu.next_z;
     }
 }
+
+
+
+void kotp_12000(WORK_Other* ewk, TAMA* twk) {
+    if (ewk->wu.hf.hit_flag) {
+        ewk->wu.routine_no[1] = 1;
+    }
+    switch (ewk->wu.routine_no[1]) {
+    case 0:
+        if (ewk->wu.hit_stop) {
+            if (ewk->wu.hit_stop == 1) {
+                ewk->wu.hit_stop = 0;
+                add_mvxy_speed_exp(&ewk->wu, 2);
+            } else {
+                ewk->wu.hit_stop--;
+                break;
+            }
+        } else {
+            add_mvxy_speed(&ewk->wu);
+        }
+        cal_mvxy_speed(&ewk->wu);
+        char_move(&ewk->wu);
+        if (ewk->wu.cg_type == 10) {
+            add_to_mvxy_data(&ewk->wu, twk->data01);
+            ewk->wu.cg_type = 0;
+            break;
+        }
+        if (ewk->wu.cg_type == 0xFF) {
+            set_char_move_init(&ewk->wu, 0, twk->ernm);
+            ewk->wu.routine_no[1] = 2;
+            ewk->wu.routine_no[2] = 0;
+            break;
+        }
+        if ((ewk->wu.xyz[1].disp.pos + ewk->wu.cg_jphos) <= 0) {
+            ewk->wu.mvxy.a[0].sp = 0;
+            ewk->wu.mvxy.a[1].sp = 0;
+            ewk->wu.mvxy.d[0].sp = 0;
+            ewk->wu.mvxy.d[1].sp = 0;
+            set_char_move_init(&ewk->wu, 0, twk->erex);
+            ewk->wu.routine_no[1] = 2;
+            ewk->wu.routine_no[2] = 1;
+            ewk->wu.xyz[1].disp.pos = -ewk->wu.cg_jphos;
+            break;
+        }
+        if (--ewk->wu.dir_timer >= 0 && !screen_range_check(&ewk->wu)) {
+            break;
+        }
+        ewk->wu.mvxy.a[0].sp /= 4;
+        ewk->wu.mvxy.a[1].sp /= 4;
+        set_char_move_init(&ewk->wu, 0, twk->ernm);
+        ewk->wu.routine_no[1] = 2;
+        ewk->wu.routine_no[2] = 0;
+        break;
+    case 1:
+        ewk->wu.vital_new -= ewk->wu.dm_vital;
+        ewk->wu.dm_vital = 0;
+        if (ewk->wu.vital_new < 256) {
+            if (ewk->wu.hf.hit.player) {
+                if (ewk->wu.hf.hit.player & 0xF0) {
+                    set_char_move_init(&ewk->wu, 0, twk->erdf);
+                } else {
+                    set_char_move_init(&ewk->wu, 0, twk->erht);
+                }
+            } else {
+                set_char_move_init(&ewk->wu, 0, twk->erex);
+            }
+            ewk->wu.routine_no[1] = 2;
+            ewk->wu.routine_no[2] = 1;
+            ewk->wu.kage_flag = 0;
+            ewk->wu.hit_stop = 0;
+        } else {
+            ewk->wu.routine_no[1] = 0;
+            if (ewk->wu.hf.hit.player) {
+                if (ewk->wu.hf.hit.player & 0xF0) {
+                    effect_96_init(&ewk->wu, twk->erdf, ewk->wu.disp_flag, ewk->wu.hit_stop);
+                } else {
+                    effect_96_init(&ewk->wu, twk->erht, ewk->wu.disp_flag, ewk->wu.hit_stop);
+                }
+            } else {
+                effect_96_init(&ewk->wu, twk->erex, ewk->wu.disp_flag, ewk->wu.hit_stop);
+            }
+            if (ewk->dm_refrect) {
+                ewk->master_id = (ewk->master_id + 1) & 1;
+                ewk->wu.rl_flag = (ewk->wu.rl_flag + 1) & 1;
+                ewk->dm_refrect = 0;
+            }
+        }
+        ewk->wu.hf.hit_flag = 0;
+        ewk->wu.hit_quake = 0;
+        break;
+    case 2:
+        switch (ewk->wu.routine_no[2]) {
+        case 0:
+            add_mvxy_speed(&ewk->wu);
+            cal_mvxy_speed(&ewk->wu);
+        case 1:
+            char_move(&ewk->wu);
+            if (ewk->wu.cg_type == 0xFF) {
+                ewk->wu.disp_flag = 0;
+                ewk->wu.routine_no[0] = 2;
+            }
+            break;
+        }
+        break;
+    }
+}
+
+
+
+void kotp_13000(WORK_Other* ewk, TAMA* twk) {
+    PLW* mwk;
+    PLW* emwk;
+    s16 ipos_x;
+    if (ewk->wu.hf.hit_flag) {
+        ewk->wu.routine_no[1] = 1;
+    }
+    mwk = (PLW*)ewk->my_master;
+    if (mwk->wu.routine_no[1] != 4) {
+        ewk->wu.routine_no[0] = 2;
+        ewk->wu.disp_flag = 0;
+        return;
+    }
+    switch (ewk->wu.routine_no[1]) {
+    case 0:
+        if (ewk->wu.hit_stop) {
+            ewk->wu.hit_stop--;
+            break;
+        }
+        if (!ewk->wu.routine_no[3]) {
+            ewk->wu.xyz[1].disp.pos = 0;
+            ewk->wu.routine_no[3]++;
+            if (twk->data00) {
+                mwk = (PLW*)ewk->my_master;
+                emwk = (PLW*)mwk->wu.target_adrs;
+                ipos_x = enemy_pos_hos[0][emwk->player_number][0];
+                ewk->wu.xyz[0].disp.pos =
+                    emwk->wu.rl_flag ? emwk->wu.xyz[0].disp.pos + ipos_x : emwk->wu.xyz[0].disp.pos - ipos_x;
+            }
+        }
+        char_move(&ewk->wu);
+        if (ewk->wu.cg_type == 0xFF) {
+            set_char_move_init(&ewk->wu, 0, twk->ernm);
+            ewk->wu.routine_no[1] = 2;
+            ewk->wu.routine_no[2] = 0;
+            break;
+        }
+        if (screen_range_check(&ewk->wu)) {
+            ewk->wu.routine_no[0] = 2;
+            ewk->wu.disp_flag = 0;
+            break;
+        }
+        break;
+    case 1:
+        ewk->wu.vital_new -= ewk->wu.dm_vital;
+        ewk->wu.dm_vital = 0;
+        if (ewk->wu.vital_new < 256) {
+            ewk->wu.routine_no[1] = 2;
+            ewk->wu.routine_no[2] = 1;
+            ewk->wu.kage_flag = 0;
+            ewk->wu.hit_stop = 0;
+            ewk->wu.att_hit_ok = 0;
+        } else {
+            ewk->wu.routine_no[1] = 0;
+        }
+        ewk->wu.hf.hit_flag = 0;
+        ewk->wu.hit_quake = 0;
+        break;
+    case 2:
+        char_move(&ewk->wu);
+        ewk->wu.att_hit_ok = 0;
+        if (ewk->wu.cg_type == 0xFF) {
+            ewk->wu.routine_no[0] = 2;
+            ewk->wu.disp_flag = 0;
+        }
+        break;
+    }
+}
+
+
+

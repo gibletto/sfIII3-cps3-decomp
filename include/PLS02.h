@@ -14,7 +14,7 @@ s16 cal_attdir(WORK* wk);
 void cal_mvxy_speed(WORK* wk);
 void check_body_touch(void);
 void check_body_touch2(void);
-s16 check_work_position(WORK* p1, WORK* p2);
+s32 check_work_position(WORK* p1, WORK* p2);
 s32 check_work_position_bonus(WORK* hm, s16 tx);
 s16 cal_attdir_flip(s16 dir);
 s32 get_guard_direction(WORK* as, WORK* ds);

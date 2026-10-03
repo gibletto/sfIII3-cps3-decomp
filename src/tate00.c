@@ -1,7 +1,7 @@
 /*
  * tate00.c  Stage background control task
  *
- * cal_bg_speed_data, cal_bg_speed_data_x and cal_bg_speed_data_y compute the speed and deceleration
+ * cal_bg_speed_data and cal_bg_speed_data_y (cal_bg_speed_data_x is at the head of ta_sub.c) compute the speed and deceleration
  * that bring a BG plane's chase position to the target (chase_x / chase_y) in a given number
  * of frames, spreading the remainder so the plane arrives exactly.
  * TATE00 is the per-frame stage BG entry used during fights (and by
@@ -53,29 +53,6 @@ s16 tm;
     bg_w.bgw[bg_num].chase_xy[0].cal += ms.amx;
     bg_w.bgw[bg_num].chase_xy[1].cal += ms.amy;
     bg_mvxy.kop[0] = bg_mvxy.kop[1] = 0;
-}
-
-
-
-void cal_bg_speed_data_x(s16 bg_num, s16 tm, s16 dummy) {
-    MotionState ms;
-    bg_w.bgw[bg_num].chase_xy[0].disp.low = 0;
-    ms.timer = tm;
-    ms.timer2 = (ms.timer - 1) * ms.timer / 2 + ms.timer;
-    ms.x.ps.h = chase_x - bg_w.bgw[bg_num].chase_xy[0].disp.pos;
-    ms.x.ps.l = 0;
-    if (!ms.timer) {
-        ms.amx = 0;
-        ms.dlx = 0;
-        ms.spx = 0;
-    } else {
-        ms.amx = ms.x.pl % ms.timer2;
-        ms.spx = ms.dlx = ms.x.pl / ms.timer2;
-    }
-    bg_mvxy.a[0].sp = ms.spx;
-    bg_mvxy.d[0].sp = ms.dlx;
-    bg_w.bgw[bg_num].chase_xy[0].cal += ms.amx;
-    bg_mvxy.kop[0] = 0;
 }
 
 

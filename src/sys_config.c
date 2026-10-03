@@ -296,10 +296,10 @@ void eeprom_config_verify(void) {
 
 
 /* provisional name */
-s32 config_menu_run(void)
+s8 config_menu_run(void)
 {
   config_menu_tbl[Config_No_0]();
-  return (s32)(char)cfg_reserve;
+  return cfg_reserve;
 }
 
 

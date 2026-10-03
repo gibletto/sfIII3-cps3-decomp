@@ -1193,22 +1193,21 @@ void Pattern20_0076(PLW* wk) {
     }
 }
 
-u32 Pattern20_0077(PLW* wk)
-{
-    s16 lever;
+void Pattern20_0077(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        lever = 0x82;
+        Normal_Attack(wk, 8, 0x82);
         break;
     case 1:
-        lever = 0x102;
+        Normal_Attack(wk, 8, 0x102);
         break;
     case 2:
-        return ((u32 (*)())Command_Attack)(wk, 8, 30, 10, -1);
+        Command_Attack(wk, 8, 30, 10, -1);
+        break;
     default:
-        return ((u32 (*)())End_Pattern)();
+        End_Pattern(wk);
+        break;
     }
-    return ((u32 (*)())Normal_Attack)(wk, 8, lever);
 }
 
 

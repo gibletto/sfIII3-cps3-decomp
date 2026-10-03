@@ -1,7 +1,6 @@
 /*
- * EFF42.C  Effect 41 init and effect 42 (order-driven select object)
+ * EFF42.C  Effect 42 (order-driven select object)
  *
- * effect_41_init creates the super art sign for a player (not in test mode).
  * Effect 42 is a select-screen object driven through the Order tables: EFF42_SUDDENLY,
  * SLIDE_IN, SLIDE_OUT, KILL and MOVE place it from Pos_Data_69, slide it in from either
  * side, or release it. Used by sel_pl and next_cpu.
@@ -17,32 +16,6 @@
 #include "EFFECT.h"
 #include "CHARMOVE.h"
 #include "EFF42.h"
-
-
-
-s32 effect_41_init(PLW* wk, u8 data) {
-    WORK_Other* ewk;
-    s16 ix;
-    if (test_flag) {
-        return;
-    }
-    if ((ix = pull_effect_work(3)) == -1) {
-        return -1;
-    }
-    ewk = (WORK_Other*)frw[ix];
-    write_my_shell_ix(&wk->wu, ix);
-    ewk->wu.be_flag = 1;
-    ewk->wu.type = data;
-    ewk->wu.id = 41;
-    ewk->wu.work_id = 16;
-    ewk->wu.my_family = wk->wu.my_family;
-    ewk->wu.cgromtype = 1;
-    ewk->my_master = (u32*)wk;
-    ewk->master_work_id = wk->wu.work_id;
-    ewk->master_id = wk->wu.id;
-    *ewk->wu.char_table = plef_char_table;
-    return 0;
-}
 
 
 

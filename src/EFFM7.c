@@ -1,8 +1,6 @@
 /*
- * EFFM7.C  Effects M6, M7, M8 (win-pose extras) and fight player control
+ * EFFM7.C  Effects M7, M8 (win-pose extras) and fight player control
  *
- * effect_M6_init (id 226, from effM5) creates an object behind a parent effect, copying its
- * position, facing and colour, with char 105 of etc_char_table.
  * Effect M7 (id 227): effect_M7_init (from win_pl) creates six objects around the losing opponent
  * from a position table; effm7_move places each relative to the opponent, waits, animates,
  * jumps up and flies off horizontally until off screen.
@@ -32,33 +30,6 @@
 #include "spgauge.h"
 #include "sc_sub.h"
 #include "EFFM7.h"
-
-
-
-s32 effect_M6_init(WORK_Other* oya) {
-    WORK_Other* ewk;
-    s16 ix;
-    if ((ix = pull_effect_work(3)) == -1) {
-        return -1;
-    }
-    ewk = (WORK_Other*)frw[ix];
-    ewk->wu.be_flag = 1;
-    ewk->wu.id = 226;
-    ewk->wu.work_id = 16;
-    ewk->wu.cgromtype = 1;
-    ewk->wu.disp_flag = 0;
-    ewk->my_master = (u32*)oya;
-    ewk->wu.my_family = 2;
-    ewk->wu.char_index = 105;
-    ewk->wu.my_col_mode = 0x4200;
-    ewk->wu.my_priority = ewk->wu.position_z = oya->wu.my_priority - 1;
-    ewk->wu.xyz[0].cal = oya->wu.xyz[0].cal;
-    ewk->wu.xyz[1].cal = oya->wu.xyz[1].cal;
-    ewk->wu.rl_flag = oya->wu.rl_flag;
-    *ewk->wu.char_table = etc_char_table;
-    ewk->wu.my_col_code = oya->wu.my_col_code;
-    suzi_offset_set(ewk);
-}
 
 
 

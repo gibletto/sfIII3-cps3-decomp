@@ -306,11 +306,21 @@ void scfont_page1_fill(u32 attr, u16 code) {
 /* provisional name */
 void scrn_pos_clear(void) {
     SCRLPOS* p;
-    for (p = scrn_pos; p < &scrn_pos[4]; p++) {
+    SCRLPOS* q;
+    p = scrn_pos;
+    while (p < &scrn_pos[4]) {
+        q = p;
         p->set_x.cal = 0;
-        p->cur_x.cal = 0;
-        p->set_y.cal = 0;
-        p->cur_y.cal = 0;
+        p++;
+        q->cur_x.cal = 0;
+        q->set_y.cal = 0;
+        q->cur_y.cal = 0;
+        q = p;
+        p->set_x.cal = 0;
+        p++;
+        q->cur_x.cal = 0;
+        q->set_y.cal = 0;
+        q->cur_y.cal = 0;
     }
 }
 
@@ -326,6 +336,19 @@ void Clear_Flash_No(void) {
     F_No1[1] = 0;
     F_No0[1] = 0;
     Personal_Disp_Flag = 0;
+}
+
+
+
+/* Erases the 18-character banner on the text layer: at the right-hand column when the new challenger is player 2. */
+/* provisional name */
+void challenger_banner_clear(void) {
+    Forbid_Break = 1;
+    if (New_Challenger) {
+        tilemap_print_string_attr(30, 0, 18, banner_blank_msg);
+    } else {
+        tilemap_print_string_attr(0, 0, 18, banner_blank_msg);
+    }
 }
 
 

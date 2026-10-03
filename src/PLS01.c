@@ -87,44 +87,49 @@ s32 check_rl_flag(WORK* wk) {
 
 
 void set_rl_waza(PLW* wk) {
-    WORK* em;
-    s16 result;
-    if (Bonus_Game_Flag == 21) {
-        if (wk->wu.operator == 0) {
-            wk->wu.rl_waza = wk->wu.rl_flag;
-            return;
+    s16 v;
+    s16 d;
+    WORK_Other* p;
+    if (Bonus_Game_Flag != 0x15) {
+        goto other;
+    }
+    if (wk->wu.operator) {
+        if (wk->wu.xyz[0].disp.pos < bs2_hosei[0] || wk->wu.xyz[0].disp.pos > bs2_hosei[1]) {
+            goto other;
         }
-        if (wk->wu.xyz[0].disp.pos >= bs2_hosei[0] && wk->wu.xyz[0].disp.pos <= bs2_hosei[1]) {
-            if (((result = wk->cp->sw_lvbt & 0xF) != 0) && !(result & 3)) {
-                wk->wu.rl_waza = (result & 8) != 0;
-                return;
-            }
-            wk->wu.rl_waza = wk->wu.rl_flag;
+        if ((v = wk->cp->sw_lvbt & 0xF) && !(v & 3)) {
+            wk->wu.rl_waza = (v & 8) != 0;
             return;
         }
     }
-    em = (WORK*)wk->wu.target_adrs;
-    result = wk->wu.xyz[0].disp.pos - em->xyz[0].disp.pos;
-    if (result) {
-        wk->wu.rl_waza = (result > 0) ? 0 : 1;
+    wk->wu.rl_waza = wk->wu.rl_flag;
+    return;
+other:
+    p = (WORK_Other*)wk->wu.target_adrs;
+    d = wk->wu.xyz[0].disp.pos - p->wu.xyz[0].disp.pos;
+    if (d) {
+        if (d > 0) {
+            wk->wu.rl_waza = 0;
+        } else {
+            wk->wu.rl_waza = 1;
+        }
     } else {
-        wk->wu.rl_waza = (em->rl_waza + 1) & 1;
+        wk->wu.rl_waza = (p->wu.rl_waza + 1) & 1;
     }
 }
 
 
 
-s16 check_rl_on_car(PLW* wk) {
+s32 check_rl_on_car(PLW* wk) {
     s16 rnum;
     if (Bonus_Game_Flag != 21) {
-    not_on_car:
         return 0;
     }
     if (wk->wu.operator == 0) {
-        goto not_on_car;
+        return 0;
     }
     if (bs2_floor[2] == 0) {
-        goto not_on_car;
+        return 0;
     }
     rnum = 0;
     wk->bs2_area_car = 0;
@@ -239,9 +244,9 @@ void check_extra_jump_timer(PLW* wk) {
         if (wk->micchaku_wall_time > 8) {
             wk->micchaku_wall_time = 8;
         }
-    } else {
-        wk->micchaku_wall_time = 0;
+        return;
     }
+    wk->micchaku_wall_time = 0;
 }
 
 

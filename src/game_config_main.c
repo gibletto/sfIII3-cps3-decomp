@@ -39,7 +39,7 @@
 
 
 /* provisional name */
-s32 game_config_main(void) {
+s8 game_config_main(void) {
     void (*Setting_Tbl[2])() = { game_config_init_jp, game_config_move_jp };
 
     if (Country == 1) {
@@ -73,4 +73,3 @@ s32 game_config_menu(void) {
 
 
 
-/* provisional name */

@@ -1,6 +1,9 @@
 /*
- * EFFI0.C  Effect I0: small stone debris (move)
+ * EFFI0.C  Effect H9 (balls-left counter) and effect I0: small stone debris (move)
  *
+ * Effect H9 is the bonus stage's remaining-ball counter: effect_H9_init (BBBSCOM.c) builds three
+ * connected sprites from bbbs_ball by facing, and effect_H9_move counts the two-digit number up
+ * to Bonus_Game_Work, then keeps it equal to Bonus_Game_Work (nokori_ball_effH9).
  * Each I0 work is one piece of stone kicked up from the floor. effect_I0_move picks one of eight
  * stone patterns (char_of_koishi) at random, flies the piece up under gravity, and when it falls
  * back to its landing height plays the landing part of its pattern and frees itself when the
@@ -19,6 +22,107 @@
 #include "EFFI0.h"
 #include "end_sub.h"
 #include "EFFI3.h"
+#include "EFF03.h"
+#include "EFFH9.h"
+
+
+
+void effect_H9_move(WORK_Other_CONN* ewk) {
+    switch (ewk->wu.routine_no[0]) {
+    case 0:
+        switch (ewk->wu.routine_no[1]) {
+        case 0:
+            ewk->wu.routine_no[1]++;
+            ewk->wu.disp_flag = 1;
+            ewk->wu.old_cgnum = 0;
+            ewk->wu.position_z = ewk->wu.my_priority = 9;
+            ewk->wu.direction = 0;
+            ewk->wu.dir_timer = 0;
+            nokori_ball_effH9(ewk, ewk->wu.direction);
+            break;
+        case 1:
+            if (--ewk->wu.dir_timer > 0) {
+                break;
+            }
+            ewk->wu.dir_timer = 3;
+            ewk->wu.direction++;
+            nokori_ball_effH9(ewk, ewk->wu.direction);
+            if (ewk->wu.direction >= Bonus_Game_Work) {
+                ewk->wu.routine_no[0] = 1;
+                ewk->wu.routine_no[1] = 0;
+            }
+            break;
+        }
+        effH9_trans(&ewk->wu);
+        break;
+    case 1:
+        if (ewk->wu.dead_f == 1) {
+            ewk->wu.disp_flag = 0;
+            ewk->wu.type = 0;
+            ewk->wu.routine_no[0] = 2;
+            break;
+        }
+        nokori_ball_effH9(ewk, Bonus_Game_Work);
+        effH9_trans(&ewk->wu);
+        break;
+    case 2:
+        ewk->wu.routine_no[0] = 3;
+        break;
+    default:
+        all_cgps_put_back(&ewk->wu);
+        push_effect_work(&ewk->wu);
+        break;
+    }
+}
+
+
+
+void effH9_trans(WORK* ewk) {
+    ewk->cg_number = (ewk->cg_number + 1) & 0x7FFF;
+    if (ewk->cg_number == 0) {
+        ewk->cg_number = 1;
+    }
+    ewk->position_x = bg_w.bgw[1].wxy[0].disp.pos;
+    ewk->position_y = bg_w.bgw[1].wxy[1].disp.pos;
+    sort_push_request3(ewk);
+}
+
+
+
+void nokori_ball_effH9(WORK_Other_CONN* ewk, s16 num) {
+    ewk->conn[0].chr = (num % 10) + 0xB318;
+    ewk->conn[1].chr = (num / 10) + 0xB318;
+}
+
+
+
+s32 effect_H9_init(PLW* wk) {
+    WORK_Other_CONN* ewk;
+    s16 ix;
+    s16 i;
+    if ((ix = pull_effect_work(4)) == -1) {
+        return -1;
+    }
+    ewk = (WORK_Other_CONN*)frw[ix];
+    ewk->wu.be_flag = 1;
+    ewk->wu.id = 179;
+    ewk->wu.work_id = 16;
+    ewk->wu.my_family = 2;
+    ewk->wu.cgromtype = 1;
+    ewk->wu.type = wk->wu.rl_flag;
+    ewk->wu.my_col_mode = 0x4200;
+    ewk->wu.my_col_code = 92;
+    ewk->num_of_conn = 3;
+    if (wk->wu.rl_flag != 0) {
+        ix = 1;
+    } else {
+        ix = 0;
+    }
+    for (i = 0; i < 3; i++) {
+        ewk->conn[i] = bbbs_ball[ix][i];
+    }
+    return 0;
+}
 
 
 

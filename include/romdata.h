@@ -5,6 +5,7 @@
 
 extern const TM_STRING dbg_dump_title[];
 extern const TM_STRING dbg_disasm_title[];
+extern const s8 banner_blank_msg[];
 extern const u32 monitor_msg_tbl[];   /* provisional name: opcode records ahead of the disassembler's tables */
 extern const char sh_str_break[];   /* provisional name: the Break: label of the disassembler */
 extern const MoveName sh_op_none_tbl[];

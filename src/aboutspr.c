@@ -10,7 +10,7 @@
  * builds multi-part sprites; set_judge_area_sprite draws hit/hurt boxes.
  * push_char_sprite and the sort-push routines queue sprites by priority, with
  * shadow_drawing, zoom and rotation helpers. Called by the player and effect code each frame.
- * The file opens with Shell14_0012, the last pattern of the Shell14 CPU table.
+ * The file opens with Shell14_0013, the empty last entry of the Shell14 CPU table.
  */
 
 #include "structs.h"
@@ -23,9 +23,15 @@
 #include "EFFECT.h"
 #include "aboutspr.h"
 #include "cps3.h"
+#include "SHELL14.h"
 
 #pragma inline(check_cg_data)
 #pragma inline(cg_data_exist)
+
+
+
+/* provisional name */
+void Shell14_0013(void) {}
 
 
 

@@ -1781,7 +1781,6 @@ s32 memtest_page(void) {
 
 
 
-/* provisional name */
 /* The SRAM byte is read as a halfword (the low byte is the data). */
 u8 sram_read_byte(u32 addr) {
     u16* p;
@@ -2701,18 +2700,3 @@ void coin_lockout_update(void) {
 
 
 
-/* provisional name */
-void coin_work_init(void) {
-    register s32 unused;
-    register u32 j;
-    register s32 i;
-    s8* p;
-    for (i = 0; i < 4; i++) {
-        p = (s8*)coin_chute_tbl[i];
-        for (j = 0; j < 8; j++) {
-            *p++ = 0;
-        }
-        p = credit_ptr_tbl[i];
-        *p = 0;
-    }
-}

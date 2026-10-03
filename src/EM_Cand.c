@@ -139,10 +139,12 @@ s16 grade;
 s16 flag;
 s16 ix;
 {
+    u16 em;
     if (Candidate_Buff[ix] == 0xFF) {
         return 0;
     }
-    switch (Candidate_Buff[ix]) {
+    em = Candidate_Buff[ix];
+    switch ((s16)em) {
     case 2:
     case 6:
     case 8:
@@ -161,9 +163,8 @@ s16 ix;
             return 0;
         }
         return 1;
-    default:
-        return 1;
     }
+    return 1;
 }
 
 

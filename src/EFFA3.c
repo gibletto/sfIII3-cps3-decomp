@@ -236,3 +236,35 @@ u32 effect_A5_entry(void)
     ewk->wu.id = 105;
     return 0;
 }
+
+
+
+/* provisional name */
+s32 effA5_shot_pressed(void) {
+    u16 sw;
+    if (Player_id) {
+        sw = p2sw_0;
+    } else {
+        sw = p1sw_0;
+    }
+    if (sw & 0x3F0) {
+        return 1;
+    }
+    return 0;
+}
+
+
+
+/* provisional name */
+s32 effA5_start_pressed(void) {
+    u16 sw;
+    if (Player_id) {
+        sw = p2sw_0;
+    } else {
+        sw = p1sw_0;
+    }
+    if (sw & 0x1000) {
+        return 1;
+    }
+    return 0;
+}

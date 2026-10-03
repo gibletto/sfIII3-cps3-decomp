@@ -5,7 +5,6 @@
  * Logo_Capcom, Logo_Etc); Title and Title_At_a_Dash run the title sequence and opening.
  * Play_Demo runs the current demo step from Demo_Jmp_Data; Setup_Demo_PL, Setup_Demo_Arts
  * and Setup_Demo_Stage pick the characters, super arts and stage for demonstration fights.
- * draw_operator_info and Set_Mode_Pos place operator text for the current screen mode.
  * Driven by the attract sequence in Game_Main.
  */
 
@@ -33,36 +32,6 @@
 #include "textsound.h"
 #include "DEMO.h"
 /* provisional name */
-void draw_operator_info(s32 y) {
-    s16 y1;
-    s16 y2;
-    if (Country == 6 || Country == 5) {
-        if (p1sw_0 & 0x10) {
-            tilemap_print_string_attr(DE_X[18] + 36, y + 20, 18, Game_Data_msg);
-            tilemap_print_string_attr(DE_X[18] + 31, y1 = y + 21, 18, Income_msg);
-            tilemap_print_string_attr(DE_X[18] + 31, y2 = y + 22, 18, Service_msg);
-            tilemap_print_string_attr(DE_X[18] + 31, y + 23, 18, Card_msg);
-            tilemap_print_hex_block(DE_X[18] + 41, y1, 18, hex_to_bcd(book_coin_count), 6, 0);
-            tilemap_print_hex_block(DE_X[18] + 41, y2, 18, hex_to_bcd(book_service_count), 6, 0);
-            tilemap_print_hex_block(DE_X[18] + 41, y + 23, 18, hex_to_bcd(book_card_count), 6, 0);
-        } else {
-            tilemap_clear_rect(DE_X[18] + 31, y + 20, DE_X[18] + 49, y + 23);
-        }
-    }
-}
-
-
-
-/* provisional name */
-void Set_Mode_Pos(s16* value, s16 add, s16 init) {
-    *value = init;
-    if (Game_setting.mode) {
-        *value += add;
-    }
-}
-
-
-
 s32 CAPCOM_Logo(void) {
     void (*jmp_tbl[3])() = { Logo_Capcom, Logo_Warning, Logo_Etc };
     Next_Demo = 0;

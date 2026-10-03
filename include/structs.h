@@ -2186,9 +2186,9 @@ typedef struct {
 } BG_JMP2;
 
 typedef struct {
-    s16 cell;
-    s16 w;
-    s16 h;
+    u16 cell;
+    u16 w;
+    u16 h;
     s16 x;
     s16 y;
     s16 x2;

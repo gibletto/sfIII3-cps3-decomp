@@ -400,8 +400,9 @@ const u8 dir_sel_table[128][128] = {
 
 /* Stored after dir_sel_table. Nothing in the program refers to it by name or address; if it is read,
    it is through an index past the end of dir_sel_table. */
-const u8 dir_sel_table_tail[28] = {
-    1, 2, 3, 4, 4, 3, 2, 1, 32, 32, 32, 32, 32, 32, 32, 32,
-    32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 0, 0,
+const u8 dir_sel_table_tail[8] = {
+    1, 2, 3, 4, 4, 3, 2, 1,
 };
+
+const s8 banner_blank_msg[20] = "                  ";
 
