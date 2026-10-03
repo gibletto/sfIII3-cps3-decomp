@@ -22,6 +22,8 @@
 #include "aboutspr.h"
 #include "ta_sub.h"
 #include "bg090.h"
+
+#pragma inline(bg0601, bg0602, bg0701, bg0702, bg0801, bg0802, bg080_sync_common)
 #include "fighter.h"
 #include "EFF45.h"
 #include "EFF61.h"
@@ -138,25 +140,11 @@ void bg180_sync_move(void) {
 
 
 
-static void bg0601_BG060(void) {
-    void (*bg1601_jmp[2])() = { bg0601_init00, bg_move_common };
-    bg1601_jmp[bgw_ptr->r_no_0]();
-}
-
-
-
-static void bg0602_BG060(void) {
-    void (*bg1602_jmp[2])() = { bg0602_init00, bg_base_move_common };
-    bg1602_jmp[bgw_ptr->r_no_0]();
-}
-
-
-
 void BG060(void) {
     bgw_ptr = &bg_w.bgw[1];
-    bg0602_BG060();
+    bg0602();
     bgw_ptr = &bg_w.bgw[0];
-    bg0601_BG060();
+    bg0601();
     bgw_ptr = &bg_w.bgw[2];
     bg0603();
     zoom_ud_check();
@@ -236,25 +224,11 @@ void bg0603(void) {
 
 
 
-static void bg0701_BG070(void) {
-    void (*bg1601_jmp[2])() = { bg0701_init00, bg0701_move00 };
-    bg1601_jmp[bgw_ptr->r_no_0]();
-}
-
-
-
-static void bg0702_BG070(void) {
-    void (*bg1602_jmp[2])() = { bg0702_init00, bg_base_move_common };
-    bg1602_jmp[bgw_ptr->r_no_0]();
-}
-
-
-
 void BG070(void) {
     bgw_ptr = &bg_w.bgw[1];
-    bg0702_BG070();
+    bg0702();
     bgw_ptr = &bg_w.bgw[0];
-    bg0701_BG070();
+    bg0701();
     bgw_ptr = &bg_w.bgw[2];
     bg0703();
     zoom_ud_check();
@@ -341,27 +315,6 @@ void bg0703(void) {
 
 
 
-static void bg0801_BG080(void) {
-    void (*bg0801_jmp[2])() = { bg0801_init00, bg_move_common };
-    bg0801_jmp[bgw_ptr->r_no_0]();
-}
-
-
-
-static void bg0802_BG080(void) {
-    void (*bg0802_jmp[2])() = { bg0802_init00, bg_base_move_common };
-    bg0802_jmp[bgw_ptr->r_no_0]();
-}
-
-
-
-static void bg080_sync_common_BG080(void) {
-    void (*bg080_sync_jmp[2])() = { bg080_sync_init, bg080_sync_move };
-    bg080_sync_jmp[bgw_ptr->r_no_0]();
-}
-
-
-
 
 
 
@@ -373,15 +326,15 @@ static void bg080_sync_common_BG080(void) {
 
 void BG080(void) {
     bgw_ptr = &bg_w.bgw[1];
-    bg0802_BG080();
+    bg0802();
     bgw_ptr = &bg_w.bgw[0];
-    bg0801_BG080();
+    bg0801();
     bgw_ptr = &bg_w.bgw[2];
-    bg080_sync_common_BG080();
+    bg080_sync_common();
     bgw_ptr = &bg_w.bgw[5];
-    bg080_sync_common_BG080();
+    bg080_sync_common();
     bgw_ptr = &bg_w.bgw[6];
-    bg080_sync_common_BG080();
+    bg080_sync_common();
     zoom_ud_check();
     bg_pos_hosei2();
     Bg_Family_Set();
@@ -583,7 +536,7 @@ void bg_fam0900(void) {
 void bg090_demo_check(void) {
     if ((plw->player_number != PL_ORO) && (plw[1].player_number != PL_ORO)) {
         bgw_ptr->r_no_0 = 2;
-    } else if (bg_w.area) {
+    } else if (bg_w.area != 0) {
         bgw_ptr->r_no_0 = 2;
     } else {
         bgw_ptr->r_no_0 = 1;

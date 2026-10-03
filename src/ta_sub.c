@@ -487,7 +487,7 @@ s32 hit_check_subroutine_yu(WORK* tpl, WORK* tef, s16* hd1, s16* hd2) {
     }
     d2 += tef->xyz[0].disp.pos;
     flag = (d0 < d2);
-    d2 += (d3 - d0);
+    d2 = d2 + (d3 - d0);
     d3 += d1;
     if ((u32)d2 >= d3) {
         return 0;

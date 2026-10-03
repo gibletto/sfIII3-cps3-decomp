@@ -87,6 +87,13 @@ void grade_check_work_round_init(s16 ix) {
     judge_item[ix][(u8)Play_Type].app_rpd_block = -1;
     judge_item[ix][(u8)Play_Type].app_grd_block = -1;
     judge_item[ix][(u8)Play_Type].onaji_waza = 0;
+    if (Round_Operator[ix] == 0) {
+        judge_item[ix][(u8)Play_Type].grd_miss = ji_grd_init_data[Setup_Lv10(0)];
+        judge_item[ix][(u8)Play_Type].grd_mcnt = ji_grd_init_data[Setup_Lv10(0)];
+    } else {
+        judge_item[ix][(u8)Play_Type].grd_miss = 0;
+        judge_item[ix][(u8)Play_Type].grd_mcnt = 0;
+    }
     for (i = 0; i < 384; i++) {
         ji_sat[ix][i] = 0;
     }
@@ -95,13 +102,6 @@ void grade_check_work_round_init(s16 ix) {
     judge_gals[ix].defence_total = 0;
     judge_gals[ix].tech_pts_total = 0;
     judge_gals[ix].ex_point_total = 0;
-    if (Round_Operator[ix] == 0) {
-        judge_item[ix][(u8)Play_Type].grd_miss = ji_grd_init_data[Setup_Lv10(0)];
-        judge_item[ix][(u8)Play_Type].grd_mcnt = ji_grd_init_data[Setup_Lv10(0)];
-    } else {
-        judge_item[ix][(u8)Play_Type].grd_miss = 0;
-        judge_item[ix][(u8)Play_Type].grd_mcnt = 0;
-    }
 }
 
 
@@ -403,7 +403,7 @@ void grade_makeup_stage_parameter(s16 ix) {
 /* provisional name */
 u32 rannyuu_Q_check(s16 pl)
 {
-    if (Round_Operator[pl] == 0 && My_char[pl] == PL_Q) {
+    if ((&Round_Operator[0])[pl] == 0 && (&My_char[0])[pl] == PL_Q) {
         return 1;
     }
     return 0;

@@ -9,7 +9,8 @@
  * add_super_arts_gauge; sa_gauge_flash is the gauge flash table.
  * check_buttobi_type, setup_saishin_lvdir and setup_lvdir_after_autodir handle blow-away type
  * and lever direction; dead_voice_request/2 request the KO voice. short_to_bcd converts a count
- * to BCD digits.
+ * to BCD digits. get_kind_of_head_dm and get_kind_of_trunk_dm pick the head-hit or body-hit damage
+ * routine for an attack direction.
  */
 
 #include "structs.h"
@@ -19,6 +20,27 @@
 #include "CALDIR.h"
 #include "PLS02.h"
 #include "PLSGAUGE.h"
+
+
+
+s32 get_kind_of_head_dm(s16 dir, char rl)
+{
+    if (rl == 0) {
+        dir = dir16_rl_conv[dir];
+    }
+    return dir16_hddm[dir];
+}
+
+
+
+/* provisional name */
+s32 get_kind_of_trunk_dm(s16 dir, char rl)
+{
+    if (rl == 0) {
+        dir = dir16_rl_conv[dir];
+    }
+    return dir16_trdm[dir];
+}
 
 
 
@@ -294,7 +316,7 @@ s32 add_super_arts_gauge(wk, ix, asag, mf)
             return 0;
         }
         asag = asag * 120 / 100;
-        if (Battle_Round[Play_Type] == 0) {
+        if ((&Battle_Round[0])[Play_Type] == 0) {
             asag = asag * 150 / 100;
         }
         wk->gauge.s.h += asag;

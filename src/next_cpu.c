@@ -284,7 +284,7 @@ void Next_CPU_5th(void) {
             if (S_Timer < 0) {
                 S_Timer = 1;
             }
-            Introduce_Boss[Player_id][VS_Index[Player_id] - 8] |= 1;
+            Introduce_Boss[Player_id][(&VS_Index[0])[Player_id] - 8] |= 1;
         }
         break;
     default:

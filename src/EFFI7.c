@@ -85,7 +85,7 @@ void effI7_pos_hosei(WORK_Other* ewk, WORK* mwk) {
 s32 effect_I7_init(PLW* wk, u8 data) {
     WORK_Other* ewk;
     s16 ix;
-    if (test_flag == 0) {
+    if (!test_flag) {
         if ((ix = pull_effect_work(3)) == -1) {
             return -1;
         }

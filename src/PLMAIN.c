@@ -381,7 +381,7 @@ PLW* wk;
     case 2:
         switch (wk->sa->saeff_mp) {
         case -1:
-            if (!pcon_dp_flag) {
+            if (pcon_dp_flag == 0) {
                 wk->sa->store = 0;
                 wk->sa->gauge.i = 0;
             }

@@ -1313,7 +1313,9 @@ extern s32 suzi_calc_w[2];
 extern s16 ls_cnt1;
 extern s16 ls_rate1;
 extern u8 col_trans_req_tbl[256];
-extern s16 col_trans_req_cnt[3];
+extern s16 col_trans_req_cnt0;
+extern s16 col_trans_req_cnt1;
+extern s16 col_trans_req_cnt2;
 extern u32 palette_base;
 
 /* Records of these arrays are reached the way the game computes their offset: with shifts and adds,

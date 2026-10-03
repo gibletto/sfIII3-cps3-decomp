@@ -362,8 +362,8 @@ void sc_chr_list_trans(s8 ix) {
     u16 i;
     for (i = 0; i < n; i++) {
         sc_trans_dst = (u16*)((SS_RAM + 0x8000) + *slot++ * 64);
-        sc_trans_src = &sc_chr_data[*src++ * 32];
-        sc_trans_src = &sc_chr_data[(s32)(*src++ * 32) / 2 * 2];
+        sc_trans_src = (u8*)sc_chr_data + *src++ * 32;
+        sc_trans_src = (u8*)sc_chr_data + (s32)(*src++ * 32) / 2 * 2;
         *sc_trans_dst = *sc_trans_src;
     }
 }
@@ -795,99 +795,3 @@ void bcount_mark_trans(u8 mode) {
 
 
 /* provisional name */
-void sa_stock_chr_trans(s8 pl, s16 n) {
-    sc_trans_dst = (u16*)((SS_RAM + 0xB440) + pl * 0xC0);
-    sc_trans_src = (u8*)(sc_chr_data + (((n * 2 + 0x910) << 5) >> 1));
-    sc_chr_trans(2);
-}
-
-
-
-/* provisional name */
-void sa_max_level_trans(row, col)
-s8 row;
-s16 col;
-{
-    sc_trans_dst = (u16*)((SS_RAM + 0xB400) + row * 192);
-    sc_trans_src = (u8*)&sc_chr_data[((row * 16 + col + 2352) * 32) >> 1];
-    sc_chr_trans(1);
-}
-
-
-
-void sa_stock_trans(s16 n, s16 ix, s8 pl) {
-    if (pl == 0) {
-        sa_stock_chr_trans(0, n);
-        tilemap_put_cell(3, 25, sa_color_data_tbl[ix], 0xD1);
-        tilemap_put_cell(3, 26, sa_color_data_tbl[ix], 0xD2);
-    } else {
-        sa_stock_chr_trans(1, n);
-        tilemap_put_cell(44, 25, sa_color_data_tbl[ix], 0xD4);
-        tilemap_put_cell(44, 26, sa_color_data_tbl[ix], 0xD5);
-    }
-}
-
-
-
-void sa_fullstock_trans(s8 side, s16 ix) {
-    if (side == 0) {
-        tilemap_put_cell(1, 26, sa_color_data_tbl[ix], 0xD0);
-    } else {
-        tilemap_put_cell(46, 26, sa_color_data_tbl[ix], 0xD3);
-    }
-}
-
-
-
-/* provisional name */
-void win_mark_put(s16 pl, u16 n, s16 attr) {
-    const s16* e;
-    sc_trans_src = (u8*)&sc_chr_data[n * 32] + 0xBDC0;
-    sc_trans_dst = (u16*)((SS_RAM + 0x8400) + pl * 128);
-    sc_chr_trans(2);
-    e = &vmark_tbl[pl * 6];
-    tilemap_put_cell(e[0] + DE_X[3], e[1], attr, e[2]);
-    tilemap_put_cell(e[3] + (*&DE_X)[3], e[4], attr, e[5]);
-}
-
-
-
-/* provisional name */
-void win_mark_ram_clear(void) {
-    s32 i;
-    u8* dst = &sc_chr_ram[0x200];
-    volatile s32 blank = 0xBDC0;
-    for (i = 0; i < 8; i++) {
-        sc_trans_src = (u8*)((u32)sc_chr_data + blank);
-        sc_bak_ptr = dst;
-        sc_chr_to_ram(64);
-        dst += 64;
-    }
-}
-
-
-
-/* provisional name */
-void win_mark_find_put(s16 x, s16 y, s16 pl) {
-    s16 round = win_mark_find(pl);
-    const s16* mark;
-    if (round == -1) {
-        cpu_hang_forever();
-    }
-    mark = &vmark_tbl[pl * 24 + round * 6];
-    tilemap_put_cell(x, y, 14, mark[2]);
-    tilemap_put_cell(x + 1, y, 14, mark[5]);
-}
-
-
-
-/* provisional name */
-s16 win_mark_find(s16 pl) {
-    s16 i;
-    for (i = 0; i < Battle_Round[Play_Type] + 1; i++) {
-        if (win_type[pl][i] == 3) {
-            return i;
-        }
-    }
-    return -1;
-}

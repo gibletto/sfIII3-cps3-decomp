@@ -285,7 +285,7 @@ s16 J_Lever_Data;
         break;
     }
     if (CP_Index[wk->wu.id][1] >= 3) {
-        Lever_Buff[wk->wu.id] |= Lever_LR[wk->wu.id];
+        Lever_Buff[wk->wu.id] = Lever_Buff[wk->wu.id] | Lever_LR[wk->wu.id];
     }
 }
 
@@ -2185,7 +2185,7 @@ s32 Select_Combo_Speed(PLW* wk) {
     s8 zz;
     xx = (u8)random_32_com();
     Lv = Setup_Lv18(8);
-    Lv = Lv + CC_Value[0];
+    Lv += CC_Value[0];
     if (Break_Into_CPU == 2) {
         Lv = 0x13;
     }
@@ -3345,9 +3345,10 @@ void Setup_Shell_Disposal(PLW* wk, WORK_Other* tmw) {
         break;
     case 10:
         Pattern_Index[wk->wu.id] = Decide_Shell_Reaction(wk, tmw, 0);
-        if (Pattern_Index[wk->wu.id] == 0) {
-            Next_Be_Shell_Guard(wk, &tmw->wu);
+        if (Pattern_Index[wk->wu.id] != 0) {
+            break;
         }
+        Next_Be_Shell_Guard(wk, &tmw->wu);
         break;
     }
 }

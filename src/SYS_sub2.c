@@ -24,6 +24,6 @@ void Clear_Disp_Ranking(s16 PL_id) {
     s32 i;
     for (i = 0; i <= 3; i++) {
         Request_Disp_Rank[PL_id][i] = -1;
-        Rank_In[PL_id][i] = -1;
+        (&Rank_In[0])[PL_id][i] = -1;
     }
 }

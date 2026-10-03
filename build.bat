@@ -671,10 +671,6 @@ shc src\PLS01.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortne
 if errorlevel 1 goto fail
 shc src\PLS02.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\PLS02.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\HITHEAD.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\HITHEAD.obj >obj\shc.log 2>&1
-if errorlevel 1 goto fail
-shc src\HITTRUNK.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\HITTRUNK.obj >obj\shc.log 2>&1
-if errorlevel 1 goto fail
 shc src\PLSGAUGE.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -noinline -object=obj\PLSGAUGE.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\PLS03.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\PLS03.obj >obj\shc.log 2>&1

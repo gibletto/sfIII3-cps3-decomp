@@ -435,7 +435,7 @@ s32 Ck_Exit_Guard(PLW* wk, WORK* em) {
         if (Guard_Counter[wk->wu.id] == Attack_Counter[wk->wu.id]) {
             return 1;
         }
-        Guard_Counter[wk->wu.id] = Attack_Counter[wk->wu.id];
+        Guard_Counter[wk->wu.id] = (&Attack_Counter[0])[wk->wu.id];
         Lv = Setup_Lv10(0);
         if (Break_Into_CPU == 2) {
             Lv = 10;
@@ -1270,7 +1270,7 @@ s16 Decide_Exit_Catch(PLW* wk) {
 s32 Com_Rapid_Sub(PLW* wk, s16 Shot, s16* dir_step) {
     u16 xx;
     if (--Timer_00[wk->wu.id] == 0) {
-        Timer_00[wk->wu.id] = Timer_01[wk->wu.id];
+        Timer_00[wk->wu.id] = (&Timer_01[0])[wk->wu.id];
         xx = Rapid_Lever_Data[dir_step[0]];
         xx |= Shot;
         dir_step[0]++;

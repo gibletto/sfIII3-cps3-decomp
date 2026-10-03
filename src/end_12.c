@@ -284,7 +284,7 @@ void end_C01_0000(void) {
 
 /* provisional name */
 void end_C00_cell_set(void) {
-    s32 i;
+    s16 i;
     for (i = 0; i < 12; i++) {
         bg_cell_write(0, end_c00_bg0_cell_tbl[i].ofs, end_c00_bg0_cell_tbl[i].cell, (u32)end_c00_scrn_data, 0, 0x220);
     }

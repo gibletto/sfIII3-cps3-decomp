@@ -502,7 +502,7 @@ void Game_Manage_5th(void) {
 
 
 void Game_Manage_5_0(void) {
-    if (Complete_Victory || --G_Timer == 0) {
+    if (Complete_Victory != 0 || --G_Timer == 0) {
         C_No1++;
         C_Timer = 30;
         Judge_Round_Flag = 1;
@@ -1213,7 +1213,7 @@ void Game_Manage_12_0(void) {
     Next_Step = 0;
     Judge_Round_Flag = 0;
     Stop_Combo = 0;
-    if (Demo_Flag != 0) {
+    if (Demo_Flag) {
         Stop_SG = 0;
     }
     Complete_Judgement = 0;

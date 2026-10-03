@@ -210,7 +210,7 @@ void debug_pattern_edit_init_counts(void);
 void debug_pattern_entry_copy_dual(s16 n, s16 box);
 void debug_pattern_list_build(void);
 void debug_pattern_count(void);
-u32 debug_pattern_preview_step(WORK* wk);
+void debug_pattern_preview_step(WORK* wk);
 void debug_motion_list_count(void);
 void debug_bg_color_preset_next(void);
 void debug_hit_a_print_box_values(WORK* wk);

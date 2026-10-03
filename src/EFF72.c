@@ -55,7 +55,7 @@ void effect_72_move(WORK_Other* ewk) {
 s32 effect_72_init(WORK_Other* oya, u8 type_id) {
     WORK_Other* ewk;
     s16 ix;
-    if (EXE_obroll == 0) {
+    if (!EXE_obroll) {
         if ((ix = pull_effect_work(4)) == -1) {
             return -1;
         }

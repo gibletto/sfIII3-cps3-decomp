@@ -21,26 +21,15 @@
 #include "aboutspr.h"
 #include "ta_sub.h"
 #include "bg120.h"
-static void bg1101_BG110(void) {
-    void (*bg_jmp[2])() = { bg1101_init00, bg1101_move };
-    bg_jmp[bgw_ptr->r_no_0]();
-}
 
-
-
-static void bg1100_BG110(void) {
-    void (*bg_jmp[2])() = { bg1100_init00, bg1100_move };
-    bg_jmp[bgw_ptr->r_no_0]();
-}
-
-
+#pragma inline(bg1201, bg1202, bg1101, bg1100)
 
 /* provisional name */
 void BG110(void) {
     bgw_ptr = &bg_w.bgw[1];
-    bg1101_BG110();
+    bg1101();
     bgw_ptr = &bg_w.bgw[0];
-    bg1100_BG110();
+    bg1100();
     zoom_ud_check();
     bg_pos_hosei2();
     Bg_Family_Set();
@@ -92,10 +81,6 @@ void bg1100_move(void) {
     bg_x_move_check();
     bg_y_move_check();
 }
-
-
-
-#pragma inline(bg1201, bg1202)
 
 
 

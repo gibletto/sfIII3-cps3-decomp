@@ -1087,7 +1087,7 @@ void op_111_move(void) {
 void op_112_move(void) {
     switch (op_w.r_no_2) {
     case 0:
-        op_w.r_no_2 = op_w.r_no_2 + 1;
+        op_w.r_no_2 += 1;
         op_work_clear();
         op_w.index = 70;
         opening_bg_move_broadcast(70);
@@ -1103,7 +1103,7 @@ void op_112_move(void) {
         break;
     case 1:
         if (gSeqStatus[0] >= op_112_tbl[op_w.r_no_2] && gSeqStatus[0] != 112) {
-            op_w.r_no_2 = op_w.r_no_2 + 1;
+            op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 71;
             op_w.mv_ctr = 0;
@@ -1180,7 +1180,7 @@ void op_112_move(void) {
     case 8:
         op_w.mv_ctr++;
         if (op_w.mv_ctr >= op_112_tbl[op_w.r_no_2]) {
-            op_w.r_no_2 = op_w.r_no_2 + 1;
+            op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 78;
         } else {
@@ -1951,7 +1951,7 @@ void op_bg0_0011(s16 r_index) {
         if (bgw_ptr->xy[1].disp.pos < 0) {
             bgw_ptr->xy[1].cal += 0x20000;
         }
-        if (bgw_ptr->frame_deff > 0) {
+        if (bgw_ptr->frame_deff >= 1) {
             bgw_ptr->frame_deff -= 1;
             Frame_Down(0xC0, 0x40, 1, 1);
         }
