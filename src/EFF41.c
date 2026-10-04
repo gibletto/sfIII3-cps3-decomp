@@ -150,26 +150,26 @@ void gauge_minus(WORK_Other* ewk, PLW* mwk) {
 
 s32 effect_41_init(PLW* wk, u8 data) {
     WORK_Other* ewk;
-    s16 ix;
-    if (test_flag) {
-        return;
+    s32 ix;
+    if (!test_flag) {
+        ix = pull_effect_work(3);
+        if ((s16)ix == -1) {
+            return -1;
+        }
+        ewk = (WORK_Other*)frw[(s16)ix];
+        write_my_shell_ix(&wk->wu, (s16)ix);
+        ewk->wu.be_flag = 1;
+        ewk->wu.type = data;
+        ewk->wu.id = 41;
+        ewk->wu.work_id = 16;
+        ewk->wu.my_family = wk->wu.my_family;
+        ewk->wu.cgromtype = 1;
+        ewk->my_master = (u32*)wk;
+        ewk->master_work_id = wk->wu.work_id;
+        ewk->master_id = wk->wu.id;
+        *ewk->wu.char_table = plef_char_table;
+        return 0;
     }
-    if ((ix = pull_effect_work(3)) == -1) {
-        return -1;
-    }
-    ewk = (WORK_Other*)frw[ix];
-    write_my_shell_ix(&wk->wu, ix);
-    ewk->wu.be_flag = 1;
-    ewk->wu.type = data;
-    ewk->wu.id = 41;
-    ewk->wu.work_id = 16;
-    ewk->wu.my_family = wk->wu.my_family;
-    ewk->wu.cgromtype = 1;
-    ewk->my_master = (u32*)wk;
-    ewk->master_work_id = wk->wu.work_id;
-    ewk->master_id = wk->wu.id;
-    *ewk->wu.char_table = plef_char_table;
-    return 0;
 }
 
 

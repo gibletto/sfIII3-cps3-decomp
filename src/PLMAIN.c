@@ -597,6 +597,7 @@ void sag_normal(PLW* wk) {
             wk->sa->saeff_ok = 0;
             wk->sa->sa_rno = 0;
             wk->sa->ok = 0;
+            break;
         }
         break;
     default:
