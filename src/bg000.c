@@ -681,8 +681,8 @@ s16 capcom_logo_color_step(void) {
             bg_w.bgw[1].r_limit++;
             bg_w.bgw[1].l_limit = 1;
             if (bg_w.bgw[1].r_limit >= 90) {
-                ret = 1;
                 bg_w.bgw[1].r_no_2++;
+                ret = 1;
             }
             bg_vbl_trans_flag = 1;
         } else {
@@ -696,8 +696,8 @@ s16 capcom_logo_color_step(void) {
             bg_w.bgw[1].r_limit++;
             bg_w.bgw[1].l_limit = 1;
             if (bg_w.bgw[1].r_limit >= 95) {
-                ret = 3;
                 bg_w.bgw[1].r_no_2++;
+                ret = 3;
                 bg_vbl_trans_flag = 0;
                 Bg_Off_W(2);
             } else {
@@ -773,11 +773,15 @@ u32 cell;
 u32 tbl;
 {
     u16* dst;
-    u16* src;
+    u32 base;
     s16 code;
-    dst = (u16*)(eff_bg_adrs[i].adrs + ofs);
-    src = (u16*)((cell << 10) + tbl);
+    u16* src;
+    base = eff_bg_adrs[i].adrs;
+    ofs += base;
+    dst = (u16*)ofs;
     code = bg_w.scroll_cg_adr >> 7;
+    cell = (cell << 10) + tbl;
+    src = (u16*)cell;
     ((void(*)())blit_16x16_tile)(src, code, dst, 0x280);
 }
 
