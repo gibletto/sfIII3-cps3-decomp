@@ -15,8 +15,10 @@
 #include "extern.h"
 #include "ta_sub.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "aboutspr.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "efff6.h"
 
 

@@ -17,6 +17,7 @@
 #include "EFFE5.h"
 #include "aboutspr.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "EFFE7.h"
 
 

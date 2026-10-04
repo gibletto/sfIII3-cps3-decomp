@@ -14,7 +14,9 @@
 #include "aboutspr.h"
 #include "EFFH2.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "EFF37.h"
 
 

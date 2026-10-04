@@ -8,7 +8,8 @@
  * set for the final round and some stage-specific poses. Several have their own movement:
  * the jijii_* routines fly up, jump or run a full sequence for the old man's poses, the q_*
  * routines make Q keep his distance, walk past or leave the opponent, and urien_dash_chk /
- * urien_dash handle Urien's dash. Normal_normal_Winner is the default pose and
+ * urien_dash handle Urien's dash. bonus_game_win_pause picks the pose after a bonus stage from
+ * its result; meta_win_pause handles a winner who is not in his own character. Normal_normal_Winner is the default pose and
  * Judge_normal_winner is used for a special match state. Appear_41000 is an entrance
  * routine (appearance type 41) and jijii_nebukuro is called from the player main loop.
  */
@@ -21,6 +22,7 @@
 #include "PLS02.h"
 #include "ta_sub.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "EFF30.h"
 #include "EFF31.h"
 #include "EFF32.h"
@@ -28,10 +30,39 @@
 #include "EFF83.h"
 #include "effL3.h"
 #include "EFFL4.h"
+#include "effl5.h"
+#include "effl6.h"
 #include "EFFM2.h"
 #include "EFFECT.h"
-#include "CHARSET.h"
+#include "effect_2.h"
 #include "lose_pl.h"
+#include "lose_pl_2.h"
+#include "sys_test.h"
+#include "sys_test_2.h"
+#include "sys_test_2b.h"
+#include "sys_test_2c.h"
+#include "sys_test_3.h"
+#include "sys_test_4.h"
+#include "sys_test_5.h"
+#include "aboutspr.h"
+#include "SE.h"
+#include "se_2.h"
+#include "se_3.h"
+#include "SYS_sub.h"
+#include "textsound.h"
+#include "textsound_2.h"
+#include "textsound_3.h"
+#include "sc_trans.h"
+#include "fifo.h"
+#include "eff36.h"
+#include "EFF48.h"
+#include "EFFC1.h"
+#include "efff6.h"
+#include "end_main.h"
+#include "sys_config.h"
+#include "sys_config_2.h"
+#include "sys_config_3.h"
+#include "Com_Pl.h"
 #include "win_pl.h"
 #include "fighter.h"
 
@@ -411,7 +442,7 @@ void Win_04000(PLW* wk) {
 
 
 void Normal_normal_Winner(PLW* wk) {
-    u16 work;
+    s16 work;
     bg_app_stop = 1;
     if (set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
         set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
@@ -461,7 +492,10 @@ void Win_05000(PLW* wk) {
     }
     switch (wk->wu.routine_no[3]) {
     case 0:
-        win_rno[0] = win_rno[1] = 0;
+        {
+            s16 t = win_rno[1] = 0;
+            win_rno[0] = t;
+        }
         wk->wu.routine_no[3]++;
         if (Round_num >= (Battle_Round[Play_Type] * 2) ||
             PL_Wins[wk->wu.id] >= Battle_Round[Play_Type]) {
@@ -607,7 +641,10 @@ void Win_08000(PLW* wk) {
         if (set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
             set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
         }
-        win_rno[0] = win_rno[1] = 0;
+        {
+            s16 t = win_rno[1] = 0;
+            win_rno[0] = t;
+        }
         wk->wu.routine_no[3]++;
         if (Round_Result & 0x800) {
             set_char_move_init(&wk->wu, 9, 40);
@@ -636,7 +673,10 @@ void Win_09000(PLW* wk) {
     }
     switch (wk->wu.routine_no[3]) {
     case 0:
-        win_rno[0] = win_rno[1] = 0;
+        {
+            s16 t = win_rno[1] = 0;
+            win_rno[0] = t;
+        }
         wk->wu.routine_no[3]++;
         work = random_16_com() & 7;
         if (work == 7) {
@@ -696,8 +736,8 @@ void Win_09000(PLW* wk) {
 
 
 void Win_10000(PLW* wk) {
-    u16 work;
-    u16 work2;
+    s32 work;
+    s16 work2;
     u16 id_w;
     bg_app_stop = 1;
     id_w = wk->wu.id ^ 1;
@@ -982,7 +1022,10 @@ void Win_11000(PLW* wk) {
         if (set_field_hosei_flag(&plw[wk->wu.id], (bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset), 1)) {
             set_field_hosei_flag(&plw[wk->wu.id], (bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset), 0);
         }
-        win_rno[0] = win_rno[1] = 0;
+        {
+            s16 t = win_rno[1] = 0;
+            win_rno[0] = t;
+        }
         wk->wu.routine_no[3]++;
         work = random_16_com() & 3;
         if (Round_num >= (Battle_Round[Play_Type] * 2) ||
@@ -1304,4 +1347,83 @@ s32 win_select(PLW* wk, s16 num) {
     s16 work = random_16_com();
     work &= num;
     return work;
+}
+
+
+void bonus_game_win_pause(PLW* wk) {
+    bg_app_stop = 1;
+    if (set_field_hosei_flag(&plw[1], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
+        set_field_hosei_flag(&plw[1], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
+    }
+    if (set_field_hosei_flag(&plw[0], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
+        set_field_hosei_flag(&plw[0], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
+    }
+    switch (wk->wu.routine_no[3]) {
+    case 0:
+        wk->wu.routine_no[3]++;
+        win_rno[0] = win_rno[1] = 0;
+        if (Bonus_Game_Flag == 21) {
+            if (wk->wu.operator) {
+                if (Time_Over) {
+                    set_char_move_init(&wk->wu, 9, 67);
+                } else {
+                    set_char_move_init(&wk->wu, 9, 65);
+                }
+                break;
+            }
+            wk->wu.routine_no[3] = 99;
+            break;
+        }
+        if (wk->wu.operator) {
+            if (Bonus_Game_result == 20 || Bonus_Game_ex_result == 20) {
+                set_char_move_init(&wk->wu, 9, 65);
+                break;
+            }
+            if (Bonus_Game_result > 10) {
+                set_char_move_init(&wk->wu, 9, 66);
+                break;
+            }
+            set_char_move_init(&wk->wu, 9, 67);
+            break;
+        }
+        if (Bonus_Game_result == 20 || Bonus_Game_ex_result == 20) {
+            win_rno[0] = 1;
+            if (wk->wu.rl_flag) {
+                wk->wu.mvxy.a[0].sp = 0x20000;
+            } else {
+                wk->wu.mvxy.a[0].sp = -0x20000;
+            }
+            wk->wu.mvxy.d[0].sp = 0;
+            wk->wu.mvxy.a[1].sp = 0x80000;
+            wk->wu.mvxy.d[1].sp = -0x6000;
+            win_rno[0] = 0;
+            set_char_move_init(&wk->wu, 9, 66);
+            break;
+        }
+        set_char_move_init(&wk->wu, 9, 52);
+        break;
+    case 1:
+    case 9:
+        char_move(&wk->wu);
+        break;
+    }
+}
+
+
+
+void meta_win_pause(PLW* wk) {
+    bg_app_stop = 1;
+    if (set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
+        set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
+    }
+    switch (wk->wu.routine_no[3]) {
+    case 0:
+        wk->wu.routine_no[3]++;
+        set_char_move_init(&wk->wu, 9, meta_win_tbl[wk->player_number]);
+        break;
+    case 1:
+    case 9:
+        char_move(&wk->wu);
+        break;
+    }
 }

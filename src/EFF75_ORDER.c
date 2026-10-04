@@ -13,8 +13,10 @@
 #include "romdata.h"
 #include "extern.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "aboutspr.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "EFF75_ORDER.h"
 
 

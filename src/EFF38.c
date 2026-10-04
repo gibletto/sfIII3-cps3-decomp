@@ -15,7 +15,9 @@
 #include "CALDIR.h"
 #include "aboutspr.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "EFF38.h"
 #include "fighter.h"
 

@@ -12,9 +12,10 @@
 #include "romdata.h"
 #include "extern.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "aboutspr.h"
 #include "EFFECT.h"
-#include "CHARSET.h"
+#include "effect_2.h"
 #include "EFFG4.h"
 
 

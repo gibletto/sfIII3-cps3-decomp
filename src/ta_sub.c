@@ -21,42 +21,23 @@
 #include "romdata.h"
 #include "extern.h"
 #include "bg_sub.h"
+#include "bg_sub_2.h"
+#include "bg_sub_3.h"
+#include "bg_sub_4.h"
+#include "bg_sub_5.h"
 #include "fifo.h"
 #include "aboutspr.h"
 #include "HITCHECK.h"
 #include "ta_sub.h"
 #include "bg000.h"
 #include "PLS02.h"
+#include "ta_sub2.h"
 #include "tate00.h"
 
 #pragma inline(obr_disp_off_check)
 
 
-struct PLW_tag;
-
-
-
-/* provisional name */
-void waza_slot_clear_all_p(PLW* pl) {
-    s16 j;
-    for (j = 0; j < 56; j++) {
-        if (wcp[pl->wu.id].waza_flag[j] != -1) {
-            waza_work[pl->wu.id][j].w_type = 0;
-        }
-    }
-}
-
-
-
-/* provisional name */
-s32 sw_to_lvbt(s32 value) {
-    s32 lvbt = value & 127;
-    lvbt |= ((u16)value << 1) & 0x700;
-    return lvbt;
-}
-
-
-/* provisional name */
+struct PLW_tag;/* provisional name */
 void sw_dummy_1(void) {}
 
 
@@ -67,8 +48,8 @@ void sw_dummy_2(void) {}
 
 /* provisional name */
 void sync_fam_set(s16 num_of_bg) {
-    s32 x;
-    s32 y;
+    s16 x;
+    s16 y;
     bg_pos_hosei_sub3(num_of_bg);
     x = bg_w.bgw[num_of_bg].position_x;
     y = bg_w.bgw[num_of_bg].position_y;
@@ -83,7 +64,7 @@ void sync_fam_set(s16 num_of_bg) {
 void sync_fam_set2(s16 num_of_bg) {
     s16 x;
     s16 y;
-    s16 y2;
+    s32 y2;
     bg_pos_hosei_sub2(num_of_bg);
     x = bg_w.bgw[num_of_bg].position_x;
     y2 = bg_w.bgw[num_of_bg].position_y;
@@ -97,30 +78,29 @@ void sync_fam_set2(s16 num_of_bg) {
 
 void sync_fam_set3(s16 bg_no) {
     BGW* bgw_ptr = &bg_w.bgw[bg_no];
-    u16 pos;
-    u16 pos2;
-    u16 posy2;
-    u16 x;
-    u16 y;
-    pos2 = (bg_w.chase_flag & 0xF) ? bgw_ptr->chase_xy[0].disp.pos : bgw_ptr->wxy[0].disp.pos;
-    posy2 = (bg_w.chase_flag & 0xF0) ? bgw_ptr->chase_xy[1].disp.pos : bgw_ptr->xy[1].disp.pos;
-    pos = pos2 & 0x3FF;
-    pos -= bg_w.pos_offset;
-    pos2 -= bg_w.pos_offset;
+    s16 pos_work_x;
+    s16 pos_work_y;
+    s16 pos_x_w;
+    s16 pos_y_w;
+    pos_x_w = (bg_w.chase_flag & 0xF) ? bgw_ptr->chase_xy[0].disp.pos : bgw_ptr->wxy[0].disp.pos;
+    pos_y_w = (bg_w.chase_flag & 0xF0) ? bgw_ptr->chase_xy[1].disp.pos : bgw_ptr->xy[1].disp.pos;
+    pos_work_x = pos_x_w & 0x3FF;
+    pos_work_x -= bg_w.pos_offset;
+    pos_x_w -= bg_w.pos_offset;
     if (bg_w.quake_x_index > 0) {
-        pos += quake_x_tbl[bg_w.quake_x_index];
-        pos2 += quake_x_tbl[bg_w.quake_x_index];
+        pos_work_x += quake_x_tbl[bg_w.quake_x_index];
+        pos_x_w += quake_x_tbl[bg_w.quake_x_index];
     }
-    bg_w.bgw[bg_no].position_x = pos & 0x3FF;
-    bg_w.bgw[bg_no].abs_x = pos2;
-    x = -pos & 0x3FF;
-    pos = posy2 & 0x3FF;
-    pos += quake_y_tbl[bg_w.quake_y_index];
-    posy2 += quake_y_tbl[bg_w.quake_y_index];
-    bg_w.bgw[bg_no].position_y = y = pos & 0x3FF;
-    bg_w.bgw[bg_no].abs_y = posy2;
-    y = (0x300 - y) & 0x3FF;
-    Family_Set_W(bg_no + 1, x, y);
+    bg_w.bgw[bg_no].position_x = pos_work_x & 0x3FF;
+    bg_w.bgw[bg_no].abs_x = pos_x_w;
+    pos_work_y = pos_y_w & 0x3FF;
+    pos_work_y += quake_y_tbl[bg_w.quake_y_index];
+    pos_y_w += quake_y_tbl[bg_w.quake_y_index];
+    bg_w.bgw[bg_no].position_y = pos_work_y & 0x3FF;
+    bg_w.bgw[bg_no].abs_y = pos_y_w;
+    pos_work_x = -pos_work_x & 0x3FF;
+    pos_work_y = (0x300 - (pos_work_y & 0x3FF)) & 0x3FF;
+    Family_Set_W(bg_no + 1, pos_work_x, pos_work_y);
 }
 
 
@@ -259,6 +239,19 @@ void add_x_sub(WORK_Other* ewk) {
 void add_x_sub2(WORK_Other* ewk) {
     ewk->wu.xyz[0].cal += ewk->wu.mvxy.a[0].sp;
     ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;
+}
+
+
+
+/* provisional name */
+void add_x_sub_flip(WORK_Other* ewk) {
+    if (ewk->wu.rl_flag) {
+        ewk->wu.xyz[0].cal -= ewk->wu.mvxy.a[0].sp;
+        ewk->wu.mvxy.a[0].sp -= ewk->wu.mvxy.d[0].sp;
+    } else {
+        ewk->wu.xyz[0].cal += ewk->wu.mvxy.a[0].sp;
+        ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;
+    }
 }
 
 
@@ -493,7 +486,7 @@ s32 hit_check_subroutine_yu(WORK* tpl, WORK* tef, s16* hd1, s16* hd2) {
     }
     d2 += tef->xyz[0].disp.pos;
     flag = (d0 < d2);
-    d2 = d2 + (d3 - d0);
+    d2 += (d3 - d0);
     d3 += d1;
     if ((u32)d2 >= d3) {
         return 0;
@@ -608,29 +601,3 @@ void win_lose_work_clear(void) {
     lose_rno[1] = 0;
     lose_free[1] = 0;
 }
-
-
-
-void cal_bg_speed_data_x(s16 bg_num, s16 tm, s16 dummy) {
-    MotionState ms;
-    bg_w.bgw[bg_num].chase_xy[0].disp.low = 0;
-    ms.timer = tm;
-    ms.timer2 = (ms.timer - 1) * ms.timer / 2 + ms.timer;
-    ms.x.ps.h = chase_x - bg_w.bgw[bg_num].chase_xy[0].disp.pos;
-    ms.x.ps.l = 0;
-    if (!ms.timer) {
-        ms.amx = 0;
-        ms.dlx = 0;
-        ms.spx = 0;
-    } else {
-        ms.amx = ms.x.pl % ms.timer2;
-        ms.spx = ms.dlx = ms.x.pl / ms.timer2;
-    }
-    bg_mvxy.a[0].sp = ms.spx;
-    bg_mvxy.d[0].sp = ms.dlx;
-    bg_w.bgw[bg_num].chase_xy[0].cal += ms.amx;
-    bg_mvxy.kop[0] = 0;
-}
-
-
-

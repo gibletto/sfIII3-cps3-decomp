@@ -36,7 +36,7 @@ void combo_message_set(s8 pl, s8 kind) {
 void combo_hitnum_set(s8 pl, s8 kind, u16 hits) {
     s16 x = combo_hitpos_tbl[kind][pl];
     s16 y = pl * 2 + 30;
-    u16 tens = hits / 10;
+    s32 tens = hits / 10;
     u16 ones = hits - tens * 10;
     if (tens != 0) {
         tilemap_put_cell(x, y, 16, tens + 96);
@@ -56,17 +56,19 @@ void combo_hitnum_set(s8 pl, s8 kind, u16 hits) {
 s16 combo_pts_set(s8 PL, u32 pts) {
     s16 digit[4];
     s16 i;
-    s16 first;
+    s32 first;
     s32 xx;
-    s16 x;
+    u16 x;
     s16 y;
     s16 x2;
     first = -1;
     xx = 100000;
     for (i = 3; i >= 0; i--) {
         digit[i] = pts / xx;
-        if (first < 0 && digit[i] != 0) {
-            first = i;
+        if (first < 0) {
+            if (digit[i] != 0) {
+                first = i;
+            }
         }
         pts -= digit[i] * xx;
         xx /= 10;
@@ -109,7 +111,7 @@ void combo_window_slide(s8 pl, s16 x, s16 y, s16 n) {
 
 /* provisional name */
 void combo_window_erase(s8 col, s8 kind, s16 row) {
-    u32* cell = (u32*)((SS_RAM + 0x700) + combo_erase_pos_tbl[(*&Game_setting).mode][kind][col] * 4 + row * 0x300);
+    u32* cell = (u32*)((SS_RAM + 0x700) + combo_erase_pos_tbl[Game_setting.mode][kind][col] * 4 + row * 0x300);
     u16 i;
     for (i = 0; i < combo_erase_len_tbl[kind]; i++) {
         cell[0] = 0x200000;
@@ -122,7 +124,7 @@ void combo_window_erase(s8 col, s8 kind, s16 row) {
 
 /* provisional name */
 void combo_window_all_clear(void) {
-    if ((*&Game_setting).mode == 0) {
+    if (Game_setting.mode == 0) {
         tilemap_clear_rect(0, 7, 20, 9);
         tilemap_clear_rect(0, 10, 18, 11);
         tilemap_clear_rect(27, 7, 47, 9);

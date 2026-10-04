@@ -1,15 +1,13 @@
 /*
- * lose_pl.c  Win/lose poses after a round and the opening demo (first half)
+ * LOSE_PL.C  Win/lose poses after a round and the opening demo (first half)
  *
- * Player routines for the end of a round: bonus_game_win_pause picks the pose after a bonus
- * stage from its result, meta_win_pause and meta_lose_pause handle a player who is not in his
- * own character, and lose_player dispatches the loser through Lose_00000..Lose_30000 by the
- * character's lose type (normal loser, judged-loss loser and special cases).
- * The second part starts the opening demo: opening_demo_tick is the per-frame entry (init,
- * move, Capcom screen), opning_init_00000/01000 allocate scroll graphics and set up the BG
- * planes, and opening_move advances the scene number when the music sequence reaches the next
- * cue in op_change_sound_tbl, then runs op_100_move..op_106_move; the later bars continue in
- * end_main.c.
+ * Player routines for the end of a round: lose_player dispatches the loser through
+ * Lose_00000..Lose_30000 by the character's lose type (normal loser, judged-loss loser and special
+ * cases); meta_lose_pause handles a loser who is not in his own character. The second part starts
+ * the opening demo: opening_demo_tick is the per-frame entry (init, move, Capcom screen),
+ * opning_init_00000/01000 allocate scroll graphics and set up the BG planes, and opening_move
+ * advances the scene number when the music sequence reaches the next cue in op_change_sound_tbl,
+ * then runs op_100_move..op_106_move; the later bars continue in end_main.c.
  */
 
 #include "structs.h"
@@ -17,12 +15,23 @@
 #include "romdata.h"
 #include "extern.h"
 #include "sys_test.h"
+#include "sys_test_2.h"
+#include "sys_test_2b.h"
+#include "sys_test_2c.h"
+#include "sys_test_3.h"
+#include "sys_test_4.h"
+#include "sys_test_5.h"
 #include "aboutspr.h"
 #include "SE.h"
+#include "se_2.h"
+#include "se_3.h"
 #include "SYS_sub.h"
 #include "textsound.h"
+#include "textsound_2.h"
+#include "textsound_3.h"
 #include "sc_trans.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "fifo.h"
 #include "eff36.h"
 #include "EFF48.h"
@@ -30,92 +39,11 @@
 #include "efff6.h"
 #include "end_main.h"
 #include "sys_config.h"
+#include "sys_config_2.h"
+#include "sys_config_3.h"
 #include "PLS02.h"
 #include "Com_Pl.h"
-#include "CHARSET.h"
 #include "lose_pl.h"
-
-
-
-void bonus_game_win_pause(PLW* wk) {
-    bg_app_stop = 1;
-    if (set_field_hosei_flag(&plw[1], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
-        set_field_hosei_flag(&plw[1], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
-    }
-    if (set_field_hosei_flag(&plw[0], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
-        set_field_hosei_flag(&plw[0], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
-    }
-    switch (wk->wu.routine_no[3]) {
-    case 0:
-        wk->wu.routine_no[3]++;
-        win_rno[0] = win_rno[1] = 0;
-        if (Bonus_Game_Flag == 21) {
-            if (wk->wu.operator) {
-                if (Time_Over) {
-                    set_char_move_init(&wk->wu, 9, 67);
-                } else {
-                    set_char_move_init(&wk->wu, 9, 65);
-                }
-                break;
-            }
-            wk->wu.routine_no[3] = 99;
-            break;
-        }
-        if (wk->wu.operator) {
-            if (Bonus_Game_result == 20 || Bonus_Game_ex_result == 20) {
-                set_char_move_init(&wk->wu, 9, 65);
-                break;
-            }
-            if (Bonus_Game_result > 10) {
-                set_char_move_init(&wk->wu, 9, 66);
-                break;
-            }
-            set_char_move_init(&wk->wu, 9, 67);
-            break;
-        }
-        if (Bonus_Game_result == 20 || Bonus_Game_ex_result == 20) {
-            win_rno[0] = 1;
-            if (wk->wu.rl_flag) {
-                wk->wu.mvxy.a[0].sp = 0x20000;
-            } else {
-                wk->wu.mvxy.a[0].sp = -0x20000;
-            }
-            wk->wu.mvxy.d[0].sp = 0;
-            wk->wu.mvxy.a[1].sp = 0x80000;
-            wk->wu.mvxy.d[1].sp = -0x6000;
-            win_rno[0] = 0;
-            set_char_move_init(&wk->wu, 9, 66);
-            break;
-        }
-        set_char_move_init(&wk->wu, 9, 52);
-        break;
-    case 1:
-    case 9:
-        char_move(&wk->wu);
-        break;
-    }
-}
-
-
-
-void meta_win_pause(PLW* wk) {
-    bg_app_stop = 1;
-    if (set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
-        set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
-    }
-    switch (wk->wu.routine_no[3]) {
-    case 0:
-        wk->wu.routine_no[3]++;
-        set_char_move_init(&wk->wu, 9, meta_win_tbl[wk->player_number]);
-        break;
-    case 1:
-    case 9:
-        char_move(&wk->wu);
-        break;
-    }
-}
-
-
 
 void lose_player(PLW* wk) {
     void (*lose_jp_tbl[4])(PLW*) = { Lose_00000, Lose_10000, Lose_20000, Lose_30000 };
@@ -329,15 +257,3 @@ void meta_lose_pause(PLW* wk) {
 }
 
 
-/* provisional name */
-void op_w_clear(void) {
-    op_w.r_no_0 = 0;
-    op_w.r_no_1 = 0;
-    op_w.r_no_2 = 0;
-    op_w.index = 0;
-    op_w.mv_ctr = 0;
-}
-
-
-
-/* provisional name */

@@ -18,30 +18,60 @@
 #include "romdata.h"
 #include "extern.h"
 #include "bg_sub.h"
+#include "bg_sub_2.h"
+#include "bg_sub_3.h"
+#include "bg_sub_4.h"
+#include "bg_sub_5.h"
 #include "SYS_sub.h"
-#include "PLCNT.h"
+#include "EM_Cand.h"
 #include "Win.h"
+#include "win_2.h"
+#include "continue.h"
 #include "end_sub.h"
+#include "end_sub_2.h"
+#include "end_sub_3.h"
+#include "end_sub_4.h"
+#include "end_sub_5.h"
+#include "end_sub_6.h"
+#include "end_sub_7.h"
+#include "color3rd.h"
+#include "end_sub_8.h"
 #include "cmb_win.h"
 #include "Eff39.h"
 #include "EFF44.h"
-#include "Eff76_COLOR.h"
 #include "EFF99.h"
+#include "effa0.h"
 #include "EFFA3.h"
+#include "effa5.h"
+#include "effa5_input.h"
 #include "sys_test.h"
+#include "sys_test_2.h"
+#include "sys_test_2b.h"
+#include "sys_test_2c.h"
+#include "sys_test_3.h"
+#include "sys_test_4.h"
+#include "sys_test_5.h"
 #include "sel_pl.h"
 #include "SE.h"
+#include "se_2.h"
+#include "se_3.h"
 #include "EFF38.h"
 #include "EFF42.h"
-#include "EFF58.h"
+#include "eff56.h"
+#include "eff57.h"
+#include "eff58.h"
 #include "EFF75_ORDER.h"
 #include "Eff76.h"
 #include "EFFA7.h"
+#include "effa8.h"
+#include "effa9.h"
 #include "EffE0.h"
 #include "EffK6.h"
 #include "PLS02.h"
 #include "bg000.h"
 #include "textsound.h"
+#include "textsound_2.h"
+#include "textsound_3.h"
 #include "next_cpu.h"
 
 
@@ -519,7 +549,10 @@ void Select_CPU_1st(void) {
     Temporary_EM[Player_id] = Last_Selected_EM[Player_id];
     Select_Timer = 32;
     Setup_EM_List();
-    Target_BG_X[3] = bg_w.bgw[3].wxy[0].disp.pos + 458;
+    {
+        s16 t = bg_w.bgw[3].wxy[0].disp.pos + 458;
+        Target_BG_X[3] = t;
+    }
     Offset_BG_X[3] = 0;
     if (VS_Index[Player_id] == 0) {
         bg_mvxy.a[0].sp = 0xA0000;
@@ -546,11 +579,10 @@ void Select_CPU_1st(void) {
 
 s32 Select_CPU_2nd(void) {
     u16 xx;
-    u8* p = SC_No;
-    s32 st = p[1];
+    s32 st = SC_No[1];
     switch (st) {
     case 0:
-        p[1]++;
+        SC_No[1]++;
         Order[Aborigine + 13] = 5;
         Order_Timer[Aborigine + 13] = 1;
         Order[Aborigine + 31] = 5;
@@ -567,8 +599,8 @@ s32 Select_CPU_2nd(void) {
     case 1:
         Check_Auto_Cut();
         if (Next_Step) {
-            p[0]++;
-            p[1] = 0;
+            SC_No[0]++;
+            SC_No[1] = 0;
             Time_Stop = 0;
         }
         return 0;
@@ -579,7 +611,7 @@ s32 Select_CPU_2nd(void) {
 u8 *Select_CPU_3rd(void)
 {
     u32 rv;
-    u16 sw_on;
+    s32 sw_on;
     s8 pid;
 
     rv = SC_No[1];
@@ -597,10 +629,10 @@ u8 *Select_CPU_3rd(void)
         } else {
             if (pid == 0) {
                 sw_on = p1sw_0;
-                Sel_CPU_Sub(pid != 0, (u16)(~p1sw_1 & sw_on), sw_on, 20, sw_on);
+                Sel_CPU_Sub(0, (u16)(~p1sw_1 & sw_on), sw_on, 20, sw_on);
             } else {
                 sw_on = p2sw_0;
-                Sel_CPU_Sub(pid != 0, (u16)(~p2sw_1 & sw_on), sw_on, 20, sw_on);
+                Sel_CPU_Sub(1, (u16)(~p2sw_1 & sw_on), sw_on, 20, sw_on);
             }
         }
         rv = (u32)Sel_EM_Complete;
@@ -830,7 +862,7 @@ void Next_Bonus_End(void) {
 
 
 
-s16 Next_Q(void) {
+s32 Next_Q(void) {
     void (*Next_Q_Tbl[4])() = { Next_Q_1st, Next_Q_2nd, Next_Q_3rd, PL_Sel_1st };
     if (Break_Into != 0) {
         return 0;
@@ -1005,7 +1037,10 @@ u16 sw;
             Sound_SE(ID + 98);
             Sound_SE(EM_Select_SE_Data[random_16_com()]);
         }
-        Last_Selected_EM[PL_id] = Temporary_EM[PL_id];
+        {
+            s8 t = Temporary_EM[PL_id];
+            Last_Selected_EM[PL_id] = t;
+        }
     }
 }
 
@@ -1062,6 +1097,8 @@ void Setup_Com_Color(void) {
 void Setup_PL_Color(s16 PL_id, u16 sw) {
     s8 id_0;
     s8 id_1;
+    s8* mine = &Player_Color[PL_id];
+    s8* other = &Player_Color[PL_id ^ 1];
     if (plw[PL_id ^ 1].wu.operator == 0) {
         id_0 = -1;
         id_1 = 1;
@@ -1074,58 +1111,58 @@ void Setup_PL_Color(s16 PL_id, u16 sw) {
     }
     switch (sw) {
     case 16:
-        if (Player_Color[PL_id ^ 1] == 0 && id_0 == id_1) {
-            Player_Color[PL_id] = 3;
+        if (*other == 0 && id_0 == id_1) {
+            *mine = 3;
         } else {
-            Player_Color[PL_id] = 0;
+            *mine = 0;
         }
         break;
     case 32:
-        if (Player_Color[PL_id ^ 1] == 1 && id_0 == id_1) {
-            Player_Color[PL_id] = 4;
+        if (*other == 1 && id_0 == id_1) {
+            *mine = 4;
         } else {
-            Player_Color[PL_id] = 1;
+            *mine = 1;
         }
         break;
     case 64:
-        if (Player_Color[PL_id ^ 1] == 2 && id_0 == id_1) {
-            Player_Color[PL_id] = 5;
+        if (*other == 2 && id_0 == id_1) {
+            *mine = 5;
         } else {
-            Player_Color[PL_id] = 2;
+            *mine = 2;
         }
         break;
     case 128:
-        if (Player_Color[PL_id ^ 1] == 3 && id_0 == id_1) {
-            Player_Color[PL_id] = 0;
+        if (*other == 3 && id_0 == id_1) {
+            *mine = 0;
         } else {
-            Player_Color[PL_id] = 3;
+            *mine = 3;
         }
         break;
     case 256:
-        if (Player_Color[PL_id ^ 1] == 4 && id_0 == id_1) {
-            Player_Color[PL_id] = 1;
+        if (*other == 4 && id_0 == id_1) {
+            *mine = 1;
         } else {
-            Player_Color[PL_id] = 4;
+            *mine = 4;
         }
         break;
     case 336:
         if (Version_Type == 3) {
-            if (Player_Color[PL_id ^ 1] == 0 && id_0 == id_1) {
-                Player_Color[PL_id] = 3;
+            if (*other == 0 && id_0 == id_1) {
+                *mine = 3;
             } else {
-                Player_Color[PL_id] = 0;
+                *mine = 0;
             }
-        } else if (Player_Color[PL_id ^ 1] == 6 && id_0 == id_1) {
-            Player_Color[PL_id] = 0;
+        } else if (*other == 6 && id_0 == id_1) {
+            *mine = 0;
         } else {
-            Player_Color[PL_id] = 6;
+            *mine = 6;
         }
         break;
     default:
-        if (Player_Color[PL_id ^ 1] == 5 && id_0 == id_1) {
-            Player_Color[PL_id] = 2;
+        if (*other == 5 && id_0 == id_1) {
+            *mine = 2;
         } else {
-            Player_Color[PL_id] = 5;
+            *mine = 5;
         }
         break;
     }
@@ -1245,7 +1282,7 @@ void Setup_VS_OBJ(s16 Option) {
 
 
 
-s8 Check_Bonus_Stage(void) {
+s32 Check_Bonus_Stage(void) {
     Setup_ID();
     if ((Game_setting.bonus & 1) == 0) {
         return 0;

@@ -11,8 +11,15 @@
 #include "romdata.h"
 #include "extern.h"
 #include "sys_test.h"
+#include "sys_test_2.h"
+#include "sys_test_2b.h"
+#include "sys_test_2c.h"
+#include "sys_test_3.h"
+#include "sys_test_4.h"
+#include "sys_test_5.h"
 #include "fifo.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "aboutspr.h"
 #include "EFF77.h"
 
@@ -44,6 +51,7 @@ void effect_77_move(WORK_Other* ewk) {
         sa_pa_flag = 1;
         for (i = 0; i < bg_w.scno; i++) {
             Bg_Off_W(1 << i);
+            continue;
         }
         Bg_On_W(8);
         ewk->wu.old_rno[0] = eff77_data_tbl[ewk->wu.type][0];
@@ -56,6 +64,7 @@ void effect_77_move(WORK_Other* ewk) {
         ewk->wu.routine_no[0]++;
         for (i = 0; i < bg_w.scno; i++) {
             Bg_Off_W(1 << i);
+            continue;
         }
         Bg_On_W(8);
         sa_pa_flag = 1;
@@ -83,6 +92,7 @@ void effect_77_move(WORK_Other* ewk) {
         }
         for (i = 0; i < bg_w.scno; i++) {
             Bg_On_W(1 << i);
+            continue;
         }
         Bg_Off_W(8);
         break;

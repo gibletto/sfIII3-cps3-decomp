@@ -10,15 +10,21 @@
 #include "work.h"
 #include "romdata.h"
 #include "extern.h"
-#include "EFF29.h"
+#include "eff28.h"
+#include "eff29.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "ta_sub.h"
 #include "EFF27.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "EFF25.h"
 #include "aboutspr.h"
-#include "CHARSET.h"
 #include "bg_sub.h"
+#include "bg_sub_2.h"
+#include "bg_sub_3.h"
+#include "bg_sub_4.h"
+#include "bg_sub_5.h"
 #include "EFF26.h"
 
 
@@ -327,7 +333,7 @@ void eff26_05(WORK_Other* ewk) {
 s32 effect_26_init(WORK_Other* oya, s16 type26) {
     WORK_Other* ewk;
     s16 ix;
-    s16 lp_cnt = eff26_num[type26];
+    s32 lp_cnt = eff26_num[type26];
     s16 i;
     const s16* data_ptr;
     if (!lp_cnt) {

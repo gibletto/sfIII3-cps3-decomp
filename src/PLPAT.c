@@ -17,11 +17,11 @@
 #include "PLS02.h"
 #include "CALDIR.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "PLS01.h"
 #include "EFFG6.h"
 #include "Grade.h"
 #include "PLS00.h"
-#include "CHARSET.h"
 #include "PLSGAUGE.h"
 #include "PLPAT.h"
 void Player_attack(PLW* wk) {

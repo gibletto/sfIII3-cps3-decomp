@@ -16,11 +16,15 @@
 #include "romdata.h"
 #include "extern.h"
 #include "PLCNTDAT.h"
+#include "plcntdat_2.h"
 #include "cmb_win.h"
 #include "Grade.h"
 #include "meta_col.h"
 #include "Win.h"
+#include "win_2.h"
+#include "continue.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "cmb_cont.h"
 
 
@@ -59,6 +63,8 @@ void combo_cont_init(void) {
         memset(score_calc[i], 0, sizeof(score_calc[0]));
     }
 }
+
+
 
 
 
@@ -242,7 +248,7 @@ void bonus_pts_inc(s8 id) {
 
 
 s32 paring_check(s8 PL) {
-    s8 PLS;
+    s32 PLS;
     if (paring_bonus_r[PL]) {
         paring_bonus_r[PL] = 0;
         paring_attack[PL] = 1;
@@ -256,6 +262,7 @@ s32 paring_check(s8 PL) {
     }
     return 0;
 }
+
 
 
 
@@ -309,7 +316,7 @@ u32 SCORE_CALCULATION(s8 PL) {
     s8 lpx;
     s8 lpy;
     s16 hit;
-    s16 h;
+    u16 h;
     u32 score;
     s8 last;
     k_ptr = plw[PL].cb->kind_of[0][0];
@@ -360,7 +367,7 @@ void SCORE_PLUS(s8 pl, u32 pts) {
 
 void combo_window_push(s8 PL, s8 KIND) {
     u32 score;
-    s8 PLS;
+    s32 PLS;
     if (KIND < 3) {
         score = SCORE_CALCULATION(PL);
         grade_max_combo_check(PL ^ 1, hit_num);
@@ -597,3 +604,4 @@ void combo_window_trans(s8 PL) {
         }
     }
 }
+

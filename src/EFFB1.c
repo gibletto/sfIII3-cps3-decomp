@@ -14,6 +14,7 @@
 #include "romdata.h"
 #include "extern.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "aboutspr.h"
 #include "EFFB1.h"
 
@@ -67,6 +68,7 @@ void effect_B1_move(WORK_Other_CONN* ewk) {
                     if (!ewk->conn[i + 20].nx) {
                         ewk->conn[i + 20].nx = 1;
                     }
+                    continue;
                 }
                 effB1_mark_change(ewk);
             }
@@ -131,6 +133,7 @@ void effB1_mark_change(WORK_Other_CONN* ewk) {
         case 4:
             break;
         }
+        continue;
     }
 }
 

@@ -14,12 +14,28 @@
 #include "romdata.h"
 #include "extern.h"
 #include "sys_test.h"
+#include "sys_test_2.h"
+#include "sys_test_2b.h"
+#include "sys_test_2c.h"
+#include "sys_test_3.h"
+#include "sys_test_4.h"
+#include "sys_test_5.h"
 #include "end_1.h"
-#include "EFFF9.h"
+#include "efff7.h"
+#include "efff8_code.h"
+#include "efff9.h"
 #include "SE.h"
+#include "se_2.h"
+#include "se_3.h"
 #include "bg_sub.h"
+#include "bg_sub_2.h"
+#include "bg_sub_3.h"
+#include "bg_sub_4.h"
+#include "bg_sub_5.h"
 #include "end_main.h"
 #include "sys_config.h"
+#include "sys_config_2.h"
+#include "sys_config_3.h"
 #include "effe6.h"
 #include "aboutspr.h"
 #include "meta_col.h"
@@ -270,7 +286,7 @@ u32 end_2001_0003(void)
     s16 *ls_cnt = &ls_cnt1;       /* sea line-scroll phase */
     s16 *ls_rate = &ls_rate1;      /* sea line-scroll amplitude */
     s16 *line;
-    u16 i;
+    s32 i;
     s32 ix;
 
     switch (bgw_ptr->r_no_1) {

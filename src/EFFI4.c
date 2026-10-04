@@ -22,11 +22,12 @@
 #include "EFFI9.h"
 #include "PLS02.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "EFF13.h"
 #include "EFF96.h"
-#include "CHARSET.h"
 #include "EFFI4.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "EFF13_KOTP.h"
 #include "fighter.h"
 
@@ -36,7 +37,7 @@ void kotp_06000(WORK_Other* ewk, TAMA* twk) {
     PLW* mwk;
     PLW* emwk;
     s16 dir;
-    s16 emdir;
+    s32 emdir;
     s16* target_x;
     s16* target_y;
     s32 t;

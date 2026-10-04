@@ -17,22 +17,27 @@
 #include "romdata.h"
 #include "extern.h"
 #include "Win.h"
+#include "win_2.h"
+#include "continue.h"
 #include "SLOWF.h"
 #include "PLS02.h"
 #include "PLSGAUGE.h"
 #include "CALDIR.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "PLS01.h"
 #include "cmb_cont.h"
 #include "EFFA7.h"
+#include "effa8.h"
+#include "effa9.h"
 #include "EFFD9.h"
 #include "EFFG6.h"
 #include "EFFI3.h"
 #include "Grade.h"
-#include "CHARSET.h"
 #include "EFFE2.h"
 #include "PLPCA.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "PLPDM.h"
 #include "fighter.h"
 
@@ -412,8 +417,10 @@ void Damage_17000(PLW* wk) {
             combo_rp_clear_check(wk->wu.id);
             break;
         }
-        if (wk->wu.cmwk[14] > 0 && --wk->wu.cmwk[14] == 0) {
-            char_move_wca(&wk->wu);
+        if (wk->wu.cmwk[14] > 0) {
+            if (--wk->wu.cmwk[14] == 0) {
+                char_move_wca(&wk->wu);
+            }
         }
         if (dm17_to_nm23_flag != 0 && wk->wu.cmwk[14] <= 0 && wk->wu.mvxy.a[1].real.h < -2) {
             wk->wu.routine_no[1] = 0;
@@ -1082,7 +1089,7 @@ void add_dm_step_dummy(void) {}
 
 void set_dm_hos_flag_sky(PLW* wk) {
     PLW* twk = (PLW*)wk->wu.target_adrs;
-    s16 disx = wk->wu.xyz[0].disp.pos - twk->wu.xyz[0].disp.pos;
+    s32 disx = wk->wu.xyz[0].disp.pos - twk->wu.xyz[0].disp.pos;
     if (disx < 0) {
         disx = -disx;
     }

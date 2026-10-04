@@ -15,9 +15,17 @@
 #include "romdata.h"
 #include "extern.h"
 #include "sys_test.h"
+#include "sys_test_2.h"
+#include "sys_test_2b.h"
+#include "sys_test_2c.h"
+#include "sys_test_3.h"
+#include "sys_test_4.h"
+#include "sys_test_5.h"
 #include "aboutspr.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "EFFF4.h"
 
 
@@ -105,6 +113,7 @@ void effect_F4_move(WORK_Other* ewk) {
         ewk->wu.routine_no[0]++;
         for (i = 0; i < bg_w.scno; i++) {
             scroll_layer_mask_disable(1 << i);
+            continue;
         }
         scroll_layer_mask_enable(8);
         ewk->wu.disp_flag = 1;
@@ -118,11 +127,13 @@ void effect_F4_move(WORK_Other* ewk) {
             if (ewk->wu.disp_flag) {
                 for (i = 0; i < bg_w.scno; i++) {
                     scroll_layer_mask_disable(1 << i);
+                    continue;
                 }
                 scroll_layer_mask_enable(8);
             } else {
                 for (i = 0; i < bg_w.scno; i++) {
                     scroll_layer_mask_enable(1 << i);
+                    continue;
                 }
                 scroll_layer_mask_disable(8);
             }
@@ -130,6 +141,7 @@ void effect_F4_move(WORK_Other* ewk) {
             ewk->wu.routine_no[0]++;
             for (i = 0; i < bg_w.scno; i++) {
                 scroll_layer_mask_enable(1 << i);
+                continue;
             }
             scroll_layer_mask_disable(8);
         }

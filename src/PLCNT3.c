@@ -12,12 +12,18 @@
 #include "romdata.h"
 #include "extern.h"
 #include "Manage.h"
+#include "manage_2.h"
 #include "PLCNTSET.h"
+#include "plcntset_2.h"
 #include "PLS02.h"
 #include "PLCNT2.h"
 #include "aboutspr.h"
 #include "HITCHECK.h"
 #include "bg_sub.h"
+#include "bg_sub_2.h"
+#include "bg_sub_3.h"
+#include "bg_sub_4.h"
+#include "bg_sub_5.h"
 #include "PLCNT3.h"
 
 #pragma inline(zanzou_store)

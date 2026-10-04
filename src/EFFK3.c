@@ -15,9 +15,10 @@
 #include "extern.h"
 #include "PLS02.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "aboutspr.h"
 #include "EFFECT.h"
-#include "CHARSET.h"
+#include "effect_2.h"
 #include "EFFK3.h"
 
 
@@ -69,7 +70,7 @@ void effect_K3_move(WORK_Other* ewk) {
 
 void set_init_posspeed_effK3(WORK* wk) {
     s16 data[4];
-    s16 ix;
+    s32 ix;
     s16 flag;
     wk->xyz[0].disp.pos = 520;
     wk->xyz[1].disp.pos = 96;
@@ -129,6 +130,7 @@ s32 setup_effK3(WORK* wk) {
     }
     for (i = 0; i < numof_effK3[wk->dm_attlv]; i++) {
         effect_K3_init((WORK_Other*)wk);
+        continue;
     }
     return 1;
 }

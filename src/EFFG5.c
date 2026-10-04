@@ -16,9 +16,10 @@
 #include "aboutspr.h"
 #include "CALDIR.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "PLS02.h"
-#include "CHARSET.h"
 #include "EFFG5.h"
 
 

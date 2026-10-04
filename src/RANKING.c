@@ -18,19 +18,43 @@
 #include "romdata.h"
 #include "extern.h"
 #include "bg_sub.h"
+#include "bg_sub_2.h"
+#include "bg_sub_3.h"
+#include "bg_sub_4.h"
+#include "bg_sub_5.h"
 #include "SYS_sub.h"
 #include "Game_Main.h"
-#include "DEMO.h"
+#include "demo00.h"
+#include "demo01.h"
+#include "demo02_code.h"
 #include "end_sub.h"
+#include "end_sub_2.h"
+#include "end_sub_3.h"
+#include "end_sub_4.h"
+#include "end_sub_5.h"
+#include "end_sub_6.h"
+#include "end_sub_7.h"
+#include "color3rd.h"
+#include "end_sub_8.h"
 #include "cmb_win.h"
 #include "sc_trans.h"
 #include "SE.h"
-#include "EFF58.h"
-#include "EFF67.h"
+#include "se_2.h"
+#include "se_3.h"
+#include "eff56.h"
+#include "eff57.h"
+#include "eff58.h"
+#include "eff64.h"
+#include "eff65.h"
+#include "eff66.h"
 #include "Eff76.h"
 #include "bg000.h"
 #include "Win.h"
+#include "win_2.h"
+#include "continue.h"
 #include "textsound.h"
+#include "textsound_2.h"
+#include "textsound_3.h"
 #include "RANKING.h"
 
 
@@ -62,7 +86,7 @@ void Ranking_00_1st(void)
 
 
 void Ranking_00_2nd(void) {
-    s16 Char_Index;
+    u16 Char_Index;
     D_No1++;
     D_Timer = 1;
     Rank_X = 0;
@@ -231,7 +255,7 @@ void Ranking_01_1st(void) {
 
 
 void Ranking_01_2nd(void) {
-    s16 Char_Index;
+    s32 Char_Index;
     D_No1++;
     D_Timer = 420;
     Rank_X = 0;
@@ -266,6 +290,7 @@ void Ranking_01_2nd(void) {
         Rank_Pos_Y -= 32;
         Rank_X = 0;
         Flash_Rank_Time = 0;
+        continue;
     }
     Order[85] = 1;
     Order_Timer[85] = 180;
@@ -614,7 +639,7 @@ void Setup_Score_Obj(void) {
 
 /* provisional name */
 void Ranking_Init(void) {
-    u16 ix;
+    s16 ix;
     u16 j;
     RANK_DATA* dst = Ranking_Data;
     const RANK_DATA* src = Rank_Default_Data;

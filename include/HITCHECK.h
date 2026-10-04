@@ -11,7 +11,7 @@ void cal_combo_waribiki2(PLW* ds);
 void cal_hit_mark_pos(WORK* as, WORK* ds, s16 ix2, s16 ix);
 void cal_hit_mark_position(WORK* wk1, WORK* wk2, s16* hd1, s16* hd2);
 void catch_hit_check(void);
-s16 check_blocking_flag(PLW* as, PLW* ds);
+s32 check_blocking_flag(PLW* as, PLW* ds);
 s32 change_damage_attribute();
 s32 check_aiuchi_pat(s16 ix);
 s32 check_dm_att_blocking(WORK* as, WORK* ds, s16 dnum);

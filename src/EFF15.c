@@ -12,10 +12,15 @@
 #include "extern.h"
 #include "ta_sub.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "aboutspr.h"
 #include "EFFECT.h"
-#include "CHARSET.h"
+#include "effect_2.h"
 #include "bg_sub.h"
+#include "bg_sub_2.h"
+#include "bg_sub_3.h"
+#include "bg_sub_4.h"
+#include "bg_sub_5.h"
 #include "EFF15.h"
 
 void eff15_kemuri(WORK_Other* ewk);

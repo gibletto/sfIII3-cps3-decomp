@@ -12,11 +12,16 @@
 #include "extern.h"
 #include "ta_sub.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "PLS02.h"
 #include "aboutspr.h"
-#include "CHARSET.h"
 #include "bg_sub.h"
+#include "bg_sub_2.h"
+#include "bg_sub_3.h"
+#include "bg_sub_4.h"
+#include "bg_sub_5.h"
 #include "EFF19.h"
 
 
@@ -46,25 +51,24 @@ void effect_19_move(WORK_Other* ewk) {
 
 u8 * eff19_quake_sub(WORK_Other* ewk)
 {
-    const s8* sel_tbl;
     s16 rnd;
     s8 sel;
     s16 hit;
 
     switch (ewk->wu.routine_no[1]) {
     case 0:
-        if (bg_w.quake_y_index < 3) {
+        if (bg_w.quake_y_index <= 2) {
             return (u8*)0x2C;
         }
         rnd = random_16_com();
         if (bg_w.quake_y_index < 8) {
             sel = effect_19_s_tbl[rnd];
         } else {
-            sel_tbl = effect_19_m_tbl;
             if (bg_w.quake_y_index > 14) {
-                sel_tbl = effect_19_l_tbl;
+                sel = effect_19_l_tbl[rnd];
+            } else {
+                sel = effect_19_m_tbl[rnd];
             }
-            sel = sel_tbl[rnd];
         }
         if (!sel) {
             ewk->wu.routine_no[1]++;

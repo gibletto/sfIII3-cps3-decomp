@@ -9,7 +9,7 @@ void setup_kage_cells(void);
 s32 setup_hit_mark_cells(void);
 s32 setup_GILL_exsa_obj(void);
 s32 setup_bonus_car_parts(void);
-u16 get_cg_slot_addr(u16 id);
+s32 get_cg_slot_addr(u16 id);
 s32 purge_char_gfx();
 s32 check_cg_data();
 s32 cg_data_exist(u16 id);

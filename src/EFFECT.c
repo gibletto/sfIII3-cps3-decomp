@@ -4,15 +4,14 @@
  * All effect objects live in 128 work blocks (frw) taken from a free queue and linked into one of
  * eight execution lists. effect_work_init builds the queue; pull_effect_work (or
  * effect_work_pull_link, to insert beside a given work) takes a block for a list, and
- * push_effect_work unlinks, clears and returns it. move_effect_work runs one list per call,
- * calling each work's move routine through effmovejptbl by id; a timing stamp stops a work pulled
- * during the pass from running twice. effect_work_quick_init / _quick_clear and the list walkers
- * free whole lists, effect_work_kill marks works dead and search_effect_index finds a work by id.
- * Also here: work_init_zero, the per-player shell list helpers (effect_shell_ix_* ,
- * get_vs_shell_adrs, setup_shell_hit_stop, shell_live_check) and small setters called
- * from character move data (status, caution, extra-BG, BG quake, extra-damage index, step move),
- * and setup_dmv_use_flag, setup_disp_flag and setup_command_number, used when effects and players
- * are initialised.
+ * push_effect_work unlinks, clears and returns it. move_effect_work runs one list per call, calling
+ * each work's move routine through effmovejptbl by id; a timing stamp stops a work pulled during the
+ * pass from running twice. effect_work_quick_init / _quick_clear and the list walkers free whole
+ * lists, effect_work_kill marks works dead and search_effect_index finds a work by id. Also here:
+ * work_init_zero, the per-player shell list helpers (effect_shell_ix_* , get_vs_shell_adrs,
+ * setup_shell_hit_stop, shell_live_check) and small setters called from character move data (status,
+ * caution, extra-BG, BG quake, extra-damage index, step move), and setup_dmv_use_flag,
+ * setup_disp_flag and setup_command_number, used when effects and players are initialised.
  */
 
 #include "structs.h"
@@ -20,6 +19,7 @@
 #include "romdata.h"
 #include "extern.h"
 #include "aboutspr.h"
+#include "effect_2.h"
 #include "EFFECT.h"
 
 void move_effect_work(s16 index) {
@@ -318,6 +318,27 @@ void work_init_zero(s32* adrs_int, s32 xx) {
     }
 }
 
+/* provisional name */
+void work_init_copy(s32* src, s32* dst, s16 size) {
+    s16 i;
+    s16 j;
+    s16 words;
+    s32 surr;
+    surr = (u32)size % 4;
+    words = size;
+    words /= 4;
+    for (i = 0; i < words; i++) {
+        *dst++ = *src++;
+    }
+    if (surr != 0) {
+        for (j = 0; j < surr; j++) {
+            *(s8*)dst = *(s8*)src;
+            src++;
+            dst++;
+        }
+    }
+}
+
 void write_my_shell_ix(WORK* wk, s16 ix) {
     s32 i;
     for (i = 7; i >= 1; i -= 1) {
@@ -467,57 +488,3 @@ void setup_meoshi_hit_flag(WORK* wk, u8 flag) {
 
 
 
-s32 exec_char_asxy(WORK* wk, u8 data) {
-    s16* from_rom2;
-    s32 st;
-    s16 ix = data;
-    ix *= 2;
-    from_rom2 = &wk->step_xy_table[ix];
-    st = *from_rom2++;
-    st *= 256;
-    if (wk->rl_flag) {
-        wk->xyz[0].cal += st;
-    } else {
-        wk->xyz[0].cal -= st;
-    }
-    st = *from_rom2;
-    st *= 256;
-    wk->xyz[1].cal += st;
-}
-
-
-
-void setup_free_program(WORK* wk, u8 arg) {}/* Start a horizontal background quake using quake pattern ix. */
-void setup_bg_quake_x(WORK* wk, u8 ix)
-{
-    bg_w.quake_x_index = ix;
-}
-
-/* Start a vertical background quake using quake pattern ix. */
-void setup_bg_quake_y(WORK* wk, u8 ix)
-{
-    bg_w.quake_y_index = ix;
-}
-
-
-
-void setup_exdm_ix(PLW* wk, u8 ix) {
-    wk->exdm_ix = ix;
-}
-
-
-void setup_dmv_use_flag(PLW* wk, u8 use) {
-    wk->dm_vital_use = use;
-}
-
-
-
-void setup_disp_flag(WORK* wk, s8 flag) {
-    wk->disp_flag = flag;
-}
-
-/* Queue a special command number for the player to perform. */
-void setup_command_number(PLW* wk, u8 cmd_no)
-{
-    wk->cmd_request = cmd_no;
-}

@@ -16,10 +16,11 @@
 #include "extern.h"
 #include "PLS02.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "aboutspr.h"
 #include "EFF03.h"
 #include "EFFECT.h"
-#include "CHARSET.h"
+#include "effect_2.h"
 #include "EFFH9.h"
 
 

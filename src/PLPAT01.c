@@ -18,11 +18,11 @@
 #include "PLSGAUGE.h"
 #include "CALDIR.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "Grade.h"
 #include "PLPAT.h"
 #include "PLS01.h"
 #include "PLS02.h"
-#include "CHARSET.h"
 #include "PLPAT01.h"
 
 

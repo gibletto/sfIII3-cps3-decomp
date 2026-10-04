@@ -13,16 +13,25 @@
 #include "extern.h"
 #include "bg000.h"
 #include "sys_test.h"
+#include "sys_test_2.h"
+#include "sys_test_2b.h"
+#include "sys_test_2c.h"
+#include "sys_test_3.h"
+#include "sys_test_4.h"
+#include "sys_test_5.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "sys_config.h"
+#include "sys_config_2.h"
+#include "sys_config_3.h"
 #include "EFF23.h"
 
 
 
 void effect_23_move(WORK_Other_CONN* ewk) {
     s32 i;
-    s32 j;
-    s32 slot;
+    s16 j;
+    s16 slot;
     switch (ewk->wu.routine_no[0]) {
     case 0:
         ewk->wu.routine_no[0]++;

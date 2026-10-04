@@ -1,0 +1,1943 @@
+/*
+ * ENTRY_2.C  Task control, debug dumps and the player entry / credit task (part 2)
+ *
+ * Entry task: entry_task calls entry_main every frame, which dispatches on E_No to Entry_00
+ * (flashing INSERT COIN / FREE PLAY), card entry, name entry, winner, loser, continue
+ * (Entry_Continue_Sub countdown), in-game and ranking entry steps, letting a second player join or
+ * break in (Break_Into_xx, Pay_Start_Credit, Credit_Sub / Credit_Continue). Title messages
+ * (Disp_Start_Message, credit_display_render, Disp_More_Coins) and game-over handling (In_Game_Sub,
+ * Setup_Next_Step) are also here.
+ */
+
+#include "structs.h"
+#include "work.h"
+#include "romdata.h"
+#include "extern.h"
+#include "EFFA2_MAIN.h"
+#include "Win.h"
+#include "win_2.h"
+#include "continue.h"
+#include "n_input.h"
+#include "SYS_sub.h"
+#include "cmb_win.h"
+#include "eff87.h"
+#include "eff88.h"
+#include "eff89.h"
+#include "eff90.h"
+#include "eff91.h"
+#include "eff92_code.h"
+#include "eff93.h"
+#include "sys_test.h"
+#include "sys_test_2.h"
+#include "sys_test_2b.h"
+#include "sys_test_2c.h"
+#include "sys_test_3.h"
+#include "sys_test_4.h"
+#include "sys_test_5.h"
+#include "eeprom.h"
+#include "SE.h"
+#include "se_2.h"
+#include "se_3.h"
+#include "end_sub.h"
+#include "end_sub_2.h"
+#include "end_sub_3.h"
+#include "end_sub_4.h"
+#include "end_sub_5.h"
+#include "end_sub_6.h"
+#include "end_sub_7.h"
+#include "color3rd.h"
+#include "end_sub_8.h"
+#include "Grade.h"
+#include "meta_col.h"
+#include "sc_trans.h"
+#include "textsound.h"
+#include "textsound_2.h"
+#include "textsound_3.h"
+#include "entry_2.h"
+
+
+
+/* provisional name */
+void entry_task(void)
+{
+    do {
+        entry_main();
+        task_sleep(1);
+    } while (1);
+}
+
+
+
+/* provisional name */
+void entry_main(void) {
+    void (*Main_Jmp_Tbl[11])() = { Entry_00, Entry_01, Entry_02, Entry_03, Entry_04, Entry_03, Entry_06, Entry_07, Entry_08, Entry_03, Entry_10 };
+    if (Free_Play) {
+        credit_1p = 9;
+        credit_2p = 9;
+    }
+    Main_Jmp_Tbl[E_No0]();
+    card_msg_disp();
+}
+
+
+
+void Entry_00(void) {
+    switch (E_No1) {
+    case 0:
+        Text_Page_Y = 0;
+        break;
+    case 1:
+        E_No1 = E_No1 + 1;
+        E_Timer = 50;
+        if (Free_Play) {
+            tilemap_print_string_attr(DE_X[3] + 14, Text_Page_Y + Insert_Y, 18, msg_free_play);
+        } else if (Two_Coin_Start) {
+            tilemap_print_string(DE_X[3] + 14, Text_Page_Y + Insert_Y, 0xFFFF, &insert_coin_mes[1]);
+        } else {
+            tilemap_print_string(DE_X[3] + 14, Text_Page_Y + Insert_Y, 0xFFFF, insert_coin_mes + coin_chute1_w[2] - 1);
+        }
+        if (G_No1 == 5 || G_No1 == 7) {
+            if (Free_Play) {
+                tilemap_print_string_attr(DE_X[16] + 2, Text_Page_Y, 18, msg_free_play);
+                tilemap_print_string_attr(DE_X[3] + 27, Text_Page_Y, 18, msg_free_play);
+            } else if (Two_Coin_Start) {
+                tilemap_print_string(DE_X[16] + 2, Text_Page_Y, 0xFFFF, &insert_coin_mes[1]);
+                tilemap_print_string(DE_X[3] + 27, Text_Page_Y, 0xFFFF, &insert_coin_mes[1]);
+            } else {
+                tilemap_print_string(DE_X[16] + 2, Text_Page_Y, 0xFFFF, insert_coin_mes + coin_chute1_w[2] - 1);
+                tilemap_print_string(DE_X[3] + 27, Text_Page_Y, 0xFFFF, insert_coin_mes + coin_chute1_w[2] - 1);
+            }
+        }
+        break;
+    case 2:
+        if (--E_Timer == 0) {
+            E_No1 = E_No1 + 1;
+            E_Timer = 30;
+            tilemap_print_string_attr(DE_X[3] + 14, Text_Page_Y + Insert_Y, 18, msg_blank);
+            if (G_No1 == 3 || G_No1 == 5) {
+                tilemap_print_string_attr(DE_X[16] + 2, Text_Page_Y, 18, msg_blank18);
+                tilemap_print_string_attr(DE_X[3] + 27, Text_Page_Y, 18, msg_blank18);
+            }
+        }
+        break;
+    case 3:
+        if (--E_Timer == 0) {
+            E_No1 = E_No1 - 1;
+            E_Timer = 50;
+            if (Free_Play) {
+                tilemap_print_string_attr(DE_X[3] + 14, Text_Page_Y + Insert_Y, 18, msg_free_play);
+            } else if (Two_Coin_Start) {
+                tilemap_print_string(DE_X[3] + 14, Text_Page_Y + Insert_Y, 0xFFFF, &insert_coin_mes[1]);
+            } else {
+                tilemap_print_string(DE_X[3] + 14, Text_Page_Y + Insert_Y, 0xFFFF,
+                                     insert_coin_mes + coin_chute1_w[2] - 1);
+            }
+            if (G_No1 == 3 || G_No1 == 5) {
+                if (Free_Play) {
+                    tilemap_print_string_attr(DE_X[16] + 2, Text_Page_Y, 18, msg_free_play);
+                    tilemap_print_string_attr(DE_X[3] + 27, Text_Page_Y, 18, msg_free_play);
+                } else if (Two_Coin_Start) {
+                    tilemap_print_string(DE_X[16] + 2, Text_Page_Y, 0xFFFF, &insert_coin_mes[1]);
+                    tilemap_print_string(DE_X[3] + 27, Text_Page_Y, 0xFFFF, &insert_coin_mes[1]);
+                } else {
+                    tilemap_print_string(DE_X[16] + 2, Text_Page_Y, 0xFFFF, insert_coin_mes + coin_chute1_w[2] - 1);
+                    tilemap_print_string(DE_X[3] + 27, Text_Page_Y, 0xFFFF, insert_coin_mes + coin_chute1_w[2] - 1);
+                }
+            }
+        }
+        break;
+    }
+}
+
+
+
+/* provisional name */
+void Entry_01(void) {
+    switch (E_No1) {
+    case 0:
+        E_No1++;
+        Text_Page_Y = 0;
+        Break_Into = 0;
+        credit_display_render(1);
+        Disp_Start_Message();
+        break;
+    case 1:
+        if (credit_display_render(0) != 0) {
+            Disp_Start_Message();
+        }
+        if (~p1sw_1 & p1sw_0 & 0x1000) {
+            if (Pay_Start_Credit(0) != 0) {
+                Entry_01_Sub(0);
+            }
+        } else if (~p2sw_1 & p2sw_0 & 0x1000) {
+            if (Pay_Start_Credit(1) != 0) {
+                Entry_01_Sub(1);
+            }
+        }
+        break;
+    case 2:
+        if (((u8)Request_E_No)) {
+            E_No1++;
+        }
+        break;
+    default:
+        entry_to_in_game();
+        break;
+    }
+}
+
+
+
+void Entry_01_Sub(s16 PL_id) {
+    E_No1++;
+    Request_G_No = 1;
+    if (Game_setting.set5) {
+        plw[0].wu.operator = 1;
+        plw[1].wu.operator = 1;
+        Operator_Status[0] = 1;
+        Operator_Status[1] = 1;
+        Ignore_Entry[0] = 0;
+        Ignore_Entry[1] = 0;
+        ((void(*)(s32 ix, s32 ix2))grade_check_work_1st_init)(0, 0);
+        ((void(*)(s32 ix, s32 ix2))grade_check_work_1st_init)(0, 1);
+        ((void(*)(s32 ix, s32 ix2))grade_check_work_1st_init)(1, 0);
+        ((void(*)(s32 ix, s32 ix2))grade_check_work_1st_init)(1, 1);
+    } else {
+        plw[PL_id].wu.operator = 1;
+        Operator_Status[PL_id] = 1;
+        Champion = PL_id;
+        plw[PL_id ^ 1].wu.operator = 0;
+        Operator_Status[PL_id ^ 1] = 0;
+        Ignore_Entry[0] = 0;
+        Ignore_Entry[1] = 0;
+        if (((s8)Continue_Coin[PL_id]) == 0) {
+            ((void(*)(s32 ix, s32 ix2))grade_check_work_1st_init)(PL_id, 0);
+        }
+    }
+}
+
+
+
+/* provisional name */
+void entry_to_in_game(void) {
+    s16 i;
+    s16 j;
+    E_No0 = 2;
+    E_No1 = 0;
+    E_No2 = 0;
+    E_No3 = 0;
+    F_No3[0] = F_No2[0] = F_No1[0] = 0;
+    F_No3[1] = F_No2[1] = F_No1[1] = 0;
+    for (i = 0; i < 2; i++) {
+        for (j = 0; j < 4; j++) {
+            E_Number[i][j] = 0;
+        }
+    }
+}
+
+
+
+void Entry_02(void) {
+    switch (E_No1) {
+    case 0:
+        E_No1 += 1;
+        Text_Page_Y = 32;
+        break;
+    }
+    Entry_Main_Sub(0, 2);
+    Entry_Main_Sub(1, 2);
+}
+
+
+
+void Entry_03(void) {
+    switch (E_No1) {
+    case 0:
+        Entry_03_1st();
+        break;
+    default:
+        Entry_03_2nd();
+        break;
+    }
+}
+
+
+
+void Entry_03_1st(void) {
+    switch (E_No2) {
+    case 0:
+        E_No2 += 1;
+        Text_Page_Y = 32;
+        break;
+    }
+    Entry_Main_Sub(0, 4);
+    Entry_Main_Sub(1, 4);
+}
+
+
+
+void Entry_03_2nd(void) {
+    switch (E_No2) {
+    case 0:
+        if (--E_Timer == 0) {
+            E_No2 += 1;
+            Switch_Screen_Init(0, 2);
+        }
+        break;
+    case 1:
+        if (Switch_Screen() != 0) {
+            E_No2 += 1;
+            tilemap_clear_rect(DE_X[3], Text_Page_Y + 11, DE_X[3] + 47, Text_Page_Y + 13);
+            sc_vram_to_ram();
+            Switch_Screen_Init(0, 0);
+        }
+        break;
+    case 2:
+        if (Switch_Screen() != 0) {
+            Cover_Timer = 23;
+            G_No1 = 1;
+            G_No2 = 0;
+            G_No3 = 0;
+            E_No0 = 2;
+            E_No1 = 0;
+            E_No2 = 0;
+            E_No3 = 0;
+            plw[New_Challenger].wu.operator = 1;
+            Operator_Status[New_Challenger] = 1;
+            Sel_Arts_Complete[Champion] = -1;
+            if (Continue_Coin[New_Challenger] == 0) {
+                grade_check_work_1st_init(New_Challenger, 0);
+            }
+        }
+        break;
+    }
+}
+
+
+
+void Entry_04(void) {
+    switch (E_No1) {
+    case 0:
+        Entry_04_1st();
+        break;
+    default:
+        Entry_04_2nd();
+        break;
+    }
+}
+
+
+
+void Entry_04_1st(void) {
+    switch (E_No2) {
+    case 0:
+        E_No2 += 1;
+        break;
+    }
+    Entry_Main_Sub(0, 5);
+    Entry_Main_Sub(1, 5);
+}
+
+
+
+void Entry_04_2nd(void) {
+    switch (E_No2) {
+    case 0:
+        if (--E_Timer == 0) {
+            E_No2 += 1;
+            Switch_Screen_Init(0, 2);
+        }
+        break;
+    case 1:
+        if (Switch_Screen() != 0) {
+            E_No2 += 1;
+            tilemap_clear_rect(DE_X[3], Text_Page_Y + 11, DE_X[3] + 47, Text_Page_Y + 13);
+            sc_vram_to_ram();
+            Switch_Screen_Init(3, 3);
+        }
+        break;
+    default:
+        if (Switch_Screen() != 0) {
+            Cover_Timer = 23;
+            G_No1 = 1;
+            G_No2 = 0;
+            G_No3 = 0;
+            if (E_No3 == -1 && Continue_Flag != 0) {
+                E_Number[LOSER][0] = 1;
+                E_Number[LOSER][1] = 0;
+                E_Number[LOSER][2] = 0;
+                E_Number[LOSER][3] = 0;
+            } else {
+                Correct_BI_Data();
+            }
+            E_No0 = 2;
+            E_No1 = 0;
+            E_No2 = 0;
+            E_No3 = 0;
+            Game_pause = 0;
+            plw[New_Challenger].wu.operator = 1;
+            Operator_Status[New_Challenger] = 1;
+            if (Continue_Coin[New_Challenger] == 0) {
+                grade_check_work_1st_init(New_Challenger, 0);
+            }
+        }
+        break;
+    }
+}
+
+
+
+void Entry_06(void) {
+    switch (E_No1) {
+    case 0:
+        Entry_06_1st();
+        break;
+    default:
+        Entry_06_2nd();
+        break;
+    }
+}
+
+
+
+void Entry_06_1st(void) {
+    switch (E_No2) {
+    case 0:
+        E_No2 += 1;
+        Text_Page_Y = 0;
+        break;
+    }
+    Entry_Main_Sub(0, 7);
+    Entry_Main_Sub(1, 7);
+}
+
+
+
+void Entry_06_2nd(void) {
+    if (E_07_Flag[0] == 0) {
+        Entry_Main_Sub(0, 7);
+    }
+    if (E_07_Flag[1] == 0) {
+        Entry_Main_Sub(1, 7);
+    }
+    switch (E_No2) {
+    case 0:
+        E_No2 += 1;
+        sc_vram_to_ram();
+        Switch_Screen_Init(0, 1);
+        break;
+    case 1:
+        if (Switch_Screen() != 0) {
+            E_No2 = E_No2 + 1;
+            Cover_Timer = 23;
+            Switch_Screen_Init(0, 1);
+        }
+        break;
+    default:
+        if (Switch_Screen() != 0) {
+            G_No1 = 1;
+            G_No2 = 0;
+            G_No3 = 0;
+            E_No0 = 2;
+            E_No1 = 0;
+            E_No2 = 0;
+            E_No3 = 0;
+            Fade_Flag = 0;
+            if (E_07_Flag[0]) {
+                plw[0].wu.operator = 1;
+                Operator_Status[0] = 1;
+                if (Continue_Coin[0] == 0) {
+                    grade_check_work_1st_init(0, 0);
+                }
+            }
+            if (E_07_Flag[1]) {
+                plw[1].wu.operator = 1;
+                Operator_Status[1] = 1;
+                if (Continue_Coin[1] == 0) {
+                    grade_check_work_1st_init(1, 0);
+                }
+            }
+            E_07_Flag[0] = 0;
+            E_07_Flag[1] = 0;
+            if (E_Number[LOSER][0] == 5 && Continue_Flag) {
+                E_Number[LOSER][0] = 1;
+            }
+        }
+        break;
+    }
+}
+
+
+
+void Entry_07(void) {
+    switch (E_No1) {
+    case 0:
+        Entry_07_1st();
+        break;
+    default:
+        Entry_07_2nd();
+        break;
+    }
+}
+
+
+
+void Entry_07_1st(void) {
+    switch (E_No2) {
+    case 0:
+        E_No2 += 1;
+        Text_Page_Y = 0;
+        break;
+    }
+    Entry_Main_Sub(0, 8);
+    Entry_Main_Sub(1, 8);
+}
+
+
+
+void Entry_07_2nd(void) {
+    if (E_07_Flag[0] == 0) {
+        Entry_Main_Sub(0, 8);
+    }
+    if (E_07_Flag[1] == 0) {
+        Entry_Main_Sub(1, 8);
+    }
+    switch (E_No2) {
+    case 0:
+        if (!--E_Timer) {
+            E_No2 = E_No2 + 1;
+            sc_vram_to_ram();
+            Switch_Screen_Init(0, 1);
+        }
+        break;
+    default:
+        if (Switch_Screen() != 0) {
+            Cover_Timer = 23;
+            G_No1 = 1;
+            G_No2 = 0;
+            G_No3 = 0;
+            E_No0 = 2;
+            E_No1 = 0;
+            E_No2 = 0;
+            E_No3 = 0;
+            if (E_07_Flag[0]) {
+                plw[0].wu.operator = 1;
+                Operator_Status[0] = 1;
+                if (Continue_Coin[0] == 0) {
+                    grade_check_work_1st_init(0, 0);
+                }
+            }
+            if (E_07_Flag[1]) {
+                plw[1].wu.operator = 1;
+                Operator_Status[1] = 1;
+                if (Continue_Coin[1] == 0) {
+                    grade_check_work_1st_init(1, 0);
+                }
+            }
+            E_07_Flag[0] = 0;
+            E_07_Flag[1] = 0;
+        }
+        break;
+    }
+}
+
+
+
+void Entry_08(void) {
+    switch (E_No1) {
+    case 0:
+        Entry_08_1st();
+        break;
+    default:
+        Entry_08_2nd();
+        break;
+    }
+}
+
+
+
+void Entry_08_1st(void) {
+    switch (E_No2) {
+    case 0:
+        E_No2 += 1;
+        if (((s8 *)&Game_setting)[5]) {
+            E_No2 = 99;
+        }
+    case 1:
+        Entry_Main_Sub(0, 9);
+        Entry_Main_Sub(1, 9);
+        break;
+    }
+}
+
+
+
+void Entry_08_2nd(void) {
+    if (E_07_Flag[0] == 0) {
+        Entry_Main_Sub(0, 9);
+    }
+    if (E_07_Flag[1] == 0) {
+        Entry_Main_Sub(1, 9);
+    }
+    switch (E_No2) {
+    case 0:
+        E_No2 += 1;
+        if (E_Number[LOSER][0] == 8 && E_Number[LOSER][1] == 1) {
+            Clear_Personal_Data(LOSER);
+        }
+        sc_vram_to_ram();
+        Switch_Screen_Init(0, 1);
+        break;
+    default:
+        if (Switch_Screen() != 0) {
+            Cover_Timer = 23;
+            G_No1 = 1;
+            G_No2 = 0;
+            G_No3 = 0;
+            E_No0 = 2;
+            E_No1 = 0;
+            E_No2 = 0;
+            E_No3 = 0;
+            if (E_07_Flag[0]) {
+                plw[0].wu.operator = 1;
+                Operator_Status[0] = 1;
+                if (Continue_Coin[0] == 0) {
+                    grade_check_work_1st_init(0, 0);
+                }
+            }
+            if (E_07_Flag[1]) {
+                plw[1].wu.operator = 1;
+                Operator_Status[1] = 1;
+                if (Continue_Coin[1] == 0) {
+                    grade_check_work_1st_init(1, 0);
+                }
+            }
+            E_07_Flag[0] = 0;
+            E_07_Flag[1] = 0;
+            Request_Disp_Rank[0][0] = -1;
+            Request_Disp_Rank[0][1] = -1;
+            Request_Disp_Rank[1][0] = -1;
+            Request_Disp_Rank[1][1] = -1;
+        }
+        break;
+    }
+}
+
+
+
+void Entry_10(void) {
+    switch (E_No1) {
+    case 0:
+        Entry_10_1st();
+        break;
+    default:
+        Entry_10_2nd();
+        break;
+    }
+}
+
+
+
+void Entry_10_1st(void) {
+    switch (E_No2) {
+    case 0:
+        E_No2 += 1;
+        break;
+    case 1:
+        E_No2 += 1;
+        Text_Page_Y = 0;
+        set_result_target_loser();
+        if (ranking_insert_all_four(WINNER) != 0) {
+            E_Number[WINNER][0] = 2;
+            E_Number[WINNER][1] = 0;
+            E_Number[WINNER][2] = 0;
+            E_Number[WINNER][3] = 0;
+            Request_Disp_Rank[WINNER][0] = Rank_In[WINNER][0];
+            Request_Disp_Rank[WINNER][1] = Rank_In[WINNER][1];
+            Request_Disp_Rank[WINNER][2] = Rank_In[WINNER][2];
+            Request_Disp_Rank[WINNER][3] = Rank_In[WINNER][3];
+        } else {
+            E_Number[WINNER][0] = 8;
+            E_Number[WINNER][1] = 0;
+        }
+    default:
+        Entry_Main_Sub(0, 10);
+        Entry_Main_Sub(1, 10);
+        break;
+    }
+}
+
+
+
+void Entry_10_2nd(void) {
+    if (E_07_Flag[0] == 0) {
+        Entry_Main_Sub(0, 10);
+    }
+    if (E_07_Flag[1] == 0) {
+        Entry_Main_Sub(1, 10);
+    }
+    switch (E_No2) {
+    case 0:
+        E_No2 += 1;
+        if ((E_Number[LOSER][0] == 8) && (E_Number[LOSER][1] == 1)) {
+            Clear_Personal_Data(LOSER);
+        }
+        sc_vram_to_ram();
+        Switch_Screen_Init(0, 1);
+        break;
+    default:
+        if (Switch_Screen() != 0) {
+            Cover_Timer = 23;
+            G_No1 = 1;
+            G_No2 = 0;
+            G_No3 = 0;
+            E_No0 = 2;
+            E_No1 = 0;
+            E_No2 = 0;
+            E_No3 = 0;
+            if (E_07_Flag[0]) {
+                plw[0].wu.operator = 1;
+                Operator_Status[0] = 1;
+                if (Continue_Coin[0] == 0) {
+                    grade_check_work_1st_init(0, 0);
+                }
+            }
+            if (E_07_Flag[1]) {
+                plw[1].wu.operator = 1;
+                Operator_Status[1] = 1;
+                if (Continue_Coin[1] == 0) {
+                    grade_check_work_1st_init(1, 0);
+                }
+            }
+            E_07_Flag[0] = 0;
+            E_07_Flag[1] = 0;
+            Request_Disp_Rank[0][0] = -1;
+            Request_Disp_Rank[0][1] = -1;
+            Request_Disp_Rank[1][0] = -1;
+            Request_Disp_Rank[1][1] = -1;
+        }
+        break;
+    }
+}
+
+void Entry_Main_Sub(PL_id, Jump_Index)
+s16 PL_id;
+s16 Jump_Index;
+{
+    ENTRY_X = 0;
+    switch (E_Number[PL_id][0]) {
+    case 0:
+        if (Game_setting.set5 == 0 && Ignore_Entry[LOSER] == 0 && plw[PL_id].wu.operator == 0) {
+            Entry_Common_Sub(PL_id, Jump_Index);
+        }
+        break;
+    case 1:
+        if (PL_id) {
+            if (Credit_Continue_2P() != 0) {
+                Break_Into_Sub(PL_id, Jump_Index);
+            }
+        } else if (Credit_Continue_1P() != 0) {
+            Break_Into_Sub(PL_id, Jump_Index);
+        }
+        if (Request_Break[PL_id]) {
+            E_Number[PL_id][0] = 0;
+            E_Number[PL_id][1] = 0;
+            E_Number[PL_id][2] = 0;
+            E_Number[PL_id][3] = 0;
+        } else if ((E_Number[PL_id][0] == 1) && (E_07_Flag[PL_id ^ 1] == 0)) {
+            Entry_Continue_Sub(PL_id);
+        }
+        break;
+    case 2:
+        switch (E_Number[PL_id][1]) {
+        case 0:
+            E_Number[PL_id][1] += 1;
+            Personal_Timer[PL_id] = 30;
+            tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], 0, 18, msg_blank);
+            tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], 32, 18, msg_blank);
+            break;
+        case 1:
+            if (--Personal_Timer[PL_id] == 0) {
+                E_Number[PL_id][1] += 1;
+                Naming_Init(PL_id);
+                commit_name_entry_row_both_players(Text_Page_Y);
+            }
+            break;
+        case 2:
+            if (Forbid_Break == 1) {
+                break;
+            }
+            if (PL_id == 0) {
+                Naming_Cut_Sub_1P();
+            } else {
+                Naming_Cut_Sub_2P();
+            }
+            if (Name_Input(PL_id) == 0) {
+                break;
+            }
+            tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], 0, 18, msg_blank);
+            tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], 32, 18, msg_blank);
+            Name_In_Sub(PL_id);
+            if (Naming_Cut[PL_id]) {
+                Clear_Personal_Data(PL_id);
+                break;
+            }
+            E_Number[PL_id][2] = 0;
+            E_Number[PL_id][3] = 0;
+            if (E_No0 == 8) {
+                E_Number[PL_id][0] = 8;
+                E_Number[PL_id][1] = 1;
+            } else {
+                E_Number[PL_id][0] = 8;
+                E_Number[PL_id][1] = 0;
+            }
+            break;
+        }
+        break;
+    case 3:
+        switch (E_Number[PL_id][1]) {
+        case 0:
+            if ((E_No0 == 8) || (E_No0 == 2)) {
+                E_Number[PL_id][0] = 2;
+                E_Number[PL_id][1] = 2;
+                E_Number[PL_id][2] = 0;
+                E_Number[PL_id][3] = 0;
+                Naming_Init(PL_id);
+                tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18, msg_blank);
+            }
+            break;
+        case 1:
+            if ((E_No0 == 8) || (E_No0 == 2)) {
+                E_Number[PL_id][0] = 8;
+                E_Number[PL_id][1] = 1;
+                E_Number[PL_id][2] = 0;
+                E_Number[PL_id][3] = 0;
+                if (E_No0 == 2) {
+                    E_Number[PL_id][1] = 0;
+                }
+            }
+            break;
+        }
+        break;
+    case 8:
+        switch (E_Number[PL_id][1]) {
+        case 0:
+            In_Game_Sub(PL_id);
+            break;
+        case 1:
+            In_Over_Sub(PL_id);
+            break;
+        }
+        break;
+    case 5:
+        Loser_Scene_Sub(PL_id, Jump_Index);
+        break;
+    }
+}
+
+void Naming_Init(PL_id)
+s16 PL_id;
+{
+    Naming_Cut[PL_id] = 0;
+    Name_00[PL_id] = 0;
+    name_wk[PL_id].r_no_0 = 0;
+    name_wk[PL_id].r_no_1 = 0;
+    end_name_cut[PL_id] = 0;
+    name_wk[PL_id].dmm = 0;
+}
+
+
+
+void Naming_Cut_Sub_1P(void) {
+    s8 state;
+    if (Naming_Cut[0]) {
+        return;
+    }
+    if (Two_Coin_Start && Request_Break[0] == 0 && credit_1p < 2) {
+        state = 99;
+    } else {
+        state = Request_Break[0] | credit_1p;
+    }
+    switch (state) {
+    case 0:
+    case 99:
+        break;
+    default:
+        if (Ck_Break_Into_SP(p1sw_0, p1sw_1, 0) != 0) {
+            Game_pause = 0;
+            Naming_Cut[0] = 1;
+            Request_Break[0] = 1;
+        }
+        break;
+    }
+}
+
+
+
+void Naming_Cut_Sub_2P(void) {
+    s8 credit;
+    s8 state;
+    if (Naming_Cut[1]) {
+        return;
+    }
+    credit = (Chute_Mode < 2) ? credit_1p : credit_2p;
+    state = (Two_Coin_Start && Request_Break[1] == 0 && credit < 2) ? 99 : Request_Break[1] | credit;
+    switch (state) {
+    case 0:
+    case 99:
+        break;
+    default:
+        if (Ck_Break_Into_SP(p2sw_0, p2sw_1, 1) != 0) {
+            Game_pause = 0;
+            Naming_Cut[1] = 1;
+            Request_Break[1] = 1;
+        }
+        break;
+    }
+}
+
+void Name_In_Sub(PL_id)
+s16 PL_id;
+{
+    if (Rank_In[PL_id][0] >= 0) {
+        Name_In_Sub0(PL_id, Rank_In[PL_id][0] + 0);
+    }
+    if (Rank_In[PL_id][1] >= 0) {
+        Name_In_Sub0(PL_id, Rank_In[PL_id][1] + 5);
+    }
+    if (Rank_In[PL_id][2] >= 0) {
+        Name_In_Sub0(PL_id, Rank_In[PL_id][2] + 10);
+    }
+    if (Rank_In[PL_id][3] >= 0) {
+        Name_In_Sub0(PL_id, Rank_In[PL_id][3] + 15);
+    }
+}
+
+
+
+void Name_In_Sub0(s16 PL_id, s16 xx) {
+    Ranking_Data[xx].name[0] = rank_name_w[PL_id].code[0];
+    Ranking_Data[xx].name[1] = rank_name_w[PL_id].code[1];
+    Ranking_Data[xx].name[2] = rank_name_w[PL_id].code[2];
+}
+
+void Entry_Common_Sub(PL_id, Jump_Index)
+s16 PL_id;
+s16 Jump_Index;
+{
+    if (PL_id) {
+        if (Credit_Sub_2P() != 0) {
+            Break_Into_Sub(PL_id, Jump_Index);
+        }
+    } else if (Credit_Sub_1P() != 0) {
+        Break_Into_Sub(PL_id, Jump_Index);
+    }
+}
+
+void Loser_Scene_Sub(PL_id, Jump_Index)
+s16 PL_id;
+s16 Jump_Index;
+{
+    if (PL_id) {
+        if (Loser_Sub_2P() != 0) {
+            Break_Into_Sub(PL_id, Jump_Index);
+        }
+    } else if (Loser_Sub_1P() != 0) {
+        Break_Into_Sub(PL_id, Jump_Index);
+    }
+}
+
+
+
+s32 Loser_Sub_1P(void) {
+    s8 status;
+    if (Two_Coin_Start != 0 && !Request_Break[0] && credit_1p < 2) {
+        status = 99;
+    } else {
+        status = Request_Break[0] | credit_1p;
+    }
+    switch (status) {
+    default:
+        if (Ck_Break_Into(p1sw_0, p1sw_1, 0) == 0) {
+            if (Request_Break[0] != 0) {
+                tilemap_print_string_attr(DE_X[Entry_Mes_Wide[0]] + Entry_Mes_X[0], Text_Page_Y, 18, msg_blank);
+            } else if (!LOSER) {
+                tilemap_print_string_attr(DE_X[Entry_Mes_Wide[0]] + Entry_Mes_X[0], Text_Page_Y, 18, msg_continue);
+            } else {
+                Flash_Start(0, Entry_Msg_X_Data[1][0][Game_setting.mode]);
+            }
+        }
+        break;
+    }
+    return ENTRY_X;
+}
+
+
+
+s32 Loser_Sub_2P(void) {
+    s8 credits;
+    s8 status;
+    if (Chute_Mode < 2) {
+        credits = credit_1p;
+    } else {
+        credits = credit_2p;
+    }
+    if (Two_Coin_Start && Request_Break[1] == 0 && credits < 2) {
+        status = 99;
+    } else {
+        status = Request_Break[1] | credits;
+    }
+    switch (status) {
+    default:
+        if (Ck_Break_Into(p2sw_0, p2sw_1, 1) == 0) {
+            if (Request_Break[1]) {
+                tilemap_print_string_attr(DE_X[Entry_Mes_Wide[1]] + Entry_Mes_X[1], Text_Page_Y, 18, msg_blank);
+            } else if (LOSER == 1) {
+                tilemap_print_string_attr(DE_X[Entry_Mes_Wide[1]] + Entry_Mes_X[1], Text_Page_Y, 18, msg_continue);
+            } else {
+                Flash_Start(1, Entry_Msg_X_Data[1][1][Game_setting.mode]);
+            }
+        }
+        break;
+    }
+    return ENTRY_X;
+}
+
+
+
+s32 Credit_Sub_1P(void) {
+    s8 credits;
+    s8 status;
+    volatile s8* credit_p = &credit_1p;
+    credits = *credit_p;
+    if (Two_Coin_Start && Request_Break[0] == 0 && *credit_p < 2) {
+        status = 99;
+    } else {
+        status = Request_Break[0] | credits;
+    }
+    switch (status) {
+    case 0:
+        if (coin_chute1_w[1]) {
+            Flash_More_Coins(0, Entry_Msg_X_Data[2][0][Game_setting.mode], (s8)(coin_chute1_w[2] - coin_chute1_w[1]));
+        } else {
+            Flash_Insert_Coin(0, Entry_Msg_X_Data[0][0][Game_setting.mode]);
+        }
+        break;
+    case 99:
+        if (credits) {
+            Flash_More_Coins(0, Entry_Msg_X_Data[2][0][Game_setting.mode], 1);
+        } else {
+            Flash_Insert_Coin(0, Entry_Msg_X_Data[0][0][Game_setting.mode]);
+        }
+        break;
+    default:
+        if (Ck_Break_Into(p1sw_0, p1sw_1, 0) == 0) {
+            if (Request_Break[0]) {
+                Flash_Please(0);
+            } else {
+                Flash_Start(0, Entry_Msg_X_Data[1][0][Game_setting.mode]);
+            }
+        }
+        break;
+    }
+    return ENTRY_X;
+}
+
+
+
+s32 Credit_Sub_2P(void) {
+    s8 credits;
+    s8 status;
+    if (Chute_Mode < 2) {
+        credits = credit_1p;
+    } else {
+        credits = credit_2p;
+    }
+    if (Two_Coin_Start != 0 && Request_Break[1] == 0 && credits < 2) {
+        status = 99;
+    } else {
+        status = Request_Break[1] | credits;
+    }
+    switch (status) {
+    case 0:
+        if (Get_2P_Coin_Count()) {
+            if (Chute_Mode < 2) {
+                Flash_More_Coins(1, Entry_Msg_X_Data[2][1][Game_setting.mode], (s8)(coin_chute1_w[2] - coin_chute1_w[1]));
+            } else {
+                Flash_More_Coins(1, Entry_Msg_X_Data[2][1][Game_setting.mode], (s8)((*(s8*)&(coin_chute2_w[2])) - (*(s8*)&(coin_chute2_w[1]))));
+            }
+        } else {
+            Flash_Insert_Coin(1, Entry_Msg_X_Data[0][1][Game_setting.mode]);
+        }
+        break;
+    case 99:
+        if (credits != 0) {
+            Flash_More_Coins(1, Entry_Msg_X_Data[2][1][Game_setting.mode], 1);
+        } else {
+            Flash_Insert_Coin(1, Entry_Msg_X_Data[0][1][Game_setting.mode]);
+        }
+        break;
+    default:
+        if (Ck_Break_Into(p2sw_0, p2sw_1, 1) == 0) {
+            if (Request_Break[1] != 0) {
+                Flash_Please(1);
+            } else {
+                Flash_Start(1, Entry_Msg_X_Data[1][1][Game_setting.mode]);
+            }
+        }
+        break;
+    }
+    return ENTRY_X;
+}
+
+
+
+s32 Credit_Continue_1P(void) {
+    s8 state = Request_Break[0] | credit_1p;
+    switch (state) {
+    case 0:
+        return 0;
+    }
+    Ck_Break_Into(p1sw_0, p1sw_1, 0);
+    return ENTRY_X;
+}
+
+
+
+s32 Credit_Continue_2P(void) {
+    s8* credit;
+    s8 state;
+    credit = (Chute_Mode < 2) ? &credit_1p : &credit_2p;
+    state = Request_Break[1] | *credit;
+    switch (state) {
+    case 0:
+        return 0;
+    }
+    Ck_Break_Into(p2sw_0, p2sw_1, 1);
+    return ENTRY_X;
+}
+
+
+
+void Entry_Continue_Sub(s16 PL_id) {
+    switch (E_Number[PL_id][1]) {
+    case 0:
+        if (!Continue_Count_Down[PL_id]) {
+            E_Number[PL_id][1]++;
+            Personal_Disp_Flag = 1;
+            Personal_Timer[PL_id] = 60;
+            tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18, msg_continue_cnt);
+            Disp_Personal_Count(PL_id, Continue_Count[PL_id]);
+        }
+        break;
+    case 1:
+        if (!Personal_Disp_Flag) {
+            Personal_Disp_Flag = 1;
+            Personal_Timer[PL_id] = 60;
+            tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18, msg_continue_cnt);
+            Disp_Personal_Count(PL_id, Continue_Count[PL_id]);
+        }
+        if (Check_Coin_In(PL_id) != 0) {
+            Continue_Count[PL_id] = 10;
+            Personal_Timer[PL_id] = 1;
+        }
+        if (Check_Count_Cut(PL_id, 8) != 0) {
+            Continue_Cut[PL_id] = 1;
+        } else if (--Personal_Timer[PL_id] != 0) {
+            break;
+        }
+        if (--Continue_Count[PL_id] >= 0) {
+            Personal_Timer[PL_id] = 60;
+            Disp_Personal_Count(PL_id, Continue_Count[PL_id]);
+            break;
+        }
+        Setup_Next_Step(PL_id);
+        break;
+    }
+}
+
+
+
+void Setup_Next_Step(s16 PL_id) {
+    s32 xx;
+    E_Number[PL_id][1] = 0;
+    E_Number[PL_id][2] = 0;
+    E_Number[PL_id][3] = 0;
+    for (xx = 0; xx < 24; xx++) {
+        Break_Com[PL_id][xx] = 0;
+    }
+    if (E_No0 != 7) {
+        if (Game_setting.set5 == 0) {
+            tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18, msg_blank);
+        }
+        set_result_target_loser();
+        if (ranking_insert_all_four(PL_id) != 0) {
+            E_Number[PL_id][0] = 2;
+            Request_Disp_Rank[PL_id][0] = Rank_In[PL_id][0];
+            Request_Disp_Rank[PL_id][1] = Rank_In[PL_id][1];
+            Request_Disp_Rank[PL_id][2] = Rank_In[PL_id][2];
+            Request_Disp_Rank[PL_id][3] = Rank_In[PL_id][3];
+            return;
+        }
+        E_Number[PL_id][0] = 8;
+        E_Number[PL_id][1] = 0;
+        return;
+    }
+    set_result_target_loser();
+    if (ranking_insert_all_four(PL_id) != 0) {
+        Request_Disp_Rank[PL_id][0] = Rank_In[PL_id][0];
+        Request_Disp_Rank[PL_id][1] = Rank_In[PL_id][1];
+        Request_Disp_Rank[PL_id][2] = Rank_In[PL_id][2];
+        Request_Disp_Rank[PL_id][3] = Rank_In[PL_id][3];
+        if (E_Number[PL_id ^ 1][0] != 0) {
+            E_Number[PL_id][0] = 2;
+            return;
+        }
+        E_Number[PL_id][0] = 3;
+        E_Number[PL_id][1] = 0;
+        return;
+    }
+    if (E_Number[PL_id ^ 1][0] != 0) {
+        E_Number[PL_id][0] = 8;
+        E_Number[PL_id][1] = 0;
+        return;
+    }
+    E_Number[PL_id][0] = 3;
+    E_Number[PL_id][1] = 1;
+}
+
+
+
+s32 In_Game_Sub(s16 PL_id) {
+    s32 rc;
+    switch (E_Number[PL_id][2]) {
+    case 0:
+        E_Number[PL_id][2] = E_Number[PL_id][2] + 1;
+        Personal_Timer[PL_id] = 30;
+        if ((rc = ((s8 *)&Game_setting)[5])) {
+            return rc;
+        }
+        tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18, (s8*)msg_blank);
+        return;
+    case 1:
+        if (--Personal_Timer[PL_id] != 0) {
+            return PL_id;
+        }
+        E_Number[PL_id][2] = E_Number[PL_id][2] + 1;
+        Personal_Timer[PL_id] = 60;
+        if ((rc = ((s8 *)&Game_setting)[5])) {
+            return rc;
+        }
+        tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18, (s8*)msg_blank);
+        return;
+    case 2:
+        if (Personal_Disp_Flag == 0) {
+            Personal_Disp_Flag = 1;
+            if (Personal_Timer[PL_id] < 20) {
+                Personal_Timer[PL_id] = 20;
+            }
+            if (((s8 *)&Game_setting)[5] == 0) {
+                tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18, (s8*)msg_game_over);
+            }
+        }
+        if (--Personal_Timer[PL_id] != 0) {
+            return PL_id;
+        }
+        E_Number[PL_id][2] = E_Number[PL_id][2] + 1;
+        Personal_Timer[PL_id] = 30;
+        if ((rc = ((s8 *)&Game_setting)[5])) {
+            return rc;
+        }
+        tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18, (s8*)msg_game_over);
+        return;
+    default:
+        if (--Personal_Timer[PL_id] != 0) {
+            return PL_id;
+        }
+        Clear_Personal_Data(PL_id);
+        Clear_Flash_No();
+        return;
+    }
+}
+
+
+
+void In_Over_Sub(s16 PL_id) {
+    switch (E_Number[PL_id][2]) {
+    case 0:
+        E_Number[PL_id][2]++;
+        tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + (&Entry_Mes_X[0])[PL_id], Text_Page_Y, 18,
+                                  (s8*)msg_game_over);
+        break;
+    default:
+        break;
+    }
+}
+
+
+
+/* provisional name */
+s32 Flash_Insert_Coin(PL_id)
+s16 PL_id;
+{
+    if (E_No0 == 6 || E_No0 == 8 || E_No0 == 7) {
+        tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18,
+                                  (s8*)msg_blank);
+        return 0;
+    }
+    switch (F_No0[PL_id]) {
+    case 0:
+        F_No0[PL_id] += 1;
+        F_No1[PL_id] = F_No2[PL_id] = 0;
+        F_Timer[PL_id] = 1;
+        tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18,
+                                  (s8*)msg_blank);
+        break;
+    case 1:
+        if (--F_Timer[PL_id] != 0) {
+            break;
+        }
+        F_No0[PL_id] += 1;
+        F_Timer[PL_id] = 50;
+        if (Two_Coin_Start) {
+            tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18,
+                                      (s8*)msg_insert_2coins);
+        } else if (coin_chute1_w[2] == 1) {
+            tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18,
+                                      (s8*)msg_insert_coin);
+        } else {
+            tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18,
+                                      (s8*)msg_insert_coins);
+            tilemap_print_hex_block(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id] + 10, Text_Page_Y, 18,
+                                         coin_chute1_w[2], 1, 1);
+        }
+        break;
+    case 2:
+        if (--F_Timer[PL_id] != 0) {
+            break;
+        }
+        F_No0[PL_id] -= 1;
+        F_Timer[PL_id] = 50;
+        tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18,
+                                  (s8*)msg_join_in);
+        break;
+    }
+    return 0;
+}
+
+s32 Flash_Start(PL_id, x)
+s16 PL_id;
+u16 x;
+{
+    switch (F_No1[PL_id]) {
+    case 0:
+        F_No1[PL_id] += 1;
+        F_No0[PL_id] = 0;
+        F_No2[PL_id] = 0;
+        F_No3[PL_id] = 0;
+        F_Timer[PL_id] = 1;
+        tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18, msg_blank);
+        if (E_No0 == 6 && PL_id == LOSER && Continue_Flag) {
+            F_No1[PL_id] = 3;
+        }
+        break;
+    case 1:
+        if (--F_Timer[PL_id] == 0) {
+            F_No1[PL_id] += 1;
+            F_Timer[PL_id] = 50;
+            if (Free_Play) {
+                tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18, msg_free_play);
+            } else {
+                tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18, PL_id ? msg_press_2p_start : msg_press_1p_start);
+            }
+        }
+        break;
+    case 2:
+        if (--F_Timer[PL_id] == 0) {
+            F_No1[PL_id] -= 1;
+            F_Timer[PL_id] = 30;
+            tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18, msg_blank);
+        }
+        break;
+    case 3:
+        F_No1[PL_id] = 99;
+        tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18, msg_continue);
+        break;
+    }
+    return 0;
+}
+
+s32 Flash_Please(PL_id)
+s16 PL_id;
+{
+    if (E_No0 == 6 || E_No0 == 8) {
+        return 0;
+    }
+    switch (F_No3[PL_id]) {
+    case 0:
+        F_No3[PL_id] += 1;
+        F_No1[PL_id] = 0;
+        F_Timer[PL_id] = 1;
+        tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18, msg_blank);
+        break;
+    case 1:
+        if (--F_Timer[PL_id] == 0) {
+            F_No3[PL_id] += 1;
+            F_Timer[PL_id] = 50;
+            tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18, msg_please_wait);
+        }
+        break;
+    default:
+        if (--F_Timer[PL_id] == 0) {
+            F_No3[PL_id] -= 1;
+            F_Timer[PL_id] = 30;
+            tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18, msg_blank);
+        }
+        break;
+    }
+    return 0;
+}
+
+/* provisional name */
+s32 Flash_More_Coins(PL_id, unused, coins)
+s16 PL_id;
+s16 unused;
+s8 coins;
+{
+    switch (F_No2[PL_id]) {
+    case 0:
+        F_No2[PL_id] += 1;
+        F_No1[PL_id] = 0;
+        F_No0[PL_id] = 0;
+        F_Timer[PL_id] = 1;
+        tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18,
+                                  (s8*)msg_blank);
+        if (E_No0 == 6 && PL_id == LOSER) {
+            F_No2[PL_id] = 3;
+        }
+        break;
+    case 1:
+        if (Disp_More_Coins(PL_id, unused, coins)) {
+            F_No2[PL_id] += 1;
+            break;
+        }
+        if (--F_Timer[PL_id] != 0) {
+            break;
+        }
+        F_No2[PL_id] += 1;
+        F_Timer[PL_id] = 50;
+        if (coins == 1) {
+            tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18,
+                                      (s8*)msg_insert_more_coin);
+        } else {
+            tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18,
+                                      (s8*)msg_insert_more_coins);
+        }
+        tilemap_print_hex_block(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id] + 7, Text_Page_Y, 18, coins, 1,
+                                     1);
+        break;
+    case 2:
+        Disp_More_Coins(PL_id, unused, coins);
+        if (--F_Timer[PL_id] != 0) {
+            break;
+        }
+        F_No2[PL_id] -= 1;
+        F_Timer[PL_id] = 30;
+        tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18,
+                                  (s8*)msg_blank);
+        break;
+    }
+    return 0;
+}
+
+
+
+/* provisional name */
+s32 Disp_More_Coins(s16 PL_id, s16 unused, s16 coins) {
+    if (Check_Coin_In(PL_id) == 0) {
+        return 0;
+    }
+    if (coins == 1) {
+        tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18,
+                                  (s8*)msg_insert_more_coin);
+    } else {
+        tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18,
+                                  (s8*)msg_insert_more_coins);
+    }
+    tilemap_print_hex_block(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id] + 7, Text_Page_Y, 18, (s8)coins,
+                                 1, 1);
+    F_Timer[PL_id] = 50;
+    return 1;
+}
+
+
+
+/* provisional name */
+s32 Get_2P_Coin_Count(void) {
+    switch (Chute_Mode) {
+    case 0:
+    case 1:
+        return coin_chute1_w[1];
+    default:
+        return (*(s8*)&(coin_chute2_w[1]));
+    }
+}
+
+
+
+/* provisional name */
+s32 credit_display_render(s8 force) {
+    s16 coin_mode;
+    s32 coins;
+    if ((force | coin_chute1_w[6] | (*(s8*)&(coin_chute2_w[6]))) == 0) {
+        return 0;
+    }
+    coin_mode = coin_chute1_w[2];
+    coins = Two_Coin_Start;
+    switch (Chute_Mode) {
+    case 0:
+    case 1:
+        switch (coin_mode) {
+        case 0:
+        case 1:
+            if (coins) {
+                tilemap_print_string_attr(DE_X[0] + 21, 23, 18, msg_coins);
+                tilemap_print_hex_block(DE_X[0] + 27, 23, 18, credit_1p, 1, 1);
+            } else {
+                tilemap_print_string_attr(DE_X[0] + 20, 23, 18, msg_credit);
+                if (credit_1p >= 2) {
+                    tilemap_print_string_attr(DE_X[0] + 26, 23, 18, msg_plural_s);
+                }
+                tilemap_print_hex_block(DE_X[0] + 28, 23, 18, credit_1p, 1, 1);
+            }
+            break;
+        default:
+            tilemap_print_string_attr(DE_X[0] + 18, 23, 18, msg_credits);
+            if (credit_1p < 2) {
+                tilemap_print_string_attr(DE_X[0] + 24, 23, 18, msg_space);
+            }
+            tilemap_print_hex_block(DE_X[0] + 26, 23, 18, credit_1p, 1, 1);
+            if (credit_1p >= 9) {
+                tilemap_print_string_attr(DE_X[0] + 27, 23, 18, msg_blank6);
+            } else {
+                tilemap_print_string_attr(DE_X[0] + 27, 23, 18, msg_coin_frac);
+                tilemap_print_hex_block(DE_X[0] + 28, 23, 18, coin_chute1_w[1], 1, 1);
+                tilemap_print_hex_block(DE_X[0] + 30, 23, 18, coin_chute1_w[2], 1, 1);
+            }
+            break;
+        }
+        break;
+    default:
+        switch (coin_mode) {
+        case 0:
+        case 1:
+            if (coins) {
+                tilemap_print_string_attr(DE_X[0] + 5, 23, 18, msg_coins);
+                tilemap_print_hex_block(DE_X[0] + 11, 23, 18, credit_1p, 1, 1);
+                tilemap_print_string_attr(DE_X[0] + 31, 23, 18, msg_coins);
+                tilemap_print_hex_block(DE_X[0] + 37, 23, 18, credit_2p, 1, 1);
+            } else {
+                tilemap_print_string_attr(DE_X[0] + 6, 23, 18, (credit_1p >= 2) ? msg_credits : msg_credit);
+                tilemap_print_hex_block(DE_X[0] + 14, 23, 18, credit_1p, 1, 1);
+                if (credit_2p >= 2) {
+                    tilemap_print_string_attr(DE_X[0] + 32, 23, 18, msg_credits);
+                } else {
+                    tilemap_print_string_attr(DE_X[0] + 32, 23, 18, msg_credit);
+                }
+                tilemap_print_hex_block(DE_X[0] + 40, 23, 18, credit_2p, 1, 1);
+            }
+            break;
+        default:
+            tilemap_print_string_attr(DE_X[0] + 5, 23, 18, (credit_1p >= 2) ? msg_credits : msg_credit);
+            tilemap_print_hex_block(DE_X[0] + 13, 23, 18, credit_1p, 1, 1);
+            if (credit_1p >= 9) {
+                tilemap_print_string_attr(DE_X[0] + 14, 23, 18, msg_blank6);
+            } else {
+                tilemap_print_string_attr(DE_X[0] + 14, 23, 18, msg_coin_frac);
+                tilemap_print_hex_block(DE_X[0] + 15, 23, 18, coin_chute1_w[1], 1, 1);
+                tilemap_print_hex_block(DE_X[0] + 17, 23, 18, coin_chute1_w[2], 1, 1);
+            }
+            tilemap_print_string_attr(DE_X[0] + 30, 23, 18, (credit_2p >= 2) ? msg_credits : msg_credit);
+            tilemap_print_hex_block(DE_X[0] + 38, 23, 18, credit_2p, 1, 1);
+            if (credit_2p >= 9) {
+                tilemap_print_string_attr(DE_X[0] + 39, 23, 18, msg_blank6);
+            } else {
+                tilemap_print_string_attr(DE_X[0] + 39, 23, 18, msg_coin_frac);
+                tilemap_print_hex_block(DE_X[0] + 40, 23, 18, (*(s8*)&(coin_chute2_w[1])), 1, 1);
+                tilemap_print_hex_block(DE_X[0] + 42, 23, 18, (*(s8*)&(coin_chute2_w[2])), 1, 1);
+            }
+            break;
+        }
+        break;
+    }
+    return 1;
+}
+
+
+
+/* provisional name */
+void Disp_Start_Message(void) {
+    s8 credits;
+    s8 coins;
+    s8 needed;
+    const s8* blank = msg_blank25;
+    const s8* one_more = msg_insert_1_more;
+    if (Two_Coin_Start && credit_1p < 2) {
+        credits = 99;
+    } else {
+        credits = credit_1p;
+    }
+    switch (Chute_Mode) {
+    case 0:
+    case 1:
+        switch (credits) {
+        case 0:
+            needed = coin_chute1_w[2] - coin_chute1_w[1];
+            tilemap_print_string_attr(DE_X[0] + 12, 21, 18, blank);
+            if (needed == 1) {
+                tilemap_print_string_attr(DE_X[0] + 15, 21, 18, msg_insert_more_coin);
+            } else {
+                tilemap_print_string_attr(DE_X[0] + 15, 21, 18, msg_insert_more_coins);
+            }
+            tilemap_print_hex_block(DE_X[0] + 22, 21, 18, needed, 1, 1);
+            break;
+        case 99:
+            tilemap_print_string_attr(DE_X[0] + 15, 21, 18, one_more);
+            break;
+        default:
+            tilemap_print_string_attr(DE_X[0] + 12, 21, 18, msg_press_1or2_start);
+            break;
+        }
+        return;
+    default:
+        switch (credits) {
+        case 0:
+            tilemap_print_string_attr(DE_X[0] + 2, 21, 18, blank);
+            coins = coin_chute1_w[1];
+            needed = coin_chute1_w[2] - coins;
+            if (coins) {
+                tilemap_print_string_attr(DE_X[0] + 2, 21, 18, (needed == 1) ? msg_insert_more_coin : msg_insert_more_coins);
+                tilemap_print_hex_block(DE_X[0] + 9, 21, 18, needed, 1, 1);
+            } else {
+                tilemap_print_string(6, 21, 0xFFFF, ((const TM_STRING*)((const u8*)insert_coin_mes + (s8)((coin_chute1_w[2]) * sizeof(TM_STRING)) - sizeof(TM_STRING))));
+            }
+            break;
+        case 99:
+            tilemap_print_string_attr(DE_X[0] + 2, 21, 18, credit_1p ? one_more : msg_insert_2_more);
+            break;
+        default:
+            tilemap_print_string_attr(DE_X[0] + 2, 21, 18, msg_press_1p_button);
+            break;
+        }
+        break;
+    }
+    if (Two_Coin_Start && credit_2p < 2) {
+        credits = 99;
+    } else {
+        credits = credit_2p;
+    }
+    switch (credits) {
+    case 0:
+        tilemap_print_string_attr(DE_X[0] + 25, 21, 18, blank);
+        coins = coin_chute2_w[1];
+        needed = coin_chute2_w[2] - coins;
+        if (coins) {
+            tilemap_print_string_attr(DE_X[0] + 25, 21, 18, (needed == 1) ? msg_insert_more_coin : msg_insert_more_coins);
+            tilemap_print_hex_block(DE_X[0] + 32, 21, 18, needed, 1, 1);
+        } else {
+            tilemap_print_string(DE_X[4] + 29, 21, 0xFFFF, ((const TM_STRING*)((const u8*)insert_coin_mes + (s8)((coin_chute1_w[2]) * sizeof(TM_STRING)) - sizeof(TM_STRING))));
+        }
+        break;
+    case 99:
+        tilemap_print_string_attr(DE_X[0] + 25, 21, 18, credit_2p ? one_more : msg_insert_2_more);
+        break;
+    default:
+        tilemap_print_string_attr(DE_X[0] + 25, 21, 18, msg_press_2p_button);
+        break;
+    }
+}
+
+void Break_Into_Sub(PL_id, Jump_Index)
+s16 PL_id;
+s16 Jump_Index;
+{
+    switch (Jump_Index) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+        Break_Into_02(PL_id);
+        break;
+    case 4:
+    case 6:
+        Break_Into_04(PL_id);
+        break;
+    case 5:
+        Break_Into_05(PL_id);
+        break;
+    case 7:
+        Break_Into_07(PL_id);
+        break;
+    case 8:
+        Break_Into_08(PL_id);
+        break;
+    case 9:
+        Break_Into_09(PL_id);
+        break;
+    case 10:
+        Break_Into_10(PL_id);
+        break;
+    default:
+        break;
+    }
+}
+
+s32 Ck_Break_Into(Sw_0, Sw_1, pl_arg)
+u16 Sw_0;
+u16 Sw_1;
+s32 pl_arg;
+{
+    s32 PL_id = (s16)pl_arg;
+    if ((E_No0 != 10) && Request_Break[PL_id ^ 1]) {
+        return PL_id ^ 1;
+    }
+    if (Request_Break[PL_id]) {
+        if (Forbid_Break || Extra_Break) {
+            return 0;
+        }
+        Game_pause = 1;
+        New_Challenger = PL_id;
+        Champion = New_Challenger ^ 1;
+        Request_Break[PL_id] = 0;
+        return ENTRY_X = 1;
+    }
+    if (!(~Sw_1 & Sw_0 & 0x1000)) {
+        return 0;
+    }
+    if (!Pay_Start_Credit(PL_id)) {
+        return 0;
+    }
+    Continue_Score_Sub(PL_id);
+    if (Forbid_Break || Extra_Break) {
+        Request_Break[PL_id] = 1;
+        tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18, msg_blank);
+    } else {
+        Game_pause = 1;
+        New_Challenger = PL_id;
+        Champion = New_Challenger ^ 1;
+        return ENTRY_X = 1;
+    }
+    return 0;
+}
+
+s32 Ck_Break_Into_SP(Sw_0, Sw_1, PL_id)
+u16 Sw_0;
+u16 Sw_1;
+s16 PL_id;
+{
+    if (!(~Sw_1 & Sw_0 & 0x1000)) {
+        return 0;
+    }
+    if (!Pay_Start_Credit(PL_id)) {
+        return 0;
+    }
+    New_Challenger = PL_id;
+    Champion = New_Challenger ^ 1;
+    return ENTRY_X = 1;
+}
+
+
+
+/* provisional name */
+s32 Pay_Start_Credit(s16 PL_id) {
+    s8* credit;
+    if (Free_Play) {
+        bookkeep_freeplay_count();
+        return 1;
+    }
+    if (E_Number[PL_id][0] == 1 || E_Number[PL_id][0] == 5) {
+        return ((s8(*)(s16 PL_id))credit_use)(PL_id);
+    }
+    if (Two_Coin_Start) {
+        switch (Chute_Mode) {
+        case 0:
+        case 1:
+            if (credit_1p < 2) {
+                return 0;
+            }
+            credit_1p -= 2;
+            return 1;
+        default:
+            if (PL_id) {
+                credit = &credit_2p;
+            } else {
+                credit = &credit_1p;
+            }
+            if (*credit < 2) {
+                return 0;
+            }
+            *credit -= 2;
+            return 1;
+        }
+    }
+    return ((s8(*)(s16 PL_id))credit_use)(PL_id);
+}
+
+
+
+void Break_Into_02(s16 PL_id) {
+    plw[New_Challenger].wu.operator = 1;
+    Operator_Status[New_Challenger] = 1;
+    E_Number[New_Challenger][0] = 0;
+    E_Number[New_Challenger][1] = 0;
+    E_Number[New_Challenger][2] = 0;
+    E_Number[New_Challenger][3] = 0;
+    if (Continue_Coin[New_Challenger] == 0) {
+        grade_check_work_1st_init(New_Challenger, 0);
+    }
+    tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + (&Entry_Mes_X[0])[PL_id], Text_Page_Y, 18, msg_blank);
+    Select_Timer = 48;
+    Unit_Of_Timer = 50;
+}
+
+
+
+void Break_Into_04(s16 PL_id) {
+    Break_Into = 1;
+    E_No1++;
+    E_No2 = 0;
+    E_Timer = 150;
+    E_Number[New_Challenger][0] = 0;
+    E_Number[New_Challenger][1] = 0;
+    E_Number[New_Challenger][2] = 0;
+    E_Number[New_Challenger][3] = 0;
+    effect_A2_init(0);
+    effect_89_init(6, 0, Text_Page_Y + 11, 48, 3);
+    bgm_request(5);
+    tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + (&Entry_Mes_X[0])[PL_id], Text_Page_Y, 18, msg_blank);
+}
+
+
+
+void Break_Into_05(s16 PL_id) {
+    Break_Into = 1;
+    Stop_Combo = 1;
+    E_No1 = E_No1 + 1;
+    E_No2 = 0;
+    E_Number[New_Challenger][0] = 0;
+    E_Number[New_Challenger][1] = 0;
+    E_Number[New_Challenger][2] = 0;
+    E_Number[New_Challenger][3] = 0;
+    if ((Play_Type == 0) && (Conclusion_Flag != 0) && (plw[Champion].wu.operator == 0)) {
+        E_Timer = 1;
+        if (LOSER != New_Challenger) {
+            E_No3 = -1;
+        } else {
+            E_No3 = 0;
+        }
+    } else {
+        E_Timer = 150;
+        if (Conclusion_Flag == 0) {
+            Score[Champion][0] = Stage_Stock_Score[Champion];
+        }
+        effect_A2_init(0);
+        effect_89_init(6, 0, Text_Page_Y + 11, 48, 3);
+        bgm_request(5);
+    }
+    tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + (&Entry_Mes_X[0])[PL_id], Text_Page_Y, 18, msg_blank);
+}
+
+
+
+void Break_Into_07(s16 PL_id) {
+    E_Number[New_Challenger][0] = 0;
+    E_Number[New_Challenger][1] = 0;
+    E_Number[New_Challenger][2] = 0;
+    E_Number[New_Challenger][3] = 0;
+    E_07_Flag[PL_id] = 1;
+    if (E_07_Flag[0] != 0 && E_07_Flag[1] != 0) {
+        return;
+    }
+    E_No1 = E_No1 + 1;
+    E_No2 = 0;
+    Break_Into = 1;
+}
+
+
+
+s32 Break_Into_08(s16 PL_id) {
+    tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18, msg_blank);
+    E_Number[New_Challenger][0] = 0;
+    E_Number[New_Challenger][1] = 0;
+    E_Number[New_Challenger][2] = 0;
+    E_Number[New_Challenger][3] = 0;
+    E_07_Flag[PL_id] = 1;
+    if (E_07_Flag[0] != 0 && E_07_Flag[1] != 0) {
+        return E_07_Flag[1];
+    }
+    Break_Into = 1;
+    E_No1 += 1;
+    E_No2 = 0;
+    if (Continue_Count[PL_id ^ 1] >= 0) {
+        E_Timer = 60;
+    } else {
+        E_Timer = 10;
+    }
+    return (s32)Continue_Count;
+}
+
+
+
+void Break_Into_09(s16 PL_id) {
+    tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18, msg_blank);
+    E_Number[New_Challenger][0] = 0;
+    E_Number[New_Challenger][1] = 0;
+    E_Number[New_Challenger][2] = 0;
+    E_Number[New_Challenger][3] = 0;
+    E_07_Flag[PL_id] = 1;
+    if (E_07_Flag[0] != 0 && E_07_Flag[1] != 0) {
+        return;
+    }
+    Break_Into = 1;
+    E_No1 += 1;
+    E_No2 = 0;
+    Champion = New_Challenger;
+}
+
+
+
+void Break_Into_10(s16 PL_id) {
+    tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18, msg_blank);
+    E_Number[New_Challenger][0] = 0;
+    E_Number[New_Challenger][1] = 0;
+    E_Number[New_Challenger][2] = 0;
+    E_Number[New_Challenger][3] = 0;
+    E_07_Flag[PL_id] = 1;
+    if (E_07_Flag[0] != 0 && E_07_Flag[1] != 0) {
+        return;
+    }
+    Break_Into = 1;
+    E_No1 += 1;
+    E_No2 = 0;
+    Champion = New_Challenger;
+}
+
+
+
+void Continue_Score_Sub(s16 PL_id) {
+    if ((E_Number[PL_id][0] == 1) || (E_Number[PL_id][0] == 5)) {
+        Continue_Coin[PL_id] += 1;
+        if (Continue_Coin[PL_id] >= 99) {
+            Continue_Coin[PL_id] = 99;
+        }
+    }
+}
+
+
+
+void Correct_BI_Data(void) {
+    Super_Arts_Finish[Player_id] -= Stage_SA_Finish[Player_id];
+    Lost_Round[Player_id] -= Stage_Lost_Round[Player_id];
+    Perfect_Finish[Player_id] -= Stage_Perfect_Finish[Player_id];
+    Cheap_Finish[Player_id] -= Stage_Cheap_Finish[Player_id];
+}

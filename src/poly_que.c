@@ -12,6 +12,8 @@
 #include "romdata.h"
 #include "extern.h"
 #include "sys_config.h"
+#include "sys_config_2.h"
+#include "sys_config_3.h"
 #include "cps3.h"
 
 /* provisional name */

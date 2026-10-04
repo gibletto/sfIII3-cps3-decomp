@@ -13,6 +13,7 @@
 #include "romdata.h"
 #include "extern.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "aboutspr.h"
 #include "EFF16.h"
 
@@ -88,7 +89,7 @@ void eff16_trans(WORK* ewk) {
 
 
 /* provisional name */
-s16 score_bunkai_eff16(WORK_Other_CONN* ewk, u32 tsc) {
+s32 score_bunkai_eff16(WORK_Other_CONN* ewk, u32 tsc) {
     s16 noobjans = 0;
     s16 i;
     s16 ixs[8];

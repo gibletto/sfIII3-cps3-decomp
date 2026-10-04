@@ -15,6 +15,7 @@
 #include "romdata.h"
 #include "extern.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "EFFJ7.h"
 #include "cps3.h"
 #include "fighter.h"
@@ -29,8 +30,10 @@ void effect_J7_move(WORK_Other* ewk) {
     case 0:
         if (mwk->gill_ccch_go) {
         } else {
-            if (mwk->wu.routine_no[1] == 0 && mwk->wu.routine_no[2] == 1) {
-                goto go;
+            if (mwk->wu.routine_no[1] == 0) {
+                if (mwk->wu.routine_no[2] == 1) {
+                    goto go;
+                }
             }
             break;
         }

@@ -14,23 +14,18 @@
 #include "romdata.h"
 #include "extern.h"
 #include "sys_test.h"
+#include "sys_test_2.h"
+#include "sys_test_2b.h"
+#include "sys_test_2c.h"
+#include "sys_test_3.h"
+#include "sys_test_4.h"
+#include "sys_test_5.h"
 #include "fifo.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "aboutspr.h"
 #include "effe3.h"
 
-static void effE3_scroll_set(WORK_Other* ewk);
-
-
-
-/* provisional name */
-static void effE3_scroll_set(WORK_Other* ewk) {
-    s32 x = effE3_data[Flash_MT[ewk->master_id]][0] - bg_w.pos_offset;
-    s32 y = effE3_data[Flash_MT[ewk->master_id]][1];
-    scrn_map_set(3, ake_scrl_w[2].adrs);
-    Scrn_Move_Set(3, x, y);
-    Family_Set_W(4, -x & 0x3FF, (0x300 - (y & 0x3FF)) & 0x3FF);
-}
 
 
 
@@ -67,6 +62,7 @@ s32 effect_E3_move(WORK_Other* ewk) {
         sa_pa_flag = 1;
         for (i = 0; i < bg_w.scno; i++) {
             Bg_Off_W(1 << i);
+            continue;
         }
         Bg_On_W(8);
         if (Flash_MT[0]) {
@@ -98,6 +94,7 @@ s32 effect_E3_move(WORK_Other* ewk) {
         }
         for (i = 0; i < bg_w.scno; i++) {
             Bg_On_W(1 << i);
+            continue;
         }
         Bg_Off_W(8);
         return;
@@ -106,6 +103,16 @@ s32 effect_E3_move(WORK_Other* ewk) {
         push_effect_work(&ewk->wu);
         return;
     }
+}
+
+
+/* provisional name */
+void effE3_scroll_set(WORK_Other* ewk) {
+    s32 x = effE3_data[Flash_MT[ewk->master_id]][0] - bg_w.pos_offset;
+    s32 y = effE3_data[Flash_MT[ewk->master_id]][1];
+    scrn_map_set(3, ake_scrl_w[2].adrs);
+    Scrn_Move_Set(3, x, y);
+    Family_Set_W(4, -x & 0x3FF, (0x300 - (y & 0x3FF)) & 0x3FF);
 }
 
 

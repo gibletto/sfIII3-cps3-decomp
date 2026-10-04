@@ -20,7 +20,9 @@
 #include "EFFE7.h"
 #include "EFFE8.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "HITCHECK.h"
 #include "EFFE5.h"
 
@@ -125,11 +127,13 @@ void effect_E5_move(WORK_Other* ewk) {
                     for (i = 0; i < ewk->wu.dmcal_d; i++) {
                         effect_E8_init(ewk, mwk, ewk->wu.dir_step);
                         ewk->wu.dir_step += ewk->wu.dmcal_m;
+                        continue;
                     }
                 } else {
                     for (i = 0; i < ewk->wu.dmcal_d; i++) {
                         ewk->wu.dir_step += ewk->wu.dmcal_m;
                         effect_E8_init(ewk, mwk, ewk->wu.dir_step);
+                        continue;
                     }
                 }
                 break;

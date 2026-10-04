@@ -17,10 +17,11 @@
 #include "extern.h"
 #include "ta_sub.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "PLS02.h"
 #include "aboutspr.h"
-#include "CHARSET.h"
 #include "eff94.h"
 
 

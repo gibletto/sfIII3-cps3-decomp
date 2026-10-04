@@ -13,9 +13,10 @@
 #include "extern.h"
 #include "aboutspr.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "PLS02.h"
-#include "CHARSET.h"
 #include "EFF02.h"
 #include "fighter.h"
 void effect_02_move(WORK_Other* ewk) {

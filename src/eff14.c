@@ -15,6 +15,7 @@
 #include "romdata.h"
 #include "extern.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "ta_sub.h"
 #include "eff14.h"
 

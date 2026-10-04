@@ -13,6 +13,7 @@
 #include "romdata.h"
 #include "extern.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "BBBSBALL.h"
 
 
@@ -50,5 +51,6 @@ void bbbs_ball_set(PLW* wk, const BBBSTable* dadr) {
     for (i = 0; i < dadr->kosuu; i++) {
         ttime = ttime + dadr->bbdat[i][0];
         effect_I8_init(wk, ttime, &dadr->bbdat[i][0]);
+        continue;
     }
 }

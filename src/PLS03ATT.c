@@ -19,12 +19,15 @@
 #include "romdata.h"
 #include "extern.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "PLS02.h"
 #include "Grade.h"
 #include "PLPAT.h"
 #include "PLS03ATT.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "CMD_MAIN.h"
+#include "cmd_main_2.h"
 #include "ta_sub.h"
 #include "PLS03.h"
 
@@ -368,7 +371,7 @@ s16 sf;
 
 
 s32 decode_wst_data(PLW* wk, u16 cmd, s16 cmd_ex) {
-    u16 lever;
+    s16 lever;
     u16 rnum;
     if (cmd == 0) {
         return 0;
@@ -391,8 +394,10 @@ s32 decode_wst_data(PLW* wk, u16 cmd, s16 cmd_ex) {
         }
         break;
     case 0xB000:
-        if ((lever == (wk->cp->sw_new & 0xF)) && (cmd_ex_check(wk->wu.xyz[1].disp.pos, cmd_ex))) {
-            rnum = 1;
+        if ((lever == (wk->cp->sw_new & 0xF))) {
+            if ((cmd_ex_check(wk->wu.xyz[1].disp.pos, cmd_ex))) {
+                rnum = 1;
+            }
         }
         break;
     case 0x2000:
@@ -519,19 +524,20 @@ s32 check_renda_cancel(PLW* wk) {
         return 0;
     }
     wk->permited_koa |= 32;
-    if (wk->wu.pat_status == renda_status_table[(wk->cp->sw_new & 3)] &&
-        wk->current_attack == (wk->cp->sw_now & 0x770)) {
-        setup_comm_back((WORK*)wk);
-        wk->wu.cg_ix = wk->wu.cg_eftype * wk->wu.cgd_type - (wk->wu.cgd_type * 2);
-        wk->wu.cg_next_ix = 0;
-        wk->wu.cg_ctr = 1;
-        wk->wu.meoshi_hit_flag = 0;
-        wk->wu.att_hit_ok = 0;
-        wk->wu.hf.hit_flag = 0;
-        wk->caution_flag = 1;
-        wk->cancel_timer = 0;
-        wk->wu.cg_cancel &= 0xE0;
-        return 1;
+    if (wk->wu.pat_status == renda_status_table[(wk->cp->sw_new & 3)]) {
+        if (wk->current_attack == (wk->cp->sw_now & 0x770)) {
+            setup_comm_back((WORK*)wk);
+            wk->wu.cg_ix = wk->wu.cg_eftype * wk->wu.cgd_type - (wk->wu.cgd_type * 2);
+            wk->wu.cg_next_ix = 0;
+            wk->wu.cg_ctr = 1;
+            wk->wu.meoshi_hit_flag = 0;
+            wk->wu.att_hit_ok = 0;
+            wk->wu.hf.hit_flag = 0;
+            wk->caution_flag = 1;
+            wk->cancel_timer = 0;
+            wk->wu.cg_cancel &= 0xE0;
+            return 1;
+        }
     }
     return 0;
 }

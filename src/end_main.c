@@ -18,16 +18,38 @@
 #include "romdata.h"
 #include "extern.h"
 #include "sys_test.h"
+#include "sys_test_2.h"
+#include "sys_test_2b.h"
+#include "sys_test_2c.h"
+#include "sys_test_3.h"
+#include "sys_test_4.h"
+#include "sys_test_5.h"
 #include "Com_Pl.h"
 #include "aboutspr.h"
 #include "SYS_sub.h"
 #include "bg000.h"
 #include "end_sub.h"
+#include "end_sub_2.h"
+#include "end_sub_3.h"
+#include "end_sub_4.h"
+#include "end_sub_5.h"
+#include "end_sub_6.h"
+#include "end_sub_7.h"
+#include "color3rd.h"
+#include "end_sub_8.h"
 #include "VITAL.h"
+#include "vital_2.h"
+#include "count.h"
 #include "cmb_win.h"
-#include "EFFF9.h"
+#include "efff7.h"
+#include "efff8_code.h"
+#include "efff9.h"
 #include "fifo.h"
 #include "bg_sub.h"
+#include "bg_sub_2.h"
+#include "bg_sub_3.h"
+#include "bg_sub_4.h"
+#include "bg_sub_5.h"
 #include "eff36.h"
 #include "EFF48.h"
 #include "EFFE1.h"
@@ -35,20 +57,28 @@
 #include "efff5.h"
 #include "efff6.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "end_6.h"
 #include "coin_cont.h"
 #include "lose_pl.h"
+#include "lose_pl_2.h"
 #include "sys_config.h"
+#include "sys_config_2.h"
+#include "sys_config_3.h"
 #include "textsound.h"
+#include "textsound_2.h"
+#include "textsound_3.h"
 #include "end_main.h"
 #include "SE.h"
+#include "se_2.h"
+#include "se_3.h"
 #include "effe6.h"
 #include "end_1.h"
 #include "sc_trans.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "EFFC1.h"
 #include "PLS02.h"
-#include "CHARSET.h"
 
 
 
@@ -90,7 +120,7 @@ void opening_init2(void) {
 
 
 void opning_init_00000(void) {
-    u16 i;
+    s16 i;
     op_w.r_no_1++;
     op_end_flag = 0;
     bg_vbl_trans_flag = 0;
@@ -2398,14 +2428,10 @@ void opening_capcom_logo_draw(void) {
     Scrn_Move_Set(1, 0x200 - bg_w.pos_offset, 0);
     Family_Set_W(1, -(0x200 - bg_w.pos_offset) & 0x3FF, 0x300);
     op_end_flag = 1;
-    bg_stop = 0;
-    bg_stop2 = 0;
-    akebono_flag = 0;
-    seraph_flag = 0;
-    aku_flag = 0;
-    sa_pa_flag = 0;
-    bg_app = 0;
-    bg_w.chase_flag = 0;
+    bg_stop2 = bg_stop = 0;
+    seraph_flag = akebono_flag = 0;
+    sa_pa_flag = aku_flag = 0;
+    bg_w.chase_flag = bg_app = 0;
 }
 
 /* provisional name */
@@ -2480,7 +2506,7 @@ void Ending_init(void) {
 
 
 
-s8 Ending_main(s16 pl_num) {
+s32 Ending_main(s16 pl_num) {
     Game_timer++;
     normal_ending(pl_num);
     return ending_all_end;
@@ -2651,7 +2677,7 @@ void fadeout_to_staff_roll(void) {
 
 void common_end_init00(s16 pl_num) {
     s16 i;
-    s32 blocks;
+    s16 blocks;
     const END_BG_GFX* gfx;
     Family_Init();
     clear_scroll_layer_state_and_mask();
@@ -2711,6 +2737,7 @@ void common_end_init01(void) {
     for (i = 0; i < bg_w.scno; i++) {
         scrn_attr_set(i, 0, 31);
         scrn_reg_w[i].ctrl &= 0xFE7F;
+        continue;
     }
     bg_w.scr_stop = 0;
     bg_w.frame_flag = 0;
@@ -2823,6 +2850,7 @@ void end_scn_pos_set2(void) {
                       bg_w.bgw[bg_no].xy[1].disp.pos);
         bg_w.bgw[bg_no].wxy[0].cal = bg_w.bgw[bg_no].xy[0].cal;
         bg_w.bgw[bg_no].wxy[1].cal = bg_w.bgw[bg_no].xy[1].cal;
+        continue;
     }
 }
 

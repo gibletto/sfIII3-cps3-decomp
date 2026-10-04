@@ -17,10 +17,14 @@
 #include "CALDIR.h"
 #include "PLS02.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "bg_sub.h"
+#include "bg_sub_2.h"
+#include "bg_sub_3.h"
+#include "bg_sub_4.h"
+#include "bg_sub_5.h"
 #include "HITCHECK.h"
 #include "Grade.h"
-#include "CHARSET.h"
 #include "PLS01.h"
 
 

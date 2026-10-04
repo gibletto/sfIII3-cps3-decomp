@@ -17,14 +17,32 @@
 #include "romdata.h"
 #include "extern.h"
 #include "end_sub.h"
+#include "end_sub_2.h"
+#include "end_sub_3.h"
+#include "end_sub_4.h"
+#include "end_sub_5.h"
+#include "end_sub_6.h"
+#include "end_sub_7.h"
+#include "color3rd.h"
+#include "end_sub_8.h"
 #include "sc_trans.h"
-#include "Eff93.h"
+#include "eff87.h"
+#include "eff88.h"
+#include "eff89.h"
+#include "eff90.h"
+#include "eff91.h"
+#include "eff92_code.h"
+#include "eff93.h"
 #include "EFFB6.h"
 #include "EFFB8.h"
 #include "sc_face.h"
 #include "PLS02.h"
 #include "SE.h"
+#include "se_2.h"
+#include "se_3.h"
 #include "textsound.h"
+#include "textsound_2.h"
+#include "textsound_3.h"
 #include "n_input.h"
 
 
@@ -196,13 +214,13 @@ void Name_Scs_Input_comm(void) {
             } else {
                 name_ptr->code[name_ptr->index] = 46;
             }
-            (*&sc_name_wk)[name_ptr->id][name_ptr->index].n_disp_flag = 0;
-            (*&sc_name_wk)[name_ptr->id][name_ptr->index].f_cnt = 0;
+            sc_name_wk[name_ptr->id][name_ptr->index].n_disp_flag = 0;
+            sc_name_wk[name_ptr->id][name_ptr->index].f_cnt = 0;
             break;
         case 2:
             name_ptr->timer += 420;
-            (*&sc_name_wk)[name_ptr->id][name_ptr->index].n_disp_flag = 0;
-            (*&sc_name_wk)[name_ptr->id][name_ptr->index].f_cnt = 0;
+            sc_name_wk[name_ptr->id][name_ptr->index].n_disp_flag = 0;
+            sc_name_wk[name_ptr->id][name_ptr->index].f_cnt = 0;
             name_ptr->index--;
             name_ptr->r_no_0 -= 2;
             if (name_ptr->index < 0) {
@@ -243,13 +261,14 @@ void Name_Scs_Input_end(void) {
     }
     for (i = 0; i < 4; i++) {
         name_ptr->end_flag[i] = 1;
+        continue;
     }
     ranking_name_entry();
     name_ptr->index = 3;
     if (name_ptr->id) {
         effect_89_init(8, DE_X[0] + 40, Text_Page_Y, 3, 1);
     } else {
-        effect_89_init(8, (*&DE_X)[6] + 13, Text_Page_Y, 3, 1);
+        effect_89_init(8, DE_X[6] + 13, Text_Page_Y, 3, 1);
     }
 }
 
@@ -417,26 +436,26 @@ void name_work_init(pl_id)
 s16 pl_id;
 {
     s16 j;
-    (*&name_wk)[pl_id].r_no_0 = 0;
-    (*&name_wk)[pl_id].r_no_1 = 0;
-    (*&name_wk)[pl_id].dmm = 0;
-    (*&name_wk)[pl_id].end_flag[0] = 0;
-    (*&name_wk)[pl_id].code[0] = 46;
-    (*&name_wk)[pl_id].old_code[0] = 46;
-    (*&name_wk)[pl_id].end_flag[3] = 0;
-    (*&name_wk)[pl_id].old_code[3] = (*&name_wk)[pl_id].code[3] = 44;
-    (*&sc_name_wk)[pl_id][0].c_cnt = 0;
-    (*&sc_name_wk)[pl_id][0].type = 0;
-    (*&sc_name_wk)[pl_id][0].r_no_0 = 0;
-    (*&sc_name_wk)[pl_id][0].r_no_1 = 0;
+    name_wk[pl_id].r_no_0 = 0;
+    name_wk[pl_id].r_no_1 = 0;
+    name_wk[pl_id].dmm = 0;
+    name_wk[pl_id].end_flag[0] = 0;
+    name_wk[pl_id].code[0] = 46;
+    name_wk[pl_id].old_code[0] = 46;
+    name_wk[pl_id].end_flag[3] = 0;
+    name_wk[pl_id].old_code[3] = name_wk[pl_id].code[3] = 44;
+    sc_name_wk[pl_id][0].c_cnt = 0;
+    sc_name_wk[pl_id][0].type = 0;
+    sc_name_wk[pl_id][0].r_no_0 = 0;
+    sc_name_wk[pl_id][0].r_no_1 = 0;
     for (j = 1; j < 3; j++) {
-        (*&name_wk)[pl_id].end_flag[j] = 0;
-        (*&name_wk)[pl_id].code[j] = 0x2F;
-        (*&name_wk)[pl_id].old_code[j] = 0x2F;
-        (*&sc_name_wk)[pl_id][j].c_cnt = j;
-        (*&sc_name_wk)[pl_id][j].type = j;
-        (*&sc_name_wk)[pl_id][j].r_no_0 = 0;
-        (*&sc_name_wk)[pl_id][j].r_no_1 = 0;
+        name_wk[pl_id].end_flag[j] = 0;
+        name_wk[pl_id].code[j] = 0x2F;
+        name_wk[pl_id].old_code[j] = 0x2F;
+        sc_name_wk[pl_id][j].c_cnt = j;
+        sc_name_wk[pl_id][j].type = j;
+        sc_name_wk[pl_id][j].r_no_0 = 0;
+        sc_name_wk[pl_id][j].r_no_1 = 0;
     }
 }
 
@@ -449,7 +468,7 @@ void name_entry_commit_row(s16 pl_id, s16 pos_y) {
     if (pl_id) {
         pos_x = DE_X[0] + 37;
     } else {
-        pos_x = (*&DE_X)[6] + 10;
+        pos_x = DE_X[6] + 10;
     }
     switch (name_ptr->rank_in) {
     case 0:
@@ -552,7 +571,11 @@ void current_sc_move2(void) {
             if (nsc_ptr->n_disp_flag > 2) {
                 nsc_ptr->n_disp_flag = 0;
             }
-            naming_set(name_ptr->id, nsc_ptr->type, (nsc_ptr->n_disp_flag != 2) ? name_ptr->code[nsc_ptr->type] : 47);
+            if (nsc_ptr->n_disp_flag != 2) {
+                naming_set(name_ptr->id, nsc_ptr->type, name_ptr->code[nsc_ptr->type]);
+            } else {
+                naming_set(name_ptr->id, nsc_ptr->type, 47);
+            }
         }
         break;
     }

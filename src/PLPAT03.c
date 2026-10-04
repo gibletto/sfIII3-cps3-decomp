@@ -14,9 +14,9 @@
 #include "extern.h"
 #include "PLSGAUGE.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "Grade.h"
 #include "PLPAT.h"
-#include "CHARSET.h"
 #include "PLPAT03.h"
 
 

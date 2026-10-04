@@ -35,5 +35,7 @@ void urien_dash(PLW* wk);
 s32 urien_dash_chk(PLW* wk);
 void Judge_normal_winner(PLW* wk);
 void win_player(PLW* wk);
+void bonus_game_win_pause(PLW* wk);
+void meta_win_pause(PLW* wk);
 
 #endif

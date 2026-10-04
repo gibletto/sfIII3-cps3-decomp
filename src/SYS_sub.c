@@ -19,16 +19,39 @@
 #include "extern.h"
 #include "aboutspr.h"
 #include "SE.h"
+#include "se_2.h"
+#include "se_3.h"
 #include "end_sub.h"
+#include "end_sub_2.h"
+#include "end_sub_3.h"
+#include "end_sub_4.h"
+#include "end_sub_5.h"
+#include "end_sub_6.h"
+#include "end_sub_7.h"
+#include "color3rd.h"
+#include "end_sub_8.h"
 #include "sc_trans.h"
 #include "EFFECT.h"
+#include "effect_2.h"
+#include "effd2.h"
 #include "effd3.h"
 #include "sys_test.h"
+#include "sys_test_2.h"
+#include "sys_test_2b.h"
+#include "sys_test_2c.h"
+#include "sys_test_3.h"
+#include "sys_test_4.h"
+#include "sys_test_5.h"
 #include "fifo.h"
 #include "sc_sub.h"
+#include "sc_sub_2.h"
 #include "sys_config.h"
+#include "sys_config_2.h"
+#include "sys_config_3.h"
 #include "n_input.h"
 #include "textsound.h"
+#include "textsound_2.h"
+#include "textsound_3.h"
 #include "SYS_sub.h"
 #include "cps3.h"
 
@@ -372,7 +395,7 @@ u32 ranking_insert_all_four(s16 pl)
   u32 made;
   char v;
   char *rank;
-  u32 side;
+  s16 side;
   u8 *name;
   u32 id;
   p = (u8 *)Present_Data;
@@ -478,7 +501,7 @@ s32 insert_ranking_score(s16 PL_id) {
 
 /* provisional name */
 s32 insert_ranking_wins(s16 PL_id) {
-    s16 i;
+    s32 i;
     s16 j;
     for (i = 0; i < 5; i++) {
         if (Ranking_Data[i + 5].wins < Present_Data[PL_id].wins) {
@@ -488,6 +511,7 @@ s32 insert_ranking_wins(s16 PL_id) {
             Ranking_Data[i + 5] = Present_Data[PL_id];
             return i;
         }
+        continue;
     }
     return -1;
 }
@@ -496,7 +520,7 @@ s32 insert_ranking_wins(s16 PL_id) {
 
 /* provisional name */
 s32 insert_ranking_cpu_grade(s16 PL_id) {
-    s16 i;
+    s32 i;
     s16 j;
     for (i = 0; i < 5; i++) {
         if (!((s32(*)())Check_CPU_Grade_Score)(PL_id, i)) {
@@ -669,8 +693,10 @@ void Disp_Digit8x16(u32 value, s16 x, s16 y) {
         t = xx;
         t *= Digit[i];
         value -= t;
-        if ((First_Digit < 0) && Digit[i]) {
-            First_Digit = i;
+        if ((First_Digit < 0)) {
+            if (Digit[i]) {
+                First_Digit = i;
+            }
         }
     }
     Digit[0] = value;
@@ -684,7 +710,7 @@ void Disp_Digit8x16(u32 value, s16 x, s16 y) {
 
 
 void Disp_Digit16x24(u32 value, s32 x_arg, s16 y, s32 attr_arg) {
-    s32 x = (s16)x_arg;
+    s16 x = (s16)x_arg;
     s32 attr = (s16)attr_arg;
     s16 i;
     s16 First_Digit;

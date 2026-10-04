@@ -15,11 +15,14 @@
 #include "romdata.h"
 #include "extern.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "ta_sub.h"
-#include "effJ6.h"
+#include "effj4.h"
+#include "effj5.h"
+#include "effj6.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "aboutspr.h"
-#include "CHARSET.h"
 #include "EFFI4MV.h"
 
 

@@ -11,6 +11,8 @@
 #include "romdata.h"
 #include "extern.h"
 #include "Win.h"
+#include "win_2.h"
+#include "continue.h"
 #include "HITCHECK.h"
 #include "EFF02.h"
 #include "HITPLEF.h"

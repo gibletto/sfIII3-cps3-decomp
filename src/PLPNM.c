@@ -18,8 +18,8 @@
 #include "PLS01.h"
 #include "appear.h"
 #include "PLPNM.h"
-#include "CHARSET.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 
 
 

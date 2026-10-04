@@ -18,14 +18,22 @@
 #include "ta_sub.h"
 #include "CALDIR.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "aboutspr.h"
-#include "EFFB4.h"
+#include "effb3.h"
+#include "effb4.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "HITCHECK.h"
 #include "PLS02.h"
-#include "CHARSET.h"
 #include "SE.h"
+#include "se_2.h"
+#include "se_3.h"
 #include "bg_sub.h"
+#include "bg_sub_2.h"
+#include "bg_sub_3.h"
+#include "bg_sub_4.h"
+#include "bg_sub_5.h"
 #include "EFF09.h"
 
 
@@ -1523,15 +1531,15 @@ s32 effect_09_init(WORK_Other* mk, s8 kind) {
     ewk->wu.rl_flag = 0;
     ewk->wu.my_col_mode = 0x4200;
     ewk->wu.char_table[0] = eff09_char_table;
-    ewk->wu.routine_no[0] = data[0];
-    ewk->wu.my_family = data[1];
-    ewk->wu.my_col_code = data[2];
-    ewk->wu.xyz[0].disp.pos = data[3];
-    ewk->wu.xyz[1].disp.pos = data[4];
-    ewk->wu.position_z = ewk->wu.my_priority = data[5];
-    ewk->wu.char_index = data[6];
-    ewk->wu.hit_stop = data[7];
-    ewk->wu.sync_suzi = data[8];
+    ewk->wu.routine_no[0] = *data++;
+    ewk->wu.my_family = *data++;
+    ewk->wu.my_col_code = *data++;
+    ewk->wu.xyz[0].disp.pos = *data++;
+    ewk->wu.xyz[1].disp.pos = *data++;
+    ewk->wu.position_z = ewk->wu.my_priority = *data++;
+    ewk->wu.char_index = *data++;
+    ewk->wu.hit_stop = *data++;
+    ewk->wu.sync_suzi = *data++;
     suzi_offset_set(&ewk->wu);
     return 0;
 }

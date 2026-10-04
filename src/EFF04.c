@@ -13,6 +13,7 @@
 #include "extern.h"
 #include "EFF18.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "aboutspr.h"
 #include "EFF04.h"
 

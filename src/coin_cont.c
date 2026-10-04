@@ -12,7 +12,11 @@
 #include "romdata.h"
 #include "extern.h"
 #include "Win.h"
+#include "win_2.h"
+#include "continue.h"
 #include "textsound.h"
+#include "textsound_2.h"
+#include "textsound_3.h"
 #include "coin_cont.h"
 
 

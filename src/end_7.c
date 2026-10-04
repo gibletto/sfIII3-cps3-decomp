@@ -15,9 +15,23 @@
 #include "romdata.h"
 #include "extern.h"
 #include "sys_test.h"
-#include "EFFF9.h"
+#include "sys_test_2.h"
+#include "sys_test_2b.h"
+#include "sys_test_2c.h"
+#include "sys_test_3.h"
+#include "sys_test_4.h"
+#include "sys_test_5.h"
+#include "efff7.h"
+#include "efff8_code.h"
+#include "efff9.h"
 #include "SE.h"
+#include "se_2.h"
+#include "se_3.h"
 #include "bg_sub.h"
+#include "bg_sub_2.h"
+#include "bg_sub_3.h"
+#include "bg_sub_4.h"
+#include "bg_sub_5.h"
 #include "end_main.h"
 #include "EFFB0.h"
 #include "effe6.h"
@@ -144,7 +158,7 @@ void end_700_2000(void) {
 
 
 void end_700_cell_set(void) {
-    u16 i;
+    s16 i;
     for (i = 0; i < 10; i++) {
         bg_cell_write(0, end_700_bg0_cell_tbl[i].ofs, end_700_bg0_cell_tbl[i].cell, (u32)end_700_scrn_data, 0, 0x220);
     }

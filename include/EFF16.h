@@ -6,6 +6,6 @@
 void eff16_trans(WORK* ewk);
 s32 effect_16_init();
 void effect_16_move(WORK_Other* ewk);
-s16 score_bunkai_eff16(WORK_Other_CONN* ewk, u32 tsc);
+s32 score_bunkai_eff16(WORK_Other_CONN* ewk, u32 tsc);
 
 #endif

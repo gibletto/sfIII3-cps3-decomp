@@ -18,14 +18,23 @@
 #include "romdata.h"
 #include "extern.h"
 #include "EFFI5.h"
+#include "effi6.h"
 #include "EFFL4.h"
+#include "effl5.h"
+#include "effl6.h"
 #include "ta_sub.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "PLS02.h"
 #include "aboutspr.h"
 #include "effb2.h"
 #include "bg_sub.h"
-#include "EFFB4.h"
+#include "bg_sub_2.h"
+#include "bg_sub_3.h"
+#include "bg_sub_4.h"
+#include "bg_sub_5.h"
+#include "effb3.h"
+#include "effb4.h"
 
 
 
@@ -195,8 +204,7 @@ s32 effect_B2_init(void) {
     ewk->wu.my_family = 4;
     load_char_gfx(0xA7F8, 1);
     bg_w.bgw[3].xy[0].cal = bg_w.bgw[3].wxy[0].cal = 0x100000;
-    bg_w.bgw[3].wxy[1].cal = 0;
-    bg_w.bgw[3].xy[1].cal = 0;
+    bg_w.bgw[3].xy[1].cal = bg_w.bgw[3].wxy[1].cal = 0;
     bg_w.bgw[3].position_x = 256 - bg_w.pos_offset;
     bg_w.bgw[3].position_y = 0;
     ake_Family_Set();

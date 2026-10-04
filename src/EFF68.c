@@ -14,13 +14,20 @@
 #include "ta_sub.h"
 #include "CALDIR.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "aboutspr.h"
-#include "CHARSET.h"
 #include "bg_sub.h"
+#include "bg_sub_2.h"
+#include "bg_sub_3.h"
+#include "bg_sub_4.h"
+#include "bg_sub_5.h"
 #include "EFF68.h"
 #include "PLS02.h"
-#include "EFF67.h"
+#include "eff64.h"
+#include "eff65.h"
+#include "eff66.h"
 
 
 

@@ -22,47 +22,88 @@
 #include "sel_pl.h"
 #include "SYS_sub.h"
 #include "Entry.h"
+#include "entry_2.h"
 #include "SYS_sub2.h"
 #include "end_main.h"
 #include "aboutspr.h"
 #include "SE.h"
+#include "se_2.h"
+#include "se_3.h"
 #include "Grade.h"
-#include "DEMO.h"
+#include "demo00.h"
+#include "demo01.h"
+#include "demo02_code.h"
 #include "RANKING.h"
 #include "Manage.h"
+#include "manage_2.h"
 #include "Win.h"
+#include "win_2.h"
+#include "continue.h"
 #include "next_cpu.h"
 #include "end_sub.h"
+#include "end_sub_2.h"
+#include "end_sub_3.h"
+#include "end_sub_4.h"
+#include "end_sub_5.h"
+#include "end_sub_6.h"
+#include "end_sub_7.h"
+#include "color3rd.h"
+#include "end_sub_8.h"
 #include "sc_trans.h"
 #include "sc_face.h"
 #include "cmb_win.h"
 #include "VITAL.h"
+#include "vital_2.h"
+#include "count.h"
 #include "spgauge.h"
 #include "EFFECT.h"
-#include "effJ6.h"
+#include "effect_2.h"
+#include "effj4.h"
+#include "effj5.h"
+#include "effj6.h"
 #include "EFFJ0.h"
+#include "effj1.h"
+#include "effj2_code.h"
 #include "PLCNTDAT.h"
+#include "plcntdat_2.h"
 #include "PLCNT3.h"
 #include "sys_test.h"
+#include "sys_test_2.h"
+#include "sys_test_2b.h"
+#include "sys_test_2c.h"
+#include "sys_test_3.h"
+#include "sys_test_4.h"
+#include "sys_test_5.h"
 #include "textsound.h"
+#include "textsound_2.h"
+#include "textsound_3.h"
 #include "PLCNT2.h"
 #include "EFFM7.h"
 #include "BBBSCOM.h"
 #include "bg_sub.h"
+#include "bg_sub_2.h"
+#include "bg_sub_3.h"
+#include "bg_sub_4.h"
+#include "bg_sub_5.h"
 #include "HITCHECK.h"
 #include "cmb_cont.h"
 #include "eff35.h"
-#include "EFF58.h"
+#include "eff56.h"
+#include "eff57.h"
+#include "eff58.h"
 #include "SLOWF.h"
 #include "sc_sub.h"
+#include "sc_sub_2.h"
 #include "bg000.h"
+#include "ta_sub2.h"
 #include "tate00.h"
 #include "ta_sub.h"
 #include "Game_Main.h"
 #include "eeprom.h"
 #include "meta_col.h"
-#include "PLCNT.h"
+#include "EM_Cand.h"
 #include "lose_pl.h"
+#include "lose_pl_2.h"
 #include "PLS02.h"
 
 
@@ -155,8 +196,8 @@ void Game01(void) {
 
 
 void Game01_Sub(void) {
-    tilemap_print_string_attr((*(const s16(*)[2][2])&(Entry_Msg_X_Data[2]))[0][(*&Game_setting).mode], 0, 18, Game01_Erase_msg);
-    tilemap_print_string_attr((*(const s16(*)[2][2])&(Entry_Msg_X_Data[2]))[1][(*&Game_setting).mode], 0, 18, Game01_Erase_msg);
+    tilemap_print_string_attr((*(const s16(*)[2][2])&(Entry_Msg_X_Data[2]))[0][Game_setting.mode], 0, 18, Game01_Erase_msg);
+    tilemap_print_string_attr((*(const s16(*)[2][2])&(Entry_Msg_X_Data[2]))[1][Game_setting.mode], 0, 18, Game01_Erase_msg);
     vital_cont_init();
     combo_cont_init();
     count_cont_init(0);
@@ -253,9 +294,9 @@ void Game11(void) {
     case 0:
         G_No2 += 1;
         SC_No[0] = 0;
-        (*&SC_No)[1] = 0;
-        (*&SC_No)[2] = 0;
-        (*&SC_No)[3] = 0;
+        SC_No[1] = 0;
+        SC_No[2] = 0;
+        SC_No[3] = 0;
         Stop_Combo = 0;
         Bonus_Type = 0;
         init_slow_flag();
@@ -294,10 +335,10 @@ void Game11(void) {
         break;
     case 3:
         G_No2 += 1;
-        (*&SC_No)[0] = 0;
-        (*&SC_No)[1] = 0;
-        (*&SC_No)[2] = 0;
-        (*&SC_No)[3] = 0;
+        SC_No[0] = 0;
+        SC_No[1] = 0;
+        SC_No[2] = 0;
+        SC_No[3] = 0;
         Stop_Combo = 0;
         Bonus_Type = 0;
         init_slow_flag();
@@ -590,7 +631,10 @@ void Game09(void) {
         init_slow_flag();
         effect_work_quick_init();
         clear_hit_queue();
-        pcon_rno[0] = pcon_rno[1] = pcon_rno[2] = pcon_rno[3] = 0;
+        {
+            s16 t = pcon_rno[1] = pcon_rno[2] = pcon_rno[3] = 0;
+            pcon_rno[0] = t;
+        }
         bbbs_com_initialize();
         ca_check_flag = 1;
         Bonus_Game_Work = 20;
@@ -802,7 +846,7 @@ void Game08(void) {
 
 
 void Game06(void) {
-    s16 xx;
+    s32 xx;
     Basic_Sub_Ex();
     if (Break_Into) {
         return;
@@ -1077,7 +1121,7 @@ s32 Ck_Coin(void) {
         }
         bg_vbl_trans_flag = 0;
         bookkeep_freeplay_count();
-        if ((*&Game_setting).set5) {
+        if (Game_setting.set5) {
             plw[0].wu.operator = 1;
             plw[1].wu.operator = 1;
             Operator_Status[0] = 1;

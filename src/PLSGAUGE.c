@@ -394,7 +394,7 @@ void dead_voice_request(void) {
 void dead_voice_request2(PLW* wk) {
     s16 secd1;
     s16 secd2;
-    s16 ks = 0;
+    s32 ks = 0;
     if (wk->metamorphose != 0 && Country != 8) {
         ks = 0x600;
     }

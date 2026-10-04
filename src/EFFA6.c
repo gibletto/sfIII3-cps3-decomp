@@ -23,6 +23,7 @@
 #include "next_cpu.h"
 #include "aboutspr.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 
 #pragma inline(check2_A6_shortcut)
 

@@ -15,11 +15,20 @@
 #include "romdata.h"
 #include "extern.h"
 #include "sys_test.h"
+#include "sys_test_2.h"
+#include "sys_test_2b.h"
+#include "sys_test_2c.h"
+#include "sys_test_3.h"
+#include "sys_test_4.h"
+#include "sys_test_5.h"
 #include "EFFB6.h"
 #include "fifo.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "aboutspr.h"
 #include "textsound.h"
+#include "textsound_2.h"
+#include "textsound_3.h"
 #include "efff0.h"
 
 
@@ -64,6 +73,7 @@ void effect_F0_move(WORK_Other* ewk) {
             ewk->wu.routine_no[0]++;
             for (i = 0; i < bg_w.scno; i++) {
                 Bg_Off_W(1 << i);
+                continue;
             }
             Bg_Off_W(8);
             switch (another_bg[ewk->wu.type]) {
@@ -114,7 +124,10 @@ void effect_F0_move(WORK_Other* ewk) {
             if (!another_bg[0] && !another_bg[1]) {
                 ewk->wu.routine_no[0] = 5;
                 sound_reg_level_set(0, 0);
-                another_bg_old[0] = another_bg_old[1] = 0;
+                {
+                    s8 t = another_bg_old[1] = 0;
+                    another_bg_old[0] = t;
+                }
                 effF0_scroll_set(ewk);
                 seraph_flag = 0;
                 break;
@@ -134,7 +147,10 @@ void effect_F0_move(WORK_Other* ewk) {
             break;
         }
     }
-    another_bg_old[0] = another_bg[0];
+    {
+        s8 t = another_bg[0];
+        another_bg_old[0] = t;
+    }
     another_bg_old[1] = another_bg[1];
 }
 

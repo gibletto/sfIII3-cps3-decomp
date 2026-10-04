@@ -14,7 +14,10 @@
 #include "romdata.h"
 #include "extern.h"
 #include "EFFJ0.h"
+#include "effj1.h"
+#include "effj2_code.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "EFFI9.h"
 
 

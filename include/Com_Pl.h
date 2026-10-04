@@ -37,7 +37,7 @@ void Com_Passive(PLW* wk);
 s32 Com_Rapid_Sub(PLW* wk, s16 Shot, s16* dir_step);
 void Com_VS_Shell(PLW* wk);
 void Com_Wait_Lie(PLW* wk);
-s32 Command_Attack_SP(PLW* wk, s8 Pl_Number, s16 Tech_Number, s16 Power_Level);
+s32 Command_Attack_SP(PLW* wk, s8 Pl_Number, s32 TN, s16 Power_Level);
 void Damage_1st(PLW* wk);
 void Damage_2nd(PLW* wk);
 void Damage_5th(PLW* wk);

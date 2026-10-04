@@ -14,10 +14,13 @@
 #include "extern.h"
 #include "ta_sub.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "aboutspr.h"
 #include "EFFECT.h"
-#include "CHARSET.h"
+#include "effect_2.h"
 #include "SE.h"
+#include "se_2.h"
+#include "se_3.h"
 #include "EFFC4.h"
 
 

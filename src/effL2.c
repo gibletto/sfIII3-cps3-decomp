@@ -15,8 +15,9 @@
 #include "extern.h"
 #include "aboutspr.h"
 #include "EFFECT.h"
-#include "CHARSET.h"
+#include "effect_2.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "effL2.h"
 #include "fighter.h"
 
@@ -35,13 +36,15 @@ void effect_L2_move(WORK_Other* ewk) {
         return;
     case 1:
         if (!Allow_a_battle_f && Conclusion_Flag == 1 && C_No0 >= 2) {
-            if (!(!Complete_Victory) && Conclusion_Flag != 0) {
-                ewk->wu.routine_no[0]++;
-                ewk->wu.old_rno[0] = 0;
-                if (Winner_id != ewk->master_id) {
-                    set_char_move_init(&ewk->wu, 0, 2);
-                } else {
-                    set_char_move_init(&ewk->wu, 0, 1);
+            if (!(!Complete_Victory)) {
+                if (Conclusion_Flag != 0) {
+                    ewk->wu.routine_no[0]++;
+                    ewk->wu.old_rno[0] = 0;
+                    if (Winner_id != ewk->master_id) {
+                        set_char_move_init(&ewk->wu, 0, 2);
+                    } else {
+                        set_char_move_init(&ewk->wu, 0, 1);
+                    }
                 }
             }
         } else if (!EXE_flag && !Game_pause) {

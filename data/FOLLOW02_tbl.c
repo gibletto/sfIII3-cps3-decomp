@@ -169,8 +169,15 @@ const u32 Follow_Menu_1st_Unit_Data_2[128] = {
     0, 0, 0x1010101, 0x1010101, 0x2020202, 0x2020202, 0x3030303, 0x3030303,
 };
 
-const u32 Follow_Menu_2nd_Unit_Data_2[8] = {
-    0x10203, 0x10203, 0x10203, 0x10203, (u32)Follow01_0000, (u32)Follow01_0001, (u32)Follow01_0002, (u32)Follow01_0003,
+const u32 Follow_Menu_2nd_Unit_Data_2[4] = {
+    0x10203, 0x10203, 0x10203, 0x10203,
+};
+
+void (*const Follow01_Tbl[4])() = {
+    Follow01_0000,
+    Follow01_0001,
+    Follow01_0002,
+    Follow01_0003,
 };
 
 void (*const Follow02_Tbl[4])() = {

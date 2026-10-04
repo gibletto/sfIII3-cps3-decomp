@@ -16,11 +16,12 @@
 #include "extern.h"
 #include "aboutspr.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "EFF00.h"
 #include "fighter.h"
 void effect_00_move(WORK_Other_JUDGE* judge) {
     WORK_Other_JUDGE* ewk = (WORK_Other_JUDGE*)judge;
-    s16 dip;
+    s32 dip;
     ewk->fade_cja.l = ewk->fade_cja.l + 0x2000;
     ewk->fade_cja.w = ewk->fade_cja.w & 3;
     switch (ewk->wu.routine_no[0]) {
@@ -29,13 +30,10 @@ void effect_00_move(WORK_Other_JUDGE* judge) {
         renewal_table_address(ewk, ewk->my_master);
         ewk->wu.cgromtype = 1;
         ewk->wu.my_col_mode = 0x4200;
-        ewk->wu.spr.disp_colcd = 0x203F;
-        ewk->wu.my_col_code = 0x203F;
-        ewk->wu.position_z = 16;
-        ewk->wu.my_priority = 16;
+        ewk->wu.my_col_code = ewk->wu.spr.disp_colcd = 0x203F;
+        ewk->wu.my_priority = ewk->wu.position_z = 16;
         ewk->wu.cg_number = 0x9000;
-        ewk->look_up_flag = 0;
-        ewk->curr_ja = 0;
+        ewk->curr_ja = ewk->look_up_flag = 0;
         break;
     case 1:
         if (ewk->wu.dead_f == 1 || ewk->my_master->waku_work_index != ewk->wu.myself) {

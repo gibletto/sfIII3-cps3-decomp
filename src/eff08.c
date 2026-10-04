@@ -16,9 +16,18 @@
 #include "extern.h"
 #include "bg000.h"
 #include "sys_test.h"
+#include "sys_test_2.h"
+#include "sys_test_2b.h"
+#include "sys_test_2c.h"
+#include "sys_test_3.h"
+#include "sys_test_4.h"
+#include "sys_test_5.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "PLS02.h"
 #include "sys_config.h"
+#include "sys_config_2.h"
+#include "sys_config_3.h"
 #include "eff08.h"
 
 

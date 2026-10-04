@@ -17,8 +17,10 @@
 #include "ta_sub.h"
 #include "sc_face.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "aboutspr.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "EFFB5.h"
 
 
@@ -99,7 +101,6 @@ void effect_B5_move(WORK_Other* ewk) {
 s16 * current_name_move(WORK_Other* ewk, NAME_WK* np)
 {
     s16 pat;
-    s16 r_no;
 
     if (np->index != ewk->wu.old_rno[2]) {
         return (s16*)(s32)np->index;
@@ -113,10 +114,9 @@ s16 * current_name_move(WORK_Other* ewk, NAME_WK* np)
         ewk->wu.old_rno[3] = np->code[np->index];
         return (s16*)0x3A;
     case 1:
-        r_no = np->r_no_0;
-        if (r_no >= 6) {
+        if (np->r_no_0 > 5) {
             ewk->wu.routine_no[0]++;
-            return (s16*)(s32)r_no;
+            return (s16*)(s32)np->r_no_0;
         }
         ewk->wu.old_rno[0]++;
         if (ewk->wu.old_rno[0] <= 16) {

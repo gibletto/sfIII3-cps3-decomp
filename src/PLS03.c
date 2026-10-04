@@ -14,9 +14,12 @@
 #include "romdata.h"
 #include "extern.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "Grade.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "CMD_MAIN.h"
+#include "cmd_main_2.h"
 #include "ta_sub.h"
 #include "PLS03.h"
 void hissatsu_setup_union(PLW* wk, s16 rno) {
@@ -36,7 +39,7 @@ void hissatsu_setup_union(PLW* wk, s16 rno) {
 s32 check_full_gauge_attack(PLW* wk, s8 always) {
     u16* conpane;
     s16 j;
-    s32 cusw;
+    s16 cusw;
     s32 exsw;
     if (wk->sa->mp != 1) {
         return 0;
@@ -271,7 +274,7 @@ s32 check_super_arts_attack(PLW* wk) {
     u16* conpane;
     s16 j;
     s16 cusw;
-    s16 exsw;
+    u16 exsw;
     if (wk->sa->ok != 1) {
         return 0;
     }
