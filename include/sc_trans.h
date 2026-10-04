@@ -21,7 +21,7 @@ u8* sc_chr_slot_trans(s8 ix, u16 code, s8 to_ram);
 void sc_ram_to_vram();
 void sc_ram_to_vram_opc(s8 ix, s8 dx, s8 dy, u16 attr);
 void score8x16_put(u16 x, u16 y, u16 attr, u16 code);
-void score16x24_put(s16 x, s16 y, s16 attr, s16 n);
+void score16x24_put(u16 x, u16 y, u16 attr, s32 n);
 void sc_celllist_put(u8 ix);
 void sc_celllist_put_scr(u8 ix);
 void sc_celllist_put_pos(u8 kind, u8 dx, u8 dy);
