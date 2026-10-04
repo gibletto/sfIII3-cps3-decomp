@@ -486,7 +486,7 @@ void score8x16_put(u16 x, u16 y, u16 attr, u16 code) {
 
 
 
-void score16x24_put(s16 x, s16 y, s16 attr, s16 n) {
+void score16x24_put(u16 x, u16 y, u16 attr, s32 n) {
     s32 code = n * 6 + 0x130;
     tilemap_put_cell(x, y, attr, code);
     tilemap_put_cell(x + 1, y, attr, code + 1);

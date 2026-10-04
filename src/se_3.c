@@ -40,9 +40,10 @@ void Stage_BGM(u16 Stage_Number, s32 Round_Number) {
 
 /* provisional name */
 void bgm_fade_in_stage(s16 x) {
-    if (!Keep_BGM_Flag) {
-        sound_fade_in_submit(stage_bgm_tbl[bg_w.stage], 0x8000 / x);
+    if (Keep_BGM_Flag) {
+        return;
     }
+    sound_fade_in_submit(stage_bgm_tbl[bg_w.stage], 0x8000 / x);
 }
 
 void Sound_SE(Code)

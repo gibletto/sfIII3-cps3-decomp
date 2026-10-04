@@ -510,10 +510,11 @@ void Game_Manage_5_1(void) {
 
 
 void Game_Manage_5_2(void) {
-    if (!request_message) {
-        C_No1++;
-        C_Timer = 30;
+    if (request_message) {
+        return;
     }
+    C_No1++;
+    C_Timer = 30;
 }
 
 
@@ -721,11 +722,12 @@ void Game_Manage_7_4(void) {
 
 
 void Game_Manage_7_5(void) {
-    if (!request_message) {
-        C_No1++;
-        C_Timer = 6;
-        Event_Judge_Gals = -1;
+    if (request_message) {
+        return;
     }
+    C_No1++;
+    C_Timer = 6;
+    Event_Judge_Gals = -1;
 }
 
 
@@ -1220,14 +1222,15 @@ void Game_Manage_12_0(void) {
 
 
 void Game_Manage_12_1(void) {
-    if (Next_Step != 0) {
-        C_No1++;
-        C_No2 = 0;
-        C_No3 = 0;
-        Allow_a_battle_f = 1;
-        load_char_eff_color(My_char[0], 0);
-        load_char_eff_color(My_char[1], 1);
+    if (Next_Step == 0) {
+        return;
     }
+    C_No1++;
+    C_No2 = 0;
+    C_No3 = 0;
+    Allow_a_battle_f = 1;
+    load_char_eff_color(My_char[0], 0);
+    load_char_eff_color(My_char[1], 1);
 }
 
 
