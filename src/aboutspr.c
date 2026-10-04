@@ -1249,7 +1249,7 @@ void shadow_drawing(WORK* wk, s16 y_ofs) {
         return;
     }
     size = wk->kage_char - get_kage_width(wk->xyz[1].disp.pos - wk->kage_hy);
-    if (size > 28) {
+    if (size >= 29) {
         size = 28;
     } else if (size < 0) {
         size = 0;

@@ -143,28 +143,27 @@ void quake_level_large(WORK_Other* ewk) {
         if (ewk->wu.mvxy.a[1].sp < 0) {
             ewk->wu.routine_no[2]++;
             set_char_move_init2(&ewk->wu, 0, ewk->wu.old_rno[6] + 1, 13, 0);
-            break;
         }
         break;
     case 2:
         char_move(&ewk->wu);
         add_x_sub(ewk);
         add_y_sub(ewk);
-        if (!(ewk->wu.xyz[1].disp.pos < ewk->wu.old_rno[2])) {
-            break;
+        if (ewk->wu.xyz[1].disp.pos < ewk->wu.old_rno[2]) {
+            ewk->wu.routine_no[2]++;
+            ewk->wu.xyz[1].disp.pos = ewk->wu.old_rno[2];
+            ewk->wu.xyz[1].disp.low = 0;
+            set_char_move_init(&ewk->wu, 0, ewk->wu.old_rno[6] + 3);
+            ewk->wu.old_rno[5] = 28;
+            ewk->wu.mvxy.d[0].sp = 0;
+            if (ewk->wu.old_rno[3]) {
+                ewk->wu.mvxy.d[1].sp = -0x6000;
+            } else {
+                ewk->wu.mvxy.d[1].sp = -0x8000;
+            }
+            cal_initial_speed(&ewk->wu, ewk->wu.old_rno[5], ewk->wu.old_rno[4], ewk->wu.old_rno[2]);
+            return;
         }
-        ewk->wu.routine_no[2]++;
-        ewk->wu.xyz[1].disp.pos = ewk->wu.old_rno[2];
-        ewk->wu.xyz[1].disp.low = 0;
-        set_char_move_init(&ewk->wu, 0, ewk->wu.old_rno[6] + 3);
-        ewk->wu.old_rno[5] = 28;
-        ewk->wu.mvxy.d[0].sp = 0;
-        if (ewk->wu.old_rno[3]) {
-            ewk->wu.mvxy.d[1].sp = -0x6000;
-        } else {
-            ewk->wu.mvxy.d[1].sp = -0x8000;
-        }
-        cal_initial_speed(&ewk->wu, ewk->wu.old_rno[5], ewk->wu.old_rno[4], ewk->wu.old_rno[2]);
         break;
     case 3:
         char_move(&ewk->wu);

@@ -224,7 +224,6 @@ void Att_PL17_AT2(PLW* wk) {
 
 
 void Att_PL17_TOKUSHUKOUDOU(PLW* wk) {
-    s32 t;
     wk->scr_pos_set_flag = 0;
     switch (wk->wu.routine_no[3]) {
     case 0:
@@ -257,11 +256,9 @@ void Att_PL17_TOKUSHUKOUDOU(PLW* wk) {
             break;
         case 30:
             wk->wu.routine_no[3]++;
-            if (wk->tk_success < 3) {
+            if (wk->tk_success <= 2) {
                 wk->tk_success++;
-                t = wk->py->recover;
-                t *= 110;
-                wk->py->recover = t / 100;
+                wk->py->recover = wk->py->recover * 110 / 100;
             }
             break;
         }
