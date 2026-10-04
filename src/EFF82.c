@@ -16,12 +16,19 @@
 #include "ta_sub.h"
 #include "CALDIR.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "aboutspr.h"
-#include "CHARSET.h"
 #include "SE.h"
+#include "se_2.h"
+#include "se_3.h"
 #include "bg_sub.h"
+#include "bg_sub_2.h"
+#include "bg_sub_3.h"
+#include "bg_sub_4.h"
+#include "bg_sub_5.h"
 #include "EFF82.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 
 void effect_82_move(WORK_Other* ewk) {
     WORK* oya_ptr = (WORK*)ewk->my_master;

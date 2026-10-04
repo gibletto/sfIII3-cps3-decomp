@@ -12,6 +12,7 @@
 #include "extern.h"
 #include "EFF72.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "ta_sub.h"
 #include "PLS02.h"
 #include "aboutspr.h"

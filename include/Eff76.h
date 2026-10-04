@@ -16,5 +16,8 @@ void Setup_Char_76(WORK_Other* ewk);
 void Setup_Pos_76(WORK_Other* ewk);
 s32 effect_76_init(s16 dir_old);
 void effect_76_move(WORK_Other* ewk);
+s32 chkNameAkuma();
+void Setup_Color_76();
+void Setup_Color_L1();
 
 #endif

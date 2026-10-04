@@ -11,10 +11,11 @@
 #include "romdata.h"
 #include "extern.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "ta_sub.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "aboutspr.h"
-#include "CHARSET.h"
 #include "EFF63.h"
 
 

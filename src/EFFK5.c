@@ -18,6 +18,7 @@
 #include "extern.h"
 #include "CALDIR.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "EFFK5.h"
 
 static void get_okuri_time(WORK* ewk, WORK* mwk, MVJ* mvj);

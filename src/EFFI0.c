@@ -16,11 +16,20 @@
 #include "extern.h"
 #include "PLS02.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "aboutspr.h"
 #include "EFFECT.h"
-#include "CHARSET.h"
+#include "effect_2.h"
 #include "EFFI0.h"
 #include "end_sub.h"
+#include "end_sub_2.h"
+#include "end_sub_3.h"
+#include "end_sub_4.h"
+#include "end_sub_5.h"
+#include "end_sub_6.h"
+#include "end_sub_7.h"
+#include "color3rd.h"
+#include "end_sub_8.h"
 #include "EFFI3.h"
 #include "EFF03.h"
 #include "EFFH9.h"
@@ -230,6 +239,7 @@ void effect_I0_init(WORK* wk, u8 num) {
         spx = koishi_speed_x[dix[i]][random_16_com() & 7];
         spy = koishi_speed_y[dix[i]][random_16_com() & 7];
         effI0_piece_set(wk, hsx, hsy, spx, spy, nxy);
+        continue;
     }
 }
 

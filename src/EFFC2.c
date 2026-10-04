@@ -18,11 +18,15 @@
 #include "romdata.h"
 #include "extern.h"
 #include "Win.h"
+#include "win_2.h"
+#include "continue.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "PLS03.h"
 #include "PLSGAUGE.h"
 #include "PLS02.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "PLMAIN.h"
 #include "aboutspr.h"
 #include "EFFC3.h"
@@ -30,9 +34,10 @@
 #include "HITCHECK.h"
 #include "EFFK2.h"
 #include "CHARID.h"
-#include "CHARSET.h"
 #include "EFFK4.h"
 #include "textsound.h"
+#include "textsound_2.h"
+#include "textsound_3.h"
 #include "EFFC2.h"
 
 
@@ -164,15 +169,19 @@ void effC2_main_process_first(WORK_Other* ewk, PLW* twk) {
     if (EXE_flag == 0 && Game_pause == 0) {
         switch (ewk->wu.direction + (twk->bs2_on_car * 2)) {
         case 0:
-            if (ewk->wu.routine_no[1] != 1 && ewk->wu.routine_no[2] != 0) {
-                ewk->wu.routine_no[2] = 0;
-                ewk->wu.routine_no[3] = 2;
+            if (ewk->wu.routine_no[1] != 1) {
+                if (ewk->wu.routine_no[2] != 0) {
+                    ewk->wu.routine_no[2] = 0;
+                    ewk->wu.routine_no[3] = 2;
+                }
             }
             break;
         case 3:
-            if (ewk->wu.routine_no[1] != 1 && ewk->wu.routine_no[2] != 1) {
-                ewk->wu.routine_no[2] = 1;
-                ewk->wu.routine_no[3] = 2;
+            if (ewk->wu.routine_no[1] != 1) {
+                if (ewk->wu.routine_no[2] != 1) {
+                    ewk->wu.routine_no[2] = 1;
+                    ewk->wu.routine_no[3] = 2;
+                }
             }
             break;
         case 1:
@@ -793,7 +802,10 @@ void set_bs2_floor(WORK_Other* wk) {
     dad = wk->wu.hosei_adrs[wk->wu.cg_ja.hoix].hos_box;
     bs2_floor[0] = wk->wu.xyz[0].disp.pos + dad[0];
     bs2_floor[1] = wk->wu.xyz[0].disp.pos + dad[0] + dad[1];
-    bs2_floor[2] = dad[2] + dad[3];
+    {
+        s16 t = dad[2] + dad[3];
+        bs2_floor[2] = t;
+    }
     dad = wk->wu.hosei_adrs[wk->wu.cg_ja.hoix + 1].hos_box;
     bs2_hosei[0] = wk->wu.xyz[0].disp.pos + dad[0];
     bs2_hosei[1] = wk->wu.xyz[0].disp.pos + dad[0] + dad[1];

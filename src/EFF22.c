@@ -12,8 +12,9 @@
 #include "extern.h"
 #include "ta_sub.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "aboutspr.h"
-#include "CHARSET.h"
+#include "CHARMOVE.h"
 #include "EFF22.h"
 
 

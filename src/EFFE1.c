@@ -14,7 +14,8 @@
 #include "extern.h"
 #include "aboutspr.h"
 #include "EFFECT.h"
-#include "CHARSET.h"
+#include "effect_2.h"
+#include "CHARMOVE.h"
 #include "EFFE1.h"
 
 

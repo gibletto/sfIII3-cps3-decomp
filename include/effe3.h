@@ -4,5 +4,6 @@
 #include "structs.h"
 
 s32 effect_E3_move(WORK_Other* ewk);
+void effE3_scroll_set(WORK_Other* ewk);
 
 #endif

@@ -11,7 +11,6 @@
 #include "work.h"
 #include "romdata.h"
 #include "extern.h"
-#include "Ck_Pass.h"
 #include "Com_Sub.h"
 #include "ACTIVE00.h"
 #include "active01.h"
@@ -33,10 +32,20 @@
 #include "active17.h"
 #include "active18.h"
 #include "active19.h"
+#include "active20.h"
+#include "FOLLOW01.h"
 #include "FOLLOW02.h"
 #include "fifo.h"
 #include "sys_test.h"
+#include "sys_test_2.h"
+#include "sys_test_2b.h"
+#include "sys_test_2c.h"
+#include "sys_test_3.h"
+#include "sys_test_4.h"
+#include "sys_test_5.h"
 #include "textsound.h"
+#include "textsound_2.h"
+#include "textsound_3.h"
 #include "pass00.h"
 #include "PASS01.h"
 #include "PASS02.h"
@@ -69,15 +78,31 @@
 #include "SHELL13.h"
 #include "SHELL14.h"
 #include "Entry.h"
+#include "entry_2.h"
 #include "CMD_MAIN.h"
+#include "cmd_main_2.h"
 #include "sys_config.h"
+#include "sys_config_2.h"
+#include "sys_config_3.h"
 #include "PLS02.h"
 #include "SE.h"
+#include "se_2.h"
+#include "se_3.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "aboutspr.h"
 #include "end_sub.h"
+#include "end_sub_2.h"
+#include "end_sub_3.h"
+#include "end_sub_4.h"
+#include "end_sub_5.h"
+#include "end_sub_6.h"
+#include "end_sub_7.h"
+#include "color3rd.h"
+#include "end_sub_8.h"
 #include "sc_trans.h"
 #include "Manage.h"
+#include "manage_2.h"
 #include "bg0001.h"
 #include "Com_Pl.h"
 #include "cps3.h"
@@ -167,7 +192,10 @@ void Com_Initialize(PLW* wk) {
 
 void Com_Free(PLW* wk) {
     s16 xx;
-    Lever_Buff[wk->wu.id] = Lever_LR[wk->wu.id];
+    {
+        u16 t = Lever_LR[wk->wu.id];
+        Lever_Buff[wk->wu.id] = t;
+    }
     if (Check_Damage(wk)) {
         return;
     }
@@ -286,7 +314,10 @@ void Com_Guard(PLW* wk) {
     Passive_Mode = 4;
     if (Ck_Passive_Term(wk)) {
         Select_Passive(wk);
-        Counter_Attack[wk->wu.id] = Counter_Attack[wk->wu.id] | 2;
+        {
+            s32 t = Counter_Attack[wk->wu.id] | 2;
+            Counter_Attack[wk->wu.id] = t;
+        }
         return;
     }
     if (!Check_Counter_Attack(wk)) {
@@ -330,7 +361,7 @@ s32 Check_Counter_Attack(PLW* wk) {
 
 
 s32 Check_Hamari(PLW* wk) {
-    u8 tech;
+    s16 tech;
     s16 Rnd;
     s16 limit;
     s16 xx;
@@ -562,7 +593,7 @@ void Com_Damage(PLW* wk) {
 
 void Damage_1st(PLW* wk) {
     u8 Lv;
-    u8 Rnd;
+    u16 Rnd;
     u8 xx;
     WORK* em;
     Lever_Buff[wk->wu.id] = Setup_Guard_Lever(wk, 1);
@@ -1344,12 +1375,13 @@ void Com_Wait_Lie(PLW* wk) {
 
 
 
-s32 Command_Attack_SP(PLW* wk, s8 Pl_Number, s16 Tech_Number, s16 Power_Level) {
+s32 Command_Attack_SP(PLW* wk, s8 Pl_Number, s32 TN, s16 Power_Level) {
+    s32 Tech_Number = TN;
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
         CP_Index[wk->wu.id][1]++;
         dash_flag_clear(wk->wu.id);
-        Tech_Address[wk->wu.id] = player_cmd[Pl_Number][Tech_Number & 0xFFU];
+        Tech_Address[wk->wu.id] = player_cmd[Pl_Number][Tech_Number & 0xFF];
         Tech_Index[wk->wu.id] = 0xC;
         Check_Rapid(wk, Tech_Number);
         Rapid_Index[wk->wu.id] = 0x90;
@@ -1376,7 +1408,10 @@ s32 Command_Attack_SP(PLW* wk, s8 Pl_Number, s16 Tech_Number, s16 Power_Level) {
         break;
     case 2:
         if (wk->wu.cg_type == 64) {
-            Lever_Buff[wk->wu.id] = Lever_Pool[wk->wu.id];
+            {
+                u16 t = Lever_Pool[wk->wu.id];
+                Lever_Buff[wk->wu.id] = t;
+            }
             CP_Index[wk->wu.id][1]++;
         }
     default:
@@ -1387,8 +1422,6 @@ s32 Command_Attack_SP(PLW* wk, s8 Pl_Number, s16 Tech_Number, s16 Power_Level) {
     }
     return 0;
 }
-
-
 
 void Next_Be_Free(wk)
 PLW* wk;

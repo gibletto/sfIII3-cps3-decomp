@@ -8,7 +8,8 @@
  * This character has only one: Att_PL10_TOKUSHUKOUDOU, the personal action (taunt). Its animation
  * markers add to the super art gauge, raise the personal-action strike and throw bonuses
  * (tk_dageki, tk_nage, capped at 10 and 2) and score the personal action for grading.
- * Att_PL10_MACH_SLIDE is an earlier, unused slide special.
+ * Att_PL10_MACH_SLIDE is an earlier, unused slide special; Att_PL10_MACH_SLIDE2 is a second slide
+ * special that slides by mvxy speed and reloads or resets the data once the opponent is reached.
  */
 
 #include "structs.h"
@@ -17,9 +18,9 @@
 #include "extern.h"
 #include "PLSGAUGE.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "Grade.h"
 #include "PLPAT.h"
-#include "CHARSET.h"
 #include "plpat10.h"
 #include "PLS02.h"
 
@@ -98,8 +99,10 @@ void Att_PL10_MACH_SLIDE(PLW* wk) {
         }
         wk->wu.xyz[1].cal += wk->wu.mvxy.a[1].sp;
         wk->wu.rl_flag = wk->wu.rl_waza;
-        if (wk->wu.mvxy.a[0].sp && wk->old_pos_data[0] == wk->old_pos_data[1]) {
-            char_move_z(&wk->wu);
+        if (wk->wu.mvxy.a[0].sp) {
+            if (wk->old_pos_data[0] == wk->old_pos_data[1]) {
+                char_move_z(&wk->wu);
+            }
         }
         switch (wk->wu.cg_type) {
         case 30:
@@ -111,6 +114,59 @@ void Att_PL10_MACH_SLIDE(PLW* wk) {
             reset_mvxy_data(&wk->wu);
             wk->wu.cg_type = 0;
             break;
+        }
+        break;
+    }
+}
+
+
+void Att_PL10_MACH_SLIDE2(PLW* wk) {
+    switch (wk->wu.routine_no[3]) {
+    case 0:
+        wk->wu.routine_no[3]++;
+        hoken_muriyari_chakuchi(wk);
+        wk->wu.rl_flag = wk->wu.rl_waza;
+        wk->rl_save = wk->wu.rl_flag;
+        reset_mvxy_data((WORK*)wk);
+        wk->wu.mvxy.index = wk->as->r_no;
+        set_char_move_init((WORK*)wk, 5, wk->as->char_ix);
+        break;
+    case 1:
+        char_move((WORK*)wk);
+        if (wk->wu.cg_type == 30) {
+            setup_mvxy_data((WORK*)wk, wk->wu.mvxy.index);
+            wk->wu.mvxy.a[1].sp = wk->wu.mvxy.d[1].sp = wk->wu.mvxy.kop[1] = 0;
+            wk->wu.mvxy.index++;
+            wk->wu.routine_no[3] = 3;
+            wk->wu.cg_type = 0;
+        }
+        if (wk->wu.routine_no[3] != 1) {
+            add_mvxy_speed((WORK*)wk);
+        }
+        break;
+    case 3:
+        char_move((WORK*)wk);
+        cal_mvxy_speed((WORK*)wk);
+        if (wk->rl_save) {
+            wk->wu.xyz[0].cal += wk->wu.mvxy.a[0].sp;
+        } else {
+            wk->wu.xyz[0].cal -= wk->wu.mvxy.a[0].sp;
+        }
+        wk->wu.xyz[1].cal += wk->wu.mvxy.a[1].sp;
+        if (!wk->micchaku_flag) {
+            break;
+        }
+        char_move_z((WORK*)wk);
+        if (wk->wu.cg_type == 21) {
+            reset_mvxy_data((WORK*)wk);
+            wk->wu.cg_type = 0;
+            wk->wu.routine_no[3] = 1;
+        }
+        if (wk->wu.cg_type == 30) {
+            setup_mvxy_data((WORK*)wk, wk->wu.mvxy.index);
+            wk->wu.mvxy.a[1].sp = wk->wu.mvxy.d[1].sp = wk->wu.mvxy.kop[1] = 0;
+            wk->wu.mvxy.index++;
+            wk->wu.cg_type = 0;
         }
         break;
     }

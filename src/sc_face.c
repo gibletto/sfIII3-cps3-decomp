@@ -18,6 +18,8 @@
 #include "sc_trans.h"
 #include "Grade.h"
 #include "sys_config.h"
+#include "sys_config_2.h"
+#include "sys_config_3.h"
 #include "sc_face.h"
 #include "cps3.h"
 #include "fighter.h"
@@ -77,14 +79,14 @@ void win_mark_put(s16 pl, u16 n, s16 attr) {
     sc_chr_trans(2);
     e = &vmark_tbl[pl * 6];
     tilemap_put_cell(e[0] + DE_X[3], e[1], attr, e[2]);
-    tilemap_put_cell(e[3] + (*&DE_X)[3], e[4], attr, e[5]);
+    tilemap_put_cell(e[3] + DE_X[3], e[4], attr, e[5]);
 }
 
 
 
 /* provisional name */
 void win_mark_ram_clear(void) {
-    s32 i;
+    u16 i;
     u8* dst = &sc_chr_ram[0x200];
     volatile s32 blank = 0xBDC0;
     for (i = 0; i < 8; i++) {
@@ -112,7 +114,7 @@ void win_mark_find_put(s16 x, s16 y, s16 pl) {
 
 
 /* provisional name */
-s16 win_mark_find(s16 pl) {
+s32 win_mark_find(s16 pl) {
     s16 i;
     for (i = 0; i < Battle_Round[Play_Type] + 1; i++) {
         if (win_type[pl][i] == 3) {
@@ -167,7 +169,7 @@ void winner_name_put(s8 ch) {
     }
     sc_chr_block_trans(0x1588, 0x1C0, 13, 4);
     scfont_sqput(DE_X[3] + p->x, p->y, p->w, p->h, 40, 0x180);
-    scfont_sqput(p->x2 + (*&DE_X)[3], p->y2, 13, 4, 40, 0x1C0);
+    scfont_sqput(p->x2 + DE_X[3], p->y2, 13, 4, 40, 0x1C0);
 }
 
 

@@ -1,22 +1,26 @@
 /*
- * EFFA3.C  Effects A3, A4 and A5: text-layer cell animations and the select timer
+ * EFFA3.C  Effects A3 and A4: text-layer cell animations
  *
  * Effect A3 animates blocks of text-layer cells: effect_A3_init takes a position, size, step,
  * repeat count and layout and a type whose step data come from EFF91_Init_Data / EFF91_Step_Data.
  * effA3_cell_put writes each frame's code/attribute pairs with tilemap_put_cell and moves the
  * draw position; at the end effA3_area_clear clears the rectangle from EFFA3_Area_Data.
  * Effect A4 calls effect_89_init 21 times, two columns apart, starting later for player 2.
- * Effect A5 (effect_A5_entry, started by sel_pl.c and next_cpu.c) is the select-screen timer:
- * it counts Select_Timer down in BCD every 50 frames, holds while Time_Stop or Break_Into is set,
- * and sets Time_Over 30 frames after the timer reaches zero.
  */
 
 #include "structs.h"
 #include "work.h"
 #include "romdata.h"
 #include "extern.h"
-#include "Eff93.h"
+#include "eff87.h"
+#include "eff88.h"
+#include "eff89.h"
+#include "eff90.h"
+#include "eff91.h"
+#include "eff92_code.h"
+#include "eff93.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "meta_col.h"
 #include "sc_trans.h"
 #include "EFFA3.h"
@@ -162,109 +166,3 @@ s32 effect_A4_init(s16 PL_id) {
 }
 
 
-void effect_A5_move(WORK_Other* ewk) {
-    if (Break_Into) {
-        return;
-    }
-    switch (ewk->wu.routine_no[0]) {
-    case 0:
-        if (Time_Stop == 0) {
-            ewk->wu.routine_no[0]++;
-        }
-        break;
-    case 1:
-        if (!Check_Sleep_A5(ewk)) {
-            break;
-        }
-        if (--Unit_Of_Timer) {
-            break;
-        }
-        Unit_Of_Timer = 50;
-        bcdext = 0;
-        if ((Select_Timer = sbcd(1, Select_Timer)) == 0) {
-            ewk->wu.routine_no[0]++;
-            ewk->wu.dir_timer = 30;
-        }
-        break;
-    case 2:
-        if (!Check_Sleep_A5(ewk)) {
-            break;
-        }
-        if (Select_Timer) {
-            ewk->wu.routine_no[0] = 1;
-            Unit_Of_Timer = 50;
-        } else if (--ewk->wu.dir_timer == 0) {
-            Time_Over = 1;
-            ewk->wu.routine_no[0]++;
-        }
-        break;
-    case 3:
-        if (!Check_Sleep_A5(ewk)) {
-            break;
-        }
-        Time_Over = 1;
-        if (Select_Timer) {
-            ewk->wu.routine_no[0] = 1;
-            Unit_Of_Timer = 50;
-        }
-        break;
-    default:
-        push_effect_work(&ewk->wu);
-        break;
-    }
-}
-
-
-s32 Check_Sleep_A5(WORK_Other* ewk) {
-    if (Time_Stop == 2) {
-        ewk->wu.routine_no[0] = 0;
-    }
-    return 1;
-}
-
-/* provisional name */
-u32 effect_A5_entry(void)
-{
-    WORK_Other* ewk;
-    s16 ix;
-
-    if ((ix = pull_effect_work(4)) == -1) {
-        return -1;
-    }
-    ewk = (WORK_Other*)frw[ix];
-    ewk->wu.be_flag = 1;
-    ewk->wu.id = 105;
-    return 0;
-}
-
-
-
-/* provisional name */
-s32 effA5_shot_pressed(void) {
-    u16 sw;
-    if (Player_id) {
-        sw = p2sw_0;
-    } else {
-        sw = p1sw_0;
-    }
-    if (sw & 0x3F0) {
-        return 1;
-    }
-    return 0;
-}
-
-
-
-/* provisional name */
-s32 effA5_start_pressed(void) {
-    u16 sw;
-    if (Player_id) {
-        sw = p2sw_0;
-    } else {
-        sw = p1sw_0;
-    }
-    if (sw & 0x1000) {
-        return 1;
-    }
-    return 0;
-}

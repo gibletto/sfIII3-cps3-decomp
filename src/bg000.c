@@ -17,13 +17,33 @@
 #include "romdata.h"
 #include "extern.h"
 #include "bg_sub.h"
+#include "bg_sub_2.h"
+#include "bg_sub_3.h"
+#include "bg_sub_4.h"
+#include "bg_sub_5.h"
 #include "sys_test.h"
+#include "sys_test_2.h"
+#include "sys_test_2b.h"
+#include "sys_test_2c.h"
+#include "sys_test_3.h"
+#include "sys_test_4.h"
+#include "sys_test_5.h"
 #include "SYS_sub.h"
 #include "bg040.h"
 #include "end_sub.h"
+#include "end_sub_2.h"
+#include "end_sub_3.h"
+#include "end_sub_4.h"
+#include "end_sub_5.h"
+#include "end_sub_6.h"
+#include "end_sub_7.h"
+#include "color3rd.h"
+#include "end_sub_8.h"
 #include "EFF61.h"
 #include "EFF78.h"
 #include "SE.h"
+#include "se_2.h"
+#include "se_3.h"
 #include "fifo.h"
 #include "bg120.h"
 #include "eff05.h"
@@ -35,10 +55,13 @@
 #include "appear.h"
 #include "aboutspr.h"
 #include "sys_config.h"
+#include "sys_config_2.h"
+#include "sys_config_3.h"
 #include "Com_Pl.h"
 #include "ta_sub.h"
 #include "bg000.h"
 #include "fighter.h"
+#include "ta_sub2.h"
 #include "tate00.h"
 
 #pragma inline(bg0101, bg0102)
@@ -66,6 +89,7 @@ void Bg_Family_Set_2(void) {
         a = -x & 0x3FF;
         b = (0x300 - (y & 0x3FF)) & 0x3FF;
         Family_Set_W(i + 1, a, b);
+        continue;
     }
 }
 
@@ -110,7 +134,7 @@ void ake_Family_Set2(void) {
 
 
 
-void bg_pos_hosei_sub2(s16 bg_no) {
+void bg_pos_hosei_sub2(s32 bg_no) {
     u16 pos;
     u16 pos2;
     u16 work;
@@ -134,7 +158,7 @@ void bg_pos_hosei_sub2(s16 bg_no) {
 
 
 
-void bg_pos_hosei_sub3(s16 bg_no) {
+void bg_pos_hosei_sub3(s32 bg_no) {
     s32 pos;
     s32 pos2;
     volatile s16 work;
@@ -339,8 +363,8 @@ void bg_cell_write_yflip(s16 bg, s32 ofs, s32 cell, u32 src, s16 u5, s16 attr) {
 
 /* provisional name */
 void blit_16x16_xyflip(u16* src, s16 code, u16* dst, s16 attr) {
-    s16 i;
-    s16 j;
+    u16 i;
+    u16 j;
     u16* s;
     u16* d;
     for (i = 0; i < 16; i++) {
@@ -386,7 +410,7 @@ void bg_cell_fill(s16 bg, s16 attr) {
 
 /* provisional name */
 void bg_scr_write(void) {
-    s16 attr = bg_attr_tbl[bg_w.bg_index] + bg_attr_add_tbl[bg_w.bg_index];
+    s32 attr = bg_attr_tbl[bg_w.bg_index] + bg_attr_add_tbl[bg_w.bg_index];
     s16 set;
     HUD_CELL** cells;
     HUD_CELL* c;
@@ -399,7 +423,9 @@ void bg_scr_write(void) {
         for (j = 0; j < bg_cell_cnt_tbl[bg_w.bg_index][i]; j++) {
             c = &cells[i][j];
             bg_cell_write(i, c->ofs, c->cell, bg_cg_src_tbl[bg_w.bg_index], 0, attr);
+            continue;
         }
+        continue;
     }
 }
 
@@ -489,6 +515,7 @@ void bg_etc_scr_write(s16 n) {
             bg_cell_write(i, t->ofs, t->cell, etc_bg_cg_src_tbl[n], 0, attr);
             j++;
         }
+        continue;
     }
 }
 
@@ -505,7 +532,9 @@ void bg_scr_clear_all(void) {
             for (k = 0; k < 4; k++) {
                 blit_16x16_tile((u16*)bg_cg_src_tbl[bg_w.bg_index], bg_w.scroll_cg_adr >> 7, (u16*)(dst + k * 0x40), 0);
             }
+            continue;
         }
+        continue;
     }
 }
 
@@ -688,7 +717,7 @@ s16 capcom_logo_color_step(void) {
 
 
 /* provisional name */
-s32 capcom_logo_anim(void) {
+s16 capcom_logo_anim(void) {
     s32 ret = 0;
     switch (bg_w.bgw[1].r_no_1) {
     case 0:
@@ -806,7 +835,7 @@ void bg_initialize(void) {
     load_bg_color(((s16)bg_palette_no_tbl[bg_w.bg_index]));
     polygon2d_submit_line(gfx->prep, 0, 0, 3);
     polygon2d_submit_line(gfx->src, bg_w.scroll_cg_adr, gfx->size, 1);
-    bg_w.pos_offset = ((*&Game_setting).mode) ? 0xF8 : 0xC0;
+    bg_w.pos_offset = (Game_setting.mode) ? 0xF8 : 0xC0;
     for (i = 0; i < 7; i++) {
         bg_w.bgw[i].pos_x_work = bg_w.bgw[i].pos_y_work = 0;
         bg_w.bgw[i].zuubun = 0;
@@ -867,7 +896,7 @@ void bg_initialize(void) {
         bg_w.bgw[i].r_limit2 = *ptr++;
         bg_w.bgw[i].y_limit = *ptr++;
         bg_w.bgw[i].y_limit2 = *ptr;
-        if (!(*&Game_setting).mode) {
+        if (!Game_setting.mode) {
             bg_w.bgw[i].r_limit2 = bg_w.bgw[i].r_limit;
             bg_w.bgw[i].l_limit2 = bg_w.bgw[i].l_limit;
         }
@@ -944,7 +973,7 @@ void bg_etc_write(s16 type) {
     gfx = &etc_bg_gfx_tbl[type];
     polygon2d_submit_line(gfx->prep, 0, 0, 3);
     polygon2d_submit_line(gfx->src, bg_w.scroll_cg_adr, gfx->size, (u8)gfx->mode);
-    if ((*&Game_setting).mode) {
+    if (Game_setting.mode) {
         bg_w.pos_offset = 0xF8;
     } else {
         bg_w.pos_offset = 0xC0;
@@ -1006,7 +1035,7 @@ void bg_etc_write(s16 type) {
         bg_w.bgw[i].frame_deff = 64;
         bg_w.bgw[i].max_x_limit = bg_w.bgw[i].speed_x * bg_w.max_x;
     }
-    if (type == 1 && (*&Game_setting).mode) {
+    if (type == 1 && Game_setting.mode) {
         bg_w.bgw[0].xy[0].cal = 0x2000000;
         bg_w.bgw[0].wxy[0].cal = 0x2000000;
         bg_w.bgw[0].pos_x_work = 0x200;

@@ -14,19 +14,36 @@
 #include "romdata.h"
 #include "extern.h"
 #include "Manage.h"
+#include "manage_2.h"
 #include "end_sub.h"
-#include "PLCNTAPP.h"
+#include "end_sub_2.h"
+#include "end_sub_3.h"
+#include "end_sub_4.h"
+#include "end_sub_5.h"
+#include "end_sub_6.h"
+#include "end_sub_7.h"
+#include "color3rd.h"
+#include "end_sub_8.h"
 #include "PLCNTDAT.h"
+#include "plcntdat_2.h"
 #include "PLMAIN2.h"
 #include "PLCNTSET.h"
+#include "plcntset_2.h"
 #include "PLS02.h"
 #include "aboutspr.h"
 #include "bg_sub.h"
+#include "bg_sub_2.h"
+#include "bg_sub_3.h"
+#include "bg_sub_4.h"
+#include "bg_sub_5.h"
 #include "HITCHECK.h"
 #include "ta_sub.h"
+#include "CMD_MAIN.h"
+#include "cmd_main_2.h"
 #include "PLS01.h"
 #include "PLPDM.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "PLCNT2.h"
 
 void move_P1_move_P2_bonus(s16* field_work);
@@ -59,6 +76,7 @@ s32 Player_control_bonus(void) {
     for (i = 47; i >= 1; i--) {
         zanzou_table[0][i] = zanzou_table[0][i - 1];
         zanzou_table[1][i] = zanzou_table[1][i - 1];
+        continue;
     }
     for (i = 0; i < 2; i++) {
         zanzou_table[i]->pos_x = plw[i].wu.position_x;
@@ -70,6 +88,7 @@ s32 Player_control_bonus(void) {
         zanzou_table[i]->flip = plw[i].wu.rl_flag;
         zanzou_table[i]->cg_flp = plw[i].wu.cg_flip;
         zanzou_table[i]->kowaza = plw[i].wu.kind_of_waza;
+        continue;
     }
     if (pl_eff_disp_stop == 0) {
         sort_push_request(&plw[0]);
@@ -211,8 +230,10 @@ s32 footwork_check_bns(char pl)
     if (Bonus_Game_Flag == 21 && plw[pl].wu.operator == 0) {
         return 1;
     }
-    if (plw[pl].wu.routine_no[1] == 0 && plw[pl].wu.routine_no[2] == 1) {
-        result = 1;
+    if (plw[pl].wu.routine_no[1] == 0) {
+        if (plw[pl].wu.routine_no[2] == 1) {
+            result = 1;
+        }
     }
     return result;
 }

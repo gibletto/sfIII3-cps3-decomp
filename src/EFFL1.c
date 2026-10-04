@@ -19,8 +19,9 @@
 #include "romdata.h"
 #include "extern.h"
 #include "effM5.h"
-#include "Eff76_COLOR.h"
+#include "Eff76.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "Grade.h"
 #include "aboutspr.h"
 #include "EFFL1.h"
@@ -121,6 +122,7 @@ void effL1_w_grade_init(WORK_Other_CONN* ewk) {
             break;
         }
         effect_M3_init(ewk, i);
+        continue;
     }
     ewk->num_of_conn = ewk->conn[i].chr;
     ewk->wu.position_x -= 384;
@@ -185,7 +187,7 @@ void effL1_w_graph_init(WORK_Other_CONN* ewk) {
 
 
 void effL1_k_graph_init(WORK_Other_CONN* ewk) {
-    s16 i;
+    s32 i;
     if (kakushi_op) {
         ewk->wu.direction = grade_get_my_point_percentage((s32)kakushi_ix, (s16)(ewk->wu.type - 16));
     } else {
@@ -317,7 +319,7 @@ void effL1_f_mk_spp_init(WORK_Other_CONN* ewk) {
 
 
 s32 effL1_f_mk_all_init(WORK_Other_CONN* ewk) {
-    s16 i;
+    s32 i;
     s32 rc;
     ewk->num_of_conn = 6;
     for (i = 0; i < 6; i++) {

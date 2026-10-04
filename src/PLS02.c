@@ -136,14 +136,12 @@ void cal_mvxy_speed(WORK* wk) {
             if (wk->mvxy.a[i].sp >= 0) {
                 wk->mvxy.a[i].sp += wk->mvxy.d[i].sp;
                 if (wk->mvxy.a[i].sp < 0) {
-                    wk->mvxy.d[i].sp = 0;
-                    wk->mvxy.a[i].sp = 0;
+                    wk->mvxy.a[i].sp = wk->mvxy.d[i].sp = 0;
                 }
             } else {
                 wk->mvxy.a[i].sp += wk->mvxy.d[i].sp;
                 if (wk->mvxy.a[i].sp >= 0) {
-                    wk->mvxy.d[i].sp = 0;
-                    wk->mvxy.a[i].sp = 0;
+                    wk->mvxy.a[i].sp = wk->mvxy.d[i].sp = 0;
                 }
             }
             break;
@@ -588,7 +586,7 @@ s32 get_guard_direction(WORK* as, WORK* ds) {
 
 
 
-s16 cal_attdir(WORK* wk) {
+s32 cal_attdir(WORK* wk) {
     s16 resdir = wk->att.dir;
     if (wk->rl_flag) {
         resdir = dir16_rl_conv[resdir];

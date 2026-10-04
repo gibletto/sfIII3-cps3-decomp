@@ -4,7 +4,7 @@
 #include "structs.h"
 
 void Ending_init(void);
-s8 Ending_main(s16 pl_num);
+s32 Ending_main(s16 pl_num);
 void op_111_move(void);
 void op_112_move(void);
 void op_113_move(void);

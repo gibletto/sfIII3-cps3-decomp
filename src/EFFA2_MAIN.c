@@ -15,6 +15,7 @@
 #include "SYS_sub2.h"
 #include "EffA2.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "sc_trans.h"
 #include "EFFA2_MAIN.h"
 

@@ -14,8 +14,18 @@
 #include "meta_col.h"
 #include "eeprom.h"
 #include "sys_config.h"
+#include "sys_config_2.h"
+#include "sys_config_3.h"
 #include "textsound.h"
+#include "textsound_2.h"
+#include "textsound_3.h"
 #include "sys_test.h"
+#include "sys_test_2.h"
+#include "sys_test_2b.h"
+#include "sys_test_2c.h"
+#include "sys_test_3.h"
+#include "sys_test_4.h"
+#include "sys_test_5.h"
 #include "cps3.h"
 
 
@@ -39,7 +49,7 @@ void coin_work_init(void) {
 
 
 /* provisional name */
-u8 coin_chute_check(s8 n, s32 keep) {
+s8 coin_chute_check(s8 n, s32 keep) {
     COINCHUTE* cc;
     void* unused0;
     void* unused1;

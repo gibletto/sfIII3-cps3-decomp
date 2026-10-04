@@ -17,10 +17,13 @@
 #include "extern.h"
 #include "ta_sub.h"
 #include "CHARMOVE.h"
-#include "EFF58.h"
+#include "charmove_2.h"
+#include "eff56.h"
+#include "eff57.h"
+#include "eff58.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "aboutspr.h"
-#include "CHARSET.h"
 #include "eff35.h"
 
 

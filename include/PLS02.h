@@ -10,7 +10,7 @@ void add_mvxy_speed_direct(WORK* wk, s16 sx, s16 sy);
 void add_mvxy_speed_exp(WORK* wk, s16 dvp);
 void add_mvxy_speed_no_use_rl(WORK* wk);
 void add_to_mvxy_data();
-s16 cal_attdir(WORK* wk);
+s32 cal_attdir(WORK* wk);
 void cal_mvxy_speed(WORK* wk);
 void check_body_touch(void);
 void check_body_touch2(void);

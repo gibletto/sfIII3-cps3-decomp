@@ -11,7 +11,6 @@
 #include "work.h"
 #include "romdata.h"
 #include "extern.h"
-#include "Ck_Pass.h"
 #include "Com_Sub.h"
 #include "ACTIVE00.h"
 #include "active01.h"
@@ -33,10 +32,20 @@
 #include "active17.h"
 #include "active18.h"
 #include "active19.h"
+#include "active20.h"
+#include "FOLLOW01.h"
 #include "FOLLOW02.h"
 #include "fifo.h"
 #include "sys_test.h"
+#include "sys_test_2.h"
+#include "sys_test_2b.h"
+#include "sys_test_2c.h"
+#include "sys_test_3.h"
+#include "sys_test_4.h"
+#include "sys_test_5.h"
 #include "textsound.h"
+#include "textsound_2.h"
+#include "textsound_3.h"
 #include "pass00.h"
 #include "PASS01.h"
 #include "PASS02.h"
@@ -69,15 +78,31 @@
 #include "SHELL13.h"
 #include "SHELL14.h"
 #include "Entry.h"
+#include "entry_2.h"
 #include "CMD_MAIN.h"
+#include "cmd_main_2.h"
 #include "sys_config.h"
+#include "sys_config_2.h"
+#include "sys_config_3.h"
 #include "PLS02.h"
 #include "SE.h"
+#include "se_2.h"
+#include "se_3.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "aboutspr.h"
 #include "end_sub.h"
+#include "end_sub_2.h"
+#include "end_sub_3.h"
+#include "end_sub_4.h"
+#include "end_sub_5.h"
+#include "end_sub_6.h"
+#include "end_sub_7.h"
+#include "color3rd.h"
+#include "end_sub_8.h"
 #include "sc_trans.h"
 #include "Manage.h"
+#include "manage_2.h"
 #include "bg0001.h"
 #include "Com_Pl.h"
 #include "cps3.h"
@@ -141,7 +166,7 @@ void text_clear_task_exit(void) {
 void mode_init_task(void) {
     s16 wait;
     u8 region;
-    s16 color;
+    s32 color;
 
     region_setup();
     CC_Type = region_cc_type_tbl[Country - 1];
@@ -182,7 +207,10 @@ void mode_init_task(void) {
     No_Death = 0;
     Get_Demo_Index = Request_Break[0] = Request_Break[1] = 0;
     Battle_Round[0] = Game_setting.set4 & 3;
-    Battle_Round[1] = (Game_setting.set4 / 16) & 3;
+    {
+        u8 t = (Game_setting.set4 / 16) & 3;
+        Battle_Round[1] = t;
+    }
     G_No0 = G_No1 = G_No2 = G_No3 = 0;
     E_No0 = E_No1 = E_No2 = E_No3 = 0;
     S_No = S_Sub_No = S_Sub2_No = S_Sub3_No = 0;

@@ -9,7 +9,7 @@ s32 Check_Boss(s16 PL_id);
 void Correct_Control_Time(s16 PL_id);
 u32 Deley_Shot_Sub(s16 PL_id);
 void Sel_PL_4th(void);
-u16 Disposal_Of_Diagonal(u32 sw_arg);
+s32 Disposal_Of_Diagonal(u32 sw_arg);
 void Exit_7th(void);
 void Sel_PL_Cont_2nd(void);
 void Initialize_BG(void);

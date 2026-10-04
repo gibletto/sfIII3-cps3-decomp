@@ -11,7 +11,11 @@
 #include "romdata.h"
 #include "extern.h"
 #include "textsound.h"
+#include "textsound_2.h"
+#include "textsound_3.h"
 #include "sys_config.h"
+#include "sys_config_2.h"
+#include "sys_config_3.h"
 #include "Game.h"
 
 #pragma noregsave(Game_Task)

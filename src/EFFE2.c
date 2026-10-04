@@ -17,8 +17,9 @@
 #include "extern.h"
 #include "aboutspr.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "EFFECT.h"
-#include "CHARSET.h"
+#include "effect_2.h"
 #include "EFFE2.h"
 
 
@@ -84,10 +85,12 @@ void effect_E2_move(WORK_Other* ewk) {
         default:
             if (EXE_flag == 0 && Game_pause == 0) {
                 char_move(&ewk->wu);
-                if (ewk->wu.cg_type != 0 && ewk->wu.cg_type == 0xFF) {
-                    ewk->wu.disp_flag = 0;
-                    ewk->wu.routine_no[0] = 2;
-                    break;
+                if (ewk->wu.cg_type != 0) {
+                    if (ewk->wu.cg_type == 0xFF) {
+                        ewk->wu.disp_flag = 0;
+                        ewk->wu.routine_no[0] = 2;
+                        break;
+                    }
                 }
             }
             sort_push_request8(&ewk->wu);

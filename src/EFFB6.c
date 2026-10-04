@@ -18,8 +18,14 @@
 #include "ta_sub.h"
 #include "aboutspr.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "bg_sub.h"
+#include "bg_sub_2.h"
+#include "bg_sub_3.h"
+#include "bg_sub_4.h"
+#include "bg_sub_5.h"
 #include "EFFB6.h"
 
 
@@ -64,7 +70,7 @@ s32 effect_B5_init(s16 PL_id) {
 void effect_B6_move(WORK_Other_CONN* ewk_conn) {
     WORK_B6* ewk = (WORK_B6*)ewk_conn;
     WORK* oya = ewk->my_master;
-    s16 i;
+    s32 i;
     switch (ewk->wu.routine_no[0]) {
     case 0:
         ewk->wu.routine_no[0]++;
@@ -102,6 +108,7 @@ void effect_B6_move(WORK_Other_CONN* ewk_conn) {
                     for (i = 0; i < ewk->num; i++) {
                         ewk->pos[i][1] += ewk->src[i][3];
                         ewk->pos[i][2] = ewk->src[i][4];
+                        continue;
                     }
                     ewk->wu.disp_flag = 1;
                     break;
@@ -112,6 +119,7 @@ void effect_B6_move(WORK_Other_CONN* ewk_conn) {
                     for (i = 0; i < ewk->num; i++) {
                         ewk->pos[i][0] += ewk->src[i][1];
                         ewk->pos[i][2] = ewk->src[i][5];
+                        continue;
                     }
                     ewk->wu.disp_flag = 1;
                     break;
@@ -122,6 +130,7 @@ void effect_B6_move(WORK_Other_CONN* ewk_conn) {
                     for (i = 0; i < ewk->num; i++) {
                         ewk->pos[i][0] -= ewk->src[i][1];
                         ewk->pos[i][2] = ewk->src[i][4];
+                        continue;
                     }
                     ewk->wu.disp_flag = 1;
                     break;
@@ -132,6 +141,7 @@ void effect_B6_move(WORK_Other_CONN* ewk_conn) {
                     for (i = 0; i < ewk->num; i++) {
                         ewk->pos[i][1] -= ewk->src[i][3];
                         ewk->pos[i][2] = ewk->src[i][5];
+                        continue;
                     }
                     ewk->wu.disp_flag = 1;
                     break;

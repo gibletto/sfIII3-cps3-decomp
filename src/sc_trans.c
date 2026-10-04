@@ -197,6 +197,7 @@ void scfont_lnput_rev(s16 x, s16 y, u16 w, u16 h, s16 attr, s16 code)
             tilemap_put_cell(cx, y + row, attr, code + n);
             n++;
         }
+        continue;
     }
 }
 
@@ -205,7 +206,7 @@ void scfont_lnput_rev(s16 x, s16 y, u16 w, u16 h, s16 attr, s16 code)
 /* provisional name */
 s32 scfont_fill(s16 x, s16 y, u16 w, u16 h, s16 attr, s16 code) {
     u16 i;
-    u16 j;
+    s32 j;
     s32 ret = 54;
     for (j = 0; j < h; j++) {
         ret = (s16)w;
@@ -404,6 +405,8 @@ u8* sc_chr_slot_trans(s8 ix, u16 code, s8 to_ram) {
     return base;
 }
 
+extern const CELL_SET sc_ram_vram_tbl[30];
+
 void sc_ram_to_vram(ix, dx, dy)
 char ix;
 char dx;
@@ -416,6 +419,7 @@ char dy;
     u16 *cell;
     u16 n;
     u16 i;
+    s32 bit = 0x100;
 
     set = &sc_ram_vram_tbl[ix];
     pos = set->pos;
@@ -426,13 +430,13 @@ char dy;
         for (i = 0; i < n; i++) {
             cell = (u16 *)(SS_RAM + *pos++);
             cell[0] = *code;
-            cell[1] = ((*code++ >> 8) & 1) | *attr++;
+            cell[1] = ((*code++ & bit) >> 8) | *attr++;
         }
     } else {
         for (i = 0; i < n; i++) {
             cell = (u16 *)(SS_RAM + *pos++ + dx * 4 + dy * 0x100);
             cell[0] = *code;
-            cell[1] = ((*code++ >> 8) & 1) | *attr++;
+            cell[1] = ((*code++ & bit) >> 8) | *attr++;
         }
     }
 }
@@ -545,7 +549,7 @@ void sc_attr_put(u16 x, u16 y, u16 attr) {
 
 /* provisional name */
 void player_name_trans(void) {
-    u16 i;
+    s16 i;
     sc_trans_dst = (u16*)(SS_RAM + 0x8D40);
     if (Country == 1) {
         for (i = 0; i < 2; i++) {
@@ -610,6 +614,7 @@ s8 pl;
     s16 code = smark_kind_tbl[My_char[pl]] * 4;
     for (i = 0; i < smark_kind_tbl[My_char[pl]] + 4; i++) {
         tilemap_put_cell(*pos + i, 3, 20, code + i + 33);
+        continue;
     }
 }
 
@@ -649,6 +654,7 @@ void tilemap_clear_rect(x0, y0, x1, y1)
             cell += 2;
         }
         line = (u16 *)((u8 *)line + 0x100);
+        continue;
     }
 }
 

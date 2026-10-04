@@ -14,6 +14,7 @@
 #include "romdata.h"
 #include "extern.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "effl8.h"
 #include "cps3.h"
 #include "fighter.h"

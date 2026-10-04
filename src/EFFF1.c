@@ -19,7 +19,9 @@
 #include "extern.h"
 #include "ta_sub.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "PLS02.h"
 #include "aboutspr.h"
 #include "EFFF1.h"
@@ -31,7 +33,10 @@ void effect_F1_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
     case 0:
         effF1_data_set(ewk, mwk);
-        another_bg[ewk->master_id] = ewk->wu.type;
+        {
+            s8 t = ewk->wu.type;
+            another_bg[ewk->master_id] = t;
+        }
         ewk->wu.routine_no[0]++;
     case 1:
         if (ewk->wu.dead_f == 1) {
@@ -40,9 +45,11 @@ void effect_F1_move(WORK_Other* ewk) {
         if ((ewk->wu.dir_old & 1) && (--ewk->wu.direction == 0)) {
             goto end;
         }
-        if ((ewk->wu.dir_old & 2) && ((ewk->wu.routine_no[5] != mwk->wu.routine_no[1]) ||
+        if ((ewk->wu.dir_old & 2)) {
+            if (((ewk->wu.routine_no[5] != mwk->wu.routine_no[1]) ||
                                       (ewk->wu.routine_no[6] != mwk->wu.routine_no[2]))) {
-            goto end;
+                goto end;
+            }
         }
         if ((ewk->wu.dir_old & 4) && (mwk->sa->ok != -1)) {
             goto end;

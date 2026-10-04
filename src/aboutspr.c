@@ -19,8 +19,19 @@
 #include "extern.h"
 #include "Com_Sub.h"
 #include "end_sub.h"
+#include "end_sub_2.h"
+#include "end_sub_3.h"
+#include "end_sub_4.h"
+#include "end_sub_5.h"
+#include "end_sub_6.h"
+#include "end_sub_7.h"
+#include "color3rd.h"
+#include "end_sub_8.h"
 #include "sys_config.h"
+#include "sys_config_2.h"
+#include "sys_config_3.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "aboutspr.h"
 #include "cps3.h"
 #include "SHELL14.h"
@@ -36,7 +47,7 @@ void Shell14_0013(void) {}
 
 
 void init_char_gfx_tables(void) {
-    s32 i;
+    s16 i;
     cg_data_list = cg_data_tbl;
     for (i = 0; i < 512; i++) {
         cg_slot_tbl[i].addr = cg_slot_tbl[i].handle = 0;
@@ -48,10 +59,16 @@ void init_char_gfx_tables(void) {
         car_gfx_ofs[i] = car_gfx_cells[i] = 0;
     }
     for (i = 0; i < 512; i++) {
-        hitmark_gfx_cells[i] = hitmark_gfx_ofs[0][i] = hitmark_gfx_ofs[1][i] = 0;
+        {
+            s16 t = hitmark_gfx_ofs[0][i] = hitmark_gfx_ofs[1][i] = 0;
+            hitmark_gfx_cells[i] = t;
+        }
     }
     for (i = 0; i < 64; i++) {
-        seraph_gfx_ofs[i] = seraph_gfx_cells[i] = 0;
+        {
+            s16 t = seraph_gfx_cells[i] = 0;
+            seraph_gfx_ofs[i] = t;
+        }
     }
 }
 
@@ -201,7 +218,10 @@ s32 setup_GILL_exsa_obj(void) {
             goto fail;
         }
         char_sprite_zoom_cells(ewk);
-        seraph_gfx_ofs[i] = ewk->spr.gfx_ofs;
+        {
+            s16 t = ewk->spr.gfx_ofs;
+            seraph_gfx_ofs[i] = t;
+        }
         seraph_gfx_cells[i] = ewk->spr.gfx_cells;
         handles[i] = ewk->spr.gfx_blk40[0];
         ewk->spr.gfx_blk40[0] = 0;
@@ -247,8 +267,14 @@ s32 setup_bonus_car_parts(void) {
         if (!trans_char_cells(ewk)) {
             goto fail;
         }
-        car_gfx_ofs[i] = ewk->spr.gfx_ofs;
-        car_gfx_cells[i] = ewk->spr.gfx_cells;
+        {
+            s16 t = ewk->spr.gfx_ofs;
+            car_gfx_ofs[i] = t;
+        }
+        {
+            s16 t = ewk->spr.gfx_cells;
+            car_gfx_cells[i] = t;
+        }
         handles[i] = ewk->spr.gfx_blk40[0];
         ewk->spr.gfx_blk40[0] = 0;
     }
@@ -275,7 +301,7 @@ u32 get_cg_slot_no(id)
 }
 
 /* provisional name */
-u16 get_cg_slot_addr(u16 id) {
+s32 get_cg_slot_addr(u16 id) {
     return cg_slot_tbl[id].addr;
 }
 
@@ -321,6 +347,7 @@ s32 load_char_gfx(id, mode)
                 ((void(*)(s16 handle))simmram_block_free_10)(handle);
                 return 0;
             }
+            continue;
         }
     }
     return 1;
@@ -608,6 +635,7 @@ s32 char_cell_flip_x(WORK* wk) {
         cell = &dst[i];
         *cell = src[i];
         cell->w[2] = -cell->w[2] & 0x3FF;
+        continue;
     }
     return char_cell_push_block(wk, handle);
 }
@@ -631,6 +659,7 @@ s32 char_cell_flip_y(WORK* wk) {
         cell = &dst[i];
         *cell = src[i];
         cell->w[3] = -cell->w[3] & 0x3FF;
+        continue;
     }
     return char_cell_push_block(wk, handle);
 }
@@ -654,6 +683,7 @@ s32 char_cell_unflip_y(WORK* wk) {
         cell = &dst[i];
         *cell = src[i];
         cell->w[3] = -cell->w[3] & 0x3FF;
+        continue;
     }
     return char_cell_push_block(wk, handle);
 }
@@ -678,6 +708,7 @@ s32 char_cell_flip_xy(WORK* wk) {
         *cell = src[i];
         cell->w[2] = -cell->w[2] & 0x3FF;
         cell->w[3] = -cell->w[3] & 0x3FF;
+        continue;
     }
     return char_cell_push_block(wk, handle);
 }
@@ -702,6 +733,7 @@ s32 char_cell_unflip_xy(WORK* wk) {
         *cell = src[i];
         cell->w[2] = -cell->w[2] & 0x3FF;
         cell->w[3] = -cell->w[3] & 0x3FF;
+        continue;
     }
     return char_cell_push_block(wk, handle);
 }
@@ -869,11 +901,11 @@ s32 make_conn_cells(WORK_Other_CONN* ewk) {
     CHAR_CELL* cells;
     CHAR_CELL* c;
     CharGfxSet* set;
-    s32 base;
+    s16 base;
     u16 chr;
-    s32 i;
-    s32 j;
-    s32 n;
+    s16 i;
+    s16 j;
+    s16 n;
     s32 blocks;
     if (ewk->wu.old_cgnum == ewk->wu.cg_number) {
         return 1;
@@ -921,6 +953,7 @@ s32 make_conn_cells(WORK_Other_CONN* ewk) {
             s->attr = (*((u8*)c + 6) >> 4) | 0x300;
             s->zoom = 0x3F3F;
         }
+        continue;
     }
     return 1;
 }
@@ -939,8 +972,7 @@ void all_cgps_put_back(WORK* wk) {
         }
         wk->spr.gfx_blk40[i] = 0;
     }
-    wk->cg_number = 0;
-    wk->old_cgnum = 0;
+    wk->old_cgnum = wk->cg_number = 0;
 }
 
 
@@ -1019,6 +1051,7 @@ s32 sort_push_request2(WORK_Other* wk) {
         cell = (CHAR_SPRITE*)SPRITE_RAM + wk->wu.spr.gfx_ofs;
         for (i = 0; i < wk->wu.spr.gfx_cells; i++) {
             cell[i].sx = -cell[i].sx & 0x3FF;
+            continue;
         }
     } else if (wk->wu.spr.done_rl) {
         spr[4] ^= 0x1000;

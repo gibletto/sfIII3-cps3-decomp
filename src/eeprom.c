@@ -14,6 +14,8 @@
 #include "romdata.h"
 #include "extern.h"
 #include "textsound.h"
+#include "textsound_2.h"
+#include "textsound_3.h"
 #include "eeprom.h"
 #include "cps3.h"
 

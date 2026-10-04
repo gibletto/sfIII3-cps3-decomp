@@ -14,7 +14,9 @@
 #include "SYS_sub.h"
 #include "aboutspr.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "EFF42.h"
 
 
@@ -174,7 +176,7 @@ void EFF42_MOVE(WORK_Other* ewk) {
 
 
 void Setup_Char_Index(WORK_Other* ewk) {
-    s16 xx = Select_Timer & (s8)ewk->wu.routine_no[7];
+    s32 xx = Select_Timer & (s8)ewk->wu.routine_no[7];
     xx &= 0xFF;
     if (ewk->wu.routine_no[7] == 240) {
         xx >>= 4;

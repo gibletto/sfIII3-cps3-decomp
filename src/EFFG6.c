@@ -15,6 +15,7 @@
 #include "extern.h"
 #include "EFFG9.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "EFFG6.h"
 
 

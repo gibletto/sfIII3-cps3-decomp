@@ -18,27 +18,57 @@
 #include "romdata.h"
 #include "extern.h"
 #include "bg_sub.h"
-#include "Eff93.h"
+#include "bg_sub_2.h"
+#include "bg_sub_3.h"
+#include "bg_sub_4.h"
+#include "bg_sub_5.h"
+#include "eff87.h"
+#include "eff88.h"
+#include "eff89.h"
+#include "eff90.h"
+#include "eff91.h"
+#include "eff92_code.h"
+#include "eff93.h"
 #include "SYS_sub.h"
 #include "EM_Cand.h"
-#include "PLCNT.h"
 #include "end_sub.h"
+#include "end_sub_2.h"
+#include "end_sub_3.h"
+#include "end_sub_4.h"
+#include "end_sub_5.h"
+#include "end_sub_6.h"
+#include "end_sub_7.h"
+#include "color3rd.h"
+#include "end_sub_8.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "Eff39.h"
 #include "EFF44.h"
 #include "Eff52.h"
 #include "EFF70.h"
 #include "EFFA3.h"
+#include "effa5.h"
+#include "effa5_input.h"
 #include "sys_test.h"
+#include "sys_test_2.h"
+#include "sys_test_2b.h"
+#include "sys_test_2c.h"
+#include "sys_test_3.h"
+#include "sys_test_4.h"
+#include "sys_test_5.h"
 #include "sc_trans.h"
 #include "EffD8.h"
 #include "EFF69.h"
 #include "next_cpu.h"
 #include "SE.h"
+#include "se_2.h"
+#include "se_3.h"
 #include "EFF38.h"
 #include "EFF42.h"
 #include "Eff50.h"
-#include "EFF58.h"
+#include "eff56.h"
+#include "eff57.h"
+#include "eff58.h"
 #include "EFF75_ORDER.h"
 #include "Eff76.h"
 #include "Eff79.h"
@@ -49,6 +79,8 @@
 #include "Com_Pl.h"
 #include "bg000.h"
 #include "textsound.h"
+#include "textsound_2.h"
+#include "textsound_3.h"
 #include "sel_pl.h"
 #include "fighter.h"
 
@@ -442,7 +474,7 @@ void Sel_PL_6th(void) {}
 
 
 
-u16 Disposal_Of_Diagonal(u32 sw_arg) {
+s32 Disposal_Of_Diagonal(u32 sw_arg) {
     u16 sw = sw_arg;
     sw = sw & 0xF;
     if (sw == 1) {
@@ -463,7 +495,7 @@ u16 Disposal_Of_Diagonal(u32 sw_arg) {
 
 
 void Sel_PL_Sub(s32 PL_id_arg, u16 sw) {
-    s32 PL_id = (s16)PL_id_arg;
+    s16 PL_id = (s16)PL_id_arg;
     Cursor_Move[PL_id] = 0;
     if (Sel_PL_Complete[PL_id] != 0) {
         return;
@@ -497,12 +529,18 @@ void Sel_PL_Sub(s32 PL_id_arg, u16 sw) {
         return;
     }
     Sel_PL_Complete[PL_id] = 1;
-    My_char[PL_id] = ID_of_Face[*(volatile s16*)&Cursor_Y[PL_id]][Cursor_X[PL_id]];
+    {
+        u8 t = ID_of_Face[*(volatile s16*)&Cursor_Y[PL_id]][Cursor_X[PL_id]];
+        My_char[PL_id] = t;
+    }
     if (Last_My_char2[PL_id] != My_char[PL_id]) {
         Arts_Y[ID] = Super_Arts[ID] = Last_Super_Arts[ID] = 0;
         Introduce_Boss[ID][0] = 0;
     }
-    Last_My_char2[PL_id] = My_char[PL_id];
+    {
+        s8 t = My_char[PL_id];
+        Last_My_char2[PL_id] = t;
+    }
     Last_Selected_ID = PL_id;
     Order[1] = 2;
     Order_Timer[1] = 1;
@@ -639,7 +677,10 @@ void Auto_Repeat_Sub(s16 PL_id) {
         if (sw & 4) {
             Auto_No[PL_id] = 1;
             Auto_Cursor[PL_id] = 4;
-            Auto_Timer[PL_id] = Auto_Repeat_Data[0];
+            {
+                s8 t = Auto_Repeat_Data[0];
+                Auto_Timer[PL_id] = t;
+            }
             Auto_Index[PL_id] = 1;
             break;
         }
@@ -665,7 +706,10 @@ void Auto_Repeat_Sub(s16 PL_id) {
         if (Auto_Timer[PL_id] -= 1) {
             break;
         }
-        Auto_Timer[PL_id] = Auto_Repeat_Data[Auto_Index[PL_id]];
+        {
+            s8 t = Auto_Repeat_Data[Auto_Index[PL_id]];
+            Auto_Timer[PL_id] = t;
+        }
         Auto_Index[PL_id]++;
         if (Auto_Index[PL_id] > 2) {
             Auto_Index[PL_id] = 2;

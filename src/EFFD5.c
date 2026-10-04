@@ -14,14 +14,15 @@
 #include "romdata.h"
 #include "extern.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "PLS02.h"
 #include "CALDIR.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "aboutspr.h"
 #include "HITCHECK.h"
 #include "PLS01.h"
 #include "CHARID.h"
-#include "CHARSET.h"
 #include "EFFD5.h"
 
 

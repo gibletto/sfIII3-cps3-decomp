@@ -12,6 +12,8 @@
 #include "extern.h"
 #include "HITCHECK.h"
 #include "Win.h"
+#include "win_2.h"
+#include "continue.h"
 #include "PLSGAUGE.h"
 #include "PLS02.h"
 #include "HITEFPL.h"
@@ -20,11 +22,11 @@
 
 void effect_at_vs_player_dm(s32 ix2_arg, s32 ix_arg) {
     s32 ix2 = (s16)ix2_arg;
-    s32 ix = (s16)ix_arg;
+    s16 ix = (s16)ix_arg;
     WORK_Other* as = (WORK_Other*)q_hit_push[ix2];
     PLW* ds = (PLW*)q_hit_push[ix];
     PLW* ms;
-    s8 gddir;
+    s32 gddir;
     s32 t;
     ds->dm_point = hs[ix].dm_body;
     gddir = get_guard_direction(&as->wu, &ds->wu);

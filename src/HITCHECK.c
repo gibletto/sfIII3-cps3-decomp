@@ -17,8 +17,11 @@
 #include "romdata.h"
 #include "extern.h"
 #include "Win.h"
+#include "win_2.h"
+#include "continue.h"
 #include "PLSGAUGE.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "PLS01.h"
 #include "Grade.h"
 #include "PLS02.h"
@@ -28,7 +31,10 @@
 #include "HITPLEF.h"
 #include "HITPLPL.h"
 #include "ta_sub.h"
+#include "CMD_MAIN.h"
+#include "cmd_main_2.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "HITCHECK.h"
 #include "fighter.h"
 
@@ -321,7 +327,7 @@ s32 check_pat_status(WORK* wk) {
 
 
 /* provisional name */
-s16 check_blocking_flag(PLW* as, PLW* ds) {
+s32 check_blocking_flag(PLW* as, PLW* ds) {
     WORK_CP* wp;
     s16 num;
     wp = ds->cp;
@@ -374,9 +380,11 @@ void set_struck_status(s16 ix) {
         player_at_vs_player_dm(ix2, ix);
         break;
     case 2:
-        if (hs[ix].flag.results & 0x10 && ix2 == hs[ix].my_hit) {
-            as->att_hit_ok = 1;
-            break;
+        if (hs[ix].flag.results & 0x10) {
+            if (ix2 == hs[ix].my_hit) {
+                as->att_hit_ok = 1;
+                break;
+            }
         }
         effect_at_vs_player_dm(ix2, ix);
         break;

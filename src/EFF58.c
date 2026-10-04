@@ -1,7 +1,6 @@
 /*
- * EFF58.C  Effects 56-57 and effect 58 (timed screen commands)
+ * EFF58.C  Effect 58: timed screen commands
  *
- * Effect 56 steps through eight palette steps. Effect 57 is an animation that starts after a delay.
  * Effect 58 is a timer: after time0 frames it performs one screen command - stop a scroll,
  * screen switch or fill, the title logo, sound and BGM requests, set Next_Step, slide a BG
  * layer to its target, set a Suicide flag or move a virtual BG. Used by the game flow,
@@ -15,109 +14,45 @@
 #include "extern.h"
 #include "SYS_sub.h"
 #include "Win.h"
+#include "win_2.h"
+#include "continue.h"
 #include "end_sub.h"
+#include "end_sub_2.h"
+#include "end_sub_3.h"
+#include "end_sub_4.h"
+#include "end_sub_5.h"
+#include "end_sub_6.h"
+#include "end_sub_7.h"
+#include "color3rd.h"
+#include "end_sub_8.h"
 #include "Eff59.h"
 #include "sys_test.h"
+#include "sys_test_2.h"
+#include "sys_test_2b.h"
+#include "sys_test_2c.h"
+#include "sys_test_3.h"
+#include "sys_test_4.h"
+#include "sys_test_5.h"
 #include "textsound.h"
+#include "textsound_2.h"
+#include "textsound_3.h"
 #include "sc_trans.h"
 #include "SE.h"
+#include "se_2.h"
+#include "se_3.h"
 #include "aboutspr.h"
 #include "ta_sub.h"
 #include "EFFECT.h"
-#include "CHARSET.h"
+#include "effect_2.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "bg_sub.h"
-#include "EFF58.h"
+#include "bg_sub_2.h"
+#include "bg_sub_3.h"
+#include "bg_sub_4.h"
+#include "bg_sub_5.h"
+#include "eff58.h"
 #include "sc_logo.h"
-
-
-
-s32 effect_56_init(s8 side)
-{
-    WORK_Other* ewk;
-    s16 ix;
-
-    if ((ix = pull_effect_work(4)) == -1) {
-        return -1;
-    }
-    ewk = (WORK_Other*)frw[ix];
-    ewk->wu.be_flag = 1;
-    ewk->wu.id = 56;
-    ewk->wu.rl_flag = side;
-    ewk->wu.operator = 0;
-    ewk->wu.type = eff56_timer_tbl[side][0];
-    return 0;
-}
-
-
-
-void effect_56_move(WORK_Other* ewk) {
-    switch (ewk->wu.routine_no[0]) {
-    case 0:
-        ewk->wu.routine_no[0]++;
-    case 1:
-        ewk->wu.type--;
-        if (ewk->wu.type == 0) {
-            ewk->wu.operator++;
-            if (ewk->wu.operator > 7) {
-                ewk->wu.operator = 0;
-            }
-            ewk->wu.type = eff56_timer_tbl[ewk->wu.rl_flag][ewk->wu.operator];
-            load_any_color(eff56_color_tbl[ewk->wu.rl_flag][ewk->wu.operator]);
-        }
-        break;
-    default:
-    case 2:
-        push_effect_work(&ewk->wu);
-        break;
-    }
-}
-
-
-
-void effect_57_move(WORK_Other* ewk) {
-    switch (ewk->wu.routine_no[0]) {
-    case 0:
-        if (--ewk->wu.dir_timer != 0) {
-            return;
-        }
-        ewk->wu.routine_no[0]++;
-        ewk->wu.disp_flag = 1;
-        set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
-        break;
-    default:
-        break;
-    }
-    ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
-    ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-    sort_push_request4(ewk);
-}
-
-
-
-s32 effect_57_init(s16 char_ix, s16 x, s16 y, s16 timer, s16 step, s16 z) {
-    WORK_Other* ewk;
-    s16 ix;
-    if ((ix = pull_effect_work(4)) == -1) {
-        return -1;
-    }
-    ewk = (WORK_Other*)frw[ix];
-    ewk->wu.be_flag = 1;
-    ewk->wu.id = 57;
-    ewk->wu.work_id = 16;
-    ewk->wu.cgromtype = 1;
-    ewk->wu.my_col_mode = 0x4200;
-    ewk->wu.my_col_code = 67;
-    ewk->wu.my_family = 1;
-    ewk->wu.position_z = z;
-    ewk->wu.dir_timer = timer;
-    *ewk->wu.char_table = sel_pl_char_table;
-    ewk->wu.char_index = char_ix;
-    ewk->wu.dir_step = step;
-    ewk->wu.xyz[0].disp.pos = x;
-    ewk->wu.xyz[1].disp.pos = y;
-    return 0;
-}
 
 
 
@@ -458,6 +393,3 @@ void EFF58_Type_11(WORK_Other* ewk) {
         break;
     }
 }
-
-
-

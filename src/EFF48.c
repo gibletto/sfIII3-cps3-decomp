@@ -15,8 +15,10 @@
 #include "CALDIR.h"
 #include "eff36.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "aboutspr.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "EFF48.h"
 
 
@@ -142,6 +144,7 @@ s32 effect_48_init(s16 type) {
         ewk->wu.old_rno[0] = *data_ptr++;
         ewk->wu.char_index = *data_ptr++;
         ewk->wu.old_rno[1] = *data_ptr++;
+        continue;
     }
     effect_48_move(ewk);
     return 0;

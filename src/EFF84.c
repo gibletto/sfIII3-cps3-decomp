@@ -15,9 +15,16 @@
 #include "romdata.h"
 #include "extern.h"
 #include "sc_trans.h"
-#include "Eff93.h"
+#include "eff87.h"
+#include "eff88.h"
+#include "eff89.h"
+#include "eff90.h"
+#include "eff91.h"
+#include "eff92_code.h"
+#include "eff93.h"
 #include "PLSGAUGE.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "EFF84.h"
 
 

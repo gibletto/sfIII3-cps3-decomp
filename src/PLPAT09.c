@@ -18,12 +18,13 @@
 #include "PLSGAUGE.h"
 #include "CALDIR.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "EFF13_KOTP.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "Grade.h"
 #include "PLPAT.h"
 #include "PLS01.h"
-#include "CHARSET.h"
 #include "PLPAT09.h"
 
 
@@ -118,6 +119,7 @@ s32 set_tenguiwa(PLW* wk, u8 data) {
     tengu = tenguiwa_stand_by[tenguiwa_stage_data[bg_w.stage][1]];
     for (i = 0; i < 5; i++) {
         effect_13_init((WORK*)wk, tengu[random_16_com() & 7]);
+        continue;
     }
     for (j = 0, i = 0; i < 8; i++) {
         if (!(rv = get_my_shell_ix((WORK*)wk, i, &tmw))) {
@@ -227,7 +229,7 @@ void Att_JINNCHUUWATARI_EX(PLW* wk) {
 void mvxy_table_reader(PLW* wk) {
     PLW* twk = (PLW*)wk->wu.target_adrs;
     const s16* curr_kop = &homing_kop[wk->wu.kow][0];
-    u16 ex;
+    s32 ex;
     u16 ey;
     if (wk->wu.cg_type == 30) {
         setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);

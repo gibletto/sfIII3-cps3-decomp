@@ -17,10 +17,10 @@
 #include "PLS02.h"
 #include "PLSGAUGE.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "Grade.h"
 #include "PLPAT.h"
 #include "PLS01.h"
-#include "CHARSET.h"
 #include "plpat14.h"
 
 
@@ -76,8 +76,10 @@ void Att_PL14_AT1(PLW* wk) {
         }
         wk->wu.xyz[1].cal += wk->wu.mvxy.a[1].sp;
         wk->wu.rl_flag = wk->wu.rl_waza;
-        if ((wk->wu.mvxy.a[0].sp != 0) && wk->old_pos_data[0] == wk->old_pos_data[1]) {
-            char_move_z(&wk->wu);
+        if ((wk->wu.mvxy.a[0].sp != 0)) {
+            if (wk->old_pos_data[0] == wk->old_pos_data[1]) {
+                char_move_z(&wk->wu);
+            }
         }
         switch (wk->wu.cg_type) {
         case 20:

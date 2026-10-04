@@ -19,12 +19,16 @@
 #include "PLSGAUGE.h"
 #include "CALDIR.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "EFFI3.h"
 #include "bg_sub.h"
+#include "bg_sub_2.h"
+#include "bg_sub_3.h"
+#include "bg_sub_4.h"
+#include "bg_sub_5.h"
 #include "Grade.h"
 #include "PLPAT.h"
 #include "PLS01.h"
-#include "CHARSET.h"
 #include "plpat17.h"
 
 

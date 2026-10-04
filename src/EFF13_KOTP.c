@@ -14,10 +14,11 @@
 #include "extern.h"
 #include "PLS02.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "EFF13.h"
 #include "EFF96.h"
 #include "EFFECT.h"
-#include "CHARSET.h"
+#include "effect_2.h"
 #include "EFF13_KOTP.h"
 #include "fighter.h"
 

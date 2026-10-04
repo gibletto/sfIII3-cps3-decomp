@@ -14,10 +14,14 @@
 #include "extern.h"
 #include "SYS_sub.h"
 #include "Win.h"
+#include "win_2.h"
+#include "continue.h"
 #include "aboutspr.h"
 #include "EFFECT.h"
+#include "effect_2.h"
 #include "PLS02.h"
 #include "CHARMOVE.h"
+#include "charmove_2.h"
 #include "Eff95.h"
 
 

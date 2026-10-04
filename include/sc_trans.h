@@ -43,7 +43,7 @@ void sa_fullstock_trans(s8 side, s16 ix);
 void win_mark_put(s16 pl, u16 n, s16 attr);
 void win_mark_ram_clear(void);
 void win_mark_find_put(s16 x, s16 y, s16 pl);
-s16 win_mark_find(s16 pl);
+s32 win_mark_find(s16 pl);
 void Ranking_00_6th(s8 flag);
 s32 ToneDown(s8 tone);
 void scfont_lnput(s16 x, s16 y, u16 w, u16 h, s16 attr, s16 code);
