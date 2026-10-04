@@ -78,7 +78,7 @@ original files are in `bin/original`.
 
 With the changes, 8,589 of the 10,048 C routines compile to the arcade's instructions (3,669 with the original
 Release 26), and 7,927 to its exact bytes (1,739). Over 254 Fightcade replays compared with the original ROM,
-248 keep identical game state throughout (218 before) and 246 identical slowdown (214).
+246 keep identical game state throughout (218 before) and 244 identical slowdown (214).
 
 ## Fightcade replays
 
