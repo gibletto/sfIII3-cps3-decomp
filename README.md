@@ -1,5 +1,14 @@
 # Street Fighter III 3rd Strike - CPS3 program source
 
+AI Disclosure:
+Yes, this used Claude, decompiling compilers is thirsty work.
+It also used the hard manual work from https://github.com/crowded-street/3s-decomp which was hand built, and I have discussed that fact with them with approval.
+The PS2 Debug disk of the Anniversary provided the layout, and names of most of what is in here and the 3s-decomp, and the names of the files here are what Capcom named their files, so blame them for Eff18.c etc.
+
+It has been in the works for a number of months / years, and relies on the work of collaborators who know 3rd Strike inside out. 
+
+Right, back to it.
+
 C and SH-2 assembler source for the CPS3 program ROM of *Street Fighter III 3rd Strike: Fight for the Future*
 (sfiii3nr1), built with the original Hitachi toolchain (SHC 5.0, asmsh, lnk 6.0, rof2bin).
 
