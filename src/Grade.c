@@ -436,11 +436,10 @@ void grade_makeup_bonus_parameter(s16 ix) {
     if (Round_Operator[ix] != 0) {
         switch (bg_w.stage) {
         case 22:
-            (*(GradeFinalData*)((u8*)judge_final + (s16)((ix) * sizeof(judge_final[0])) + (s16)((Play_Type) * sizeof(judge_final[0][0])))).vs_cpu_grade[13] =
-                (Bonus_Game_result == 20) + (Bonus_Game_ex_result == 20) * 2;
+            judge_final[ix][Play_Type].vs_cpu_grade[13] = (Bonus_Game_result == 20) + (Bonus_Game_ex_result == 20) * 2;
             break;
         case 21:
-            (*(GradeFinalData*)((u8*)judge_final + (s16)((ix) * sizeof(judge_final[0])) + (s16)((Play_Type) * sizeof(judge_final[0][0])))).vs_cpu_grade[14] = Bonus_Game_result;
+            judge_final[ix][Play_Type].vs_cpu_grade[14] = Bonus_Game_result;
             break;
         }
     }
@@ -898,16 +897,18 @@ void grade_set_round_result(s16 ix) {
         return;
     }
     judge_item[ix][Play_Type_low].kimarite = 0;
+    return;
 }
 
 
 
 void grade_add_personal_action(s16 ix) {
-    if (!pcon_dp_flag) {
-        judge_item[ix][Play_Type].personal_act++;
-        if (judge_item[ix][Play_Type].personal_act > 3) {
-            judge_item[ix][Play_Type].personal_act = 3;
-        }
+    if (pcon_dp_flag) {
+        return;
+    }
+    judge_item[ix][Play_Type].personal_act++;
+    if (judge_item[ix][Play_Type].personal_act > 3) {
+        judge_item[ix][Play_Type].personal_act = 3;
     }
 }
 

@@ -81,7 +81,6 @@ void Att_PL18_NINGENBAKUDAN(PLW* wk) {
 
 
 void Att_PL18_TOKUSHUKOUDOU(PLW* wk) {
-    s32 recover;
     wk->scr_pos_set_flag = 0;
     switch (wk->wu.routine_no[3]) {
     case 0:
@@ -105,9 +104,7 @@ void Att_PL18_TOKUSHUKOUDOU(PLW* wk) {
             wk->wu.routine_no[3]++;
             if (wk->tk_success <= 0) {
                 wk->tk_success++;
-                recover = wk->py->recover;
-                recover *= 120;
-                wk->py->recover = recover / 100;
+                wk->py->recover = wk->py->recover * 120 / 100;
             }
         }
         break;

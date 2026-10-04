@@ -69,7 +69,7 @@ void effl6_flont(WORK_Other* ewk) {
         add_x_sub(ewk);
         add_y_sub(ewk);
         ewk->wu.old_rno[0]--;
-        if (ewk->wu.old_rno[0] < 1) {
+        if (ewk->wu.old_rno[0] <= 0) {
             ewk->wu.routine_no[1]++;
             set_char_move_init(&ewk->wu, 0, 1);
         }
@@ -107,7 +107,7 @@ void effl6_back(WORK_Other* ewk) {
         add_x_sub(ewk);
         add_y_sub(ewk);
         ewk->wu.old_rno[0]--;
-        if (ewk->wu.old_rno[0] < 1) {
+        if (ewk->wu.old_rno[0] <= 0) {
             ewk->wu.routine_no[1]++;
             set_char_move_init(&ewk->wu, 0, 1);
         }

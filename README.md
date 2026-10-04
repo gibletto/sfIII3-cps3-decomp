@@ -65,8 +65,8 @@ setting in that source. With every rule off they give the same output as Release
 `MDL_ARG_CONST`, `MDL_CAST_CSE`, `MDL_ARG_CAST`, `MDL_GCSE`, `ASM_MULWAIT`, `GEN_CHAIN_JUMP` and `ASM_SPECREG` to 0 gives Release 26's behaviour back. The
 original files are in `bin/original`.
 
-With the changes, 8,578 of the 10,048 C routines compile to the arcade's instructions (3,666 with the original
-Release 26), and 7,906 to its exact bytes (1,738). Over 254 Fightcade replays compared with the original ROM,
+With the changes, 8,587 of the 10,048 C routines compile to the arcade's instructions (3,669 with the original
+Release 26), and 7,918 to its exact bytes (1,739). Over 254 Fightcade replays compared with the original ROM,
 246 keep identical game state throughout (218 before) and 244 identical slowdown (214).
 
 ## Fightcade replays

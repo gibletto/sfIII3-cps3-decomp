@@ -51,20 +51,22 @@ void Att_PL16_TOKUSHUKOUDOU(PLW* wk) {
             break;
         case 50:
             wk->wu.cg_type = 0;
-            if (wk->tk_dageki <= 9) {
-                wk->tk_dageki = 10;
+            if (wk->tk_dageki > 9) {
+                break;
             }
+            wk->tk_dageki = 10;
             break;
         case 64:
             grade_add_personal_action(wk->wu.id);
             wk->wu.routine_no[3]++;
-            if (wk->tk_success <= 2) {
-                wk->tk_success++;
-                wk->py->recover = wk->py->recover * 110 / 100;
+            if (wk->tk_success > 2) {
+                break;
             }
+            wk->tk_success++;
+            wk->py->recover = wk->py->recover * 110 / 100;
             break;
         }
-        break;
+        return;
     default:
         char_move(&wk->wu);
         break;
