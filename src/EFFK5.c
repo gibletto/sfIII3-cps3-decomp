@@ -308,10 +308,12 @@ void get_master_table_address(WORK* ewk, WORK* mwk) {
 
 
 void K5_init_data(WORK* mwk, MVJ* mvj, u16* ixtbl) {
-    s32 i;
+    s16 i;
+    MVJ* m;
     for (i = 0; i < 8; i++) {
-        mvj[i].rno = 0;
-        mvj[i].index = ixtbl[lookup_index[i]];
+        m = &mvj[i];
+        m->rno = 0;
+        m->index = ixtbl[lookup_index[i]];
     }
     K5_init_data_copy(mvj, (K5Data*)mwk->body_adrs[mwk->cg_ja.boix].body_dm, 4);
     K5_init_data_copy(mvj + 4, (K5Data*)mwk->hand_adrs[mwk->cg_ja.bhix + mwk->cg_ja.haix].hand_dm, 4);

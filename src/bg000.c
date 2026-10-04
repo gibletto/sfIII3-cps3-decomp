@@ -486,8 +486,7 @@ void akebono_scr_write(void)
 
     cell = (PANEL *)ake_cell1_data;
     for (i = 0; i < 16; i++) {
-        ake_cell_write_attr(1, cell->ofs, cell->cell, (u32)ake_scrn_data, *attr);
-        attr++;
+        ake_cell_write_attr(1, cell->ofs, cell->cell, (u32)ake_scrn_data, *attr++);
         cell++;
     }
     cell = (PANEL *)ake_cell2_data;
