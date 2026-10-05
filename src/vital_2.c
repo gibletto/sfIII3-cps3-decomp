@@ -1,7 +1,7 @@
 /*
  * VITAL_2.C  Vitality bars and round timers (part 2)
  *
- * Routines: vital_parts_allwrite, count_cont_init, count_cont_reset.
+ * Routines: vital_parts_allwrite.
  */
 
 #include "structs.h"
@@ -63,39 +63,4 @@ s32 vital_parts_allwrite(s8 pl) {
         vital_col_ix++;
     }
     return i;
-}
-
-
-
-void count_cont_init(pl)
-s8 pl;
-{
-    count_work.hoji_counter = hoji_counter_tbl[Game_setting.set3];
-    Counter_hi = 99;
-    Counter_low = hoji_counter_tbl[Game_setting.set3];
-    round_timer.half.h = Counter_hi;
-    count_digit_trans(pl, 9, 9);
-    if (pl == 0) {
-        sc_ram_to_vram(2, 0, 0);
-        sc_ram_to_vram(3, 0, 0);
-    }
-    round_timer.timer = 0x630000;
-    Timer_Freeze = 0;
-    flash_r_num = 0;
-    flash_col = 0;
-}
-
-
-
-/* provisional name */
-void count_cont_reset(void) {
-    count_work.hoji_counter = hoji_counter_tbl[(*&Game_setting).set3];
-    Counter_hi = 99;
-    Counter_low = hoji_counter_tbl[(*&Game_setting).set3];
-    round_timer.half.h = Counter_hi;
-    flash_r_num = 0;
-    flash_col = 0;
-    count_digit_trans(0, 9, 9);
-    sc_ram_to_vram(2, 0, 0);
-    sc_ram_to_vram(3, 0, 0);
 }

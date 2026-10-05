@@ -77,3 +77,10 @@ void effect_H4_move(WORK_Other* ewk) {
         break;
     }
 }
+
+
+
+/* provisional name */
+s32 effect_H4_dummy(void) {
+    return 0;
+}

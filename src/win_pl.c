@@ -36,7 +36,6 @@
 #include "EFFECT.h"
 #include "effect_2.h"
 #include "lose_pl.h"
-#include "lose_pl_2.h"
 #include "sys_test.h"
 #include "sys_test_2.h"
 #include "sys_test_2b.h"

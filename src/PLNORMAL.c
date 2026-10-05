@@ -14,7 +14,6 @@
 #include "romdata.h"
 #include "extern.h"
 #include "lose_pl.h"
-#include "lose_pl_2.h"
 #include "PLS02.h"
 #include "PLSGAUGE.h"
 #include "CHARMOVE.h"

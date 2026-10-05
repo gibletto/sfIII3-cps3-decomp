@@ -61,7 +61,6 @@
 #include "end_6.h"
 #include "coin_cont.h"
 #include "lose_pl.h"
-#include "lose_pl_2.h"
 #include "sys_config.h"
 #include "sys_config_2.h"
 #include "sys_config_3.h"
@@ -82,10 +81,22 @@
 
 
 
+/* provisional name */
+void op_w_clear(void) {
+    op_w.r_no_0 = 0;
+    op_w.r_no_1 = 0;
+    op_w.r_no_2 = 0;
+    op_w.index = 0;
+    op_w.mv_ctr = 0;
+}
+
+
+
 void op_work_clear(void) {
     s16 i;
     for (i = 0; i < 3; i++) {
-        op_w.bgw[i].r_no_0 = op_w.bgw[i].r_no_1 = 0;
+        op_w.bgw[i].r_no_0 = 0;
+        op_w.bgw[i].r_no_1 = 0;
     }
 }
 
