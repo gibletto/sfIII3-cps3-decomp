@@ -4,7 +4,5 @@
 #include "structs.h"
 
 s32 vital_parts_allwrite(s8 pl);
-void count_cont_reset(void);
-void count_cont_init();
 
 #endif

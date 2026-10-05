@@ -3,6 +3,8 @@
 
 #include "structs.h"
 
+void count_cont_init();
+void count_cont_reset(void);
 void counter_control(void);
 void counter_flash(s8 type);
 void bcount_cont_init(u8 pl);

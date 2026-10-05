@@ -126,7 +126,6 @@ INPUT obj\n_input.obj
 INPUT obj\appear.obj
 INPUT obj\win_pl.obj
 INPUT obj\lose_pl.obj
-INPUT obj\lose_pl_2.obj
 INPUT obj\end_main.obj
 INPUT obj\end_1.obj
 INPUT obj\end_2.obj

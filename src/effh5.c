@@ -31,13 +31,6 @@
 
 
 
-/* provisional name */
-s32 effect_H4_dummy(void) {
-    return 0;
-}
-
-
-
 void effect_H5_move(WORK_Other* ewk) {
     void (*H5_Jmp_Tbl[5])(WORK_Other*) = { effH5_0000, effH5_0001, effH5_0002, effH5_0003, effH5_0004 };
     H5_Jmp_Tbl[ewk->wu.routine_no[0]](ewk);

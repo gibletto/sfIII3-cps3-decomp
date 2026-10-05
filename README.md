@@ -46,7 +46,7 @@ and loads it over the ROM files.
 
 ## Compiler
 
-The compiler is SHC 5.0 Release 26 with fifteen changes, each one a rule the arcade's own compiler visibly follows
+The compiler is SHC 5.0 Release 26 with sixteen changes, each one a rule the arcade's own compiler visibly follows
 throughout the ROM but Release 26 doesn't:
 
 - a switch case is tested with `bt case` / `bra default` (Release 26 folds it into `bf default`), and a jump to
@@ -67,18 +67,20 @@ throughout the ROM but Release 26 doesn't:
 - after a multiply the multiplier counts as busy for one instruction, not two, so `sts macl` can follow the next load;
 - a switch's compare-and-branch jumps leave r1 free, so a value live into the cases can move into it and r13/r14 is not saved;
 - a load through a pointer and a later separate `add` to the pointer stay apart (Release 26 folds them into a
-  post-increment load, `mov.w @r5+,r0`); the arcade has post-increments only where the source has `*p++`.
+  post-increment load, `mov.w @r5+,r0`); the arcade has post-increments only where the source has `*p++`;
+- a `char` cast of a loop counter's multiple, `(char)(i * 6)`, still counts as a multiple of the counter, so the
+  value steps by 6 on each pass instead of being multiplied again (a cast to `short` is still recomputed, as in the arcade).
 
 The four changed stages (`shcmdl.exe`, `shcgen.exe`, `shcpep.exe` and `shcasm.exe`) are rebuilt from a C
 decompilation of the originals (source: https://github.com/gibletto/shc-5r26-decomp-sf3), and each rule is a
 setting in that source. With every rule off they give the same output as Release 26. Setting `SWITCH_ARCADE_BRANCH`,
 `SWITCH_ARCADE_JUMP`, `XJUMP_OFF`, `PEP_R0_FORGET`, `SLOT_NO_STACK`, `PEP_NO_THREAD`, `GEN_TST_R0`, `GEN_MUL_L`,
-`MDL_ARG_CONST`, `MDL_CAST_CSE`, `MDL_ARG_CAST`, `MDL_GCSE`, `ASM_MULWAIT`, `GEN_CHAIN_JUMP`, `PEP_AUTOINC` and `ASM_SPECREG` to 0 gives Release 26's behaviour back. The
+`MDL_ARG_CONST`, `MDL_CAST_CSE`, `MDL_ARG_CAST`, `MDL_GCSE`, `ASM_MULWAIT`, `GEN_CHAIN_JUMP`, `PEP_AUTOINC`, `MDL_IV` and `ASM_SPECREG` to 0 gives Release 26's behaviour back. The
 original files are in `bin/original`.
 
-With the changes, 8,589 of the 10,048 C routines compile to the arcade's instructions (3,669 with the original
-Release 26), and 7,927 to its exact bytes (1,739). Over 254 Fightcade replays compared with the original ROM,
-248 keep identical game state throughout (218 before) and 246 identical slowdown (214).
+With the changes, 8,596 of the 10,048 C routines compile to the arcade's instructions (3,672 with the original
+Release 26), and 7,935 to its exact bytes (1,741). Over 254 Fightcade replays compared with the original ROM,
+246 keep identical game state throughout (218 before) and 244 identical slowdown (214).
 
 ## Fightcade replays
 

@@ -261,7 +261,6 @@ shc src\win_pl.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortn
 if errorlevel 1 goto fail
 shc src\lose_pl.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\lose_pl.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\lose_pl_2.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\lose_pl_2.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\end_main.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -noinline -object=obj\end_main.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
