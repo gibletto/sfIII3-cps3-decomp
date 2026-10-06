@@ -12,7 +12,7 @@ void eeprom_config_load(void);
 void eeprom_config_apply();
 u32 simmram_slot_to_code(s16 n);
 void sprite_list_shift_x(SPR16* dst, SPR16* src, s16 dx, s32 n);
-u32 simmram_slot_to_cg_no(s16 n);
+u32 simmram_slot_to_cg_no();
 s32 polygon2d_queue_quad(u32 a, u32 b, u32 c, u16 lo, u16 hi, s16 pri);
 u32 simmram_small_page_alloc_40(s32 kind);
 void poly_queue_init(s32 offset);

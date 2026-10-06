@@ -22,6 +22,10 @@
 #include "EFFECT.h"
 #include "effect_2.h"
 #include "meta_col.h"
+#include "meta_col_mem.h"
+#include "meta_col_strcpy.h"
+#include "meta_col_lib.h"
+#include "meta_col_bcd.h"
 #include "sc_trans.h"
 #include "EFFA3.h"
 

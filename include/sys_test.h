@@ -9,7 +9,7 @@ u32 simmram_small_page_addr(void);
 void Scrn_Pos_Init(void);
 void Scrn_Move_Set_R(s32 n, s16 x, s16 y);
 void Scrn_X_Set_W(s32 ix, s16 x);
-void Scrn_Y_Set_W(s32 ix, s16 y);
+void Scrn_Y_Set_W();
 void Scrn_Move_Add(s32 n, s32 dx, s32 dy);
 void clear_scroll_layer_state_and_mask(void);
 void scrn_linescroll_set_now(u16 n, void* p);

@@ -52,6 +52,10 @@
 #include "eff94.h"
 #include "EFFJ8.h"
 #include "meta_col.h"
+#include "meta_col_mem.h"
+#include "meta_col_strcpy.h"
+#include "meta_col_lib.h"
+#include "meta_col_bcd.h"
 #include "bg050.h"
 
 

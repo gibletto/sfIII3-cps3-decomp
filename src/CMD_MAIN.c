@@ -2013,7 +2013,7 @@ void debug_hit_judgment_dispatch(void) {
 
 /* provisional name */
 void debug_hit_judgment_init(void) {
-    s8 i;
+    s32 i;
     Debug_Tool_No++;
     tilemap_fill_all(0, 32);
     tilemap_print_string_attr(15, 1, 14, hit_judgment_msg);
@@ -3788,7 +3788,7 @@ s32 debug_check_rec_frame(u16 sw) {
 
 /* provisional name */
 s32 debug_flip_cycle(u16 sw) {
-    s8 keep;
+    s32 keep;
     if (sw & 0x80) {
         keep = dbg_pl->wu.cg_flip & 4;
         dbg_pl->wu.cg_flip++;
@@ -6193,21 +6193,20 @@ void debug_draw_cm_data(void)
     /* kind-of-command names: the table that follows the nine dbg_koc_cmoa_str entries */
     const TM_STRING *koc_str = &dbg_koc_cmoa_str[9];
     s16 bcd;
-    u16 attr = 0xFFFF;
 
-    tilemap_print_string(dbg_hud_x, 0, attr, &koc_str[dbg_pl->wu.cmoa.koc]);
-    tilemap_print_string(dbg_hud_x, 1, attr, &koc_str[dbg_pl->wu.cmsw.koc]);
-    tilemap_print_string(dbg_hud_x, 2, attr, &koc_str[dbg_pl->wu.cmlp.koc]);
-    tilemap_print_string(dbg_hud_x, 3, attr, &koc_str[dbg_pl->wu.cml2.koc]);
-    tilemap_print_string(dbg_hud_x, 4, attr, &koc_str[dbg_pl->wu.cmja.koc]);
-    tilemap_print_string(dbg_hud_x, 5, attr, &koc_str[dbg_pl->wu.cmj2.koc]);
-    tilemap_print_string(dbg_hud_x, 6, attr, &koc_str[dbg_pl->wu.cmj3.koc]);
-    tilemap_print_string(dbg_hud_x, 7, attr, &koc_str[dbg_pl->wu.cmj4.koc]);
-    tilemap_print_string(dbg_hud_x, 8, attr, &koc_str[dbg_pl->wu.cmms.koc]);
+    tilemap_print_string(dbg_hud_x, 0, 0xFFFF, &koc_str[dbg_pl->wu.cmoa.koc]);
+    tilemap_print_string(dbg_hud_x, 1, 0xFFFF, &koc_str[dbg_pl->wu.cmsw.koc]);
+    tilemap_print_string(dbg_hud_x, 2, 0xFFFF, &koc_str[dbg_pl->wu.cmlp.koc]);
+    tilemap_print_string(dbg_hud_x, 3, 0xFFFF, &koc_str[dbg_pl->wu.cml2.koc]);
+    tilemap_print_string(dbg_hud_x, 4, 0xFFFF, &koc_str[dbg_pl->wu.cmja.koc]);
+    tilemap_print_string(dbg_hud_x, 5, 0xFFFF, &koc_str[dbg_pl->wu.cmj2.koc]);
+    tilemap_print_string(dbg_hud_x, 6, 0xFFFF, &koc_str[dbg_pl->wu.cmj3.koc]);
+    tilemap_print_string(dbg_hud_x, 7, 0xFFFF, &koc_str[dbg_pl->wu.cmj4.koc]);
+    tilemap_print_string(dbg_hud_x, 8, 0xFFFF, &koc_str[dbg_pl->wu.cmms.koc]);
     tilemap_print_hex(dbg_hud_x + 32, 11, 10, dbg_pl->wu.cmmd.koc, 2, 0);
     tilemap_print_hex(dbg_hud_x + 32, 12, 10, dbg_pl->wu.cmyd.koc, 2, 0);
-    tilemap_print_string(dbg_hud_x, 11, attr, &koc_str[dbg_pl->wu.cmcf.koc]);
-    tilemap_print_string(dbg_hud_x, 12, attr, &koc_str[dbg_pl->wu.cmcr.koc]);
+    tilemap_print_string(dbg_hud_x, 11, 0xFFFF, &koc_str[dbg_pl->wu.cmcf.koc]);
+    tilemap_print_string(dbg_hud_x, 12, 0xFFFF, &koc_str[dbg_pl->wu.cmcr.koc]);
     bcd = debug_hex4_to_bcd(dbg_pl->wu.cmoa.ix);
     tilemap_print_hex(dbg_hud_x + 35, 2, 10, bcd, 3, 0);
     bcd = debug_hex4_to_bcd(dbg_pl->wu.cmoa.pat);

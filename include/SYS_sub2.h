@@ -3,7 +3,7 @@
 
 #include "structs.h"
 
-void Clear_Disp_Ranking(s16 PL_id);
+void Clear_Disp_Ranking();
 void Switch_Priority_76(void);
 
 #endif

@@ -73,13 +73,13 @@ throughout the ROM but Release 26 doesn't:
 
 The four changed stages (`shcmdl.exe`, `shcgen.exe`, `shcpep.exe` and `shcasm.exe`) are rebuilt from a C
 decompilation of the originals (source: https://github.com/gibletto/shc-5r26-decomp-sf3), and each rule is a
-setting in that source. With every rule off they give the same output as Release 26. Setting `SWITCH_ARCADE_BRANCH`,
+setting in that source (seventeen settings for the sixteen rules: the switch rule has two). With every rule off they give the same output as Release 26. Setting `SWITCH_ARCADE_BRANCH`,
 `SWITCH_ARCADE_JUMP`, `XJUMP_OFF`, `PEP_R0_FORGET`, `SLOT_NO_STACK`, `PEP_NO_THREAD`, `GEN_TST_R0`, `GEN_MUL_L`,
 `MDL_ARG_CONST`, `MDL_CAST_CSE`, `MDL_ARG_CAST`, `MDL_GCSE`, `ASM_MULWAIT`, `GEN_CHAIN_JUMP`, `PEP_AUTOINC`, `MDL_IV` and `ASM_SPECREG` to 0 gives Release 26's behaviour back. The
 original files are in `bin/original`.
 
-With the changes, 8,596 of the 10,048 C routines compile to the arcade's instructions (3,672 with the original
-Release 26), and 7,935 to its exact bytes (1,741). Over 254 Fightcade replays compared with the original ROM,
+With the changes, 8,623 of the 10,048 C routines compile to the arcade's instructions (3,684 with the original
+Release 26), and 7,958 to its exact bytes (1,745). Over 254 Fightcade replays compared with the original ROM,
 246 keep identical game state throughout (218 before) and 244 identical slowdown (214).
 
 ## Fightcade replays

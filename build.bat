@@ -862,6 +862,14 @@ shc src\BBBSCOM2.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nor
 if errorlevel 1 goto fail
 shc src\meta_col.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\meta_col.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
+shc src\meta_col_mem.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\meta_col_mem.obj >obj\shc.log 2>&1
+if errorlevel 1 goto fail
+shc src\meta_col_strcpy.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\meta_col_strcpy.obj >obj\shc.log 2>&1
+if errorlevel 1 goto fail
+shc src\meta_col_lib.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\meta_col_lib.obj >obj\shc.log 2>&1
+if errorlevel 1 goto fail
+shc src\meta_col_bcd.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\meta_col_bcd.obj >obj\shc.log 2>&1
+if errorlevel 1 goto fail
 asmsh lib\shclib.src -object=obj\shclib.obj
 if errorlevel 1 goto fail
 shc src\fifo.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\fifo.obj >obj\shc.log 2>&1

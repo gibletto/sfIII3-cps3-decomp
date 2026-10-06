@@ -3,7 +3,6 @@
 
 #include "structs.h"
 
-s32 distance2speed_EFFD4(WORK_Other* ewk, WORK* wk, s32 dir);
 s32 effect_D4_init(WORK* wk, u8 data);
 void effect_D4_move(WORK_Other* ewk);
 s32 distance2speed(WORK_Other* ewk, WORK* wk, s32 dir);

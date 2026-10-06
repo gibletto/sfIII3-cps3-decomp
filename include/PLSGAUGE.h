@@ -3,7 +3,7 @@
 
 #include "structs.h"
 
-s32 cal_sa_gauge_waribiki(PLW* wk, s16 asag);
+s32 cal_sa_gauge_waribiki();
 void add_sp_arts_gauge_hit_dm(PLW* wk);
 void add_sp_arts_gauge_init(PLW* wk);
 void add_sp_arts_gauge_nagenuke(PLW* wk);

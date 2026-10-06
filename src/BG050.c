@@ -48,6 +48,10 @@
 #include "EFFJ8.h"
 #include "aboutspr.h"
 #include "meta_col.h"
+#include "meta_col_mem.h"
+#include "meta_col_strcpy.h"
+#include "meta_col_lib.h"
+#include "meta_col_bcd.h"
 #include "ta_sub.h"
 #include "bg050.h"
 

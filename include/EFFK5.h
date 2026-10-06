@@ -3,9 +3,9 @@
 
 #include "structs.h"
 
-u32 decode_mvsw(u16 flag);
+u32 decode_mvsw();
 s32 effect_K5_init(PLW* wk);
-void K5_decode_new_hit_index(WORK* wk, MVJ* mvj, u16 mf);
+void K5_decode_new_hit_index();
 void K5_init_data_copy(MVJ* mvj, K5Data* dad, s16 num);
 void effect_K5_move(WORK_Other* ewk);
 void K5_main_process(WORK* ewk, WORK* mwk, MVJ* mvj);

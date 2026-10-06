@@ -916,13 +916,12 @@ u16 SA2;
 u16* xx;
 u16 Term_No;
 {
-    if (plw[wk->wu.id].sa->kind_of_arts != 2) {
-        return 0;
+    if (plw[wk->wu.id].sa->kind_of_arts == 2) {
+        DENJIN_No[wk->wu.id] = Term_No;
+        DENJIN_Term[wk->wu.id] = SA2;
+        xx[0] = 0x37;
+        return 1;
     }
-    DENJIN_No[wk->wu.id] = Term_No;
-    DENJIN_Term[wk->wu.id] = SA2;
-    xx[0] = 0x37;
-    return 1;
 }
 
 
@@ -930,7 +929,7 @@ u16 Term_No;
 s32 YAGYOU_Check(wk, xx, Term_No)
 PLW* wk;
 s16* xx;
-u16 Term_No;
+s32 Term_No;
 {
     if (plw[wk->wu.id].sa->kind_of_arts == 1) {
         if (Term_No == 0) {
@@ -946,7 +945,7 @@ u16 Term_No;
 
 s32 SA_Range_Check(wk, SA_No, Range)
 PLW* wk;
-s16 SA_No;
+s32 SA_No;
 u16 Range;
 {
     if (plw[wk->wu.id].sa->kind_of_arts != SA_No) {
@@ -2637,7 +2636,7 @@ u16 JLD;
 void Command_Attack(wk, Reaction, Tech_Number, Power_Level, Ex_Shot)
 PLW* wk;
 s16 Reaction;
-u16 Tech_Number;
+s32 Tech_Number;
 s16 Power_Level;
 s16 Ex_Shot;
 {
@@ -4172,6 +4171,7 @@ PLW* wk;
 s16 Reaction;
 s16 Power_Level;
 {
+    s32 follow;
     switch (Reaction & 0x7F) {
     case 9:
         if (Stock_Hit_Flag[wk->wu.id]) {
@@ -4218,14 +4218,15 @@ s16 Power_Level;
     case 5:
     case 6:
     case 7:
+        follow = Reaction & 0xFFF;
         if ((Stock_Hit_Flag[wk->wu.id] >> 2) != 0) {
-            Setup_Follow(wk, Reaction & 0xFFF);
+            Setup_Follow(wk, follow);
             break;
         }
         if (Stock_Hit_Flag[wk->wu.id]) {
             Reaction_Exit_Sub(wk);
         } else if ((wk->wu.routine_no[1] != 4) || (wk->wu.cg_type == 0x40)) {
-            Setup_Follow(wk, Reaction & 0xFFF);
+            Setup_Follow(wk, follow);
         }
         break;
     case 12:

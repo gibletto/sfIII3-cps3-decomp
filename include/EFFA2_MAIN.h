@@ -3,7 +3,7 @@
 
 #include "structs.h"
 
-s32 effect_A2_init(s16 timer);
+s32 effect_A2_init();
 void effect_A2_move(WORK_Other* ewk);
 
 #endif

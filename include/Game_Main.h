@@ -14,7 +14,7 @@ char * Game03(void);
 void Game04(void);
 s32 Bonus_Sub(void);
 void Game10(void);
-void Request_Break_Sub(s16 PL_id);
+void Request_Break_Sub();
 s32 Disp_Ranking(void);
 void Game2_4(void);
 void Game00(void);

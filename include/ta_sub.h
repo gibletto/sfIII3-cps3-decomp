@@ -38,7 +38,7 @@ s32 range_y_check(WORK* wk);
 s32 obr_disp_off_check(void);
 s32 obr_disp_off(void);
 void pl_eff_trans_entry(WORK_Other* ewk);
-void sync_fam_set3(s16 my_fam);
+void sync_fam_set3();
 void sync_fam_set(s16 num_of_bg);
 void sync_fam_set2(s16 num_of_bg);
 void win_lose_work_clear(void);

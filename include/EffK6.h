@@ -8,7 +8,7 @@ void EFFK6_SLIDE_IN(WORK_Other* ewk);
 void EFFK6_SLIDE_OUT(WORK_Other* ewk);
 void EFFK6_SUDDENLY(WORK_Other* ewk);
 void EFFK6_KILL(WORK_Other* ewk);
-s16 Get_PosK6(WORK_Other* ewk, s16 Who, s16 Get_Type, s16 Play_Style);
+s16 Get_PosK6();
 void Setup_1st_PosK6(WORK_Other* ewk, s16 Who, s16 Play_Style);
 void Setup_CharK6(WORK_Other* ewk, s16 dm_vital);
 s16 Setup_K6_Index(WORK_Other* ewk);

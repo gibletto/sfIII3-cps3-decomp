@@ -3,13 +3,13 @@
 
 #include "structs.h"
 
-void Break_Into_02(s16 PL_id);
-void Break_Into_04(s16 PL_id);
-void Break_Into_05(s16 PL_id);
-void Break_Into_07(s16 PL_id);
-s32 Break_Into_08(s16 PL_id);
-void Break_Into_09(s16 PL_id);
-void Break_Into_10(s16 PL_id);
+void Break_Into_02();
+void Break_Into_04();
+void Break_Into_05();
+void Break_Into_07();
+s32 Break_Into_08();
+void Break_Into_09();
+void Break_Into_10();
 void Continue_Score_Sub(s16 PL_id);
 void Correct_BI_Data(void);
 s32 Credit_Sub_1P(void);
@@ -32,7 +32,7 @@ void Entry_08(void);
 void Entry_08_2nd(void);
 void Entry_10(void);
 void Entry_Continue_Sub(s16 PL_id);
-void Setup_Next_Step(s16 PL_id);
+void Setup_Next_Step();
 s32 In_Game_Sub(s16 PL_id);
 void In_Over_Sub(s16 PL_id);
 void Disp_Start_Message(void);

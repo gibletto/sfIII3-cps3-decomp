@@ -19,6 +19,10 @@
 #include "PLCNTDAT.h"
 #include "plcntdat_2.h"
 #include "meta_col.h"
+#include "meta_col_mem.h"
+#include "meta_col_strcpy.h"
+#include "meta_col_lib.h"
+#include "meta_col_bcd.h"
 #include "Com_Pl.h"
 #include "EFFECT.h"
 #include "effect_2.h"
@@ -85,13 +89,15 @@ void effect_K7_move(WORK_Other* ewk) {
 
 /* provisional name */
 void K7_move_type_1(WORK_Other* ewk, PLW* mwk) {
-    const s16(*blink)[4] = K7_blink_tbl;
-    const s16(*last)[4] = K7_last_tbl;
+    const s16(*blink)[4];
+    const s16(*last)[4];
     SA_WORK* sa;
     if (mwk->sa->ok != -1 || mwk->dead_flag) {
         ewk->wu.routine_no[0] = 2;
         return;
     }
+    blink = K7_blink_tbl;
+    last = K7_last_tbl;
     switch (ewk->wu.routine_no[1]) {
     case 0:
         if (mwk->wu.cg_type != 20) {

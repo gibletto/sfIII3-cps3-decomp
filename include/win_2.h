@@ -5,7 +5,7 @@
 
 s32 Winner_Scene(void);
 s32 Loser_Scene(void);
-void Setup_Virtual_BG(s16 bg, s16 x, s16 y);
+void Setup_Virtual_BG();
 void Setup_Wins_OBJ(void);
 s32 Game_Over(void);
 s32 GameOver_1st(void);

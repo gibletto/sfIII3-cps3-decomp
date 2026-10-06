@@ -25,7 +25,7 @@ s8 pl;
     Counter_low = hoji_counter_tbl[Game_setting.set3];
     round_timer.half.h = Counter_hi;
     count_digit_trans(pl, 9, 9);
-    if (pl == 0) {
+    if (!pl) {
         sc_ram_to_vram(2, 0, 0);
         sc_ram_to_vram(3, 0, 0);
     }
@@ -66,7 +66,7 @@ void counter_control(void) {
     if (Counter_hi == 0) {
         return;
     }
-    if (flash_r_num != 0) {
+    if (flash_r_num) {
         if (Counter_hi == 10 && Counter_low == cw->hoji_counter) {
             flash_timer = 0;
             counter_flash(1);
@@ -80,7 +80,7 @@ void counter_control(void) {
         flash_timer = 0;
         counter_flash(0);
     }
-    if (Counter_low != 0) {
+    if (Counter_low) {
         Counter_low -= 1;
         return;
     }
@@ -91,7 +91,7 @@ void counter_control(void) {
     }
     round_timer.half.h = Counter_hi;
     hi = (u16)Counter_hi / 10;
-    if (Counter_hi != 0) {
+    if (Counter_hi) {
         count_digit_trans(0, hi, Counter_hi - hi * 10);
     } else {
         count_digit_trans(0, 0, 0);

@@ -5,7 +5,7 @@
 
 void settle_type_50000(void);
 void check_damage_hosei_nage(PLW* as, PLW* ds);
-void setup_settle_rno(s16 kos);
+void setup_settle_rno();
 s32 check_sa_resurrection(PLW* wk);
 void reset_char_disp_work(WORK* wk);
 void setup_gouki_wins(void);

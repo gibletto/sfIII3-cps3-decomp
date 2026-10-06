@@ -46,7 +46,7 @@ void Sel_PL_Cont_1st(void);
 void Sel_PL_Cont_3rd(void);
 void Sel_PL_Cont_4th(void);
 void Sel_PL_Control(void);
-void Sel_PL_Sub(s32 PL_id_arg, u16 sw);
+void Sel_PL_Sub();
 void Sel_PL_Sub_CD(s16 PL_id);
 void Sel_PL_Sub_CL(s16 PL_id);
 void Sel_PL_Sub_CR(s16 PL_id);
