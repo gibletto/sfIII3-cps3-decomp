@@ -389,7 +389,7 @@ void Check_Priority(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[7]) {
     case 0:
         if (OK_Priority[ewk->master_id] == 0) {
-            break;
+            return;
         }
         ewk->wu.routine_no[7]++;
     case 1:

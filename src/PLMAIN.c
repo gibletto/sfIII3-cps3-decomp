@@ -736,7 +736,7 @@ void sag_rebirth(PLW* wk) {
             wk->sa->sa_rno = 3;
             break;
         case 1:
-            break;
+            return;
         default:
             wk->sa->saeff_ok = 0;
             wk->sa->sa_rno = 0;
@@ -745,7 +745,7 @@ void sag_rebirth(PLW* wk) {
         }
         break;
     case 3:
-        break;
+        return;
     default:
         wk->sa->sa_rno = 0;
         wk->sa->ok = 0;

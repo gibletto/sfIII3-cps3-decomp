@@ -31,7 +31,6 @@
 #include "active18.h"
 #include "active19.h"
 #include "appear.h"
-#include "BBBSBALL.h"
 #include "BBBSCOM.h"
 #include "BBBSCOM2.h"
 #include "bg000.h"
@@ -403,7 +402,6 @@
 #include "PLS03ATT.h"
 #include "PLSGAUGE.h"
 #include "RANKING.h"
-#include "sc_face.h"
 #include "sc_logo.h"
 #include "sc_sub.h"
 #include "sc_sub_2.h"
@@ -446,7 +444,6 @@
 #include "textsound_3.h"
 #include "vbl_hook.h"
 #include "VITAL.h"
-#include "vital_2.h"
 #include "count.h"
 #include "Win.h"
 #include "win_2.h"
@@ -714,9 +711,10 @@ u8 Tech_Index_tail[24];  /* after Tech_Index; nothing refers to it by name or ad
 s16 Random_ix16_com;  /* 020155E8 */
 s16 Random_ix32_com;  /* 020155EA */
 s16 M_Timer;  /* 020155EC */
-/* M_No: declared 8 bytes; the code reads it on into the variables after it */
-u8 M_No[2];  /* 020155EE */
-u8 M_Sub_No[6];  /* 020155F0 */
+s16 M_No0;  /* 020155EE */
+s16 M_No1;  /* 020155F0 */
+s16 M_No2;  /* 020155F2 */
+s16 M_No3;  /* 020155F4 */
 s8 Demo_Step_Flag;  /* 020155F6 */
 s16 VS_Tech[2];  /* 020155F8 */
 s8 Exec_Wipe;  /* 020155FC */
@@ -1312,7 +1310,7 @@ u8 sa_kind;  /* 02028848 */
 u8 end_flag[2];  /* 02028849 */
 s16 calc_hit[2][10];  /* 0202884C */
 s16 score_calc[2][12];  /* 02028874 */
-s8 cmb_all_stock[1];  /* 020288A4 */
+s8 cmb_all_stock;  /* 020288A4 */
 s8 sarts_finish_flag[2];  /* 020288A5 */
 s8 last_hit_time;  /* 020288A7 */
 s8 cmb_calc_now[2];  /* 020288A8 */

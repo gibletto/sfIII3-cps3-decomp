@@ -26,7 +26,6 @@
 #include "PLS02.h"
 #include "ta_sub.h"
 #include "CALDIR.h"
-#include "CHARMOVE.h"
 #include "charmove_2.h"
 #include "effM0.h"
 #include "EFF09.h"
@@ -39,6 +38,40 @@
 #include "SE.h"
 #include "se_2.h"
 #include "se_3.h"
+#include "EFFM7.h"
+#include "EFF30.h"
+#include "EFF31.h"
+#include "EFF32.h"
+#include "EFF82.h"
+#include "EFF83.h"
+#include "effL3.h"
+#include "EFFL4.h"
+#include "effl5.h"
+#include "effl6.h"
+#include "EFFM2.h"
+#include "EFFECT.h"
+#include "effect_2.h"
+#include "lose_pl.h"
+#include "sys_test.h"
+#include "sys_test_2.h"
+#include "sys_test_2b.h"
+#include "sys_test_2c.h"
+#include "sys_test_3.h"
+#include "sys_test_4.h"
+#include "sys_test_5.h"
+#include "aboutspr.h"
+#include "SYS_sub.h"
+#include "sc_trans.h"
+#include "fifo.h"
+#include "eff36.h"
+#include "EFF48.h"
+#include "EFFC1.h"
+#include "efff6.h"
+#include "end_main.h"
+#include "sys_config.h"
+#include "sys_config_2.h"
+#include "sys_config_3.h"
+#include "Com_Pl.h"
 #include "appear.h"
 #include "fighter.h"
 
@@ -1184,7 +1217,7 @@ void Appear_23000(PLW* wk) {
             set_char_move_init(&wk->wu, 9, wk->wu.char_index + 8);
             return;
         } else {
-            break;
+            return;
         }
     case 2:
         char_move(&wk->wu);
@@ -1581,7 +1614,7 @@ void Appear_33000(PLW* wk) {
             wk->wu.routine_no[3]++;
             set_char_move_init2(&wk->wu, 9, 0xC, 2, 0);
             wk->wu.xyz[1].disp.pos = 0;
-            return;
+            break;
         }
         add_x_sub((WORK_Other*)wk);
         add_y_sub((WORK_Other*)wk);
@@ -1821,6 +1854,58 @@ void Appear_39000(PLW* wk) {
         wk->wu.routine_no[2] = 1;
         wk->wu.routine_no[3] = 0;
         Appear_end += 1;
+        break;
+    }
+}
+
+
+void Appear_41000(PLW* wk) {
+    switch (wk->wu.routine_no[3]) {
+    case 0:
+        wk->wu.routine_no[3]++;
+        wk->wu.disp_flag = 1;
+        bg_app_stop = 1;
+        set_char_move_init(&wk->wu, 0, 0);
+        app_counter[wk->wu.id] = 0x78;
+        effect_M7_init(wk);
+        break;
+    case 1:
+        char_move(&wk->wu);
+        app_counter[wk->wu.id]--;
+        if (app_counter[wk->wu.id] < 0) {
+            wk->wu.routine_no[2] = 1;
+            wk->wu.routine_no[3] = 0;
+            Appear_end++;
+        }
+        break;
+    }
+}
+
+
+
+void jijii_nebukuro(wk)
+PLW* wk;
+{
+    if (wk->wu.cmwk[0] == 0) {
+        char_move(&wk->wu);
+        return;
+    }
+    switch (wk->wu.routine_no[6]) {
+    case 0:
+        wk->wu.routine_no[6]++;
+        set_char_move_init(&wk->wu, 1, 60);
+        char_move_z(&wk->wu);
+        wk->wu.xyz[1].disp.pos = -6;
+        break;
+    case 1:
+        char_move(&wk->wu);
+        if (wk->wu.cg_type == 0xFF) {
+            wk->wu.routine_no[6]++;
+        }
+    case 2:
+        if (wk->player_number == PL_GILL) {
+            Gill_Pos_X = wk->wu.xyz[0].disp.pos;
+        }
         break;
     }
 }

@@ -694,7 +694,7 @@ void kotp_05000(WORK_Other* ewk, TAMA* twk) {
         set_char_move_init(&ewk->wu, 0, twk->ernm);
         ewk->wu.routine_no[1] = 2;
         ewk->wu.routine_no[2] = 0;
-        break;
+        return;
     case 1:
         ewk->wu.vital_new -= ewk->wu.dm_vital;
         ewk->wu.dm_vital = 0;
@@ -726,7 +726,7 @@ void kotp_05000(WORK_Other* ewk, TAMA* twk) {
         }
         ewk->wu.hf.hit_flag = 0;
         ewk->wu.hit_quake = 0;
-        break;
+        return;
     case 2:
         switch (ewk->wu.routine_no[2]) {
         case 0:

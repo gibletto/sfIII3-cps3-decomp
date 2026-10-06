@@ -38,7 +38,6 @@
 #include "color3rd.h"
 #include "end_sub_8.h"
 #include "VITAL.h"
-#include "vital_2.h"
 #include "count.h"
 #include "cmb_win.h"
 #include "efff7.h"
@@ -344,7 +343,7 @@ void op_102_move(void) {
 
 void op_103_move(void) {
     u8* seq = gSeqStatus;
-    const s16* lim = &op_103_tbl[op_w.r_no_2];
+    register const s16* lim = &op_103_tbl[op_w.r_no_2];
     switch (op_w.r_no_2) {
     case 0:
         op_w.r_no_2 += 1;
@@ -597,7 +596,7 @@ void op_106_move(void) {
     OP_W* r = &op_w;
     u8* g = gSeqStatus;
     s8 s = r->r_no_2;
-    s16* t = &op_106_tbl[s];
+    register s16* t = &op_106_tbl[s];
     switch (s) {
     case 0:
         r->r_no_2++;
@@ -2392,8 +2391,8 @@ void opening_title_00(void) {
     scr_cg_c_no = ((s16)simmram_block_alloc_10(0x165, 1));
     bg_w.scroll_cg_adr = simmram_slot_to_offset(scr_cg_c_no);
     bg_w.scno = 1;
-    ((s32(*)(u32 src, u32 dst, u32 size, s32 mode))polygon2d_submit_line)(0x01D2C000, 0, 0, 3);
-    ((s32(*)(u32 src, u32 dst, u32 size, s32 mode))polygon2d_submit_line)(0x01D2C080, bg_w.scroll_cg_adr, 0x164AF, 1);
+    polygon2d_submit_line(0x01D2C000, 0, 0, 3);
+    polygon2d_submit_line(0x01D2C080, bg_w.scroll_cg_adr, 0x164AF, 1);
     if ((*&Game_setting).mode) {
         bg_w.pos_offset = 0xF8;
     } else {

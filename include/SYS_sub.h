@@ -4,7 +4,7 @@
 #include "structs.h"
 
 s32 Button_Cut_EX(s16* Timer, s16 Limit_Time);
-s32 Check_CPU_Grade_Score(s16 PL_id, s16 i);
+s32 Check_CPU_Grade_Score();
 s32 Check_Fade_Complete_SP(void);
 s32 Check_Grade_Score(s16 PL_id, s16 i);
 s32 Ck_Range_Out_S(WORK_Other* ewk, s16 BG_No, s16 R);

@@ -141,7 +141,7 @@ void screen_flip_offsets_set(void) {
 void set_screen_mode(mode)
 s32 mode;
 {
-    const s16* row;
+    register const s16* row;
     window_req_flag = 1;
     screen_mode = mode;
     screen_base_x = screen_origin_tbl[mode][0];

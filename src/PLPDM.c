@@ -458,7 +458,7 @@ void Damage_18000(PLW* wk) {
         break;
     case 1:
         if (setup_kuuchuu_nmdm(wk)) {
-            break;
+            return;
         }
         wk->wu.routine_no[3]++;
         char_move_wca_init((WORK*)wk);
@@ -495,7 +495,7 @@ void Damage_19000(PLW* wk) {
         break;
     case 1:
         if (setup_kuuchuu_nmdm(wk)) {
-            break;
+            return;
         }
         wk->wu.routine_no[3]++;
         char_move_wca_init(&wk->wu);

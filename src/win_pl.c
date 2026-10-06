@@ -65,61 +65,6 @@
 #include "win_pl.h"
 #include "fighter.h"
 
-
-
-void Appear_41000(PLW* wk) {
-    switch (wk->wu.routine_no[3]) {
-    case 0:
-        wk->wu.routine_no[3]++;
-        wk->wu.disp_flag = 1;
-        bg_app_stop = 1;
-        set_char_move_init(&wk->wu, 0, 0);
-        app_counter[wk->wu.id] = 0x78;
-        effect_M7_init(wk);
-        break;
-    case 1:
-        char_move(&wk->wu);
-        app_counter[wk->wu.id]--;
-        if (app_counter[wk->wu.id] < 0) {
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
-            Appear_end++;
-        }
-        break;
-    }
-}
-
-
-
-void jijii_nebukuro(wk)
-PLW* wk;
-{
-    if (wk->wu.cmwk[0] == 0) {
-        char_move(&wk->wu);
-        return;
-    }
-    switch (wk->wu.routine_no[6]) {
-    case 0:
-        wk->wu.routine_no[6]++;
-        set_char_move_init(&wk->wu, 1, 60);
-        char_move_z(&wk->wu);
-        wk->wu.xyz[1].disp.pos = -6;
-        break;
-    case 1:
-        char_move(&wk->wu);
-        if (wk->wu.cg_type == 0xFF) {
-            wk->wu.routine_no[6]++;
-        }
-    case 2:
-        if (wk->player_number == PL_GILL) {
-            Gill_Pos_X = wk->wu.xyz[0].disp.pos;
-        }
-        break;
-    }
-}
-
-
-
 /* provisional name */
 void win_player(PLW* wk) {
     void (*win_jp_tbl[16])(PLW*) = { Win_00000, Win_01000, Win_02000, Win_03000, Win_04000, Win_05000, Win_06000, Win_07000, Win_08000, Win_09000, Win_10000, Win_11000, Win_12000, Win_13000, Win_14000, Win_15000 };

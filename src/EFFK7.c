@@ -60,7 +60,7 @@ void effect_K7_move(WORK_Other* ewk) {
             break;
         }
         if (EXE_flag != 0) {
-            break;
+            return;
         }
         if (Game_pause != 0) {
             break;

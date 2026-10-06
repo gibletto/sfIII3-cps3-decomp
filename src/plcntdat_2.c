@@ -20,7 +20,6 @@
 #include "end_sub_8.h"
 #include "sc_trans.h"
 #include "VITAL.h"
-#include "vital_2.h"
 #include "count.h"
 #include "spgauge.h"
 #include "EFF02.h"

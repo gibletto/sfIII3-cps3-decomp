@@ -17,10 +17,18 @@
 #include "bg_sub_3.h"
 #include "bg_sub_4.h"
 #include "bg_sub_5.h"
+#include "se_3.h"
 #include "se_2.h"
 #include "cps3.h"
 
 
+/* provisional name */
+void mix_put_step(void) {
+    *wipe_dst_ptr = *wipe_back_ptr | *wipe_pat_ptr;
+    wipe_dst_ptr++;
+    wipe_pat_ptr++;
+    wipe_back_ptr++;
+}
 
 /* provisional name */
 void wipe_pattern_and_low(s16 kind, s16 row) {

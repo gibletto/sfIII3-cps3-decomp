@@ -50,10 +50,8 @@
 #include "color3rd.h"
 #include "end_sub_8.h"
 #include "sc_trans.h"
-#include "sc_face.h"
 #include "cmb_win.h"
 #include "VITAL.h"
-#include "vital_2.h"
 #include "count.h"
 #include "spgauge.h"
 #include "EFFECT.h"
@@ -849,7 +847,7 @@ void Game08(void) {
 
 
 void Game06(void) {
-    s32 xx;
+    s16 xx;
     Basic_Sub_Ex();
     if (Break_Into) {
         return;

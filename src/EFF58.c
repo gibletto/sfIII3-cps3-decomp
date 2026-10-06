@@ -333,7 +333,7 @@ void EFF58_Type_05(WORK_Other* ewk) {
         ewk->wu.char_index = 26;
         ewk->wu.char_table[0] = sel_pl_char_table;
         ewk->wu.disp_flag = 1;
-        ((void(*)(WORK* wk, s16 koc, s32 index, s32 ip, s16 scf))set_char_move_init2)(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 11, 0);
+        set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 11, 0);
         break;
     case 1:
         x = Separate_Area[ewk->wu.dir_old][ewk->wu.dir_step - 1];

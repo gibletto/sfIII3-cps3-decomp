@@ -5,7 +5,7 @@
 
 void disp_pos_trans_entry_rxy(WORK_Other* ewk);
 void disp_pos_trans_entry_rbg(WORK_Other* ewk, s16 bg_no);
-void disp_pos_trans_entry_seraph(WORK_Other* ewk);
+void disp_pos_trans_entry_seraph();
 void pl_eff_trans_entry_r(WORK_Other* ewk);
 s32 complete_victory_check(void);
 u32 range_abs_check(s16 a, s16 b, s16 range);

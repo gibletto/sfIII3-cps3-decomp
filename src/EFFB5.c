@@ -15,7 +15,7 @@
 #include "extern.h"
 #include "Eff51.h"
 #include "ta_sub.h"
-#include "sc_face.h"
+#include "sc_trans.h"
 #include "EFFECT.h"
 #include "effect_2.h"
 #include "aboutspr.h"

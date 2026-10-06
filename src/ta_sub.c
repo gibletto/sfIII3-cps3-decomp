@@ -129,7 +129,7 @@ s32 range_x_check(WORK* wk) {
 /* provisional name */
 s32 range_x_check2(WORK* wk) {
     s16 left;
-    s16 right;
+    register s16 right;
     s16 w;
     left = bg_w.bgw[wk->my_family - 1].abs_x;
     w = 320;

@@ -2373,7 +2373,7 @@ s16 Range;
 
 /* provisional name */
 s32 Check_Com_Add_Y_Sub(PLW* wk) {
-    if (wk->wu.routine_no[1] == 4 && (u8)wk->wu.cg_type == 64) {
+    if (wk->wu.routine_no[1] != 4 || (u8)wk->wu.cg_type == 64) {
         return 1;
     }
     return 0;
@@ -4147,11 +4147,7 @@ s32 Next_End(PLW* wk) {
 
 
 
-void Next_Another_Menu(wk, Next_Action, Next_Menu)
-PLW* wk;
-s16 Next_Action;
-s16 Next_Menu;
-{
+void Next_Another_Menu(PLW* wk, s16 Next_Action, s16 Next_Menu) {
     if (Next_Action != 1) {
         CP_No[wk->wu.id][0] = Next_Action;
         Pattern_Index[wk->wu.id] = Next_Menu;

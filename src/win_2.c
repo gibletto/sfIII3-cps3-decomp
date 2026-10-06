@@ -76,7 +76,7 @@ s32 Winner_Scene(void) {
     }
     WIN_X = 0;
     Scene_Cut = Cut_Cut_Cut();
-    Scene_Tbl[M_No[0]]();
+    Scene_Tbl[M_No0]();
     bg_pos_hosei_sub3(0);
     bg_pos_hosei_sub3(2);
     bg_pos_hosei_sub3(1);
@@ -91,8 +91,8 @@ s32 Winner_Scene(void) {
 
 
 void Win_1st(void) {
-    M_No[0]++;
-    M_No[1] = 0;
+    M_No0++;
+    M_No1 = 0;
     Cover_Timer = 23;
     All_Clear_Suicide();
     System_all_clear_Wait();
@@ -114,7 +114,7 @@ void Win_1st(void) {
 
 
 void Win_2nd(void) {
-    M_No[0]++;
+    M_No0++;
     Order[55] = 1;
     Order_Timer[55] = 1;
     effect_76_init(55);
@@ -157,10 +157,10 @@ void Win_2nd(void) {
 
 
 void Win_3rd(void) {
-    switch (M_No[1]) {
+    switch (M_No1) {
     case 0:
         if (--Cover_Timer == 0) {
-            M_No[1]++;
+            M_No1++;
             tilemap_fill_all(0, 32);
             Clear_Flash_No();
             commit_name_entry_row_both_players(Text_Page_Y);
@@ -172,7 +172,7 @@ void Win_3rd(void) {
         break;
     case 1:
         if (Switch_Screen_Revival()) {
-            M_No[0]++;
+            M_No0++;
             M_Timer = 90;
             bgm_request(4);
             Forbid_Break = -1;
@@ -190,7 +190,7 @@ void Win_3rd(void) {
 
 void Win_4th(void) {
     if (--M_Timer == 0) {
-        M_No[0]++;
+        M_No0++;
         M_Timer = 170;
         Forbid_Break = 0;
     }
@@ -203,7 +203,7 @@ void Win_5th(void) {
         M_Timer = 1;
     }
     if (--M_Timer == 0) {
-        M_No[0]++;
+        M_No0++;
         WIN_X = 1;
     }
 }
@@ -220,7 +220,7 @@ s32 Loser_Scene(void) {
     void (*Scene_Tbl[6])() = { Lose_1st, Lose_2nd, Lose_3rd, Lose_4th, Lose_5th, Lose_6th };
     WIN_X = 0;
     Scene_Cut = Cut_Cut_Loser();
-    Scene_Tbl[M_No[0]]();
+    Scene_Tbl[M_No0]();
     bg_pos_hosei_sub3(0);
     bg_pos_hosei_sub3(2);
     bg_pos_hosei_sub3(1);
@@ -239,8 +239,8 @@ s32 Loser_Scene(void) {
 
 /* provisional name */
 void Lose_1st(void) {
-    M_No[0]++;
-    M_No[1] = 0;
+    M_No0++;
+    M_No1 = 0;
     Cover_Timer = 23;
     All_Clear_Suicide();
     System_all_clear_Wait();
@@ -260,7 +260,7 @@ void Lose_1st(void) {
 
 
 void Lose_2nd(void) {
-    M_No[0]++;
+    M_No0++;
     Order[55] = 1;
     Order_Timer[55] = 1;
     effect_76_init(55);
@@ -284,10 +284,10 @@ void Lose_2nd(void) {
 
 
 void Lose_3rd(void) {
-    switch (M_No[1]) {
+    switch (M_No1) {
     case 0:
         if (--Cover_Timer == 0) {
-            M_No[1]++;
+            M_No1++;
             tilemap_fill_all(0, 32);
             Clear_Flash_No();
             commit_name_entry_row_both_players(Text_Page_Y);
@@ -299,7 +299,7 @@ void Lose_3rd(void) {
         break;
     case 1:
         if (Switch_Screen_Revival() != 0) {
-            M_No[0]++;
+            M_No0++;
             M_Timer = 90;
             bgm_request(4);
             Forbid_Break = -1;
@@ -312,7 +312,7 @@ void Lose_3rd(void) {
 /* provisional name */
 void Lose_4th(void) {
     if (--M_Timer == 0) {
-        M_No[0]++;
+        M_No0++;
         M_Timer = 170;
         Forbid_Break = 0;
     }
@@ -326,7 +326,7 @@ void Lose_5th(void) {
         M_Timer = 1;
     }
     if (--M_Timer == 0) {
-        M_No[0]++;
+        M_No0++;
         WIN_X = 1;
     }
 }
@@ -393,8 +393,9 @@ s32 Game_Over(void) {
     Bg_Family_Set_appoint(3);
     if (Break_Into) {
         return 0;
+    } else {
+        return WIN_X;
     }
-    return WIN_X;
 }
 
 

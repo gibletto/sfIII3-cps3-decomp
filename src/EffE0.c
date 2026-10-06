@@ -13,7 +13,6 @@
 #include "romdata.h"
 #include "extern.h"
 #include "SYS_sub.h"
-#include "CHARMOVE.h"
 #include "charmove_2.h"
 #include "aboutspr.h"
 #include "EFFECT.h"

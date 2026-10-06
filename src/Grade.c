@@ -793,7 +793,7 @@ void grade_add_quick_stand(s16 ix) {
 
 void grade_add_nml_nage(WORK* wk) {
     s16 ix;
-    if (((s32(*)())check_normal_attack)(wk->kind_of_waza)) {
+    if (check_normal_attack(wk->kind_of_waza)) {
         ix = wk->id;
         judge_item[ix][Play_Type].nml_nage += 1;
         if (judge_item[ix][Play_Type].nml_nage > 0xC) {

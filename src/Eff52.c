@@ -115,7 +115,7 @@ void EFF52_SLIDE_OUT(WORK_Other* ewk) {
         if (ewk->wu.disp_flag == 0) {
             ewk->wu.routine_no[1] = 99;
         } else if (--Order_Timer[ewk->wu.dir_old]) {
-            break;
+            return;
         } else {
             ewk->wu.routine_no[6]++;
         }

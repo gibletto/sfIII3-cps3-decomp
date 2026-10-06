@@ -80,7 +80,7 @@ void effl7_move(WORK_Other* ewk) {
             ewk->wu.routine_no[1] += 1;
             set_char_move_init(&ewk->wu, 0, 1);
         }
-        break;
+        return;
     default:
         break;
     case 2:

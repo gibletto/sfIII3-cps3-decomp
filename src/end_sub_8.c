@@ -12,7 +12,6 @@
 #include "Com_Pl.h"
 #include "SYS_sub.h"
 #include "VITAL.h"
-#include "vital_2.h"
 #include "count.h"
 #include "EFFECT.h"
 #include "effect_2.h"

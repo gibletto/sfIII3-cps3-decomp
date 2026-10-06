@@ -340,7 +340,7 @@ void sast_control(s8 Stpl_Num) {
         ((void(*)())sa_moji_trans)(Stpl_Num, 0, 1);
         spg->spg_level = plw[Stpl_Num].sa->store;
         sa_stock_trans(spg->spg_level, 1, Stpl_Num);
-        ((void(*)())sa_gauge_trans)(Stpl_Num, 1);
+        sa_gauge_trans(Stpl_Num, 1);
         ((void(*)())sagauge_color_chenge)(Stpl_Num);
         spg->max_rno = 1;
         break;
@@ -355,11 +355,11 @@ void sast_control(s8 Stpl_Num) {
             if (spg->kind == 3) {
                 spg->kind = 0;
             }
-            ((void(*)())sa_gauge_trans)(Stpl_Num, spg->kind);
+            sa_gauge_trans(Stpl_Num, spg->kind);
             sa_stock_trans(spg->spg_level, spg->kind, Stpl_Num);
             spg->timer2 = 1;
         } else {
-            ((void(*)())sa_gauge_trans)(Stpl_Num, 1);
+            sa_gauge_trans(Stpl_Num, 1);
             sa_stock_trans(spg->spg_level, 1, Stpl_Num);
             spg->max = 0;
             spg->max_old = 1;
@@ -507,7 +507,10 @@ void sa_gauge_color_set(s8 pl) {
 
 
 
-s16 sa_color_chenge(s8 pl, s8 step) {
+s16 sa_color_chenge(pl, step)
+s8 pl;
+s8 step;
+{
     if (spg_dat[pl].kind) {
         if (pl == 0) {
             return spg_dat[0].spgcol_number = step * 2 + 34;

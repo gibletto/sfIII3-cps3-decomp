@@ -174,15 +174,3 @@ void mix_or_step(void) {
     wipe_dst_ptr++;
     wipe_pat_ptr++;
 }
-
-
-/* provisional name */
-void mix_put_step(void) {
-    *wipe_dst_ptr = *wipe_back_ptr | *wipe_pat_ptr;
-    wipe_dst_ptr++;
-    wipe_pat_ptr++;
-    wipe_back_ptr++;
-}
-
-
-

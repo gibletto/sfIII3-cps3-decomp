@@ -24,52 +24,6 @@
 
 #pragma inline(b8_sel_1_by_8)
 
-
-
-s32 effect_B7_init(s8 pl) {
-    WORK_Other* ewk;
-    NAME_WK* np = &name_wk[pl];
-    s16 ix;
-    s16 i;
-    s16 x;
-    for (i = 0; i < 2; i++) {
-        if ((ix = pull_effect_work(3)) == -1) {
-            return -1;
-        }
-        ewk = (WORK_Other*)frw[ix];
-        ewk->my_master = (u32*)np;
-        ewk->wu.be_flag = 1;
-        ewk->wu.id = 117;
-        ewk->wu.work_id = 16;
-        ewk->wu.type = i;
-        ewk->wu.cgromtype = 1;
-        ewk->wu.disp_flag = 0;
-        ewk->wu.rl_flag = 0;
-        ewk->wu.my_family = 1;
-        ewk->wu.my_col_mode = 0x4200;
-        ewk->wu.my_col_code = 0x180;
-        ewk->wu.position_z = 10;
-        ewk->wu.my_priority = 10;
-        ewk->wu.position_y = 104;
-        ewk->wu.xyz[1].cal = 104 << 16;
-        ewk->wu.xyz[0].disp.low = 0;
-        ewk->wu.char_index = 7;
-        *ewk->wu.char_table = etc_char_table;
-        if (i) {
-            ewk->wu.old_rno[0] = np->rank_in * 2 + 1;
-            x = bg_w.bgw[0].xy[0].disp.pos + 8;
-        } else {
-            ewk->wu.old_rno[0] = np->rank_in * 2;
-            x = bg_w.bgw[0].xy[0].disp.pos - 8;
-        }
-        ewk->wu.xyz[0].disp.pos = x;
-        ewk->wu.position_x = x;
-    }
-    return 0;
-}
-
-
-
 void effect_B8_move(WORK_Other_CONN* ewk) {
     const EFFB8_MESSAGE* mes;
     const CONN* conn_data;

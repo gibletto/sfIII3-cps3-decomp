@@ -564,7 +564,7 @@ void Entry_08_1st(void) {
     switch (E_No2) {
     case 0:
         E_No2 += 1;
-        if (((s8 *)&Game_setting)[5]) {
+        if (Game_setting.set5) {
             E_No2 = 99;
         }
     case 1:

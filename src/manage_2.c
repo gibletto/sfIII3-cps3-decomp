@@ -32,7 +32,6 @@
 #include "sc_trans.h"
 #include "cmb_win.h"
 #include "VITAL.h"
-#include "vital_2.h"
 #include "count.h"
 #include "spgauge.h"
 #include "EFFECT.h"
@@ -76,7 +75,6 @@
 #include "end_main.h"
 #include "Entry.h"
 #include "entry_2.h"
-#include "sc_face.h"
 
 
 
@@ -676,7 +674,7 @@ void Game_Manage_7_2(void) {
 
 
 s32 Check_Disp_Combo(void) {
-    if (cmb_all_stock[0] != 0 || cmb_calc_now[0] != 0 || cmb_calc_now[1] != 0) {
+    if (cmb_all_stock != 0 || cmb_calc_now[0] != 0 || cmb_calc_now[1] != 0) {
         return 1;
     }
     if (PL_Wins[Winner_id] < Battle_Round[Play_Type] + 1) {
@@ -1074,10 +1072,10 @@ void Game_Manage_10th(void) {
                 G_No1 = 3;
                 G_No2 = 0;
                 G_No3 = 0;
-                M_No[0] = 0;
-                M_No[1] = 0;
-                M_No[2] = 0;
-                M_No[3] = 0;
+                M_No0 = 0;
+                M_No1 = 0;
+                M_No2 = 0;
+                M_No3 = 0;
                 E_No0 = 5;
                 E_No1 = 0;
                 E_No2 = 0;
@@ -1089,10 +1087,10 @@ void Game_Manage_10th(void) {
                 G_No1 = 4;
                 G_No2 = 0;
                 G_No3 = 0;
-                M_No[0] = 0;
-                M_No[1] = 0;
-                M_No[2] = 0;
-                M_No[3] = 0;
+                M_No0 = 0;
+                M_No1 = 0;
+                M_No2 = 0;
+                M_No3 = 0;
                 E_No0 = 6;
                 E_No1 = 0;
                 E_No2 = 0;
