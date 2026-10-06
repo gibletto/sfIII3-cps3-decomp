@@ -7,8 +7,7 @@
  * effect_D4_move moves the opponent toward (or, with dmcal_m == -1, away from) the master each
  * frame; the speed is looked up by x/y distance in swallow_areas_x / _y (distance2speed) and
  * swallow_speeds. In push mode it also moves the opponent's live shells. It can be limited to
- * one side of the master and stops during a super-art freeze. distance2speed_EFFD4 is a local
- * copy of distance2speed.
+ * one side of the master and stops during a super-art freeze.
  */
 
 #include "structs.h"
@@ -19,34 +18,6 @@
 #include "EFFECT.h"
 #include "effect_2.h"
 #include "EFFD4.h"
-
-
-
-/* provisional name */
-s32 distance2speed_EFFD4(WORK_Other* ewk, WORK* wk, s32 dir) {
-    s32 y = 0;
-    s32 x = 0;
-    if (ewk->wu.xyz[0].disp.pos < wk->xyz[0].disp.pos) {
-        x = wk->xyz[0].disp.pos - ewk->wu.xyz[0].disp.pos;
-    } else if (ewk->wu.xyz[0].disp.pos > wk->xyz[0].disp.pos) {
-        x = ewk->wu.xyz[0].disp.pos - wk->xyz[0].disp.pos;
-    }
-    if (x >= 512) {
-        x = 511;
-    }
-    x >>= 4;
-    if (ewk->wu.xyz[1].disp.pos < wk->xyz[1].disp.pos) {
-        y = wk->xyz[1].disp.pos - ewk->wu.xyz[1].disp.pos;
-    }
-    if (y >= 192) {
-        y = 191;
-    }
-    y >>= 4;
-    if (dir == 0) {
-        return swallow_areas_x[y][x];
-    }
-    return swallow_areas_y[y][x];
-}
 
 
 
@@ -92,10 +63,10 @@ void effect_D4_move(WORK_Other* ewk) {
             (!ewk->wu.dmcal_d || rl != ewk->wu.rl_flag || mwk->sa_stop_flag)) {
             break;
         }
-        i = distance2speed_EFFD4(ewk, &wk->wu, 0);
+        i = distance2speed(ewk, &wk->wu, 0);
         ewk->wu.mvxy.a[0].sp = swallow_speeds[i];
         ewk->wu.mvxy.d[0].sp = 0;
-        i = distance2speed_EFFD4(ewk, &wk->wu, 1);
+        i = distance2speed(ewk, &wk->wu, 1);
         ewk->wu.mvxy.a[1].sp = swallow_speeds[i];
         ewk->wu.mvxy.d[1].sp = 0;
         ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;
@@ -128,7 +99,7 @@ void effect_D4_move(WORK_Other* ewk) {
             } else {
                 rl = 0;
             }
-            i = distance2speed_EFFD4(ewk, swk, 0);
+            i = distance2speed(ewk, swk, 0);
             ewk->wu.mvxy.a[0].sp = swallow_speeds[i];
             ewk->wu.mvxy.d[0].sp = 0;
             ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;

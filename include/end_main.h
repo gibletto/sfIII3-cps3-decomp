@@ -55,7 +55,7 @@ void end_reset_etc();
 void end_scn_pos_set2(void);
 void ending_effects_cleanup(void);
 void fadeout_to_staff_roll(void);
-void normal_ending(s16 pl_num);
+void normal_ending();
 s32 Cut_Cut_Cut_t(void);
 void op_bg0_move(s16 r_index);
 void opening_bg_move_broadcast();

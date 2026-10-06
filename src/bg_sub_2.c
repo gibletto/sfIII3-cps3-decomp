@@ -294,7 +294,7 @@ s32 remake_x_mvstep(s16 x) {
 
 /* provisional name */
 void bg_base_x_move_check(void) {
-    s16 mvstep;
+    s32 mvstep;
     s16 old_work;
     bg_w.bg2_sp_x2 = bg_w.bg2_sp_x = 0;
     if (!bg_stop && !bg_app_stop) {

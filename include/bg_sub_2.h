@@ -17,7 +17,7 @@ s32 remake_x_mvstep(s16 x);
 void scr_10_22(void);
 void scr_11_21(void);
 void scr_12_20(void);
-void Bg_mv_tw_appoint(s16 bg_num, s32 dx, s32 dy);
+void Bg_mv_tw_appoint();
 void x_left_check(s16 d0);
 void scr_x_dummy(void);
 void scr_10_20(void);

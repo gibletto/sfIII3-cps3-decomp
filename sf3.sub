@@ -424,6 +424,10 @@ INPUT obj\plpat20.obj
 INPUT obj\BBBSCOM.obj
 INPUT obj\BBBSCOM2.obj
 INPUT obj\meta_col.obj
+INPUT obj\meta_col_mem.obj
+INPUT obj\meta_col_strcpy.obj
+INPUT obj\meta_col_lib.obj
+INPUT obj\meta_col_bcd.obj
 INPUT obj\shclib.obj
 INPUT obj\fifo.obj
 INPUT obj\family.obj

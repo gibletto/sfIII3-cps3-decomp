@@ -168,13 +168,17 @@ const s16 (*tbl)[6];
 s16 num;
 {
     s16 i;
+    s16* d;
+    const s16* t;
     for (i = 0; i < num; i++) {
-        ewk->src[i][0] = tbl[i][0];
-        ewk->src[i][1] = tbl[i][1];
-        ewk->src[i][2] = tbl[i][2];
-        ewk->src[i][3] = tbl[i][3];
-        ewk->src[i][4] = tbl[i][4];
-        ewk->src[i][5] = tbl[i][5];
+        d = ewk->src[i];
+        t = tbl[i];
+        d[0] = t[0];
+        d[1] = t[1];
+        d[2] = t[2];
+        d[3] = t[3];
+        d[4] = t[4];
+        d[5] = t[5];
         ewk->pos[i][0] = ewk->src[i][0];
         ewk->pos[i][1] = ewk->src[i][2];
         ewk->pos[i][2] = ewk->src[i][4];

@@ -6,8 +6,8 @@
 void debug_play12_init(void);
 void debug_play13_init(void);
 void init_color_trans_req(void);
-void load_bg_color_fade(u16 col_no, u8 r, u8 g, u8 b);
-void load_any_color_fade(u16 col_no, u8 r, u8 g, u8 b);
+void load_bg_color_fade();
+void load_any_color_fade();
 void load_any_color_attr(u16 col_no, u8 r, u8 g, u8 b);
 void debug_play12(void);
 void debug_play13(void);

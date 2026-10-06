@@ -16,7 +16,7 @@ s32 cat07_running_check(WORK* wk);
 void Catch_08000(PLW* wk);
 void Player_catch(PLW* wk);
 void catch_cg_type_check(PLW* wk);
-void set_char_move_init_ca(PLW* wk, s16 koc, s16 index);
+void set_char_move_init_ca();
 void subtract_cu_vital(PLW* wk);
 
 #endif

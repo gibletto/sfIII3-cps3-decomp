@@ -24,6 +24,6 @@ void cal_damage_vitality_eff(WORK_Other* as, PLW* ds);
 s32 Continue_Scene(void);
 void Score_Sub(void);
 s32 Clear_Personal_Data(s16 PL_id);
-void Disp_Player_Score(s16 id);
+void Disp_Player_Score();
 
 #endif

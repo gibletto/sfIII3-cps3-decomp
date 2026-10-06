@@ -5,7 +5,7 @@
 
 void BG020(void);
 void bg_rect_attr_preset(void);
-void bg_rect_attr_add(u16* adrs, s32 x, s16 w, s32 y, s16 h, s16 bits, s16 add);
+void bg_rect_attr_add();
 void scroll_cell_write();
 void bg_extra_color_trans(void);
 void bg_color_trans(void);
@@ -44,7 +44,7 @@ void bg0102_init00(void);
 void bg0201_init00(void);
 void bg020_sync_move(void);
 void bg_initialize(void);
-void oh_opening_demo(u16* adrs, s32 x, s16 w, s32 y, s16 h, s16 attr, s16 prio);
+void oh_opening_demo();
 void reset_all_char_display_with_backup(void);
 void akebono_initialize(void);
 void bg_etc_write(s16 x);

@@ -214,7 +214,7 @@ void Game_Manage_2_2(void) {
     Next_Step = 0;
     Judge_Round_Flag = 0;
     Stop_Combo = 0;
-    if (Demo_Flag != 0) {
+    if (Demo_Flag) {
         Stop_SG = 0;
     }
     Complete_Judgement = 0;
@@ -283,7 +283,7 @@ void Game_Manage_2_4(void) {
         Stage_Intro_Flag = 0x80;
         break;
     case 3:
-        if (!Next_Step) {
+        if (Next_Step == 0) {
             break;
         }
         C_No0++;
@@ -299,7 +299,7 @@ void Game_Manage_2_4(void) {
         }
         load_char_eff_color(My_char[0], 0);
         load_char_eff_color(My_char[1], 1);
-        if (!Demo_Flag) {
+        if (Demo_Flag == 0) {
             effect_58_init(10, 60, -1);
         }
         break;
@@ -1264,10 +1264,9 @@ s32 Game_Manage_12_7(void) {
 
 
 s32 Game_Manage_12_3(void) {
-    s16 rc;
-    switch (rc = C_No2) {
+    switch (C_No2) {
     case 0:
-        if ((rc = Cut_Cut_C_Timer()) == 0) {
+        if (Cut_Cut_C_Timer() == 0) {
             C_No2++;
             C_Timer = 10;
             request_message = 1;
@@ -1291,7 +1290,7 @@ s32 Game_Manage_12_3(void) {
         }
         break;
     case 3:
-        if ((rc = Cut_Cut_C_Timer()) == 0) {
+        if (Cut_Cut_C_Timer() == 0) {
             C_No1++;
             C_No2 = 0;
             C_No3 = 0;
@@ -1299,7 +1298,6 @@ s32 Game_Manage_12_3(void) {
         }
         break;
     }
-    return rc;
 }
 
 
@@ -1999,7 +1997,7 @@ s32 Check_Entry_Again(void) {
 
 
 void Loser_Sub(void) {
-    s16 x;
+    s32 x;
     plw[LOSER].wu.operator = 0;
     Operator_Status[LOSER] = 0;
     Sel_PL_Complete[LOSER] = 0;
@@ -2231,7 +2229,7 @@ s32 Check_BI_Grade(s16 PL_id) {
 
 
 void Check_Stage_BGM(void) {
-    u8 kind = Round_num;
+    s32 kind = Round_num;
     u16 stage = bg_w.stage;
     if (Play_Type == 1) {
         Stage_BGM(stage, kind);

@@ -10,7 +10,7 @@ s32 Bonus_Cut_Sub(void);
 void Flash_Bonus_Perfect(void);
 s32 Check_Bonus_Perfect(void);
 s32 Check_Disp_Combo(void);
-void Check_Naming(s16 PL_id);
+void Check_Naming();
 void Clear_1Stage_Work(void);
 void Disp_Bonus_Perfect(void);
 void Update_BI_Term(void);
