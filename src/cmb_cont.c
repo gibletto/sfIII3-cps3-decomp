@@ -49,7 +49,7 @@ void combo_cont_init(void) {
     first_attack = 0;
     hit_num = 0;
     sa_kind = 0;
-    cmb_all_stock[0] = 0;
+    cmb_all_stock = 0;
     last_hit_time = 0;
     for (i = 0; i < 2; i++) {
         work_init_zero((s32*)&combo_type[i], sizeof(ComboType));
@@ -99,7 +99,7 @@ void combo_cont_main(void) {
             combo_control(0);
             combo_window_trans(0);
         }
-        cmb_all_stock[0] = cmb_stock[0] + cmb_stock[1];
+        cmb_all_stock = cmb_stock[0] + cmb_stock[1];
     }
 }
 

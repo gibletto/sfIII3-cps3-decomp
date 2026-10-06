@@ -183,7 +183,7 @@ void Att_SHOURYUUKEN(PLW* wk) {
             wk->wu.routine_no[3] = 3;
             wk->wu.cg_type = 0;
         }
-        break;
+        return;
     case 3:
         jumping_union_process(&wk->wu, 4);
         break;

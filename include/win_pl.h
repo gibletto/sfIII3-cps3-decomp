@@ -3,7 +3,6 @@
 
 #include "structs.h"
 
-void Appear_41000(PLW* wk);
 void Win_02000(PLW* wk);
 void Win_10000(PLW* wk);
 void q_walk_past_action(PLW* wk);
@@ -26,7 +25,6 @@ void Win_08000(PLW* wk);
 void Win_09000(PLW* wk);
 void Win_11000(PLW* wk);
 void Win_14000(PLW* wk);
-void jijii_nebukuro();
 s32 q_em_dir(PLW* wk);
 s16 q_em_distance_chk(PLW* wk);
 void q_keeping_action(PLW* wk);

@@ -156,12 +156,10 @@ INPUT obj\end_sub_7.obj
 INPUT obj\color3rd.obj
 INPUT obj\end_sub_8.obj
 INPUT obj\sc_trans.obj
-INPUT obj\sc_face.obj
 INPUT obj\sc_logo.obj
 INPUT obj\EffA2.obj
 INPUT obj\cmb_win.obj
 INPUT obj\VITAL.obj
-INPUT obj\vital_2.obj
 INPUT obj\count.obj
 INPUT obj\spgauge.obj
 INPUT obj\sc_sub.obj
@@ -343,7 +341,6 @@ INPUT obj\EFFI5.obj
 INPUT obj\effi6.obj
 INPUT obj\EFFI7.obj
 INPUT obj\EFFI8.obj
-INPUT obj\BBBSBALL.obj
 INPUT obj\EFFI9.obj
 INPUT obj\EFFJ0.obj
 INPUT obj\effj1.obj

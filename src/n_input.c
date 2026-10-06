@@ -35,7 +35,6 @@
 #include "eff93.h"
 #include "EFFB6.h"
 #include "EFFB8.h"
-#include "sc_face.h"
 #include "PLS02.h"
 #include "SE.h"
 #include "se_2.h"

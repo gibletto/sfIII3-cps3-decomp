@@ -52,5 +52,12 @@ void max_mark_write(char side, s32 left, u32 count, s32 x, char mark);
 void stun_mark_put();
 void tilemap_clear_rect();
 s32 tilemap_put_cell(u16 x, u16 y, u16 attr, u16 code);
+void winner_name_put(s8 chr);
+void player_face_char_set(s8 pl);
+void player_grade_char_set();
+void player_face_default_set(s8 pl);
+void player_face(void);
+void rank_mark_set(s8 pl, s8 rank);
+void naming_set();
 
 #endif

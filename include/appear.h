@@ -51,5 +51,7 @@ void don_appear_check(PLW* wk);
 s16 gill_appear_check();
 s32 home_visitor_check(PLW* wk);
 s32 sean_appear_check(PLW* wk, s16 id);
+void Appear_41000(PLW* wk);
+void jijii_nebukuro();
 
 #endif

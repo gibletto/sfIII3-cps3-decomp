@@ -18,7 +18,7 @@
 #include "extern.h"
 #include "EFFB1_INIT.h"
 #include "EFFH0.h"
-#include "BBBSBALL.h"
+#include "EFFI8.h"
 #include "EFF16.h"
 #include "EFFH9.h"
 #include "BBBSCOM.h"

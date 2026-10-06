@@ -23,7 +23,6 @@
 #include "aboutspr.h"
 #include "EFFECT.h"
 #include "effect_2.h"
-#include "CHARMOVE.h"
 #include "charmove_2.h"
 #include "Eff59.h"
 #include "eff56.h"

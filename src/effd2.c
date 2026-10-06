@@ -97,7 +97,7 @@ void effD2_wipe_open(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
     case 0:
         if (--ewk->wu.dir_timer) {
-            break;
+            return;
         }
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
@@ -106,7 +106,7 @@ void effD2_wipe_open(WORK_Other* ewk) {
         break;
     case 1:
         if (--ewk->wu.dir_timer) {
-            break;
+            return;
         }
         ewk->wu.routine_no[1]++;
         tilemap_fill_all(0, 32);

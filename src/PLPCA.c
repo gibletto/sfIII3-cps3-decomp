@@ -437,7 +437,7 @@ void catch_cg_type_check(PLW* wk) {
             emwk->ukemi_ok_timer = 0;
         }
         emwk->ukemi_success = 0;
-        break;
+        return;
     case 4:
         break;
     case 5:
@@ -446,7 +446,7 @@ void catch_cg_type_check(PLW* wk) {
         emwk->ukemi_ok_timer = 0;
         emwk->uot_cd_ok_flag = 0;
         emwk->ukemi_success = 0;
-        break;
+        return;
     case 6:
         wk->wu.cg_type = 0;
         wk->wu.rl_flag ^= 1;

@@ -18,7 +18,6 @@
 #include "end_sub_7.h"
 #include "color3rd.h"
 #include "end_sub_8.h"
-#include "CHARMOVE.h"
 #include "charmove_2.h"
 #include "CMD_MAIN.h"
 #include "cmd_main_2.h"

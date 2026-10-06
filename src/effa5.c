@@ -41,7 +41,7 @@ void effect_A5_move(WORK_Other* ewk) {
         break;
     case 1:
         if (!Check_Sleep_A5(ewk)) {
-            break;
+            return;
         }
         if (--Unit_Of_Timer) {
             break;
@@ -67,7 +67,7 @@ void effect_A5_move(WORK_Other* ewk) {
         break;
     case 3:
         if (!Check_Sleep_A5(ewk)) {
-            break;
+            return;
         }
         Time_Over = 1;
         if (Select_Timer) {

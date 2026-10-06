@@ -29,7 +29,6 @@
 #include "sc_trans.h"
 #include "cmb_win.h"
 #include "VITAL.h"
-#include "vital_2.h"
 #include "count.h"
 #include "spgauge.h"
 #include "EFFECT.h"
@@ -73,7 +72,6 @@
 #include "end_main.h"
 #include "Entry.h"
 #include "entry_2.h"
-#include "sc_face.h"
 
 
 

@@ -247,7 +247,7 @@ void efff5_0009(WORK_Other* ewk) {
     case 1:
         ewk->wu.old_rno[1]--;
         if (ewk->wu.old_rno[1] > 0) {
-            break;
+            return;
         }
         ewk->wu.routine_no[1]++;
         ewk->wu.old_rno[1] = 10;
@@ -292,7 +292,7 @@ void efff5_0010(WORK_Other* ewk) {
     case 1:
         ewk->wu.old_rno[1]--;
         if (ewk->wu.old_rno[1] > 0) {
-            break;
+            return;
         }
         ewk->wu.routine_no[1]++;
         ewk->wu.old_rno[1] = 10;
@@ -337,7 +337,7 @@ void efff5_0011(WORK_Other* ewk) {
     case 1:
         ewk->wu.old_rno[1]--;
         if (ewk->wu.old_rno[1] > 0) {
-            break;
+            return;
         }
         ewk->wu.routine_no[1]++;
         ewk->wu.old_rno[1] = 10;

@@ -523,7 +523,7 @@ s32 insert_ranking_cpu_grade(s16 PL_id) {
     s32 i;
     s16 j;
     for (i = 0; i < 5; i++) {
-        if (!((s32(*)())Check_CPU_Grade_Score)(PL_id, i)) {
+        if (!Check_CPU_Grade_Score(PL_id, i)) {
             continue;
         }
         for (j = 3; j >= i; j--) {

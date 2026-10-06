@@ -23,7 +23,6 @@
 #include "meta_col_lib.h"
 #include "meta_col_bcd.h"
 #include "eeprom.h"
-#include "sys_config.h"
 #include "sys_config_2.h"
 #include "sys_config_3.h"
 #include "textsound.h"

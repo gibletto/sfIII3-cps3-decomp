@@ -21,7 +21,6 @@
 #include "sys_test_5.h"
 #include "Com_Pl.h"
 #include "VITAL.h"
-#include "vital_2.h"
 #include "count.h"
 #include "cmb_win.h"
 #include "efff7.h"
@@ -218,7 +217,7 @@ void end_401_1000(void) {
         }
         bgw_ptr->abs_x = bgw_ptr->xy[0].disp.pos;
         bgw_ptr->abs_y = bgw_ptr->xy[1].disp.pos;
-        break;
+        return;
     case 3:
         break;
     }

@@ -514,7 +514,7 @@ void Attack_10000(PLW* wk) {
             break;
         }
         if (!wk->wu.hf.hit.player) {
-            break;
+            return;
         }
         if (wk->wu.hf.hit.player & 3) {
             wk->wu.mvxy.a[0].sp /= 4;

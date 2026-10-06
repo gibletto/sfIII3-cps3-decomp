@@ -61,7 +61,7 @@ void effect_D4_move(WORK_Other* ewk) {
         }
         if ((ewk->wu.dmcal_d || mwk->sa_stop_flag) &&
             (!ewk->wu.dmcal_d || rl != ewk->wu.rl_flag || mwk->sa_stop_flag)) {
-            break;
+            return;
         }
         i = distance2speed(ewk, &wk->wu, 0);
         ewk->wu.mvxy.a[0].sp = swallow_speeds[i];

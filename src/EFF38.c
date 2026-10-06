@@ -165,7 +165,7 @@ void EFF38_SHIFT(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
     case 0:
         if (--Order_Timer[ewk->wu.dir_old] != 0) {
-            break;
+            return;
         }
         ewk->wu.routine_no[1]++;
         if (ewk->master_id == 0) {

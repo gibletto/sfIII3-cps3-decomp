@@ -53,7 +53,7 @@ void effect_84_move(WORK_Other* ewk) {
                 break;
             case 1:
                 Game_pause = -1;
-                if (cmb_all_stock[0]) {
+                if (cmb_all_stock) {
                     break;
                 }
                 ewk->wu.routine_no[1]++;
@@ -67,7 +67,7 @@ void effect_84_move(WORK_Other* ewk) {
                 effect_89_init(3, DE_X[3] + 12, 9, 23, 4);
                 break;
             case 3:
-                if (cmb_all_stock[0] || cmb_calc_now[0] || cmb_calc_now[1]) {
+                if (cmb_all_stock || cmb_calc_now[0] || cmb_calc_now[1]) {
                     break;
                 }
                 ewk->wu.routine_no[1]++;

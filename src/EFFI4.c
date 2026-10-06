@@ -303,7 +303,7 @@ void kotp_08000(WORK_Other* ewk, TAMA* twk) {
         set_char_move_init(&ewk->wu, 0, twk->ernm);
         ewk->wu.routine_no[1] = 2;
         ewk->wu.routine_no[2] = 0;
-        break;
+        return;
     case 1:
         ewk->wu.vital_new -= ewk->wu.dm_vital;
         ewk->wu.dm_vital = 0;
@@ -346,7 +346,7 @@ void kotp_08000(WORK_Other* ewk, TAMA* twk) {
         }
         ewk->wu.hf.hit_flag = 0;
         ewk->wu.hit_quake = 0;
-        break;
+        return;
     case 2:
         switch (ewk->wu.routine_no[2]) {
         case 0:
@@ -660,7 +660,7 @@ void kotp_13000(WORK_Other* ewk, TAMA* twk) {
         if (screen_range_check(&ewk->wu)) {
             ewk->wu.routine_no[0] = 2;
             ewk->wu.disp_flag = 0;
-            break;
+            return;
         }
         break;
     case 1:

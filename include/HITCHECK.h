@@ -17,7 +17,7 @@ s32 check_aiuchi_pat(s16 ix);
 s32 check_dm_att_blocking(WORK* as, WORK* ds, s16 dnum);
 s16 check_dm_att_guard(WORK* as, WORK* ds, s16 kom);
 s32 check_head_damage(s16 ix);
-s32 check_normal_attack(u8 waza);
+s32 check_normal_attack();
 s32 check_normal_waza(u8 waza);
 s32 check_pat_status(WORK* wk);
 void check_result_extra(void);

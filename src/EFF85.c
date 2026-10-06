@@ -215,7 +215,7 @@ void eff85_9000(WORK_Other* ewk) {
         add_y_sub(ewk);
         if (ewk->wu.xyz[0].disp.pos >= bg_w.bgw[1].l_limit2 - bg_w.pos_offset &&
             ewk->wu.xyz[0].disp.pos <= bg_w.bgw[1].r_limit2 + bg_w.pos_offset) {
-            break;
+            return;
         }
         ewk->wu.routine_no[2]++;
         ewk->wu.disp_flag = 0;

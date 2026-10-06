@@ -78,7 +78,7 @@ void effm1_move(WORK_Other* ewk) {
         }
         oya_ptr->cmwk[0] = 2;
         ewk->wu.routine_no[1]++;
-        ((void(*)(WORK* wk, s16 koc, s32 index, s32 ip, s16 scf))set_char_move_init2)(&ewk->wu, 0, 0, 3, 0);
+        set_char_move_init2(&ewk->wu, 0, 0, 3, 0);
         ewk->wu.rl_flag ^= 1;
         ewk->wu.old_rno[0] = 60;
         cal_initial_speed(&ewk->wu, ewk->wu.old_rno[0], ewk->wu.old_rno[1], ewk->wu.xyz[1].disp.pos);

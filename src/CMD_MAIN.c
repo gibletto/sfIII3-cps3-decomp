@@ -7101,7 +7101,7 @@ void debug_bg_tile_put(s16 bg, s32 ofs, s32 page, s32 src) {
     x += bg_w.ake_cg_adr >> 7;
     page = (page << 10) + src;
     sp = (u16*)page;
-    ((void (*)())blit_16x16_tile)(sp, (u16)x, dst, 0x2C0);
+    blit_16x16_tile(sp, (u16)x, dst, 0x2C0);
 }
 
 

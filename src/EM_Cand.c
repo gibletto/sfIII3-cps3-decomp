@@ -20,7 +20,6 @@
 #include "romdata.h"
 #include "extern.h"
 #include "VITAL.h"
-#include "vital_2.h"
 #include "count.h"
 #include "PLCNTDAT.h"
 #include "plcntdat_2.h"
