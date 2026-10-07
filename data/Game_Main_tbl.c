@@ -38,8 +38,9 @@ const u32 Game_Jmp_Tbl_init[12] = {
     (u32)Game08, (u32)Game09, (u32)Game10, (u32)Game11,
 };
 
-const GAME00_JMP_TBL Game00_Jmp_Data[1] = {
-    { { Game0_0, Game0_1, Game0_2, Game0_3, Game0_2, Game0_3 } },
+/* Initial values of Game00_Jmp_Tbl (Game00) in bg0001.c. */
+const u32 Game00_Jmp_Tbl_init[6] = {
+    (u32)Game0_0, (u32)Game0_1, (u32)Game0_2, (u32)Game0_3, (u32)Game0_2, (u32)Game0_3,
 };
 
 const s8 Game01_Erase_msg[20] = "                   ";

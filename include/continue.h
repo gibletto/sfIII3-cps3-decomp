@@ -15,7 +15,7 @@ void Continue_4th(void);
 void Continue_5th(void);
 void Setup_Continue_OBJ(void);
 s32 Check_Exit_Continue(void);
-u32 Disp_Personal_Count(s16 id, char count);
+void Disp_Personal_Count(s16 id, char count);
 void Clear_Win_Type(void);
 s32 Check_Coin_In(s16 pl);
 void Setup_Result_OBJ(void);

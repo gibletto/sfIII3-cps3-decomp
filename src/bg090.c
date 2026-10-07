@@ -581,7 +581,6 @@ void demo90_base(void) {
         }
         if (Appear_free[chk_pl]) {
             bgw_ptr->r_no_1++;
-            break;
         }
         break;
     case 1:
@@ -595,13 +594,13 @@ void demo90_base(void) {
         }
         break;
     case 2:
-        if (Appear_end == 2) {
-            bgw_ptr->r_no_0++;
-            bgw_ptr->r_no_1 = 0;
-            bgw_ptr->xy[1].cal = 0;
-            bgw_ptr->wxy[1].cal = 0;
+        if (Appear_end != 2) {
+            break;
         }
-        break;
+        bgw_ptr->r_no_0++;
+        bgw_ptr->r_no_1 = 0;
+        bgw_ptr->xy[1].cal = 0;
+        bgw_ptr->wxy[1].cal = 0;
     }
 }
 

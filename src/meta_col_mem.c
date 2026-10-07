@@ -32,10 +32,8 @@ u8* strcat(u8* dst, u8* src) {
     u8* p = dst;
     u8* s = src;
     for (; *p != 0; p++) {
-        continue;
     }
     while ((*p++ = *s++) != 0) {
-        continue;
     }
     return dst;
 }

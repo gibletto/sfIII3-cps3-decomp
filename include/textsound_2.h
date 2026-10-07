@@ -18,7 +18,6 @@ void sound_sample_bank_set(u16 bank);
 void bgm_stop(void);
 void se_voice_stop(u8 ch);
 void se_voice_stop_all(void);
-void sound_reg_level_set();
 void bgm_fade_out();
 
 #endif

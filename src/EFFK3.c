@@ -130,7 +130,6 @@ s32 setup_effK3(WORK* wk) {
     }
     for (i = 0; i < numof_effK3[wk->dm_attlv]; i++) {
         effect_K3_init((WORK_Other*)wk);
-        continue;
     }
     return 1;
 }

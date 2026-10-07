@@ -51,7 +51,6 @@ void effect_77_move(WORK_Other* ewk) {
         sa_pa_flag = 1;
         for (i = 0; i < bg_w.scno; i++) {
             Bg_Off_W(1 << i);
-            continue;
         }
         Bg_On_W(8);
         ewk->wu.old_rno[0] = eff77_data_tbl[ewk->wu.type][0];
@@ -64,7 +63,6 @@ void effect_77_move(WORK_Other* ewk) {
         ewk->wu.routine_no[0]++;
         for (i = 0; i < bg_w.scno; i++) {
             Bg_Off_W(1 << i);
-            continue;
         }
         Bg_On_W(8);
         sa_pa_flag = 1;
@@ -92,7 +90,6 @@ void effect_77_move(WORK_Other* ewk) {
         }
         for (i = 0; i < bg_w.scno; i++) {
             Bg_On_W(1 << i);
-            continue;
         }
         Bg_Off_W(8);
         break;

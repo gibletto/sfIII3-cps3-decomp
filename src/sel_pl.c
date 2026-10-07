@@ -30,7 +30,6 @@
 #include "eff92_code.h"
 #include "eff93.h"
 #include "SYS_sub.h"
-#include "EM_Cand.h"
 #include "end_sub.h"
 #include "end_sub_2.h"
 #include "end_sub_3.h"
@@ -106,19 +105,19 @@ s16 Select_Player(void) {
 
 
 void Sel_PL_Control(void) {
-    SEL_PL_CONT_TBL cont_tbl;
-    SEL_EXIT_TBL exit_tbl;
-    cont_tbl = Sel_PL_Cont_Jmp_Data;
+    void (*cont_tbl[4])() = { Sel_PL_Cont_1st, Sel_PL_Cont_2nd, Sel_PL_Cont_3rd, Sel_PL_Cont_4th };
     Setup_Select_Status();
-    cont_tbl.f[S_No]();
+    cont_tbl[S_No]();
     sel_pl_face_control();
     OBJ_Control();
     ID2 = 0;
     Player_Select_Control();
     ID2 = 1;
     Player_Select_Control();
-    exit_tbl = Sel_Exit_Jmp_Data;
-    exit_tbl.f[Exit_No]();
+    {
+        void (*exit_tbl[7])() = { Exit_1st, Exit_2nd, Exit_3rd, Exit_4th, Exit_5th, Exit_6th, Exit_7th };
+        exit_tbl[Exit_No]();
+    }
 }
 
 
@@ -890,56 +889,56 @@ void OBJ_1st(void) {
         Order[6] = 1;
         Order_Timer[6] = 45;
         Order_Dir[6] = 4;
-        return;
+    } else {
+        *SO_No = 2;
+        effect_75_init(42, 3, 2);
+        Order[42] = 3;
+        Order_Timer[42] = 1;
+        Order_Dir[42] = 3;
+        effect_38_init(0, 11, 127, 1, 2);
+        Order[11] = 1;
+        Order_Timer[11] = 86;
+        effect_38_init(1, 12, 127, 1, 2);
+        Order[12] = 1;
+        Order_Timer[12] = 86;
+        effect_K6_init(0, 33, 31, 2);
+        Order[33] = 1;
+        Order_Timer[33] = 86;
+        Order_Dir[33] = 0;
+        effect_52_init(0, 38);
+        Order[38] = 3;
+        Order_Timer[38] = 30;
+        effect_K6_init(0, 27, 25, 2);
+        Order[27] = 3;
+        Order_Timer[27] = 86;
+        effect_K6_init(1, 28, 25, 2);
+        Order[28] = 3;
+        Order_Timer[28] = 86;
+        effect_K6_init(1, 34, 31, 2);
+        Order[34] = 1;
+        Order_Timer[34] = 86;
+        Order_Dir[34] = 0;
+        effect_52_init(1, 39);
+        Order[39] = 3;
+        Order_Timer[39] = 30;
+        effect_39_init(0, 15, 127, 2, 0);
+        Order[15] = 1;
+        Order_Timer[15] = 86;
+        Order_Dir[15] = 0;
+        effect_39_init(1, 16, 127, 2, 0);
+        Order[16] = 1;
+        Order_Timer[16] = 86;
+        Order_Dir[16] = 0;
+        Order[4] = 3;
+        Order_Timer[4] = 86;
+        Order_Dir[4] = 255;
+        effect_42_init(7);
+        Order[7] = 0;
+        Order_Timer[7] = 86;
+        effect_42_init(8);
+        Order[8] = 0;
+        Order_Timer[8] = 86;
     }
-    *SO_No = 2;
-    effect_75_init(42, 3, 2);
-    Order[42] = 3;
-    Order_Timer[42] = 1;
-    Order_Dir[42] = 3;
-    effect_38_init(0, 11, 127, 1, 2);
-    Order[11] = 1;
-    Order_Timer[11] = 86;
-    effect_38_init(1, 12, 127, 1, 2);
-    Order[12] = 1;
-    Order_Timer[12] = 86;
-    effect_K6_init(0, 33, 31, 2);
-    Order[33] = 1;
-    Order_Timer[33] = 86;
-    Order_Dir[33] = 0;
-    effect_52_init(0, 38);
-    Order[38] = 3;
-    Order_Timer[38] = 30;
-    effect_K6_init(0, 27, 25, 2);
-    Order[27] = 3;
-    Order_Timer[27] = 86;
-    effect_K6_init(1, 28, 25, 2);
-    Order[28] = 3;
-    Order_Timer[28] = 86;
-    effect_K6_init(1, 34, 31, 2);
-    Order[34] = 1;
-    Order_Timer[34] = 86;
-    Order_Dir[34] = 0;
-    effect_52_init(1, 39);
-    Order[39] = 3;
-    Order_Timer[39] = 30;
-    effect_39_init(0, 15, 127, 2, 0);
-    Order[15] = 1;
-    Order_Timer[15] = 86;
-    Order_Dir[15] = 0;
-    effect_39_init(1, 16, 127, 2, 0);
-    Order[16] = 1;
-    Order_Timer[16] = 86;
-    Order_Dir[16] = 0;
-    Order[4] = 3;
-    Order_Timer[4] = 86;
-    Order_Dir[4] = 255;
-    effect_42_init(7);
-    Order[7] = 0;
-    Order_Timer[7] = 86;
-    effect_42_init(8);
-    Order[8] = 0;
-    Order_Timer[8] = 86;
 }
 
 

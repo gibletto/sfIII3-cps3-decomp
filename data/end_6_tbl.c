@@ -64,6 +64,7 @@ const u8 end_600_5000_pal_tbl[8] = {
     44, 45, 44, 46, 44, 45, 44, 46,
 };
 
-const END601_JP end_601_jp_tbl[1] = {
-    { { end_601_0000, end_601_1000, end_601_2000, end_601_3000, end_X_com01, end_X_com01 } },
+/* Initial values of end_601_jp (end_601_move) in end_6.c. */
+const u32 end_601_jp_init[6] = {
+    (u32)end_601_0000, (u32)end_601_1000, (u32)end_601_2000, (u32)end_601_3000, (u32)end_X_com01, (u32)end_X_com01,
 };

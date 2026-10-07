@@ -65,7 +65,7 @@ s32 effect_21_init(s16 sync_index) {
     s16 i;
     const s16* data_ptr;
     if (lp_cnt == 0) {
-        return (s32)eff21_num;
+        return;
     }
     data_ptr = eff21_data_adrs[sync_index];
     for (i = 0; i < lp_cnt; i++) {

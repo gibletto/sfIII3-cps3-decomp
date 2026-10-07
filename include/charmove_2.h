@@ -16,7 +16,7 @@ s32 get_comm_if_shot(WORK* wk);
 s32 get_comm_if_shot_now(WORK* wk);
 s32 get_comm_if_lvsh(WORK* wk);
 s32 get_comm_djmp_lever_dir(PLW* wk);
-s32 check_cgd_patdat(WORK* wk);
+void check_cgd_patdat(WORK* wk);
 void check_cgd_patdat2(WORK* wk);
 u32 check_xcopy_filter_se_req(WORK* wk);
 s32 comm_asxy(WORK* wk, CHAR_CMD* ctc);

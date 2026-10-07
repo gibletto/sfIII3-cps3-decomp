@@ -77,11 +77,11 @@ void effect_D9_move(WORK_Other* ewk) {
         }
         if (--ewk->wu.vitality <= 0) {
             ewk->wu.dir_step += 2;
-            if (ewk->wu.step_xy_table[ewk->wu.dir_step] == 0) {
+            if (((const ColorStep*)(ewk->wu.step_xy_table + ewk->wu.dir_step))->timer == 0) {
                 ewk->wu.dir_step = 0;
             }
-            ewk->wu.vitality = ewk->wu.step_xy_table[ewk->wu.dir_step];
-            ewk->wu.vital_new = ewk->wu.step_xy_table[ewk->wu.dir_step + 1];
+            ewk->wu.vitality = ((const ColorStep*)(ewk->wu.step_xy_table + ewk->wu.dir_step))->timer;
+            ewk->wu.vital_new = ((const ColorStep*)(ewk->wu.step_xy_table + ewk->wu.dir_step))->color;
         }
         if (ewk->wu.vital_old & 1) {
             mwk->wu.extra_col = ewk->wu.vital_new;

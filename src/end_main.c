@@ -78,6 +78,8 @@
 #include "EFFC1.h"
 #include "PLS02.h"
 
+void scrn_attr_set(s16 n, s16 attr, s16 bits);
+
 
 
 /* provisional name */
@@ -283,9 +285,9 @@ void op_101_move(void) {
             op_w.index = 1;
             op_obj_disp = 1;
             op_work_clear();
-            break;
+        } else {
+            opening_bg_move_broadcast(0);
         }
-        opening_bg_move_broadcast(0);
         break;
     default:
         opening_bg_move_broadcast(1);
@@ -791,17 +793,16 @@ void op_107_move(void) {
 /* provisional name */
 void op_108_move(void) {
     s16* t = op_108_tbl;
-    OP_W* r = &op_w;
-    switch (r->r_no_2) {
+    switch (op_w.r_no_2) {
     case 0:
-        r->r_no_2++;
+        op_w.r_no_2++;
         purge_char_gfx(0xE528);
         load_char_gfx(0xE530, 1);
         load_char_gfx(0xE538, 1);
         op_work_clear();
-        r->index = 41;
+        op_w.index = 41;
         opening_bg_move_broadcast(41);
-        r->mv_ctr = 0;
+        op_w.mv_ctr = 0;
         effect_36_init(0);
         effect_36_init(1);
         effect_36_init(2);
@@ -812,20 +813,20 @@ void op_108_move(void) {
         effect_36_init(7);
         break;
     case 1:
-        r->mv_ctr++;
-        if (r->mv_ctr >= t[r->r_no_2]) {
-            r->r_no_2++;
+        op_w.mv_ctr++;
+        if (op_w.mv_ctr >= t[op_w.r_no_2]) {
+            op_w.r_no_2++;
             op_work_clear();
-            r->index = 42;
+            op_w.index = 42;
             opening_bg_move_broadcast(42);
         }
         break;
     case 2:
-        r->mv_ctr++;
-        if (r->mv_ctr >= t[r->r_no_2]) {
-            r->r_no_2++;
+        op_w.mv_ctr++;
+        if (op_w.mv_ctr >= t[op_w.r_no_2]) {
+            op_w.r_no_2++;
             op_work_clear();
-            r->index = 43;
+            op_w.index = 43;
             opening_bg_move_broadcast(43);
             effect_36_init(8);
             effect_36_init(9);
@@ -838,92 +839,92 @@ void op_108_move(void) {
         }
         break;
     case 3:
-        r->mv_ctr++;
-        if (r->mv_ctr >= t[r->r_no_2]) {
-            r->r_no_2++;
+        op_w.mv_ctr++;
+        if (op_w.mv_ctr >= t[op_w.r_no_2]) {
+            op_w.r_no_2++;
             op_work_clear();
-            r->index = 44;
+            op_w.index = 44;
             opening_bg_move_broadcast(44);
         }
         break;
     case 4:
-        r->mv_ctr++;
-        if (r->mv_ctr >= t[r->r_no_2]) {
-            r->r_no_2++;
+        op_w.mv_ctr++;
+        if (op_w.mv_ctr >= t[op_w.r_no_2]) {
+            op_w.r_no_2++;
             op_work_clear();
-            r->index = 45;
+            op_w.index = 45;
             opening_bg_move_broadcast(45);
         }
         break;
     case 5:
-        r->mv_ctr++;
-        if (r->mv_ctr >= t[r->r_no_2]) {
-            r->r_no_2++;
+        op_w.mv_ctr++;
+        if (op_w.mv_ctr >= t[op_w.r_no_2]) {
+            op_w.r_no_2++;
             op_work_clear();
-            r->index = 46;
+            op_w.index = 46;
             opening_bg_move_broadcast(46);
         }
         break;
     case 6:
-        r->mv_ctr++;
-        if (r->mv_ctr >= t[r->r_no_2]) {
-            r->r_no_2++;
+        op_w.mv_ctr++;
+        if (op_w.mv_ctr >= t[op_w.r_no_2]) {
+            op_w.r_no_2++;
             op_work_clear();
-            r->index = 47;
+            op_w.index = 47;
             opening_bg_move_broadcast(47);
         }
         break;
     case 7:
-        r->mv_ctr++;
-        if (r->mv_ctr >= t[r->r_no_2]) {
-            r->r_no_2++;
+        op_w.mv_ctr++;
+        if (op_w.mv_ctr >= t[op_w.r_no_2]) {
+            op_w.r_no_2++;
             op_work_clear();
-            r->index = 48;
+            op_w.index = 48;
             opening_bg_move_broadcast(48);
         }
         break;
     case 8:
-        r->mv_ctr++;
-        if (r->mv_ctr >= t[r->r_no_2]) {
-            r->r_no_2++;
+        op_w.mv_ctr++;
+        if (op_w.mv_ctr >= t[op_w.r_no_2]) {
+            op_w.r_no_2++;
             op_work_clear();
-            r->index = 49;
+            op_w.index = 49;
             opening_bg_move_broadcast(49);
         }
         break;
     case 9:
-        r->mv_ctr++;
-        if (r->mv_ctr >= t[r->r_no_2]) {
-            r->r_no_2++;
+        op_w.mv_ctr++;
+        if (op_w.mv_ctr >= t[op_w.r_no_2]) {
+            op_w.r_no_2++;
             op_work_clear();
-            r->index = 50;
+            op_w.index = 50;
             opening_bg_move_broadcast(50);
         }
         break;
     case 10:
-        r->mv_ctr++;
-        if (r->mv_ctr >= t[r->r_no_2]) {
-            r->r_no_2++;
+        op_w.mv_ctr++;
+        if (op_w.mv_ctr >= t[op_w.r_no_2]) {
+            op_w.r_no_2++;
             op_work_clear();
-            r->index = 51;
+            op_w.index = 51;
             opening_bg_move_broadcast(51);
         }
         break;
     case 11:
-        r->mv_ctr++;
-        if (r->mv_ctr >= t[r->r_no_2]) {
-            r->r_no_2++;
+        op_w.mv_ctr++;
+        if (op_w.mv_ctr >= t[op_w.r_no_2]) {
+            op_w.r_no_2++;
             op_work_clear();
-            r->index = 52;
+            op_w.index = 52;
             opening_bg_move_broadcast(52);
         }
         break;
     case 12:
-        r->mv_ctr++;
-        if (r->mv_ctr >= t[r->r_no_2]) {
-            r->r_no_2++;
+        op_w.mv_ctr++;
+        if (op_w.mv_ctr >= t[op_w.r_no_2]) {
+            op_w.r_no_2++;
             op_work_clear();
-            r->index = 53;
+            op_w.index = 53;
             opening_bg_move_broadcast(53);
         }
         break;
@@ -1533,11 +1534,27 @@ s16 r_index;
 
 /* provisional name */
 void op_bg0_move(s16 r_index) {
-    OP_BG0_JP op_bg0_move_jp;
-    op_bg0_move_jp = op_bg0_jp_tbl;
+    void (*op_bg0_move_jp[94])() = {
+        op_bg0_0000, op_bg0_0001, op_bg0_0000, op_bg0_0001, op_bg0_0001, op_bg0_0001,
+        op_bg0_0000, op_bg0_0001, op_bg0_0015, op_bg0_0001, op_bg0_0000, op_bg0_0001,
+        op_bg0_0001, op_bg0_0000, op_bg0_0015, op_bg0_0001, op_bg0_0000, op_bg0_0000,
+        op_bg0_0001, op_bg0_0001, op_bg0_0000, op_bg0_0001, op_bg0_0001, op_bg0_0000,
+        op_bg0_0000, op_bg0_0000, op_bg0_0000, op_bg0_0000, op_bg0_0000, op_bg0_0000,
+        op_bg0_0001, op_bg0_0001, op_bg0_0001, op_bg0_0001, op_bg0_0000, op_bg0_0001,
+        op_bg0_0001, op_bg0_0000, op_bg0_0001, op_bg0_0001, op_bg0_0000, op_bg0_0002,
+        op_bg0_0003, op_bg0_0002, op_bg0_0003, op_bg0_0002, op_bg0_0003, op_bg0_0002,
+        op_bg0_0003, op_bg0_0002, op_bg0_0003, op_bg0_0002, op_bg0_0003, op_bg0_0000,
+        op_bg0_0004, op_bg0_0001, op_bg0_0001, op_bg0_0004, op_bg0_0005, op_bg0_0002,
+        op_bg0_0001, op_bg0_0002, op_bg0_0001, op_bg0_0002, op_bg0_0006, op_bg0_0001,
+        op_bg0_0001, op_bg0_0001, op_bg0_0007, op_bg0_0008, op_bg0_0000, op_bg0_0000,
+        op_bg0_0001, op_bg0_0001, op_bg0_0000, op_bg0_0001, op_bg0_0001, op_bg0_0000,
+        op_bg0_0000, op_bg0_0004, op_bg0_0001, op_bg0_0004, op_bg0_0001, op_bg0_0002,
+        op_bg1_0003_move, op_bg0_0002, op_bg0_0010, op_bg0_0002, op_bg0_0011, op_bg0_0012,
+        op_bg0_0013, op_bg0_0014, op_bg0_0002, op_bg0_0016,
+    };
     opw_ptr = &op_w.bgw[0];
     bgw_ptr = &bg_w.bgw[0];
-    op_bg0_move_jp.jp[r_index](r_index);
+    op_bg0_move_jp[r_index](r_index);
 }
 
 
@@ -2438,10 +2455,14 @@ void opening_capcom_logo_draw(void) {
     Scrn_Move_Set(1, 0x200 - bg_w.pos_offset, 0);
     Family_Set_W(1, -(0x200 - bg_w.pos_offset) & 0x3FF, 0x300);
     op_end_flag = 1;
-    bg_stop2 = bg_stop = 0;
-    seraph_flag = akebono_flag = 0;
-    sa_pa_flag = aku_flag = 0;
-    bg_w.chase_flag = bg_app = 0;
+    bg_stop = 0;
+    bg_stop2 = 0;
+    akebono_flag = 0;
+    seraph_flag = 0;
+    aku_flag = 0;
+    sa_pa_flag = 0;
+    bg_app = 0;
+    bg_w.chase_flag = 0;
 }
 
 /* provisional name */
@@ -2524,9 +2545,8 @@ s32 Ending_main(s16 pl_num) {
 
 
 
+#pragma inline(end_main_move)
 void normal_ending(s16 pl_num) {
-    s16* timer;
-    s32 ofs;
     switch (end_w.r_no_0) {
     case 0:
         end_w.r_no_0 += 1;
@@ -2538,19 +2558,20 @@ void normal_ending(s16 pl_num) {
         card_win_check(1);
         break;
     case 1:
-        if (!(Cover_Timer -= 1)) {
-            end_w.r_no_0 += 1;
-            load_any_color(end_color_tbl[end_w.type]);
-            tilemap_fill_all(0, 32);
-            Redisp_Continue_Count(0);
-            Redisp_Continue_Count(1);
-            Switch_Screen_Init(0, 1);
-            end_main_jp[pl_num](pl_num);
-            card_msg_disp();
-            load_any_color(0x93);
-            load_char_gfx(0x9DC8, 1);
-            load_char_gfx(0xA0F8, 1);
+        if (Cover_Timer -= 1) {
+            break;
         }
+        end_w.r_no_0 += 1;
+        load_any_color(end_color_tbl[end_w.type]);
+        tilemap_fill_all(0, 32);
+        Redisp_Continue_Count(0);
+        Redisp_Continue_Count(1);
+        Switch_Screen_Init(0, 1);
+        end_main_jp[pl_num](pl_num);
+        card_msg_disp();
+        load_any_color(0x93);
+        load_char_gfx(0x9DC8, 1);
+        load_char_gfx(0xA0F8, 1);
         break;
     case 2:
         if (Switch_Screen_Revival()) {
@@ -2560,8 +2581,7 @@ void normal_ending(s16 pl_num) {
         }
         break;
     case 3:
-        end_main_jp[pl_num](pl_num);
-        end_fade_bgm();
+        end_main_move(pl_num);
         card_msg_disp();
         if (end_w.end_flag) {
             end_w.r_no_0 += 1;
@@ -2570,8 +2590,7 @@ void normal_ending(s16 pl_num) {
         } else if (Cut_Cut_Cut_t()) {
             end_w.timer = 0;
             effect_work_kill(4, 0x9F);
-            end_main_jp[pl_num](pl_num);
-            end_fade_bgm();
+            end_main_move(pl_num);
             end_fade_flag = 0;
         }
         Forbid_Break = -1;
@@ -2635,18 +2654,15 @@ void normal_ending(s16 pl_num) {
         break;
     case 10:
         end_w.r_no_0 += 1;
-        ofs = WINNER;
-        ofs *= sizeof(NAME_WK);
-        timer = (s16*)((u8*)name_wk + (s8)ofs + 0x1C);
-        if (*timer >= 1) {
-            *timer = 0;
+        if (name_wk[WINNER].timer > 0) {
+            name_wk[WINNER].timer = 0;
             end_name_cut[WINNER] = 1;
             end_w.timer = 180;
             bgm_fade_out(0xB6);
-        } else {
-            end_w.timer = 60;
-            bgm_fade_out(0x222);
+            break;
         }
+        end_w.timer = 60;
+        bgm_fade_out(0x222);
         break;
     case 11:
         end_w.timer--;
@@ -2747,16 +2763,15 @@ void common_end_init01(void) {
     for (i = 0; i < bg_w.scno; i++) {
         scrn_attr_set(i, 0, 31);
         scrn_reg_w[i].ctrl &= 0xFE7F;
-        continue;
     }
     bg_w.scr_stop = 0;
     bg_w.frame_flag = 0;
     bg_w.dmm0[0] = 0;
     bg_w.bg_f_x = 9;
-    bg_w.old_bg_f[0] = 9;
+    bg_w.old_bg_f_x = 9;
     bg_w.bg_f_y = 9;
-    bg_w.old_bg_f[1] = 9;
-    bg_w.dmm1[0] = 1;
+    bg_w.old_bg_f_y = 9;
+    bg_w.dmm1 = 1;
     bg_w.bg2_sp_x2 = bg_w.bg2_sp_x = 0;
     bg_sp_work = 0;
     bg_land_flag = 0;
@@ -2800,18 +2815,14 @@ void end_fam_set(s16 i) {
 
 void end_fam_set2(void) {
     s16 i;
+    s32 pos_work_x;
+    s32 pos_work_y;
     for (i = 0; i < bg_w.scno; i++) {
-        BGW* l = &bg_w.bgw[i];
-        s32 a, b, m;
-        a = l->position_x;
-        b = l->position_y;
-        a = -a;
-        m = 0x3FF;
-        a &= m;
-        b &= m;
-        b = (0x300 - b) & m;
-        Family_Set_W(i + 1, a, b);
-        continue;
+        pos_work_x = bg_w.bgw[i].position_x;
+        pos_work_y = bg_w.bgw[i].position_y;
+        pos_work_x = -pos_work_x & 0x3FF;
+        pos_work_y = (0x300 - (pos_work_y & 0x3FF)) & 0x3FF;
+        Family_Set_W(i + 1, pos_work_x, pos_work_y);
     }
 }
 
@@ -2836,7 +2847,6 @@ void end_bg_pos_hosei2(void) {
         bg_w.bgw[bg_no].position_x = pos_work & 0x3FF;
         pos_work = bg_w.bgw[bg_no].abs_y & 0x3FF;
         bg_w.bgw[bg_no].position_y = pos_work;
-        continue;
     }
 }
 
@@ -2860,7 +2870,6 @@ void end_scn_pos_set2(void) {
                       bg_w.bgw[bg_no].xy[1].disp.pos);
         bg_w.bgw[bg_no].wxy[0].cal = bg_w.bgw[bg_no].xy[0].cal;
         bg_w.bgw[bg_no].wxy[1].cal = bg_w.bgw[bg_no].xy[1].cal;
-        continue;
     }
 }
 
@@ -2890,7 +2899,6 @@ void end_reset_etc(void) {
         bg_w.bgw[i].r_no_1 = 0;
         bg_w.bgw[i].abs_x = bg_w.bgw[i].xy[0].disp.pos = 0x200;
         bg_w.bgw[i].abs_y = bg_w.bgw[i].xy[1].disp.pos = 0;
-        continue;
     }
 }
 

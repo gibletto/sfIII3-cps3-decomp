@@ -183,15 +183,15 @@ void effect_01_move(WORK_Other* ewk) {
         ewk->wu.cgromtype = mwk->cgromtype;
         ewk->wu.cg_number = ewk->wu.old_cgnum = 0;
         ewk->wu.blink_timing = mwk->blink_timing;
-        ewk->wu.cg_olc.olc_ix[ewk->wu.type] = 0;
-        return;
+        goto clear_ix;
     case 1:
         if (ewk->wu.dead_f == 1 || mwk->olc_work_ix[ewk->wu.type] != ewk->wu.myself) {
             ewk->wu.disp_flag = 0;
             ewk->wu.routine_no[0]++;
-            return;
+            break;
         }
         if (mwk->cg_olc.olc_ix[ewk->wu.type] == 0) {
+        clear_ix:
             ewk->wu.cg_olc.olc_ix[ewk->wu.type] = 0;
             return;
         }

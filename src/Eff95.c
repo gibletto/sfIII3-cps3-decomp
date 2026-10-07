@@ -103,12 +103,12 @@ void effect_95_move(WORK_Other* ewk) {
     case 2:
         break;
     case 3:
-        if (!Ck_Range_Out_S(ewk, 1, 64)) {
-            break;
+        if (Ck_Range_Out_S(ewk, 1, 64)) {
+            ewk->wu.routine_no[0]++;
+            ewk->wu.disp_flag = 0;
+            return;
         }
-        ewk->wu.routine_no[0]++;
-        ewk->wu.disp_flag = 0;
-        return;
+        break;
     default:
         all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);

@@ -460,10 +460,11 @@ void end_501_0011(void) {
         bg_cell_write(1, 0x40, 17, (u32)end_500_scrn_data, 0, 0x220);
         bg_cell_write(1, 0x1000, 16, (u32)end_500_scrn_data, 0, 0x220);
         bg_cell_write(1, 0x1040, 17, (u32)end_500_scrn_data, 0, 0x220);
-        if (Request_Fade(22, 0)) {
-            bgw_ptr->r_no_1++;
-            end_no_cut = 1;
+        if (!Request_Fade(22, 0)) {
+            break;
         }
+        bgw_ptr->r_no_1++;
+        end_no_cut = 1;
         break;
     case 2:
         if (end_fade_complete()) {

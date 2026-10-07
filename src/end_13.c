@@ -151,11 +151,12 @@ void end_d00_3000(void) {
         bgw_ptr->xy[1].disp.pos = end_d_pos[end_w.r_no_2][1];
         effect_E6_init(0x35);
     case 1:
-        if (Request_Fade(43, 0)) {
-            end_no_cut = 1;
-            bgw_ptr->r_no_1++;
-            Rewrite_End_Message(1);
+        if (!Request_Fade(43, 0)) {
+            break;
         }
+        end_no_cut = 1;
+        bgw_ptr->r_no_1++;
+        Rewrite_End_Message(1);
         break;
     case 2:
         if (end_fade_complete()) {

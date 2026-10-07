@@ -160,11 +160,12 @@ void end_1600_2000(void) {
         bgw_ptr->xy[1].disp.pos = end_16_pos[end_w.r_no_2][1];
         bgw_ptr->abs_x = 512;
     case 1:
-        if (Request_Fade(79, 0)) {
-            bgw_ptr->r_no_1++;
-            end_no_cut = 1;
-            Rewrite_End_Message(2);
+        if (!Request_Fade(79, 0)) {
+            break;
         }
+        bgw_ptr->r_no_1++;
+        end_no_cut = 1;
+        Rewrite_End_Message(2);
         break;
     case 2:
         if (end_fade_complete()) {
@@ -234,9 +235,9 @@ void end_1600_5000(void) {
             bgw_ptr->rewrite_flag ^= 1;
             if (bgw_ptr->rewrite_flag) {
                 bgw_ptr->xy[0].disp.pos = 768;
-                break;
+            } else {
+                bgw_ptr->xy[0].disp.pos = 256;
             }
-            bgw_ptr->xy[0].disp.pos = 256;
         }
         break;
     }

@@ -222,8 +222,8 @@ void Com_Free(PLW* wk) {
 
 
 void Com_Before_Follow(PLW* wk) {
-    s32 i = wk->wu.id;
-    Lever_Buff[i] = Lever_LR[i];
+    u16 lever = Lever_LR[wk->wu.id];
+    Lever_Buff[wk->wu.id] = lever;
     if (Check_Damage(wk)) {
         return;
     }
@@ -254,8 +254,8 @@ void Com_Before_Follow(PLW* wk) {
 
 
 void Com_Before_Passive(PLW* wk) {
-    s32 i = wk->wu.id;
-    Lever_Buff[i] = Lever_LR[i];
+    u16 lever = Lever_LR[wk->wu.id];
+    Lever_Buff[wk->wu.id] = lever;
     if (Check_Damage(wk)) {
         return;
     }

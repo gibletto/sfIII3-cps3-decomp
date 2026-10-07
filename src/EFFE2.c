@@ -54,8 +54,7 @@ void effect_E2_move(WORK_Other* ewk) {
                         ewk->wu.disp_flag = 0;
                         ewk->wu.routine_no[0] = 2;
                         break;
-                    }
-                    if (ewk->wu.cg_type == 1) {
+                    } else if (ewk->wu.cg_type == 1) {
                         ewk->wu.routine_no[1] = 1;
                         sort_push_request8(&ewk->wu);
                         break;
@@ -85,7 +84,7 @@ void effect_E2_move(WORK_Other* ewk) {
         default:
             if (EXE_flag == 0 && Game_pause == 0) {
                 char_move(&ewk->wu);
-                if (ewk->wu.cg_type != 0) {
+                if (ewk->wu.cg_type) {
                     if (ewk->wu.cg_type == 0xFF) {
                         ewk->wu.disp_flag = 0;
                         ewk->wu.routine_no[0] = 2;

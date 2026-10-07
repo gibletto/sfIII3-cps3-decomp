@@ -37,14 +37,13 @@ void effect_04_move(WORK_Other* ewk) {
             ewk->wu.routine_no[0] = 5;
             break;
         }
-        if (ewk->wu.old_rno[2] == 0) {
-            break;
+        if (ewk->wu.old_rno[2]) {
+            ewk->wu.routine_no[0]++;
+            ewk->wu.old_rno[1] = 6;
+            ewk->wu.old_rno[3] = 0;
+            ewk->wu.extra_col = 0;
+            ewk->wu.old_rno[2] = 0;
         }
-        ewk->wu.routine_no[0]++;
-        ewk->wu.old_rno[1] = 6;
-        ewk->wu.old_rno[3] = 0;
-        ewk->wu.extra_col = 0;
-        ewk->wu.old_rno[2] = 0;
         break;
     case 2:
         if (Break_Into) {
@@ -71,11 +70,10 @@ void effect_04_move(WORK_Other* ewk) {
             break;
         }
         ewk->wu.old_rno[1]--;
-        if (ewk->wu.old_rno[1] > 0) {
-            break;
+        if (ewk->wu.old_rno[1] <= 0) {
+            ewk->wu.routine_no[0]++;
+            ewk->wu.old_rno[2] = 0;
         }
-        ewk->wu.routine_no[0]++;
-        ewk->wu.old_rno[2] = 0;
         break;
     case 4:
         if (Break_Into) {

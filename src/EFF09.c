@@ -713,13 +713,13 @@ void eff09_12000(WORK_Other* ewk) {
         ewk->wu.old_rno[1]--;
         if (ewk->wu.old_rno[1] < 0) {
             ewk->wu.routine_no[1]++;
-            break;
+        } else {
+            char_move(&ewk->wu);
+            add_x_sub(ewk);
+            add_y_sub(ewk);
+            suzi_sync_pos_set(ewk);
+            sort_push_request(&ewk->wu);
         }
-        char_move(&ewk->wu);
-        add_x_sub(ewk);
-        add_y_sub(ewk);
-        suzi_sync_pos_set(ewk);
-        sort_push_request(&ewk->wu);
         break;
     case 3:
         ewk->wu.routine_no[1]++;
@@ -1253,12 +1253,10 @@ void eff09_23000(WORK_Other* ewk) {
         pl_eff_trans_entry(ewk);
         break;
     default:
-        goto dflt;
+        all_cgps_put_back(ewk);
+        push_effect_work(&ewk->wu);
+        break;
     }
-    return;
-dflt:
-    all_cgps_put_back(ewk);
-    push_effect_work(&ewk->wu);
 }
 
 
@@ -1324,12 +1322,10 @@ void eff09_24000(WORK_Other* ewk) {
         pl_eff_trans_entry(ewk);
         break;
     default:
-        goto dflt;
+        all_cgps_put_back(ewk);
+        push_effect_work(&ewk->wu);
+        break;
     }
-    return;
-dflt:
-    all_cgps_put_back(ewk);
-    push_effect_work(&ewk->wu);
 }
 
 
@@ -1521,8 +1517,8 @@ s32 effect_09_init(WORK_Other* mk, s8 kind) {
     }
     ewk = (WORK_Other*)frw[ix];
     ewk->wu.type = kind;
-    ewk->wu.be_flag = 1;
     data = (const s16*)((const u8*)eff09_data + (s8)((s8)ewk->wu.type * 18));
+    ewk->wu.be_flag = 1;
     ewk->wu.id = 9;
     ewk->wu.work_id = 16;
     ewk->master_id = mk->wu.id;
@@ -1536,7 +1532,7 @@ s32 effect_09_init(WORK_Other* mk, s8 kind) {
     ewk->wu.my_col_code = *data++;
     ewk->wu.xyz[0].disp.pos = *data++;
     ewk->wu.xyz[1].disp.pos = *data++;
-    ewk->wu.position_z = ewk->wu.my_priority = *data++;
+    ewk->wu.my_priority = ewk->wu.position_z = *data++;
     ewk->wu.char_index = *data++;
     ewk->wu.hit_stop = *data++;
     ewk->wu.sync_suzi = *data++;

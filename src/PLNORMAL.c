@@ -22,7 +22,6 @@
 #include "EFFG6.h"
 #include "EFFI3.h"
 #include "Grade.h"
-#include "PLS01.h"
 #include "win_pl.h"
 #include "PLNORMAL.h"
 
@@ -619,10 +618,10 @@ void Normal_39000(PLW* wk) {
     }
     if (wk->wu.routine_no[3]) {
         char_move((WORK*)wk);
-        return;
+    } else {
+        wk->wu.routine_no[3]++;
+        set_char_move_init((WORK*)wk, 0, 23);
     }
-    wk->wu.routine_no[3]++;
-    set_char_move_init((WORK*)wk, 0, 23);
 }
 
 
@@ -666,13 +665,13 @@ void Normal_42000(PLW* wk) {
         }
         break;
     case 1:
-        if (1) {
-            wk->wu.routine_no[3]++;
-            char_move_wca((WORK*)wk);
-        } else {
-        case 2:
-            char_move((WORK*)wk);
-        }
+        wk->wu.routine_no[3]++;
+        char_move_wca((WORK*)wk);
+        goto move_done;
+        break;
+    case 2:
+        char_move((WORK*)wk);
+    move_done:
         if (wk->wu.cg_type == 1) {
             wk->wu.routine_no[3]++;
             add_mvxy_speed((WORK*)wk);
@@ -716,20 +715,19 @@ void Normal_47000(PLW* wk) {
         grade_add_grap_def(wk->wu.id);
         break;
     case 1:
-        if (1) {
-            wk->wu.routine_no[3]++;
-            char_move_wca(&wk->wu);
-        } else {
-        case 2:
-            char_move(&wk->wu);
-        }
+        wk->wu.routine_no[3]++;
+        char_move_wca(&wk->wu);
+        goto move_done;
+        break;
+    case 2:
+        char_move(&wk->wu);
+    move_done:
         if (wk->wu.cg_type == 1) {
             wk->wu.cg_type = 0;
             wk->wu.routine_no[3]++;
             add_mvxy_speed(&wk->wu);
             if (datix[2]) {
                 effect_G6_init(&wk->wu, wk->wu.weight_level);
-                break;
             }
         }
         break;
@@ -758,13 +756,13 @@ void Normal_48000(PLW* wk) {
         wk->wu.dm_stop = wk->wu.dm_quake = 0;
         break;
     case 1:
-        if (1) {
-            wk->wu.routine_no[3]++;
-            char_move_wca(&wk->wu);
-        } else {
-        case 2:
-            char_move(&wk->wu);
-        }
+        wk->wu.routine_no[3]++;
+        char_move_wca(&wk->wu);
+        goto move_done;
+        break;
+    case 2:
+        char_move(&wk->wu);
+    move_done:
         if (wk->wu.cg_type == 1) {
             wk->wu.cg_type = 0;
             wk->wu.routine_no[3]++;
@@ -794,15 +792,15 @@ void Normal_50000(PLW* wk) {
         wk->wu.hit_stop = -17;
         wk->wu.hit_quake = 8;
         wk->wu.dm_stop = wk->wu.dm_quake = 0;
-        return;
+        break;
     case 1:
-        if (1) {
-            wk->wu.routine_no[3]++;
-            char_move_wca(&wk->wu);
-        } else {
-        case 2:
-            char_move(&wk->wu);
-        }
+        wk->wu.routine_no[3]++;
+        char_move_wca(&wk->wu);
+        goto move_done;
+        break;
+    case 2:
+        char_move(&wk->wu);
+    move_done:
         if (wk->wu.cg_type == 1) {
             wk->wu.cg_type = 0;
             wk->wu.routine_no[3]++;
@@ -836,7 +834,7 @@ void Normal_52000(PLW* wk) {
     }
     switch (wk->wu.routine_no[3]) {
     case 0:
-        wk->wu.routine_no[3] = wk->wu.routine_no[3] + 1;
+        wk->wu.routine_no[3]++;
         wk->extra_jump = 1;
         remake_sankaku_tobi_mvxy(&wk->wu, wk->micchaku_flag);
         set_char_move_init(&wk->wu, 0, 48);

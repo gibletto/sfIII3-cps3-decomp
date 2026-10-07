@@ -140,10 +140,11 @@ void end_300_0002(void) {
         }
         break;
     case 2:
-        if (Request_Fade(105, 0)) {
-            bgw_ptr->r_no_1++;
-            end_no_cut = 1;
+        if (Request_Fade(105, 0) == 0) {
+            break;
         }
+        bgw_ptr->r_no_1++;
+        end_no_cut = 1;
         break;
     case 3:
         if (end_fade_complete()) {

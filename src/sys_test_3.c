@@ -267,7 +267,7 @@ void memtest_color_ram(void) {
 
 /* provisional name */
 void memtest_character_ram(void) {
-    register s32 err;
+    register u32 err;
     register u32 bank;
     register s32 col;
     if (screen_mode == 7) {
@@ -279,8 +279,7 @@ void memtest_character_ram(void) {
     _builtin_set_imask(15);
     for (bank = 0; bank < 8; bank++) {
         *(volatile u16*)(VIDEO_REG + 0x86) = bank;
-        err = memtest_pattern_stride_8((volatile u16*)CHARACTER_RAM, 0x100000);
-        if (err) {
+        if ((err = memtest_pattern_stride_8((volatile u16*)CHARACTER_RAM, 0x100000)) != 0) {
             break;
         }
     }
@@ -412,7 +411,7 @@ s32 cd_check_drive_inquiry(void) {
         }
     }
     while (1) {
-        rc = scsi_inquiry(36, 1, scsi_mode_buf);
+        rc = scsi_inquiry(36, 1, (u8*)&scsi_inquiry_data);
         if ((rc = scsi_decode_sense_key(rc)) == -1) {
             return -1;
         }
@@ -420,7 +419,7 @@ s32 cd_check_drive_inquiry(void) {
             break;
         }
     }
-    if (scsi_mode_buf[0] != 5) {
+    if (scsi_inquiry_data.device_type != 5) {
         return -1;
     }
     return 0;
@@ -446,7 +445,7 @@ s32 cd_check_disc_id(void) {
         }
     }
     while (1) {
-        rc = scsi_read_capacity(8, scsi_capacity_buf);
+        rc = scsi_read_capacity(8, &scsi_capacity);
         if ((rc = scsi_decode_sense_key(rc)) == -1) {
             return -1;
         }
@@ -454,7 +453,7 @@ s32 cd_check_disc_id(void) {
             break;
         }
     }
-    blen = scsi_capacity_buf[1];
+    blen = scsi_capacity.block_len;
     last = (blen >> 8) - 1;
     while (1) {
         scsi_send_cdb_bytes(10, cdb_read_toc);
@@ -527,27 +526,27 @@ void memtest_simm_quick(void) {
     s32 j;
     u32 sum;
     s32 col;
-    u8* p = ((u8*)0x1FED4);
-    u8* q;
+    u32 p = 0x1FED4;
+    u32 q;
     if (screen_mode == 7) {
         col = 4;
     } else {
         col = 0;
     }
     for (slot = 1; slot < 8; slot++) {
-        if (p[0] != 0) {
+        if (*(u8*)p != 0) {
             tilemap_print_string_attr(col + 30, slot + 16, 2, memtest_checking_str);
             _builtin_set_imask(15);
-            if (p[0] == 1) {
+            if (*(u8*)p == 1) {
                 sum = simm_quick_checksum(slot, 0);
             } else {
                 sum = simm_quick_checksum(slot, 1);
             }
-            if (sum % 256 != p[2]) {
+            if (sum % 256 != *(u8*)(p + 2)) {
                 memtest_error = 1;
-                q = ((u8*)0x1FED4);
+                q = 0x1FED4;
                 for (j = 1; j < 8; j++) {
-                    if (q[0] != 0 && sum % 256 == q[2]) {
+                    if (*(u8*)q != 0 && sum % 256 == *(u8*)(q + 2)) {
                         break;
                     }
                     q += 4;
@@ -596,7 +595,7 @@ void simm_check_run(void) {
     s32 slot;
     u32 sum;
     s32 col;
-    u8* p = ((u8*)0x1FED4);
+    u32 p = 0x1FED4;
     if (screen_mode == 7) {
         col = 4;
     } else {
@@ -605,15 +604,15 @@ void simm_check_run(void) {
     tilemap_fill_all(0, 32);
     tilemap_print_string(col, 0, 0xFFFF, memtest_simm_scr);
     for (slot = 1; slot < 8; slot++) {
-        if (p[0] != 0) {
+        if (*(u8*)p != 0) {
             tilemap_print_string_attr(col + 30, slot * 2 + 3, 2, memtest_checking_str);
             _builtin_set_imask(15);
-            if (p[0] == 1) {
+            if (*(u8*)p == 1) {
                 sum = simm_full_checksum(slot, 0);
             } else {
                 sum = simm_full_checksum(slot, 1);
             }
-            if (sum % 256 != p[1]) {
+            if (sum % 256 != *(u8*)(p + 1)) {
                 memtest_error = 1;
                 tilemap_print_string_attr(col + 30, slot * 2 + 3, 8, memtest_ng_str);
             } else {
@@ -1071,7 +1070,7 @@ s32 scsi_send_cdb_and_read(s32 lba, u8* buf) {
     delay_cycles(17);
     (*(volatile u16*)(CD_REG + 0x2)) = (lba & 0xFF00) >> 8;
     delay_cycles(17);
-    (*(volatile u16*)(CD_REG + 0x2)) = lba & 0xFF;
+    (*(volatile u16*)(CD_REG + 0x2)) = lba % 256U;
     delay_cycles(17);
     (*(volatile u16*)CD_REG) = 21;
     delay_cycles(17);
@@ -1121,18 +1120,18 @@ s32 scsi_send_cdb_and_read(s32 lba, u8* buf) {
         }
         (*(volatile u16*)CD_REG) = 23;
         delay_cycles(17);
-        phase = (*(volatile u16*)(CD_REG + 0x2)) & 0xFF;
+        phase = (s16)(*(volatile u16*)(CD_REG + 0x2)) % 256U;
         if (phase == 22) {
             break;
         }
         (*(volatile u16*)CD_REG) = 19;
         delay_cycles(17);
-        addr = ((*(volatile u16*)(CD_REG + 0x2)) & 0xFF) << 16;
-        addr |= ((*(volatile u16*)(CD_REG + 0x2)) & 0xFF) << 8;
-        addr |= (*(volatile u16*)(CD_REG + 0x2)) & 0xFF;
+        addr = ((*(volatile u16*)(CD_REG + 0x2)) % 256U) << 16;
+        addr |= ((*(volatile u16*)(CD_REG + 0x2)) % 256U) << 8;
+        addr |= (*(volatile u16*)(CD_REG + 0x2)) % 256U;
         (*(volatile u16*)CD_REG) = 16;
         delay_cycles(17);
-        msg = (*(volatile u16*)(CD_REG + 0x2)) & 0xFF;
+        msg = (s16)(*(volatile u16*)(CD_REG + 0x2)) % 256U;
         switch (phase) {
         case 75:
             (*(volatile u16*)CD_REG) = 16;
@@ -1155,7 +1154,7 @@ s32 scsi_send_cdb_and_read(s32 lba, u8* buf) {
             }
             while (((*(volatile u16*)CD_REG) & 0x80) == 0) {
             }
-            phase = (*(volatile u16*)(CD_REG + 0x2)) & 0xFF;
+            phase = (s16)(*(volatile u16*)(CD_REG + 0x2)) % 256U;
             if (phase == 128) {
                 (*(volatile u16*)CD_REG) = 16;
                 delay_cycles(17);
@@ -1181,7 +1180,7 @@ s32 scsi_send_cdb_and_read(s32 lba, u8* buf) {
             delay_cycles(17);
             (*(volatile u16*)(CD_REG + 0x2)) = (addr & 0xFF00) >> 8;
             delay_cycles(17);
-            (*(volatile u16*)(CD_REG + 0x2)) = addr & 0xFF;
+            (*(volatile u16*)(CD_REG + 0x2)) = addr % 256U;
             delay_cycles(17);
             break;
         default:
@@ -1200,7 +1199,7 @@ s32 scsi_send_cdb_and_read(s32 lba, u8* buf) {
         }
         (*(volatile u16*)CD_REG) = 23;
         delay_cycles(17);
-        phase = (*(volatile u16*)(CD_REG + 0x2)) & 0xFF;
+        phase = (s16)(*(volatile u16*)(CD_REG + 0x2)) % 256U;
         if (phase != 133) {
             (*(volatile u16*)CD_REG) = 15;
             delay_cycles(17);
@@ -1223,8 +1222,9 @@ s32 scsi_decode_sense_key(s32 status) {
     case -1:
         if (scsi_error == 2) {
             return -1;
+        } else {
+            return 1;
         }
-        return 1;
         break;
     case 0:
         return 0;
@@ -1246,6 +1246,7 @@ s32 scsi_decode_sense_key(s32 status) {
     case 1:
         scsi_error = 0;
         return 0;
+        break;
     case 2:
         switch (scsi_sense_asc) {
         case 4:

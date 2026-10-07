@@ -133,7 +133,6 @@ void exset_char_move_init(WORK* wk, s16 koc, s16 index) {
     src = wk->set_char_ad + wk->cg_ix;
     for (i = 0; i < wk->cgd_type; i++) {
         *dst++ = *src++;
-        continue;
     }
     wk->cg_ctr = now_ctr;
     wk->cmoa.koc = wk->now_koc;
@@ -402,7 +401,6 @@ loop:
         to_ram = (u32*)&wk->wu.cg_wca_ix;
         for (i = 0; i < now_cgd - wk->wu.cgd_type; i++) {
             *--to_ram = 0;
-            continue;
         }
     }
     wk->wu.cg_ix -= wk->wu.cgd_type;

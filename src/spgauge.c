@@ -173,19 +173,20 @@ void spgauge_cont_main(void) {
         wipe_check();
         Old_Stop_SG = Stop_SG;
         return;
-    }
-    if (Old_Stop_SG) {
-        Old_Stop_SG = 0;
-        Exec_Wipe_F = 0;
-        time_clear[0] = 0;
-        time_clear[1] = 0;
-    }
-    sa_time_moji_send();
-    if (gauge_stop_flag[0] == 0) {
-        spgauge_control(0);
-    }
-    if (gauge_stop_flag[1] == 0) {
-        spgauge_control(1);
+    } else {
+        if (Old_Stop_SG) {
+            Old_Stop_SG = 0;
+            Exec_Wipe_F = 0;
+            time_clear[0] = 0;
+            time_clear[1] = 0;
+        }
+        sa_time_moji_send();
+        if (gauge_stop_flag[0] == 0) {
+            spgauge_control(0);
+        }
+        if (gauge_stop_flag[1] == 0) {
+            spgauge_control(1);
+        }
     }
 }
 
@@ -254,10 +255,10 @@ void spgauge_control(s8 Spg_Num) {
 void wipe_check(void) {
     PLW* pl;
     if (Old_Stop_SG) {
-        if (((u8)Exec_Wipe)) {
+        if (Exec_Wipe != 0) {
             return;
         }
-        if (Exec_Wipe_F) {
+        if (Exec_Wipe_F != 0) {
             return;
         }
         Exec_Wipe_F = 1;
@@ -566,7 +567,7 @@ void sa_moji_trans(Stpl_Num, Kind, OnOff)
     switch (Kind) {
     case 0:
         if (OnOff) {
-            spg = (SPG_DAT*)((s8*)spg_dat + (s8)((s8)Stpl_Num * sizeof(SPG_DAT)));
+            spg = &spg_dat[Stpl_Num];
             spg->current_spg = spg->spg_dotlen;
             sa_waku_trans(Stpl_Num, Stpl_Num);
             max_mark_write(Stpl_Num, spg->spg_len, (s16)spg->mchar, (s16)spg->mass_len, spg->mass_odd);

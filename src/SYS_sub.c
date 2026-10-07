@@ -368,9 +368,9 @@ void Clear_Flash_No(void) {
 void challenger_banner_clear(void) {
     Forbid_Break = 1;
     if (New_Challenger) {
-        tilemap_print_string_attr(30, 0, 18, banner_blank_msg);
+        tilemap_print_string_attr(30, 0, 18, "                  ");
     } else {
-        tilemap_print_string_attr(0, 0, 18, banner_blank_msg);
+        tilemap_print_string_attr(0, 0, 18, "                  ");
     }
 }
 
@@ -511,7 +511,6 @@ s32 insert_ranking_wins(s16 PL_id) {
             Ranking_Data[i + 5] = Present_Data[PL_id];
             return i;
         }
-        continue;
     }
     return -1;
 }
@@ -605,8 +604,9 @@ s32 Button_Cut_Hold(s16* timer, s16 first, s16 repeat) {
         if (repeat >= *timer) {
             Reserve_Cut = 0;
             return 1;
+        } else {
+            return 0;
         }
-        return 0;
     }
     side = cut_button_side();
     if (side) {
@@ -618,23 +618,25 @@ s32 Button_Cut_Hold(s16* timer, s16 first, s16 repeat) {
         if (repeat >= *timer) {
             Reserve_Cut = 0;
             return 1;
+        } else {
+            Reserve_Cut = 1;
+            return 0;
         }
-        Reserve_Cut = 1;
-        return 0;
-    }
-    if (first < *timer) {
-        return 0;
-    }
-    if (side) {
-        if (p2sw_0 & 0x3F0) {
+    } else {
+        if (first < *timer) {
+            return 0;
+        }
+        if (side) {
+            if (p2sw_0 & 0x3F0) {
+                Reserve_Cut = 0;
+                return 1;
+            }
+            return 0;
+        }
+        if (p1sw_0 & 0x3F0) {
             Reserve_Cut = 0;
             return 1;
         }
-        return 0;
-    }
-    if (p1sw_0 & 0x3F0) {
-        Reserve_Cut = 0;
-        return 1;
     }
     return 0;
 }
@@ -746,7 +748,6 @@ void Disp_Win_Type(void) {
     for (i = 0; i <= Battle_Round[Play_Type]; i++) {
         win_mark_put(i, win_type[0][i], 14);
         win_mark_put(i + 4, win_type[1][i], 14);
-        continue;
     }
 }
 

@@ -41,10 +41,11 @@ void effect_67_move(WORK_Other_CONN* ewk) {
             set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
             break;
         case 1:
-            if (!--ewk->wu.dir_timer) {
-                ewk->wu.routine_no[1]++;
-                ewk->wu.dir_timer = 40;
+            if (--ewk->wu.dir_timer) {
+                break;
             }
+            ewk->wu.routine_no[1]++;
+            ewk->wu.dir_timer = 40;
             break;
         case 2:
             if (--ewk->wu.dir_timer) {
@@ -66,10 +67,11 @@ void effect_67_move(WORK_Other_CONN* ewk) {
             set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
             break;
         case 1:
-            if (!--ewk->wu.dir_timer) {
-                ewk->wu.routine_no[1]++;
-                ewk->wu.dir_timer = 39;
+            if (--ewk->wu.dir_timer) {
+                break;
             }
+            ewk->wu.routine_no[1]++;
+            ewk->wu.dir_timer = 39;
             break;
         case 2:
             if (--ewk->wu.dir_timer) {
@@ -93,10 +95,11 @@ void effect_67_move(WORK_Other_CONN* ewk) {
             ewk->wu.cg_number &= 0x7FFF;
             break;
         case 1:
-            if (!--ewk->wu.dir_timer) {
-                ewk->wu.routine_no[1]++;
-                ewk->wu.dir_timer = 40;
+            if (--ewk->wu.dir_timer) {
+                break;
             }
+            ewk->wu.routine_no[1]++;
+            ewk->wu.dir_timer = 40;
             break;
         case 2:
             if (--ewk->wu.dir_timer) {
@@ -128,7 +131,6 @@ void effect_67_move(WORK_Other_CONN* ewk) {
             ewk->wu.routine_no[1]++;
             ewk->wu.disp_flag = 1;
             set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
-            break;
         }
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
@@ -142,7 +144,6 @@ void effect_67_move(WORK_Other_CONN* ewk) {
             ewk->wu.old_cgnum = ewk->wu.cg_number = 0;
             ewk->wu.cg_number++;
             ewk->wu.cg_number &= 0x7FFF;
-            break;
         }
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;

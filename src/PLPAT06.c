@@ -121,11 +121,10 @@ void Att_PL06_HASHIRI_NAGE(PLW* wk) {
         }
         add_mvxy_speed(&wk->wu);
         cal_mvxy_speed(&wk->wu);
-        if (wk->wu.routine_no[3] == 1 || (wk->hos_fi_flag | wk->hos_em_flag) == 0) {
-            break;
+        if (wk->wu.routine_no[3] != 1 && (wk->hos_fi_flag | wk->hos_em_flag) != 0) {
+            char_move_cmj4(&wk->wu);
+            wk->wu.routine_no[3] = 1;
         }
-        char_move_cmj4(&wk->wu);
-        wk->wu.routine_no[3] = 1;
         break;
     }
 }

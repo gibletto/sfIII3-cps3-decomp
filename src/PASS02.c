@@ -1294,14 +1294,12 @@ void Passive02_0077(PLW* wk) {
 
 
 void Passive02_0078(PLW* wk) {
-    s32 m = -1;
-
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
         Approach_Walk(wk, 0xBF, 2);
         break;
     case 1:
-        Wait_Get_Up(wk, 0, m);
+        Wait_Get_Up(wk, 0, -1);
         break;
     case 2:
         Check_EX(wk, 6, 0x70);
@@ -1313,16 +1311,16 @@ void Passive02_0078(PLW* wk) {
         Command_Attack(wk, 8, 0x1F, 8, (0x380));
         break;
     case 5:
-        Check_BOSS_EX(wk, 1, m);
+        Check_BOSS_EX(wk, 1, -1);
         break;
     case 6:
-        EM_Term(wk, 0x80A8, m, 0, 1, m);
+        EM_Term(wk, 0x80A8, -1, 0, 1, -1);
         break;
     case 7:
         Wait(wk, 2);
         break;
     case 8:
-        J_Command_Attack(wk, 8, 0x1C, 10, m);
+        J_Command_Attack(wk, 8, 0x1C, 10, -1);
         break;
     default:
         End_Pattern(wk);

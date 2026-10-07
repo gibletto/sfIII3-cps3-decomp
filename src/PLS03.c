@@ -377,32 +377,38 @@ s32 execute_super_arts(PLW* wk) {
     if ((wk->sa->gauge_type != 3) && pcon_dp_flag) {
         return 0;
     }
-    if (((Bonus_Game_Flag == 21) && wk->bs2_on_car) || (wk->wu.xyz[1].disp.pos <= 0)) {
-        if (wk->spmv_ng_flag & 0x40000000) {
-            return 0;
-        }
-        if (wk->sa->ok != 1) {
-            return 0;
-        }
-        if (wk->sa->nmsa_g_ix > 28) {
-            return 0;
-        }
-        if (wk->cp->btix[wk->sa->nmsa_g_ix] & 0x4000) {
-            if (Version_Type == 3) {
-                return 0;
-            }
-            if (Version_Type == 2) {
-                return 0;
-            }
-        }
-        setup_comm_back(&wk->wu);
-        wk->as = &asstbl_sa_ground[wk->player_number][wk->sa->nmsa_g_ix - 20][0].as;
-        wk->wu.cg_cancel = 0;
-        wk->sa->ok = -1;
-        hissatsu_setup_union(wk, wk->cp->waza_r[wk->sa->nmsa_g_ix][0]);
-        waza_slot_clear_all_p(wk);
-        return 1;
+    if ((Bonus_Game_Flag == 21) && wk->bs2_on_car) {
+        goto ground;
     }
+    if (wk->wu.xyz[1].disp.pos > 0) {
+        goto air;
+    }
+ground:
+    if (wk->spmv_ng_flag & 0x40000000) {
+        return 0;
+    }
+    if (wk->sa->ok != 1) {
+        return 0;
+    }
+    if (wk->sa->nmsa_g_ix > 28) {
+        return 0;
+    }
+    if (wk->cp->btix[wk->sa->nmsa_g_ix] & 0x4000) {
+        if (Version_Type == 3) {
+            return 0;
+        }
+        if (Version_Type == 2) {
+            return 0;
+        }
+    }
+    setup_comm_back(&wk->wu);
+    wk->as = &asstbl_sa_ground[wk->player_number][wk->sa->nmsa_g_ix - 20][0].as;
+    wk->wu.cg_cancel = 0;
+    wk->sa->ok = -1;
+    hissatsu_setup_union(wk, wk->cp->waza_r[wk->sa->nmsa_g_ix][0]);
+    waza_slot_clear_all_p(wk);
+    return 1;
+air:
     if (wk->spmv_ng_flag & 0x80000000) {
         return 0;
     }

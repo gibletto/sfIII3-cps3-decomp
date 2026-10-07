@@ -28,12 +28,14 @@ u32 size;
 
 /* provisional name */
 s32 fifo_put(FIFO32* q, u32 dat) {
+    u32* wr;
     u32* next = q->wr + 1;
     if ((u32)next >= (u32)q->base + q->size) {
         next = q->base;
     }
     if (next != q->rd) {
-        *q->wr = dat;
+        wr = q->wr;
+        *wr = dat;
         q->wr = next;
         q->count++;
         return 0;

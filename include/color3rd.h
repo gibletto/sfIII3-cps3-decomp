@@ -15,7 +15,6 @@ void debug_play13_move(void);
 void debug_play12_move(void);
 void metamor_color_restore(u16 wkid);
 void color_trans_dummy(void);
-void load_any_color();
 void load_bg_color();
 void load_any_color_req();
 void load_player_color();

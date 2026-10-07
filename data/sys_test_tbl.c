@@ -3134,10 +3134,7 @@ const u16 sys_palette[256] = {
     0x4631, 0x2D6B, 0x2529, 0, 0, 0, 0, 0,
 };
 
-const u8 coin_counter_off_mask[1] = {
-    239,
-};
-
-const u8 coin_counter_on_bit[3] = {
-    16, 0, 0,
+/* provisional name: counter output off mask, on bit */
+const u8 coin_counter_bit_tbl[4] = {
+    239, 16, 0, 0,
 };

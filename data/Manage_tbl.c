@@ -104,8 +104,9 @@ const RANK_DATA Rank_Default_Data[20] = {
     { { 18, 23, 14 }, 8, 0xEA60, 6, 6, 6, 4, 0 },
 };
 
-const JMP_TBL2 FBI_Warning_Jmp_Data[1] = {
-    { { FBI_Warning_1st, FBI_Warning_2nd } },
+/* Initial values of jmp_tbl (FBI_Warning) in Manage.c. */
+const u32 FBI_Warning_jmp_tbl_init[2] = {
+    (u32)FBI_Warning_1st, (u32)FBI_Warning_2nd,
 };
 
 const s8 FBI_msg[4] = "FBI";
@@ -210,13 +211,13 @@ const u32 Win_local_init[12] = {
     (u32)Lose_6th,
 };
 
-const u16 Entry_Msg_X_Data[6][2][2] = {
-    { { 6, 0xA }, { 0x1F, 0x28 } },
-    { { 5, 0xA }, { 0x1E, 0x27 } },
-    { { 2, 0xA }, { 0x1B, 0x24 } },
-    { { 2, 9 }, { 27, 40 } },
-    { { 7, 15 }, { 32, 41 } },
-    { { 7, 15 }, { 32, 41 } },
+const u16 Entry_Msg_X_Data[12][2] = {
+    { 6, 0xA }, { 0x1F, 0x28 },
+    { 5, 0xA }, { 0x1E, 0x27 },
+    { 2, 0xA }, { 0x1B, 0x24 },
+    { 2, 9 }, { 27, 40 },
+    { 7, 15 }, { 32, 41 },
+    { 7, 15 }, { 32, 41 },
 };
 
 const s16 Score_X_Pos_Data[4][2] = {

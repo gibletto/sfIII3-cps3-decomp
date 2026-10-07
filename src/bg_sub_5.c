@@ -80,6 +80,5 @@ void Bg_Family_Set(void) {
         x = -x & 0x3FF;
         y = (768 - (y & 0x3FF)) & 0x3FF;
         Family_Set_W(i + 1, x, y);
-        continue;
     }
 }

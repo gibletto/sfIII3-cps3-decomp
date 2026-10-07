@@ -389,7 +389,6 @@ void end_402_1000(void) {
             bgw_ptr->speed_x = 0xA000;
             bgw_ptr->speed_y = 0x4000;
             bgw_ptr->free = 0xF0;
-            break;
         }
         break;
     case 2:
@@ -402,7 +401,7 @@ void end_402_1000(void) {
         }
         bgw_ptr->abs_x = bgw_ptr->xy[0].disp.pos;
         bgw_ptr->abs_y = bgw_ptr->xy[1].disp.pos;
-        break;
+        return;
     case 3:
         break;
     }

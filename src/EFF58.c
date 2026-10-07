@@ -253,10 +253,11 @@ s32 effect_58_area_init(s16 time0, s16 step) {
 void EFF58_Type_01(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
     case 0:
-        if (!--Cover_Timer) {
-            ewk->wu.routine_no[2]++;
-            Switch_Screen_Init(0, 0);
+        if (--Cover_Timer) {
+            break;
         }
+        ewk->wu.routine_no[2]++;
+        Switch_Screen_Init(0, 0);
         break;
     case 1:
         if (Switch_Screen_Revival()) {
@@ -308,7 +309,7 @@ void EFF58_Type_02(WORK_Other* ewk) {
         break;
     case 2:
         ewk->wu.routine_no[2]++;
-        break;
+        return;
     default:
         all_cgps_put_back(ewk);
         push_effect_work(&ewk->wu);

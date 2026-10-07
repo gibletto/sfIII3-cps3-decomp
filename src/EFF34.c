@@ -50,11 +50,12 @@ void effect_34_move(WORK_Other* ewk) {
         char_move(&ewk->wu);
         suzi_sync_pos_set(ewk);
         sort_push_request(&ewk->wu);
-        if (ewk->wu.cg_type == 1) {
-            ewk->wu.routine_no[0]++;
-            ewk->wu.cg_type = 0;
-            oya_ptr->cmwk[1] = 9;
+        if (ewk->wu.cg_type != 1) {
+            break;
         }
+        ewk->wu.routine_no[0]++;
+        ewk->wu.cg_type = 0;
+        oya_ptr->cmwk[1] = 9;
         break;
     case 2:
         if (EXE_flag || Game_pause) {
@@ -65,11 +66,12 @@ void effect_34_move(WORK_Other* ewk) {
         char_move(&ewk->wu);
         suzi_sync_pos_set(ewk);
         sort_push_request(&ewk->wu);
-        if (ewk->wu.cg_type == 0xFF) {
-            ewk->wu.routine_no[0]++;
-            ewk->wu.rl_flag = ewk->wu.rl_flag ? 0 : 1;
-            set_char_move_init(&ewk->wu, 0, 0);
+        if (ewk->wu.cg_type != 0xFF) {
+            break;
         }
+        ewk->wu.routine_no[0]++;
+        ewk->wu.rl_flag = ewk->wu.rl_flag ? 0 : 1;
+        set_char_move_init(&ewk->wu, 0, 0);
         break;
     case 3:
         if (EXE_flag || Game_pause) {

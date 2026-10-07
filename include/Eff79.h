@@ -3,7 +3,7 @@
 
 #include "structs.h"
 
-s32 Check_Depth_to_Before(WORK_Other* ewk);
+s32 Check_Depth_to_Before();
 s32 Check_Play_Status_79(WORK_Other* ewk);
 void Check_Speed_79(WORK_Other* ewk);
 s32 EFF79_Move_X(WORK_Other* ewk);

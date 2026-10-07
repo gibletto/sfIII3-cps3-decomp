@@ -15,7 +15,7 @@ s32 check_blocking_flag(PLW* as, PLW* ds);
 s32 change_damage_attribute();
 s32 check_aiuchi_pat(s16 ix);
 s32 check_dm_att_blocking(WORK* as, WORK* ds, s16 dnum);
-s16 check_dm_att_guard(WORK* as, WORK* ds, s16 kom);
+s32 check_dm_att_guard(WORK* as, WORK* ds);
 s32 check_head_damage(s16 ix);
 s32 check_normal_attack();
 s32 check_normal_waza(u8 waza);

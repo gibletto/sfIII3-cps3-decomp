@@ -39,10 +39,11 @@ void effect_16_move(WORK_Other* ewk) {
             if (--ewk->wu.dir_timer <= 0) {
                 ewk->wu.dir_timer = 3;
                 ((WORK_Other_CONN*)ewk)->num_of_conn++;
-                if (((WORK_Other_CONN*)ewk)->num_of_conn >= ewk->wu.direction) {
-                    ewk->wu.routine_no[0] = 1;
-                    ewk->wu.routine_no[1] = 0;
+                if (((WORK_Other_CONN*)ewk)->num_of_conn < ewk->wu.direction) {
+                    break;
                 }
+                ewk->wu.routine_no[0] = 1;
+                ewk->wu.routine_no[1] = 0;
             }
             break;
         }
@@ -96,7 +97,7 @@ s32 score_bunkai_eff16(WORK_Other_CONN* ewk, u32 tsc) {
     s16 ixa[8];
     for (i = 7; i > 0; i--) {
         ixa[i] = tsc / bunkai_table[i];
-        ixs[i] = tsc %= bunkai_table[i];
+        ixs[i] = tsc = tsc % bunkai_table[i];
     }
     ixa[i] = tsc;
     for (i = 0; i < 8; i++) {

@@ -22,7 +22,7 @@ u32 hex_to_bcd(u32 dat) {
     const u8* p = bcd_weight_end;
     u32 mask;
     sum = 0;
-    for (mask = 0x8000; mask != 0; mask >>= 1) {
+    for (mask = 0x8000; mask > 0; mask >>= 1) {
         if (dat & mask) {
             bcdext = 0;
             bcd[3] = abcd(bcd[3], *--p);

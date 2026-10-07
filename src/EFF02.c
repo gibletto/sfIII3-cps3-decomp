@@ -161,7 +161,7 @@ u16 oto;
         Last_Called_SE = 0x2F9;
         return;
     }
-    sound_effect_request[oto](ewk, se);
+    sound_effect_request[oto](ewk, oto);
     Last_Called_SE = oto;
 }
 

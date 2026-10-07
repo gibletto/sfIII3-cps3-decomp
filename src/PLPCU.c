@@ -173,10 +173,10 @@ void caught_cg_type_check(PLW* wk, PLW* emwk) {
         wk->wu.cg_type = 0;
         break;
     case 9:
-        if (wk->dead_flag != 0) {
-            char_move_cmms((WORK*)wk);
-        } else {
+        if (wk->dead_flag == 0) {
             char_move_z((WORK*)wk);
+        } else {
+            char_move_cmms((WORK*)wk);
         }
         wk->wu.routine_no[1] = wk->wu.cmmd.koc;
         wk->wu.routine_no[2] = wk->wu.cmmd.ix;

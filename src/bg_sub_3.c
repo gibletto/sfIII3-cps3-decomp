@@ -271,7 +271,7 @@ s32 zoom_y_width_check(void) {
         return Game_setting.mode;
     }
     /* previous bg_f_y, kept in the unnamed word at bg_w+0x34 */
-    bg_w.old_bg_f[1] = bg_w.bg_f_y;
+    bg_w.old_bg_f_y = bg_w.bg_f_y;
     bg_w.frame_flag = zoom_frame_judge();
     f = bg_w.bg_f_y;
     flag = bg_w.frame_flag;
@@ -354,7 +354,6 @@ void suzi_line_calc(s16 bg_num) {
             *dst = *(u16*)line;
             line++;
             dst += 2;
-            continue;
         }
         calc[1] = 0;
         for (i = 0; i < bg_w.bgw[bg_num].d_line; i++) {
@@ -363,7 +362,6 @@ void suzi_line_calc(s16 bg_num) {
             *dst = *(u16*)line;
             line++;
             dst += 2;
-            continue;
         }
     } else {
         calc[0] = bg_w.bgw[bg_num].zuubun * dist;
@@ -375,7 +373,6 @@ void suzi_line_calc(s16 bg_num) {
             *dst = *(u16*)line;
             line++;
             dst += 2;
-            continue;
         }
         calc[1] = 0;
         for (i = 0; i < bg_w.bgw[bg_num].d_line; i++) {
@@ -384,7 +381,6 @@ void suzi_line_calc(s16 bg_num) {
             *dst = *(u16*)line;
             line++;
             dst += 2;
-            continue;
         }
     }
     top = suzi_line_buf[0];
@@ -392,7 +388,6 @@ void suzi_line_calc(s16 bg_num) {
     for (i = 0; i < bg_w.bgw[bg_num].no_suzi_line - 512; i++) {
         *dst = top;
         dst += 2;
-        continue;
     }
 }
 
@@ -435,7 +430,6 @@ void suzi_line_calc_fill(s16 bg_num) {
             *dst = *(u16*)line;
             line++;
             dst += 2;
-            continue;
         }
         calc[1] = 0;
         for (i = 0; i < bg_w.bgw[bg_num].d_line; i++) {
@@ -444,7 +438,6 @@ void suzi_line_calc_fill(s16 bg_num) {
             *dst = *(u16*)line;
             line++;
             dst += 2;
-            continue;
         }
         count = 41 - bg_w.bgw[bg_num].d_line;
         for (i = 0; i < count; i++) {
@@ -461,7 +454,6 @@ void suzi_line_calc_fill(s16 bg_num) {
             *dst = *(u16*)line;
             line++;
             dst += 2;
-            continue;
         }
         calc[1] = 0;
         for (i = 0; i < bg_w.bgw[bg_num].d_line; i++) {
@@ -470,7 +462,6 @@ void suzi_line_calc_fill(s16 bg_num) {
             *dst = *(u16*)line;
             line++;
             dst += 2;
-            continue;
         }
         count = 41 - bg_w.bgw[bg_num].d_line;
         for (i = 0; i < count; i++) {
@@ -483,7 +474,6 @@ void suzi_line_calc_fill(s16 bg_num) {
     for (i = 0; i < bg_w.bgw[bg_num].no_suzi_line - 512; i++) {
         *dst = top;
         dst += 2;
-        continue;
     }
 }
 
@@ -524,7 +514,6 @@ void suzi_line_calc_flat(s16 bg_num) {
             *dst = *(u16*)line;
             line++;
             dst += 2;
-            continue;
         }
         line--;
         count = bg_w.bgw[bg_num].d_line - 1;
@@ -542,7 +531,6 @@ void suzi_line_calc_flat(s16 bg_num) {
             *dst = *(u16*)line;
             line++;
             dst += 2;
-            continue;
         }
         line--;
         count = bg_w.bgw[bg_num].d_line - 1;
@@ -556,6 +544,5 @@ void suzi_line_calc_flat(s16 bg_num) {
     for (i = 0; i < bg_w.bgw[bg_num].no_suzi_line - 512; i++) {
         *dst = top;
         dst += 2;
-        continue;
     }
 }

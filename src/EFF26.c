@@ -333,46 +333,46 @@ void eff26_05(WORK_Other* ewk) {
 s32 effect_26_init(WORK_Other* oya, s16 type26) {
     WORK_Other* ewk;
     s16 ix;
-    s32 lp_cnt = eff26_num[type26];
+    s16 lp_cnt = eff26_num[type26];
     s16 i;
     const s16* data_ptr;
-    if (!lp_cnt) {
+    if (lp_cnt) {
+        if (!type26) {
+            effect_28_init(oya);
+        }
+        data_ptr = scr_obj_data26[type26];
+        for (i = 0; i < lp_cnt; i++) {
+            if ((ix = pull_effect_work(4)) == -1) {
+                return -1;
+            }
+            ewk = (WORK_Other*)frw[ix];
+            ewk->wu.be_flag = 1;
+            ewk->wu.id = 26;
+            ewk->wu.work_id = 16;
+            ewk->my_master = (u32*)oya;
+            ewk->wu.cgromtype = 1;
+            ewk->wu.rl_flag = 0;
+            ewk->wu.my_col_mode = 0x4200;
+            ewk->wu.dead_f = *data_ptr++;
+            ewk->wu.type = (s8)*data_ptr++;
+            ewk->wu.my_family = *data_ptr++;
+            ewk->wu.my_col_code = *data_ptr++;
+            ewk->wu.xyz[0].disp.pos = *data_ptr++;
+            ewk->wu.xyz[1].disp.pos = *data_ptr++;
+            ewk->wu.position_z = *data_ptr++;
+            ewk->wu.char_index = *data_ptr++;
+            ewk->wu.hit_stop = *data_ptr++;
+            ewk->wu.sync_suzi = *data_ptr++;
+            ewk->wu.old_rno[0] = *data_ptr++;
+            ewk->wu.old_rno[1] = *data_ptr++;
+            ewk->wu.old_rno[2] = *data_ptr++;
+            ewk->wu.old_rno[3] = *data_ptr++;
+            ewk->wu.old_rno[7] = *data_ptr++;
+            ewk->wu.old_rno[4] = *data_ptr++;
+            ewk->wu.old_rno[5] = *data_ptr++;
+            ewk->wu.char_table[0] = char_add[bg_w.bg_index];
+            suzi_offset_set((WORK*)ewk);
+        }
         return 0;
     }
-    if (!type26) {
-        effect_28_init(oya);
-    }
-    for (data_ptr = scr_obj_data26[type26], i = 0; i < lp_cnt; i++) {
-        if ((ix = pull_effect_work(4)) == -1) {
-            return -1;
-        }
-        ewk = (WORK_Other*)frw[ix];
-        ewk->wu.be_flag = 1;
-        ewk->wu.id = 26;
-        ewk->wu.work_id = 16;
-        ewk->my_master = (u32*)oya;
-        ewk->wu.cgromtype = 1;
-        ewk->wu.rl_flag = 0;
-        ewk->wu.my_col_mode = 0x4200;
-        ewk->wu.dead_f = *data_ptr++;
-        ewk->wu.type = (s8)*data_ptr++;
-        ewk->wu.my_family = *data_ptr++;
-        ewk->wu.my_col_code = *data_ptr++;
-        ewk->wu.xyz[0].disp.pos = *data_ptr++;
-        ewk->wu.xyz[1].disp.pos = *data_ptr++;
-        ewk->wu.position_z = *data_ptr++;
-        ewk->wu.char_index = *data_ptr++;
-        ewk->wu.hit_stop = *data_ptr++;
-        ewk->wu.sync_suzi = *data_ptr++;
-        ewk->wu.old_rno[0] = *data_ptr++;
-        ewk->wu.old_rno[1] = *data_ptr++;
-        ewk->wu.old_rno[2] = *data_ptr++;
-        ewk->wu.old_rno[3] = *data_ptr++;
-        ewk->wu.old_rno[7] = *data_ptr++;
-        ewk->wu.old_rno[4] = *data_ptr++;
-        ewk->wu.old_rno[5] = *data_ptr++;
-        ewk->wu.char_table[0] = char_add[bg_w.bg_index];
-        suzi_offset_set((WORK*)ewk);
-    }
-    return 0;
 }

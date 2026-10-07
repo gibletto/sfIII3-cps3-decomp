@@ -285,13 +285,12 @@ void end_2001_0002(void) {
     }
 }
 
-u32 end_2001_0003(void)
+void end_2001_0003(void)
 {
-    s16 *ls_cnt = &ls_cnt1;       /* sea line-scroll phase */
-    s16 *ls_rate = &ls_rate1;      /* sea line-scroll amplitude */
     s16 *line;
-    s32 i;
+    u16 i;
     s32 ix;
+    XY work;
 
     switch (bgw_ptr->r_no_1) {
     case 0:
@@ -302,22 +301,22 @@ u32 end_2001_0003(void)
         bgw_ptr->abs_y = 0;
         Bg_On_W(0x20);
         Bg_On_W(2);
-        *ls_cnt = 0;
+        ls_cnt1 = 0;
         bgw_ptr->xy[0].disp.pos = end_20_pos[end_w.r_no_2][0];
         bgw_ptr->xy[1].disp.pos = end_20_pos[end_w.r_no_2][1];
-        return end_20_pos[end_w.r_no_2][1];
+        break;
     case 1:
-        *ls_rate = 0x40;
+        ls_rate1 = 0x40;
         line = (s16 *)bg_w.bgw[1].suzi_adrs;
         for (i = 0; i < 512; i++) {
-            ix = *ls_cnt + i * 4;
-            *line = (rate_256_table[ix & 0xFF][0] * *ls_rate) >> 20;
+            ix = (ls_cnt1 + i * 4) & 0xFF;
+            work.cal = (rate_256_table[ix][0] * ls_rate1) >> 4;
+            *line = work.disp.pos;
             line += 2;
         }
-        *ls_cnt = *ls_cnt + 2 & 0x1FF;
-        return ix;
+        ls_cnt1 = (ls_cnt1 + 2) & 0x1FF;
+        break;
     }
-    return bgw_ptr->r_no_1;
 }
 
 
@@ -352,10 +351,13 @@ void end_2001_0005(void) {
 
 void end_2000_cell_set(void) {
     s16 i;
-    for (i = 0; i < 4; i++) {
-        bg_cell_write(0, end_2000_bg0_cell_tbl[i].ofs, end_2000_bg0_cell_tbl[i].cell, (u32)end_2000_scrn_data, 0, 0x220);
+    const PANEL* cell;
+    cell = end_2000_bg0_cell_tbl;
+    for (i = 0; i < 4; i++, cell++) {
+        bg_cell_write(0, cell->ofs, cell->cell, (u32)end_2000_scrn_data, 0, 0x220);
     }
-    for (i = 0; i < 4; i++) {
-        end_ake_cell_put(0, end_2000_ake_cell_tbl[i].ofs, end_2000_ake_cell_tbl[i].cell, (u32)end_ake_scrn_data);
+    cell = end_2000_ake_cell_tbl;
+    for (i = 0; i < 4; i++, cell++) {
+        end_ake_cell_put(0, cell->ofs, cell->cell, (u32)end_ake_scrn_data);
     }
 }

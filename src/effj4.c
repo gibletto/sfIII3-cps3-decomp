@@ -194,7 +194,6 @@ s32 effect_J4_init2(s16 ix) {
     }
     for (i = effJ4_piece_range[ix][0]; i < effJ4_piece_range[ix][1]; i++) {
         effJ4_piece_set_stay(i);
-        continue;
     }
 }
 

@@ -169,20 +169,24 @@ void effC2_main_process_first(WORK_Other* ewk, PLW* twk) {
     if (EXE_flag == 0 && Game_pause == 0) {
         switch (ewk->wu.direction + (twk->bs2_on_car * 2)) {
         case 0:
-            if (ewk->wu.routine_no[1] != 1) {
-                if (ewk->wu.routine_no[2] != 0) {
-                    ewk->wu.routine_no[2] = 0;
-                    ewk->wu.routine_no[3] = 2;
-                }
+            if (ewk->wu.routine_no[1] == 1) {
+                break;
             }
+            if (ewk->wu.routine_no[2] == 0) {
+                break;
+            }
+            ewk->wu.routine_no[2] = 0;
+            ewk->wu.routine_no[3] = 2;
             break;
         case 3:
-            if (ewk->wu.routine_no[1] != 1) {
-                if (ewk->wu.routine_no[2] != 1) {
-                    ewk->wu.routine_no[2] = 1;
-                    ewk->wu.routine_no[3] = 2;
-                }
+            if (ewk->wu.routine_no[1] == 1) {
+                break;
             }
+            if (ewk->wu.routine_no[2] == 1) {
+                break;
+            }
+            ewk->wu.routine_no[2] = 1;
+            ewk->wu.routine_no[3] = 2;
             break;
         case 1:
             if (ewk->wu.routine_no[1] != 1 || ewk->wu.routine_no[2] != 0) {
@@ -238,6 +242,7 @@ void effC2_main_process_first(WORK_Other* ewk, PLW* twk) {
                     ewk->wu.cg_number = 18;
                     break;
                 }
+                break;
             }
             ewk->wu.old_pos[0] = ewk->wu.cg_type;
             ewk->wu.cg_type = 0;
@@ -266,19 +271,19 @@ void effC2_main_process_first(WORK_Other* ewk, PLW* twk) {
                 }
                 check_parts_break_level(&ewk->wu);
             case 1:
-                if (--ewk->wu.hit_stop <= 0) {
-                    char_move(&ewk->wu);
-                    if (ewk->wu.cg_type == 0xFF) {
-                        ewk->wu.routine_no[1] = 0;
-                        ewk->wu.routine_no[2] = 0;
-                        ewk->wu.cg_type = 0;
-                    }
+                if (--ewk->wu.hit_stop > 0) {
+                    break;
+                }
+                char_move(&ewk->wu);
+                if (ewk->wu.cg_type == 0xFF) {
+                    ewk->wu.routine_no[1] = 0;
+                    ewk->wu.routine_no[2] = 0;
+                    ewk->wu.cg_type = 0;
                 }
                 break;
             }
             ewk->wu.old_pos[1] = ewk->wu.cg_type;
             ewk->wu.cg_type = 0;
-            break;
         }
     }
     player_hosei_data(ewk, ewk->wu.dir_timer, 1);
@@ -401,6 +406,7 @@ void effC2_main_process_second(WORK_Other* ewk, PLW* twk) {
                 case 3:
                     illegal_setup_effK2(&ewk->wu, 3);
                     ewk->wu.cg_type = 0;
+                default:
                     break;
                 }
                 if (ewk->wu.cg_type == 0xFF) {

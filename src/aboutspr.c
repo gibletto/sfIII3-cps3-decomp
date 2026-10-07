@@ -347,7 +347,6 @@ s32 load_char_gfx(id, mode)
                 ((void(*)(s16 handle))simmram_block_free_10)(handle);
                 return 0;
             }
-            continue;
         }
     }
     return 1;
@@ -635,7 +634,6 @@ s32 char_cell_flip_x(WORK* wk) {
         cell = &dst[i];
         *cell = src[i];
         cell->w[2] = -cell->w[2] & 0x3FF;
-        continue;
     }
     return char_cell_push_block(wk, handle);
 }
@@ -659,7 +657,6 @@ s32 char_cell_flip_y(WORK* wk) {
         cell = &dst[i];
         *cell = src[i];
         cell->w[3] = -cell->w[3] & 0x3FF;
-        continue;
     }
     return char_cell_push_block(wk, handle);
 }
@@ -683,7 +680,6 @@ s32 char_cell_unflip_y(WORK* wk) {
         cell = &dst[i];
         *cell = src[i];
         cell->w[3] = -cell->w[3] & 0x3FF;
-        continue;
     }
     return char_cell_push_block(wk, handle);
 }
@@ -870,9 +866,7 @@ s32 set_conn_sprite(WORK_Other_CONN* wk) {
             dst[5] = size | 0x300;
             dst[4] = ((u16)cell_size_tbl[size]);
             cell++;
-            continue;
         }
-        continue;
     }
     return 1;
 }
@@ -953,7 +947,6 @@ s32 make_conn_cells(WORK_Other_CONN* ewk) {
             s->attr = (*((u8*)c + 6) >> 4) | 0x300;
             s->zoom = 0x3F3F;
         }
-        continue;
     }
     return 1;
 }
@@ -1051,7 +1044,6 @@ s32 sort_push_request2(WORK_Other* wk) {
         cell = (CHAR_SPRITE*)SPRITE_RAM + wk->wu.spr.gfx_ofs;
         for (i = 0; i < wk->wu.spr.gfx_cells; i++) {
             cell[i].sx = -cell[i].sx & 0x3FF;
-            continue;
         }
     } else if (wk->wu.spr.done_rl) {
         spr[4] ^= 0x1000;

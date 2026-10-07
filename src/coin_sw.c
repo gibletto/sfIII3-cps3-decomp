@@ -128,12 +128,12 @@ void coin_counter_drive(s8 n) {
     if (p->lockout) {
         p->lockout = p->lockout - 1;
         if (p->lockout == 0x20) {
-            coin_out_latch &= coin_counter_off_mask;
+            coin_out_latch &= coin_counter_bit_tbl[0];
         }
     } else if (*q != 0) {
         *q = *q - 1;
         p->lockout = 0x40;
-        coin_out_latch |= coin_counter_on_bit;
+        coin_out_latch |= coin_counter_bit_tbl[1];
     }
 }
 
@@ -340,6 +340,7 @@ void switch_work_clear(char level) {
     coin_sw_hist[2] = coin_sw_now[2] = 0;
     coin_sw_hist[3] = coin_sw_now[3] = 0;
     card_sw_0 = card_sw_1 = 0;
+    return;
 }
 
 
@@ -402,8 +403,7 @@ void switch_read_six_button(void) {
     p2sw_0 = (~(*(volatile u16*)(IO_REG + 0x2)) >> 8) % 256U;
     lo = p2sw_0;
     p2sw_0 = ((lo & 0x80) << 3) | (p2sw_0 & 0x7F);
-    lo = (~(*(volatile u16*)(IO_REG + 0x4)) << 3) & 0x180;
-    lo |= (~(*(volatile u16*)IO_REG) >> 1) & 0x200;
+    lo = ((~(*(volatile u16*)(IO_REG + 0x4)) << 3) & 0x180) | ((~(*(volatile u16*)IO_REG) >> 1) & 0x200);
     p2sw_0 |= lo;
     lo = (~(*(volatile u16*)IO_REG) & 0x200) << 2;
     hi = (~(*(volatile u16*)IO_REG) & 0x2000) >> 1;

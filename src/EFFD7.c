@@ -65,7 +65,8 @@ void effect_D7_move(WORK_Other* ewk) {
             ewk->wu.routine_no[0] = 2;
             break;
         }
-        if (sa_stop_check() == 0) {
+        if (sa_stop_check()) {
+        } else {
             if (ewk->wu.hit_stop < 0) {
                 ewk->wu.hit_stop = -ewk->wu.hit_stop;
             }

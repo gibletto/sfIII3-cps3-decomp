@@ -92,16 +92,17 @@ void Att_RESURRECTION2(PLW* wk) {
             wk->wu.cg_type = 0;
         }
         wk->wu.vital_new += wk->wu.direction;
-        if (wk->wu.vital_new >= wk->wu.vitality) {
-            wk->wu.vital_new = wk->wu.vitality;
-            wk->wu.mvxy.d[1].sp = -0x8000;
-            wk->wu.direction = 0;
-            wk->wu.routine_no[3]++;
-            if (wk->wu.vital_new < 0) {
-                wk->wu.vital_new = 0;
-            }
-            char_move_cmja(&wk->wu);
+        if (wk->wu.vital_new < wk->wu.vitality) {
+            break;
         }
+        wk->wu.vital_new = wk->wu.vitality;
+        wk->wu.mvxy.d[1].sp = -0x8000;
+        wk->wu.direction = 0;
+        wk->wu.routine_no[3]++;
+        if (wk->wu.vital_new < 0) {
+            wk->wu.vital_new = 0;
+        }
+        char_move_cmja(&wk->wu);
         break;
     case 2:
         jumping_union_process(&wk->wu, 3);

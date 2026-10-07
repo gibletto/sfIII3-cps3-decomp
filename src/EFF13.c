@@ -14,7 +14,6 @@
 #include "romdata.h"
 #include "extern.h"
 #include "PLS02.h"
-#include "CALDIR.h"
 #include "CHARMOVE.h"
 #include "charmove_2.h"
 #include "aboutspr.h"
@@ -291,14 +290,13 @@ void kotp_00000(WORK_Other* ewk, TAMA* twk) {
             ewk->wu.xyz[1].disp.pos = -ewk->wu.cg_jphos;
             break;
         }
-        if (--ewk->wu.dir_timer >= 0 && screen_range_check(&ewk->wu) == 0) {
-            break;
+        if (--ewk->wu.dir_timer < 0 || screen_range_check(&ewk->wu) != 0) {
+            ewk->wu.mvxy.a[0].sp /= 4;
+            ewk->wu.mvxy.a[1].sp /= 4;
+            set_char_move_init(&ewk->wu, 0, twk->ernm);
+            ewk->wu.routine_no[1] = 2;
+            ewk->wu.routine_no[2] = 0;
         }
-        ewk->wu.mvxy.a[0].sp /= 4;
-        ewk->wu.mvxy.a[1].sp /= 4;
-        set_char_move_init(&ewk->wu, 0, twk->ernm);
-        ewk->wu.routine_no[1] = 2;
-        ewk->wu.routine_no[2] = 0;
         break;
     case 1:
         ewk->wu.vital_new -= ewk->wu.dm_vital;
@@ -432,7 +430,10 @@ void kotp_02000(WORK_Other* ewk, TAMA* twk) {
         case 1:
             add_mvxy_speed_no_use_rl(&ewk->wu);
             cal_mvxy_speed(&ewk->wu);
-            if (check_tengu_attack(&ewk->wu, &mwk->wu, twk) == 0 && --ewk->wu.dir_timer < 0) {
+            if (check_tengu_attack(&ewk->wu, &mwk->wu, twk)) {
+                break;
+            }
+            if (--ewk->wu.dir_timer < 0) {
                 ewk->wu.routine_no[2] = 2;
             }
             break;
@@ -482,7 +483,6 @@ void kotp_02000(WORK_Other* ewk, TAMA* twk) {
             ewk->wu.mvxy.d[0].sp = 0;
             ewk->wu.mvxy.d[1].sp = -0x4000;
             cal_initial_speed(&ewk->wu, ewk->wu.dir_timer, ewk->wu.dmcal_m, ewk->wu.dmcal_d);
-            break;
         }
         break;
     case 1:
@@ -548,8 +548,8 @@ void make_speed_xy_att(WORK* ewk, WORK* mwk, s16 tm, u8 xsw, u8 ysw) {
 
 
 void make_speed_xy_back(WORK* ewk, WORK* mwk, TAMA* twk) {
-    u16 bx;
-    u16 by;
+    s16 bx;
+    s16 by;
     ewk->dmcal_m = ewk->xyz[0].disp.pos;
     ewk->dmcal_d = ewk->xyz[1].disp.pos;
     ewk->mvxy.d[0].sp = 0;

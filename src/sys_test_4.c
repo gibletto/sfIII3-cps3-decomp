@@ -272,7 +272,7 @@ void service_coin_check(void) {
         case 8:
         case 10:
             credit_1p++;
-            (*(s8*)&(coin_chute1_w[6])) = 1;
+            coin_chute1_w.dropped = 1;
             if (credit_1p > 9) {
                 credit_1p = 9;
             }
@@ -280,24 +280,24 @@ void service_coin_check(void) {
         case 2:
         case 9:
             credit_1p++;
-            (*(s8*)&(coin_chute1_w[6])) = 1;
+            coin_chute1_w.dropped = 1;
             if (credit_1p > 9) {
                 credit_1p = 9;
             }
             credit_2p++;
-            coin_chute2_w[6] = 1;
+            coin_chute2_w.dropped = 1;
             if (credit_2p > 9) {
                 credit_2p = 9;
             }
             break;
         case 6:
             credit_1p++;
-            (*(s8*)&(coin_chute1_w[6])) = 1;
+            coin_chute1_w.dropped = 1;
             if (credit_1p > 9) {
                 credit_1p = 9;
             }
             credit_2p++;
-            coin_chute2_w[6] = 1;
+            coin_chute2_w.dropped = 1;
             if (credit_2p > 9) {
                 credit_2p = 9;
             }
@@ -309,12 +309,12 @@ void service_coin_check(void) {
             break;
         case 11:
             credit_1p++;
-            (*(s8*)&(coin_chute1_w[6])) = 1;
+            coin_chute1_w.dropped = 1;
             if (credit_1p > 9) {
                 credit_1p = 9;
             }
             credit_2p++;
-            coin_chute2_w[6] = 1;
+            coin_chute2_w.dropped = 1;
             if (credit_2p > 9) {
                 credit_2p = 9;
             }

@@ -144,7 +144,6 @@ s32 effect_48_init(s16 type) {
         ewk->wu.old_rno[0] = *data_ptr++;
         ewk->wu.char_index = *data_ptr++;
         ewk->wu.old_rno[1] = *data_ptr++;
-        continue;
     }
     effect_48_move(ewk);
     return 0;

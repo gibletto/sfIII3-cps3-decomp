@@ -29,40 +29,34 @@
 
 
 
-s32 effect_E3_move(WORK_Other* ewk) {
+void effect_E3_move(WORK_Other* ewk) {
     s16 i;
-    s32 rc;
-    if ((rc = akebono_flag)) {
+    if (akebono_flag) {
         sa_pa_flag = 0;
-        return rc;
+        return;
     }
-    switch (rc = ewk->wu.routine_no[0]) {
+    switch (ewk->wu.routine_no[0]) {
     case 0:
-        if (Flash_MT[0]) {
-            ewk->wu.routine_no[0]++;
-            return rc;
+        if (!Flash_MT[0] && !Flash_MT[1]) {
+            break;
         }
-        if ((rc = Flash_MT[1])) {
-            ewk->wu.routine_no[0]++;
-        }
-        return rc;
+        ewk->wu.routine_no[0]++;
+        break;
     case 1:
         ewk->wu.routine_no[0]++;
-        if ((rc = another_bg[0]) || (rc = another_bg[1])) {
+        if (another_bg[0] || another_bg[1]) {
             sa_pa_flag = 0;
             if (Flash_MT[0]) {
                 Flash_MT[0] = 0;
             } else {
                 Flash_MT[1] = 0;
-                rc = 0;
             }
             ewk->wu.routine_no[0] = 0;
-            return rc;
+            return;
         }
         sa_pa_flag = 1;
         for (i = 0; i < bg_w.scno; i++) {
             Bg_Off_W(1 << i);
-            continue;
         }
         Bg_On_W(8);
         if (Flash_MT[0]) {
@@ -78,23 +72,22 @@ s32 effect_E3_move(WORK_Other* ewk) {
         ewk->wu.old_rno[0]--;
         if (ewk->wu.old_rno[0] <= 0) {
             ewk->wu.routine_no[0]++;
-            return rc;
+            break;
         }
         effE3_scroll_set(ewk);
-        return;
+        break;
     case 3:
         ewk->wu.routine_no[0] = 0;
-        Flash_MT[rc = ewk->master_id] = 0;
+        Flash_MT[ewk->master_id] = 0;
         sa_pa_flag = 0;
         if (akebono_flag) {
-            return rc;
+            return;
         }
-        if ((rc = seraph_flag)) {
-            return rc;
+        if (seraph_flag) {
+            return;
         }
         for (i = 0; i < bg_w.scno; i++) {
             Bg_On_W(1 << i);
-            continue;
         }
         Bg_Off_W(8);
         return;
@@ -112,7 +105,9 @@ void effE3_scroll_set(WORK_Other* ewk) {
     s32 y = effE3_data[Flash_MT[ewk->master_id]][1];
     scrn_map_set(3, ake_scrl_w[2].adrs);
     Scrn_Move_Set(3, x, y);
-    Family_Set_W(4, -x & 0x3FF, (0x300 - (y & 0x3FF)) & 0x3FF);
+    x = -x & 0x3FF;
+    y = (0x300 - (y & 0x3FF)) & 0x3FF;
+    Family_Set_W(4, x, y);
 }
 
 

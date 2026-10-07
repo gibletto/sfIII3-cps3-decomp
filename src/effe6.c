@@ -494,7 +494,8 @@ void effe6_0014(WORK_Other* ewk) {
 
 
 void effe6_0015(WORK_Other* ewk) {
-    if (ewk->wu.old_rno[6] < end_w.r_no_2) {
+    END_W* ew = &end_w;
+    if (ewk->wu.old_rno[6] < ew->r_no_2) {
         ewk->wu.routine_no[2] = 99;
     }
     switch (ewk->wu.routine_no[1]) {
@@ -504,7 +505,7 @@ void effe6_0015(WORK_Other* ewk) {
         cal_all_speed_data(&ewk->wu, ewk->wu.old_rno[2], 544, 48, 2, 2);
         break;
     case 1:
-        if (ewk->wu.old_rno[6] == end_w.r_no_2) {
+        if (ewk->wu.old_rno[6] == ew->r_no_2) {
             ewk->wu.routine_no[1] = 3;
             ewk->wu.xyz[0].disp.pos = 544;
             ewk->wu.xyz[1].disp.pos = 48;
@@ -522,7 +523,7 @@ void effe6_0015(WORK_Other* ewk) {
         disp_pos_trans_entry(ewk);
         break;
     case 2:
-        if (ewk->wu.old_rno[6] == end_w.r_no_2) {
+        if (ewk->wu.old_rno[6] == ew->r_no_2) {
             ewk->wu.routine_no[1] = 3;
         } else {
             char_move(&ewk->wu);
@@ -572,9 +573,9 @@ void effe6_0016(WORK_Other* ewk) {
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
             ewk->wu.routine_no[2] = 99;
-            break;
+        } else {
+            disp_pos_trans_entry(ewk);
         }
-        disp_pos_trans_entry(ewk);
         break;
     }
 }
@@ -701,7 +702,7 @@ void effe6_0020(WORK_Other* ewk) {
         }
         break;
     case 2:
-        ewk->wu.xyz[1].cal += -0x18000;
+        ewk->wu.xyz[1].cal -= 0x18000;
         if (ewk->wu.xyz[1].disp.pos <= 0) {
             ewk->wu.routine_no[1]++;
             ewk->wu.xyz[1].cal = 0;

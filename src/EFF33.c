@@ -40,10 +40,13 @@ void effect_33_move(WORK_Other* ewk) {
     case 1:
         suzi_sync_pos_set(ewk);
         sort_push_request(&ewk->wu);
-        if (EXE_flag || Game_pause || pcon_rno[2] != 1 || Event_Judge_Gals != -1 || !Complete_Judgement) {
-            break;
+        if (!EXE_flag && !Game_pause) {
+            if (pcon_rno[2] == 1 && Event_Judge_Gals == -1) {
+                if (Complete_Judgement) {
+                    ewk->wu.routine_no[0]++;
+                }
+            }
         }
-        ewk->wu.routine_no[0]++;
         break;
     case 2:
         if (!EXE_flag && !Game_pause) {

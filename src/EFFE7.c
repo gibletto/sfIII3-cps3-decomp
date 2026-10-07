@@ -54,10 +54,12 @@ void effect_E7_move(WORK_Other* ewk) {
                 break;
             }
         }
-        if (EXE_flag == 0 && Game_pause == 0 && --ewk->wu.dir_timer <= 0) {
-            ewk->wu.disp_flag = 0;
-            ewk->wu.routine_no[0]++;
-            break;
+        if (EXE_flag == 0 && Game_pause == 0) {
+            if (--ewk->wu.dir_timer <= 0) {
+                ewk->wu.disp_flag = 0;
+                ewk->wu.routine_no[0]++;
+                break;
+            }
         }
         pricol = ewk->wu.dmcal_d - (ewk->wu.dir_timer + ewk->wu.dmcal_m - 1) / ewk->wu.dmcal_m;
         if (ewk->wu.old_rno[0]) {

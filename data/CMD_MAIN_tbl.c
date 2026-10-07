@@ -1033,9 +1033,9 @@ const u8 debug_charset_tbl[24] = {
     18, 19, 20, 21, 22, 6, 6, 6,
 };
 
-/* Read by debug_menu_select_dispatch. */
-const STAGE_TBL_T debug_select_jmp_data[1] = {
-    { { debug_menu_select_init, debug_menu_select_run } },
+/* Initial values of Select_Tbl (debug_menu_select_dispatch) in CMD_MAIN.c. */
+const u32 Select_Tbl_init[2] = {
+    (u32)debug_menu_select_init, (u32)debug_menu_select_run,
 };
 
 const char debug_cursor_msg[4] = "T";
@@ -1216,12 +1216,16 @@ const char dbg_flag_on_str[4] = "[1]";
 
 const char dbg_flag_off_str[4] = "[0]";
 
+/* ROM copy of a string literal in debug_draw_kakusyuku_frame_flags (CMD_MAIN.c). */
 const char dbg_kakusyuku_off_str[16] = "KAKUSYUKU  OFF";
 
+/* ROM copy of a string literal in debug_draw_kakusyuku_frame_flags (CMD_MAIN.c). */
 const char dbg_frame_off_str[16] = "FRAME      OFF";
 
+/* ROM copy of a string literal in debug_draw_kakusyuku_frame_flags (CMD_MAIN.c). */
 const char dbg_frame_on_str[16] = "FRAME      ON ";
 
+/* ROM copy of a string literal in debug_draw_kakusyuku_frame_flags (CMD_MAIN.c). */
 const char dbg_kakusyuku_on_str[16] = "KAKUSYUKU  ON ";
 
 const char dbg_hex_mark_str[4] = "H";

@@ -29,18 +29,19 @@
 
 
 void effect_23_move(WORK_Other_CONN* ewk) {
-    s32 i;
+    s16 i;
     s16 j;
     s16 slot;
+    const EFF23_CELL_REQ* cell;
     switch (ewk->wu.routine_no[0]) {
     case 0:
         ewk->wu.routine_no[0]++;
-        ewk->wu.cg_ix = 0;
-        ewk->wu.char_index = 0;
+        ewk->wu.char_index = ewk->wu.cg_ix = 0;
         ewk->wu.cg_ctr = eff23_anm_tbl[ewk->wu.cg_ix].timer;
         for (i = 0; i < 2; i++) {
+            cell = eff23_cell_tbl[i];
             for (j = 0; j < 16; j++) {
-                scroll_cell_write(i, eff23_cell_tbl[i][j].a, eff23_cell_tbl[i][j].b, eff23_scrn_data);
+                scroll_cell_write(i, cell[j].a, cell[j].b, eff23_scrn_data);
             }
         }
         scrn_map_set_now(0, (u32)bg_w.bgw[0].bg_address);

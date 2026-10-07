@@ -42,7 +42,7 @@ void eeprom_config_load(void) {
     } else {
         side = Area_Type;
     }
-    p = ((u8**)tbl)[side];
+    p = *(u8**)(tbl + side * 4);
     if ((s8)*eeprom_w != (s8)*p) {
         eeprom_config_reset();
         return;
@@ -161,10 +161,10 @@ u32 rec;
     if (Win_Point_Human < Win_Point_Human_Min || Win_Point_Human > Win_Point_Human_Max) {
         Win_Point_Human = 2;
     }
-    (*(u8*)((void*)&(*(s8*)&(coin_chute1_w[2])))) = coin_rate_tbl[Coin_Mode][0];
-    coin_chute1_w[3] = coin_rate_tbl[Coin_Mode][1];
-    (*(u8*)((void*)&coin_chute2_w[2])) = coin_rate_tbl[Coin_Mode][0];
-    (*(u8*)&(coin_chute2_w[3])) = coin_rate_tbl[Coin_Mode][1];
+    coin_chute1_w.per_credit = coin_rate_tbl[Coin_Mode][0];
+    coin_chute1_w.credits = coin_rate_tbl[Coin_Mode][1];
+    coin_chute2_w.per_credit = coin_rate_tbl[Coin_Mode][0];
+    coin_chute2_w.credits = coin_rate_tbl[Coin_Mode][1];
     coin3_coin_rate = coin_rate_tbl[Coin_Mode][0];
     coin3_credit_rate = coin_rate_tbl[Coin_Mode][1];
     coin4_coin_rate = coin_rate_tbl[Coin_Mode][0];

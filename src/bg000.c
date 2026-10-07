@@ -89,7 +89,6 @@ void Bg_Family_Set_2(void) {
         a = -x & 0x3FF;
         b = (0x300 - (y & 0x3FF)) & 0x3FF;
         Family_Set_W(i + 1, a, b);
-        continue;
     }
 }
 
@@ -203,7 +202,6 @@ void bg_pos_hosei2(void)
         quake = quake_y_tbl[bg_w.quake_y_index];
         bg_w.bgw[i].position_y = (y & 0x3FF) + quake & 0x3FF;
         bg_w.bgw[i].abs_y = y + quake;
-        continue;
     }
 }
 
@@ -219,8 +217,7 @@ s16 get_center_position(void) {
 
 
 s32 get_height_position(void) {
-    BGW* blk = &bg_w.bgw[1];
-    return blk->xy[1].disp.pos;
+    return bg_w.bgw[1].xy[1].disp.pos;
 }
 
 
@@ -275,7 +272,7 @@ void blit_8x16_tile(u16* src, s16 code, u16* dst, s16 attr) {
 
 
 /* provisional name */
-void bg_cell_write(s16 bg, s32 ofs, s32 cell, u32 src, s16 u5, s16 attr) {
+void bg_cell_write(s16 bg, s32 ofs, s32 cell, u32 src, u16 u5, s16 attr) {
     u32 dst;
     u32 s;
     u16 code;
@@ -310,11 +307,16 @@ void blit_16x16_xflip(u16* src, s16 code, u16* dst, s16 attr) {
 /* provisional name */
 void bg_cell_write_xflip(s16 bg, s32 ofs, s32 cell, u32 src, s16 u5, s16 attr) {
     u16* dst;
+    u32 base;
+    u16 code;
     u16* s;
-    u16 code = 0;
-    dst = (u16*)((u32)bg_w.bgw[bg].bg_address + ofs);
-    s = (u16*)((cell << 10) + src);
+    base = (u32)bg_w.bgw[bg].bg_address;
+    ofs += base;
+    dst = (u16*)ofs;
+    code = 0;
     code += bg_w.scroll_cg_adr >> 7;
+    cell = (cell << 10) + src;
+    s = (u16*)cell;
     blit_16x16_xflip(s, code, dst, attr);
 }
 
@@ -351,11 +353,16 @@ void blit_16x16_yflip(u16* src, s16 code, u16* dst, s16 attr) {
 /* provisional name */
 void bg_cell_write_yflip(s16 bg, s32 ofs, s32 cell, u32 src, s16 u5, s16 attr) {
     u16* dst;
+    u32 base;
+    u16 code;
     u16* s;
-    u16 code = 0;
-    dst = (u16*)((u32)bg_w.bgw[bg].bg_address + ofs);
-    s = (u16*)((cell << 10) + src);
+    base = (u32)bg_w.bgw[bg].bg_address;
+    ofs += base;
+    dst = (u16*)ofs;
+    code = 0;
     code += bg_w.scroll_cg_adr >> 7;
+    cell = (cell << 10) + src;
+    s = (u16*)cell;
     blit_16x16_yflip(s, code, dst, attr);
 }
 
@@ -384,11 +391,16 @@ void blit_16x16_xyflip(u16* src, s16 code, u16* dst, s16 attr) {
 /* provisional name */
 void bg_cell_write_xyflip(s16 bg, s32 ofs, s32 cell, u32 src, s16 u5, s16 attr) {
     u16* dst;
+    u32 base;
+    u16 code;
     u16* s;
-    u16 code = 0;
-    dst = (u16*)((u32)bg_w.bgw[bg].bg_address + ofs);
-    s = (u16*)((cell << 10) + src);
+    base = (u32)bg_w.bgw[bg].bg_address;
+    ofs += base;
+    dst = (u16*)ofs;
+    code = 0;
     code += bg_w.scroll_cg_adr >> 7;
+    cell = (cell << 10) + src;
+    s = (u16*)cell;
     blit_16x16_xyflip(s, code, dst, attr);
 }
 
@@ -423,9 +435,7 @@ void bg_scr_write(void) {
         for (j = 0; j < bg_cell_cnt_tbl[bg_w.bg_index][i]; j++) {
             c = &cells[i][j];
             bg_cell_write(i, c->ofs, c->cell, bg_cg_src_tbl[bg_w.bg_index], 0, attr);
-            continue;
         }
-        continue;
     }
 }
 
@@ -434,11 +444,16 @@ void bg_scr_write(void) {
 /* provisional name */
 void ake_cell_write(s8 map, s32 ofs, s32 cell, u32 src) {
     u16* dst;
+    u32 base;
+    u16 code;
     u16* s;
-    u16 code = 0;
-    dst = (u16*)(ake_scrl_w[map].adrs + ofs);
-    s = (u16*)((cell << 10) + src);
+    base = ake_scrl_w[map].adrs;
+    ofs += base;
+    dst = (u16*)ofs;
+    code = 0;
     code += bg_w.ake_cg_adr >> 7;
+    cell = (cell << 10) + src;
+    s = (u16*)cell;
     blit_16x16_tile(s, code, dst, 0x3C0);
 }
 
@@ -447,11 +462,16 @@ void ake_cell_write(s8 map, s32 ofs, s32 cell, u32 src) {
 /* provisional name */
 void ake_cell_write_attr(s8 map, s32 ofs, s32 cell, u32 src, s16 attr) {
     u16* dst;
+    u32 base;
+    u16 code;
     u16* s;
-    u16 code = 0;
-    dst = (u16*)(ake_scrl_w[map].adrs + ofs);
-    s = (u16*)((cell << 10) + src);
+    base = ake_scrl_w[map].adrs;
+    ofs += base;
+    dst = (u16*)ofs;
+    code = 0;
     code += bg_w.ake_cg_adr >> 7;
+    cell = (cell << 10) + src;
+    s = (u16*)cell;
     blit_16x16_tile(s, code, dst, attr + 0x3C0);
 }
 
@@ -514,7 +534,6 @@ void bg_etc_scr_write(s16 n) {
             bg_cell_write(i, t->ofs, t->cell, etc_bg_cg_src_tbl[n], 0, attr);
             j++;
         }
-        continue;
     }
 }
 
@@ -531,9 +550,7 @@ void bg_scr_clear_all(void) {
             for (k = 0; k < 4; k++) {
                 blit_16x16_tile((u16*)bg_cg_src_tbl[bg_w.bg_index], bg_w.scroll_cg_adr >> 7, (u16*)(dst + k * 0x40), 0);
             }
-            continue;
         }
-        continue;
     }
 }
 
@@ -573,9 +590,9 @@ void compel_bg_init_position(void) {
     bg_w.compel_on[0] = 1;
     Zoomf_Init();
     bg_w.bg_f_x = 64;
-    bg_w.old_bg_f[0] = 64;
+    bg_w.old_bg_f_x = 64;
     bg_w.bg_f_y = 64;
-    bg_w.old_bg_f[1] = 64;
+    bg_w.old_bg_f_y = 64;
     bg_w.scr_stop = 0;
     bg_w.frame_flag = 0;
     bg_w.dmm0[0] = 0;
@@ -598,9 +615,9 @@ void reset_all_char_display_with_backup(void) {
     bg_w.compel_on[0] = 0;
     Zoomf_Init();
     bg_w.bg_f_x = 64;
-    bg_w.old_bg_f[0] = 64;
+    bg_w.old_bg_f_x = 64;
     bg_w.bg_f_y = 64;
-    bg_w.old_bg_f[1] = 64;
+    bg_w.old_bg_f_y = 64;
     bg_w.scr_stop = 0;
     bg_w.frame_flag = 0;
     bg_w.dmm0[0] = 0;
@@ -867,10 +884,10 @@ void bg_initialize(void) {
     bg_w.frame_flag = 0;
     bg_w.dmm0[0] = 0;
     bg_w.bg_f_x = 64;
-    bg_w.old_bg_f[0] = 64;
+    bg_w.old_bg_f_x = 64;
     bg_w.bg_f_y = 64;
-    bg_w.old_bg_f[1] = 64;
-    bg_w.dmm1[0] = 1;
+    bg_w.old_bg_f_y = 64;
+    bg_w.dmm1 = 1;
     bg_w.bg2_sp_x2 = bg_w.bg2_sp_x = 0;
     bg_sp_work = 0;
     bg_land_flag = 0;
@@ -931,7 +948,7 @@ void akebono_initialize(void) {
     ake_scrl_w[2].adrs = simmram_slot_addr(ake_scrl_w[2].handle);
     scrn_map_set_now(3, (u32)bg_w.bgw[3].bg_address);
     scrn_map_set(3, (u32)bg_w.bgw[3].bg_address);
-    bg_w.bgw[3].wxy[0].cal = bg_w.bgw[3].xy[0].cal = 0x100000;
+    bg_w.bgw[3].xy[0].cal = bg_w.bgw[3].wxy[0].cal = 0x100000;
     bg_w.bgw[3].xy[1].cal = bg_w.bgw[3].wxy[1].cal = 0;
     bg_w.bgw[3].position_x = 256 - bg_w.pos_offset;
     bg_w.bgw[3].position_y = 0;
@@ -941,7 +958,7 @@ void akebono_initialize(void) {
     ake_scrl_w[0].xy[0].cal = 0x2000000;
     ake_scrl_w[0].xy[1].cal = 0;
     sprite_list_setup(3, 1, (s16*)((u32)ake_scr_record_data));
-    bg_w.bgw[3].r_no_2 = bg_w.bgw[3].r_no_1 = 0;
+    bg_w.bgw[3].r_no_1 = bg_w.bgw[3].r_no_2 = 0;
     bg_w.bgw[3].fam_no = 3;
     akebono_scr_write();
     scrn_reg_w[3].ctrl &= 0xFE7F;
@@ -1011,10 +1028,10 @@ void bg_etc_write(s16 type) {
     bg_etc_flag = 0;
     bg_w.old_chase_flag = bg_w.chase_flag = 0;
     bg_w.bg_f_x = 64;
-    bg_w.old_bg_f[0] = 64;
+    bg_w.old_bg_f_x = 64;
     bg_w.bg_f_y = 64;
-    bg_w.old_bg_f[1] = 64;
-    bg_w.dmm1[0] = 1;
+    bg_w.old_bg_f_y = 64;
+    bg_w.dmm1 = 1;
     bg_w.bg2_sp_x2 = bg_w.bg2_sp_x = 0;
     bg_sp_work = 0;
     bg_stop2 = 0;

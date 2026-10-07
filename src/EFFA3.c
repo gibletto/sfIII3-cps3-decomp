@@ -132,15 +132,16 @@ s32 effect_A3_init(s16 type, s16 a, s16 b, s16 c, s16 d, s16 e, s16 f, s16 g, s1
 void effect_A4_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
     case 0:
-        if (--ewk->wu.dir_timer == 0) {
-            effect_89_init(ewk->master_id + 6, ewk->wu.dir_old, Text_Page_Y + 11, 2, 4);
-            if (--ewk->wu.dir_step != 0) {
-                ewk->wu.dir_timer = 1;
-                ewk->wu.dir_old += 2;
-            } else {
-                push_effect_work(&ewk->wu);
-                return;
-            }
+        if (--ewk->wu.dir_timer) {
+            break;
+        }
+        effect_89_init(ewk->master_id + 6, ewk->wu.dir_old, Text_Page_Y + 11, 2, 4);
+        if (--ewk->wu.dir_step != 0) {
+            ewk->wu.dir_timer = 1;
+            ewk->wu.dir_old += 2;
+        } else {
+            push_effect_work(&ewk->wu);
+            return;
         }
         break;
     }

@@ -231,8 +231,9 @@ s32 Loser_Scene(void) {
     Bg_Family_Set_appoint(3);
     if (Break_Into) {
         return 0;
+    } else {
+        return WIN_X;
     }
-    return WIN_X;
 }
 
 
@@ -400,9 +401,8 @@ s32 Game_Over(void) {
 
 
 
-s32 GameOver_1st(void) {
-    s32 rc;
-    switch (rc = GO_No[1]) {
+void GameOver_1st(void) {
+    switch (GO_No[1]) {
     case 0:
         GO_No[1]++;
         Target_BG_X[3] = bg_w.bgw[3].wxy[0].disp.pos + 458;
@@ -418,29 +418,27 @@ s32 GameOver_1st(void) {
         effect_58_init(12, 1, 1);
         effect_58_init(15, 5, 2);
         effect_58_init(16, 5, 2);
-        if (Version_Type != 3 || Break_Com[Player_id][0] == 0) {
-            effect_76_init(56);
-            Order[56] = 3;
-            Order_Timer[56] = 1;
-            return;
+        if (Version_Type == 3 && Break_Com[Player_id][0] != 0) {
+            break;
         }
-        return (s32)Break_Com;
+        effect_76_init(56);
+        Order[56] = 3;
+        Order_Timer[56] = 1;
+        break;
     case 1:
-        if (Next_Step != 0) {
+        if (Next_Step) {
             GO_No[1]++;
             G_Timer = 240;
         }
         break;
     case 2:
-        if ((rc = ((s8)Scene_Cut))) {
+        if (Scene_Cut) {
             G_Timer = 1;
         }
         if (--G_Timer == 0) {
             GO_No[0]++;
             GO_No[1] = 0;
-            return 0;
         }
         break;
     }
-    return rc;
 }

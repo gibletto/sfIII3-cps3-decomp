@@ -61,8 +61,9 @@ extern void Select_CPU_4th();
 extern void After_Bonus_1st();
 extern void Next_Q_1st();
 
-const SEL_PL_CONT_TBL Sel_PL_Cont_Jmp_Data[1] = {
-    { { Sel_PL_Cont_1st, Sel_PL_Cont_2nd, Sel_PL_Cont_3rd, Sel_PL_Cont_4th } },
+/* Initial values of cont_tbl (Sel_PL_Control) in sel_pl.c. */
+const u32 Sel_PL_cont_tbl_init[4] = {
+    (u32)Sel_PL_Cont_1st, (u32)Sel_PL_Cont_2nd, (u32)Sel_PL_Cont_3rd, (u32)Sel_PL_Cont_4th,
 };
 
 const s8 Sel_PL_Erase_msg[1] = {

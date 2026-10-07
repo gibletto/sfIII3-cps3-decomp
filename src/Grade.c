@@ -149,7 +149,6 @@ void makeup_final_grade(s16 ix, s16 pt) {
     }
     for (i = 0; i < judge_final[ix][pt].vcr_ix; i++) {
         tt += judge_final[ix][pt].vs_cpu_result[i];
-        continue;
     }
     if (Version_Type == 3) {
         tt /= 6;
@@ -239,12 +238,10 @@ void makeup_spp_frdat(s16 pl, s16 set)
         ev[n][1] = ((u8 *)jf->vs_cpu_grade)[i * 2 + 1];
         ev[n][2] = ((u8 *)jf->vs_cpu_player)[i * 2 + 1];
         n++;
-        continue;
     }
     jf->fr_ix = n;
     for (; i < 10; i++, n++) {
         ev[n][0] = i;
-        continue;
     }
     jf->sp_point = 0;
     for (i = 1; i < jf->fr_ix; i++) {
@@ -252,7 +249,6 @@ void makeup_spp_frdat(s16 pl, s16 set)
             jf->sp_point++;
             ev[i][3] = 1;
         }
-        continue;
     }
 }
 
@@ -566,7 +562,6 @@ s16 wf;
 s32 get_tech_pts_total(ix)
 s16 ix;
 {
-    s32 pl;
     s16 i;
     s16 point = 0;
     point += grade_t_first_attack[judge_item[ix][(u8)Play_Type].first_attack];
@@ -618,9 +613,7 @@ s16 ix;
         }
     }
     point += grade_t_command_waza[i][1];
-    pl = ix;
-    pl *= 0x498;
-    switch (((PLW*)((u8*)plw + (s16)pl))->sa->store_max) {
+    switch (plw[ix].sa->store_max) {
     case 1:
         for (i = 0; i < 5; i++) {
             if (judge_item[ix][(u8)Play_Type].sa_exec < grade_t_sa_stock_1[i + 1][0]) {

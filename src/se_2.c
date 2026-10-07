@@ -34,7 +34,8 @@ void mix_put_step(void) {
 void wipe_pattern_and_low(s16 kind, s16 row) {
     s16 x;
     s16 y;
-    wipe_pat_top = wipe_clear_pattern_tbl[kind].adr + row * 32;
+    wipe_pat_top = wipe_clear_pattern_tbl[kind].adr;
+    wipe_pat_top += row * 32;
     wipe_dst_ptr = (u16*)(SS_RAM + 0xD000);
     for (y = 0; y < 144; y++) {
         wipe_pat_ptr = wipe_pat_top;

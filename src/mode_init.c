@@ -43,7 +43,6 @@
 #include "sys_test_3.h"
 #include "sys_test_4.h"
 #include "sys_test_5.h"
-#include "textsound.h"
 #include "textsound_2.h"
 #include "textsound_3.h"
 #include "pass00.h"
@@ -310,7 +309,7 @@ void region_group_params_set(void) {
 
 /* provisional name */
 void display_mode_setup(void) {
-    if ((*&Game_setting).mode) {
+    if (Game_setting.mode) {
         set_screen_mode(7);
         screen_flip_offsets_set();
         DE_X[0] = 8;

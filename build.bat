@@ -899,9 +899,15 @@ shc src\sys_config_3.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 
 if errorlevel 1 goto fail
 shc src\spr_pool.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=0 -nospeed -object=obj\spr_pool.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
+shc src\spr_pool_2.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=0 -nospeed -object=obj\spr_pool_2.obj >obj\shc.log 2>&1
+if errorlevel 1 goto fail
 asmsh src\simmram.src -object=obj\simmram.obj
 if errorlevel 1 goto fail
+shc src\simmram_slot.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=0 -nospeed -object=obj\simmram_slot.obj >obj\shc.log 2>&1
+if errorlevel 1 goto fail
 shc src\poly_que.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=0 -nospeed -object=obj\poly_que.obj >obj\shc.log 2>&1
+if errorlevel 1 goto fail
+shc src\spr_list.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=0 -nospeed -object=obj\spr_list.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\textsound.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -noinline -object=obj\textsound.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail

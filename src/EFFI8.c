@@ -64,7 +64,8 @@ void effect_I8_move(WORK_Other* ewk) {
             ewk->wu.routine_no[0] = 2;
             break;
         }
-        if (sa_stop_check() == 0) {
+        if (sa_stop_check()) {
+        } else {
             if (ewk->wu.hit_stop < 0) {
                 ewk->wu.hit_stop = -ewk->wu.hit_stop;
             }
@@ -313,7 +314,11 @@ s16 y;
 }
 
 
-s32 effect_I8_init(PLW* wk, s16 top, const s16* sptr) {
+s32 effect_I8_init(wk, top, sptr)
+PLW* wk;
+s16 top;
+const s16* sptr;
+{
     WORK_Other* ewk;
     s16 ix;
     if ((ix = pull_effect_work(3)) == -1) {
@@ -346,6 +351,5 @@ void bbbs_ball_set(PLW* wk, const BBBSTable* dadr) {
     for (i = 0; i < dadr->kosuu; i++) {
         ttime = ttime + dadr->bbdat[i][0];
         effect_I8_init(wk, ttime, &dadr->bbdat[i][0]);
-        continue;
     }
 }
