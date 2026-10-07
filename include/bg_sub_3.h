@@ -5,7 +5,7 @@
 
 s32 zoom_frame_judge(void);
 void zoom_x_width_check(void);
-s32 zoom_y_width_check(void);
+void zoom_y_width_check(void);
 void bg_x_move_check(void);
 void bg_y_move_check(void);
 void bg_base_y_move_check(void);

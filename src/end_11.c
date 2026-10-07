@@ -259,11 +259,14 @@ void end_b01_3000(void) {
 
 /* provisional name */
 void end_b00_cell_set(void) {
-    s32 i;
-    for (i = 0; i < 8; i++) {
-        bg_cell_write(0, end_b00_bg0_cell_tbl[i].ofs, end_b00_bg0_cell_tbl[i].cell, (u32)end_b00_scrn_data, 0, 0x220);
+    s16 i;
+    const PANEL* p;
+    p = end_b00_bg0_cell_tbl;
+    for (i = 0; i < 8; i++, p++) {
+        bg_cell_write(0, p->ofs, p->cell, (u32)end_b00_scrn_data, 0, 0x220);
     }
-    for (i = 0; i < 16; i++) {
-        bg_cell_write(1, end_b00_bg1_cell_tbl[i].ofs, end_b00_bg1_cell_tbl[i].cell, (u32)end_b00_scrn_data, 0, 0x220);
+    p = end_b00_bg1_cell_tbl;
+    for (i = 0; i < 16; i++, p++) {
+        bg_cell_write(1, p->ofs, p->cell, (u32)end_b00_scrn_data, 0, 0x220);
     }
 }

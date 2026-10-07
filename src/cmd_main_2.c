@@ -432,12 +432,14 @@ void check_5(void) {
     if (waza_ptr->w_int < 0) {
         waza_ptr->w_type = 0;
     }
-    if (!dead_lvr_check() && waza_ptr->w_lvr == chk_pl->sw_now) {
-        if (*waza_ptr->w_ptr == 0x1C) {
-            command_ok();
-            return;
+    if (!dead_lvr_check()) {
+        if (waza_ptr->w_lvr == chk_pl->sw_now) {
+            if (*waza_ptr->w_ptr == 0x1C) {
+                command_ok();
+                return;
+            }
+            check_next();
         }
-        check_next();
     }
 }
 
@@ -1654,7 +1656,7 @@ void basic_waza_flag_clear(s16 pl_id) {
 
 
 
-void waza_flag_clear_only_1(s16 pl_id, s16 wznum) {
+void waza_flag_clear_only_1(s16 pl_id, u16 wznum) {
     waza_compel_init(pl_id, wznum, pl_CMD[plw[pl_id].player_number]);
 }
 

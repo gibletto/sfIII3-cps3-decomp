@@ -68,7 +68,9 @@
 #include "bg000.h"
 #include "Win.h"
 #include "win_2.h"
+#include "gameover.h"
 #include "continue.h"
+#include "pow_pow.h"
 #include "end_main.h"
 #include "Entry.h"
 #include "entry_2.h"
@@ -94,27 +96,23 @@ void FBI_Warning_1st(void) {
         tilemap_print_string_attr(x, 8, 18, FBI_msg);
         break;
     case 1:
-        if (--D_Timer == 0) {
-            D_No1++;
-            scfont_page0_fill(0, 32);
-            D_Timer = 40;
+        if (--D_Timer) {
+            break;
         }
+        D_No1++;
+        scfont_page0_fill(0, 32);
+        D_Timer = 40;
         break;
     case 2:
         if (--D_Timer == 0) {
             if (G_No1 == 12) {
                 G_No1 = 1;
-                D_No3 = 0;
-                D_No2 = 0;
-                D_No1 = 0;
-                D_No0 = 0;
+                D_No0 = D_No1 = D_No2 = D_No3 = 0;
                 return;
+            } else {
+                G_No1++;
+                D_No0 = D_No1 = D_No2 = D_No3 = 0;
             }
-            G_No1++;
-            D_No3 = 0;
-            D_No2 = 0;
-            D_No1 = 0;
-            D_No0 = 0;
         }
         break;
     }

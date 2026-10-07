@@ -28,6 +28,7 @@
 #include "PLS03ATT.h"
 #include "Grade.h"
 #include "EFFF1.h"
+#include "EFFF2_code.h"
 #include "CMD_MAIN.h"
 #include "cmd_main_2.h"
 #include "charmove_2.h"

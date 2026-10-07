@@ -63,7 +63,9 @@
 #include "textsound.h"
 #include "textsound_2.h"
 #include "textsound_3.h"
+#include "gameover.h"
 #include "continue.h"
+#include "pow_pow.h"
 #include "win_2.h"
 #include "fighter.h"
 

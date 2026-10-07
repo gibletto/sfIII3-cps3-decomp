@@ -270,7 +270,8 @@ void test_menu_select(void) {
     if (sw & 1) {
         tilemap_put_block(test_cursor_x_tbl[test_font_type], test_cursor_y_tbl[(s8)test_font_type][test_cursor], 2,
                                  test_cursor_off);
-        if (--test_cursor < 0) {
+        test_cursor--;
+        if (test_cursor < 0) {
             test_cursor = test_cursor_max;
         }
         tilemap_put_block(test_cursor_x_tbl[test_font_type], test_cursor_y_tbl[(s8)test_font_type][test_cursor], 2,
@@ -278,7 +279,8 @@ void test_menu_select(void) {
     } else if (sw & 2) {
         tilemap_put_block(test_cursor_x_tbl[test_font_type], test_cursor_y_tbl[(s8)test_font_type][test_cursor], 2,
                                  test_cursor_off);
-        if (++test_cursor > test_cursor_max) {
+        test_cursor++;
+        if (test_cursor > test_cursor_max) {
             test_cursor = 0;
         }
         tilemap_put_block(test_cursor_x_tbl[test_font_type], test_cursor_y_tbl[(s8)test_font_type][test_cursor], 2,

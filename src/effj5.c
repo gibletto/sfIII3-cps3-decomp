@@ -32,7 +32,7 @@
 
 
 void effect_J5_move(WORK_Other* ewk) {
-    s16 slot;
+    s16 work;
     switch (ewk->wu.routine_no[0]) {
     case 0:
         ewk->wu.routine_no[0]++;
@@ -46,15 +46,17 @@ void effect_J5_move(WORK_Other* ewk) {
     case 1:
         if (!EXE_flag && !Game_pause) {
             ewk->wu.cg_ctr--;
-            if (ewk->wu.cg_ctr < 1) {
+            if (ewk->wu.cg_ctr <= 0) {
                 ewk->wu.cg_ix++;
                 ewk->wu.cg_ix &= 3;
                 ewk->wu.cg_ctr = effJ5_frame_tbl[ewk->wu.cg_ix].timer;
-                slot = effJ5_frame_tbl[ewk->wu.cg_ix].slot;
-                scrn_map_set_now(0, eff_bg_adrs[slot].adrs);
+                work = effJ5_frame_tbl[ewk->wu.cg_ix].slot;
+                scrn_map_set_now(0, eff_bg_adrs[work].adrs);
             }
         }
-        Scrn_Y_Set_R(0, (s16)(effJ5_frame_tbl[ewk->wu.cg_ix].y + (bg_w.bgw[0].abs_y & 0x3FF)));
+        work = effJ5_frame_tbl[ewk->wu.cg_ix].y;
+        work += bg_w.bgw[0].abs_y & 0x3FF;
+        Scrn_Y_Set_R(0, work);
         break;
     default:
         push_effect_work(&ewk->wu);

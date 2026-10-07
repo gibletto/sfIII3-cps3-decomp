@@ -73,7 +73,7 @@ u32 sound_voice_volume_compute(u16 level, u32 pan_scale, s8 pan, SOUND_VOICE* v)
         out = t;
     }
     ctrl = snd_ctrl;
-    if ((u8)ctrl.b[1] & 1) {
+    if (ctrl.b[1] & 1) {
         if (!v->no_master) {
             t = (out * (u16)((u32)snd_fade_level >> 8)) >> 7;
             return t;

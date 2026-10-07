@@ -961,7 +961,7 @@ void Float_4th(PLW* wk) {
             u16 lp = Lever_Pool[wk->wu.id];
             Lever_Buff[wk->wu.id] = lp;
         }
-        break;
+        return;
     default:
         if (--Timer_00[wk->wu.id] != 0) {
             break;
@@ -1099,7 +1099,7 @@ void Flip_2nd(PLW* wk) {
 
 
 void Flip_3rd(PLW* wk) {
-    s32 next_disposal;
+    s16 next_disposal;
     if (PL_Damage_Data[wk->wu.routine_no[2]] == 0) {
         return;
     }

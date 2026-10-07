@@ -298,7 +298,6 @@ void chase_start_check(void) {
 
 
 s32 chase_xy_move(void) {
-    s32 sp_y;
     if (bg_w.chase_flag & 0xF) {
         bg_w.bg2_sp_x2 = bg_w.bg2_sp_x = 0;
         if (bg_w.chase_flag & 1) {
@@ -352,12 +351,8 @@ s32 chase_xy_move(void) {
             bgw_ptr->chase_xy[1].disp.pos = bgw_ptr->y_limit2;
             bgw_ptr->chase_xy[1].disp.low = 0;
         }
-        sp_y = bgw_ptr->pos_y_work;
-        sp_y = bgw_ptr->chase_xy[1].disp.pos - sp_y;
-        bg_w.bg2_sp_y = sp_y;
-        return sp_y;
+        bg_w.bg2_sp_y = bgw_ptr->chase_xy[1].disp.pos - bgw_ptr->pos_y_work;
     }
-    return bg_w.chase_flag;
 }
 
 /* provisional name */
@@ -623,7 +618,8 @@ s32 remake_x_mvstep(s16 x) {
 
 /* provisional name */
 void bg_base_x_move_check(void) {
-    s32 mvstep;
+    s16 mvstep;
+    s16 max_x;
     s16 old_work;
     bg_w.bg2_sp_x2 = bg_w.bg2_sp_x = 0;
     if (!bg_stop && !bg_app_stop) {
@@ -640,14 +636,15 @@ void bg_base_x_move_check(void) {
         ideal_w.iw[0].cal = 0;
         ideal_w.iw[0].disp.pos = mvstep;
         if (mvstep) {
+            max_x = bg_w.max_x;
             if (mvstep < 0) {
-                if (mvstep < -bg_w.max_x) {
-                    mvstep = -bg_w.max_x;
+                if (mvstep < -max_x) {
+                    mvstep = -max_x;
                 }
                 mvstep = -remake_x_mvstep(-mvstep);
             } else {
-                if (mvstep > bg_w.max_x) {
-                    mvstep = bg_w.max_x;
+                if (mvstep > max_x) {
+                    mvstep = max_x;
                 }
                 mvstep = remake_x_mvstep(mvstep);
             }

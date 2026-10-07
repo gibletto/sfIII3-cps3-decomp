@@ -56,16 +56,15 @@ void kotp_15000(WORK_Other* ewk, TAMA* twk) {
             ewk->wu.routine_no[2] = 0;
             break;
         }
-        if (--ewk->wu.dir_timer >= 0 && !tama15_screen_check(&ewk->wu)) {
-            break;
+        if (--ewk->wu.dir_timer < 0 || tama15_screen_check(&ewk->wu)) {
+            ewk->wu.mvxy.a[0].sp = 0;
+            ewk->wu.mvxy.a[1].sp = 0;
+            ewk->wu.mvxy.d[0].sp = 0;
+            ewk->wu.mvxy.d[1].sp = 0;
+            set_char_move_init(&ewk->wu, 0, twk->ernm);
+            ewk->wu.routine_no[1] = 2;
+            ewk->wu.routine_no[2] = 0;
         }
-        ewk->wu.mvxy.a[0].sp = 0;
-        ewk->wu.mvxy.a[1].sp = 0;
-        ewk->wu.mvxy.d[0].sp = 0;
-        ewk->wu.mvxy.d[1].sp = 0;
-        set_char_move_init(&ewk->wu, 0, twk->ernm);
-        ewk->wu.routine_no[1] = 2;
-        ewk->wu.routine_no[2] = 0;
         break;
     case 1:
         ewk->wu.vital_new -= ewk->wu.dm_vital;
@@ -140,12 +139,11 @@ void kotp_16000(WORK_Other* ewk, TAMA* twk) {
             ewk->wu.xyz[1].disp.pos = -ewk->wu.cg_jphos;
             break;
         }
-        if (--ewk->wu.dir_timer >= 0 && !screen_range_check(&ewk->wu)) {
-            break;
+        if (--ewk->wu.dir_timer < 0 || screen_range_check(&ewk->wu)) {
+            set_char_move_init(&ewk->wu, 0, twk->ernm);
+            ewk->wu.routine_no[1] = 2;
+            ewk->wu.routine_no[2] = 0;
         }
-        set_char_move_init(&ewk->wu, 0, twk->ernm);
-        ewk->wu.routine_no[1] = 2;
-        ewk->wu.routine_no[2] = 0;
         break;
     case 1:
         ewk->wu.vital_new -= ewk->wu.dm_vital;

@@ -28,7 +28,7 @@ void Win_14000(PLW* wk);
 s32 q_em_dir(PLW* wk);
 s16 q_em_distance_chk(PLW* wk);
 void q_keeping_action(PLW* wk);
-s32 q_leave_after_action(PLW* wk);
+void q_leave_after_action(PLW* wk);
 void urien_dash(PLW* wk);
 s32 urien_dash_chk(PLW* wk);
 void Judge_normal_winner(PLW* wk);

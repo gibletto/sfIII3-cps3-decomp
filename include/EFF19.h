@@ -5,6 +5,6 @@
 
 s32 effect_19_init(void);
 void effect_19_move(WORK_Other* ewk);
-u8 * eff19_quake_sub(WORK_Other* ewk);
+void eff19_quake_sub(WORK_Other* ewk);
 
 #endif

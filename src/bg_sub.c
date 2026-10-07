@@ -132,26 +132,28 @@ void bg_debug_scroll_layers(void) {
 /* provisional name */
 void bg_test_stage_select(void) {
     u16 sw;
-    s32 changed;
+    s16 changed;
     s8 save_27;
     s8 save_entry;
     changed = 0;
     sw = ~p1sw_1 & p1sw_0;
     if (sw & 0x80) {
-        if (++bg_select_no > 16) {
+        bg_select_no++;
+        if (bg_select_no > 16) {
             bg_select_no = 0;
         }
-        changed = 1;
         bg_w.stage = bg_test_stage_tbl[bg_select_no][0];
         bg_w.area = bg_test_stage_tbl[bg_select_no][1];
+        changed = 1;
     }
     if (sw & 0x100) {
-        if (--bg_select_no < 0) {
+        bg_select_no--;
+        if (bg_select_no < 0) {
             bg_select_no = 16;
         }
-        changed = 1;
         bg_w.stage = bg_test_stage_tbl[bg_select_no][0];
         bg_w.area = bg_test_stage_tbl[bg_select_no][1];
+        changed = 1;
     }
     if (changed) {
         System_all_clear_Wait();

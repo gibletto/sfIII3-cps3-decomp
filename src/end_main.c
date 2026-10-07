@@ -2486,7 +2486,7 @@ void update_all_disp_pos_ending(void) {
         bg_w.bgw[i].position_y = bg_w.bgw[i].xy[1].disp.pos & 0x3FF;
         bg_w.bgw[i].position_x = bg_w.bgw[i].wxy[0].disp.pos - bg_w.pos_offset;
         bg_w.bgw[i].position_x &= 0x3FF;
-        pos_work_x = -bg_w.bgw[i].position_x & 0x3FF;
+        pos_work_x = (s16)-bg_w.bgw[i].position_x & 0x3FF;
         pos_work_y = bg_w.bgw[i].position_y;
         pos_work_y = (768 - (pos_work_y & 0x3FF)) & 0x3FF;
         Family_Set_W(i + 1, pos_work_x, pos_work_y);
@@ -2494,7 +2494,7 @@ void update_all_disp_pos_ending(void) {
     bg_w.bgw[5].position_y = bg_w.bgw[5].xy[1].disp.pos & 0x3FF;
     bg_w.bgw[5].position_x = bg_w.bgw[5].wxy[0].disp.pos - bg_w.pos_offset;
     bg_w.bgw[5].position_x &= 0x3FF;
-    pos_work_x = -bg_w.bgw[5].position_x & 0x3FF;
+    pos_work_x = (s16)-bg_w.bgw[5].position_x & 0x3FF;
     pos_work_y = bg_w.bgw[5].position_y;
     pos_work_y = (768 - (pos_work_y & 0x3FF)) & 0x3FF;
     Family_Set_W(6, pos_work_x, pos_work_y);
@@ -2703,7 +2703,7 @@ void fadeout_to_staff_roll(void) {
 
 void common_end_init00(s16 pl_num) {
     s16 i;
-    s16 blocks;
+    s32 blocks;
     const END_BG_GFX* gfx;
     Family_Init();
     clear_scroll_layer_state_and_mask();

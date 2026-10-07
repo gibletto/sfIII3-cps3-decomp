@@ -118,7 +118,7 @@ loop:
 void bg0001(void) {
     GAME_TASK_JMP Main_Jmp_Tbl;
     Main_Jmp_Tbl = Main_Jmp_Data;
-    Main_Jmp_Tbl.jmp[(*(s16(*)[4])&G_No0)[0]]();
+    Main_Jmp_Tbl.jmp[G_No0]();
 }
 
 

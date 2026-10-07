@@ -80,7 +80,7 @@ void init_image_buff(WORK_Other* wk, ImageBuff* image_buff) {
     ImageBuff* p;
     for (i = 16; i >= 0; i--) {
         p = &image_buff[i];
-        p->pos_x = wk->wu.position_x;
+        image_buff[i].pos_x = wk->wu.position_x;
         p->pos_y = wk->wu.position_y;
     }
 }

@@ -188,7 +188,7 @@ void debug_ghost_shift_up(WORK* wk);
 void debug_ghost_shift_left(WORK* wk);
 void debug_ghost_shift_right(WORK* wk);
 void debug_hit_box_copy(void);
-void debug_set_all_boxes(s16 n);
+void debug_set_all_boxes();
 void debug_set_caught_box(s16 n);
 void game_config_move_jp(void);
 void game_config_cursor_move_jp(void);

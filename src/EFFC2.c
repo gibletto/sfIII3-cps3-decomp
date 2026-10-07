@@ -19,7 +19,9 @@
 #include "extern.h"
 #include "Win.h"
 #include "win_2.h"
+#include "gameover.h"
 #include "continue.h"
+#include "pow_pow.h"
 #include "EFFECT.h"
 #include "effect_2.h"
 #include "PLS03.h"
@@ -808,10 +810,7 @@ void set_bs2_floor(WORK_Other* wk) {
     dad = wk->wu.hosei_adrs[wk->wu.cg_ja.hoix].hos_box;
     bs2_floor[0] = wk->wu.xyz[0].disp.pos + dad[0];
     bs2_floor[1] = wk->wu.xyz[0].disp.pos + dad[0] + dad[1];
-    {
-        s16 t = dad[2] + dad[3];
-        bs2_floor[2] = t;
-    }
+    bs2_floor[2] = dad[2] + dad[3];
     dad = wk->wu.hosei_adrs[wk->wu.cg_ja.hoix + 1].hos_box;
     bs2_hosei[0] = wk->wu.xyz[0].disp.pos + dad[0];
     bs2_hosei[1] = wk->wu.xyz[0].disp.pos + dad[0] + dad[1];

@@ -16,6 +16,7 @@
 #include "PLS03ATT.h"
 #include "Grade.h"
 #include "EFFF1.h"
+#include "EFFF2_code.h"
 #include "CMD_MAIN.h"
 #include "cmd_main_2.h"
 #include "charmove_2.h"
@@ -1212,10 +1213,10 @@ s32 comm_ifcom(WORK* wk, CHAR_CMD* ctc) {
 
 
 s32 comm_axjmp(WORK* wk, CHAR_CMD* ctc) {
-    if (wk->mvxy.a[0].real.h > 2) {
+    if (*(s16*)&wk->mvxy.a[0] > 2) {
         return decord_if_jump(wk, ctc, ctc->koc);
     }
-    if (wk->mvxy.a[0].real.h < -2) {
+    if (*(s16*)&wk->mvxy.a[0] < -2) {
         return decord_if_jump(wk, ctc, ctc->pat);
     }
     return decord_if_jump(wk, ctc, ctc->ix);

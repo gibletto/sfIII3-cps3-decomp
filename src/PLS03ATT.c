@@ -489,7 +489,9 @@ s32 cmd_ex_check(s16 px, s16 cx) {
 
 
 /* provisional name */
-s32 shot_data_convert(s32 sw) {
+s32 shot_data_convert(sw)
+u16 sw;
+{
     s16 i;
     s16 rnum = -1;
     for (i = 0; i < 6; i++) {

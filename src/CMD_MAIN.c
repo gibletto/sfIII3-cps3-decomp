@@ -312,7 +312,7 @@ void game_config_1p_round_item_jp(void) {
         Config_New_jp = game_config_work.set4 & 3;
         Config_New_jp += Config_Move_jp;
         Config_New_jp &= 3;
-        Config_Attr_jp = (Config_New_jp == Config_Old_jp) ? 2 : 8;
+        Config_Attr_jp = (Config_New_jp != Config_Old_jp) ? 8 : 2;
         game_config_print_value_jp(Config_Attr_jp, &gcfg_round_scr_jp[Config_New_jp]);
         Config_Keep_Bits_jp = game_config_work.set4 & 0x30;
         game_config_work.set4 = Config_Keep_Bits_jp | Config_New_jp;
@@ -345,7 +345,7 @@ void game_config_2p_round_item_jp(void) {
         Config_New_jp &= 3;
         Config_New_jp += Config_Move_jp;
         Config_New_jp &= 3;
-        Config_Attr_jp = (Config_New_jp == Config_Old_jp) ? 2 : 8;
+        Config_Attr_jp = (Config_New_jp != Config_Old_jp) ? 8 : 2;
         game_config_print_value_jp(Config_Attr_jp, &gcfg_round_scr_jp[Config_New_jp]);
         Config_Keep_Bits_jp = game_config_work.set4 & 3;
         Config_New_jp *= 16;
@@ -402,7 +402,7 @@ void game_config_bonus_item_jp(void) {
         game_config_work.bonus &= 1;
         Config_New_jp = game_config_work.bonus & 1;
         Config_Old_jp = Game_setting.bonus & 1;
-        Config_Attr_jp = (Config_New_jp == Config_Old_jp) ? 2 : 8;
+        Config_Attr_jp = (Config_New_jp != Config_Old_jp) ? 8 : 2;
         game_config_print_value_jp(Config_Attr_jp, &gcfg_bonus_scr_jp[Config_New_jp]);
     }
 }
@@ -434,27 +434,21 @@ void game_config_settings_commit(void) {
 
 /* provisional name */
 s8 game_config_lever_repeat_jp(u16 sw, s16 ix) {
-    s32 cur = p1sw_0;
-    s32 mm = sw;
-
-    if (~p1sw_1 & cur & mm) {
+    if (~p1sw_1 & p1sw_0 & sw) {
         return 1;
     }
-    if (cur & mm) {
+    if (p1sw_0 & sw) {
         Config_Rep_Timer_jp[ix]++;
         if (Config_Rep_Timer_jp[ix] > 10) {
-            s8* t = &Config_Rep_Count_jp[ix];
-            ++*t;
-            if (*t > 8) {
+            Config_Rep_Count_jp[ix]++;
+            if (Config_Rep_Count_jp[ix] > 8) {
                 Config_Rep_Count_jp[ix] = 0;
                 return 1;
             }
         }
     } else {
-        {
-            s8 t = Config_Rep_Timer_jp[ix] = 0;
-            Config_Rep_Count_jp[ix] = t;
-        }
+        Config_Rep_Timer_jp[ix] = 0;
+        Config_Rep_Count_jp[ix] = 0;
     }
     return 0;
 }
@@ -748,7 +742,7 @@ void game_config_1p_round_item_en(void) {
         Config_New_en = game_config_work.set4 & 3;
         Config_New_en += Config_Move_en;
         Config_New_en &= 3;
-        Config_Attr_en = (Config_New_en == Config_Old_en) ? 2 : 8;
+        Config_Attr_en = (Config_New_en != Config_Old_en) ? 8 : 2;
         game_config_print_value_en(Config_Attr_en, &gcfg_round_str_en[Config_New_en]);
         Config_Keep_Bits_en = game_config_work.set4 & 0x30;
         game_config_work.set4 = Config_Keep_Bits_en | Config_New_en;
@@ -781,7 +775,7 @@ void game_config_2p_round_item_en(void) {
         Config_New_en &= 3;
         Config_New_en += Config_Move_en;
         Config_New_en &= 3;
-        Config_Attr_en = (Config_New_en == Config_Old_en) ? 2 : 8;
+        Config_Attr_en = (Config_New_en != Config_Old_en) ? 8 : 2;
         game_config_print_value_en(Config_Attr_en, &gcfg_round_str_en[Config_New_en]);
         Config_Keep_Bits_en = game_config_work.set4 & 3;
         Config_New_en *= 16;
@@ -856,18 +850,14 @@ void game_config_exit_item_en(void) {
 
 /* provisional name */
 s8 game_config_lever_repeat_en(u16 sw, s16 ix) {
-    s32 cur = p1sw_0;
-    s32 mm = sw;
-
-    if (~p1sw_1 & cur & mm) {
+    if (~p1sw_1 & p1sw_0 & sw) {
         return 1;
     }
-    if (cur & mm) {
+    if (p1sw_0 & sw) {
         Config_Rep_Timer_en[ix]++;
         if (Config_Rep_Timer_en[ix] > 10) {
-            s8* t = &Config_Rep_Count_en[ix];
-            ++*t;
-            if (*t > 8) {
+            Config_Rep_Count_en[ix]++;
+            if (Config_Rep_Count_en[ix] > 8) {
                 Config_Rep_Count_en[ix] = 0;
                 return 1;
             }
@@ -1282,10 +1272,7 @@ void debug_object_look_run(void) {
         if (dbg_pl->wu.disp_flag == 0) {
             dbg_pl->wu.old_cgnum = dbg_pl->wu.cg_number;
         }
-        {
-            s8 t = dbg_pl->wu.cg_flip;
-            Debug_CG_Flip[dbg_pl->wu.id] = t;
-        }
+        Debug_CG_Flip[dbg_pl->wu.id] = dbg_pl->wu.cg_flip;
         dbg_pl->wu.cg_flip ^= Debug_Flip_Mask[dbg_pl->wu.id];
         Debug_RL_Flag[dbg_pl->wu.id] = dbg_pl->wu.rl_flag;
         debug_pattern_timer_update();
@@ -1326,7 +1313,7 @@ void debug_object_look_run(void) {
         debug_pattern_timer_update();
         dbg_slot->sel[2] = dbg_pl->wu.cg_ix / dbg_pl->wu.cgd_type;
         Debug_CG_Flip[dbg_pl->wu.id] = dbg_pl->wu.cg_flip;
-        dbg_pl->wu.cg_flip ^= (&Debug_Flip_Mask[0])[dbg_pl->wu.id];
+        dbg_pl->wu.cg_flip ^= Debug_Flip_Mask[dbg_pl->wu.id];
         Debug_RL_Flag[dbg_pl->wu.id] = dbg_pl->wu.rl_flag;
         break;
     }
@@ -1400,10 +1387,7 @@ void debug_object_edit_move(void) {
         debug_motion_list_count();
         Debug_CG_Flip[dbg_pl->wu.id] = dbg_pl->wu.cg_flip;
         dbg_pl->wu.cg_flip ^= Debug_Flip_Mask[dbg_pl->wu.id];
-        {
-            s8 t = dbg_pl->wu.rl_flag;
-            Debug_RL_Flag[dbg_pl->wu.id] = t;
-        }
+        Debug_RL_Flag[dbg_pl->wu.id] = dbg_pl->wu.rl_flag;
         debug_pattern_timer_update();
         dbg_snap_ptr->dbg_val[1] = dbg_slot->frames;
         dbg_snap_ptr->dbg_val[0] = dbg_slot->rest;
@@ -1422,10 +1406,7 @@ void debug_object_edit_move(void) {
         }
         Debug_CG_Flip[dbg_pl->wu.id] = dbg_pl->wu.cg_flip;
         dbg_pl->wu.cg_flip ^= Debug_Flip_Mask[dbg_pl->wu.id];
-        {
-            s8 t = dbg_pl->wu.rl_flag;
-            Debug_RL_Flag[dbg_pl->wu.id] = t;
-        }
+        Debug_RL_Flag[dbg_pl->wu.id] = dbg_pl->wu.rl_flag;
         debug_pattern_timer_update();
         dbg_snap_ptr->dbg_val[1] = dbg_slot->frames;
         dbg_snap_ptr->dbg_val[0] = dbg_slot->rest;
@@ -1693,10 +1674,7 @@ void debug_object_edit_all_char_move(void) {
         debug_motion_list_count();
         Debug_CG_Flip[dbg_pl->wu.id] = dbg_pl->wu.cg_flip;
         dbg_pl->wu.cg_flip ^= Debug_Flip_Mask[dbg_pl->wu.id];
-        {
-            s8 t = dbg_pl->wu.rl_flag;
-            Debug_RL_Flag[dbg_pl->wu.id] = t;
-        }
+        Debug_RL_Flag[dbg_pl->wu.id] = dbg_pl->wu.rl_flag;
         debug_pattern_timer_update();
         dbg_snap_ptr->dbg_val[1] = dbg_slot->frames;
         dbg_snap_ptr->dbg_val[0] = dbg_slot->rest;
@@ -1715,10 +1693,7 @@ void debug_object_edit_all_char_move(void) {
         }
         Debug_CG_Flip[dbg_pl->wu.id] = dbg_pl->wu.cg_flip;
         dbg_pl->wu.cg_flip ^= Debug_Flip_Mask[dbg_pl->wu.id];
-        {
-            s8 t = dbg_pl->wu.rl_flag;
-            Debug_RL_Flag[dbg_pl->wu.id] = t;
-        }
+        Debug_RL_Flag[dbg_pl->wu.id] = dbg_pl->wu.rl_flag;
         debug_pattern_timer_update();
         dbg_snap_ptr->dbg_val[1] = dbg_slot->frames;
         dbg_snap_ptr->dbg_val[0] = dbg_slot->rest;
@@ -3185,7 +3160,7 @@ void debug_char_preview_dispatch(void) {
 
 /* provisional name */
 void debug_char_preview_init(void) {
-    s32 i;
+    s16 i;
     Debug_Tool_No++;
     tilemap_fill_all(0, 32);
     tilemap_print_string(0, 0, 0xFFFF, dbg_all_char_str);
@@ -3216,9 +3191,7 @@ void debug_char_preview_init(void) {
     Debug_Dec_Disp = 0;
     dbg_col_char = 0;
     dbg_cmd_panel = 0;
-    Debug_RL_Flag[0] = 0;
-    Debug_Flip_Work[0] = Debug_CG_Flip[0] = 0;
-    Debug_Flip_Mask[0] = 0;
+    Debug_Flip_Mask[0] = Debug_Flip_Work[0] = Debug_CG_Flip[0] = Debug_RL_Flag[0] = 0;
     Debug_RL_Flag[1] = 0;
     Debug_CG_Flip[1] = 0;
     Debug_Flip_Work[1] = 0;
@@ -3483,10 +3456,7 @@ void debug_parts_run(void) {
         if (Debug_PL_id == 0) {
             debug_slot_char_load();
             debug_motion_list_count();
-            {
-                s8 t = dbg_pl->wu.cg_flip;
-                Debug_CG_Flip[dbg_pl->wu.id] = t;
-            }
+            Debug_CG_Flip[dbg_pl->wu.id] = dbg_pl->wu.cg_flip;
             dbg_pl->wu.cg_flip ^= Debug_Flip_Mask[dbg_pl->wu.id];
             Debug_RL_Flag[dbg_pl->wu.id] = dbg_pl->wu.rl_flag;
             debug_pattern_timer_update();
@@ -3903,7 +3873,7 @@ void debug_record_frame_adjust(u16 sw) {
 /* provisional name */
 void debug_move_record_menu(void)
 {
-    s16 sw;
+    u16 sw;
     s16 i;
     s16 cur;
     s16 next;
@@ -3930,9 +3900,9 @@ void debug_move_record_menu(void)
         tilemap_print_string(0, 0, 0xFFFF, dbg_rec_clear_str);
         for (i = Debug_Rec_Frame; i < Debug_Rec_Count; i++) {
             cur = i * sizeof(SNAPSHOT);
-            next = (i + 1) * sizeof(SNAPSHOT);
-            debug_copy_player_snapshot((SNAPSHOT *)((u8 *)dbg_snap_w[0] + next), (SNAPSHOT *)((u8 *)dbg_snap_w[0] + cur));
-            debug_copy_player_snapshot((SNAPSHOT *)((u8 *)dbg_snap_w[1] + next), (SNAPSHOT *)((u8 *)dbg_snap_w[1] + cur));
+            next = i + 1;
+            debug_copy_player_snapshot((SNAPSHOT *)((u8 *)dbg_snap_w[0] + next * sizeof(SNAPSHOT)), (SNAPSHOT *)((u8 *)dbg_snap_w[0] + cur));
+            debug_copy_player_snapshot((SNAPSHOT *)((u8 *)dbg_snap_w[1] + next * sizeof(SNAPSHOT)), (SNAPSHOT *)((u8 *)dbg_snap_w[1] + cur));
         }
         Debug_Rec_Count--;
         dbg_rec_menu = 0;
@@ -4332,7 +4302,8 @@ void debug_set_hosei_box(s16 n) {
 
 /* Point every hit-box cursor of the look and edit buffers at box number n. */
 /* provisional name */
-void debug_set_all_boxes(s16 n)
+void debug_set_all_boxes(n)
+s16 n;
 {
     debug_set_dummy_box();
     debug_set_body_box(n);
@@ -4707,7 +4678,7 @@ draw:
 
 /* provisional name */
 void debug_cg_number_browse(void) {
-    u16 kind;
+    u32 kind;
     s16 moved;
     s16 ix;
     u16 code;
@@ -5323,10 +5294,7 @@ void debug_slot_char_load(void) {
     }
     Debug_CG_Flip[dbg_pl->wu.id] = dbg_pl->wu.cg_flip;
     dbg_pl->wu.cg_flip ^= Debug_Flip_Mask[dbg_pl->wu.id];
-    {
-        s8 t = dbg_pl->wu.rl_flag;
-        Debug_RL_Flag[dbg_pl->wu.id] = t;
-    }
+    Debug_RL_Flag[dbg_pl->wu.id] = dbg_pl->wu.rl_flag;
     dbg_pl->wu.disp_flag = check_cg_data(dbg_pl->wu.cg_number);
     if (dbg_pl->wu.disp_flag == 0) {
         dbg_pl->wu.old_cgnum = dbg_pl->wu.cg_number;
@@ -6680,10 +6648,10 @@ void debug_draw_att_data(void)
 {
     s16 bcd;
 
-    if (plw[0].wu.meoshi_hit_flag == 1) {
-        tilemap_print_string_attr(dbg_hud_x + 36, 2, 14, debug_space_msg);
-    } else {
+    if (plw[0].wu.meoshi_hit_flag != 1) {
         tilemap_print_string_attr(dbg_hud_x + 36, 2, 10, dbg_minus_str);
+    } else {
+        tilemap_print_string_attr(dbg_hud_x + 36, 2, 14, debug_space_msg);
     }
     bcd = debug_hex4_to_bcd(plw[0].wu.cg_att_ix);
     tilemap_print_hex(dbg_hud_x + 37, 2, 10, bcd, 4, 0);
@@ -7011,10 +6979,7 @@ s16 debug_catch_move_record(SNAPSHOT* p1, SNAPSHOT* p2) {
             char_move_z(&a->wu);
             Debug_CG_Flip[0] = a->wu.cg_flip;
             Debug_Flip_Mask[0] = 0;
-            {
-                s8 t = a->wu.rl_flag;
-                Debug_RL_Flag[0] = t;
-            }
+            Debug_RL_Flag[0] = a->wu.rl_flag;
         } while (a->wu.cg_type != 0xFF && (!(((s8)ixbfw_cut) & 4) || a->wu.cg_rival));
     } else {
         do {
@@ -7042,10 +7007,7 @@ s16 debug_catch_move_record(SNAPSHOT* p1, SNAPSHOT* p2) {
             debug_move_snapshot_frame(s1, &a->wu, a->wu.xyz[2].disp.pos);
             debug_move_snapshot_frame(s2, &d->wu, d->wu.next_z);
             char_move_z(&a->wu);
-            {
-                s8 t = a->wu.cg_flip;
-                Debug_CG_Flip[0] = t;
-            }
+            Debug_CG_Flip[0] = a->wu.cg_flip;
             Debug_Flip_Mask[0] = 0;
             Debug_RL_Flag[0] = a->wu.rl_flag;
         } while (a->wu.cg_type != 0xFF && (!(((s8)ixbfw_cut) & 4) || a->wu.cg_rival));

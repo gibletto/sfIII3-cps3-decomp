@@ -50,7 +50,7 @@ void set_caught_status();
 void set_char_base_data_init(WORK* wk);
 void set_damage_and_piyo(PLW* as, PLW* ds);
 void set_guard_status(PLW* as, PLW* ds);
-s16 set_judge_result(void);
+s32 set_judge_result(void);
 void set_paring_status(PLW* as, PLW* ds);
 void set_struck_status();
 void setup_catch_atthit(WORK* as, WORK* ds);

@@ -213,8 +213,8 @@ void setup_air_paring_mvxy(WORK* wk) {
         wk->mvxy.a[0].sp = -wk->mvxy.a[0].sp;
         wk->mvxy.d[0].sp = -wk->mvxy.d[0].sp;
     case 2:
-        if (wk->mvxy.a[0].real.h > -2) {
-            wk->mvxy.a[0].real.h = -2;
+        if (*(s16*)&wk->mvxy.a[0] > -2) {
+            *(s16*)&wk->mvxy.a[0] = -2;
         }
     }
 }
@@ -231,33 +231,24 @@ void remake_mvxy_PoSB(WORK* wk) {
 
 
 void remake_mvxy_PoGR(WORK* wk) {
-    s32 v;
     if (wk->mvxy.d[1].sp) {
         switch (((wk->mvxy.a[1].sp < 0) * 2) + (wk->mvxy.a[1].sp > 0)) {
         case 1:
-            v = wk->mvxy.a[1].sp;
-            v *= 80;
-            wk->mvxy.a[1].sp = v / 100;
+            wk->mvxy.a[1].sp = wk->mvxy.a[1].sp * 80 / 100;
             break;
         default:
-            v = wk->mvxy.a[1].sp;
-            v *= 10;
-            wk->mvxy.a[1].sp = v / 100;
+            wk->mvxy.a[1].sp = wk->mvxy.a[1].sp * 10 / 100;
             break;
         }
     }
     switch (((wk->mvxy.a[0].sp < 0) * 2) + (wk->mvxy.a[0].sp > 0)) {
     case 2:
-        v = wk->mvxy.a[0].sp;
-        v *= 30;
-        wk->mvxy.a[0].sp = v / 100;
+        wk->mvxy.a[0].sp = wk->mvxy.a[0].sp * 30 / 100;
         break;
     default:
-        v = wk->mvxy.a[0].sp;
-        v *= 50;
-        wk->mvxy.a[0].sp = v / 100;
-        if (wk->mvxy.a[0].real.h < 1) {
-            wk->mvxy.a[0].real.h = 1;
+        wk->mvxy.a[0].sp = wk->mvxy.a[0].sp * 50 / 100;
+        if (*(s16*)&wk->mvxy.a[0] < 1) {
+            *(s16*)&wk->mvxy.a[0] = 1;
         }
         wk->mvxy.d[0].sp = 0;
         wk->mvxy.a[0].sp = -wk->mvxy.a[0].sp;
@@ -300,6 +291,7 @@ two:
     p2w->wu.xyz[0].disp.pos += meri * (p2w->micchaku_flag != 1);
     p1w->hos_em_flag = 1;
     p2w->hos_em_flag = 2;
+    return;
 }
 
 
@@ -366,11 +358,10 @@ void check_body_touch2(void) {
             meri = hit_check_subroutine(&hmw->wu, efw, &dad2[0], &dad3[0]);
             if (meri != 0) {
                 meri = meri_case_switch(meri);
-                if (!check_work_position_bonus(&hmw->wu, efw->xyz[0].disp.pos + (dad1[0] + dad1[1] / 2))) {
-                    goto two;
-                } else {
+                if (check_work_position_bonus(&hmw->wu, efw->xyz[0].disp.pos + (dad1[0] + dad1[1] / 2))) {
                     goto one;
                 }
+                goto two;
             }
         }
     }
@@ -443,14 +434,13 @@ s32 set_field_hosei_flag(PLW* pl, s16 pos, s16 ix) {
     if (ix != 0) {
         hami = pl->wu.xyz[0].disp.pos + satse[pl->player_number] - pos;
         if (hami) {
-            if (hami >= 0) {
-                pl->wu.xyz[0].disp.pos -= hami;
-                pl->micchaku_flag = 1;
-                pl->hos_fi_flag = 1;
-                pl->hosei_amari = -hami;
-            } else {
+            if (hami < 0) {
                 goto no_hosei;
             }
+            pl->wu.xyz[0].disp.pos -= hami;
+            pl->micchaku_flag = 1;
+            pl->hos_fi_flag = 1;
+            pl->hosei_amari = -hami;
         } else {
             pl->micchaku_flag = 1;
             pl->hos_fi_flag = 0;
@@ -459,14 +449,13 @@ s32 set_field_hosei_flag(PLW* pl, s16 pos, s16 ix) {
     } else {
         hami = pl->wu.xyz[0].disp.pos - satse[pl->player_number] - pos;
         if (hami) {
-            if (hami <= 0) {
-                pl->wu.xyz[0].disp.pos -= hami;
-                pl->micchaku_flag = 2;
-                pl->hos_fi_flag = 2;
-                pl->hosei_amari = -hami;
-            } else {
+            if (hami > 0) {
                 goto no_hosei;
             }
+            pl->wu.xyz[0].disp.pos -= hami;
+            pl->micchaku_flag = 2;
+            pl->hos_fi_flag = 2;
+            pl->hosei_amari = -hami;
         } else {
             pl->micchaku_flag = 2;
             pl->hos_fi_flag = 0;

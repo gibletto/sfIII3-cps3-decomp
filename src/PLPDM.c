@@ -18,7 +18,9 @@
 #include "extern.h"
 #include "Win.h"
 #include "win_2.h"
+#include "gameover.h"
 #include "continue.h"
+#include "pow_pow.h"
 #include "SLOWF.h"
 #include "PLS02.h"
 #include "PLSGAUGE.h"
@@ -821,9 +823,8 @@ void check_dmpat_to_dmpat_sky(PLW* _p0) {}
 
 
 
-s32 Damage_30000(PLW* wk) {
-    s16 rc;
-    switch (rc = wk->wu.routine_no[3]) {
+void Damage_30000(PLW* wk) {
+    switch (wk->wu.routine_no[3]) {
     case 0:
         wk->wu.routine_no[3]++;
         wk->wu.dm_rl = ((WORK*)wk->wu.dmg_adrs)->rl_flag;
@@ -833,21 +834,18 @@ s32 Damage_30000(PLW* wk) {
         buttobi_add_y_check(wk);
         setup_butt_own_data(&wk->wu);
         cal_initial_speed_y(&wk->wu, buttobi_time_table[wk->as->char_ix][wk->wu.dm_attlv], 0);
-        return;
+        break;
     case 1:
-        if ((rc = setup_kuuchuu_nmdm(wk))) {
-            return rc;
+        if (setup_kuuchuu_nmdm(wk)) {
+            break;
         }
         wk->wu.routine_no[3]++;
         char_move_wca_init(&wk->wu);
     case 2:
         set_dm_hos_flag_sky(wk);
         first_flight_union(wk, 3, 3);
-        if ((rc = wk->wu.routine_no[3]) == 3) {
-            return rc;
-        }
-        if (!(rc = wk->hos_fi_flag)) {
-            return rc;
+        if (wk->wu.routine_no[3] == 3 || !wk->hos_fi_flag) {
+            break;
         }
         wk->wu.routine_no[2] = 18;
         wk->wu.routine_no[3] = 1;
@@ -867,13 +865,12 @@ s32 Damage_30000(PLW* wk) {
         bg_w.quake_x_index = 6;
         effect_I3_init(&wk->wu, 1);
         subtract_cu_vital(wk);
-        return;
+        break;
     case 3:
         char_move(&wk->wu);
         buttobi_chakuchi_cg_type_check(wk);
-        return;
+        break;
     }
-    return rc;
 }
 
 
@@ -923,7 +920,7 @@ void Damage_31000(PLW* wk) {
         setup_butt_own_data(&wk->wu);
         cal_initial_speed_y(&wk->wu, buttobi_time_table[wk->as->char_ix][wk->wu.dm_attlv], wk->wu.xyz[1].disp.pos);
         get_sky_dm_timer(wk);
-        break;
+        return;
     }
 }
 

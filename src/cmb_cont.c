@@ -26,7 +26,9 @@
 #include "meta_col_bcd.h"
 #include "Win.h"
 #include "win_2.h"
+#include "gameover.h"
 #include "continue.h"
+#include "pow_pow.h"
 #include "EFFECT.h"
 #include "effect_2.h"
 #include "cmb_cont.h"
@@ -34,38 +36,39 @@
 
 
 void combo_cont_init(void) {
-    u8 i;
-    for (i = 0; i < 2; i++) {
-        old_cmb_flag[i] = 0;
-        cmb_stock[i] = 0;
-        rever_attack[i] = 0;
-        paring_attack[i] = 0;
-        bonus_pts[i] = 0;
-        sarts_finish_flag[i] = 0;
-        cmb_calc_now[i] = 0;
-        cst_read[i] = 0;
-        cst_write[i] = 0;
-    }
+    old_cmb_flag[0] = 0;
+    old_cmb_flag[1] = 0;
+    cmb_stock[0] = 0;
+    cmb_stock[1] = 0;
     first_attack = 0;
+    rever_attack[0] = 0;
+    rever_attack[1] = 0;
+    paring_attack[0] = 0;
+    paring_attack[1] = 0;
+    bonus_pts[0] = 0;
+    bonus_pts[1] = 0;
     hit_num = 0;
     sa_kind = 0;
     cmb_all_stock = 0;
+    sarts_finish_flag[0] = 0;
+    sarts_finish_flag[1] = 0;
     last_hit_time = 0;
-    for (i = 0; i < 2; i++) {
-        work_init_zero((s32*)&combo_type[i], sizeof(ComboType));
-    }
-    for (i = 0; i < 2; i++) {
-        work_init_zero((s32*)&remake_power[i], sizeof(ComboType));
-    }
-    for (i = 0; i < 2; i++) {
-        memset(cmst_buff[i], 0, 64);
-    }
-    for (i = 0; i < 2; i++) {
-        memset(calc_hit[i], 0, sizeof(calc_hit[0]));
-    }
-    for (i = 0; i < 2; i++) {
-        memset(score_calc[i], 0, sizeof(score_calc[0]));
-    }
+    cmb_calc_now[0] = 0;
+    cmb_calc_now[1] = 0;
+    cst_read[0] = 0;
+    cst_read[1] = 0;
+    cst_write[0] = 0;
+    cst_write[1] = 0;
+    work_init_zero((s32*)&combo_type[0], sizeof(ComboType));
+    work_init_zero((s32*)&combo_type[1], sizeof(ComboType));
+    work_init_zero((s32*)&remake_power[0], sizeof(ComboType));
+    work_init_zero((s32*)&remake_power[1], sizeof(ComboType));
+    memset(cmst_buff[0], 0, 64);
+    memset(cmst_buff[1], 0, 64);
+    memset(calc_hit[0], 0, sizeof(calc_hit[0]));
+    memset(calc_hit[1], 0, sizeof(calc_hit[0]));
+    memset(score_calc[0], 0, sizeof(score_calc[0]));
+    memset(score_calc[1], 0, sizeof(score_calc[0]));
 }
 
 
@@ -214,7 +217,7 @@ void first_attack_pts_check(s8 PL) {
 
 
 s32 reversal_check(s8 PL) {
-    s8 PLS;
+    s16 PLS;
     if (rever_attack[PL]) {
         return 0;
     }

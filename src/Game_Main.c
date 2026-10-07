@@ -19,7 +19,6 @@
 #include "work.h"
 #include "romdata.h"
 #include "extern.h"
-#include "sel_pl.h"
 #include "SYS_sub.h"
 #include "Entry.h"
 #include "entry_2.h"
@@ -528,7 +527,7 @@ void Game03(void)
     switch (G_No2) {
     case 0:
         if (Winner_Scene() == 0) {
-            break;
+            return;
         }
         if (Check_Short_Ending()) {
             Forbid_Break = 1;
@@ -556,7 +555,10 @@ void Game03(void)
                 G_No3 = 0;
             }
             Cover_Timer = 24;
-            if (Continue_Flag != 0 && Round_Operator[LOSER]) {
+            if (Continue_Flag == 0) {
+                break;
+            }
+            if (Round_Operator[LOSER]) {
                 E_Number[LOSER][0] = 1;
                 E_Number[LOSER][1] = 0;
                 E_Number[LOSER][2] = 0;
@@ -627,10 +629,7 @@ void Game09(void) {
         init_slow_flag();
         effect_work_quick_init();
         clear_hit_queue();
-        {
-            s16 t = pcon_rno[1] = pcon_rno[2] = pcon_rno[3] = 0;
-            pcon_rno[0] = t;
-        }
+        pcon_rno[0] = pcon_rno[1] = pcon_rno[2] = pcon_rno[3] = 0;
         bbbs_com_initialize();
         ca_check_flag = 1;
         Bonus_Game_Work = 20;
@@ -1105,8 +1104,9 @@ void Time_Control(void) {
 
 
 s32 Ck_Coin(void) {
-    s16 pl = -1;
-    if (Free_Play != 0) {
+    s16 pl;
+    if (Free_Play) {
+        pl = -1;
         if (~p1sw_1 & p1sw_0 & 0x1000) {
             pl = 0;
         } else if (~p2sw_1 & p2sw_0 & 0x1000) {

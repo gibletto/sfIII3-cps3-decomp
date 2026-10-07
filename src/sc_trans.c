@@ -71,7 +71,12 @@ void sc_chr_load(u16 rows) {
 
 
 /* provisional name */
-void sc_chr_block_trans(u16 chr, u16 pos, u16 w, u16 h) {
+void sc_chr_block_trans(chr, pos, w, h)
+u16 chr;
+u16 pos;
+u16 w;
+u16 h;
+{
     s32 i, j, k;
     u16* dst;
     sc_trans_src = (u8*)&sc_chr_data[chr * 32 / 2];
@@ -362,7 +367,7 @@ void sc_chr_list_trans(s8 ix) {
     for (i = 0; i < n; i++) {
         sc_trans_dst = (u16*)((SS_RAM + 0x8000) + *slot++ * 64);
         sc_trans_src = (u8*)sc_chr_data + *src++ * 32;
-        sc_trans_src = (u8*)sc_chr_data + (s32)(*src++ * 32) / 2 * 2;
+        sc_trans_src = (u8*)&sc_chr_data[*src++ * 32 / 2];
         *sc_trans_dst = *sc_trans_src;
     }
 }
@@ -370,19 +375,17 @@ void sc_chr_list_trans(s8 ix) {
 
 
 /* provisional name */
-u8* sc_chr_slot_trans(s8 ix, u16 code, s8 to_ram) {
+void sc_chr_slot_trans(s8 ix, u16 code, s8 to_ram) {
     const u16* const* list = &sc_chr_slot_tbl[ix];
     const u16* p = *list;
-    u8* base;
     u16 n;
     u16 i;
     u16 k;
     sc_trans_src = (u8*)&sc_chr_data[code * 32 / 2];
     n = *p++;
     if (to_ram == 0) {
-        base = (u8*)(SS_RAM + 0x8000);
         for (i = 0; i < n; i++) {
-            sc_trans_dst = (u16*)(base + *p++ * 64);
+            sc_trans_dst = (u16*)((SS_RAM + 0x8000) + *p++ * 64);
             for (k = 0; k < 32; k++) {
                 *sc_trans_dst = *sc_trans_src;
                 sc_trans_dst++;
@@ -390,9 +393,8 @@ u8* sc_chr_slot_trans(s8 ix, u16 code, s8 to_ram) {
             }
         }
     } else {
-        base = sc_chr_ram;
         for (i = 0; i < n; i++) {
-            sc_bak_ptr = base + *p++ * 32;
+            sc_bak_ptr = sc_chr_ram + *p++ * 32;
             for (k = 0; k < 32; k++) {
                 *sc_bak_ptr = *sc_trans_src;
                 sc_bak_ptr++;
@@ -400,7 +402,6 @@ u8* sc_chr_slot_trans(s8 ix, u16 code, s8 to_ram) {
             }
         }
     }
-    return base;
 }
 
 extern const CELL_SET sc_ram_vram_tbl[30];
@@ -410,31 +411,32 @@ char ix;
 char dx;
 char dy;
 {
-    const CELL_SET *set;
+    const u16 **tbl;
     const u16 *pos;
     const u16 *code;
     const u16 *attr;
     u16 *cell;
     u16 n;
     u16 i;
-    s32 bit = 0x100;
 
-    set = &sc_ram_vram_tbl[ix];
-    pos = set->pos;
-    attr = set->attr;
-    code = set->code;
+    tbl = (const u16 **)&sc_ram_vram_tbl[ix];
+    pos = *tbl;
+    tbl++;
+    code = *tbl;
+    tbl++;
+    attr = *tbl;
     n = *code++;
     if (dx == 0 && dy == 0) {
         for (i = 0; i < n; i++) {
             cell = (u16 *)(SS_RAM + *pos++);
             cell[0] = *code;
-            cell[1] = ((*code++ & bit) >> 8) | *attr++;
+            cell[1] = ((*code++ & 0x100) >> 8) | *attr++;
         }
     } else {
         for (i = 0; i < n; i++) {
             cell = (u16 *)(SS_RAM + *pos++ + dx * 4 + dy * 0x100);
             cell[0] = *code;
-            cell[1] = ((*code++ & bit) >> 8) | *attr++;
+            cell[1] = ((*code++ & 0x100) >> 8) | *attr++;
         }
     }
 }
@@ -442,14 +444,19 @@ char dy;
 
 
 void sc_ram_to_vram_opc(s8 ix, s8 dx, s8 dy, u16 attr) {
-    const CELL_SET* set = &sc_ram_vram_tbl[ix];
-    const u16* pos = set->pos;
-    const u16* code = set->code;
-    u16 n = *code++;
+    const u16** tbl;
+    const u16* pos;
+    const u16* code;
     u16* cell;
+    u16 n;
     u16 i;
-    s32 x = dx;
-    if (x == 0 && dy == 0) {
+
+    tbl = (const u16**)&sc_ram_vram_tbl[ix];
+    pos = *tbl;
+    tbl++;
+    code = *tbl;
+    n = *code++;
+    if (dx == 0 && dy == 0) {
         for (i = 0; i < n; i++) {
             cell = (u16*)(SS_RAM + *pos++);
             cell[0] = *code;
@@ -457,7 +464,7 @@ void sc_ram_to_vram_opc(s8 ix, s8 dx, s8 dy, u16 attr) {
         }
     } else {
         for (i = 0; i < n; i++) {
-            cell = (u16*)(SS_RAM + *pos++ + x * 4 + dy * 0x100);
+            cell = (u16*)(SS_RAM + *pos++ + dx * 4 + dy * 0x100);
             cell[0] = *code;
             cell[1] = ((*code++ & 0x100) >> 8) | attr;
         }
@@ -626,6 +633,18 @@ void max_mark_write(char side, s32 left, u32 count, s32 x, char mark)
             tilemap_put_cell(x - left + 42 + i, 26, 34, mark * 6 + 42 + i);
         }
     }
+}
+
+
+
+/* provisional name */
+void max_mark_chr_trans(pl, n)
+s8 pl;
+s16 n;
+{
+    sc_trans_dst = (u16*)((SS_RAM + 0xB400) + pl * 0x400);
+    sc_trans_src = (u8*)sc_chr_data + ((n * 6 + 0x680) << 5);
+    sc_chr_trans(6);
 }
 
 /* provisional name */
@@ -859,7 +878,7 @@ void win_mark_put(s16 pl, u16 n, s16 attr) {
 void win_mark_ram_clear(void) {
     u16 i;
     u8* dst = &sc_chr_ram[0x200];
-    volatile s32 blank = 0xBDC0;
+    s32 blank = 0xBDC0;
     for (i = 0; i < 8; i++) {
         sc_trans_src = (u8*)((u32)sc_chr_data + blank);
         sc_bak_ptr = dst;
@@ -946,7 +965,9 @@ void winner_name_put(s8 ch) {
 
 
 /* provisional name */
-void player_face_char_set(s8 pl) {
+void player_face_char_set(pl)
+s8 pl;
+{
     if (My_char[1] == PL_GILL && pl == 1) {
         sc_chr_slot_trans(1, 0x350, 0);
         sc_chr_slot_trans(3, 0x358, 0);

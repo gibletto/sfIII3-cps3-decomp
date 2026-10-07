@@ -9,7 +9,7 @@ void sound_request_pan(u16 code, s16 vol_l, s16 vol_r, s16 time, s16 ramp);
 void sound_driver_init(void);
 void sound_driver_tick(void);
 u8 sound_status_read(void);
-void sound_seq_start(u16 code, s16 ramp);
+s32 sound_seq_start();
 u32 sound_fade_in_submit(u32 code_no, u16 speed);
 void bgm_pause(void);
 void bgm_resume(void);

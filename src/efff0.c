@@ -146,10 +146,7 @@ void effect_F0_move(WORK_Other* ewk) {
             break;
         }
     }
-    {
-        s8 t = another_bg[0];
-        another_bg_old[0] = t;
-    }
+    another_bg_old[0] = another_bg[0];
     another_bg_old[1] = another_bg[1];
 }
 

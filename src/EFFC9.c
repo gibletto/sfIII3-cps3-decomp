@@ -36,7 +36,7 @@ void effect_C9_move(WORK_Other* ewk) {
     s16 scrc;
     switch (ewk->wu.routine_no[0]) {
     case 0:
-        ewk->wu.routine_no[0] += 1;
+        ewk->wu.routine_no[0] = ewk->wu.routine_no[0] + 1;
         ewk->wu.disp_flag = 1;
         scrc = get_center_position();
         ewk->wu.xyz[0].disp.pos = app_pos_hosei[ewk->wu.type][0] + scrc;

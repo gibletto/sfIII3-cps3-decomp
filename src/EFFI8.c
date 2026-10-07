@@ -18,7 +18,9 @@
 #include "extern.h"
 #include "Win.h"
 #include "win_2.h"
+#include "gameover.h"
 #include "continue.h"
+#include "pow_pow.h"
 #include "PLS02.h"
 #include "effd6_code.h"
 #include "effd7.h"
@@ -94,8 +96,7 @@ void effect_I8_move(WORK_Other* ewk) {
 
 void effI8_main_process(WORK_Other* ewk) {
     PLW* mwk = (PLW*)ewk->my_master;
-    void (**se)() = sound_effect_request;
-    const s16 (*hit_box)[4] = effI8_hit_box;
+    const s16 (*hit_box)[4];
     if (ewk->wu.hf.hit_flag) {
         ewk->wu.routine_no[1] = 1;
     }
@@ -130,7 +131,7 @@ void effI8_main_process(WORK_Other* ewk) {
                     effect_03_init(&ewk->wu, 0x85);
                     break;
                 default:
-                    se[0x157](ewk, 0x157);
+                    sound_effect_request[0x157](ewk, 0x157);
                     break;
                 }
                 ewk->wu.mvxy.a[0].sp = (ewk->wu.mvxy.a[0].sp * 80) / 100;
@@ -146,11 +147,13 @@ void effI8_main_process(WORK_Other* ewk) {
                 }
             }
             if (ewk->wu.kage_flag != 0 && ewk->refrected == 0 && mwk->wu.routine_no[1] == 4 &&
-                mwk->wu.routine_no[2] == 31 && mwk->wu.cg_type == 0x28 &&
-                ((s16)hit_check_subroutine(&ewk->wu, (WORK*)ewk->my_master, hit_box[0], hit_box[1]))) {
-                mwk->wu.cmwk[7] = 1;
-                ewk->wu.type = 0;
-                ewk->wu.routine_no[2] = 1;
+                mwk->wu.routine_no[2] == 31 && mwk->wu.cg_type == 0x28) {
+                hit_box = effI8_hit_box;
+                if ((s16)hit_check_subroutine(&ewk->wu, (WORK*)ewk->my_master, hit_box[0], hit_box[1])) {
+                    mwk->wu.cmwk[7] = 1;
+                    ewk->wu.type = 0;
+                    ewk->wu.routine_no[2] = 1;
+                }
             }
             break;
         case 1:
@@ -216,14 +219,14 @@ void effI8_main_process(WORK_Other* ewk) {
                 set_char_move_init(&ewk->wu, 0, 0x8B);
             }
         } else if (ewk->wu.hf.hit.effect && ((WORK*)ewk->wu.hit_adrs)->id == 0x89) {
-            se[0x157](ewk, 0x157);
+            sound_effect_request[0x157](ewk, 0x157);
             ewk->wu.routine_no[1] = 0;
             ewk->wu.rl_flag = (ewk->wu.rl_flag + 1) & 1;
             ewk->wu.mvxy.a[0].sp = (ewk->wu.mvxy.a[0].sp * 3) / 4;
             ewk->wu.hit_stop = 2;
         } else {
             if (ewk->wu.dmg_work_id != 1) {
-                se[0x10B](ewk, 0x10B);
+                sound_effect_request[0x10B](ewk, 0x10B);
             }
             ewk->wu.routine_no[1] = 2;
             ewk->wu.rl_flag = (ewk->wu.rl_flag + 1) & 1;

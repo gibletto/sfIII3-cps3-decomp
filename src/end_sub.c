@@ -82,52 +82,46 @@ u32 card_work_clear(void)
 }
 
 /* provisional name */
-u32 card_win_check(s16 vs_mode)
+void card_win_check(s16 vs_mode)
 {
-    SELPL *win;
     s8 need;
-    s32 ret;
 
     if (!Card_Dispenser) {
-        return 0;
+        return;
     }
-    ret = Country;
-    if (ret != 6 && ret != 5) {
-        return (u32)ret;
+    if (Country != 6 && Country != 5) {
+        return;
     }
-    if (!Play_Type) {
-        win = (SELPL *)((u8 *)card_pl_w + (s8)(Winner_id * sizeof(SELPL)));
-        if (!vs_mode) {
-            need = Win_Point_Com - Continue_Coin[Winner_id];
-            if (need < 0) {
-                need = 1;
-            }
-            win->wins += 1;
-            if (!win->cleared && need <= win->wins) {
-                win->cleared += 1;
-                card_out_req += 1;
-                win->flag = 1;
-            }
-        } else {
-            win->cleared += 1;
-            card_out_req += 1;
-            win->flag = 1;
+    if (Play_Type) {
+        card_pl_work_clear(Loser_id);
+        card_pl_w[Winner_id].vs_wins++;
+        if (card_pl_w[Winner_id].cleared) {
+            return;
         }
-        return (u32)memset((u8 *)card_pl_w + (s8)(Loser_id * sizeof(SELPL)), 0, sizeof(SELPL));
+        if (card_pl_w[Winner_id].vs_wins >= Win_Point_Human) {
+            card_pl_w[Winner_id].cleared++;
+            card_out_req++;
+            card_pl_w[Winner_id].flag = 1;
+        }
+        return;
     }
-    memset((u8 *)card_pl_w + (s8)(Loser_id * sizeof(SELPL)), 0, sizeof(SELPL));
-    win = (SELPL *)((u8 *)card_pl_w + (s8)(Winner_id * sizeof(SELPL)));
-    win->vs_wins += 1;
-    ret = win->cleared;
-    if (!ret) {
-        if ((ret = win->vs_wins) >= Win_Point_Human) {
-            win->cleared += 1;
-            card_out_req += 1;
-            win->flag = 1;
-            ret = 1;
+    if (vs_mode) {
+        card_pl_w[Winner_id].cleared++;
+        card_out_req++;
+        card_pl_w[Winner_id].flag = 1;
+    } else {
+        need = Win_Point_Com - Continue_Coin[Winner_id];
+        if (need < 0) {
+            need = 1;
+        }
+        card_pl_w[Winner_id].wins++;
+        if (!card_pl_w[Winner_id].cleared && card_pl_w[Winner_id].wins >= need) {
+            card_pl_w[Winner_id].cleared++;
+            card_out_req++;
+            card_pl_w[Winner_id].flag = 1;
         }
     }
-    return (u32)ret;
+    card_pl_work_clear(Loser_id);
 }
 
 

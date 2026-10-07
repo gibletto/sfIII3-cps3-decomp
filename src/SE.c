@@ -35,7 +35,7 @@ void wipe_pattern_or_cols(s16 kind, s16 row) {
     u16* dst;
     u16* p;
     u32 code;
-    s16 ofs;
+    s32 ofs;
     s16 x;
     s16 y;
     s16 width;
@@ -66,18 +66,36 @@ void wipe_pattern_restore_cols(s16 kind, s16 row) {
     u16* dst;
     s16 x;
     s16 y;
-    ofs = wipe_column_tbl[kind].w;
-    ofs *= row;
-    src = wipe_column_tbl[kind].adr + ofs;
+    u32 code;
+    src = wipe_column_tbl[kind].adr + wipe_column_tbl[kind].w * row;
     map = wipe_clear_pattern_tbl[kind].adr + row * 32;
     cell = sc_chr_ram;
     dst = (u16*)(SS_RAM + 0x8000);
     for (y = 0; y < 464; y++) {
         for (x = 0; x < wipe_column_tbl[kind].w; x++) {
-            dst[src[x]] = cell[src[x]] | map[src[x]];
+            code = src[x];
+            dst[code] = cell[code] | map[code];
         }
         dst += 32;
         cell += 32;
+    }
+}
+
+
+
+/* provisional name */
+void wipe_pattern_set_512(s16 kind, s16 row, s16 mix) {
+    wipe_pat_top = wipe_set_pattern_tbl[kind].adr;
+    if (mix) {
+        wipe_pat_top = wipe_clear_pattern_tbl[kind].adr;
+    }
+    wipe_pat_top += row * 32;
+    wipe_dst_ptr = (u16*)(SS_RAM + 0x8000);
+    if (!mix) {
+        mix_or_512();
+    } else {
+        wipe_back_ptr = sc_chr_ram;
+        mix_put_512();
     }
 }
 
@@ -168,7 +186,7 @@ void mix_put_128(void) {
 
 /* provisional name */
 void mix_or_step(void) {
-    *wipe_dst_ptr |= *wipe_pat_ptr;
+    *wipe_dst_ptr = *wipe_dst_ptr | *wipe_pat_ptr;
     wipe_dst_ptr++;
     wipe_pat_ptr++;
 }

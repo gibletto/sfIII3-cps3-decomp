@@ -18,7 +18,9 @@
 #include "extern.h"
 #include "Win.h"
 #include "win_2.h"
+#include "gameover.h"
 #include "continue.h"
+#include "pow_pow.h"
 #include "PLSGAUGE.h"
 #include "CHARMOVE.h"
 #include "charmove_2.h"
@@ -96,7 +98,7 @@ void hit_check_main_process(void) {
 
 
 
-s16 set_judge_result(void) {
+s32 set_judge_result(void) {
     s16 i;
     s16 rnum = 0;
     for (i = 0; i < hpq_in; i++) {

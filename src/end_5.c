@@ -498,7 +498,7 @@ void end_501_0012(void) {
 void end_5_bg1_cell_sub(s8 dir) {
     s16 pos;
     pos = bgw_ptr->xy[0].disp.pos & 0x300;
-    if (pos != end5_bg1_pos) {
+    if (end5_bg1_pos != pos) {
         end5_bg1_pos = pos;
         if (dir) {
             end5_col_ix++;
@@ -509,7 +509,8 @@ void end_5_bg1_cell_sub(s8 dir) {
             if (end5_pal_ix > 3) {
                 end5_pal_ix = 0;
             }
-            end_5_bg1_cell[end5_pal_ix] = end_5_bg1_cell_tbl[end5_col_ix];
+            (&end_5_bg1_cell[0])[end5_pal_ix] = end_5_bg1_cell_tbl[end5_col_ix];
+            bg_cell_write(1, end_5_bg1_ofs_tbl[end5_pal_ix], end_5_bg1_cell_tbl[end5_col_ix], (u32)end_500_scrn_data, 0, 0x220);
         } else {
             end5_col_ix--;
             if (end5_col_ix < 0) {
@@ -519,20 +520,25 @@ void end_5_bg1_cell_sub(s8 dir) {
             if (end5_pal_ix < 0) {
                 end5_pal_ix = 3;
             }
-            end_5_bg1_cell[end5_pal_ix] = end_5_bg1_cell_tbl[end5_col_ix];
+            (&end_5_bg1_cell[0])[end5_pal_ix] = end_5_bg1_cell_tbl[end5_col_ix];
+            bg_cell_write(1, end_5_bg1_ofs_tbl[end5_pal_ix], end_5_bg1_cell_tbl[end5_col_ix], (u32)end_500_scrn_data, 0, 0x220);
         }
-        bg_cell_write(1, end_5_bg1_ofs_tbl[end5_pal_ix], end_5_bg1_cell_tbl[end5_col_ix], (u32)end_500_scrn_data, 0, 0x220);
     }
 }
 
 
 
 void end_500_cell_set(void) {
-    s32 i;
+    s16 i;
+    const PANEL* p;
+    p = end_500_bg0_cell_tbl;
     for (i = 0; i < 12; i++) {
-        bg_cell_write(0, end_500_bg0_cell_tbl[i].ofs, end_500_bg0_cell_tbl[i].cell, (u32)end_500_scrn_data, 0, 0x220);
+        bg_cell_write(0, p->ofs, p->cell, (u32)end_500_scrn_data, 0, 0x220);
+        p++;
     }
+    p = end_500_bg1_cell_tbl;
     for (i = 0; i < 10; i++) {
-        bg_cell_write(1, end_500_bg1_cell_tbl[i].ofs, end_500_bg1_cell_tbl[i].cell, (u32)end_500_scrn_data, 0, 0x220);
+        bg_cell_write(1, p->ofs, p->cell, (u32)end_500_scrn_data, 0, 0x220);
+        p++;
     }
 }

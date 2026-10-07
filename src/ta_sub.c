@@ -64,14 +64,13 @@ void sync_fam_set(s16 num_of_bg) {
 void sync_fam_set2(s16 num_of_bg) {
     s16 x;
     s16 y;
-    s32 y2;
     bg_pos_hosei_sub2(num_of_bg);
     x = bg_w.bgw[num_of_bg].position_x;
-    y2 = bg_w.bgw[num_of_bg].position_y;
+    y = bg_w.bgw[num_of_bg].position_y;
     x = -x & 0x3FF;
-    y2 += 8;
-    y2 = (0x300 - (y2 & 0x3FF)) & 0x3FF;
-    Family_Set_W(num_of_bg + 1, x, y2);
+    y += 8;
+    y = (0x300 - (y & 0x3FF)) & 0x3FF;
+    Family_Set_W(num_of_bg + 1, x, y);
 }
 
 
@@ -87,6 +86,7 @@ void sync_fam_set3(s16 bg_no) {
     pos_work_x = pos_x_w & 0x3FF;
     pos_work_x -= bg_w.pos_offset;
     pos_x_w -= bg_w.pos_offset;
+    pos_work_x &= 0x3FF;
     if (bg_w.quake_x_index > 0) {
         pos_work_x += quake_x_tbl[bg_w.quake_x_index];
         pos_x_w += quake_x_tbl[bg_w.quake_x_index];
