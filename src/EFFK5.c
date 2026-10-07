@@ -32,7 +32,7 @@ void effect_K5_move(WORK_Other* ewk) {
         ewk->wu.routine_no[0] += 1;
         if (get_cal_work(&ewk->wu) == -1) {
             ewk->wu.routine_no[0] = 3;
-            return;
+            break;
         }
         mvj = (MVJ*)(((WORK*)ewk->wu.target_adrs)->routine_no);
         init_K5_work(&ewk->wu, mwk, mvj);
@@ -44,12 +44,12 @@ void effect_K5_move(WORK_Other* ewk) {
         if (ewk->wu.dead_f == 1) {
             ewk->wu.disp_flag = 0;
             ewk->wu.routine_no[0] = 2;
-            return;
+            break;
         }
         if (((PLW*)mwk)->waku_ram_index != ewk->wu.myself) {
             ewk->wu.disp_flag = 0;
             ewk->wu.routine_no[0] = 2;
-            return;
+            break;
         }
         get_master_table_address(&ewk->wu, mwk);
         mvj = (MVJ*)(((WORK*)ewk->wu.target_adrs)->routine_no);

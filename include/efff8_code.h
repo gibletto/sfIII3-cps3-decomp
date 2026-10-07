@@ -4,6 +4,6 @@
 #include "structs.h"
 
 s32 effect_F8_init(PLW* wk, u8 data);
-u32 effect_F8_move(WORK_Other* ewk);
+void effect_F8_move(WORK_Other* ewk);
 
 #endif

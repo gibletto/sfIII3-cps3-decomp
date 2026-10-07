@@ -26,7 +26,9 @@
 #include "EM_Cand.h"
 #include "Win.h"
 #include "win_2.h"
+#include "gameover.h"
 #include "continue.h"
+#include "pow_pow.h"
 #include "end_sub.h"
 #include "end_sub_2.h"
 #include "end_sub_3.h"
@@ -549,10 +551,7 @@ void Select_CPU_1st(void) {
     Temporary_EM[Player_id] = Last_Selected_EM[Player_id];
     Select_Timer = 32;
     Setup_EM_List();
-    {
-        s16 t = bg_w.bgw[3].wxy[0].disp.pos + 458;
-        Target_BG_X[3] = t;
-    }
+    Target_BG_X[3] = bg_w.bgw[3].wxy[0].disp.pos + 458;
     Offset_BG_X[3] = 0;
     if (VS_Index[Player_id] == 0) {
         bg_mvxy.a[0].sp = 0xA0000;
@@ -1020,14 +1019,11 @@ u16 sw;
         EM_id = EM_List[Player_id][Temporary_EM[Player_id] - 1];
         My_char[COM_id] = EM_id;
         Time_Stop = 2;
-        if (VS_Index[PL_id] < 8) {
+        if ((&VS_Index[0])[PL_id] < 8) {
             Sound_SE(ID + 98);
             Sound_SE(EM_Select_SE_Data[random_16_com()]);
         }
-        {
-            s8 t = Temporary_EM[PL_id];
-            Last_Selected_EM[PL_id] = t;
-        }
+        (&Last_Selected_EM[0])[PL_id] = (&Temporary_EM[0])[PL_id];
     }
 }
 

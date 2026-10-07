@@ -564,7 +564,7 @@ extern const TONE_ENTRY tone_down_tbl[];
 extern const u16 picture_chr_tbl[];
 extern const s16 picture_set_tbl[];
 extern const u16 picture_attr_tbl[];
-extern const NAME_PLATE nwdata_tbl[];
+extern const NAME_PLATE nwdata_tbl[22];
 extern const s16 vmark_tbl[];
 extern const s16 smark_pos_tbl[][2];
 extern const u16 smark_kind_tbl[];

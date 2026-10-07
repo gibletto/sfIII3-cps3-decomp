@@ -282,18 +282,19 @@ void wipe_check(void) {
         }
         return;
     }
-    pl = plw;
-    if (pl[0].sa->ok == -1) {
-        pl[0].sa->ok = 0;
+    pl = &plw[0];
+    if (pl->sa->ok == -1) {
+        pl->sa->ok = 0;
         time_clear[0] = 1;
-        pl[0].sa->gauge.i = 0;
+        pl->sa->gauge.i = 0;
         spg_dat[0].current_spg = 0;
         spg_dat[0].spg_level = 0;
     }
-    if (pl[1].sa->ok == -1) {
-        pl[1].sa->ok = 0;
+    pl = &plw[1];
+    if (pl->sa->ok == -1) {
+        pl->sa->ok = 0;
         time_clear[1] = 1;
-        pl[1].sa->gauge.i = 0;
+        pl->sa->gauge.i = 0;
         spg_dat[1].current_spg = 0;
         spg_dat[1].spg_level = 0;
     }
@@ -508,20 +509,25 @@ void sa_gauge_color_set(s8 pl) {
 
 
 
-s16 sa_color_chenge(pl, step)
+void sa_color_chenge(pl, step)
 s8 pl;
 s8 step;
 {
+    SPG_DAT* p0 = &spg_dat[0];
+    SPG_DAT* p1 = &spg_dat[1];
     if (spg_dat[pl].kind) {
         if (pl == 0) {
-            return spg_dat[0].spgcol_number = step * 2 + 34;
+            p0->spgcol_number = step * 2 + 34;
+        } else {
+            p1->spgcol_number = step * 2 + 162;
         }
-        return spg_dat[1].spgcol_number = step * 2 + 162;
+    } else {
+        if (pl == 0) {
+            p0->spgcol_number = 36 - step * 2;
+        } else {
+            p1->spgcol_number = 164 - step * 2;
+        }
     }
-    if (pl == 0) {
-        return spg_dat[0].spgcol_number = 36 - step * 2;
-    }
-    return spg_dat[1].spgcol_number = 164 - step * 2;
 }
 
 

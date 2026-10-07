@@ -23,7 +23,7 @@
 
 
 void effect_D8_move(WORK_Other* ewk) {
-    s32 offset_x;
+    s16 offset_x;
     ewk->wu.hit_quake += 1;
     switch (ewk->wu.routine_no[0]) {
     case 0:
@@ -48,7 +48,7 @@ void effect_D8_move(WORK_Other* ewk) {
             } else {
                 offset_x = Setup_Face_Offset_X(Play_Type_1st);
             }
-            ((s32(*)())effect_D8_init)(ewk, offset_x);
+            effect_D8_init(ewk, offset_x);
             set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, (ewk->wu.cg_ix / ewk->wu.cgd_type) + 1, 0);
         }
         if (Sel_PL_Complete[ewk->master_id]) {
@@ -131,7 +131,10 @@ L1:
 
 
 
-void effect_D8_init(WORK_Other* ewk, s16 offset_x) {
+void effect_D8_init(ewk, offset_x)
+WORK_Other* ewk;
+s16 offset_x;
+{
     s16 xx = ID_of_Face[Cursor_Y_low[ewk->master_id * 2]][Cursor_X[ewk->master_id]];
     ewk->wu.xyz[0].disp.pos = Face_Pos_Data[xx][0] + 512;
     ewk->wu.xyz[1].disp.pos = Face_Pos_Data[xx][1] + 0;

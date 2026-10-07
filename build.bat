@@ -202,7 +202,11 @@ shc src\Win.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext
 if errorlevel 1 goto fail
 shc src\win_2.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\win_2.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
+shc src\gameover.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\gameover.obj >obj\shc.log 2>&1
+if errorlevel 1 goto fail
 shc src\continue.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\continue.obj >obj\shc.log 2>&1
+if errorlevel 1 goto fail
+shc src\pow_pow.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\pow_pow.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\sel_pl.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -noinline -object=obj\sel_pl.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
@@ -639,6 +643,8 @@ if errorlevel 1 goto fail
 shc src\efff0.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\efff0.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\EFFF1.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\EFFF1.obj >obj\shc.log 2>&1
+if errorlevel 1 goto fail
+shc src\EFFF2_code.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\EFFF2_code.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\EFFF4.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\EFFF4.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail

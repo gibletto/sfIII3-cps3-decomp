@@ -4,7 +4,7 @@
 #include "structs.h"
 
 void Lose_10000(PLW* wk);
-s32 Lose_20000(PLW* wk);
+void Lose_20000(PLW* wk);
 void Lose_30000(PLW* wk);
 void Normal_normal_Loser(PLW* wk);
 void Judge_normal_loser(PLW* wk);

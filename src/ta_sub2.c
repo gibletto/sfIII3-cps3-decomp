@@ -21,8 +21,7 @@ s16 tm;
 {
     MotionState ms;
     XY* c = bg_w.bgw[bg_num].chase_xy;
-    c[0].disp.low = 0;
-    c[1].disp.low = 0;
+    c[0].disp.low = c[1].disp.low = 0;
     ms.timer = tm;
     ms.timer2 = ((ms.timer * (ms.timer - 1)) / 2) + ms.timer;
     ms.x.ps.h = chase_x - bg_w.bgw[bg_num].chase_xy[0].disp.pos;

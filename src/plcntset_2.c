@@ -718,6 +718,7 @@ void check_damage_hosei(void) {
             break;
         case 2:
             check_damage_hosei_dageki(&plw[1], &plw[0]);
+        default:
             break;
         }
     }

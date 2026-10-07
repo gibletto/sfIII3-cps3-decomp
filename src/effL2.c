@@ -94,17 +94,17 @@ s32 effect_L2_init(void) {
     s16 ix;
     s16 oya_id;
     if (plw[0].player_number == PL_YANG || plw[1].player_number == PL_YANG) {
-        return 10;
+        return;
     }
     if (plw[0].player_number == PL_YUN && plw[1].player_number == PL_YUN) {
-        return 3;
+        return;
     }
     if (plw[0].player_number == PL_YUN) {
         oya_id = 0;
     } else if (plw[1].player_number == PL_YUN) {
         oya_id = 1;
     } else {
-        return plw[1].player_number;
+        return;
     }
     if ((ix = pull_effect_work(3)) == -1) {
         return -1;
@@ -139,5 +139,4 @@ s32 effect_L2_init(void) {
     ewk->wu.kage_prio = ewk->wu.position_z + 1;
     ewk->wu.dir_old = 0;
     ewk->wu.direction = 0;
-    return 148;
 }

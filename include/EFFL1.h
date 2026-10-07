@@ -8,7 +8,7 @@ void effL1_f_stage_r_init(WORK_Other_CONN* ewk);
 void effL1_f_grade_init(WORK_Other_CONN* ewk);
 void effL1_f_kz_cont_init(WORK_Other_CONN* ewk);
 void effL1_f_kz_spp_init(WORK_Other_CONN* ewk);
-s32 effL1_f_mk_all_init(WORK_Other_CONN* ewk);
+void effL1_f_mk_all_init(WORK_Other_CONN* ewk);
 void effL1_f_mk_spp_init(WORK_Other_CONN* ewk);
 void effL1_f_score_init(WORK_Other_CONN* ewk);
 void effL1_f_stage_p_init(WORK_Other_CONN* ewk);

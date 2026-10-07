@@ -166,10 +166,10 @@ void bcount_cont_main(void) {
 
 
 
-s32 bcounter_control(void) {
-    s16 hi;
-    s32 rc;
-    const COUNT_WORK* cw = &count_work;
+void bcounter_control(void) {
+    u16 hi;
+    u16 lo;
+    const COUNT_WORK* cw;
     if (Counter_hi == 0) {
         return;
     }
@@ -177,16 +177,19 @@ s32 bcounter_control(void) {
         Counter_low -= 1;
         return;
     }
+    cw = &count_work;
     Counter_low = cw->hoji_counter;
     Counter_hi -= 1;
     round_timer.half.h = Counter_hi;
     hi = (u16)Counter_hi / 10;
+    lo = Counter_hi - hi * 10;
     if (Counter_hi) {
-        return ((s32(*)(s16 flag, s16 hi, s16 low))bcount_digit_trans)(0, hi, Counter_hi - hi * 10);
+        bcount_digit_trans(0, hi, lo);
+        return;
     }
-    rc = ((s32(*)(s16 flag, s16 hi, s16 low))bcount_digit_trans)(0, 0, 0);
+    hi = lo = 0;
+    bcount_digit_trans(0, hi, lo);
     Time_Over = 1;
-    return rc;
 }
 
 
@@ -203,9 +206,11 @@ s16 bcounter_down(u8 stop) {
     }
     hi = (u16)Counter_hi / 10;
     lo = Counter_hi - hi * 10;
-    if (Counter_hi == 0) {
+    if (Counter_hi) {
+        bcount_digit_trans(0, hi, lo);
+    } else {
         hi = lo = 0;
+        bcount_digit_trans(0, hi, lo);
     }
-    bcount_digit_trans(0, hi, lo);
     return Counter_hi;
 }

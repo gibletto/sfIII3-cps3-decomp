@@ -219,7 +219,7 @@ void Setup_Pos_52(WORK_Other* ewk) {
             ewk->wu.mvxy.d[0].sp = 0x10000;
         }
     } else {
-        ix = chkNameAkuma(ewk->wu.dir_step, 6);
+        ix = chkNameAkuma(ewk->wu.dir_step);
         ewk->wu.xyz[0].disp.pos = Pos_Data_52[ewk->master_id][ewk->wu.dir_step + ix][0] + 512;
         ewk->wu.xyz[1].disp.pos = Pos_Data_52[ewk->master_id][ewk->wu.dir_step + ix][1] + 0;
     }

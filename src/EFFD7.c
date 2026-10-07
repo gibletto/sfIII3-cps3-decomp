@@ -95,8 +95,7 @@ void effect_D7_move(WORK_Other* ewk) {
 
 void effD7_main_process(WORK_Other* ewk) {
     PLW* mwk = (PLW*)ewk->my_master;
-    void (**se)() = sound_effect_request;
-    const s16 (*hit_box)[4] = effD7_hit_box;
+    const s16 (*hit_box)[4];
     if (ewk->wu.hf.hit_flag) {
         ewk->wu.routine_no[1] = 1;
     }
@@ -131,7 +130,7 @@ void effD7_main_process(WORK_Other* ewk) {
                     effect_03_init(&ewk->wu, 0x85);
                     break;
                 default:
-                    se[0x157](ewk, 0x157);
+                    sound_effect_request[0x157](ewk, 0x157);
                     break;
                 }
                 ewk->wu.mvxy.a[0].sp = (ewk->wu.mvxy.a[0].sp * 80) / 100;
@@ -146,11 +145,13 @@ void effD7_main_process(WORK_Other* ewk) {
                 }
             }
             if (ewk->wu.kage_flag && mwk->wu.routine_no[1] == 4 && mwk->wu.routine_no[2] == 30 &&
-                mwk->wu.cg_type == 0x28 && mwk->tk_success == ewk->wu.shell_ix[0] &&
-                hit_check_subroutine(&ewk->wu, (WORK*)ewk->my_master, hit_box[0], hit_box[1])) {
-                mwk->wu.cmwk[7] = 1;
-                ewk->wu.type = 0;
-                ewk->wu.routine_no[2] = 1;
+                mwk->wu.cg_type == 0x28 && mwk->tk_success == ewk->wu.shell_ix[0]) {
+                hit_box = effD7_hit_box;
+                if (hit_check_subroutine(&ewk->wu, (WORK*)ewk->my_master, hit_box[0], hit_box[1])) {
+                    mwk->wu.cmwk[7] = 1;
+                    ewk->wu.type = 0;
+                    ewk->wu.routine_no[2] = 1;
+                }
             }
             break;
         case 1:
@@ -207,14 +208,14 @@ void effD7_main_process(WORK_Other* ewk) {
                 ewk->wu.hit_stop = 4;
             }
         } else if (ewk->wu.hf.hit.effect && ((WORK*)ewk->wu.hit_adrs)->id == 0x89) {
-            se[0x157](ewk, 0x157);
+            sound_effect_request[0x157](ewk, 0x157);
             ewk->wu.routine_no[1] = 0;
             ewk->wu.rl_flag = (ewk->wu.rl_flag + 1) & 1;
             ewk->wu.mvxy.a[0].sp = (ewk->wu.mvxy.a[0].sp * 3) / 4;
             ewk->wu.hit_stop = 2;
         } else {
             if (ewk->wu.dmg_work_id != 1) {
-                se[0x10B](ewk, 0x10B);
+                sound_effect_request[0x10B](ewk, 0x10B);
             }
             ewk->wu.routine_no[1] = 2;
             ewk->wu.rl_flag = (ewk->wu.rl_flag + 1) & 1;

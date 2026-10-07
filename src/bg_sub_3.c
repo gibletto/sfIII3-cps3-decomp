@@ -225,6 +225,35 @@ void zoom_ud_check(void) {
 
 
 /* provisional name */
+/* An earlier frame judgement on the two players' distance alone. */
+s32 zoom_frame_judge_dist(void) {
+    PLW* p1;
+    PLW* p2;
+    s16 left;
+    s16 right;
+    bg_w.frame_flag = 0;
+    p1 = &plw[0];
+    p2 = &plw[1];
+    if (p1->wu.scr_mv_x < plw[1].wu.scr_mv_x) {
+        left = p1->wu.scr_mv_x;
+        right = p2->wu.scr_mv_x;
+    } else {
+        left = p2->wu.scr_mv_x;
+        right = p1->wu.scr_mv_x;
+    }
+    right -= left;
+    if (right > 304) {
+        return 2;
+    }
+    if (right >= 272) {
+        return 1;
+    }
+    return 0;
+}
+
+
+
+/* provisional name */
 void zoom_x_width_check(void) {
     s32 f;
     if (Game_setting.mode) {
@@ -264,40 +293,38 @@ void zoom_x_width_check(void) {
 }
 
 /* provisional name */
-s32 zoom_y_width_check(void) {
-    s16 f;
-    s16 flag;
+void zoom_y_width_check(void) {
+    s32 f;
     if (Game_setting.mode) {
-        return Game_setting.mode;
+        return;
     }
     /* previous bg_f_y, kept in the unnamed word at bg_w+0x34 */
     bg_w.old_bg_f_y = bg_w.bg_f_y;
     bg_w.frame_flag = zoom_frame_judge();
     f = bg_w.bg_f_y;
-    flag = bg_w.frame_flag;
-    if (flag == 1) {
+    switch (bg_w.frame_flag) {
+    case 1:
         if (f < 9) {
             bg_w.bg_f_y++;
-            flag = bg_w.old_frame_flag;
-            if (flag == 1) {
-                return Frame_Up(192, 224, 0, 1);
+            if (bg_w.old_frame_flag == 1) {
+                Frame_Up(192, 224, 0, 1);
             }
         }
-    } else if (flag == 2) {
+        break;
+    case 2:
         if (f > 0) {
             bg_w.bg_f_y--;
-            flag = bg_w.old_frame_flag;
-            if (flag == 2) {
-                return Frame_Down(192, 224, 0, 1);
+            if (bg_w.old_frame_flag == 2) {
+                Frame_Down(192, 224, 0, 1);
             }
         }
-    } else if (flag == 3) {
+        break;
+    case 3:
         if (f != 9) {
-            return ((s32(*)())Zoomf_Init_Y)();
+            Zoomf_Init_Y();
         }
-        return f;
+        break;
     }
-    return flag;
 }
 
 

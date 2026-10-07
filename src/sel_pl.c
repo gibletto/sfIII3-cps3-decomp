@@ -384,9 +384,9 @@ void Sel_PL_3rd(void) {
         Request_Disp_Rank[ID][1] = -1;
         Request_Disp_Rank[ID][2] = -1;
         Request_Disp_Rank[ID][3] = -1;
-        return;
+    } else {
+        Check_Same_CPU(ID);
     }
-    Check_Same_CPU(ID);
 }
 
 
@@ -528,10 +528,7 @@ void Sel_PL_Sub(s32 PL_id_arg, u16 sw) {
         return;
     }
     Sel_PL_Complete[PL_id] = 1;
-    {
-        u8 t = ID_of_Face[*(volatile s16*)&Cursor_Y[PL_id]][Cursor_X[PL_id]];
-        My_char[PL_id] = t;
-    }
+    My_char[PL_id] = ID_of_Face[*(volatile s16*)&Cursor_Y[PL_id]][Cursor_X[PL_id]];
     if (Last_My_char2[PL_id] != My_char[PL_id]) {
         Arts_Y[ID] = Super_Arts[ID] = Last_Super_Arts[ID] = 0;
         Introduce_Boss[ID][0] = 0;
@@ -803,7 +800,7 @@ u16 sw;
     }
     lever_sw = sw & 0xF;
     if (lever_sw == 0) {
-        sw |= Auto_Repeat_Sub_Wife(PL_id);
+        sw = sw | Auto_Repeat_Sub_Wife(PL_id);
     }
     if (sw & 2) {
         Sound_SE(ID + 96);

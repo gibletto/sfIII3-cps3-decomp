@@ -114,11 +114,11 @@ void wipe_mask_and_cols(s16 kind, s16 row) {
     map += row * 32;
     dst = (u16*)(SS_RAM + 0xE000);
     for (i = 0; i < 6; i++) {
-        for (y = 0; y < 16; y++, dst += 32) {
+        for (y = 0; y < 16; y++) {
             for (x = 0; x < wipe_column_tbl[kind].w; x++) {
-                dst[src[x]] &= map[src[x]];
-                continue;
+                dst[src[x]] = dst[src[x]] & map[src[x]];
             }
+            dst += 32;
         }
     }
 }

@@ -4,7 +4,7 @@
 #include "structs.h"
 
 void spgauge_cont_init(void);
-s16 sa_color_chenge();
+void sa_color_chenge();
 void satime_stock_clear(void);
 void sa_gauge_trans();
 void sa_moji_trans();

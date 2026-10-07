@@ -71,7 +71,9 @@
 #include "bg000.h"
 #include "Win.h"
 #include "win_2.h"
+#include "gameover.h"
 #include "continue.h"
+#include "pow_pow.h"
 #include "end_main.h"
 #include "Entry.h"
 #include "entry_2.h"
@@ -1003,8 +1005,11 @@ void Game_Manage_9th(void) {
             C_No1 = 0;
             C_Timer = 75;
             sc_vram_to_ram();
-            if (Play_Type != 1 && Round_Operator[WINNER] && Battle_Q[WINNER]) {
-                C_No0 = 10;
+            if (Play_Type != 1) {
+                if (Round_Operator[WINNER] && Battle_Q[WINNER]) {
+                    C_No0 = 10;
+                    break;
+                }
             }
             break;
         }
@@ -1231,30 +1236,27 @@ void Game_Manage_12_1(void) {
 
 
 
-s32 Game_Manage_12_7(void) {
-    s16 rc;
+void Game_Manage_12_7(void) {
     bcount_cont_main();
-    if (!(rc = ((u8)Bonus_Game_Complete))) {
-        return rc;
+    if (Bonus_Game_Complete) {
+        C_No1++;
+        C_No2 = 0;
+        C_Timer = 30;
+        Forbid_Break = -1;
+        Completion_Bonus[Player_id][1] = -128;
+        Stock_Bonus_Game_Result = Bonus_Game_result;
+        Bonus_Score = 0;
+        Final_Bonus_Score = Setup_Final_Score(22);
+        ToneDown(8);
+        ToneDown(9);
+        effect_58_init(6, 10, 169);
+        grade_makeup_bonus_parameter(Player_id);
+        if (Check_Bonus_Perfect()) {
+            C_Timer = 20;
+        } else {
+            C_No1 = 4;
+        }
     }
-    C_No1++;
-    C_No2 = 0;
-    C_Timer = 30;
-    Forbid_Break = -1;
-    Completion_Bonus[Player_id][1] = -128;
-    Stock_Bonus_Game_Result = Bonus_Game_result;
-    Bonus_Score = 0;
-    Final_Bonus_Score = Setup_Final_Score(22);
-    ToneDown(8);
-    ToneDown(9);
-    effect_58_init(6, 10, 169);
-    grade_makeup_bonus_parameter(Player_id);
-    if ((rc = Check_Bonus_Perfect())) {
-        C_Timer = 20;
-        return rc;
-    }
-    C_No1 = 4;
-    return 4;
 }
 
 
@@ -2032,38 +2034,38 @@ void Update_VS_Data(void) {
         LOSER = Loser_id;
         Stock_My_char[LOSER] = My_char[LOSER];
         Stock_Player_Color[LOSER] = Player_Color[LOSER];
-        if (Play_Type != 0) {
-            return;
-        }
-        if (Round_Operator[WINNER] != 0) {
-            SC_Personal_Time[WINNER] = Control_Time;
-            Stage_Continue[WINNER] = 0;
-            Request_Disp_Rank[LOSER][0] = -1;
-            Request_Disp_Rank[LOSER][1] = -1;
-            Request_Disp_Rank[LOSER][2] = -1;
-            Request_Disp_Rank[LOSER][3] = -1;
-            Stock_Com_Color[WINNER] = -1;
-            Stock_Com_Arts[WINNER] = -1;
-            EM_History[WINNER][VS_Index[WINNER]] = EM_id;
-            Result_Disp_Timer[WINNER] += 30;
-            if (EM_id == 18) {
-                Break_Com[WINNER][EM_id] = (s8)VS_Index[WINNER];
+        if (Play_Type == 0) {
+            if (Round_Operator[WINNER] != 0) {
+                SC_Personal_Time[WINNER] = Control_Time;
+                Stage_Continue[WINNER] = 0;
+                Request_Disp_Rank[LOSER][0] = -1;
+                Request_Disp_Rank[LOSER][1] = -1;
+                Request_Disp_Rank[LOSER][2] = -1;
+                Request_Disp_Rank[LOSER][3] = -1;
+                Stock_Com_Color[WINNER] = -1;
+                Stock_Com_Arts[WINNER] = -1;
+                EM_History[WINNER][VS_Index[WINNER]] = EM_id;
+                Result_Disp_Timer[WINNER] += 30;
+                if (EM_id == 18) {
+                    Break_Com[WINNER][EM_id] = (s8)VS_Index[WINNER];
+                } else {
+                    VS_Index[WINNER]++;
+                    Break_Com[WINNER][EM_id] = 1;
+                }
+                if (PL_Wins[LOSER] != 0) {
+                    Straight_Counter[WINNER] = 0;
+                    Straight_Flag[WINNER] = 1;
+                }
+                if (++Round_Level > 7) {
+                    Round_Level = 7;
+                }
             } else {
-                VS_Index[WINNER]++;
-                Break_Com[WINNER][EM_id] = 1;
-            }
-            if (PL_Wins[LOSER] != 0) {
-                Straight_Counter[WINNER] = 0;
-                Straight_Flag[WINNER] = 1;
-            }
-            if (++Round_Level > 7) {
-                Round_Level = 7;
+                Score[LOSER][0] = Stage_Stock_Score[LOSER];
+                Win_Record[LOSER] = 0;
+                Straight_Counter[LOSER] = 0;
+                Straight_Flag[LOSER] = 1;
             }
         } else {
-            Score[LOSER][0] = Stage_Stock_Score[LOSER];
-            Win_Record[LOSER] = 0;
-            Straight_Counter[LOSER] = 0;
-            Straight_Flag[LOSER] = 1;
         }
     } else if (Round_Operator[Winner_id] != 0) {
         Pool_Score(Winner_id);

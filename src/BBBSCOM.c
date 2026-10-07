@@ -26,7 +26,8 @@
 
 
 void bbbs_com_execute(PLW* wk) {
-    switch (Bonus_Stage_RNO[0]) {
+    s16* rno = Bonus_Stage_RNO;
+    switch (rno[0]) {
     case 0:
         if (Allow_a_battle_f == 0) {
             break;
@@ -45,7 +46,7 @@ void bbbs_com_execute(PLW* wk) {
         effect_H0_init(&wk->wu);
         break;
     case 1:
-        switch (Bonus_Stage_RNO[1]) {
+        switch (rno[1]) {
         case 0:
             if (wk->wu.routine_no[1] != 0) {
                 break;
@@ -112,7 +113,7 @@ void bbbs_com_execute(PLW* wk) {
             }
             break;
         case 6:
-            Bonus_Stage_RNO[0] = 2;
+            rno[0] = 2;
             Bonus_Stage_RNO[1] = 0;
             break;
         }
@@ -173,7 +174,9 @@ s32 set_bonus_game_difficulty(s16 emid) {
 
 
 
-s32 set_bonus_game_nando(u16 swdat) {
+s32 set_bonus_game_nando(swdat)
+u16 swdat;
+{
     if (swdat == 0x152) {
         return 9;
     }
@@ -206,7 +209,9 @@ s32 set_bonus_game_nando(u16 swdat) {
 
 
 
-s32 katteni_bonus_nando(u16 swdat) {
+s32 katteni_bonus_nando(swdat)
+u16 swdat;
+{
     if (swdat & 1) {
         if (swdat & 0x70) {
             return 1;

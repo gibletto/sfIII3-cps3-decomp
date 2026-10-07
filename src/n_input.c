@@ -150,8 +150,9 @@ void Name_Input_end(void) {
         define_name_input();
     }
     ranking_name_entry();
-    for (i = 0; i < 4; i++) {
-        name_ptr->end_flag[i] = 1;
+    i = 0;
+    while (i < 4) {
+        name_ptr->end_flag[i++] = 1;
     }
     name_ptr->index = 3;
 }
@@ -258,9 +259,8 @@ void Name_Scs_Input_end(void) {
     } else {
         define_name_input();
     }
-    for (i = 0; i < 4; i++) {
-        name_ptr->end_flag[i] = 1;
-        continue;
+    for (i = 0; i < 4;) {
+        name_ptr->end_flag[i++] = 1;
     }
     ranking_name_entry();
     name_ptr->index = 3;

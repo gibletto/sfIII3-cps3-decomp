@@ -471,7 +471,7 @@ extern u8 Country;
 extern s16 mes_already;
 extern s16 CP_No[2][4];
 extern s16 CP_Index[2][8];
-extern u16 Pattern_Index[2];
+extern s16 Pattern_Index[2];
 extern s16 Timer_00[2];
 extern s16 Timer_01[2];
 extern s8 Combo_Speed[2];

@@ -33,7 +33,7 @@
 
 
 
-u32 effect_F8_move(WORK_Other* ewk)
+void effect_F8_move(WORK_Other* ewk)
 {
     WORK* mwk = (WORK*)ewk->my_master;
     /* paring_b_mark_data[direction][master_player][2]: { x, y } */
@@ -45,40 +45,43 @@ u32 effect_F8_move(WORK_Other* ewk)
         ewk->wu.disp_flag = 1;
         ewk->wu.xyz[2].disp.pos = 26;
         ewk->wu.next_z = mwk->position_z;
-        if (!mwk->rl_flag) {
-            ewk->wu.position_x = mwk->position_x - mark_tbl[ewk->wu.direction][ewk->master_player][0];
-        } else {
+        if (mwk->rl_flag) {
             ewk->wu.position_x = mwk->position_x + mark_tbl[ewk->wu.direction][ewk->master_player][0];
+        } else {
+            ewk->wu.position_x = mwk->position_x - mark_tbl[ewk->wu.direction][ewk->master_player][0];
         }
-        ewk->wu.position_y = mark_tbl[ewk->wu.direction][ewk->master_player][1] + mwk->position_y;
+        ewk->wu.position_y = mwk->position_y + mark_tbl[ewk->wu.direction][ewk->master_player][1];
         if (ewk->wu.position_z == ewk->wu.xyz[2].disp.pos) {
             ewk->wu.position_z = ewk->wu.next_z;
         } else {
             ewk->wu.position_z = ewk->wu.xyz[2].disp.pos;
         }
         set_char_move_init(&ewk->wu, 0, 3);
-        return sort_push_request(&ewk->wu);
+        sort_push_request(&ewk->wu);
+        break;
     case 1:
         if (ewk->wu.dead_f == 1 || Suicide[0] != 0) {
             ewk->wu.disp_flag = 0;
             ewk->wu.routine_no[0]++;
-            return 0;
+            break;
         }
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             if (ewk->wu.cg_type == 0xFF) {
                 ewk->wu.disp_flag = 0;
                 ewk->wu.routine_no[0]++;
-                return 0;
+                break;
             }
         }
-        return sort_push_request(&ewk->wu);
+        sort_push_request(&ewk->wu);
+        break;
     case 2:
         ewk->wu.routine_no[0] = 3;
-        return 2;
+        break;
     default:
         all_cgps_put_back(&ewk->wu);
-        return push_effect_work((WORK*)ewk);
+        push_effect_work((WORK*)ewk);
+        break;
     }
 }
 

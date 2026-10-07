@@ -95,7 +95,9 @@ INPUT obj\Manage.obj
 INPUT obj\manage_2.obj
 INPUT obj\Win.obj
 INPUT obj\win_2.obj
+INPUT obj\gameover.obj
 INPUT obj\continue.obj
+INPUT obj\pow_pow.obj
 INPUT obj\sel_pl.obj
 INPUT obj\next_cpu.obj
 INPUT obj\game_config_main.obj
@@ -312,6 +314,7 @@ INPUT obj\EFFE8.obj
 INPUT obj\effe9.obj
 INPUT obj\efff0.obj
 INPUT obj\EFFF1.obj
+INPUT obj\EFFF2_code.obj
 INPUT obj\EFFF4.obj
 INPUT obj\efff5.obj
 INPUT obj\efff6.obj

@@ -46,7 +46,7 @@ and loads it over the ROM files.
 
 ## Compiler
 
-The compiler is SHC 5.0 Release 26 with eighteen changes, each one a rule the arcade's own compiler visibly follows
+The compiler is SHC 5.0 Release 26 with twenty-two changes, each one a rule the arcade's own compiler visibly follows
 throughout the ROM but Release 26 doesn't:
 
 - a switch case is tested with `bt case` / `bra default` (Release 26 folds it into `bf default`), and a jump to
@@ -64,27 +64,39 @@ throughout the ROM but Release 26 doesn't:
 - an integer cast of a table's name, `(u32)table`, is loaded again at each use rather than kept across calls;
 - `f(&p->first)`, with `first` at offset 0, counts as passing `p`, so `p` can stay in its argument register;
 - a global variable is loaded again at each use, not read from a copy an earlier use kept in a register or on the stack;
+  the same goes for an expression several branches compute, when the first of them can't share its value;
 - after a multiply the multiplier counts as busy for one instruction, not two, so `sts macl` can follow the next load;
 - a switch's compare-and-branch jumps leave r1 free, so a value live into the cases can move into it and r13/r14 is not saved;
 - a load through a pointer and a later separate `add` to the pointer stay apart (Release 26 folds them into a
   post-increment load, `mov.w @r5+,r0`); the arcade has post-increments only where the source has `*p++`;
+  likewise an `add` of minus the size to a pointer and a store through it stay apart (Release 26 folds them into
+  a pre-decrement store), so `*--p = x` is `mov.l r1,@-r4` only while `p` is used again;
 - a `char` cast of a loop counter's multiple, `(char)(i * 6)`, still counts as a multiple of the counter, so the
   value steps by 6 on each pass instead of being multiplied again (a cast to `short` is still recomputed, as in the arcade);
 - in the files compiled without optimization, a load or store of a local variable counts as 4 bytes, not 6, when
   the compiler decides where a literal pool goes, so those pools come later;
 - a `for` or `while` loop is entered by a jump to its test at the bottom (Release 26, asked for speed, puts a copy
   of the test in front of nearly every loop instead); only a loop with no loop inside it, whose test compares two
-  local variables or constants, gets the copy.
+  local variables or constants, gets the copy;
+- the last use of a variable kept on the stack reads it from the stack again, even straight after the store
+  (Release 26 takes it from the register the value was computed in); earlier uses still take the register;
+- once an array's address is loaded, the scratch register that held an earlier address or constant counts as
+  free again (Release 26 goes on avoiding it), so the next value is loaded into it;
+- a `short` or `char` index whose first use is scaled (`shorts[ix]`) is extended again at each `chars[ix]`
+  (Release 26 extends it once for the byte arrays and keeps that copy in a register across branches);
+- a multiply reads a constant that is already in a register: a `char` or `short` multiply takes it from there
+  (`muls.w r12,r3`, where Release 26 shifts), and the 16-bit constant of an `int` multiply of a `char` or `short`
+  counts like any other, so `s * 100` used three times keeps 100 in a register (Release 26 loads it at each multiply).
 
 The four changed stages (`shcmdl.exe`, `shcgen.exe`, `shcpep.exe` and `shcasm.exe`) are rebuilt from a C
 decompilation of the originals (source: https://github.com/gibletto/shc-5r26-decomp-sf3), and each rule is a
-setting in that source (nineteen settings for the eighteen rules: the switch rule has two). With every rule off they give the same output as Release 26. Setting `SWITCH_ARCADE_BRANCH`,
+setting in that source (twenty-three settings for the twenty-two rules: the switch rule has two). With every rule off they give the same output as Release 26. Setting `SWITCH_ARCADE_BRANCH`,
 `SWITCH_ARCADE_JUMP`, `XJUMP_OFF`, `PEP_R0_FORGET`, `SLOT_NO_STACK`, `PEP_NO_THREAD`, `GEN_TST_R0`, `GEN_MUL_L`,
-`MDL_ARG_CONST`, `MDL_CAST_CSE`, `MDL_ARG_CAST`, `MDL_GCSE`, `ASM_MULWAIT`, `GEN_CHAIN_JUMP`, `PEP_AUTOINC`, `MDL_IV`, `GEN_POOL_MOVLOC`, `MDL_LOOP_INV` and `ASM_SPECREG` to 0 gives Release 26's behaviour back. The
+`MDL_ARG_CONST`, `MDL_CAST_CSE`, `MDL_ARG_CAST`, `MDL_GCSE`, `ASM_MULWAIT`, `GEN_CHAIN_JUMP`, `PEP_AUTOINC`, `MDL_IV`, `GEN_POOL_MOVLOC`, `MDL_LOOP_INV`, `GEN_RELOAD`, `GEN_EVICT_ORDER`, `MDL_CAST_MUL`, `MDL_MUL_CONST` and `ASM_SPECREG` to 0 gives Release 26's behaviour back. The
 original files are in `bin/original`.
 
-With the changes, 8,930 of the 10,048 C routines compile to the arcade's instructions (3,760 with the original
-Release 26), and 8,355 to its exact bytes (1,803). Over 254 Fightcade replays compared with the original ROM,
+With the changes, 9,085 of the 10,053 C routines compile to the arcade's instructions (3,781 with the original
+Release 26), and 8,533 to its exact bytes (1,824). Over 254 Fightcade replays compared with the original ROM,
 246 keep identical game state throughout (218 before) and 243 identical slowdown (214).
 
 ## Fightcade replays

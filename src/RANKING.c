@@ -50,7 +50,9 @@
 #include "bg000.h"
 #include "Win.h"
 #include "win_2.h"
+#include "gameover.h"
 #include "continue.h"
+#include "pow_pow.h"
 #include "textsound.h"
 #include "textsound_2.h"
 #include "textsound_3.h"
@@ -644,28 +646,36 @@ void Setup_Score_Obj(void) {
 
 
 /* provisional name */
+void ranking_insert_present(s16 top, s16 PL_id);
+
 void Ranking_Init(void) {
     s16 ix;
-    u16 j;
     RANK_DATA* dst = Ranking_Data;
     const RANK_DATA* src = Rank_Default_Data;
-    RANK_DATA* entry;
     for (ix = 0; ix < 20; ix++) {
         *dst = *src;
         src++;
         dst++;
     }
     if (exsw_3 & 0x80) {
-        /* insert player 1's present score into the top six */
-        entry = &Present_Data[0];
-        for (ix = 0; ix < 6; ix++) {
-            if (Ranking_Data[ix].score < entry->score) {
-                for (j = 4; j >= ix; j--) {
-                    Ranking_Data[j + 1] = Ranking_Data[j];
-                }
-                Ranking_Data[ix] = *entry;
-                break;
+        ranking_insert_present(0, 0);
+    }
+}
+
+
+
+/* provisional name */
+/* Inserts a player's present score into six ranking rows starting at the given row. */
+void ranking_insert_present(s16 top, s16 PL_id) {
+    s16 i;
+    s16 j;
+    for (i = 0; i < 6; i++) {
+        if (Ranking_Data[top + i].score < Present_Data[PL_id].score) {
+            for (j = 4; j >= i; j--) {
+                Ranking_Data[top + j + 1] = Ranking_Data[top + j];
             }
+            Ranking_Data[top + i] = Present_Data[PL_id];
+            break;
         }
     }
 }

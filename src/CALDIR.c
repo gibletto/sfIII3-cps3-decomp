@@ -538,16 +538,16 @@ s8 ysw;
 /* provisional name */
 void cal_initial_speed_y0(WORK* wk, s16 tm) {
     MotionState bb;
-    wk->xyz[1].disp.low = wk->xyz[0].disp.low = 0;
+    wk->xyz[0].disp.low = wk->xyz[1].disp.low = 0;
     bb.timer = tm;
     bb.timer2 = bb.timer + bb.timer * (bb.timer - 1) / 2;
     bb.y.ps.h = 0;
     bb.y.ps.l = 0;
     bb.dly = wk->mvxy.d[1].sp;
-    if (bb.timer == 0) {
-        bb.spy = 0;
-    } else {
+    if (bb.timer) {
         cmsd_y_initial_speed(&bb);
+    } else {
+        bb.spy = 0;
     }
     wk->mvxy.a[1].sp = bb.spy;
 }

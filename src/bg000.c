@@ -52,7 +52,6 @@
 #include "EFF11.h"
 #include "eff14.h"
 #include "EFF44.h"
-#include "appear.h"
 #include "aboutspr.h"
 #include "sys_config.h"
 #include "sys_config_2.h"
@@ -529,7 +528,7 @@ void bg_etc_scr_write(s16 n) {
         j = 0;
         while (j < etc_bg_cell_cnt_tbl[n][(s16)i]) {
             t = bg_etc_cell_tbl[n][i];
-            t += j;
+            t = t + j;
             attr = etc_bg_attr_tbl[n] + t->attr;
             bg_cell_write(i, t->ofs, t->cell, etc_bg_cg_src_tbl[n], 0, attr);
             j++;
@@ -970,7 +969,7 @@ void akebono_initialize(void) {
 
 void bg_etc_write(s16 type) {
     const BG_GFX* gfx;
-    s32 i;
+    s16 i;
     Family_Init();
     clear_scroll_layer_state_and_mask();
     scrn_pos_clear();

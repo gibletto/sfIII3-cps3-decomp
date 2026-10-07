@@ -13,7 +13,6 @@
 #include "work.h"
 #include "romdata.h"
 #include "extern.h"
-#include "PLS02.h"
 #include "CHARMOVE.h"
 #include "charmove_2.h"
 #include "aboutspr.h"
@@ -70,14 +69,18 @@ void effect_K3_move(WORK_Other* ewk) {
 
 void set_init_posspeed_effK3(WORK* wk) {
     s16 data[4];
-    s32 ix;
+    s16 ix;
     s16 flag;
     wk->xyz[0].disp.pos = 520;
     wk->xyz[1].disp.pos = 96;
     flag = (random_32_com() * 2) - 32;
     wk->xyz[0].disp.pos += flag;
     wk->xyz[1].disp.pos += random_16_com();
-    flag = (flag < 0) ? 2 : 0;
+    if (flag < 0) {
+        flag = 2;
+    } else {
+        flag = 0;
+    }
     ix = random_16_com() & 1;
     data[0] = effK3_isp_table[wk->dm_attlv][flag + ix][0];
     data[2] = effK3_isp_table[wk->dm_attlv][flag + ix][1];

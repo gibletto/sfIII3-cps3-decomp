@@ -34,6 +34,7 @@
 #include "bg_sub_5.h"
 #include "effe6.h"
 #include "EFFF1.h"
+#include "EFFF2_code.h"
 #include "aboutspr.h"
 #include "end_12.h"
 

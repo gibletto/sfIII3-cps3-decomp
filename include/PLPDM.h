@@ -21,7 +21,7 @@ void Damage_26000(PLW* wk);
 void Damage_27000(PLW* wk);
 void Damage_28000(PLW* wk);
 void Damage_29000(PLW* wk);
-s32 Damage_30000(PLW* wk);
+void Damage_30000(PLW* wk);
 void Damage_31000(PLW* wk);
 void Damage_07000(PLW* wk);
 void Damage_08000(PLW* wk);

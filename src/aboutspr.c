@@ -59,16 +59,10 @@ void init_char_gfx_tables(void) {
         car_gfx_ofs[i] = car_gfx_cells[i] = 0;
     }
     for (i = 0; i < 512; i++) {
-        {
-            s16 t = hitmark_gfx_ofs[0][i] = hitmark_gfx_ofs[1][i] = 0;
-            hitmark_gfx_cells[i] = t;
-        }
+        hitmark_gfx_cells[i] = hitmark_gfx_ofs[0][i] = hitmark_gfx_ofs[1][i] = 0;
     }
     for (i = 0; i < 64; i++) {
-        {
-            s16 t = seraph_gfx_cells[i] = 0;
-            seraph_gfx_ofs[i] = t;
-        }
+        seraph_gfx_ofs[i] = seraph_gfx_cells[i] = 0;
     }
 }
 
@@ -1137,6 +1131,16 @@ void push_char_sprite(WORK* wk, u16* spr, s16 y_ofs) {
 
 
 /* provisional name */
+void sprite_entry_debug_halt(s16* spr) {
+loop:
+    tilemap_print_hex(10, 10, 18, spr[3], 4, 0);
+    tilemap_print_hex(10, 11, 18, spr[4], 4, 0);
+    goto loop;
+}
+
+
+
+/* provisional name */
 s32 disp_seraph_cells(WORK* wk) {
     u16* spr;
     u16 ix;
@@ -1144,7 +1148,7 @@ s32 disp_seraph_cells(WORK* wk) {
         return 1;
     }
     if (cg_slot_tbl[cg_data_list[wk->cg_number].set->slot & 0x7FFF].addr == 0) {
-        return (s32)cg_slot_tbl;
+        return;
     }
     if ((spr = sprite_entry_alloc(0)) == 0) {
         return 0;
@@ -1208,7 +1212,7 @@ s32 disp_car_parts_cells(WORK* wk) {
         return 1;
     }
     if (cg_slot_tbl[cg_data_list[wk->cg_number].set->slot & 0x7FFF].addr == 0) {
-        return (s32)cg_slot_tbl;
+        return;
     }
     if ((spr = sprite_entry_alloc(0)) == 0) {
         return 0;

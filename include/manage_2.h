@@ -22,7 +22,7 @@ void Game_Manage_12_0(void);
 void Game_Manage_12_1(void);
 void Game_Manage_12_2(void);
 s32 Game_Manage_12_3(void);
-s32 Game_Manage_12_7(void);
+void Game_Manage_12_7(void);
 void Game_Manage_12th(void);
 void Game_Manage_1st(void);
 void Game_Manage_2_0(void);

@@ -41,10 +41,10 @@ void effect_51_move(WORK_Other_CONN* ewk) {
         }
         break;
     case 2:
-        if ((ewk->wu.my_mr.size.x -= ewk->wu.mvxy.a[0].real.h) <= 63) {
+        if ((ewk->wu.my_mr.size.x -= *(s16*)&ewk->wu.mvxy.a[0]) <= 63) {
             ewk->wu.my_mr.size.x = 63;
         }
-        if ((ewk->wu.my_mr.size.y -= ewk->wu.mvxy.a[0].real.h) <= 63) {
+        if ((ewk->wu.my_mr.size.y -= *(s16*)&ewk->wu.mvxy.a[0]) <= 63) {
             ewk->wu.my_mr.size.y = 63;
         }
         if (ewk->wu.my_mr.size.x > 63 || ewk->wu.my_mr.size.y > 63) {

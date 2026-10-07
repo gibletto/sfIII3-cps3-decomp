@@ -100,13 +100,13 @@ void sound_init(u8* data, SNDSAMPLE* bank_a, u8** bank_b, u8 stereo, u8 volume, 
 
 /* provisional name */
 s32 sound_request(s32 code) {
-    return ((s32(*)(s32 code, s32 ramp))sound_seq_start)(code, -1);
+    return sound_seq_start(code, -1);
 }
 
 
 
 /* provisional name */
-void sound_seq_start(u16 code, s16 ramp) {
+s32 sound_seq_start(u16 code, s16 ramp) {
     u8* seq;
     u8* p;
     u8* track;

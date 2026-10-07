@@ -35,7 +35,7 @@ s32 Check_Passive(PLW* wk);
 void Check_Rapid();
 s32 Check_Rapid_End(PLW* wk);
 s32 Check_Resume_Lever(PLW* wk);
-s32 Check_SA();
+void Check_SA();
 s32 Check_SA_Active();
 void Check_SA_Full();
 void Check_SA_Range();

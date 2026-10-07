@@ -219,6 +219,7 @@
 #include "effect_L9_move.h"
 #include "efff0.h"
 #include "EFFF1.h"
+#include "EFFF2_code.h"
 #include "EFFF4.h"
 #include "efff5.h"
 #include "efff6.h"
@@ -447,7 +448,9 @@
 #include "count.h"
 #include "Win.h"
 #include "win_2.h"
+#include "gameover.h"
 #include "continue.h"
+#include "pow_pow.h"
 #include "win_pl.h"
 
 TCB * current_task;  /* 02007EEC */
@@ -696,7 +699,7 @@ u8 Country;  /* 0201556F */
 s16 mes_already;  /* 02015570 */
 s16 CP_No[2][4];  /* 02015572 */
 s16 CP_Index[2][8];  /* 02015582 */
-u16 Pattern_Index[2];  /* 020155A2 */
+s16 Pattern_Index[2];  /* 020155A2 */
 s16 Timer_00[2];  /* 020155A6 */
 s16 Timer_01[2];  /* 020155AA */
 s8 Combo_Speed[2];  /* 020155AE */

@@ -5,7 +5,7 @@
 
 u32 card_work_clear(void);
 void card_msg_disp(void);
-u32 card_win_check(s16 vs_mode);
+void card_win_check(s16 vs_mode);
 void card_pl_work_clear(s16 pl);
 
 #endif

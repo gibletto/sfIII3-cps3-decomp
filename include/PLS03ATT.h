@@ -7,7 +7,7 @@ s32 check_jump_pat_status(PLW* wk);
 s32 check_paring_attack(PLW* wk);
 s32 check_lever_up_attack(PLW* wk);
 s32 check_nagenuke_cmd(PLW* wk);
-s32 shot_data_convert(s32 sw);
+s32 shot_data_convert();
 s32 check_sp_waza_flag(PLW* wk);
 s32 get_meoshi_lever();
 s32 check_catch_attack(PLW* wk);

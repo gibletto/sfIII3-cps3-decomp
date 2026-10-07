@@ -27,10 +27,12 @@ struct PLW_tag;void tilemap_chunk_copy_16b(s16 *dst, char *src, s32 chunks)
         n = 32;
         do {
             n -= 2;
-            dst[0] = src[0];
-            dst[1] = src[1];
-            dst += 2;
-            src += 2;
+            *dst = *src;
+            src++;
+            dst++;
+            *dst = *src;
+            dst++;
+            src++;
         } while (n != 0);
     }
 }
@@ -38,14 +40,12 @@ struct PLW_tag;void tilemap_chunk_copy_16b(s16 *dst, char *src, s32 chunks)
 /* provisional name */
 void palette_bank_set(s32 offset)
 {
-    u32 addr;
-    addr = offset + COLOR_RAM;
-    palette_base = addr;
-    *(volatile u16 *)(SS_REG + 0x24) = (u16)(addr >> 10) & 0xFF;
+    palette_base = offset + COLOR_RAM;
+    *(volatile u16 *)(SS_REG + 0x24) = (palette_base >> 10) & 0xFF;
 }
 
 /* provisional name */
-u32 palette_write(s32 offset, u16 *src, s32 count)
+void palette_write(s32 offset, u16 *src, s32 count)
 {
     u16 *dst;
     s32 i;
@@ -57,7 +57,6 @@ u32 palette_write(s32 offset, u16 *src, s32 count)
         src++;
         dst++;
     }
-    return 0xFFFF;
 }
 
 
@@ -66,13 +65,16 @@ u32 palette_write(s32 offset, u16 *src, s32 count)
 void tilemap_fill_all(u16 attr, u16 code) {
     u16* p;
     u16* q;
+    u16* r;
+    u16 both;
     if (attr == 0xFFFF && code == 0xFFFF) {
         return;
     }
     if (attr != 0xFFFF && code == 0xFFFF) {
         p = (u16*)(SS_RAM + 0x2);
         for (q = (u16*)SS_RAM; q < (u16*)(SS_RAM + 0x3FFF); q += 2) {
-            *p = (*p & 1) | attr;
+            r = p;
+            *p = (*r & 1) | attr;
             p += 2;
         }
     } else if (attr == 0xFFFF && code != 0xFFFF) {
@@ -81,9 +83,10 @@ void tilemap_fill_all(u16 attr, u16 code) {
             p[1] = (p[1] & 0xFFFE) | ((code & 0x100) >> 8);
         }
     } else {
+        both = attr | ((code & 0x100) >> 8);
         for (p = (u16*)SS_RAM; p < (u16*)(SS_RAM + 0x3FFF); p += 2) {
             p[0] = code;
-            p[1] = attr | ((code & 0x100) >> 8);
+            p[1] = both;
         }
     }
 }
@@ -97,10 +100,9 @@ u16 y;
 u16 attr;
 u16 code;
 {
-    u16* p = (u16*)(SS_RAM + (x << 2) + (y << 8));
     u32 w = ((code & 0x0E00) >> 9) + 1;
     u32 h = ((code & 0x7000) >> 12) + 1;
-    s32 adv = (128 - w * 2) * 2;
+    u16* p = (u16*)(SS_RAM + (x << 2) + (y << 8));
     u32 i;
     u32 j;
     for (i = 0; i < h; i++) {
@@ -113,7 +115,7 @@ u16 code;
             }
             code++;
         }
-        p = (u16*)((u8*)p + adv);
+        p = (u16*)((u8*)p + (128 - w * 2) * 2);
         if (p > (u16*)(SS_RAM + 0x3FFF)) {
             p = (u16*)SS_RAM;
         }
@@ -126,7 +128,7 @@ u16 code;
 u16* tilemap_put_block_next(u16* p, u16 attr, u16 code) {
     u32 w = ((code & 0x0E00) >> 9) + 1;
     u32 h = ((code & 0x7000) >> 12) + 1;
-    s32 adv = (128 - w * 2) * 2;
+    s32 w2 = w * 2;
     u32 i;
     u32 j;
     for (i = 0; i < h; i++) {
@@ -139,12 +141,13 @@ u16* tilemap_put_block_next(u16* p, u16 attr, u16 code) {
             }
             code++;
         }
-        p = (u16*)((u8*)p + adv);
+        p += 128 - w2;
         if (p > (u16*)(SS_RAM + 0x3FFF)) {
             p = (u16*)SS_RAM;
         }
     }
-    p = (u16*)((u8*)p + w * 2 * 2 - h * 256);
+    p += w2;
+    p -= h << 7;
     if (p > (u16*)(SS_RAM + 0x3FFF)) {
         p = (u16*)SS_RAM;
     }

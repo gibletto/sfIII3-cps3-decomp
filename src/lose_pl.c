@@ -106,9 +106,8 @@ void Lose_10000(PLW* wk) {
 
 
 
-s32 Lose_20000(PLW* wk) {
+void Lose_20000(PLW* wk) {
     s16 work;
-    s32 rc;
     if (set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
         set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
     }
@@ -116,31 +115,26 @@ s32 Lose_20000(PLW* wk) {
         Judge_normal_loser(wk);
         return;
     }
-    if (wk->wu.routine_no[3] != 0) {
-        Normal_normal_Loser(wk);
-        return;
-    }
-    wk->wu.routine_no[3]++;
-    rc = 42;
-    if (!Extra_Break) {
-        if (Round_num >= Battle_Round[Play_Type] * 2) {
-            rc = effect_C1_init(&wk->wu);
-        } else if (PL_Wins[Winner_id] >= Battle_Round[Play_Type] + 1) {
-            rc = effect_C1_init(&wk->wu);
-        } else {
-            rc = (s32)PL_Wins;
+    switch (wk->wu.routine_no[3]) {
+    case 0:
+        wk->wu.routine_no[3]++;
+        if (!Extra_Break) {
+            if ((Round_num >= (work = Battle_Round[Play_Type]) * 2) || (PL_Wins[Winner_id] >= work + 1)) {
+                effect_C1_init(&wk->wu);
+            }
         }
+        if ((pcon_rno[1] != 0) && (pcon_rno[1] != 4)) {
+            lose_rno[0] = lose_rno[1] = lose_rno[2] = 0;
+            work = random_16_com();
+            work &= 7;
+            set_char_move_init(&wk->wu, 9, work + 0x18);
+            break;
+        }
+        break;
+    default:
+        Normal_normal_Loser(wk);
+        break;
     }
-    if (pcon_rno[1] == 0) {
-        return rc;
-    }
-    if ((rc = pcon_rno[1]) == 4) {
-        return rc;
-    }
-    lose_rno[0] = lose_rno[1] = lose_rno[2] = 0;
-    work = random_16_com();
-    work &= 7;
-    set_char_move_init(&wk->wu, 9, work + 0x18);
 }
 
 
