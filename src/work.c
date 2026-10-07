@@ -2724,7 +2724,7 @@ TM_STRING dbg_koc_cmja_str[11] = {
     { 0x20, 0x1A, 0xA, (void*)str_empty_8 },
 };
 /* 0200194C */
-TM_STRING dbg_koc_cmoa_str[18] = {
+TM_STRING dbg_koc_cmoa_str[9] = {
     { 0x20, 0x1B, 0xA, (void*)str_NM },
     { 0x20, 0x1B, 0xA, (void*)str_DM },
     { 0x20, 0x1B, 0xA, (void*)str_CA },
@@ -2734,6 +2734,9 @@ TM_STRING dbg_koc_cmoa_str[18] = {
     { 0x20, 0x1B, 0xA, (void*)str_BT },
     { 0x20, 0x1B, 0xA, (void*)str_EX },
     { 0x20, 0x1B, 0xA, (void*)str_CB },
+};
+/* 020019B8: provisional name */
+TM_STRING dbg_koc_str[9] = {
     { 0x20, 2, 2, (void*)str_NM },
     { 0x20, 2, 2, (void*)str_DM },
     { 0x20, 2, 2, (void*)str_CA },

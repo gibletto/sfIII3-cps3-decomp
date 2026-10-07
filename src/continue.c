@@ -83,7 +83,7 @@ void GameOver_2nd(void) {
             }
             GO_No[1]++;
             load_char_gfx(0xA0F8, 1);
-            return;
+            break;
         }
         if (Request_Fade(97, 0) == 0) {
             break;
@@ -125,18 +125,17 @@ void GameOver_2nd(void) {
         }
         break;
     case 4:
-        if (Check_Fade_Complete_SP() == 0) {
-            break;
+        if (Check_Fade_Complete_SP()) {
+            Forbid_Break = 0;
+            bgm_request(47);
+            Ignore_Entry[LOSER] = 0;
+            if (E_Number[0][0] != 2 && E_Number[1][0] != 2) {
+                GO_No[1] += 2;
+                G_Timer = 60;
+                break;
+            }
+            GO_No[1]++;
         }
-        Forbid_Break = 0;
-        bgm_request(47);
-        Ignore_Entry[LOSER] = 0;
-        if (E_Number[0][0] != 2 && E_Number[1][0] != 2) {
-            GO_No[1] += 2;
-            G_Timer = 60;
-            break;
-        }
-        GO_No[1]++;
         break;
     case 5:
         if (E_Number[0][0] != 2 && E_Number[1][0] != 2) {
@@ -400,8 +399,8 @@ s32 Check_Exit_Continue(void) {
     return 1;
 }
 
-u32 Disp_Personal_Count(s16 id, char count) {
-    return ((u32(*)())tilemap_print_hex_block)(DE_X[Entry_Mes_Wide[id]] + Entry_Mes_X[id] + 14, Text_Page_Y, 18, count, 1, 1);
+void Disp_Personal_Count(s16 id, char count) {
+    tilemap_print_hex_block(DE_X[Entry_Mes_Wide[id]] + Entry_Mes_X[id] + 14, Text_Page_Y, 18, count, 1, 1);
 }
 
 
@@ -495,8 +494,8 @@ void Clear_Win_Type(void) {
 
 /* provisional name */
 s32 Check_Coin_In(s16 pl) {
-    s32 sw1 = (*(s8*)&(coin_chute1_w[6]));
-    s32 sw2 = coin_chute2_w[6];
+    s32 sw1 = coin_chute1_w.dropped;
+    s32 sw2 = coin_chute2_w.dropped;
     switch (Chute_Mode) {
     case 0:
     case 1:
@@ -538,24 +537,19 @@ void cal_damage_vitality_eff(WORK_Other* as, PLW* ds) {
     u16 xx = as->wu.att.pow;
     s16 yy;
     s16 power = Damage_Power_Data[xx];
-    s32 t;
+    s32 d;
     if (((PLW*)as)->player_number == PL_GOUKI2) {
         yy = Damage_Rate_Data[1][Round_Level];
     } else {
         yy = Damage_Rate_Data[0][Round_Level];
     }
-    t = power;
-    t *= yy;
-    ds->wu.dm_vital = t / 100;
+    ds->wu.dm_vital = power * yy / 100;
+    d = 8;
     if (as->wu.work_id == 1) {
-        t = ds->wu.dm_vital;
-        t *= ((PLW*)as)->att_plus;
-        ds->wu.dm_vital = t / 8;
+        ds->wu.dm_vital = ds->wu.dm_vital * ((PLW*)as)->att_plus / d;
     }
     if (ds->wu.work_id == 1) {
-        t = ds->wu.dm_vital;
-        t *= ds->def_plus;
-        ds->wu.dm_vital = t / 8;
+        ds->wu.dm_vital = ds->wu.dm_vital * ds->def_plus / d;
     }
 }
 

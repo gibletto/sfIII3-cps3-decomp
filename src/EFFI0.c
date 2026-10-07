@@ -30,7 +30,6 @@
 #include "end_sub_7.h"
 #include "color3rd.h"
 #include "end_sub_8.h"
-#include "EFFI3.h"
 #include "EFF03.h"
 #include "EFFH9.h"
 
@@ -56,10 +55,11 @@ void effect_H9_move(WORK_Other_CONN* ewk) {
             ewk->wu.dir_timer = 3;
             ewk->wu.direction++;
             nokori_ball_effH9(ewk, ewk->wu.direction);
-            if (ewk->wu.direction >= Bonus_Game_Work) {
-                ewk->wu.routine_no[0] = 1;
-                ewk->wu.routine_no[1] = 0;
+            if (ewk->wu.direction < Bonus_Game_Work) {
+                break;
             }
+            ewk->wu.routine_no[0] = 1;
+            ewk->wu.routine_no[1] = 0;
             break;
         }
         effH9_trans(&ewk->wu);
@@ -192,7 +192,14 @@ void effect_I0_move(WORK_Other* ewk) {
 
 
 
-s32 effI0_piece_set(WORK* wk, s16 hsx, s16 hsy, s16 spx, s16 spy, s16 nxy) {
+s32 effI0_piece_set(wk, hsx, hsy, spx, spy, nxy)
+WORK* wk;
+s16 hsx;
+s16 hsy;
+s16 spx;
+s16 spy;
+s16 nxy;
+{
     WORK_Other* ewk;
     s16 ix;
     if ((ix = pull_effect_work(3)) == -1) {
@@ -231,7 +238,7 @@ void effect_I0_init(WORK* wk, u8 num) {
     s16 spx;
     s16 spy;
     s16 nxy;
-    dix = (s16*)koishi_app_area[random_16_com() & 7];
+    dix = (s16*)&koishi_app_area[random_16_com() & 7][0];
     for (i = 0; i < num_of_koishi[num]; i++) {
         hsx = (koishi_area_hosei[dix[i]] + (random_16_com() - 7));
         hsy = -(random_16_com() & 3);
@@ -239,7 +246,6 @@ void effect_I0_init(WORK* wk, u8 num) {
         spx = koishi_speed_x[dix[i]][random_16_com() & 7];
         spy = koishi_speed_y[dix[i]][random_16_com() & 7];
         effI0_piece_set(wk, hsx, hsy, spx, spy, nxy);
-        continue;
     }
 }
 

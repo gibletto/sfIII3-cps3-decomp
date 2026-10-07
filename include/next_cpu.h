@@ -32,7 +32,7 @@ void Next_CPU_2nd(void);
 s32 Next_CPU_4th(void);
 void Next_CPU_5th(void);
 void Next_CPU_6th(void);
-s32 Next_Bonus_3rd(void);
+void Next_Bonus_3rd(void);
 void Next_Bonus_End(void);
 void After_Bonus_4th(void);
 void After_Bonus_6th(void);

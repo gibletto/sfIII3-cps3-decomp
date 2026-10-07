@@ -159,10 +159,13 @@ void end_700_2000(void) {
 
 void end_700_cell_set(void) {
     s16 i;
-    for (i = 0; i < 10; i++) {
-        bg_cell_write(0, end_700_bg0_cell_tbl[i].ofs, end_700_bg0_cell_tbl[i].cell, (u32)end_700_scrn_data, 0, 0x220);
+    const PANEL* cell;
+    cell = end_700_bg0_cell_tbl;
+    for (i = 0; i < 10; i++, cell++) {
+        bg_cell_write(0, cell->ofs, cell->cell, (u32)end_700_scrn_data, 0, 0x220);
     }
-    for (i = 0; i < 4; i++) {
-        bg_cell_write(1, end_700_bg1_cell_tbl[i].ofs, end_700_bg1_cell_tbl[i].cell, (u32)end_700_scrn_data, 0, 0x220);
+    cell = end_700_bg1_cell_tbl;
+    for (i = 0; i < 4; i++, cell++) {
+        bg_cell_write(1, cell->ofs, cell->cell, (u32)end_700_scrn_data, 0, 0x220);
     }
 }

@@ -42,7 +42,7 @@ void Irl_Family(void) {
         v = fm_pos[i].cur_x.disp.pos - zoom_adj_x + flip_obj_ofs_x;
         *reg = v & 0x3FF;
         reg++;
-        v = fm_pos[i].cur_y.disp.pos + zoom_adj_y + flip_obj_ofs_y + 0xFFFEU;
+        v = fm_pos[i].cur_y.disp.pos + zoom_adj_y + flip_obj_ofs_y + 0xFFFE;
         *reg = v & 0x3FF;
         reg++;
         fm_pos[i].cur_x.cal = fm_pos[i].set_x.cal;
@@ -57,16 +57,16 @@ void scrn_flip_set(u16 n, u16 flip) {
     s32 r;
     switch (flip) {
     case 0:
-        scrn_mode_prm[n][0] ^= 0x800;
-        scrn_mode_prm[n][1] = scrn_mode_prm[n][0];
+        scrn_mode_prm[n].set ^= 0x800;
+        scrn_mode_prm[n].cur = scrn_mode_prm[n].set;
         break;
     case 1:
-        scrn_mode_prm[n][0] ^= 0x400;
-        scrn_mode_prm[n][1] = scrn_mode_prm[n][0];
+        scrn_mode_prm[n].set ^= 0x400;
+        scrn_mode_prm[n].cur = scrn_mode_prm[n].set;
         break;
     case 2:
-        scrn_mode_prm[n][0] ^= 0xC00;
-        scrn_mode_prm[n][1] = scrn_mode_prm[n][0];
+        scrn_mode_prm[n].set ^= 0xC00;
+        scrn_mode_prm[n].cur = scrn_mode_prm[n].set;
     }
 }
 
@@ -77,13 +77,13 @@ void scrn_flip_toggle(u16 n, u16 flip) {
     s32 r;
     switch (flip) {
     case 0:
-        scrn_mode_prm[n][0] ^= 0x800;
+        scrn_mode_prm[n].set ^= 0x800;
         break;
     case 1:
-        scrn_mode_prm[n][0] ^= 0x400;
+        scrn_mode_prm[n].set ^= 0x400;
         break;
     case 2:
-        scrn_mode_prm[n][0] ^= 0xC00;
+        scrn_mode_prm[n].set ^= 0xC00;
     }
 }
 
@@ -99,8 +99,8 @@ void clear_scroll_layer_state_and_mask(void) {
         scrn_reg_w[i].attr = 0;
         scrn_reg_w[i].ctrl = 0;
         scrn_reg_w[i].map_adrs = 0;
-        scrn_mode_prm[i][0] = 0;
-        scrn_mode_prm[i][1] = 0;
+        scrn_mode_prm[i].set = 0;
+        scrn_mode_prm[i].cur = 0;
     }
 }
 
@@ -383,7 +383,7 @@ void scroll_layers_finalize_frame(void) {
         w |= scrn_line_prm[i][1] & 0x3FF;
         scrn_reg_w[i].ctrl = w;
         scrn_reg_w[i].ctrl &= 0xF3FF;
-        scrn_reg_w[i].ctrl |= scrn_mode_prm[i][1] & 0xC00;
+        scrn_reg_w[i].ctrl |= scrn_mode_prm[i].cur & 0xC00;
         *reg = scrn_reg_w[i].ctrl;
         reg++;
         if (scrn_map_ptr[i].ptr2) {
@@ -406,7 +406,7 @@ void scroll_layers_finalize_frame(void) {
         scrn_map_ptr[i].ptr2 = scrn_map_ptr[i].ptr0;
         scrn_map_ptr[i].ptr3 = scrn_map_ptr[i].ptr1;
         scrn_line_prm[i][1] = scrn_line_prm[i][0];
-        scrn_mode_prm[i][1] = scrn_mode_prm[i][0];
+        scrn_mode_prm[i].cur = scrn_mode_prm[i].set;
     }
     (*(volatile u16*)(SS_REG + (0x0E))) = w = scrn_pos[4].cur_x.disp.pos + screen_base_x + flip_crt_ofs_x;
     (*(volatile u16*)(SS_REG + (0x10))) = w = w >> 8;

@@ -286,10 +286,9 @@ void end_600_5000(void) {
 
 
 void end_601_move(void) {
-    END601_JP end_601_jp;
-    end_601_jp = end_601_jp_tbl;
+    void (*end_601_jp[6])() = { end_601_0000, end_601_1000, end_601_2000, end_601_3000, end_X_com01, end_X_com01 };
     bgw_ptr = &bg_w.bgw[1];
-    end_601_jp.jp[end_w.r_no_2]();
+    end_601_jp[end_w.r_no_2]();
 }
 
 

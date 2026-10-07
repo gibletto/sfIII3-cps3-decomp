@@ -77,9 +77,8 @@
 
 /* provisional name */
 void FBI_Warning(void) {
-    JMP_TBL2 jmp_tbl;
-    jmp_tbl = FBI_Warning_Jmp_Data;
-    jmp_tbl.fn[D_No0]();
+    void (*jmp_tbl[2])() = { FBI_Warning_1st, FBI_Warning_2nd };
+    jmp_tbl[D_No0]();
 }
 
 

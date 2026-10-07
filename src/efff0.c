@@ -73,7 +73,6 @@ void effect_F0_move(WORK_Other* ewk) {
             ewk->wu.routine_no[0]++;
             for (i = 0; i < bg_w.scno; i++) {
                 Bg_Off_W(1 << i);
-                continue;
             }
             Bg_Off_W(8);
             switch (another_bg[ewk->wu.type]) {
@@ -164,7 +163,6 @@ void effF0_scroll_reset(WORK_Other* ewk) {
         Bg_Off_W(8);
         for (i = 0; i < bg_w.scno; i++) {
             Bg_On_W(1 << i);
-            continue;
         }
     }
     ake_scrl_w[0].xy[0].cal = 0x2000000;

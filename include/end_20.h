@@ -15,7 +15,7 @@ void end_2001_0004(void);
 void end_2001_0005(void);
 void end_2000_0000(void);
 void end_2000_0002(void);
-u32 end_2001_0003(void);
+void end_2001_0003(void);
 void end_2000_cell_set(void);
 
 #endif

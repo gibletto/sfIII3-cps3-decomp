@@ -414,7 +414,7 @@ void Damage_17000(PLW* wk) {
         if (wk->wu.routine_no[3] == 3) {
             wk->guard_flag = 0;
             wk->tsukamarenai_flag = 7;
-            combo_rp_clear_check(wk->wu.id);
+            combo_rp_clear_check((s8)wk->wu.id);
             break;
         }
         if (wk->wu.cmwk[14] > 0) {
@@ -422,11 +422,15 @@ void Damage_17000(PLW* wk) {
                 char_move_wca(&wk->wu);
             }
         }
-        if (dm17_to_nm23_flag != 0 && wk->wu.cmwk[14] <= 0 && wk->wu.mvxy.a[1].real.h < -2) {
-            wk->wu.routine_no[1] = 0;
-            wk->wu.routine_no[2] = 23;
-            wk->wu.routine_no[3] = 1;
-            exset_char_move_init(&wk->wu, wk->wu.now_koc, dm17_to_nm23_change[wk->player_number]);
+        if (dm17_to_nm23_flag) {
+            if (wk->wu.cmwk[14] <= 0) {
+                if (wk->wu.mvxy.a[1].real.h < -2) {
+                    wk->wu.routine_no[1] = 0;
+                    wk->wu.routine_no[2] = 23;
+                    wk->wu.routine_no[3] = 1;
+                    exset_char_move_init(&wk->wu, wk->wu.now_koc, dm17_to_nm23_change[wk->player_number]);
+                }
+            }
         }
         wk->tsukamarenai_flag = 7;
         break;

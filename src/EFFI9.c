@@ -46,10 +46,12 @@ void effect_I9_move(WORK_Other* ewk) {
             ewk->wu.disp_flag = 0;
             break;
         }
-        if (!EXE_flag && !Game_pause && mwk->wu.hit_stop <= 0 && --ewk->wu.dir_timer == 0) {
-            ewk->wu.routine_no[0] = 2;
+        if (!EXE_flag && !Game_pause && mwk->wu.hit_stop <= 0) {
+            if (--ewk->wu.dir_timer == 0) {
+                ewk->wu.routine_no[0] = 2;
+            }
         }
-        break;
+        return;
     case 2:
         ewk->wu.routine_no[0] = 3;
         break;
@@ -64,7 +66,8 @@ void effect_I9_move(WORK_Other* ewk) {
 void push_image_buff(WORK_Other* wk, ImageBuff* image_buff) {
     s16 i;
     for (i = 16; i > 0; i--) {
-        image_buff[i] = image_buff[i - 1];
+        image_buff[i].pos_x = image_buff[i - 1].pos_x;
+        image_buff[i].pos_y = image_buff[i - 1].pos_y;
     }
     image_buff->pos_x = wk->wu.position_x;
     image_buff->pos_y = wk->wu.position_y;
@@ -74,9 +77,11 @@ void push_image_buff(WORK_Other* wk, ImageBuff* image_buff) {
 
 void init_image_buff(WORK_Other* wk, ImageBuff* image_buff) {
     s16 i;
+    ImageBuff* p;
     for (i = 16; i >= 0; i--) {
-        image_buff[i].pos_x = wk->wu.position_x;
-        image_buff[i].pos_y = wk->wu.position_y;
+        p = &image_buff[i];
+        p->pos_x = wk->wu.position_x;
+        p->pos_y = wk->wu.position_y;
     }
 }
 

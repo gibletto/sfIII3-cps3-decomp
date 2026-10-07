@@ -440,7 +440,6 @@ u32* out;
     u32 val = 0;
     while (!(*p & 0x80)) {
         val = (val << 7) + *p++;
-        continue;
     }
     *out = val;
     return p - start;

@@ -52,7 +52,9 @@ void effect_D5_move(WORK_Other* ewk) {
             ewk->wu.routine_no[0]++;
             break;
         }
-        if (sa_stop_check() == 0) {
+        if (sa_stop_check()) {
+            /* frozen while a super art holds the screen */
+        } else {
             if (ewk->wu.hit_stop < 0) {
                 ewk->wu.hit_stop = -ewk->wu.hit_stop;
             }
@@ -182,7 +184,7 @@ void cal_speeds(WORK_Other* ewk, PLW* _p1, PLW* twk) {
     }
     ewk->wu.mvxy.a[0].sp = 0;
     ewk->wu.mvxy.a[1].real.h = range_isp_table[rix];
-    cal_delta_speed(&ewk->wu, range_time_table[rix], tx, 0, 2, 1);
+    cal_delta_speed(&ewk->wu, range_time_table[rix][0], tx, 0, 2, 1);
     ewk->wu.mvxy.kop[0] = 1;
     if (ewk->wu.rl_flag == 0) {
         ewk->wu.mvxy.a[0].sp = -ewk->wu.mvxy.a[0].sp;

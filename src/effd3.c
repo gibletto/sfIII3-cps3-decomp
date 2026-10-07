@@ -66,7 +66,6 @@ void akebono_finish(WORK_Other* ewk) {
         ewk->wu.disp_flag = 0;
         for (i = 0; i < bg_w.scno; i++) {
             scroll_layer_mask_disable(1 << i);
-            continue;
         }
         scroll_layer_mask_enable(8);
         akebono_flag = 1;
@@ -86,7 +85,6 @@ void akebono_finish(WORK_Other* ewk) {
                 ewk->wu.dir_timer = ake_timer_tbl[ewk->wu.old_rno[1]];
                 for (i = 0; i < bg_w.scno; i++) {
                     Bg_Off_W(1 << i);
-                    continue;
                 }
                 Bg_On_W(8);
             } else {
@@ -94,7 +92,6 @@ void akebono_finish(WORK_Other* ewk) {
                 effect_G8_init();
                 for (i = 0; i < bg_w.scno; i++) {
                     Bg_Off_W(1 << i);
-                    continue;
                 }
                 Bg_On_W(8);
             }
@@ -112,7 +109,6 @@ void akebono_finish(WORK_Other* ewk) {
                 ewk->wu.dir_timer = ake_timer_tbl[ewk->wu.old_rno[1]];
                 for (i = 0; i < bg_w.scno; i++) {
                     Bg_Off_W(1 << i);
-                    continue;
                 }
                 Bg_On_W(8);
                 akebono_flag = 1;
@@ -120,7 +116,6 @@ void akebono_finish(WORK_Other* ewk) {
                 ewk->wu.routine_no[0] += 1;
                 for (i = 0; i < bg_w.scno; i++) {
                     Bg_On_W(1 << i);
-                    continue;
                 }
                 if (scrn_reg_w[3].ctrl & 0x8000) {
                     Bg_Off_W(8);
@@ -156,7 +151,6 @@ void syungoku_finish(WORK_Other* ewk) {
         Pause_Hit_Marks = 1;
         for (i = 0; i < bg_w.scno; i++) {
             Bg_Off_W(1 << i);
-            continue;
         }
         Bg_On_W(8);
         bg_w.bgw[3].position_x = 256 - bg_w.pos_offset;
@@ -196,7 +190,6 @@ void syungoku_finish(WORK_Other* ewk) {
         ewk->wu.routine_no[0] += 1;
         for (i = 0; i < bg_w.scno; i++) {
             Bg_On_W(1 << i);
-            continue;
         }
         Bg_Off_W(8);
         Conclusion_Flag = 1;

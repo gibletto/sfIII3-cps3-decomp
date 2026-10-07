@@ -10,7 +10,7 @@ void Game01_Sub(void);
 void Game05(void);
 void Game11(void);
 void Game2_0(void);
-char * Game03(void);
+void Game03(void);
 void Game04(void);
 s32 Bonus_Sub(void);
 void Game10(void);

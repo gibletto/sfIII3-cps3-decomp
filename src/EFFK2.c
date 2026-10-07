@@ -33,6 +33,7 @@
 
 
 void effect_K1_move(WORK_Other* ewk) {
+    s8 tm;
     switch (ewk->wu.routine_no[0]) {
     case 0:
         if (Time_Stop < 0) {
@@ -69,8 +70,9 @@ void effect_K1_move(WORK_Other* ewk) {
             ewk->wu.my_mr_flag = 0;
             break;
         case 2:
-            if (Select_Timer != ewk->wu.rl_waza) {
-                ewk->wu.rl_waza = Select_Timer;
+            tm = Select_Timer;
+            if (ewk->wu.rl_waza != tm) {
+                ewk->wu.rl_waza = tm;
                 Setup_Char_Index(ewk);
                 ewk->wu.dir_step += 20;
                 set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);

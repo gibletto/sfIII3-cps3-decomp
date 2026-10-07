@@ -27,6 +27,8 @@
 #include "sys_config_2.h"
 #include "cps3.h"
 
+void tilemap_put_block(u16 x, u16 y, u16 attr, u16 code);
+
 
 
 /* provisional name */
@@ -196,46 +198,48 @@ void config_top_default(void) {
     u32 table;
     u32 p;
     s8* dst;
-    if ((p1sw_0 & 0x30) == 0x30 && (p1sw_1 & 0x30) != 0x30) {
-        table = sys_cfg_default_tbl[Cabinet_Type];
-        if (Area_Type != 0) {
-            ix = Area_Type;
-        } else if (Area_Alt_Flag != 0) {
-            ix = 6;
-        } else {
-            ix = Area_Type;
+    if ((p1sw_0 & 0x30) == 0x30) {
+        if ((p1sw_1 & 0x30) != 0x30) {
+            table = sys_cfg_default_tbl[Cabinet_Type];
+            if (Area_Type != 0) {
+                ix = Area_Type;
+            } else if (Area_Alt_Flag != 0) {
+                ix = 6;
+            } else {
+                ix = Area_Type;
+            }
+            p = *(u32*)(table + ix * 4);
+            cfg_coin = *(u8*)(p + 1);
+            cfg_continue = *(u8*)(p + 2);
+            cfg_chute = *(u8*)(p + 3);
+            cfg_sound_mode = *(u8*)(p + 4);
+            cfg_voice = *(u8*)(p + 9);
+            Monitor_Flip = *(u8*)(p + 6);
+            cfg_demo_sound = *(u8*)(p + 5);
+            cfg_coin_special = Free_Play;
+            cfg_dispenser = *(u8*)(p + 10);
+            cfg_win_point = *(u8*)(p + 11);
+            cfg_win_point_vs = *(u8*)(p + 12);
+            cfg_extra = *(u8*)(p + 13);
+            if (Coin_Mode == 17) {
+                cfg_free_play = 1;
+                cfg_continue = 1;
+            } else {
+                cfg_free_play = 0;
+            }
+            p = (u32)game_cfg_default_tbl[ix];
+            dst = (s8 *)&game_config_work;
+            for (ix = 0; ix < 16; ix++) {
+                *dst = *(s8*)p;
+                dst++;
+                p++;
+            }
+            game_config_apply();
+            Config_No_1 = 0;
+            Config_No_2 = 0;
         }
-        p = *(u32*)(table + ix * 4);
-        cfg_coin = *(u8*)(p + 1);
-        cfg_continue = *(u8*)(p + 2);
-        cfg_chute = *(u8*)(p + 3);
-        cfg_sound_mode = *(u8*)(p + 4);
-        cfg_voice = *(u8*)(p + 9);
-        Monitor_Flip = *(u8*)(p + 6);
-        cfg_demo_sound = *(u8*)(p + 5);
-        cfg_coin_special = Free_Play;
-        cfg_dispenser = *(u8*)(p + 10);
-        cfg_win_point = *(u8*)(p + 11);
-        cfg_win_point_vs = *(u8*)(p + 12);
-        cfg_extra = *(u8*)(p + 13);
-        if (Coin_Mode == 17) {
-            cfg_free_play = 1;
-            cfg_continue = 1;
-        } else {
-            cfg_free_play = 0;
-        }
-        p = (u32)game_cfg_default_tbl[ix];
-        dst = (s8 *)&game_config_work;
-        for (ix = 0; ix < 16; ix++) {
-            *dst = *(s8*)p;
-            dst++;
-            p++;
-        }
-        game_config_apply();
-        Config_No_1 = 0;
-        Config_No_2 = 0;
     }
-    if (Area_Type != 0) {
+    if (Area_Type) {
         tilemap_print_string(0, 0, 0xFFFF, (TM_STRING*)config_reset_guide_scr);
     } else {
         tilemap_print_script_seq(0, 0, 0xFFFF, (TMSCRIPT*)cfg_top_guide_jp);
@@ -274,13 +278,10 @@ void config_top_save_exit(void) {
             s++;
             d++;
         }
-        coin_chute1_w[2] = coin_rate_tbl[Coin_Mode][0];
-        coin_chute1_w[3] = coin_rate_tbl[Coin_Mode][1];
-        coin_chute2_w[2] = coin_rate_tbl[Coin_Mode][0];
-        {
-            s8 t = coin_rate_tbl[Coin_Mode][1];
-            coin_chute2_w[3] = t;
-        }
+        coin_chute1_w.per_credit = coin_rate_tbl[Coin_Mode][0];
+        coin_chute1_w.credits = coin_rate_tbl[Coin_Mode][1];
+        coin_chute2_w.per_credit = coin_rate_tbl[Coin_Mode][0];
+        coin_chute2_w.credits = coin_rate_tbl[Coin_Mode][1];
         coin3_coin_rate = coin_rate_tbl[Coin_Mode][0];
         coin3_credit_rate = coin_rate_tbl[Coin_Mode][1];
         coin4_coin_rate = coin_rate_tbl[Coin_Mode][0];
@@ -374,18 +375,20 @@ void sysconfig_select(void) {
         cfg_cursor = menu_cursor_vtick(2, 4, cfg_item_max, cfg_cursor, 1);
     }
     if (cfg_cursor != cfg_cursor_old) {
-        if (cfg_cursor == 2 && (cfg_coin == 17 || event_off_flag == 0)) {
-            if (cfg_cursor > cfg_cursor_old) {
-                cfg_cursor_old = cfg_cursor;
-                cfg_cursor++;
-            } else {
-                cfg_cursor_old = cfg_cursor;
-                cfg_cursor--;
-            }
-            if (Area_Type == 0) {
-                menu_cursor_redraw(2, 4, cfg_cursor, cfg_cursor_old);
-            } else {
-                menu_cursor_redraw(1, 5, cfg_cursor, cfg_cursor_old);
+        if (cfg_cursor == 2) {
+            if (cfg_coin == 17 || event_off_flag == 0) {
+                if (cfg_cursor > cfg_cursor_old) {
+                    cfg_cursor_old = cfg_cursor;
+                    cfg_cursor++;
+                } else {
+                    cfg_cursor_old = cfg_cursor;
+                    cfg_cursor--;
+                }
+                if (Area_Type == 0) {
+                    menu_cursor_redraw(2, 4, cfg_cursor, cfg_cursor_old);
+                } else {
+                    menu_cursor_redraw(1, 5, cfg_cursor, cfg_cursor_old);
+                }
             }
         }
         if (cfg_cursor == 7 && (Area_Type == 3 || Area_Type == 4) && cfg_dispenser == 0) {
@@ -550,7 +553,7 @@ void sysconfig_coin(void) {
             } else if (Free_Play_Enable != 0 && cfg_coin == 18) {
                 cfg_coin_special = 1;
                 cfg_cont_forced = 0;
-            } else if (cfg_cont_forced != 0) {
+            } else if (cfg_cont_forced) {
                 cfg_cont_forced = 0;
                 cfg_continue = 0;
             }
@@ -835,7 +838,7 @@ void sysconfig_draw_values(void) {
         tilemap_print_script_seq(0, 0, attr, sys_cfg_continue_scr_jp[cfg_continue]);
     }
     attr = 2;
-    if (Monitor_Flip != eeprom_saved_flip) {
+    if (Monitor_Flip != eeprom_w[6]) {
         attr = 8;
     }
     if (Area_Type) {
@@ -865,7 +868,7 @@ void sysconfig_draw_values(void) {
     }
     if (Area_Type == 3 || Area_Type == 4) {
         attr = 2;
-        if (cfg_dispenser != Card_Dispenser) {
+        if (cfg_dispenser != (s8)Card_Dispenser) {
             attr = 8;
         }
         config_print_setting(on_off_str_tbl[cfg_dispenser], 17, attr);

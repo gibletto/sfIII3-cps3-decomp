@@ -73,7 +73,7 @@ void effect_M3_move(WORK_Other* ewk) {
                 break;
             }
             ewk->wu.routine_no[1]++;
-            ewk->wu.mvxy.a[0].real.h = 64;
+            *(s16*)&ewk->wu.mvxy.a[0] = 64;
             ewk->wu.mvxy.a[0].real.l = -1;
             ewk->wu.mvxy.d[0].real.h = -1;
             ewk->wu.mvxy.d[0].real.l = M3_bahn_data[4] * 16;
@@ -88,12 +88,13 @@ void effect_M3_move(WORK_Other* ewk) {
         case 2:
             cal_mvxy_speed(&ewk->wu);
             ewk->wu.mvxy.d[0].sp = (ewk->wu.mvxy.d[0].sp * ewk->wu.dmcal_m) / ewk->wu.dmcal_d;
-            if (!ewk->wu.mvxy.a[0].real.h) {
-                ewk->wu.routine_no[1]++;
-                if (ewk->wu.type == 0) {
-                    Next_Step = 0;
-                    effinitjp_quake_y[0](ewk, M3_bahn_data[3]);
-                }
+            if (*(s16*)&ewk->wu.mvxy.a[0]) {
+                break;
+            }
+            ewk->wu.routine_no[1]++;
+            if (ewk->wu.type == 0) {
+                Next_Step = 0;
+                effinitjp_quake_y[0](ewk, (u8)M3_bahn_data[3]);
             }
             break;
         default:
@@ -102,7 +103,8 @@ void effect_M3_move(WORK_Other* ewk) {
             ewk->wu.routine_no[0] = 2;
             break;
         }
-        ewk->wu.my_mr.size.x = ewk->wu.my_mr.size.y = ewk->wu.my_mts = ewk->wu.mvxy.a[0].real.h + 63;
+        ewk->wu.my_mts = *(s16*)&ewk->wu.mvxy.a[0] + 63;
+        ewk->wu.my_mr.size.x = ewk->wu.my_mr.size.y = ewk->wu.my_mts;
         effM3_trans(&ewk->wu);
         break;
     case 2:

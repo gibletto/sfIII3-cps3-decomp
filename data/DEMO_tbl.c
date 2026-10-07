@@ -28,8 +28,9 @@ const u32 jmp_tbl_init[3] = {
     (u32)Logo_Etc,
 };
 
-const DEMO_JMP2 Demo_Jmp_Data[1] = {
-    { { Demo00, Demo01 } },
+/* Initial values of Demo_Jmp_Tbl (Play_Demo) in demo02_code.c. */
+const u32 Demo_Jmp_Tbl_init[2] = {
+    (u32)Demo00, (u32)Demo01,
 };
 
 const s8 Demo_Char_Data[4][2] = {

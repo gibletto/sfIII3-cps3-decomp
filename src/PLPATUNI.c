@@ -94,15 +94,16 @@ void Att_METAMOR_REBIRTH(PLW* wk) {
             set_jugde_area((WORK*)wk);
             break;
         }
-        if (wk->wu.cg_type == 40) {
-            wk->wu.routine_no[3] = 2;
-            wk->wu.mvxy.a[0].sp = 0;
-            wk->wu.mvxy.a[1].sp = 0;
-            wk->wu.mvxy.d[0].sp = 0;
-            wk->wu.mvxy.d[1].sp = -0x8000;
-            wk->wu.mvxy.kop[0] = wk->wu.mvxy.kop[1] = 0;
-            wk->scr_pos_set_flag = 1;
+        if (wk->wu.cg_type != 40) {
+            break;
         }
+        wk->wu.routine_no[3] = 2;
+        wk->wu.mvxy.a[0].sp = 0;
+        wk->wu.mvxy.a[1].sp = 0;
+        wk->wu.mvxy.d[0].sp = 0;
+        wk->wu.mvxy.d[1].sp = -0x8000;
+        wk->wu.mvxy.kop[0] = wk->wu.mvxy.kop[1] = 0;
+        wk->scr_pos_set_flag = 1;
         break;
     case 2:
         wk->scr_pos_set_flag = 1;
@@ -758,7 +759,7 @@ void att_ahj_table_reader(PLW* wk) {
             }
             ey = ahj_empos_hos[wk->as->r_no][twk->player_number][1];
             wk->wu.mvxy.a[0].sp = 0;
-            cal_delta_speed(&wk->wu, curr_kop[1], ex, ey, curr_kop[2], curr_kop[3]);
+            cal_delta_speed(&wk->wu, curr_kop[1], ex, ey, (s8)curr_kop[2], (s8)curr_kop[3]);
         default:
             if (wk->wu.rl_flag == 0) {
                 wk->wu.mvxy.a[0].sp = -wk->wu.mvxy.a[0].sp;

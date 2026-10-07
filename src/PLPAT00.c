@@ -91,10 +91,11 @@ void Att_RESURRECTION(PLW* wk) {
             wk->wu.cg_type = 0;
         }
         wk->wu.vital_new += wk->wu.direction;
-        if (wk->wu.vital_new < wk->wu.vitality) {
+        if (wk->wu.vital_new >= wk->wu.vitality) {
+            wk->wu.vital_new = wk->wu.vitality;
+        } else {
             break;
         }
-        wk->wu.vital_new = wk->wu.vitality;
         wk->wu.mvxy.d[1].sp = -0x8000;
         wk->wu.direction = 0;
         wk->wu.routine_no[3]++;

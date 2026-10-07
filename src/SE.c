@@ -50,7 +50,6 @@ void wipe_pattern_or_cols(s16 kind, s16 row) {
             ofs = code * 2;
             p = (u16*)((u8*)dst + ofs);
             *p |= map[code];
-            continue;
         }
         dst += 32;
     } while (++y < 464);
@@ -76,7 +75,6 @@ void wipe_pattern_restore_cols(s16 kind, s16 row) {
     for (y = 0; y < 464; y++) {
         for (x = 0; x < wipe_column_tbl[kind].w; x++) {
             dst[src[x]] = cell[src[x]] | map[src[x]];
-            continue;
         }
         dst += 32;
         cell += 32;

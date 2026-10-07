@@ -8,7 +8,7 @@ s32 Loser_Scene(void);
 void Setup_Virtual_BG();
 void Setup_Wins_OBJ(void);
 s32 Game_Over(void);
-s32 GameOver_1st(void);
+void GameOver_1st(void);
 void Win_1st(void);
 void Win_2nd(void);
 void Win_3rd(void);

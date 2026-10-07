@@ -54,13 +54,11 @@ void EFF52_SUDDENLY(WORK_Other* ewk) {
     case 1:
         char_move(&ewk->wu);
         x = ewk->wu.cg_ix / ewk->wu.cgd_type;
-        if (x >= ewk->wu.direction) {
-            ewk->wu.routine_no[6]++;
-            goto start_check;
+        if (x < ewk->wu.direction) {
+            break;
         }
-        break;
+        ewk->wu.routine_no[6]++;
     case 2:
-    start_check:
         if (Select_Start[ewk->master_id] == 0) {
             Order[ewk->wu.dir_old] = 4;
             ewk->wu.routine_no[0] = 4;

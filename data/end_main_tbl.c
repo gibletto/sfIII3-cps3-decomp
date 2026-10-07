@@ -103,8 +103,24 @@ const s16 op_115_tbl[2] = {
     0, 7,
 };
 
-const OP_BG0_JP op_bg0_jp_tbl[1] = {
-    { { op_bg0_0000, op_bg0_0001, op_bg0_0000, op_bg0_0001, op_bg0_0001, op_bg0_0001, op_bg0_0000, op_bg0_0001, op_bg0_0015, op_bg0_0001, op_bg0_0000, op_bg0_0001, op_bg0_0001, op_bg0_0000, op_bg0_0015, op_bg0_0001, op_bg0_0000, op_bg0_0000, op_bg0_0001, op_bg0_0001, op_bg0_0000, op_bg0_0001, op_bg0_0001, op_bg0_0000, op_bg0_0000, op_bg0_0000, op_bg0_0000, op_bg0_0000, op_bg0_0000, op_bg0_0000, op_bg0_0001, op_bg0_0001, op_bg0_0001, op_bg0_0001, op_bg0_0000, op_bg0_0001, op_bg0_0001, op_bg0_0000, op_bg0_0001, op_bg0_0001, op_bg0_0000, op_bg0_0002, op_bg0_0003, op_bg0_0002, op_bg0_0003, op_bg0_0002, op_bg0_0003, op_bg0_0002, op_bg0_0003, op_bg0_0002, op_bg0_0003, op_bg0_0002, op_bg0_0003, op_bg0_0000, op_bg0_0004, op_bg0_0001, op_bg0_0001, op_bg0_0004, op_bg0_0005, op_bg0_0002, op_bg0_0001, op_bg0_0002, op_bg0_0001, op_bg0_0002, op_bg0_0006, op_bg0_0001, op_bg0_0001, op_bg0_0001, op_bg0_0007, op_bg0_0008, op_bg0_0000, op_bg0_0000, op_bg0_0001, op_bg0_0001, op_bg0_0000, op_bg0_0001, op_bg0_0001, op_bg0_0000, op_bg0_0000, op_bg0_0004, op_bg0_0001, op_bg0_0004, op_bg0_0001, op_bg0_0002, op_bg1_0003_move, op_bg0_0002, op_bg0_0010, op_bg0_0002, op_bg0_0011, op_bg0_0012, op_bg0_0013, op_bg0_0014, op_bg0_0002, op_bg0_0016 } },
+/* Initial values of op_bg0_move_jp (op_bg0_move) in end_main.c. */
+const u32 op_bg0_move_jp_init[94] = {
+    (u32)op_bg0_0000, (u32)op_bg0_0001, (u32)op_bg0_0000, (u32)op_bg0_0001, (u32)op_bg0_0001, (u32)op_bg0_0001,
+    (u32)op_bg0_0000, (u32)op_bg0_0001, (u32)op_bg0_0015, (u32)op_bg0_0001, (u32)op_bg0_0000, (u32)op_bg0_0001,
+    (u32)op_bg0_0001, (u32)op_bg0_0000, (u32)op_bg0_0015, (u32)op_bg0_0001, (u32)op_bg0_0000, (u32)op_bg0_0000,
+    (u32)op_bg0_0001, (u32)op_bg0_0001, (u32)op_bg0_0000, (u32)op_bg0_0001, (u32)op_bg0_0001, (u32)op_bg0_0000,
+    (u32)op_bg0_0000, (u32)op_bg0_0000, (u32)op_bg0_0000, (u32)op_bg0_0000, (u32)op_bg0_0000, (u32)op_bg0_0000,
+    (u32)op_bg0_0001, (u32)op_bg0_0001, (u32)op_bg0_0001, (u32)op_bg0_0001, (u32)op_bg0_0000, (u32)op_bg0_0001,
+    (u32)op_bg0_0001, (u32)op_bg0_0000, (u32)op_bg0_0001, (u32)op_bg0_0001, (u32)op_bg0_0000, (u32)op_bg0_0002,
+    (u32)op_bg0_0003, (u32)op_bg0_0002, (u32)op_bg0_0003, (u32)op_bg0_0002, (u32)op_bg0_0003, (u32)op_bg0_0002,
+    (u32)op_bg0_0003, (u32)op_bg0_0002, (u32)op_bg0_0003, (u32)op_bg0_0002, (u32)op_bg0_0003, (u32)op_bg0_0000,
+    (u32)op_bg0_0004, (u32)op_bg0_0001, (u32)op_bg0_0001, (u32)op_bg0_0004, (u32)op_bg0_0005, (u32)op_bg0_0002,
+    (u32)op_bg0_0001, (u32)op_bg0_0002, (u32)op_bg0_0001, (u32)op_bg0_0002, (u32)op_bg0_0006, (u32)op_bg0_0001,
+    (u32)op_bg0_0001, (u32)op_bg0_0001, (u32)op_bg0_0007, (u32)op_bg0_0008, (u32)op_bg0_0000, (u32)op_bg0_0000,
+    (u32)op_bg0_0001, (u32)op_bg0_0001, (u32)op_bg0_0000, (u32)op_bg0_0001, (u32)op_bg0_0001, (u32)op_bg0_0000,
+    (u32)op_bg0_0000, (u32)op_bg0_0004, (u32)op_bg0_0001, (u32)op_bg0_0004, (u32)op_bg0_0001, (u32)op_bg0_0002,
+    (u32)op_bg1_0003_move, (u32)op_bg0_0002, (u32)op_bg0_0010, (u32)op_bg0_0002, (u32)op_bg0_0011, (u32)op_bg0_0012,
+    (u32)op_bg0_0013, (u32)op_bg0_0014, (u32)op_bg0_0002, (u32)op_bg0_0016,
 };
 
 const s16 op_bg0_0004_tbl[6] = {

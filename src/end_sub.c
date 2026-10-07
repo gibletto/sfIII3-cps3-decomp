@@ -53,7 +53,6 @@
 #include "meta_col_strcpy.h"
 #include "meta_col_lib.h"
 #include "meta_col_bcd.h"
-#include "textsound.h"
 #include "textsound_2.h"
 #include "textsound_3.h"
 #include "fifo.h"

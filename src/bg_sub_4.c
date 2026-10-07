@@ -68,7 +68,6 @@ void suzi_line_calc2(s16 bg_num) {
             *dst = *(u16*)line;
             line++;
             dst += 2;
-            continue;
         }
     } else {
         calc[0] = bg_w.bgw[bg_num].zuubun * dist;
@@ -80,7 +79,6 @@ void suzi_line_calc2(s16 bg_num) {
             *dst = *(u16*)line;
             line++;
             dst += 2;
-            continue;
         }
     }
     src = bg_w.bgw[bg_num].suzi_adrs;

@@ -77,16 +77,14 @@ s32 bg_debug_stage_change(void) {
 
 /* provisional name */
 void bg_free_work_blocks(void) {
-    s32 i;
+    s16 i;
     simmram_block_free_10(scr_cg_c_no);
-    i = 0;
-    while (i < bg_w.scno) {
+    for (i = 0; i < bg_w.scno; i++) {
         simmram_block_free_40(bg_w.bgw[i].bg_adrs_c_no);
         sprite_list_clear(i);
         if (bg_w.bgw[i].zuubun != 0) {
             simmram_block_free_40(bg_w.bgw[i].suzi_c_no);
         }
-        i++;
     }
 }
 
@@ -176,7 +174,7 @@ void bg_layers_off(void) {
     s16 i;
 
     for (i = 0; i < bg_w.scno; i++) {
-        if ((((SCROLL_CTRL*)((u8*)scrn_reg_w + (s8)(i * sizeof(SCROLL_CTRL))))->ctrl & 0x8000) == 0) {
+        if ((scrn_reg_w[i].ctrl & 0x8000) == 0) {
             continue;
         }
         Bg_Off_W(1 << i);

@@ -20,7 +20,6 @@
 #include "extern.h"
 #include "CHARMOVE.h"
 #include "charmove_2.h"
-#include "PLS02.h"
 #include "Grade.h"
 #include "PLPAT.h"
 #include "PLS03ATT.h"
@@ -54,11 +53,11 @@ s32 check_nm_attack(PLW* wk) {
         break;
     case 14:
         koa = waza_select(wk, kos, 6);
-        wk->as = &asstbl_lv_3010[wk->player_number][kos][koa].as;
+        wk->as = &asstbl_lv_6010[wk->player_number][kos][koa].as;
         break;
     case 26:
         koa = waza_select(wk, kos, 9);
-        wk->as = &asstbl_lv_3010[wk->player_number][kos][koa].as;
+        wk->as = &asstbl_lv_9010[wk->player_number][kos][koa].as;
         break;
     case 22:
         koa = waza_select(wk, kos, 2);
@@ -66,11 +65,11 @@ s32 check_nm_attack(PLW* wk) {
         break;
     case 16:
         koa = waza_select(wk, kos, 5);
-        wk->as = &asstbl_lv_2010[wk->player_number][kos][koa].as;
+        wk->as = &asstbl_lv_5010[wk->player_number][kos][koa].as;
         break;
     case 28:
         koa = waza_select(wk, kos, 8);
-        wk->as = &asstbl_lv_2010[wk->player_number][kos][koa].as;
+        wk->as = &asstbl_lv_8010[wk->player_number][kos][koa].as;
         break;
     case 24:
         koa = waza_select(wk, kos, 4);
@@ -78,11 +77,11 @@ s32 check_nm_attack(PLW* wk) {
         break;
     case 18:
         koa = waza_select(wk, kos, 7);
-        wk->as = &asstbl_lv_4010[wk->player_number][kos][koa].as;
+        wk->as = &asstbl_lv_7010[wk->player_number][kos][koa].as;
         break;
     case 30:
         koa = waza_select(wk, kos, 10);
-        wk->as = &asstbl_lv_4010[wk->player_number][kos][koa].as;
+        wk->as = &asstbl_lv_10010[wk->player_number][kos][koa].as;
         break;
     default:
         if (((Bonus_Game_Flag != 21) || !wk->bs2_on_car) && (wk->wu.xyz[1].disp.pos > 0)) {
@@ -115,12 +114,12 @@ s32 check_jump_pat_status(PLW* wk) {
     if (!(wk->cp->sw_lvbt & 1)) {
         return 0;
     }
-    if (((Bonus_Game_Flag != 21) || !wk->bs2_on_car) && (wk->wu.xyz[1].disp.pos >= 1)) {
-        return 0;
+    if (((Bonus_Game_Flag == 21) && wk->bs2_on_car) || (wk->wu.xyz[1].disp.pos <= 0)) {
+        hoken_muriyari_chakuchi(wk);
+        wk->wu.pat_status = jump_pat_status_data[wk->wu.rl_flag != wk->wu.rl_waza][wk->cp->lever_dir];
+        return 1;
     }
-    hoken_muriyari_chakuchi(wk);
-    wk->wu.pat_status = jump_pat_status_data[wk->wu.rl_flag != wk->wu.rl_waza][wk->cp->lever_dir];
-    return 1;
+    return 0;
 }
 
 
@@ -339,22 +338,22 @@ s16 sf;
         wst = asstbl_lv_4000[wk->player_number][kos];
         break;
     case 5:
-        wst = asstbl_lv_2000[wk->player_number][kos];
+        wst = asstbl_lv_5000[wk->player_number][kos];
         break;
     case 6:
-        wst = asstbl_lv_3000[wk->player_number][kos];
+        wst = asstbl_lv_6000[wk->player_number][kos];
         break;
     case 7:
-        wst = asstbl_lv_4000[wk->player_number][kos];
+        wst = asstbl_lv_7000[wk->player_number][kos];
         break;
     case 8:
-        wst = asstbl_lv_2000[wk->player_number][kos];
+        wst = asstbl_lv_8000[wk->player_number][kos];
         break;
     case 9:
-        wst = asstbl_lv_3000[wk->player_number][kos];
+        wst = asstbl_lv_9000[wk->player_number][kos];
         break;
     case 10:
-        wst = asstbl_lv_4000[wk->player_number][kos];
+        wst = asstbl_lv_10000[wk->player_number][kos];
         break;
     default:
         return 0;
@@ -371,7 +370,7 @@ s16 sf;
 
 
 s32 decode_wst_data(PLW* wk, u16 cmd, s16 cmd_ex) {
-    s16 lever;
+    u16 lever;
     u16 rnum;
     if (cmd == 0) {
         return 0;
@@ -389,8 +388,10 @@ s32 decode_wst_data(PLW* wk, u16 cmd, s16 cmd_ex) {
         rnum = cmd_ex_check(wk->wu.xyz[1].disp.pos, cmd_ex);
         break;
     case 0x7000:
-        if ((wk->cp->sw_new & lever) && (cmd_ex_check(wk->wu.xyz[1].disp.pos, cmd_ex))) {
-            rnum = 1;
+        if (wk->cp->sw_new & lever) {
+            if (cmd_ex_check(wk->wu.xyz[1].disp.pos, cmd_ex)) {
+                rnum = 1;
+            }
         }
         break;
     case 0xB000:
@@ -411,15 +412,17 @@ s32 decode_wst_data(PLW* wk, u16 cmd, s16 cmd_ex) {
         }
         break;
     case 0xA000:
-        if ((wk->wu.mvxy.a[1].sp > 0) && (lever == (wk->cp->sw_new & 0xF)) &&
-            (cmd_ex_check(wk->wu.xyz[1].disp.pos, cmd_ex))) {
-            rnum = 1;
+        if ((wk->wu.mvxy.a[1].sp > 0) && (lever == (wk->cp->sw_new & 0xF))) {
+            if (cmd_ex_check(wk->wu.xyz[1].disp.pos, cmd_ex)) {
+                rnum = 1;
+            }
         }
         break;
     case 0x9000:
-        if ((wk->wu.mvxy.a[1].sp <= 0) && (lever == (wk->cp->sw_new & 0xF)) &&
-            (cmd_ex_check(wk->wu.xyz[1].disp.pos, cmd_ex))) {
-            rnum = 1;
+        if ((wk->wu.mvxy.a[1].sp <= 0) && (lever == (wk->cp->sw_new & 0xF))) {
+            if (cmd_ex_check(wk->wu.xyz[1].disp.pos, cmd_ex)) {
+                rnum = 1;
+            }
         }
         break;
     case 0x6000:

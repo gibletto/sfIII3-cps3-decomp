@@ -108,6 +108,8 @@
 #include "fighter.h"
 #include "RANKING.h"
 
+void tilemap_put_block(u16 x, u16 y, u16 attr, u16 code);
+
 #pragma noregsave(test_mode_task)
 
 
@@ -177,7 +179,8 @@ void test_menu_init(void) {
     bg_vbl_trans_flag = 0;
     tilemap_fill_all(0, 32);
     palette_write(0, (u16*)((u32)sys_palette), 256);
-    if (Country == 1) {
+    switch (Country) {
+    case 1:
         test_font_type = 1;
         tilemap_chunk_copy_16b((s16*)(SS_RAM + 0x8000), (char*)((u32)jp_menu_font_cg), 512);
         tilemap_fill_all(0, 0x1200);
@@ -187,7 +190,8 @@ void test_menu_init(void) {
         if (config_differs_from_default()) {
             tilemap_rect_fill(21, 16, 4, 2, 8, 0xFFFF);
         }
-    } else {
+        break;
+    default:
         test_font_type = 0;
         tilemap_chunk_copy_16b((s16*)(SS_RAM + 0x8000), (char*)((u32)sys_font_cg), 140);
         tilemap_fill_all(0, 32);
@@ -197,6 +201,7 @@ void test_menu_init(void) {
         if (config_differs_from_default()) {
             tilemap_rect_fill(19, 15, 14, 1, 8, 0xFFFF);
         }
+        break;
     }
     tilemap_put_block(test_cursor_x_tbl[test_font_type], test_cursor_y_tbl[(s8)test_font_type][test_cursor], 2,
                              test_cursor_on);
@@ -289,16 +294,14 @@ void test_menu_select(void) {
 void test_mode_exit(void)
 {
     tilemap_fill_all(0, 32);
-    test_cursor = 0;
-    test_menu_no = 0;
-    test_rno = 0;
+    test_cursor = test_menu_no = test_rno = 0;
     coin_lock_set(-1);
     Cd_Error_Flag = 1;
     switch_read(1);
-    if (!Game_setting.mode) {
-        set_screen_mode(3);
-    } else {
+    if (Game_setting.mode) {
         set_screen_mode(7);
+    } else {
+        set_screen_mode(3);
     }
     screen_flip_offsets_set();
     Scrn_Pos_Init();

@@ -17,7 +17,6 @@
 #include "charmove_2.h"
 #include "EFF13.h"
 #include "EFF96.h"
-#include "EFFECT.h"
 #include "effect_2.h"
 #include "EFF13_KOTP.h"
 #include "fighter.h"

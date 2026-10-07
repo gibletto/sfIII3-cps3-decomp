@@ -702,7 +702,8 @@ typedef struct {
     s16 quake_y_index;
     s16 bg_f_x;
     s16 bg_f_y;
-    s16 old_bg_f[2];    /* bg_f_x, bg_f_y of the previous frame */
+    s16 old_bg_f_x;     /* bg_f_x of the previous frame */
+    s16 old_bg_f_y;     /* bg_f_y of the previous frame */
     u8 pad1[0xa];
     s16 bg2_sp_x2;
     s16 bg2_sp_y2;
@@ -710,7 +711,7 @@ typedef struct {
     s16 center_x;
     s16 center_y;
     s16 bg_index;
-    s8 dmm1[1];         /* set to 1 on scene set */
+    s8 dmm1;            /* set to 1 on scene set */
     s8 frame_vol;
     s16 max_x;
     u8 bg_opaque;
@@ -1562,10 +1563,6 @@ typedef struct {
 
 
 typedef struct {
-    void (*fn[6])();
-} GAME00_JMP_TBL;
-
-typedef struct {
     s16 x;
     s16 y;
     s16 attr;
@@ -1637,10 +1634,6 @@ typedef struct {
     u8 kz_blocking;
     u8 free;
 } TAMA;
-
-typedef struct {
-    void (*fn[2])();
-} JMP_TBL2;
 
 typedef struct {
     void (*fn[3])();
@@ -1744,10 +1737,6 @@ typedef struct {
     s16 x_posnum[2];
     s16 timer[2];
 } CMST_WIN_R;
-
-typedef struct {
-    void (*jp[6])();
-} END601_JP;
 
 typedef struct {
     s8 mode;
@@ -1873,10 +1862,6 @@ typedef union {
 } XY16;
 
 typedef struct {
-    void (*f[2])();
-} DEMO_JMP2;
-
-typedef struct {
     union {
         u16 code;
         u8 frames;
@@ -1885,10 +1870,6 @@ typedef struct {
     s16 param;
     s16 box;
 } PATTERN_REC;
-
-typedef struct {
-    void (*f[2])();
-} STAGE_TBL_T;
 
 typedef struct {
     s16 x;
@@ -1976,7 +1957,8 @@ typedef struct {
     s8 credits;
     s8 timer;
     s8 lockout;
-    u8 dropped;
+    s8 dropped;
+    u8 pad;
 } COINCHUTE;
 
 typedef struct {
@@ -1992,10 +1974,6 @@ typedef struct {
 typedef struct {
     s16 w[8];
 } GFX_CELL;
-
-typedef struct {
-    void (*jp[94])(s16 r_index);
-} OP_BG0_JP;
 
 typedef union {
     u32 swi;
@@ -2172,10 +2150,6 @@ typedef struct {
 typedef struct {
     void (*f[7])();
 } ROUTINES7;
-
-typedef struct {
-    void (*f[4])();
-} SEL_PL_CONT_TBL;
 
 typedef struct {
     void (*f[7])();
@@ -2508,5 +2482,37 @@ typedef struct {
     s16 y;
     CharGfxSet* set;
 } CharGfxEntry;
+
+typedef struct {
+    u8 device_type;
+    u8 data[37];
+} SCSI_INQUIRY;
+
+typedef struct {
+    u32 last_block;
+    u32 block_len;
+} SCSI_CAPACITY;
+
+typedef struct {
+    u16 set;
+    u16 cur;
+} SCRN_MODE;
+
+/* provisional names */
+typedef struct {
+    s16 sel[3];
+    s16 rest;
+    s16 sel0_max;
+    s16 sel1_max;
+    s16 rec_count;
+    s16 frames;
+    s16 row;
+} DBG_SLOT;
+
+/* One step of a colour-step table: how many frames to hold, then the colour. A timer of 0 ends the table. */
+typedef struct {
+    s16 timer;
+    s16 color;
+} ColorStep;
 
 #endif

@@ -9,7 +9,6 @@
 #include "work.h"
 #include "romdata.h"
 #include "extern.h"
-#include "sc_trans.h"
 #include "fifo.h"
 #include "sys_test.h"
 #include "sys_test_2.h"

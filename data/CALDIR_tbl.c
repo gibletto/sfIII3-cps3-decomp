@@ -404,5 +404,6 @@ const u8 dir_sel_table_tail[8] = {
     1, 2, 3, 4, 4, 3, 2, 1,
 };
 
+/* ROM copy of the blank string literal in challenger_banner_clear (SYS_sub.c). */
 const s8 banner_blank_msg[20] = "                  ";
 

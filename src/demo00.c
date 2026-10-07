@@ -135,19 +135,21 @@ void Logo_Warning(void) {
         tilemap_print_string(DE_X[3], 0, 0xFFFF, parental_advisory_msg);
         break;
     case 1:
-        if (--D_Timer == 0) {
-            D_No1++;
-            D_Timer = 120;
-            Scrn_Move_Set(4, 0, 0);
+        if (--D_Timer) {
+            break;
         }
+        D_No1++;
+        D_Timer = 120;
+        Scrn_Move_Set(4, 0, 0);
         break;
     case 2:
-        if (--D_Timer == 0) {
-            if (Request_Fade(34, 0)) {
-                D_No1++;
-            } else {
-                D_Timer = 1;
-            }
+        if (--D_Timer) {
+            break;
+        }
+        if (Request_Fade(34, 0)) {
+            D_No1++;
+        } else {
+            D_Timer = 1;
         }
         break;
     case 3:
@@ -176,19 +178,21 @@ void Logo_Etc(void) {
         Bg_Family_Set();
         break;
     case 1:
-        if (--D_Timer == 0) {
-            D_No1++;
-            D_Timer = 120;
-            Scrn_Move_Set(4, 0, 0);
+        if (--D_Timer) {
+            break;
         }
+        D_No1++;
+        D_Timer = 120;
+        Scrn_Move_Set(4, 0, 0);
         break;
     case 2:
-        if (--D_Timer == 0) {
-            if (Request_Fade(36, 0)) {
-                D_No1++;
-            } else {
-                D_Timer = 1;
-            }
+        if (--D_Timer) {
+            break;
+        }
+        if (Request_Fade(36, 0)) {
+            D_No1++;
+        } else {
+            D_Timer = 1;
         }
         break;
     case 3:

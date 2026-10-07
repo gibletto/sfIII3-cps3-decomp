@@ -256,32 +256,46 @@ void check_ja_nmj_dummy_RTNM(PLW* wk) {
     }
     switch (wk->ja_nmj_rno) {
     case 0:
-        if ((wk->wu.cg_ja.atix != 0) || (wk->wu.cg_ja.caix != 0)) {
-            wk->ja_nmj_rno = 1;
+        if ((wk->wu.cg_ja.atix == 0) && (wk->wu.cg_ja.caix == 0)) {
+            break;
         }
+        wk->ja_nmj_rno = 1;
         break;
     case 1:
-        if (((wk->wu.cg_ja.atix == 0) && (wk->wu.cg_ja.caix == 0)) || !wk->wu.att_hit_ok) {
-            wk->ja_nmj_cnt = get_cjdR(wk);
-            wk->ja_nmj_rno = 2;
+        if ((wk->wu.cg_ja.atix == 0) && (wk->wu.cg_ja.caix == 0)) {
+            goto cancel;
         }
+        if (wk->wu.att_hit_ok) {
+            break;
+        }
+    cancel:
+        wk->ja_nmj_cnt = get_cjdR(wk);
+        wk->ja_nmj_rno = 2;
         break;
     case 2:
-        if (((wk->wu.cg_ja.atix != 0) || (wk->wu.cg_ja.caix != 0)) && wk->wu.att_hit_ok) {
+        if ((wk->wu.cg_ja.atix == 0) && (wk->wu.cg_ja.caix == 0)) {
+            goto count;
+        }
+        if (wk->wu.att_hit_ok) {
             wk->ja_nmj_rno = 1;
             break;
         }
-        if (!--wk->ja_nmj_cnt) {
-            wk->ja_nmj_rno = 3;
+    count:
+        if (--wk->ja_nmj_cnt) {
+            break;
         }
+        wk->ja_nmj_rno = 3;
         break;
     default:
-        if ((wk->wu.cg_ja.atix != 0) || (wk->wu.cg_ja.caix != 0)) {
-            if (wk->wu.att_hit_ok) {
-                wk->ja_nmj_rno = 1;
-                break;
-            }
-        } else if (wk->wu.cg_type == 0) {
+        if ((wk->wu.cg_ja.atix == 0) && (wk->wu.cg_ja.caix == 0)) {
+            goto idle;
+        }
+        if (wk->wu.att_hit_ok) {
+            wk->ja_nmj_rno = 1;
+        }
+        break;
+    idle:
+        if (wk->wu.cg_type == 0) {
             wk->wu.cg_type = 64;
         }
         break;

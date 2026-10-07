@@ -94,7 +94,6 @@ void eff89_cell_attr_set(WORK_Other* ewk, s16 attr) {
         }
         row += 64;
         cell = row;
-        continue;
     }
 }
 

@@ -1085,7 +1085,7 @@ s16 dbg_dipsw_1;  /* 020170F4 */
 s16 * dbg_edit_box;  /* 020170F8 */
 s16 dbg_col_char;  /* 020170FC */
 PLW * dbg_pl;  /* 02017100 */
-s16 * dbg_slot;  /* 02017104 */
+DBG_SLOT * dbg_slot;  /* 02017104 */
 s16 dbg_slot_w[2][9];  /* 02017108 */
 SNAPSHOT* dbg_snap_ptr;  /* 0201712C */
 SNAPSHOT dbg_snap_w[2][128];  /* 02017130 */
@@ -1389,7 +1389,7 @@ SCRLPOS scrn_pos[5];  /* 0206A104 */
 SCROLL_CTRL scrn_reg_w[4];  /* 0206A154 */
 SPRPTR scrn_map_ptr[4];  /* 0206A17C */
 u16 scrn_line_prm[4][2];  /* 0206A1BC */
-u16 scrn_mode_prm[4][2];  /* 0206A1CC */
+SCRN_MODE scrn_mode_prm[4];  /* 0206A1CC */
 u16 Screen_Switch;  /* 0206A1DC */
 u16 Screen_Switch_Buffer;  /* 0206A1DE */
 u8 Screen_Switch_Req;  /* 0206A1E0 */
@@ -1403,15 +1403,15 @@ u8 iotest_save_flip_low;  /* 0206A1ED */
 u32 scsi_sense_key;  /* 0206A1F0 */
 u32 scsi_sense_asc;  /* 0206A1F4 */
 s8 scsi_sense_buf[22];  /* 0206A1F8 */
-u8 scsi_mode_buf[38];  /* 0206A20E */
-u32 scsi_capacity_buf[2];  /* 0206A234 */
+SCSI_INQUIRY scsi_inquiry_data;  /* 0206A20E */
+SCSI_CAPACITY scsi_capacity;  /* 0206A234 */
 s8 scsi_toc_buf[40];  /* 0206A23C */
 s8 cd_sector_buf[2048];  /* 0206A264 */
 s32 scsi_error;  /* 0206AA64 */
 s16 scsi_cdb_len;  /* 0206AA68 */
 u8 scsi_cdb_len_tail[2];  /* after scsi_cdb_len; nothing refers to it by name or address */
-s8 coin_chute1_w[8];  /* 0206AA6C */
-s8 coin_chute2_w[8];  /* 0206AA74 */
+COINCHUTE coin_chute1_w;  /* 0206AA6C */
+COINCHUTE coin_chute2_w;  /* 0206AA74 */
 /* Coin chutes 3 and 4 have the same 8-byte work as chutes 1 and 2 (coin_chute_tbl points at each; the
  * coin test reads them byte by byte); some of their bytes are also named on their own. */
 s8 coin_chute3_w[2];  /* 0206AA7C: bytes 0-1 of chute 3 */

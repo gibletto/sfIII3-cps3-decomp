@@ -15,7 +15,6 @@
 #include "charmove_2.h"
 #include "aboutspr.h"
 #include "EFFD9.h"
-#include "EFFECT.h"
 #include "effect_2.h"
 #include "Grade.h"
 #include "EFF41.h"
@@ -63,7 +62,7 @@ void effect_41_move(WORK_Other* ewk) {
         if (ewk->wu.cg_type == 0xFF) {
             ewk->wu.routine_no[0]++;
             ewk->wu.disp_flag = 0;
-            return;
+            break;
         }
     jump:
         eff41_main_process[sa_sign_data[ewk->wu.type][4]](ewk, mwk);
@@ -142,7 +141,7 @@ void gauge_minus(WORK_Other* ewk, PLW* mwk) {
     case 2:
         mwk->sa->saeff_mp = -1;
         grade_add_super_arts(mwk->wu.id, 2);
-        break;
+        return;
     }
 }
 
@@ -150,14 +149,13 @@ void gauge_minus(WORK_Other* ewk, PLW* mwk) {
 
 s32 effect_41_init(PLW* wk, u8 data) {
     WORK_Other* ewk;
-    s32 ix;
+    s16 ix;
     if (!test_flag) {
-        ix = pull_effect_work(3);
-        if ((s16)ix == -1) {
+        if ((ix = pull_effect_work(3)) == -1) {
             return -1;
         }
-        ewk = (WORK_Other*)frw[(s16)ix];
-        write_my_shell_ix(&wk->wu, (s16)ix);
+        ewk = (WORK_Other*)frw[ix];
+        write_my_shell_ix(&wk->wu, ix);
         ewk->wu.be_flag = 1;
         ewk->wu.type = data;
         ewk->wu.id = 41;

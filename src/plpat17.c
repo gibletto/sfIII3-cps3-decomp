@@ -256,13 +256,14 @@ void Att_PL17_TOKUSHUKOUDOU(PLW* wk) {
             break;
         case 30:
             wk->wu.routine_no[3]++;
-            if (wk->tk_success <= 2) {
-                wk->tk_success++;
-                wk->py->recover = wk->py->recover * 110 / 100;
+            if (wk->tk_success > 2) {
+                break;
             }
+            wk->tk_success++;
+            wk->py->recover = wk->py->recover * 110 / 100;
             break;
         }
-        break;
+        return;
     default:
         char_move(&wk->wu);
         break;

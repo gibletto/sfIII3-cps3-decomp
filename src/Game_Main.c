@@ -38,7 +38,6 @@
 #include "manage_2.h"
 #include "Win.h"
 #include "win_2.h"
-#include "continue.h"
 #include "next_cpu.h"
 #include "end_sub.h"
 #include "end_sub_2.h"
@@ -107,6 +106,8 @@
 #include "lose_pl.h"
 #include "PLS02.h"
 
+void Scrn_Move_Set(s32 n, s16 x, s16 y);
+
 
 
 /* provisional name */
@@ -136,7 +137,7 @@ void Game01(void) {
     Setup_Play_Type();
     switch (G_No2) {
     case 0:
-        G_No2 = G_No2 + 1;
+        G_No2++;
         S_No = 0;
         S_Sub_No = 0;
         S_Sub2_No = 0;
@@ -148,7 +149,7 @@ void Game01(void) {
         break;
     case 1:
         if (Select_Player()) {
-            G_No2 = G_No2 + 1;
+            G_No2++;
             Bonus_Game_Flag = 0;
             load_any_color(2);
             Game01_Sub();
@@ -161,7 +162,7 @@ void Game01(void) {
         if (Switch_Screen()) {
             Cover_Timer = 24;
             appear_type = 1;
-            if (Demo_Flag != 0) {
+            if (Demo_Flag) {
                 G_No1 = 2;
                 G_No2 = 0;
                 E_No0 = 4;
@@ -197,8 +198,8 @@ void Game01(void) {
 
 
 void Game01_Sub(void) {
-    tilemap_print_string_attr((*(const s16(*)[2][2])&(Entry_Msg_X_Data[2]))[0][Game_setting.mode], 0, 18, Game01_Erase_msg);
-    tilemap_print_string_attr((*(const s16(*)[2][2])&(Entry_Msg_X_Data[2]))[1][Game_setting.mode], 0, 18, Game01_Erase_msg);
+    tilemap_print_string_attr((*(const s16(*)[2][2])&(Entry_Msg_X_Data[4]))[0][Game_setting.mode], 0, 18, Game01_Erase_msg);
+    tilemap_print_string_attr((*(const s16(*)[2][2])&(Entry_Msg_X_Data[4]))[1][Game_setting.mode], 0, 18, Game01_Erase_msg);
     vital_cont_init();
     combo_cont_init();
     count_cont_init(0);
@@ -252,7 +253,7 @@ void Game05(void) {
     case 1:
         if (Next_CPU()) {
             G_No2++;
-            if (!Bonus_Type) {
+            if (Bonus_Type == 0) {
                 Game01_Sub();
             }
             sc_vram_to_ram();
@@ -264,7 +265,7 @@ void Game05(void) {
         if (Switch_Screen()) {
             Cover_Timer = 24;
             voice_all_off();
-            if (!Bonus_Type) {
+            if (Bonus_Type == 0) {
                 G_No1 = 2;
                 G_No2 = 0;
                 E_No0 = 4;
@@ -435,7 +436,8 @@ void Game2_3(void) {
 
 
 void Game2_4(void) {
-    if (!G_No3) {
+    switch (G_No3) {
+    case 0:
         G_No3++;
         System_all_clear_Wait();
         vital_cont_init();
@@ -462,12 +464,14 @@ void Game2_4(void) {
             bg_w.area++;
         }
         TATE00();
-    } else {
+        break;
+    default:
         Game2_1();
         if (--G_Timer == 0) {
             G_No2 = 1;
             Clear_Flash_No();
         }
+        break;
     }
 }
 
@@ -517,59 +521,50 @@ void Game2_5(void) {
     }
 }
 
-char *Game03(void)
+void Game03(void)
 {
-    char *result;
-    s8 event;
-
     move_effect_work(4);
     move_effect_work(5);
-    result = (char *)G_No2;
-    if (!result) {
+    switch (G_No2) {
+    case 0:
         if (Winner_Scene() == 0) {
-            result = 0;
+            break;
+        }
+        if (Check_Short_Ending()) {
+            Forbid_Break = 1;
+            break;
+        }
+        if (Game_setting.set5) {
+            G_No1 = 6;
+            G_No2 = 0;
+            G_No3 = 0;
+            E_No0 = 8;
+            E_No1 = 0;
+            E_No2 = 0;
+            E_No3 = 0;
         } else {
-            result = (char *)Check_Short_Ending();
-            if (!result) {
-                event = Game_setting.set5;
-                if (!event) {
-                    G_No1 = 5;
-                    G_No2 = 0;
-                    G_No3 = 0;
-                    E_No0 = 9;
-                    E_No1 = 0;
-                    E_No2 = 0;
-                    E_No3 = 0;
-                    if (Battle_Q[WINNER]) {
-                        G_No1 = 11;
-                        G_No2 = 3;
-                        G_No3 = 0;
-                    }
-                    result = (char *)&Continue_Flag;
-                    Cover_Timer = 24;
-                    if (Continue_Flag && (result = (char *)Round_Operator, Round_Operator[LOSER])) {
-                        result = 0;
-                        E_Number[LOSER][0] = 1;
-                        E_Number[LOSER][1] = 0;
-                        E_Number[LOSER][2] = 0;
-                        E_Number[LOSER][3] = 0;
-                    }
-                } else {
-                    G_No1 = 6;
-                    G_No2 = 0;
-                    G_No3 = 0;
-                    E_No0 = 8;
-                    E_No1 = 0;
-                    E_No2 = 0;
-                    E_No3 = 0;
-                    result = (char *)event;
-                }
-            } else {
-                Forbid_Break = 1;
+            G_No1 = 5;
+            G_No2 = 0;
+            G_No3 = 0;
+            E_No0 = 9;
+            E_No1 = 0;
+            E_No2 = 0;
+            E_No3 = 0;
+            if (Battle_Q[WINNER]) {
+                G_No1 = 11;
+                G_No2 = 3;
+                G_No3 = 0;
+            }
+            Cover_Timer = 24;
+            if (Continue_Flag != 0 && Round_Operator[LOSER]) {
+                E_Number[LOSER][0] = 1;
+                E_Number[LOSER][1] = 0;
+                E_Number[LOSER][2] = 0;
+                E_Number[LOSER][3] = 0;
             }
         }
+        break;
     }
-    return result;
 }
 
 
@@ -1136,10 +1131,10 @@ s32 Ck_Coin(void) {
         Operator_Status[pl ^ 1] = 0;
         return 1;
     }
-    if (coin_chute1_w[6] | coin_chute2_w[6]) {
+    if (coin_chute1_w.dropped | coin_chute2_w.dropped) {
         return 1;
     }
-    return coin_chute1_w[1] | coin_chute2_w[1] | credit_1p | credit_2p;
+    return coin_chute1_w.count | coin_chute2_w.count | credit_1p | credit_2p;
 }
 
 
@@ -1148,17 +1143,19 @@ s32 Ck_Coin(void) {
 void draw_operator_info(s32 y) {
     s16 y1;
     s16 y2;
+    s32 bottom;
     if (Country == 6 || Country == 5) {
+        bottom = y + 23;
         if (p1sw_0 & 0x10) {
             tilemap_print_string_attr(DE_X[18] + 36, y + 20, 18, Game_Data_msg);
             tilemap_print_string_attr(DE_X[18] + 31, y1 = y + 21, 18, Income_msg);
             tilemap_print_string_attr(DE_X[18] + 31, y2 = y + 22, 18, Service_msg);
-            tilemap_print_string_attr(DE_X[18] + 31, y + 23, 18, Card_msg);
+            tilemap_print_string_attr(DE_X[18] + 31, bottom, 18, Card_msg);
             tilemap_print_hex_block(DE_X[18] + 41, y1, 18, hex_to_bcd(book_coin_count), 6, 0);
             tilemap_print_hex_block(DE_X[18] + 41, y2, 18, hex_to_bcd(book_service_count), 6, 0);
-            tilemap_print_hex_block(DE_X[18] + 41, y + 23, 18, hex_to_bcd(book_card_count), 6, 0);
+            tilemap_print_hex_block(DE_X[18] + 41, bottom, 18, hex_to_bcd(book_card_count), 6, 0);
         } else {
-            tilemap_clear_rect(DE_X[18] + 31, y + 20, DE_X[18] + 49, y + 23);
+            tilemap_clear_rect(DE_X[18] + 31, y + 20, DE_X[18] + 49, bottom);
         }
     }
 }

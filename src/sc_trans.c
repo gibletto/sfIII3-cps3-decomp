@@ -96,11 +96,9 @@ void sc_chr_block_trans(u16 chr, u16 pos, u16 w, u16 h) {
                 sc_trans_dst++;
                 sc_trans_src++;
             } while ((u16)k < 32);
-            continue;
         }
         dst += 0x200;
         sc_trans_dst = dst;
-        continue;
     }
 }
 
@@ -134,12 +132,10 @@ void sc_chr_sheet_trans(u16 chr, u16 pos, u16 w, u16 h) {
                 sc_trans_dst++;
                 sc_trans_src++;
             } while ((u16)k < 32);
-            continue;
         }
         src += 0x200;
         sc_trans_src = src;
         dst = sc_trans_dst = dst + 0x200;
-        continue;
     }
 }
 
@@ -242,7 +238,7 @@ u16 n;
 {
     u16 i;
     u16 k;
-    sc_trans_src = sc_blank_chr;
+    sc_trans_src = (u8*)&sc_blank_chr;
     sc_trans_dst = (u16*)((SS_RAM + 0x8000) + pos * 64);
     for (i = 0; i < n; i++) {
         for (k = 0; k < 16; k++) {
@@ -253,7 +249,7 @@ u16 n;
             sc_trans_dst++;
             sc_trans_src++;
         }
-        sc_trans_src = sc_blank_chr;
+        sc_trans_src = (u8*)&sc_blank_chr;
     }
 }
 
@@ -297,12 +293,10 @@ void sc_chr_sheet_to_ram(u16 chr, u16 pos, u16 w, u16 h) {
                 sc_bak_ptr++;
                 sc_trans_src++;
             } while ((u16)k < 32);
-            continue;
         }
         sc_trans_src = src + 0x200;
         src = sc_trans_src;
         sc_bak_ptr += 0x200;
-        continue;
     }
 }
 
@@ -618,7 +612,6 @@ s8 pl;
     s16 code = smark_kind_tbl[My_char[pl]] * 4;
     for (i = 0; i < smark_kind_tbl[My_char[pl]] + 4; i++) {
         tilemap_put_cell(*pos + i, 3, 20, code + i + 33);
-        continue;
     }
 }
 
@@ -657,7 +650,6 @@ void tilemap_clear_rect(x0, y0, x1, y1)
             line[col * 2 + 1] = 0;
         }
         line += 0x80;
-        continue;
     }
 }
 

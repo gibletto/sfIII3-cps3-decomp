@@ -63,9 +63,8 @@ void Att_PL14_AT1(PLW* wk) {
         case 21:
             reset_mvxy_data(&wk->wu);
             wk->wu.cg_type = 0;
-            break;
         }
-        break;
+        return;
     default:
         char_move(&wk->wu);
         cal_mvxy_speed(&wk->wu);
@@ -93,7 +92,6 @@ void Att_PL14_AT1(PLW* wk) {
             char_move_z(&wk->wu);
             break;
         }
-        break;
     }
 }
 

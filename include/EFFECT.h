@@ -26,7 +26,7 @@ s32 erase_my_shell_ix(WORK* wk, s16 ix);
 s32 get_my_shell_ix();
 void write_my_shell_ix(WORK* wk, s16 ix);
 s32 shell_live_check();
-s32 get_vs_shell_adrs(WORK* wk, s16 id, s16 ix, WORK_Other** tmw);
+s32 get_vs_shell_adrs();
 void effect_work_list_init();
 void effect_work_list_release();
 

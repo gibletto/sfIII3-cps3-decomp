@@ -148,7 +148,10 @@ void reset_round_and_screen(void) {
     scfont_page0_fill(0, 32);
     load_any_color(2);
     count_cont_reset();
-    Round_num = G_No2 = appear_type = pcon_rno[0] = pcon_rno[1] = pcon_rno[2] = pcon_rno[3] = 0;
+    pcon_rno[0] = pcon_rno[1] = pcon_rno[2] = pcon_rno[3] = 0;
+    appear_type = 0;
+    G_No2 = 0;
+    Round_num = 0;
 }
 
 

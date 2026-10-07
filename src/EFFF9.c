@@ -101,7 +101,6 @@ void effect_F9_move(WORK_Other* owk) {
         }
         for (i = 0; i < chr_data[0]; i++) {
             load_char_gfx(chr_data[i + 1], 1);
-            continue;
         }
         ewk->num_of_conn = chr_data[i + 1];
         ewk->wu.old_rno[4] = chr_data[i + 1];
@@ -118,7 +117,6 @@ void effect_F9_move(WORK_Other* owk) {
             ewk->conn[i].ny = conn_data[i].ny;
             ewk->conn[i].col = conn_data[i].col;
             ewk->conn[i].chr = conn_data[i].chr;
-            continue;
         }
         efff9_suicide = 0;
         ewk->wu.vitality = 240;
@@ -284,7 +282,7 @@ s32 Rewrite_End_Message(u16 mes_no) {
     efff9_txt_no_adrs = txt_no_tbl[efff9_PL_NO];
     efff9_txt_scene_adrs = (u16*)efff9_txt_no_adrs[mes_no];
     efff9_message = efff9_txt_scene_adrs[0];
-    ewk->wu.old_rno[3] = *(s16*)((u8*)efff9_txt_scene_adrs + 2);
+    ewk->wu.old_rno[3] = *(s16*)(efff9_txt_scene_adrs + 1);
     mes_already = efff9_message;
     return 0;
 }
@@ -308,7 +306,7 @@ s32 Rewrite_Talk_Message(u16 mes_no) {
     efff9_txt_no_adrs = txt_no_tbl[efff9_PL_NO];
     efff9_txt_scene_adrs = (u16*)efff9_txt_no_adrs[mes_no];
     efff9_message = efff9_txt_scene_adrs[0];
-    ewk->wu.old_rno[3] = efff9_txt_scene_adrs[1];
+    ewk->wu.old_rno[3] = *(s16*)(efff9_txt_scene_adrs + 1);
     mes_already = efff9_message;
     return 0;
 }

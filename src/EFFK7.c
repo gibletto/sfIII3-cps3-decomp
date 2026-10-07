@@ -91,17 +91,16 @@ void effect_K7_move(WORK_Other* ewk) {
 void K7_move_type_1(WORK_Other* ewk, PLW* mwk) {
     const s16(*blink)[4];
     const s16(*last)[4];
-    SA_WORK* sa;
-    if (mwk->sa->ok != -1 || mwk->dead_flag) {
+    if (mwk->sa->ok != -1 || mwk->dead_flag != 0) {
         ewk->wu.routine_no[0] = 2;
         return;
     }
-    blink = K7_blink_tbl;
     last = K7_last_tbl;
+    blink = K7_blink_tbl;
     switch (ewk->wu.routine_no[1]) {
     case 0:
         if (mwk->wu.cg_type != 20) {
-            return;
+            break;
         }
         ewk->wu.routine_no[1] = 1;
         ewk->wu.dir_step = 0;
@@ -111,8 +110,7 @@ void K7_move_type_1(WORK_Other* ewk, PLW* mwk) {
         mwk->wu.my_col_mode = blink[ewk->wu.dir_step][2];
     case 1:
         if (ewk->wu.dir_step > 2) {
-            sa = mwk->sa;
-            if ((sa->gauge.i - 0x10000) / (sa->dtm * sa->dtm_mul) <= 45) {
+            if ((mwk->sa->gauge.i - 0x10000) / (mwk->sa->dtm * mwk->sa->dtm_mul) <= 45) {
                 ewk->wu.routine_no[1] = 2;
                 ewk->wu.dir_step = 0;
                 ewk->wu.dir_old = last[ewk->wu.dir_step][3];

@@ -1,7 +1,7 @@
 /*
  * DEMO02_CODE.C  Attract mode: demonstration play
  *
- * Play_Demo runs the current demo step from Demo_Jmp_Data; Setup_Demo_PL, Setup_Demo_Arts
+ * Play_Demo runs the current demo step from Demo_Jmp_Tbl; Setup_Demo_PL, Setup_Demo_Arts
  * and Setup_Demo_Stage pick the characters, super arts and stage for demonstration fights.
  */
 
@@ -59,10 +59,9 @@
 
 
 s32 Play_Demo(void) {
-    DEMO_JMP2 jmp_tbl;
-    jmp_tbl = Demo_Jmp_Data;
+    void (*Demo_Jmp_Tbl[2])() = { Demo00, Demo01 };
     Next_Demo = 0;
-    jmp_tbl.f[D_No0]();
+    Demo_Jmp_Tbl[D_No0]();
     return Next_Demo;
 }
 

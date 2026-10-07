@@ -136,7 +136,7 @@ s32 effect_10_init(WORK* wk, u8 type) {
     s16 i;
     const s16* data;
     if (!scr_obj_num10[type]) {
-        return 0;
+        return;
     }
     data = scr_obj_data10[type];
     for (i = 0; i < scr_obj_num10[type]; i++) {
@@ -166,7 +166,6 @@ s32 effect_10_init(WORK* wk, u8 type) {
         ewk->wu.char_index = *data++;
         ewk->wu.sync_suzi = 0;
         suzi_offset_set(ewk);
-        continue;
     }
     return 0;
 }

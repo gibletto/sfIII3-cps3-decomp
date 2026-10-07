@@ -216,11 +216,9 @@ void effect_H6_move(WORK_Other* ewk) {
         case 7:
             ewk->wu.xyz[1].disp.pos = ewk->wu.xyz[1].disp.pos - roll_rate;
             ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-            if (0 < ewk->wu.xyz[1].disp.pos) {
-                break;
+            if (ewk->wu.xyz[1].disp.pos <= 0) {
+                ewk->wu.routine_no[0]++;
             }
-            ewk->wu.routine_no[0]++;
-            break;
         }
         if (Suicide[4]) {
             ewk->wu.routine_no[0] = 2;
@@ -300,143 +298,143 @@ s32 unused;
             ewk->wu.cg_number = 0x9E63;
             break;
         }
-        return 0;
-    }
-    ewk->wu.dir_step = 0;
-    switch (Original_Color) {
-    case 0:
-        ewk->wu.routine_no[1] = 0;
-        ewk->wu.routine_no[5] = X;
-        ewk->wu.xyz[0].disp.pos = 384;
-        ewk->wu.xyz[1].disp.pos = Y;
-        break;
-    case 1:
-        ewk->wu.routine_no[1] = 1;
-        ewk->wu.routine_no[6] = Y;
-        ewk->wu.xyz[0].disp.pos = X;
-        ewk->wu.xyz[1].disp.pos = 0;
-        break;
-    case 2:
-        Original_Color = 0;
-        ewk->wu.routine_no[1] = 2;
-        ewk->wu.routine_no[5] = X;
-        ewk->wu.xyz[0].disp.pos = -64;
-        ewk->wu.xyz[1].disp.pos = Y;
-        break;
-    case 3:
-        ewk->wu.routine_no[1] = 3;
-        ewk->wu.xyz[0].disp.pos = X;
-        ewk->wu.xyz[1].disp.pos = Y;
-        break;
-    case 4:
-        Original_Color = 1;
-        ewk->wu.routine_no[1] = 4;
-        ewk->wu.routine_no[6] = Y;
-        ewk->wu.xyz[0].disp.pos = X;
-        ewk->wu.xyz[1].disp.pos = 0;
-        break;
-    case 5:
-        Original_Color = 1;
-        ewk->wu.routine_no[1] = 5;
-        ewk->wu.xyz[0].disp.pos = X;
-        ewk->wu.xyz[1].disp.pos = Y;
-        break;
-    case 6:
-        ewk->wu.routine_no[1] = 6;
-        ewk->wu.routine_no[6] = Y;
-        ewk->wu.xyz[0].disp.pos = X;
-        ewk->wu.xyz[1].disp.pos = -32;
-        break;
-    case 7:
-        ewk->wu.routine_no[1] = 7;
-        ewk->wu.routine_no[6] = Y;
-        ewk->wu.xyz[0].disp.pos = X;
-        ewk->wu.xyz[1].disp.pos = 256;
-        break;
-    case 8:
-        ewk->wu.routine_no[1] = 6;
-        ewk->wu.routine_no[6] = Y;
-        ewk->wu.xyz[0].disp.pos = X;
-        ewk->wu.xyz[1].disp.pos = -32;
-        break;
-    case 9:
-        ewk->wu.dir_step = 2;
-        ewk->wu.routine_no[1] = 0;
-        ewk->wu.routine_no[6] = Y;
-        ewk->wu.xyz[0].disp.pos = X;
-        ewk->wu.xyz[1].disp.pos = 0;
-        ewk->wu.my_col_code = 0x20A0;
-        break;
-    }
-    ewk->wu.my_col_code = 0;
-    for (x = 0, i = 0; *su != '\0'; i += 9, su++) {
-        if ((c = code_tab[*su]) == -1) {
-            continue;
-        }
-        ewk->conn[x].nx = i;
-        ewk->conn[x].ny = 0;
+    } else {
+        ewk->wu.dir_step = 0;
         switch (Original_Color) {
-        case 8:
-            ewk->conn[x].chr = c + 0x9E08;
-            if (*su == '(') {
-                ewk->conn[x].chr = 0x9E66;
-            }
-            if (*su == ')') {
-                ewk->conn[x].chr = 0x9E67;
-            }
+        case 0:
+            ewk->wu.routine_no[1] = 0;
+            ewk->wu.routine_no[5] = X;
+            ewk->wu.xyz[0].disp.pos = 384;
+            ewk->wu.xyz[1].disp.pos = Y;
             break;
-        default:
-            ewk->conn[x].chr = c + 0x9DC8;
-            if (*su == '{') {
-                ewk->conn[x].chr = 0x9E5B;
-            }
-            if (*su == '[') {
-                ewk->conn[x].chr = 0x9E59;
-            }
-            if (*su == ']') {
-                ewk->conn[x].chr = 0x9E56;
-            }
-            if (*su == '^') {
-                ewk->conn[x].chr = 0x9E5D;
-            }
-            if (*su == '|') {
-                ewk->conn[x].chr = 0x9E5E;
-            }
-            if (*su == '=') {
-                ewk->conn[x].chr = 0x9E4A;
-            }
-            if (*su == '&') {
-                ewk->conn[x].chr = 0x9E50;
-            }
-            if (*su == '-') {
-                ewk->conn[x].chr = 0x9E49;
-            }
-            if (*su == '\"') {
-                ewk->conn[x].chr = 0x9E43;
-            }
-            if (*su == '%') {
-                ewk->conn[x].chr = 0x9E52;
-            }
-            if (*su == '|') {
-                ewk->conn[x].chr = 0x9E5F;
-            }
-            if (*su == '(') {
-                ewk->conn[x].chr = 0x9E4C;
-            }
-            if (*su == ')') {
-                ewk->conn[x].chr = 0x9E4D;
-            }
-            if (*su == '*') {
-                ewk->conn[x].chr = 0x9E58;
-            }
-            if (*su == '/') {
-                ewk->conn[x].chr = 0x9E4B;
-            }
+        case 1:
+            ewk->wu.routine_no[1] = 1;
+            ewk->wu.routine_no[6] = Y;
+            ewk->wu.xyz[0].disp.pos = X;
+            ewk->wu.xyz[1].disp.pos = 0;
+            break;
+        case 2:
+            Original_Color = 0;
+            ewk->wu.routine_no[1] = 2;
+            ewk->wu.routine_no[5] = X;
+            ewk->wu.xyz[0].disp.pos = -64;
+            ewk->wu.xyz[1].disp.pos = Y;
+            break;
+        case 3:
+            ewk->wu.routine_no[1] = 3;
+            ewk->wu.xyz[0].disp.pos = X;
+            ewk->wu.xyz[1].disp.pos = Y;
+            break;
+        case 4:
+            Original_Color = 1;
+            ewk->wu.routine_no[1] = 4;
+            ewk->wu.routine_no[6] = Y;
+            ewk->wu.xyz[0].disp.pos = X;
+            ewk->wu.xyz[1].disp.pos = 0;
+            break;
+        case 5:
+            Original_Color = 1;
+            ewk->wu.routine_no[1] = 5;
+            ewk->wu.xyz[0].disp.pos = X;
+            ewk->wu.xyz[1].disp.pos = Y;
+            break;
+        case 6:
+            ewk->wu.routine_no[1] = 6;
+            ewk->wu.routine_no[6] = Y;
+            ewk->wu.xyz[0].disp.pos = X;
+            ewk->wu.xyz[1].disp.pos = -32;
+            break;
+        case 7:
+            ewk->wu.routine_no[1] = 7;
+            ewk->wu.routine_no[6] = Y;
+            ewk->wu.xyz[0].disp.pos = X;
+            ewk->wu.xyz[1].disp.pos = 256;
+            break;
+        case 8:
+            ewk->wu.routine_no[1] = 6;
+            ewk->wu.routine_no[6] = Y;
+            ewk->wu.xyz[0].disp.pos = X;
+            ewk->wu.xyz[1].disp.pos = -32;
+            break;
+        case 9:
+            ewk->wu.dir_step = 2;
+            ewk->wu.routine_no[1] = 0;
+            ewk->wu.routine_no[6] = Y;
+            ewk->wu.xyz[0].disp.pos = X;
+            ewk->wu.xyz[1].disp.pos = 0;
+            ewk->wu.my_col_code = 0x20A0;
             break;
         }
-        ewk->conn[x].col = 0x20A0;
-        x++;
+        ewk->wu.my_col_code = 0;
+        for (x = 0, i = 0; *su != '\0'; i += 9, su++) {
+            if ((c = code_tab[*su]) == -1) {
+                continue;
+            }
+            ewk->conn[x].nx = i;
+            ewk->conn[x].ny = 0;
+            switch (Original_Color) {
+            case 8:
+                ewk->conn[x].chr = c + 0x9E08;
+                if (*su == '(') {
+                    ewk->conn[x].chr = 0x9E66;
+                }
+                if (*su == ')') {
+                    ewk->conn[x].chr = 0x9E67;
+                }
+                break;
+            default:
+                ewk->conn[x].chr = c + 0x9DC8;
+                if (*su == '{') {
+                    ewk->conn[x].chr = 0x9E5B;
+                }
+                if (*su == '[') {
+                    ewk->conn[x].chr = 0x9E59;
+                }
+                if (*su == ']') {
+                    ewk->conn[x].chr = 0x9E56;
+                }
+                if (*su == '^') {
+                    ewk->conn[x].chr = 0x9E5D;
+                }
+                if (*su == '|') {
+                    ewk->conn[x].chr = 0x9E5E;
+                }
+                if (*su == '=') {
+                    ewk->conn[x].chr = 0x9E4A;
+                }
+                if (*su == '&') {
+                    ewk->conn[x].chr = 0x9E50;
+                }
+                if (*su == '-') {
+                    ewk->conn[x].chr = 0x9E49;
+                }
+                if (*su == '\"') {
+                    ewk->conn[x].chr = 0x9E43;
+                }
+                if (*su == '%') {
+                    ewk->conn[x].chr = 0x9E52;
+                }
+                if (*su == '|') {
+                    ewk->conn[x].chr = 0x9E5F;
+                }
+                if (*su == '(') {
+                    ewk->conn[x].chr = 0x9E4C;
+                }
+                if (*su == ')') {
+                    ewk->conn[x].chr = 0x9E4D;
+                }
+                if (*su == '*') {
+                    ewk->conn[x].chr = 0x9E58;
+                }
+                if (*su == '/') {
+                    ewk->conn[x].chr = 0x9E4B;
+                }
+                break;
+            }
+            ewk->conn[x].col = 0x20A0;
+            x++;
+        }
+        ewk->num_of_conn = x;
     }
-    ewk->num_of_conn = x;
     return 0;
 }

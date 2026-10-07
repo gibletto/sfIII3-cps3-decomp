@@ -258,7 +258,6 @@ void disasm_sh_opcode(u16 code, char* str) {
             if (code == p->code) {
                 goto found;
             }
-            continue;
         }
     }
     kind = code & 0xF000;
@@ -274,7 +273,6 @@ void disasm_sh_opcode(u16 code, char* str) {
                 strcat(str, mark + 2);
                 return;
             }
-            continue;
         }
     }
     if (kind == 0 || kind == 0x4000) {
@@ -289,7 +287,6 @@ void disasm_sh_opcode(u16 code, char* str) {
                 strcat(str, mark + 2);
                 return;
             }
-            continue;
         }
     }
     if (kind == 0 || kind == 0x2000 || kind == 0x3000 || kind == 0x4000 || kind == 0x6000) {
@@ -307,7 +304,6 @@ void disasm_sh_opcode(u16 code, char* str) {
                 strcat(str, mark2 + 2);
                 return;
             }
-            continue;
         }
     }
     if (kind == 0x8000) {
@@ -315,7 +311,6 @@ void disasm_sh_opcode(u16 code, char* str) {
             if (hi == p->code) {
                 goto found;
             }
-            continue;
         }
     }
     if (kind == 0x8000) {
@@ -323,7 +318,6 @@ void disasm_sh_opcode(u16 code, char* str) {
             if (hi == p->code) {
                 goto found;
             }
-            continue;
         }
     }
     if (kind == 0x8000 || kind == 0xC000) {
@@ -331,7 +325,6 @@ void disasm_sh_opcode(u16 code, char* str) {
             if (hi == p->code) {
                 goto found;
             }
-            continue;
         }
     }
     if (kind == 0x8000 || kind == 0xC000) {
@@ -339,32 +332,27 @@ void disasm_sh_opcode(u16 code, char* str) {
             if (hi == p->code) {
                 goto found;
             }
-            continue;
         }
     }
     for (p = sh_op_disp4_tbl; p->name != 0; p++) {
         if (kind == p->code) {
             goto found;
         }
-        continue;
     }
     for (p = sh_op_d12_tbl; p->name != 0; p++) {
         if (kind == p->code) {
             goto found;
         }
-        continue;
     }
     for (p = sh_op_pcrel_tbl; p->name != 0; p++) {
         if (kind == p->code) {
             goto found;
         }
-        continue;
     }
     for (p = sh_op_imm_n_tbl; p->name != 0; p++) {
         if (kind == p->code) {
             goto found;
         }
-        continue;
     }
     if (*str == 0) {
         strcpy(str, sh_str_undef);

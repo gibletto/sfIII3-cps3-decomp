@@ -489,7 +489,6 @@ void tilemap_print_script_seq(u16 x, u16 y, u16 pal, const TMSCRIPT* scr) {
                 if (dst > ((u16*)(SS_RAM + 0x3FFF))) {
                     dst = ((u16*)SS_RAM);
                 }
-                continue;
             }
         }
     }

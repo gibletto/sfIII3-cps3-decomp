@@ -159,7 +159,6 @@ void end_e00_0000(void) {
             end_w.timer = 20;
         }
         bgw_ptr->abs_y = bgw_ptr->xy[1].disp.pos;
-        break;
     case 7:
         break;
     }
@@ -174,9 +173,10 @@ s16 end_e00_0000_col_sub(void) {
         bgw_ptr->l_limit++;
         if (bgw_ptr->l_limit >= 12) {
             return 1;
+        } else {
+            bgw_ptr->r_limit = end_e00_0000_col_tbl[bgw_ptr->l_limit];
+            end_bg_block_attr_set(0, 0, 32, 0, 32);
         }
-        bgw_ptr->r_limit = end_e00_0000_col_tbl[bgw_ptr->l_limit];
-        end_bg_block_attr_set(0, 0, 32, 0, 32);
     }
     return 0;
 }
@@ -257,11 +257,11 @@ void end_e00_2000(void) {
             if (bgw_ptr->l_limit >= 8) {
                 bgw_ptr->r_no_1++;
                 end_w.timer = 120;
-                break;
+            } else {
+                bgw_ptr->free = 8;
+                bgw_ptr->r_limit = end_e00_2000_col_tbl[bgw_ptr->l_limit];
+                end_bg_block_attr_set(0, 64, 32, 0x1800, 32);
             }
-            bgw_ptr->free = 8;
-            bgw_ptr->r_limit = end_e00_2000_col_tbl[bgw_ptr->l_limit];
-            end_bg_block_attr_set(0, 64, 32, 0x1800, 32);
         }
         break;
     case 4:
@@ -328,10 +328,11 @@ void end_e00_4000(void) {
         effect_E6_init(0x1E);
         break;
     case 1:
-        if (Request_Fade(49, 0)) {
-            bgw_ptr->r_no_1++;
-            end_no_cut = 1;
+        if (Request_Fade(49, 0) == 0) {
+            break;
         }
+        bgw_ptr->r_no_1++;
+        end_no_cut = 1;
         break;
     case 2:
         if (end_fade_complete()) {
@@ -688,7 +689,7 @@ void end_e02_7000(void) {
 
 /* provisional name */
 void end_e00_cell_set(void) {
-    s32 i;
+    s16 i;
     for (i = 0; i < 16; i++) {
         bg_cell_write(0, end_e00_bg0_cell_tbl[i].ofs, end_e00_bg0_cell_tbl[i].cell, (u32)end_e00_scrn_data, 0, 0x220);
     }

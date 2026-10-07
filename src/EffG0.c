@@ -102,14 +102,12 @@ void Flash_G0(WORK_Other_CONN* ewk) {
         ewk->wu.vital_new = 4;
         ewk->wu.dir_timer = 1;
     case 1:
-        if (--ewk->wu.dir_timer != 0) {
-            break;
-        }
-        ewk->wu.routine_no[2] = 2;
-        ewk->wu.dir_timer = 3;
-        for (ix = 0; ix < ewk->num_of_conn; ix++) {
-            ewk->conn[ix].chr += 10;
-            continue;
+        if (--ewk->wu.dir_timer == 0) {
+            ewk->wu.routine_no[2] = 2;
+            ewk->wu.dir_timer = 3;
+            for (ix = 0; ix < ewk->num_of_conn; ix++) {
+                ewk->conn[ix].chr += 10;
+            }
         }
         break;
     case 2:
@@ -118,7 +116,6 @@ void Flash_G0(WORK_Other_CONN* ewk) {
         }
         for (ix = 0; ix < ewk->num_of_conn; ix++) {
             ewk->conn[ix].chr -= 10;
-            continue;
         }
         if (--ewk->wu.vital_new == 0) {
             Order[ewk->wu.dir_old] = 0;

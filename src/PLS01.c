@@ -243,12 +243,14 @@ void check_extra_jump_timer(PLW* wk) {
     if (wk->air_jump_ok_time) {
         wk->air_jump_ok_time--;
     }
-    if (wk->wu.xyz[1].disp.pos > 48 && wk->micchaku_flag) {
-        wk->micchaku_wall_time = wk->micchaku_wall_time + 1;
-        if (wk->micchaku_wall_time > 8) {
-            wk->micchaku_wall_time = 8;
+    if (wk->wu.xyz[1].disp.pos > 48) {
+        if (wk->micchaku_flag) {
+            wk->micchaku_wall_time++;
+            if (wk->micchaku_wall_time > 8) {
+                wk->micchaku_wall_time = 8;
+            }
+            return;
         }
-        return;
     }
     wk->micchaku_wall_time = 0;
 }

@@ -76,7 +76,7 @@ void crow_fuss_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
     case 0:
         ewk->wu.routine_no[1]++;
-        ewk->wu.old_rno[0] = ((const s16*)((const u8*)crow_char_tbl + (s8)((ewk)->wu.direction * sizeof(crow_char_tbl[0]))))[0];
+        ewk->wu.old_rno[0] = crow_char_tbl[ewk->wu.direction][0];
         set_char_move_init(&ewk->wu, 0, ewk->wu.old_rno[0]);
         break;
     case 1:
@@ -85,8 +85,8 @@ void crow_fuss_move(WORK_Other* ewk) {
             ewk->wu.routine_no[1]++;
             set_char_move_init(&ewk->wu, 0, ewk->wu.old_rno[0] + 1);
             ewk->wu.dir_timer = 28;
-            ewk->wu.old_rno[1] = ewk->wu.xyz[0].disp.pos + ((const s16*)((const u8*)crow_char_tbl + (s8)((ewk)->wu.direction * sizeof(crow_char_tbl[0]))))[1];
-            ewk->wu.old_rno[2] = ewk->wu.xyz[1].disp.pos + ((const s16*)((const u8*)crow_char_tbl + (s8)((ewk)->wu.direction * sizeof(crow_char_tbl[0]))))[2];
+            ewk->wu.old_rno[1] = ewk->wu.xyz[0].disp.pos + crow_char_tbl[ewk->wu.direction][1];
+            ewk->wu.old_rno[2] = ewk->wu.xyz[1].disp.pos + crow_char_tbl[ewk->wu.direction][2];
             cal_all_speed_data(&ewk->wu, ewk->wu.dir_timer, ewk->wu.old_rno[1], ewk->wu.old_rno[2], 2, 2);
         }
         break;

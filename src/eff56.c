@@ -50,6 +50,8 @@
 #include "eff56.h"
 #include "sc_logo.h"
 
+void load_any_color(u8 col_no);
+
 
 
 s32 effect_56_init(s8 side)

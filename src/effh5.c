@@ -172,9 +172,12 @@ void effH5_0004(WORK_Other* ewk) {
             ewk->wu.my_priority = ewk->wu.position_z = 85;
             ewk->wu.old_rno[5] = 20;
             cal_all_speed_data(&ewk->wu, ewk->wu.old_rno[5], 474, 131, 1, 1);
+            disp_pos_trans_entry(ewk);
+            return;
+        } else {
+            disp_pos_trans_entry(ewk);
+            return;
         }
-        disp_pos_trans_entry(ewk);
-        break;
     case 2:
         ewk->wu.old_rno[5]--;
         if (ewk->wu.old_rno[5] <= 0) {
@@ -196,8 +199,6 @@ void effH5_0004(WORK_Other* ewk) {
             add_x_sub(ewk);
             add_y_sub(ewk);
         }
-        disp_pos_trans_entry(ewk);
-        break;
     case 4:
         disp_pos_trans_entry(ewk);
         break;

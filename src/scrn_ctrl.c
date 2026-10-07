@@ -280,24 +280,20 @@ void Zoomf_Init_Y(void) {
 
 /* Zooms the frame in; returns the vertical offset computed by Frame_Adgjust. */
 s32 Frame_Up(u16 x, u16 y, s16 add_x, s16 add_y) {
-    s32 adj;
     zoom_frame[0].zoom -= add_x;
     zoom_frame[1].zoom -= add_y;
-    adj = Frame_Adgjust(x, y);
+    Frame_Adgjust(x, y);
     zoom_req_flag = 1;
-    return adj;
 }
 
 
 
 /* Zooms the frame out; returns the vertical offset computed by Frame_Adgjust. */
 s32 Frame_Down(u16 x, u16 y, s16 add_x, s16 add_y) {
-    s32 adj;
     zoom_frame[0].zoom += add_x;
     zoom_frame[1].zoom += add_y;
-    adj = Frame_Adgjust(x, y);
+    Frame_Adgjust(x, y);
     zoom_req_flag = 1;
-    return adj;
 }
 
 

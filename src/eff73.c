@@ -136,6 +136,6 @@ s32 effect_73_init(WORK_Other* oya) {
             ewk->wu.old_rno[0] = eff73_vanish_tbl[work2];
             suzi_offset_set(ewk);
         }
+        return 0;
     }
-    return 0;
 }

@@ -72,7 +72,6 @@ void effect_L1_move(WORK_Other_CONN* ewk) {
                 ewk->wu.direction = (ewk->wu.direction + 1) & ewk->wu.dir_old;
                 for (i = 0; i < ewk->num_of_conn; i++) {
                     ewk->conn[i].chr = ewk->conn[ewk->num_of_conn + ewk->wu.direction].chr;
-                    continue;
                 }
             }
             break;
@@ -122,7 +121,6 @@ void effL1_w_grade_init(WORK_Other_CONN* ewk) {
             break;
         }
         effect_M3_init(ewk, i);
-        continue;
     }
     ewk->num_of_conn = ewk->conn[i].chr;
     ewk->wu.position_x -= 384;

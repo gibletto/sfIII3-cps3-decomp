@@ -4,7 +4,7 @@
  * The double-buffered sprite entry pools: sprite_entry_alloc takes an entry of a layer from the pool being
  * filled, sprite_entry_push_prio links it into that pool's priority list, sprite_display_list_build turns the
  * other pool's lists into the sprite display list, and sprite_bank_flip swaps the pools each frame, carrying
- * over the entries of the fixed layers. Also the SIMM RAM slot address helpers.
+ * over the entries of the fixed layers.
  */
 
 #include "structs.h"
@@ -253,7 +253,7 @@ void sprite_display_list_build(void) {
             for (i = 127; i >= 0; i--) {
                 rec = spr_prio_a[i];
                 if (rec) {
-                    while (rec->flag) {
+                    while (rec->flag != 0) {
                         total += (s16)rec->w0 & 0x1FF;
                         *dst = rec->w0;
                         dst++;
@@ -279,7 +279,7 @@ void sprite_display_list_build(void) {
             for (i = 127; i >= 0; i--) {
                 rec = spr_prio_b[i];
                 if (rec) {
-                    while (rec->flag) {
+                    while (rec->flag != 0) {
                         total += (s16)rec->w0 & 0x1FF;
                         *dst = rec->w0;
                         dst++;
@@ -451,35 +451,4 @@ void sprite_bank_flip(void) {
         }
     }
     spr_list_ready = 1;
-}
-
-
-/* provisional name */
-u32 simmram_slot_to_page_offset(s16 slot) {
-    return (slot - 1) << 8;
-}
-
-
-/* provisional name */
-u32 simmram_slot_addr(s16 slot) {
-    return ((slot - 1) << 8) + (SPRITE_RAM + 0x2000);
-}
-
-
-
-/* provisional name */
-u32 simmram_slot_to_code(s16 n) {
-    return ((n + 0xFFFF) << 4) + 0x200;
-}
-
-
-
-/* provisional name */
-void sprite_list_shift_x(SPR16* dst, SPR16* src, s16 dx, s32 n) {
-    do {
-        *dst = *src;
-        dst->x += dx;
-        src++;
-        dst++;
-    } while (--n);
 }

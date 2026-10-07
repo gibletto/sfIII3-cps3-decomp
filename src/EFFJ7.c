@@ -28,16 +28,14 @@ void effect_J7_move(WORK_Other* ewk) {
     ewk->wu.rl_flag = mwk->wu.rl_flag;
     switch (ewk->wu.routine_no[0]) {
     case 0:
-        if (mwk->gill_ccch_go) {
-        } else {
-            if (mwk->wu.routine_no[1] == 0) {
-                if (mwk->wu.routine_no[2] == 1) {
-                    goto go;
-                }
+        if (mwk->gill_ccch_go == 0) {
+            if (mwk->wu.routine_no[1] != 0) {
+                return;
             }
-            break;
+            if (mwk->wu.routine_no[2] != 1) {
+                return;
+            }
         }
-    go:
         ewk->wu.routine_no[0]++;
         ewk->wu.hit_adrs = (u32*)pl00_cctbl[ewk->wu.type][0];
         ewk->wu.dmg_adrs = (u32*)pl00_cctbl[ewk->wu.type][1];
@@ -58,10 +56,7 @@ void effect_J7_move(WORK_Other* ewk) {
             ewk->wu.routine_no[1] = 0;
             break;
         }
-        if (EXE_flag != 0) {
-            break;
-        }
-        if (Game_pause != 0) {
+        if (EXE_flag != 0 || Game_pause != 0) {
             break;
         }
         J7_color_step(&ewk->wu);

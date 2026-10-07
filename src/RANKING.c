@@ -44,7 +44,6 @@
 #include "eff56.h"
 #include "eff57.h"
 #include "eff58.h"
-#include "eff64.h"
 #include "eff65.h"
 #include "eff66.h"
 #include "Eff76.h"
@@ -86,7 +85,8 @@ void Ranking_00_1st(void)
 
 
 void Ranking_00_2nd(void) {
-    u16 Char_Index;
+    s16 Char_Index;
+    RANK_DATA* rd;
     D_No1++;
     D_Timer = 1;
     Rank_X = 0;
@@ -102,19 +102,20 @@ void Ranking_00_2nd(void) {
         effect_67_init(24, bg_w.bgw[0].xy[0].disp.pos + 120, bg_w.bgw[0].xy[1].disp.pos + 40, 180, 13, 35, 5, 0);
         effect_67_init(24, bg_w.bgw[0].xy[0].disp.pos - 144, bg_w.bgw[0].xy[1].disp.pos + 68, 180, 7, 30, 5, 0);
         base_y_pos = 40;
+        rd = Ranking_Data;
         switch (Rank_Type) {
         case 10:
-            if (Ranking_Data[10].cpu_grade == 0xFF) {
+            if (rd[10].cpu_grade == 0xFF) {
                 Char_Index = 0;
             } else {
-                Char_Index = Ranking_Data[10].cpu_grade;
+                Char_Index = rd[10].cpu_grade;
             }
             break;
         case 15:
-            if (Ranking_Data[15].grade == 0xFF) {
+            if (rd[15].grade == 0xFF) {
                 Char_Index = 0;
             } else {
-                Char_Index = Ranking_Data[15].grade;
+                Char_Index = rd[15].grade;
             }
             break;
         }
@@ -176,16 +177,17 @@ void Ranking_00_2nd(void) {
     case 0:
         effect_67_init(24, bg_w.bgw[0].xy[0].disp.pos + 0, bg_w.bgw[0].xy[1].disp.pos + 200, 180, 0, 10, 5, 0);
         effect_67_init(24, bg_w.bgw[0].xy[0].disp.pos + 168, bg_w.bgw[0].xy[1].disp.pos + 32, 180, 5, 20, 5, 0);
-        return;
+        break;
     case 5:
         effect_67_init(24, bg_w.bgw[0].xy[0].disp.pos + 0, bg_w.bgw[0].xy[1].disp.pos + 200, 180, 2, 10, 5, 0);
         effect_67_init(24, bg_w.bgw[0].xy[0].disp.pos + 168, bg_w.bgw[0].xy[1].disp.pos + 32, 180, 5, 20, 5, 0);
-        return;
+        break;
     case 10:
         effect_67_init(24, bg_w.bgw[0].xy[0].disp.pos, bg_w.bgw[0].xy[1].disp.pos + 200, 180, 1, 10, 5, 0);
-        return;
+        break;
     case 15:
         effect_67_init(24, bg_w.bgw[0].xy[0].disp.pos, bg_w.bgw[0].xy[1].disp.pos + 200, 180, 3, 10, 5, 0);
+        break;
     }
 }
 
@@ -255,7 +257,8 @@ void Ranking_01_1st(void) {
 
 
 void Ranking_01_2nd(void) {
-    s32 Char_Index;
+    s16 Char_Index;
+    RANK_DATA* rd;
     D_No1++;
     D_Timer = 420;
     Rank_X = 0;
@@ -290,7 +293,6 @@ void Ranking_01_2nd(void) {
         Rank_Pos_Y -= 32;
         Rank_X = 0;
         Flash_Rank_Time = 0;
-        continue;
     }
     Order[85] = 1;
     Order_Timer[85] = 180;
@@ -300,19 +302,20 @@ void Ranking_01_2nd(void) {
     effect_67_init(24, bg_w.bgw[0].xy[0].disp.pos + 504, bg_w.bgw[0].xy[1].disp.pos + 40, 180, 13, 35, 0, 0);
     effect_67_init(24, bg_w.bgw[0].xy[0].disp.pos + 240, bg_w.bgw[0].xy[1].disp.pos + 68, 180, 7, 30, 0, 0);
     base_y_pos = 40;
+    rd = Ranking_Data;
     switch (Rank_Type) {
     case 0:
-        if (Ranking_Data[10].cpu_grade == 0xFF) {
+        if (rd[10].cpu_grade == 0xFF) {
             Char_Index = 0;
         } else {
-            Char_Index = Ranking_Data[10].cpu_grade;
+            Char_Index = rd[10].cpu_grade;
         }
         break;
     case 5:
-        if (Ranking_Data[15].grade == 0xFF) {
+        if (rd[15].grade == 0xFF) {
             Char_Index = 0;
         } else {
-            Char_Index = Ranking_Data[15].grade;
+            Char_Index = rd[15].grade;
         }
         break;
     }
@@ -362,21 +365,22 @@ void Ranking_01_4th(void) {
 void Ranking_01_5th(void) {
     switch (D_No2) {
     case 0:
-        if (--D_Timer == 0) {
-            D_No2++;
-            if ((Demo_Flag == 0) && (Rank_Demo_Loop == 0)) {
-                Text_Page_Y = 0;
-                Setup_Demo_PL();
-                Setup_Demo_Arts();
-                Setup_Demo_Stage();
-                Clear_Personal_Data(0);
-                Clear_Personal_Data(1);
-                Ranking_00_6th(0);
-                Game01_Sub();
-            }
-            sc_vram_to_ram();
-            Switch_Screen_Init(3, 3);
+        if (--D_Timer) {
+            break;
         }
+        D_No2++;
+        if ((Demo_Flag == 0) && (Rank_Demo_Loop == 0)) {
+            Text_Page_Y = 0;
+            Setup_Demo_PL();
+            Setup_Demo_Arts();
+            Setup_Demo_Stage();
+            Clear_Personal_Data(0);
+            Clear_Personal_Data(1);
+            Ranking_00_6th(0);
+            Game01_Sub();
+        }
+        sc_vram_to_ram();
+        Switch_Screen_Init(3, 3);
         break;
     case 1:
         if (Switch_Screen() != 0) {
@@ -495,7 +499,7 @@ void Setup_Score(s16 y) {
     s16 Digit[8];
     Score_Buff = Ranking_Data[Rank].score;
     First_Digit = -1;
-    for (i = 7, xx = 10000000; i > 0; i--, xx /= 10) {
+    for (i = 7, xx = 10000000; i > 0; i--, xx = xx / 10) {
         Digit[i] = Score_Buff / xx;
         Score_Buff -= Digit[i] * xx;
         if (First_Digit < 0) {
@@ -530,7 +534,7 @@ void Setup_Score_Small(s16 y) {
     s16 Digit[7];
     Score_Buff = Ranking_Data[Rank].score;
     First_Digit = -1;
-    for (i = 6, xx = 1000000; i > 0; i--, xx /= 10) {
+    for (i = 6, xx = 1000000; i > 0; i--, xx = xx / 10) {
         Digit[i] = Score_Buff / xx;
         Score_Buff -= Digit[i] * xx;
         if (First_Digit < 0) {
@@ -563,7 +567,8 @@ void Setup_Wins(s16 y) {
     Digit[2] = Score_Buff / 100;
     Score_Buff -= Digit[2] * 100;
     Digit[1] = Score_Buff / 10;
-    Digit[0] = (Score_Buff -= (Digit[1] * 10));
+    Score_Buff -= Digit[1] * 10;
+    Digit[0] = Score_Buff;
     if (Digit[2]) {
         effect_67_init(26, Rank_Pos_X, Rank_Pos_Y, 180, Digit[2] + 130, 10, y, 0);
         Rank_Pos_X += 16;
@@ -596,7 +601,8 @@ void Setup_Wins2(s16 y) {
     Digit[2] = Score_Buff / 100;
     Score_Buff -= Digit[2] * 100;
     Digit[1] = Score_Buff / 10;
-    Digit[0] = (Score_Buff -= (Digit[1] * 10));
+    Score_Buff -= Digit[1] * 10;
+    Digit[0] = Score_Buff;
     if (Digit[2]) {
         effect_67_init(26, Rank_Pos_X, Rank_Pos_Y, 180, Digit[2] + 75, 10, y, 0);
         Rank_Pos_X += 16;
@@ -630,10 +636,10 @@ void Setup_Score_Obj(void) {
     if (Rank_Type == 0) {
         effect_67_init(24, bg_w.bgw[0].xy[0].disp.pos - 0, bg_w.bgw[0].xy[1].disp.pos + 200, 180, 0, 10, 1, 0);
         effect_67_init(24, bg_w.bgw[0].xy[0].disp.pos - 384, bg_w.bgw[0].xy[1].disp.pos + 200, 180, 1, 10, 1, 0);
-        return;
+    } else {
+        effect_67_init(24, bg_w.bgw[0].xy[0].disp.pos - 0, bg_w.bgw[0].xy[1].disp.pos + 200, 180, 2, 10, 1, 0);
+        effect_67_init(24, bg_w.bgw[0].xy[0].disp.pos - 384, bg_w.bgw[0].xy[1].disp.pos + 200, 180, 3, 10, 1, 0);
     }
-    effect_67_init(24, bg_w.bgw[0].xy[0].disp.pos - 0, bg_w.bgw[0].xy[1].disp.pos + 200, 180, 2, 10, 1, 0);
-    effect_67_init(24, bg_w.bgw[0].xy[0].disp.pos - 384, bg_w.bgw[0].xy[1].disp.pos + 200, 180, 3, 10, 1, 0);
 }
 
 
@@ -645,7 +651,9 @@ void Ranking_Init(void) {
     const RANK_DATA* src = Rank_Default_Data;
     RANK_DATA* entry;
     for (ix = 0; ix < 20; ix++) {
-        *dst++ = *src++;
+        *dst = *src;
+        src++;
+        dst++;
     }
     if (exsw_3 & 0x80) {
         /* insert player 1's present score into the top six */

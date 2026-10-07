@@ -82,11 +82,15 @@ void Att_PL10_MACH_SLIDE(PLW* wk) {
         break;
     case 1:
         char_move(&wk->wu);
-        if (wk->wu.cg_type == 30) {
+        switch (wk->wu.cg_type) {
+        case 30:
             wk->wu.routine_no[3]++;
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
             wk->wu.cg_type = 0;
+            break;
+        default:
+            break;
         }
         break;
     default:
@@ -113,7 +117,7 @@ void Att_PL10_MACH_SLIDE(PLW* wk) {
         case 21:
             reset_mvxy_data(&wk->wu);
             wk->wu.cg_type = 0;
-            break;
+            return;
         }
         break;
     }

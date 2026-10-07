@@ -18,7 +18,6 @@
 #include "EFFF1.h"
 #include "CMD_MAIN.h"
 #include "cmd_main_2.h"
-#include "CHARMOVE.h"
 #include "charmove_2.h"
 #include "fighter.h"
 
@@ -503,14 +502,13 @@ s32 comm_rapk2(WORK* wk, CHAR_CMD* ctc) {
             return 0;
         }
         return 1;
-    } else {
-        if (wcp[((WORK_Other*)wk)->master_id & 1].waza_flag[10]) {
-            setup_comm_back(wk);
-            set_char_move_init2(wk, ctc->koc, ctc->ix, ctc->pat, 1);
-            return 0;
-        }
-        return 1;
     }
+    if (wcp[((WORK_Other*)wk)->master_id & 1].waza_flag[10]) {
+        setup_comm_back(wk);
+        set_char_move_init2(wk, ctc->koc, ctc->ix, ctc->pat, 1);
+        return 0;
+    }
+    return 1;
 }
 
 
@@ -1135,7 +1133,7 @@ s32 comm_abbak(WORK* wk, CHAR_CMD* _p1) {
 s32 comm_sse(WORK* wk, CHAR_CMD* ctc) {
     wk->cg_se = ctc->koc;
     if (wk->cg_se & 0x800) {
-        wk->cg_se = ((u16*)wk->se_random_table[wk->cg_se & 0x7FF])[random_16_com()];
+        wk->cg_se = (*(u16**)(wk->se_random_table + (wk->cg_se & 0x7FF)))[random_16_com()];
     }
     if (wk->cg_se) {
         sound_effect_request[wk->cg_se](wk, check_xcopy_filter_se_req(wk));
@@ -1389,16 +1387,14 @@ void setup_comm_abbak(WORK* wk) {
 
 
 
-s32 check_cgd_patdat(WORK* wk) {
+void check_cgd_patdat(WORK* wk) {
     ST st;
-    u8 type;
     u32* dst;
     u32* src;
     s16 i;
-    u16* seAdrs;
     s16* from_rom2;
-    dst = (u32*)&wk->cg_ctr;
     src = wk->set_char_ad + wk->cg_ix;
+    dst = (u32*)&wk->cg_ctr;
     for (i = 0; i < wk->cgd_type; i++) {
         *dst++ = *src++;
     }
@@ -1433,7 +1429,6 @@ s32 check_cgd_patdat(WORK* wk) {
         if (wk->cg_effect) {
             effinitjptbl[wk->cg_effect](wk, wk->cg_eftype);
         }
-        break;
     }
     wk->cg_jphos = jphos_table[wk->cg_olc_ix & 0xF];
     wk->cg_olc_ix >>= 4;
@@ -1441,8 +1436,7 @@ s32 check_cgd_patdat(WORK* wk) {
     wk->cg_prio = (wk->cg_se & 0xF) >> 2;
     wk->cg_se >>= 4;
     if (wk->cg_se & 0x800) {
-        seAdrs = (u16*)wk->se_random_table[wk->cg_se & 0x7FF];
-        wk->cg_se = seAdrs[random_16_com()];
+        wk->cg_se = (*(u16**)(wk->se_random_table + (wk->cg_se & 0x7FF)))[random_16_com()];
     }
     if (wk->cg_se) {
         sound_effect_request[wk->cg_se](wk, check_xcopy_filter_se_req(wk));
@@ -1457,16 +1451,12 @@ s32 check_cgd_patdat(WORK* wk) {
     wk->cg_olc = wk->olc_ix_table[wk->cg_olc_ix];
     wk->cg_ja = wk->hit_ix_table[wk->cg_hit_ix];
     set_jugde_area(wk);
-    if (wk->cg_type == 0xFF) {
-        return 0x215;
+    if (wk->cg_type != 0xFF) {
+        if (wk->cg_type & 0x80) {
+            wk->cg_wca_ix = wk->cg_type & 0x7F;
+            wk->cg_type = 0;
+        }
     }
-    type = wk->cg_type;
-    if (!(type & 0x80)) {
-        return type;
-    }
-    wk->cg_wca_ix = wk->cg_type & 0x7F;
-    wk->cg_type = 0;
-    return 0x215;
 }
 
 
@@ -1510,10 +1500,9 @@ void check_cgd_patdat2(WORK* wk) {
         wk->cg_att_ix >>= 6;
         st.l *= 8;
         wk->cg_hit_ix = st.w.h & 0x1FF;
-        if (wk->cg_att_ix != 0) {
+        if (wk->cg_att_ix) {
             set_new_attnum(wk);
         }
-        break;
     }
     wk->cg_jphos = jphos_table[wk->cg_olc_ix & 0xF];
     wk->cg_olc_ix >>= 4;
@@ -1521,7 +1510,7 @@ void check_cgd_patdat2(WORK* wk) {
     wk->cg_prio = (wk->cg_se & 0xF) >> 2;
     wk->cg_se >>= 4;
     if (wk->cg_se & 0x800) {
-        wk->cg_se = ((u16*)wk->se_random_table[wk->cg_se & 0x7FF])[random_16_com()];
+        wk->cg_se = (*(u16**)(wk->se_random_table + (wk->cg_se & 0x7FF)))[random_16_com()];
     }
     if (wk->work_id == 1) {
         if (wk->cg_rival == 0) {

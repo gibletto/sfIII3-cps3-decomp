@@ -30,7 +30,7 @@ void effect_50_move(WORK_Other* ewk) {
     pwk = (WORK_Other*)Synchro_Address[ewk->master_id][(ewk->wu.direction - 1) ^ 1];
     switch (ewk->wu.routine_no[0]) {
     case 0:
-        if (!Select_Arts[ewk->master_id]) {
+        if (Select_Arts[ewk->master_id] == 0) {
             ewk->wu.routine_no[0]++;
             ewk->wu.disp_flag = 1;
         }
@@ -39,14 +39,14 @@ void effect_50_move(WORK_Other* ewk) {
         if (Sel_Arts_Complete[ewk->master_id]) {
             ewk->wu.routine_no[0] = 3;
             ewk->wu.dir_timer = 5;
-        } else if (Moving_Plate[ewk->master_id] == ewk->wu.direction && !ewk->wu.dm_vital) {
+        } else if (Moving_Plate[ewk->master_id] == ewk->wu.direction && ewk->wu.dm_vital == 0) {
             ewk->wu.routine_no[0]++;
             ewk->wu.char_index++;
             ewk->wu.dmcal_m += 4;
             ewk->wu.dmcal_d--;
             set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         }
-        if (!ewk->wu.dm_vital) {
+        if (ewk->wu.dm_vital == 0) {
             char_move(&ewk->wu);
         }
         break;

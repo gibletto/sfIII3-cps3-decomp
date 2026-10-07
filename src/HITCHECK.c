@@ -122,18 +122,8 @@ void check_result_extra(void) {
     s16 qua;
     s16 p1state;
     s16 p2state;
-    s32 assign1;
-    s32 assign2;
-    assign1 = 0;
-    if (plw[0].wu.routine_no[1] == 1 && plw[0].wu.routine_no[3] == 0) {
-        assign1 = 1;
-    }
-    p1state = assign1;
-    assign2 = 0;
-    if (plw[1].wu.routine_no[1] == 1 && plw[1].wu.routine_no[3] == 0) {
-        assign2 = 1;
-    }
-    p2state = assign2;
+    p1state = plw[0].wu.routine_no[1] == 1 && plw[0].wu.routine_no[3] == 0;
+    p2state = plw[1].wu.routine_no[1] == 1 && plw[1].wu.routine_no[3] == 0;
     if (p1state & p2state) {
         dm1p = (WORK_Other*)plw[0].wu.dmg_adrs;
         dm2p = (WORK_Other*)plw[1].wu.dmg_adrs;
@@ -192,7 +182,8 @@ wait_dm:
             if (ds->wu.att.dipsw & 0x40) {
                 goto one;
             }
-            if (!(ds->wu.att.dipsw & 0x20)) {
+            if (ds->wu.att.dipsw & 0x20) {
+            } else {
                 goto two;
             }
         } else if (ds->wu.att.dipsw & 0x60) {
@@ -367,8 +358,10 @@ void set_struck_status(s16 ix) {
     WORK* ds;
     s16 ix2;
     ix2 = hs[ix].dm_me;
-    do {
-    } while (ix != hs[ix2].my_hit);
+wait_hit:
+    if (ix != hs[ix2].my_hit) {
+        goto wait_hit;
+    }
     as = q_hit_push[ix2];
     ds = q_hit_push[ix];
     as->hit_adrs = (u32*)ds;
@@ -381,7 +374,7 @@ void set_struck_status(s16 ix) {
         break;
     case 2:
         if (hs[ix].flag.results & 0x10) {
-            if (ix2 == hs[ix].my_hit) {
+            if (hs[ix].my_hit == ix2) {
                 as->att_hit_ok = 1;
                 break;
             }
@@ -748,7 +741,7 @@ void hit_pattern_extdat_check(WORK* as) {
 
 
 
-s16 check_dm_att_guard(WORK* as, WORK* ds, s16 kom) {
+s32 check_dm_att_guard(WORK* as, WORK* ds) {
     s16 rnum;
     rnum = 0;
     if (as->kezuri_pow) {
@@ -806,28 +799,22 @@ void set_damage_and_piyo(PLW* as, PLW* ds) {
     ds->wu.dm_piyo = add_piyo_gauge[as->player_number][as->wu.att.piyo];
     if ((ds->wu.pat_status == 32 || ds->wu.pat_status == 3) || ds->wu.pat_status == 25) {
         v = ds->wu.dm_vital;
-        v *= 125;
-        ds->wu.dm_vital = v / 100;
+        ds->wu.dm_vital = v * 125 / 100;
     } else if (ds->wu.pat_status == 7 || ds->wu.pat_status == 23 || ds->wu.pat_status == 35) {
         v = ds->wu.dm_vital;
-        v *= 150;
-        ds->wu.dm_vital = v / 100;
+        ds->wu.dm_vital = v * 150 / 100;
     } else if (ds->wu.pat_status == 1 || ds->wu.pat_status == 21 || ds->wu.pat_status == 37) {
         ds->wu.dm_vital *= 2;
     }
     if (ds->wu.dm_vital) {
         if (as->wu.routine_no[1] == 2) {
-            v = ds->wu.dm_vital;
-            v *= as->tk_nage + 32;
-            ds->wu.dm_vital = v / 32;
+            ds->wu.dm_vital = ds->wu.dm_vital * (as->tk_nage + 32) / 32;
             if ((as->tk_nage -= 2) < 0) {
                 as->tk_nage = 0;
             }
         }
         if (as->wu.routine_no[1] == 4) {
-            v = ds->wu.dm_vital;
-            v *= as->tk_dageki + 32;
-            ds->wu.dm_vital = v / 32;
+            ds->wu.dm_vital = ds->wu.dm_vital * (as->tk_dageki + 32) / 32;
             if ((as->tk_dageki -= 2) < 0) {
                 as->tk_dageki = 0;
             }
@@ -836,9 +823,7 @@ void set_damage_and_piyo(PLW* as, PLW* ds) {
         ds->utk_dageki = as->tk_dageki;
     }
     if (ds->wu.dm_piyo) {
-        v = ds->wu.dm_piyo;
-        v *= as->tk_kizetsu + 32;
-        ds->wu.dm_piyo = v / 32;
+        ds->wu.dm_piyo = ds->wu.dm_piyo * (as->tk_kizetsu + 32) / 32;
         if ((as->tk_kizetsu -= 2) < 0) {
             as->tk_kizetsu = 0;
         }
@@ -896,36 +881,47 @@ void same_dm_stop(WORK* as, WORK* ds) {
 
 s32 defense_sky(PLW* as, PLW* ds, s8 gddir) {
     if (ds->py->flag == 0 && !(ds->guard_flag & 2) && as->wu.att.guard & 4) {
-        if (!(ds->spmv_ng_flag & 0x400) && ds->cp->waza_flag[5] != 0) {
-            blocking_point_count_up(ds);
-            as->wu.hf.hit.player = 0x80;
-            ds->wu.routine_no[2] = 0x22;
-            if (check_dm_att_blocking(&as->wu, &ds->wu, 7)) {
-                return 2;
-            }
-            return 0;
+        if (ds->spmv_ng_flag & 0x400 || ds->cp->waza_flag[5] == 0) {
+            goto low;
         }
-        if (!(ds->spmv_ng_flag & 0x800) && ds->cp->waza_flag[6] != 0) {
-            blocking_point_count_up(ds);
-            as->wu.hf.hit.player = 0x80;
-            ds->wu.routine_no[2] = 0x23;
-            if (check_dm_att_blocking(&as->wu, &ds->wu, 7)) {
-                return 2;
-            }
-            return 0;
+        blocking_point_count_up(ds);
+        as->wu.hf.hit.player = 0x80;
+        ds->wu.routine_no[2] = 0x22;
+        if (check_dm_att_blocking(&as->wu, &ds->wu, 7)) {
+            return 2;
         }
+        return 0;
+    low:
+        if (ds->spmv_ng_flag & 0x800 || ds->cp->waza_flag[6] == 0) {
+            goto guard;
+        }
+        blocking_point_count_up(ds);
+        as->wu.hf.hit.player = 0x80;
+        ds->wu.routine_no[2] = 0x23;
+        if (check_dm_att_blocking(&as->wu, &ds->wu, 7)) {
+            return 2;
+        }
+        return 0;
     }
+guard:
     if (!(as->wu.att.guard & 32)) {
         return 2;
     }
-    if (!(ds->guard_flag & 1) && !(ds->spmv_ng_flag & 32) && (ds->saishin_lvdir & gddir)) {
+    if (ds->guard_flag & 1) {
+        goto miss;
+    }
+    if (ds->spmv_ng_flag & 32) {
+        goto miss;
+    }
+    if (ds->saishin_lvdir & gddir) {
         as->wu.hf.hit.player = 0x20;
         ds->wu.routine_no[2] = 7;
-        if (check_dm_att_guard(&as->wu, &ds->wu, 2)) {
+        if (check_dm_att_guard(&as->wu, &ds->wu)) {
             return 2;
         }
         return 1;
     }
+miss:
     return 2;
 }
 
@@ -978,7 +974,7 @@ s32 defense_ground(PLW* as, PLW* ds, s8 gddir) {
                     return check_dm_att_blocking(&as->wu, &ds->wu, 5) ? 2 : 0;
                 }
             } else if (as->wu.jump_att_flag) {
-                if (ds->cp->waza_flag[12] != 0) {
+                if (ds->cp->waza_flag[12]) {
                     blocking_point_count_up(ds);
                     as->wu.hf.hit.player = 64;
                     if (check_attbox_dir(ds) == 0) {
@@ -1057,16 +1053,16 @@ s32 defense_ground(PLW* as, PLW* ds, s8 gddir) {
     default:
         if (ds->cp->sw_lvbt & 2) {
             ds->wu.routine_no[2] = 6;
-            break;
+        } else {
+            ds->wu.routine_no[2] = 5;
         }
-        ds->wu.routine_no[2] = 5;
         break;
     }
     as->wu.hf.hit.player = 16;
     if (ds->wu.routine_no[2] == 5 && check_attbox_dir(ds) == 0) {
         ds->wu.routine_no[2] = 4;
     }
-    if (check_dm_att_guard(&as->wu, &ds->wu, 1)) {
+    if (check_dm_att_guard(&as->wu, &ds->wu)) {
         return 2;
     }
     return 1;

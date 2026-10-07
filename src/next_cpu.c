@@ -795,14 +795,10 @@ u32 Next_Bonus_2nd(void) {
     }
 }
 
-s32 Next_Bonus_3rd(void)
-{
-    s32 rv;
-
-    switch ((s8)SC_No[1]) {
+void Next_Bonus_3rd(void) {
+    switch (SC_No[1]) {
     case 0:
-        rv = Request_Fade(0x41, 0);
-        if (rv != 0) {
+        if (Request_Fade(0x41, 0)) {
             SC_No[1]++;
             Forbid_Break = 0;
             bgm_request(3);
@@ -813,36 +809,28 @@ s32 Next_Bonus_3rd(void)
             bg_w.bgw[3].wxy[1].disp.pos += 512;
             My_char[COM_id] = Bonus_Type;
             Setup_VS_OBJ(0);
-            return effect_58_init(15, 5, 0);
+            effect_58_init(15, 5, 0);
         }
-        rv = 0;
         break;
-
     case 1:
-        rv = 1;
         if (--Exit_Timer == 0) {
             SC_No[1]++;
             Setup_Virtual_BG(0, bg_w.bgw[0].wxy[0].disp.pos, bg_w.bgw[0].wxy[1].disp.pos);
             Setup_Virtual_BG(1, bg_w.bgw[1].wxy[0].disp.pos, bg_w.bgw[1].wxy[1].disp.pos);
-            rv = ((s32 (*)())Setup_Virtual_BG)(3, bg_w.bgw[3].wxy[0].disp.pos, bg_w.bgw[3].wxy[1].disp.pos);
+            Setup_Virtual_BG(3, bg_w.bgw[3].wxy[0].disp.pos, bg_w.bgw[3].wxy[1].disp.pos);
         }
         break;
-
     case 2:
         S_Timer--;
-        rv = 0;
-        if (Check_Fade_Complete_SP() != 0) {
-            rv = (s8)SC_No[1] + 1;
-            SC_No[1] = rv;
+        if (Check_Fade_Complete_SP()) {
+            SC_No[1]++;
             if (S_Timer < 0) {
                 S_Timer = 1;
             }
         }
         break;
-
     default:
-        rv = (s8)Scene_Cut;
-        if (rv != 0) {
+        if (Scene_Cut) {
             S_Timer = 1;
         }
         if (--S_Timer == 0) {
@@ -851,7 +839,6 @@ s32 Next_Bonus_3rd(void)
         }
         break;
     }
-    return rv;
 }
 
 

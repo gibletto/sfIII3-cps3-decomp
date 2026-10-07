@@ -308,7 +308,8 @@ void player_mv_4000(PLW* wk) {
     if (wk->tsukamare_f) {
         wk->wu.hit_stop = wk->wu.dm_stop = 0;
     }
-    if (!check_hit_stop(wk)) {
+    if (check_hit_stop(wk) != 0) {
+    } else {
         plmain_lv_02[wk->wu.routine_no[1]](wk);
         if (Timer_Freeze == 0 && wk->wu.hit_stop == 0 && wk->zuru_timer > 0) {
             wk->zuru_timer -= 2;
@@ -615,7 +616,7 @@ void sag_normal(PLW* wk) {
 void sag_timer(PLW* wk) {
     switch (wk->sa->sa_rno) {
     case 0:
-        if (wk->sa->store != 0) {
+        if (wk->sa->store) {
             wk->sa->sa_rno = 1;
             wk->sa->ok = 1;
             wk->sa->id_arts++;
@@ -645,13 +646,15 @@ void sag_timer(PLW* wk) {
             wk->sa->saeff_ok = 0;
             break;
         case 1:
-            if (wk->wu.routine_no[1] != 4) {
-            default:
-                wk->sa->saeff_ok = 0;
-                wk->sa->sa_rno = 0;
-                wk->sa->ok = 0;
-                wk->sa->dtm_mul = 1;
+            if (wk->wu.routine_no[1] == 4) {
+                break;
             }
+        default:
+            wk->sa->saeff_ok = 0;
+            wk->sa->sa_rno = 0;
+            wk->sa->ok = 0;
+            wk->sa->dtm_mul = 1;
+            break;
         }
         break;
     case 3:

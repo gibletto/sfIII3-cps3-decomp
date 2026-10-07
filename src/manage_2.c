@@ -76,6 +76,8 @@
 #include "Entry.h"
 #include "entry_2.h"
 
+void sound_reg_level_set(s16 level, s8 flag);
+
 
 
 s32 Game_Management(void) {
@@ -592,33 +594,29 @@ void Game_Manage_5_7(void) {
 
 
 
-s32 Game_Manage_6th(void) {
-    s32 rc;
-    switch (rc = C_No1) {
+void Game_Manage_6th(void) {
+    switch (C_No1) {
     case 0:
-        if (Complete_Victory == 0) {
-            if ((rc = --G_Timer) != 0) {
-                break;
-            }
+        if (Complete_Victory != 0 || --G_Timer == 0) {
+            C_No1++;
+            C_Timer = 60;
+            pcon_rno[1] = 3;
+            pcon_rno[2] = 0;
+            grade_makeup_round_para_dko();
+            effect_58_init(6, 1, Winner_id + 100);
+            effect_92_init(0, win_type[0][PL_Wins[0] - 1]);
+            effect_92_init(1, win_type[1][PL_Wins[1] - 1]);
         }
-        C_No1++;
-        C_Timer = 60;
-        pcon_rno[1] = 3;
-        pcon_rno[2] = 0;
-        grade_makeup_round_para_dko();
-        effect_58_init(6, 1, Winner_id + 100);
-        effect_92_init(0, win_type[0][PL_Wins[0] - 1]);
-        return effect_92_init(1, win_type[1][PL_Wins[1] - 1]);
+        break;
     case 1:
         if (--C_Timer == 0) {
             C_No0 = 7;
             C_No1 = 0;
             Round_num++;
-            return ((s32(*)(void))Quick_Entry)();
+            Quick_Entry();
         }
         break;
     }
-    return rc;
 }
 
 
@@ -1432,20 +1430,19 @@ void Game_Manage_12_2(void) {
     if (Check_Time_Over()) {
         return;
     }
-    if (!Bonus_Game_Complete) {
-        return;
+    if (Bonus_Game_Complete) {
+        C_No1++;
+        C_No2 = 0;
+        C_No3 = 0;
+        C_Timer = 30;
+        Forbid_Break = -1;
+        Completion_Bonus[Player_id][0] = -128;
+        Final_Bonus_Score = Setup_Final_Score(21);
+        grade_makeup_bonus_parameter(Player_id);
+        ToneDown(8);
+        ToneDown(9);
+        effect_58_init(6, 10, 169);
     }
-    C_No1++;
-    C_No2 = 0;
-    C_No3 = 0;
-    C_Timer = 30;
-    Forbid_Break = -1;
-    Completion_Bonus[Player_id][0] = -128;
-    Final_Bonus_Score = Setup_Final_Score(21);
-    grade_makeup_bonus_parameter(Player_id);
-    ToneDown(8);
-    ToneDown(9);
-    effect_58_init(6, 10, 169);
 }
 
 
@@ -1898,24 +1895,22 @@ void Check_Perfect(s16 PL_id) {
 void Judge_Winner(void) {
     JudgeGals* jg1;
     grade_makeup_judgement_gals();
-    jg1 = ((void*)&(*(JudgeGals*)&(judge_gals[1])));
+    jg1 = &judge_gals[1];
     if (judge_gals[0].grade == jg1->grade) {
         if (Play_Type == 0) {
             Winner_id = Player_id;
             Loser_id = COM_id;
-            return;
+        } else {
+            Winner_id = Champion;
+            Loser_id = Champion ^ 1;
         }
-        Winner_id = Champion;
-        Loser_id = Champion ^ 1;
-        return;
-    }
-    if (judge_gals[0].grade > judge_gals[1].grade) {
+    } else if (judge_gals[0].grade > judge_gals[1].grade) {
         Winner_id = 0;
         Loser_id = 1;
-        return;
+    } else {
+        Winner_id = 1;
+        Loser_id = 0;
     }
-    Winner_id = 1;
-    Loser_id = 0;
 }
 
 
@@ -2050,7 +2045,7 @@ void Update_VS_Data(void) {
             Stock_Com_Color[WINNER] = -1;
             Stock_Com_Arts[WINNER] = -1;
             EM_History[WINNER][VS_Index[WINNER]] = EM_id;
-            Result_Disp_Timer[WINNER] = Result_Disp_Timer[WINNER] + 30;
+            Result_Disp_Timer[WINNER] += 30;
             if (EM_id == 18) {
                 Break_Com[WINNER][EM_id] = (s8)VS_Index[WINNER];
             } else {
@@ -2061,23 +2056,20 @@ void Update_VS_Data(void) {
                 Straight_Counter[WINNER] = 0;
                 Straight_Flag[WINNER] = 1;
             }
-            if (++Round_Level <= 7) {
-                return;
+            if (++Round_Level > 7) {
+                Round_Level = 7;
             }
-            Round_Level = 7;
-            return;
+        } else {
+            Score[LOSER][0] = Stage_Stock_Score[LOSER];
+            Win_Record[LOSER] = 0;
+            Straight_Counter[LOSER] = 0;
+            Straight_Flag[LOSER] = 1;
         }
-        Score[LOSER][0] = Stage_Stock_Score[LOSER];
-        Win_Record[LOSER] = 0;
-        Straight_Counter[LOSER] = 0;
-        Straight_Flag[LOSER] = 1;
-        return;
-    }
-    if (Round_Operator[Winner_id] != 0) {
+    } else if (Round_Operator[Winner_id] != 0) {
         Pool_Score(Winner_id);
-        return;
+    } else {
+        Score[Loser_id][0] = Stock_Score[Loser_id];
     }
-    Score[Loser_id][0] = ((s32)Stock_Score[Loser_id]);
 }
 
 
@@ -2198,7 +2190,7 @@ s32 Check_Break_Into_CPU(s16 PL_id) {
     if (Straight_Flag[PL_id]) {
         return 0;
     }
-    if ((*(s16(*)[2][0xAC])&(judge_final[0][0].sp_point))[Player_id][0] < 2) {
+    if (judge_final[Player_id][0].sp_point < 2) {
         return 0;
     }
     if (Super_Arts_Finish[PL_id] < Break_Into_Level_Data[Battle_Round[Play_Type]]) {
@@ -2218,8 +2210,9 @@ s32 Check_BI_Grade(s16 PL_id) {
     for (ix = 0; ix < VS_Index[PL_id]; ix++) {
         if (judge_final[PL_id][0].vs_cpu_grade[ix] < 9) {
             return 0;
+        } else {
+            continue;
         }
-        continue;
     }
     return 1;
 }
@@ -2227,22 +2220,20 @@ s32 Check_BI_Grade(s16 PL_id) {
 
 
 void Check_Stage_BGM(void) {
-    s32 kind = Round_num;
-    u16 stage = bg_w.stage;
     if (Play_Type == 1) {
-        Stage_BGM(stage, kind);
+        Stage_BGM((u16)bg_w.stage, Round_num);
     } else {
         switch (EM_id) {
         case 0:
             if (Introduce_Boss[Player_id][1] & 0x80) {
-                Stage_BGM(stage, kind);
+                Stage_BGM((u16)bg_w.stage, Round_num);
             }
             break;
         case 18:
-            Stage_BGM(18, kind);
+            Stage_BGM(18, Round_num);
             break;
         default:
-            Stage_BGM(stage, kind);
+            Stage_BGM((u16)bg_w.stage, Round_num);
             break;
         }
     }

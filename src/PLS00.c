@@ -700,34 +700,34 @@ void jumping_cg_type_check(PLW* wk) {
         case 2:
             wk->guard_flag = 0;
             if (check_full_gauge_attack(wk, 0)) {
-                break;
+                return;
             }
             if (check_full_gauge_attack2(wk, 0)) {
-                break;
+                return;
             }
             if (check_super_arts_attack(wk)) {
-                break;
+                return;
             }
             if (check_special_attack(wk)) {
-                break;
+                return;
             }
             if (check_chouhatsu(wk)) {
-                break;
+                return;
             }
             if (check_catch_attack(wk)) {
-                break;
+                return;
             }
             if (check_leap_attack(wk)) {
-                break;
+                return;
             }
             if (check_nm_attack(wk)) {
-                break;
+                return;
             }
             if (check_cg_cancel_data(wk)) {
-                break;
+                return;
             }
             if (check_360_jump(wk)) {
-                break;
+                return;
             }
             if (check_jump_ready(wk)) {
                 return;
@@ -736,28 +736,28 @@ void jumping_cg_type_check(PLW* wk) {
         case 7:
             wk->guard_flag = 0;
             if (check_full_gauge_attack(wk, 0)) {
-                break;
+                return;
             }
             if (check_full_gauge_attack2(wk, 0)) {
-                break;
+                return;
             }
             if (check_super_arts_attack(wk)) {
-                break;
+                return;
             }
             if (check_special_attack(wk)) {
-                break;
+                return;
             }
             if (check_chouhatsu(wk)) {
-                break;
+                return;
             }
             if (check_catch_attack(wk)) {
-                break;
+                return;
             }
             if (check_leap_attack(wk)) {
-                break;
+                return;
             }
             if (check_nm_attack(wk)) {
-                break;
+                return;
             }
             if (check_cg_cancel_data(wk)) {
                 return;
@@ -766,46 +766,46 @@ void jumping_cg_type_check(PLW* wk) {
         case 3:
             wk->guard_flag = 0;
             if (check_full_gauge_attack(wk, 0)) {
-                break;
+                return;
             }
             if (check_full_gauge_attack2(wk, 0)) {
-                break;
+                return;
             }
             if (check_super_arts_attack(wk)) {
-                break;
+                return;
             }
             if (check_special_attack(wk)) {
-                break;
+                return;
             }
             if (check_chouhatsu(wk)) {
-                break;
+                return;
             }
             if (check_catch_attack(wk)) {
-                break;
+                return;
             }
             if (check_leap_attack(wk)) {
-                break;
+                return;
             }
             if (check_nm_attack(wk)) {
-                break;
+                return;
             }
             if (check_cg_cancel_data(wk)) {
-                break;
+                return;
             }
             if (check_turn_to_back(wk)) {
-                break;
+                return;
             }
             if (check_F_R_dash(wk)) {
-                break;
+                return;
             }
             if (check_360_jump(wk)) {
-                break;
+                return;
             }
             if (check_jump_ready(wk)) {
-                break;
+                return;
             }
             if (check_bend_myself(wk)) {
-                break;
+                return;
             }
             check_F_R_walk(wk);
             break;
@@ -827,34 +827,34 @@ void jumping_cg_type_check(PLW* wk) {
         case 2:
             wk->guard_flag = 0;
             if (check_full_gauge_attack(wk, 0)) {
-                break;
+                return;
             }
             if (check_full_gauge_attack2(wk, 0)) {
-                break;
+                return;
             }
             if (check_super_arts_attack(wk)) {
-                break;
+                return;
             }
             if (check_special_attack(wk)) {
-                break;
+                return;
             }
             if (check_chouhatsu(wk)) {
-                break;
+                return;
             }
             if (check_catch_attack(wk)) {
-                break;
+                return;
             }
             if (check_leap_attack(wk)) {
-                break;
+                return;
             }
             if (check_nm_attack(wk)) {
-                break;
+                return;
             }
             if (check_cg_cancel_data(wk)) {
-                break;
+                return;
             }
             if (check_360_jump(wk)) {
-                break;
+                return;
             }
             if (check_jump_ready(wk)) {
                 return;
@@ -863,28 +863,28 @@ void jumping_cg_type_check(PLW* wk) {
         case 7:
             wk->guard_flag = 0;
             if (check_full_gauge_attack(wk, 0)) {
-                break;
+                return;
             }
             if (check_full_gauge_attack2(wk, 0)) {
-                break;
+                return;
             }
             if (check_super_arts_attack(wk)) {
-                break;
+                return;
             }
             if (check_special_attack(wk)) {
-                break;
+                return;
             }
             if (check_chouhatsu(wk)) {
-                break;
+                return;
             }
             if (check_catch_attack(wk)) {
-                break;
+                return;
             }
             if (check_leap_attack(wk)) {
-                break;
+                return;
             }
             if (check_nm_attack(wk)) {
-                break;
+                return;
             }
             if (check_cg_cancel_data(wk)) {
                 return;
@@ -893,46 +893,46 @@ void jumping_cg_type_check(PLW* wk) {
         case 3:
             wk->guard_flag = 0;
             if (check_full_gauge_attack(wk, 0)) {
-                break;
+                return;
             }
             if (check_full_gauge_attack2(wk, 0)) {
-                break;
+                return;
             }
             if (check_super_arts_attack(wk)) {
-                break;
+                return;
             }
             if (check_special_attack(wk)) {
-                break;
+                return;
             }
             if (check_chouhatsu(wk)) {
-                break;
+                return;
             }
             if (check_catch_attack(wk)) {
-                break;
+                return;
             }
             if (check_leap_attack(wk)) {
-                break;
+                return;
             }
             if (check_nm_attack(wk)) {
-                break;
+                return;
             }
             if (check_cg_cancel_data(wk)) {
-                break;
+                return;
             }
             if (check_turn_to_back(wk)) {
-                break;
+                return;
             }
             if (check_F_R_dash(wk)) {
-                break;
+                return;
             }
             if (check_360_jump(wk)) {
-                break;
+                return;
             }
             if (check_jump_ready(wk)) {
-                break;
+                return;
             }
             if (check_stand_up(wk)) {
-                break;
+                return;
             }
             if (check_F_R_step(wk)) {
                 return;
@@ -1409,9 +1409,9 @@ void dm_00000(PLW* wk) {
     if (check_sa_type_rebirth(wk) != 0) {
         wk->py->flag = 0;
         execute_super_arts(wk);
-        return;
+    } else {
+        wk->wu.routine_no[3]++;
     }
-    wk->wu.routine_no[3]++;
 }
 
 
@@ -1427,9 +1427,9 @@ void dm_04000(PLW* wk) {
             wk->tsukamarenai_flag = 7;
             if (wk->wu.pat_status < 32) {
                 TO_nm_36000((WORK*)wk);
-                break;
+            } else {
+                TO_nm_37000((WORK*)wk);
             }
-            TO_nm_37000((WORK*)wk);
         } else {
             wk->wu.routine_no[2] = 19;
             wk->wu.routine_no[3] = 0;
@@ -1440,9 +1440,9 @@ void dm_04000(PLW* wk) {
             wk->tsukamarenai_flag = 7;
             if (wk->wu.pat_status < 32) {
                 TO_nm_01000((WORK*)wk);
-                break;
+            } else {
+                TO_nm_09000((WORK*)wk);
             }
-            TO_nm_09000((WORK*)wk);
         } else {
             wk->wu.routine_no[2] = 19;
             wk->wu.routine_no[3] = 0;
@@ -1455,13 +1455,13 @@ void dm_04000(PLW* wk) {
 
 void dm_08000(PLW* wk) {
     switch (wk->wu.cg_type) {
-    case 64:
-        wk->tsukamarenai_flag = 7;
-        TO_nm_36000(&wk->wu);
-        break;
     case 0xFF:
         wk->tsukamarenai_flag = 7;
         TO_nm_01000(&wk->wu);
+        break;
+    case 64:
+        wk->tsukamarenai_flag = 7;
+        TO_nm_36000(&wk->wu);
         break;
     default:
         if (wk->wu.routine_no[3] < 3 && check_dm_shot_attack(wk)) {

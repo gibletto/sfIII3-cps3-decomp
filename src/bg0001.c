@@ -29,7 +29,6 @@
 #include "SYS_sub2.h"
 #include "end_main.h"
 #include "aboutspr.h"
-#include "SE.h"
 #include "se_2.h"
 #include "se_3.h"
 #include "Grade.h"
@@ -41,7 +40,6 @@
 #include "manage_2.h"
 #include "Win.h"
 #include "win_2.h"
-#include "continue.h"
 #include "next_cpu.h"
 #include "sc_trans.h"
 #include "cmb_win.h"
@@ -92,6 +90,10 @@
 #include "ta_sub.h"
 #include "Game_Main.h"
 #include "eeprom.h"
+
+void Scrn_Move_Set(s32 n, s16 x, s16 y);
+
+void sound_reg_level_set(s16 level, s8 flag);
 
 #pragma noregsave(game_frame_task)
 #pragma inline(bg0001)
@@ -348,9 +350,8 @@ void game_phase_dispatch(void) {
 
 
 void Game00(void) {
-    GAME00_JMP_TBL Game00_Jmp_Tbl;
-    Game00_Jmp_Tbl = Game00_Jmp_Data;
-    Game00_Jmp_Tbl.fn[G_No2]();
+    void (*Game00_Jmp_Tbl[6])() = { Game0_0, Game0_1, Game0_2, Game0_3, Game0_2, Game0_3 };
+    Game00_Jmp_Tbl[G_No2]();
     Basic_Sub();
 }
 

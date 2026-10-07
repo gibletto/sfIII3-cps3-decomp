@@ -22,6 +22,8 @@
 #include "sc_sub_2.h"
 #include "cps3.h"
 
+void stun_mark_put(s8 pl);
+
 
 
 void fade_cont_init(void) {
@@ -115,7 +117,6 @@ s32 fade_cont_main(void)
                 }
                 break;
             }
-            continue;
         }
         done = 0;
         for (i = 0; i < fade_layer_num; i++) {

@@ -70,8 +70,9 @@ s32 stage_index_get(void) {
     if (stage == 8) {
         if (bg_w.area != 0) {
             return next;
+        } else {
+            return stage;
         }
-        return stage;
     }
     if (stage < 8) {
         return stage;

@@ -30,6 +30,7 @@
 
 void effect_F1_move(WORK_Other* ewk) {
     PLW* mwk = (PLW*)ewk->my_master;
+    s32 rno;
     switch (ewk->wu.routine_no[0]) {
     case 0:
         effF1_data_set(ewk, mwk);
@@ -54,12 +55,17 @@ void effect_F1_move(WORK_Other* ewk) {
         if ((ewk->wu.dir_old & 4) && (mwk->sa->ok != -1)) {
             goto end;
         }
-        if ((ewk->wu.dir_old & 8) && (((WORK*)mwk->wu.target_adrs)->routine_no[1] != 4) &&
-            (((WORK*)mwk->wu.target_adrs)->routine_no[1] != 2)) {
-            goto end;
+        if (ewk->wu.dir_old & 8) {
+            rno = ((WORK*)mwk->wu.target_adrs)->routine_no[1];
+            if (rno != 4 && rno != 2) {
+                goto end;
+            }
         }
-        if ((ewk->wu.dir_old & 0x10) && (mwk->wu.routine_no[1] != 4) && (mwk->wu.routine_no[1] != 2)) {
-            goto end;
+        if (ewk->wu.dir_old & 0x10) {
+            rno = mwk->wu.routine_no[1];
+            if (rno != 4 && rno != 2) {
+                goto end;
+            }
         }
         if ((ewk->wu.dir_old & 0x20) && (ewk->wu.total_att_set != ((WORK*)mwk->wu.target_adrs)->kind_of_waza)) {
             goto end;
@@ -159,9 +165,9 @@ void effect_F2_move(WORK_Other* ewk) {
             ewk->wu.xyz[1].disp.pos = efff2_data_tbl1[ewk->wu.type][2];
             ewk->wu.old_rno[4] = 19;
             ewk->wu.char_index = 1;
-            break;
+        } else {
+            disp_pos_trans_entry(ewk);
         }
-        disp_pos_trans_entry(ewk);
         break;
     default:
         all_cgps_put_back(&ewk->wu);

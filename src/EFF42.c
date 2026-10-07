@@ -70,7 +70,7 @@ void EFF42_SLIDE_IN(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[6]) {
     case 0:
         if (--Order_Timer[ewk->wu.dir_old] != 0) {
-            break;
+            return;
         }
         ewk->wu.routine_no[6]++;
         ewk->wu.disp_flag = 1;

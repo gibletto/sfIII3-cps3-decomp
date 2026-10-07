@@ -158,11 +158,11 @@ void efff5_0005(WORK_Other* ewk) {
             ewk->wu.routine_no[1]++;
             op_w.free_work = 1;
             ewk->wu.disp_flag = 0;
-            break;
+        } else {
+            ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
+            ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
+            sort_push_request4(ewk);
         }
-        ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
-        ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-        sort_push_request4(ewk);
         break;
     default:
         all_cgps_put_back(ewk);

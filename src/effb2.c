@@ -60,7 +60,6 @@ void effect_B2_move(WORK_Other* ewk) {
             ewk->wu.routine_no[0] += 1;
             ewk->wu.my_mr.size.y = 0;
             effect_I6_init(ewk);
-            return;
         }
         break;
     case 2:
@@ -70,7 +69,6 @@ void effect_B2_move(WORK_Other* ewk) {
             ewk->wu.my_mr.size.y = 63;
             ewk->wu.hit_stop = 64;
             rf_b2_flag = 0;
-            return;
         }
         break;
     case 3:
@@ -80,7 +78,6 @@ void effect_B2_move(WORK_Other* ewk) {
             b2_curr_no = 0;
             rf_b2_flag = 0;
             ewk->wu.hit_stop = 10;
-            return;
         }
         break;
     case 4:
@@ -91,7 +88,6 @@ void effect_B2_move(WORK_Other* ewk) {
             ewk->wu.routine_no[0] += 1;
             rf_b2_flag = 0;
             effect_L5_init(ewk);
-            return;
         }
         break;
     case 5:
@@ -99,14 +95,12 @@ void effect_B2_move(WORK_Other* ewk) {
         if (ewk->wu.my_mr.size.y >= 63) {
             ewk->wu.routine_no[0] += 1;
             ewk->wu.my_mr.size.y = 63;
-            return;
         }
         break;
     case 6:
         if (rf_b2_flag) {
             ewk->wu.routine_no[0] += 1;
             rf_b2_flag = 0;
-            return;
         }
         break;
     case 7:
@@ -114,13 +108,11 @@ void effect_B2_move(WORK_Other* ewk) {
             ewk->wu.routine_no[0] += 1;
             rf_b2_flag = 0;
             ewk->wu.routine_no[1] = 0;
-            return;
         }
         break;
     case 8:
         if (rf_b2_flag) {
             ewk->wu.routine_no[0] += 1;
-            return;
         }
         break;
     case 9:

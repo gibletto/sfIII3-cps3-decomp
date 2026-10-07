@@ -439,7 +439,7 @@ void settle_type_20000(void) {
             if (plw[0].wu.operator == 0 && plw[0].player_number == PL_GILL) {
                 Gill_Pos_X = plw[0].wu.xyz[0].disp.pos;
             }
-            if (plw[1].wu.operator == 0) {
+            if (!plw[1].wu.operator) {
                 if (plw[1].player_number == PL_GILL) {
                     Gill_Pos_X = plw[1].wu.xyz[0].disp.pos;
                 }
@@ -476,7 +476,10 @@ void settle_type_30000(void) {
     case 0:
         break;
     case 1:
-        if ((Event_Judge_Gals == -1) && Complete_Judgement != 0) {
+        if (Event_Judge_Gals != -1) {
+            break;
+        }
+        if (Complete_Judgement) {
             plw[Winner_id].wu.routine_no[2] = 40;
             plw[Loser_id].wu.routine_no[2] = 41;
             plw[0].wu.routine_no[3] = plw[1].wu.routine_no[3] = 0;
@@ -531,9 +534,11 @@ void settle_type_40000(void) {
         if (--plw[Winner_id].wu.dir_timer <= 0) {
             if (Special_Settle) {
                 pcon_rno[2] = 10;
+                break;
             } else {
                 complete_victory_pause();
                 pcon_rno[2]++;
+                break;
             }
         }
         break;
@@ -726,14 +731,14 @@ void check_damage_hosei_nage(PLW* as, PLW* ds) {
         if (ds->hosei_amari != 0) {
             as->wu.xyz[0].disp.pos += ds->hosei_amari;
             as->muriyari_ugoku += ds->hosei_amari;
-            return;
-        }
-        if (bg_app_stop == 0 && bg_app == 0 && set_field_hosei_flag(as, scrr, 1) != 0) {
-            set_field_hosei_flag(as, scrl, 0);
-        }
-        if (as->hosei_amari != 0) {
-            ds->wu.xyz[0].disp.pos += as->hosei_amari;
-            ds->muriyari_ugoku += as->hosei_amari;
+        } else {
+            if (bg_app_stop == 0 && bg_app == 0 && set_field_hosei_flag(as, scrr, 1) != 0) {
+                set_field_hosei_flag(as, scrl, 0);
+            }
+            if (as->hosei_amari != 0) {
+                ds->wu.xyz[0].disp.pos += as->hosei_amari;
+                ds->muriyari_ugoku += as->hosei_amari;
+            }
         }
     } else if (ds->hosei_amari != 0) {
         as->wu.xyz[0].disp.pos += ds->hosei_amari;
@@ -789,7 +794,9 @@ s32 will_die(void) {
 
 
 /* provisional name */
-void setup_settle_rno(s16 kos) {
+void setup_settle_rno(kos)
+s16 kos;
+{
     pcon_rno[0] = 2;
     pcon_rno[1] = kos;
     pcon_rno[2] = 0;
@@ -803,23 +810,23 @@ void settle_check(void) {
 retry:
     switch ((plw[0].dead_flag) + (plw[1].dead_flag * 2)) {
     case 1:
-        if (1) {
-            Winner_id = 1;
-            Loser_id = 0;
-        } else {
-        case 2:
-            Winner_id = 0;
-            Loser_id = 1;
+        Winner_id = 1;
+        Loser_id = 0;
+        goto settle;
+    case 2:
+        Winner_id = 0;
+        Loser_id = 1;
+    settle:
+        if (check_sa_resurrection(&plw[Loser_id])) {
+            break;
         }
-        if (check_sa_resurrection(&plw[Loser_id]) == 0) {
-            setup_gouki_wins();
-            Round_Result |= plw[Loser_id].wu.dm_koa;
-            if ((Round_Result & 0x800) && gouki_wins) {
-                Shin_Gouki_BGM = 1;
-                Control_Music_Fade(150);
-                setup_settle_rno(4);
-                break;
-            }
+        setup_gouki_wins();
+        Round_Result |= plw[Loser_id].wu.dm_koa;
+        if ((Round_Result & 0x800) && gouki_wins) {
+            Shin_Gouki_BGM = 1;
+            Control_Music_Fade(150);
+            setup_settle_rno(4);
+        } else {
             setup_settle_rno(0);
             Conclusion_Flag = 1;
             Conclusion_Type = 0;
@@ -829,15 +836,14 @@ retry:
         }
         break;
     case 3:
-        if ((check_sa_resurrection(&plw[0]) == 0) && (check_sa_resurrection(&plw[1]) == 0)) {
-            Conclusion_Flag = 1;
-            Conclusion_Type = 1;
-            setup_settle_rno(1);
-            if (Demo_Flag) {
-                request_center_message(1);
-            }
-        } else {
+        if (check_sa_resurrection(&plw[0]) || check_sa_resurrection(&plw[1])) {
             goto retry;
+        }
+        Conclusion_Flag = 1;
+        Conclusion_Type = 1;
+        setup_settle_rno(1);
+        if (Demo_Flag) {
+            request_center_message(1);
         }
         break;
     default:
