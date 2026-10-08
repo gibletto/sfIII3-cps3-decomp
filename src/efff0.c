@@ -120,19 +120,19 @@ void effect_F0_move(WORK_Other* ewk) {
                 break;
             }
             scrn_map_set(3, adrs);
-            if (!another_bg[0] && !another_bg[1]) {
-                ewk->wu.routine_no[0] = 5;
-                sound_reg_level_set(0, 0);
-                {
-                    s8 t = another_bg_old[1] = 0;
-                    another_bg_old[0] = t;
-                }
+            if (another_bg[0] || another_bg[1]) {
+                seraph_flag = 1;
                 effF0_scroll_set(ewk);
-                seraph_flag = 0;
                 break;
             }
-            seraph_flag = 1;
+            ewk->wu.routine_no[0] = 5;
+            sound_reg_level_set(0, 0);
+            {
+                s8 t = another_bg_old[1] = 0;
+                another_bg_old[0] = t;
+            }
             effF0_scroll_set(ewk);
+            seraph_flag = 0;
             break;
         case 5:
             ewk->wu.routine_no[0] = 1;

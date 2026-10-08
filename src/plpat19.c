@@ -321,23 +321,23 @@ void Att_AIRDASH(PLW* wk) {
             setup_mvxy_data(&wk->wu, wk->as->data_ix);
             wk->wu.routine_no[3] = 3;
             wk->wu.cg_type = 0;
-            break;
         }
         break;
     case 3:
         jumping_union_process(&wk->wu, 4);
-        if (kabe_check3(wk)) {
-            wk->wu.rl_flag = wk->wu.rl_flag + 1 & 1;
-            wk->wu.xyz[0].disp.pos = wk->wu.rl_flag ? bg_w.bgw[1].l_limit2 - 192 : bg_w.bgw[1].r_limit2 + 192;
-            set_char_move_init(&wk->wu, 5, 65);
-            wk->wu.routine_no[3] = 5;
-            wk->wu.cg_type = 0;
-            effect_I3_init(&wk->wu, 4);
+        if (!kabe_check3(wk)) {
+            break;
         }
+        wk->wu.rl_flag = wk->wu.rl_flag + 1 & 1;
+        wk->wu.xyz[0].disp.pos = wk->wu.rl_flag ? bg_w.bgw[1].l_limit2 - 192 : bg_w.bgw[1].r_limit2 + 192;
+        set_char_move_init(&wk->wu, 5, 65);
+        wk->wu.routine_no[3] = 5;
+        wk->wu.cg_type = 0;
+        effect_I3_init(&wk->wu, 4);
         break;
     case 4:
         char_move(&wk->wu);
-        break;
+        return;
     case 5:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {

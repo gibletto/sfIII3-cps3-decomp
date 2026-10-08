@@ -3,7 +3,7 @@
 
 #include "structs.h"
 
-u8 * EFF69_SLIDE_IN(WORK_Other* ewk);
+void EFF69_SLIDE_IN(WORK_Other* ewk);
 void Setup_Clear_OBJ(WORK_Other* ewk);
 void EFF69_SLIDE_OUT(WORK_Other* ewk);
 void EFF69_SUDDENLY(WORK_Other* ewk);

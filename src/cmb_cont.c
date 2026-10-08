@@ -299,8 +299,10 @@ void hit_combo_check(s8 PL) {
 
 
 s32 arts_finish_check(s8 PL) {
-    if (Conclusion_Flag && Conclusion_Type == 0 && Loser_id == PL && sarts_finish_flag[PL]) {
-        return 1;
+    if (Conclusion_Flag && Conclusion_Type == 0 && Loser_id == PL) {
+        if (sarts_finish_flag[PL]) {
+            return 1;
+        }
     }
     return 0;
 }
@@ -323,7 +325,7 @@ u32 SCORE_CALCULATION(s8 PL) {
     s8 lpx;
     s8 lpy;
     s16 hit;
-    u16 h;
+    s16 h;
     u32 score;
     s8 last;
     k_ptr = plw[PL].cb->kind_of[0][0];
@@ -331,7 +333,7 @@ u32 SCORE_CALCULATION(s8 PL) {
     s_ptr = score_calc[PL];
     for (lpx = 0; lpx < 4; lpx++) {
         *s_ptr++ = k_ptr[0] + k_ptr[1];
-        k_ptr += 2;
+        k_ptr = k_ptr + 2;
     }
     s_ptr = &score_calc[PL][4];
     for (lpy = 0; lpy < 8; lpy++) {
@@ -374,7 +376,7 @@ void SCORE_PLUS(s8 pl, u32 pts) {
 
 void combo_window_push(s8 PL, s8 KIND) {
     u32 score;
-    s32 PLS;
+    s8 PLS;
     if (KIND < 3) {
         score = SCORE_CALCULATION(PL);
         grade_max_combo_check(PL ^ 1, hit_num);

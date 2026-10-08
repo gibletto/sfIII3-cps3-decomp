@@ -30,14 +30,12 @@ void fade_cont_init(void) {
     const s16* tbl;
     const s16* dat;
     FADE_LAYER* fw;
-    s32 i;
+    s8 i;
     s8 num;
-    s32 no;
     fade_layer_num = 0;
     fade_cont_rno = 0;
     fade_end_timer = 1;
-    no = Fade_Number;
-    tbl = fade_data_tbl[no];
+    tbl = fade_data_tbl[Fade_Number];
     fade_layer_num = num = *tbl++;
     for (i = 0; i < num; i++) {
         fw = &fade_layer[i];
@@ -187,49 +185,48 @@ void stngauge_cont_main(void) {
 
 void stngauge_control(s32 player) {
     s8 pl = player;
-    STN_DAT* sd = &sdat[pl];
     PLW* wk = &plw[pl];
     if (Exec_Wipe) {
-        sd->cstn = wk->py->now.quantity.h;
+        sdat[pl].cstn = wk->py->now.quantity.h;
         return;
     }
-    if (sd->proccess_dead) {
+    if (sdat[pl].proccess_dead) {
         return;
     }
     if (wk->dead_flag) {
-        sd->proccess_dead = 1;
-        sd->cstn = 0;
+        sdat[pl].proccess_dead = 1;
+        sdat[pl].cstn = 0;
         stun_put(pl);
         return;
     }
     if ((wk->wu.routine_no[1] == 1 && wk->wu.routine_no[2] == 25 && wk->wu.routine_no[3] != 0) ||
         wk->py->flag == 1) {
-        sd->sflag = 1;
-        if (sd->osflag == 0) {
-            sd->cstn = stun_genkai_tbl[My_char[pl] & 0x7F];
+        sdat[pl].sflag = 1;
+        if (sdat[pl].osflag == 0) {
+            sdat[pl].cstn = stun_genkai_tbl[My_char[pl] & 0x7F];
         }
-        sd->stimer--;
-        if (sd->g_or_s == 0) {
-            if (sd->stimer == 0) {
+        sdat[pl].stimer--;
+        if (sdat[pl].g_or_s == 0) {
+            if (sdat[pl].stimer == 0) {
                 stun_mark_put(pl);
-                sd->g_or_s = 1;
-                sd->stimer = 2;
+                sdat[pl].g_or_s = 1;
+                sdat[pl].stimer = 2;
             }
-        } else if (sd->stimer == 0) {
+        } else if (sdat[pl].stimer == 0) {
             stun_put(pl);
-            sd->g_or_s = 0;
-            sd->stimer = 2;
+            sdat[pl].g_or_s = 0;
+            sdat[pl].stimer = 2;
         }
-        sd->osflag = sd->sflag;
+        sdat[pl].osflag = sdat[pl].sflag;
         return;
     }
-    sd->sflag = 0;
-    if (sd->osflag == 1) {
-        sd->osflag = sd->sflag;
-        sd->g_or_s = 0;
-        sd->stimer = 2;
-        sd->cstn = wk->py->now.quantity.h;
-        sd->osflag = sd->sflag;
+    sdat[pl].sflag = 0;
+    if (sdat[pl].osflag == 1) {
+        sdat[pl].osflag = sdat[pl].sflag;
+        sdat[pl].g_or_s = 0;
+        sdat[pl].stimer = 2;
+        sdat[pl].cstn = wk->py->now.quantity.h;
+        sdat[pl].osflag = sdat[pl].sflag;
         stun_put(pl);
         return;
     }

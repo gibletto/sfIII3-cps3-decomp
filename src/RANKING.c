@@ -650,8 +650,8 @@ void ranking_insert_present(s16 top, s16 PL_id);
 
 void Ranking_Init(void) {
     s16 ix;
-    RANK_DATA* dst = Ranking_Data;
     const RANK_DATA* src = Rank_Default_Data;
+    RANK_DATA* dst = Ranking_Data;
     for (ix = 0; ix < 20; ix++) {
         *dst = *src;
         src++;

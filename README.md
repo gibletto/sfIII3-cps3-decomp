@@ -46,13 +46,16 @@ and loads it over the ROM files.
 
 ## Compiler
 
-The compiler is SHC 5.0 Release 26 with twenty-two changes, each one a rule the arcade's own compiler visibly follows
+The compiler is SHC 5.0 Release 26 with twenty-eight changes, each one a rule the arcade's own compiler visibly follows
 throughout the ROM but Release 26 doesn't:
 
 - a switch case is tested with `bt case` / `bra default` (Release 26 folds it into `bf default`), and a jump to
   a case label that is also the next block is kept;
-- functions keep a separate `rts` at each return (Release 26 merges identical returns; jumps and labels are still
-  shared, as in the arcade);
+- two returns share the instructions they end with only as far back as those leave r0 alone: the store or call
+  in front of a plain `return;`, never the `mov #0,r0` of `return 0;` (Release 26 shares every instruction they
+  end with), and an instruction that uses r0 does not fill the delay slot of the jump to the shared code; inside
+  a `switch`, a return whose whole block would be shared keeps its own copy; and once returns were shared the
+  function keeps its epilogue and `rts`, even when every path now ends in a tail call;
 - a constant loaded into r0 is loaded again after a conditional branch (Release 26 carries it across);
 - a stack load or store never fills a branch delay slot;
 - a value that is only tested takes the lowest free register (Release 26 starts from r3);
@@ -64,7 +67,8 @@ throughout the ROM but Release 26 doesn't:
 - an integer cast of a table's name, `(u32)table`, is loaded again at each use rather than kept across calls;
 - `f(&p->first)`, with `first` at offset 0, counts as passing `p`, so `p` can stay in its argument register;
 - a global variable is loaded again at each use, not read from a copy an earlier use kept in a register or on the stack;
-  the same goes for an expression several branches compute, when the first of them can't share its value;
+  the same goes for an expression several branches compute, when the first of them can't share its value, and
+  for the uses a call or store cuts off from the first: only the uses reached from the first share its value;
 - after a multiply the multiplier counts as busy for one instruction, not two, so `sts macl` can follow the next load;
 - a switch's compare-and-branch jumps leave r1 free, so a value live into the cases can move into it and r13/r14 is not saved;
 - a load through a pointer and a later separate `add` to the pointer stay apart (Release 26 folds them into a
@@ -86,18 +90,35 @@ throughout the ROM but Release 26 doesn't:
   (Release 26 extends it once for the byte arrays and keeps that copy in a register across branches);
 - a multiply reads a constant that is already in a register: a `char` or `short` multiply takes it from there
   (`muls.w r12,r3`, where Release 26 shifts), and the 16-bit constant of an `int` multiply of a `char` or `short`
-  counts like any other, so `s * 100` used three times keeps 100 in a register (Release 26 loads it at each multiply).
+  counts like any other, so `s * 100` used three times keeps 100 in a register (Release 26 loads it at each multiply);
+- when an address is the sum of a pointer still in memory (a row of a table of pointers, `table[a]` in
+  `table[a][b]`) and an index in a register, the pointer is loaded and added (`mov.l @(r0,r3),r3`, `add r3,r2`,
+  `mov.l @r2,r1`); Release 26 loads it into r0 and indexes with it;
+- an index used by several arrays in one statement stays in its own register, and each access takes its array's
+  address into r0 or adds (Release 26 copies the index into r0 once and uses every array as a base);
+- a zero that is added or subtracted (the index of `a[0]`) and the constant of a bit-and (`v & 3`) count when a
+  constant is weighed for a register, and read the register that holds it (Release 26 passes over every use that
+  can be an immediate);
+- a mask by 0xff, `x & 0xFF` or `v &= 0xFF`, stays an `and` (Release 26 turns it into a cast, so the code
+  extends with `extu.b`); `extu.b` comes from a cast or an `unsigned char`;
+- in a loop, the address of a member reached through a pointer, `p->a`, is not taken as fixed when stepping
+  pointers are made, so for `p->a[i]` only `i * size` steps (Release 26 makes the element's address a pointer
+  that steps by the element size);
+- a value derived from the loop counter and used more than once (`i * 2`, or `&a[i]` used by two statements)
+  gets a new stepping variable, and the shared copy is taken from it on each pass (`mov r4,r7`); Release 26
+  steps the shared copy itself. An address used again within one statement and a counter that steps by -1 keep
+  Release 26's choice, and the index of a `char` array is extended on each pass instead of stepped.
 
 The four changed stages (`shcmdl.exe`, `shcgen.exe`, `shcpep.exe` and `shcasm.exe`) are rebuilt from a C
 decompilation of the originals (source: https://github.com/gibletto/shc-5r26-decomp-sf3), and each rule is a
-setting in that source (twenty-three settings for the twenty-two rules: the switch rule has two). With every rule off they give the same output as Release 26. Setting `SWITCH_ARCADE_BRANCH`,
+setting in that source (thirty settings for the twenty-eight rules: the switch rule and the return rule have two each). With every rule off they give the same output as Release 26. Setting `SWITCH_ARCADE_BRANCH`,
 `SWITCH_ARCADE_JUMP`, `XJUMP_OFF`, `PEP_R0_FORGET`, `SLOT_NO_STACK`, `PEP_NO_THREAD`, `GEN_TST_R0`, `GEN_MUL_L`,
-`MDL_ARG_CONST`, `MDL_CAST_CSE`, `MDL_ARG_CAST`, `MDL_GCSE`, `ASM_MULWAIT`, `GEN_CHAIN_JUMP`, `PEP_AUTOINC`, `MDL_IV`, `GEN_POOL_MOVLOC`, `MDL_LOOP_INV`, `GEN_RELOAD`, `GEN_EVICT_ORDER`, `MDL_CAST_MUL`, `MDL_MUL_CONST` and `ASM_SPECREG` to 0 gives Release 26's behaviour back. The
+`MDL_ARG_CONST`, `MDL_CAST_CSE`, `MDL_ARG_CAST`, `MDL_GCSE`, `ASM_MULWAIT`, `GEN_CHAIN_JUMP`, `PEP_AUTOINC`, `MDL_IV`, `GEN_POOL_MOVLOC`, `MDL_LOOP_INV`, `GEN_RELOAD`, `GEN_EVICT_ORDER`, `MDL_CAST_MUL`, `MDL_MUL_CONST`, `PEP_RET_R0`, `GEN_MEM_INDEX`, `GEN_R0VAR`, `MDL_IMM_REG`, `MDL_MASK_AND`, `MDL_IV_BASE`, `MDL_IV_TEMP` and `ASM_SPECREG` to 0 gives Release 26's behaviour back. The
 original files are in `bin/original`.
 
-With the changes, 9,085 of the 10,053 C routines compile to the arcade's instructions (3,781 with the original
-Release 26), and 8,533 to its exact bytes (1,824). Over 254 Fightcade replays compared with the original ROM,
-246 keep identical game state throughout (218 before) and 243 identical slowdown (214).
+With the changes, 9,250 of the 10,059 C routines compile to the arcade's instructions (3,785 with the original
+Release 26), and 8,772 to its exact bytes (1,831). Over 254 Fightcade replays compared with the original ROM,
+240 keep identical game state throughout (218 before) and 226 identical slowdown (214).
 
 ## Fightcade replays
 

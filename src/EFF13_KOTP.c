@@ -181,7 +181,7 @@ void kotp_16000(WORK_Other* ewk, TAMA* twk) {
         }
         ewk->wu.hf.hit_flag = 0;
         ewk->wu.hit_quake = 0;
-        break;
+        return;
     case 2:
         switch (ewk->wu.routine_no[2]) {
         case 0:

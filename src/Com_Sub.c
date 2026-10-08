@@ -234,10 +234,8 @@ s32 Check_Exit_DENJIN(PLW* wk) {
     if ((DENJIN_Term[wk->wu.id] & 4) && (xx == -1)) {
         return 1;
     }
-    if ((DENJIN_Term[wk->wu.id] & 0x20)) {
-        if ((Lie_Flag[wk->wu.id] == 0)) {
-            return 1;
-        }
+    if ((DENJIN_Term[wk->wu.id] & 0x20) && (Lie_Flag[wk->wu.id] == 0)) {
+        return 1;
     }
     return 0;
 }
@@ -518,10 +516,7 @@ s16 Lever;
         }
         return;
     default:
-        {
-            s32 j = wk->wu.id;
-            Lever_Buff[j] = Lever_LR[j];
-        }
+        Lever_Buff[wk->wu.id] = (&Lever_LR[0])[wk->wu.id];
         if (wk->wu.routine_no[1] == 4 && wk->wu.routine_no[2] == 0x1E) {
             return;
         }
@@ -561,13 +556,13 @@ u16 Lever_Data;
         if (--Combo_Speed[wk->wu.id] == 0) {
             CP_Index[wk->wu.id][1]++;
             Lever_Buff[wk->wu.id] = Lever_Data;
-            Lever_Buff[wk->wu.id] |= Lever_LR[wk->wu.id];
+            Lever_Buff[wk->wu.id] |= (&Lever_LR[0])[wk->wu.id];
         } else {
             Lever_Buff[wk->wu.id] |= Lever_LR[wk->wu.id];
         }
         break;
     default:
-        Lever_Buff[wk->wu.id] = Lever_LR[wk->wu.id];
+        Lever_Buff[wk->wu.id] = (&Lever_LR[0])[wk->wu.id];
         Stock_Hit_Flag[wk->wu.id] = wk->wu.hf.hit.player;
         Reaction_Sub(wk, Reaction, 0);
         break;
@@ -1092,7 +1087,7 @@ s16 Rnd_Type;
         Next_End(wk);
     } else {
         Disposal_Again[wk->wu.id] = 1;
-        Next_Another_Menu(wk, Next_Action, xx[zz]);
+        Next_Another_Menu(wk, Next_Action, (&xx[0])[zz]);
     }
 }
 
@@ -1378,10 +1373,7 @@ s16 Option;
             Lever_LR[wk->wu.id] = 0;
         }
     }
-    {
-        s32 j = wk->wu.id;
-        Lever_Buff[j] = Lever_LR[j];
-    }
+    Lever_Buff[wk->wu.id] = (&Lever_LR[0])[wk->wu.id];
     {
         s32 k = Option;
         if (!Check_Exit_Guard(wk, k)) {
@@ -1802,10 +1794,7 @@ s32 Check_Air_Guard(PLW* wk) {
     if (PL_Distance[wk->wu.id] > xx) {
         return 0;
     }
-    {
-        s16 t = Attack_Counter[wk->wu.id];
-        Guard_Counter[wk->wu.id] = t;
-    }
+    Guard_Counter[wk->wu.id] = Attack_Counter[wk->wu.id];
     Lv = Setup_Lv10(0);
     if ((Demo_Flag == 0) && (Weak_PL == wk->wu.id)) {
         Lv = 2;
@@ -1843,7 +1832,7 @@ s16 Lever;
         CP_Index[wk->wu.id][1]++;
         Free_Lever[wk->wu.id] = Setup_Guard_Lever(wk, Lever);
     case 1:
-        Lever_Buff[wk->wu.id] = (&Free_Lever[0])[wk->wu.id] | 1;
+        Lever_Buff[wk->wu.id] = Free_Lever[wk->wu.id] | 1;
         if (wk->wu.xyz[1].disp.pos > 0) {
             CP_Index[wk->wu.id][1]++;
         }
@@ -1907,7 +1896,7 @@ s16 Jump_Dir;
             CP_Index[wk->wu.id][1]++;
         }
         else {
-            Lever_Buff[wk->wu.id] = (&Lever_Pool[0])[wk->wu.id];
+            Lever_Buff[wk->wu.id] = Lever_Pool[wk->wu.id];
         }
         break;
     case 3:
@@ -1928,7 +1917,7 @@ s16 Jump_Dir;
         break;
     }
     if (CP_Index[wk->wu.id][1] >= 3) {
-        Lever_Buff[wk->wu.id] |= (&Lever_LR[0])[wk->wu.id];
+        Lever_Buff[wk->wu.id] |= Lever_LR[wk->wu.id];
     }
 }
 
@@ -1974,7 +1963,7 @@ s16 J_Lever_Data;
         if (wk->wu.xyz[1].disp.pos > 0) {
             CP_Index[wk->wu.id][1]++;
         } else {
-            Lever_Buff[wk->wu.id] = (&Lever_Pool[0])[wk->wu.id];
+            Lever_Buff[wk->wu.id] = Lever_Pool[wk->wu.id];
         }
         break;
     case 3:
@@ -2567,7 +2556,7 @@ u16 JLD;
         if (wk->wu.xyz[1].disp.pos > 0) {
             CP_Index[wk->wu.id][1]++;
         } else {
-            Lever_Buff[wk->wu.id] = Lever_Pool[wk->wu.id];
+            Lever_Buff[wk->wu.id] = (&Lever_Pool[0])[wk->wu.id];
             Timer_00[wk->wu.id] = 2;
         }
         break;
@@ -3002,7 +2991,7 @@ void Rapid_Sub(PLW* wk) {
             return;
         case 1:
             if (--Timer_00[wk->wu.id] == 0) {
-                Lever_Buff[wk->wu.id] = Rapid_Index[wk->wu.id];
+                Lever_Buff[wk->wu.id] = (&Rapid_Index[0])[wk->wu.id];
                 Timer_00[wk->wu.id] = 2;
                 if (--Timer_01[wk->wu.id] == 0) {
                     Rapid_No[wk->wu.id][1]++;
@@ -3020,10 +3009,7 @@ void Rapid_Sub(PLW* wk) {
         default:
             if (--Timer_00[wk->wu.id] == 0) {
                 Lever_Buff[wk->wu.id] = Rapid_Index[wk->wu.id];
-                {
-                    s16 t = Timer_01[wk->wu.id];
-                    Timer_00[wk->wu.id] = t;
-                }
+                Timer_00[wk->wu.id] = Timer_01[wk->wu.id];
             }
             break;
         }
@@ -3037,8 +3023,8 @@ void Rapid_Sub(PLW* wk) {
             break;
         default:
             if (--Timer_00[wk->wu.id] == 0) {
-                Lever_Buff[wk->wu.id] = Rapid_Index[wk->wu.id];
-                Timer_00[wk->wu.id] = Timer_01[wk->wu.id];
+                Lever_Buff[wk->wu.id] = (&Rapid_Index[0])[wk->wu.id];
+                Timer_00[wk->wu.id] = (&Timer_01[0])[wk->wu.id];
             }
             break;
         }
@@ -3304,7 +3290,7 @@ u16 JLD;
             CP_Index[wk->wu.id][1]++;
         }
         else {
-            Lever_Buff[wk->wu.id] = Lever_Pool[wk->wu.id];
+            Lever_Buff[wk->wu.id] = (&Lever_Pool[0])[wk->wu.id];
             Timer_00[wk->wu.id] = 2;
         }
         break;
@@ -3449,7 +3435,7 @@ u16 JLD;
         Check_Landed(wk, Reaction & 0xFFF);
         break;
     case 5:
-        Lever_Buff[wk->wu.id] = Lever_LR[wk->wu.id];
+        Lever_Buff[wk->wu.id] = (&Lever_LR[0])[wk->wu.id];
         if (Check_Landed(wk, Reaction) != 0) {
             break;
         }
@@ -3488,7 +3474,7 @@ u16 JLD;
 {
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
-        Lever_Buff[wk->wu.id] = Lever_LR[wk->wu.id];
+        Lever_Buff[wk->wu.id] = (&Lever_LR[0])[wk->wu.id];
         if (Check_Passive(wk) != 0) {
             break;
         }
@@ -3739,7 +3725,7 @@ u16 Tech_Number;
 s16 Ex_Shot;
 {
     if (Tech_Address[wk->wu.id][Tech_Index[wk->wu.id] + 4] != 0x1C) {
-        Lever_Buff[wk->wu.id] = Tech_Address[wk->wu.id][Tech_Index[wk->wu.id] + 3] & 0x7FFF;
+        Lever_Buff[wk->wu.id] = Tech_Address[wk->wu.id][(&Tech_Index[0])[wk->wu.id] + 3] & 0x7FFF;
         Lever_Buff[wk->wu.id] = datacmd_conpanecmd(Lever_Buff[wk->wu.id]);
         if (wk->wu.rl_waza) {
             if (Lever_Buff[wk->wu.id] & 0xC) {
@@ -3766,7 +3752,7 @@ s16 Ex_Shot;
         }
         if ((My_char[wk->wu.id] == PL_RYU) && ((Tech_Number) == 0x8015) && (Power_Level != 8)) {
             CP_Index[wk->wu.id][0]++;
-            Lever_LR[wk->wu.id] = Lever_Buff[wk->wu.id] & 0x3F0;
+            Lever_LR[wk->wu.id] = (&Lever_Buff[0])[wk->wu.id] & 0x3F0;
             if (Power_Level == 0xA) {
                 CP_Index[wk->wu.id][1] = 1;
             } else {
@@ -3775,7 +3761,7 @@ s16 Ex_Shot;
         } else {
             if (CP_No[wk->wu.id][0] == 0xA) {
                 Rapid_Index[wk->wu.id] = Lever_Buff[wk->wu.id] & 0x3F0;
-                Lever_Pool[wk->wu.id] = Lever_Buff[wk->wu.id] & 0x3F0;
+                Lever_Pool[wk->wu.id] = (&Lever_Buff[0])[wk->wu.id] & 0x3F0;
             }
             if ((wk->player_number == PL_HUGO) && ((Tech_Number) == 0x8016)) {
                 CP_Index[wk->wu.id][1] = 5;
@@ -3802,7 +3788,7 @@ s16 Ex_Shot;
     s16 xx;
     xx = 0;
     if (Tech_Number & 0x8000) {
-        if ((My_char[wk->wu.id] == PL_HUGO) && (Super_Arts[wk->wu.id] == 0)) {
+        if ((My_char[wk->wu.id] == PL_HUGO) && ((&Super_Arts[0])[wk->wu.id] == 0)) {
             xx = 1;
         }
     }
@@ -3825,7 +3811,7 @@ s16 Ex_Shot;
     switch (CP_Index[wk->wu.id][2]) {
     case 0:
         CP_Index[wk->wu.id][2]++;
-        Timer_01[wk->wu.id] = Tech_Address[wk->wu.id][Tech_Index[wk->wu.id] + 1] + 2;
+        Timer_01[wk->wu.id] = Tech_Address[wk->wu.id][(&Tech_Index[0])[wk->wu.id] + 1] + 2;
         Lever_Pool[wk->wu.id] = Tech_Address[wk->wu.id][Tech_Index[wk->wu.id] + 3];
         Setup_Command_01(wk);
         if (wk->wu.rl_waza) {
@@ -4534,10 +4520,7 @@ s32 Select_Passive(PLW* wk) {
     if (VS_Tech[wk->wu.id] == 0x1E) {
         Area_Number[wk->wu.id] = Ck_Area_Shell(wk);
     }
-    {
-        s16 t = Attack_Counter[wk->wu.id];
-        Last_Attack_Counter[wk->wu.id] = t;
-    }
+    Last_Attack_Counter[wk->wu.id] = Attack_Counter[wk->wu.id];
     Standing_Timer[wk->wu.id] = 0;
     Devide_Level(VS_Tech[wk->wu.id] >> 0xC);
     if ((Demo_Flag == 0) && (Weak_PL == wk->wu.id)) {
@@ -4596,7 +4579,7 @@ s32 Select_Passive(PLW* wk) {
     CP_No[wk->wu.id][2] = 0;
     CP_No[wk->wu.id][3] = 0;
     Timer_00[wk->wu.id] = Select_Reflection_Time(wk);
-    if ((VS_Tech[wk->wu.id] == 0x19) || (VS_Tech[wk->wu.id] == 0x13) || (Timer_00[wk->wu.id] == 0)) {
+    if ((VS_Tech[wk->wu.id] == 0x19) || (VS_Tech[wk->wu.id] == 0x13) || ((&Timer_00[0])[wk->wu.id] == 0)) {
         CP_No[wk->wu.id][0] = 6;
         CP_Index[wk->wu.id][0] = 0;
         CP_Index[wk->wu.id][1] = 0;
@@ -4660,7 +4643,7 @@ s16 PL_id;
 
 s32 Check_Passive(PLW* wk) {
     WORK* em;
-    if ((Counter_Attack[wk->wu.id]) || (Pierce_Menu[wk->wu.id])) {
+    if ((Counter_Attack[wk->wu.id]) || ((&Pierce_Menu[0])[wk->wu.id])) {
         return 0;
     }
     em = (WORK*)wk->wu.target_adrs;
@@ -4679,7 +4662,7 @@ s32 Check_Passive(PLW* wk) {
     if (Check_Shell(wk) != 0) {
         return 1;
     }
-    if ((Passive_Flag[wk->wu.id]) || (Flip_Flag[wk->wu.id])) {
+    if ((Passive_Flag[wk->wu.id]) || ((&Flip_Flag[0])[wk->wu.id])) {
         return Check_Guard(wk);
     }
     if (Check_Lie(wk) == 1) {
@@ -4697,7 +4680,7 @@ s32 Check_Passive(PLW* wk) {
     if (Check_Guard(wk) != 0) {
         return 1;
     }
-    if ((Passive_Flag[wk->wu.id]) || (Flip_Flag[wk->wu.id])) {
+    if ((Passive_Flag[wk->wu.id]) || ((&Flip_Flag[0])[wk->wu.id])) {
         return 0;
     }
     Passive_Mode = 0;
@@ -4736,10 +4719,7 @@ s32 Check_Guard(PLW* wk) {
     }
     zz = Setup_EM_Rank_Index(wk);
     if (Guard_Data[zz][Lv][Rnd] == 3) {
-        {
-            s16 t = Attack_Counter[wk->wu.id];
-            Guard_Counter[wk->wu.id] = t;
-        }
+        Guard_Counter[wk->wu.id] = Attack_Counter[wk->wu.id];
         return 0;
     }
     if (Check_Flip_Term(wk) != 0) {
@@ -6112,10 +6092,7 @@ s32 Check_Special_Technique(PLW* wk, WORK* em, s16 VS_Technique, u8 Kind_of_Tech
     if (xx == Kind_of_Tech && (em->sp_tech_id == SP_Tech_ID)) {
         if ((Option2 == -1 || !(Option2 & 8))) {
             if (Option2 == (em->kind_of_waza & 6)) {
-                {
-                    s16 t = Attack_Counter[(wk->wu.id)];
-                    Last_Attack_Counter[(wk->wu.id)] = t;
-                }
+                Last_Attack_Counter[(wk->wu.id)] = Attack_Counter[(wk->wu.id)];
                 return 0;
             }
         } else if (!((Option2 & 6) & (em->kind_of_waza & 6))) {

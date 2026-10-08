@@ -576,10 +576,9 @@ void Select_CPU_1st(void) {
 
 
 
-s32 Select_CPU_2nd(void) {
+void Select_CPU_2nd(void) {
     u16 xx;
-    s32 st = SC_No[1];
-    switch (st) {
+    switch (SC_No[1]) {
     case 0:
         SC_No[1]++;
         Order[Aborigine + 13] = 5;
@@ -602,9 +601,8 @@ s32 Select_CPU_2nd(void) {
             SC_No[1] = 0;
             Time_Stop = 0;
         }
-        return 0;
+        break;
     }
-    return st;
 }
 
 u8 *Select_CPU_3rd(void)

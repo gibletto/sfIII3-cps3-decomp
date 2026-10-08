@@ -402,7 +402,7 @@ void Appear_05000(PLW* wk) {
             set_char_move_init2(&wk->wu, 9, 0x17, 9, 0);
             if (wk->wu.id) {
                 wk->wu.xyz[0].disp.pos = bg_w.bgw[1].pos_x_work + 0x58;
-                return;
+                break;
             }
             wk->wu.xyz[0].disp.pos = bg_w.bgw[1].pos_x_work - 0x58;
             return;
@@ -1818,7 +1818,7 @@ void Appear_39000(PLW* wk) {
         if (gill_appear_check()) {
             appear_data_set(wk, (APPEAR_DATA*)appear_data);
             Appear_00000(wk);
-            return;
+            break;
         }
         bg_app_stop = 1;
         set_char_move_init(&wk->wu, 0, 2);

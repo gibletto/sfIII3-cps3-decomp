@@ -62,6 +62,7 @@ void Att_PL08_HEALING(PLW* wk) {
                 break;
             case 20:
                 wk->wu.vital_new += 1;
+            default:
                 break;
             }
         }

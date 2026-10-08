@@ -47,16 +47,16 @@ void effect_51_move(WORK_Other_CONN* ewk) {
         if ((ewk->wu.my_mr.size.y -= *(s16*)&ewk->wu.mvxy.a[0]) <= 63) {
             ewk->wu.my_mr.size.y = 63;
         }
-        if (ewk->wu.my_mr.size.x > 63 || ewk->wu.my_mr.size.y > 63) {
-            ewk->wu.position_z++;
+        if (ewk->wu.my_mr.size.x <= 63 && ewk->wu.my_mr.size.y <= 63) {
+            Flash_Sign[0]--;
+            if (ewk->wu.dir_old) {
+                ewk->wu.routine_no[0]++;
+            } else {
+                ewk->wu.routine_no[0] = 99;
+            }
             break;
         }
-        Flash_Sign[0]--;
-        if (ewk->wu.dir_old) {
-            ewk->wu.routine_no[0]++;
-        } else {
-            ewk->wu.routine_no[0] = 99;
-        }
+        ewk->wu.position_z++;
         break;
     case 3:
         if (Flash_Sign[0] == 0) {
@@ -93,7 +93,6 @@ void effect_51_move(WORK_Other_CONN* ewk) {
         if (ewk->wu.vitality) {
             set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
         }
-        break;
     }
     ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
     ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;

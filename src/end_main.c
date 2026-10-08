@@ -954,7 +954,7 @@ void op_109_move(void) {
             return;
         }
         opening_bg_move_broadcast(54);
-        break;
+        return;
     case 2:
         if (gSeqStatus[0] >= op_109_tbl[op_w.r_no_2]) {
             op_w.r_no_2 += 1;
@@ -963,7 +963,7 @@ void op_109_move(void) {
             return;
         }
         opening_bg_move_broadcast(55);
-        break;
+        return;
     case 3:
         if (gSeqStatus[0] >= op_109_tbl[op_w.r_no_2]) {
             op_w.r_no_2 += 1;
@@ -988,7 +988,7 @@ void op_109_move(void) {
         break;
     default:
         opening_bg_move_broadcast(58);
-        break;
+        return;
     }
 }
 
@@ -2008,10 +2008,11 @@ void op_bg0_0011(s16 r_index) {
         if (bgw_ptr->xy[1].disp.pos < 0) {
             bgw_ptr->xy[1].cal += 0x20000;
         }
-        if (bgw_ptr->frame_deff >= 1) {
-            bgw_ptr->frame_deff -= 1;
-            Frame_Down(0xC0, 0x40, 1, 1);
+        if (bgw_ptr->frame_deff < 1) {
+            break;
         }
+        bgw_ptr->frame_deff -= 1;
+        Frame_Down(0xC0, 0x40, 1, 1);
         break;
     }
     opening_bgw_commit_pos(0);
@@ -2689,6 +2690,11 @@ void end_main_move(s16 pl_num) {
 void end_00000(void)
 {
     end_06000(6);
+}
+
+/* provisional name */
+void end_color_load(void) {
+    load_any_color(end_color_tbl[end_w.type]);
 }
 
 

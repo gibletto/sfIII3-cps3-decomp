@@ -64,7 +64,7 @@ void effect_08_move(WORK_Other* ewk) {
                     scrn_map_set_now(1, eff_bg_adrs[slot].adrs);
                     pos_y = eff08_anm2_tbl[(s8)ewk->wu.cg_ix].y + (bg_w.bgw[1].abs_y & 0x3FF);
                     Scrn_Y_Set_R(1, pos_y);
-                    break;
+                    return;
                 }
                 ewk->wu.cg_ctr = eff08_anm_tbl[(s8)ewk->wu.cg_ix].timer;
                 slot = eff08_anm_tbl[(s8)ewk->wu.cg_ix].slot;

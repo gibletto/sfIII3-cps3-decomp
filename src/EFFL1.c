@@ -74,7 +74,6 @@ void effect_L1_move(WORK_Other_CONN* ewk) {
                     ewk->conn[i].chr = ewk->conn[ewk->num_of_conn + ewk->wu.direction].chr;
                 }
             }
-            break;
         }
         effL1_trans(&ewk->wu);
         break;

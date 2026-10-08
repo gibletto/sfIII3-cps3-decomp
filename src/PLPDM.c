@@ -834,10 +834,10 @@ void Damage_30000(PLW* wk) {
         buttobi_add_y_check(wk);
         setup_butt_own_data(&wk->wu);
         cal_initial_speed_y(&wk->wu, buttobi_time_table[wk->as->char_ix][wk->wu.dm_attlv], 0);
-        break;
+        return;
     case 1:
         if (setup_kuuchuu_nmdm(wk)) {
-            break;
+            return;
         }
         wk->wu.routine_no[3]++;
         char_move_wca_init(&wk->wu);
@@ -845,7 +845,7 @@ void Damage_30000(PLW* wk) {
         set_dm_hos_flag_sky(wk);
         first_flight_union(wk, 3, 3);
         if (wk->wu.routine_no[3] == 3 || !wk->hos_fi_flag) {
-            break;
+            return;
         }
         wk->wu.routine_no[2] = 18;
         wk->wu.routine_no[3] = 1;
@@ -869,7 +869,7 @@ void Damage_30000(PLW* wk) {
     case 3:
         char_move(&wk->wu);
         buttobi_chakuchi_cg_type_check(wk);
-        break;
+        return;
     }
 }
 
@@ -895,7 +895,7 @@ void Damage_31000(PLW* wk) {
         set_dm_hos_flag_sky(wk);
         first_flight_union(wk, 3, 3);
         if (wk->wu.routine_no[3] != 3) {
-            break;
+            return;
         }
         wk->wu.dir_timer = 10;
         wk->wu.cg_hit_ix = 1;
@@ -910,7 +910,7 @@ void Damage_31000(PLW* wk) {
         wk->wu.cg_ja = wk->wu.hit_ix_table[1];
         set_jugde_area(&wk->wu);
         if (--wk->wu.dir_timer >= 0) {
-            break;
+            return;
         }
         set_char_move_init(&wk->wu, 6, 17);
         wk->wu.cg_wca_ix++;

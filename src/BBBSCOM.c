@@ -79,7 +79,7 @@ void bbbs_com_execute(PLW* wk) {
             }
             break;
         case 1:
-            if (--wk->wu.dir_timer <= 0) {
+            if (--wk->wu.dir_timer < 1) {
                 Bonus_Stage_RNO[1] = 2;
             }
             break;
@@ -115,7 +115,6 @@ void bbbs_com_execute(PLW* wk) {
         case 6:
             rno[0] = 2;
             Bonus_Stage_RNO[1] = 0;
-            break;
         }
     case 2:
         break;

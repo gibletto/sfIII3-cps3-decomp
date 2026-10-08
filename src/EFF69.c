@@ -36,17 +36,17 @@ void EFF69_WAIT(WORK_Other* ewk) {
     }
 }
 
-u8 * EFF69_SLIDE_IN(WORK_Other* ewk)
+void EFF69_SLIDE_IN(WORK_Other* ewk)
 {
-
     if (Order[ewk->wu.dir_old] != 1) {
         ewk->wu.routine_no[0] = Order[ewk->wu.dir_old];
         ewk->wu.routine_no[1] = 0;
-        return (u8*)0x26;
+        return;
     }
-    if (ewk->wu.routine_no[1] == 0) {
-        if (--Order_Timer[ewk->wu.dir_old] != 0) {
-            return (u8*)Order_Timer;
+    switch (ewk->wu.routine_no[1]) {
+    case 0:
+        if (--Order_Timer[ewk->wu.dir_old]) {
+            break;
         }
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
@@ -58,23 +58,28 @@ u8 * EFF69_SLIDE_IN(WORK_Other* ewk)
             ewk->wu.mvxy.a[0].sp = 0x100000;
             ewk->wu.mvxy.d[0].sp = 0x8000;
         }
-        return (u8*)((s32 (*)())set_char_move_init2)(ewk, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
-    }
-    ewk->wu.xyz[0].cal += ewk->wu.mvxy.a[0].sp;
-    ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;
-    if (ewk->wu.mvxy.a[0].sp > 0) {
-        if (ewk->wu.xyz[0].disp.pos < ewk->wu.hit_quake) {
-            return (u8*)0x64;
+        set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
+        break;
+    default:
+        ewk->wu.xyz[0].cal += ewk->wu.mvxy.a[0].sp;
+        ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;
+        if (0 < ewk->wu.mvxy.a[0].sp) {
+            if (ewk->wu.hit_quake <= ewk->wu.xyz[0].disp.pos) {
+                if (Order[ewk->wu.dir_old] == ewk->wu.routine_no[0]) {
+                    Order[ewk->wu.dir_old] = 0;
+                }
+                ewk->wu.routine_no[0] = 0;
+                ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake;
+            }
+        } else if (ewk->wu.hit_quake >= ewk->wu.xyz[0].disp.pos) {
+            if (Order[ewk->wu.dir_old] == ewk->wu.routine_no[0]) {
+                Order[ewk->wu.dir_old] = 0;
+            }
+            ewk->wu.routine_no[0] = 0;
+            ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake;
         }
-    } else if (ewk->wu.xyz[0].disp.pos > ewk->wu.hit_quake) {
-        return (u8*)0x64;
+        break;
     }
-    if (Order[ewk->wu.dir_old] == (u16)ewk->wu.routine_no[0]) {
-        Order[ewk->wu.dir_old] = 0;
-    }
-    ewk->wu.routine_no[0] = 0;
-    ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake;
-    return (u8*)0x64;
 }
 
 

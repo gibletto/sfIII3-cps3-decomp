@@ -78,11 +78,7 @@ void animal_init(WORK_Other* ewk) {
         ewk->wu.rl_flag ^= 1;
         break;
     case 6:
-        if (plw->player_number == PL_IBUKI) {
-            ewk->wu.my_col_code = plw->wu.my_col_code;
-        } else {
-            ewk->wu.my_col_code = plw[1].wu.my_col_code;
-        }
+        ewk->wu.my_col_code = (plw->player_number == PL_IBUKI) ? plw->wu.my_col_code : plw[1].wu.my_col_code;
         ewk->wu.kage_flag = 1;
         ewk->wu.kage_hx = -2;
         ewk->wu.kage_hy = 24;

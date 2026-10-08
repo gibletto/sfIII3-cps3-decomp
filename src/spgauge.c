@@ -193,7 +193,7 @@ void spgauge_cont_main(void) {
 
 
 void spgauge_control(s8 Spg_Num) {
-    if (((u8)sa_gauge_flash[Spg_Num])) {
+    if (sa_gauge_flash[Spg_Num]) {
         spgauge_sound_request(Spg_Num);
         if (plw[Spg_Num].sa->store == plw[Spg_Num].sa->store_max && spg_dat[Spg_Num].max_old == 0 && spg_dat[Spg_Num].max == 0) {
             spg_dat[Spg_Num].max = 1;
@@ -244,8 +244,10 @@ void spgauge_control(s8 Spg_Num) {
         } else {
             spg_dat[Spg_Num].current_spg = plw[Spg_Num].sa->gauge.s.h;
         }
-        if (spg_dat[Spg_Num].max == 0 && spg_dat[Spg_Num].flag == 0 && spg_dat[Spg_Num].max_old == 0) {
-            sa_waku_trans(Spg_Num, Spg_Num);
+        if (spg_dat[Spg_Num].max == 0 && spg_dat[Spg_Num].flag == 0) {
+            if (spg_dat[Spg_Num].max_old == 0) {
+                sa_waku_trans(Spg_Num, Spg_Num);
+            }
         }
     }
 }
@@ -336,40 +338,41 @@ void sa_time_moji_send(void) {
 
 
 void sast_control(s8 Stpl_Num) {
-    SPG_DAT* spg = &spg_dat[Stpl_Num];
-    switch (spg->max_rno) {
+    switch (spg_dat[Stpl_Num].max_rno) {
     case 0:
-        ((void(*)())sa_moji_trans)(Stpl_Num, 0, 1);
-        spg->spg_level = plw[Stpl_Num].sa->store;
-        sa_stock_trans(spg->spg_level, 1, Stpl_Num);
+        sa_moji_trans(Stpl_Num, 0, 1);
+        spg_dat[Stpl_Num].spg_level = plw[Stpl_Num].sa->store;
+        sa_stock_trans(spg_dat[Stpl_Num].spg_level, 1, Stpl_Num);
         sa_gauge_trans(Stpl_Num, 1);
-        ((void(*)())sagauge_color_chenge)(Stpl_Num);
-        spg->max_rno = 1;
+        sagauge_color_chenge(Stpl_Num);
+        spg_dat[Stpl_Num].max_rno = 1;
         break;
     case 1:
-        spg->timer--;
-        if (spg->timer) {
-            spg->timer2--;
-            if (spg->timer2 != 0) {
+        spg_dat[Stpl_Num].timer--;
+        if (spg_dat[Stpl_Num].timer) {
+            spg_dat[Stpl_Num].timer2--;
+            if (spg_dat[Stpl_Num].timer2 != 0) {
                 break;
             }
-            spg->kind++;
-            if (spg->kind == 3) {
-                spg->kind = 0;
+            spg_dat[Stpl_Num].kind++;
+            if (spg_dat[Stpl_Num].kind == 3) {
+                spg_dat[Stpl_Num].kind = 0;
             }
-            sa_gauge_trans(Stpl_Num, spg->kind);
-            sa_stock_trans(spg->spg_level, spg->kind, Stpl_Num);
-            spg->timer2 = 1;
+            sa_gauge_trans(Stpl_Num, spg_dat[Stpl_Num].kind);
+            sa_stock_trans(spg_dat[Stpl_Num].spg_level, spg_dat[Stpl_Num].kind, Stpl_Num);
+            spg_dat[Stpl_Num].timer2 = 1;
         } else {
             sa_gauge_trans(Stpl_Num, 1);
-            sa_stock_trans(spg->spg_level, 1, Stpl_Num);
-            spg->max = 0;
-            spg->max_old = 1;
-            spg->kind = 1;
-            spg->timer2 = 2;
-            spg->max_rno = 2;
-            spg->time_rno = 5;
+            sa_stock_trans(spg_dat[Stpl_Num].spg_level, 1, Stpl_Num);
+            spg_dat[Stpl_Num].max = 0;
+            spg_dat[Stpl_Num].max_old = 1;
+            spg_dat[Stpl_Num].kind = 1;
+            spg_dat[Stpl_Num].timer2 = 2;
+            spg_dat[Stpl_Num].max_rno = 2;
+            spg_dat[Stpl_Num].time_rno = 5;
         }
+        break;
+    case 2:
         break;
     }
 }
@@ -533,7 +536,6 @@ s8 step;
 
 
 void sagauge_color_chenge(s8 Stpl_Num) {
-    SPG_DAT* spg = &spg_dat[1];
     if (spg_dat[Stpl_Num].no_chgcol) {
         return;
     }
@@ -544,16 +546,16 @@ void sagauge_color_chenge(s8 Stpl_Num) {
     spg_dat[Stpl_Num].gauge_flash_time = 2;
     if (Stpl_Num == 0) {
         sq_paint_chenge(6, 26, spg_dat[0].spg_len, 1, sagauge_colchg_tbl[spg_dat[0].gauge_flash_col][0]);
-    } else if (spg->max == 1 || spg->max_old == 1 || spg->spg_level == spg->spg_maxlevel) {
-        sq_paint_chenge(42 - spg->spg_len, 26, spg->mass_len, 1, sagauge_colchg_tbl[spg->gauge_flash_col][1]);
-        sq_paint_chenge(42 - spg->spg_len + spg->mass_len, 26, spg->mchar, 1, sagauge_colchg_tbl[spg->gauge_flash_col][0]);
-        sq_paint_chenge(42 - spg->spg_len + spg->mass_len + spg->mchar,
+    } else if (spg_dat[1].max == 1 || spg_dat[1].max_old == 1 || spg_dat[1].spg_level == spg_dat[1].spg_maxlevel) {
+        sq_paint_chenge(42 - spg_dat[1].spg_len, 26, spg_dat[1].mass_len, 1, sagauge_colchg_tbl[spg_dat[1].gauge_flash_col][1]);
+        sq_paint_chenge(42 - spg_dat[1].spg_len + spg_dat[1].mass_len, 26, spg_dat[1].mchar, 1, sagauge_colchg_tbl[spg_dat[1].gauge_flash_col][0]);
+        sq_paint_chenge(42 - spg_dat[1].spg_len + spg_dat[1].mass_len + spg_dat[1].mchar,
                      26,
-                     spg->mass_len,
+                     spg_dat[1].mass_len,
                      1,
-                     sagauge_colchg_tbl[spg->gauge_flash_col][1]);
+                     sagauge_colchg_tbl[spg_dat[1].gauge_flash_col][1]);
     } else {
-        sq_paint_chenge(42 - spg->spg_len, 26, spg->spg_len, 1, sagauge_colchg_tbl[spg->gauge_flash_col][1]);
+        sq_paint_chenge(42 - spg_dat[1].spg_len, 26, spg_dat[1].spg_len, 1, sagauge_colchg_tbl[spg_dat[1].gauge_flash_col][1]);
     }
     if (spg_dat[Stpl_Num].gauge_flash_col == 3) {
         spg_dat[Stpl_Num].gauge_flash_col = 0;

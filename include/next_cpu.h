@@ -10,7 +10,7 @@ void Next_CPU_3rd(void);
 s32 Check_EM_Speech(void);
 void After_Bonus_2nd(void);
 void After_Bonus_3rd(void);
-s32 Select_CPU_2nd(void);
+void Select_CPU_2nd(void);
 u32 Next_Bonus_2nd(void);
 void Next_Q_2nd(void);
 void Next_Q_3rd(void);

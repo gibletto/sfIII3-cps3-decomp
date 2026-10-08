@@ -56,7 +56,8 @@ s16 y2;
     }
     tent += dir_sel_table[y1][y2];
     if (yhan) {
-        tent = (u8)-tent;
+        tent = -tent;
+        tent &= 0xFF;
     }
     return tent;
 }

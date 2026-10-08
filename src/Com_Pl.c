@@ -192,10 +192,7 @@ void Com_Initialize(PLW* wk) {
 
 void Com_Free(PLW* wk) {
     s16 xx;
-    {
-        u16 t = Lever_LR[wk->wu.id];
-        Lever_Buff[wk->wu.id] = t;
-    }
+    Lever_Buff[wk->wu.id] = Lever_LR[wk->wu.id];
     if (Check_Damage(wk)) {
         return;
     }
@@ -929,18 +926,12 @@ void Float_3rd(register PLW* wk) {
         CP_No[wk->wu.id][2]++;
         Timer_00[wk->wu.id] = 4;
         Lever_Pool[wk->wu.id] = Setup_Guard_Lever(wk, 0);
-        {
-            s32 i = wk->wu.id;
-            Lever_Buff[i] = Lever_Pool[i];
-        }
+        Lever_Buff[wk->wu.id] = (&Lever_Pool[0])[wk->wu.id];
         break;
     default:
         if (--Timer_00[wk->wu.id] == 0) {
             Timer_00[wk->wu.id] = 3;
-            {
-                s32 i = wk->wu.id;
-                Lever_Buff[i] = Lever_Pool[i];
-            }
+            Lever_Buff[wk->wu.id] = (&Lever_Pool[0])[wk->wu.id];
         }
         break;
     }
@@ -957,20 +948,14 @@ void Float_4th(PLW* wk) {
         CP_No[wk->wu.id][2]++;
         Timer_00[wk->wu.id] = 4;
         Lever_Pool[wk->wu.id] = Setup_Guard_Lever(wk, 1);
-        {
-            u16 lp = Lever_Pool[wk->wu.id];
-            Lever_Buff[wk->wu.id] = lp;
-        }
+        Lever_Buff[wk->wu.id] = (&Lever_Pool[0])[wk->wu.id];
         return;
     default:
         if (--Timer_00[wk->wu.id] != 0) {
             break;
         }
         Timer_00[wk->wu.id] = 3;
-        {
-            u16 lp = Lever_Pool[wk->wu.id];
-            Lever_Buff[wk->wu.id] = lp;
-        }
+        Lever_Buff[wk->wu.id] = (&Lever_Pool[0])[wk->wu.id];
         break;
     }
 }
@@ -1408,10 +1393,7 @@ s32 Command_Attack_SP(PLW* wk, s8 Pl_Number, s32 TN, s16 Power_Level) {
         break;
     case 2:
         if (wk->wu.cg_type == 64) {
-            {
-                u16 t = Lever_Pool[wk->wu.id];
-                Lever_Buff[wk->wu.id] = t;
-            }
+            Lever_Buff[wk->wu.id] = Lever_Pool[wk->wu.id];
             CP_Index[wk->wu.id][1]++;
         }
     default:

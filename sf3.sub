@@ -101,6 +101,8 @@ INPUT obj\pow_pow.obj
 INPUT obj\sel_pl.obj
 INPUT obj\next_cpu.obj
 INPUT obj\game_config_main.obj
+INPUT obj\game_config_jp.obj
+INPUT obj\game_config_en.obj
 INPUT obj\CMD_MAIN.obj
 INPUT obj\cmd_main_2.obj
 INPUT obj\ta_sub.obj
@@ -170,6 +172,7 @@ INPUT obj\cmb_cont.obj
 INPUT obj\EFFECT.obj
 INPUT obj\effect_2.obj
 INPUT obj\EFF00.obj
+INPUT obj\EFF01_code.obj
 INPUT obj\EFF02.obj
 INPUT obj\EFF03.obj
 INPUT obj\EFF04.obj

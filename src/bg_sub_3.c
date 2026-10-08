@@ -50,8 +50,7 @@ void bg_base_y_move_check(void) {
         } else {
             kake = 0x1C000;
             pos_w = kake * hi_pos;
-            bgw_ptr->xy[1].cal = 0;
-            bgw_ptr->wxy[1].cal = 0;
+            bgw_ptr->xy[1].cal = bgw_ptr->wxy[1].cal = 0;
             bgw_ptr->xy[1].cal += pos_w;
             bgw_ptr->wxy[1].cal += pos_w;
             if (bgw_ptr->xy[1].disp.pos > bgw_ptr->y_limit2) {
@@ -141,7 +140,7 @@ s32 zoom_frame_judge(void) {
 
 
 void zoom_ud_check(void) {
-    s16 work;
+    s32 work;
     s16 work2;
     s16 pos_w;
     s16 x2;
@@ -245,10 +244,10 @@ s32 zoom_frame_judge_dist(void) {
     if (right > 304) {
         return 2;
     }
-    if (right >= 272) {
-        return 1;
+    if (right < 272) {
+        return 0;
     }
-    return 0;
+    return 1;
 }
 
 
@@ -440,7 +439,7 @@ void suzi_line_calc_fill(s16 bg_num) {
     } else {
         dist = bg_w.bgw[bg_num].chase_xy[0].disp.pos;
     }
-    if (dist == bg_w.bgw[bg_num].old_pos_x) {
+    if (bg_w.bgw[bg_num].old_pos_x == dist) {
         return;
     }
     dist -= bg_w.bgw[bg_num].old_pos_x;
@@ -493,7 +492,7 @@ void suzi_line_calc_fill(s16 bg_num) {
         count = 41 - bg_w.bgw[bg_num].d_line;
         for (i = 0; i < count; i++) {
             *dst = *(u16*)(line - 1);
-            dst += 2;
+            dst = dst + 2;
         }
     }
     top = suzi_line_buf[0];

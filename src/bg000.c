@@ -669,7 +669,7 @@ void bg_rect_attr_add(u16* adrs, s32 x, s16 w, s32 y, s16 h, s16 bits, s16 add) 
     s16 i;
     s16 j;
     u16* p;
-    adrs = adrs + x;
+    adrs += x;
     adrs = adrs + y;
     i = 0;
     while (i < h) {
@@ -1009,7 +1009,8 @@ void bg_etc_write(s16 type) {
         bg_w.bgw[i].hos_xy[1].cal = 0;
         bg_w.bgw[i].rewrite_flag = 0;
         bg_w.bgw[i].fam_no = i;
-        bg_w.bgw[i].speed_y = bg_w.bgw[i].speed_x = 0;
+        bg_w.bgw[i].speed_x = 0;
+        bg_w.bgw[i].speed_y = 0;
         bg_w.bgw[i].r_no_1 = bg_w.bgw[i].r_no_2 = 0;
     }
     for (i = 0; i < bg_w.scno; i++) {
@@ -1175,9 +1176,10 @@ void bg0000_demo(void) {
         break;
     case 1:
         bgw_ptr->free--;
-        if (bgw_ptr->free <= 0) {
-            bgw_ptr->r_no_1 += 1;
+        if (bgw_ptr->free > 0) {
+            break;
         }
+        bgw_ptr->r_no_1 += 1;
         break;
     case 2:
         if (bgw_ptr->u_line) {
@@ -1207,6 +1209,13 @@ void bg0000_demo(void) {
         bgw_ptr->r_no_0 = 2;
         break;
     }
+}
+
+
+
+/* provisional name */
+void bg0000_demo_effect_set(void) {
+    effect_44_init(9);
 }
 
 

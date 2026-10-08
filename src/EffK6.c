@@ -247,7 +247,11 @@ s32 effect_K6_init(s16 PL_id, s16 dir_old, s16 dm_vital, s16 Target_BG) {
 
 
 
-void Setup_1st_PosK6(WORK_Other* ewk, s16 Who, s16 Play_Style) {
+void Setup_1st_PosK6(ewk, Who, Play_Style)
+WORK_Other* ewk;
+s16 Who;
+s16 Play_Style;
+{
     if (ewk->master_id) {
         ewk->wu.mvxy.a[0].sp = -0xF0000;
         ewk->wu.mvxy.d[0].sp = 0;

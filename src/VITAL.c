@@ -163,10 +163,9 @@ s32 vital_control(s8 pl) {
 
 s32 vital_parts_allwrite(s8 pl) {
     const u16* tbl;
+    s8 i;
     const s16* cols;
     const s16* attrs;
-    s8 i;
-    u16 code;
     if (vit_bar[1].cyerw < 0) {
         vit_bar[1].cyerw = 0;
     }
@@ -182,31 +181,33 @@ s32 vital_parts_allwrite(s8 pl) {
     vital_col_ix = 0;
     for (i = 0; i < 20; i++) {
         vital_dot_pos -= 8;
-        if (vital_dot_pos >= vit_bar[1].cred) {
-            code = 0xAC;
-        } else if (vit_bar[1].cyerw > vital_dot_pos) {
-            if (vital_dot_pos + 8 > vit_bar[1].cred) {
-                vital_red_ofs = vital_dot_pos - vit_bar[1].cred + 8;
-            } else {
-                vital_red_ofs = 0;
+        if (vital_dot_pos < vit_bar[1].cred) {
+            if (vit_bar[1].cyerw > vital_dot_pos) {
+                if (vital_dot_pos + 8 > vit_bar[1].cred) {
+                    vital_red_ofs = vital_dot_pos - vit_bar[1].cred + 8;
+                } else {
+                    vital_red_ofs = 0;
+                }
+                if (vital_dot_pos + 8 > vit_bar[1].cyerw) {
+                    vital_yel_ofs = vit_bar[1].cyerw - vital_dot_pos;
+                } else {
+                    vital_yel_ofs = 8;
+                }
+                tilemap_put_cell(cols[vital_col_ix], 2, attrs[vit_bar[1].colnum], tbl[vital_yel_ofs * 9 + vital_red_ofs]);
+                vital_col_ix++;
+                continue;
             }
-            if (vital_dot_pos + 8 > vit_bar[1].cyerw) {
-                vital_yel_ofs = vit_bar[1].cyerw - vital_dot_pos;
-            } else {
-                vital_yel_ofs = 8;
-            }
-            code = tbl[vital_yel_ofs * 9 + vital_red_ofs];
-        } else {
             if (vit_bar[1].cred >= vital_dot_pos + 8) {
                 vital_red_ofs = 0;
             } else {
                 vital_red_ofs = vital_dot_pos - vit_bar[1].cred + 8;
             }
             vital_yel_ofs = 0;
-            code = 0xAC;
+            tilemap_put_cell(cols[vital_col_ix], 2, attrs[vit_bar[1].colnum], 0xAC);
+            vital_col_ix++;
+            continue;
         }
-        tilemap_put_cell(cols[vital_col_ix], 2, attrs[vit_bar[1].colnum], code);
+        tilemap_put_cell(cols[vital_col_ix], 2, attrs[vit_bar[1].colnum], 0xAC);
         vital_col_ix++;
     }
-    return i;
 }

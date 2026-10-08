@@ -488,10 +488,10 @@ void c2_last_char_and_mvxy(WORK_Other* ewk) {
 
 
 
-s16 c2_last_dir_select(PLW* wk, WORK* efw) {
+s32 c2_last_dir_select(PLW* wk, WORK* efw) {
     s16 ix = get_sel_hosei_tbl_ix(wk->player_number) + 1;
     s16* dad = efw->hosei_adrs[ix].hos_box;
-    u16 dir = 4;
+    s16 dir = 4;
     if (check_work_position_bonus(&wk->wu, efw->xyz[0].disp.pos + dad[0] + (dad[1] / 2))) {
         dir = 0;
     }

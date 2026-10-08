@@ -210,43 +210,43 @@ s32 Switch_Screen(void) {
     switch (((s8)Wipe_Mode)) {
     case 0:
         wipe_pattern_set(((s8)Wipe_Kind), Wipe_Count, 0);
-        if (++Wipe_Count >= ((s8)Wipe_Limit)) {
-            Exec_Wipe = 0;
-            Stop_Combo = 0;
-            return 1;
+        if (++Wipe_Count < ((s8)Wipe_Limit)) {
+            return 0;
         }
-        return 0;
+        Exec_Wipe = 0;
+        Stop_Combo = 0;
+        return 1;
     case 1:
         wipe_pattern_or_cols(((s8)Wipe_Kind), Wipe_Count);
-        if (++Wipe_Count >= ((s8)Wipe_Limit)) {
-            Exec_Wipe = 0;
-            Stop_Combo = 0;
-            return 1;
+        if (++Wipe_Count < ((s8)Wipe_Limit)) {
+            return 0;
         }
-        return 0;
+        Exec_Wipe = 0;
+        Stop_Combo = 0;
+        return 1;
     case 2:
         wipe_pattern_and_low(((s8)Wipe_Kind), Wipe_Count);
-        if (++Wipe_Count >= ((s8)Wipe_Limit)) {
-            Exec_Wipe = 0;
-            Stop_Combo = 0;
-            return 1;
+        if (++Wipe_Count < ((s8)Wipe_Limit)) {
+            return 0;
         }
-        return 0;
+        Exec_Wipe = 0;
+        Stop_Combo = 0;
+        return 1;
     case 3:
     case 4:
         wipe_pattern_or_cols(((s8)Wipe_Kind), Wipe_Count);
-        if (++Wipe_Count >= ((s8)Wipe_Limit)) {
-            Exec_Wipe = 0;
-            Stop_Combo = 0;
-            return 1;
+        if (++Wipe_Count < ((s8)Wipe_Limit)) {
+            return 0;
         }
-        return 0;
+        Exec_Wipe = 0;
+        Stop_Combo = 0;
+        return 1;
     case 5:
         wipe_mask_and_cols(((s8)Wipe_Kind), Wipe_Count);
-        if (++Wipe_Count >= ((s8)Wipe_Limit)) {
-            return 1;
+        if (++Wipe_Count < ((s8)Wipe_Limit)) {
+            return 0;
         }
-        return 0;
+        return 1;
     }
     return 0;
 }
@@ -257,36 +257,36 @@ s32 Switch_Screen_Revival(void) {
     switch (((s8)Wipe_Mode)) {
     case 0:
         wipe_pattern_set(((s8)Wipe_Kind), Wipe_Count, 1);
-        if (++Wipe_Count >= ((s8)Wipe_Limit)) {
-            Exec_Wipe = 0;
-            Escape_SS = 0;
-            return 1;
+        if (++Wipe_Count < ((s8)Wipe_Limit)) {
+            return 0;
         }
-        return 0;
+        Exec_Wipe = 0;
+        Escape_SS = 0;
+        return 1;
     case 1:
         wipe_pattern_restore_cols(((s8)Wipe_Kind), Wipe_Count);
-        if (++Wipe_Count >= ((s8)Wipe_Limit)) {
-            Exec_Wipe = 0;
-            Escape_SS = 0;
-            return 1;
+        if (++Wipe_Count < ((s8)Wipe_Limit)) {
+            return 0;
         }
-        return 0;
+        Exec_Wipe = 0;
+        Escape_SS = 0;
+        return 1;
     case 3:
     case 4:
         wipe_pattern_restore_cols(((s8)Wipe_Kind), Wipe_Count);
-        if (++Wipe_Count >= ((s8)Wipe_Limit)) {
-            Exec_Wipe = 0;
-            Escape_SS = 0;
-            return 1;
+        if (++Wipe_Count < ((s8)Wipe_Limit)) {
+            return 0;
         }
-        return 0;
+        Exec_Wipe = 0;
+        Escape_SS = 0;
+        return 1;
     case 5:
         wipe_mask_set_cols(((s8)Wipe_Kind), Wipe_Count);
-        if (++Wipe_Count >= ((s8)Wipe_Limit)) {
-            Exec_Wipe = 0;
-            return 1;
+        if (++Wipe_Count < ((s8)Wipe_Limit)) {
+            return 0;
         }
-        return 0;
+        Exec_Wipe = 0;
+        return 1;
     }
     return 0;
 }
@@ -387,84 +387,54 @@ void Setup_Play_Type(void) {
 /* Build this player's ranking entry and try it against all four ranking tables:
    score, wins, CPU grade and grade.  Returns 1 if the player made any of them. */
 /* provisional name */
-u32 ranking_insert_all_four(s16 pl)
+u32 ranking_insert_all_four(s16 PL_id)
 {
-  char ix;
-  u8 *p;
-  u8 *cpu_grade;
-  u32 made;
-  char v;
-  char *rank;
-  s16 side;
-  u8 *name;
-  u32 id;
-  p = (u8 *)Present_Data;
-  v = Version_Type;
-  if (v == 3) {
-    made = 0;
-  }
-  else {
-    ix = (char)pl;
-    if ((v != 7) && (v != 5)) {
-      name = Present_Data[ix].name;
-      *name = 0xc;
-      name[1] = 10;
-      name[2] = 0x19;
+    s32 id;
+    s32 type = Version_Type;
+    if (type == 3) {
+        return 0;
     }
-    *(u16 *)(p + (char)(ix * 20) + 4) = (u16)Stock_My_char[pl];
-    p[(char)(ix * 20) + 0x10] = Stock_Player_Color[pl];
-    *(u32 *)(p + (char)(ix * 20) + 8) =
-         (u32)Continue_Coin[pl] + Score[ix][0];
-    cpu_grade = (u8 *)&judge_final[0][0].vs_cpu_grade[12] + 1;
-    *(u16 *)(p + (char)(ix * 20) + 0xe) =
-         Stock_Win_Record[pl];
-    p[(char)(ix * 20) + 0xc] = cpu_grade[(s16)(pl * ((s16)(344)))];
-    p[(char)(ix * 20) + 0xd] = Best_Grade[pl];
-    if (!Break_Com[ix][0]) {
-      p[(char)(ix * 20) + 0x11] = 0;
+    if (type != 7 && type != 5) {
+        Present_Data[PL_id].name[0] = 12;
+        Present_Data[PL_id].name[1] = 10;
+        Present_Data[PL_id].name[2] = 25;
     }
-    else {
-      p[(char)(ix * 20) + 0x11] = 1;
+    Present_Data[PL_id].player = Stock_My_char[PL_id];
+    Present_Data[PL_id].player_color = Stock_Player_Color[PL_id];
+    Present_Data[PL_id].score = Continue_Coin[PL_id] + Score[PL_id][0];
+    Present_Data[PL_id].wins = Stock_Win_Record[PL_id];
+    Present_Data[PL_id].cpu_grade = judge_final[PL_id][0].vs_cpu_grade[12];
+    Present_Data[PL_id].grade = Best_Grade[PL_id];
+    if (Break_Com[PL_id][0]) {
+        Present_Data[PL_id].all_clear = 1;
+    } else {
+        Present_Data[PL_id].all_clear = 0;
     }
-    p = (u8 *)Rank_In;
-    id = (u32)pl;
-    rank = Rank_In[pl];
-    v = insert_ranking_score(id);
-    *rank = v;
-    if ((-1 < *rank) && (-1 < (char)p[(id ^ 1) * 4])) {
-      rank_in_push_other(0,id);
+    id = PL_id;
+    Rank_In[PL_id][0] = insert_ranking_score(id);
+    if (Rank_In[PL_id][0] >= 0 && Rank_In[id ^ 1][0] >= 0) {
+        rank_in_push_other(0, id);
     }
-    v = insert_ranking_wins(id);
-    p[pl * 4 + 1] = v;
-    if ((-1 < (char)p[pl * 4 + 1]) && (-1 < (char)p[(id ^ 1) * 4 + 1])) {
-      rank_in_push_other(1,id);
+    Rank_In[PL_id][1] = insert_ranking_wins(id);
+    if (Rank_In[PL_id][1] >= 0 && Rank_In[id ^ 1][1] >= 0) {
+        rank_in_push_other(1, id);
     }
-    v = insert_ranking_cpu_grade(id);
-    p[pl * 4 + 2] = v;
-    if (!p[pl * 4 + 2]) {
-      side = id ^ 1;
+    Rank_In[PL_id][2] = insert_ranking_cpu_grade(id);
+    if (Rank_In[PL_id][2]) {
+        Rank_In[PL_id][2] = -1;
+    } else {
+        Rank_In[id ^ 1][2] = -1;
     }
-    else {
-      side = (u32)pl;
+    Rank_In[PL_id][3] = insert_ranking_grade(id);
+    if (Rank_In[PL_id][3]) {
+        Rank_In[PL_id][3] = -1;
+    } else {
+        Rank_In[id ^ 1][3] = -1;
     }
-    p[side * 4 + 2] = 0xff;
-    v = insert_ranking_grade(id);
-    p[pl * 4 + 3] = v;
-    if (!p[pl * 4 + 3]) {
-      p[(id ^ 1) * 4 + 3] = 0xff;
+    if (Rank_In[PL_id][0] >= 0 || Rank_In[PL_id][1] >= 0 || Rank_In[PL_id][2] >= 0 || Rank_In[PL_id][3] >= 0) {
+        return 1;
     }
-    else {
-      p[pl * 4 + 3] = 0xff;
-    }
-    rank = p + pl * 4;
-    if ((((*rank < 0) && (rank[1] < 0)) && (rank[2] < 0)) && (rank[3] < 0)) {
-      made = 0;
-    }
-    else {
-      made = 1;
-    }
-  }
-  return made;
+    return 0;
 }
 
 
@@ -519,14 +489,14 @@ s32 insert_ranking_wins(s16 PL_id) {
 
 /* provisional name */
 s32 insert_ranking_cpu_grade(s16 PL_id) {
-    s32 i;
+    s16 i;
     s16 j;
     for (i = 0; i < 5; i++) {
         if (!Check_CPU_Grade_Score(PL_id, i)) {
             continue;
         }
         for (j = 3; j >= i; j--) {
-            Ranking_Data[j + 11] = Ranking_Data[j + 10];
+            Ranking_Data[j + 10 + 1] = Ranking_Data[j + 10];
         }
         Ranking_Data[i + 10] = Present_Data[PL_id];
         return i;
@@ -538,14 +508,14 @@ s32 insert_ranking_cpu_grade(s16 PL_id) {
 
 /* provisional name */
 s32 insert_ranking_grade(s16 PL_id) {
-    s32 i;
-    s32 j;
+    s16 i;
+    s16 j;
     for (i = 0; i < 5; i++) {
         if (!((s32(*)())Check_Grade_Score)(PL_id, i)) {
             continue;
         }
         for (j = 3; j >= i; j--) {
-            Ranking_Data[j + 16] = Ranking_Data[j + 15];
+            Ranking_Data[j + 15 + 1] = Ranking_Data[j + 15];
         }
         Ranking_Data[i + 15] = Present_Data[PL_id];
         return i;
@@ -682,61 +652,53 @@ int cut_button_side(void)
 /* provisional name */
 void Disp_Digit8x16(u32 value, s16 x, s16 y) {
     s16 i;
-    s16 First_Digit;
+    s16 j;
     s32 xx;
+    s16 First_Digit;
     s16 Digit[8];
-    s32 t;
     if (value == 0) {
         score8x16_put(x, y, 16, 0);
     }
-    First_Digit = -1;
-    for (i = 7, xx = 10000000; i > 0; i--, xx /= 10) {
+    for (i = 7, xx = 10000000, First_Digit = -1; i > 0; i--, xx = xx / 10) {
         Digit[i] = value / xx;
-        t = xx;
-        t *= Digit[i];
-        value -= t;
-        if ((First_Digit < 0)) {
+        value -= xx * Digit[i];
+        if (First_Digit < 0) {
             if (Digit[i]) {
                 First_Digit = i;
             }
         }
     }
     Digit[0] = value;
-    x -= First_Digit;
-    for (i = First_Digit; i >= 0; i--) {
-        score8x16_put(x, y, 16, Digit[i]);
-        x++;
+    i = x - First_Digit;
+    for (j = First_Digit; j >= 0; j--, i++) {
+        score8x16_put(i, y, 16, Digit[j]);
     }
 }
 
 
 
-void Disp_Digit16x24(u32 value, s32 x_arg, s16 y, s32 attr_arg) {
-    s16 x = (s16)x_arg;
-    s32 attr = (s16)attr_arg;
+void Disp_Digit16x24(u32 value, s16 x, s16 y, s16 attr) {
     s16 i;
-    s16 First_Digit;
+    s16 j;
     s32 xx;
+    s16 First_Digit;
     s16 Digit[8];
-    s32 t;
     if (value == 0) {
         score16x24_put(x, y, 30, 0);
     }
-    First_Digit = -1;
-    for (i = 7, xx = 10000000; i > 0; i--, xx /= 10) {
+    for (i = 7, xx = 10000000, First_Digit = -1; i > 0; i--, xx = xx / 10) {
         Digit[i] = value / xx;
-        t = xx;
-        t *= Digit[i];
-        value -= t;
-        if ((First_Digit < 0) && Digit[i] != 0) {
-            First_Digit = i;
+        value -= xx * Digit[i];
+        if (First_Digit < 0) {
+            if (Digit[i]) {
+                First_Digit = i;
+            }
         }
     }
     Digit[0] = value;
-    x -= First_Digit * 2;
-    for (i = First_Digit; i >= 0; i--) {
-        score16x24_put(x, y, attr, Digit[i]);
-        x += 2;
+    i = x - (First_Digit * 2);
+    for (j = First_Digit; j >= 0; j--, i += 2) {
+        score16x24_put(i, y, attr, Digit[j]);
     }
 }
 

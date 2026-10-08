@@ -62,8 +62,9 @@ void grade_check_work_stage_init(s16 ix) {
 
 
 void grade_check_work_round_init(s16 ix) {
-    s32 i;
-    judge_item[ix][(u8)Play_Type].max_combo = judge_item[ix][(u8)Play_Type].em_stun = 0;
+    s16 i;
+    judge_item[ix][(u8)Play_Type].max_combo = 0;
+    judge_item[ix][(u8)Play_Type].em_stun = 0;
     judge_item[ix][(u8)Play_Type].clean_hits = 0;
     judge_item[ix][(u8)Play_Type].att_renew = 0;
     judge_item[ix][(u8)Play_Type].guard_succ = 0;
@@ -115,11 +116,15 @@ s16 pt;
         if (VS_Index[WINNER] >= 6) {
             judge_final[ix][pt].all_clear = 1;
         }
-    } else if (Break_Com[ix][0]) {
-        judge_final[ix][pt].all_clear = 1;
+        judge_final[ix][pt].keizoku = Continue_Coin[ix];
+        makeup_spp_frdat(ix, pt);
+    } else {
+        if (Break_Com[ix][0]) {
+            judge_final[ix][pt].all_clear = 1;
+        }
+        judge_final[ix][pt].keizoku = Continue_Coin[ix];
+        makeup_spp_frdat(ix, pt);
     }
-    judge_final[ix][pt].keizoku = Continue_Coin[ix];
-    makeup_spp_frdat(ix, pt);
     makeup_final_grade(ix, pt);
 }
 
@@ -178,7 +183,7 @@ void makeup_final_grade(s16 ix, s16 pt) {
                 break;
             }
         }
-        tt += grade_t_f_continue[i][1];
+        tt = tt + grade_t_f_continue[i][1];
         for (i = 0; i < 10; i++) {
             if (judge_final[ix][pt].sp_point < grade_t_f_gradeup[i + 1][0]) {
                 break;
@@ -226,8 +231,7 @@ void makeup_spp_frdat(s16 pl, s16 set)
 
     jf = &judge_final[pl][set];
     ev = jf->fr_sort_data;
-    n = 0;
-    for (i = 0; i < jf->vcr_ix; i++) {
+    for (i = n = 0; i < jf->vcr_ix; i++) {
         if (i == jf->vs_cpu_player[15]) {
             ev[n][0] = 9;
             ev[n][1] = ((u8 *)jf->vs_cpu_grade)[31];
@@ -512,7 +516,7 @@ s16 wf;
             break;
         }
     }
-    num += grade_t_bougyoritsu2[i][1];
+    num = num + grade_t_bougyoritsu2[i][1];
     t = judge_item[ix][Play_Type_low].clean_hits + judge_item[(ix + 1) & 1][Play_Type_low].guard_succ;
     t *= 100;
     point2 = t / judge_item[ix][Play_Type_low].att_renew;

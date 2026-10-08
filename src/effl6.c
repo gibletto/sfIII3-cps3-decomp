@@ -172,10 +172,18 @@ s32 effect_L6_init(WORK* wk, u8 typel6) {
     } else {
         ewk->wu.rl_flag = wk->rl_flag;
         if (wk->rl_flag) {
-            ewk->wu.xyz[0].disp.pos = (wk->xyz[0].disp.pos < bg_w.bgw[1].wxy[0].disp.pos) ? wk->xyz[0].disp.pos - 256 : bg_w.bgw[1].wxy[0].disp.pos - (bg_w.pos_offset + 32);
+            if (wk->xyz[0].disp.pos < bg_w.bgw[1].wxy[0].disp.pos) {
+                ewk->wu.xyz[0].disp.pos = wk->xyz[0].disp.pos - 256;
+            } else {
+                ewk->wu.xyz[0].disp.pos = bg_w.bgw[1].wxy[0].disp.pos - (bg_w.pos_offset + 32);
+            }
             ewk->wu.old_rno[1] = wk->xyz[0].disp.pos - 32;
         } else {
-            ewk->wu.xyz[0].disp.pos = (wk->xyz[0].disp.pos > bg_w.bgw[1].wxy[0].disp.pos) ? wk->xyz[0].disp.pos + 256 : bg_w.bgw[1].wxy[0].disp.pos + (bg_w.pos_offset + 32);
+            if (wk->xyz[0].disp.pos > bg_w.bgw[1].wxy[0].disp.pos) {
+                ewk->wu.xyz[0].disp.pos = wk->xyz[0].disp.pos + 256;
+            } else {
+                ewk->wu.xyz[0].disp.pos = bg_w.bgw[1].wxy[0].disp.pos + (bg_w.pos_offset + 32);
+            }
             ewk->wu.old_rno[1] = wk->xyz[0].disp.pos + 32;
         }
         ewk->wu.old_rno[0] = 80;

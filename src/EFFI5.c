@@ -82,7 +82,7 @@ void effect_I5_move(WORK_Other* ewk) {
             ewk->wu.routine_no[0]++;
         }
         disp_pos_trans_entry(ewk);
-        break;
+        return;
     case 7:
         disp_pos_trans_entry(ewk);
         break;

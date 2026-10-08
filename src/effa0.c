@@ -141,7 +141,7 @@ s32 effect_A0_init(s16 pl) {
     PLW* mwk;
     WORK* twk;
     s16 ix;
-    s16 center;
+    s32 center;
     s16 offset;
     if ((ix = pull_effect_work(4)) == -1) {
         return -1;

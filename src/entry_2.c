@@ -764,7 +764,7 @@ s16 Jump_Index;
             tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], 32, 18, msg_blank);
             break;
         case 1:
-            if (--Personal_Timer[PL_id] == 0) {
+            if (--(&Personal_Timer[0])[PL_id] == 0) {
                 E_Number[PL_id][1] += 1;
                 Naming_Init(PL_id);
                 commit_name_entry_row_both_players(Text_Page_Y);
@@ -888,10 +888,19 @@ void Naming_Cut_Sub_2P(void) {
     if (Naming_Cut[1]) {
         return;
     }
-    credit = (Chute_Mode < 2) ? credit_1p : credit_2p;
-    state = (Two_Coin_Start && Request_Break[1] == 0 && credit < 2) ? 99 : Request_Break[1] | credit;
+    if (Chute_Mode < 2) {
+        credit = credit_1p;
+    } else {
+        credit = credit_2p;
+    }
+    if (Two_Coin_Start != 0 && Request_Break[1] == 0 && credit < 2) {
+        state = 99;
+    } else {
+        state = Request_Break[1] | credit;
+    }
     switch (state) {
     case 0:
+        break;
     case 99:
         break;
     default:
@@ -1907,7 +1916,7 @@ s16 PL_id;
 
 
 void Break_Into_09(s16 PL_id) {
-    tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18, msg_blank);
+    tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + (&Entry_Mes_X[0])[PL_id], Text_Page_Y, 18, msg_blank);
     E_Number[New_Challenger][0] = 0;
     E_Number[New_Challenger][1] = 0;
     E_Number[New_Challenger][2] = 0;
@@ -1925,7 +1934,7 @@ void Break_Into_09(s16 PL_id) {
 
 
 void Break_Into_10(s16 PL_id) {
-    tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18, msg_blank);
+    tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + (&Entry_Mes_X[0])[PL_id], Text_Page_Y, 18, msg_blank);
     E_Number[New_Challenger][0] = 0;
     E_Number[New_Challenger][1] = 0;
     E_Number[New_Challenger][2] = 0;

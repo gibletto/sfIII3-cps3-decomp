@@ -39,7 +39,7 @@ void effect_80_move(WORK_Other* ewk) {
         if (Ck_Range_Out_S(ewk, 2, 96)) {
             ewk->wu.disp_flag = 0;
             ewk->wu.routine_no[0]++;
-            goto end;
+            return;
         }
         break;
     case 2:
@@ -55,8 +55,6 @@ void effect_80_move(WORK_Other* ewk) {
     ewk->wu.position_y = ewk->wu.xyz[1].disp.pos = mwk->wu.position_y;
     ewk->wu.position_z = ewk->wu.xyz[2].disp.pos = mwk->wu.position_z - 1;
     sort_push_request4(&ewk->wu);
-    return;
-end:;
 }
 
 

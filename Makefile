@@ -8,9 +8,9 @@ CFLAGS = -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -inc
 OPT = -optimize=1 -speed
 
 # modules compiled with other settings
-NOINLINE = Entry entry_2 SYS_sub sel_pl next_cpu CMD_MAIN cmd_main_2 ta_sub end_main end_4 sc_trans VITAL count \
-	sc_sub sc_sub_2 EFF15 EFF25 EffD8 effe6 PLCNTSET plcntset_2 PLSGAUGE textsound textsound_2 \
-	textsound_3
+NOINLINE = Entry entry_2 SYS_sub sel_pl next_cpu game_config_jp game_config_en CMD_MAIN cmd_main_2 ta_sub \
+	end_main end_4 sc_trans VITAL count sc_sub sc_sub_2 EFF15 EFF25 EffD8 effe6 PLCNTSET plcntset_2 \
+	PLSGAUGE textsound textsound_2 textsound_3
 OPT0 = family sys_test sys_test_2 sys_test_2b sys_test_2c sys_test_3 sys_test_4 sys_test_5 coin_sw eeprom \
 	sys_config sys_config_2 sys_config_3 spr_pool spr_pool_2 simmram_slot poly_que spr_list cram_bank
 

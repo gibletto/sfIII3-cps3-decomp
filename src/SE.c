@@ -67,6 +67,7 @@ void wipe_pattern_restore_cols(s16 kind, s16 row) {
     s16 x;
     s16 y;
     u32 code;
+    u8 a;
     src = wipe_column_tbl[kind].adr + wipe_column_tbl[kind].w * row;
     map = wipe_clear_pattern_tbl[kind].adr + row * 32;
     cell = sc_chr_ram;
@@ -74,7 +75,8 @@ void wipe_pattern_restore_cols(s16 kind, s16 row) {
     for (y = 0; y < 464; y++) {
         for (x = 0; x < wipe_column_tbl[kind].w; x++) {
             code = src[x];
-            dst[code] = cell[code] | map[code];
+            a = cell[code] | map[code];
+            dst[code] = a;
         }
         dst += 32;
         cell += 32;
