@@ -78,8 +78,7 @@ s32 effect_H3_init(void) {
         ewk->wu.char_table[0] = etc2_char_table;
         ewk->wu.my_family = 3;
         ewk->wu.my_col_code = 1;
-        ewk->wu.position_z = 40;
-        ewk->wu.my_priority = 40;
+        ewk->wu.my_priority = ewk->wu.position_z = 40;
         ewk->wu.xyz[0].disp.pos = *data_ptr++;
         ewk->wu.xyz[1].disp.pos = *data_ptr++;
         ewk->wu.char_index = *data_ptr++;

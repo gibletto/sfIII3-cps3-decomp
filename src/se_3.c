@@ -26,14 +26,16 @@
 
 
 void Stage_BGM(u16 Stage_Number, s32 Round_Number) {
+    s32 code;
     if (Demo_Sound == 0 && Demo_Flag == 0) {
         return;
     }
     if (Keep_BGM_Flag) {
         return;
     }
+    code = stage_bgm_tbl[Stage_Number] + (Round_Number & 1);
     gSeqStatus[0] = 0;
-    sound_request(stage_bgm_tbl[Stage_Number] + (Round_Number & 1));
+    sound_request(code);
 }
 
 

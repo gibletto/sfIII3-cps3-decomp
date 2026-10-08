@@ -421,6 +421,7 @@ s32 effect_67_init(s16 id, s16 X, s16 Y, s16 time0, s16 Char_Index, s16 Priority
         case 31:
             ewk->conn[0].chr = 0xA196;
             ewk->conn[1].chr = 0xA19D;
+            break;
         }
     } else {
         *ewk->wu.char_table = sel_pl_char_table;

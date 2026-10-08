@@ -52,7 +52,7 @@ void Zoomf_Init_X(void);
 void Zoomf_Init_Y(void);
 s32 Frame_Up(u16 x, u16 y, s16 add_x, s16 add_y);
 s32 Frame_Down(u16 x, u16 y, s16 add_x, s16 add_y);
-s32 Frame_Adgjust(u16 pos_x, u16 pos_y);
+void Frame_Adgjust(u16 pos_x, u16 pos_y);
 void Flip_1st(PLW* wk);
 void Flip_2nd(PLW* wk);
 void Flip_3rd(PLW* wk);

@@ -49,7 +49,7 @@ u32 voice_process_primary(SNDVOICE* voice, s8 is_bgm, u32 voice_index) {
     u8 event;
     u8 loop_index;
     u16 note;
-    u32 event_mask = 0x80;
+    u32 event_mask;
     s32 note_resolved;
     s32 consumed;
     s32 ticks;
@@ -66,6 +66,7 @@ u32 voice_process_primary(SNDVOICE* voice, s8 is_bgm, u32 voice_index) {
     automation = &se_pan_ramp[(u8)voice_index];
     sfx_ticks = &se_tick_step[(u8)voice_index];
     bgm_ticks = &bgm_tick_step;
+    event_mask = 0x80;
 next_event:
     argument = voice->cursor;
     event = *argument++;

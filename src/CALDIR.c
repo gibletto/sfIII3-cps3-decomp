@@ -598,14 +598,17 @@ s32 Convert_BCD(v, digits)
     s16 bcd;
     switch (digits) {
     case 2:
-        bcd = (v % 100 / 10) << 4;
+        bcd = ((v % 100 / 10) << 4);
+        bcd += v % 10;
         break;
     case 3:
         bcd = ((v % 100 / 10) << 4) + ((v / 100) << 8);
+        bcd += v % 10;
         break;
     default:
         bcd = ((v % 100 / 10) << 4) + ((v / 1000) << 12) + ((v / 100) << 8);
+        bcd += v % 10;
         break;
     }
-    return (s16)(bcd + v % 10);
+    return bcd;
 }

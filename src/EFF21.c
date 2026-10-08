@@ -45,9 +45,9 @@ void effect_21_move(WORK_Other* ewk) {
         ewk->wu.xyz[1].cal += (ewk->wu.mvxy.a[1].sp * bg_w.bg2_sp_y);
         if (ewk->wu.old_rno[3]) {
             disp_pos_trans_entry_rs(ewk);
-            break;
+        } else {
+            disp_pos_trans_entry_s(ewk);
         }
-        disp_pos_trans_entry_s(ewk);
         break;
     default:
         all_cgps_put_back(&ewk->wu);

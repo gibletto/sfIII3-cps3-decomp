@@ -34,21 +34,18 @@ void wipe_pattern_or_cols(s16 kind, s16 row) {
     u8* map;
     u16* dst;
     u16* p;
-    u32 code;
-    s32 ofs;
     s16 x;
     s16 y;
-    s16 width;
-    width = wipe_column_tbl[kind].w;
-    src = wipe_column_tbl[kind].adr + width * row;
+    u32 code;
+    src = wipe_column_tbl[kind].adr + wipe_column_tbl[kind].w * row;
     map = wipe_set_pattern_tbl[kind].adr + row * 32;
     dst = (u16*)(SS_RAM + 0x8000);
     y = 0;
     do {
         for (x = 0; x < wipe_column_tbl[kind].w; x++) {
             code = src[x];
-            ofs = code * 2;
-            p = (u16*)((u8*)dst + ofs);
+            p = dst;
+            p += code;
             *p |= map[code];
         }
         dst += 32;

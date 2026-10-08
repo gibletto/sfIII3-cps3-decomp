@@ -91,8 +91,7 @@ void Ranking_00_2nd(void) {
     RANK_DATA* rd;
     D_No1++;
     D_Timer = 1;
-    Rank_X = 0;
-    Flash_Rank_Time = 0;
+    Rank_X = Flash_Rank_Time = 0;
     Rank_Pos_X = bg_w.bgw[0].xy[0].disp.pos - 104;
     Rank_Pos_Y = bg_w.bgw[0].xy[1].disp.pos + 160;
     if (Rank_Type >= 10) {

@@ -51,17 +51,16 @@ void effect_E0_move(WORK_Other* ewk) {
         }
         break;
     case 2:
-        if (--ewk->wu.dir_timer != 0) {
-            break;
+        if (--ewk->wu.dir_timer == 0) {
+            ewk->wu.routine_no[0]++;
+            ewk->wu.dir_timer = 20;
+            if (Temporary_EM[Player_id] == ewk->wu.direction) {
+                ewk->wu.char_index = ((ewk->wu.direction - 1) * 4) + 38;
+            } else {
+                ewk->wu.char_index = ((ewk->wu.direction - 1) * 4) + 37;
+            }
+            set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         }
-        ewk->wu.routine_no[0]++;
-        ewk->wu.dir_timer = 20;
-        if (Temporary_EM[Player_id] == ewk->wu.direction) {
-            ewk->wu.char_index = ((ewk->wu.direction - 1) * 4) + 38;
-        } else {
-            ewk->wu.char_index = ((ewk->wu.direction - 1) * 4) + 37;
-        }
-        set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
     case 3:
         if (Exec_Wipe == 0) {

@@ -243,7 +243,7 @@ s32 effect_39_init(s16 PL_id, s16 dir_old, s16 Your_Char, s16 Target_BG, s16 Opt
     ewk->master_id = PL_id;
     ewk->wu.dir_old = dir_old;
     if (Your_Char == 0x7F) {
-        ewk->wu.dir_step = ID_of_Face[Cursor_Y_low[ewk->master_id * 2]][Cursor_X[ewk->master_id]];
+        ewk->wu.dir_step = ID_of_Face[Cursor_Y[ewk->master_id]][Cursor_X[ewk->master_id]];
     } else {
         ewk->wu.dir_step = Your_Char;
     }
@@ -269,8 +269,8 @@ void effect_40_move(WORK_Other* ewk) {
             return;
         }
         ewk->wu.routine_no[0]++;
-        ewk->wu.disp_flag = 1;
         ewk->wu.dir_timer = 1;
+        ewk->wu.disp_flag = 1;
         ewk->wu.mvxy.a[0].sp = 0x80000;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
         break;

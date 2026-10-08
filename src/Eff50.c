@@ -67,19 +67,19 @@ void effect_50_move(WORK_Other* ewk) {
         char_move(&ewk->wu);
         break;
     case 3:
-        if (--ewk->wu.dir_timer != 0) {
-            break;
+        if (--ewk->wu.dir_timer == 0) {
+            ewk->wu.disp_flag = 0;
+            ewk->wu.routine_no[0]++;
+            return;
         }
-        ewk->wu.disp_flag = 0;
-        ewk->wu.routine_no[0]++;
-        return;
+        break;
     default:
         all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
         return;
     }
-    ewk->wu.xyz[0].disp.pos = ewk->wu.dmcal_m + Plate_X[ewk->master_id][0];
-    ewk->wu.xyz[1].disp.pos = ewk->wu.dmcal_d + Plate_Y[ewk->master_id][0];
+    ewk->wu.xyz[0].disp.pos = Plate_X[ewk->master_id][0] + ewk->wu.dmcal_m;
+    ewk->wu.xyz[1].disp.pos = Plate_Y[ewk->master_id][0] + ewk->wu.dmcal_d;
     ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
     ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
     sort_push_request4(&ewk->wu);

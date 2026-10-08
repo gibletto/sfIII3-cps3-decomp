@@ -1716,14 +1716,13 @@ s16 Jump_Index;
     }
 }
 
-s32 Ck_Break_Into(Sw_0, Sw_1, pl_arg)
+s32 Ck_Break_Into(Sw_0, Sw_1, PL_id)
 u16 Sw_0;
 u16 Sw_1;
-s32 pl_arg;
+s16 PL_id;
 {
-    s32 PL_id = (s16)pl_arg;
     if ((E_No0 != 10) && Request_Break[PL_id ^ 1]) {
-        return PL_id ^ 1;
+        return;
     }
     if (Request_Break[PL_id]) {
         if (Forbid_Break || Extra_Break) {

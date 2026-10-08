@@ -228,10 +228,10 @@ void load_player_color(a, b, c)
     s16 b;
     s16 c;
 {
-    s32 zero = 0;
+    s32 zero;
     const XFER* p = player_color_tbl[a][b][c];
     s8 i;
-    for (i = 0; i < 14; i++, p++) {
+    for (zero = i = 0; i < 14; i++, p++) {
         if (p->size) {
             col_trans_result = polygon2d_submit_quad(p->src, p->dst, p->size, zero, zero, zero);
         }

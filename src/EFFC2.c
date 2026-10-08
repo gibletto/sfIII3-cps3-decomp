@@ -747,7 +747,7 @@ void setup_parts_break2(WORK* wk) {
 
 /* provisional name */
 void disp_bs2_parts_debug(WORK* wk) {
-    s32 i;
+    s16 i;
     if (Version_Type != 7 || !(exsw_2 & 0x10)) {
         return;
     }

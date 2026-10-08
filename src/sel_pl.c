@@ -1512,8 +1512,8 @@ void Setup_Face_ID(void) {
 
 
 void Correct_Control_Time(s16 PL_id) {
-    s32 xx;
-    s32 zz;
+    u8 xx;
+    u8 zz;
     if (Play_Type == 1) {
         return;
     }

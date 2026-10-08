@@ -3,6 +3,6 @@
 
 #include "structs.h"
 
-void effect_at_vs_effect_dm(s16 ix2, s16 ix);
+void effect_at_vs_effect_dm();
 
 #endif

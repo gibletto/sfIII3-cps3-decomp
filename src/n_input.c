@@ -107,7 +107,7 @@ void Name_Input_comm(void) {
         name_ptr->code[name_ptr->index] = name_ptr->code[name_ptr->index - 1];
         break;
     case 2:
-        name_ptr->timer += 420;
+        name_ptr->timer = name_ptr->timer + 420;
         name_ptr->index--;
         name_ptr->r_no_0 -= 2;
         if (name_ptr->index < 0) {
@@ -533,16 +533,10 @@ s32 Scs_move_sub(void) {
         break;
     }
     if (name_ptr->old_code[nsc_ptr->type] != name_ptr->code[nsc_ptr->type]) {
-        s8 type;
-        s32 id;
         nsc_ptr->n_disp_flag = 0;
         nsc_ptr->f_cnt = 0;
-        type = nsc_ptr->type;
-        id = name_ptr->id;
-        naming_set(id, type, name_ptr->code[type]);
-        return;
+        naming_set(name_ptr->id, nsc_ptr->type, name_ptr->code[nsc_ptr->type]);
     }
-    return (s32)name_ptr;
 }
 
 

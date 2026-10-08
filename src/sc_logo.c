@@ -15,5 +15,5 @@
 u32 SF3_logo(s16 y)
 {
     sc_chr_clear(384, 128);
-    return ((u32 (*)())scfont_sqput)(DE_X[3] + 16, y + 10, 16, 6, 58, 384);
+    scfont_sqput(DE_X[3] + 16, y + 10, 16, 6, 58, 384);
 }

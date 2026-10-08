@@ -36,8 +36,6 @@
 void effect_F8_move(WORK_Other* ewk)
 {
     WORK* mwk = (WORK*)ewk->my_master;
-    /* paring_b_mark_data[direction][master_player][2]: { x, y } */
-    const s16 (*mark_tbl)[24][2] = paring_b_mark_data;
 
     switch (ewk->wu.routine_no[0]) {
     case 0:
@@ -46,11 +44,11 @@ void effect_F8_move(WORK_Other* ewk)
         ewk->wu.xyz[2].disp.pos = 26;
         ewk->wu.next_z = mwk->position_z;
         if (mwk->rl_flag) {
-            ewk->wu.position_x = mwk->position_x + mark_tbl[ewk->wu.direction][ewk->master_player][0];
+            ewk->wu.position_x = mwk->position_x + paring_b_mark_data[ewk->wu.direction][ewk->master_player][0];
         } else {
-            ewk->wu.position_x = mwk->position_x - mark_tbl[ewk->wu.direction][ewk->master_player][0];
+            ewk->wu.position_x = mwk->position_x - paring_b_mark_data[ewk->wu.direction][ewk->master_player][0];
         }
-        ewk->wu.position_y = mwk->position_y + mark_tbl[ewk->wu.direction][ewk->master_player][1];
+        ewk->wu.position_y = mwk->position_y + paring_b_mark_data[ewk->wu.direction][ewk->master_player][1];
         if (ewk->wu.position_z == ewk->wu.xyz[2].disp.pos) {
             ewk->wu.position_z = ewk->wu.next_z;
         } else {
@@ -65,7 +63,7 @@ void effect_F8_move(WORK_Other* ewk)
             ewk->wu.routine_no[0]++;
             break;
         }
-        if (!EXE_flag && !Game_pause) {
+        if (EXE_flag == 0 && !Game_pause) {
             char_move(&ewk->wu);
             if (ewk->wu.cg_type == 0xFF) {
                 ewk->wu.disp_flag = 0;

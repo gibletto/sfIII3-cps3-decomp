@@ -71,7 +71,6 @@
 
 void Player_control(void) {
     s16 i;
-    s32 j;
     pl_eff_disp_stop = 0;
     if (((pcon_rno[0] + pcon_rno[1]) == 0) || (!Game_pause && EXE_flag == 0)) {
         pcon_timer++;
@@ -93,9 +92,8 @@ void Player_control(void) {
         check_cg_zoom();
     }
     for (i = 47; i > 0; i--) {
-        j = i - 1;
-        zanzou_table[0][i] = zanzou_table[0][j];
-        zanzou_table[1][i] = zanzou_table[1][j];
+        zanzou_table[0][i] = zanzou_table[0][i - 1];
+        zanzou_table[1][i] = zanzou_table[1][i - 1];
         continue;
     }
     zanzou_table[0]->pos_x = plw[0].wu.position_x;
@@ -157,9 +155,9 @@ void init_app_10000(void) {
         }
         if (plw[1].wu.operator) {
             paring_ctr_vs[0][1] = paring_ctr_ori[1];
-            return;
+        } else {
+            paring_ctr_vs[0][1] = 0;
         }
-        paring_ctr_vs[0][1] = 0;
         break;
     case 3:
         pcon_rno[1] = 1;
@@ -437,13 +435,13 @@ void settle_type_20000(void) {
     case 1:
         if (footwork_check(0) && footwork_check(1)) {
             pcon_rno[2]++;
-            if (plw[0].wu.operator == 0 && plw[0].player_number == PL_GILL) {
-                Gill_Pos_X = plw[0].wu.xyz[0].disp.pos;
-            }
-            if (!plw[1].wu.operator) {
-                if (plw[1].player_number == PL_GILL) {
-                    Gill_Pos_X = plw[1].wu.xyz[0].disp.pos;
+            if (plw[0].wu.operator == 0) {
+                if (plw[0].player_number == PL_GILL) {
+                    Gill_Pos_X = plw[0].wu.xyz[0].disp.pos;
                 }
+            }
+            if (!plw[1].wu.operator && plw[1].player_number == PL_GILL) {
+                Gill_Pos_X = plw[1].wu.xyz[0].disp.pos;
             }
         }
         break;
@@ -459,7 +457,7 @@ void settle_type_20000(void) {
         plw[0].wu.routine_no[3] = plw[1].wu.routine_no[3] = 0;
         plw[0].wu.cg_type = plw[1].wu.cg_type = 0;
         pcon_rno[2]++;
-        break;
+        return;
     case 3:
         if ((plw[0].wu.routine_no[3] == 9)) {
             if ((plw[1].wu.routine_no[3] == 9)) {
@@ -910,7 +908,8 @@ void reset_char_disp_work(WORK* wk) {
     for (i = 0; i < 4; i++) {
         wk->spr.gfx_blk10[i] = wk->spr.gfx_blk40[i] = 0;
     }
-    wk->spr.gfx_ofs = wk->old_cgnum = 0;
+    wk->old_cgnum = 0;
+    wk->spr.gfx_ofs = 0;
     wk->spr.gfx_cells = 0;
 }
 

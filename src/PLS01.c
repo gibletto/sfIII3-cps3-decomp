@@ -654,15 +654,19 @@ s32 check_defense_kind(PLW* wk) {
     case 27:
         if (wk->cp->sw_new & 2) {
             rnum = 3;
-        } else if (chcgp_hos[wk->player_number] && check_attbox_dir(wk)) {
-            rnum = 2;
+        } else if (chcgp_hos[wk->player_number]) {
+            if (check_attbox_dir(wk)) {
+                rnum = 2;
+            }
         }
         break;
     case 28:
         if (wk->cp->sw_new & 2) {
             rnum = 3;
-        } else if (chcgp_hos[wk->player_number] && (check_attbox_dir(wk) == 0)) {
-            rnum = 1;
+        } else if (chcgp_hos[wk->player_number]) {
+            if (check_attbox_dir(wk) == 0) {
+                rnum = 1;
+            }
         }
         break;
     case 29:
@@ -695,7 +699,8 @@ void jumping_union_process(WORK* wk, s16 num) {
     cal_mvxy_speed(wk);
     char_move(wk);
     if ((Bonus_Game_Flag == 21) && (wk->operator != 0) && (saishin_bs2_area_car((PLW*)wk) == 0)) {
-        if (!(wk->xyz[1].disp.pos + wk->cg_jphos > bs2_floor[2])) {
+        if (wk->xyz[1].disp.pos + wk->cg_jphos > bs2_floor[2]) {
+        } else {
             wk->position_y = wk->xyz[1].disp.pos = bs2_floor[2];
             wk->mvxy.a[1].sp = 0;
             wk->routine_no[3] = num;

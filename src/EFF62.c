@@ -57,7 +57,7 @@ void effect_61_move(WORK_Other_CONN* ewk) {
             ewk->wu.disp_flag = 1;
             ewk->wu.cg_number = eff61_data_tbl[ewk->wu.old_rno[0]][3];
             disp_pos_trans_entry_seraph((WORK_Other*)ewk, ewk->wu.dir_old);
-            break;
+            return;
         case 2:
             if (ewk->wu.dir_old > 8) {
                 ewk->wu.xyz[0].cal += ewk->wu.mvxy.a[1].sp;

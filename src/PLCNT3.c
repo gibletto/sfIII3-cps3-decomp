@@ -68,6 +68,7 @@ s32 Player_control_bonus2(void) {
     for (i = 47; i > 0; i--) {
         zanzou_table[0][i] = zanzou_table[0][i - 1];
         zanzou_table[1][i] = zanzou_table[1][i - 1];
+        continue;
     }
     zanzou_store(zanzou_table[0], &plw[0]);
     zanzou_store(zanzou_table[1], &plw[1]);

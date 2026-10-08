@@ -164,6 +164,7 @@ void effect_F9_move(WORK_Other* owk) {
             ewk->wu.disp_flag = 0;
             ewk->wu.routine_no[0] = 6;
             break;
+        } else {
         }
         ewk->wu.old_rno[3]--;
         if (efff9_suicide == 1) {

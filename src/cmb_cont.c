@@ -35,6 +35,7 @@
 
 
 
+
 void combo_cont_init(void) {
     old_cmb_flag[0] = 0;
     old_cmb_flag[1] = 0;
@@ -109,12 +110,15 @@ void combo_cont_main(void) {
 
 
 void combo_control(s32 pl_arg) {
-    s32 PL = (s8)pl_arg;
+    s8 PL = pl_arg;
     PLW* wk;
     s16 cmb_flag;
-    s8 PLS;
     cmb_flag = check_combo_end(PL);
-    cmb_calc_now[PL] = (cmb_flag) ? 1 : 0;
+    if (cmb_flag) {
+        cmb_calc_now[PL] = 1;
+    } else {
+        cmb_calc_now[PL] = 0;
+    }
     if (reversal_check(PL) != 0) {
         return;
     }
@@ -124,7 +128,7 @@ void combo_control(s32 pl_arg) {
     if (paring_check(PL) != 0) {
         return;
     }
-    wk = (PLW*)((u8*)plw + (s16)(PL * 0x498));
+    wk = &plw[PL];
     if (wk->cb->total == 0) {
         return;
     }
@@ -139,14 +143,20 @@ void combo_control(s32 pl_arg) {
     if (cmb_flag != 0) {
         return;
     }
-    if ((*(ComboType**)((u8*)((void*)&(*(ComboType **)&(plw[0].cb))) + (s16)((PL) * 0x498)))->total == 1) {
+    if (plw[PL].cb->total == 1) {
         super_arts_finish_check(PL);
         combo_hensuu_clear(PL);
         first_attack = 3;
         return;
     }
+    combo_hit_count(PL);
+}
+
+/* provisional name */
+void combo_hit_count(s8 PL) {
+    s8 PLS;
     PLS = (PL == 0) ? 1 : 0;
-    hit_num = (*(ComboType**)((u8*)((void*)&(*(ComboType **)&(plw[0].cb))) + (s16)((PL) * 0x498)))->total;
+    hit_num = plw[PL].cb->total;
     if (hit_num > 99) {
         hit_num = 99;
     }
@@ -279,7 +289,7 @@ void hit_combo_check(s8 PL) {
     for (lpx = 0; lpx < 20; lpx++) {
         if (!(*sa_ptr++ == 0)) {
             if (arts_finish_check(PL)) {
-                if (lpx < 8) {
+                if (lpx <= 7) {
                     bonus_pts[PL] += 2;
                     sa_kind = 2;
                 } else {
@@ -294,6 +304,7 @@ void hit_combo_check(s8 PL) {
         }
     }
     combo_window_push(PL, 0);
+    return;
 }
 
 

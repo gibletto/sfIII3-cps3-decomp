@@ -135,7 +135,7 @@ void effect_D8_init(ewk, offset_x)
 WORK_Other* ewk;
 s16 offset_x;
 {
-    s16 xx = ID_of_Face[Cursor_Y_low[ewk->master_id * 2]][Cursor_X[ewk->master_id]];
+    s16 xx = ID_of_Face[Cursor_Y[ewk->master_id]][Cursor_X[ewk->master_id]];
     ewk->wu.xyz[0].disp.pos = Face_Pos_Data[xx][0] + 512;
     ewk->wu.xyz[1].disp.pos = Face_Pos_Data[xx][1] + 0;
 }

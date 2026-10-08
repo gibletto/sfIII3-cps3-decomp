@@ -203,7 +203,7 @@ s32 iotest_output_page(void) {
     if ((p1sw_0 & 0x1000) && (p1sw_0 & 0x10)) {
         rc = -1;
         iotest_out_no = 0;
-        Monitor_Flip = iotest_save_flip_low;
+        Monitor_Flip = iotest_save_flip;
         coin_out_latch &= ~1;
         coin_out_latch &= ~2;
         coin_out_latch &= ~0x10;

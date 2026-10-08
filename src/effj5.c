@@ -69,11 +69,13 @@ void effect_J5_move(WORK_Other* ewk) {
 
 /* provisional name */
 void effJ5_bg_write(void) {
-    s32 i;
-    s32 j;
+    s16 i;
+    s16 j;
+    const J5_ENTRY* p;
     for (i = 0; i < 2; i++) {
         for (j = 0; j < 16; j++) {
-            scroll_cell_write(i, effJ5_cell_tbl[i][j].a, effJ5_cell_tbl[i][j].b, effJ5_scrn_data);
+            p = &effJ5_cell_tbl[i][j];
+            scroll_cell_write(i, p->a, p->b, (u32)effJ5_scrn_data);
         }
     }
 }

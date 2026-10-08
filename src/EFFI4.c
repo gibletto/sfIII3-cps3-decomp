@@ -37,7 +37,7 @@ void kotp_06000(WORK_Other* ewk, TAMA* twk) {
     PLW* mwk;
     PLW* emwk;
     s16 dir;
-    s32 emdir;
+    s16 emdir;
     s16* target_x;
     s16* target_y;
     s32 t;
@@ -100,7 +100,7 @@ void kotp_06000(WORK_Other* ewk, TAMA* twk) {
             ewk->wu.routine_no[1] = 2;
             ewk->wu.routine_no[2] = 1;
             ewk->wu.xyz[1].disp.pos = -ewk->wu.cg_jphos;
-            return;
+            break;
         }
         if (--ewk->wu.dir_timer < 0 || screen_range_check(&ewk->wu) != 0) {
             ewk->wu.mvxy.a[0].sp /= 4;

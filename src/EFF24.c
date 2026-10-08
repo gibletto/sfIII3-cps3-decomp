@@ -41,9 +41,9 @@ void effect_24_move(WORK_Other* ewk) {
         }
         if (ewk->wu.old_rno[7]) {
             disp_pos_trans_entry_r(ewk);
-            break;
+        } else {
+            disp_pos_trans_entry(ewk);
         }
-        disp_pos_trans_entry(ewk);
         break;
     default:
         all_cgps_put_back(&ewk->wu);

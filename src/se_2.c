@@ -80,16 +80,16 @@ void wipe_mask_set_cols(s16 kind, s16 row) {
     s16 x;
     s16 y;
     s16 i;
-    s16 width;
-    width = wipe_column_tbl[kind].w;
-    src = wipe_column_tbl[kind].adr + width * row;
+    u8 code;
+    src = wipe_column_tbl[kind].adr + wipe_column_tbl[kind].w * row;
     map = wipe_set_pattern_tbl[kind].adr + row * 32;
     dst = (u16*)(SS_RAM + 0xE000);
     mask = wipe_mask_chr;
     for (i = 0; i < 6; i++) {
         for (y = 0; y < 16; y++) {
             for (x = 0; x < wipe_column_tbl[kind].w; x++) {
-                dst[src[x]] = mask[src[x]] & map[src[x]];
+                code = src[x];
+                dst[code] = (u8)(mask[code] & map[code]);
             }
             dst += 32;
             mask += 32;
@@ -107,6 +107,8 @@ void wipe_mask_and_cols(s16 kind, s16 row) {
     u8* src;
     u8* map;
     u16* dst;
+    u32 code;
+    u16* p;
 
     src = wipe_column_tbl[kind].adr;
     src += wipe_column_tbl[kind].w * row;
@@ -116,7 +118,10 @@ void wipe_mask_and_cols(s16 kind, s16 row) {
     for (i = 0; i < 6; i++) {
         for (y = 0; y < 16; y++) {
             for (x = 0; x < wipe_column_tbl[kind].w; x++) {
-                dst[src[x]] = dst[src[x]] & map[src[x]];
+                code = src[x];
+                p = dst;
+                p += code;
+                *p &= map[code];
             }
             dst += 32;
         }

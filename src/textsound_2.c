@@ -211,7 +211,7 @@ s32 sound_seq_start(u16 code, s16 ramp) {
             off = *p++ << 8;
             off += *p++;
             if (off != 0) {
-                if (hdr >= SE_VOICE(i).priority_flags || (SE_VOICE(i).status & 0x80)) {
+                if (((hdr >= SE_VOICE(i).priority_flags) & 0x7F) || (SE_VOICE(i).status & 0x80)) {
                     track = seq + off;
                     n = midi_vlq_decode_while(track, &ticks);
                     ticks <<= 8;
@@ -361,17 +361,13 @@ void bgm_stop(void) {
 
 /* provisional name */
 void bgm_pause(void) {
-    u8* save = bgm_status_save;
     u8 i;
-    if (!(sound_sample_submit_work7 & 2)) {
-        return;
-    }
-    if (sound_sample_submit_work7 & 4) {
+    if (!(sound_sample_submit_work7 & 2) || (sound_sample_submit_work7 & 4)) {
         return;
     }
     snd_reg_save = *(u16*)(SOUND_REG + 0x200);
     for (i = 0; i < 16; i++) {
-        save[i] = bgm_voice[i].status;
+        bgm_status_save[i] = bgm_voice[i].status;
         bgm_voice[i].status = 192;
     }
     sound_sample_submit_work7 |= 4;
@@ -380,15 +376,14 @@ void bgm_pause(void) {
 
 /* provisional name */
 void bgm_resume(void) {
+    u8* save;
     u8 i;
-    if (!(sound_sample_submit_work7 & 2)) {
+    if (!(sound_sample_submit_work7 & 2) || !(sound_sample_submit_work7 & 4)) {
         return;
     }
-    if (!(sound_sample_submit_work7 & 4)) {
-        return;
-    }
-    for (i = 0; i < 16; i++) {
-        bgm_voice[i].status = bgm_status_save[i];
+    for (i = 0, save = bgm_status_save; i < 16; i++) {
+        bgm_voice[i].status = *save;
+        save++;
     }
     sound_sample_submit_work7 &= ~4;
     *(u16*)(SOUND_REG + 0x200) |= snd_reg_save;

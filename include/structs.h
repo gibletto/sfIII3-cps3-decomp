@@ -1803,6 +1803,12 @@ typedef union {
         u16 lo;
     } w;
     s8 b[4];
+    struct {
+        u32 volume : 8;
+        u32 mode : 7;
+        u32 stereo : 1;
+        u32 lo : 16;
+    } bit;
 } SOUND_CTRL;
 
 typedef struct SPRITE_ENTRY {

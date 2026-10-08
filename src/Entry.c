@@ -172,36 +172,33 @@ s32 mode;
 {
     s32 i;
     for (i = 0; i < 8; i++) {
-        if (&task_tbl[i] == current_task) {
-            continue;
-        }
-        switch (mode) {
-        case 0:
-            if (task_tbl[i].priority > prio) {
-                break;
-            }
-            if (task_tbl[i].status != 0) {
-                task_tbl[i].status = 0;
-                task_free_count++;
-            }
-            break;
-        case 2:
-            if (task_tbl[i].priority < prio) {
-                break;
-            }
-            if (task_tbl[i].status != 0) {
-                task_tbl[i].status = 0;
-                task_free_count++;
-            }
-            break;
-        default:
-            if (task_tbl[i].priority == prio) {
-                if (task_tbl[i].status != 0) {
-                    task_tbl[i].status = 0;
-                    task_free_count++;
+        if (&task_tbl[i] != current_task) {
+            switch (mode) {
+            case 0:
+                if (task_tbl[i].priority <= prio) {
+                    if (task_tbl[i].status != 0) {
+                        task_tbl[i].status = 0;
+                        task_free_count++;
+                    }
                 }
+                break;
+            case 2:
+                if (task_tbl[i].priority >= prio) {
+                    if (task_tbl[i].status != 0) {
+                        task_tbl[i].status = 0;
+                        task_free_count++;
+                    }
+                }
+                break;
+            default:
+                if (task_tbl[i].priority == prio) {
+                    if (task_tbl[i].status != 0) {
+                        task_tbl[i].status = 0;
+                        task_free_count++;
+                    }
+                }
+                break;
             }
-            break;
         }
     }
 }
@@ -220,7 +217,6 @@ void dbg_memory_dump_rows(u16* tbl) {
             tilemap_print_hex_block(x, row + 11, 14, *tbl, 4, 0);
             tbl++;
         }
-        continue;
     }
 }
 

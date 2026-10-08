@@ -55,7 +55,7 @@ void EFFK6_SLIDE_IN(WORK_Other* ewk) {
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         if (ewk->wu.dir_old == 27 || ewk->wu.dir_old == 28) {
-            xx = ID_of_Face[Cursor_Y_low[(ewk->master_id) * 2]][Cursor_X[ewk->master_id]];
+            xx = ID_of_Face[Cursor_Y[ewk->master_id]][Cursor_X[ewk->master_id]];
         } else {
             xx = ewk->wu.dir_step;
         }
@@ -353,7 +353,7 @@ s16 Setup_K6_Index(WORK_Other* ewk) {
     case 26:
     case 27:
     case 28:
-        return ID_of_Face[Cursor_Y_low[(ewk->master_id) * 2]][Cursor_X[ewk->master_id]];
+        return ID_of_Face[Cursor_Y[ewk->master_id]][Cursor_X[ewk->master_id]];
     case 29:
     case 30:
         return My_char[ewk->master_id];

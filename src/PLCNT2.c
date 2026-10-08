@@ -73,23 +73,29 @@ s32 Player_control_bonus(void) {
         add_next_position(&plw[1]);
         check_cg_zoom();
     }
-    for (i = 47; i >= 1; i--) {
+    for (i = 47; i > 0; i--) {
         zanzou_table[0][i] = zanzou_table[0][i - 1];
         zanzou_table[1][i] = zanzou_table[1][i - 1];
         continue;
     }
-    for (i = 0; i < 2; i++) {
-        zanzou_table[i]->pos_x = plw[i].wu.position_x;
-        zanzou_table[i]->pos_y = plw[i].wu.position_y;
-        zanzou_table[i]->pos_z = plw[i].wu.position_z;
-        zanzou_table[i]->cg_num = plw[i].wu.cg_number;
-        zanzou_table[i]->renew = plw[i].wu.renew_attack;
-        zanzou_table[i]->hit_ix = plw[i].wu.cg_hit_ix;
-        zanzou_table[i]->flip = plw[i].wu.rl_flag;
-        zanzou_table[i]->cg_flp = plw[i].wu.cg_flip;
-        zanzou_table[i]->kowaza = plw[i].wu.kind_of_waza;
-        continue;
-    }
+    zanzou_table[0]->pos_x = plw[0].wu.position_x;
+    zanzou_table[0]->pos_y = plw[0].wu.position_y;
+    zanzou_table[0]->pos_z = plw[0].wu.position_z;
+    zanzou_table[0]->cg_num = plw[0].wu.cg_number;
+    zanzou_table[0]->renew = plw[0].wu.renew_attack;
+    zanzou_table[0]->hit_ix = plw[0].wu.cg_hit_ix;
+    zanzou_table[0]->flip = plw[0].wu.rl_flag;
+    zanzou_table[0]->cg_flp = plw[0].wu.cg_flip;
+    zanzou_table[0]->kowaza = plw[0].wu.kind_of_waza;
+    zanzou_table[1]->pos_x = plw[1].wu.position_x;
+    zanzou_table[1]->pos_y = plw[1].wu.position_y;
+    zanzou_table[1]->pos_z = plw[1].wu.position_z;
+    zanzou_table[1]->cg_num = plw[1].wu.cg_number;
+    zanzou_table[1]->renew = plw[1].wu.renew_attack;
+    zanzou_table[1]->hit_ix = plw[1].wu.cg_hit_ix;
+    zanzou_table[1]->flip = plw[1].wu.rl_flag;
+    zanzou_table[1]->cg_flp = plw[1].wu.cg_flip;
+    zanzou_table[1]->kowaza = plw[1].wu.kind_of_waza;
     if (pl_eff_disp_stop == 0) {
         sort_push_request(&plw[0]);
         sort_push_request(&plw[1]);
@@ -350,7 +356,8 @@ void check_damage_hosei_bonus(void) {
     plw[1].muriyari_ugoku = plw[1].hosei_amari;
     switch ((plw[0].hosei_amari != 0) + ((plw[1].hosei_amari != 0) * 2)) {
     case 1:
-        if ((!plw[0].tsukami_f || plw[0].kind_of_catch != 1) && (plw[0].tsukamare_f | plw[0].dm_hos_flag) == 0) {
+        if (plw[0].tsukami_f && plw[0].kind_of_catch == 1) {
+        } else if ((plw[0].tsukamare_f | plw[0].dm_hos_flag) == 0) {
             break;
         }
     one:
@@ -358,7 +365,8 @@ void check_damage_hosei_bonus(void) {
         plw[1].muriyari_ugoku += plw[0].hosei_amari;
         break;
     case 2:
-        if ((!plw[1].tsukami_f || plw[1].kind_of_catch != 1) && (plw[1].tsukamare_f | plw[1].dm_hos_flag) == 0) {
+        if (plw[1].tsukami_f && plw[1].kind_of_catch == 1) {
+        } else if ((plw[1].tsukamare_f | plw[1].dm_hos_flag) == 0) {
             break;
         }
     two:

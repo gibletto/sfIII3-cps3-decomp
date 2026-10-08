@@ -65,6 +65,7 @@
 #include "win_pl.h"
 #include "fighter.h"
 
+
 /* provisional name */
 void win_player(PLW* wk) {
     void (*win_jp_tbl[16])(PLW*) = { Win_00000, Win_01000, Win_02000, Win_03000, Win_04000, Win_05000, Win_06000, Win_07000, Win_08000, Win_09000, Win_10000, Win_11000, Win_12000, Win_13000, Win_14000, Win_15000 };
@@ -964,16 +965,15 @@ void q_walk_past_action(PLW* wk) {
 void Win_11000(PLW* wk) {
     s16 work;
     bg_app_stop = 1;
-    if (wk->wu.routine_no[3] == 0) {
+    switch (wk->wu.routine_no[3]) {
+    case 0:
         if (set_field_hosei_flag(&plw[wk->wu.id], (bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset), 1)) {
             set_field_hosei_flag(&plw[wk->wu.id], (bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset), 0);
         }
-        {
-            s16 t = win_rno[1] = 0;
-            win_rno[0] = t;
-        }
+        win_rno[0] = win_rno[1] = 0;
         wk->wu.routine_no[3]++;
-        work = random_16_com() & 3;
+        work = random_16_com();
+        work &= 3;
         if (Round_num >= (Battle_Round[Play_Type] * 2) ||
             PL_Wins[wk->wu.id] >= Battle_Round[Play_Type] + 1) {
             if (Perfect_Flag) {
@@ -998,94 +998,110 @@ void Win_11000(PLW* wk) {
             win_rno[0] = 0;
             set_char_move_init(&wk->wu, 9, work + 32);
         }
-        return;
-    }
-    switch (win_rno[0]) {
-    case 0:
-        Normal_normal_Winner(wk);
         break;
-    case 1:
-        switch (win_rno[1]) {
+    default:
+        switch (win_rno[0]) {
         case 0:
-            char_move(&wk->wu);
-            if (wk->wu.cg_type == 1) {
-                win_rno[1]++;
-                wk->wu.mvxy.a[0].sp = 0;
-                wk->wu.mvxy.d[0].sp = 0;
-                wk->wu.mvxy.a[1].sp = 0x78000;
-                wk->wu.mvxy.d[1].sp = -0x6000;
-            }
+            Normal_normal_Winner(wk);
             break;
         case 1:
-            add_y_sub((WORK_Other*)wk);
-            char_move(&wk->wu);
-            if (wk->wu.cg_type != 2) {
-                break;
-            }
-            win_rno[1]++;
-            wk->wu.mvxy.d[0].sp = 0;
-            if (wk->wu.rl_flag) {
-                wk->wu.mvxy.a[0].sp = 0x80000;
-            } else {
-                wk->wu.mvxy.a[0].sp = -0x80000;
-            }
-            wk->wu.mvxy.a[1].sp = -0x8000;
-            wk->wu.mvxy.d[1].sp = 0x4000;
+            Win_11000_jump_out(wk);
             break;
         case 2:
-            add_x_sub((WORK_Other*)wk);
-            add_y_sub((WORK_Other*)wk);
-            if (!range_x_check3((WORK_Other*)wk, 208)) {
-                win_rno[1]++;
-            }
+            Win_11000_leap_out(wk);
             break;
+        }
+        break;
+    }
+}
+
+/* provisional name */
+void Win_11000_jump_out(PLW* wk) {
+    switch (win_rno[1]) {
+    case 0:
+        char_move(&wk->wu);
+        if (wk->wu.cg_type == 1) {
+            win_rno[1]++;
+            wk->wu.mvxy.a[0].sp = 0;
+            wk->wu.mvxy.d[0].sp = 0;
+            wk->wu.mvxy.a[1].sp = 0x78000;
+            wk->wu.mvxy.d[1].sp = -0x6000;
+        }
+        break;
+    case 1:
+        add_y_sub((WORK_Other*)wk);
+        char_move(&wk->wu);
+        if (wk->wu.cg_type != 2) {
+            break;
+        }
+        win_rno[1]++;
+        wk->wu.mvxy.d[0].sp = 0;
+        if (wk->wu.rl_flag) {
+            wk->wu.mvxy.a[0].sp = 0x80000;
+        } else {
+            wk->wu.mvxy.a[0].sp = -0x80000;
+        }
+        wk->wu.mvxy.a[1].sp = -0x8000;
+        wk->wu.mvxy.d[1].sp = 0x4000;
+        break;
+    case 2:
+        add_x_sub((WORK_Other*)wk);
+        add_y_sub((WORK_Other*)wk);
+        if (!range_x_check3((WORK_Other*)wk, 208)) {
+            win_rno[1]++;
+        }
+        break;
+    case 3:
+        break;
+    }
+}
+
+/* provisional name */
+void Win_11000_leap_out(PLW* wk) {
+    switch (win_rno[1]) {
+    case 0:
+        if (set_field_hosei_flag(&plw[wk->wu.id], (bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset), 1)) {
+            set_field_hosei_flag(&plw[wk->wu.id], (bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset), 0);
+        }
+        char_move(&wk->wu);
+        if (wk->wu.cg_type == 1) {
+            win_rno[1]++;
+            wk->wu.mvxy.a[0].sp = 0x30000;
+            wk->wu.mvxy.d[0].sp = 0;
+            wk->wu.mvxy.a[1].sp = 0x78000;
+            wk->wu.mvxy.d[1].sp = -0x5000;
+            if (wk->wu.rl_flag) {
+                wk->wu.mvxy.a[0].sp = -wk->wu.mvxy.a[0].sp;
+            }
+        }
+        break;
+    case 1:
+        if (set_field_hosei_flag(&plw[wk->wu.id], (bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset), 1)) {
+            set_field_hosei_flag(&plw[wk->wu.id], (bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset), 0);
+        }
+        add_y_sub((WORK_Other*)wk);
+        add_x_sub((WORK_Other*)wk);
+        char_move(&wk->wu);
+        if (wk->wu.cg_type == 2) {
+            win_rno[1]++;
+            char_move_z(&wk->wu);
+            wk->wu.xyz[1].cal = 0;
         }
         break;
     case 2:
-        switch (win_rno[1]) {
-        case 0:
-            if (set_field_hosei_flag(&plw[wk->wu.id], (bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset), 1)) {
-                set_field_hosei_flag(&plw[wk->wu.id], (bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset), 0);
-            }
-            char_move(&wk->wu);
-            if (wk->wu.cg_type == 1) {
-                win_rno[1]++;
-                wk->wu.mvxy.a[0].sp = 0x30000;
-                wk->wu.mvxy.d[0].sp = 0;
-                wk->wu.mvxy.a[1].sp = 0x78000;
-                wk->wu.mvxy.d[1].sp = -0x5000;
-                if (wk->wu.rl_flag) {
-                    wk->wu.mvxy.a[0].sp = -wk->wu.mvxy.a[0].sp;
-                }
-            }
-            break;
-        case 1:
-            if (set_field_hosei_flag(&plw[wk->wu.id], (bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset), 1)) {
-                set_field_hosei_flag(&plw[wk->wu.id], (bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset), 0);
-            }
-            add_y_sub((WORK_Other*)wk);
-            add_x_sub((WORK_Other*)wk);
-            char_move(&wk->wu);
-            if (wk->wu.cg_type == 2) {
-                win_rno[1]++;
-                char_move_z(&wk->wu);
-                wk->wu.xyz[1].cal = 0;
-            }
-            break;
-        case 2:
-            char_move(&wk->wu);
-            if (wk->wu.cg_type == 9) {
-                win_rno[1]++;
-            }
-            break;
-        case 3:
-            char_move(&wk->wu);
-            wk->wu.xyz[1].cal += 0x20000;
-            if (wk->wu.xyz[1].disp.pos > 256) {
-                win_rno[1]++;
-            }
-            break;
+        char_move(&wk->wu);
+        if (wk->wu.cg_type == 9) {
+            win_rno[1]++;
         }
+        break;
+    case 3:
+        char_move(&wk->wu);
+        wk->wu.xyz[1].cal += 0x20000;
+        if (wk->wu.xyz[1].disp.pos > 256) {
+            win_rno[1]++;
+        }
+        break;
+    case 4:
         break;
     }
 }

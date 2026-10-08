@@ -29,22 +29,23 @@ void effect_J0_move(WORK_Other* ewk) {
         ewk->wu.routine_no[0]++;
         ewk->wu.cg_att_ix = 0;
         ewk->wu.cg_hit_ix = 0;
+        sort_push_request(&ewk->wu);
         break;
     case 1:
         if (ewk->wu.dead_f == 1) {
             ewk->wu.disp_flag = 0;
             ewk->wu.routine_no[0] = 2;
-            return;
+            break;
         }
         if (mwk->wu.routine_no[0] >= 2 || mwk->wu.routine_no[1] >= 2) {
             ewk->wu.routine_no[0] = 2;
             ewk->wu.disp_flag = 0;
-            return;
+            break;
         }
         if (!EXE_flag && !Game_pause && mwk->wu.hit_stop <= 0) {
             if (--ewk->wu.dir_timer == 0) {
                 ewk->wu.routine_no[0] = 2;
-                return;
+                break;
             }
             ewk->wu.position_x = image_buff[ewk->wu.dir_step].pos_x;
             ewk->wu.position_y = image_buff[ewk->wu.dir_step].pos_y;
@@ -56,16 +57,16 @@ void effect_J0_move(WORK_Other* ewk) {
         ewk->wu.spr.sprite_flip = mwk->wu.spr.sprite_flip;
         ewk->wu.cg_flip = mwk->wu.cg_flip;
         ewk->wu.spr.done_rl = mwk->wu.spr.done_rl;
+        sort_push_request(&ewk->wu);
         break;
     case 2:
         ewk->wu.routine_no[0] = 3;
-        return;
+        break;
     default:
         all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
-        return;
+        break;
     }
-    sort_push_request(&ewk->wu);
 }
 
 

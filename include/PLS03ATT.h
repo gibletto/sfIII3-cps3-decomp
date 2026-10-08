@@ -22,7 +22,7 @@ s32 decode_wst_data();
 s32 check_dm_shot_attack(PLW* wk);
 s32 get_em_body_range(WORK* wk);
 s32 get_meoshi_shot();
-s32 get_nearing_range(s16 pnum, s16 kos);
+s32 get_nearing_range();
 s16 renbanshot_conpaneshot();
 void set_attack_routine_number(PLW* wk);
 s16 shot_data_refresh(s16 sw);

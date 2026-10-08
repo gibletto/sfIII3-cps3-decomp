@@ -211,9 +211,11 @@ void Appear_01000(PLW* wk) {
         break;
     case 2:
         char_move(&wk->wu);
-        if (wk->wu.cg_type == 9 && Appear_flag[wk->wu.id] == 0) {
-            wk->wu.routine_no[3]++;
-            set_char_move_init(&wk->wu, 9, wk->wu.char_index + 8);
+        if (wk->wu.cg_type == 9) {
+            if (Appear_flag[wk->wu.id] == 0) {
+                wk->wu.routine_no[3]++;
+                set_char_move_init(&wk->wu, 9, wk->wu.char_index + 8);
+            }
         }
         break;
     case 3:
@@ -413,7 +415,7 @@ void Appear_05000(PLW* wk) {
         char_move(&wk->wu);
         if ((wk->wu.cg_type) == 9) {
             wk->wu.routine_no[3]++;
-            wk->wu.rl_flag = wk->wu.rl_flag ^ 1;
+            wk->wu.rl_flag ^= 1;
             return;
         }
         break;

@@ -299,9 +299,8 @@ s32 Frame_Down(u16 x, u16 y, s16 add_x, s16 add_y) {
 
 
 /* Recomputes the zoom frame offsets; returns the vertical offset as first computed (before -32 is nudged to -31). */
-s32 Frame_Adgjust(u16 pos_x, u16 pos_y) {
+void Frame_Adgjust(u16 pos_x, u16 pos_y) {
     u16 buff;
-    s16 adj;
     if (Monitor_Flip) {
         pos_y = 0xD0 - pos_y;
         if (screen_mode != 7) {
@@ -310,20 +309,20 @@ s32 Frame_Adgjust(u16 pos_x, u16 pos_y) {
     }
     if (zoom_frame[0].zoom >= 0x40) {
         buff = zoom_frame[0].zoom;
-        buff = buff - 0x40;
+        buff -= 0x40;
         buff *= pos_x;
-        buff = buff >> 6;
-        buff = buff & 0x1FF;
+        buff >>= 6;
+        buff &= 0x1FF;
         zoom_adj_x = -buff;
         if (Monitor_Flip && screen_mode != 7) {
             flip_zoom_ofs_x = 0x80 - buff * 2;
         }
     } else {
         buff = 0x40;
-        buff = buff - zoom_frame[0].zoom;
+        buff -= zoom_frame[0].zoom;
         buff *= pos_x;
-        buff = buff >> 6;
-        buff = buff & 0x1FF;
+        buff >>= 6;
+        buff &= 0x1FF;
         if (Monitor_Flip) {
             zoom_adj_x = -buff;
         } else {
@@ -332,32 +331,33 @@ s32 Frame_Adgjust(u16 pos_x, u16 pos_y) {
     }
     if (zoom_frame[1].zoom >= 0x40) {
         buff = zoom_frame[1].zoom;
-        buff = buff - 0x40;
+        buff -= 0x40;
         buff *= pos_y + 0x21;
-        buff = buff >> 6;
-        buff = buff & 0x1FF;
+        buff >>= 6;
+        buff &= 0x1FF;
         if (!Monitor_Flip) {
-            buff = -buff;
+            zoom_adj_y = -buff;
+        } else {
+            zoom_adj_y = buff;
         }
-        zoom_adj_y = buff;
-        if ((adj = zoom_adj_y) == -0x20) {
+        if (zoom_adj_y == -0x20) {
             zoom_adj_y = zoom_adj_y + 1;
         }
     } else {
         buff = 0x40;
-        buff = buff - zoom_frame[1].zoom;
+        buff -= zoom_frame[1].zoom;
         buff *= pos_y + 0x21;
-        buff = buff >> 6;
-        buff = buff & 0x1FF;
+        buff >>= 6;
+        buff &= 0x1FF;
         if (Monitor_Flip) {
-            buff = -buff;
+            zoom_adj_y = -buff;
+        } else {
+            zoom_adj_y = buff;
         }
-        zoom_adj_y = buff;
-        if ((adj = zoom_adj_y) == -0x20) {
+        if (zoom_adj_y == -0x20) {
             zoom_adj_y = zoom_adj_y + 1;
         }
     }
-    return adj;
 }
 
 

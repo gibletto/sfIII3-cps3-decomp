@@ -4,6 +4,6 @@
 #include "structs.h"
 
 void effect_B5_move(WORK_Other* ewk);
-s16 * current_name_move(WORK_Other* ewk, NAME_WK* np);
+void current_name_move(WORK_Other* ewk, NAME_WK* np);
 
 #endif
