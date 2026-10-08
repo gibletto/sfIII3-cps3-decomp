@@ -230,15 +230,14 @@ s16 dir256_to_008(s16 dir) {
 /* provisional name */
 s16 cal_move_quantity(WORK* wk, s16 t) {
     XY pos[2];
-    s32 half;
-    if (t == 0) {
+    s32 time = t;
+    if (time == 0) {
         return 0;
     }
-    half = t * t / 2;
-    pos[0].cal = wk->mvxy.d[0].sp * half;
-    pos[0].cal += wk->mvxy.a[0].sp * t + wk->xyz[0].cal;
-    pos[1].cal = wk->mvxy.d[1].sp * half;
-    pos[1].cal += wk->mvxy.a[1].sp * t + wk->xyz[1].cal;
+    pos[0].cal = wk->mvxy.d[0].sp * (time * time / 2);
+    pos[0].cal = wk->mvxy.a[0].sp * time + pos[0].cal + wk->xyz[0].cal;
+    pos[1].cal = wk->mvxy.d[1].sp * (time * time / 2);
+    pos[1].cal = wk->mvxy.a[1].sp * time + pos[1].cal + wk->xyz[1].cal;
     return cal_move_quantity2(wk->xyz[0].disp.pos, wk->xyz[1].disp.pos, pos[0].disp.pos, pos[1].disp.pos);
 }
 
@@ -580,13 +579,14 @@ s32 cal_time_of_sign_change(WORK* wk) {
 
 s32 cal_move_dir_forecast(WORK* wk, s16 tm) {
     PS_DP ps[2];
-    if (tm == 0) {
+    s32 time = tm;
+    if (time == 0) {
         return 0;
     }
-    ps[0].dp = wk->mvxy.d[0].sp * (tm * tm / 2);
-    ps[0].dp = wk->mvxy.a[0].sp * tm + ps[0].dp + wk->xyz[0].cal;
-    ps[1].dp = wk->mvxy.d[1].sp * (tm * tm / 2);
-    ps[1].dp = wk->mvxy.a[1].sp * tm + ps[1].dp + wk->xyz[1].cal;
+    ps[0].dp = wk->mvxy.d[0].sp * (time * time / 2);
+    ps[0].dp = wk->mvxy.a[0].sp * time + ps[0].dp + wk->xyz[0].cal;
+    ps[1].dp = wk->mvxy.d[1].sp * (time * time / 2);
+    ps[1].dp = wk->mvxy.a[1].sp * time + ps[1].dp + wk->xyz[1].cal;
     return (s16)caldir_pos_032(wk->xyz[0].disp.pos, wk->xyz[1].disp.pos, ps[0].rp.h, ps[1].rp.h);
 }
 

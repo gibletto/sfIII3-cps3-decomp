@@ -102,7 +102,7 @@ s32 Next_CPU(void) {
 
 
 void Next_CPU_1st(void) {
-    volatile u16 Rnd;
+    u16 Rnd;
     SC_No[0]++;
     Target_BG_X[3] = bg_w.bgw[3].wxy[0].disp.pos + 458;
     Offset_BG_X[3] = 0;
@@ -1161,7 +1161,7 @@ void Setup_Regular_OBJ(s16 PL_id) {
 
 void Regular_OBJ_Sub(s16 PL_id, s16 Dir) {
     s16 ix = Dir - 1;
-    volatile s16 x;
+    s16 x;
     effect_A9_init(33, EM_List[PL_id][ix], ix + 4, 0);
     x = chkNameAkuma(EM_List[PL_id][ix]);
     effect_A9_init(34, x + EM_List[PL_id][ix], ix + 6, 0);

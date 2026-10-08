@@ -166,7 +166,7 @@ void tilemap_put_char(u16 x, u16 y, u16 attr, u16 code) {
 /* provisional name */
 void tilemap_print_string_attr(u16 x, u16 y, u16 attr, const s8* str) {
     u16* p = (u16*)(SS_RAM + (x << 2) + (y << 8));
-    while (*str) {
+    while (*str != 0) {
         p[0] = *str;
         p[1] = attr;
         p += 2;

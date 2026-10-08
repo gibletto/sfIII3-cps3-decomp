@@ -176,11 +176,14 @@ const s16 dead_voice_table[20][2] = {
 
 /* Stored after dead_voice_table. Nothing in the program refers to it by name or address; if it is read,
    it is through an index past the end of dead_voice_table. */
-const s16 dead_voice_table_tail[10][2] = {
+const s16 dead_voice_table_tail[4][2] = {
     544, 545,
     864, 865,
     864, 865,
     864, 865,
+};
+
+const s16 gauge_rank_table[6][2] = {
     90, 1000,
     80, 600,
     60, 400,

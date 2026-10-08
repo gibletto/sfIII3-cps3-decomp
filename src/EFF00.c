@@ -18,7 +18,7 @@
 #include "fighter.h"
 void effect_00_move(WORK_Other_JUDGE* judge) {
     WORK_Other_JUDGE* ewk = (WORK_Other_JUDGE*)judge;
-    s32 dip;
+    u16 dip;
     ewk->fade_cja.l = ewk->fade_cja.l + 0x2000;
     ewk->fade_cja.w = ewk->fade_cja.w & 3;
     switch (ewk->wu.routine_no[0]) {
@@ -39,15 +39,15 @@ void effect_00_move(WORK_Other_JUDGE* judge) {
             break;
         }
         dip = exsw_1 & 0x3F00;
-        (*(u16*)((u8*)&(ewk)->wu + 0x242)) = 0;
+        ewk->wu.spr.gfx_cells = 0;
         ewk->ja_disp_bit = 0;
         if (judge_disp_all) {
             ewk->ja_disp_bit = jdb[15];
-            (*(u16*)((u8*)&(ewk)->wu + 0x242)) = jdb2[15];
+            ewk->wu.spr.gfx_cells = jdb2[15];
         } else if ((ewk->master_work_id == 1) ? (dip & 0x1000) : (dip & 0x2000)) {
             dip = (dip >> 8) & 0xF;
             ewk->ja_disp_bit = jdb[dip];
-            (*(u16*)((u8*)&(ewk)->wu + 0x242)) = jdb2[dip];
+            ewk->wu.spr.gfx_cells = jdb2[dip];
         }
         renewal_table_address(ewk, ewk->my_master);
         renewal_table_data(ewk);

@@ -78,6 +78,8 @@
 #include "Entry.h"
 #include "entry_2.h"
 
+#pragma inline(request_center_message)
+
 void sound_reg_level_set(s16 level, s8 flag);
 
 
@@ -293,9 +295,8 @@ void Game_Manage_2_4(void) {
         C_No2 = 0;
         Allow_a_battle_f = 1;
         if (!Play_Type && !EM_id) {
-            u8* boss = Introduce_Boss[Player_id];
-            if (!(boss[1] & 0x80)) {
-                boss[1] = boss[1] | 0x80;
+            if (!(Introduce_Boss[Player_id][1] & 0x80)) {
+                Introduce_Boss[Player_id][1] |= 0x80;
                 Check_Stage_BGM();
             }
         }
@@ -491,18 +492,10 @@ void Game_Manage_5_0(void) {
 
 
 
-/* provisional name */
-void request_center_message_p2_Manage(s16 Kind_of_Message) {
-    request_message = 1;
-    message_index = Kind_of_Message;
-}
-
-
-
 void Game_Manage_5_1(void) {
     if (Button_Cut_EX(&C_Timer, 10)) {
         C_No1++;
-        request_center_message_p2_Manage(3);
+        request_center_message(3);
         sound_request(154);
     }
 }
@@ -709,7 +702,7 @@ void Game_Manage_7_3(void) {
 void Game_Manage_7_4(void) {
     if (--C_Timer == 0) {
         C_No1++;
-        request_center_message_p2_Manage(4);
+        request_center_message(4);
         effect_58_init(6, 1, 155);
         effect_58_init(6, 60, 156);
     }
@@ -1302,80 +1295,92 @@ s32 Game_Manage_12_3(void) {
 void Game_Manage_12_4(void) {
     switch (C_No2) {
     case 0:
-        if (Bonus_Cut_Sub() == 0 && --C_Timer == 0) {
-            C_No2++;
-            C_Timer = 20;
-            sc_ram_to_vram_opc(27, Game_setting.mode * 7, 1, 30);
-            Disp_Digit16x24(Bonus_Score, DE_X[3] + 35, 11, 30);
+        if (Bonus_Cut_Sub() == 0) {
+            if (--C_Timer == 0) {
+                C_No2++;
+                C_Timer = 20;
+                sc_ram_to_vram_opc(27, Game_setting.mode * 7, 1, 30);
+                Disp_Digit16x24(Bonus_Score, DE_X[3] + 35, 11, 30);
+            }
         }
         break;
     case 1:
-        if (Bonus_Cut_Sub() == 0 && --C_Timer == 0) {
-            C_No2++;
-            C_Timer = 1;
-            Bonus_Score = 0;
+        if (Bonus_Cut_Sub() == 0) {
+            if (--C_Timer == 0) {
+                C_No2++;
+                C_Timer = 1;
+                Bonus_Score = 0;
+            }
         }
         break;
     case 2:
-        if (Bonus_Cut_Sub() == 0 && --C_Timer == 0) {
-            if (Bonus_Game_result == 0 && !(PB_Status & 2)) {
-                C_No2 = 4;
-                C_Timer = 30;
-                break;
-            }
-            if (Bonus_Game_result == 0) {
-                Bonus_Game_result = 1;
-            } else {
-                Bonus_Score += 1000;
-                Score[Player_id][0] += 1000;
-                Disp_Digit16x24(Bonus_Score, DE_X[3] + 35, 11, 30);
-                Sound_SE(100);
-            }
-            if (--Bonus_Game_result == 0) {
-                C_No2++;
-                if (PB_Status) {
-                    C_No3 = 1;
-                    C_Timer = 10;
+        if (Bonus_Cut_Sub() == 0) {
+            if (--C_Timer == 0) {
+                if (Bonus_Game_result == 0 && !(PB_Status & 2)) {
+                    C_No2 = 4;
+                    C_Timer = 30;
                     break;
                 }
-                C_No3 = 0;
-                C_Timer = 20;
-                break;
+                if (Bonus_Game_result == 0) {
+                    Bonus_Game_result = 1;
+                } else {
+                    Bonus_Score += 1000;
+                    Score[Player_id][0] += 1000;
+                    Disp_Digit16x24(Bonus_Score, DE_X[3] + 35, 11, 30);
+                    Sound_SE(100);
+                }
+                if (--Bonus_Game_result == 0) {
+                    C_No2++;
+                    if (PB_Status) {
+                        C_No3 = 1;
+                        C_Timer = 10;
+                        break;
+                    }
+                    C_No3 = 0;
+                    C_Timer = 20;
+                    break;
+                }
+                C_Timer = 3;
             }
-            C_Timer = 3;
         }
         break;
     case 3:
         switch (C_No3) {
         case 0:
-            if (Bonus_Cut_Sub() == 0 && --C_Timer == 0) {
-                C_No2++;
-                C_Timer = 30;
-                Bonus_Game_result = Stock_Bonus_Game_Result;
+            if (Bonus_Cut_Sub() == 0) {
+                if (--C_Timer == 0) {
+                    C_No2++;
+                    C_Timer = 30;
+                    Bonus_Game_result = Stock_Bonus_Game_Result;
+                }
             }
             break;
         case 1:
-            if (Bonus_Cut_Sub() == 0 && --C_Timer == 0) {
-                C_No3++;
-                C_Timer = 10;
-                Disp_Bonus_Perfect();
+            if (Bonus_Cut_Sub() == 0) {
+                if (--C_Timer == 0) {
+                    C_No3++;
+                    C_Timer = 10;
+                    Disp_Bonus_Perfect();
+                }
             }
             break;
         case 2:
-            if (Bonus_Cut_Sub() == 0 && --C_Timer == 0) {
-                C_No3++;
-                C_Timer = 40;
-                if (PB_Status & 1) {
-                    Score[Player_id][0] += Ball_Perfect_PTS[0][Bonus_Stage_Level];
+            if (Bonus_Cut_Sub() == 0) {
+                if (--C_Timer == 0) {
+                    C_No3++;
+                    C_Timer = 40;
+                    if (PB_Status & 1) {
+                        Score[Player_id][0] += Ball_Perfect_PTS[0][Bonus_Stage_Level];
+                    }
+                    if (PB_Status & 2) {
+                        Score[Player_id][0] += Ball_Perfect_PTS[1][Bonus_Stage_Level];
+                    }
+                    if (Score[Player_id][0] >= 99999900) {
+                        Score[Player_id][0] = 99999900;
+                    }
+                    Flash_Bonus_Perfect();
+                    break;
                 }
-                if (PB_Status & 2) {
-                    Score[Player_id][0] += Ball_Perfect_PTS[1][Bonus_Stage_Level];
-                }
-                if (Score[Player_id][0] >= 99999900) {
-                    Score[Player_id][0] = 99999900;
-                }
-                Flash_Bonus_Perfect();
-                break;
             }
             break;
         default:
@@ -1477,38 +1482,44 @@ void Game_Manage_12_8(void) {
         }
         break;
     case 1:
-        if (Bonus_Cut_Sub() == 0 && --C_Timer == 0) {
-            C_No2++;
-            C_Timer = 20;
-            Score[Player_id][0] += Bonus_Score;
-            sc_ram_to_vram_opc(27, Game_setting.mode * 7, 1, 30);
-            Disp_Digit16x24(Bonus_Score, 35, 11, 30);
-            if (Bonus_Game_result == 0) {
-                C_No2 = 99;
-                C_Timer = 120;
+        if (Bonus_Cut_Sub() == 0) {
+            if (--C_Timer == 0) {
+                C_No2++;
+                C_Timer = 20;
+                Score[Player_id][0] += Bonus_Score;
+                sc_ram_to_vram_opc(27, Game_setting.mode * 7, 1, 30);
+                Disp_Digit16x24(Bonus_Score, 35, 11, 30);
+                if (Bonus_Game_result == 0) {
+                    C_No2 = 99;
+                    C_Timer = 120;
+                }
             }
         }
         break;
     case 2:
-        if (Bonus_Cut_Sub() == 0 && --C_Timer == 0) {
-            C_No2++;
-            C_Timer = 1;
+        if (Bonus_Cut_Sub() == 0) {
+            if (--C_Timer == 0) {
+                C_No2++;
+                C_Timer = 1;
+            }
         }
         break;
     case 3:
-        if (Bonus_Cut_Sub() == 0 && --C_Timer == 0) {
-            if (bcounter_down(0) == 0) {
-                C_No2++;
-                C_Timer = 3;
-                Bonus_Score += 1000;
-                Score[Player_id][0] += 1000;
-            } else {
-                C_Timer = 3;
-                Bonus_Score += 1000;
-                Score[Player_id][0] += 1000;
+        if (Bonus_Cut_Sub() == 0) {
+            if (--C_Timer == 0) {
+                if (bcounter_down(0) == 0) {
+                    C_No2++;
+                    C_Timer = 3;
+                    Bonus_Score += 1000;
+                    Score[Player_id][0] += 1000;
+                } else {
+                    C_Timer = 3;
+                    Bonus_Score += 1000;
+                    Score[Player_id][0] += 1000;
+                }
+                Disp_Digit16x24(Bonus_Score, 35, 11, 30);
+                Sound_SE(100);
             }
-            Disp_Digit16x24(Bonus_Score, 35, 11, 30);
-            Sound_SE(100);
         }
         break;
     case 4:
@@ -1558,9 +1569,9 @@ void Disp_Bonus_Perfect(void) {
         break;
     case 3:
         sc_ram_to_vram_opc(23, Game_setting.mode * 7, 5, 30);
-        Disp_Digit16x24(Ball_Perfect_PTS[0][Bonus_Stage_Level], (*&DE_X)[3] + 35, 15, 30);
+        Disp_Digit16x24(Ball_Perfect_PTS[0][Bonus_Stage_Level], DE_X[3] + 35, 15, 30);
         sc_ram_to_vram_opc(23, Game_setting.mode * 7, 9, 52);
-        Disp_Digit16x24(Ball_Perfect_PTS[1][Bonus_Stage_Level], (*&DE_X)[3] + 35, 19, 52);
+        Disp_Digit16x24(Ball_Perfect_PTS[1][Bonus_Stage_Level], DE_X[3] + 35, 19, 52);
         break;
     }
     sound_request(Winner_id + 102);

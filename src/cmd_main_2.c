@@ -1663,7 +1663,7 @@ void basic_waza_flag_clear(s16 pl_id) {
 
 
 
-void waza_flag_clear_only_1(s16 pl_id, u16 wznum) {
+void waza_flag_clear_only_1(s16 pl_id, s16 wznum) {
     waza_compel_init(pl_id, wznum, pl_CMD[plw[pl_id].player_number]);
 }
 

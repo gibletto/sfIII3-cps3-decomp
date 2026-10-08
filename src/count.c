@@ -194,7 +194,7 @@ void bcounter_control(void) {
 
 
 
-s16 bcounter_down(u8 stop) {
+s32 bcounter_down(u8 stop) {
     u16 hi;
     u16 lo;
     if (Counter_hi == 0) {

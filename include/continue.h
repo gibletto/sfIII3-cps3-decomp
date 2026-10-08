@@ -15,6 +15,6 @@ void Disp_Personal_Count(s16 id, char count);
 void Clear_Win_Type(void);
 s32 Check_Coin_In(s16 pl);
 s32 Continue_Scene(void);
-s32 Clear_Personal_Data(s16 PL_id);
+s32 Clear_Personal_Data();
 
 #endif

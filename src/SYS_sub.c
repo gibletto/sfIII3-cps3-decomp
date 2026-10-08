@@ -354,7 +354,7 @@ void Clear_Flash_No(void) {
     F_No2[0] = 0;
     F_No1[0] = 0;
     F_No0[0] = 0;
-    (*(u16*)&(F_No3[1])) = 0;
+    F_No3[1] = 0;
     F_No2[1] = 0;
     F_No1[1] = 0;
     F_No0[1] = 0;
@@ -441,10 +441,14 @@ u32 ranking_insert_all_four(s16 PL_id)
 
 /* provisional name */
 void rank_in_push_other(s16 dir_step, s16 PL_id) {
-    if (Rank_In[PL_id][dir_step] > Rank_In[PL_id ^ 1][dir_step]) {
+    s8* p;
+    s16 other = PL_id ^ 1;
+    p = Rank_In[other];
+    if (Rank_In[PL_id][dir_step] > p[dir_step]) {
         return;
     }
-    if (++Rank_In[PL_id ^ 1][dir_step] > 4) {
+    p[dir_step]++;
+    if (p[dir_step] > 4) {
         Rank_In[PL_id ^ 1][dir_step] = -1;
     }
 }

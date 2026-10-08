@@ -1,9 +1,9 @@
 /*
- * SYS_TEST_2.C  Test mode: input/output, sound, colour and screen test pages
+ * SYS_TEST_2.C  Test mode: input/output, sound and colour test pages
  *
  * iotest_draw_sw_grid, iotest_input_page, iotest_output_toggle and iotest_output_page are the switch
  * and output test pages; soundtest_* the sound test (title, code select, monitor task, pan, balance
- * and level bars); colortest_* the palette grid test; screentest_* the crosshatch screen test.
+ * and level bars); colortest_* the palette grid test.
  */
 
 #include "structs.h"
@@ -514,73 +514,3 @@ s32 colortest_page(void) {
     rc = 0;
     return rc;
 }
-
-
-
-/* provisional name */
-void screentest_draw_crosshatch(void) {
-    register s16 x;
-    register s16 y;
-    register s16 attr;
-    register s16 ofs;
-    register s16 cols;
-    register s16 rows;
-    register u16* p;
-    switch (screen_mode) {
-    case 3:
-        cols = 24;
-        ofs = 0;
-        break;
-    case 7:
-        cols = 31;
-        ofs = 4;
-    }
-    rows = 14;
-    tilemap_fill_all(0, 32);
-    p = (u16*)SS_RAM_CACHED;
-    for (y = 0; y < rows; y++) {
-        for (x = 0; x < cols; x++) {
-            if (y == 0 || x == 0 || x == cols - 1 || y == rows - 1) {
-                attr = 8;
-            } else {
-                attr = 2;
-            }
-            p[0] = 127;
-            p[1] = attr;
-            p[2] = 127;
-            p[3] = attr | 0x80;
-            p[0x80] = 127;
-            p[0x81] = attr | 0x40;
-            p[0x82] = 127;
-            p[0x83] = attr | 0xC0;
-            p += 4;
-        }
-        p += 0x100 - cols * 4;
-    }
-    tilemap_print_string(ofs, 0, 0xFFFF, crosshatch_scr);
-    screentest_no++;
-}
-
-
-
-/* provisional name */
-s32 screentest_page(void) {
-    register s32 rc;
-    switch (screentest_no) {
-    case 0:
-        screentest_draw_crosshatch();
-        break;
-    case 1:
-        break;
-    }
-    if ((p1sw_0 & 0x1000) && (p1sw_0 & 0x10)) {
-        rc = -1;
-        screentest_no = 0;
-        return rc;
-    }
-    rc = 0;
-    return rc;
-}
-
-
-

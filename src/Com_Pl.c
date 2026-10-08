@@ -311,10 +311,7 @@ void Com_Guard(PLW* wk) {
     Passive_Mode = 4;
     if (Ck_Passive_Term(wk)) {
         Select_Passive(wk);
-        {
-            s32 t = Counter_Attack[wk->wu.id] | 2;
-            Counter_Attack[wk->wu.id] = t;
-        }
+        Counter_Attack[wk->wu.id] |= 2;
         return;
     }
     if (!Check_Counter_Attack(wk)) {
@@ -618,8 +615,9 @@ void Damage_1st(PLW* wk) {
         if (Receive_Data[xx][Lv] > Rnd) {
             Receive_Flag[wk->wu.id] = 1;
             break;
+        } else {
+            break;
         }
-        break;
     case 1:
         if (wk->wu.routine_no[3] == 0) {
             CP_No[wk->wu.id][2] = 0;
@@ -640,24 +638,25 @@ void Damage_1st(PLW* wk) {
         }
         if (CP_No[wk->wu.id][1] != 0) {
             break;
-        }
-        Lv = Setup_Lv10(0);
-        if (Break_Into_CPU == 2) {
-            Lv = 10;
-        }
-        if (Demo_Flag == 0 && Weak_PL == wk->wu.id) {
-            Lv = 0;
-        }
-        Rnd = random_16_com();
-        Lv += CC_Value[0];
-        em = (WORK*)wk->wu.target_adrs;
-        if (EM_Rank != 0) {
-            Guard_Type[wk->wu.id] = Guard_Data[18][Lv][Rnd];
         } else {
-            Guard_Type[wk->wu.id] = Guard_Data[wk->player_number][Lv][Rnd];
+            Lv = Setup_Lv10(0);
+            if (Break_Into_CPU == 2) {
+                Lv = 10;
+            }
+            if (Demo_Flag == 0 && Weak_PL == wk->wu.id) {
+                Lv = 0;
+            }
+            Rnd = random_16_com();
+            Lv += CC_Value[0];
+            em = (WORK*)wk->wu.target_adrs;
+            if (EM_Rank != 0) {
+                Guard_Type[wk->wu.id] = Guard_Data[18][Lv][Rnd];
+            } else {
+                Guard_Type[wk->wu.id] = Guard_Data[wk->player_number][Lv][Rnd];
+            }
+            Check_Guard_Type(wk, em);
+            break;
         }
-        Check_Guard_Type(wk, em);
-        break;
     }
 }
 

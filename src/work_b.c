@@ -561,7 +561,7 @@ u8 Fade_Mode;  /* 02011398 */
 u32 Score[2][3];  /* 0201139C */
 /* Play_Type: declared 2 bytes; the code reads it on into the variables after it */
 u8 Play_Type[1];  /* 020113B4 */
-u8 Play_Type_low;  /* 020113B5 */
+u8 Play_Type_tail[1];  /* after Play_Type; nothing refers to it by name or address */
 s8 Continue_Count[2];  /* 020113B6 */
 s8 Personal_Continue_Flag[2];  /* 020113B8 */
 s8 Personal_Disp_Flag;  /* 020113BA */
@@ -754,8 +754,7 @@ s8 Ignore_Entry[2];  /* 02015667 */
 u8 Ignore_Entry_tail[1];  /* after Ignore_Entry; nothing refers to it by name or address */
 /* Cursor_Y: declared 4 bytes; the code reads it on into the variables after it */
 u8 Cursor_Y[1];  /* 0201566A */
-s8 Cursor_Y_low[4];  /* 0201566B */
-u8 Cursor_Y_low_tail[11];  /* after Cursor_Y_low; nothing refers to it by name or address */
+u8 Cursor_Y_tail[15];  /* after Cursor_Y; nothing refers to it by name or address */
 s8 Last_Arts_PL;  /* 0201567A */
 s8 Moving_Plate[2];  /* 0201567B */
 s8 Naming_Cut[2];  /* 0201567D */
@@ -1402,7 +1401,7 @@ s16 iotest_out2_flag;  /* 0206A1E6 */
 s32 iotest_hold_flag;  /* 0206A1E8 */
 /* iotest_save_flip: declared 2 bytes; the code reads it on into the variables after it */
 u8 iotest_save_flip[1];  /* 0206A1EC */
-u8 iotest_save_flip_low;  /* 0206A1ED */
+u8 iotest_save_flip_tail[1];  /* after iotest_save_flip; nothing refers to it by name or address */
 u32 scsi_sense_key;  /* 0206A1F0 */
 u32 scsi_sense_asc;  /* 0206A1F4 */
 s8 scsi_sense_buf[22];  /* 0206A1F8 */

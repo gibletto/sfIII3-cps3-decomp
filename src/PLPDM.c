@@ -43,6 +43,8 @@
 #include "PLPDM.h"
 #include "fighter.h"
 
+#pragma inline(check_dmpat_to_dmpat)
+
 
 
 void Player_damage(PLW* wk) {
@@ -481,11 +483,6 @@ void Damage_18000(PLW* wk) {
 
 
 
-/* provisional name */
-void check_dmpat_to_dmpat_PLPDM(PLW* _p0) {}
-
-
-
 void Damage_19000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
     case 0:
@@ -493,7 +490,7 @@ void Damage_19000(PLW* wk) {
         wk->wu.dm_rl = ((WORK*)wk->wu.dmg_adrs)->rl_flag;
         wk->wu.rl_flag = (wk->wu.dm_rl + 1) & 1;
         set_char_move_init(&wk->wu, 6, wk->as->char_ix);
-        check_dmpat_to_dmpat_PLPDM(wk);
+        check_dmpat_to_dmpat(wk);
         buttobi_add_y_check(wk);
         setup_butt_own_data(&wk->wu);
         cal_initial_speed_y(&wk->wu, buttobi_time_table[wk->as->char_ix][wk->wu.dm_attlv], 0);
@@ -527,7 +524,7 @@ void Damage_20000(PLW* wk) {
         setup_butt_own_data(&wk->wu);
         buttobi_add_y_check(wk);
         set_char_move_init(&wk->wu, 6, wk->as->char_ix);
-        check_dmpat_to_dmpat_PLPDM(wk);
+        check_dmpat_to_dmpat(wk);
         get_sky_dm_timer(wk);
         break;
     case 1:
@@ -584,7 +581,7 @@ void Damage_23000(PLW* wk) {
         setup_butt_own_data(&wk->wu);
         buttobi_add_y_check(wk);
         set_char_move_init(&wk->wu, 6, wk->as->char_ix);
-        check_dmpat_to_dmpat_PLPDM(wk);
+        check_dmpat_to_dmpat(wk);
         get_sky_dm_timer(wk);
         break;
     case 1:
@@ -822,11 +819,6 @@ void Damage_29000(PLW* wk) {
 
 
 
-/* provisional name */
-void check_dmpat_to_dmpat_sky(PLW* _p0) {}
-
-
-
 void Damage_30000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
     case 0:
@@ -834,7 +826,7 @@ void Damage_30000(PLW* wk) {
         wk->wu.dm_rl = ((WORK*)wk->wu.dmg_adrs)->rl_flag;
         wk->wu.rl_flag = (wk->wu.dm_rl + 1) & 1;
         set_char_move_init(&wk->wu, 6, wk->as->char_ix);
-        check_dmpat_to_dmpat_sky(wk);
+        check_dmpat_to_dmpat(wk);
         buttobi_add_y_check(wk);
         setup_butt_own_data(&wk->wu);
         cal_initial_speed_y(&wk->wu, buttobi_time_table[wk->as->char_ix][wk->wu.dm_attlv], 0);
@@ -1087,8 +1079,7 @@ void add_dm_step_tbl(PLW* wk) {
 }
 
 
-/* provisional name */
-void add_dm_step_dummy(void) {}
+void check_dmpat_to_dmpat(PLW* wk) {}
 
 
 
@@ -1334,7 +1325,7 @@ s32 setup_kuuchuu_nmdm(PLW* wk) {
     wk->wu.routine_no[2] = 17;
     wk->wu.rl_flag = (wk->wu.dm_rl + 1) & 1;
     set_char_move_init(&wk->wu, 6, 0);
-    check_dmpat_to_dmpat_PLPDM(wk);
+    check_dmpat_to_dmpat(wk);
     setup_butt_own_data(&wk->wu);
     cal_initial_speed_y(&wk->wu, buttobi_time_table[wk->as->char_ix][wk->wu.dm_attlv], wk->wu.xyz[1].disp.pos);
     return 1;

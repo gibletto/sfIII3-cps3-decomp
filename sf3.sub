@@ -13,6 +13,7 @@ INPUT obj\test_mode.obj
 INPUT obj\scrn_ctrl.obj
 INPUT obj\Com_Pl.obj
 INPUT obj\Com_Sub.obj
+INPUT obj\Ck_Pass.obj
 INPUT obj\pass00.obj
 INPUT obj\PASS01.obj
 INPUT obj\PASS02.obj
@@ -85,8 +86,8 @@ INPUT obj\SYS_sub.obj
 INPUT obj\EM_Cand.obj
 INPUT obj\SYS_sub2.obj
 INPUT obj\Grade.obj
-INPUT obj\bg0001.obj
 INPUT obj\Game_Main.obj
+INPUT obj\Game_Main_2.obj
 INPUT obj\demo00.obj
 INPUT obj\demo01.obj
 INPUT obj\demo02_code.obj
@@ -110,10 +111,8 @@ INPUT obj\ta_sub2.obj
 INPUT obj\tate00.obj
 INPUT obj\bg_sub.obj
 INPUT obj\bg_sub_2.obj
-INPUT obj\bg_sub_3.obj
-INPUT obj\bg_sub_4.obj
-INPUT obj\bg_sub_5.obj
 INPUT obj\bg000.obj
+INPUT obj\bg020.obj
 INPUT obj\bg040.obj
 INPUT obj\BG050.obj
 INPUT obj\bg090.obj
@@ -157,12 +156,11 @@ INPUT obj\end_sub_4.obj
 INPUT obj\end_sub_5.obj
 INPUT obj\end_sub_6.obj
 INPUT obj\end_sub_7.obj
+INPUT obj\end_sub_7b.obj
+INPUT obj\end_sub_7c.obj
 INPUT obj\color3rd.obj
 INPUT obj\end_sub_8.obj
 INPUT obj\sc_trans.obj
-INPUT obj\sc_logo.obj
-INPUT obj\EffA2.obj
-INPUT obj\cmb_win.obj
 INPUT obj\VITAL.obj
 INPUT obj\count.obj
 INPUT obj\spgauge.obj
@@ -170,7 +168,6 @@ INPUT obj\sc_sub.obj
 INPUT obj\sc_sub_2.obj
 INPUT obj\cmb_cont.obj
 INPUT obj\EFFECT.obj
-INPUT obj\effect_2.obj
 INPUT obj\EFF00.obj
 INPUT obj\EFF01_code.obj
 INPUT obj\EFF02.obj
@@ -185,8 +182,6 @@ INPUT obj\EFF10.obj
 INPUT obj\EFF11.obj
 INPUT obj\eff12.obj
 INPUT obj\EFF13.obj
-INPUT obj\EFFI4.obj
-INPUT obj\EFF13_KOTP.obj
 INPUT obj\eff14.obj
 INPUT obj\EFF15.obj
 INPUT obj\EFF16.obj
@@ -212,6 +207,7 @@ INPUT obj\eff36.obj
 INPUT obj\EFF37.obj
 INPUT obj\EFF38.obj
 INPUT obj\Eff39.obj
+INPUT obj\EFF40.obj
 INPUT obj\EFF41.obj
 INPUT obj\EFF42.obj
 INPUT obj\EFF44.obj
@@ -270,6 +266,7 @@ INPUT obj\effa0.obj
 INPUT obj\EFFA1.obj
 INPUT obj\EFFA2_MAIN.obj
 INPUT obj\EFFA3.obj
+INPUT obj\EFFA4.obj
 INPUT obj\effa5.obj
 INPUT obj\effa5_input.obj
 INPUT obj\EFFA6.obj
@@ -283,7 +280,9 @@ INPUT obj\effb2.obj
 INPUT obj\effb3.obj
 INPUT obj\EFFB4.obj
 INPUT obj\EFFB5.obj
+INPUT obj\EFFB5_INIT.obj
 INPUT obj\EFFB6.obj
+INPUT obj\EFFB7.obj
 INPUT obj\EFFB8.obj
 INPUT obj\effb9.obj
 INPUT obj\EFFC0.obj
@@ -318,6 +317,7 @@ INPUT obj\effe9.obj
 INPUT obj\efff0.obj
 INPUT obj\EFFF1.obj
 INPUT obj\EFFF2_code.obj
+INPUT obj\EFFF3.obj
 INPUT obj\EFFF4.obj
 INPUT obj\efff5.obj
 INPUT obj\efff6.obj
@@ -436,6 +436,7 @@ INPUT obj\fifo.obj
 INPUT obj\family.obj
 INPUT obj\sys_test.obj
 INPUT obj\sys_test_2.obj
+INPUT obj\sys_test_2a.obj
 INPUT obj\sys_test_2b.obj
 INPUT obj\sys_test_2c.obj
 INPUT obj\sys_test_3.obj
@@ -460,6 +461,7 @@ INPUT obj\sta_sftra.obj
 INPUT obj\cram_bank.obj
 INPUT obj\sound_voice.obj
 INPUT obj\sound_voice_2.obj
+INPUT obj\sound_voice_3.obj
 INPUT obj\quick_strcpy.obj
 INPUT obj\intr_tbl.obj
 INPUT obj\sections.obj

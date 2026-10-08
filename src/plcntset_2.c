@@ -210,7 +210,7 @@ void init_app_30000(void) {
         break;
     case 1:
         if (plw[0].wu.routine_no[0] != 3 || plw[1].wu.routine_no[0] != 3) {
-            break;
+            return;
         }
         pcon_rno[0] = 2;
         pcon_rno[1] = 3;

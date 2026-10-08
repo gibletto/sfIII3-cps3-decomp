@@ -42,45 +42,6 @@
 
 struct PLW_tag;
 
-
-
-/* provisional name */
-void set_char_base_data_init(WORK* wk) {
-    const CHAR_INIT_ROM* cdat =
-        (const CHAR_INIT_ROM*)((u8*)char_init_data + (s16)(wk->charset_id * sizeof(CHAR_INIT_ROM)));
-    wk->char_table[0] = cdat->nmca;
-    wk->char_table[1] = cdat->dmca;
-    wk->char_table[6] = cdat->btca;
-    wk->char_table[2] = cdat->caca;
-    wk->char_table[3] = cdat->cuca;
-    wk->char_table[4] = cdat->atca;
-    wk->char_table[5] = cdat->saca;
-    wk->char_table[7] = cdat->exca;
-    wk->char_table[8] = cdat->cbca;
-    wk->char_table[9] = cdat->yuca;
-    wk->step_xy_table = cdat->stxy;
-    wk->move_xy_table = cdat->mvxy;
-    wk->se_random_table = cdat->sernd;
-    wk->overlap_char_tbl = cdat->ovct;
-    wk->olc_ix_table = cdat->ovix;
-    wk->rival_catch_tbl = cdat->rict;
-    wk->hit_ix_table = cdat->hiit;
-    wk->body_adrs = cdat->boda;
-    wk->hand_adrs = cdat->hana;
-    wk->catch_adrs = cdat->cata;
-    wk->caught_adrs = cdat->caua;
-    wk->attack_adrs = cdat->atta;
-    wk->hosei_adrs = cdat->hosa;
-    wk->att_ix_table = cdat->atit;
-    wk->cgromtype = cdat->cgromtype;
-    wk->my_col_mode = cdat->my_cm;
-    wk->my_col_code = cdat->my_cc;
-    wk->my_family = cdat->my_fm;
-    wk->my_ext_pri = cdat->my_ep;
-}
-
-
-
 /* provisional name */
 void hit_check_main_process(void) {
     aiuchi_flag = 0;
@@ -406,86 +367,6 @@ void cal_hit_mark_pos(WORK* as, WORK* ds, s16 ix2, s16 ix) {
         cal_hit_mark_position(ds, as, hs[ix].dh, hs[ix2].ah);
     }
     as->hit_mark_z = as->position_z - 8;
-}
-
-
-
-void set_paring_status(PLW* as, PLW* ds) {
-    s16 hsadix;
-    if ((as->wu.att.hs_you == 0) && (as->wu.att.hs_me == 0)) {
-        ds->wu.routine_no[2] = ds->wu.old_rno[2];
-    } else {
-        hsadix = 4;
-        if ((as->wu.kind_of_waza & 0xF8) == 0) {
-            hsadix = (as->wu.kind_of_waza / 2) & 3;
-        }
-        ds->wu.routine_no[1] = 0;
-        ds->wu.routine_no[3] = 0;
-        waza_slot_clear_all_p(ds);
-        dm_status_copy(&as->wu, &ds->wu);
-        ds->wu.dm_piyo = 0;
-        ds->wu.cg_type = 0;
-        switch ((as->wu.xyz[1].disp.pos > 0) + (ds->wu.routine_no[2] - 31) * 2) {
-        case 0:
-        case 2:
-        case 4:
-            ds->wu.dm_stop = -15;
-            as->wu.hit_stop = sel_hs_add_tbl[hsadix] + 16;
-            as->wu.hit_quake = sel_hs_add_tbl[hsadix] + 16;
-            break;
-        case 1:
-        case 3:
-        case 5:
-            ds->wu.dm_stop = -15;
-            as->wu.hit_stop = 16;
-            as->wu.hit_quake = 16;
-            break;
-        case 6:
-            ds->wu.dm_stop = -15;
-            as->wu.hit_stop = 16;
-            as->wu.hit_quake = 16;
-            break;
-        case 7:
-            ds->wu.dm_stop = -15;
-            as->wu.hit_stop = 16;
-            as->wu.hit_quake = 16;
-            break;
-        case 8:
-            ds->wu.dm_stop = -15;
-            as->wu.hit_stop = 16;
-            as->wu.hit_quake = 16;
-            break;
-        case 9:
-            ds->wu.dm_stop = -15;
-            as->wu.hit_stop = 16;
-            as->wu.hit_quake = 16;
-            break;
-        default:
-            ds->wu.dm_stop = 0;
-            as->wu.hit_stop = 0;
-            as->wu.hit_quake = 0;
-            break;
-        }
-        ds->wu.dm_quake = 0;
-        if (ds->wu.xyz[1].disp.pos < 0) {
-            ds->wu.xyz[1].cal = 0;
-        }
-        ds->wu.dm_arts_point = 0;
-        if (as->wu.pat_status >= 0xE && as->wu.pat_status < 31 && as->wu.work_id == 1 &&
-            sel_sp_ch_tbl[as->wu.kind_of_waza >> 3] == 0) {
-            remake_mvxy_PoGR(&as->wu);
-        }
-        if (Bonus_Game_Flag == 0 && ds->spmv_ng_flag & 0x80) {
-            paring_bonus_r[ds->wu.id] = 1;
-            paring_ctr_vs[Play_Type][ds->wu.id]++;
-            if (paring_ctr_vs[Play_Type][ds->wu.id] > 39) {
-                paring_ctr_vs[Play_Type][ds->wu.id] = 39;
-            }
-            paring_counter[ds->wu.id] = parisucc_pts[Play_Type][paring_ctr_vs[Play_Type][ds->wu.id] - 1];
-        }
-        as->wu.cmwk[8]++;
-    }
-    hit_pattern_extdat_check(&as->wu);
 }
 
 
@@ -911,17 +792,19 @@ guard:
     }
     if (ds->guard_flag & 1) {
         goto miss;
-    }
-    if (ds->spmv_ng_flag & 32) {
-        goto miss;
-    }
-    if (ds->saishin_lvdir & gddir) {
-        as->wu.hf.hit.player = 0x20;
-        ds->wu.routine_no[2] = 7;
-        if (check_dm_att_guard(&as->wu, &ds->wu)) {
-            return 2;
+    } else {
+        if (ds->spmv_ng_flag & 32) {
+            goto miss;
+        } else {
+            if (ds->saishin_lvdir & gddir) {
+                as->wu.hf.hit.player = 0x20;
+                ds->wu.routine_no[2] = 7;
+                if (check_dm_att_guard(&as->wu, &ds->wu)) {
+                    return 2;
+                }
+                return 1;
+            }
         }
-        return 1;
     }
 miss:
     return 2;
@@ -1144,7 +1027,7 @@ void add_combo_work(PLW* as, PLW* ds) {
     }
     ds->kizetsu_kow = ds->cb->new_dm = as->wu.kind_of_waza;
     c = &ds->cb->kind_of[0][0][0];
-    r = (s16*)((u8*)calc_hit + (s8)(ds->wu.id * 20));
+    r = calc_hit[ds->wu.id];
     c[as->wu.kind_of_waza]++;
     r[(as->wu.kind_of_waza & 0x78) / 8]++;
     ds->cb->total++;
@@ -1623,13 +1506,15 @@ void clear_hit_queue(void) {
 
 
 s32 change_damage_attribute(PLW* as, u16 atr, u16 ix) {
+    const s16* flame = &attr_flame_tbl[ix - 32];
+    const s16* freeze = &attr_freeze_tbl[ix - 32];
     switch (atr) {
     case 1:
         if (as->wu.work_id == 1 && as->player_number == PL_GILL && as->wu.rl_flag) {
-            ix = attr_freeze_tbl[ix - 32];
+            ix = *freeze;
             as->wu.at_attribute = 3;
         } else {
-            ix = attr_flame_tbl[ix - 32];
+            ix = *flame;
         }
         break;
     case 2:
@@ -1637,10 +1522,10 @@ s32 change_damage_attribute(PLW* as, u16 atr, u16 ix) {
         break;
     case 3:
         if (as->wu.work_id == 1 && as->player_number == PL_GILL && as->wu.rl_flag) {
-            ix = attr_flame_tbl[ix - 32];
+            ix = *flame;
             as->wu.at_attribute = 1;
         } else {
-            ix = attr_freeze_tbl[ix - 32];
+            ix = *freeze;
         }
         break;
     }

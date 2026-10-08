@@ -3,8 +3,8 @@
 
 #include "structs.h"
 
-u32 sound_envelope_rate(u32 level, u32 index, const u16* table);
+u32 sound_envelope_rate(u16 level, u8 index, const u16* table);
 void voice_process_null();
-u32 voice_process_primary(SNDVOICE* voice, s8 is_bgm, u32 voice_index);
+void voice_process_primary(SNDVOICE* voice, s8 is_bgm, u32 voice_index);
 
 #endif

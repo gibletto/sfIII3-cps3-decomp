@@ -90,7 +90,7 @@ void setup_kage_cells(void) {
         push_effect_work(ewk);
         return;
     }
-    tmp = (WORK*)frw[ix];
+    tmp = (WORK*)&frw[ix];
     handles = &tmp->routine_no[0];
     for (i = 0; i < 29; i++) {
         ewk->cg_number = 0x9020 + i;
@@ -102,16 +102,16 @@ void setup_kage_cells(void) {
         handles[i] = ewk->spr.gfx_blk40[0];
         ewk->spr.gfx_blk40[0] = 0;
     }
-    push_effect_work(ewk);
-    push_effect_work(tmp);
-    return;
+    goto done;
 fail:
     if (i) {
-        for (i--; i >= 0; i--) {
-            simmram_block_free_40(handles[i]);
+        i--;
+        for (ix = i; ix >= 0; ix--) {
+            simmram_block_free_40(handles[ix]);
         }
     }
     purge_char_gfx(0x9020);
+done:
     push_effect_work(ewk);
     push_effect_work(tmp);
 }
@@ -126,25 +126,27 @@ s32 setup_hit_mark_cells(void) {
     s16 ix;
     s16 i;
     if (hitmark_gfx_ofs[0][0]) {
-        return hitmark_gfx_ofs[0][0];
+        return;
     }
     load_any_color(1);
     if (!load_char_gfx(0x9EC8, 1)) {
-        return 0;
+        return;
     }
     if (!load_char_gfx(0xA9F8, 1)) {
-        return 0;
+        return;
     }
     if ((ix = pull_effect_work(7)) == -1) {
-        return purge_char_gfx(0x9EC8);
+        purge_char_gfx(0x9EC8);
+        return;
     }
     ewk = (WORK*)frw[ix];
     ewk->my_col_code = 0;
     if ((ix = pull_effect_work(7)) == -1) {
         purge_char_gfx(0x9EC8);
-        return push_effect_work(ewk);
+        push_effect_work(ewk);
+        return;
     }
-    tmp = (WORK*)frw[ix];
+    tmp = (WORK*)&frw[ix];
     handles = &tmp->routine_no[0];
     ewk->rl_flag = 0;
     for (i = 0; i < 303; i++) {
@@ -167,17 +169,18 @@ s32 setup_hit_mark_cells(void) {
         handles[303 + i] = ewk->spr.gfx_blk40[0];
         ewk->spr.gfx_blk40[0] = 0;
     }
-    push_effect_work(ewk);
-    return push_effect_work(tmp);
+    goto done;
 fail:
-    if (i != 0) {
-        for (i--; i >= 0; i--) {
-            simmram_block_free_40(handles[i]);
+    if (i) {
+        i--;
+        for (ix = i; ix >= 0; ix--) {
+            simmram_block_free_40(handles[ix]);
         }
     }
     purge_char_gfx(0x9EC8);
+done:
     push_effect_work(ewk);
-    return push_effect_work(tmp);
+    push_effect_work(tmp);
 }
 
 s32 setup_GILL_exsa_obj(void) {
@@ -187,13 +190,14 @@ s32 setup_GILL_exsa_obj(void) {
     s16 ix;
     s16 i;
     if (seraph_gfx_ofs[0]) {
-        return seraph_gfx_ofs[0];
+        return;
     }
     if (!load_char_gfx(0xB478, 1)) {
-        return 0;
+        return;
     }
     if ((ix = pull_effect_work(7)) == -1) {
-        return purge_char_gfx(0xB478);
+        purge_char_gfx(0xB478);
+        return;
     }
     ewk = (WORK*)frw[ix];
     ewk->my_col_code = 320;
@@ -202,9 +206,10 @@ s32 setup_GILL_exsa_obj(void) {
     ewk->my_mr.size.y = 0x7F;
     if ((ix = pull_effect_work(7)) == -1) {
         purge_char_gfx(0xB478);
-        return push_effect_work(ewk);
+        push_effect_work(ewk);
+        return;
     }
-    tmp = (WORK*)frw[ix];
+    tmp = (WORK*)&frw[ix];
     handles = &tmp->routine_no[0];
     for (i = 0; i < 8; i++) {
         ewk->cg_number = 0xB478 + i;
@@ -212,25 +217,23 @@ s32 setup_GILL_exsa_obj(void) {
             goto fail;
         }
         char_sprite_zoom_cells(ewk);
-        {
-            s16 t = ewk->spr.gfx_ofs;
-            seraph_gfx_ofs[i] = t;
-        }
+        seraph_gfx_ofs[i] = ewk->spr.gfx_ofs;
         seraph_gfx_cells[i] = ewk->spr.gfx_cells;
         handles[i] = ewk->spr.gfx_blk40[0];
         ewk->spr.gfx_blk40[0] = 0;
     }
-    push_effect_work(ewk);
-    return push_effect_work(tmp);
+    goto done;
 fail:
     if (i) {
-        for (i--; i >= 0; i--) {
-            simmram_block_free_40(handles[i]);
+        i--;
+        for (ix = i; ix >= 0; ix--) {
+            simmram_block_free_40(handles[ix]);
         }
     }
     purge_char_gfx(0xB478);
+done:
     push_effect_work(ewk);
-    return push_effect_work(tmp);
+    push_effect_work(tmp);
 }
 
 s32 setup_bonus_car_parts(void) {
@@ -240,49 +243,46 @@ s32 setup_bonus_car_parts(void) {
     s16 ix;
     s16 i;
     if (car_gfx_ofs[0]) {
-        return car_gfx_ofs[0];
+        return;
     }
     if (!load_char_gfx(0xB0C8, 1)) {
-        return 0;
+        return;
     }
     if ((ix = pull_effect_work(7)) == -1) {
-        return purge_char_gfx(0xB0C8);
+        purge_char_gfx(0xB0C8);
+        return;
     }
     ewk = (WORK*)frw[ix];
     ewk->my_col_code = 0x2080;
     if ((ix = pull_effect_work(7)) == -1) {
         purge_char_gfx(0xB0C8);
-        return push_effect_work(ewk);
+        push_effect_work(ewk);
+        return;
     }
-    tmp = (WORK*)frw[ix];
+    tmp = (WORK*)&frw[ix];
     handles = &tmp->routine_no[0];
     for (i = 0; i < 288; i++) {
         ewk->cg_number = 0xB0C8 + i;
         if (!trans_char_cells(ewk)) {
             goto fail;
         }
-        {
-            s16 t = ewk->spr.gfx_ofs;
-            car_gfx_ofs[i] = t;
-        }
-        {
-            s16 t = ewk->spr.gfx_cells;
-            car_gfx_cells[i] = t;
-        }
+        car_gfx_ofs[i] = ewk->spr.gfx_ofs;
+        car_gfx_cells[i] = ewk->spr.gfx_cells;
         handles[i] = ewk->spr.gfx_blk40[0];
         ewk->spr.gfx_blk40[0] = 0;
     }
-    push_effect_work(ewk);
-    return push_effect_work(tmp);
+    goto done;
 fail:
     if (i) {
-        for (i--; i >= 0; i--) {
-            simmram_block_free_40(handles[i]);
+        i--;
+        for (ix = i; ix >= 0; ix--) {
+            simmram_block_free_40(handles[ix]);
         }
     }
     purge_char_gfx(0xB0C8);
+done:
     push_effect_work(ewk);
-    return push_effect_work(tmp);
+    push_effect_work(tmp);
 }
 
 
@@ -319,6 +319,8 @@ s32 load_char_gfx(id, mode)
     u32 base;
     s16 i;
     CharGfxChunk* chunk;
+    s32 err;
+    u32 adr;
     if (!cg_data_exist(id)) {
         return 0;
     }
@@ -327,8 +329,7 @@ s32 load_char_gfx(id, mode)
             return 1;
         }
         polygon2d_submit_line(set->prep, 0, 0, 3);
-        handle = ((s16)simmram_block_alloc_10((set->size >> 5) + 1, 1));
-        if (handle == 0) {
+        if ((handle = simmram_block_alloc_10((set->size >> 5) + 1, 1)) == 0) {
             return 0;
         }
         base = simmram_slot_to_offset(handle);
@@ -336,7 +337,9 @@ s32 load_char_gfx(id, mode)
         cg_slot_tbl[set->slot].handle = handle;
         chunk = set->chunk;
         for (i = 0; i < set->count; i++) {
-            if (polygon2d_submit_line(chunk[i].src, base + chunk[i].dst * 16, chunk[i].size, mode) != 0) {
+            adr = base + chunk[i].dst * 16;
+            err = polygon2d_submit_line(chunk[i].src, adr, chunk[i].size, mode);
+            if (err != 0) {
                 cg_slot_tbl[set->slot].addr = cg_slot_tbl[set->slot].handle = 0;
                 ((void(*)(s16 handle))simmram_block_free_10)(handle);
                 return 0;
@@ -742,7 +745,7 @@ s32 set_judge_area_sprite(WORK_Other* owk) {
     if ((blk = simmram_block_alloc_40(wk->wu.spr.gfx_cells / 16 + 1, 1)) == 0) {
         return 0;
     }
-    base = ((GFX_CELL *(*)(s16 handle))simmram_slot_addr)(blk);
+    base = (GFX_CELL *)simmram_slot_addr(blk);
     if (wk->wu.spr.gfx_blk40[2] != 0) {
         simmram_block_free_40(wk->wu.spr.gfx_blk40[2]);
     }
@@ -774,8 +777,8 @@ s32 set_judge_area_sprite(WORK_Other* owk) {
         for (k = 0; k < 4; k++) {
             base[cell].w[0] = judge_area_code_tbl[14] + base_code;
             base[cell].w[1] = flip_attr_tbl[k];
-            base[cell].w[2] = wk->ja[56 + k][0] & 0x3FF;
-            base[cell].w[3] = wk->ja[56 + k][1] & 0x3FF;
+            base[cell].w[2] = wk->ja[14 * 4 + k][0] & 0x3FF;
+            base[cell].w[3] = wk->ja[14 * 4 + k][1] & 0x3FF;
             base[cell].w[5] = 0x305;
             base[cell].w[4] = cell_size_tbl[5];
             cell++;
@@ -801,18 +804,17 @@ s32 set_judge_area_sprite(WORK_Other* owk) {
 
 
 s32 set_conn_sprite(WORK_Other_CONN* wk) {
-    CharGfxEntry* ent;
+    s16 handle;
+    CharSpriteK* dst;
+    CharSpriteK* s;
+    CHAR_CELL* cells;
+    CHAR_CELL* c;
     CharGfxSet* set;
-    CHAR_CELL* parts;
-    CHAR_CELL* p;
-    u16* base;
-    u16* dst;
-    s32 blk;
-    s16 cell;
-    s16 base_code;
+    s16 base;
+    u16 chr;
     s16 i;
     s16 j;
-    u16 chr;
+    s16 n;
     u16 size;
     if (wk->wu.old_cgnum == wk->wu.cg_number) {
         return 1;
@@ -821,41 +823,40 @@ s32 set_conn_sprite(WORK_Other_CONN* wk) {
     if (wk->wu.spr.gfx_cells == 0) {
         return 0;
     }
-    blk = simmram_block_alloc_40(wk->wu.spr.gfx_cells / 16 + 1, 1);
-    if (blk == 0) {
+    if ((handle = simmram_block_alloc_40(wk->wu.spr.gfx_cells / 16 + 1, 1)) == 0) {
         return 0;
     }
-    base = (u16 *)simmram_slot_addr(blk);
+    dst = (CharSpriteK*)simmram_slot_addr(handle);
     if (wk->wu.spr.gfx_blk40[2]) {
         simmram_block_free_40(wk->wu.spr.gfx_blk40[2]);
     }
     wk->wu.spr.gfx_blk40[2] = wk->wu.spr.gfx_blk40[1];
     wk->wu.spr.gfx_blk40[1] = wk->wu.spr.gfx_blk40[0];
-    wk->wu.spr.gfx_blk40[0] = blk;
-    wk->wu.spr.gfx_ofs = simmram_slot_to_code(blk);
+    wk->wu.spr.gfx_blk40[0] = handle;
+    wk->wu.spr.gfx_ofs = simmram_slot_to_code(handle);
     wk->wu.spr.done_rl = 0;
     if (wk->wu.my_col_code & 0x2000) {
         wk->wu.spr.disp_colcd = wk->wu.my_col_code;
     } else {
         wk->wu.spr.disp_colcd = wk->wu.my_col_code & 0x1FF;
     }
-    for (cell = i = 0; i < wk->num_of_conn; i++) {
+    for (i = n = 0; i < wk->num_of_conn; i++) {
         chr = wk->conn[i].chr;
-        ent = &cg_data_list[chr];
-        set = ent->set;
-        base_code = cg_slot_tbl[(u16)set->slot].addr;
-        parts = (CHAR_CELL*)((u8*)set + 12) + set->count;
+        set = cg_data_list[chr].set;
+        base = cg_slot_tbl[set->slot].addr;
+        cells = (CHAR_CELL*)set->chunk;
+        cells += set->count;
         for (j = 0; j < set->cells; j++) {
-            p = &parts[j];
-            dst = base + cell * 8;
-            dst[0] = p->code + base_code;
-            dst[1] = wk->wu.spr.disp_colcd + p->col + wk->conn[i].col;
-            dst[2] = (p->x + wk->conn[i].nx + cg_data_list[chr].x) & 0x3FF;
-            dst[3] = (wk->conn[i].ny - (u16)p->y - cg_data_list[chr].y) & 0x3FF;
-            size = *(u8*)&p->y >> 4;
-            dst[5] = size | 0x300;
-            dst[4] = ((u16)cell_size_tbl[size]);
-            cell++;
+            s = &dst[n];
+            c = &cells[j];
+            s->code = base + c->code;
+            s->pal = c->col + wk->wu.spr.disp_colcd + wk->conn[i].col;
+            s->x = (c->x + wk->conn[i].nx + cg_data_list[chr].x) & 0x3FF;
+            s->y = (wk->conn[i].ny - c->y - cg_data_list[chr].y) & 0x3FF;
+            size = *((u8*)c + 6) >> 4;
+            s->attr = size | 0x300;
+            s->zoom = cell_size_tbl[size];
+            n++;
         }
     }
     return 1;
@@ -879,7 +880,7 @@ void count_conn_cells(WORK_Other_CONN* ewk) {
 
 /* provisional name */
 s32 make_conn_cells(WORK_Other_CONN* ewk) {
-    s32 handle;
+    s16 handle;
     CharSpriteK* dst;
     CharSpriteK* s;
     CHAR_CELL* cells;
@@ -890,7 +891,6 @@ s32 make_conn_cells(WORK_Other_CONN* ewk) {
     s16 i;
     s16 j;
     s16 n;
-    s32 blocks;
     if (ewk->wu.old_cgnum == ewk->wu.cg_number) {
         return 1;
     }
@@ -898,12 +898,7 @@ s32 make_conn_cells(WORK_Other_CONN* ewk) {
     if (ewk->wu.spr.gfx_cells == 0) {
         return 0;
     }
-    blocks = ewk->wu.spr.gfx_cells;
-    if (blocks < 0) {
-        blocks += 15;
-    }
-    handle = ((s16)simmram_block_alloc_40((blocks >> 4) + 1, 1));
-    if (handle == 0) {
+    if ((handle = simmram_block_alloc_40(ewk->wu.spr.gfx_cells / 16 + 1, 1)) == 0) {
         return 0;
     }
     dst = (CharSpriteK*)simmram_slot_addr(handle);
@@ -920,7 +915,7 @@ s32 make_conn_cells(WORK_Other_CONN* ewk) {
     } else {
         ewk->wu.spr.disp_colcd = ewk->wu.my_col_code & 0x1FF;
     }
-    for (n = i = 0; i < ewk->num_of_conn; i++) {
+    for (i = n = 0; i < ewk->num_of_conn; i++) {
         chr = ewk->conn[i].chr;
         set = cg_data_list[chr].set;
         base = cg_slot_tbl[set->slot].addr;
@@ -931,8 +926,8 @@ s32 make_conn_cells(WORK_Other_CONN* ewk) {
             c = &cells[j];
             s->code = base + c->code;
             s->pal = c->col + ewk->wu.spr.disp_colcd + ewk->conn[i].col;
-            n++;
             s->x = (c->x + ewk->conn[i].nx + cg_data_list[chr].x) & 0x3FF;
+            n++;
             s->y = (ewk->conn[i].ny - c->y - cg_data_list[chr].y) & 0x3FF;
             s->attr = (*((u8*)c + 6) >> 4) | 0x300;
             s->zoom = 0x3F3F;

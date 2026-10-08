@@ -10,8 +10,9 @@
  * lists, effect_work_kill marks works dead and search_effect_index finds a work by id. Also here:
  * work_init_zero, the per-player shell list helpers (effect_shell_ix_* , get_vs_shell_adrs,
  * setup_shell_hit_stop, shell_live_check) and small setters called from character move data (status,
- * caution, extra-BG, BG quake, extra-damage index, step move), and setup_dmv_use_flag,
- * setup_disp_flag and setup_command_number, used when effects and players are initialised.
+ * caution, extra-BG, BG quake, extra-damage index, step move: exec_char_asxy, setup_free_program,
+ * setup_bg_quake_x, setup_bg_quake_y, setup_exdm_ix), and setup_dmv_use_flag, setup_disp_flag and
+ * setup_command_number, used when effects and players are initialised.
  */
 
 #include "structs.h"
@@ -40,7 +41,6 @@ void move_effect_work(s16 index) {
 }
 
 
-
 void effect_work_init(void) {
     WORK* c_addr;
     s16 i;
@@ -61,7 +61,6 @@ void effect_work_init(void) {
 }
 
 
-
 void effect_work_quick_init(void) {
 
     s16 i;
@@ -71,7 +70,6 @@ void effect_work_quick_init(void) {
 }
 
 
-
 /* provisional name */
 void effect_work_quick_clear(void) {
     s16 i;
@@ -79,7 +77,6 @@ void effect_work_quick_clear(void) {
         effect_work_list_init(i, -1);
     }
 }
-
 
 
 /* provisional name */
@@ -114,7 +111,6 @@ void effect_work_list_release(lix, iid)
 }
 
 
-
 void effect_work_list_init(lix, iid)
 s16 lix;
 s16 iid;
@@ -145,7 +141,6 @@ s16 iid;
 }
 
 
-
 /* Takes an effect work from the free queue and links it into list `index`; returns its slot index, -1 when none is free. */
 /* provisional name */
 s32 pull_effect_work(s16 index) {
@@ -170,7 +165,6 @@ s32 pull_effect_work(s16 index) {
     tadr->listix = index;
     return qix;
 }
-
 
 
 /* provisional name */
@@ -206,7 +200,6 @@ s32 effect_work_pull_link(s16 index, s16 before, s16 aix) {
 }
 
 
-
 s32 search_effect_index(s16 index, s16 flag, s16 tid) {
     WORK* c_addr;
     s16 aix;
@@ -233,7 +226,6 @@ s32 search_effect_index(s16 index, s16 flag, s16 tid) {
     }
     return aix;
 }
-
 
 
 /* Unlinks an effect work and returns it to the free queue; returns its slot index. */
@@ -273,7 +265,6 @@ s32 push_effect_work(WORK* wkhd) {
 }
 
 
-
 void effect_work_kill(s16 index, s16 kill_id) {
     s16 aix;
     WORK* c_addr;
@@ -298,7 +289,6 @@ void effect_work_kill(s16 index, s16 kill_id) {
 s16 get_frwctr(void) {
     return frwctr;
 }
-
 
 
 void work_init_zero(s32* adrs_int, s32 xx) {
@@ -346,7 +336,6 @@ void write_my_shell_ix(WORK* wk, s16 ix) {
 }
 
 
-
 s32 erase_my_shell_ix(WORK* wk, s16 ix) {
     s32 i;
     s32 j;
@@ -366,7 +355,6 @@ ok:
 }
 
 
-
 s32 get_my_shell_ix(WORK* wk, s16 ix, WORK** tmw) {
     if (wk->shell_ix[ix] == -1) {
         return 0;
@@ -377,7 +365,6 @@ s32 get_my_shell_ix(WORK* wk, s16 ix, WORK** tmw) {
     }
     return 0;
 }
-
 
 
 s32 get_vs_shell_adrs(WORK* wk, s16 id, s16 ix, WORK_Other** tmw) {
@@ -392,14 +379,12 @@ s32 get_vs_shell_adrs(WORK* wk, s16 id, s16 ix, WORK_Other** tmw) {
 }
 
 
-
 void clear_my_shell_ix(WORK* wk) {
     s32 i;
     for (i = 0; i < 8; i++) {
         wk->shell_ix[i] = -1;
     }
 }
-
 
 
 void setup_shell_hit_stop(WORK* wk, s16 tm, s16 fl) {
@@ -413,7 +398,6 @@ void setup_shell_hit_stop(WORK* wk, s16 tm, s16 fl) {
         }
     }
 }
-
 
 
 s32 shell_live_check(PLW* wk, s16 wix) {
@@ -463,11 +447,9 @@ void set_caution_flag(PLW* wk)
 }
 
 
-
 void setup_status_flag(WORK* wk, u8 status) {
     wk->pat_status = status;
 }
-
 
 
 void reset_extra_bg_flag(WORK* wk) {
@@ -481,10 +463,58 @@ void flip_my_rl_flag(WORK* wk)
 }
 
 
-
 void setup_meoshi_hit_flag(WORK* wk, u8 flag) {
     wk->meoshi_hit_flag = flag;
 }
 
+s32 exec_char_asxy(WORK* wk, u8 data) {
+    s16* from_rom2;
+    s32 st;
+    s16 ix = data;
+    ix *= 2;
+    from_rom2 = &wk->step_xy_table[ix];
+    st = *from_rom2++;
+    st *= 256;
+    if (wk->rl_flag) {
+        wk->xyz[0].cal += st;
+    } else {
+        wk->xyz[0].cal -= st;
+    }
+    st = *from_rom2;
+    st *= 256;
+    wk->xyz[1].cal += st;
+}
 
 
+void setup_free_program(WORK* wk, u8 arg) {}/* Start a horizontal background quake using quake pattern ix. */
+void setup_bg_quake_x(WORK* wk, u8 ix)
+{
+    bg_w.quake_x_index = ix;
+}
+
+/* Start a vertical background quake using quake pattern ix. */
+void setup_bg_quake_y(WORK* wk, u8 ix)
+{
+    bg_w.quake_y_index = ix;
+}
+
+
+void setup_exdm_ix(PLW* wk, u8 ix) {
+    wk->exdm_ix = ix;
+}
+
+
+void setup_dmv_use_flag(PLW* wk, u8 use) {
+    wk->dm_vital_use = use;
+}
+
+
+void setup_disp_flag(WORK* wk, s8 flag) {
+    wk->disp_flag = flag;
+}
+
+/* Queue a special command number for the player to perform. */
+void setup_command_number(PLW* wk, u8 cmd_no)
+{
+    wk->cmd_request = cmd_no;
+}

@@ -373,7 +373,7 @@ u32 SCORE_CALCULATION(s8 PL) {
 
 void SCORE_PLUS(s8 pl, u32 pts) {
     Score[pl][2] += pts;
-    if (!Play_Type) {
+    if (Play_Type == 0) {
         Score[pl][0] += pts;
         if (Score[pl][0] >= 99999900) {
             Score[pl][0] = 99999900;

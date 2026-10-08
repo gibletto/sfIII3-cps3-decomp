@@ -21,7 +21,7 @@ s32 Setup_Com_Arts(void);
 void Setup_Regular_OBJ(s16 PL_id);
 s32 Check_Bonus_Stage(void);
 void Next_Bonus_1st(void);
-void Regular_OBJ_Sub(s16 PL_id, s16 Dir);
+void Regular_OBJ_Sub();
 void Setup_Com_Color(void);
 void Setup_History_OBJ(void);
 void Setup_Next_Stage(s16 dir_step);

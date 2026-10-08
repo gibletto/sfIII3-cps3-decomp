@@ -6,7 +6,7 @@
  * blinks the letter under the cursor (current_name_move, alternating with the cursor pattern
  * every 16 frames), fixes the letter with naming_set when that position is entered, redraws it
  * when the code changes, and colour-flashes the name when the entry is complete (r_no_0 == 7).
- * The init, effect_B5_init, is in EFFB6.C and is called from n_input.c.
+ * The init, effect_B5_init, is in EFFB5_INIT.C and is called from n_input.c.
  */
 
 #include "structs.h"

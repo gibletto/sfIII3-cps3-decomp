@@ -93,7 +93,7 @@ void Entry_00(void) {
         Text_Page_Y = 0;
         break;
     case 1:
-        E_No1 = E_No1 + 1;
+        E_No1++;
         E_Timer = 50;
         if (Free_Play) {
             tilemap_print_string_attr(DE_X[3] + 14, Text_Page_Y + Insert_Y, 18, msg_free_play);
@@ -117,7 +117,7 @@ void Entry_00(void) {
         break;
     case 2:
         if (--E_Timer == 0) {
-            E_No1 = E_No1 + 1;
+            E_No1++;
             E_Timer = 30;
             tilemap_print_string_attr(DE_X[3] + 14, Text_Page_Y + Insert_Y, 18, msg_blank);
             if (G_No1 == 3 || G_No1 == 5) {
@@ -128,7 +128,7 @@ void Entry_00(void) {
         break;
     case 3:
         if (--E_Timer == 0) {
-            E_No1 = E_No1 - 1;
+            E_No1--;
             E_Timer = 50;
             if (Free_Play) {
                 tilemap_print_string_attr(DE_X[3] + 14, Text_Page_Y + Insert_Y, 18, msg_free_play);
@@ -204,10 +204,10 @@ void Entry_01_Sub(s16 PL_id) {
         Operator_Status[1] = 1;
         Ignore_Entry[0] = 0;
         Ignore_Entry[1] = 0;
-        ((void(*)(s32 ix, s32 ix2))grade_check_work_1st_init)(0, 0);
-        ((void(*)(s32 ix, s32 ix2))grade_check_work_1st_init)(0, 1);
-        ((void(*)(s32 ix, s32 ix2))grade_check_work_1st_init)(1, 0);
-        ((void(*)(s32 ix, s32 ix2))grade_check_work_1st_init)(1, 1);
+        grade_check_work_1st_init(0, 0);
+        grade_check_work_1st_init(0, 1);
+        grade_check_work_1st_init(1, 0);
+        grade_check_work_1st_init(1, 1);
     } else {
         plw[PL_id].wu.operator = 1;
         Operator_Status[PL_id] = 1;
@@ -217,7 +217,7 @@ void Entry_01_Sub(s16 PL_id) {
         Ignore_Entry[0] = 0;
         Ignore_Entry[1] = 0;
         if (((s8)Continue_Coin[PL_id]) == 0) {
-            ((void(*)(s32 ix, s32 ix2))grade_check_work_1st_init)(PL_id, 0);
+            grade_check_work_1st_init(PL_id, 0);
         }
     }
 }
@@ -764,7 +764,7 @@ s16 Jump_Index;
             tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], 32, 18, msg_blank);
             break;
         case 1:
-            if (--(&Personal_Timer[0])[PL_id] == 0) {
+            if (--Personal_Timer[PL_id] == 0) {
                 E_Number[PL_id][1] += 1;
                 Naming_Init(PL_id);
                 commit_name_entry_row_both_players(Text_Page_Y);
@@ -981,7 +981,7 @@ s32 Loser_Sub_1P(void) {
         if (Ck_Break_Into(p1sw_0, p1sw_1, 0) == 0) {
             if (Request_Break[0] != 0) {
                 tilemap_print_string_attr(DE_X[Entry_Mes_Wide[0]] + Entry_Mes_X[0], Text_Page_Y, 18, msg_blank);
-            } else if (!LOSER) {
+            } else if (LOSER == 0) {
                 tilemap_print_string_attr(DE_X[Entry_Mes_Wide[0]] + Entry_Mes_X[0], Text_Page_Y, 18, msg_continue);
             } else {
                 Flash_Start(0, Entry_Msg_X_Data[2][Game_setting.mode]);
@@ -1188,7 +1188,7 @@ void Entry_Continue_Sub(s16 PL_id) {
 
 
 void Setup_Next_Step(s16 PL_id) {
-    s32 xx;
+    s16 xx;
     E_Number[PL_id][1] = 0;
     E_Number[PL_id][2] = 0;
     E_Number[PL_id][3] = 0;
@@ -1290,7 +1290,7 @@ void In_Over_Sub(s16 PL_id) {
     switch (E_Number[PL_id][2]) {
     case 0:
         E_Number[PL_id][2]++;
-        tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + (&Entry_Mes_X[0])[PL_id], Text_Page_Y, 18,
+        tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18,
                                   (s8*)msg_game_over);
         break;
     default:
@@ -1733,24 +1733,25 @@ s16 PL_id;
         Champion = New_Challenger ^ 1;
         Request_Break[PL_id] = 0;
         return ENTRY_X = 1;
-    }
-    if (!(~Sw_1 & Sw_0 & 0x1000)) {
-        return 0;
-    }
-    if (!Pay_Start_Credit(PL_id)) {
-        return 0;
-    }
-    Continue_Score_Sub(PL_id);
-    if (Forbid_Break || Extra_Break) {
-        Request_Break[PL_id] = 1;
-        tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18, msg_blank);
     } else {
-        Game_pause = 1;
-        New_Challenger = PL_id;
-        Champion = New_Challenger ^ 1;
-        return ENTRY_X = 1;
+        if (!(~Sw_1 & Sw_0 & 0x1000)) {
+            return 0;
+        }
+        if (!Pay_Start_Credit(PL_id)) {
+            return 0;
+        }
+        Continue_Score_Sub(PL_id);
+        if (Forbid_Break || Extra_Break) {
+            Request_Break[PL_id] = 1;
+            tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18, msg_blank);
+        } else {
+            Game_pause = 1;
+            New_Challenger = PL_id;
+            Champion = New_Challenger ^ 1;
+            return ENTRY_X = 1;
+        }
+        return 0;
     }
-    return 0;
 }
 
 s32 Ck_Break_Into_SP(Sw_0, Sw_1, PL_id)
@@ -1820,7 +1821,7 @@ void Break_Into_02(s16 PL_id) {
     if (Continue_Coin[New_Challenger] == 0) {
         grade_check_work_1st_init(New_Challenger, 0);
     }
-    tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + (&Entry_Mes_X[0])[PL_id], Text_Page_Y, 18, msg_blank);
+    tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18, msg_blank);
     Select_Timer = 48;
     Unit_Of_Timer = 50;
 }
@@ -1839,7 +1840,7 @@ void Break_Into_04(s16 PL_id) {
     effect_A2_init(0);
     effect_89_init(6, 0, Text_Page_Y + 11, 48, 3);
     bgm_request(5);
-    tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + (&Entry_Mes_X[0])[PL_id], Text_Page_Y, 18, msg_blank);
+    tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18, msg_blank);
 }
 
 
@@ -1869,7 +1870,7 @@ void Break_Into_05(s16 PL_id) {
         effect_89_init(6, 0, Text_Page_Y + 11, 48, 3);
         bgm_request(5);
     }
-    tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + (&Entry_Mes_X[0])[PL_id], Text_Page_Y, 18, msg_blank);
+    tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18, msg_blank);
 }
 
 
@@ -1901,10 +1902,9 @@ s16 PL_id;
     E_07_Flag[PL_id] = 1;
     if (E_07_Flag[0] == 0 || E_07_Flag[1] == 0) {
         Break_Into = 1;
-        E_No1 += 1;
+        E_No1++;
         E_No2 = 0;
-        PL_id ^= 1;
-        if (Continue_Count[PL_id] >= 0) {
+        if (Continue_Count[PL_id ^ 1] >= 0) {
             E_Timer = 60;
         } else {
             E_Timer = 10;
@@ -1915,7 +1915,7 @@ s16 PL_id;
 
 
 void Break_Into_09(s16 PL_id) {
-    tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + (&Entry_Mes_X[0])[PL_id], Text_Page_Y, 18, msg_blank);
+    tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18, msg_blank);
     E_Number[New_Challenger][0] = 0;
     E_Number[New_Challenger][1] = 0;
     E_Number[New_Challenger][2] = 0;
@@ -1933,7 +1933,7 @@ void Break_Into_09(s16 PL_id) {
 
 
 void Break_Into_10(s16 PL_id) {
-    tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + (&Entry_Mes_X[0])[PL_id], Text_Page_Y, 18, msg_blank);
+    tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], Text_Page_Y, 18, msg_blank);
     E_Number[New_Challenger][0] = 0;
     E_Number[New_Challenger][1] = 0;
     E_Number[New_Challenger][2] = 0;

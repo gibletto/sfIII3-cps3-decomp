@@ -35,20 +35,14 @@
 #include "ta_sub.h"
 #include "bonus_bg.h"
 
+#pragma inline(bns01, bns02)
+
 /* provisional name */
 void Bonus_bg1(void) {
     bgw_ptr = &bg_w.bgw[1];
-    {
-        BG_JMP2 jmp1;
-        jmp1 = bonus1_jmp1_tbl;
-        jmp1.f[bgw_ptr->r_no_0]();
-    }
+    bns02();
     bgw_ptr = &bg_w.bgw[0];
-    {
-        BG_JMP2 jmp0;
-        jmp0 = bonus1_jmp0_tbl;
-        jmp0.f[bgw_ptr->r_no_0]();
-    }
+    bns01();
     bg_pos_hosei2();
     Bg_Family_Set();
 }
