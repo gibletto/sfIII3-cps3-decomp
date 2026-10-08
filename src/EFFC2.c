@@ -644,12 +644,9 @@ void setup_vital_bonus2(ewk)
 WORK_Other* ewk;
 {
     s16 i;
-    s32 k;
-    const BS2* row;
-    for (i = 0, k = 0, row = bs2_data_table; i < 8; i++, k++) {
-        ewk->wu.shell_ix[k] = row->vital;
-        ewk->wu.cmwk[k] = 0;
-        row++;
+    for (i = 0; i < 8; i++) {
+        ewk->wu.shell_ix[i] = bs2_data_table[i].vital;
+        ewk->wu.cmwk[i] = 0;
     }
 }
 
@@ -748,7 +745,10 @@ void setup_parts_break2(WORK* wk) {
 /* provisional name */
 void disp_bs2_parts_debug(WORK* wk) {
     s16 i;
-    if (Version_Type != 7 || !(exsw_2 & 0x10)) {
+    if (Version_Type != 7) {
+        return;
+    }
+    if (!(exsw_2 & 0x10)) {
         return;
     }
     for (i = 0; i < 8; i++) {

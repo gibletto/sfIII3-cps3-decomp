@@ -376,7 +376,7 @@ void Setup_Pos_76(WORK_Other* ewk) {
         ewk->wu.position_z = 79;
         ewk->wu.mvxy.a[0].sp = -0xA0000;
         ewk->wu.mvxy.d[0].sp = 0;
-        break;
+        return;
     case 0x4A:
     case 0x4B:
     case 0x4C:

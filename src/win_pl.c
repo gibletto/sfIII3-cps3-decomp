@@ -545,16 +545,18 @@ void Win_07000(PLW* wk) {
             set_char_move_init(&wk->wu, 9, 60);
             wk->wu.cmwk[1] = 0;
             return;
+        } else {
+            win_rno[0] = 0;
+            work = win_select(wk, 7);
+            set_char_move_init(&wk->wu, 9, work + 32);
+            break;
         }
-        win_rno[0] = 0;
-        work = win_select(wk, 7);
-        set_char_move_init(&wk->wu, 9, work + 32);
-        break;
     default:
         switch (win_rno[0]) {
         case 0:
             char_move(&wk->wu);
             return;
+            break;
         default:
             if (win_rno[1] == 0) {
                 if (wk->wu.cmwk[1]) {

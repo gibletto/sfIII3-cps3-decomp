@@ -1,7 +1,7 @@
 /*
  * EFFI9.C  Effect I9: after-image trail of a shell
  *
- * effect_I9_init is called for a shell (for example the homing shell kotp_06000 in EFFI4.C) with
+ * effect_I9_init is called for a shell (for example the homing shell kotp_06000 in EFF13.C) with
  * the number of images, the spacing and a life time. It copies the shell's colour and frame and
  * takes a second work from list 7 as a position buffer. effect_I9_move keeps the last 17 shell
  * positions in that buffer (push_image_buff / init_image_buff) and on its first frame spawns the

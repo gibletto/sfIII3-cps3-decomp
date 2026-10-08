@@ -188,16 +188,20 @@ void Setup_Continue_OBJ(void) {
 
 
 s32 Check_Exit_Continue(void) {
+    s16* p;
+    s8 id;
     if (E_Number[0][0] == 2 || E_Number[1][0] == 2) {
         return 0;
     }
-    if (E_Number[LOSER ^ 1][0] == 0) {
+    id = LOSER;
+    p = E_Number[id ^ 1];
+    if (p[0] == 0) {
         return 60;
     }
-    if (E_Number[LOSER ^ 1][0] != 3 && E_Number[LOSER ^ 1][0] != 0) {
+    if (p[0] != 3 && p[0] != 0) {
         return 0;
     }
-    if (E_Number[LOSER][0] != 3 && E_Number[LOSER][0] != 0) {
+    if (E_Number[id][0] != 3 && E_Number[id][0] != 0) {
         return 0;
     }
     return 1;
@@ -228,7 +232,6 @@ s32 Check_Count_Cut(s16 PL_id, s16 Limit) {
 /* provisional name */
 s32 Clear_Personal_Data(s16 PL_id) {
     s16 xx;
-    s32 rc;
     Lost_Round[PL_id] = 0;
     Super_Arts_Finish[PL_id] = 0;
     Perfect_Finish[PL_id] = 0;
@@ -273,15 +276,13 @@ s32 Clear_Personal_Data(s16 PL_id) {
     if (PL_id == 0) {
         Cursor_X[0] = 1;
         Cursor_Y[0] = 0;
-        rc = (s32)E_07_Flag;
     } else {
         Cursor_X[1] = 5;
-        Cursor_Y[1] = rc = 2;
+        Cursor_Y[1] = 2;
     }
     for (xx = 0; xx < 10; xx++) {
         EM_History[PL_id][xx] = 0;
     }
-    return rc;
 }
 
 

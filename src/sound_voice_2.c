@@ -2,7 +2,7 @@
  * SOUND_VOICE_2.C  Sound driver voice sequencer (part 2)
  *
  * Routines: sound_note_to_pitch, sound_voice_volume_compute, voice_process_secondary,
- * sound_reg_write_verify, midi_vlq_decode_while, midi_vlq_decode_leading.
+ * sound_reg_write_verify.
  */
 
 #include "structs.h"
@@ -103,11 +103,12 @@ u32 voice_process_secondary(SNDVOICE* voice, u8 voice_index, u8 is_bgm) {
     u8 owns_hardware_voice = 1;
     volatile SNDREGS* regs;
     u32 result;
-    u8 status;
     s32 next;
     u32 depth;
     s32 step;
-    s32 pan;
+    u8 pan;
+    u8 patch_pan;
+    s32 inverse;
     s8 output_pan;
     u16 key_clear_mask;
     s8 key_state_changed = 0;
@@ -117,12 +118,11 @@ u32 voice_process_secondary(SNDVOICE* voice, u8 voice_index, u8 is_bgm) {
     }
     regs = &((volatile SNDREGS*)SOUND_REG)[voice_index];
     key_clear_mask = (u16)~(u16)(1u << voice_index);
-    status = voice->status;
-    if (status & 0x80) {
+    if (voice->status & 0x80) {
         if (is_bgm && owns_hardware_voice) {
             snd_key_on_reg &= key_clear_mask;
         }
-        return status;
+        return;
     }
     if (is_bgm) {
         voice->event_ticks -= bgm_tick_step + bgm_tempo_add;
@@ -164,13 +164,13 @@ u32 voice_process_secondary(SNDVOICE* voice, u8 voice_index, u8 is_bgm) {
             voice->envelope_level = 0;
             if (owns_hardware_voice) {
                 snd_key_on_reg &= key_clear_mask;
-                do { u32 bias; s16 loop_on; sound_reg_write_verify((volatile s16*)&(regs)->sample_control, 0); bias = snd_wave_bias; sound_reg_write_verify((volatile s16*)&(regs)->sample_start_low, (u16)(voice->sample)->start); sound_reg_write_verify((volatile s16*)&(regs)->sample_start_high, (u16)((voice->sample)->start >> 16) + bias); sound_reg_write_verify((volatile s16*)&(regs)->sample_loop_low, (u16)(voice->sample)->loop); sound_reg_write_verify((volatile s16*)&(regs)->sample_loop_high, (u16)((voice->sample)->loop >> 16) + bias); sound_reg_write_verify((volatile s16*)&(regs)->sample_end_low_a, (u16)(voice->sample)->end); sound_reg_write_verify((volatile s16*)&(regs)->sample_end_low_b, (u16)(voice->sample)->end); sound_reg_write_verify((volatile s16*)&(regs)->sample_end_high_a, (u16)((voice->sample)->end >> 16) + bias); sound_reg_write_verify((volatile s16*)&(regs)->sample_end_high_b, (u16)((voice->sample)->end >> 16) + bias); sound_reg_write_verify((volatile s16*)&(regs)->sample_control, 0); sound_reg_write_verify((volatile s16*)&(regs)->sample_start_low, (u16)(voice->sample)->start); sound_reg_write_verify((volatile s16*)&(regs)->sample_start_high, (u16)((voice->sample)->start >> 16) + bias); if ((voice->sample)->loop == (voice->sample)->end) { loop_on = 0; } else { loop_on = 1; } sound_reg_write_verify((volatile s16*)&(regs)->sample_loop_enable, loop_on); } while (0);
+                do { u32 bias; sound_reg_write_verify((volatile s16*)&(regs)->sample_control, 0); bias = snd_wave_bias; sound_reg_write_verify((volatile s16*)&(regs)->sample_start_low, (u16)(voice->sample)->start); sound_reg_write_verify((volatile s16*)&(regs)->sample_start_high, (u16)((voice->sample)->start >> 16) + bias); sound_reg_write_verify((volatile s16*)&(regs)->sample_loop_low, (u16)(voice->sample)->loop); sound_reg_write_verify((volatile s16*)&(regs)->sample_loop_high, (u16)((voice->sample)->loop >> 16) + bias); sound_reg_write_verify((volatile s16*)&(regs)->sample_end_low_a, (u16)(voice->sample)->end); sound_reg_write_verify((volatile s16*)&(regs)->sample_end_low_b, (u16)(voice->sample)->end); sound_reg_write_verify((volatile s16*)&(regs)->sample_end_high_a, (u16)((voice->sample)->end >> 16) + bias); sound_reg_write_verify((volatile s16*)&(regs)->sample_end_high_b, (u16)((voice->sample)->end >> 16) + bias); sound_reg_write_verify((volatile s16*)&(regs)->sample_control, 0); sound_reg_write_verify((volatile s16*)&(regs)->sample_start_low, (u16)(voice->sample)->start); sound_reg_write_verify((volatile s16*)&(regs)->sample_start_high, (u16)((voice->sample)->start >> 16) + bias); sound_reg_write_verify((volatile s16*)&(regs)->sample_loop_enable, (voice->sample)->end == (voice->sample)->loop ? 0 : 1); } while (0);
             }
-            if (!voice->portamento_step) {
+            if (voice->portamento_step) {
+                voice->status |= 0x02;
+            } else {
                 voice->status &= 0xfd;
                 voice->current_pitch = voice->target_pitch;
-            } else {
-                voice->status |= 0x02;
             }
             voice->envelope_phase = 1;
             if (voice->status & 0x01) {
@@ -179,11 +179,11 @@ u32 voice_process_secondary(SNDVOICE* voice, u8 voice_index, u8 is_bgm) {
                 voice->volume_lfo = 0;
             }
         } else {
-            if (!voice->portamento_step) {
+            if (voice->portamento_step) {
+                voice->status |= 0x02;
+            } else {
                 voice->status &= 0xfd;
                 voice->current_pitch = voice->target_pitch;
-            } else {
-                voice->status |= 0x02;
             }
             voice->envelope_phase = 3;
         }
@@ -192,14 +192,14 @@ u32 voice_process_secondary(SNDVOICE* voice, u8 voice_index, u8 is_bgm) {
     if (is_bgm && voice->restart_pending && owns_hardware_voice) {
         voice->restart_pending = 0;
         snd_key_on_reg &= key_clear_mask;
-        do { u32 bias; s16 loop_on; sound_reg_write_verify((volatile s16*)&(regs)->sample_control, 0); bias = snd_wave_bias; sound_reg_write_verify((volatile s16*)&(regs)->sample_start_low, (u16)(voice->sample)->start); sound_reg_write_verify((volatile s16*)&(regs)->sample_start_high, (u16)((voice->sample)->start >> 16) + bias); sound_reg_write_verify((volatile s16*)&(regs)->sample_loop_low, (u16)(voice->sample)->loop); sound_reg_write_verify((volatile s16*)&(regs)->sample_loop_high, (u16)((voice->sample)->loop >> 16) + bias); sound_reg_write_verify((volatile s16*)&(regs)->sample_end_low_a, (u16)(voice->sample)->end); sound_reg_write_verify((volatile s16*)&(regs)->sample_end_low_b, (u16)(voice->sample)->end); sound_reg_write_verify((volatile s16*)&(regs)->sample_end_high_a, (u16)((voice->sample)->end >> 16) + bias); sound_reg_write_verify((volatile s16*)&(regs)->sample_end_high_b, (u16)((voice->sample)->end >> 16) + bias); sound_reg_write_verify((volatile s16*)&(regs)->sample_control, 0); sound_reg_write_verify((volatile s16*)&(regs)->sample_start_low, (u16)(voice->sample)->start); sound_reg_write_verify((volatile s16*)&(regs)->sample_start_high, (u16)((voice->sample)->start >> 16) + bias); if ((voice->sample)->loop == (voice->sample)->end) { loop_on = 0; } else { loop_on = 1; } sound_reg_write_verify((volatile s16*)&(regs)->sample_loop_enable, loop_on); } while (0);
+        do { u32 bias; sound_reg_write_verify((volatile s16*)&(regs)->sample_control, 0); bias = snd_wave_bias; sound_reg_write_verify((volatile s16*)&(regs)->sample_start_low, (u16)(voice->sample)->start); sound_reg_write_verify((volatile s16*)&(regs)->sample_start_high, (u16)((voice->sample)->start >> 16) + bias); sound_reg_write_verify((volatile s16*)&(regs)->sample_loop_low, (u16)(voice->sample)->loop); sound_reg_write_verify((volatile s16*)&(regs)->sample_loop_high, (u16)((voice->sample)->loop >> 16) + bias); sound_reg_write_verify((volatile s16*)&(regs)->sample_end_low_a, (u16)(voice->sample)->end); sound_reg_write_verify((volatile s16*)&(regs)->sample_end_low_b, (u16)(voice->sample)->end); sound_reg_write_verify((volatile s16*)&(regs)->sample_end_high_a, (u16)((voice->sample)->end >> 16) + bias); sound_reg_write_verify((volatile s16*)&(regs)->sample_end_high_b, (u16)((voice->sample)->end >> 16) + bias); sound_reg_write_verify((volatile s16*)&(regs)->sample_control, 0); sound_reg_write_verify((volatile s16*)&(regs)->sample_start_low, (u16)(voice->sample)->start); sound_reg_write_verify((volatile s16*)&(regs)->sample_start_high, (u16)((voice->sample)->start >> 16) + bias); sound_reg_write_verify((volatile s16*)&(regs)->sample_loop_enable, (voice->sample)->end == (voice->sample)->loop ? 0 : 1); } while (0);
         key_state_changed = 1;
     }
     if (voice->status & 0x40) {
         if (!voice->envelope_level) {
             voice->status |= 0x80;
             voice->priority_flags = 0;
-            return 0x6f;
+            return;
         }
         voice->envelope_phase = 4;
         if (owns_hardware_voice) {
@@ -209,7 +209,7 @@ u32 voice_process_secondary(SNDVOICE* voice, u8 voice_index, u8 is_bgm) {
     }
     if ((voice->status & 0x02) &&
         voice->current_pitch != voice->target_pitch) {
-        if (voice->target_pitch < voice->current_pitch) {
+        if (voice->current_pitch > voice->target_pitch) {
             next = voice->current_pitch - voice->portamento_step;
             voice->current_pitch = next;
             if (next <= voice->target_pitch) {
@@ -218,7 +218,7 @@ u32 voice_process_secondary(SNDVOICE* voice, u8 voice_index, u8 is_bgm) {
         } else {
             next = voice->current_pitch + voice->portamento_step;
             voice->current_pitch = next;
-            if (voice->target_pitch <= next) {
+            if (next >= voice->target_pitch) {
                 voice->current_pitch = voice->target_pitch;
             }
         }
@@ -226,24 +226,28 @@ u32 voice_process_secondary(SNDVOICE* voice, u8 voice_index, u8 is_bgm) {
     switch (voice->envelope_phase) {
     case 0:
         break;
-    case 1:
-        result = (u32)voice->envelope_level + voice->attack_rate;
-        if (result < voice->attack_peak) {
-            voice->envelope_level = (u16)result;
+    case 1: {
+        u32 level = voice->envelope_level + voice->attack_rate;
+        u32 peak = voice->attack_peak;
+        if (level < peak) {
+            voice->envelope_level = level;
         } else {
-            voice->envelope_level = voice->attack_peak;
+            voice->envelope_level = peak;
             voice->envelope_phase = 2;
         }
         break;
-    case 2:
-        if ((u32)voice->sustain_level + voice->decay_rate <
-            voice->envelope_level) {
-            voice->envelope_level -= voice->decay_rate;
+    }
+    case 2: {
+        u32 sustain = voice->sustain_level;
+        u32 decay = voice->decay_rate;
+        if (sustain + decay < voice->envelope_level) {
+            voice->envelope_level -= decay;
         } else {
-            voice->envelope_level = voice->sustain_level;
+            voice->envelope_level = sustain;
             voice->envelope_phase = 3;
         }
         break;
+    }
     case 3: {
         u32 rate = voice->release_rate;
         u32 level = voice->envelope_level;
@@ -274,44 +278,40 @@ u32 voice_process_secondary(SNDVOICE* voice, u8 voice_index, u8 is_bgm) {
         if (voice->pitch_lfo_depth) {
             depth = voice->pitch_lfo_depth;
             step = (s32)(depth * voice->lfo_rate);
-            if (!(voice->lfo_phase_flags & 0x01)) {
-                if (voice->pitch_lfo < (s32)(depth * 0x10000 - step)) {
-                    voice->pitch_lfo += step;
+            if (voice->lfo_phase_flags & 0x01) {
+                if ((s32)(step - depth * 0x10000) < voice->pitch_lfo) {
+                    voice->pitch_lfo -= step;
                 } else {
-                    voice->pitch_lfo = (s32)(depth * 0x10000);
-                    voice->lfo_phase_flags |= 0x01;
+                    voice->pitch_lfo = -(s32)(depth * 0x10000);
+                    voice->lfo_phase_flags &= 0xfe;
                 }
-            } else if ((s32)(step - depth * 0x10000) < voice->pitch_lfo) {
-                voice->pitch_lfo -= step;
+            } else if ((s32)(depth * 0x10000 - step) > voice->pitch_lfo) {
+                voice->pitch_lfo += step;
             } else {
-                voice->pitch_lfo = -(s32)(depth * 0x10000);
-                voice->lfo_phase_flags &= 0xfe;
+                voice->pitch_lfo = (s32)(depth * 0x10000);
+                voice->lfo_phase_flags |= 0x01;
             }
         }
-        result = 0;
         if (voice->volume_lfo_depth) {
+            step = (s16)((voice->volume_lfo_depth * voice->lfo_rate) >> 16);
             depth = voice->volume_lfo_depth;
-            step = (s16)((depth * voice->lfo_rate) >> 16);
-            if (!(voice->lfo_phase_flags & 0x02)) {
-                if (voice->volume_lfo < (s32)(depth - step)) {
-                    voice->volume_lfo += step;
+            if (voice->lfo_phase_flags & 0x02) {
+                if ((s32)(step - depth) < voice->volume_lfo) {
+                    voice->volume_lfo -= step;
                 } else {
-                    voice->volume_lfo = (s32)depth;
-                    result = 0x6e;
-                    voice->lfo_phase_flags |= 0x02;
+                    voice->volume_lfo = -(s32)depth;
+                    voice->lfo_phase_flags &= 0xfd;
                 }
-            } else if ((s32)(step - depth) < voice->volume_lfo) {
-                voice->volume_lfo -= step;
+            } else if ((s32)(depth - step) > voice->volume_lfo) {
+                voice->volume_lfo += step;
             } else {
-                result = 0x6e;
-                voice->volume_lfo = -(s32)depth;
-                voice->lfo_phase_flags &= 0xfd;
+                voice->volume_lfo = (s32)depth;
+                voice->lfo_phase_flags |= 0x02;
             }
         }
     } else {
         voice->pitch_lfo = 0;
         voice->volume_lfo = 0;
-        result = 0x40;
     }
     ramp = &se_pan_ramp[voice_index];
     if (!is_bgm && ramp->mode != -1 && ramp->mode != 0) {
@@ -325,7 +325,6 @@ u32 voice_process_secondary(SNDVOICE* voice, u8 voice_index, u8 is_bgm) {
                     se_voice[voice_index].status |= 0x40;
                 }
                 se_pan_ramp[voice_index].mode = 0;
-                result = 0;
             }
         } else if (next < se_pan_ramp[voice_index].target) {
             se_pan_ramp[voice_index].current = (s16)next;
@@ -335,14 +334,56 @@ u32 voice_process_secondary(SNDVOICE* voice, u8 voice_index, u8 is_bgm) {
                 se_voice[voice_index].status |= 0x40;
             }
             se_pan_ramp[voice_index].mode = 0;
-            result = 0;
         }
     }
     if (!owns_hardware_voice) {
-        return result;
+        return;
     }
     output_pan = ((u8)sound_sample_submit_work4);
-    if (!snd_stereo) {
+    if (snd_stereo) {
+        if (!is_bgm && se_pan_ramp[voice_index].mode != -1) {
+            pan = se_pan_ramp[voice_index].current >> 8;
+        } else {
+            patch_pan = voice->patch->pan;
+            if (patch_pan == 0xff) {
+                pan = voice->pan_override;
+            } else {
+                pan = patch_pan;
+            }
+        }
+        inverse = (0x7f - pan) & 0xffff;
+        if (is_bgm) {
+            if (pan < 0x40) {
+                regs->volume_right = (u16)sound_voice_volume_compute(
+                    (pan * voice->envelope_level) >> 6,
+                    voice->volume_lfo, output_pan, voice);
+                regs->volume_left = (u16)sound_voice_volume_compute(
+                    voice->envelope_level, voice->volume_lfo,
+                    ((u8)sound_sample_submit_work4), voice);
+            } else {
+                regs->volume_left = (u16)sound_voice_volume_compute(
+                    (inverse * voice->envelope_level) >> 6,
+                    voice->volume_lfo, output_pan, voice);
+                regs->volume_right = (u16)sound_voice_volume_compute(
+                    voice->envelope_level, voice->volume_lfo,
+                    ((u8)sound_sample_submit_work4), voice);
+            }
+        } else {
+            if (pan < 0x40) {
+                regs->volume_right = (u16)sound_voice_volume_compute(
+                    (pan * voice->envelope_level) >> 6,
+                    voice->volume_lfo, 0, voice);
+                regs->volume_left = (u16)sound_voice_volume_compute(
+                    voice->envelope_level, voice->volume_lfo, 0, voice);
+            } else {
+                regs->volume_left = (u16)sound_voice_volume_compute(
+                    (inverse * voice->envelope_level) >> 6,
+                    voice->volume_lfo, 0, voice);
+                regs->volume_right = (u16)sound_voice_volume_compute(
+                    voice->envelope_level, voice->volume_lfo, 0, voice);
+            }
+        }
+    } else {
         if (is_bgm) {
             regs->volume_right = (u16)sound_voice_volume_compute(
                 voice->envelope_level, voice->volume_lfo, output_pan, voice);
@@ -354,47 +395,6 @@ u32 voice_process_secondary(SNDVOICE* voice, u8 voice_index, u8 is_bgm) {
                 voice->envelope_level, voice->volume_lfo, 0, voice);
             regs->volume_right = (u16)sound_voice_volume_compute(
                 voice->envelope_level, voice->volume_lfo, 0, voice);
-        }
-    } else {
-        if (!is_bgm && se_pan_ramp[voice_index].mode != -1) {
-            pan = (u8)(se_pan_ramp[voice_index].current >> 8);
-        } else {
-            pan = voice->patch->pan;
-            if (pan == 0xff) {
-                pan = voice->pan_override;
-            }
-        }
-        result = (0x7f - pan) & 0xffff;
-        if (is_bgm) {
-            if (pan > 0x3f) {
-                regs->volume_left = (u16)sound_voice_volume_compute(
-                    (result * voice->envelope_level) >> 6,
-                    voice->volume_lfo, output_pan, voice);
-                regs->volume_right = (u16)sound_voice_volume_compute(
-                    voice->envelope_level, voice->volume_lfo,
-                    ((u8)sound_sample_submit_work4), voice);
-            } else {
-                regs->volume_right = (u16)sound_voice_volume_compute(
-                    (pan * voice->envelope_level) >> 6,
-                    voice->volume_lfo, output_pan, voice);
-                regs->volume_left = (u16)sound_voice_volume_compute(
-                    voice->envelope_level, voice->volume_lfo,
-                    ((u8)sound_sample_submit_work4), voice);
-            }
-        } else {
-            if (pan > 0x3f) {
-                regs->volume_left = (u16)sound_voice_volume_compute(
-                    (result * voice->envelope_level) >> 6,
-                    voice->volume_lfo, 0, voice);
-                regs->volume_right = (u16)sound_voice_volume_compute(
-                    voice->envelope_level, voice->volume_lfo, 0, voice);
-            } else {
-                regs->volume_right = (u16)sound_voice_volume_compute(
-                    (pan * voice->envelope_level) >> 6,
-                    voice->volume_lfo, 0, voice);
-                regs->volume_left = (u16)sound_voice_volume_compute(
-                    voice->envelope_level, voice->volume_lfo, 0, voice);
-            }
         }
     }
     if (is_bgm) {
@@ -413,9 +413,7 @@ u32 voice_process_secondary(SNDVOICE* voice, u8 voice_index, u8 is_bgm) {
         result = 1;
         result <<= voice_index;
         snd_key_on_reg |= (u16)result;
-        return result;
     }
-    return key_state_changed;
 }
 
 /* provisional name */
@@ -428,40 +426,4 @@ void sound_reg_write_verify(s16 *reg, s16 value)
         }
         *reg = value;
     }
-}
-
-
-
-/* provisional name */
-s32 midi_vlq_decode_while(p, out)
-u8* p;
-u32* out;
-{
-    u8* start = p;
-    u32 val = 0;
-    while (!(*p & 0x80)) {
-        val = (val << 7) + *p++;
-    }
-    *out = val;
-    return p - start;
-}
-
-
-
-/* provisional name */
-s32 midi_vlq_decode_leading(p, out)
-u8* p;
-u32* out;
-{
-    u8* start = p;
-    u32 val;
-    val = *p++;
-    if (val & 0x80) {
-        val &= 0x7F;
-        do {
-            val = (val << 7) + (*p & 0x7F);
-        } while (*p++ & 0x80);
-    }
-    *out = val;
-    return p - start;
 }

@@ -77,26 +77,27 @@ void eff24_quake_sub(WORK_Other* ewk) {
         ewk->wu.old_rno[5]--;
         if (ewk->wu.old_rno[5] > 0) {
             break;
-        }
-        ewk->wu.xyz[0].disp.pos = ewk->wu.old_rno[4];
-        ewk->wu.xyz[0].disp.low = 0;
-        ewk->wu.xyz[1].disp.pos = ewk->wu.old_rno[2];
-        ewk->wu.xyz[1].disp.low = 0;
-        if (ewk->wu.type == 0 && ewk->wu.old_rno[1] > 2) {
-            ewk->wu.routine_no[1]++;
-            dog24_data_set(ewk);
-            if (ewk->wu.old_rno[6]) {
-                set_char_move_init(&ewk->wu, 0, 14);
-            } else {
-                set_char_move_init(&ewk->wu, 0, 13);
+        } else {
+            ewk->wu.xyz[0].disp.pos = ewk->wu.old_rno[4];
+            ewk->wu.xyz[0].disp.low = 0;
+            ewk->wu.xyz[1].disp.pos = ewk->wu.old_rno[2];
+            ewk->wu.xyz[1].disp.low = 0;
+            if (ewk->wu.type == 0 && ewk->wu.old_rno[1] > 2) {
+                ewk->wu.routine_no[1]++;
+                dog24_data_set(ewk);
+                if (ewk->wu.old_rno[6]) {
+                    set_char_move_init(&ewk->wu, 0, 14);
+                } else {
+                    set_char_move_init(&ewk->wu, 0, 13);
+                }
+                ewk->wu.old_rno[6] ^= 1;
+                break;
             }
-            ewk->wu.old_rno[6] ^= 1;
+            ewk->wu.routine_no[1] = 0;
+            ewk->wu.old_rno[1] = 0;
+            ewk->wu.old_rno[0] = 0;
             break;
         }
-        ewk->wu.routine_no[1] = 0;
-        ewk->wu.old_rno[1] = 0;
-        ewk->wu.old_rno[0] = 0;
-        break;
     case 3:
         char_move(&ewk->wu);
         add_x_sub(ewk);

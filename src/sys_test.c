@@ -221,10 +221,10 @@ u32 simmram_small_page_addr(void) {
 /* provisional name */
 void scrn_map_set_now(n, p)
 u16 n;
-void* p;
+u32 p;
 {
-    scrn_map_ptr[n].ptr0 = p;
-    scrn_map_ptr[n].ptr2 = p;
+    scrn_map_ptr[n].ptr0 = (void*)p;
+    scrn_map_ptr[n].ptr2 = (void*)p;
 }
 
 
@@ -232,9 +232,9 @@ void* p;
 /* provisional name */
 void scrn_map_set(n, p)
 u16 n;
-void* p;
+u32 p;
 {
-    scrn_map_ptr[n].ptr0 = p;
+    scrn_map_ptr[n].ptr0 = (void*)p;
 }
 
 

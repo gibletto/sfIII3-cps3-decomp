@@ -1,11 +1,10 @@
 /*
- * EFFA3.C  Effects A3 and A4: text-layer cell animations
+ * EFFA3.C  Effect A3: text-layer cell animation
  *
  * Effect A3 animates blocks of text-layer cells: effect_A3_init takes a position, size, step,
  * repeat count and layout and a type whose step data come from EFF91_Init_Data / EFF91_Step_Data.
  * effA3_cell_put writes each frame's code/attribute pairs with tilemap_put_cell and moves the
  * draw position; at the end effA3_area_clear clears the rectangle from EFFA3_Area_Data.
- * Effect A4 calls effect_89_init 21 times, two columns apart, starting later for player 2.
  */
 
 #include "structs.h"
@@ -128,46 +127,3 @@ s32 effect_A3_init(s16 type, s16 a, s16 b, s16 c, s16 d, s16 e, s16 f, s16 g, s1
     ewk->wu.vitality = EFF91_Init_Data[type][2];
     return 0;
 }
-
-void effect_A4_move(WORK_Other* ewk) {
-    switch (ewk->wu.routine_no[0]) {
-    case 0:
-        if (--ewk->wu.dir_timer) {
-            break;
-        }
-        effect_89_init(ewk->master_id + 6, ewk->wu.dir_old, Text_Page_Y + 11, 2, 4);
-        if (--ewk->wu.dir_step != 0) {
-            ewk->wu.dir_timer = 1;
-            ewk->wu.dir_old += 2;
-        } else {
-            push_effect_work(&ewk->wu);
-            return;
-        }
-        break;
-    }
-}
-
-
-
-s32 effect_A4_init(s16 PL_id) {
-    WORK_Other* ewk;
-    s16 ix;
-    if ((ix = pull_effect_work(4)) == -1) {
-        return -1;
-    }
-    ewk = (WORK_Other*)frw[ix];
-    ewk->wu.be_flag = 1;
-    ewk->wu.id = 104;
-    ewk->master_id = PL_id;
-    ewk->wu.direction = 0;
-    ewk->wu.dir_step = 21;
-    ewk->wu.dir_old = DE_X[0] + 3;
-    if (PL_id) {
-        ewk->wu.dir_timer = 5;
-    } else {
-        ewk->wu.dir_timer = 1;
-    }
-    return 0;
-}
-
-

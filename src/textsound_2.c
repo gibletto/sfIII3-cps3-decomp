@@ -83,15 +83,15 @@ void sound_init(u8* data, SNDSAMPLE* bank_a, u8** bank_b, u8 stereo, u8 volume, 
     snd_fade_level = 0;
     snd_fade_speed = 0;
     bgm_tempo_add = 0;
-    q = bgm_status_save;
-    for (v = bgm_voice; v < &bgm_voice[16]; v++) {
+    q = &bgm_status_save[0];
+    for (v = &bgm_voice[0]; v < &bgm_voice[16]; v++) {
         v->status = 0xC0;
         *q++ = 0xC0;
     }
     for (v = se_voice; v < &se_voice[16]; v++) {
         v->status = 0xC0;
     }
-    for (q = (*(u8(*)[16])&gSeqStatus[0]); q < &(*(u8(*)[16])&gSeqStatus[0])[16]; q++) {
+    for (q = gSeqStatus; q < &gSeqStatus[16]; q++) {
         *q = 0;
     }
 }
@@ -113,6 +113,7 @@ s32 sound_seq_start(u16 code, s16 ramp) {
     u8* bank;
     SNDVOICE* v;
     SNDVOICE* mv;
+    SNDVOICE* vp;
     SNDRAMP* rec;
     u32 ofs;
     s32 ticks;
@@ -134,17 +135,16 @@ s32 sound_seq_start(u16 code, s16 ramp) {
     seq = (u8*)snd_seq_data + ofs;
     p = seq;
     hdr = *p++;
-    if (hdr == 0) {
+    if (!hdr) {
         bgm_stop();
         mv = bgm_voice;
-        v = bgm_voice;
-        for (i = 0; i < 16; i++, mv++, v++) {
+        vp = bgm_voice;
+        for (i = 0; i < 16; i++, vp++, mv++) {
             off = *p++ << 8;
             off += *p++;
-            if (off == 0) {
-                mv->status = 0xC0;
-            } else {
+            if (off != 0) {
                 track = seq + off;
+                v = vp;
                 v->origin = track;
                 n = midi_vlq_decode_while(track, &ticks);
                 ticks <<= 8;
@@ -196,6 +196,8 @@ s32 sound_seq_start(u16 code, s16 ramp) {
                 v->restart_pending = 0;
                 v->pan_override = 0x40;
                 v->control_70 = 0;
+            } else {
+                mv->status = 0xC0;
             }
         }
         if (!(sound_sample_submit_work7 & 8)) {
@@ -211,68 +213,67 @@ s32 sound_seq_start(u16 code, s16 ramp) {
             off = *p++ << 8;
             off += *p++;
             if (off != 0) {
-                if (((hdr >= SE_VOICE(i).priority_flags) & 0x7F) || (SE_VOICE(i).status & 0x80)) {
+                if (((hdr >= se_voice[i].priority_flags) & 0x7F) || (se_voice[i].status & 0x80)) {
                     track = seq + off;
                     n = midi_vlq_decode_while(track, &ticks);
                     ticks <<= 8;
-                    SE_VOICE(i).event_ticks = ticks;
-                    SE_VOICE(i).cursor = track + n;
-                    SE_VOICE(i).status = 0;
+                    se_voice[i].event_ticks = ticks;
+                    se_voice[i].cursor = track + n;
+                    se_voice[i].status = 0;
                     bank = *snd_bank_tbl;
-                    SE_VOICE(i).patch = (SNDPATCH*)(bank + *(u16*)bank);
-                    SE_VOICE(i).sample = &snd_sample_tbl[SE_VOICE(i).patch->sample_index];
-                    SE_VOICE(i).decoded_pitch = 0;
-                    SE_VOICE(i).target_pitch = 0;
-                    SE_VOICE(i).current_pitch = 0;
-                    SE_VOICE(i).pitch_lfo = 0;
-                    SE_VOICE(i).volume_lfo = 0;
-                    SE_VOICE(i).pitch_lfo_depth = 0;
-                    SE_VOICE(i).volume_lfo_depth = 0;
-                    SE_VOICE(i).lfo_rate = 0;
-                    SE_VOICE(i).envelope_level = 0;
-                    SE_VOICE(i).saved_portamento_step = 0;
-                    SE_VOICE(i).portamento_step = 0;
-                    SE_VOICE(i).program_index = 0;
-                    SE_VOICE(i).attack_peak = 0;
-                    SE_VOICE(i).attack_rate = 0;
-                    SE_VOICE(i).sustain_level = 0;
-                    SE_VOICE(i).decay_rate = 0;
-                    SE_VOICE(i).release_rate = 0;
-                    SE_VOICE(i).forced_release_rate = 0;
-                    SE_VOICE(i).loop_count[0] = 0;
-                    SE_VOICE(i).loop_count[1] = 0;
-                    SE_VOICE(i).loop_count[2] = 0;
-                    SE_VOICE(i).loop_count[3] = 0;
-                    SE_VOICE(i).loop_latch = 0;
-                    SE_VOICE(i).envelope_phase = 0;
-                    SE_VOICE(i).pan_override = 0x40;
-                    SE_VOICE(i).lfo_phase_flags = 0;
-                    SE_VOICE(i).priority_flags = hdr;
-                    SE_VOICE(i).volume = 0;
+                    se_voice[i].patch = (SNDPATCH*)(bank + *(u16*)bank);
+                    se_voice[i].sample = &snd_sample_tbl[se_voice[i].patch->sample_index];
+                    se_voice[i].decoded_pitch = 0;
+                    se_voice[i].target_pitch = 0;
+                    se_voice[i].current_pitch = 0;
+                    se_voice[i].pitch_lfo = 0;
+                    se_voice[i].volume_lfo = 0;
+                    se_voice[i].pitch_lfo_depth = 0;
+                    se_voice[i].volume_lfo_depth = 0;
+                    se_voice[i].lfo_rate = 0;
+                    se_voice[i].envelope_level = 0;
+                    se_voice[i].saved_portamento_step = 0;
+                    se_voice[i].portamento_step = 0;
+                    se_voice[i].program_index = 0;
+                    se_voice[i].attack_peak = 0;
+                    se_voice[i].attack_rate = 0;
+                    se_voice[i].sustain_level = 0;
+                    se_voice[i].decay_rate = 0;
+                    se_voice[i].release_rate = 0;
+                    se_voice[i].forced_release_rate = 0;
+                    se_voice[i].loop_count[0] = 0;
+                    se_voice[i].loop_count[1] = 0;
+                    se_voice[i].loop_count[2] = 0;
+                    se_voice[i].loop_count[3] = 0;
+                    se_voice[i].loop_latch = 0;
+                    se_voice[i].envelope_phase = 0;
+                    se_voice[i].pan_override = 0x40;
+                    se_voice[i].lfo_phase_flags = 0;
+                    se_voice[i].priority_flags = hdr;
+                    se_voice[i].volume = 0;
                     bgm_voice[i].velocity = 0x7F;
-                    SE_VOICE(i).expression = 0x7F;
-                    SE_VOICE(i).fine_tune = 0;
-                    SE_VOICE(i).transpose = 0;
-                    SE_VOICE(i).coarse_pitch_bend = 0;
-                    SE_VOICE(i).fine_pitch_control = 0x40;
-                    SE_VOICE(i).key_on_pending = 0;
-                    SE_VOICE(i).duration_enabled = 0;
-                    SE_VOICE(i).note_event_pending = 0;
-                    SE_VOICE(i).tie = 0;
-                    SE_VOICE(i).release_pending = 0;
-                    SE_VOICE(i).pan_override = 0x40;
-                    SE_VOICE(i).control_70 = 0;
-                    rec = &se_pan_ramp[i];
+                    se_voice[i].expression = 0x7F;
+                    se_voice[i].fine_tune = 0;
+                    se_voice[i].transpose = 0;
+                    se_voice[i].coarse_pitch_bend = 0;
+                    se_voice[i].fine_pitch_control = 0x40;
+                    se_voice[i].key_on_pending = 0;
+                    se_voice[i].duration_enabled = 0;
+                    se_voice[i].note_event_pending = 0;
+                    se_voice[i].tie = 0;
+                    se_voice[i].release_pending = 0;
+                    se_voice[i].pan_override = 0x40;
+                    se_voice[i].control_70 = 0;
                     if (ramp != -1) {
-                        rec->current = se_ramp_req.current;
-                        rec->target = se_ramp_req.target;
-                        rec->step = se_ramp_req.step;
-                        rec->mode = se_ramp_req.mode;
+                        se_pan_ramp[i].current = se_ramp_req.current;
+                        se_pan_ramp[i].target = se_ramp_req.target;
+                        se_pan_ramp[i].step = se_ramp_req.step;
+                        se_pan_ramp[i].mode = se_ramp_req.mode;
                     } else {
-                        rec->current = 0;
-                        rec->target = 0;
-                        rec->step = 0;
-                        rec->mode = -1;
+                        se_pan_ramp[i].current = 0;
+                        se_pan_ramp[i].target = 0;
+                        se_pan_ramp[i].step = 0;
+                        se_pan_ramp[i].mode = -1;
                     }
                     se_tick_step[i] = 0;
                 }
@@ -281,31 +282,29 @@ s32 sound_seq_start(u16 code, s16 ramp) {
         return;
     }
     ch = hdr & 15;
-    v = &se_voice[ch];
-    if ((*p & 0x7F) < (v->priority_flags & 0x7F) && !(v->status & 0x80)) {
+    if ((*p & 0x7F) < (SE_VOICE(ch).priority_flags & 0x7F) && !(SE_VOICE(ch).status & 0x80)) {
         return;
     }
-    v->cursor = p;
-    bank = *snd_bank_tbl;
-    v->patch = (SNDPATCH*)(bank + *(u16*)bank);
-    v->sample = &snd_sample_tbl[v->patch->sample_index];
-    v->envelope_level = 0;
-    v->program_index = 0;
-    v->attack_peak = 0;
-    v->attack_rate = 0;
-    v->sustain_level = 0;
-    v->decay_rate = 0;
-    v->release_rate = 0;
-    v->forced_release_rate = 0;
-    v->volume = 0;
-    v->velocity = 0x7F;
-    v->expression = 0x7F;
-    v->fine_tune = 0;
-    v->transpose = 0;
-    v->coarse_pitch_bend = 0;
-    v->fine_pitch_control = 0x40;
-    v->priority_flags = *p | 0x80;
-    v->pan_override = 0x40;
+    SE_VOICE(ch).cursor = p;
+    SE_VOICE(ch).patch = (SNDPATCH*)(*snd_bank_tbl + *(u16*)*snd_bank_tbl);
+    SE_VOICE(ch).sample = &snd_sample_tbl[SE_VOICE(ch).patch->sample_index];
+    SE_VOICE(ch).envelope_level = 0;
+    SE_VOICE(ch).program_index = 0;
+    SE_VOICE(ch).attack_peak = 0;
+    SE_VOICE(ch).attack_rate = 0;
+    SE_VOICE(ch).sustain_level = 0;
+    SE_VOICE(ch).decay_rate = 0;
+    SE_VOICE(ch).release_rate = 0;
+    SE_VOICE(ch).forced_release_rate = 0;
+    SE_VOICE(ch).volume = 0;
+    SE_VOICE(ch).velocity = 0x7F;
+    SE_VOICE(ch).expression = 0x7F;
+    SE_VOICE(ch).fine_tune = 0;
+    SE_VOICE(ch).transpose = 0;
+    SE_VOICE(ch).coarse_pitch_bend = 0;
+    SE_VOICE(ch).fine_pitch_control = 0x40;
+    SE_VOICE(ch).priority_flags = *p | 0x80;
+    SE_VOICE(ch).pan_override = 0x40;
     rec = &se_pan_ramp[ch];
     if (ramp != -1) {
         rec->current = se_ramp_req.current;
@@ -499,7 +498,7 @@ void sound_driver_tick(void) {
     }
     for (i = 0; i < 16; i++) {
         if (!(se_voice[i].priority_flags & 0x80)) {
-            voice_process_secondary(&SE_VOICE(i), i, 0);
+            voice_process_secondary(&se_voice[i], i, 0);
         }
     }
 }

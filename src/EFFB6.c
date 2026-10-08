@@ -1,14 +1,10 @@
 /*
- * EFFB6.C  Effect B5 init, effect B6 (another-BG overlay parts) and effect B7 move
+ * EFFB6.C  Effect B6: another-BG overlay parts
  *
- * effect_B5_init creates the three name-entry letter works (B5) for a player, 24 dots apart on
- * BG1 (called from n_input.c).
  * Effect B6 draws a set of background overlay cells for the another-BG switch: effect_B6_init is
  * called twice (types 0 and 1) from efff0.c. effect_B6_move copies the cell positions from
  * effB6_pos_tbl_0 / _1 and, while another_bg[] is set, shows the parts of its type and slides
  * them by the offsets for the switch direction (1-4), drawing with disp_car_parts_cells.
- * Effect B7 shows a rank-in number (pattern old_rno[0] + 1) for name entry until it is killed;
- * its init is in EFFB8.C.
  */
 
 #include "structs.h"
@@ -28,45 +24,6 @@
 #include "bg_sub_5.h"
 #include "PLS02.h"
 #include "EFFB6.h"
-
-
-
-s32 effect_B5_init(s16 PL_id) {
-    WORK_Other* ewk;
-    s16 ix;
-    s16 i;
-    s16 x = bg_w.bgw[0].xy[0].disp.pos - 20;
-    NAME_WK* np = &name_wk[PL_id];
-    for (i = 0; i < 3; i++) {
-        if ((ix = pull_effect_work(3)) == -1) {
-            return -1;
-        }
-        ewk = (WORK_Other*)frw[ix];
-        ewk->my_master = (u32*)np;
-        ewk->wu.be_flag = 1;
-        ewk->wu.id = 115;
-        ewk->wu.work_id = 16;
-        ewk->wu.old_rno[2] = i;
-        ewk->wu.type = i;
-        ewk->wu.cgromtype = 1;
-        ewk->wu.disp_flag = 0;
-        ewk->wu.rl_flag = 0;
-        ewk->wu.my_family = 1;
-        ewk->wu.my_col_mode = 0x4200;
-        ewk->wu.my_col_code = 0x180;
-        ewk->wu.my_priority = ewk->wu.position_z = 10;
-        ewk->wu.position_y = 80;
-        ewk->wu.xyz[1].cal = 0x500000;
-        ewk->wu.position_x = ewk->wu.xyz[0].disp.pos = x;
-        ewk->wu.xyz[0].disp.low = 0;
-        ewk->wu.char_index = 6;
-        ewk->wu.char_table[0] = etc_char_table;
-        x = x + 24;
-    }
-    return 0;
-}
-
-
 
 void effect_B6_move(WORK_Other_CONN* ewk_conn) {
     WORK_B6* ewk = (WORK_B6*)ewk_conn;
@@ -205,70 +162,5 @@ s32 effect_B6_init(WORK_Other* oya, u8 type) {
     ewk->my_master = (u32*)oya;
     ewk->wu.sync_suzi = 0;
     suzi_offset_set(ewk);
-    return 0;
-}
-
-
-void effect_B7_move(WORK_Other* ewk) {
-    NAME_WK* np = (NAME_WK*)ewk->my_master;
-    switch (ewk->wu.routine_no[0]) {
-    case 0:
-        ewk->wu.routine_no[0]++;
-        ewk->wu.disp_flag = 1;
-        set_char_move_init2(&ewk->wu, 0, 7, ewk->wu.old_rno[0] + 1, 0);
-        break;
-    case 1:
-        disp_pos_trans_entry(ewk);
-        break;
-    case 2:
-        ewk->wu.routine_no[0]++;
-        break;
-    default:
-        all_cgps_put_back(&ewk->wu);
-        push_effect_work(&ewk->wu);
-        break;
-    }
-}
-
-
-s32 effect_B7_init(s8 pl) {
-    WORK_Other* ewk;
-    NAME_WK* np = &name_wk[pl];
-    s16 ix;
-    s16 i;
-    s16 x;
-    for (i = 0; i < 2; i++) {
-        if ((ix = pull_effect_work(3)) == -1) {
-            return -1;
-        }
-        ewk = (WORK_Other*)frw[ix];
-        ewk->my_master = (u32*)np;
-        ewk->wu.be_flag = 1;
-        ewk->wu.id = 117;
-        ewk->wu.work_id = 16;
-        ewk->wu.type = i;
-        ewk->wu.cgromtype = 1;
-        ewk->wu.disp_flag = 0;
-        ewk->wu.rl_flag = 0;
-        ewk->wu.my_family = 1;
-        ewk->wu.my_col_mode = 0x4200;
-        ewk->wu.my_col_code = 0x180;
-        ewk->wu.position_z = 10;
-        ewk->wu.my_priority = 10;
-        ewk->wu.position_y = 104;
-        ewk->wu.xyz[1].cal = 104 << 16;
-        ewk->wu.xyz[0].disp.low = 0;
-        ewk->wu.char_index = 7;
-        *ewk->wu.char_table = etc_char_table;
-        if (i) {
-            ewk->wu.old_rno[0] = np->rank_in * 2 + 1;
-            x = bg_w.bgw[0].xy[0].disp.pos + 8;
-        } else {
-            ewk->wu.old_rno[0] = np->rank_in * 2;
-            x = bg_w.bgw[0].xy[0].disp.pos - 8;
-        }
-        ewk->wu.xyz[0].disp.pos = x;
-        ewk->wu.position_x = x;
-    }
     return 0;
 }

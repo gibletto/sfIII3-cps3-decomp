@@ -68,13 +68,15 @@ void effect_E3_move(WORK_Other* ewk) {
         }
         effE3_scroll_set(ewk);
         return;
+        break;
     case 2:
         ewk->wu.old_rno[0]--;
         if (ewk->wu.old_rno[0] <= 0) {
             ewk->wu.routine_no[0]++;
             break;
+        } else {
+            effE3_scroll_set(ewk);
         }
-        effE3_scroll_set(ewk);
         break;
     case 3:
         ewk->wu.routine_no[0] = 0;
@@ -91,6 +93,7 @@ void effect_E3_move(WORK_Other* ewk) {
         }
         Bg_Off_W(8);
         return;
+        break;
     default:
         all_cgps_put_back(ewk);
         push_effect_work(&ewk->wu);

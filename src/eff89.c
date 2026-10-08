@@ -53,7 +53,7 @@ void effect_89_move(WORK_Other* ewk)
             break;
         }
         if (--ewk->wu.dir_timer != 0) {
-            break;
+            return;
         }
         attr = *ewk->wu.move_xy_table++;
         ewk->wu.dir_timer = *ewk->wu.move_xy_table++;

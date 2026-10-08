@@ -68,7 +68,6 @@ s32 Game_Management(void);
 void Pool_Score(s16 PL_id);
 u32 Setup_Final_Score(s16 Type);
 void Setup_Win_Mark(void);
-void request_center_message_p2_Manage(s16 Kind_of_Message);
 void setFinishType(void);
 void Game_Manage_12_5(void);
 void Ck_Win_Record(void);

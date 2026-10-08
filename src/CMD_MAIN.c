@@ -133,10 +133,8 @@ void debug_menu_work_init(void) {
             ((s16*)dbg_snap_w[i])[j] = 0;
         }
     }
-    p0 = &plw[0];
-    work_init_zero((s32*)p0, sizeof(PLW));
-    p1 = &plw[1];
-    work_init_zero((s32*)p1, sizeof(PLW));
+    work_init_zero((s32*)(p0 = &plw[0]), sizeof(PLW));
+    work_init_zero((s32*)(p1 = &plw[1]), sizeof(PLW));
     Game_pause = 0;
     G_No0 = 0;
     G_No1 = 0;
@@ -915,7 +913,9 @@ void debug_object_edit_all_char_move(void) {
 
 /* provisional name */
 void debug_zoom_out_by_dipsw(void) {
-    u16 sw = ~dbg_dipsw_1 & dbg_dipsw_0 & 0xC0;
+    u16 sw = ~dbg_dipsw_1;
+    sw &= dbg_dipsw_0;
+    sw &= 0xC0;
     switch (sw) {
     case 0x40:
         Zoomf_Init();
@@ -1295,7 +1295,8 @@ fail:
 
 /* provisional name */
 void debug_hit_a_judgement_build_table(void) {
-    WORK* wk = &dbg_hita_ewk[0]->wu;
+    WORK_Other** ewk = dbg_hita_ewk;
+    WORK* wk = &ewk[0]->wu;
     WORK_Other* slot;
     u32* dst;
     u32* src;
@@ -1316,7 +1317,7 @@ void debug_hit_a_judgement_build_table(void) {
     plw[0].wu.listix = wk->listix;
     plw[0].wu.dead_f = wk->dead_f;
     plw[0].wu.timing = wk->timing;
-    dst = (u32*)dbg_hita_ewk[0];
+    dst = (u32*)ewk[0];
     src = (u32*)&plw[0];
     for (i = 0; i < 512; i++) {
         *dst++ = *src++;
@@ -1327,7 +1328,7 @@ void debug_hit_a_judgement_build_table(void) {
     plw[1].wu.position_x += 0x180;
     wk->hit_adrs = plw[0].wu.set_char_ad;
     wk->dmg_adrs = (u32*)plw[0].wu.hit_ix_table;
-    slot = dbg_hita_ewk[1];
+    slot = ewk[1];
     slot->wu.routine_no[4] = 4;
     pat = (HITA_PAT*)((u8*)(slot) + 0x34);
     wk->set_char_ad = (u32*)pat;
@@ -1342,16 +1343,16 @@ void debug_hit_a_judgement_build_table(void) {
     pat[i].kind = 2;
     pat[i].param = 1;
     wk->cg_ctr = pat[0].frames;
-    body = (HITA_BOX*)((u8*)(dbg_hita_ewk[3]) + 0x34);
+    body = (HITA_BOX*)((u8*)(ewk[3]) + 0x34);
     wk->body_adrs = (BODY_BOX*)body;
-    hand = (HITA_BOX*)((u8*)(dbg_hita_ewk[4]) + 0x34);
+    hand = (HITA_BOX*)((u8*)(ewk[4]) + 0x34);
     wk->hand_adrs = (HAND_BOX*)hand;
     wk->catch_adrs = (CATCH_BOX*)hand;
     wk->caught_adrs = (CAUGHT_BOX*)hand;
     wk->hosei_adrs = (HOSEI_BOX*)hand;
-    att = (HITA_BOX*)((u8*)(dbg_hita_ewk[5]) + 0x34);
+    att = (HITA_BOX*)((u8*)(ewk[5]) + 0x34);
     wk->attack_adrs = (ATTACK_BOX*)att;
-    keys = (HITA_KEY*)((u8*)(dbg_hita_ewk[6]) + 0x34);
+    keys = (HITA_KEY*)((u8*)(ewk[6]) + 0x34);
     n = 0;
     for (i = 1; i <= wk->dmcal_m; i++) {
         for (j = n; j >= 0; j--) {
@@ -1398,7 +1399,7 @@ void debug_hit_a_judgement_build_table(void) {
     }
     wk->vital_old = n;
     n = 0;
-    ixkey = (u32*)((u8*)(dbg_hita_ewk[2]) + 0x34);
+    ixkey = (u32*)((u8*)(ewk[2]) + 0x34);
     for (i = 1; i <= wk->dmcal_m; i++) {
         for (j = n; j >= 0; j--) {
             if (keys[i].key == ixkey[j * 4]) {
@@ -1995,15 +1996,13 @@ void debug_hit_a_print_box_values(WORK* wk) {
         }
         for (i = 0; i < 4; i++) {
             tilemap_print_string_attr(11, i + 5, 2, dbg_hitbox_row_str);
-            v = box[i].x;
-            if (v < 0) {
+            if ((v = box[i].x) < 0) {
                 tilemap_print_string_attr(11, i + 5, 2, dbg_minus_str);
                 v = -v;
             }
             tilemap_print_hex(12, i + 5, 2, v, 3, 0);
             tilemap_print_hex(16, i + 5, 2, box[i].w, 3, 0);
-            v = box[i].y;
-            if (v < 0) {
+            if ((v = box[i].y) < 0) {
                 tilemap_print_string_attr(20, i + 5, 2, dbg_minus_str);
                 v = -v;
             }
@@ -2681,24 +2680,22 @@ void debug_parts_run(void) {
 void debug_parts_copy_overlap(void) {
     s16 i;
     OVERLAP_PARTS* oct;
-    PLW* pw;
     for (i = 0; i < 4; i++) {
-        pw = &dbg_parts_plw[i];
         oct = &plw[0].wu.overlap_char_tbl[plw[0].wu.cg_olc.olc_ix[i]];
-        pw->wu.cg_olc.olc_ix[i] = plw[0].wu.cg_olc.olc_ix[i];
-        pw->wu.cg_olc_ix = plw[0].wu.cg_olc_ix;
-        pw->wu.dir_step = oct->parts_hos_x;
-        pw->wu.dir_timer = oct->parts_hos_y;
-        pw->wu.xyz[0].disp.pos = plw[0].wu.xyz[0].disp.pos;
-        pw->wu.xyz[1].disp.pos = plw[0].wu.xyz[1].disp.pos;
-        pw->wu.xyz[0].disp.low = pw->wu.xyz[1].disp.low = 0;
-        pw->wu.dir_old = oct->parts_flip;
-        pw->wu.cg_flip = pw->wu.dir_old & 3;
-        pw->wu.cg_number = oct->parts_char;
-        pw->wu.old_rno[1] = oct->parts_prio;
+        dbg_parts_plw[i].wu.cg_olc.olc_ix[i] = plw[0].wu.cg_olc.olc_ix[i];
+        dbg_parts_plw[i].wu.cg_olc_ix = plw[0].wu.cg_olc_ix;
+        dbg_parts_plw[i].wu.dir_step = oct->parts_hos_x;
+        dbg_parts_plw[i].wu.dir_timer = oct->parts_hos_y;
+        dbg_parts_plw[i].wu.xyz[0].disp.pos = plw[0].wu.xyz[0].disp.pos;
+        dbg_parts_plw[i].wu.xyz[1].disp.pos = plw[0].wu.xyz[1].disp.pos;
+        dbg_parts_plw[i].wu.xyz[0].disp.low = dbg_parts_plw[i].wu.xyz[1].disp.low = 0;
+        dbg_parts_plw[i].wu.dir_old = oct->parts_flip;
+        dbg_parts_plw[i].wu.cg_flip = dbg_parts_plw[i].wu.dir_old & 3;
+        dbg_parts_plw[i].wu.cg_number = oct->parts_char;
+        dbg_parts_plw[i].wu.old_rno[1] = oct->parts_prio;
     }
     for (i = 0; i < 4; i++) {
-        dbg_parts_olc_ix[i] = plw[0].wu.cg_olc.olc_ix[i];
+        (&dbg_parts_olc_ix[0])[i] = plw[0].wu.cg_olc.olc_ix[i];
         plw[0].wu.cg_olc.olc_ix[i] = 0;
     }
 }
@@ -2710,7 +2707,7 @@ void debug_parts_flip_apply(void) {
     s16 i;
     for (i = 0; i < 4; i++) {
         if (dbg_parts_plw[i].wu.dir_old & 4) {
-            dbg_parts_plw[i].wu.cg_flip = plw[0].wu.cg_flip ^ (s8)dbg_parts_plw[i].wu.dir_old;
+            dbg_parts_plw[i].wu.cg_flip = dbg_parts_plw[i].wu.dir_old ^ plw[0].wu.cg_flip;
         }
         plw[0].wu.cg_olc.olc_ix[i] = 0;
     }
@@ -2769,7 +2766,7 @@ void debug_edit_slots_reset(void) {
 
 
 /* provisional name */
-s32 debug_slot_all_select()
+s32 debug_slot_all_select(u16 sw)
 {
     s16 moved;
     s16 row;
@@ -2877,13 +2874,15 @@ s32 debug_check_rec_frame(u16 sw) {
 
 /* provisional name */
 s32 debug_flip_cycle(u16 sw) {
-    s32 keep;
+    s8 keep;
     if (sw & 0x80) {
-        keep = dbg_pl->wu.cg_flip & 4;
+        keep = dbg_pl->wu.cg_flip;
+        keep &= 4;
         dbg_pl->wu.cg_flip++;
         dbg_pl->wu.cg_flip &= 3;
         dbg_pl->wu.cg_flip |= keep;
-        keep = Debug_Flip_Mask[dbg_pl->wu.id] & 4;
+        keep = Debug_Flip_Mask[dbg_pl->wu.id];
+        keep &= 4;
         Debug_Flip_Mask[dbg_pl->wu.id]++;
         Debug_Flip_Mask[dbg_pl->wu.id] &= 3;
         Debug_Flip_Mask[dbg_pl->wu.id] |= keep;
@@ -2898,12 +2897,14 @@ s32 debug_flip_cycle(u16 sw) {
 s32 debug_parts_flip_cycle(u16 sw) {
     s8 keep;
     if (sw & 0x80) {
-        keep = dbg_pl->wu.cg_flip & 4;
+        keep = dbg_pl->wu.cg_flip;
+        keep &= 4;
         dbg_pl->wu.cg_flip++;
         dbg_pl->wu.cg_flip &= 3;
         dbg_pl->wu.cg_flip |= keep;
         if (!Debug_PL_id) {
-            keep = Debug_Flip_Mask[dbg_pl->wu.id] & 4;
+            keep = Debug_Flip_Mask[dbg_pl->wu.id];
+        keep &= 4;
             Debug_Flip_Mask[dbg_pl->wu.id]++;
             Debug_Flip_Mask[dbg_pl->wu.id] &= 3;
             Debug_Flip_Mask[dbg_pl->wu.id] |= keep;
@@ -2949,19 +2950,19 @@ void debug_move_record_start(u16 sw) {
     if (sw & 0x100) {
         if (Debug_Rec_Count != 0) {
             dbg_rec_menu = 15;
-            return;
-        }
-        dbg_rec_menu = 0;
-        n = debug_catch_move_record(dbg_snap_w[0], dbg_snap_w[1]);
-        if (n != 0) {
-            dbg_rec_exist = 1;
-            Debug_Rec_Frame = 1;
         } else {
-            Debug_Rec_Count = 0;
-            Debug_Rec_Frame = 0;
+            dbg_rec_menu = 0;
+            n = debug_catch_move_record(dbg_snap_w[0], dbg_snap_w[1]);
+            if (n != 0) {
+                dbg_rec_exist = 1;
+                Debug_Rec_Frame = 1;
+            } else {
+                Debug_Rec_Count = 0;
+                Debug_Rec_Frame = 0;
+            }
+            dbg_snap_req = 1;
+            Debug_Play_Flag = 1;
         }
-        dbg_snap_req = 1;
-        Debug_Play_Flag = 1;
     }
 }
 
@@ -3559,39 +3560,31 @@ void debug_hit_box_show_select(void) {
 
 
 /* provisional name */
-u32 debug_edit_common_input(void)
+void debug_edit_common_input(void)
 {
     u16 sw;
-    u32 ret;
-    s32 i;
+    u16 i;
 
     if (Debug_Menu_No != 4) {
         debug_position_by_pad();
     }
-    sw = ~(s16)dbg_p1sw_1 & (s16)dbg_p1sw_0;
+    sw = ~dbg_p1sw_1 & dbg_p1sw_0;
     if ((Debug_Command = debug_slot_all_select(sw)) != 0) {
-        return Debug_Command;
+        return;
     }
     if ((Debug_Command = debug_slot_motion_select()) != 0) {
-        return Debug_Command;
+        return;
     }
     if ((Debug_Command = (sw & 0x20) ? 5 : 0) != 0) {
-        return sw & 0xFFFF;
+        return;
     }
     if ((Debug_Command = (dbg_p1sw_0 & 0x10) ? 4 : 0) != 0) {
-        return dbg_p1sw_0;
+        return;
     }
-    ret = debug_flip_cycle(sw);
-    Debug_Command = ret;
+    Debug_Command = debug_flip_cycle(sw);
     if (sw & 0x800) {
         dbg_cmd_panel ^= 1;
-        /* the value of the last print call is passed back (callers ignore it) */
-        if (dbg_cmd_panel == 0) {
-            for (i = 0; i < 6; i++) {
-                tilemap_print_string_attr(0x14, i + 3, 2, dbg_space10_str);
-                ret = ((u32 (*)())tilemap_print_string_attr)(0x21, i + 3, 2, dbg_space10_str);
-            }
-        } else {
+        if (dbg_cmd_panel) {
             tilemap_print_string_attr(0x14, 3, 2, dbg_slot_1p_s1_str);
             tilemap_print_string_attr(0x14, 4, 2, dbg_slot_1p_s2_str);
             tilemap_print_string_attr(0x14, 5, 2, dbg_slot_1p_s3_str);
@@ -3603,10 +3596,14 @@ u32 debug_edit_common_input(void)
             tilemap_print_string_attr(0x21, 5, 2, dbg_slot_2p_s3_str);
             tilemap_print_string_attr(0x21, 6, 2, dbg_slot_2p_s4_str);
             tilemap_print_string_attr(0x21, 7, 2, dbg_slot_s5_str);
-            ret = ((u32 (*)())tilemap_print_string_attr)(0x21, 8, 2, dbg_slot_s6_str);
+            tilemap_print_string_attr(0x21, 8, 2, dbg_slot_s6_str);
+        } else {
+            for (i = 0; i < 6; i++) {
+                tilemap_print_string_attr(0x14, i + 3, 2, dbg_space10_str);
+                tilemap_print_string_attr(0x21, i + 3, 2, dbg_space10_str);
+            }
         }
     }
-    return ret;
 }
 
 
@@ -4233,7 +4230,8 @@ s32 debug_lever_repeat(sw, old, mask, ix)
         }
         return 0;
     }
-    Debug_Rep_Count[ix] = Debug_Rep_Timer[ix] = 0;
+    Debug_Rep_Timer[ix] = 0;
+    Debug_Rep_Count[ix] = 0;
     return 0;
 }
 
@@ -4267,7 +4265,8 @@ s32 debug_lever_repeat_fast(u16 sw, u16 old, u16 mask, s16 ix) {
         }
         return 0;
     }
-    Debug_Rep_Count[ix] = Debug_Rep_Timer[ix] = 0;
+    Debug_Rep_Timer[ix] = 0;
+    Debug_Rep_Count[ix] = 0;
     return 0;
 }
 
@@ -4278,26 +4277,27 @@ u16 sw_old;
 u16 mask;
 u16 ix;
 {
-    if (!(mask & sw_now)) {
-        Debug_Rep_Count[ix] = Debug_Rep_Timer[ix] = 0;
-        return 0;
-    }
-    if (mask & ~sw_old & sw_now) {
-        Debug_Rep_Timer[ix] = 0;
-        Debug_Rep_Count[ix] = 0;
-        return 1;
-    }
-    Debug_Rep_Timer[ix]++;
-    if (ix < 4) {
-        if (Debug_Rep_Timer[ix] > 12) {
-            Debug_Rep_Timer[ix] = 12;
-            return 1;
-        }
-    } else if (Debug_Rep_Timer[ix] > 16) {
-        if (++Debug_Rep_Count[ix] > 4) {
+    if (sw_now & mask) {
+        if (~sw_old & sw_now & mask) {
+            Debug_Rep_Timer[ix] = 0;
             Debug_Rep_Count[ix] = 0;
             return 1;
         }
+        Debug_Rep_Timer[ix]++;
+        if (ix < 4) {
+            if (Debug_Rep_Timer[ix] > 12) {
+                Debug_Rep_Timer[ix] = 12;
+                return 1;
+            }
+        } else if (Debug_Rep_Timer[ix] > 16) {
+            if (++Debug_Rep_Count[ix] > 4) {
+                Debug_Rep_Count[ix] = 0;
+                return 1;
+            }
+        }
+    } else {
+        Debug_Rep_Timer[ix] = 0;
+        Debug_Rep_Count[ix] = 0;
     }
     return 0;
 }
@@ -4600,15 +4600,14 @@ void debug_parts_disp(void) {
 
 /* provisional name */
 void debug_pattern_edit_init_counts(void) {
-    u32* pat = dbg_pl_char_tbl;
-    dbg_slot_w[0][0] = 1;
-    dbg_slot_w[1][0] = 1;
-    dbg_slot_w[0][4] = 0;
-    dbg_slot_w[1][4] = 0;
-    while (*pat) {
-        pat++;
-        dbg_slot_w[0][4]++;
-        dbg_slot_w[1][4]++;
+    u32* pat;
+    ((DBG_SLOT*)dbg_slot_w[0])->sel[0] = 1;
+    ((DBG_SLOT*)dbg_slot_w[1])->sel[0] = 1;
+    ((DBG_SLOT*)dbg_slot_w[0])->sel0_max = 0;
+    ((DBG_SLOT*)dbg_slot_w[1])->sel0_max = 0;
+    for (pat = dbg_pl_char_tbl; *pat; pat++) {
+        ((DBG_SLOT*)dbg_slot_w[0])->sel0_max++;
+        ((DBG_SLOT*)dbg_slot_w[1])->sel0_max++;
     }
 }
 
@@ -4922,21 +4921,35 @@ void debug_snapshot_to_ghost(WORK* wk, SNAPSHOT* rec) {
 /* provisional name */
 s32 debug_hex4_to_bcd(s16 x) {
     s16 digit[4];
-    s16* p = digit;
     s16 i;
     s32 n;
     s16 div = 1000;
+    s32 a;
+    s32 b;
+    s32 c;
     for (i = 0; i < 4; i++) {
         n = 0;
-        while ((x -= div) >= 0) {
+        for (;;) {
+            x -= div;
+            if (x < 0) {
+                break;
+            }
             n++;
         }
-        *p++ = n;
+        digit[i] = n;
         x = x + div;
         div /= 10;
     }
-    return (s16)(((digit[0] << 12) & 0xF000) | ((digit[1] << 8) & 0xF00) | ((digit[2] << 4) & 0xF0)
-                 | digit[3]);
+    a = digit[0] << 12;
+    a &= 0xF000;
+    b = digit[1] << 8;
+    b &= 0xF00;
+    c = digit[2] << 4;
+    c &= 0xF0;
+    a |= b;
+    a |= c;
+    a |= digit[3];
+    return (s16)a;
 }
 
 
@@ -5384,6 +5397,7 @@ void debug_draw_record_info(void) {
 void debug_draw_parts_info(void)
 {
     const char *str;
+    const char *msg;
     s16 num;
 
     num = debug_hex4_to_bcd(dbg_slot->sel[0]);
@@ -5418,9 +5432,10 @@ void debug_draw_parts_info(void)
         tilemap_print_string_attr(11, 11, 2, dbg_flip_hv_str);
         break;
     }
-    str = dbg_flag_off_str;
     if (Debug_RL_Flag[dbg_pl->wu.id]) {
         str = dbg_flag_on_str;
+    } else {
+        str = dbg_flag_off_str;
     }
     tilemap_print_string_attr(13, 11, 2, str);
 
@@ -5438,25 +5453,27 @@ void debug_draw_parts_info(void)
         tilemap_print_string_attr(11, 12, 2, dbg_flip_hv_str);
         break;
     }
-    str = dbg_flag_off_str;
     if (dbg_pl->wu.rl_flag) {
         str = dbg_flag_on_str;
+    } else {
+        str = dbg_flag_off_str;
     }
     tilemap_print_string_attr(13, 12, 2, str);
 
-    if (dbg_slot->sel[0] > 216) {
-        tilemap_print_string(0, 0, 0xFFFF, &dbg_act_kind_str[10]);
-        tilemap_print_string(0, 0, 0xFFFF, &dbg_act_name_tbl[10][dbg_slot->sel[0] - 217]);
-        tilemap_print_string(0, 0, 0xFFFF, &dbg_char_name_str[26]);
-    } else {
+    if (dbg_slot->sel[0] <= 216) {
         tilemap_print_string(0, 0, 0xFFFF, &dbg_act_kind_str[dbg_slot->row]);
         tilemap_print_string(0, 0, 0xFFFF, &dbg_act_name_tbl[dbg_slot->row][dbg_slot->sel[1] - 1]);
         tilemap_print_string(0, 0, 0xFFFF, &dbg_char_name_str[dbg_pl->player_number]);
+    } else {
+        tilemap_print_string(0, 0, 0xFFFF, &dbg_act_kind_str[10]);
+        tilemap_print_string(0, 0, 0xFFFF, &dbg_act_name_tbl[10][dbg_slot->sel[0] - 217]);
+        tilemap_print_string(0, 0, 0xFFFF, &dbg_char_name_str[26]);
     }
 
-    str = dbg_1p_str;
     if (Debug_PL_id) {
         str = dbg_2p_str;
+    } else {
+        str = dbg_1p_str;
     }
     tilemap_print_string_attr(11, 13, 2, str);
 
@@ -5497,30 +5514,38 @@ void debug_draw_parts_info(void)
     case 0:
         tilemap_print_string_attr(1, 23, 6, dbg_parts1_str);
         if (dbg_parts_olc_ix[0]) {
-            str = dbg_blank8_str;
+            msg = dbg_blank8_str;
+        } else {
+            msg = str;
         }
-        tilemap_print_string_attr(8, 23, 6, str);
+        tilemap_print_string_attr(8, 23, 6, msg);
         break;
     case 1:
         tilemap_print_string_attr(1, 23, 6, dbg_parts2_str);
         if (dbg_parts_olc_ix[1]) {
-            str = dbg_blank8_str;
+            msg = dbg_blank8_str;
+        } else {
+            msg = str;
         }
-        tilemap_print_string_attr(8, 23, 6, str);
+        tilemap_print_string_attr(8, 23, 6, msg);
         break;
     case 2:
         tilemap_print_string_attr(1, 23, 6, dbg_parts3_str);
         if (dbg_parts_olc_ix[2]) {
-            str = dbg_blank8_str;
+            msg = dbg_blank8_str;
+        } else {
+            msg = str;
         }
-        tilemap_print_string_attr(8, 23, 6, str);
+        tilemap_print_string_attr(8, 23, 6, msg);
         break;
     case 3:
         tilemap_print_string_attr(1, 23, 6, dbg_parts4_str);
         if (dbg_parts_olc_ix[3]) {
-            str = dbg_blank8_str;
+            msg = dbg_blank8_str;
+        } else {
+            msg = str;
         }
-        tilemap_print_string_attr(8, 23, 6, str);
+        tilemap_print_string_attr(8, 23, 6, msg);
         break;
     }
 
@@ -5540,7 +5565,12 @@ void debug_draw_parts_info(void)
 
 /* provisional name */
 void debug_char_init(void) {
-    s16 x = Game_setting.mode ? 32 : 0;
+    s16 x;
+    if (Game_setting.mode) {
+        x = 32;
+    } else {
+        x = 0;
+    }
     dbg_pl->wu.be_flag = 1;
     dbg_pl->wu.disp_flag = 1;
     dbg_pl->wu.cgromtype = 1;
@@ -5548,15 +5578,11 @@ void debug_char_init(void) {
     dbg_pl->wu.my_col_mode = 0x4200;
     dbg_pl->wu.work_id = 1;
     if (dbg_pl->wu.id != 0) {
-        x += 0x270;
-        dbg_pl->wu.xyz[0].disp.pos = x;
-        dbg_pl->wu.position_x = x;
+        dbg_pl->wu.position_x = dbg_pl->wu.xyz[0].disp.pos = x + 0x270;
         dbg_pl->wu.my_priority = 64;
         dbg_pl->wu.target_adrs = (u32*)&plw[0];
     } else {
-        x += 0x200;
-        dbg_pl->wu.xyz[0].disp.pos = x;
-        dbg_pl->wu.position_x = x;
+        dbg_pl->wu.position_x = dbg_pl->wu.xyz[0].disp.pos = x + 0x200;
         dbg_pl->wu.my_priority = 62;
         dbg_pl->wu.target_adrs = (u32*)&plw[1];
     }
@@ -5569,11 +5595,13 @@ void debug_char_init(void) {
     debug_char_table_load();
     set_char_base_data_init(&dbg_pl->wu);
     set_char_move_init(&dbg_pl->wu, dbg_slot->row, dbg_slot->sel[1] - 1);
-    dbg_pl->wu.rl_flag = 0;
-    Debug_RL_Flag[dbg_pl->wu.id] = 0;
-    dbg_pl->wu.cg_flip = Debug_Flip_Work[dbg_pl->wu.id] = 0;
-    Debug_Flip_Mask[dbg_pl->wu.id] = Debug_CG_Flip[dbg_pl->wu.id] = 0;
-    dbg_pl->wu.my_col_code = (dbg_pl->wu.id != 0) ? 0x2010 : 0x2000;
+    Debug_Flip_Work[dbg_pl->wu.id] = Debug_RL_Flag[dbg_pl->wu.id] = dbg_pl->wu.rl_flag = 0;
+    Debug_Flip_Mask[dbg_pl->wu.id] = Debug_CG_Flip[dbg_pl->wu.id] = dbg_pl->wu.cg_flip = 0;
+    if (dbg_pl->wu.id != 0) {
+        dbg_pl->wu.my_col_code = 0x2010;
+    } else {
+        dbg_pl->wu.my_col_code = 0x2000;
+    }
 }
 
 
@@ -5673,8 +5701,8 @@ void debug_bg_stage_load(void)
         }
         bg_w.bgw[0].bg_adrs_c_no = simmram_big_page_alloc_40(1);
         bg_w.bgw[0].bg_address = (u16 *)simmram_slot_addr(bg_w.bgw[0].bg_adrs_c_no);
-        scrn_map_set_now(0, bg_w.bgw[0].bg_address);
-        scrn_map_set(0, bg_w.bgw[0].bg_address);
+        scrn_map_set_now(0, (u32)bg_w.bgw[0].bg_address);
+        scrn_map_set(0, (u32)bg_w.bgw[0].bg_address);
         sprite_list_setup(0, 1, bg_scr_record_data);
         bg_cell_write(0, 0x2000, 0, (u32)russia2_scrn_data, 0, 0x340);
         bg_cell_write(0, 0x2040, 1, (u32)russia2_scrn_data, 0, 0x340);

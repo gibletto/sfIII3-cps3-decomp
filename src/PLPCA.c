@@ -182,7 +182,7 @@ void Catch_04000(PLW* wk) {
             wk->wu.cg_type = 0;
         }
         catch_cg_type_check(wk);
-        return;
+        break;
     default:
         break;
     case 2:

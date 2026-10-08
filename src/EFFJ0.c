@@ -30,7 +30,7 @@ void effect_J0_move(WORK_Other* ewk) {
         ewk->wu.cg_att_ix = 0;
         ewk->wu.cg_hit_ix = 0;
         sort_push_request(&ewk->wu);
-        break;
+        return;
     case 1:
         if (ewk->wu.dead_f == 1) {
             ewk->wu.disp_flag = 0;

@@ -167,9 +167,9 @@ void opning_init_00000(void) {
     for (i = 0; i < 4; i++) {
         bg_w.bgw[i].fam_no = i;
         bg_w.bgw[i].bg_adrs_c_no = simmram_big_page_alloc_40(1);
-        bg_w.bgw[i].bg_address = ((u16 *(*)(s16 handle))simmram_slot_addr)(bg_w.bgw[i].bg_adrs_c_no);
-        scrn_map_set_now(i, bg_w.bgw[i].bg_address);
-        scrn_map_set(i, bg_w.bgw[i].bg_address);
+        bg_w.bgw[i].bg_address = (u16*)simmram_slot_addr(bg_w.bgw[i].bg_adrs_c_no);
+        scrn_map_set_now(i, (u32)bg_w.bgw[i].bg_address);
+        scrn_map_set(i, (u32)bg_w.bgw[i].bg_address);
         op_w.bgw[i].r_no_0 = 0;
         op_w.bgw[i].r_no_1 = 0;
         op_w.bgw[i].bg_no = i;
@@ -934,6 +934,8 @@ void op_108_move(void) {
 
 
 void op_109_move(void) {
+    const s16* lim = &op_109_tbl[op_w.r_no_2];
+    u8* seq = gSeqStatus;
     switch (op_w.r_no_2) {
     case 0:
         op_w.r_no_2 += 1;
@@ -946,49 +948,49 @@ void op_109_move(void) {
         effect_48_init(16);
         break;
     case 1:
-        if ((gSeqStatus[0] >= op_109_tbl[op_w.r_no_2]) && (gSeqStatus[0] != 0x6D)) {
+        if ((*seq >= *lim) && (*seq != 0x6D)) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 55;
             op_obj_disp = 1;
-            return;
+        } else {
+            opening_bg_move_broadcast(54);
         }
-        opening_bg_move_broadcast(54);
-        return;
+        break;
     case 2:
-        if (gSeqStatus[0] >= op_109_tbl[op_w.r_no_2]) {
+        if (*seq >= *lim) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 56;
-            return;
+        } else {
+            opening_bg_move_broadcast(55);
         }
-        opening_bg_move_broadcast(55);
-        return;
+        break;
     case 3:
-        if (gSeqStatus[0] >= op_109_tbl[op_w.r_no_2]) {
+        if (*seq >= *lim) {
             op_w.r_no_2 += 1;
             op_scrn_end = 0;
             op_work_clear();
             op_w.index = 57;
             op_obj_disp = 0;
             effect_48_init(17);
-            return;
+        } else {
+            opening_bg_move_broadcast(56);
         }
-        opening_bg_move_broadcast(56);
         break;
     case 4:
-        if (gSeqStatus[0] >= op_109_tbl[op_w.r_no_2]) {
+        if (*seq >= *lim) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 58;
             op_obj_disp = 1;
-            return;
+        } else {
+            opening_bg_move_broadcast(57);
         }
-        opening_bg_move_broadcast(57);
         break;
     default:
         opening_bg_move_broadcast(58);
-        return;
+        break;
     }
 }
 
@@ -1584,108 +1586,108 @@ void op_bg0_0001(s16 r_index) {
         bgw_ptr->xy[1].cal = 0;
         switch (r_index) {
         case 1:
-            bg_cell_write(0, 0x3040, 48, (u32)op_bg0_scrn_data, 0, 0x2C0);
-            bg_cell_write(0, 0x3080, 49, (u32)op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3040, 48, (u32)&op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3080, 49, (u32)&op_bg0_scrn_data, 0, 0x2C0);
             break;
         case 3:
-            bg_cell_write_yflip(0, 0x3040, 70, (u32)op_bg0_scrn_data, 0, 0x2C0);
-            bg_cell_write_yflip(0, 0x3080, 71, (u32)op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write_yflip(0, 0x3040, 70, (u32)&op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write_yflip(0, 0x3080, 71, (u32)&op_bg0_scrn_data, 0, 0x2C0);
             break;
         case 4:
         case 22:
         case 33:
-            bg_cell_write_xflip(0, 0x3080, 52, (u32)op_bg0_scrn_data, 0, 0x2C0);
-            bg_cell_write_xflip(0, 0x3040, 53, (u32)op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write_xflip(0, 0x3080, 52, (u32)&op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write_xflip(0, 0x3040, 53, (u32)&op_bg0_scrn_data, 0, 0x2C0);
             break;
         case 7:
-            bg_cell_write(0, 0x3040, 64, (u32)op_bg0_scrn_data, 0, 0x2C7);
-            bg_cell_write(0, 0x3080, 65, (u32)op_bg0_scrn_data, 0, 0x2C7);
+            bg_cell_write(0, 0x3040, 64, (u32)&op_bg0_scrn_data, 0, 0x2C7);
+            bg_cell_write(0, 0x3080, 65, (u32)&op_bg0_scrn_data, 0, 0x2C7);
             break;
         case 9:
         case 72:
-            bg_cell_write(0, 0x3040, 50, (u32)op_bg0_scrn_data, 0, 0x2C7);
-            bg_cell_write(0, 0x3080, 51, (u32)op_bg0_scrn_data, 0, 0x2C7);
+            bg_cell_write(0, 0x3040, 50, (u32)&op_bg0_scrn_data, 0, 0x2C7);
+            bg_cell_write(0, 0x3080, 51, (u32)&op_bg0_scrn_data, 0, 0x2C7);
             break;
         case 11:
         case 30:
-            bg_cell_write_xflip(0, 0x3080, 50, (u32)op_bg0_scrn_data, 0, 0x2C0);
-            bg_cell_write_xflip(0, 0x3040, 51, (u32)op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write_xflip(0, 0x3080, 50, (u32)&op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write_xflip(0, 0x3040, 51, (u32)&op_bg0_scrn_data, 0, 0x2C0);
             break;
         case 12:
-            bg_cell_write(0, 0x3040, 68, (u32)op_bg0_scrn_data, 0, 0x2C7);
-            bg_cell_write(0, 0x3080, 69, (u32)op_bg0_scrn_data, 0, 0x2C7);
+            bg_cell_write(0, 0x3040, 68, (u32)&op_bg0_scrn_data, 0, 0x2C7);
+            bg_cell_write(0, 0x3080, 69, (u32)&op_bg0_scrn_data, 0, 0x2C7);
             break;
         case 15:
-            bg_cell_write_xflip(0, 0x3080, 52, (u32)op_bg0_scrn_data, 0, 0x2C7);
-            bg_cell_write_xflip(0, 0x3040, 53, (u32)op_bg0_scrn_data, 0, 0x2C7);
+            bg_cell_write_xflip(0, 0x3080, 52, (u32)&op_bg0_scrn_data, 0, 0x2C7);
+            bg_cell_write_xflip(0, 0x3040, 53, (u32)&op_bg0_scrn_data, 0, 0x2C7);
             break;
         case 18:
-            bg_cell_write_yflip(0, 0x3040, 50, (u32)op_bg0_scrn_data, 0, 0x2C0);
-            bg_cell_write_yflip(0, 0x3080, 51, (u32)op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write_yflip(0, 0x3040, 50, (u32)&op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write_yflip(0, 0x3080, 51, (u32)&op_bg0_scrn_data, 0, 0x2C0);
             break;
         case 19:
-            bg_cell_write(0, 0x3040, 72, (u32)op_bg0_scrn_data, 0, 0x2C0);
-            bg_cell_write(0, 0x3080, 73, (u32)op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3040, 72, (u32)&op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3080, 73, (u32)&op_bg0_scrn_data, 0, 0x2C0);
             break;
         case 21:
-            bg_cell_write(0, 0x3040, 56, (u32)op_bg0_scrn_data, 0, 0x2C0);
-            bg_cell_write(0, 0x3080, 0, (u32)op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3040, 56, (u32)&op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3080, 0, (u32)&op_bg0_scrn_data, 0, 0x2C0);
             break;
         case 31:
-            bg_cell_write(0, 0x3040, 74, (u32)op_bg0_scrn_data, 0, 0x2C0);
-            bg_cell_write(0, 0x3080, 75, (u32)op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3040, 74, (u32)&op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3080, 75, (u32)&op_bg0_scrn_data, 0, 0x2C0);
             break;
         case 32:
-            bg_cell_write(0, 0x3040, 76, (u32)op_bg0_scrn_data, 0, 0x2C0);
-            bg_cell_write(0, 0x3080, 77, (u32)op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3040, 76, (u32)&op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3080, 77, (u32)&op_bg0_scrn_data, 0, 0x2C0);
             break;
         case 35:
-            bg_cell_write(0, 0x3040, 74, (u32)op_bg0_scrn_data, 0, 0x2C8);
-            bg_cell_write(0, 0x3080, 75, (u32)op_bg0_scrn_data, 0, 0x2C8);
+            bg_cell_write(0, 0x3040, 74, (u32)&op_bg0_scrn_data, 0, 0x2C8);
+            bg_cell_write(0, 0x3080, 75, (u32)&op_bg0_scrn_data, 0, 0x2C8);
             break;
         case 36:
-            bg_cell_write(0, 0x3040, 76, (u32)op_bg0_scrn_data, 0, 0x2C8);
-            bg_cell_write(0, 0x3080, 77, (u32)op_bg0_scrn_data, 0, 0x2C8);
+            bg_cell_write(0, 0x3040, 76, (u32)&op_bg0_scrn_data, 0, 0x2C8);
+            bg_cell_write(0, 0x3080, 77, (u32)&op_bg0_scrn_data, 0, 0x2C8);
             break;
         case 38:
-            bg_cell_write(0, 0x3040, 52, (u32)op_bg0_scrn_data, 0, 0x2C8);
-            bg_cell_write(0, 0x3080, 53, (u32)op_bg0_scrn_data, 0, 0x2C8);
+            bg_cell_write(0, 0x3040, 52, (u32)&op_bg0_scrn_data, 0, 0x2C8);
+            bg_cell_write(0, 0x3080, 53, (u32)&op_bg0_scrn_data, 0, 0x2C8);
             break;
         case 39:
-            bg_cell_write(0, 0x3040, 52, (u32)op_bg0_scrn_data, 0, 0x2C8);
-            bg_cell_write(0, 0x3080, 53, (u32)op_bg0_scrn_data, 0, 0x2C8);
+            bg_cell_write(0, 0x3040, 52, (u32)&op_bg0_scrn_data, 0, 0x2C8);
+            bg_cell_write(0, 0x3080, 53, (u32)&op_bg0_scrn_data, 0, 0x2C8);
             break;
         case 55:
         case 56:
-            bg_cell_write(0, 0x3040, 78, (u32)op_bg0_scrn_data, 0, 0x2C0);
-            bg_cell_write(0, 0x3080, 79, (u32)op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3040, 78, (u32)&op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3080, 79, (u32)&op_bg0_scrn_data, 0, 0x2C0);
             break;
         case 60:
         case 62:
         case 80:
         case 82:
-            bg_cell_write(0, 0x3040, 88, (u32)op_bg0_scrn_data, 0, 0x2C0);
-            bg_cell_write(0, 0x3080, 89, (u32)op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3040, 88, (u32)&op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3080, 89, (u32)&op_bg0_scrn_data, 0, 0x2C0);
             break;
         case 65:
-            bg_cell_write(0, 0x3040, 80, (u32)op_bg0_scrn_data, 0, 0x2C0);
-            bg_cell_write(0, 0x3080, 81, (u32)op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3040, 80, (u32)&op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3080, 81, (u32)&op_bg0_scrn_data, 0, 0x2C0);
             break;
         case 66:
-            bg_cell_write(0, 0x3040, 82, (u32)op_bg0_scrn_data, 0, 0x2C0);
-            bg_cell_write(0, 0x3080, 83, (u32)op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3040, 82, (u32)&op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3080, 83, (u32)&op_bg0_scrn_data, 0, 0x2C0);
             break;
         case 73:
-            bg_cell_write(0, 0x3040, 84, (u32)op_bg0_scrn_data, 0, 0x2C0);
-            bg_cell_write(0, 0x3080, 85, (u32)op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3040, 84, (u32)&op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3080, 85, (u32)&op_bg0_scrn_data, 0, 0x2C0);
             break;
         case 75:
-            bg_cell_write_xyflip(0, 0x3080, 84, (u32)op_bg0_scrn_data, 0, 0x2C0);
-            bg_cell_write_xyflip(0, 0x3040, 85, (u32)op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write_xyflip(0, 0x3080, 84, (u32)&op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write_xyflip(0, 0x3040, 85, (u32)&op_bg0_scrn_data, 0, 0x2C0);
             break;
         case 76:
-            bg_cell_write(0, 0x3040, 86, (u32)op_bg0_scrn_data, 0, 0x2C0);
-            bg_cell_write(0, 0x3080, 87, (u32)op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3040, 86, (u32)&op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3080, 87, (u32)&op_bg0_scrn_data, 0, 0x2C0);
             break;
         }
     case 1:
@@ -1735,28 +1737,28 @@ void op_bg0_0003(s16 r_index) {
         bgw_ptr->xy[1].cal = 0;
         switch (r_index) {
         case 42:
-            bg_cell_write(0, 0x3040, 36, (u32)op_bg0_scrn_data, 0, 0x2C0);
-            bg_cell_write(0, 0x3080, 37, (u32)op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3040, 36, (u32)&op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3080, 37, (u32)&op_bg0_scrn_data, 0, 0x2C0);
             break;
         case 44:
-            bg_cell_write(0, 0x3040, 38, (u32)op_bg0_scrn_data, 0, 0x2C0);
-            bg_cell_write(0, 0x3080, 39, (u32)op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3040, 38, (u32)&op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3080, 39, (u32)&op_bg0_scrn_data, 0, 0x2C0);
             break;
         case 46:
-            bg_cell_write(0, 0x3040, 40, (u32)op_bg0_scrn_data, 0, 0x2C0);
-            bg_cell_write(0, 0x3080, 41, (u32)op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3040, 40, (u32)&op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3080, 41, (u32)&op_bg0_scrn_data, 0, 0x2C0);
             break;
         case 48:
-            bg_cell_write(0, 0x3040, 42, (u32)op_bg0_scrn_data, 0, 0x2C0);
-            bg_cell_write(0, 0x3080, 43, (u32)op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3040, 42, (u32)&op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3080, 43, (u32)&op_bg0_scrn_data, 0, 0x2C0);
             break;
         case 50:
-            bg_cell_write(0, 0x3040, 44, (u32)op_bg0_scrn_data, 0, 0x2C0);
-            bg_cell_write(0, 0x3080, 45, (u32)op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3040, 44, (u32)&op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3080, 45, (u32)&op_bg0_scrn_data, 0, 0x2C0);
             break;
         case 52:
-            bg_cell_write(0, 0x3040, 46, (u32)op_bg0_scrn_data, 0, 0x2C0);
-            bg_cell_write(0, 0x3080, 47, (u32)op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3040, 46, (u32)&op_bg0_scrn_data, 0, 0x2C0);
+            bg_cell_write(0, 0x3080, 47, (u32)&op_bg0_scrn_data, 0, 0x2C0);
             break;
         }
         break;
@@ -1819,7 +1821,7 @@ void op_bg0_0005(s16 r_index) {
         bg_cell_write(0, 0x3040, 5, (u32)op_bg0_scrn_data, 0, 0x2CB);
         bg_cell_write(0, 0x3080, 6, (u32)op_bg0_scrn_data, 0, 0x2CB);
         bgw_ptr->frame_deff = 12;
-        Frame_Up(0xC0, 0xE0, *(volatile s16*)&bgw_ptr->frame_deff, *(volatile s16*)&bgw_ptr->frame_deff);
+        Frame_Up(0xC0, 0xE0, bgw_ptr->frame_deff, bgw_ptr->frame_deff);
         break;
     case 1:
         bgw_ptr->frame_deff -= 2;
@@ -2008,11 +2010,10 @@ void op_bg0_0011(s16 r_index) {
         if (bgw_ptr->xy[1].disp.pos < 0) {
             bgw_ptr->xy[1].cal += 0x20000;
         }
-        if (bgw_ptr->frame_deff < 1) {
-            break;
+        if (bgw_ptr->frame_deff > 0) {
+            bgw_ptr->frame_deff -= 1;
+            Frame_Down(0xC0, 0x40, 1, 1);
         }
-        bgw_ptr->frame_deff -= 1;
-        Frame_Down(0xC0, 0x40, 1, 1);
         break;
     }
     opening_bgw_commit_pos(0);
@@ -2089,12 +2090,12 @@ void op_bg0_0015(s16 r_index) {
         bgw_ptr->xy[1].cal = 0;
         switch (r_index) {
         case 8:
-            bg_cell_write(0, 0x3040, 66, (u32)op_bg0_scrn_data, 0, 0x2C7);
-            bg_cell_write(0, 0x3080, 67, (u32)op_bg0_scrn_data, 0, 0x2C7);
+            bg_cell_write(0, 0x3040, 66, (u32)&op_bg0_scrn_data, 0, 0x2C7);
+            bg_cell_write(0, 0x3080, 67, (u32)&op_bg0_scrn_data, 0, 0x2C7);
             break;
         case 14:
-            bg_cell_write(0, 0x3040, 70, (u32)op_bg0_scrn_data, 0, 0x2C7);
-            bg_cell_write(0, 0x3080, 71, (u32)op_bg0_scrn_data, 0, 0x2C7);
+            bg_cell_write(0, 0x3040, 70, (u32)&op_bg0_scrn_data, 0, 0x2C7);
+            bg_cell_write(0, 0x3080, 71, (u32)&op_bg0_scrn_data, 0, 0x2C7);
             break;
         }
         break;
@@ -2129,7 +2130,7 @@ void op_bg0_0016(s16 r_index) {
         bg_cell_write(0, 0x3040, 57, (u32)op_bg0_scrn_data, 0, 0x2C0);
         bg_cell_write(0, 0x3080, 57, (u32)op_bg0_scrn_data, 0, 0x2C0);
         bgw_ptr->frame_deff = 19;
-        Frame_Up(0xC0, 0x70, *(volatile s16*)&bgw_ptr->frame_deff, *(volatile s16*)&bgw_ptr->frame_deff);
+        Frame_Up(0xC0, 0x70, bgw_ptr->frame_deff, bgw_ptr->frame_deff);
         bgw_ptr->free = 10;
         break;
     case 1:
@@ -2429,10 +2430,10 @@ void opening_title_00(void) {
     bg_w.bgw[0].position_x = 0x200 - bg_w.pos_offset;
     bg_w.bgw[0].position_y = 0;
     bg_w.bgw[0].bg_adrs_c_no = simmram_big_page_alloc_40(1);
-    bg_w.bgw[0].bg_address = ((u16 *(*)(s16 handle))simmram_slot_addr)(bg_w.bgw[0].bg_adrs_c_no);
-    scrn_map_set_now(0, bg_w.bgw[0].bg_address);
-    scrn_map_set(0, bg_w.bgw[0].bg_address);
-    ((void(*)(s32 slot, s32 kind, u32 tree))sprite_list_setup)(0, 1, (u32)op_scr_record_data[0]);
+    bg_w.bgw[0].bg_address = (u16*)simmram_slot_addr(bg_w.bgw[0].bg_adrs_c_no);
+    scrn_map_set_now(0, (u32)bg_w.bgw[0].bg_address);
+    scrn_map_set(0, (u32)bg_w.bgw[0].bg_address);
+    sprite_list_setup(0, 1, (s16*)((u32)op_scr_record_data[0]));
     load_char_gfx(0xE3D0, 1);
 }
 
@@ -2754,8 +2755,8 @@ void common_end_init00(s16 pl_num) {
     for (i = 0; i < bg_w.scno; i++) {
         bg_w.bgw[i].bg_adrs_c_no = simmram_big_page_alloc_40(1);
         bg_w.bgw[i].bg_address = (u16 *)simmram_slot_addr(bg_w.bgw[i].bg_adrs_c_no);
-        scrn_map_set_now(i, bg_w.bgw[i].bg_address);
-        scrn_map_set(i, bg_w.bgw[i].bg_address);
+        scrn_map_set_now(i, (u32)bg_w.bgw[i].bg_address);
+        scrn_map_set(i, (u32)bg_w.bgw[i].bg_address);
         sprite_list_setup((s16)i, 1, (s16*)end_map_tbl[i]);
         bg_w.bgw[i].r_no_1 = bg_w.bgw[i].r_no_2 = 0;
         bg_w.bgw[i].fam_no = i;

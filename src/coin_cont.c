@@ -14,12 +14,13 @@
 #include "Win.h"
 #include "win_2.h"
 #include "gameover.h"
-#include "continue.h"
 #include "pow_pow.h"
 #include "textsound.h"
 #include "textsound_2.h"
 #include "textsound_3.h"
 #include "coin_cont.h"
+
+void Disp_Personal_Count();
 
 
 
@@ -36,6 +37,6 @@ void coin_in_sound_request(void) {
 void Redisp_Continue_Count(s16 pl_id) {
     if (E_Number[pl_id][0] == 1) {
         tilemap_print_string_attr(DE_X[Entry_Mes_Wide[pl_id]] + (&Entry_Mes_X[0])[pl_id], Text_Page_Y, 0x12, msg_continue);
-        ((void (*)(s32, s32))Disp_Personal_Count)(pl_id, Continue_Count[pl_id]);
+        Disp_Personal_Count(pl_id, Continue_Count[pl_id]);
     }
 }

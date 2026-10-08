@@ -9,9 +9,6 @@
  * position; EFF39_SLIDE_IN and EFF39_SLIDE_OUT slide it in from or out to the player's side;
  * EFF39_MOVE moves it; EFF39_KILL counts down, hides and releases it.
  * Get_Pos39 returns the resting position; Select_Start is decremented when a slide-in lands.
- * Effect 40, at the end of the file, is a select-screen zoom object: it waits for its delay,
- * appears at double size and shrinks to normal while moving forward in priority; it is placed by
- * direction from eff40_pos_x_tbl.
  */
 
 #include "structs.h"
@@ -259,75 +256,3 @@ s32 effect_39_init(s16 PL_id, s16 dir_old, s16 Your_Char, s16 Target_BG, s16 Opt
 s32 Get_Pos39(WORK_Other* ewk, s16 Who, s16 Get_Type) {
     return Name_Pos_Data[ewk->master_id][Play_Type][Who][Get_Type];
 }
-
-
-
-void effect_40_move(WORK_Other* ewk) {
-    switch (ewk->wu.routine_no[0]) {
-    case 0:
-        if (--ewk->wu.dir_timer != 0) {
-            return;
-        }
-        ewk->wu.routine_no[0]++;
-        ewk->wu.dir_timer = 1;
-        ewk->wu.disp_flag = 1;
-        ewk->wu.mvxy.a[0].sp = 0x80000;
-        set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
-        break;
-    case 1:
-        if (--ewk->wu.dir_timer == 0) {
-            ewk->wu.routine_no[0]++;
-        }
-        break;
-    case 2:
-        ewk->wu.my_priority++;
-        ewk->wu.position_z++;
-        if ((ewk->wu.my_mr.size.x -= ewk->wu.mvxy.a[0].real.h) <= 63) {
-            ewk->wu.my_mr.size.x = 63;
-        }
-        if ((ewk->wu.my_mr.size.y -= ewk->wu.mvxy.a[0].real.h) <= 63) {
-            ewk->wu.my_mr.size.y = 63;
-        }
-        if (ewk->wu.my_mr.size.x <= 63 && ewk->wu.my_mr.size.y <= 63) {
-            ewk->wu.routine_no[0]++;
-        }
-        break;
-    default:
-        break;
-    }
-    ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
-    ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-    sort_push_request4(ewk);
-}
-
-
-
-s32 effect_40_init(s16 dir, s16 timer) {
-    WORK_Other* ewk;
-    s16 ix;
-    if ((ix = pull_effect_work(4)) == -1) {
-        return -1;
-    }
-    ewk = (WORK_Other*)frw[ix];
-    ewk->wu.be_flag = 1;
-    ewk->wu.id = 40;
-    ewk->wu.work_id = 16;
-    ewk->wu.cgromtype = 1;
-    ewk->wu.my_col_mode = 0x4200;
-    ewk->wu.my_col_code = 0x2043;
-    ewk->wu.my_family = 1;
-    ewk->wu.position_z = 40;
-    ewk->wu.dir_timer = timer;
-    ewk->wu.char_table[0] = sel_pl_char_table;
-    ewk->wu.dir_step = dir;
-    ewk->wu.char_index = 22;
-    ewk->wu.my_mr_flag = 1;
-    ewk->wu.my_mr.size.x = 127;
-    ewk->wu.my_mr.size.y = 127;
-    ewk->wu.xyz[0].disp.pos = eff40_pos_x_tbl[dir] + DE_X[10] + bg_w.bgw[0].position_x + 0xC0;
-    ewk->wu.xyz[1].disp.pos = bg_w.bgw[0].position_y + 0x80;
-    return 0;
-}
-
-
-

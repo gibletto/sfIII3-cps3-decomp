@@ -170,7 +170,7 @@ void K5_decode_new_hit_index(WORK* wk, MVJ* mvj, u16 mf) {
     get_table_adrs_K5(wk);
     mvsw.swi = decode_mvsw(mf);
     if (wk->cg_ja.boix != mvj[0].index) {
-        for (i = 0; i < 4; i++) {
+        for (i = 0; i < 4;) {
             if (mvj[i].r[1].pos.h != 0) {
                 wk->xyz[0].disp.pos = mvj[i].r[0].pos.h;
                 wk->xyz[1].disp.pos = mvj[i].r[1].pos.h;
@@ -204,12 +204,12 @@ void K5_decode_new_hit_index(WORK* wk, MVJ* mvj, u16 mf) {
             } else {
                 mvj[i].rno = 0;
             }
-            mvj[i].index = wk->cg_ja.boix;
+            mvj[i++].index = wk->cg_ja.boix;
             continue;
         }
     }
     if (mvj[4].index != (wk->cg_ja.bhix + wk->cg_ja.haix)) {
-        for (i = 4; i < 8; i++) {
+        for (i = 4; i < 8;) {
             if (mvj[i].r[1].pos.h != 0) {
                 wk->xyz[0].disp.pos = mvj[i].r[0].pos.h;
                 wk->xyz[1].disp.pos = mvj[i].r[1].pos.h;
@@ -243,7 +243,7 @@ void K5_decode_new_hit_index(WORK* wk, MVJ* mvj, u16 mf) {
             } else {
                 mvj[i].rno = 0;
             }
-            mvj[i].index = wk->cg_ja.bhix + wk->cg_ja.haix;
+            mvj[i++].index = wk->cg_ja.bhix + wk->cg_ja.haix;
             continue;
         }
     }

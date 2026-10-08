@@ -159,13 +159,13 @@ s32 effect_A0_init(s16 pl) {
     ewk->my_master = (u32*)mwk;
     ewk->wu.rl_flag = mwk->wu.rl_flag;
     ewk->wu.old_rno[2] = Player_Color[twk->id];
-    if (*(volatile s16*)&ewk->wu.old_rno[2] == Player_Color[mwk->wu.id]) {
+    if (ewk->wu.old_rno[2] == Player_Color[mwk->wu.id]) {
         if (Player_Color[mwk->wu.id] < 7) {
             ewk->wu.old_rno[2] = effA0_swap_tbl[Player_Color[mwk->wu.id]];
         } else {
             ewk->wu.old_rno[2] = 0;
         }
-        Player_Color[twk->id] = *(volatile s8*)((u8*)&ewk->wu.old_rno[2] + 1);
+        Player_Color[twk->id] = ewk->wu.old_rno[2];
     }
     center = bg_w.bgw[1].wxy[0].disp.pos;
     offset = bg_w.pos_offset;

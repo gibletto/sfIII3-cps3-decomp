@@ -516,11 +516,12 @@ s32 comm_iflg(WORK* wk, CHAR_CMD* ctc) {
             return 1;
         }
         return decord_if_jump(wk, ctc, ctc->pat);
+    } else {
+        if (((WORK*)wk->target_adrs)->cmwk[11] < ctc->ix) {
+            return 1;
+        }
+        return decord_if_jump(wk, ctc, ctc->pat);
     }
-    if (((WORK*)wk->target_adrs)->cmwk[11] < ctc->ix) {
-        return 1;
-    }
-    return decord_if_jump(wk, ctc, ctc->pat);
 }
 
 
@@ -1070,11 +1071,12 @@ s32 comm_bgrlf(WORK* wk, CHAR_CMD* ctc) {
             return decord_if_jump(wk, ctc, ctc->pat);
         }
         return decord_if_jump(wk, ctc, ctc->ix);
+    } else {
+        if (wk->position_x < bg_w.bgw[1].pos_x_work) {
+            return decord_if_jump(wk, ctc, ctc->pat);
+        }
+        return decord_if_jump(wk, ctc, ctc->ix);
     }
-    if (wk->position_x < bg_w.bgw[1].pos_x_work) {
-        return decord_if_jump(wk, ctc, ctc->pat);
-    }
-    return decord_if_jump(wk, ctc, ctc->ix);
 }
 
 

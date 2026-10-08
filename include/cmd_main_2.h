@@ -47,7 +47,7 @@ void pl_lvr_set(void);
 void sw_pick_up(void);
 void waza_check(PLW* pl);
 void waza_compel_all_init(PLW* pl);
-void waza_compel_init(s16 pl_id, s16 num, intptr_t* adrs);
+void waza_compel_init();
 void waza_flag_clear_only_1();
 s32 sw_to_lvbt(s32 value);
 void waza_slot_clear_all_p(PLW* pl);

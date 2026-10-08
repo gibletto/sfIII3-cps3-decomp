@@ -5,7 +5,7 @@
  * effect (list 3) with a given character index, and records the owning player and id (from
  * a player work or from another effect's master fields). effect_96_move plays the pattern from
  * ef13_char_table, honouring hit stop and the game pause, and frees itself when the pattern ends
- * or dead_f is set. Spawned by the shell effects EFF13 / EFF13_KOTP and EFFI4.
+ * or dead_f is set. Spawned by the shell effect EFF13.
  */
 
 #include "structs.h"

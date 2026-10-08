@@ -46,13 +46,14 @@ void effect_K1_move(WORK_Other* ewk) {
         case 0:
             if (--ewk->wu.dir_timer) {
                 return;
+            } else {
+                ewk->wu.routine_no[1]++;
+                ewk->wu.routine_no[2] = 5;
+                ewk->wu.disp_flag = 1;
+                Time_Stop = 0;
+                set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
+                break;
             }
-            ewk->wu.routine_no[1]++;
-            ewk->wu.routine_no[2] = 5;
-            ewk->wu.disp_flag = 1;
-            Time_Stop = 0;
-            set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
-            break;
         case 1:
             if ((ewk->wu.my_mr.size.x -= *(s16*)&ewk->wu.mvxy.a[0]) <= 63) {
                 ewk->wu.my_mr.size.x = 63;
@@ -62,13 +63,15 @@ void effect_K1_move(WORK_Other* ewk) {
             }
             if (ewk->wu.my_mr.size.x > 63) {
                 break;
+            } else {
+                if (ewk->wu.my_mr.size.y > 63) {
+                    break;
+                } else {
+                    ewk->wu.routine_no[1]++;
+                    ewk->wu.my_mr_flag = 0;
+                    break;
+                }
             }
-            if (ewk->wu.my_mr.size.y > 63) {
-                break;
-            }
-            ewk->wu.routine_no[1]++;
-            ewk->wu.my_mr_flag = 0;
-            break;
         case 2:
             tm = Select_Timer;
             if (ewk->wu.rl_waza != tm) {

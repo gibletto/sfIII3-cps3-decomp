@@ -279,7 +279,7 @@ void Zoomf_Init_Y(void) {
 
 
 /* Zooms the frame in; returns the vertical offset computed by Frame_Adgjust. */
-s32 Frame_Up(u16 x, u16 y, s16 add_x, s16 add_y) {
+s32 Frame_Up(u16 x, u16 y, u16 add_x, u16 add_y) {
     zoom_frame[0].zoom -= add_x;
     zoom_frame[1].zoom -= add_y;
     Frame_Adgjust(x, y);
@@ -289,7 +289,7 @@ s32 Frame_Up(u16 x, u16 y, s16 add_x, s16 add_y) {
 
 
 /* Zooms the frame out; returns the vertical offset computed by Frame_Adgjust. */
-s32 Frame_Down(u16 x, u16 y, s16 add_x, s16 add_y) {
+s32 Frame_Down(u16 x, u16 y, u16 add_x, u16 add_y) {
     zoom_frame[0].zoom += add_x;
     zoom_frame[1].zoom += add_y;
     Frame_Adgjust(x, y);
@@ -335,7 +335,7 @@ void Frame_Adgjust(u16 pos_x, u16 pos_y) {
         buff *= pos_y + 0x21;
         buff >>= 6;
         buff &= 0x1FF;
-        if (!Monitor_Flip) {
+        if (Monitor_Flip == 0) {
             zoom_adj_y = -buff;
         } else {
             zoom_adj_y = buff;
@@ -349,7 +349,7 @@ void Frame_Adgjust(u16 pos_x, u16 pos_y) {
         buff *= pos_y + 0x21;
         buff >>= 6;
         buff &= 0x1FF;
-        if (Monitor_Flip) {
+        if (Monitor_Flip != 0) {
             zoom_adj_y = -buff;
         } else {
             zoom_adj_y = buff;

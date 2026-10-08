@@ -145,10 +145,14 @@ void add_sp_arts_gauge_hit_dm(PLW* wk) {
     }
     emwk = (PLW*)wk->wu.target_adrs;
     asag = add_arts_gauge[emwk->player_number][wk->wu.dm_arts_point][2];
-    if (asag) {
+    if (asag != 0) {
         add_super_arts_gauge(wk->sa, wk->wu.id, asag / 3, wk->metamorphose);
         if (emwk->wu.operator == 0) {
-            asag += (((Country & 2) ? asagh_zuru2 : asagh_zuru)[Game_setting.level]);
+            if (Country & 2) {
+                asag += asagh_zuru2[Game_setting.level];
+            } else {
+                asag += asagh_zuru[Game_setting.level];
+            }
         }
         if (asag <= 0) {
             asag = 1;
@@ -306,7 +310,7 @@ s32 add_super_arts_gauge(wk, ix, asag, mf)
             return 0;
         }
         asag = asag * 120 / 100;
-        if ((&Battle_Round[0])[Play_Type] == 0) {
+        if (Battle_Round[Play_Type] == 0) {
             asag = asag * 150 / 100;
         }
         wk->gauge.s.h += asag;
@@ -394,7 +398,7 @@ void dead_voice_request(void) {
 void dead_voice_request2(PLW* wk) {
     s16 secd1;
     s16 secd2;
-    s32 ks = 0;
+    s16 ks = 0;
     if (wk->metamorphose != 0 && Country != 8) {
         ks = 0x600;
     }
@@ -405,6 +409,18 @@ void dead_voice_request2(PLW* wk) {
     } else {
         sound_effect_request[secd1](wk, secd1 + ks);
     }
+}
+
+/* provisional name */
+s16 gauge_rank_value(s16 v) {
+    s16 i;
+
+    for (i = 0; i < 5; i++) {
+        if (v >= gauge_rank_table[i][0]) {
+            break;
+        }
+    }
+    return gauge_rank_table[i][1];
 }
 
 

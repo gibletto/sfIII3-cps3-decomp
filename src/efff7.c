@@ -45,7 +45,8 @@ void effect_F7_move(WORK_Other* ewk) {
         set_char_move_init2(&ewk->wu, 0, 3, ewk->wu.old_rno[0] + 1, 0);
         break;
     case 1:
-        switch ((s16)(p2sw_0 & ~p2sw_1)) {
+        work = p2sw_0 & ~p2sw_1;
+        switch (work) {
         case 0x10:
             ewk->wu.routine_no[0] = 0;
             ewk->wu.old_rno[0]++;
@@ -68,7 +69,11 @@ void effect_F7_move(WORK_Other* ewk) {
             break;
         case 0x100:
             ewk->wu.old_rno[2] ^= 1;
-            ewk->wu.my_priority = ewk->wu.position_z = ewk->wu.old_rno[2] ? 10 : 100;
+            if (ewk->wu.old_rno[2]) {
+                ewk->wu.my_priority = ewk->wu.position_z = 10;
+            } else {
+                ewk->wu.my_priority = ewk->wu.position_z = 100;
+            }
             break;
         case 0x200:
             ewk->wu.old_rno[1]--;

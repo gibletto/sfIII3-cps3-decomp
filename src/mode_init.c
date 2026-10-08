@@ -165,7 +165,7 @@ void text_clear_task_exit(void) {
 void mode_init_task(void) {
     s16 wait;
     u8 region;
-    s32 color;
+    s16 color;
 
     region_setup();
     CC_Type = region_cc_type_tbl[Country - 1];

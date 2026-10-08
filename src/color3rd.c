@@ -1,5 +1,5 @@
 /*
- * COLOR3RD.C  Ending support: prize cards, CD checks, staff roll, debug fights and colour loads (part 8)
+ * COLOR3RD.C  Colour loads
  *
  * The colour transfer routines (load_any_color, load_bg_color, load_player_color, fade variants,
  * side/effect/option colours) send palette blocks from ROM tables to colour RAM through the transfer
@@ -59,92 +59,6 @@
 #include "end_sub.h"
 #include "color3rd.h"
 #include "cps3.h"
-
-#pragma inline(card_pl_work_clear)
-
-
-
-/* provisional name */
-void debug_play12(void) {
-    void (*jmp_tbl[2])() = { debug_play12_init, debug_play12_move };
-    jmp_tbl[G_No2]();
-}
-
-
-
-/* provisional name */
-void debug_play12_init(void) {
-    G_No2++;
-    dbg_play12_w[0] = dbg_play12_w[1] = dbg_play12_w[2] = dbg_play12_w[3] = 0;
-    effect_work_quick_init();
-    bg_work_clear();
-}
-
-
-
-/* provisional name */
-void debug_play12_move(void) { hit_check_main_process(); }
-
-
-/* provisional name */
-void debug_play12_dummy(void) {}
-
-
-
-/* provisional name */
-void debug_play13(void) {
-    void (*jmp_tbl[2])() = { debug_play13_init, debug_play13_move };
-    jmp_tbl[G_No2]();
-}
-
-
-
-/* provisional name */
-void debug_play13_init(void) {
-    tilemap_fill_all(0, 0x20);
-    G_No2++;
-    System_all_clear_Wait();
-    Play_Type = 1;
-    Operator_Status[0] = 1;
-    Operator_Status[1] = 1;
-    My_char[0] = 2;
-    My_char[1] = 2;
-    vital_cont_init();
-    combo_cont_init();
-    count_cont_init(0);
-    set_kizetsu_status(0);
-    set_kizetsu_status(1);
-    set_super_arts_status(0);
-    set_super_arts_status(1);
-    C_No0 = 0;
-    Game_timer = 0;
-    Game_pause = 0;
-    Round_num = 0;
-    Allow_a_battle_f = 0;
-    init_slow_flag();
-    effect_work_quick_init();
-    clear_hit_queue();
-    appear_type = 0;
-    pcon_rno[0] = pcon_rno[1] = pcon_rno[2] = pcon_rno[3] = 0;
-    ca_check_flag = 1;
-    bg_work_clear();
-    win_lose_work_clear();
-    bg_w.stage = 13;
-    bg_w.area = 0;
-    TATE00();
-}
-
-/* provisional name */
-void debug_play13_move(void)
-{
-    round_timer.timer = 0x990000;
-    Game_timer++;
-    set_EXE_flag();
-    Player_control();
-    TATE00();
-    Game_Management();
-    hit_check_main_process();
-}
 
 void init_color_trans_req(void)
 {
@@ -218,6 +132,14 @@ u8 b;
 void color_trans_dummy(void)
 {
   return;
+}
+
+/* provisional name */
+void color_dma_error_disp(void)
+{
+    if (col_trans_result == -1) {
+        tilemap_print_string_attr(16, Text_Page_Y + 7, 18, "COLOR DMA ERROR");
+    }
 }
 
 

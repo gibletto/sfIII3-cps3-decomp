@@ -171,7 +171,7 @@ void Demo01(void) {
     case 2:
         Game02();
         if (--Cover_Timer != 0) {
-            break;
+            return;
         }
         D_No1++;
         Switch_Screen_Init(3, 3);
