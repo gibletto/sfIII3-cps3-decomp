@@ -67,11 +67,9 @@ s32 comm_if_s(WORK* wk, CHAR_CMD* ctc) {
     }
     shdat = get_comm_if_shot(wk);
     if (my_shdat == shdat) {
-        ix = ctc->ix;
-    } else {
-        ix = ctc->pat;
+        return decord_if_jump(wk, ctc, ctc->ix);
     }
-    return decord_if_jump(wk, ctc, ix);
+    return decord_if_jump(wk, ctc, ctc->pat);
 }
 
 
@@ -228,11 +226,9 @@ s32 comm_iflb(WORK* wk, CHAR_CMD* ctc) {
     }
     shdat = get_comm_if_lvsh(wk);
     if (my_shdat == shdat) {
-        ix = ctc->ix;
-    } else {
-        ix = ctc->pat;
+        return decord_if_jump(wk, ctc, ctc->ix);
     }
-    return decord_if_jump(wk, ctc, ix);
+    return decord_if_jump(wk, ctc, ctc->pat);
 }
 
 
@@ -789,12 +785,10 @@ s32 comm_atmf(PLW* wk, CHAR_CMD* ctc) {
 s32 comm_chkwf(PLW* wk, CHAR_CMD* ctc) {
     s16 ix;
     if (wk->cp->waza_flag[ctc->koc] == 0 || wk->cp->waza_flag[ctc->koc] == -1) {
-        ix = ctc->pat;
-    } else {
-        waza_flag_clear_only_1(wk->wu.id, ctc->koc);
-        ix = ctc->ix;
+        return decord_if_jump(&wk->wu, ctc, ctc->pat);
     }
-    return decord_if_jump(&wk->wu, ctc, ix);
+    waza_flag_clear_only_1(wk->wu.id, ctc->koc);
+    return decord_if_jump(&wk->wu, ctc, ctc->ix);
 }
 
 
@@ -1071,19 +1065,16 @@ s32 comm_srlf(WORK* wk, CHAR_CMD* ctc) {
 
 
 s32 comm_bgrlf(WORK* wk, CHAR_CMD* ctc) {
-    s16 ix;
     if (wk->rl_flag) {
         if (wk->position_x > bg_w.bgw[1].pos_x_work) {
-            ix = ctc->pat;
-        } else {
-            ix = ctc->ix;
+            return decord_if_jump(wk, ctc, ctc->pat);
         }
-    } else if (wk->position_x < bg_w.bgw[1].pos_x_work) {
-        ix = ctc->pat;
-    } else {
-        ix = ctc->ix;
+        return decord_if_jump(wk, ctc, ctc->ix);
     }
-    return decord_if_jump(wk, ctc, ix);
+    if (wk->position_x < bg_w.bgw[1].pos_x_work) {
+        return decord_if_jump(wk, ctc, ctc->pat);
+    }
+    return decord_if_jump(wk, ctc, ctc->ix);
 }
 
 
@@ -1115,11 +1106,9 @@ s32 comm_ifs2(WORK* wk, CHAR_CMD* ctc) {
     }
     shdat = get_comm_if_shot(wk);
     if (my_shdat & shdat) {
-        ix = ctc->ix;
-    } else {
-        ix = ctc->pat;
+        return decord_if_jump(wk, ctc, ctc->ix);
     }
-    return decord_if_jump(wk, ctc, ix);
+    return decord_if_jump(wk, ctc, ctc->pat);
 }
 
 
@@ -1155,11 +1144,9 @@ s32 comm_s_chg(WORK* wk, CHAR_CMD* ctc) {
     }
     shdat = get_comm_if_shot_now_off(wk);
     if (my_shdat == shdat) {
-        ix = ctc->ix;
-    } else {
-        ix = ctc->pat;
+        return decord_if_jump(wk, ctc, ctc->ix);
     }
-    return decord_if_jump(wk, ctc, ix);
+    return decord_if_jump(wk, ctc, ctc->pat);
 }
 
 
@@ -1175,11 +1162,9 @@ s32 comm_schg2(WORK* wk, CHAR_CMD* ctc) {
     }
     shdat = get_comm_if_shot_now_off(wk);
     if (my_shdat & shdat) {
-        ix = ctc->ix;
-    } else {
-        ix = ctc->pat;
+        return decord_if_jump(wk, ctc, ctc->ix);
     }
-    return decord_if_jump(wk, ctc, ix);
+    return decord_if_jump(wk, ctc, ctc->pat);
 }
 
 
@@ -1247,11 +1232,9 @@ s32 comm_ifs3(WORK* wk, CHAR_CMD* ctc) {
     }
     shdat = get_comm_if_shot_now(wk);
     if (my_shdat & shdat) {
-        ix = ctc->ix;
-    } else {
-        ix = ctc->pat;
+        return decord_if_jump(wk, ctc, ctc->ix);
     }
-    return decord_if_jump(wk, ctc, ix);
+    return decord_if_jump(wk, ctc, ctc->pat);
 }
 
 

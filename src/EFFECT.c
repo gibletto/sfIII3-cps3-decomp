@@ -322,15 +322,13 @@ void work_init_zero(s32* adrs_int, s32 xx) {
 void work_init_copy(s32* src, s32* dst, s16 size) {
     s16 i;
     s16 j;
-    s16 words;
-    s32 surr;
-    surr = (u32)size % 4;
-    words = size;
-    words /= 4;
-    for (i = 0; i < words; i++) {
+    s16 surr;
+    surr = size & 3;
+    size /= 4;
+    for (i = 0; i < size; i++) {
         *dst++ = *src++;
     }
-    if (surr != 0) {
+    if (surr) {
         for (j = 0; j < surr; j++) {
             *(s8*)dst = *(s8*)src;
             src++;
@@ -341,7 +339,7 @@ void work_init_copy(s32* src, s32* dst, s16 size) {
 
 void write_my_shell_ix(WORK* wk, s16 ix) {
     s32 i;
-    for (i = 7; i >= 1; i -= 1) {
+    for (i = 7; i > 0; i--) {
         wk->shell_ix[i] = wk->shell_ix[i - 1];
     }
     wk->shell_ix[0] = ix;
@@ -361,8 +359,7 @@ s32 erase_my_shell_ix(WORK* wk, s16 ix) {
     return 0;
 ok:
     for (j = i; j < 7; j++) {
-        s16* p = &wk->shell_ix[j];
-        p[0] = p[1];
+        wk->shell_ix[j] = wk->shell_ix[j + 1];
     }
     wk->shell_ix[7] = -1;
     return 1;
@@ -423,7 +420,8 @@ s32 shell_live_check(PLW* wk, s16 wix) {
     WORK_Other* tmw;
     s16 i;
     if (wk->player_number != 0xE) {
-        for (i = 0; i < 8; i++) {
+        i = 0;
+        do {
             if (wk->wu.shell_ix[i] == -1) {
                 break;
             }
@@ -431,7 +429,8 @@ s32 shell_live_check(PLW* wk, s16 wix) {
             if ((!tmw->refrected) && (tmw->wu.original_vitality == wix)) {
                 return 1;
             }
-        }
+            i++;
+        } while (i < 8);
         return 0;
     }
     for (i = 0; i < 8; i++) {

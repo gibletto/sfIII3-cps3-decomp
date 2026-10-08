@@ -94,7 +94,6 @@ s32 Check_Break_Into_59(WORK_Other* ewk) {
             set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
         }
     }
-    return 0;
 }
 
 

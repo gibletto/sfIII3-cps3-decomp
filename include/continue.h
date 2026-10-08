@@ -3,7 +3,7 @@
 
 #include "structs.h"
 
-s16 Check_Count_Cut(s16 PL_id, s16 Limit);
+s32 Check_Count_Cut(s16 PL_id, s16 Limit);
 void Continue_1st(void);
 void Continue_2nd(void);
 s32 Continue_3rd(void);

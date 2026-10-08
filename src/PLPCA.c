@@ -303,15 +303,17 @@ void Catch_07000(PLW* wk) {
         add_mvxy_speed(&wk->wu);
         cal_mvxy_speed(&wk->wu);
         char_move(&wk->wu);
-        if (cat07_running_check(&wk->wu) == 0) {
-            catch_cg_type_check(wk);
+        if (cat07_running_check(&wk->wu) != 0) {
+            break;
         }
+        catch_cg_type_check(wk);
         break;
     case 3:
         jumping_union_process(&wk->wu, 6);
-        if (--wk->wu.dir_timer < 1) {
-            wk->wu.routine_no[3] = 4;
+        if (--wk->wu.dir_timer > 0) {
+            break;
         }
+        wk->wu.routine_no[3] = 4;
         break;
     case 4:
         jumping_union_process(&wk->wu, 6);

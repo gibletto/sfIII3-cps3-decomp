@@ -3,7 +3,7 @@
 
 #include "structs.h"
 
-s16 c2_last_dir_select(PLW* wk, WORK* efw);
+s32 c2_last_dir_select(PLW* wk, WORK* efw);
 s32 bs2_sync_bomb(WORK* wk);
 void disp_bs2_parts_debug(WORK* wk);
 void clear_bs2_floor(WORK_Other* wk);

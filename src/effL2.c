@@ -53,7 +53,7 @@ void effect_L2_move(WORK_Other* ewk) {
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos;
         sort_push_request(&ewk->wu);
-        return;
+        break;
     case 2:
         if (Exec_Wipe != 0) {
             ewk->wu.old_rno[0] = 1;

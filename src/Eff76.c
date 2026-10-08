@@ -83,11 +83,12 @@ void EFF76_SLIDE_IN(WORK_Other* ewk) {
     }
     switch (ewk->wu.routine_no[1]) {
     case 0:
-        if (!--Order_Timer[ewk->wu.dir_old]) {
-            ewk->wu.routine_no[1]++;
-            ewk->wu.disp_flag = 1;
-            set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
+        if (--Order_Timer[ewk->wu.dir_old]) {
+            break;
         }
+        ewk->wu.routine_no[1]++;
+        ewk->wu.disp_flag = 1;
+        set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
         break;
     default:
         ewk->wu.xyz[0].cal += ewk->wu.mvxy.a[0].sp;

@@ -1163,6 +1163,25 @@ void draw_operator_info(s32 y) {
 
 
 /* provisional name */
+void tilemap_print_string_origin(str)
+TM_STRING* str;
+{
+    tilemap_print_string(0, 0, 0xFFFF, str);
+}
+
+
+
+/* provisional name */
+void Set_Mode_Pos_copy(s16* value, s16 add, s16 init) {
+    *value = init;
+    if (Game_setting.mode) {
+        *value += add;
+    }
+}
+
+
+
+/* provisional name */
 void Set_Mode_Pos(s16* value, s16 add, s16 init) {
     *value = init;
     if (Game_setting.mode) {

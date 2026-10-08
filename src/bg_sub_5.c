@@ -40,13 +40,17 @@ void suzi_offset_set(WORK* wk) {
 
 u32 suzi_offset_set_sub(WORK* wk)
 {
-    BGW *bgw;
     s16 work;
+    s16 work2;
+    s16 pos = wk->xyz[1].disp.pos;
 
-    work = 0x300 - (wk->xyz[1].disp.pos & 0x300);
-    work += 0x100 - (wk->xyz[1].disp.pos & 0xFF);
-    bgw = (BGW *)((u8 *)bg_w.bgw + (s16)((wk->my_family - 1) * sizeof(BGW)));
-    wk->suzi_offset = bgw->suzi_adrs + (s16)(work * 2);
+    work = pos & 0x300;
+    work = 0x300 - work;
+    work2 = pos & 0xFF;
+    work2 = 0x100 - work2;
+    work += work2;
+    work += work;
+    wk->suzi_offset = bg_w.bgw[wk->my_family - 1].suzi_adrs + work;
     return 0;
 }
 

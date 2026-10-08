@@ -446,18 +446,16 @@ void Setup_Win_Mark(void) {
 
 void Update_BI_Term(void)
 {
-    PLW *wk;
     s16 pl;
 
     if (Play_Type == 1) {
         return;
     }
     pl = Winner_id;
-    wk = &plw[pl];
-    if (wk->sa_healing) {
+    if (plw[pl].sa_healing) {
         Super_Arts_Finish[pl]++;
         Stage_SA_Finish[Winner_id]++;
-    } else if (wk->wu.vitality == wk->wu.vital_new) {
+    } else if (plw[pl].wu.vitality == plw[pl].wu.vital_new) {
         Perfect_Finish[pl]++;
         Stage_Perfect_Finish[Winner_id]++;
         if (Round_Result & 0x980) {
@@ -1012,20 +1010,21 @@ void Game_Manage_9th(void) {
                 }
             }
             break;
+        } else {
+            C_No1++;
+            C_Timer = 60;
+            satime_stock_clear();
+            sc_vram_to_ram();
+            Stop_Combo = 1;
+            BGM_Timer[1] = 1;
+            break;
         }
-        C_No1++;
-        C_Timer = 60;
-        satime_stock_clear();
-        sc_vram_to_ram();
-        Stop_Combo = 1;
-        BGM_Timer[1] = 1;
-        break;
     case 1:
         if (Scene_Cut) {
             C_Timer = 1;
         }
         if (--C_Timer > 0) {
-            break;
+            return;
         }
         C_No1++;
         Game_pause = 1;
@@ -1648,12 +1647,13 @@ s32 Bonus_Cut_Sub(void) {
             C_No2 = 3;
             C_No3 = 99;
             return C_Timer = 90;
+        } else {
+            bcounter_down(1);
+            Disp_Digit16x24(Bonus_Score_Plus, 35, 11, 30);
+            C_No2 = 4;
+            C_No3 = 99;
+            return C_Timer = 90;
         }
-        bcounter_down(1);
-        Disp_Digit16x24(Bonus_Score_Plus, 35, 11, 30);
-        C_No2 = 4;
-        C_No3 = 99;
-        return C_Timer = 90;
     }
     return 0;
 }
@@ -1695,10 +1695,7 @@ void Ck_Win_Record(void) {
         } else {
             Win_Record[Winner_id] = 999;
         }
-        {
-            u16 t = Win_Record[Winner_id];
-            Stock_Win_Record[Winner_id] = t;
-        }
+        Stock_Win_Record[Winner_id] = Win_Record[Winner_id];
     } else {
         Erase_Win_Record(Loser_id);
     }

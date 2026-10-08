@@ -121,6 +121,7 @@ void effect_A7_move(WORK_Other* ewk) {
         }
         if (Pause_Hit_Marks) {
             return;
+        } else {
         }
         if (EXE_flag == 0 && Game_pause == 0) {
             char_move(&ewk->wu);

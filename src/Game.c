@@ -93,7 +93,7 @@ void Game_Task(void) {
 
 /* provisional name */
 void task_sleep_tick(void) {
-    s32 i;
+    u32 i;
     for (i = 0; i < 8; i++) {
         if (task_tbl[i].status == 1) {
             task_tbl[i].state--;

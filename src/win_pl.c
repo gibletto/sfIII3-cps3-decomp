@@ -436,10 +436,8 @@ void Win_05000(PLW* wk) {
     }
     switch (wk->wu.routine_no[3]) {
     case 0:
-        {
-            s16 t = win_rno[1] = 0;
-            win_rno[0] = t;
-        }
+        win_rno[1] = 0;
+        win_rno[0] = 0;
         wk->wu.routine_no[3]++;
         if (Round_num >= (Battle_Round[Play_Type] * 2) ||
             PL_Wins[wk->wu.id] >= Battle_Round[Play_Type]) {
@@ -455,7 +453,7 @@ void Win_05000(PLW* wk) {
             win_rno[0] = 0;
             break;
         }
-        work = random_16_com() & 3;
+        work = win_select(wk, 3);
         set_char_move_init(&wk->wu, 9, work + 32);
         win_rno[0] = 1;
         break;

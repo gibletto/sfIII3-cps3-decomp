@@ -214,6 +214,8 @@ shc src\next_cpu.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nor
 if errorlevel 1 goto fail
 shc src\game_config_main.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\game_config_main.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
+shc src\game_config_jp.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -noinline -object=obj\game_config_jp.obj >obj\shc.log 2>&1
+shc src\game_config_en.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -noinline -object=obj\game_config_en.obj >obj\shc.log 2>&1
 shc src\CMD_MAIN.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -noinline -object=obj\CMD_MAIN.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\cmd_main_2.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -noinline -object=obj\cmd_main_2.obj >obj\shc.log 2>&1
@@ -352,6 +354,8 @@ if errorlevel 1 goto fail
 shc src\effect_2.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\effect_2.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\EFF00.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\EFF00.obj >obj\shc.log 2>&1
+if errorlevel 1 goto fail
+shc src\EFF01_code.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\EFF01_code.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\EFF02.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\EFF02.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail

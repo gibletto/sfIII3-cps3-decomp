@@ -125,7 +125,7 @@ void setup_hana_extra(WORK* wk, s16 num, s16 acc) {
     s16 i;
     s16 way = wk->direction * 4;
     s16 rnd_00 = random_16_com() & 3;
-    s16 rnd_01;
+    s32 rnd_01;
     for (i = 0; i < num_of_hana[num]; i++) {
         rnd_01 = random_16_com() & 3;
         effect_D6_init((WORK_Other*)wk,

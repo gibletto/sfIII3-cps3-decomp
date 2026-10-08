@@ -190,36 +190,28 @@ void scfont_lnput_rev(s16 x, s16 y, u16 w, u16 h, s16 attr, s16 code)
 {
     u16 row;
     u16 col;
-    s16 cx;
-    u16 n;
+    s16 n;
 
     n = 0;
-    attr += 128;
     for (row = 0; row < h; row++) {
-        cx = (s16)(w + x);
         for (col = 0; col < w; col++) {
-            cx--;
-            tilemap_put_cell(cx, y + row, attr, code + n);
+            tilemap_put_cell(x + w - 1 - col, y + row, attr + 0x80, code + n);
             n++;
         }
-        continue;
     }
 }
 
 
 
 /* provisional name */
-s32 scfont_fill(s16 x, s16 y, u16 w, u16 h, s16 attr, s16 code) {
+void scfont_fill(s16 x, s16 y, u16 w, u16 h, s16 attr, s16 code) {
     u16 i;
-    s32 j;
-    s32 ret = 54;
+    u16 j;
     for (j = 0; j < h; j++) {
-        ret = (s16)w;
         for (i = 0; i < w; i++) {
-            ret = tilemap_put_cell(x + i, y + j, attr, code);
+            tilemap_put_cell(x + i, y + j, attr, code);
         }
     }
-    return ret;
 }
 
 
@@ -434,7 +426,7 @@ char dy;
         }
     } else {
         for (i = 0; i < n; i++) {
-            cell = (u16 *)(SS_RAM + *pos++ + dx * 4 + dy * 0x100);
+            cell = (u16 *)(SS_RAM + *pos++ + (dx << 2) + (dy << 8));
             cell[0] = *code;
             cell[1] = ((*code++ & 0x100) >> 8) | *attr++;
         }
@@ -464,7 +456,7 @@ void sc_ram_to_vram_opc(s8 ix, s8 dx, s8 dy, u16 attr) {
         }
     } else {
         for (i = 0; i < n; i++) {
-            cell = (u16*)(SS_RAM + *pos++ + dx * 4 + dy * 0x100);
+            cell = (u16*)(SS_RAM + *pos++ + (dx << 2) + (dy << 8));
             cell[0] = *code;
             cell[1] = ((*code++ & 0x100) >> 8) | attr;
         }
@@ -478,7 +470,7 @@ void sc_ram_to_vram_opc(s8 ix, s8 dx, s8 dy, u16 attr) {
 s32 tilemap_put_cell(u16 x, u16 y, u16 attr, u16 code) {
     u16* cell = (u16*)(SS_RAM + x * 4 + y * 0x100);
     cell[0] = code;
-    return cell[1] = ((code & 0x100) >> 8) | attr;
+    cell[1] = ((code & 0x100) >> 8) | attr;
 }
 
 
@@ -505,7 +497,7 @@ void score16x24_put(u16 x, u16 y, u16 attr, s32 n) {
 
 /* provisional name */
 void sc_celllist_put(u8 ix) {
-    const CELL_ENTRY* const* tbl = sc_celllist_tbl + (ix & 0xFF);
+    const CELL_ENTRY* const* tbl = sc_celllist_tbl + ix;
     const CELL_ENTRY* p = *tbl;
     u16 x;
     for (x = p->x; x != 100; x = p->x) {

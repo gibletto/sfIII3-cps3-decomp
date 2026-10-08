@@ -167,6 +167,8 @@ void Att_PL07_HOP_JUMP(PLW* wk) {
         }
         break;
     case 3:
+        jumping_union_process(&wk->wu, 6);
+        break;
     case 5:
         jumping_union_process(&wk->wu, 6);
         break;

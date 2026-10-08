@@ -360,9 +360,10 @@ void settle_type_00000(void) {
         }
         if (--plw[Winner_id].wu.dir_timer != 0) {
             break;
+        } else {
+            plw[Winner_id].wkey_flag = 1;
+            break;
         }
-        plw[Winner_id].wkey_flag = 1;
-        break;
     case 2:
         if (footwork_check(Winner_id)) {
             grade_set_round_result(Winner_id);
@@ -450,7 +451,7 @@ void settle_type_20000(void) {
         complete_victory_pause();
         if (plw[0].wu.vital_new == plw[1].wu.vital_new) {
             pcon_rno[2] = 4;
-            return;
+            break;
         }
         grade_set_round_result(Winner_id);
         plw[Winner_id].wu.routine_no[2] = 40;

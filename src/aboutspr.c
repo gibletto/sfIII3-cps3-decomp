@@ -811,7 +811,7 @@ s32 set_conn_sprite(WORK_Other_CONN* wk) {
     CHAR_CELL* p;
     u16* base;
     u16* dst;
-    s16 blk;
+    s32 blk;
     s16 cell;
     s16 base_code;
     s16 i;
@@ -1147,7 +1147,8 @@ s32 disp_seraph_cells(WORK* wk) {
     if (wk->disp_flag == 0 || wk->cg_number == 0) {
         return 1;
     }
-    if (cg_slot_tbl[cg_data_list[wk->cg_number].set->slot & 0x7FFF].addr == 0) {
+    ix = cg_data_list[wk->cg_number].set->slot & 0x7FFF;
+    if (cg_slot_tbl[ix].addr == 0) {
         return;
     }
     if ((spr = sprite_entry_alloc(0)) == 0) {
@@ -1211,7 +1212,8 @@ s32 disp_car_parts_cells(WORK* wk) {
     if (wk->disp_flag == 0 || wk->cg_number == 0) {
         return 1;
     }
-    if (cg_slot_tbl[cg_data_list[wk->cg_number].set->slot & 0x7FFF].addr == 0) {
+    ix = cg_data_list[wk->cg_number].set->slot & 0x7FFF;
+    if (cg_slot_tbl[ix].addr == 0) {
         return;
     }
     if ((spr = sprite_entry_alloc(0)) == 0) {
@@ -1284,7 +1286,7 @@ void char_sprite_zoom_cells(WORK* wk) {
     s16 m[4];
     s32 base_x;
     s32 base_y;
-    s32 i;
+    s16 i;
     s16* volatile mp;
     spr = (CharSpriteK*)(SPRITE_RAM + (u16)wk->spr.gfx_ofs * 16);
     *(u32*)&wk->spr.old_mr = *(u32*)&wk->my_mr;

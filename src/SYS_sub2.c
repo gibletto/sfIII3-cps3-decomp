@@ -21,7 +21,7 @@ void Switch_Priority_76(void) {
 
 
 void Clear_Disp_Ranking(s16 PL_id) {
-    s32 i;
+    s16 i;
     for (i = 0; i <= 3; i++) {
         Request_Disp_Rank[PL_id][i] = -1;
         (&Rank_In[0])[PL_id][i] = -1;

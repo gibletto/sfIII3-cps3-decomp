@@ -124,7 +124,7 @@ void cmd_init(PLW* pl) {
 
 
 void cmd_move(void) {
-    s32 j;
+    s16 j;
     intptr_t* adrs;
     cmd_id = cmd_pl->wu.id;
     adrs = pl_CMD[cmd_pl->player_number];
@@ -980,20 +980,20 @@ void check_13(void) {
 
 
 void check_14(void) {
-    s16 ofs;
+    WORK_CP* wk;
     waza_ptr->w_int--;
     if (waza_ptr->w_lvr == 0x10) {
         if (chk_pl->sw_now & 0x70) {
             waza_ptr->uni0.tame.flag++;
         }
     } else if (chk_pl->sw_now & 0x700) {
-        waza_ptr->uni0.tame.flag = waza_ptr->uni0.tame.flag + 1;
+        waza_ptr->uni0.tame.flag += 1;
     }
-    if (WCP_AT(ofs = cmd_id * (s16)sizeof(WORK_CP)).waza_flag[waza_type[cmd_id]]) {
+    wk = &WCP_AT((s16)(cmd_id * (s16)sizeof(WORK_CP)));
+    if (wk->waza_flag[waza_type[cmd_id]]) {
         if (waza_ptr->w_int <= 0) {
             if (waza_ptr->uni0.tame.flag) {
-                WCP_OFS(ofs, cmd_id);
-                WCP_AT(ofs).waza_flag[waza_type[cmd_id]] = WCP_AT(ofs).reset[waza_type[cmd_id]];
+                wk->waza_flag[waza_type[cmd_id]] = wk->reset[waza_type[cmd_id]];
                 waza_ptr->uni0.tame.flag = 0;
                 if (waza_type[cmd_id] & 1) {
                     waza_ptr->w_int = 10;
@@ -1007,8 +1007,7 @@ void check_14(void) {
         }
     } else if (waza_type[cmd_id] & 1) {
         if (waza_ptr->uni0.tame.flag >= 3) {
-            WCP_OFS(ofs, cmd_id);
-            WCP_AT(ofs).waza_flag[waza_type[cmd_id]] = WCP_AT(ofs).reset[waza_type[cmd_id]];
+            wk->waza_flag[waza_type[cmd_id]] = wk->reset[waza_type[cmd_id]];
             waza_ptr->uni0.tame.flag = 0;
             waza_ptr->w_int = 0xA;
             chk_pl->waza_no = waza_type[cmd_id];
@@ -1020,8 +1019,7 @@ void check_14(void) {
         }
     } else {
         if (waza_ptr->uni0.tame.flag >= 3) {
-            WCP_OFS(ofs, cmd_id);
-            WCP_AT(ofs).waza_flag[waza_type[cmd_id]] = WCP_AT(ofs).reset[waza_type[cmd_id]];
+            wk->waza_flag[waza_type[cmd_id]] = wk->reset[waza_type[cmd_id]];
             waza_ptr->uni0.tame.flag = 0;
             waza_ptr->w_int = 6;
             chk_pl->waza_no = waza_type[cmd_id];
@@ -1445,9 +1443,18 @@ void command_ok_move(s16 waza_num) {
 s8 dead_lvr_check(void) {
     WAZA_WORK* wk = waza_ptr;
     T_PL_LVR* pl = chk_pl;
-    if ((wk->w_dead == 0 || wk->w_dead != pl->sw_new) && (wk->w_dead2 == 0 || wk->w_dead2 != pl->sw_new)) {
-        return 0;
+    if (wk->w_dead != 0) {
+        if (wk->w_dead == pl->sw_new) {
+            goto dead;
+        }
     }
+    if (wk->w_dead2 != 0) {
+        if (wk->w_dead2 == pl->sw_new) {
+            goto dead;
+        }
+    }
+    return 0;
+dead:
     wk->w_type = 0;
     return 1;
 }
@@ -1465,7 +1472,7 @@ void pl_lvr_set(void) {
     sw_work = sw_0 & 0xC;
     if (check_rl_on_car(cmd_pl)) {
         if (cmd_pl->wu.rl_flag) {
-            if (sw_work) {
+            if (sw_work != 0) {
                 sw_0 &= 0xFF3;
                 sw_work ^= 0xC;
                 sw_0 |= sw_work;
@@ -1586,7 +1593,7 @@ void sw_pick_up(void) {
         sw_work *= 2;
     }
     for (i = 0; i < 4; i++) {
-        if (chk_pl->sw_new & lvr_chk_tbl[i]) {
+        if (lvr_chk_tbl[i] & chk_pl->sw_new) {
             *cnt_address1 += 1;
         } else {
             *cnt_address1 = 0;

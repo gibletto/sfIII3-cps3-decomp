@@ -34,7 +34,6 @@
 /* provisional name */
 void suzi_line_calc2(s16 bg_num) {
     BGW* bgw;
-    s32* calc;
     s32* line;
     u16* dst;
     u16* src;
@@ -56,26 +55,26 @@ void suzi_line_calc2(s16 bg_num) {
         return;
     }
     dist -= bgw->old_pos_x;
-    calc = suzi_calc_w;
     line = (s32*)suzi_line_buf;
     if (dist < 0) {
-        calc[0] = bg_w.bgw[bg_num].zuubun * -dist;
+        dist = -dist;
+        suzi_calc_w[0] = bg_w.bgw[bg_num].zuubun * dist;
         dst = bg_w.bgw[bg_num].start_suzi;
-        calc[1] = calc[0] * bg_w.bgw[bg_num].u_line;
+        suzi_calc_w[1] = suzi_calc_w[0] * bg_w.bgw[bg_num].u_line;
         for (i = 0; i < bg_w.bgw[bg_num].u_line; i++) {
-            *line += calc[1];
-            calc[1] -= calc[0];
+            *line += suzi_calc_w[1];
+            suzi_calc_w[1] -= suzi_calc_w[0];
             *dst = *(u16*)line;
             line++;
             dst += 2;
         }
     } else {
-        calc[0] = bg_w.bgw[bg_num].zuubun * dist;
+        suzi_calc_w[0] = bg_w.bgw[bg_num].zuubun * dist;
         dst = bg_w.bgw[bg_num].start_suzi;
-        calc[1] = calc[0] * bg_w.bgw[bg_num].u_line;
+        suzi_calc_w[1] = suzi_calc_w[0] * bg_w.bgw[bg_num].u_line;
         for (i = 0; i < bg_w.bgw[bg_num].u_line; i++) {
-            *line -= calc[1];
-            calc[1] -= calc[0];
+            *line -= suzi_calc_w[1];
+            suzi_calc_w[1] -= suzi_calc_w[0];
             *dst = *(u16*)line;
             line++;
             dst += 2;
@@ -89,4 +88,10 @@ void suzi_line_calc2(s16 bg_num) {
         dst += 2;
         src += 2;
     }
+}
+
+
+/* provisional name */
+s32 bg_cell_offset(s16 x, s16 y) {
+    return ((((0x400 - (y & 0x300) - (y & 0xF0)) & 0x3F0) << 4) + ((x & 0x3F0) >> 2)) >> 1;
 }

@@ -82,9 +82,9 @@ void win_mark_control(s16 pl) {
 void win_mark_pos_set(s16 pl) {
     win_mark_num[pl] = PL_Wins[pl] * 2;
     if (pl != 0) {
-        win_mark_pos[1] = win_mark_pos_tbl[(*&Game_setting).mode][4];
+        win_mark_pos[1] = win_mark_pos_tbl[Game_setting.mode][4];
     } else {
-        win_mark_pos[0] = win_mark_pos_tbl[(*&Game_setting).mode][0];
+        win_mark_pos[0] = win_mark_pos_tbl[Game_setting.mode][0];
     }
 }
 
@@ -102,21 +102,20 @@ void win_mark_new_check(s16 pl) {
 
 /* provisional name */
 void win_mark_write(s16 pl) {
-    u32 cell = (SS_RAM + 0x400) + win_mark_pos[pl] * 4;
+    u16 (*cell)[4] = (u16 (*)[4])((SS_RAM + 0x400) + win_mark_pos[pl] * 4);
     s16* type = win_type[pl];
-    s16* phase = &win_mark_phase[pl];
-    s16 n = win_mark_num[pl];
+    s16 n;
     if (pl == 0) {
-        for (; n > 0; n -= 2) {
-            *(u16*)(cell + 2) = win_mark_blink_tbl[*type][*phase] | (*(u16*)(cell + 2) & 1);
-            *(u16*)(cell + 6) = win_mark_blink_tbl[*type++][*phase] | (*(u16*)(cell - 2) & 1);
-            cell -= 8;
+        for (n = win_mark_num[pl]; n > 0; n -= 2) {
+            (*cell)[1] = win_mark_blink_tbl[*type][win_mark_phase[pl]] | ((*cell)[1] & 1);
+            (*cell)[3] = win_mark_blink_tbl[*type++][win_mark_phase[pl]] | (cell[-1][3] & 1);
+            cell--;
         }
     } else {
-        for (; n > 0; n -= 2) {
-            *(u16*)(cell + 2) = win_mark_blink_tbl[*type][*phase] | (*(u16*)(cell + 2) & 1);
-            *(u16*)(cell + 6) = win_mark_blink_tbl[*type++][*phase] | (*(u16*)(cell + 6) & 1);
-            cell += 8;
+        for (n = win_mark_num[pl]; n > 0; n -= 2) {
+            (*cell)[1] = win_mark_blink_tbl[*type][win_mark_phase[pl]] | ((*cell)[1] & 1);
+            (*cell)[3] = win_mark_blink_tbl[*type++][win_mark_phase[pl]] | ((*cell)[3] & 1);
+            cell++;
         }
     }
 }
@@ -124,48 +123,27 @@ void win_mark_write(s16 pl) {
 /* provisional name */
 u32 win_mark_all_write(u32 pl)
 {
-    s16 side;
-    s16 count;
+    u16 (*cell)[4];
+    s16* type;
     s16 n;
-    u32 rv;
-    u16 *cell;
-    s16 *type;
 
-    side = (s16)pl;
-    win_mark_phase[side] = 0;
-    rv = ((u32 (*)())win_mark_pos_set)(pl);
-    cell = (u16 *)((SS_RAM + 0x400) + win_mark_pos[side] * 4);
-    if (!side) {
-        count = Battle_Round[Play_Type] + 1;
-        n = count * 2;
-        rv = 0;
-        type = win_type[side];
-        if (count != 0) {
-            do {
-                n -= 2;
-                cell[1] = win_mark_blink_tbl[*type][win_mark_phase[side]] | (cell[1] & 1);
-                rv = (((s16 *)cell)[-1] & 1) | win_mark_blink_tbl[*type][win_mark_phase[side]];
-                cell[3] = rv;
-                cell -= 4;
-                type++;
-            } while (n > 0);
+    win_mark_phase[(s16)pl] = 0;
+    win_mark_pos_set(pl);
+    cell = (u16 (*)[4])((SS_RAM + 0x400) + win_mark_pos[(s16)pl] * 4);
+    type = win_type[(s16)pl];
+    if ((s16)pl == 0) {
+        for (n = (Battle_Round[Play_Type] + 1) * 2; n > 0; n -= 2) {
+            (*cell)[1] = win_mark_blink_tbl[*type][win_mark_phase[(s16)pl]] | ((*cell)[1] & 1);
+            (*cell)[3] = win_mark_blink_tbl[*type++][win_mark_phase[(s16)pl]] | ((*cell)[-1] & 1);
+            cell--;
         }
     } else {
-        count = Battle_Round[Play_Type] + 1;
-        n = count * 2;
-        type = win_type[side];
-        if (count != 0) {
-            do {
-                n -= 2;
-                cell[1] = win_mark_blink_tbl[*type][win_mark_phase[side]] | (cell[1] & 1);
-                rv = ((s16 *)cell)[3] & 1;
-                cell[3] = win_mark_blink_tbl[*type][win_mark_phase[side]] | rv;
-                cell += 4;
-                type++;
-            } while (n > 0);
+        for (n = (Battle_Round[Play_Type] + 1) * 2; n > 0; n -= 2) {
+            (*cell)[1] = win_mark_blink_tbl[*type][win_mark_phase[(s16)pl]] | ((*cell)[1] & 1);
+            (*cell)[3] = win_mark_blink_tbl[*type++][win_mark_phase[(s16)pl]] | ((*cell)[3] & 1);
+            cell++;
         }
     }
-    return rv;
 }
 
 

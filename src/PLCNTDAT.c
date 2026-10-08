@@ -312,28 +312,26 @@ void clear_kizetsu_point(PLW* wk) {
 
 void set_super_arts_status(s16 pl)
 {
-    SA_WORK *sa;
     u8 *data;
 
     data = super_arts_data[My_char[pl]][Super_Arts[pl]];
-    sa = &super_arts[pl];
-    sa->kind_of_arts = Super_Arts[pl];
-    sa->nmsa_g_ix = data[0];
-    sa->exsa_g_ix = data[1];
-    sa->exs2_g_ix = data[2];
-    sa->nmsa_a_ix = data[3];
-    sa->exsa_a_ix = data[4];
-    sa->exs2_a_ix = data[5];
-    sa->gauge_type = data[7];
-    sa->gauge_len = *(s16 *)&data[8];
-    sa->store_max = *(s16 *)&data[10];
-    sa->dtm = *(s32 *)&data[12];
-    sa->dtm_mul = 1;
-    sa->store = 0;
-    sa->gauge.s.h = 0;
-    sa->gauge.s.l = -1;
-    sa->sa_rno = 0;
-    sa->ok = 0;
+    super_arts[pl].kind_of_arts = Super_Arts[pl];
+    super_arts[pl].nmsa_g_ix = data[0];
+    super_arts[pl].exsa_g_ix = data[1];
+    super_arts[pl].exs2_g_ix = data[2];
+    super_arts[pl].nmsa_a_ix = data[3];
+    super_arts[pl].exsa_a_ix = data[4];
+    super_arts[pl].exs2_a_ix = data[5];
+    super_arts[pl].gauge_type = data[7];
+    super_arts[pl].gauge_len = *(s16 *)&data[8];
+    super_arts[pl].store_max = *(s16 *)&data[10];
+    super_arts[pl].dtm = *(s32 *)&data[12];
+    super_arts[pl].dtm_mul = 1;
+    super_arts[pl].store = 0;
+    super_arts[pl].gauge.s.h = 0;
+    super_arts[pl].gauge.s.l = -1;
+    super_arts[pl].sa_rno = 0;
+    super_arts[pl].ok = 0;
 }
 
 

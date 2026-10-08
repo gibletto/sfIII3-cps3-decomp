@@ -179,7 +179,7 @@ u8 ix;
 /* provisional name */
 void load_bg_color_fade(u16 col_no, u8 r, u8 g, u8 b)
 {
-    const XFER *xfer = &bg_color_tbl[col_no & 0xFF];
+    const XFER *xfer = &bg_color_tbl[(u8)col_no];
 
     polygon2d_submit_quad(xfer->src, xfer->dst, xfer->size, r + 0x40, g + 0x40, b + 0x40);
 }
@@ -187,7 +187,7 @@ void load_bg_color_fade(u16 col_no, u8 r, u8 g, u8 b)
 /* provisional name */
 void load_any_color_fade(u16 col_no, u8 r, u8 g, u8 b)
 {
-    const XFER *xfer = &any_color_tbl[col_no & 0xFF];
+    const XFER *xfer = &any_color_tbl[(u8)col_no];
 
     polygon2d_submit_quad(xfer->src, xfer->dst, xfer->size, r + 0x40, g + 0x40, b + 0x40);
 }
@@ -195,7 +195,7 @@ void load_any_color_fade(u16 col_no, u8 r, u8 g, u8 b)
 /* provisional name */
 void load_any_color_attr(u16 col_no, u8 r, u8 g, u8 b)
 {
-    const XFER *xfer = &any_color_tbl[col_no & 0xFF];
+    const XFER *xfer = &any_color_tbl[(u8)col_no];
 
     polygon2d_submit_quad(xfer->src, xfer->dst, xfer->size, r, g, b);
 }
@@ -207,7 +207,7 @@ u8 r;
 u8 g;
 u8 b;
 {
-    const XFER *xfer = &any_color_tbl[col_no & 0xFF];
+    const XFER *xfer = &any_color_tbl[(u8)col_no];
 
     polygon2d_queue_quad(xfer->src, xfer->dst, xfer->size, r, g, b);
 }

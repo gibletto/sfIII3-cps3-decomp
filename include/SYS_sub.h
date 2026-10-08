@@ -43,7 +43,7 @@ s32 cut_button_side(void);
 u32 ranking_insert_all_four(s16 pl);
 void rank_in_push_other(s16 dir_step, s16 PL_id);
 void Fade_Cont(void);
-void Disp_Digit16x24(u32 value, s32 x_arg, s16 y, s32 attr_arg);
+void Disp_Digit16x24(u32 value, s16 x, s16 y, s16 attr);
 
 s32 cpu_algorithm(s16 id);
 

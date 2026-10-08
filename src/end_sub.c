@@ -104,24 +104,25 @@ void card_win_check(s16 vs_mode)
             card_pl_w[Winner_id].flag = 1;
         }
         return;
-    }
-    if (vs_mode) {
-        card_pl_w[Winner_id].cleared++;
-        card_out_req++;
-        card_pl_w[Winner_id].flag = 1;
     } else {
-        need = Win_Point_Com - Continue_Coin[Winner_id];
-        if (need < 0) {
-            need = 1;
-        }
-        card_pl_w[Winner_id].wins++;
-        if (!card_pl_w[Winner_id].cleared && card_pl_w[Winner_id].wins >= need) {
+        if (vs_mode) {
             card_pl_w[Winner_id].cleared++;
             card_out_req++;
             card_pl_w[Winner_id].flag = 1;
+        } else {
+            need = Win_Point_Com - Continue_Coin[Winner_id];
+            if (need < 0) {
+                need = 1;
+            }
+            card_pl_w[Winner_id].wins++;
+            if (!card_pl_w[Winner_id].cleared && card_pl_w[Winner_id].wins >= need) {
+                card_pl_w[Winner_id].cleared++;
+                card_out_req++;
+                card_pl_w[Winner_id].flag = 1;
+            }
         }
+        card_pl_work_clear(Loser_id);
     }
-    card_pl_work_clear(Loser_id);
 }
 
 
@@ -156,9 +157,10 @@ void card_msg_disp(void) {
             card_pl_w[Winner_id].card_state = 0;
             tilemap_print_string_attr(21, Text_Page_Y + 6, 18, no_card_clr_mes);
             return;
+        } else {
+            card_pl_w[Winner_id].blink++;
+            return;
         }
-        card_pl_w[Winner_id].blink++;
-        return;
     }
     switch (rec->msg_state) {
     case 0:

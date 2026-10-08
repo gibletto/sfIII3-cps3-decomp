@@ -93,7 +93,13 @@ void effect_F9_move(WORK_Other* owk) {
             }
             break;
         case 2:
+            conn_data = effF9_mes_en[ewk->master_player][mes_already].conn;
+            chr_data = effF9_mes_en[ewk->master_player][mes_already].chr;
+            break;
         case 4:
+            conn_data = effF9_mes_en[ewk->master_player][mes_already].conn;
+            chr_data = effF9_mes_en[ewk->master_player][mes_already].chr;
+            break;
         default:
             conn_data = effF9_mes_en[ewk->master_player][mes_already].conn;
             chr_data = effF9_mes_en[ewk->master_player][mes_already].chr;

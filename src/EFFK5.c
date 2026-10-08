@@ -323,30 +323,22 @@ void K5_init_data(WORK* mwk, MVJ* mvj, u16* ixtbl) {
 
 void K5_init_data_copy(MVJ* mvj, K5Data* dad, s16 num) {
     s16 i;
-    MVJ* mv;
-    K5Data* dd;
     for (i = 0; i < num; i++) {
         mvj[i].r[0].pos.h = dad[i].mvxy_lv[0];
-        mv = &mvj[i];
-        dd = &dad[i];
-        mv->r[1].pos.h = dd->mvxy_lv[1];
-        mv->r[2].pos.h = dd->mvxy_lv[2];
-        mv->r[3].pos.h = dd->mvxy_lv[3];
+        mvj[i].r[1].pos.h = dad[i].mvxy_lv[1];
+        mvj[i].r[2].pos.h = dad[i].mvxy_lv[2];
+        mvj[i].r[3].pos.h = dad[i].mvxy_lv[3];
     }
 }
 
 
-/* provisional name */
 void K5_init_data_copy2(K5Data* dad, MVJ* mvj, s16 num) {
     s16 i;
     for (i = 0; i < num; i++) {
-        K5Data* d = &dad[i];
-        MVJ* m = mvj;
-        dad[i].mvxy_lv[0] = mvj->r[0].pos.h;
-        d->mvxy_lv[1] = m->r[1].pos.h;
-        mvj++;
-        d->mvxy_lv[2] = m->r[2].pos.h;
-        d->mvxy_lv[3] = m->r[3].pos.h;
+        dad[i].mvxy_lv[0] = mvj[i].r[0].pos.h;
+        dad[i].mvxy_lv[1] = mvj[i].r[1].pos.h;
+        dad[i].mvxy_lv[2] = mvj[i].r[2].pos.h;
+        dad[i].mvxy_lv[3] = mvj[i].r[3].pos.h;
     }
 }
 

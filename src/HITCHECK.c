@@ -518,10 +518,10 @@ void plef_at_vs_player_damage_union(PLW* as, PLW* ds, s8 gddir) {
     jump_one:
         as->wu.hf.hit.player = 2;
         dm_reaction_init_set(as, ds);
-        if (as->wu.att.dipsw & 0x10) {
-            ds->wu.routine_no[2] = get_sky_sp_damage(ds->wu.routine_no[2]);
-        } else {
+        if (!(as->wu.att.dipsw & 0x10)) {
             ds->wu.routine_no[2] = get_sky_nm_damage(ds->wu.routine_no[2]);
+        } else {
+            ds->wu.routine_no[2] = get_sky_sp_damage(ds->wu.routine_no[2]);
         }
     } else {
     switch_defense_ground:

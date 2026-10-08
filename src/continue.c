@@ -209,7 +209,7 @@ void Disp_Personal_Count(s16 id, char count) {
 
 
 
-s16 Check_Count_Cut(s16 PL_id, s16 Limit) {
+s32 Check_Count_Cut(s16 PL_id, s16 Limit) {
     s16 xx;
     Continue_Cut[PL_id] = 0;
     if (Continue_Count[PL_id] >= (Limit)) {

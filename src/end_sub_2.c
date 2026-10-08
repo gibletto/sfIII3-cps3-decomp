@@ -162,15 +162,13 @@ s32 staff_roll_main(void) {
     case 0:
         staff_r_no++;
         staffroll_end = 0;
-        bg_w.bgw[5].xy[0].cal = 0x1000000;
-        bg_w.bgw[5].wxy[0].cal = 0x1000000;
+        bg_w.bgw[5].wxy[0].cal = bg_w.bgw[5].xy[0].cal = 0x1000000;
         bg_w.bgw[5].xy[1].cal = 0;
         bg_w.bgw[5].position_x = 0x100 - bg_w.pos_offset;
         bg_w.bgw[5].position_y = 0;
         Family_Set_R(6, -bg_w.bgw[5].position_x & 0x3FF, (0x300 - (bg_w.bgw[5].position_y & 0x3FF)) & 0x3FF);
         roll_rate2 = 1;
-        roll_stop = 0;
-        staff_name_ptr = 0;
+        roll_stop = staff_name_ptr = 0;
         end_w.timer = 0;
         name_timer = 0;
         staff_roll_timer = 0x1E96;
@@ -184,7 +182,7 @@ s32 staff_roll_main(void) {
         }
         if (end_w.timer >= 0) {
             end_w.timer -= roll_rate_t2;
-            staff_roll_timer -= roll_rate_t2;
+            staff_roll_timer = staff_roll_timer - roll_rate_t2;
         } else {
             if (staff_roll_tbl[staff_name_ptr].str == 0) {
                 staff_r_no = 3;
@@ -219,7 +217,7 @@ s32 staff_roll_main(void) {
             }
         }
         if (name_timer >= 0) {
-            name_timer -= roll_rate_t2;
+            name_timer = name_timer - roll_rate_t2;
             break;
         }
         line = &staff_roll_tbl[staff_name_ptr];

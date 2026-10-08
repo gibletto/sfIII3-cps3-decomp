@@ -263,7 +263,8 @@ void check_body_touch(void) {
     s16 meri;
     if (p1w->wu.h_hos->hos_box[0] != 0 && p2w->wu.h_hos->hos_box[0] != 0) {
         meri = hit_check_subroutine(&p1w->wu, &p2w->wu, &p1w->wu.h_hos->hos_box[0], &p2w->wu.h_hos->hos_box[0]);
-        if (meri != 0) {
+        if (meri == 0) {
+        } else {
             meri = meri_case_switch(meri);
             if (p1w->wu.old_pos[1] <= 0 && p2w->wu.old_pos[1] <= 0) {
                 if (ichikannkei) {
@@ -327,12 +328,12 @@ void check_body_touch2(void) {
     s16 ix;
     s16 dad2[4];
     s16 dad3[4];
-    if (plw->wu.operator) {
-        hmw = &plw[0];
-        cmw = &plw[1];
-    } else {
+    if (!plw->wu.operator) {
         hmw = &plw[1];
         cmw = &plw[0];
+    } else {
+        hmw = &plw[0];
+        cmw = &plw[1];
     }
     if (!saishin_bs2_on_car(hmw)) {
         efw = (WORK*)cmw->wu.my_effadrs;

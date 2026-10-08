@@ -289,7 +289,7 @@ void end_2001_0003(void)
 {
     s16 *line;
     u16 i;
-    s32 ix;
+    u16 ix;
     XY work;
 
     switch (bgw_ptr->r_no_1) {

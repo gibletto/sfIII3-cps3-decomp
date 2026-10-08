@@ -167,13 +167,14 @@ void Demo01(void) {
             D_No1++;
             G_No2 = 0;
         }
-        break;
+        return;
     case 2:
         Game02();
-        if (--Cover_Timer == 0) {
-            D_No1++;
-            Switch_Screen_Init(3, 3);
+        if (--Cover_Timer != 0) {
+            break;
         }
+        D_No1++;
+        Switch_Screen_Init(3, 3);
         break;
     case 3:
         Game02();

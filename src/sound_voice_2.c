@@ -79,20 +79,21 @@ u32 sound_voice_volume_compute(u16 level, u32 pan_scale, s8 pan, SOUND_VOICE* v)
             return t;
         }
         return out;
-    }
-    if (out <= 0x1000) {
-        comp = out << 2;
-    } else if (out <= 0x2000) {
-        comp = (out << 1) + 0x2000;
-    } else if (out <= 0x4000) {
-        comp = (out >> 1) + 0x5000;
     } else {
-        comp = (out >> 2) + 0x6000;
+        if (out <= 0x1000) {
+            comp = out << 2;
+        } else if (out <= 0x2000) {
+            comp = (out << 1) + 0x2000;
+        } else if (out <= 0x4000) {
+            comp = (out >> 1) + 0x5000;
+        } else {
+            comp = (out >> 2) + 0x6000;
+        }
+        if (comp >= 0x8000) {
+            comp = 0x7FFF;
+        }
+        return comp << 1;
     }
-    if (comp >= 0x8000) {
-        comp = 0x7FFF;
-    }
-    return comp << 1;
 }
 
 

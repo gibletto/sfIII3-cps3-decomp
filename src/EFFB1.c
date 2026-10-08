@@ -29,7 +29,8 @@ void effect_B1_move(WORK_Other_CONN* ewk) {
             ewk->wu.routine_no[1]++;
             ewk->wu.disp_flag = 1;
             ewk->wu.old_cgnum = 0;
-            ewk->wu.position_z = ewk->wu.my_priority = 67;
+            ewk->wu.position_z = 67;
+            ewk->wu.my_priority = 67;
             ewk->wu.next_z = 9;
             ewk->wu.direction = ewk->num_of_conn;
             ewk->num_of_conn = 0;
@@ -63,7 +64,7 @@ void effect_B1_move(WORK_Other_CONN* ewk) {
         }
         switch (ewk->wu.routine_no[1]) {
         case 0:
-            if (Bonus_Game_result != 0) {
+            if (Bonus_Game_result) {
                 for (i = 0; i < Bonus_Game_result; i++) {
                     if (!ewk->conn[i + 20].nx) {
                         ewk->conn[i + 20].nx = 1;
