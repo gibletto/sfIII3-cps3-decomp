@@ -683,22 +683,20 @@ s32 char_cell_unflip_y(WORK* wk) {
 /* provisional name */
 s32 char_cell_flip_xy(WORK* wk) {
     s16 handle;
-    GFX_CELL* dst;
-    GFX_CELL* src;
-    GFX_CELL* cell;
+    CHAR_SPRITE* dst;
+    CHAR_SPRITE* src;
+    CHAR_SPRITE* cell;
     s16 i;
-    handle = simmram_block_alloc_40((wk->spr.gfx_cells >> 4) + 1, 1);
-    if (handle == 0) {
+    if ((handle = simmram_block_alloc_40((wk->spr.gfx_cells >> 4) + 1, 1)) == 0) {
         return 0;
     }
-    dst = (GFX_CELL*)simmram_slot_addr(handle);
-    src = (GFX_CELL*)(SPRITE_RAM + (u16)wk->spr.gfx_ofs * 16);
+    dst = (CHAR_SPRITE*)simmram_slot_addr(handle);
+    src = (CHAR_SPRITE*)(SPRITE_RAM + (u16)wk->spr.gfx_ofs * 16);
     for (i = 0; i < wk->spr.gfx_cells; i++) {
         cell = &dst[i];
         *cell = src[i];
-        cell->w[2] = -cell->w[2] & 0x3FF;
-        cell->w[3] = -cell->w[3] & 0x3FF;
-        continue;
+        cell->sx = -cell->sx & 0x3FF;
+        cell->sy = -cell->sy & 0x3FF;
     }
     return char_cell_push_block(wk, handle);
 }
@@ -708,22 +706,20 @@ s32 char_cell_flip_xy(WORK* wk) {
 /* provisional name */
 s32 char_cell_unflip_xy(WORK* wk) {
     s16 handle;
-    GFX_CELL* dst;
-    GFX_CELL* src;
-    GFX_CELL* cell;
+    CHAR_SPRITE* dst;
+    CHAR_SPRITE* src;
+    CHAR_SPRITE* cell;
     s16 i;
-    handle = simmram_block_alloc_40((wk->spr.gfx_cells >> 4) + 1, 1);
-    if (handle == 0) {
+    if ((handle = simmram_block_alloc_40((wk->spr.gfx_cells >> 4) + 1, 1)) == 0) {
         return 0;
     }
-    dst = (GFX_CELL*)simmram_slot_addr(handle);
-    src = (GFX_CELL*)(SPRITE_RAM + (u16)wk->spr.gfx_ofs * 16);
+    dst = (CHAR_SPRITE*)simmram_slot_addr(handle);
+    src = (CHAR_SPRITE*)(SPRITE_RAM + (u16)wk->spr.gfx_ofs * 16);
     for (i = 0; i < wk->spr.gfx_cells; i++) {
         cell = &dst[i];
         *cell = src[i];
-        cell->w[2] = -cell->w[2] & 0x3FF;
-        cell->w[3] = -cell->w[3] & 0x3FF;
-        continue;
+        cell->sx = -cell->sx & 0x3FF;
+        cell->sy = -cell->sy & 0x3FF;
     }
     return char_cell_push_block(wk, handle);
 }
@@ -853,7 +849,7 @@ s32 set_conn_sprite(WORK_Other_CONN* wk) {
             p = &parts[j];
             dst = base + cell * 8;
             dst[0] = p->code + base_code;
-            dst[1] = p->col + wk->wu.spr.disp_colcd + wk->conn[i].col;
+            dst[1] = wk->wu.spr.disp_colcd + p->col + wk->conn[i].col;
             dst[2] = (p->x + wk->conn[i].nx + cg_data_list[chr].x) & 0x3FF;
             dst[3] = (wk->conn[i].ny - (u16)p->y - cg_data_list[chr].y) & 0x3FF;
             size = *(u8*)&p->y >> 4;
@@ -1018,7 +1014,7 @@ s32 sort_push_request(WORK* wk) {
 
 
 s32 sort_push_request2(WORK_Other* wk) {
-    u16* spr;
+    SPRITE_ENTRY* spr;
     s16 i;
     CHAR_SPRITE* cell;
 
@@ -1031,16 +1027,16 @@ s32 sort_push_request2(WORK_Other* wk) {
     if ((spr = sprite_entry_alloc(0)) == 0) {
         return 0;
     }
-    push_char_sprite(&wk->wu, spr, base_y_pos);
+    push_char_sprite(&wk->wu, (u16*)spr, base_y_pos);
     if (wk->wu.spr.done_rl != wk->wu.rl_flag) {
         wk->wu.spr.done_rl = wk->wu.rl_flag;
-        spr[4] ^= 0x1000;
+        spr->w8 ^= 0x1000;
         cell = (CHAR_SPRITE*)SPRITE_RAM + wk->wu.spr.gfx_ofs;
         for (i = 0; i < wk->wu.spr.gfx_cells; i++) {
             cell[i].sx = -cell[i].sx & 0x3FF;
         }
     } else if (wk->wu.spr.done_rl) {
-        spr[4] ^= 0x1000;
+        spr->w8 ^= 0x1000;
     }
     return 2;
 }
@@ -1048,7 +1044,7 @@ s32 sort_push_request2(WORK_Other* wk) {
 
 
 s32 sort_push_request3(WORK* wk) {
-    u16* spr;
+    SPRITE_ENTRY* spr;
     s16 i;
     CHAR_SPRITE* cell;
 
@@ -1065,16 +1061,16 @@ s32 sort_push_request3(WORK* wk) {
     if ((spr = sprite_entry_alloc(0)) == 0) {
         return 0;
     }
-    push_char_sprite(wk, spr, base_y_pos);
+    push_char_sprite(wk, (u16*)spr, base_y_pos);
     if (wk->spr.done_rl != wk->rl_flag) {
         wk->spr.done_rl = wk->rl_flag;
-        spr[4] ^= 0x1000;
+        spr->w8 ^= 0x1000;
         cell = (CHAR_SPRITE*)SPRITE_RAM + wk->spr.gfx_ofs;
         for (i = 0; i < wk->spr.gfx_cells; i++) {
             cell[i].sx = -cell[i].sx & 0x3FF;
         }
     } else if (wk->spr.done_rl) {
-        spr[4] |= 0x1000;
+        spr->w8 |= 0x1000;
     }
     if (wk->kage_flag) {
         shadow_drawing(wk, base_y_pos);
@@ -1161,7 +1157,7 @@ s32 disp_seraph_cells(WORK* wk) {
     spr[2] = wk->position_x;
     spr[3] = wk->position_y + base_y_pos;
     spr[8] = wk->position_z;
-    spr[4] = wk->my_col_mode | wk->my_col_code | flip_attr_tbl[wk->rl_flag];
+    spr[4] = wk->my_col_code | wk->my_col_mode | flip_attr_tbl[wk->rl_flag];
     spr[5] = 0;
     sprite_entry_push_prio(spr, wk->position_z);
     return 2;
@@ -1186,8 +1182,7 @@ s32 sort_push_request8(WORK* wk) {
     if (cg_slot_tbl[no].addr == 0) {
         return;
     }
-    spr = sprite_entry_alloc(0);
-    if (spr == 0) {
+    if ((spr = sprite_entry_alloc(0)) == 0) {
         return 0;
     }
     ix = wk->cg_number - 0x9EC8;
@@ -1226,7 +1221,7 @@ s32 disp_car_parts_cells(WORK* wk) {
     spr[2] = wk->position_x;
     spr[3] = wk->position_y + base_y_pos;
     spr[8] = wk->position_z;
-    spr[4] = wk->my_col_mode | wk->my_col_code | flip_attr_tbl[wk->rl_flag];
+    spr[4] = wk->my_col_code | wk->my_col_mode | flip_attr_tbl[wk->rl_flag];
     spr[5] = 0;
     sprite_entry_push_prio(spr, wk->position_z);
     return 2;
@@ -1255,7 +1250,7 @@ void shadow_drawing(WORK* wk, s16 y_ofs) {
     spr[0] = kage_gfx_cells[size];
     spr[0] |= wk->my_family << 12;
     spr[1] = kage_gfx_ofs[size];
-    spr[2] = wk->kage_hx * (wk->rl_flag ? -1 : 1) + wk->position_x;
+    spr[2] = wk->position_x + wk->kage_hx * (1 - (wk->rl_flag != 0) * 2);
     spr[3] = wk->kage_hy + y_ofs;
     spr[8] = wk->kage_prio;
     spr[4] = 0x6400;
@@ -1281,13 +1276,14 @@ s16 get_kage_width(s16 v) {
 /* provisional name */
 void char_sprite_zoom_cells(WORK* wk) {
     CharSpriteK* spr;
-    CharSpriteK* volatile s;
+    CharSpriteK* s;
+    CHAR_CELL* c;
     XY16K pos;
     s16 m[4];
     s32 base_x;
     s32 base_y;
     s16 i;
-    s16* volatile mp;
+    s16* mp;
     spr = (CharSpriteK*)(SPRITE_RAM + (u16)wk->spr.gfx_ofs * 16);
     *(u32*)&wk->spr.old_mr = *(u32*)&wk->my_mr;
     switch (wk->my_mr.size.x) {
@@ -1333,49 +1329,45 @@ void char_sprite_zoom_cells(WORK* wk) {
     case 0:
         mp = m;
         for (i = 0; i < wk->spr.gfx_cells; i++) {
-            s = (CharSpriteK*)&wk->spr.cells[i];
-            pos.l = zoom_cell_position(mp, (u16)((CHAR_CELL*)s)->x, (u16)((CHAR_CELL*)s)->y);
+            c = &wk->spr.cells[i];
+            pos.l = zoom_cell_position(mp, (u16)c->x, (u16)c->y);
             s = &spr[i];
             s->x = (pos.s.x + base_x) & 0x3FF;
-            s->y = (base_y - pos.s.y) & 0x3FF;
+            s->y = (-pos.s.y + base_y) & 0x3FF;
             s->zoom = get_cell_zoom(wk->my_mr.size.x, wk->my_mr.size.y, (u16)s->attr);
-            continue;
         }
         break;
     case 1:
         mp = m;
         for (i = 0; i < wk->spr.gfx_cells; i++) {
-            s = (CharSpriteK*)&wk->spr.cells[i];
-            pos.l = zoom_cell_position(mp, (u16)((CHAR_CELL*)s)->x, (u16)((CHAR_CELL*)s)->y);
+            c = &wk->spr.cells[i];
+            pos.l = zoom_cell_position(mp, (u16)c->x, (u16)c->y);
             s = &spr[i];
             s->x = (-pos.s.x - base_x) & 0x3FF;
-            s->y = (base_y - pos.s.y) & 0x3FF;
+            s->y = (-pos.s.y + base_y) & 0x3FF;
             s->zoom = get_cell_zoom(wk->my_mr.size.x, wk->my_mr.size.y, (u16)s->attr);
-            continue;
         }
         break;
     case 2:
         mp = m;
         for (i = 0; i < wk->spr.gfx_cells; i++) {
-            s = (CharSpriteK*)&wk->spr.cells[i];
-            pos.l = zoom_cell_position(mp, (u16)((CHAR_CELL*)s)->x, (u16)((CHAR_CELL*)s)->y);
+            c = &wk->spr.cells[i];
+            pos.l = zoom_cell_position(mp, (u16)c->x, (u16)c->y);
             s = &spr[i];
             s->x = (pos.s.x + base_x) & 0x3FF;
             s->y = (pos.s.y - base_y) & 0x3FF;
             s->zoom = get_cell_zoom(wk->my_mr.size.x, wk->my_mr.size.y, (u16)s->attr);
-            continue;
         }
         break;
     default:
         mp = m;
         for (i = 0; i < wk->spr.gfx_cells; i++) {
-            s = (CharSpriteK*)&wk->spr.cells[i];
-            pos.l = zoom_cell_position(mp, (u16)((CHAR_CELL*)s)->x, (u16)((CHAR_CELL*)s)->y);
+            c = &wk->spr.cells[i];
+            pos.l = zoom_cell_position(mp, (u16)c->x, (u16)c->y);
             s = &spr[i];
             s->x = (-pos.s.x - base_x) & 0x3FF;
             s->y = (pos.s.y - base_y) & 0x3FF;
             s->zoom = get_cell_zoom(wk->my_mr.size.x, wk->my_mr.size.y, (u16)s->attr);
-            continue;
         }
         break;
     }

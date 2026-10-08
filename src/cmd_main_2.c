@@ -587,10 +587,10 @@ void check_9(void) {
         sw_work = waza_ptr->w_lvr & 0xF;
         if (waza_ptr->w_lvr == 0) {
             if (chk_pl->new_lvbt == 0) {
-                if (*waza_ptr->w_ptr == 28) {
-                    command_ok();
-                } else {
+                if (*waza_ptr->w_ptr != 28) {
                     check_next();
+                } else {
+                    command_ok();
                 }
             }
         } else if ((chk_pl->old_lvbt & 0xF) != (chk_pl->new_lvbt & 0xF)) {
@@ -632,10 +632,10 @@ void check_9(void) {
 
 
 s32 paring_miss_init(void) {
-    s32 zero = 0;
-    waza_ptr->free3 = zero;
-    waza_ptr->uni0.tame.flag = waza_ptr->w_type = zero;
-    wcp[cmd_id].waza_flag[waza_type[cmd_id]] = zero;
+    waza_ptr->free3 = 0;
+    waza_ptr->w_type = 0;
+    waza_ptr->uni0.tame.flag = 0;
+    wcp[cmd_id].waza_flag[waza_type[cmd_id]] = 0;
 }
 
 
@@ -791,25 +791,25 @@ void check_10(void) {
 void check_11(void) {
     if (dead_lvr_check()) {
         paring_miss_init();
-        return;
-    }
-    switch (waza_ptr->uni0.tame.flag) {
-    case 0:
-        if (chk_pl->sw_lever & 8) {
-            waza_ptr->uni0.tame.flag = 1;
-            break;
-        }
-        waza_ptr->uni0.tame.flag = 0;
-        break;
-    case 1:
-        if (chk_pl->sw_lever == 2) {
-            check_next();
-            break;
-        }
-        if (!(chk_pl->sw_lever & 8)) {
+    } else {
+        switch (waza_ptr->uni0.tame.flag) {
+        case 0:
+            if (chk_pl->sw_lever & 8) {
+                waza_ptr->uni0.tame.flag = 1;
+                break;
+            }
             waza_ptr->uni0.tame.flag = 0;
+            break;
+        case 1:
+            if (chk_pl->sw_lever == 2) {
+                check_next();
+                break;
+            }
+            if (!(chk_pl->sw_lever & 8)) {
+                waza_ptr->uni0.tame.flag = 0;
+            }
+            break;
         }
-        break;
     }
 }
 
@@ -1294,10 +1294,10 @@ void check_23(void) {
                 waza_ptr->w_type = 0;
                 break;
             }
-        } else {
-            wcp[cmd_id].waza_flag[(waza_type[cmd_id])] = 0;
-            waza_ptr->shot_ok++;
+            break;
         }
+        wcp[cmd_id].waza_flag[(waza_type[cmd_id])] = 0;
+        waza_ptr->shot_ok++;
         break;
     case 3:
         waza_ptr->free3--;

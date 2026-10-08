@@ -8,6 +8,7 @@ s32 arts_finish_check(s8 PL);
 void combo_cont_init(void);
 void combo_cont_main(void);
 void combo_control(s32 pl_arg);
+void combo_hit_count(s8 PL);
 void combo_hensuu_clear(s8 PL);
 void combo_rp_clear_check();
 void combo_window_push(s8 PL, s8 KIND);

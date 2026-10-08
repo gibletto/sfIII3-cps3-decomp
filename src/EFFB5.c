@@ -98,12 +98,10 @@ void effect_B5_move(WORK_Other* ewk) {
     disp_pos_trans_entry(ewk);
 }
 
-s16 * current_name_move(WORK_Other* ewk, NAME_WK* np)
+void current_name_move(WORK_Other* ewk, NAME_WK* np)
 {
-    s16 pat;
-
     if (np->index != ewk->wu.old_rno[2]) {
-        return (s16*)(s32)np->index;
+        return;
     }
     switch (ewk->wu.hit_stop) {
     case 0:
@@ -112,28 +110,26 @@ s16 * current_name_move(WORK_Other* ewk, NAME_WK* np)
         ewk->wu.old_rno[0] = 0;
         set_char_move_init2(ewk, 0, 6, np->code[ewk->wu.old_rno[2]] + 1, 0);
         ewk->wu.old_rno[3] = np->code[np->index];
-        return (s16*)0x3A;
+        break;
     case 1:
         if (np->r_no_0 > 5) {
             ewk->wu.routine_no[0]++;
-            return (s16*)(s32)np->r_no_0;
+            break;
         }
         ewk->wu.old_rno[0]++;
         if (ewk->wu.old_rno[0] <= 16) {
-            return &ewk->wu.old_rno[0];
+            break;
         }
         ewk->wu.old_rno[0] = 0;
         ewk->wu.old_rno[4]++;
         if (ewk->wu.old_rno[4] > 2) {
             ewk->wu.old_rno[4] = 0;
         }
-        if (ewk->wu.old_rno[4] == 2) {
-            pat = 48;
+        if (ewk->wu.old_rno[4] != 2) {
+            set_char_move_init2(ewk, 0, 6, np->code[np->index] + 1, 0);
         } else {
-            pat = np->code[np->index] + 1;
+            set_char_move_init2(ewk, 0, 6, 48, 0);
         }
-        return (s16*)((s32 (*)())set_char_move_init2)(ewk, 0, 6, pat, 0);
-    default:
-        return (s16*)(s32)ewk->wu.hit_stop;
+        break;
     }
 }

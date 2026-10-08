@@ -109,8 +109,7 @@ u16 code;
         for (j = 0; j < w; j++) {
             p[0] = code;
             p[1] = attr | ((code & 0x100) >> 8);
-            p += 2;
-            if (p > (u16*)(SS_RAM + 0x3FFF)) {
+            if ((p += 2) > (u16*)(SS_RAM + 0x3FFF)) {
                 p = (u16*)SS_RAM;
             }
             code++;
@@ -135,8 +134,7 @@ u16* tilemap_put_block_next(u16* p, u16 attr, u16 code) {
         for (j = 0; j < w; j++) {
             p[0] = code;
             p[1] = attr | ((code & 0x100) >> 8);
-            p += 2;
-            if (p > (u16*)(SS_RAM + 0x3FFF)) {
+            if ((p += 2) > (u16*)(SS_RAM + 0x3FFF)) {
                 p = (u16*)SS_RAM;
             }
             code++;
@@ -182,27 +180,23 @@ void tilemap_print_string_attr(u16 x, u16 y, u16 attr, const s8* str) {
 
 
 /* provisional name */
-s32 tilemap_rect_fill(u16 x, u16 y, u16 w, u16 h, u16 attr, u16 code) {
+void tilemap_rect_fill(u16 x, u16 y, u16 w, u16 h, u16 attr, u16 code) {
     u16* p;
-    s16 skip;
+    s32 skip;
+    s32 cw;
     s32 row;
     s32 col;
-    s32 ret = 42;
     s16 bank;
-    u16 v;
-    if (attr == 0xFFFF) {
-        if (code == 0xFFFF) {
-            return ret;
-        }
+    if (attr == 0xFFFF && code == 0xFFFF) {
+        return;
     }
     p = (u16*)((u32)((u16*)SS_RAM) + (x << 2) + (y << 8));
-    skip = 0x80 - w * 2;
+    cw = w;
+    skip = 0x80 - cw * 2;
     if (attr != 0xFFFF && code == 0xFFFF) {
         for (row = 0; row < h; row++) {
-            for (col = 0; col < w; col++) {
-                v = (p[1] & 1) | attr;
-                p[1] = v;
-                ret = (s16)v;
+            for (col = 0; col < cw; col++) {
+                p[1] = (p[1] & 1) | attr;
                 p += 2;
                 if (p > ((u16*)(SS_RAM + 0x3FFF))) {
                     p = ((u16*)SS_RAM);
@@ -212,12 +206,11 @@ s32 tilemap_rect_fill(u16 x, u16 y, u16 w, u16 h, u16 attr, u16 code) {
             if (p > ((u16*)(SS_RAM + 0x3FFF))) {
                 p = ((u16*)SS_RAM);
             }
-            continue;
         }
     } else if (attr == 0xFFFF && code != 0xFFFF) {
-        bank = (code >> 8) & 1;
+        bank = (code & 0x100) >> 8;
         for (row = 0; row < h; row++) {
-            for (col = 0; col < w; col++) {
+            for (col = 0; col < cw; col++) {
                 p[0] = code;
                 p[1] = (p[1] & 0xFFFE) | bank;
                 p += 2;
@@ -231,12 +224,11 @@ s32 tilemap_rect_fill(u16 x, u16 y, u16 w, u16 h, u16 attr, u16 code) {
             }
         }
     } else {
-        attr |= (code >> 8) & 1;
+        attr |= (code & 0x100) >> 8;
         for (row = 0; row < h; row++) {
-            for (col = 0; col < w; col++) {
+            for (col = 0; col < cw; col++) {
                 p[0] = code;
                 p[1] = attr;
-                ret = (s16)attr;
                 p += 2;
                 if (p > ((u16*)(SS_RAM + 0x3FFF))) {
                     p = ((u16*)SS_RAM);
@@ -248,7 +240,6 @@ s32 tilemap_rect_fill(u16 x, u16 y, u16 w, u16 h, u16 attr, u16 code) {
             }
         }
     }
-    return ret;
 }
 
 

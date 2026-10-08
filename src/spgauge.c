@@ -51,7 +51,8 @@ void spgauge_cont_init(void) {
     spg_dat[0].ex_flag = 0;
     spg_dat[0].no_chgcol = 0;
     spg_dat[0].time_no_clear = 0;
-    sa_gauge_flash[0] = spg_dat[0].sa_mukou = 0;
+    spg_dat[0].sa_mukou = 0;
+    sa_gauge_flash[0] = 0;
     if (super_arts[0].gauge_type == 1) {
         spg_dat[0].time = 1;
         time_flag[0] = 1;

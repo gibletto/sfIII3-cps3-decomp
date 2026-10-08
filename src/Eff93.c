@@ -158,6 +158,7 @@ void Eff93_SLIDE_R_OUT(WORK_Other* ewk) {
             ewk->wu.routine_no[1] += 1;
             bg_mvxy.a[0].sp = -0x80000;
             bg_mvxy.d[0].sp = -0x28000;
+            ewk->wu.hit_quake = bg_w.bgw[1].wxy[0].disp.pos - 208;
             ewk->wu.hit_quake = 0x130;
         }
         break;

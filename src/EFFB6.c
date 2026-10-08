@@ -71,7 +71,7 @@ s32 effect_B5_init(s16 PL_id) {
 void effect_B6_move(WORK_Other_CONN* ewk_conn) {
     WORK_B6* ewk = (WORK_B6*)ewk_conn;
     WORK* oya = ewk->my_master;
-    s32 i;
+    s16 i;
     switch (ewk->wu.routine_no[0]) {
     case 0:
         ewk->wu.routine_no[0]++;

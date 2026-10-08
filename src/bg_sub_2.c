@@ -210,7 +210,6 @@ void check_cg_zoom(void) {
             scr_req_y = 0;
             break;
         }
-        break;
     }
     zoom_request_level = plw[0].wu.cg_zoom & 0xFF;
     if (zoom_request_level < (plw[1].wu.cg_zoom & 0xFF)) {

@@ -420,17 +420,18 @@ s32 shell_live_check(PLW* wk, s16 wix) {
     WORK_Other* tmw;
     s16 i;
     if (wk->player_number != 0xE) {
-        i = 0;
-        do {
+        for (i = 0; i < 8; i++) {
             if (wk->wu.shell_ix[i] == -1) {
                 break;
             }
             tmw = (WORK_Other*)frw[wk->wu.shell_ix[i]];
-            if ((!tmw->refrected) && (tmw->wu.original_vitality == wix)) {
+            if (tmw->refrected) {
+                continue;
+            }
+            if (tmw->wu.original_vitality == wix) {
                 return 1;
             }
-            i++;
-        } while (i < 8);
+        }
         return 0;
     }
     for (i = 0; i < 8; i++) {

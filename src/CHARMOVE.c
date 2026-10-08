@@ -49,7 +49,7 @@ s16 index;
     wk->set_char_ad = (u32*)wk->char_table[koc][index];
     dst = (u32*)&wk->cg_ctr;
     for (i = 0; i < 6; i++) {
-        dst[i] = 0;
+        *dst++ = 0;
     }
     src = wk->set_char_ad;
     dst = (u32*)&wk->cg_ctr;
@@ -82,8 +82,8 @@ s16 index;
 void set_char_move_init2(WORK* wk, s16 koc, s16 index, s16 ip, s16 scf) {
     u32* dst;
     u32* src;
-    s32 i;
-    s32 pst;
+    s16 i;
+    u8 pst;
     u8 kow;
     pst = wk->pat_status;
     kow = wk->kind_of_waza;
@@ -92,7 +92,7 @@ void set_char_move_init2(WORK* wk, s16 koc, s16 index, s16 ip, s16 scf) {
     wk->set_char_ad = (u32*)wk->char_table[koc][index];
     dst = (u32*)&wk->cg_ctr;
     for (i = 0; i < 6; i++) {
-        dst[i] = 0;
+        *dst++ = 0;
     }
     src = wk->set_char_ad;
     dst = (u32*)&wk->cg_ctr;

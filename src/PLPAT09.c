@@ -101,17 +101,18 @@ s32 set_tenguiwa(PLW* wk, u8 data) {
             }
             rv = tmw->type;
             num = rv - 24;
-            if (num <= 35) {
-                tmw->old_pos[0] = tenguiwa_pos_hosei[j][0];
-                tmw->old_pos[1] = tenguiwa_pos_hosei[j][1];
-                tmw->old_pos[2] = tenguiwa_pos_hosei[j][2];
-                tmw->scr_mv_x = tenguiwa_pos_hosei[j][3];
-                tmw->scr_mv_y = tenguiwa_pos_hosei[j][4];
-                rv = tmw->direction = tenguiwa_pos_hosei[j][5];
-                j++;
-                if (j > 2) {
-                    break;
-                }
+            if (num > 35) {
+                continue;
+            }
+            tmw->old_pos[0] = tenguiwa_pos_hosei[j][0];
+            tmw->old_pos[1] = tenguiwa_pos_hosei[j][1];
+            tmw->old_pos[2] = tenguiwa_pos_hosei[j][2];
+            tmw->scr_mv_x = tenguiwa_pos_hosei[j][3];
+            tmw->scr_mv_y = tenguiwa_pos_hosei[j][4];
+            rv = tmw->direction = tenguiwa_pos_hosei[j][5];
+            j++;
+            if (j > 2) {
+                break;
             }
         }
         return rv;
@@ -127,17 +128,18 @@ s32 set_tenguiwa(PLW* wk, u8 data) {
         }
         rv = tmw->type;
         num = rv - 24;
-        if (num <= 35) {
-            tmw->old_pos[0] = tenguiwa_pos_hosei2[j][0];
-            tmw->old_pos[1] = tenguiwa_pos_hosei2[j][1];
-            tmw->old_pos[2] = tenguiwa_pos_hosei2[j][2];
-            tmw->scr_mv_x = tenguiwa_pos_hosei2[j][3];
-            tmw->scr_mv_y = tenguiwa_pos_hosei2[j][4];
-            rv = tmw->direction = tenguiwa_pos_hosei2[j][5];
-            j++;
-            if (j > 4) {
-                break;
-            }
+        if (num > 35) {
+            continue;
+        }
+        tmw->old_pos[0] = tenguiwa_pos_hosei2[j][0];
+        tmw->old_pos[1] = tenguiwa_pos_hosei2[j][1];
+        tmw->old_pos[2] = tenguiwa_pos_hosei2[j][2];
+        tmw->scr_mv_x = tenguiwa_pos_hosei2[j][3];
+        tmw->scr_mv_y = tenguiwa_pos_hosei2[j][4];
+        rv = tmw->direction = tenguiwa_pos_hosei2[j][5];
+        j++;
+        if (j > 4) {
+            break;
         }
     }
     return rv;

@@ -35,7 +35,6 @@
 
 void effect_F0_move(WORK_Other* ewk) {
     s16 i;
-    u32 adrs;
     if (akebono_flag) {
         seraph_flag = 0;
     } else {
@@ -104,22 +103,21 @@ void effect_F0_move(WORK_Other* ewk) {
             switch (another_bg[ewk->wu.type]) {
             case 2:
             case 3:
-                adrs = ake_scrl_w[3].adrs;
+                scrn_map_set(3, ake_scrl_w[3].adrs);
                 break;
             case 4:
                 if (!ewk->wu.dir_old) {
                     ewk->wu.dir_old = 1;
                 }
-                adrs = ake_scrl_w[4].adrs;
+                scrn_map_set(3, ake_scrl_w[4].adrs);
                 break;
             default:
                 if (!ewk->wu.dir_old) {
                     ewk->wu.dir_old = 1;
                 }
-                adrs = ake_scrl_w[0].adrs;
+                scrn_map_set(3, ake_scrl_w[0].adrs);
                 break;
             }
-            scrn_map_set(3, adrs);
             if (another_bg[0] || another_bg[1]) {
                 seraph_flag = 1;
                 effF0_scroll_set(ewk);

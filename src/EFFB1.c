@@ -29,8 +29,7 @@ void effect_B1_move(WORK_Other_CONN* ewk) {
             ewk->wu.routine_no[1]++;
             ewk->wu.disp_flag = 1;
             ewk->wu.old_cgnum = 0;
-            ewk->wu.position_z = 67;
-            ewk->wu.my_priority = 67;
+            ewk->wu.my_priority = ewk->wu.position_z = 67;
             ewk->wu.next_z = 9;
             ewk->wu.direction = ewk->num_of_conn;
             ewk->num_of_conn = 0;
@@ -44,7 +43,8 @@ void effect_B1_move(WORK_Other_CONN* ewk) {
             sound_effect_request[167](ewk, 167);
             ewk->wu.dir_timer = 3;
             ewk->num_of_conn++;
-            if (ewk->num_of_conn >= ewk->wu.direction) {
+            if (ewk->num_of_conn < ewk->wu.direction) {
+            } else {
                 ewk->wu.routine_no[0] = 1;
                 ewk->wu.routine_no[1] = 0;
             }
@@ -66,7 +66,8 @@ void effect_B1_move(WORK_Other_CONN* ewk) {
         case 0:
             if (Bonus_Game_result) {
                 for (i = 0; i < Bonus_Game_result; i++) {
-                    if (!ewk->conn[i + 20].nx) {
+                    if (ewk->conn[i + 20].nx) {
+                    } else {
                         ewk->conn[i + 20].nx = 1;
                     }
                 }
@@ -76,7 +77,8 @@ void effect_B1_move(WORK_Other_CONN* ewk) {
         default:
             if (ewk->wu.dir_step != Bonus_Game_result) {
                 for (i = Bonus_Game_result; i < ewk->wu.dir_step; i++) {
-                    if (ewk->conn[i + 20].nx != 2) {
+                    if (ewk->conn[i + 20].nx == 2) {
+                    } else {
                         ewk->conn[i + 20].nx = 2;
                         ewk->conn[i + 20].ny = 0;
                     }

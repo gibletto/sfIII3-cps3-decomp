@@ -21,8 +21,6 @@ void bg0202(void);
 void bg020_sync_common(void);
 void BG030(void);
 void bg0300(void);
-void bg_main_layer_dispatch(void);
-void bg_back_layer_dispatch(void);
 void bg0000(void);
 void bg0000_demo(void);
 void bg0000_init00(void);

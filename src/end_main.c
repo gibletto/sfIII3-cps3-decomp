@@ -145,7 +145,7 @@ void opning_init_00000(void) {
     bg_w.scno = 3;
     polygon2d_submit_line(0x01D2C000, 0, 0, 3);
     polygon2d_submit_line(0x01D2C080, bg_w.scroll_cg_adr, 0x164AF, 1);
-    if ((*&Game_setting).mode) {
+    if (Game_setting.mode) {
         bg_w.pos_offset = 0xF8;
     } else {
         bg_w.pos_offset = 0xC0;
@@ -2411,7 +2411,7 @@ void opening_title_00(void) {
     bg_w.scno = 1;
     polygon2d_submit_line(0x01D2C000, 0, 0, 3);
     polygon2d_submit_line(0x01D2C080, bg_w.scroll_cg_adr, 0x164AF, 1);
-    if ((*&Game_setting).mode) {
+    if (Game_setting.mode) {
         bg_w.pos_offset = 0xF8;
     } else {
         bg_w.pos_offset = 0xC0;
@@ -2735,7 +2735,7 @@ void common_end_init00(s16 pl_num) {
         ake_scrl_w[0].handle = simmram_big_page_alloc_40(1);
         ake_scrl_w[0].adrs = (u32)simmram_slot_addr(ake_scrl_w[0].handle);
     }
-    bg_w.pos_offset = ((*&Game_setting).mode) ? 0xF8 : 0xC0;
+    bg_w.pos_offset = (Game_setting.mode) ? 0xF8 : 0xC0;
     base_y_pos = 40;
     for (i = 0; i < 7; i++) {
         bg_w.bgw[i].r_no_0 = 0;

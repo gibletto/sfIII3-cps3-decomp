@@ -302,10 +302,7 @@ s32 get_nearing_range(s16 pnum, s16 kos) {
     if ((kos = shot_data_convert(kos)) < 0) {
         return 0;
     }
-    {
-        const u8* row = (const u8*)asstbl_lv_0000 + (s16)(pnum * sizeof(asstbl_lv_0000[0]));
-        asstbl = (const u16*)(row + kos * 4);
-    }
+    asstbl = asstbl_lv_0000[pnum][kos];
     if ((lwork = asstbl[0] & 0x7FF)) {
         nrange = lwork;
     } else if ((lwork = asstbl[1] & 0x7FF)) {
@@ -581,7 +578,7 @@ s32 check_meoshi_cancel(PLW* wk) {
                 if (cnmc_Z_lever_data[tdat][i] == -1) {
                     return 0;
                 }
-                if (wdat == cnmc_Z_lever_data[tdat][i]) {
+                if (cnmc_Z_lever_data[tdat][i] == wdat) {
                     goto matched;
                 }
             }
@@ -590,7 +587,7 @@ s32 check_meoshi_cancel(PLW* wk) {
                 if (cnmc_z_lever_data[tdat][i] == -1) {
                     return 0;
                 }
-                if (wdat == cnmc_z_lever_data[tdat][i]) {
+                if (cnmc_z_lever_data[tdat][i] == wdat) {
                     goto matched;
                 }
             }

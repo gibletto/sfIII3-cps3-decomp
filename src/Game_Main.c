@@ -183,10 +183,10 @@ void Game01(void) {
             if (plw[1].wu.operator != 0) {
                 Sel_Arts_Complete[1] = -1;
             }
-            if (plw[0].wu.operator != 0 && plw[1].wu.operator != 0) {
-                Play_Type = 1;
-            } else {
+            if (plw[0].wu.operator == 0 || plw[1].wu.operator == 0) {
                 Play_Type = 0;
+            } else {
+                Play_Type = 1;
             }
             voice_all_off();
         }
@@ -1123,13 +1123,14 @@ s32 Ck_Coin(void) {
             Operator_Status[0] = 1;
             Operator_Status[1] = 1;
             return 1;
+        } else {
+            plw[pl].wu.operator = 1;
+            Operator_Status[pl] = 1;
+            Champion = pl;
+            plw[pl ^ 1].wu.operator = 0;
+            Operator_Status[pl ^ 1] = 0;
+            return 1;
         }
-        plw[pl].wu.operator = 1;
-        Operator_Status[pl] = 1;
-        Champion = pl;
-        plw[pl ^ 1].wu.operator = 0;
-        Operator_Status[pl ^ 1] = 0;
-        return 1;
     }
     if (coin_chute1_w.dropped | coin_chute2_w.dropped) {
         return 1;

@@ -31,6 +31,7 @@
 
 void effect_74_move(WORK_Other* ewk) {
     const EFF74_FRAME* frame;
+    s16 y;
     switch (ewk->wu.routine_no[0]) {
     case 0:
         ewk->wu.routine_no[0]++;
@@ -55,7 +56,8 @@ void effect_74_move(WORK_Other* ewk) {
                         ewk->wu.cg_ctr = eff74_anim_tbl[(s8)ewk->wu.old_rno[0]].frames->timer;
                     }
                 } else {
-                    frame = &eff74_anim_tbl[(s8)ewk->wu.old_rno[0]].frames[ewk->wu.cg_ix];
+                    frame = eff74_anim_tbl[(s8)ewk->wu.old_rno[0]].frames;
+                    frame += ewk->wu.cg_ix;
                     ewk->wu.old_rno[2] = frame->slot;
                     ewk->wu.old_rno[1] = frame->y;
                     ewk->wu.cg_ctr = frame->timer;
@@ -63,7 +65,9 @@ void effect_74_move(WORK_Other* ewk) {
             }
             scrn_map_set(1, eff_bg_adrs[ewk->wu.old_rno[2]].adrs);
         }
-        Scrn_Y_Set_W(1, ewk->wu.old_rno[1] + (bg_w.bgw[1].abs_y & 0x3FF));
+        y = ewk->wu.old_rno[1];
+        y += bg_w.bgw[1].abs_y & 0x3FF;
+        Scrn_Y_Set_W(1, y);
         break;
     default:
         all_cgps_put_back(ewk);
@@ -91,13 +95,13 @@ void eff74_pattern_set(WORK_Other* ewk) {
 
 /* provisional name */
 void eff74_cell_trans(void) {
-    s32 i;
-    s32 j;
+    s16 i;
+    s16 j;
     const CELL_REQ* p;
     for (i = 0; i < 3; i++) {
         for (j = 0; j < 16; j++) {
             p = &eff74_cell_tbl[i][j];
-            scroll_cell_write(i, p->a, p->b, eff74_scrn_data);
+            scroll_cell_write(i, p->a, p->b, (u32)eff74_scrn_data);
         }
     }
 }

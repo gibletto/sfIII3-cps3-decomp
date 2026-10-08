@@ -114,7 +114,7 @@ void debug_effect_move_all(void)
 void debug_menu_work_init(void) {
     PLW* p0;
     PLW* p1;
-    s32 i;
+    s16 i;
     s16 j;
     Debug_R_No++;
     palette_bank_set(0x3FC00);
@@ -1112,7 +1112,7 @@ void debug_hit_judgment_dispatch(void) {
 
 /* provisional name */
 void debug_hit_judgment_init(void) {
-    s32 i;
+    s16 i;
     Debug_Tool_No++;
     tilemap_fill_all(0, 32);
     tilemap_print_string_attr(15, 1, 14, hit_judgment_msg);

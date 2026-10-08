@@ -93,12 +93,13 @@ void effF3_pos_set(WORK_Other* ewk, s16 x) {
         ewk->wu.xyz[0].disp.pos = bg_w.bgw[0].xy[0].disp.pos + 576;
         ewk->wu.mvxy.a[0].sp = -0x150000;
         ewk->wu.mvxy.d[0].sp = -0x18000;
+        ewk->wu.dir_old = bg_w.bgw[0].xy[0].disp.pos + DE_X[14] + 32;
     } else {
         ewk->wu.xyz[0].disp.pos = bg_w.bgw[0].xy[0].disp.pos - 384;
         ewk->wu.mvxy.a[0].sp = 0x150000;
         ewk->wu.mvxy.d[0].sp = 0x18000;
+        ewk->wu.dir_old = bg_w.bgw[0].xy[0].disp.pos + DE_X[14] + 32;
     }
-    ewk->wu.dir_old = bg_w.bgw[0].xy[0].disp.pos + DE_X[14] + 32;
 }
 
 

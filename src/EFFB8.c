@@ -34,8 +34,9 @@ void effect_B8_move(WORK_Other_CONN* ewk) {
     s16 i;
     switch (ewk->wu.routine_no[0]) {
     case 0:
-        if (--mes_timer > 0) {
-            break;
+        mes_timer--;
+        if (mes_timer > 0) {
+            return;
         }
         ewk->wu.routine_no[0]++;
         switch (Country) {
@@ -47,7 +48,6 @@ void effect_B8_move(WORK_Other_CONN* ewk) {
             break;
         default:
             mes = &effB8_mes_jp[ewk->master_player][mes_already];
-            break;
         }
         conn_data = mes->conn;
         chr_data = mes->chr;
@@ -102,7 +102,6 @@ void effect_B8_move(WORK_Other_CONN* ewk) {
         default:
             conn_data = effB8_mes_en[ewk->master_player][mes_already].conn;
             chr_data = effB8_mes_en[ewk->master_player][mes_already].chr;
-            break;
         }
         for (i = 0; i < chr_data[0]; i++) {
             load_char_gfx(chr_data[i + 1], 1);
@@ -266,15 +265,17 @@ s32 effect_B8_init(s8 WIN_PL_NO, s16 timer) {
             }
             if (old_mes_no_pl == mes_no) {
                 mes_no = b8_sel_1_by_8();
+            } else {
             }
             old_mes_no_pl = mes_no;
         } else {
             mes_no = b8_sel_1_by_8();
         }
+        mes_already = mes_no;
     } else {
         mes_no = b8_sel_1_by_8();
+        mes_already = mes_no;
     }
-    mes_already = mes_no;
     test_mes_no = mes_no;
     return 0;
 }

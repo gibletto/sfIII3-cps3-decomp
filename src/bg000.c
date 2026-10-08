@@ -63,7 +63,7 @@
 #include "ta_sub2.h"
 #include "tate00.h"
 
-#pragma inline(bg0101, bg0102)
+#pragma inline(bg0101, bg0102, bg0001_ctrl, bg0000)
 
 /* provisional name */
 void Bg_Family_Set_appoint(s32 num_of_bg) {
@@ -491,9 +491,9 @@ void akebono_cell_fill(void) {
 
 /* provisional name */
 void akebono_scrn_move(s16 ix) {
-    const s16* p = akebono_scrn_pos_tbl[ix];
-    s32 x = p[0] - bg_w.pos_offset;
-    Scrn_Move_Set(0, x, p[1]);
+    s32 x = akebono_scrn_pos_tbl[ix][0] - bg_w.pos_offset;
+    s32 y = akebono_scrn_pos_tbl[ix][1];
+    Scrn_Move_Set(0, x, y);
 }
 
 /* provisional name */
@@ -1067,17 +1067,9 @@ void bg_etc_write(s16 type) {
 
 void BG000(void) {
     bgw_ptr = &bg_w.bgw[1];
-    {
-        JMP_TBL3 bg0402_jmp;
-        bg0402_jmp = bg0402_jmp_tbl;
-        bg0402_jmp.fn[bgw_ptr->r_no_0]();
-    }
+    bg0001_ctrl();
     bgw_ptr = &bg_w.bgw[0];
-    {
-        JMP_TBL3 bg0401_jmp;
-        bg0401_jmp = bg0401_jmp_tbl;
-        bg0401_jmp.fn[bgw_ptr->r_no_0]();
-    }
+    bg0000();
     zoom_ud_check();
     bg_pos_hosei2();
     Bg_Family_Set();
@@ -1101,22 +1093,21 @@ void bg0001_init00(void) {
     effect_06_init();
     effect_44_init(7);
     effect_60_init(2);
-    if (bg_w.area != 0) {
+    if (bg_w.area) {
         bgw_ptr->r_no_0 = 2;
-        return;
     } else if (gill_appear_check()) {
         bgw_ptr->r_no_0 = 2;
-        return;
+    } else {
+        if (plw[0].player_number == PL_GILL) {
+            bgw_ptr->u_line = 0;
+            bgw_ptr->xy[0].cal += bgw_ptr->speed_x * 0xE0;
+            bgw_ptr->old_pos_x = bgw_ptr->hos_xy[0].cal = bgw_ptr->wxy[0].cal = bgw_ptr->xy[0].cal;
+        } else {
+            bgw_ptr->u_line = 1;
+            bgw_ptr->xy[0].cal -= bgw_ptr->speed_x * 0xC0;
+            bgw_ptr->old_pos_x = bgw_ptr->hos_xy[0].cal = bgw_ptr->wxy[0].cal = bgw_ptr->xy[0].cal;
+        }
     }
-    if (plw[0].player_number == PL_GILL) {
-        bgw_ptr->u_line = 0;
-        bgw_ptr->xy[0].cal += bgw_ptr->speed_x * 0xE0;
-        bgw_ptr->old_pos_x = bgw_ptr->hos_xy[0].cal = bgw_ptr->wxy[0].cal = bgw_ptr->xy[0].cal;
-        return;
-    }
-    bgw_ptr->u_line = 1;
-    bgw_ptr->xy[0].cal -= bgw_ptr->speed_x * 0xC0;
-    bgw_ptr->old_pos_x = bgw_ptr->hos_xy[0].cal = bgw_ptr->wxy[0].cal = bgw_ptr->xy[0].cal;
 }
 
 
@@ -1124,22 +1115,6 @@ void bg0001_init00(void) {
 void bg0000(void) {
     void (*bg0000_jmp[3])() = { bg0000_init00, bg0000_demo, bg_move_common };
     bg0000_jmp[bgw_ptr->r_no_0]();
-}
-
-
-
-/* provisional name */
-void bg_main_layer_dispatch(void) {
-    void (*bg_jmp[2])() = { bg1101_init00, bg1101_move };
-    bg_jmp[bgw_ptr->r_no_0]();
-}
-
-
-
-/* provisional name */
-void bg_back_layer_dispatch(void) {
-    void (*bg_jmp[2])() = { bg1100_init00, bg1100_move };
-    bg_jmp[bgw_ptr->r_no_0]();
 }
 
 

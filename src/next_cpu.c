@@ -316,7 +316,7 @@ void Next_CPU_5th(void) {
             if (S_Timer < 0) {
                 S_Timer = 1;
             }
-            Introduce_Boss[Player_id][(&VS_Index[0])[Player_id] - 8] |= 1;
+            Introduce_Boss[Player_id][VS_Index[Player_id] - 8] |= 1;
         }
         break;
     default:
@@ -352,7 +352,7 @@ void Next_CPU_6th(void)
 /* provisional name */
 s32 After_Bonus(void) {
     void (*After_Bonus_Tbl[7])() = { After_Bonus_1st, After_Bonus_2nd, After_Bonus_3rd, After_Bonus_4th, Next_CPU_3rd, After_Bonus_6th, After_Bonus_End };
-    if (Break_Into != 0) {
+    if (Break_Into) {
         return 0;
     }
     SEL_CPU_X = 0;
@@ -605,44 +605,38 @@ void Select_CPU_2nd(void) {
     }
 }
 
-u8 *Select_CPU_3rd(void)
+void Select_CPU_3rd(void)
 {
-    u32 rv;
     s32 sw_on;
     s8 pid;
 
-    rv = SC_No[1];
-    switch (rv) {
+    switch (SC_No[1]) {
     case 0:
         pid = Player_id;
         if (Demo_Flag == 0) {
-            if (pid == 0) {
-                sw_on = *Demo_Ptr[0];
+            if (pid != 0) {
+                Sel_CPU_Sub(1, *Demo_Ptr[1], 0);
             } else {
-                sw_on = *Demo_Ptr[1];
+                Sel_CPU_Sub(0, *Demo_Ptr[0], 0);
             }
-            Sel_CPU_Sub(pid != 0, sw_on, 0);
             Demo_Ptr[Player_id]++;
         } else {
-            if (pid == 0) {
-                sw_on = p1sw_0;
-                Sel_CPU_Sub(0, (u16)(~p1sw_1 & sw_on), sw_on, 20, sw_on);
-            } else {
+            if (pid != 0) {
                 sw_on = p2sw_0;
-                Sel_CPU_Sub(1, (u16)(~p2sw_1 & sw_on), sw_on, 20, sw_on);
+                Sel_CPU_Sub(1, ~p2sw_1 & sw_on, sw_on, 20, sw_on);
+            } else {
+                sw_on = p1sw_0;
+                Sel_CPU_Sub(0, ~p1sw_1 & sw_on, sw_on, 20, sw_on);
             }
         }
-        rv = (u32)Sel_EM_Complete;
         if (Sel_EM_Complete[Player_id]) {
             SC_No[1]++;
             Setup_Next_Fighter();
-            rv = (u32)VS_Index;
             if (VS_Index[Player_id] < 8) {
                 S_Timer = 50;
             } else {
                 SC_No[1] = 2;
                 S_Timer = 100;
-                rv = 2;
             }
         }
         break;
@@ -650,16 +644,12 @@ u8 *Select_CPU_3rd(void)
     case 1:
         if (--S_Timer == 0) {
             SC_No[1] = 4;
-            rv = 4;
         }
         break;
 
     case 2:
-        if (--S_Timer < 51) {
-            rv = (s8)SC_No[1] + 1;
-            SC_No[1] = rv;
-        } else {
-            rv = 50;
+        if (--S_Timer <= 50) {
+            SC_No[1]++;
         }
         break;
 
@@ -668,8 +658,7 @@ u8 *Select_CPU_3rd(void)
             S_Timer = 1;
         }
         if (--S_Timer == 0) {
-            rv = (s8)SC_No[1] + 1;
-            SC_No[1] = rv;
+            SC_No[1]++;
         }
         break;
 
@@ -708,14 +697,14 @@ u8 *Select_CPU_3rd(void)
         Cut_Scroll = 2;
         bg_mvxy.a[0].sp = 0x200000;
         bg_mvxy.d[0].sp = 0x18000;
-        return (u8 *)effect_58_init(12, 1, 3);
+        effect_58_init(12, 1, 3);
+        break;
 
     case 5:
         if (Next_Step & 0x80) {
             SC_No[1] = 7;
             S_Timer = 20;
-            rv = (u32)&Introduce_Boss[Player_id][VS_Index[Player_id] - 8];
-            *(u8 *)rv = 1;
+            Introduce_Boss[Player_id][VS_Index[Player_id] - 8] = 1;
         }
         break;
 
@@ -733,11 +722,9 @@ u8 *Select_CPU_3rd(void)
         if (--S_Timer == 0) {
             SC_No[0]++;
             SC_No[1] = 0;
-            rv = 0;
         }
         break;
     }
-    return (u8 *)rv;
 }
 
 void Select_CPU_4th(void)
@@ -1021,7 +1008,7 @@ u16 sw;
             Sound_SE(ID + 98);
             Sound_SE(EM_Select_SE_Data[random_16_com()]);
         }
-        (&Last_Selected_EM[0])[PL_id] = (&Temporary_EM[0])[PL_id];
+        Last_Selected_EM[PL_id] = Temporary_EM[PL_id];
     }
 }
 

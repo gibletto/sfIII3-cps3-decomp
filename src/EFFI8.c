@@ -149,7 +149,7 @@ void effI8_main_process(WORK_Other* ewk) {
             if (ewk->wu.kage_flag != 0 && ewk->refrected == 0 && mwk->wu.routine_no[1] == 4 &&
                 mwk->wu.routine_no[2] == 31 && mwk->wu.cg_type == 0x28) {
                 hit_box = effI8_hit_box;
-                if ((s16)hit_check_subroutine(&ewk->wu, (WORK*)ewk->my_master, hit_box[0], hit_box[1])) {
+                if (hit_check_subroutine(&ewk->wu, (WORK*)ewk->my_master, hit_box[0], hit_box[1])) {
                     mwk->wu.cmwk[7] = 1;
                     ewk->wu.type = 0;
                     ewk->wu.routine_no[2] = 1;

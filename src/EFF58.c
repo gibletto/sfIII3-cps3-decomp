@@ -301,14 +301,15 @@ void EFF58_Type_02(WORK_Other* ewk) {
         set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
         break;
     case 1:
-        if (Suicide[0] != 0) {
+        if (Suicide[0]) {
             ewk->wu.routine_no[2]++;
             break;
+        } else {
+            ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
+            ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
+            sort_push_request4(ewk);
+            break;
         }
-        ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
-        ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-        sort_push_request4(ewk);
-        break;
     case 2:
         ewk->wu.routine_no[2]++;
         return;

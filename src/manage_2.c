@@ -1328,7 +1328,7 @@ void Game_Manage_12_4(void) {
             } else {
                 Bonus_Score += 1000;
                 Score[Player_id][0] += 1000;
-                Disp_Digit16x24(Bonus_Score, (*&DE_X)[3] + 35, 11, 30);
+                Disp_Digit16x24(Bonus_Score, DE_X[3] + 35, 11, 30);
                 Sound_SE(100);
             }
             if (--Bonus_Game_result == 0) {
@@ -1826,7 +1826,7 @@ void Disp_Winner(void) {
         effect_89_init(1, DE_X[3] + 10, 9, 29, 4);
         sound_request(0x8D);
     } else {
-        if ((&Round_Operator[0])[Winner_id] != 0) {
+        if (Round_Operator[Winner_id] != 0) {
             sc_picture_put(5, 0, 0);
             effect_89_init(1, DE_X[3] + 11, 9, 25, 4);
             sound_request(0x8D);
@@ -1958,7 +1958,7 @@ void Quick_Entry(void) {
             Be_Continue();
         }
         if (Play_Type == 1) {
-            grade = ((GradeData*)((u8*)&judge_item[0][1] + (s16)(Winner_id * sizeof(judge_item[0]))))->grade;
+            grade = judge_item[Winner_id][1].grade;
             best = &Best_Grade[Winner_id];
             if ((s8)grade > *best) {
                 *best = grade;
@@ -2032,7 +2032,7 @@ void Update_VS_Data(void) {
         Stock_My_char[LOSER] = My_char[LOSER];
         Stock_Player_Color[LOSER] = Player_Color[LOSER];
         if (Play_Type == 0) {
-            if (Round_Operator[WINNER] != 0) {
+            if (Round_Operator[WINNER]) {
                 SC_Personal_Time[WINNER] = Control_Time;
                 Stage_Continue[WINNER] = 0;
                 Request_Disp_Rank[LOSER][0] = -1;

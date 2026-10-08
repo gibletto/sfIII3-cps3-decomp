@@ -30,12 +30,12 @@ void effect_H7_move(WORK_Other* ewk) {
     case 0:
         ewk->wu.routine_no[0]++;
         if (ewk->wu.rl_waza) {
-            ewk->wu.position_x += ((const s16*)((const u8*)effH7_pos_tbl + (s8)((ewk)->wu.rl_waza * sizeof(effH7_pos_tbl[0])) + (s8)((ewk)->wu.type * sizeof(effH7_pos_tbl[0][0]))))[0];
+            ewk->wu.position_x += effH7_pos_tbl[ewk->wu.rl_waza][ewk->wu.type][0];
         } else {
-            ewk->wu.position_x -= ((const s16*)((const u8*)effH7_pos_tbl + (s8)((ewk)->wu.rl_waza * sizeof(effH7_pos_tbl[0])) + (s8)((ewk)->wu.type * sizeof(effH7_pos_tbl[0][0]))))[0];
+            ewk->wu.position_x -= effH7_pos_tbl[ewk->wu.rl_waza][ewk->wu.type][0];
         }
-        ewk->wu.position_y += ((const s16*)((const u8*)effH7_pos_tbl + (s8)((ewk)->wu.rl_waza * sizeof(effH7_pos_tbl[0])) + (s8)((ewk)->wu.type * sizeof(effH7_pos_tbl[0][0]))))[1];
-        ewk->wu.position_z += ((const s16*)((const u8*)effH7_pos_tbl + (s8)((ewk)->wu.rl_waza * sizeof(effH7_pos_tbl[0])) + (s8)((ewk)->wu.type * sizeof(effH7_pos_tbl[0][0]))))[2];
+        ewk->wu.position_y += effH7_pos_tbl[ewk->wu.rl_waza][ewk->wu.type][1];
+        ewk->wu.position_z += effH7_pos_tbl[ewk->wu.rl_waza][ewk->wu.type][2];
         ewk->wu.xyz[0].disp.pos = ewk->wu.position_x;
         ewk->wu.xyz[1].disp.pos = ewk->wu.position_y;
         ewk->wu.disp_flag = 0;
@@ -71,9 +71,9 @@ void effect_H7_move(WORK_Other* ewk) {
                 if (ewk->wu.dir_step == 99) {
                     ewk->wu.routine_no[1]++;
                     ewk->wu.dir_timer = effH7_wait2_tbl[ewk->wu.type];
-                } else {
-                    ewk->wu.position_y += ewk->wu.dir_step;
+                    break;
                 }
+                ewk->wu.position_y += ewk->wu.dir_step;
                 break;
             case 3:
                 if (--ewk->wu.dir_timer > 0) {
@@ -142,12 +142,12 @@ void effect_H8_move(WORK_Other* ewk) {
     case 0:
         ewk->wu.routine_no[0]++;
         if (ewk->wu.rl_waza) {
-            ewk->wu.position_x += ((const s16*)((const u8*)effH8_pos_tbl + (s8)((ewk)->wu.rl_waza * sizeof(effH8_pos_tbl[0])) + (s8)((ewk)->wu.type * sizeof(effH8_pos_tbl[0][0]))))[0];
+            ewk->wu.position_x += effH8_pos_tbl[ewk->wu.rl_waza][ewk->wu.type][0];
         } else {
-            ewk->wu.position_x -= ((const s16*)((const u8*)effH8_pos_tbl + (s8)((ewk)->wu.rl_waza * sizeof(effH8_pos_tbl[0])) + (s8)((ewk)->wu.type * sizeof(effH8_pos_tbl[0][0]))))[0];
+            ewk->wu.position_x -= effH8_pos_tbl[ewk->wu.rl_waza][ewk->wu.type][0];
         }
-        ewk->wu.position_y += ((const s16*)((const u8*)effH8_pos_tbl + (s8)((ewk)->wu.rl_waza * sizeof(effH8_pos_tbl[0])) + (s8)((ewk)->wu.type * sizeof(effH8_pos_tbl[0][0]))))[1];
-        ewk->wu.position_z += ((const s16*)((const u8*)effH8_pos_tbl + (s8)((ewk)->wu.rl_waza * sizeof(effH8_pos_tbl[0])) + (s8)((ewk)->wu.type * sizeof(effH8_pos_tbl[0][0]))))[2];
+        ewk->wu.position_y += effH8_pos_tbl[ewk->wu.rl_waza][ewk->wu.type][1];
+        ewk->wu.position_z += effH8_pos_tbl[ewk->wu.rl_waza][ewk->wu.type][2];
         ewk->wu.xyz[0].disp.pos = ewk->wu.position_x;
         ewk->wu.xyz[1].disp.pos = ewk->wu.position_y;
         ewk->wu.disp_flag = 0;
@@ -192,8 +192,7 @@ void effect_H8_move(WORK_Other* ewk) {
                     set_char_move_init(&ewk->wu, 0, effH8_char2_tbl[ewk->wu.rl_waza][ewk->wu.type]);
                     ewk->wu.xyz[0].disp.pos = ewk->wu.position_x;
                     ewk->wu.xyz[1].disp.pos = ewk->wu.position_y;
-                    ewk->wu.mvxy.d[0].sp = 0;
-                    ewk->wu.mvxy.a[0].sp = 0;
+                    ewk->wu.mvxy.a[0].sp = ewk->wu.mvxy.d[0].sp = 0;
                     ewk->wu.mvxy.a[1].sp = 0;
                     ewk->wu.mvxy.d[1].sp = -0x3400;
                     ewk->wu.mvxy.kop[0] = ewk->wu.mvxy.kop[1] = 0;
@@ -210,11 +209,10 @@ void effect_H8_move(WORK_Other* ewk) {
                 }
                 ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;
                 ewk->wu.position_y = ewk->wu.xyz[1].disp.pos;
-                break;
             }
         }
         sort_push_request(ewk);
-        break;
+        return;
     case 2:
         ewk->wu.routine_no[0] = 3;
         break;

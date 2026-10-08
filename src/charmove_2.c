@@ -1446,7 +1446,7 @@ void check_cgd_patdat(WORK* wk) {
 
 
 u32 check_xcopy_filter_se_req(WORK* wk) {
-    s32 voif;
+    u16 voif;
     if ((voif = wk->cg_se) < 0x160) {
         return voif;
     }

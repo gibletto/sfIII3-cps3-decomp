@@ -73,7 +73,7 @@ u32 sound_voice_volume_compute(u16 level, u32 pan_scale, s8 pan, SOUND_VOICE* v)
         out = t;
     }
     ctrl = snd_ctrl;
-    if (ctrl.b[1] & 1) {
+    if (ctrl.bit.stereo) {
         if (!v->no_master) {
             t = (out * (u16)((u32)snd_fade_level >> 8)) >> 7;
             return t;
@@ -103,7 +103,7 @@ u32 voice_process_secondary(SNDVOICE* voice, u8 voice_index, u8 is_bgm) {
     u8 owns_hardware_voice = 1;
     volatile SNDREGS* regs;
     u32 result;
-    s32 status;
+    u8 status;
     s32 next;
     u32 depth;
     s32 step;

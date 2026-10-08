@@ -383,7 +383,11 @@ void Setup_Pos_76(WORK_Other* ewk) {
     case 0x4D:
     case 0x4E:
     case 0x4F:
-        ix = (Perfect_Flag) ? 1 : 0;
+        if (Perfect_Flag) {
+            ix = 1;
+        } else {
+            ix = 0;
+        }
         ewk->wu.hit_quake =
             bg_w.bgw[ewk->wu.my_family - 1].wxy[0].disp.pos + EFF76_Score_Pos_Data[ix][Order_Dir[ewk->wu.dir_old]][0];
         ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake + 0x1A0;

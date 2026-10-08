@@ -24,6 +24,8 @@ void Win_07000(PLW* wk);
 void Win_08000(PLW* wk);
 void Win_09000(PLW* wk);
 void Win_11000(PLW* wk);
+void Win_11000_jump_out(PLW* wk);
+void Win_11000_leap_out(PLW* wk);
 void Win_14000(PLW* wk);
 s32 q_em_dir(PLW* wk);
 s16 q_em_distance_chk(PLW* wk);

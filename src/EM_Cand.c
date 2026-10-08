@@ -99,9 +99,7 @@ void Initialize_EM_Candidate(s16 PL_id) {
     EM_Candidate[PL_id][1][9] = 0;
 }
 
-void Setup_Candidate_Buff(PL_id)
-s16 PL_id;
-{
+void Setup_Candidate_Buff(s16 PL_id) {
     s16 em = 0;
     s16 ix;
     for (ix = 1; ix <= 20; ix++) {
@@ -115,10 +113,7 @@ s16 PL_id;
 
 
 
-s32 Check_EM_Buff(grade, flag)
-s16 grade;
-s16 flag;
-{
+s32 Check_EM_Buff(s16 grade, s16 flag) {
     s16 ix = random_16_com();
     s16 step;
     s16 chr;
@@ -183,7 +178,7 @@ s16 ix;
 
 
 void Check_Same_CPU(s16 PL_id) {
-    s32 ix;
+    s16 ix;
     s16 ok_urien;
     if (VS_Index[PL_id] >= 9) {
         return;

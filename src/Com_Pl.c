@@ -463,7 +463,7 @@ s32 Ck_Exit_Guard(PLW* wk, WORK* em) {
         if (Guard_Counter[wk->wu.id] == Attack_Counter[wk->wu.id]) {
             return 1;
         }
-        Guard_Counter[wk->wu.id] = (&Attack_Counter[0])[wk->wu.id];
+        Guard_Counter[wk->wu.id] = Attack_Counter[wk->wu.id];
         Lv = Setup_Lv10(0);
         if (Break_Into_CPU == 2) {
             Lv = 10;
@@ -590,7 +590,7 @@ void Com_Damage(PLW* wk) {
 
 void Damage_1st(PLW* wk) {
     u8 Lv;
-    u16 Rnd;
+    u8 Rnd;
     u8 xx;
     WORK* em;
     Lever_Buff[wk->wu.id] = Setup_Guard_Lever(wk, 1);
@@ -926,12 +926,12 @@ void Float_3rd(register PLW* wk) {
         CP_No[wk->wu.id][2]++;
         Timer_00[wk->wu.id] = 4;
         Lever_Pool[wk->wu.id] = Setup_Guard_Lever(wk, 0);
-        Lever_Buff[wk->wu.id] = (&Lever_Pool[0])[wk->wu.id];
+        Lever_Buff[wk->wu.id] = Lever_Pool[wk->wu.id];
         break;
     default:
         if (--Timer_00[wk->wu.id] == 0) {
             Timer_00[wk->wu.id] = 3;
-            Lever_Buff[wk->wu.id] = (&Lever_Pool[0])[wk->wu.id];
+            Lever_Buff[wk->wu.id] = Lever_Pool[wk->wu.id];
         }
         break;
     }
@@ -948,14 +948,14 @@ void Float_4th(PLW* wk) {
         CP_No[wk->wu.id][2]++;
         Timer_00[wk->wu.id] = 4;
         Lever_Pool[wk->wu.id] = Setup_Guard_Lever(wk, 1);
-        Lever_Buff[wk->wu.id] = (&Lever_Pool[0])[wk->wu.id];
+        Lever_Buff[wk->wu.id] = Lever_Pool[wk->wu.id];
         return;
     default:
         if (--Timer_00[wk->wu.id] != 0) {
             break;
         }
         Timer_00[wk->wu.id] = 3;
-        Lever_Buff[wk->wu.id] = (&Lever_Pool[0])[wk->wu.id];
+        Lever_Buff[wk->wu.id] = Lever_Pool[wk->wu.id];
         break;
     }
 }
@@ -1084,7 +1084,7 @@ void Flip_2nd(PLW* wk) {
 
 
 void Flip_3rd(PLW* wk) {
-    s16 next_disposal;
+    s32 next_disposal;
     if (PL_Damage_Data[wk->wu.routine_no[2]] == 0) {
         return;
     }
@@ -1286,7 +1286,7 @@ s16 Decide_Exit_Catch(PLW* wk) {
 s32 Com_Rapid_Sub(PLW* wk, s16 Shot, s16* dir_step) {
     u16 xx;
     if (--Timer_00[wk->wu.id] == 0) {
-        Timer_00[wk->wu.id] = (&Timer_01[0])[wk->wu.id];
+        Timer_00[wk->wu.id] = Timer_01[wk->wu.id];
         xx = Rapid_Lever_Data[dir_step[0]];
         xx |= Shot;
         dir_step[0]++;
@@ -1412,7 +1412,7 @@ PLW* wk;
     CP_No[wk->wu.id][1] = 0;
     CP_No[wk->wu.id][2] = 0;
     CP_No[wk->wu.id][3] = 0;
-    Lever_Buff[wk->wu.id] = (&Lever_LR[0])[wk->wu.id];
+    Lever_Buff[wk->wu.id] = Lever_LR[wk->wu.id];
 }
 
 

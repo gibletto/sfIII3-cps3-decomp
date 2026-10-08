@@ -4,7 +4,7 @@
 #include "structs.h"
 
 void tilemap_put_char(u16 x, u16 y, u16 attr, u16 code);
-s32 tilemap_rect_fill(u16 x, u16 y, u16 w, u16 h, u16 attr, u16 code);
+void tilemap_rect_fill(u16 x, u16 y, u16 w, u16 h, u16 attr, u16 code);
 void tilemap_fill_column0(u16 attr, u16 code);
 void palette_write(s32 offset, u16 *src, s32 count);
 void palette_bank_set(s32 offset);

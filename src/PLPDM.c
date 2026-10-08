@@ -771,7 +771,7 @@ void Damage_28000(PLW* wk) {
 
 void Damage_29000(PLW* wk) {
     PLW* twk = (PLW*)wk->wu.target_adrs;
-    const u16* datadrs;
+    const s16* datadrs;
     switch (wk->wu.routine_no[3]) {
     case 0:
         wk->wu.dm_rl = twk->wu.rl_flag;
@@ -781,8 +781,12 @@ void Damage_29000(PLW* wk) {
             break;
         }
         wk->wu.routine_no[3]++;
-        datadrs = exdm_ix_data[wk->wu.dm_exdm_ix][wk->player_number];
-        wk->wu.xyz[0].disp.pos = (twk->wu.rl_flag) ? twk->wu.xyz[0].disp.pos - datadrs[0] : twk->wu.xyz[0].disp.pos + datadrs[0];
+        datadrs = (const s16*)exdm_ix_data[wk->wu.dm_exdm_ix][wk->player_number];
+        if (twk->wu.rl_flag) {
+            wk->wu.xyz[0].disp.pos = twk->wu.xyz[0].disp.pos - datadrs[0];
+        } else {
+            wk->wu.xyz[0].disp.pos = twk->wu.xyz[0].disp.pos + datadrs[0];
+        }
         wk->wu.xyz[1].disp.pos = twk->wu.xyz[1].disp.pos + datadrs[1];
         wk->wu.rl_flag = (wk->wu.dm_rl + datadrs[2]) & 1;
         wk->wu.cg_olc_ix = datadrs[3];
@@ -1260,8 +1264,10 @@ void get_damage_reaction_data(PLW* wk) {
     }
     if (wk->dead_flag) {
         wk->wu.routine_no[2] = dd_convert[wk->wu.routine_no[2]][wk->wu.dm_attlv];
-        if (wk->wu.routine_no[2] > 19 && wk->wu.routine_no[2] < 88 && wk->wu.routine_no[2] != 70) {
-            wk->wu.routine_no[2] = check_buttobi_type2(&wk->wu);
+        if (wk->wu.routine_no[2] > 19 && wk->wu.routine_no[2] < 88) {
+            if (wk->wu.routine_no[2] != 70) {
+                wk->wu.routine_no[2] = check_buttobi_type2(&wk->wu);
+            }
         }
     }
     if (wk->atemi_flag == 1) {

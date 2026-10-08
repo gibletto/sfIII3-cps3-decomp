@@ -21,7 +21,7 @@
 #include "effect_2.h"
 #include "EFFK5.h"
 
-static void get_okuri_time(WORK* ewk, WORK* mwk, MVJ* mvj);
+void get_okuri_time(WORK* ewk, WORK* mwk, MVJ* mvj);
 
 
 void effect_K5_move(WORK_Other* ewk) {
@@ -80,7 +80,7 @@ void effect_K5_move(WORK_Other* ewk) {
 
 /* provisional name */
 void K5_main_process(WORK* ewk, WORK* mwk, MVJ* mvj) {
-    s32 i;
+    s16 i;
     switch (ewk->routine_no[1]) {
     case 0:
         get_okuri_time(ewk, mwk, mvj);
@@ -97,7 +97,7 @@ void K5_main_process(WORK* ewk, WORK* mwk, MVJ* mvj) {
 
 
 
-static void get_okuri_time(WORK* ewk, WORK* mwk, MVJ* mvj) {
+void get_okuri_time(WORK* ewk, WORK* mwk, MVJ* mvj) {
     GOTCP gotcp;
     ST st;
     s16 exc;
@@ -163,7 +163,7 @@ end:
 
 
 void K5_decode_new_hit_index(WORK* wk, MVJ* mvj, u16 mf) {
-    s32 i;
+    s16 i;
     s16 t0;
     s16 t1;
     MVSW mvsw;

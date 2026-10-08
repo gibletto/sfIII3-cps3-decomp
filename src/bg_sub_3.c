@@ -232,7 +232,7 @@ s32 zoom_frame_judge_dist(void) {
     s16 right;
     bg_w.frame_flag = 0;
     p1 = &plw[0];
-    p2 = &plw[1];
+    p2 = p1 + 1;
     if (p1->wu.scr_mv_x < plw[1].wu.scr_mv_x) {
         left = p1->wu.scr_mv_x;
         right = p2->wu.scr_mv_x;
@@ -245,9 +245,9 @@ s32 zoom_frame_judge_dist(void) {
         return 2;
     }
     if (right < 272) {
-        return 0;
+        return 1;
     }
-    return 1;
+    return 0;
 }
 
 

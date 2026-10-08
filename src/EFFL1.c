@@ -321,12 +321,13 @@ void effL1_f_mk_all_init(WORK_Other_CONN* ewk) {
     for (i = 0; i < 6; i++) {
         ewk->conn[i] = gj_f_mk_all[i];
     }
-    if (Version_Type != 3) {
-        if (judge_final[WGJ_Target][Play_Type].all_clear) {
-            ewk->conn[4].nx -= 4;
-            ewk->conn[5].nx -= 6;
-            ewk->conn[5].chr++;
-        }
+    if (Version_Type == 3) {
+        return;
+    }
+    if (judge_final[WGJ_Target][Play_Type].all_clear) {
+        ewk->conn[4].nx -= 4;
+        ewk->conn[5].nx -= 6;
+        ewk->conn[5].chr++;
     }
 }
 
