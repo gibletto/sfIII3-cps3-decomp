@@ -95,7 +95,6 @@ void effect_D7_move(WORK_Other* ewk) {
 
 void effD7_main_process(WORK_Other* ewk) {
     PLW* mwk = (PLW*)ewk->my_master;
-    const s16 (*hit_box)[4];
     if (ewk->wu.hf.hit_flag) {
         ewk->wu.routine_no[1] = 1;
     }
@@ -144,13 +143,14 @@ void effD7_main_process(WORK_Other* ewk) {
                     break;
                 }
             }
-            if (ewk->wu.kage_flag && mwk->wu.routine_no[1] == 4 && mwk->wu.routine_no[2] == 30 &&
-                mwk->wu.cg_type == 0x28 && mwk->tk_success == ewk->wu.shell_ix[0]) {
-                hit_box = effD7_hit_box;
-                if (hit_check_subroutine(&ewk->wu, (WORK*)ewk->my_master, hit_box[0], hit_box[1])) {
+            if (ewk->wu.kage_flag) {
+                if (mwk->wu.routine_no[1] == 4 && mwk->wu.routine_no[2] == 30 &&
+                    mwk->wu.cg_type == 0x28 && mwk->tk_success == ewk->wu.shell_ix[0]) {
+                    if (hit_check_subroutine(&ewk->wu, (WORK*)ewk->my_master, effD7_hit_box[0], effD7_hit_box[1])) {
                     mwk->wu.cmwk[7] = 1;
                     ewk->wu.type = 0;
                     ewk->wu.routine_no[2] = 1;
+                }
                 }
             }
             break;

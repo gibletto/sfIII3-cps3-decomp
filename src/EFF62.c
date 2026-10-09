@@ -28,80 +28,78 @@
 
 void effect_61_move(WORK_Other_CONN* ewk) {
     WORK* mwk = (WORK*)ewk->my_master;
-    if (akebono_flag) {
-        return;
-    }
-    switch (ewk->wu.routine_no[0]) {
-    case 0:
-        ewk->wu.routine_no[0]++;
-        ewk->wu.be_flag = 1;
-        ewk->wu.disp_flag = 0;
-        ewk->wu.xyz[0].disp.pos += bg_w.bgw[1].pos_x_work;
-        set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_old + 1, 0);
-    case 1:
-        if (!another_bg[0] && !another_bg[1]) {
-            return;
-        }
-        ewk->wu.routine_no[0]++;
-    case 2:
-        if (!another_bg[0] && !another_bg[1]) {
-            ewk->wu.routine_no[0] = 3;
-            return;
-        }
-        switch (another_bg[mwk->type]) {
+    if (!akebono_flag) {
+        switch (ewk->wu.routine_no[0]) {
+        case 0:
+            ewk->wu.routine_no[0]++;
+            ewk->wu.be_flag = 1;
+            ewk->wu.disp_flag = 0;
+            ewk->wu.xyz[0].disp.pos += bg_w.bgw[1].pos_x_work;
+            set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_old + 1, 0);
         case 1:
-            if (ewk->wu.dir_old > 8) {
+            if (!another_bg[0] && !another_bg[1]) {
                 break;
             }
-            ewk->wu.xyz[1].cal += ewk->wu.mvxy.a[1].sp;
-            ewk->wu.disp_flag = 1;
-            ewk->wu.cg_number = eff61_data_tbl[ewk->wu.old_rno[0]][3];
-            disp_pos_trans_entry_seraph((WORK_Other*)ewk, ewk->wu.dir_old);
-            return;
+            ewk->wu.routine_no[0]++;
         case 2:
-            if (ewk->wu.dir_old > 8) {
-                ewk->wu.xyz[0].cal += ewk->wu.mvxy.a[1].sp;
-                ewk->wu.disp_flag = 1;
-                ewk->wu.cg_number = eff61_data_tbl[ewk->wu.old_rno[0]][3];
-                ewk->wu.cg_number += 32;
-                ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
-                ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-                sort_push_request4((WORK_Other*)ewk);
+            if (another_bg[0] || another_bg[1]) {
+                switch (another_bg[mwk->type]) {
+                case 1:
+                    if (ewk->wu.dir_old <= 8) {
+                        ewk->wu.xyz[1].cal += ewk->wu.mvxy.a[1].sp;
+                        ewk->wu.disp_flag = 1;
+                        ewk->wu.cg_number = eff61_data_tbl[ewk->wu.old_rno[0]][3];
+                        disp_pos_trans_entry_seraph((WORK_Other*)ewk, ewk->wu.dir_old);
+                    }
+                    break;
+                case 2:
+                    if (ewk->wu.dir_old > 8) {
+                        ewk->wu.xyz[0].cal += ewk->wu.mvxy.a[1].sp;
+                        ewk->wu.disp_flag = 1;
+                        ewk->wu.cg_number = eff61_data_tbl[ewk->wu.old_rno[0]][3];
+                        ewk->wu.cg_number += 32;
+                        ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
+                        ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
+                        sort_push_request4((WORK_Other*)ewk);
+                    }
+                    break;
+                case 3:
+                    if (ewk->wu.dir_old <= 8) {
+                        break;
+                    }
+                    ewk->wu.xyz[0].cal -= ewk->wu.mvxy.a[1].sp;
+                    ewk->wu.disp_flag = 1;
+                    ewk->wu.cg_number = eff61_data_tbl[ewk->wu.old_rno[0]][3];
+                    ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
+                    ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
+                    sort_push_request4((WORK_Other*)ewk);
+                    break;
+                case 4:
+                    if (ewk->wu.dir_old > 8) {
+                        break;
+                    }
+                    ewk->wu.xyz[1].cal -= ewk->wu.mvxy.a[1].sp;
+                    ewk->wu.disp_flag = 1;
+                    ewk->wu.cg_number = eff61_data_tbl[ewk->wu.old_rno[0]][3];
+                    ewk->wu.cg_number += 32;
+                    disp_pos_trans_entry_seraph((WORK_Other*)ewk, ewk->wu.dir_old);
+                    break;
+                default:
+                    ewk->wu.disp_flag = 0;
+                    break;
+                }
+            } else {
+                ewk->wu.routine_no[0] = 3;
             }
             break;
         case 3:
-            if (ewk->wu.dir_old <= 8) {
-                break;
-            }
-            ewk->wu.xyz[0].cal -= ewk->wu.mvxy.a[1].sp;
-            ewk->wu.disp_flag = 1;
-            ewk->wu.cg_number = eff61_data_tbl[ewk->wu.old_rno[0]][3];
-            ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
-            ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-            sort_push_request4((WORK_Other*)ewk);
-            break;
-        case 4:
-            if (ewk->wu.dir_old > 8) {
-                break;
-            }
-            ewk->wu.xyz[1].cal -= ewk->wu.mvxy.a[1].sp;
-            ewk->wu.disp_flag = 1;
-            ewk->wu.cg_number = eff61_data_tbl[ewk->wu.old_rno[0]][3];
-            ewk->wu.cg_number += 32;
-            disp_pos_trans_entry_seraph((WORK_Other*)ewk, ewk->wu.dir_old);
+            ewk->wu.routine_no[0] = 1;
             break;
         default:
-            ewk->wu.disp_flag = 0;
+            all_cgps_put_back((WORK_Other*)ewk);
+            push_effect_work(&ewk->wu);
             break;
         }
-        return;
-    case 3:
-        ewk->wu.routine_no[0] = 1;
-        return;
-    default:
-        all_cgps_put_back((WORK_Other*)ewk);
-        push_effect_work(&ewk->wu);
-        return;
     }
 }
 

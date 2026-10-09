@@ -124,27 +124,37 @@ void win_mark_write(s16 pl) {
     }
 }
 
+/* one win mark on the text layer: four words */
+typedef struct {
+    u16 w[4];
+} WIN_CELL;
+
 /* provisional name */
 u32 win_mark_all_write(u32 pl)
 {
-    u16 (*cell)[4];
+    WIN_CELL* cell;
     s16* type;
     s16 n;
+    s32 i;
 
     win_mark_phase[(s16)pl] = 0;
     win_mark_pos_set(pl);
-    cell = (u16 (*)[4])((SS_RAM + 0x400) + win_mark_pos[(s16)pl] * 4);
     type = win_type[(s16)pl];
+    cell = (WIN_CELL*)((SS_RAM + 0x400) + win_mark_pos[(s16)pl] * 4);
     if ((s16)pl == 0) {
+        i = 0;
         for (n = (Battle_Round[Play_Type] + 1) * 2; n > 0; n -= 2) {
-            (*cell)[1] = win_mark_blink_tbl[*type][win_mark_phase[(s16)pl]] | ((*cell)[1] & 1);
-            (*cell)[3] = win_mark_blink_tbl[*type++][win_mark_phase[(s16)pl]] | ((*cell)[-1] & 1);
+            cell->w[1] = win_mark_blink_tbl[type[i]][win_mark_phase[(s16)pl]] | (cell->w[1] & 1);
+            cell->w[3] = win_mark_blink_tbl[type[i]][win_mark_phase[(s16)pl]] | (((u16*)cell)[-1] & 1);
+            i++;
             cell--;
         }
     } else {
+        i = 0;
         for (n = (Battle_Round[Play_Type] + 1) * 2; n > 0; n -= 2) {
-            (*cell)[1] = win_mark_blink_tbl[*type][win_mark_phase[(s16)pl]] | ((*cell)[1] & 1);
-            (*cell)[3] = win_mark_blink_tbl[*type++][win_mark_phase[(s16)pl]] | ((*cell)[3] & 1);
+            cell->w[1] = win_mark_blink_tbl[type[i]][win_mark_phase[(s16)pl]] | (cell->w[1] & 1);
+            cell->w[3] = win_mark_blink_tbl[type[i]][win_mark_phase[(s16)pl]] | (cell->w[3] & 1);
+            i++;
             cell++;
         }
     }

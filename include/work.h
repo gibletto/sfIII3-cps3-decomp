@@ -92,7 +92,7 @@ extern u32* isp_exception;          /* provisional name */
 extern u32* isp_frt_compare;        /* provisional name */
 extern u32* isp_frt_overflow;       /* provisional name */
 extern u32 task_sched_context[3];   /* provisional name */
-extern u32 exception_regs[23];      /* provisional name */
+extern EXC_REGS exception_regs;      /* provisional name */
 extern u32 exception_code;          /* provisional name */
 extern s32 errno;
 extern u32 sys_cfg_default_tbl[];

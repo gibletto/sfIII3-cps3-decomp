@@ -467,7 +467,7 @@ u32 frame_pass_count;  /* 02007F0C */
 s8 task_ran_flag;  /* 02007F10 */
 u32 task_sched_context[3];  /* 02007F14 */
 SETTINGS game_config_work;  /* 02007F20 */
-u32 exception_regs[23];  /* 02007F30 */
+EXC_REGS exception_regs;  /* 02007F30 */
 u32 exception_code;  /* 02007F8C */
 u8 boot_stack[4100];  /* the stack r15 starts on: vector 1 points at its end (task_stack); provisional name */
 u8 task_stack[18][1024];  /* 02008F94 */

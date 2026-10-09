@@ -127,7 +127,8 @@ u16 ix;
     Score[(u8)id][2] += Score_Data[ix];
     if (plw[id].wu.operator != 0) {
         if (!Play_Type) {
-            if ((Score[(u8)id][0] += Score_Data[ix]) >= 99999900) {
+            Score[(u8)id][0] += Score_Data[ix];
+            if (Score[(u8)id][0] >= 99999900) {
                 Score[(u8)id][0] = 99999900;
             }
         } else {
@@ -149,23 +150,21 @@ void Disp_Player_Score(s16 id) {
     s16 top = -1;
     s16 x;
     s16 i;
-    s32 t;
-    for (i = 6; i >= 1; i--) {
+    i = 6;
+    while (i >= 1) {
         digit[i] = score / div;
-        t = digit[i];
-        t *= div;
-        score -= t;
+        score -= digit[i] * div;
         if (top < 0) {
             if (digit[i]) {
                 top = i;
             }
         }
-        div /= 10;
+        i--;
+        div = div / 10;
     }
     x = Score_X_Pos_Data[id][Game_setting.mode] - top - 1;
-    for (i = top; i >= 1; i--) {
+    for (i = top; i >= 1; i--, x++) {
         score8x16_put(x, 0, 16, digit[i]);
-        x++;
     }
 }
 
@@ -174,15 +173,16 @@ void Disp_Player_Score(s16 id) {
 /* provisional name */
 void Score_Sub(void) {
     u16 num;
-    s32 tens;
+    u16 tens;
     s16 x;
     if (plw[0].wu.operator != 0) {
         if (Demo_Flag != 0) {
             x = Score_X_Pos_Data[0][Game_setting.mode];
             tilemap_clear_rect(x + 0xFFF9, 0, Score_X_Pos_Data[0][Game_setting.mode], 1);
             Disp_Player_Score(0);
-            tens = num = Continue_Coin[0];
-            tens /= 10;
+            tens = Continue_Coin[0];
+            num = Continue_Coin[0];
+            tens = tens / 10;
             score8x16_put(Score_X_Pos_Data[0][Game_setting.mode] - 1, 0, 16, tens);
             num -= tens * 10;
             score8x16_put(Score_X_Pos_Data[0][Game_setting.mode], 0, 16, num);
@@ -192,8 +192,9 @@ void Score_Sub(void) {
         x = Score_X_Pos_Data[1][Game_setting.mode];
         tilemap_clear_rect(x + 0xFFF9, 0, Score_X_Pos_Data[1][Game_setting.mode], 1);
         Disp_Player_Score(1);
-        tens = num = Continue_Coin[1];
-        tens /= 10;
+        tens = Continue_Coin[1];
+        num = Continue_Coin[1];
+        tens = tens / 10;
         score8x16_put(Score_X_Pos_Data[1][Game_setting.mode] - 1, 0, 16, tens);
         num -= tens * 10;
         score8x16_put(Score_X_Pos_Data[1][Game_setting.mode], 0, 16, num);

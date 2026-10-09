@@ -96,7 +96,6 @@ void effect_I8_move(WORK_Other* ewk) {
 
 void effI8_main_process(WORK_Other* ewk) {
     PLW* mwk = (PLW*)ewk->my_master;
-    const s16 (*hit_box)[4];
     if (ewk->wu.hf.hit_flag) {
         ewk->wu.routine_no[1] = 1;
     }
@@ -146,13 +145,13 @@ void effI8_main_process(WORK_Other* ewk) {
                     break;
                 }
             }
-            if (ewk->wu.kage_flag != 0 && ewk->refrected == 0 && mwk->wu.routine_no[1] == 4 &&
-                mwk->wu.routine_no[2] == 31 && mwk->wu.cg_type == 0x28) {
-                hit_box = effI8_hit_box;
-                if (hit_check_subroutine(&ewk->wu, (WORK*)ewk->my_master, hit_box[0], hit_box[1])) {
-                    mwk->wu.cmwk[7] = 1;
-                    ewk->wu.type = 0;
-                    ewk->wu.routine_no[2] = 1;
+            if (ewk->wu.kage_flag != 0 && ewk->refrected == 0) {
+                if (mwk->wu.routine_no[1] == 4 && mwk->wu.routine_no[2] == 31 && mwk->wu.cg_type == 0x28) {
+                    if (hit_check_subroutine(&ewk->wu, (WORK*)ewk->my_master, effI8_hit_box[0], effI8_hit_box[1])) {
+                        mwk->wu.cmwk[7] = 1;
+                        ewk->wu.type = 0;
+                        ewk->wu.routine_no[2] = 1;
+                    }
                 }
             }
             break;
@@ -308,8 +307,7 @@ s16 y;
         row = 7;
     }
     dat = cbm_table[row][col];
-    bit = dx % 64;
-    bit /= 4;
+    bit = dx % 64 / 4;
     if (bit > 15) {
         bit = 15;
     }

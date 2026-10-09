@@ -115,7 +115,7 @@ void renewal_table_data(WORK_Other_JUDGE* ewk) {
     s16 j;
     for (mm = (u16*)ewk->wu.h_bod, i = 0; i < 4; i++) {
         for (j = 0; j < 4; j++) {
-            ewk->jx[i][j] = *mm++;
+            *(&ewk->jx[i][0] + j) = *mm++;
         }
     }
     for (mm = (u16*)ewk->wu.h_han, i = 0; i < 4; i++) {
@@ -138,12 +138,12 @@ void renewal_table_data(WORK_Other_JUDGE* ewk) {
         ewk->jx[14][j] = *mm++;
     }
     for (i = 0; i < 15; i++) {
-        ewk->ja[i * 4 + 2][0] = ewk->ja[i * 4][0] = ewk->jx[i][0];
-        ewk->ja[i * 4 + 3][0] = ewk->ja[i * 4 + 1][0] = ewk->jx[i][0] + ewk->jx[i][1];
-        ewk->ja[i * 4 + 3][1] = ewk->ja[i * 4 + 2][1] = ewk->jx[i][2];
-        ewk->ja[i * 4 + 1][1] = ewk->ja[i * 4][1] = ewk->jx[i][2] + ewk->jx[i][3];
+        ewk->ja[i * 4][0] = ewk->ja[i * 4 + 2][0] = ewk->jx[i][0];
+        ewk->ja[i * 4 + 1][0] = ewk->ja[i * 4 + 3][0] = ewk->jx[i][0] + ewk->jx[i][1];
+        ewk->ja[i * 4 + 2][1] = ewk->ja[i * 4 + 3][1] = ewk->jx[i][2];
+        ewk->ja[i * 4][1] = ewk->ja[i * 4 + 1][1] = ewk->jx[i][2] + ewk->jx[i][3];
     }
-    ewk->ja[60][1] = ewk->ja[60][0] = 0;
+    ewk->ja[60][0] = ewk->ja[60][1] = 0;
     ewk->ja[61][0] = 0;
     ewk->ja[61][1] = -ewk->wu.position_y;
 }

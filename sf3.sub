@@ -71,7 +71,6 @@ INPUT obj\SHELL13.obj
 INPUT obj\SHELL14.obj
 INPUT obj\aboutspr.obj
 INPUT obj\CHARMOVE.obj
-INPUT obj\charmove_2.obj
 INPUT obj\CHARID.obj
 INPUT obj\HITCHECK.obj
 INPUT obj\HITPLPL.obj

@@ -31,6 +31,7 @@ void effect_45_move(WORK_Other_CONN* ewk) {
     s16 i;
     s16 j;
     s16 slot;
+    s16 pos_y;
     const EFF45_CELL_REQ* cell;
     switch (ewk->wu.routine_no[0]) {
     case 0:
@@ -59,7 +60,9 @@ void effect_45_move(WORK_Other_CONN* ewk) {
                 scrn_map_set(0, eff_bg_adrs[slot].adrs);
             }
         }
-        Scrn_Y_Set_W(0, eff45_anm_tbl[ewk->wu.cg_ix].y + (bg_w.bgw[0].abs_y & 0x3FF));
+        pos_y = eff45_anm_tbl[ewk->wu.cg_ix].y;
+        pos_y += bg_w.bgw[0].abs_y & 0x3FF;
+        Scrn_Y_Set_W(0, pos_y);
         break;
     default:
         push_effect_work(&ewk->wu);

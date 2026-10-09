@@ -181,7 +181,11 @@ s32 effect_G0_init(Order, Time, Score, Pos_Index)
     for (ix = 0; ix < 6; ix++) {
         ewk->conn[ix] = Result_Score[ix];
     }
-    ix = Perfect_Flag ? 1 : 0;
+    if (Perfect_Flag) {
+        ix = 1;
+    } else {
+        ix = 0;
+    }
     ewk->wu.hit_quake = bg_w.bgw[1].wxy[0].disp.pos + EFFG0_Score_Pos_Data[ix][Pos_Index][0];
     ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake + 416;
     ewk->wu.xyz[1].disp.pos = EFFG0_Score_Pos_Data[ix][Pos_Index][1];

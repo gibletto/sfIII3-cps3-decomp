@@ -137,8 +137,8 @@ setting in that source (thirty-four settings for the thirty-two rules: the switc
 `MDL_ARG_CONST`, `MDL_CAST_CSE`, `MDL_ARG_CAST`, `MDL_GCSE`, `ASM_MULWAIT`, `GEN_CHAIN_JUMP`, `PEP_AUTOINC`, `MDL_IV`, `GEN_POOL_MOVLOC`, `MDL_LOOP_INV`, `GEN_RELOAD`, `GEN_EVICT_ORDER`, `MDL_CAST_MUL`, `MDL_MUL_CONST`, `PEP_RET_R0`, `GEN_MEM_INDEX`, `GEN_R0VAR`, `MDL_IMM_REG`, `MDL_MASK_AND`, `MDL_IV_BASE`, `MDL_IV_TEMP`, `GEN_JUMP_TEMP`, `MDL_TEST_REPLACE`, `MDL_MUL_ONE`, `MDL_TEMP_EXPR` and `ASM_SPECREG` to 0 gives Release 26's behaviour back. The
 original files are in `bin/original`.
 
-With the changes, 9,616 of the 10,065 C routines compile to the arcade's instructions (3,777 with the original
-Release 26), and 9,393 to its exact bytes (1,867). Over 254 Fightcade replays compared with the original ROM,
+With the changes, 9,635 of the 10,066 C routines compile to the arcade's instructions (3,780 with the original
+Release 26), and 9,434 to its exact bytes (1,872). Over 254 Fightcade replays compared with the original ROM,
 252 keep identical game state throughout (218 before) and 252 identical slowdown (214).
 
 ## Fightcade replays

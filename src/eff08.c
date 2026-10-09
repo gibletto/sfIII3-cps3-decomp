@@ -33,7 +33,7 @@
 
 
 void effect_08_move(WORK_Other* ewk) {
-    s8 rounds = 0;
+    s8 rounds;
     s16 slot;
     s16 pos_y;
     switch (ewk->wu.routine_no[0]) {
@@ -55,6 +55,8 @@ void effect_08_move(WORK_Other* ewk) {
                 if (!ewk->wu.cg_ix) {
                     rounds = random_16_com();
                     rounds = eff08_loop_tbl[rounds];
+                } else {
+                    rounds = 0;
                 }
                 if (rounds) {
                     ewk->wu.routine_no[0]++;
@@ -62,7 +64,8 @@ void effect_08_move(WORK_Other* ewk) {
                     ewk->wu.cg_ctr = eff08_anm2_tbl[(s8)ewk->wu.cg_ix].timer;
                     slot = eff08_anm2_tbl[(s8)ewk->wu.cg_ix].slot;
                     scrn_map_set_now(1, eff_bg_adrs[slot].adrs);
-                    pos_y = eff08_anm2_tbl[(s8)ewk->wu.cg_ix].y + (bg_w.bgw[1].abs_y & 0x3FF);
+                    pos_y = eff08_anm2_tbl[(s8)ewk->wu.cg_ix].y;
+                    pos_y += bg_w.bgw[1].abs_y & 0x3FF;
                     Scrn_Y_Set_R(1, pos_y);
                     return;
                 }
@@ -71,7 +74,8 @@ void effect_08_move(WORK_Other* ewk) {
                 scrn_map_set_now(1, eff_bg_adrs[slot].adrs);
             }
         }
-        pos_y = eff08_anm_tbl[(s8)ewk->wu.cg_ix].y + (bg_w.bgw[1].abs_y & 0x3FF);
+        pos_y = eff08_anm_tbl[(s8)ewk->wu.cg_ix].y;
+        pos_y += bg_w.bgw[1].abs_y & 0x3FF;
         Scrn_Y_Set_R(1, pos_y);
         break;
     case 2:
@@ -87,7 +91,8 @@ void effect_08_move(WORK_Other* ewk) {
                         ewk->wu.cg_ctr = eff08_anm_tbl[(s8)ewk->wu.cg_ix].timer;
                         slot = eff08_anm_tbl[(s8)ewk->wu.cg_ix].slot;
                         scrn_map_set_now(1, eff_bg_adrs[slot].adrs);
-                        pos_y = eff08_anm_tbl[(s8)ewk->wu.cg_ix].y + (bg_w.bgw[1].abs_y & 0x3FF);
+                        pos_y = eff08_anm_tbl[(s8)ewk->wu.cg_ix].y;
+                        pos_y += bg_w.bgw[1].abs_y & 0x3FF;
                         Scrn_Y_Set_R(1, pos_y);
                         break;
                     }
@@ -97,7 +102,8 @@ void effect_08_move(WORK_Other* ewk) {
                 scrn_map_set_now(1, eff_bg_adrs[slot].adrs);
             }
         }
-        pos_y = eff08_anm2_tbl[(s8)ewk->wu.cg_ix].y + (bg_w.bgw[1].abs_y & 0x3FF);
+        pos_y = eff08_anm2_tbl[(s8)ewk->wu.cg_ix].y;
+        pos_y += bg_w.bgw[1].abs_y & 0x3FF;
         Scrn_Y_Set_R(1, pos_y);
         break;
     default:

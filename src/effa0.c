@@ -141,7 +141,6 @@ s32 effect_A0_init(s16 pl) {
     PLW* mwk;
     WORK* twk;
     s16 ix;
-    s32 center;
     s16 offset;
     if ((ix = pull_effect_work(4)) == -1) {
         return -1;
@@ -167,20 +166,19 @@ s32 effect_A0_init(s16 pl) {
         }
         Player_Color[twk->id] = ewk->wu.old_rno[2];
     }
-    center = bg_w.bgw[1].wxy[0].disp.pos;
     offset = bg_w.pos_offset;
     if (mwk->wu.rl_flag) {
-        if (mwk->wu.xyz[0].disp.pos < center) {
+        if (mwk->wu.xyz[0].disp.pos < bg_w.bgw[1].wxy[0].disp.pos) {
             ewk->wu.xyz[0].disp.pos = mwk->wu.xyz[0].disp.pos - 0x100;
         } else {
-            ewk->wu.xyz[0].disp.pos = center - offset - 32;
+            ewk->wu.xyz[0].disp.pos = bg_w.bgw[1].wxy[0].disp.pos - offset - 32;
         }
         ewk->wu.old_rno[1] = twk->xyz[0].disp.pos - 16;
     } else {
-        if (mwk->wu.xyz[0].disp.pos > center) {
+        if (mwk->wu.xyz[0].disp.pos > bg_w.bgw[1].wxy[0].disp.pos) {
             ewk->wu.xyz[0].disp.pos = mwk->wu.xyz[0].disp.pos + 0x100;
         } else {
-            ewk->wu.xyz[0].disp.pos = offset + center + 32;
+            ewk->wu.xyz[0].disp.pos = offset + bg_w.bgw[1].wxy[0].disp.pos + 32;
         }
         ewk->wu.old_rno[1] = twk->xyz[0].disp.pos + 16;
     }

@@ -1481,11 +1481,15 @@ typedef struct {
 } EFFA6_MESSAGE;
 
 typedef struct {
+    s16 d[6];
+} B6_SRC;
+
+typedef struct {
     WORK wu;
     WORK* my_master;
     s16 pad0[4];
     s16 num;
-    s16 src[32][6];
+    B6_SRC src[32];
     s16 pos[32][3];
 } WORK_B6;
 
@@ -1994,12 +1998,7 @@ typedef union {
         u16 h;
         u16 l;
     } sws;
-    struct {
-        u8 hh;
-        u8 h;
-        u8 l;
-        u8 ll;
-    } swc;
+    u8 swc[4];
 } MVSW_BE;
 
 typedef struct {
@@ -2335,6 +2334,33 @@ typedef struct {
     u32 timer;
     u32 pad1[2];
 } TCB;
+
+/* provisional name: the registers the exception handlers save for the crash screen */
+typedef struct {
+    u32 r0;
+    u32 r1;
+    u32 r2;
+    u32 r3;
+    u32 r4;
+    u32 r5;
+    u32 r6;
+    u32 r7;
+    u32 r8;
+    u32 r9;
+    u32 r10;
+    u32 r11;
+    u32 r12;
+    u32 r13;
+    u32 r14;
+    u32 sp;
+    u32 sr;
+    u32 gbr;
+    u32 vbr;
+    u32 mach;
+    u32 macl;
+    u32 pr;
+    u32 pc;
+} EXC_REGS;
 
 typedef struct {
     s8  type;           /* 00 entry type, cleared when entry starts */
