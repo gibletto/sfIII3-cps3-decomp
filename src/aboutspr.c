@@ -53,16 +53,17 @@ void init_char_gfx_tables(void) {
         cg_slot_tbl[i].addr = cg_slot_tbl[i].handle = 0;
     }
     for (i = 0; i < 64; i++) {
-        kage_gfx_ofs[i] = kage_gfx_cells[i] = 0;
+        (&kage_gfx_ofs[0])[i] = kage_gfx_cells[i] = 0;
     }
     for (i = 0; i < 288; i++) {
-        car_gfx_ofs[i] = car_gfx_cells[i] = 0;
+        (&car_gfx_ofs[0])[i] = car_gfx_cells[i] = 0;
     }
     for (i = 0; i < 512; i++) {
-        hitmark_gfx_cells[i] = hitmark_gfx_ofs[0][i] = hitmark_gfx_ofs[1][i] = 0;
+        hitmark_gfx_ofs[0][i] = hitmark_gfx_ofs[1][i] = 0;
+        hitmark_gfx_cells[i] = 0;
     }
     for (i = 0; i < 64; i++) {
-        seraph_gfx_ofs[i] = seraph_gfx_cells[i] = 0;
+        (&seraph_gfx_ofs[0])[i] = seraph_gfx_cells[i] = 0;
     }
 }
 

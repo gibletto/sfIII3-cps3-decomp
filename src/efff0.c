@@ -177,21 +177,20 @@ void effF0_scroll_reset(WORK_Other* ewk) {
 void effF0_scroll_set(WORK_Other* ewk) {
     s32 x;
     s32 y;
-    AKE_SCRL* sp = &ake_scrl_w[3];
     switch (another_bg[ewk->wu.type]) {
     case 2:
-        sp->pos_x = sp->xy[0].disp.pos & 0x3FF;
-        sp->pos_x -= bg_w.pos_offset;
-        sp->pos_y = bg_w.bgw[1].wxy[1].disp.pos;
-        x = sp->pos_x;
-        y = sp->pos_y;
+        ake_scrl_w[3].pos_x = ake_scrl_w[3].xy[0].disp.pos & 0x3FF;
+        ake_scrl_w[3].pos_x -= bg_w.pos_offset;
+        ake_scrl_w[3].pos_y = bg_w.bgw[1].wxy[1].disp.pos;
+        x = ake_scrl_w[3].pos_x;
+        y = ake_scrl_w[3].pos_y;
         break;
     case 3:
-        sp->pos_x = sp->xy[0].disp.pos & 0x3FF;
-        sp->pos_x -= bg_w.pos_offset;
-        sp->pos_y = bg_w.bgw[1].wxy[1].disp.pos;
-        x = sp->pos_x;
-        y = sp->pos_y;
+        ake_scrl_w[3].pos_x = ake_scrl_w[3].xy[0].disp.pos & 0x3FF;
+        ake_scrl_w[3].pos_x -= bg_w.pos_offset;
+        ake_scrl_w[3].pos_y = bg_w.bgw[1].wxy[1].disp.pos;
+        x = ake_scrl_w[3].pos_x;
+        y = ake_scrl_w[3].pos_y;
         y += 0x200;
         break;
     case 4:

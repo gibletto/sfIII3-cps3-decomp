@@ -3,8 +3,9 @@
  *
  * Task control: init_task_stacks gives each of the eight task control blocks its stack; create_task,
  * destroy_current_task, kill_tasks_by_func and kill_tasks_by_priority start and stop tasks (used by
- * Com_Pl and end_sub). Debug screens: dbg_memory_dump_rows and dbg_disasm_rows print memory rows,
- * and disasm_sh_opcode turns an SH-2 instruction word into its mnemonic from the opcode tables.
+ * Com_Pl and end_sub). Debug screens: cpu_hang_forever is where a fatal exception ends (its
+ * register monitor is behind an endless loop), dbg_memory_dump_rows and dbg_disasm_rows print memory
+ * rows, and disasm_sh_opcode turns an SH-2 instruction word into its mnemonic from the opcode tables.
  */
 
 #include "structs.h"
@@ -59,6 +60,7 @@
 #include "textsound_3.h"
 #include "entry_2.h"
 #include "Entry.h"
+#include "cps3.h"
 
 
 
@@ -205,16 +207,61 @@ s32 mode;
 
 
 
+extern void (*const vector_table[])();
+void vector_restart();
+
+
+
+/*
+ * provisional name: the crash screen. The exception handlers come here after saving the registers
+ * in exception_regs. The endless loop at the top is all that ever runs; behind it is the
+ * monitor that printed the break label, the saved registers in three columns and the code at the
+ * saved pc, waited for the input word and restarted the program.
+ */
+void cpu_hang_forever(void) {
+    while (1) {
+    }
+    do {
+    } while (*(volatile u16*)IO_REG == 0xFFFF);
+    tilemap_print_string_attr(30, 22, 14, sh_str_break);
+    tilemap_print_string_attr(37, 22, 14, (const s8*)current_task->timer);
+    tilemap_print_string(1, 0, 0xFFFF, (const TM_STRING*)&monitor_msg_tbl[18]);
+    tilemap_print_hex_block(7, 2, 14, exception_regs.r0, 8, 0);
+    tilemap_print_hex_block(22, 2, 14, exception_regs.r1, 8, 0);
+    tilemap_print_hex_block(37, 2, 14, exception_regs.r2, 8, 0);
+    tilemap_print_hex_block(7, 3, 14, exception_regs.r3, 8, 0);
+    tilemap_print_hex_block(22, 3, 14, exception_regs.r4, 8, 0);
+    tilemap_print_hex_block(37, 3, 14, exception_regs.r5, 8, 0);
+    tilemap_print_hex_block(7, 4, 14, exception_regs.r6, 8, 0);
+    tilemap_print_hex_block(22, 4, 14, exception_regs.r7, 8, 0);
+    tilemap_print_hex_block(37, 4, 14, exception_regs.r8, 8, 0);
+    tilemap_print_hex_block(7, 5, 14, exception_regs.r9, 8, 0);
+    tilemap_print_hex_block(22, 5, 14, exception_regs.r10, 8, 0);
+    tilemap_print_hex_block(37, 5, 14, exception_regs.r11, 8, 0);
+    tilemap_print_hex_block(7, 6, 14, exception_regs.r12, 8, 0);
+    tilemap_print_hex_block(22, 6, 14, exception_regs.r13, 8, 0);
+    tilemap_print_hex_block(37, 6, 14, exception_regs.r14, 8, 0);
+    tilemap_print_hex_block(7, 7, 14, exception_regs.sp, 8, 0);
+    tilemap_print_hex_block(22, 7, 14, exception_regs.pc, 8, 0);
+    tilemap_print_hex_block(7, 8, 14, exception_regs.pr, 8, 0);
+    tilemap_print_hex_block(22, 8, 14, exception_regs.gbr, 8, 0);
+    dbg_disasm_rows((u16*)(exception_regs.pc & ~1));
+    while (*(volatile u16*)IO_REG != 0xCFFF) {
+    }
+    vector_restart(vector_table);
+}
+
+
+
 /* provisional name */
 void dbg_memory_dump_rows(u16* tbl) {
-    s32 row;
-    s32 col;
-    s32 x;
+    long row;
+    long col;
     tilemap_print_string(1, 0, 0xFFFF, dbg_dump_title);
     for (row = 0; row < 8; row++) {
         tilemap_print_hex_block(1, row + 11, 14, (s32)tbl, 8, 0);
-        for (col = 0, x = 10; col < 8; col++, x += 5) {
-            tilemap_print_hex_block(x, row + 11, 14, *tbl, 4, 0);
+        for (col = 0; col < 8; col++) {
+            tilemap_print_hex_block(col * 5 + 10, row + 11, 14, *tbl, 4, 0);
             tbl++;
         }
     }
@@ -225,12 +272,11 @@ void dbg_memory_dump_rows(u16* tbl) {
 /* provisional name */
 void dbg_disasm_rows(u16* tbl) {
     u16 y;
-    s16 i;
+    long i;
     s8 buf[128];
     tilemap_print_string(1, 0, 0xFFFF, dbg_disasm_title);
     for (i = 0; i < 10; i++) {
-        tilemap_print_hex_block(1, i + 11, 14, (s32)tbl, 8, 0);
-        y = i + 11;
+        tilemap_print_hex_block(1, y = i + 11, 14, (s32)tbl, 8, 0);
         tilemap_print_hex_block(10, y, 14, *tbl, 4, 0);
         disasm_sh_opcode(*tbl, buf);
         tilemap_print_string_attr(15, y, 14, buf);

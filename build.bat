@@ -153,8 +153,6 @@ shc src\aboutspr.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nor
 if errorlevel 1 goto fail
 shc src\CHARMOVE.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\CHARMOVE.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\charmove_2.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\charmove_2.obj >obj\shc.log 2>&1
-if errorlevel 1 goto fail
 shc src\CHARID.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\CHARID.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\HITCHECK.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\HITCHECK.obj >obj\shc.log 2>&1

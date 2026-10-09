@@ -38,6 +38,7 @@ void effect_41_move(WORK_Other* ewk) {
             break;
         case 2:
             sa_gauge_flash[mwk->wu.id] |= 4;
+        default:
             break;
         }
         set_char_move_init(&ewk->wu, 0, sa_sign_data[ewk->wu.type][2]);

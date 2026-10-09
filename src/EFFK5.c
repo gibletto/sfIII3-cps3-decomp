@@ -255,18 +255,18 @@ u32 decode_mvsw(u16 flag) {
     MVSW_BE mvsw;
     mvsw.swi = flag;
     if (flag & 0x1000) {
-        mvsw.swc.hh = mvsw.swc.h = mvsw.swc.l;
-        mvsw.swc.hh >>= 2;
-        mvsw.swc.hh &= 3;
-        mvsw.swc.h &= 3;
+        mvsw.swc[0] = mvsw.swc[1] = mvsw.swc[2];
+        mvsw.swc[0] >>= 2;
+        mvsw.swc[0] &= 3;
+        mvsw.swc[1] &= 3;
     } else {
         mvsw.sws.h = 0xFFFF;
     }
     if (flag & 0x10) {
-        mvsw.swc.l = mvsw.swc.ll;
-        mvsw.swc.l >>= 2;
-        mvsw.swc.l &= 3;
-        mvsw.swc.ll &= 3;
+        mvsw.swc[2] = mvsw.swc[3];
+        mvsw.swc[2] >>= 2;
+        mvsw.swc[2] &= 3;
+        mvsw.swc[3] &= 3;
     } else {
         mvsw.sws.l = 0xFFFF;
     }

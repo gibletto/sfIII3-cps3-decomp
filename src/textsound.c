@@ -413,7 +413,9 @@ void tilemap_print_script_seq(u16 x, u16 y, u16 pal, const TMSCRIPT* scr) {
     u8* s;
     u16 d;
     u16 attr;
-    s32 ofs = (x * 2 + y * 0x80) * 2;
+    s32 ox = x;
+    s32 oy = y;
+    s32 ofs = (ox * 2 + oy * 0x80) * 2;
     s32 n;
     s32 i;
     u32 w;
@@ -423,14 +425,14 @@ void tilemap_print_script_seq(u16 x, u16 y, u16 pal, const TMSCRIPT* scr) {
     if (scr->kind == 0) {
         line = (TMLINE*)scr->data;
         dst = (u16*)((u8*)((u16*)SS_RAM) + (line->x << 2) + (line->y << 8));
-        if (x + y != 0) {
+        if (ox + oy != 0) {
             dst = (u16*)((u8*)dst + ofs);
         }
         for (s = line->str; *s != 0; s++) {
             if (*s == 10) {
                 line++;
                 dst = (u16*)((u8*)((u16*)SS_RAM) + (line->x << 2) + (line->y << 8));
-                if (x + y != 0) {
+                if (ox + oy != 0) {
                     dst = (u16*)((u8*)dst + ofs);
                 }
                 s = line->str;
@@ -451,7 +453,7 @@ void tilemap_print_script_seq(u16 x, u16 y, u16 pal, const TMSCRIPT* scr) {
             n = blk[0];
             attr = blk[3];
             dst = (u16*)((u8*)((u16*)SS_RAM) + (blk[1] << 2) + (blk[2] << 8));
-            if (x + y != 0) {
+            if (ox + oy != 0) {
                 dst = (u16*)((u8*)dst + ofs);
             }
             blk = blk + 4;

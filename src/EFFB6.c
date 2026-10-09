@@ -62,8 +62,8 @@ void effect_B6_move(WORK_Other_CONN* ewk_conn) {
                 case 1:
                     if (ewk->wu.type == 0) {
                         for (i = 0; i < ewk->num; i++) {
-                            ewk->pos[i][1] += ewk->src[i][3];
-                            ewk->pos[i][2] = ewk->src[i][4];
+                            ewk->pos[i][1] += ewk->src[i].d[3];
+                            ewk->pos[i][2] = ewk->src[i].d[4];
                             continue;
                         }
                         ewk->wu.disp_flag = 1;
@@ -72,8 +72,8 @@ void effect_B6_move(WORK_Other_CONN* ewk_conn) {
                 case 2:
                     if (ewk->wu.type != 0) {
                         for (i = 0; i < ewk->num; i++) {
-                            ewk->pos[i][0] += ewk->src[i][1];
-                            ewk->pos[i][2] = ewk->src[i][5];
+                            ewk->pos[i][0] += ewk->src[i].d[1];
+                            ewk->pos[i][2] = ewk->src[i].d[5];
                             continue;
                         }
                         ewk->wu.disp_flag = 1;
@@ -84,8 +84,8 @@ void effect_B6_move(WORK_Other_CONN* ewk_conn) {
                         break;
                     }
                     for (i = 0; i < ewk->num; i++) {
-                        ewk->pos[i][0] -= ewk->src[i][1];
-                        ewk->pos[i][2] = ewk->src[i][4];
+                        ewk->pos[i][0] -= ewk->src[i].d[1];
+                        ewk->pos[i][2] = ewk->src[i].d[4];
                         continue;
                     }
                     ewk->wu.disp_flag = 1;
@@ -95,8 +95,8 @@ void effect_B6_move(WORK_Other_CONN* ewk_conn) {
                         break;
                     }
                     for (i = 0; i < ewk->num; i++) {
-                        ewk->pos[i][1] -= ewk->src[i][3];
-                        ewk->pos[i][2] = ewk->src[i][5];
+                        ewk->pos[i][1] -= ewk->src[i].d[3];
+                        ewk->pos[i][2] = ewk->src[i].d[5];
                         continue;
                     }
                     ewk->wu.disp_flag = 1;
@@ -119,24 +119,15 @@ void effect_B6_move(WORK_Other_CONN* ewk_conn) {
 /* provisional name */
 void effB6_pos_data_set(ewk, tbl, num)
 WORK_B6* ewk;
-const s16 (*tbl)[6];
+const B6_SRC* tbl;
 s16 num;
 {
     s16 i;
-    s16* d;
-    const s16* t;
     for (i = 0; i < num; i++) {
-        d = ewk->src[i];
-        t = tbl[i];
-        d[0] = t[0];
-        d[1] = t[1];
-        d[2] = t[2];
-        d[3] = t[3];
-        d[4] = t[4];
-        d[5] = t[5];
-        ewk->pos[i][0] = ewk->src[i][0];
-        ewk->pos[i][1] = ewk->src[i][2];
-        ewk->pos[i][2] = ewk->src[i][4];
+        ewk->src[i] = tbl[i];
+        ewk->pos[i][0] = ewk->src[i].d[0];
+        ewk->pos[i][1] = ewk->src[i].d[2];
+        ewk->pos[i][2] = ewk->src[i].d[4];
         ewk->pos[i][0] += bg_w.bgw[1].pos_x_work;
     }
 }

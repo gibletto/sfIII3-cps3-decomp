@@ -1268,7 +1268,7 @@ void attack_hit_check(void) {
                                 continue;
                             }
                         }
-                        if (mad->att.dipsw & 4 && (lp2 >= 8 || sad->cg_ja.bhix == 0)) {
+                        if (mad->att.dipsw & 4 && (lp2 > 7 || sad->cg_ja.bhix == 0)) {
                             continue;
                         }
                     }
