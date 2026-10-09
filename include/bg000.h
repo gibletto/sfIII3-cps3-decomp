@@ -6,7 +6,7 @@
 void BG020(void);
 void bg_rect_attr_preset(void);
 void bg_rect_attr_add();
-void scroll_cell_write();
+void scroll_cell_write(s16 i, u32 ofs, u32 cell, u32 tbl);
 void bg_extra_color_trans(void);
 void bg_color_trans(void);
 void BG000(void);

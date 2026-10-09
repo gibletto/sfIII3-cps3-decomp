@@ -73,18 +73,20 @@ void wipe_and_dot(void) {
 
 /* provisional name */
 void wipe_mask_set_cols(s16 kind, s16 row) {
-    u8* src;
-    u8* map;
-    u8* mask;
-    u16* dst;
     s16 x;
     s16 y;
     s16 i;
+    u8* src;
+    u8* map;
+    u16* dst;
+    u8* mask;
     u8 code;
-    src = wipe_column_tbl[kind].adr + wipe_column_tbl[kind].w * row;
-    map = wipe_set_pattern_tbl[kind].adr + row * 32;
-    dst = (u16*)(SS_RAM + 0xE000);
+    src = wipe_column_tbl[kind].adr;
+    src += wipe_column_tbl[kind].w * row;
+    map = wipe_set_pattern_tbl[kind].adr;
+    map += row * 32;
     mask = wipe_mask_chr;
+    dst = (u16*)(SS_RAM + 0xE000);
     for (i = 0; i < 6; i++) {
         for (y = 0; y < 16; y++) {
             for (x = 0; x < wipe_column_tbl[kind].w; x++) {

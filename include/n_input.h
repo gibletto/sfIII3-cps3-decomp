@@ -3,7 +3,7 @@
 
 #include "structs.h"
 
-s16 Name_Input(s16 pl_id);
+s32 Name_Input(s16 pl_id);
 void Name_Input_init(void);
 s32 name_slang_check(void);
 void define_name_input(void);

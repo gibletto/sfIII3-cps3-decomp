@@ -1920,21 +1920,18 @@ void op_bg0_0008(s16 r_index) {
         bg_cell_write_xflip(0, 0x3080, 0x16, (u32)op_bg0_scrn_data, 0, 0x2C1);
         bg_cell_write_xflip(0, 0x3040, 0x17, (u32)&op_bg0_scrn_data[0], 0, 0x2C1);
     case 1:
+        if ((*pp)->wxy[0].disp.pos > 0x200) {
+            (*pp)->wxy[0].cal -= 0xC000;
+        } else {
+            (*pp)->wxy[0].cal = 0x2000000;
+        }
+        if ((*pp)->xy[1].disp.pos < 0) {
+            (*pp)->xy[1].cal += 0x4000;
+        } else {
+            (*pp)->xy[1].cal = 0;
+        }
         break;
-    default:
-        goto out;
     }
-    if ((*pp)->wxy[0].disp.pos > 0x200) {
-        (*pp)->wxy[0].cal -= 0xC000;
-    } else {
-        (*pp)->wxy[0].cal = 0x2000000;
-    }
-    if ((*pp)->xy[1].disp.pos < 0) {
-        (*pp)->xy[1].cal += 0x4000;
-    } else {
-        (*pp)->xy[1].cal = 0;
-    }
-out:
     opening_bgw_commit_pos(0);
 }
 
@@ -2710,7 +2707,8 @@ void fadeout_to_staff_roll(void) {
 
 void common_end_init00(s16 pl_num) {
     s16 i;
-    s32 blocks;
+    s32 n;
+    u32 blocks;
     const END_BG_GFX* gfx;
     Family_Init();
     clear_scroll_layer_state_and_mask();
@@ -2720,21 +2718,27 @@ void common_end_init00(s16 pl_num) {
     end_w.type = pl_num;
     bg_w.bg_index = end_bg_index_tbl[end_w.type];
     bg_w.scno = end_scno_tbl[end_w.type];
-    blocks = ((end_bg_gfx_tbl[bg_w.bg_index].size << 4) + 0xFFF) / 0x1000;
+    n = ((end_bg_gfx_tbl[bg_w.bg_index].size << 4) + 0xFFF) / 0x1000;
+    blocks = n;
     scr_cg_c_no = ((s16)simmram_block_alloc_10(blocks, 1));
     bg_w.scroll_cg_adr = simmram_slot_to_offset(scr_cg_c_no);
     gfx = &end_bg_gfx_tbl[bg_w.bg_index];
     polygon2d_submit_line(gfx->prep, 0, 0, 3);
     polygon2d_submit_line(gfx->src, bg_w.scroll_cg_adr, gfx->size, 1);
-    if (end_w.type == 14 || end_w.type == 15 || end_w.type == 20) {
+    switch (end_w.type) {
+    case 14:
+    case 15:
+    case 20:
         gfx = &end_bg_gfx_tbl[3];
-        blocks = ((gfx->size << 4) + 0xFFF) / 0x1000;
+        n = ((gfx->size << 4) + 0xFFF) / 0x1000;
+        blocks = n;
         ake_cg_c_no = ((s16)simmram_block_alloc_10(blocks, 1));
         bg_w.ake_cg_adr = simmram_slot_to_offset(ake_cg_c_no);
         polygon2d_submit_line(gfx->prep, 0, 0, 3);
         polygon2d_submit_line(gfx->src, bg_w.ake_cg_adr, gfx->size, 1);
         ake_scrl_w[0].handle = simmram_big_page_alloc_40(1);
         ake_scrl_w[0].adrs = (u32)simmram_slot_addr(ake_scrl_w[0].handle);
+        break;
     }
     bg_w.pos_offset = (Game_setting.mode) ? 0xF8 : 0xC0;
     base_y_pos = 40;

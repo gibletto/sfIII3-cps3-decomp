@@ -172,7 +172,7 @@ s32 saishin_bs2_area_car(PLW* wk) {
 
 
 
-s8 saishin_bs2_on_car(PLW* wk) {
+s32 saishin_bs2_on_car(PLW* wk) {
     if (wk->bs2_on_car) {
         if (wk->wu.xyz[1].disp.pos > bs2_floor[2] + 2) {
             wk->bs2_on_car = 0;
@@ -682,11 +682,10 @@ s32 check_defense_kind(PLW* wk) {
     if (rnum) {
         wk->wu.routine_no[2] = rnum + 26;
         set_char_move_init(&wk->wu, 0, rnum + 28);
-        while (1) {
-            if (wk->wu.cg_type == 1) {
-                break;
-            }
+    loop:
+        if (wk->wu.cg_type != 1) {
             char_move_z(&wk->wu);
+            goto loop;
         }
     }
     return rnum;

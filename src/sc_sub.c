@@ -57,20 +57,22 @@ void win_mark_control(s16 pl) {
             return;
         }
         win_mark_write(pl);
-        win_mark_timer[pl] = (*(const s16(*)[])((&win_mark_blink_tbl[0][1])))[win_mark_phase[pl]];
-        if (win_mark_phase[pl] == 2) {
-            win_mark_phase[pl] = 0;
+        win_mark_timer[pl] = win_mark_blink_tbl[0][win_mark_phase[pl] + 1];
+        if (win_mark_phase[pl] != 2) {
+            win_mark_phase[pl] += 2;
         } else {
-            win_mark_phase[pl] = win_mark_phase[pl] + 2;
+            win_mark_phase[pl] = 0;
         }
         return;
     default:
-        if (win_mark_new[pl] && win_mark_phase[pl ^ 1] == 0) {
-            win_mark_rno[pl] = 1;
-            win_mark_new[pl] = 0;
-            win_mark_timer[pl] = 1;
-            win_mark_phase[pl] = 0;
-            win_mark_pos_set(pl);
+        if (win_mark_new[pl]) {
+            if (win_mark_phase[pl ^ 1] == 0) {
+                win_mark_rno[pl] = 1;
+                win_mark_new[pl] = 0;
+                win_mark_timer[pl] = 1;
+                win_mark_phase[pl] = 0;
+                win_mark_pos_set(pl);
+            }
         }
         return;
     }
@@ -91,7 +93,9 @@ void win_mark_pos_set(s16 pl) {
 
 
 /* provisional name */
-void win_mark_new_check(s16 pl) {
+void win_mark_new_check(pl)
+s16 pl;
+{
     if (win_mark_phase[pl] == 0) {
         win_mark_new[pl] = 0;
         win_mark_pos_set(pl);

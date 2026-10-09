@@ -8,7 +8,7 @@ void char_move_cmj6(WORK* wk);
 void char_move_cmj7(WORK* wk);
 void char_move_cmms(WORK* wk);
 void char_move_cmms2(WORK* wk);
-void comm_djmp(WORK* wk, CHAR_CMD* ctc);
+s32 comm_djmp(WORK* wk, CHAR_CMD* ctc);
 s32 comm_uja(WORK* wk, CHAR_CMD* ctc);
 s32 comm_uja2(WORK* wk, CHAR_CMD* ctc);
 s32 comm_uja3(WORK* wk, CHAR_CMD* ctc);

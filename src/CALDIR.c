@@ -266,7 +266,7 @@ s16 cal_move_quantity2(s16 x1, s16 x2, s16 y1, s16 y2) {
     }
     kakudo = dir_sel_table[y1][y2];
     ms.psi = (x1 * rate_256_table[kakudo][0]);
-    ms.psi += (x2 * rate_256_table[kakudo][1]);
+    ms.psi = (x2 * rate_256_table[kakudo][1]) + ms.psi;
     return ms.pss.h;
 }
 

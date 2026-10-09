@@ -1084,8 +1084,7 @@ void check_dmpat_to_dmpat(PLW* wk) {}
 
 
 void set_dm_hos_flag_sky(PLW* wk) {
-    PLW* twk = (PLW*)wk->wu.target_adrs;
-    s32 disx = wk->wu.xyz[0].disp.pos - twk->wu.xyz[0].disp.pos;
+    s16 disx = wk->wu.xyz[0].disp.pos - ((WORK*)wk->wu.target_adrs)->xyz[0].disp.pos;
     if (disx < 0) {
         disx = -disx;
     }

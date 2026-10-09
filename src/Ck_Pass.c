@@ -184,7 +184,7 @@ s32 KEN_vs(PLW* wk) {
 
 s32 HUGO_vs(PLW* wk) {
     WORK* em = (WORK*)wk->wu.target_adrs;
-    switch (Passive_Mode + Area_Number[wk->wu.id]) {
+    switch (Area_Number[wk->wu.id] + Passive_Mode) {
     case 0:
         if (Check_Dash(wk, em, 1)) {
             break;
@@ -305,9 +305,9 @@ s32 HUGO_vs(PLW* wk) {
 
 
 
-void GILL_vs(PLW* wk) {
+s32 GILL_vs(PLW* wk) {
     WORK* em = (WORK*)wk->wu.target_adrs;
-    switch (Passive_Mode + Area_Number[wk->wu.id]) {
+    switch (Area_Number[wk->wu.id] + Passive_Mode) {
     case 0:
         if (Check_Dash(wk, em, 1)) {
             break;
@@ -340,7 +340,7 @@ void GILL_vs(PLW* wk) {
                 break;
             }
             if (Check_Special_Technique(wk, em, 15, 0, 33, 1, -1)) {
-                break;
+                return 1;
             }
         } else {
             if (Check_PL_Unit_AS(wk)) {
@@ -356,7 +356,9 @@ void GILL_vs(PLW* wk) {
                 break;
             }
         }
-        Check_VS_Jump(wk, em, 16);
+        if (Check_VS_Jump(wk, em, 16)) {
+            break;
+        }
         break;
     case 5:
         if (Attack_Flag[wk->wu.id]) {
@@ -370,7 +372,7 @@ void GILL_vs(PLW* wk) {
                 break;
             }
             if (Check_Special_Technique(wk, em, 15, 0, 33, 1, -1)) {
-                break;
+                return 1;
             }
         } else {
             if (Check_PL_Unit_BS(wk)) {
@@ -386,7 +388,9 @@ void GILL_vs(PLW* wk) {
                 break;
             }
         }
-        Check_VS_Jump(wk, em, 32);
+        if (Check_VS_Jump(wk, em, 32)) {
+            break;
+        }
         break;
     case 6:
         if (Attack_Flag[wk->wu.id]) {
@@ -410,20 +414,26 @@ void GILL_vs(PLW* wk) {
                 break;
             }
         }
-        Check_VS_Jump(wk, em, 64);
+        if (Check_VS_Jump(wk, em, 64)) {
+            break;
+        }
         break;
     default:
         if (Attack_Flag[wk->wu.id]) {
-            Check_PL_Unit_D(wk);
-            break;
+            if (Check_PL_Unit_D(wk)) {
+                break;
+            }
+        } else {
+            if (Check_PL_Unit_DS(wk)) {
+                break;
+            }
+            if (Check_Stand(wk, em, 4105)) {
+                break;
+            }
+            if (Check_VS_Squat(wk, em, 7, 33, 32)) {
+                break;
+            }
         }
-        if (Check_PL_Unit_DS(wk)) {
-            break;
-        }
-        if (Check_Stand(wk, em, 4105)) {
-            break;
-        }
-        Check_VS_Squat(wk, em, 7, 33, 32);
         break;
     }
 }

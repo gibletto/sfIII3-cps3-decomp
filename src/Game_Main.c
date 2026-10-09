@@ -51,6 +51,7 @@
 #include "win_2.h"
 #include "next_cpu.h"
 #include "sc_trans.h"
+#include "sc_clear.h"
 #include "cmb_win.h"
 #include "VITAL.h"
 #include "count.h"
@@ -142,9 +143,8 @@ loop:
 
 
 void bg0001(void) {
-    GAME_TASK_JMP Main_Jmp_Tbl;
-    Main_Jmp_Tbl = Main_Jmp_Data;
-    Main_Jmp_Tbl.jmp[G_No0]();
+    void (*Main_Jmp_Tbl[3])() = { match_state_0_fight, game_phase_dispatch, Game_Dummy };
+    Main_Jmp_Tbl[G_No0]();
 }
 
 
@@ -179,123 +179,124 @@ void match_state_0_fight(void) {
             return;
         }
         E_No0 = 1;
-        E_No2 = E_No1 = 0;
+        E_No1 = 0;
+        E_No2 = 0;
         E_No3 = 0;
-        return;
-    }
-    switch (G_No1) {
-    case 0:
-        G_No1++;
-        G_No2 = 0;
-        G_No3 = 0;
-        D_No0 = 0;
-        D_No1 = 0;
-        D_No2 = 0;
-        D_No3 = 0;
-        E_No1 = 99;
-        Demo_PL_Index = 0;
-        Demo_Stage_Index = 0;
-        Select_Demo_Index = 0;
-        Text_Page_Y = 0;
-        Insert_Y = 23;
-        Demo_Flag = 0;
-        wipe_pattern_set(0, 7, 0);
-        scfont_page0_fill(0, 32);
-        break;
-    case 1:
-        draw_operator_info(Text_Page_Y);
-        Basic_Sub();
-        if (CAPCOM_Logo()) {
-            Loop_Demo_Sub();
-            Erase_Insert_Coin();
-            Insert_Y = 23;
-            E_No1 = 2;
-            bg_vbl_trans_flag = 0;
-        }
-        break;
-    case 2:
-        draw_operator_info(Text_Page_Y);
-        Basic_Sub();
-        hit_check_main_process();
-        if (Title()) {
-            Loop_Demo_Sub();
-            Erase_Insert_Coin();
-            D_No0 = 1;
-            Demo_Lever_Play = 0;
-            Insert_Y = 17;
-        }
-        break;
-    case 3:
-        draw_operator_info(Text_Page_Y);
-        if (Play_Demo()) {
-            Loop_Demo_Sub();
-            Rank_Type = 0;
-            Rank_Demo_Loop = 0;
-            Text_Page_Y = 32;
-            Scrn_Move_Set(4, 0, 0x100);
-            sound_driver_init();
-            if (Version_Type == 3) {
-                G_No1 = 1;
-                E_No1 = 99;
-                if (++Select_Demo_Index > 3) {
-                    Select_Demo_Index = 0;
-                }
-            }
-        }
-        break;
-    case 4:
-        draw_operator_info(Text_Page_Y);
-        Basic_Sub();
-        if (Ranking_Main()) {
-            Loop_Demo_Sub();
-        }
-        break;
-    case 5:
-        draw_operator_info(Text_Page_Y);
-        if (Play_Demo()) {
-            Loop_Demo_Sub();
-            Rank_Demo_Loop = 1;
-            Rank_Type = 5;
-            Rank_Demo_Loop = 1;
-            Text_Page_Y = 32;
-            Scrn_Move_Set(4, 0, 0x100);
-            sound_driver_init();
-            if (Version_Type == 3) {
-                G_No1 = 1;
-                E_No1 = 99;
-            }
-        }
-        break;
-    case 6:
-        draw_operator_info(Text_Page_Y);
-        Basic_Sub();
-        if (Ranking_Main()) {
-            Loop_Demo_Sub();
-            G_No1 = 1;
-            E_No1 = 99;
-        }
-        break;
-    default:
-        switch (G_No2) {
+    } else {
+        switch (G_No1) {
         case 0:
-            if (--Cover_Timer == 0) {
-                G_No2++;
-                Switch_Screen_Init(0, 0);
-            }
-            break;
-        default:
-            G_No1 = 1;
+            G_No1++;
             G_No2 = 0;
-            E_No3 = 0;
+            G_No3 = 0;
+            D_No0 = 0;
+            D_No1 = 0;
+            D_No2 = 0;
+            D_No3 = 0;
             E_No1 = 99;
             Demo_PL_Index = 0;
             Demo_Stage_Index = 0;
             Select_Demo_Index = 0;
             Text_Page_Y = 0;
+            Insert_Y = 23;
             Demo_Flag = 0;
+            wipe_pattern_set(0, 7, 0);
+            scfont_page0_fill(0, 32);
+            break;
+        case 1:
+            draw_operator_info(Text_Page_Y);
+            Basic_Sub();
+            if (CAPCOM_Logo()) {
+                Loop_Demo_Sub();
+                Erase_Insert_Coin();
+                Insert_Y = 23;
+                E_No1 = 2;
+                bg_vbl_trans_flag = 0;
+            }
+            break;
+        case 2:
+            draw_operator_info(Text_Page_Y);
+            Basic_Sub();
+            hit_check_main_process();
+            if (Title()) {
+                Loop_Demo_Sub();
+                Erase_Insert_Coin();
+                D_No0 = 1;
+                Demo_Lever_Play = 0;
+                Insert_Y = 17;
+            }
+            break;
+        case 3:
+            draw_operator_info(Text_Page_Y);
+            if (Play_Demo()) {
+                Loop_Demo_Sub();
+                Rank_Type = 0;
+                Rank_Demo_Loop = 0;
+                Text_Page_Y = 32;
+                Scrn_Move_Set(4, 0, 0x100);
+                sound_driver_init();
+                if (Version_Type == 3) {
+                    G_No1 = 1;
+                    E_No1 = 99;
+                    if (++Select_Demo_Index > 3) {
+                        Select_Demo_Index = 0;
+                    }
+                }
+            }
+            break;
+        case 4:
+            draw_operator_info(Text_Page_Y);
+            Basic_Sub();
+            if (Ranking_Main()) {
+                Loop_Demo_Sub();
+            }
+            break;
+        case 5:
+            draw_operator_info(Text_Page_Y);
+            if (Play_Demo()) {
+                Loop_Demo_Sub();
+                Rank_Demo_Loop = 1;
+                Rank_Type = 5;
+                Rank_Demo_Loop = 1;
+                Text_Page_Y = 32;
+                Scrn_Move_Set(4, 0, 0x100);
+                sound_driver_init();
+                if (Version_Type == 3) {
+                    G_No1 = 1;
+                    E_No1 = 99;
+                }
+            }
+            break;
+        case 6:
+            draw_operator_info(Text_Page_Y);
+            Basic_Sub();
+            if (Ranking_Main()) {
+                Loop_Demo_Sub();
+                G_No1 = 1;
+                E_No1 = 99;
+            }
+            break;
+        default:
+            switch (G_No2) {
+            case 0:
+                if (--Cover_Timer == 0) {
+                    G_No2++;
+                    Switch_Screen_Init(0, 0);
+                }
+                break;
+            default:
+                G_No1 = 1;
+                G_No2 = 0;
+                E_No3 = 0;
+                E_No1 = 99;
+                Demo_PL_Index = 0;
+                Demo_Stage_Index = 0;
+                Select_Demo_Index = 0;
+                Text_Page_Y = 0;
+                Demo_Flag = 0;
+                break;
+            }
             break;
         }
-        break;
     }
 }
 
@@ -481,10 +482,10 @@ void Game01(void) {
             if (plw[1].wu.operator != 0) {
                 Sel_Arts_Complete[1] = -1;
             }
-            if (plw[0].wu.operator == 0 || plw[1].wu.operator == 0) {
-                Play_Type = 0;
-            } else {
+            if (plw[0].wu.operator != 0 && plw[1].wu.operator != 0) {
                 Play_Type = 1;
+            } else {
+                Play_Type = 0;
             }
             voice_all_off();
         }
@@ -937,7 +938,14 @@ void Game09(void) {
         win_lose_work_clear();
         bg_w.stage = Bonus_Type;
         bg_w.area = 0;
-        My_char[COM_id] = (Bonus_Game_Flag == 22) ? 12 : My_char[Player_id];
+        {
+            u8 *cp = &My_char[COM_id];
+            if (Bonus_Game_Flag == 22) {
+                *cp = 12;
+            } else {
+                *cp = My_char[Player_id];
+            }
+        }
         Setup_Com_Color();
         Setup_PL_Color(COM_id, Com_Color_Shot);
         TATE00();
@@ -1440,21 +1448,17 @@ s32 Ck_Coin(void) {
 
 /* provisional name */
 void draw_operator_info(s32 y) {
-    s16 y1;
-    s16 y2;
-    s32 bottom;
     if (Country == 6 || Country == 5) {
-        bottom = y + 23;
         if (p1sw_0 & 0x10) {
             tilemap_print_string_attr(DE_X[18] + 36, y + 20, 18, Game_Data_msg);
-            tilemap_print_string_attr(DE_X[18] + 31, y1 = y + 21, 18, Income_msg);
-            tilemap_print_string_attr(DE_X[18] + 31, y2 = y + 22, 18, Service_msg);
-            tilemap_print_string_attr(DE_X[18] + 31, bottom, 18, Card_msg);
-            tilemap_print_hex_block(DE_X[18] + 41, y1, 18, hex_to_bcd(book_coin_count), 6, 0);
-            tilemap_print_hex_block(DE_X[18] + 41, y2, 18, hex_to_bcd(book_service_count), 6, 0);
-            tilemap_print_hex_block(DE_X[18] + 41, bottom, 18, hex_to_bcd(book_card_count), 6, 0);
+            tilemap_print_string_attr(DE_X[18] + 31, y + 21, 18, Income_msg);
+            tilemap_print_string_attr(DE_X[18] + 31, y + 22, 18, Service_msg);
+            tilemap_print_string_attr(DE_X[18] + 31, y + 23, 18, Card_msg);
+            tilemap_print_hex_block(DE_X[18] + 41, y + 21, 18, hex_to_bcd(book_coin_count), 6, 0);
+            tilemap_print_hex_block(DE_X[18] + 41, y + 22, 18, hex_to_bcd(book_service_count), 6, 0);
+            tilemap_print_hex_block(DE_X[18] + 41, y + 23, 18, hex_to_bcd(book_card_count), 6, 0);
         } else {
-            tilemap_clear_rect(DE_X[18] + 31, y + 20, DE_X[18] + 49, bottom);
+            tilemap_clear_rect(DE_X[18] + 31, y + 20, DE_X[18] + 49, y + 23);
         }
     }
 }

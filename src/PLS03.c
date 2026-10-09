@@ -39,8 +39,8 @@ void hissatsu_setup_union(PLW* wk, s16 rno) {
 s32 check_full_gauge_attack(PLW* wk, s8 always) {
     u16* conpane;
     s16 j;
-    s16 cusw;
-    s32 exsw;
+    u16 cusw;
+    s16 exsw;
     if (wk->sa->mp != 1) {
         return 0;
     }
@@ -71,31 +71,29 @@ s32 check_full_gauge_attack(PLW* wk, s8 always) {
                 return 0;
             }
         }
-        conpane = &wk->cp->sw_lvbt;
+        conpane = (u16*)wk->cp;
         if (wk->cp->waza_flag[wk->sa->exsa_g_ix] == -1) {
             return 0;
         }
-        if ((wk->cp->btix[wk->sa->exsa_g_ix] & 0xFF) == 0x80) {
-            return 0;
-        }
-        if (!wk->cp->waza_flag[wk->sa->exsa_g_ix]) {
-            return 0;
-        }
-        cusw = conpane[wk->cp->btix[wk->sa->exsa_g_ix] & 0xFF];
-        for (j = 3; j >= 0; j--) {
-            if ((j == 3) && !(wk->cp->btix[wk->sa->exsa_g_ix] & 0x600)) {
-                continue;
+        if ((wk->cp->btix[wk->sa->exsa_g_ix] & 0xFF) != 0x80) {
+            if (wk->cp->waza_flag[wk->sa->exsa_g_ix] != 0) {
+            cusw = conpane[wk->cp->btix[wk->sa->exsa_g_ix] & 0xFF];
+            for (j = 3; j >= 0; j--) {
+                if ((j == 3) && !(wk->cp->btix[wk->sa->exsa_g_ix] & 0x600)) {
+                    continue;
+                }
+                exsw = cmdshot_conv_tbl[wk->cp->exdt[wk->sa->exsa_g_ix][j]];
+                if (cmdshot_conv_tbl[wk->cp->exdt[wk->sa->exsa_g_ix][j] & 0xF] == (exsw & cusw)) {
+                    setup_comm_back(&wk->wu);
+                    wk->as = &asstbl_sa_ground[wk->player_number][wk->sa->exsa_g_ix - 20][j].as;
+                    wk->wu.cg_cancel = 0;
+                    wk->sa->mp = -1;
+                    hissatsu_setup_union(wk, wk->cp->waza_r[wk->sa->exsa_g_ix][j]);
+                    waza_slot_clear_all_p(wk);
+                    return 1;
+                }
             }
-            exsw = cusw & cmdshot_conv_tbl[wk->cp->exdt[wk->sa->exsa_g_ix][j]];
-            if (exsw == cmdshot_conv_tbl[wk->cp->exdt[wk->sa->exsa_g_ix][j] & 0xF]) {
-                setup_comm_back(&wk->wu);
-                wk->as = &asstbl_sa_ground[wk->player_number][wk->sa->exsa_g_ix - 20][j].as;
-                wk->wu.cg_cancel = 0;
-                wk->sa->mp = -1;
-                hissatsu_setup_union(wk, wk->cp->waza_r[wk->sa->exsa_g_ix][j]);
-                waza_slot_clear_all_p(wk);
-                return 1;
-            }
+        }
         }
         return 0;
     }
@@ -122,31 +120,29 @@ s32 check_full_gauge_attack(PLW* wk, s8 always) {
             return 0;
         }
     }
-    conpane = &wk->cp->sw_lvbt;
+    conpane = (u16*)wk->cp;
     if (wk->cp->waza_flag[wk->sa->exsa_a_ix] == -1) {
         return 0;
     }
-    if ((wk->cp->btix[wk->sa->exsa_a_ix] & 0xFF) == 0x80) {
-        return 0;
-    }
-    if (!wk->cp->waza_flag[wk->sa->exsa_a_ix]) {
-        return 0;
-    }
-    cusw = conpane[wk->cp->btix[wk->sa->exsa_a_ix] & 0xFF];
-    for (j = 3; j >= 0; j--) {
-        if ((j == 3) && !(wk->cp->btix[wk->sa->exsa_a_ix] & 0x600)) {
-            continue;
+    if ((wk->cp->btix[wk->sa->exsa_a_ix] & 0xFF) != 0x80) {
+        if (wk->cp->waza_flag[wk->sa->exsa_a_ix] != 0) {
+        cusw = conpane[wk->cp->btix[wk->sa->exsa_a_ix] & 0xFF];
+        for (j = 3; j >= 0; j--) {
+            if ((j == 3) && !(wk->cp->btix[wk->sa->exsa_a_ix] & 0x600)) {
+                continue;
+            }
+            exsw = cmdshot_conv_tbl[wk->cp->exdt[wk->sa->exsa_a_ix][j]];
+            if (cmdshot_conv_tbl[wk->cp->exdt[wk->sa->exsa_a_ix][j] & 0xF] == (exsw & cusw)) {
+                setup_comm_back(&wk->wu);
+                wk->as = &asstbl_sa_air[wk->player_number][wk->sa->exsa_a_ix - 38][j].as;
+                wk->wu.cg_cancel = 0;
+                wk->sa->mp = -1;
+                hissatsu_setup_union(wk, wk->cp->waza_r[wk->sa->exsa_a_ix][j]);
+                waza_slot_clear_all_p(wk);
+                return 1;
+            }
         }
-        exsw = cusw & cmdshot_conv_tbl[wk->cp->exdt[wk->sa->exsa_a_ix][j]];
-        if (exsw == cmdshot_conv_tbl[wk->cp->exdt[wk->sa->exsa_a_ix][j] & 0xF]) {
-            setup_comm_back(&wk->wu);
-            wk->as = &asstbl_sa_air[wk->player_number][wk->sa->exsa_a_ix - 38][j].as;
-            wk->wu.cg_cancel = 0;
-            wk->sa->mp = -1;
-            hissatsu_setup_union(wk, wk->cp->waza_r[wk->sa->exsa_a_ix][j]);
-            waza_slot_clear_all_p(wk);
-            return 1;
-        }
+    }
     }
     return 0;
 }
@@ -156,8 +152,8 @@ s32 check_full_gauge_attack(PLW* wk, s8 always) {
 s32 check_full_gauge_attack2(PLW* wk, s8 always) {
     u16* conpane;
     s16 j;
-    s32 cusw;
-    s32 exsw;
+    u16 cusw;
+    s16 exsw;
     if (wk->sa->mp != 1) {
         return 0;
     }
@@ -188,31 +184,29 @@ s32 check_full_gauge_attack2(PLW* wk, s8 always) {
                 return 0;
             }
         }
-        conpane = &wk->cp->sw_lvbt;
+        conpane = (u16*)wk->cp;
         if (wk->cp->waza_flag[wk->sa->exs2_g_ix] == -1) {
             return 0;
         }
-        if ((wk->cp->btix[wk->sa->exs2_g_ix] & 0xFF) == 0x80) {
-            return 0;
-        }
-        if (!wk->cp->waza_flag[wk->sa->exs2_g_ix]) {
-            return 0;
-        }
-        cusw = conpane[wk->cp->btix[wk->sa->exs2_g_ix] & 0xFF];
-        for (j = 3; j >= 0; j--) {
-            if ((j == 3) && !(wk->cp->btix[wk->sa->exs2_g_ix] & 0x600)) {
-                continue;
+        if ((wk->cp->btix[wk->sa->exs2_g_ix] & 0xFF) != 0x80) {
+            if (wk->cp->waza_flag[wk->sa->exs2_g_ix] != 0) {
+            cusw = conpane[wk->cp->btix[wk->sa->exs2_g_ix] & 0xFF];
+            for (j = 3; j >= 0; j--) {
+                if ((j == 3) && !(wk->cp->btix[wk->sa->exs2_g_ix] & 0x600)) {
+                    continue;
+                }
+                exsw = cmdshot_conv_tbl[wk->cp->exdt[wk->sa->exs2_g_ix][j]];
+                if (cmdshot_conv_tbl[wk->cp->exdt[wk->sa->exs2_g_ix][j] & 0xF] == (exsw & cusw)) {
+                    setup_comm_back(&wk->wu);
+                    wk->as = &asstbl_sa_ground[wk->player_number][wk->sa->exs2_g_ix - 20][j].as;
+                    wk->wu.cg_cancel = 0;
+                    wk->sa->mp = -1;
+                    hissatsu_setup_union(wk, wk->cp->waza_r[wk->sa->exs2_g_ix][j]);
+                    waza_slot_clear_all_p(wk);
+                    return 1;
+                }
             }
-            exsw = cusw & cmdshot_conv_tbl[wk->cp->exdt[wk->sa->exs2_g_ix][j]];
-            if (exsw == cmdshot_conv_tbl[wk->cp->exdt[wk->sa->exs2_g_ix][j] & 0xF]) {
-                setup_comm_back(&wk->wu);
-                wk->as = &asstbl_sa_ground[wk->player_number][wk->sa->exs2_g_ix - 20][j].as;
-                wk->wu.cg_cancel = 0;
-                wk->sa->mp = -1;
-                hissatsu_setup_union(wk, wk->cp->waza_r[wk->sa->exs2_g_ix][j]);
-                waza_slot_clear_all_p(wk);
-                return 1;
-            }
+        }
         }
         return 0;
     }
@@ -239,31 +233,29 @@ s32 check_full_gauge_attack2(PLW* wk, s8 always) {
             return 0;
         }
     }
-    conpane = &wk->cp->sw_lvbt;
+    conpane = (u16*)wk->cp;
     if (wk->cp->waza_flag[wk->sa->exs2_a_ix] == -1) {
         return 0;
     }
-    if ((wk->cp->btix[wk->sa->exs2_a_ix] & 0xFF) == 0x80) {
-        return 0;
-    }
-    if (!wk->cp->waza_flag[wk->sa->exs2_a_ix]) {
-        return 0;
-    }
-    cusw = conpane[wk->cp->btix[wk->sa->exs2_a_ix] & 0xFF];
-    for (j = 3; j >= 0; j--) {
-        if ((j == 3) && !(wk->cp->btix[wk->sa->exs2_a_ix] & 0x600)) {
-            continue;
+    if ((wk->cp->btix[wk->sa->exs2_a_ix] & 0xFF) != 0x80) {
+        if (wk->cp->waza_flag[wk->sa->exs2_a_ix] != 0) {
+        cusw = conpane[wk->cp->btix[wk->sa->exs2_a_ix] & 0xFF];
+        for (j = 3; j >= 0; j--) {
+            if ((j == 3) && !(wk->cp->btix[wk->sa->exs2_a_ix] & 0x600)) {
+                continue;
+            }
+            exsw = cmdshot_conv_tbl[wk->cp->exdt[wk->sa->exs2_a_ix][j]];
+            if (cmdshot_conv_tbl[wk->cp->exdt[wk->sa->exs2_a_ix][j] & 0xF] == (exsw & cusw)) {
+                setup_comm_back(&wk->wu);
+                wk->as = &asstbl_sa_air[wk->player_number][wk->sa->exs2_a_ix - 38][j].as;
+                wk->wu.cg_cancel = 0;
+                wk->sa->mp = -1;
+                hissatsu_setup_union(wk, wk->cp->waza_r[wk->sa->exs2_a_ix][j]);
+                waza_slot_clear_all_p(wk);
+                return 1;
+            }
         }
-        exsw = cusw & cmdshot_conv_tbl[wk->cp->exdt[wk->sa->exs2_a_ix][j]];
-        if (exsw == cmdshot_conv_tbl[wk->cp->exdt[wk->sa->exs2_a_ix][j] & 0xF]) {
-            setup_comm_back(&wk->wu);
-            wk->as = &asstbl_sa_air[wk->player_number][wk->sa->exs2_a_ix - 38][j].as;
-            wk->wu.cg_cancel = 0;
-            wk->sa->mp = -1;
-            hissatsu_setup_union(wk, wk->cp->waza_r[wk->sa->exs2_a_ix][j]);
-            waza_slot_clear_all_p(wk);
-            return 1;
-        }
+    }
     }
     return 0;
 }
@@ -273,8 +265,8 @@ s32 check_full_gauge_attack2(PLW* wk, s8 always) {
 s32 check_super_arts_attack(PLW* wk) {
     u16* conpane;
     s16 j;
-    s16 cusw;
-    u16 exsw;
+    u16 cusw;
+    s16 exsw;
     if (wk->sa->ok != 1) {
         return 0;
     }
@@ -284,7 +276,7 @@ s32 check_super_arts_attack(PLW* wk) {
     if (wk->cancel_timer == 0) {
         wk->permited_koa |= 1;
     }
-    if (((Bonus_Game_Flag == 21) && (wk->bs2_on_car)) || (wk->wu.xyz[1].disp.pos < 1)) {
+    if (((Bonus_Game_Flag == 21) && (wk->bs2_on_car)) || (wk->wu.xyz[1].disp.pos <= 0)) {
         if (wk->spmv_ng_flag & 0x40000000) {
             return 0;
         }
@@ -306,14 +298,15 @@ s32 check_super_arts_attack(PLW* wk) {
         if (wk->cp->waza_flag[wk->sa->nmsa_g_ix] == -1) {
             return 0;
         }
-        if (((wk->cp->btix[wk->sa->nmsa_g_ix] & 0xFF) != 0x80) && (wk->cp->waza_flag[wk->sa->nmsa_g_ix])) {
+        if ((wk->cp->btix[wk->sa->nmsa_g_ix] & 0xFF) != 0x80) {
+            if (wk->cp->waza_flag[wk->sa->nmsa_g_ix] != 0) {
             cusw = conpane[wk->cp->btix[wk->sa->nmsa_g_ix] & 0xFF];
             for (j = 3; j >= 0; j--) {
                 if ((j == 3) && !(wk->cp->btix[wk->sa->nmsa_g_ix] & 0x600)) {
                     continue;
                 }
-                exsw = cusw & cmdshot_conv_tbl[wk->cp->exdt[wk->sa->nmsa_g_ix][j]];
-                if (exsw == cmdshot_conv_tbl[wk->cp->exdt[wk->sa->nmsa_g_ix][j] & 0xF]) {
+                exsw = cmdshot_conv_tbl[wk->cp->exdt[wk->sa->nmsa_g_ix][j]];
+                if (cmdshot_conv_tbl[wk->cp->exdt[wk->sa->nmsa_g_ix][j] & 0xF] == (exsw & cusw)) {
                     setup_comm_back(&wk->wu);
                     wk->as = &asstbl_sa_ground[wk->player_number][wk->sa->nmsa_g_ix - 20][j].as;
                     wk->wu.cg_cancel = 0;
@@ -323,6 +316,7 @@ s32 check_super_arts_attack(PLW* wk) {
                     return 1;
                 }
             }
+        }
         }
         return 0;
     }
@@ -347,14 +341,15 @@ s32 check_super_arts_attack(PLW* wk) {
     if (wk->cp->waza_flag[wk->sa->nmsa_a_ix] == -1) {
         return 0;
     }
-    if (((wk->cp->btix[wk->sa->nmsa_a_ix] & 0xFF) != 0x80) && (wk->cp->waza_flag[wk->sa->nmsa_a_ix])) {
+    if ((wk->cp->btix[wk->sa->nmsa_a_ix] & 0xFF) != 0x80) {
+        if (wk->cp->waza_flag[wk->sa->nmsa_a_ix] != 0) {
         cusw = conpane[wk->cp->btix[wk->sa->nmsa_a_ix] & 0xFF];
         for (j = 3; j >= 0; j--) {
             if ((j == 3) && !(wk->cp->btix[wk->sa->nmsa_a_ix] & 0x600)) {
                 continue;
             }
-            exsw = cusw & cmdshot_conv_tbl[wk->cp->exdt[wk->sa->nmsa_a_ix][j]];
-            if (exsw == cmdshot_conv_tbl[wk->cp->exdt[wk->sa->nmsa_a_ix][j] & 0xF]) {
+            exsw = cmdshot_conv_tbl[wk->cp->exdt[wk->sa->nmsa_a_ix][j]];
+            if (cmdshot_conv_tbl[wk->cp->exdt[wk->sa->nmsa_a_ix][j] & 0xF] == (exsw & cusw)) {
                 setup_comm_back(&wk->wu);
                 wk->as = &asstbl_sa_air[wk->player_number][wk->sa->nmsa_a_ix - 38][j].as;
                 wk->wu.cg_cancel = 0;
@@ -364,6 +359,7 @@ s32 check_super_arts_attack(PLW* wk) {
                 return 1;
             }
         }
+    }
     }
     return 0;
 }
@@ -449,69 +445,81 @@ s32 check_special_attack(PLW* wk) {
     if (pcon_dp_flag) {
         return 0;
     }
-    if (((Bonus_Game_Flag == 21) && wk->bs2_on_car) || (wk->wu.xyz[1].disp.pos <= 0)) {
-        if (wk->spmv_ng_flag & 0x10000000) {
-            return 0;
-        }
-        conpane = (u16*)wk->cp;
-        for (i = 28; i < 38; i++) {
-            if (wk->cp->waza_flag[i] == -1) {
-                continue;
-            }
-            if ((wk->cp->btix[i] & 0x800) && shell_live_check(wk, i)) {
-                continue;
-            }
-            if ((wk->cp->btix[i] & 0x1000) && (wk->metamorphose || (wk->sa->ok != -1))) {
-                continue;
-            }
-            if (wk->cp->btix[i] & 0x4000) {
-                if (Version_Type == 3) {
-                    return 0;
-                }
-                if (Version_Type == 2) {
-                    return 0;
-                }
-            }
-            if (((wk->cp->btix[i] & 0xFF) == 0x80) || !wk->cp->waza_flag[i]) {
-                continue;
-            }
-            cusw = conpane[wk->cp->btix[i] & 0xFF];
-            for (j = 3; j >= 0; j--) {
-                exsw = cusw & cmdshot_conv_tbl[wk->cp->exdt[i][j]];
-                if (exsw != cmdshot_conv_tbl[wk->cp->exdt[i][j] & 0xF]) {
-                    continue;
-                }
-                if (j == 3) {
-                    if (!(wk->cp->btix[i] & 0x600)) {
-                        continue;
-                    }
-                    if (wk->metamorphose) {
-                        if (wk->cp->btix[i] & 0x400) {
-                            continue;
-                        }
-                    } else {
-                        if ((wk->sa->mp == -1) || (wk->sa->ok == -1)) {
-                            continue;
-                        }
-                        if (wk->cp->btix[i] & 0x400) {
-                            if (wk->sa->ex != 1) {
-                                continue;
-                            }
-                            wk->sa->ex = -1;
-                        }
-                    }
-                }
-                setup_comm_back(&wk->wu);
-                wk->as = &asstbl_sa_ground[wk->player_number][i - 20][j].as;
-                wk->wu.cg_cancel &= 0x40;
-                hissatsu_setup_union(wk, wk->cp->waza_r[i][j]);
-                waza_flag_clear_only_1(wk->wu.id, i);
-                grade_add_command_waza(wk->wu.id);
-                return 1;
-            }
-        }
+    if ((Bonus_Game_Flag == 21) && wk->bs2_on_car) {
+        goto ground;
+    }
+    if (wk->wu.xyz[1].disp.pos > 0) {
+        goto air;
+    }
+ground:
+    if (wk->spmv_ng_flag & 0x10000000) {
         return 0;
     }
+    conpane = (u16*)wk->cp;
+    for (i = 28; i < 38; i++) {
+        if (wk->cp->waza_flag[i] == -1) {
+            continue;
+        }
+        if ((wk->cp->btix[i] & 0x800) && shell_live_check(wk, i)) {
+            continue;
+        }
+        if ((wk->cp->btix[i] & 0x1000) && (wk->metamorphose || (wk->sa->ok != -1))) {
+            continue;
+        }
+        if (wk->cp->btix[i] & 0x4000) {
+            if (Version_Type == 3) {
+                return 0;
+            }
+            if (Version_Type == 2) {
+                return 0;
+            }
+        }
+        if ((wk->cp->btix[i] & 0xFF) == 0x80) {
+            continue;
+        }
+        if (!wk->cp->waza_flag[i]) {
+            continue;
+        }
+        cusw = conpane[wk->cp->btix[i] & 0xFF];
+        for (j = 3; j >= 0; j--) {
+            exsw = cusw & cmdshot_conv_tbl[wk->cp->exdt[i][j]];
+            if (exsw != cmdshot_conv_tbl[wk->cp->exdt[i][j] & 0xF]) {
+                continue;
+            }
+            if (j == 3) {
+                if (!(wk->cp->btix[i] & 0x600)) {
+                    continue;
+                }
+                if (wk->metamorphose) {
+                    if (wk->cp->btix[i] & 0x400) {
+                        continue;
+                    }
+                } else {
+                    if (wk->sa->mp == -1) {
+                        continue;
+                    }
+                    if (wk->sa->ok == -1) {
+                        continue;
+                    }
+                    if (wk->cp->btix[i] & 0x400) {
+                        if (wk->sa->ex != 1) {
+                            continue;
+                        }
+                        wk->sa->ex = -1;
+                    }
+                }
+            }
+            setup_comm_back(&wk->wu);
+            wk->as = &asstbl_sa_ground[wk->player_number][i - 20][j].as;
+            wk->wu.cg_cancel &= 0x40;
+            hissatsu_setup_union(wk, wk->cp->waza_r[i][j]);
+            waza_flag_clear_only_1(wk->wu.id, i);
+            grade_add_command_waza(wk->wu.id);
+            return 1;
+        }
+    }
+    return 0;
+air:
     if (wk->spmv_ng_flag & 0x20000000) {
         return 0;
     }
@@ -556,7 +564,10 @@ s32 check_special_attack(PLW* wk) {
                             continue;
                         }
                     } else {
-                        if ((wk->sa->mp == -1) || (wk->sa->ok == -1)) {
+                        if (wk->sa->mp == -1) {
+                            continue;
+                        }
+                        if (wk->sa->ok == -1) {
                             continue;
                         }
                         if (wk->cp->btix[i] & 0x400) {

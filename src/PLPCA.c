@@ -183,8 +183,6 @@ void Catch_04000(PLW* wk) {
         }
         catch_cg_type_check(wk);
         break;
-    default:
-        break;
     case 2:
         jumping_union_process(&wk->wu, 1);
         if ((u8)wk->wu.cg_type == 30) {

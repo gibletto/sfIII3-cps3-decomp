@@ -91,16 +91,13 @@ void check_cg_zoom(void) {
             scr_req_x = (plw[0].wu.xyz[0].disp.pos + plw[1].wu.xyz[0].disp.pos) >> 1;
             break;
         case 0x2000:
+        case 0x4000:
             zoom_request_flag = 0x100;
             scr_req_x = plw[0].wu.xyz[0].disp.pos;
             break;
         case 0x200:
             zoom_request_flag = 0x100;
             scr_req_x = plw[1].wu.xyz[0].disp.pos;
-            break;
-        case 0x4000:
-            zoom_request_flag = 0x100;
-            scr_req_x = plw[0].wu.xyz[0].disp.pos;
             break;
         case 0x0:
             break;

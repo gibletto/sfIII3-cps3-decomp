@@ -1751,33 +1751,37 @@ s32 debug_hit_a_judgement_edit_grid(WORK* wk) {
         sw = ~dbg_p1sw_1 & dbg_p1sw_0;
         if (sw & 0x80) {
             if (wk->dir_step < 2) {
-                if (wk->dmcal_m <= 95) {
-                    wk->dmcal_m++;
-                    for (i = wk->dmcal_m + 1; i > ix; i--) {
-                        pat[i] = pat[i - 1];
-                    }
-                    return 1;
+                if (wk->dmcal_m > 95) {
+                    goto none;
                 }
-            } else if (wk->dmcal_d <= 95) {
-                wk->dmcal_d++;
-                ixtbl[wk->dmcal_d] = *h;
-                return 1;
-            }
-        } else if (sw & 0x100) {
-            if (wk->dir_step < 2) {
-                if (wk->dmcal_m >= 2) {
-                    for (i = ix; i < wk->dmcal_m; i++) {
-                        pat[i] = pat[i + 1];
-                    }
-                    wk->dmcal_m--;
-                    return 1;
+                wk->dmcal_m++;
+                for (i = wk->dmcal_m + 1; i > ix; i--) {
+                    pat[i] = pat[i - 1];
                 }
             } else {
-                *h = ixtbl[0];
-                return 1;
+                if (wk->dmcal_d > 95) {
+                    goto none;
+                }
+                wk->dmcal_d++;
+                ixtbl[wk->dmcal_d] = *h;
             }
+            return 1;
+        } else if (sw & 0x100) {
+            if (wk->dir_step < 2) {
+                if (wk->dmcal_m < 2) {
+                    goto none;
+                }
+                for (i = ix; i < wk->dmcal_m; i++) {
+                    pat[i] = pat[i + 1];
+                }
+                wk->dmcal_m--;
+            } else {
+                *h = ixtbl[0];
+            }
+            return 1;
         }
     }
+none:
     return 0;
 }
 
@@ -2152,15 +2156,26 @@ void debug_bg_color_preset_next(void) {
 
 /* provisional name */
 void debug_rgb_editor_print(s16 print) {
-    s32 r = (Debug_RGB[0] >> 2) & 31;
-    s32 g = (Debug_RGB[1] >> 2) & 31;
-    s32 b = (Debug_RGB[2] >> 2) & 31;
+    u16 r, g, b;
+    s32 green, blue;
+    s32 word;
+    s32 part;
+    r = Debug_RGB[0] >> 2;
+    g = Debug_RGB[1] >> 2;
+    b = Debug_RGB[2] >> 2;
+    r &= 31;
+    g &= 31;
+    b &= 31;
+    green = g;
+    blue = b;
     if (print) {
-        tilemap_print_hex(13, 12, 2, (u16)r, 2, 0);
-        tilemap_print_hex(13, 13, 2, g, 2, 0);
-        tilemap_print_hex(13, 14, 2, b, 2, 0);
+        tilemap_print_hex(13, 12, 2, r, 2, 0);
+        tilemap_print_hex(13, 13, 2, green, 2, 0);
+        tilemap_print_hex(13, 14, 2, blue, 2, 0);
     }
-    *(u16*)COLOR_RAM = ((b << 10) | (g << 5) | r) & 0x7FFF;
+    part = green << 5;
+    word = blue << 10;
+    *(u16*)COLOR_RAM = (word | part | r) & 0x7FFF;
 }
 
 

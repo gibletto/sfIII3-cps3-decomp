@@ -192,10 +192,12 @@ s32 effect_C9_init(PLW* arg0, u8 data) {
 void setup_EJG_index(void) {
     s16 i;
     s16 gra;
-    if (judge_gals[0].grade < judge_gals[1].grade) {
-        gra = judge_gals[1].grade - judge_gals[0].grade;
+    JudgeGals* g0 = &judge_gals[0];
+    JudgeGals* g1 = &judge_gals[1];
+    if (g0->grade < g1->grade) {
+        gra = g1->grade - g0->grade;
     } else {
-        gra = judge_gals[0].grade - judge_gals[1].grade;
+        gra = g0->grade - g1->grade;
     }
     if (gra > 5) {
         if (Winner_id) {
@@ -211,7 +213,7 @@ void setup_EJG_index(void) {
         }
     } else {
         for (i = 0; i < 4; i++) {
-            EJG_Index[i] = sel_ejg_ix_table[Winner_id][Game_timer & 1][i];
+            (&EJG_Index[0])[i] = sel_ejg_ix_table[Winner_id][Game_timer & 1][i];
         }
     }
 }

@@ -27,6 +27,8 @@ asmsh src\tasksw.src -object=obj\tasksw.obj
 if errorlevel 1 goto fail
 shc src\coin_cont.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\coin_cont.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
+shc src\boot_task.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\boot_task.obj >obj\shc.log 2>&1
+if errorlevel 1 goto fail
 shc src\mode_init.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\mode_init.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\test_mode.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\test_mode.obj >obj\shc.log 2>&1
@@ -925,11 +927,13 @@ shc src\textsound.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -no
 if errorlevel 1 goto fail
 shc src\textsound_2.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -noinline -object=obj\textsound_2.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\textsound_3.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -noinline -object=obj\textsound_3.obj >obj\shc.log 2>&1
-if errorlevel 1 goto fail
 asmsh lib\slow_mvn.src -object=obj\slow_mvn.obj
 if errorlevel 1 goto fail
 asmsh lib\sta_sftra.src -object=obj\sta_sftra.obj
+if errorlevel 1 goto fail
+shc src\textsound_3.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -noinline -object=obj\textsound_3.obj >obj\shc.log 2>&1
+if errorlevel 1 goto fail
+asmsh src\sh2_sub.src -object=obj\sh2_sub.obj
 if errorlevel 1 goto fail
 shc src\cram_bank.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=0 -nospeed -object=obj\cram_bank.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail

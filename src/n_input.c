@@ -46,7 +46,7 @@
 
 
 
-s16 Name_Input(s16 pl_id) {
+s32 Name_Input(s16 pl_id) {
     end_no_cut = 1;
     Name_Input_f = 0;
     name_ptr = &name_wk[pl_id];
@@ -287,7 +287,7 @@ void Name_Scs_Finish(void) {
 s32 Name_Input_sub(void) {
     u16 sw_up_w;
     u16 sw_data;
-    name_ptr->old_code[name_ptr->index] = name_ptr->code[name_ptr->index];
+    (&name_ptr->old_code[0])[name_ptr->index] = name_ptr->code[name_ptr->index];
     if (name_ptr->id) {
         sw_data = p2sw_0;
         sw_up_w = ~p2sw_1 & p2sw_0;
@@ -396,27 +396,22 @@ void define_name_input(void) {
 void ranking_state_check(void) {
     s16 joui;
     s16 j;
-    s8* rank_in;
-    NAME_WK* name;
-    (*(NAME_WK * volatile *)&name_ptr)->rank = -1;
-    (*(NAME_WK * volatile *)&name_ptr)->rank_sub = -1;
+    name_ptr->rank = -1;
+    name_ptr->rank_sub = -1;
     for (joui = 0; joui < 4; joui++) {
-        if (Rank_In[(*(NAME_WK * volatile *)&name_ptr)->id][joui] >= 0) {
+        if (Rank_In[name_ptr->id][joui] >= 0) {
             break;
         }
     }
     for (j = joui + 1; j < 4; j++) {
-        if (Rank_In[(*(NAME_WK * volatile *)&name_ptr)->id][j] >= 0) {
-            rank_in = Rank_In[(*(NAME_WK * volatile *)&name_ptr)->id];
-            if (rank_in[joui] > rank_in[j]) {
+        if (Rank_In[name_ptr->id][j] >= 0) {
+            if (Rank_In[name_ptr->id][joui] > Rank_In[name_ptr->id][j]) {
                 joui = j;
             }
         }
     }
-    name = (*(NAME_WK * volatile *)&name_ptr);
-    name->rank_in = name->rank = Rank_In[name->id][joui];
-    name = (*(NAME_WK * volatile *)&name_ptr);
-    name->rank_status = name->status = rank_stage_tbl[joui];
+    name_ptr->rank_in = name_ptr->rank = Rank_In[name_ptr->id][joui];
+    name_ptr->rank_status = name_ptr->status = rank_stage_tbl[joui];
 }
 
 
@@ -463,7 +458,9 @@ s16 pl_id;
 /* provisional name */
 void name_entry_commit_row(s16 pl_id, s16 pos_y) {
     s16 pos_x;
-    s8 rank;
+    if (Game_setting.mode == 0) {
+    } else {
+    }
     if (pl_id) {
         pos_x = DE_X[0] + 37;
     } else {
@@ -471,19 +468,18 @@ void name_entry_commit_row(s16 pl_id, s16 pos_y) {
     }
     switch (name_ptr->rank_in) {
     case 0:
-        rank = 0;
+        rank_mark_set(pl_id, 0);
         break;
     case 1:
-        rank = 1;
+        rank_mark_set(pl_id, 1);
         break;
     case 2:
-        rank = 2;
+        rank_mark_set(pl_id, 2);
         break;
     default:
-        rank = 3;
+        rank_mark_set(pl_id, 3);
         break;
     }
-    rank_mark_set(pl_id, rank);
     tilemap_put_cell(pos_x - 1, pos_y, 16, name_ptr->rank_in + 1);
     tilemap_put_cell(pos_x, pos_y, 16, pl_id * 2 + 106);
     tilemap_put_cell(pos_x + 1, pos_y, 16, pl_id * 2 + 107);
@@ -555,19 +551,19 @@ void current_sc_move2(void) {
     case 1:
         if (name_ptr->r_no_0 > 5) {
             nsc_ptr->r_no_0++;
-            break;
-        }
-        nsc_ptr->f_cnt++;
-        if (nsc_ptr->f_cnt > 16) {
-            nsc_ptr->f_cnt = 0;
-            nsc_ptr->n_disp_flag++;
-            if (nsc_ptr->n_disp_flag > 2) {
-                nsc_ptr->n_disp_flag = 0;
-            }
-            if (nsc_ptr->n_disp_flag != 2) {
-                naming_set(name_ptr->id, nsc_ptr->type, name_ptr->code[nsc_ptr->type]);
-            } else {
-                naming_set(name_ptr->id, nsc_ptr->type, 47);
+        } else {
+            nsc_ptr->f_cnt++;
+            if (nsc_ptr->f_cnt > 16) {
+                nsc_ptr->f_cnt = 0;
+                nsc_ptr->n_disp_flag++;
+                if (nsc_ptr->n_disp_flag > 2) {
+                    nsc_ptr->n_disp_flag = 0;
+                }
+                if (nsc_ptr->n_disp_flag != 2) {
+                    naming_set(name_ptr->id, nsc_ptr->type, name_ptr->code[nsc_ptr->type]);
+                } else {
+                    naming_set(name_ptr->id, nsc_ptr->type, 47);
+                }
             }
         }
         break;

@@ -17,6 +17,7 @@
 #include "EFFECT.h"
 #include "effect_2.h"
 #include "sc_trans.h"
+#include "sc_clear.h"
 #include "EFFA2_MAIN.h"
 
 

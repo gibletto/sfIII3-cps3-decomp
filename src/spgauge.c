@@ -17,6 +17,7 @@
 #include "romdata.h"
 #include "extern.h"
 #include "sc_trans.h"
+#include "sc_clear.h"
 #include "PLMAIN.h"
 #include "SE.h"
 #include "se_2.h"
@@ -384,11 +385,12 @@ void samoji_control(s8 Stpl_Num) {
     if (spg_dat[Stpl_Num].time) {
         switch (spg_dat[Stpl_Num].time_rno) {
         case 0:
-            if (plw[Stpl_Num].sa->ok != -1) {
+            if (plw[Stpl_Num].sa->ok == -1) {
+                spg_dat[Stpl_Num].time_rno = 1;
+            } else {
                 spg_dat[Stpl_Num].time_rno = 3;
                 goto case_3;
             }
-            spg_dat[Stpl_Num].time_rno = 1;
         case 1:
             spg_dat[Stpl_Num].timer--;
             if ((!spg_dat[Stpl_Num].sa_mukou || spg_dat[Stpl_Num].timer != 0) && spg_dat[Stpl_Num].spg_level == plw[Stpl_Num].sa->store) {
@@ -441,6 +443,8 @@ void samoji_control(s8 Stpl_Num) {
             spg_dat[Stpl_Num].ex_flag = 0;
             spg_dat[Stpl_Num].no_chgcol = 0;
             spg_dat[Stpl_Num].sa_mukou = 0;
+            return;
+        case 5:
             return;
         default:
             return;

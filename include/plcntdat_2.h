@@ -4,7 +4,7 @@
 #include "structs.h"
 
 void set_scrrrl(void);
-s32 check_combo_end(s16 ix);
+s32 check_combo_end();
 void clear_super_arts_point(PLW* wk);
 
 #endif

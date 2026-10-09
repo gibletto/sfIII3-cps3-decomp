@@ -30,6 +30,7 @@
 #include "color3rd.h"
 #include "end_sub_8.h"
 #include "sc_trans.h"
+#include "sc_clear.h"
 #include "cmb_win.h"
 #include "VITAL.h"
 #include "count.h"
@@ -158,7 +159,8 @@ void Game_Manage_1st(void) {
 
 void Clear_1Stage_Work(void) {
     s16 xx;
-    for (xx = 0; xx < 2; xx++) {
+    xx = 0;
+    do {
         Vital_Bonus[xx] = 0;
         Time_Bonus[xx] = 0;
         Perfect_Bonus[xx] = 0;
@@ -169,7 +171,7 @@ void Clear_1Stage_Work(void) {
         Stage_Cheap_Finish[xx] = 0;
         Stage_Judge_Finish[xx] = 0;
         Stage_Time_Finish[xx] = 0;
-    }
+    } while (++xx < 2);
 }
 
 
@@ -396,7 +398,7 @@ void Game_Manage_4th(void) {
         if (plw[0].wu.vital_new != plw[1].wu.vital_new) {
             C_No0 = 6;
             Round_Result |= 1;
-            win_type[Winner_id][PL_Wins[Winner_id]] = 1;
+            (&win_type[Winner_id][0])[PL_Wins[Winner_id]] = 1;
             Check_Perfect(Winner_id);
             PL_Wins[Winner_id]++;
             Update_VS_Data();
@@ -422,7 +424,7 @@ void Setup_Win_Mark(void) {
     if (Round_Result & 0x180) {
         Setup_BGM_Fade_In(150);
         sound_reg_level_set(0, -128);
-        win_type[Winner_id][PL_Wins[Winner_id]] = 4;
+        (&win_type[Winner_id][0])[PL_Wins[Winner_id]] = 4;
         sound_request(140);
         Finish_SE();
         return;
@@ -434,7 +436,7 @@ void Setup_Win_Mark(void) {
         } else {
             Shin_Gouki_BGM = 0;
         }
-        win_type[Winner_id][PL_Wins[Winner_id]] = 4;
+        (&win_type[Winner_id][0])[PL_Wins[Winner_id]] = 4;
         sound_request(0x8CU);
         Finish_SE();
         return;
@@ -447,7 +449,7 @@ void Setup_Win_Mark(void) {
 
 void Update_BI_Term(void)
 {
-    s16 pl;
+    s8 pl;
 
     if (Play_Type == 1) {
         return;
@@ -456,17 +458,23 @@ void Update_BI_Term(void)
     if (plw[pl].sa_healing) {
         Super_Arts_Finish[pl]++;
         Stage_SA_Finish[Winner_id]++;
-    } else if (plw[pl].wu.vitality == plw[pl].wu.vital_new) {
+        return;
+    }
+    if (plw[pl].wu.vitality == plw[pl].wu.vital_new) {
         Perfect_Finish[pl]++;
         Stage_Perfect_Finish[Winner_id]++;
         if (Round_Result & 0x980) {
             Super_Arts_Finish[Winner_id]++;
             Stage_SA_Finish[Winner_id]++;
         }
-    } else if (Round_Result & 0x200) {
+        return;
+    }
+    if (Round_Result & 0x200) {
         Cheap_Finish[pl]++;
         Stage_Cheap_Finish[Winner_id]++;
-    } else if (Round_Result & 0x980) {
+        return;
+    }
+    if (Round_Result & 0x980) {
         Super_Arts_Finish[pl]++;
         Stage_SA_Finish[Winner_id]++;
     }
@@ -942,8 +950,7 @@ void Pool_Score(s16 PL_id) {
     if (Perfect_Flag) {
         Perfect_Bonus[Winner_id] += 50000;
     }
-    Score_Buff = plw[PL_id].wu.vital_new;
-    Score_Buff = (s32)(Score_Buff * 100) / Max_vitality;
+    Score_Buff = plw[PL_id].wu.vital_new * 100 / Max_vitality;
     Score_Buff *= 500;
     Vital_Bonus[Winner_id] += Score_Buff;
     Time_Bonus[Winner_id] += (s32)round_timer.half.h * 300;
@@ -1127,7 +1134,7 @@ void Game_Manage_11th(void) {
     case 3:
         if (Switch_Screen()) {
             C_No1++;
-            tilemap_clear_rect(DE_X[3], (s16)(Text_Page_Y + 11), (*&DE_X)[3] + 47, Text_Page_Y + 13);
+            tilemap_clear_rect(DE_X[3], Text_Page_Y + 11, DE_X[3] + 47, Text_Page_Y + 13);
             sc_vram_to_ram();
             Switch_Screen_Init(3, 1);
         }
@@ -1398,7 +1405,7 @@ void Game_Manage_12_4(void) {
             C_No3 = 0;
             C_Timer = 10;
             Forbid_Break = 0;
-            tilemap_clear_rect(1, 8, (*&DE_X)[1] + 47, 21);
+            tilemap_clear_rect(1, 8, DE_X[1] + 47, 21);
             Check_Fade_Out_BGM(0x222);
         }
         break;
@@ -1600,11 +1607,9 @@ void Flash_Bonus_Perfect(void) {
 
 u32 Setup_Final_Score(s16 Type) {
     u32 xx;
-    s32 t;
+
     if (Type == 22) {
-        t = Bonus_Game_result;
-        t *= 1000;
-        xx = t;
+        xx = Bonus_Game_result * 1000;
         if (Stock_Bonus_Game_Result >= 20) {
             xx += Ball_Perfect_PTS[0][Bonus_Stage_Level];
         }
@@ -1629,9 +1634,7 @@ u32 Setup_Final_Score(s16 Type) {
         break;
     }
     Bonus_Score = xx;
-    t = Counter_hi;
-    t *= 1000;
-    xx += t;
+    xx += Counter_hi * 1000;
     Bonus_Score_Plus = xx;
     xx += Score[Player_id][0];
     if (xx >= 99999900) {
@@ -1773,7 +1776,7 @@ void Disp_Win_Record(void) {
             return;
         }
         pl = Player_id;
-        if (pl == 0) {
+        if (Player_id == 0) {
             x = 5;
         } else {
             x = 43;
@@ -1903,10 +1906,8 @@ void Check_Perfect(s16 PL_id) {
 
 
 void Judge_Winner(void) {
-    JudgeGals* jg1;
     grade_makeup_judgement_gals();
-    jg1 = &judge_gals[1];
-    if (judge_gals[0].grade == jg1->grade) {
+    if (judge_gals[0].grade == judge_gals[1].grade) {
         if (Play_Type == 0) {
             Winner_id = Player_id;
             Loser_id = COM_id;
@@ -2000,7 +2001,6 @@ s32 Check_Entry_Again(void) {
 
 
 void Loser_Sub(void) {
-    s32 x;
     plw[LOSER].wu.operator = 0;
     Operator_Status[LOSER] = 0;
     Sel_PL_Complete[LOSER] = 0;
@@ -2012,8 +2012,7 @@ void Loser_Sub(void) {
         Stage_Continue[LOSER]++;
     }
     if (Game_setting.set5 == 0) {
-        x = Score_X_Pos_Data[LOSER][Game_setting.mode];
-        tilemap_clear_rect(x - 7, Text_Page_Y, x, Text_Page_Y + 1);
+        tilemap_clear_rect(Score_X_Pos_Data[LOSER][Game_setting.mode] - 7, Text_Page_Y, Score_X_Pos_Data[LOSER][Game_setting.mode], Text_Page_Y + 1);
     }
     tilemap_print_string_attr(Loser_X_Pos_Data[LOSER][Game_setting.mode] - 2, 0, 18, Loser_Erase_msg);
 }

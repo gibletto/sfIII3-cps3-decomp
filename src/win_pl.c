@@ -94,8 +94,7 @@ void Win_01000(PLW* wk) {
     bg_app_stop = 1;
     switch (wk->wu.routine_no[3]) {
     case 0:
-        win_rno[1] = 0;
-        win_rno[0] = 0;
+        win_rno[0] = win_rno[1] = 0;
         wk->wu.routine_no[3]++;
         work = random_16_com() & 7;
         if ((Round_num >= Battle_Round[Play_Type] * 2) || (PL_Wins[wk->wu.id] >= Battle_Round[Play_Type] + 1)) {
@@ -110,12 +109,12 @@ void Win_01000(PLW* wk) {
                 win_rno[0] = 1;
                 break;
             }
-            set_char_move_init(&wk->wu, 9, win_10000_tbl[work + 8]);
+            set_char_move_init(&wk->wu, 9, win_10000_tbl[1][work]);
             if (work == 4) {
                 win_rno[0] = 2;
             }
         } else {
-            set_char_move_init(&wk->wu, 9, win_10000_tbl[work]);
+            set_char_move_init(&wk->wu, 9, win_10000_tbl[0][work]);
             if (work == 4) {
                 win_rno[0] = 2;
             }
@@ -678,7 +677,7 @@ void Win_09000(PLW* wk) {
 
 
 void Win_10000(PLW* wk) {
-    s32 work;
+    s16 work;
     s16 work2;
     s16 id_w;
     bg_app_stop = 1;

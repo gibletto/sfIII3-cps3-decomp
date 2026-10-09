@@ -286,24 +286,24 @@ s32 sound_seq_start(u16 code, s16 ramp) {
         return;
     }
     SE_VOICE(ch).cursor = p;
-    SE_VOICE(ch).patch = (SNDPATCH*)(*snd_bank_tbl + *(u16*)*snd_bank_tbl);
-    SE_VOICE(ch).sample = &snd_sample_tbl[SE_VOICE(ch).patch->sample_index];
-    SE_VOICE(ch).envelope_level = 0;
-    SE_VOICE(ch).program_index = 0;
-    SE_VOICE(ch).attack_peak = 0;
-    SE_VOICE(ch).attack_rate = 0;
-    SE_VOICE(ch).sustain_level = 0;
-    SE_VOICE(ch).decay_rate = 0;
-    SE_VOICE(ch).release_rate = 0;
-    SE_VOICE(ch).forced_release_rate = 0;
-    SE_VOICE(ch).volume = 0;
-    SE_VOICE(ch).velocity = 0x7F;
-    SE_VOICE(ch).expression = 0x7F;
-    SE_VOICE(ch).fine_tune = 0;
-    SE_VOICE(ch).transpose = 0;
-    SE_VOICE(ch).coarse_pitch_bend = 0;
-    SE_VOICE(ch).fine_pitch_control = 0x40;
-    SE_VOICE(ch).priority_flags = *p | 0x80;
+    se_voice[ch].patch = (SNDPATCH*)(*snd_bank_tbl + *(u16*)*snd_bank_tbl);
+    se_voice[ch].sample = &snd_sample_tbl[se_voice[ch].patch->sample_index];
+    se_voice[ch].envelope_level = 0;
+    se_voice[ch].program_index = 0;
+    se_voice[ch].attack_peak = 0;
+    se_voice[ch].attack_rate = 0;
+    se_voice[ch].sustain_level = 0;
+    se_voice[ch].decay_rate = 0;
+    se_voice[ch].release_rate = 0;
+    se_voice[ch].forced_release_rate = 0;
+    se_voice[ch].volume = 0;
+    se_voice[ch].velocity = 0x7F;
+    se_voice[ch].expression = 0x7F;
+    se_voice[ch].fine_tune = 0;
+    se_voice[ch].transpose = 0;
+    se_voice[ch].coarse_pitch_bend = 0;
+    se_voice[ch].fine_pitch_control = 0x40;
+    se_voice[ch].priority_flags = *p | 0x80;
     SE_VOICE(ch).pan_override = 0x40;
     rec = &se_pan_ramp[ch];
     if (ramp != -1) {
@@ -317,7 +317,7 @@ s32 sound_seq_start(u16 code, s16 ramp) {
         rec->step = 0;
         rec->mode = -1;
     }
-    se_voice[ch].status = 0;
+    (&se_voice[0])[ch].status = 0;
 }
 
 
@@ -376,25 +376,27 @@ void bgm_pause(void) {
 /* provisional name */
 void bgm_resume(void) {
     u8* save;
+    SNDVOICE* v;
     u8 i;
     if (!(sound_sample_submit_work7 & 2) || !(sound_sample_submit_work7 & 4)) {
         return;
     }
-    for (i = 0, save = bgm_status_save; i < 16; i++) {
-        bgm_voice[i].status = *save;
+    for (i = 0, save = bgm_status_save, v = bgm_voice; i < 16; i++) {
+        v->status = *save;
         save++;
+        v++;
     }
     sound_sample_submit_work7 &= ~4;
     *(u16*)(SOUND_REG + 0x200) |= snd_reg_save;
 }
 
 /* provisional name */
-u32 sound_fade_in_submit(u32 code_no, u16 speed)
+u32 sound_fade_in_submit(u16 code_no, u16 speed)
 {
     snd_fade_level = 0;
     snd_fade_speed = speed & 0x7FFF;
     sound_sample_submit_work7 |= 8;
-    return ((s32 (*)())sound_seq_start)(code_no, -1);
+    return sound_seq_start(code_no, -1);
 }
 
 

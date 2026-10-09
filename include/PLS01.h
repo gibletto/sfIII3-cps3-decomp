@@ -37,7 +37,7 @@ void jumping_union_process();
 void remake_sankaku_tobi_mvxy(WORK* wk, u8 kabe);
 s32 sa_stop_check();
 s32 saishin_bs2_area_car(PLW* wk);
-s8 saishin_bs2_on_car(PLW* wk);
+s32 saishin_bs2_on_car(PLW* wk);
 void set_rl_waza(PLW* wk);
 
 #endif

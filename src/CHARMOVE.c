@@ -573,22 +573,15 @@ s32 comm_if_l(WORK* wk, CHAR_CMD* ctc) {
     return decord_if_jump(wk, ctc, ix);
 }
 
-void comm_djmp(WORK* wk, CHAR_CMD* ctc)
-{
-    s32 ix;
-
-    switch ((u8)get_comm_djmp_lever_dir((PLW*)wk)) {
-    case 0:
-        ix = ctc->koc;
-        break;
-    case 1:
-        ix = ctc->ix;
-        break;
-    default:
-        ix = ctc->pat;
-        break;
+s32 comm_djmp(WORK* wk, CHAR_CMD* ctc) {
+    u8 ldir;
+    if ((ldir = get_comm_djmp_lever_dir((PLW*)wk))) {
+        if (ldir == 1) {
+            return decord_if_jump(wk, ctc, ctc->ix);
+        }
+        return decord_if_jump(wk, ctc, ctc->pat);
     }
-    decord_if_jump(wk, ctc, ix);
+    return decord_if_jump(wk, ctc, ctc->koc);
 }
 
 

@@ -23,7 +23,7 @@ u32 simmram_freelist_init_10(void);
 s32 polygon2d_submit_line();
 s32 polygon2d_submit_quad();
 s32 simmram_block_alloc_10(s32 blocks, s32 kind);
-s32 simmram_block_alloc_40(s32 blocks, s32 kind);
+s16 simmram_block_alloc_40(s32 blocks, s32 kind);
 void simmram_block_free_10(s32 blk);
 void simmram_block_free_40(s32 blk);
 u32 simmram_big_page_alloc_40(s32 kind);

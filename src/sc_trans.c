@@ -113,7 +113,12 @@ u16 h;
 
 
 /* provisional name */
-void sc_chr_sheet_trans(u16 chr, u16 pos, u16 w, u16 h) {
+void sc_chr_sheet_trans(chr, pos, w, h)
+u16 chr;
+u16 pos;
+u16 w;
+u16 h;
+{
     s32 i, j, k;
     u8* src;
     u16* dst;
@@ -1035,7 +1040,7 @@ void combo_message_set(s8 pl, s8 kind) {
 void combo_hitnum_set(s8 pl, s8 kind, u16 hits) {
     s16 x = combo_hitpos_tbl[kind][pl];
     s16 y = pl * 2 + 30;
-    s32 tens = hits / 10;
+    u16 tens = hits / 10;
     u16 ones = hits - tens * 10;
     if (tens != 0) {
         tilemap_put_cell(x, y, 16, tens + 96);
@@ -1055,27 +1060,28 @@ void combo_hitnum_set(s8 pl, s8 kind, u16 hits) {
 s16 combo_pts_set(s8 PL, u32 pts) {
     s16 digit[4];
     s16 i;
-    s32 first;
+    s16 first;
     s32 xx;
     u16 x;
     s16 y;
     s16 x2;
-    first = -1;
     xx = 100000;
+    first = -1;
     for (i = 3; i >= 0; i--) {
         digit[i] = pts / xx;
+        pts -= digit[i] * xx;
         if (first < 0) {
             if (digit[i] != 0) {
                 first = i;
             }
         }
-        pts -= digit[i] * xx;
         xx /= 10;
     }
     x = (15 - first) * PL;
     y = PL * 2 + 34;
     for (i = first; i >= 0; i--) {
-        score8x16_put(x++, y, 16, digit[i]);
+        score8x16_put(x, y, 16, digit[i]);
+        x++;
     }
     score8x16_put(x, y, 16, 0);
     score8x16_put(x + 1, y, 16, 0);
@@ -1083,8 +1089,7 @@ s16 combo_pts_set(s8 PL, u32 pts) {
     tilemap_put_cell(x + 2, y + 1, 16, 0xD6);
     tilemap_put_cell(x + 3, y, 16, 32);
     tilemap_put_cell(x + 3, y + 1, 16, 0xD7);
-    x2 = (PL == 0) ? x + 4 : 14 - first;
-    tilemap_put_cell(x2, y, 16, 32);
+    tilemap_put_cell(x2 = (PL == 0) ? x + 4 : 14 - first, y, 16, 32);
     tilemap_put_cell(x2, y + 1, 16, 32);
     return first + 6;
 }
@@ -1128,10 +1133,10 @@ void combo_window_all_clear(void) {
         tilemap_clear_rect(0, 10, 18, 11);
         tilemap_clear_rect(27, 7, 47, 9);
         tilemap_clear_rect(29, 10, 47, 11);
-        return;
+    } else {
+        tilemap_clear_rect(0, 7, 24, 11);
+        tilemap_clear_rect(37, 7, 61, 11);
     }
-    tilemap_clear_rect(0, 7, 24, 11);
-    tilemap_clear_rect(37, 7, 61, 11);
 }
 
 

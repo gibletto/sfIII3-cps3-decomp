@@ -69,4 +69,7 @@ void op_bg0_0014(s16 r_index);
 void end_00000(void);
 void update_all_disp_pos_ending(void);
 
+void scrn_map_set(u16 n, u32 p);
+void scrn_map_set_now(u16 n, u32 p);
+
 #endif

@@ -25,7 +25,7 @@ void Regular_OBJ_Sub();
 void Setup_Com_Color(void);
 void Setup_History_OBJ(void);
 void Setup_Next_Stage(s16 dir_step);
-void Setup_PL_Color(s16 PL_id, u16 sw);
+void Setup_PL_Color();
 void Setup_VS_OBJ(s16 Option);
 void Next_CPU_1st(void);
 void Next_CPU_2nd(void);

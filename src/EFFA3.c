@@ -26,6 +26,7 @@
 #include "meta_col_lib.h"
 #include "meta_col_bcd.h"
 #include "sc_trans.h"
+#include "sc_clear.h"
 #include "EFFA3.h"
 
 

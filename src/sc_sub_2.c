@@ -68,71 +68,72 @@ void fade_cont_init(void) {
 
 s32 fade_cont_main(void)
 {
-    FADE_LAYER *fl;
-    s32 rv;
-    u16 j;
-    s32 i;
+    register u16 j;
+    s8 i;
     s8 done;
+    register FADE_LAYER* fl;
+    register s16 st;
 
-    rv = fade_cont_rno;
-    if (rv == 0) {
+    switch (fade_cont_rno) {
+    case 0:
         for (i = 0; i < fade_layer_num; i++) {
-            fl = &fade_layer[i];
-            if (fl->on == 0) {
-                continue;
-            }
-            if (--fl->v20 != 0) {
-                continue;
-            }
-            fl->v20 = fl->v22;
-            for (j = 0; j < fl->v8; j++) {
-                load_any_color_req(*(u32 *)fl->adrs, fl->v10 + fl->step, fl->v12 + fl->step, fl->v14 + fl->step);
-                fl->adrs += 4;
-            }
-            if (fl->v10 == fl->v16) {
-                fl->on = 0;
-                continue;
-            }
-            fl->adrs = fl->cur;
-            fl->v10 += fl->v24;
-            fl->v12 = fl->v10;
-            fl->v14 = fl->v10;
-            switch (fl->kind) {
-            case 0:
-            case 2:
-                if (fl->v10 < fl->v16) {
-                    fl->v10 = fl->v16;
-                    fl->v12 = fl->v10;
-                    fl->v14 = fl->v10;
+            if (fade_layer[i].on) {
+                fade_layer[i].v20--;
+                if (fade_layer[i].v20 == 0) {
+                    fade_layer[i].v20 = fade_layer[i].v22;
+                    fl = &fade_layer[i];
+                    for (j = 0; j < fl->v8; j++) {
+                        st = fl->step;
+                        load_any_color_req(*(u32 *)fl->adrs, fl->v10 + st, fl->v12 + st, fl->v14 + st);
+                        fl->adrs += 4;
+                    }
+                    if (fade_layer[i].v10 == fade_layer[i].v16) {
+                        fade_layer[i].on = 0;
+                    } else {
+                        fade_layer[i].adrs = fade_layer[i].cur;
+                        fade_layer[i].v10 += fade_layer[i].v24;
+                        fade_layer[i].v12 = fade_layer[i].v10;
+                        fade_layer[i].v14 = fade_layer[i].v10;
+                        switch (fade_layer[i].kind) {
+                        case 0:
+                        case 2:
+                            if (fade_layer[i].v10 < fade_layer[i].v16) {
+                                fade_layer[i].v10 = fade_layer[i].v16;
+                                fade_layer[i].v12 = fade_layer[i].v10;
+                                fade_layer[i].v14 = fade_layer[i].v10;
+                            }
+                            break;
+                        case 1:
+                        case 3:
+                            if (fade_layer[i].v10 > fade_layer[i].v16) {
+                                fade_layer[i].v10 = fade_layer[i].v16;
+                                fade_layer[i].v12 = fade_layer[i].v10;
+                                fade_layer[i].v14 = fade_layer[i].v10;
+                            }
+                            break;
+                        }
+                    }
                 }
-                break;
-            case 1:
-            case 3:
-                if (fl->v16 < fl->v10) {
-                    fl->v10 = fl->v16;
-                    fl->v12 = fl->v10;
-                    fl->v14 = fl->v10;
-                }
-                break;
             }
         }
         done = 0;
         for (i = 0; i < fade_layer_num; i++) {
-            rv = 26; /* the value returned when no layer is fading: offset of .on in the layer record */
             if (fade_layer[i].on == 0) {
                 done++;
             }
         }
-        if (done == (u8)fade_layer_num) {
+        if (done == fade_layer_num) {
             fade_cont_rno = 1;
         }
-    } else if (rv == 1) {
-        if (--fade_end_timer == 0) {
+        break;
+    case 1:
+        fade_end_timer--;
+        if (fade_end_timer == 0) {
             Fade_Flag = 0;
             Fade_Mode = 0;
         }
+        break;
     }
-    return rv;
 }
 
 
@@ -185,24 +186,25 @@ void stngauge_cont_main(void) {
 
 void stngauge_control(s32 player) {
     s8 pl = player;
+    STN_DAT* g = &sdat[pl];
     PLW* wk = &plw[pl];
     if (Exec_Wipe) {
-        sdat[pl].cstn = wk->py->now.quantity.h;
+        g->cstn = wk->py->now.quantity.h;
         return;
     }
-    if (sdat[pl].proccess_dead) {
+    if (g->proccess_dead) {
         return;
     }
     if (wk->dead_flag) {
-        sdat[pl].proccess_dead = 1;
-        sdat[pl].cstn = 0;
+        g->proccess_dead = 1;
+        g->cstn = 0;
         stun_put(pl);
         return;
     }
     if ((wk->wu.routine_no[1] == 1 && wk->wu.routine_no[2] == 25 && wk->wu.routine_no[3] != 0) ||
         wk->py->flag == 1) {
-        sdat[pl].sflag = 1;
-        if (sdat[pl].osflag == 0) {
+        g->sflag = 1;
+        if (g->osflag == 0) {
             sdat[pl].cstn = stun_genkai_tbl[My_char[pl] & 0x7F];
         }
         sdat[pl].stimer--;
@@ -220,8 +222,8 @@ void stngauge_control(s32 player) {
         sdat[pl].osflag = sdat[pl].sflag;
         return;
     }
-    sdat[pl].sflag = 0;
-    if (sdat[pl].osflag == 1) {
+    g->sflag = 0;
+    if (g->osflag == 1) {
         sdat[pl].osflag = sdat[pl].sflag;
         sdat[pl].g_or_s = 0;
         sdat[pl].stimer = 2;

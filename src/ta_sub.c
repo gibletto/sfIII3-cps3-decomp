@@ -82,7 +82,11 @@ void sync_fam_set3(s16 bg_no) {
     s16 pos_x_w;
     s16 pos_y_w;
     pos_x_w = (bg_w.chase_flag & 0xF) ? bgw_ptr->chase_xy[0].disp.pos : bgw_ptr->wxy[0].disp.pos;
-    pos_y_w = (bg_w.chase_flag & 0xF0) ? bgw_ptr->chase_xy[1].disp.pos : bgw_ptr->xy[1].disp.pos;
+    if (bg_w.chase_flag & 0xF0) {
+        pos_y_w = bgw_ptr->chase_xy[1].disp.pos;
+    } else {
+        pos_y_w = bgw_ptr->xy[1].disp.pos;
+    }
     pos_work_x = pos_x_w & 0x3FF;
     pos_work_x -= bg_w.pos_offset;
     pos_x_w -= bg_w.pos_offset;

@@ -143,8 +143,11 @@ s16 iid;
 
 /* Takes an effect work from the free queue and links it into list `index`; returns its slot index, -1 when none is free. */
 /* provisional name */
-s32 pull_effect_work(s16 index) {
+s32 pull_effect_work(index)
+s16 index;
+{
     s16 qix;
+    s16* ixp;
     WORK* tadr;
     WORK* wrk;
     if (frwctr < 1) {
@@ -153,14 +156,15 @@ s32 pull_effect_work(s16 index) {
     qix = frwque[(frwctr -= 1)];
     tadr = (WORK*)frw[qix];
     if (head_ix[index] == -1) {
+        ixp = &head_ix[index];
         tail_ix[index] = qix;
-        head_ix[index] = qix;
     } else {
-        wrk = (WORK*)frw[tail_ix[index]];
+        ixp = &tail_ix[index];
+        wrk = (WORK*)frw[*ixp];
         wrk->behind = qix;
-        tadr->before = tail_ix[index];
-        tail_ix[index] = qix;
+        tadr->before = *ixp;
     }
+    *ixp = qix;
     tadr->timing = exec_tm[index];
     tadr->listix = index;
     return qix;
@@ -179,8 +183,8 @@ s32 effect_work_pull_link(s16 index, s16 before, s16 aix) {
         return -1;
     }
     qix = frwque[--frwctr];
-    tadr = (WORK*)frw[qix];
-    wrk = (WORK*)frw[aix];
+    tadr = (WORK*)&frw[qix];
+    wrk = (WORK*)&frw[aix];
     if (before != 0) {
         if ((tadr->before = wrk->before) == -1) {
             head_ix[index] = qix;
@@ -237,7 +241,7 @@ s32 push_effect_work(WORK* wkhd) {
     lix = wkhd->listix;
     qix = wkhd->myself;
     c_addr = (WORK*)frw[qix];
-    switch ((qix == head_ix[lix]) + (qix == tail_ix[lix]) * 2) {
+    switch ((head_ix[lix] == qix) + (tail_ix[lix] == qix) * 2) {
     case 0:
         c_addr2 = (WORK*)frw[c_addr->before];
         c_addr2->behind = c_addr->behind;
@@ -260,8 +264,7 @@ s32 push_effect_work(WORK* wkhd) {
     }
     work_init_zero((s32*)frw[qix], sizeof(frw[0]));
     c_addr->before = c_addr->behind = -1;
-    frwque[frwctr++] = qix;
-    return c_addr->myself = qix;
+    c_addr->myself = frwque[frwctr++] = qix;
 }
 
 
@@ -320,9 +323,7 @@ void work_init_copy(s32* src, s32* dst, s16 size) {
     }
     if (surr) {
         for (j = 0; j < surr; j++) {
-            *(s8*)dst = *(s8*)src;
-            src++;
-            dst++;
+            *(s8*)dst++ = *(s8*)src++;
         }
     }
 }

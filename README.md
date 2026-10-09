@@ -46,11 +46,13 @@ and loads it over the ROM files.
 
 ## Compiler
 
-The compiler is SHC 5.0 Release 26 with thirty-one changes, each one a rule the arcade's own compiler visibly follows
+The compiler is SHC 5.0 Release 26 with thirty-two changes, each one a rule the arcade's own compiler visibly follows
 throughout the ROM but Release 26 doesn't:
 
-- a switch case is tested with `bt case` / `bra default` (Release 26 folds it into `bf default`), and a jump to
-  a case label that is also the next block is kept;
+- a switch case is tested with `bt case` / `bra default` (Release 26 folds it into `bf default`), and a jump whose
+  target has become the next block is kept as a `bra` to the next instruction: the jump to a case or default
+  label, the jump over an else arm that was merged with a later identical block, the jump in front of
+  `else return;` (Release 26 deletes every such jump; only the one a then arm makes over `else break;` still goes);
 - two returns share the instructions they end with only as far back as those leave r0 alone: the store or call
   in front of a plain `return;`, never the `mov #0,r0` of `return 0;` (Release 26 shares every instruction they
   end with), and an instruction that uses r0 does not fill the delay slot of the jump to the shared code; inside
@@ -123,18 +125,21 @@ throughout the ROM but Release 26 doesn't:
 - the index of a `char` array that is read from memory (`flags[p->id]`, `cols[src[i]]`) is the converted value
   itself, so `flags[p->id] &= 0x80` keeps the index in r0, loads the array's address once, reads through it
   indexed and copies it for the store; Release 26 takes the index for a second value, copies it out of r0 and
-  loads the address twice.
+  loads the address twice;
+- an expression used in several blocks is shared even when it holds a temporary: with `table[ix]` read in
+  several places the element address is computed once in front of its uses; Release 26 leaves such an
+  expression alone, shares only the index and adds the table's address again at each use.
 
 The four changed stages (`shcmdl.exe`, `shcgen.exe`, `shcpep.exe` and `shcasm.exe`) are rebuilt from a C
 decompilation of the originals (source: https://github.com/gibletto/shc-5r26-decomp-sf3), and each rule is a
-setting in that source (thirty-three settings for the thirty-one rules: the switch rule and the return rule have two each). With every rule off they give the same output as Release 26. Setting `SWITCH_ARCADE_BRANCH`,
+setting in that source (thirty-four settings for the thirty-two rules: the switch rule and the return rule have two each). With every rule off they give the same output as Release 26. Setting `SWITCH_ARCADE_BRANCH`,
 `SWITCH_ARCADE_JUMP`, `XJUMP_OFF`, `PEP_R0_FORGET`, `SLOT_NO_STACK`, `PEP_NO_THREAD`, `GEN_TST_R0`, `GEN_MUL_L`,
-`MDL_ARG_CONST`, `MDL_CAST_CSE`, `MDL_ARG_CAST`, `MDL_GCSE`, `ASM_MULWAIT`, `GEN_CHAIN_JUMP`, `PEP_AUTOINC`, `MDL_IV`, `GEN_POOL_MOVLOC`, `MDL_LOOP_INV`, `GEN_RELOAD`, `GEN_EVICT_ORDER`, `MDL_CAST_MUL`, `MDL_MUL_CONST`, `PEP_RET_R0`, `GEN_MEM_INDEX`, `GEN_R0VAR`, `MDL_IMM_REG`, `MDL_MASK_AND`, `MDL_IV_BASE`, `MDL_IV_TEMP`, `GEN_JUMP_TEMP`, `MDL_TEST_REPLACE`, `MDL_MUL_ONE` and `ASM_SPECREG` to 0 gives Release 26's behaviour back. The
+`MDL_ARG_CONST`, `MDL_CAST_CSE`, `MDL_ARG_CAST`, `MDL_GCSE`, `ASM_MULWAIT`, `GEN_CHAIN_JUMP`, `PEP_AUTOINC`, `MDL_IV`, `GEN_POOL_MOVLOC`, `MDL_LOOP_INV`, `GEN_RELOAD`, `GEN_EVICT_ORDER`, `MDL_CAST_MUL`, `MDL_MUL_CONST`, `PEP_RET_R0`, `GEN_MEM_INDEX`, `GEN_R0VAR`, `MDL_IMM_REG`, `MDL_MASK_AND`, `MDL_IV_BASE`, `MDL_IV_TEMP`, `GEN_JUMP_TEMP`, `MDL_TEST_REPLACE`, `MDL_MUL_ONE`, `MDL_TEMP_EXPR` and `ASM_SPECREG` to 0 gives Release 26's behaviour back. The
 original files are in `bin/original`.
 
-With the changes, 9,501 of the 10,066 C routines compile to the arcade's instructions (3,771 with the original
-Release 26), and 9,182 to its exact bytes (1,869). Over 254 Fightcade replays compared with the original ROM,
-253 keep identical game state throughout (218 before) and 250 identical slowdown (214).
+With the changes, 9,616 of the 10,065 C routines compile to the arcade's instructions (3,777 with the original
+Release 26), and 9,393 to its exact bytes (1,867). Over 254 Fightcade replays compared with the original ROM,
+252 keep identical game state throughout (218 before) and 252 identical slowdown (214).
 
 ## Fightcade replays
 

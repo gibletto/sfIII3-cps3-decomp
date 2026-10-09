@@ -39,7 +39,7 @@ void Disp_Start_Message(void);
 s32 Pay_Start_Credit();
 s32 Loser_Sub_1P(void);
 s32 Loser_Sub_2P(void);
-s32 Disp_More_Coins(s16 PL_id, s16 unused, s16 coins);
+s32 Disp_More_Coins();
 s32 credit_display_render(s8 force);
 void entry_main(void);
 void entry_task(void);

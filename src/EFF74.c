@@ -82,8 +82,10 @@ void effect_74_move(WORK_Other* ewk) {
 
 /* provisional name */
 void eff74_pattern_set(WORK_Other* ewk) {
+    s16 ix;
     ewk->wu.cg_ix = 0;
-    ewk->wu.old_rno[0] = random_16_com() & 3;
+    ix = random_16_com();
+    ewk->wu.old_rno[0] = ix & 3;
     ewk->wu.old_rno[2] = eff74_anim_tbl[ewk->wu.old_rno[0]].frames->slot;
     ewk->wu.old_rno[1] = eff74_anim_tbl[ewk->wu.old_rno[0]].frames->y;
     ewk->wu.cg_ctr = eff74_anim_tbl[ewk->wu.old_rno[0]].frames->timer;
@@ -100,7 +102,8 @@ void eff74_cell_trans(void) {
     const CELL_REQ* p;
     for (i = 0; i < 3; i++) {
         for (j = 0; j < 16; j++) {
-            p = &eff74_cell_tbl[i][j];
+            p = (const CELL_REQ*)eff74_cell_tbl[i];
+            p += j;
             scroll_cell_write(i, p->a, p->b, (u32)eff74_scrn_data);
         }
     }

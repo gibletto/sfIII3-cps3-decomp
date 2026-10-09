@@ -783,6 +783,12 @@ typedef struct {
     } iw[2];
 } Ideal_W;
 
+/* per-line scroll work: step added per line and the running offset */
+typedef struct {
+    s32 step;
+    s32 ofs;
+} SUZI_CALC;
+
 typedef union {
     s32 pl;
     LoHi16 ps;
@@ -1507,7 +1513,8 @@ typedef struct {
     s16 handle;         /* SIMM RAM block holding the layer map */
     s16 pad0;
     u32 adrs;           /* address of that block */
-    s16 pos[2];         /* display position x, y */
+    s16 pos_x;          /* display position x */
+    s16 pos_y;          /* display position y */
     XY xy[2];           /* scroll position x, y (16.16) */
 } AKE_SCRL;
 

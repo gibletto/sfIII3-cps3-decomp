@@ -13,7 +13,7 @@ s32 get_cg_slot_addr();
 s32 purge_char_gfx();
 s32 check_cg_data();
 s32 cg_data_exist(u16 id);
-s32 char_cell_push_block(WORK* wk, s16 handle);
+s32 char_cell_push_block();
 s32 char_cell_flip_y(WORK* wk);
 s32 char_cell_unflip_y(WORK* wk);
 s32 char_cell_flip_xy(WORK* wk);

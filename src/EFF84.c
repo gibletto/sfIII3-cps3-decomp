@@ -15,6 +15,7 @@
 #include "romdata.h"
 #include "extern.h"
 #include "sc_trans.h"
+#include "sc_clear.h"
 #include "eff87.h"
 #include "eff88.h"
 #include "eff89.h"
@@ -101,24 +102,21 @@ void effect_84_move(WORK_Other* ewk) {
 
 /* provisional name */
 void eff84_message_clear(void) {
-    void (*fp)() = tilemap_clear_rect;
-    s16* p = &DE_X[3];
-    s16* q = p;
     switch (message_index) {
     case 0:
-        fp(*p + 14, 9, *q + 32, 17);
+        tilemap_clear_rect(DE_X[3] + 14, 9, DE_X[3] + 32, 17);
         break;
     case 1:
-        fp(*p + 12, 9, *q + 35, 13);
+        tilemap_clear_rect(DE_X[3] + 12, 9, DE_X[3] + 35, 13);
         break;
     case 2:
-        fp(*p + 12, 9, *q + 35, 13);
+        tilemap_clear_rect(DE_X[3] + 12, 9, DE_X[3] + 35, 13);
         break;
     case 3:
-        fp(*p + 8, 8, *q + 40, 14);
+        tilemap_clear_rect(DE_X[3] + 8, 8, DE_X[3] + 40, 14);
         break;
     default:
-        fp(*p + 12, 9, *q + 35, 13);
+        tilemap_clear_rect(DE_X[3] + 12, 9, DE_X[3] + 35, 13);
         break;
     }
 }

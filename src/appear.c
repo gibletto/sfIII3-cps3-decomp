@@ -255,18 +255,22 @@ void Appear_03000(PLW* wk) {
 /* provisional name */
 s32 yun_yang_appear_check(PLW* wk) {
     s16 kind;
+    s8* f0;
+    s8* f1;
     if ((plw[0].player_number == PL_YUN && plw[1].player_number == PL_YANG) ||
         (plw[0].player_number == PL_YANG && plw[1].player_number == PL_YUN)) {
         kind = 2;
     } else {
         kind = 1;
     }
+    f0 = &Appear_flag[0];
+    f1 = &Appear_flag[1];
     switch (kind) {
     case 1:
         if (wk->wu.id) {
-            Appear_flag[0] = 0;
+            *f0 = 0;
         } else {
-            Appear_flag[1] = 0;
+            *f1 = 0;
         }
         appear_data_set(wk, ((void*)&(*(APPEAR_DATA*)&(appear_data[2]))));
         wk->wu.routine_no[4] = 1;
@@ -274,9 +278,9 @@ s32 yun_yang_appear_check(PLW* wk) {
         return 1;
     case 2:
         if (wk->wu.id) {
-            Appear_flag[0] = 0;
+            *f0 = 0;
         } else {
-            Appear_flag[1] = 0;
+            *f1 = 0;
         }
         appear_data_set(wk, ((void*)&(*(APPEAR_DATA*)&(appear_data[24]))));
         wk->wu.routine_no[4] = 20;
@@ -342,18 +346,22 @@ void Appear_04000(PLW* wk) {
 /* provisional name */
 s32 yang_yun_appear_check(PLW* wk) {
     s16 kind;
+    s8* f0;
+    s8* f1;
     if ((plw[0].player_number == PL_YUN && plw[1].player_number == PL_YANG) ||
         (plw[0].player_number == PL_YANG && plw[1].player_number == PL_YUN)) {
         kind = 2;
     } else {
         kind = 1;
     }
+    f0 = &Appear_flag[0];
+    f1 = &Appear_flag[1];
     switch (kind) {
     case 1:
         if (wk->wu.id) {
-            Appear_flag[0] = 0;
+            *f0 = 0;
         } else {
-            Appear_flag[1] = 0;
+            *f1 = 0;
         }
         appear_data_set(wk, ((void*)&(*(APPEAR_DATA*)&(appear_data[2]))));
         wk->wu.routine_no[4] = 1;
@@ -361,9 +369,9 @@ s32 yang_yun_appear_check(PLW* wk) {
         return 1;
     case 2:
         if (wk->wu.id) {
-            Appear_flag[0] = 0;
+            *f0 = 0;
         } else {
-            Appear_flag[1] = 0;
+            *f1 = 0;
         }
         appear_data_set(wk, ((void*)&(*(APPEAR_DATA*)&(appear_data[24]))));
         wk->wu.routine_no[4] = 20;
