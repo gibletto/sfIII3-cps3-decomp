@@ -220,7 +220,7 @@ const u16 Entry_Msg_X_Data[12][2] = {
     { 7, 15 }, { 32, 41 },
 };
 
-const s16 Score_X_Pos_Data[4][2] = {
+const u16 Score_X_Pos_Data[4][2] = {
     { 17, 23 }, { 37, 46 },
     { 6, 14 },
     { 31, 40 },

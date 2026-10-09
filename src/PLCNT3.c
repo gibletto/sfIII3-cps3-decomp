@@ -3,7 +3,7 @@
  *
  * Player_control_bonus2 is the per-frame player control of the second bonus stage type, called from
  * Game_Main: it runs the bonus control phase (plcnt_b2_move, plcnt_b2_die), touch and push-back
- * checks, stores the afterimage history (zanzou_store) and draws the players.
+ * checks, stores the afterimage history and draws the players.
  * plcnt_b2_move moves the players and switches to the end phase on time up or stage end.
  */
 
@@ -25,23 +25,6 @@
 #include "bg_sub_4.h"
 #include "bg_sub_5.h"
 #include "PLCNT3.h"
-
-#pragma inline(zanzou_store)
-
-/* provisional name */
-static void zanzou_store(ZanzouTableEntry* zt, PLW* wk) {
-    zt->pos_x = wk->wu.position_x;
-    zt->pos_y = wk->wu.position_y;
-    zt->pos_z = wk->wu.position_z;
-    zt->cg_num = wk->wu.cg_number;
-    zt->renew = wk->wu.renew_attack;
-    zt->hit_ix = wk->wu.cg_hit_ix;
-    zt->flip = wk->wu.rl_flag;
-    zt->cg_flp = wk->wu.cg_flip;
-    zt->kowaza = wk->wu.kind_of_waza;
-}
-
-
 
 /* provisional name */
 s32 Player_control_bonus2(void) {
@@ -70,8 +53,24 @@ s32 Player_control_bonus2(void) {
         zanzou_table[1][i] = zanzou_table[1][i - 1];
         continue;
     }
-    zanzou_store(zanzou_table[0], &plw[0]);
-    zanzou_store(zanzou_table[1], &plw[1]);
+    zanzou_table[0]->pos_x = plw[0].wu.position_x;
+    zanzou_table[0]->pos_y = plw[0].wu.position_y;
+    zanzou_table[0]->pos_z = plw[0].wu.position_z;
+    zanzou_table[0]->cg_num = plw[0].wu.cg_number;
+    zanzou_table[0]->renew = plw[0].wu.renew_attack;
+    zanzou_table[0]->hit_ix = plw[0].wu.cg_hit_ix;
+    zanzou_table[0]->flip = plw[0].wu.rl_flag;
+    zanzou_table[0]->cg_flp = plw[0].wu.cg_flip;
+    zanzou_table[0]->kowaza = plw[0].wu.kind_of_waza;
+    zanzou_table[1]->pos_x = plw[1].wu.position_x;
+    zanzou_table[1]->pos_y = plw[1].wu.position_y;
+    zanzou_table[1]->pos_z = plw[1].wu.position_z;
+    zanzou_table[1]->cg_num = plw[1].wu.cg_number;
+    zanzou_table[1]->renew = plw[1].wu.renew_attack;
+    zanzou_table[1]->hit_ix = plw[1].wu.cg_hit_ix;
+    zanzou_table[1]->flip = plw[1].wu.rl_flag;
+    zanzou_table[1]->cg_flp = plw[1].wu.cg_flip;
+    zanzou_table[1]->kowaza = plw[1].wu.kind_of_waza;
     if (pl_eff_disp_stop == 0) {
         sort_push_request((WORK_Other*)&plw[0]);
         sort_push_request((WORK_Other*)&plw[1]);

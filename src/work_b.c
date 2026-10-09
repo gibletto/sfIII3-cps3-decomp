@@ -1149,7 +1149,7 @@ BG bg_w;  /* 02026BAC */
 s16 scr_cg_c_no;  /* 02026FF0 */
 s16 ake_cg_c_no;  /* 02026FF2 */
 BGW * bgw_ptr;  /* 02026FF4 */
-s32 suzi_calc_w[2];  /* 02026FF8 */
+SUZI_CALC suzi_calc_w;  /* 02026FF8 */
 u8 suzi_calc_w_tail[8];  /* after suzi_calc_w; nothing refers to it by name or address */
 Ideal_W ideal_w;  /* 02027008 */
 u16 suzi_line_buf[2048];  /* 02027010 */

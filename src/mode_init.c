@@ -1,10 +1,9 @@
 /*
- * MODE_INIT.C  System start-up, mode initialisation and screen mode setup
+ * MODE_INIT.C  Mode initialisation and screen mode setup
  *
- * boot_task starts mode_init_task and then serves the task request queue. mode_init_task
- * initialises the game for the selected mode; region_setup splits the BIOS region byte into
- * country and version, region_group_params_set picks the per-region parameters, and
- * display_mode_setup chooses normal or wide screen.
+ * mode_init_task initialises the game for the selected mode; region_setup splits the BIOS
+ * region byte into country and version, region_group_params_set picks the per-region
+ * parameters, and display_mode_setup chooses normal or wide screen.
  */
 
 #include "structs.h"
@@ -108,50 +107,6 @@
 #include "fighter.h"
 #include "RANKING.h"
 
-#pragma noregsave(boot_task)
-
-
-
-
-/* First task of the system.  Set up the task request queue and start
-   mode_init_task in task slot 0, retrying until a slot is free.  From then on
-   serve the queue: whenever task slot 6 is free and a request is waiting, start
-   the requested routine there at priority 4; otherwise give up the frame. */
-/* provisional name */
-void boot_task(void) {
-    TASK_REQ* req;
-
-    task_sleep(3);
-    fifo_init((u32*)&task_req_queue, (u32)task_req_buff, 200);
-    while (create_task(mode_init_task, 0, task_tbl, 1, 0) == 0) {
-    }
-    do {
-        if (task_tbl[6].status == 0) {
-            req = (TASK_REQ*)fifo_get((FIFO32*)&task_req_queue);
-            if (req != 0) {
-                create_task(req->func, 2, &task_tbl[6], 4, req->arg);
-                continue;
-            }
-        }
-        task_wait();
-    } while (1);
-}
-
-
-
-/* provisional name */
-void kill_mode_tasks(void) {
-    fifo_init(&task_req_queue, task_req_buff, 200);
-    kill_tasks_by_priority(4, 2);
-}
-
-
-
-/* provisional name */
-void text_clear_task_exit(void) {
-    tilemap_fill_all(0, 32);
-    destroy_current_task();
-}
 
 
 
@@ -165,7 +120,7 @@ void text_clear_task_exit(void) {
 void mode_init_task(void) {
     s16 wait;
     u8 region;
-    s16 color;
+    s32 color;
 
     region_setup();
     CC_Type = region_cc_type_tbl[Country - 1];
@@ -229,8 +184,8 @@ void mode_init_task(void) {
     region = (region >= 8) ? 8 : region & 7;
     if (region >= 8) {
         color = 2;
-    } else if ((color = region & 7) == 0) {
-        color = 1;
+    } else {
+        color = (region & 7) ? (region & 7) : 1;
     }
     cd_ready_flag = 0;
     no_cd_flag = bios_cd_flags & 1;

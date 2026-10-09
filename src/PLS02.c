@@ -81,16 +81,20 @@ void setup_mvxy_data(wk, ix)
    attacker's character and our weight. */
 void setup_butt_own_data_ex(WORK* wk, s16 ix) {
     s16* adrs;
+    s16 pn;
     wk->mvxy.index = ix;
-    adrs = (*parabora_ex_table)[ix][((PLW*)wk->target_adrs)->player_number][wk->weight_level][(s8)wk->dm_attlv];
+    pn = ((PLW*)wk->target_adrs)->player_number;
+    adrs = (*parabora_ex_table)[ix][pn][wk->weight_level][(s8)wk->dm_attlv];
     read_adrs_store_mvxy(wk, adrs);
 }
 
 /* Unreferenced: as above, by our character and the attacker's weight. */
 void setup_butt_own_data_ex2(WORK* wk, s16 ix) {
     s16* adrs;
+    u8 wl;
     wk->mvxy.index = ix;
-    adrs = (*parabora_ex_table)[ix][((PLW*)wk)->player_number][((WORK*)wk->target_adrs)->weight_level][(s8)wk->dm_attlv];
+    wl = ((WORK*)wk->target_adrs)->weight_level;
+    adrs = (*parabora_ex_table)[ix][((PLW*)wk)->player_number][wl][(s8)wk->dm_attlv];
     read_adrs_store_mvxy(wk, adrs);
 }
 
@@ -129,8 +133,6 @@ void cal_mvxy_speed(WORK* wk) {
         switch (wk->mvxy.kop[i]) {
         case 0:
             wk->mvxy.a[i].sp += wk->mvxy.d[i].sp;
-            break;
-        default:
             break;
         case 1:
             if (wk->mvxy.a[i].sp >= 0) {
@@ -321,6 +323,8 @@ s32 meri_case_switch(s16 meri) {
 void check_body_touch2(void) {
     PLW* hmw;
     PLW* cmw;
+    PLW* p0;
+    PLW* p1;
     WORK* efw;
     s16* dad0;
     s16* dad1;
@@ -328,12 +332,14 @@ void check_body_touch2(void) {
     s16 ix;
     s16 dad2[4];
     s16 dad3[4];
-    if (!plw->wu.operator) {
-        hmw = &plw[1];
-        cmw = &plw[0];
+    p0 = &plw[0];
+    p1 = &plw[1];
+    if (p0->wu.operator) {
+        hmw = p0;
+        cmw = p1;
     } else {
-        hmw = &plw[0];
-        cmw = &plw[1];
+        hmw = p1;
+        cmw = p0;
     }
     if (!saishin_bs2_on_car(hmw)) {
         efw = (WORK*)cmw->wu.my_effadrs;

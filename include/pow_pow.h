@@ -3,7 +3,7 @@
 
 #include "structs.h"
 
-void Additinal_Score_DM(WORK_Other* wk, u32 ix);
+void Additinal_Score_DM();
 void cal_damage_vitality(PLW* as, PLW* ds);
 void cal_damage_vitality_eff(WORK_Other* as, PLW* ds);
 void Score_Sub(void);

@@ -474,7 +474,7 @@ s32 EFF79_Move_Y(WORK_Other* ewk) {
 
 void Setup_Command_Name(WORK_Other* ewk) {
     if (Moving_Plate[ewk->master_id] == 2) {
-        Disp_Command_Name[ewk->master_id][ewk->master_player] = 0;
+        (&Disp_Command_Name[ewk->master_id][0])[ewk->master_player] = 0;
         switch (ewk->master_player) {
         case 0:
             Disp_Command_Name[ewk->master_id][1] = 1;
@@ -493,7 +493,7 @@ void Setup_Command_Name(WORK_Other* ewk) {
         Disp_Command_Name[ewk->master_id][0] = 0;
         Disp_Command_Name[ewk->master_id][1] = 0;
         Disp_Command_Name[ewk->master_id][2] = 0;
-        Disp_Command_Name[ewk->master_id][ewk->master_player] = 1;
+        (&Disp_Command_Name[ewk->master_id][0])[ewk->master_player] = 1;
     }
 }
 
@@ -557,9 +557,9 @@ s32 effect_79_init(s16 pl_id, s16 plate_id, s16 pos_id, s16 time, s16 Target_BG)
     }
     Setup_Pos_79(ewk);
     if (pos_id == 0) {
-        Disp_Command_Name[ewk->master_id][plate_id] = 1;
+        (&Disp_Command_Name[ewk->master_id][0])[plate_id] = 1;
     } else {
-        Disp_Command_Name[ewk->master_id][plate_id] = 0;
+        (&Disp_Command_Name[ewk->master_id][0])[plate_id] = 0;
     }
     Plate_X[ewk->master_id][0] =
         bg_w.bgw[ewk->wu.my_family - 1].wxy[0].disp.pos + Plate_Pos_Data_79[Play_Type][ewk->master_id][0][0];

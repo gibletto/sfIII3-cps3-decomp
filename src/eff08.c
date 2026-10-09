@@ -117,7 +117,8 @@ void effect_08_build_tile_grid()
     s16 j;
     for (i = 0; i < 2; i++) {
         for (j = 0; j < 16; j++) {
-            cell = &eff08_cell_tbl[i][j];
+            cell = (const GRID_CELL*)eff08_cell_tbl[i];
+            cell += j;
             scroll_cell_write(i, cell->a, cell->b, (u32)eff08_scrn_data);
         }
     }

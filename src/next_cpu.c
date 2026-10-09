@@ -621,12 +621,10 @@ void Select_CPU_3rd(void)
             }
             Demo_Ptr[Player_id]++;
         } else {
-            if (pid != 0) {
-                sw_on = p2sw_0;
-                Sel_CPU_Sub(1, ~p2sw_1 & sw_on, sw_on, 20, sw_on);
+            if (pid) {
+                Sel_CPU_Sub(1, ~p2sw_1 & p2sw_0, p2sw_0);
             } else {
-                sw_on = p1sw_0;
-                Sel_CPU_Sub(0, ~p1sw_1 & sw_on, sw_on, 20, sw_on);
+                Sel_CPU_Sub(0, ~p1sw_1 & p1sw_0, p1sw_0);
             }
         }
         if (Sel_EM_Complete[Player_id]) {
@@ -669,7 +667,7 @@ void Select_CPU_3rd(void)
         effect_38_init(COM_id, COM_id + 11, My_char[COM_id], 1, 2);
         Order[COM_id + 11] = 1;
         Order_Timer[COM_id + 11] = 1;
-        if (EM_id) {
+        if (EM_id != 0) {
             effect_98_init(COM_id, COM_id + 40, Super_Arts[COM_id], 2);
             Order[COM_id + 40] = 1;
             Order_Timer[COM_id + 40] = 1;
@@ -1078,6 +1076,19 @@ void Setup_PL_Color(s16 PL_id, u16 sw) {
         id_0 = 127;
     }
     switch (sw) {
+    case 336:
+        if (Version_Type == 3) {
+            if (*other == 0 && id_0 == id_1) {
+                *mine = 3;
+            } else {
+                *mine = 0;
+            }
+        } else if (*other == 6 && id_0 == id_1) {
+            *mine = 0;
+        } else {
+            *mine = 6;
+        }
+        break;
     case 16:
         if (*other == 0 && id_0 == id_1) {
             *mine = 3;
@@ -1111,19 +1122,6 @@ void Setup_PL_Color(s16 PL_id, u16 sw) {
             *mine = 1;
         } else {
             *mine = 4;
-        }
-        break;
-    case 336:
-        if (Version_Type == 3) {
-            if (*other == 0 && id_0 == id_1) {
-                *mine = 3;
-            } else {
-                *mine = 0;
-            }
-        } else if (*other == 6 && id_0 == id_1) {
-            *mine = 0;
-        } else {
-            *mine = 6;
         }
         break;
     default:

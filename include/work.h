@@ -1310,7 +1310,7 @@ extern u32 spr_pool_busy;
 extern s8 test_sw_lock;
 extern s16 Random_ix16_ex_com;
 extern u16 Random_ix32_ex_com;
-extern s32 suzi_calc_w[2];
+extern SUZI_CALC suzi_calc_w;
 extern s16 ls_cnt1;
 extern s16 ls_rate1;
 extern u8 col_trans_req_tbl[256];

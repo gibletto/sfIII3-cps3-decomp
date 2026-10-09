@@ -8,6 +8,7 @@ INPUT obj\Entry.obj
 INPUT obj\entry_2.obj
 INPUT obj\tasksw.obj
 INPUT obj\coin_cont.obj
+INPUT obj\boot_task.obj
 INPUT obj\mode_init.obj
 INPUT obj\test_mode.obj
 INPUT obj\scrn_ctrl.obj
@@ -455,9 +456,10 @@ INPUT obj\poly_que.obj
 INPUT obj\spr_list.obj
 INPUT obj\textsound.obj
 INPUT obj\textsound_2.obj
-INPUT obj\textsound_3.obj
 INPUT obj\slow_mvn.obj
 INPUT obj\sta_sftra.obj
+INPUT obj\textsound_3.obj
+INPUT obj\sh2_sub.obj
 INPUT obj\cram_bank.obj
 INPUT obj\sound_voice.obj
 INPUT obj\sound_voice_2.obj

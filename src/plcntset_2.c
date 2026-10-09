@@ -196,9 +196,10 @@ void init_app_20000(void) {
 
 void init_app_30000(void) {
     s16 i;
-    switch (pcon_rno[1]) {
+    s16* rno = &pcon_rno[1];
+    switch (*rno) {
     case 0:
-        pcon_rno[1]++;
+        (*rno)++;
         round_slow_flag = 0;
         dead_voice_flag = 0;
         for (i = 1; i < 8; i++) {
@@ -216,9 +217,9 @@ void init_app_30000(void) {
         pcon_rno[1] = 3;
         pcon_rno[2] = 1;
         setup_EJG_index();
-        effect_C9_init(plw, 0);
-        effect_C9_init(plw, 1);
-        effect_C9_init(plw, 2);
+        effect_C9_init(&plw[0], 0);
+        effect_C9_init(&plw[0], 1);
+        effect_C9_init(&plw[0], 2);
         load_any_color(0x88);
         load_player_sub_color();
         load_char_gfx(0x9DA8, 1);

@@ -29,7 +29,7 @@ void debug_scrfont_view(void) {
             scrfont_view_attr = scrfont_view_attr + 2;
         }
         if ((~p1sw_1 & p1sw_0 & 15) == 2) {
-            scrfont_view_attr = scrfont_view_attr - 2;
+            scrfont_view_attr -= 2;
         }
         scrfont_view_attr = scrfont_view_attr & 62;
     }
@@ -50,22 +50,24 @@ void debug_scrfont_view(void) {
 
 
 void vital_cont_init(void) {
-    vit_bar[0].cyerw = 160;
-    vit_bar[0].cred = 160;
-    vit_bar[0].ored = 160;
-    vit_bar[0].unused = 0;
-    vit_bar[0].colnum = 0;
-    vit_bar[0].cell = vital_cell_tbl;
-    vit_bar[0].attr = vital_attr_tbl[0];
-    vit_bar[1].cyerw = 160;
-    vit_bar[1].cred = 160;
-    vit_bar[1].ored = 160;
-    vit_bar[1].unused = 0;
-    vit_bar[1].colnum = 0;
-    vit_bar[1].cell = vital_cell_tbl;
-    vit_bar[1].attr = vital_attr_tbl[1];
-    vit_bar[0].xpos = vital_npos_tbl[0];
-    vit_bar[1].xpos = vital_npos_tbl[1];
+    VITAL_BAR* v0 = &vit_bar[0];
+    VITAL_BAR* v1 = &vit_bar[1];
+    v0->cyerw = 160;
+    v0->cred = 160;
+    v0->ored = 160;
+    v0->unused = 0;
+    v0->colnum = 0;
+    v0->cell = vital_cell_tbl;
+    v0->attr = vital_attr_tbl[0];
+    v1->cyerw = 160;
+    v1->cred = 160;
+    v1->ored = 160;
+    v1->unused = 0;
+    v1->colnum = 0;
+    v1->cell = vital_cell_tbl;
+    v1->attr = vital_attr_tbl[1];
+    v0->xpos = vital_npos_tbl[0];
+    v1->xpos = vital_npos_tbl[1];
     sc_ram_to_vram(4, 0, 0);
     sc_ram_to_vram(5, 0, 0);
     gauge_stop_flag[0] = 0;

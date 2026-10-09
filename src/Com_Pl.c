@@ -114,7 +114,6 @@ s32 Check_Hamari(PLW* wk);
 
 s32 CPU_Sub(PLW* wk) {
     WORK* em = (WORK*)wk->wu.target_adrs;
-    u16 index;
     if (Allow_a_battle_f == 0 || pcon_dp_flag == 1) {
         return 0;
     }
@@ -124,8 +123,7 @@ s32 CPU_Sub(PLW* wk) {
     } else {
         Lie_Flag[wk->wu.id] = 0;
     }
-    index = Pattern_Index[wk->wu.id];
-    Last_Pattern_Index[wk->wu.id] = index;
+    Last_Pattern_Index[wk->wu.id] = Pattern_Index[wk->wu.id];
     Main_Program(wk);
     Check_Store_Lv(wk);
     Shift_Resume_Lv(wk);
@@ -181,10 +179,11 @@ void Com_Initialize(PLW* wk) {
     Squat_Master_Timer[wk->wu.id] = Setup_Next_Squat_Timer(wk);
     Setup_Bullet_Counter(wk);
     for (i = 0; i < 20; i++) {
-        Resume_Lever[wk->wu.id][i] = 0;
+        (&Resume_Lever[wk->wu.id][0])[i] = 0;
     }
-    for (i = 0; i < 3; i++) {
-        Attack_Count_Buff[wk->wu.id][i] = -1;
+    i = 0;
+    while (i < 3) {
+        Attack_Count_Buff[wk->wu.id][i++] = -1;
     }
 }
 
@@ -219,8 +218,7 @@ void Com_Free(PLW* wk) {
 
 
 void Com_Before_Follow(PLW* wk) {
-    u16 lever = Lever_LR[wk->wu.id];
-    Lever_Buff[wk->wu.id] = lever;
+    Lever_Buff[wk->wu.id] = Lever_LR[wk->wu.id];
     if (Check_Damage(wk)) {
         return;
     }
@@ -251,8 +249,7 @@ void Com_Before_Follow(PLW* wk) {
 
 
 void Com_Before_Passive(PLW* wk) {
-    u16 lever = Lever_LR[wk->wu.id];
-    Lever_Buff[wk->wu.id] = lever;
+    Lever_Buff[wk->wu.id] = Lever_LR[wk->wu.id];
     if (Check_Damage(wk)) {
         return;
     }
@@ -316,9 +313,7 @@ void Com_Guard(PLW* wk) {
     }
     if (!Check_Counter_Attack(wk)) {
         Next_Be_Free(wk);
-        return;
-    }
-    if (Select_Passive(wk) == -1) {
+    } else if (Select_Passive(wk) == -1) {
         Next_Be_Free(wk);
     }
 }
@@ -355,7 +350,7 @@ s32 Check_Counter_Attack(PLW* wk) {
 
 
 s32 Check_Hamari(PLW* wk) {
-    s16 tech;
+    u8 tech;
     s16 Rnd;
     s16 limit;
     s16 xx;
@@ -370,8 +365,9 @@ s32 Check_Hamari(PLW* wk) {
     } else if (tech != 0 && tech != 1) {
         return 0;
     }
-    for (xx = 1; xx < limit; xx++) {
-        if (tech != Attack_Count_Buff[wk->wu.id][xx]) {
+    xx = 1;
+    while (xx < limit) {
+        if (tech != Attack_Count_Buff[wk->wu.id][xx++]) {
             return 0;
         }
     }
@@ -755,15 +751,16 @@ void Damage_6th(PLW* wk) {
                 Lv = 0;
             }
             Rnd = random_32_com() & 3;
-            Rnd *= 2;
+            Rnd += Rnd;
             CP_Index[wk->wu.id][0] = Get_Up_Action_Tech_Data[wk->player_number][Lv][Rnd];
             CP_Index[wk->wu.id][7] = Get_Up_Action_Tech_Data[wk->player_number][Lv][Rnd + 1];
             if (CP_Index[wk->wu.id][0] == 0xFF) {
                 CP_Index[wk->wu.id][0] = Get_Up_Action_Tech_Data[wk->player_number][Lv][0];
                 CP_Index[wk->wu.id][7] = 8;
-                if (plw[wk->wu.id].sa->ok &&
-                    Get_Up_SA_Tech_Data[wk->player_number][plw[wk->wu.id].sa->kind_of_arts] != -1) {
-                    CP_Index[wk->wu.id][0] = Get_Up_SA_Tech_Data[wk->player_number][plw[wk->wu.id].sa->kind_of_arts];
+                if (plw[wk->wu.id].sa->ok) {
+                    if (Get_Up_SA_Tech_Data[wk->player_number][plw[wk->wu.id].sa->kind_of_arts] != -1) {
+                        CP_Index[wk->wu.id][0] = Get_Up_SA_Tech_Data[wk->player_number][plw[wk->wu.id].sa->kind_of_arts];
+                    }
                 }
             }
         }
@@ -807,18 +804,14 @@ void Damage_7th(PLW* wk) {
     default:
         em = (WORK*)wk->wu.target_adrs;
         Check_Guard_Type(wk, em);
-        if (wk->wu.cg_type != 0x40 && wk->wu.routine_no[1] != 0) {
-            break;
-        }
-        if (Attack_Flag[wk->wu.id] != 0) {
-            break;
-        }
-        if (Attack_Flag[wk->wu.id] == 0) {
-            Exit_Damage_Sub(wk);
-            break;
-        }
-        if (wk->tsukamarenai_flag == 0) {
-            Exit_Damage_Sub(wk);
+        if ((wk->wu.cg_type == 0x40 || wk->wu.routine_no[1] == 0) && Attack_Flag[wk->wu.id] == 0) {
+            if (Attack_Flag[wk->wu.id] == 0) {
+                Exit_Damage_Sub(wk);
+                break;
+            }
+            if (wk->tsukamarenai_flag == 0) {
+                Exit_Damage_Sub(wk);
+            }
         }
         break;
     }
@@ -1040,7 +1033,8 @@ void Flip_2nd(PLW* wk) {
         return;
     }
     em = (PLW*)wk->wu.target_adrs;
-    if (wk->player_number == PL_GOUKI2) {
+    switch (wk->player_number) {
+    case PL_GOUKI2:
         if (Check_Flip_GO(wk, 0)) {
             if (Check_Flip_Chance(wk)) {
                 CP_No[wk->wu.id][1] = 0;
@@ -1070,20 +1064,22 @@ void Flip_2nd(PLW* wk) {
             Exit_Damage_Sub(wk);
         }
         return;
-    }
-    if (Check_Flip_Attack(wk) != 0) {
-        if (Select_Passive(wk) == -1) {
+    default:
+        if (Check_Flip_Attack(wk) != 0) {
+            if (Select_Passive(wk) == -1) {
+                Exit_Damage_Sub(wk);
+            }
+        } else {
             Exit_Damage_Sub(wk);
         }
-    } else {
-        Exit_Damage_Sub(wk);
+        break;
     }
 }
 
 
 
 void Flip_3rd(PLW* wk) {
-    s32 next_disposal;
+    s16 next_disposal;
     if (PL_Damage_Data[wk->wu.routine_no[2]] == 0) {
         return;
     }
@@ -1359,8 +1355,7 @@ void Com_Wait_Lie(PLW* wk) {
 
 
 
-s32 Command_Attack_SP(PLW* wk, s8 Pl_Number, s32 TN, s16 Power_Level) {
-    s32 Tech_Number = TN;
+s32 Command_Attack_SP(PLW* wk, s8 Pl_Number, s16 Tech_Number, s16 Power_Level) {
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
         CP_Index[wk->wu.id][1]++;
@@ -1402,6 +1397,19 @@ s32 Command_Attack_SP(PLW* wk, s8 Pl_Number, s32 TN, s16 Power_Level) {
         }
     }
     return 0;
+}
+
+/* provisional name */
+void Next_Be_Active(PLW* wk) {
+    s16 xx;
+    CP_No[wk->wu.id][0] = 2;
+    CP_No[wk->wu.id][1] = 0;
+    CP_No[wk->wu.id][2] = 0;
+    CP_No[wk->wu.id][3] = 0;
+    for (xx = 0; xx <= 7; xx++) {
+        CP_Index[wk->wu.id][xx] = 0;
+    }
+    Com_Width_Data[wk->wu.id] = PL_Body_Width_Data[wk->player_number];
 }
 
 void Next_Be_Free(wk)

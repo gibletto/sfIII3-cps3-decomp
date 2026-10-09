@@ -284,16 +284,17 @@ s16 y;
     s16 row;
     s16 bit;
     s32 dx;
+    u16 dat;
     if (bg_w.stage == 10) {
         return 2;
     }
     if (Bonus_Game_Flag != 22) {
         return 0;
     }
+    y -= 6;
     if (x > 0x2B0 || x < 0x190) {
         return 0;
     }
-    y -= 6;
     if (y > -8 || y < -24) {
         return 0;
     }
@@ -306,11 +307,13 @@ s16 y;
     if (row > 7) {
         row = 7;
     }
-    bit = (dx % 64) / 4;
+    dat = cbm_table[row][col];
+    bit = dx % 64;
+    bit /= 4;
     if (bit > 15) {
         bit = 15;
     }
-    if ((cbm_table[row][col] << bit) & 0x8000) {
+    if ((dat << bit) & 0x8000) {
         return 1;
     }
     return 0;

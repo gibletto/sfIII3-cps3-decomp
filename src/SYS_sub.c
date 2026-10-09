@@ -350,14 +350,8 @@ void scrn_pos_clear(void) {
 
 
 void Clear_Flash_No(void) {
-    F_No3[0] = 0;
-    F_No2[0] = 0;
-    F_No1[0] = 0;
-    F_No0[0] = 0;
-    F_No3[1] = 0;
-    F_No2[1] = 0;
-    F_No1[1] = 0;
-    F_No0[1] = 0;
+    F_No0[0] = F_No1[0] = F_No2[0] = F_No3[0] = 0;
+    F_No0[1] = F_No1[1] = F_No2[1] = F_No3[1] = 0;
     Personal_Disp_Flag = 0;
 }
 
@@ -389,12 +383,10 @@ void Setup_Play_Type(void) {
 /* provisional name */
 u32 ranking_insert_all_four(s16 PL_id)
 {
-    s32 id;
-    s32 type = Version_Type;
-    if (type == 3) {
+    if (Version_Type == 3) {
         return 0;
     }
-    if (type != 7 && type != 5) {
+    if (Version_Type != 7 && Version_Type != 5) {
         Present_Data[PL_id].name[0] = 12;
         Present_Data[PL_id].name[1] = 10;
         Present_Data[PL_id].name[2] = 25;
@@ -410,26 +402,25 @@ u32 ranking_insert_all_four(s16 PL_id)
     } else {
         Present_Data[PL_id].all_clear = 0;
     }
-    id = PL_id;
-    Rank_In[PL_id][0] = insert_ranking_score(id);
-    if (Rank_In[PL_id][0] >= 0 && Rank_In[id ^ 1][0] >= 0) {
-        rank_in_push_other(0, id);
+    Rank_In[PL_id][0] = insert_ranking_score(PL_id);
+    if (Rank_In[PL_id][0] >= 0 && Rank_In[PL_id ^ 1][0] >= 0) {
+        rank_in_push_other(0, PL_id);
     }
-    Rank_In[PL_id][1] = insert_ranking_wins(id);
-    if (Rank_In[PL_id][1] >= 0 && Rank_In[id ^ 1][1] >= 0) {
-        rank_in_push_other(1, id);
+    Rank_In[PL_id][1] = insert_ranking_wins(PL_id);
+    if (Rank_In[PL_id][1] >= 0 && Rank_In[PL_id ^ 1][1] >= 0) {
+        rank_in_push_other(1, PL_id);
     }
-    Rank_In[PL_id][2] = insert_ranking_cpu_grade(id);
+    Rank_In[PL_id][2] = insert_ranking_cpu_grade(PL_id);
     if (Rank_In[PL_id][2]) {
         Rank_In[PL_id][2] = -1;
     } else {
-        Rank_In[id ^ 1][2] = -1;
+        Rank_In[PL_id ^ 1][2] = -1;
     }
-    Rank_In[PL_id][3] = insert_ranking_grade(id);
+    Rank_In[PL_id][3] = insert_ranking_grade(PL_id);
     if (Rank_In[PL_id][3]) {
         Rank_In[PL_id][3] = -1;
     } else {
-        Rank_In[id ^ 1][3] = -1;
+        Rank_In[PL_id ^ 1][3] = -1;
     }
     if (Rank_In[PL_id][0] >= 0 || Rank_In[PL_id][1] >= 0 || Rank_In[PL_id][2] >= 0 || Rank_In[PL_id][3] >= 0) {
         return 1;
@@ -442,7 +433,7 @@ u32 ranking_insert_all_four(s16 PL_id)
 /* provisional name */
 void rank_in_push_other(s16 dir_step, s16 PL_id) {
     s8* p;
-    s16 other = PL_id ^ 1;
+    u32 other = PL_id ^ 1;
     p = Rank_In[other];
     if (Rank_In[PL_id][dir_step] > p[dir_step]) {
         return;
@@ -475,12 +466,14 @@ s32 insert_ranking_score(s16 PL_id) {
 
 /* provisional name */
 s32 insert_ranking_wins(s16 PL_id) {
-    s32 i;
+    s16 i;
     s16 j;
+    RANK_DATA *rp;
     for (i = 0; i < 5; i++) {
+        rp = Ranking_Data;
         if (Ranking_Data[i + 5].wins < Present_Data[PL_id].wins) {
             for (j = 3; j >= i; j--) {
-                Ranking_Data[j + 6] = Ranking_Data[j + 5];
+                rp[j + 5 + 1] = rp[j + 5];
             }
             Ranking_Data[i + 5] = Present_Data[PL_id];
             return i;
@@ -514,12 +507,13 @@ s32 insert_ranking_cpu_grade(s16 PL_id) {
 s32 insert_ranking_grade(s16 PL_id) {
     s16 i;
     s16 j;
+    RANK_DATA *rp;
     for (i = 0; i < 5; i++) {
-        if (!((s32(*)())Check_Grade_Score)(PL_id, i)) {
+        if (!Check_Grade_Score(PL_id, i)) {
             continue;
         }
-        for (j = 3; j >= i; j--) {
-            Ranking_Data[j + 15 + 1] = Ranking_Data[j + 15];
+        for (j = 3, rp = Ranking_Data; j >= i; j--) {
+            rp[j + 15 + 1] = rp[j + 15];
         }
         Ranking_Data[i + 15] = Present_Data[PL_id];
         return i;

@@ -28,9 +28,10 @@
 
 
 void effect_45_move(WORK_Other_CONN* ewk) {
-    s32 i;
+    s16 i;
     s16 j;
     s16 slot;
+    const EFF45_CELL_REQ* cell;
     switch (ewk->wu.routine_no[0]) {
     case 0:
         ewk->wu.routine_no[0]++;
@@ -39,7 +40,9 @@ void effect_45_move(WORK_Other_CONN* ewk) {
         ewk->wu.cg_ctr = eff45_anm_tbl[ewk->wu.cg_ix].timer;
         for (i = 0; i < 2; i++) {
             for (j = 0; j < 16; j++) {
-                scroll_cell_write(i, eff45_cell_tbl[i][j].a, eff45_cell_tbl[i][j].b, eff45_scrn_data);
+                cell = (const EFF45_CELL_REQ*)eff45_cell_tbl[i];
+                cell += j;
+                scroll_cell_write(i, cell->a, cell->b, (u32)eff45_scrn_data);
             }
         }
         scrn_map_set_now(0, (u32)bg_w.bgw[0].bg_address);

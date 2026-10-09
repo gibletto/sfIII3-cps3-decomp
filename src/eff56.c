@@ -52,7 +52,7 @@
 #include "eff56.h"
 #include "sc_logo.h"
 
-void load_any_color(u8 col_no);
+void load_any_color();
 
 
 

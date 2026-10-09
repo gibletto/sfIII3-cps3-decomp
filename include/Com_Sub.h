@@ -262,7 +262,7 @@ s32 VS_IBUKI_DS(PLW* wk);
 s32 VS_HUGO_DS(PLW* wk);
 s32 VS_NO12_D(PLW* wk);
 s32 VS_REMY_D(PLW* wk);
-void GILL_vs(PLW* wk);
+s32 GILL_vs(PLW* wk);
 void Setup_Com_Max_Range(void);
 s32 Setup_Next_Squat_Timer(PLW* wk);
 s32 Setup_Next_Stand_Timer(PLW* wk);

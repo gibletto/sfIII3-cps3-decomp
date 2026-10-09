@@ -45,6 +45,7 @@
 #include "sys_test_5.h"
 #include "eeprom.h"
 #include "sc_trans.h"
+#include "sc_clear.h"
 #include "bg000.h"
 #include "EM_Cand.h"
 #include "Grade.h"
@@ -167,7 +168,7 @@ void Demo01(void) {
             D_No1++;
             G_No2 = 0;
         }
-        return;
+        break;
     case 2:
         Game02();
         if (--Cover_Timer != 0) {
@@ -189,13 +190,14 @@ void Demo01(void) {
         if (--D_Timer == 1) {
             Stop_Combo = 1;
             Switch_Screen_Init(5, 5);
-            return;
+            break;
         }
-        if (D_Timer == 0) {
-            D_No1++;
-            Demo_Step_Flag = 1;
-            Game_pause = 1;
+        if (D_Timer) {
+            break;
         }
+        D_No1++;
+        Demo_Step_Flag = 1;
+        Game_pause = 1;
         break;
     case 5:
         Game02();

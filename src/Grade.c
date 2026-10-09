@@ -117,14 +117,15 @@ s16 pt;
         }
         judge_final[ix][pt].keizoku = Continue_Coin[ix];
         makeup_spp_frdat(ix, pt);
+        makeup_final_grade(ix, pt);
     } else {
         if (Break_Com[ix][0]) {
             judge_final[ix][pt].all_clear = 1;
         }
         judge_final[ix][pt].keizoku = Continue_Coin[ix];
         makeup_spp_frdat(ix, pt);
+        makeup_final_grade(ix, pt);
     }
-    makeup_final_grade(ix, pt);
 }
 
 
@@ -319,6 +320,7 @@ void grade_makeup_stage_parameter(s16 ix) {
     s16 bs;
     s16 qc;
     s32 em_char;
+    s32 em;
     if (Round_Operator[ix] == 0) {
         grade_makeup_stage_para_com(ix);
         return;
@@ -369,12 +371,13 @@ void grade_makeup_stage_parameter(s16 ix) {
             bs = 1;
             break;
         default:
-            if ((qc = rannyuu_Q_check((ix + 1) & 1))) {
+            em = (ix + 1) & 1;
+            if ((qc = rannyuu_Q_check(em))) {
                 judge_final[ix][Play_Type].vs_cpu_result[15] = point;
                 judge_final[ix][Play_Type].vs_cpu_grade[15] = grade;
                 judge_final[ix][Play_Type].vs_cpu_player[15] = judge_final[ix][Play_Type].vcr_ix;
             } else {
-                em_char = My_char[(ix + 1) & 1];
+                em_char = My_char[em];
                 plnum = em_char + chkNameAkuma(em_char);
                 judge_final[ix][Play_Type].vs_cpu_result[judge_final[ix][Play_Type].vcr_ix] = point;
                 judge_final[ix][Play_Type].vs_cpu_grade[judge_final[ix][Play_Type].vcr_ix] = grade;
@@ -1008,14 +1011,13 @@ s32 grade_get_cm_point_percentage(s16 ix, s16 flag) {
 
 
 /* provisional name */
-s16 grade_scale_to_percent(s16 value) {
-    s16 scaled;
+s32 grade_scale_to_percent(s16 value) {
     if (value == 0) {
         return 0;
     }
-    scaled = (value * 100) / 160;
-    if (scaled != 0) {
-        return scaled;
+    value = (value * 100) / 160;
+    if (value != 0) {
+        return value;
     }
     return 1;
 }
@@ -1035,14 +1037,18 @@ s32 get_grade_ix(s16 pts) {
 
 
 void check_guard_miss(WORK* as, PLW* ds, s8 gddir) {
+    s16* wf;
     if (ds->rp->total) {
         return;
     }
     judge_item[ds->wu.id][Play_Type].grd_mcnt++;
     if ((ds->guard_flag != 3) && (as->att.guard & 0x3F) && (ds->wu.xyz[1].disp.pos <= 1) &&
         (as->work_id != 1 || !as->jump_att_flag || !(ds->cp->sw_new & 0xF)) && (!(ds->cp->sw_new & 1)) &&
-        (!(ds->saishin_lvdir & gddir)) && ((ds->cp->waza_flag[3] + ds->cp->waza_flag[4]) == 0)) {
-        return;
+        (!(ds->saishin_lvdir & gddir))) {
+        wf = ds->cp->waza_flag;
+        if ((wf[3] + wf[4]) == 0) {
+            return;
+        }
     }
     judge_item[ds->wu.id][Play_Type].grd_miss++;
 }

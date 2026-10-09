@@ -147,7 +147,9 @@ s32 y;
 s32 a;
 s32 b;
 {
-    effect_H6_init(id, b, x + (bg_w.bgw[5].xy[0].disp.pos - 192), y + bg_w.bgw[5].position_y, a, -1);
+    x += bg_w.bgw[5].xy[0].disp.pos - 192;
+    y += bg_w.bgw[5].position_y;
+    effect_H6_init(id, b, x, y, a, -1);
 }
 
 

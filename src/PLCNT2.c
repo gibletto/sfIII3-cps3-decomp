@@ -109,9 +109,10 @@ s32 Player_control_bonus(void) {
 
 
 void plcnt_b_init(void) {
-    switch (pcon_rno[1]) {
+    s16* rno = &pcon_rno[1];
+    switch (*rno) {
     case 0:
-        pcon_rno[1] = 2;
+        *rno = 2;
         work_init_zero((s32*)&plw[0], sizeof(PLW));
         work_init_zero((s32*)&plw[1], sizeof(PLW));
         setup_base_and_other_data();
@@ -140,7 +141,7 @@ void plcnt_b_init(void) {
         ca_check_flag = 1;
         break;
     case 2:
-        pcon_rno[1] = 3;
+        *rno = 3;
         if (Bonus_Game_Flag == 22) {
             setup_bs_scrrrl_bs();
         }
@@ -161,7 +162,7 @@ void plcnt_b_init(void) {
         }
         break;
     case 3:
-        pcon_rno[1] = 1;
+        *rno = 1;
         pli_3000();
         break;
     }
@@ -295,7 +296,7 @@ void setup_bs_scrrrl_bs2(void) {
 
 
 void move_player_work_bonus(void) {
-    ichikannkei = check_work_position(&plw->wu, &plw[1].wu);
+    ichikannkei = check_work_position((WORK*)&plw[0], (WORK*)&plw[1]);
     set_rl_waza(&plw[0]);
     set_rl_waza(&plw[1]);
     Timer_Freeze = 0;

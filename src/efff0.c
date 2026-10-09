@@ -86,10 +86,10 @@ void effect_F0_move(WORK_Other* ewk) {
             sound_reg_level_set(0, 0xF0);
         case 4:
             if (ewk->wu.type) {
-                if (another_bg[0] && !another_bg_old[0]) {
+                if (another_bg[0] && another_bg_old[0] == 0) {
                     ewk->wu.type = 0;
                 }
-            } else if (another_bg[1] && !another_bg_old[1]) {
+            } else if (another_bg[1] && another_bg_old[1] == 0) {
                 ewk->wu.type = 1;
             }
             if (ewk->wu.type) {
@@ -125,10 +125,7 @@ void effect_F0_move(WORK_Other* ewk) {
             }
             ewk->wu.routine_no[0] = 5;
             sound_reg_level_set(0, 0);
-            {
-                s8 t = another_bg_old[1] = 0;
-                another_bg_old[0] = t;
-            }
+            another_bg_old[0] = another_bg_old[1] = 0;
             effF0_scroll_set(ewk);
             seraph_flag = 0;
             break;
@@ -166,12 +163,12 @@ void effF0_scroll_reset(WORK_Other* ewk) {
     ake_scrl_w[3].xy[1].cal = 0;
     ake_scrl_w[4].xy[0].cal = 0x2000000;
     ake_scrl_w[4].xy[1].cal = 0;
-    ake_scrl_w[0].pos[0] = ake_scrl_w[0].xy[0].disp.pos;
-    ake_scrl_w[0].pos[1] = ake_scrl_w[0].xy[1].disp.pos;
-    ake_scrl_w[3].pos[0] = ake_scrl_w[3].xy[0].disp.pos;
-    ake_scrl_w[3].pos[1] = ake_scrl_w[3].xy[1].disp.pos;
-    ake_scrl_w[4].pos[0] = ake_scrl_w[4].xy[0].disp.pos;
-    ake_scrl_w[4].pos[1] = ake_scrl_w[4].xy[1].disp.pos;
+    ake_scrl_w[0].pos_x = ake_scrl_w[0].xy[0].disp.pos;
+    ake_scrl_w[0].pos_y = ake_scrl_w[0].xy[1].disp.pos;
+    ake_scrl_w[3].pos_x = ake_scrl_w[3].xy[0].disp.pos;
+    ake_scrl_w[3].pos_y = ake_scrl_w[3].xy[1].disp.pos;
+    ake_scrl_w[4].pos_x = ake_scrl_w[4].xy[0].disp.pos;
+    ake_scrl_w[4].pos_y = ake_scrl_w[4].xy[1].disp.pos;
 }
 
 
@@ -180,34 +177,36 @@ void effF0_scroll_reset(WORK_Other* ewk) {
 void effF0_scroll_set(WORK_Other* ewk) {
     s32 x;
     s32 y;
+    AKE_SCRL* sp = &ake_scrl_w[3];
     switch (another_bg[ewk->wu.type]) {
     case 2:
-        ake_scrl_w[3].pos[0] = ake_scrl_w[3].xy[0].disp.pos & 0x3FF;
-        ake_scrl_w[3].pos[0] -= bg_w.pos_offset;
-        ake_scrl_w[3].pos[1] = bg_w.bgw[1].wxy[1].disp.pos;
-        x = ake_scrl_w[3].pos[0];
-        y = ake_scrl_w[3].pos[1];
+        sp->pos_x = sp->xy[0].disp.pos & 0x3FF;
+        sp->pos_x -= bg_w.pos_offset;
+        sp->pos_y = bg_w.bgw[1].wxy[1].disp.pos;
+        x = sp->pos_x;
+        y = sp->pos_y;
         break;
     case 3:
-        ake_scrl_w[3].pos[0] = ake_scrl_w[3].xy[0].disp.pos & 0x3FF;
-        ake_scrl_w[3].pos[0] -= bg_w.pos_offset;
-        ake_scrl_w[3].pos[1] = bg_w.bgw[1].wxy[1].disp.pos;
-        x = ake_scrl_w[3].pos[0];
-        y = ake_scrl_w[3].pos[1] + 0x200;
+        sp->pos_x = sp->xy[0].disp.pos & 0x3FF;
+        sp->pos_x -= bg_w.pos_offset;
+        sp->pos_y = bg_w.bgw[1].wxy[1].disp.pos;
+        x = sp->pos_x;
+        y = sp->pos_y;
+        y += 0x200;
         break;
     case 4:
-        ake_scrl_w[4].pos[0] = bg_w.bgw[1].wxy[0].disp.pos;
-        ake_scrl_w[4].pos[0] -= bg_w.pos_offset;
-        ake_scrl_w[4].pos[1] = ake_scrl_w[4].xy[1].disp.pos & 0x3FF;
-        x = ake_scrl_w[4].pos[0];
-        y = ake_scrl_w[4].pos[1];
+        ake_scrl_w[4].pos_x = bg_w.bgw[1].wxy[0].disp.pos;
+        ake_scrl_w[4].pos_x -= bg_w.pos_offset;
+        ake_scrl_w[4].pos_y = ake_scrl_w[4].xy[1].disp.pos & 0x3FF;
+        x = ake_scrl_w[4].pos_x;
+        y = ake_scrl_w[4].pos_y;
         break;
     default:
-        ake_scrl_w[0].pos[0] = bg_w.bgw[1].wxy[0].disp.pos;
-        ake_scrl_w[0].pos[0] -= bg_w.pos_offset;
-        ake_scrl_w[0].pos[1] = ake_scrl_w[0].xy[1].disp.pos & 0x3FF;
-        x = ake_scrl_w[0].pos[0];
-        y = ake_scrl_w[0].pos[1];
+        ake_scrl_w[0].pos_x = bg_w.bgw[1].wxy[0].disp.pos;
+        ake_scrl_w[0].pos_x -= bg_w.pos_offset;
+        ake_scrl_w[0].pos_y = ake_scrl_w[0].xy[1].disp.pos & 0x3FF;
+        x = ake_scrl_w[0].pos_x;
+        y = ake_scrl_w[0].pos_y;
         break;
     }
     Scrn_Move_Set(3, x, y);

@@ -35,6 +35,7 @@
 #include "color3rd.h"
 #include "end_sub_8.h"
 #include "sc_trans.h"
+#include "sc_clear.h"
 #include "cmb_win.h"
 #include "Eff95.h"
 #include "EFFB8.h"
@@ -110,9 +111,11 @@ void cal_damage_vitality_eff(WORK_Other* as, PLW* ds) {
     }
 }
 
-void Additinal_Score_DM(WORK_Other* wk, u32 ix) {
+void Additinal_Score_DM(wk, ix)
+WORK_Other* wk;
+u16 ix;
+{
     s16 id;
-    u8 pl;
     if (wk->wu.work_id == 1) {
         id = wk->wu.id;
     } else {
@@ -121,16 +124,14 @@ void Additinal_Score_DM(WORK_Other* wk, u32 ix) {
         }
         id = wk->master_id;
     }
-    pl = id;
-    Score[pl][2] += Score_Data[ix & 0xFFFF];
+    Score[(u8)id][2] += Score_Data[ix];
     if (plw[id].wu.operator != 0) {
         if (!Play_Type) {
-            Score[pl][0] += Score_Data[ix & 0xFFFF];
-            if (Score[pl][0] >= 99999900) {
-                Score[pl][0] = 99999900;
+            if ((Score[(u8)id][0] += Score_Data[ix]) >= 99999900) {
+                Score[(u8)id][0] = 99999900;
             }
         } else {
-            Score[pl][1] = Score[pl][1] + Score_Data[ix & 0xFFFF];
+            Score[(u8)id][1] += Score_Data[ix];
         }
     }
     if (plw[id].wu.operator && bg_w.stage != 22 && bg_w.stage != 21) {
@@ -174,22 +175,27 @@ void Disp_Player_Score(s16 id) {
 void Score_Sub(void) {
     u16 num;
     s32 tens;
+    s16 x;
     if (plw[0].wu.operator != 0) {
         if (Demo_Flag != 0) {
-            tilemap_clear_rect(Score_X_Pos_Data[0][Game_setting.mode] - 7, 0, Score_X_Pos_Data[0][Game_setting.mode], 1);
+            x = Score_X_Pos_Data[0][Game_setting.mode];
+            tilemap_clear_rect(x + 0xFFF9, 0, Score_X_Pos_Data[0][Game_setting.mode], 1);
             Disp_Player_Score(0);
-            num = Continue_Coin[0];
-            tens = num / 10;
+            tens = num = Continue_Coin[0];
+            tens /= 10;
             score8x16_put(Score_X_Pos_Data[0][Game_setting.mode] - 1, 0, 16, tens);
-            score8x16_put(Score_X_Pos_Data[0][Game_setting.mode], 0, 16, num - tens * 10);
+            num -= tens * 10;
+            score8x16_put(Score_X_Pos_Data[0][Game_setting.mode], 0, 16, num);
         }
     }
     if (plw[1].wu.operator != 0 && Demo_Flag != 0) {
-        tilemap_clear_rect(Score_X_Pos_Data[1][Game_setting.mode] - 7, 0, Score_X_Pos_Data[1][Game_setting.mode], 1);
+        x = Score_X_Pos_Data[1][Game_setting.mode];
+        tilemap_clear_rect(x + 0xFFF9, 0, Score_X_Pos_Data[1][Game_setting.mode], 1);
         Disp_Player_Score(1);
-        num = Continue_Coin[1];
-        tens = num / 10;
+        tens = num = Continue_Coin[1];
+        tens /= 10;
         score8x16_put(Score_X_Pos_Data[1][Game_setting.mode] - 1, 0, 16, tens);
-        score8x16_put(Score_X_Pos_Data[1][Game_setting.mode], 0, 16, num - tens * 10);
+        num -= tens * 10;
+        score8x16_put(Score_X_Pos_Data[1][Game_setting.mode], 0, 16, num);
     }
 }

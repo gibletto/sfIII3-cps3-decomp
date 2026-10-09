@@ -103,7 +103,19 @@ void Setup_Candidate_Buff(s16 PL_id) {
     s16 em = 0;
     s16 ix;
     for (ix = 1; ix <= 20; ix++) {
-        if (ix == My_char[PL_id] || ix == 18 || ix == 15 || ix == Rival_Char_Data[My_char[PL_id] - 1] || Break_Com[PL_id][ix]) {
+        if (ix == My_char[PL_id]) {
+            continue;
+        }
+        if (ix == 18) {
+            continue;
+        }
+        if (ix == 15) {
+            continue;
+        }
+        if (ix == Rival_Char_Data[My_char[PL_id] - 1]) {
+            continue;
+        }
+        if (Break_Com[PL_id][ix]) {
             continue;
         }
         Candidate_Buff[em] = ix;

@@ -126,7 +126,6 @@ void set_caught_status(s16 ix) {
     PLW* ds = (PLW*)q_hit_push[ix];
     s16 blocking_status = check_blocking_flag(as, ds);
     s8 gddir;
-    s32 dm_type;
 wait_hit:
     if (ix != hs[ix2].my_hit) {
         goto wait_hit;
@@ -138,36 +137,39 @@ wait_dm:
         }
         if (as->wu.att.dipsw & 0x40) {
             if (ds->wu.att.dipsw & 0x40) {
-            } else {
-                goto two;
+                goto timer;
             }
-        } else if (as->wu.att.dipsw & 0x20) {
+            goto two;
+        }
+        if (as->wu.att.dipsw & 0x20) {
             if (ds->wu.att.dipsw & 0x40) {
                 goto one;
             }
             if (ds->wu.att.dipsw & 0x20) {
-            } else {
-                goto two;
+                goto timer;
             }
-        } else if (ds->wu.att.dipsw & 0x60) {
-            goto one;
-        } else {
-            switch (blocking_status) {
-            case 1:
-                ds->hazusenai_flag = 1;
-                goto two;
-            case 2:
-                as->hazusenai_flag = 1;
-                goto one;
-            case 3:
-                ds->hazusenai_flag = 1;
-                as->hazusenai_flag = 1;
-                break;
-            default:
-                as->cat_break_reserve = ds->cat_break_reserve = 1;
-                break;
-            }
+            goto two;
         }
+        if (ds->wu.att.dipsw & 0x60) {
+            goto one;
+        }
+        switch (blocking_status) {
+        case 1:
+            ds->hazusenai_flag = 1;
+            goto two;
+        case 2:
+            as->hazusenai_flag = 1;
+            goto one;
+        case 3:
+            ds->hazusenai_flag = 1;
+            as->hazusenai_flag = 1;
+            break;
+        default:
+            ds->cat_break_reserve = 1;
+            as->cat_break_reserve = 1;
+            break;
+        }
+    timer:
         if (Game_timer & 1) {
             goto two;
         }
@@ -211,18 +213,12 @@ wait_dm:
             goto blocking;
         case 1:
             goto guard;
-        default:
-            break;
         }
     four:
         as->wu.hf.hit.player = 1;
         ds->wu.routine_no[2] = as->wu.att.reaction;
     }
-    dm_type = 0;
-    if (ds->wu.routine_no[1] == 1 && ds->wu.cg_type == 10) {
-        dm_type = 1;
-    }
-    switch (dm_type + (((as->wu.rl_flag + ds->wu.rl_flag) & 1) * 2)) {
+    switch ((ds->wu.routine_no[1] == 1 && ds->wu.cg_type == 10) + (((as->wu.rl_flag + ds->wu.rl_flag) & 1) * 2)) {
     case 0:
     case 3:
         as->wu.routine_no[1] = as->wu.cmcr.koc;
@@ -581,7 +577,7 @@ void set_blocking_status(PLW* as, PLW* ds) {
             paring_bonus_r[ds->wu.id] = 1;
             paring_ctr_vs[Play_Type][ds->wu.id]++;
             if (paring_ctr_vs[Play_Type][ds->wu.id] > 39) {
-                paring_ctr_vs[Play_Type][ds->wu.id] = 39;
+                *(ds->wu.id + paring_ctr_vs[Play_Type]) = 39;
             }
             paring_counter[ds->wu.id] = parisucc_pts[Play_Type][paring_ctr_vs[Play_Type][ds->wu.id] - 1];
         }
@@ -677,15 +673,12 @@ s32 check_dm_att_blocking(WORK* as, WORK* ds, s16 dnum) {
 
 
 void set_damage_and_piyo(PLW* as, PLW* ds) {
-    s32 v;
     cal_damage_vitality(as, ds);
     ds->wu.dm_piyo = add_piyo_gauge[as->player_number][as->wu.att.piyo];
     if ((ds->wu.pat_status == 32 || ds->wu.pat_status == 3) || ds->wu.pat_status == 25) {
-        v = ds->wu.dm_vital;
-        ds->wu.dm_vital = v * 125 / 100;
+        ds->wu.dm_vital = ds->wu.dm_vital * 125 / 100;
     } else if (ds->wu.pat_status == 7 || ds->wu.pat_status == 23 || ds->wu.pat_status == 35) {
-        v = ds->wu.dm_vital;
-        ds->wu.dm_vital = v * 150 / 100;
+        ds->wu.dm_vital = ds->wu.dm_vital * 150 / 100;
     } else if (ds->wu.pat_status == 1 || ds->wu.pat_status == 21 || ds->wu.pat_status == 37) {
         ds->wu.dm_vital *= 2;
     }
@@ -1202,8 +1195,6 @@ void attack_hit_check(void) {
     s16 lp;
     s16 lp2;
     s16 mw;
-    s16* assign1;
-    s16* assign2;
     for (si = 0; si < hpq_in; si++) {
         if (hs[si].flag.results & 0x1101) {
             continue;
@@ -1211,7 +1202,7 @@ void attack_hit_check(void) {
         sad = q_hit_push[si];
         sh = sad->h_bod->body_dm[0];
         mh = sad->h_han->hand_dm[0];
-        for (lp = 0; lp < 4; lp++, sh += 4, assign1 = mh += 4) {
+        for (lp = 0; lp < 4; lp++, sh += 4, mh += 4) {
             dmdat_adrs[lp] = sh;
             dmdat_adrs[lp + 4] = mh;
         }
@@ -1253,7 +1244,7 @@ void attack_hit_check(void) {
                 continue;
             }
             mh = &mad->h_att->att_box[0][0];
-            for (lp = 0; lp < 4; lp++, assign2 = mh += 4) {
+            for (lp = 0; lp < 4; lp++, mh += 4) {
                 if (mh[1] == 0) {
                     continue;
                 }

@@ -203,7 +203,7 @@ void eff09_2000(WORK_Other* ewk) {
                 pl_hit_ptr = &plw[1].wu.h_bod->body_dm[0][0];
             }
             sean_ball_move(ewk, sw_work);
-            if (((s16)hit_check_subroutine(&hit_pl->wu, &ewk->wu, pl_hit_ptr, sean_ball_hit))) {
+            if (hit_check_subroutine(&hit_pl->wu, &ewk->wu, pl_hit_ptr, sean_ball_hit)) {
                 ewk->wu.routine_no[1]++;
                 ball_bound_set(ewk);
                 set_char_move_init2(&hit_pl->wu, 9, 63, 1, 0);
@@ -211,7 +211,7 @@ void eff09_2000(WORK_Other* ewk) {
                 effect_B4_init(ewk);
                 work = random_16_com();
                 work &= 7;
-                hit_pl = ewk->master_id ? &plw[1] : &plw[0];
+                hit_pl = &plw[ewk->master_id];
                 add_super_arts_gauge(hit_pl->sa, hit_pl->wu.id, 1, hit_pl->metamorphose);
                 return;
             }

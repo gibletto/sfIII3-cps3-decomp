@@ -27,14 +27,14 @@ void metamor_color_trans(s16 pl, s16 ix) {
     u16* src2;
     s16 i;
     if (ix) {
-        src = metamor_color_ptr_tbl[ix] + Player_Color[pl] * 64;
+        src = ((u16(*)[64])metamor_color_ptr_tbl[ix])[Player_Color[pl]];
         for (i = 0; i < 64; i++) {
             *dst++ = *src;
             *dst2++ = *src++;
         }
     } else {
-        src = metamor_color_ptr_tbl[ix] + Player_Color[pl] * 128;
-        src2 = src + 64;
+        src = ((u16(*)[64])metamor_color_ptr_tbl[ix])[Player_Color[pl] * 2];
+        src2 = ((u16(*)[64])metamor_color_ptr_tbl[ix])[Player_Color[pl] * 2] + 64;
         for (i = 0; i < 64; i++) {
             *dst++ = *src++;
             *dst2++ = *src2++;
@@ -67,7 +67,7 @@ void metamor_color_copy(s16 page) {
 void metamor_color_store(s16 pl) {
     u16* src = (u16*)COLOR_RAM + (pl == 1) * 0x400;
     u16* src2;
-    s32 i;
+    s16 i;
     src += 0x40;
     src2 = src + 0x80;
     for (i = 0; i < 64; i++) {

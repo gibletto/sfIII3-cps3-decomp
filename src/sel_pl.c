@@ -391,7 +391,7 @@ void Sel_PL_3rd(void) {
 
 
 
-u32 Deley_Shot_Sub(s16 PL_id) {
+s32 Deley_Shot_Sub(s16 PL_id) {
     u16 sw;
     u16 lever;
     if (PL_id == 0) {
@@ -473,8 +473,7 @@ void Sel_PL_6th(void) {}
 
 
 
-s32 Disposal_Of_Diagonal(u32 sw_arg) {
-    u16 sw = sw_arg;
+s32 Disposal_Of_Diagonal(u16 sw) {
     sw = sw & 0xF;
     if (sw == 1) {
         return 1;
@@ -493,8 +492,7 @@ s32 Disposal_Of_Diagonal(u32 sw_arg) {
 
 
 
-void Sel_PL_Sub(s32 PL_id_arg, u16 sw) {
-    s16 PL_id = (s16)PL_id_arg;
+void Sel_PL_Sub(s16 PL_id, u16 sw) {
     Cursor_Move[PL_id] = 0;
     if (Sel_PL_Complete[PL_id] != 0) {
         return;
@@ -528,15 +526,12 @@ void Sel_PL_Sub(s32 PL_id_arg, u16 sw) {
         return;
     }
     Sel_PL_Complete[PL_id] = 1;
-    My_char[PL_id] = ID_of_Face[*(volatile s16*)&Cursor_Y[PL_id]][Cursor_X[PL_id]];
+    My_char[PL_id] = ID_of_Face[Cursor_Y[PL_id]][Cursor_X[PL_id]];
     if (Last_My_char2[PL_id] != My_char[PL_id]) {
         Arts_Y[ID] = Super_Arts[ID] = Last_Super_Arts[ID] = 0;
         Introduce_Boss[ID][0] = 0;
     }
-    {
-        s8 t = My_char[PL_id];
-        Last_My_char2[PL_id] = t;
-    }
+    Last_My_char2[PL_id] = My_char[PL_id];
     Last_Selected_ID = PL_id;
     Order[1] = 2;
     Order_Timer[1] = 1;
@@ -651,22 +646,28 @@ void Sel_PL_Sub_CD(s16 PL_id) {
 
 
 void Auto_Repeat_Sub(s16 PL_id) {
-    s32 sw;
-    s16 raw;
+    u16 sw;
     if (Demo_Flag == 0) {
         return;
     }
     if (Cursor_Move[PL_id] != 0) {
         return;
     }
-    raw = (PL_id == 0) ? p1sw_0 : p2sw_0;
-    sw = Disposal_Of_Diagonal(raw);
+    if (PL_id == 0) {
+        sw = p1sw_0;
+    } else {
+        sw = p2sw_0;
+    }
+    sw = Disposal_Of_Diagonal(sw);
     switch (Auto_No[PL_id]) {
     case 0:
         if (sw & 8) {
             Auto_No[PL_id] = 1;
             Auto_Cursor[PL_id] = 8;
-            Auto_Timer[PL_id] = Auto_Repeat_Data[0];
+            {
+                s8 t = Auto_Repeat_Data[0];
+                Auto_Timer[PL_id] = t;
+            }
             Auto_Index[PL_id] = 1;
             break;
         }
@@ -827,7 +828,11 @@ u16 sw;
         Last_Super_Arts[PL_id] = Super_Arts[PL_id] = Arts_Y[PL_id];
         Sound_SE(ID + 98);
         Sound_SE(*Free_Ptr[PL_id]++);
-        Setup_ID();
+        if (ID) {
+            Setup_ID();
+        } else {
+            Setup_ID();
+        }
         if (Decided_My_char[PL_id] != My_char[PL_id]) {
             Last_Player_id = PL_id;
         }

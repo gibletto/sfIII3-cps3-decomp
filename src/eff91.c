@@ -69,25 +69,26 @@ void effect_91_move(WORK_Other* ewk) {
 /* provisional name */
 void eff91_cell_data_set(WORK_Other* ewk)
 {
-    SCR_CELL* row;
-    SCR_CELL* cell;
+    u16* row;
+    u16* cell;
+    u16* dst;
     s16* code;
     u16 attr;
     s16 h;
     s16 w;
 
-    row = (SCR_CELL*)(ewk->wu.vital_new * 4 + (ewk->wu.vital_old << 8) + SS_RAM);
+    row = (u16*)(ewk->wu.vital_new * 4 + (ewk->wu.vital_old << 8) + SS_RAM);
     ewk->wu.dir_timer = *ewk->wu.move_xy_table++;
     for (h = ewk->wu.dmcal_m; h > 0; h--) {
         cell = row;
         for (w = ewk->wu.dm_vital; w > 0; w--) {
             code = ewk->wu.move_xy_table++;
             attr = *ewk->wu.move_xy_table++;
-            cell->attr = attr;
-            cell->code = *code | ((attr & 0x100) >> 8);
-            cell++;
+            dst = cell++;
+            *cell++ = attr;
+            *dst = *code | ((attr & 0x100) >> 8);
         }
-        row += 64;
+        row += 128;
     }
 }
 

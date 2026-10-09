@@ -25,6 +25,8 @@
 #include "sys_test_2.h"
 #include "cps3.h"
 
+void tilemap_put_block(s32 x, s32 y, s32 attr, u16 code);
+
 
 
 /* provisional name */

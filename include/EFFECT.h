@@ -9,7 +9,7 @@ s32 effect_work_pull_link(s16 index, s16 before, s16 aix);
 s32 search_effect_index();
 void effect_work_init(void);
 void effect_work_kill(s16 index, s16 kill_id);
-s32 pull_effect_work(s16 index);
+s32 pull_effect_work();
 void move_effect_work(s16 index);
 s32 push_effect_work(WORK* wkhd);
 void work_init_zero(s32* adrs_int, s32 xx);

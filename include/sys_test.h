@@ -39,8 +39,6 @@ void dispenser_init(void);
 void scrn_line_set_now();
 void scroll_layer_mask_disable();
 void scroll_layer_mask_enable(u16 mask);
-void scrn_map_set(u16 n, u32 p);
-void scrn_map_set_now(u16 n, u32 p);
 void switch_read_six_button(void);
 void coin_sw_shift(void);
 void dispenser_sw_read(void);

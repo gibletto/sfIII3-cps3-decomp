@@ -20,10 +20,10 @@
 void count_cont_init(pl)
 s8 pl;
 {
-    count_work.hoji_counter = hoji_counter_tbl[Game_setting.set3];
+    (*&count_work).hoji_counter = hoji_counter_tbl[Game_setting.set3];
     Counter_hi = 99;
     Counter_low = hoji_counter_tbl[Game_setting.set3];
-    round_timer.half.h = Counter_hi;
+    *(s16*)&round_timer = Counter_hi;
     count_digit_trans(pl, 9, 9);
     if (!pl) {
         sc_ram_to_vram(2, 0, 0);
@@ -39,10 +39,10 @@ s8 pl;
 
 /* provisional name */
 void count_cont_reset(void) {
-    count_work.hoji_counter = hoji_counter_tbl[(*&Game_setting).set3];
+    (*&count_work).hoji_counter = hoji_counter_tbl[(*&Game_setting).set3];
     Counter_hi = 99;
     Counter_low = hoji_counter_tbl[(*&Game_setting).set3];
-    round_timer.half.h = Counter_hi;
+    *(s16*)&round_timer = Counter_hi;
     flash_r_num = 0;
     flash_col = 0;
     count_digit_trans(0, 9, 9);
@@ -62,12 +62,12 @@ void count_cont_main(void) {
 
 void counter_control(void) {
     s32 hi;
-    const COUNT_WORK* cw = &count_work;
+    s32 lo;
     if (Counter_hi == 0) {
         return;
     }
     if (flash_r_num) {
-        if (Counter_hi == 10 && Counter_low == cw->hoji_counter) {
+        if (Counter_hi == 10 && Counter_low == (*&count_work).hoji_counter) {
             flash_timer = 0;
             counter_flash(1);
         } else if (Counter_hi <= 10) {
@@ -75,24 +75,26 @@ void counter_control(void) {
         } else {
             counter_flash(0);
         }
-    } else if (Counter_hi == 30 && Counter_low == cw->hoji_counter) {
+    } else if (Counter_hi == 30 && Counter_low == (*&count_work).hoji_counter) {
         flash_r_num = 1;
         flash_timer = 0;
         counter_flash(0);
     }
-    if (Counter_low) {
+    if (Counter_low != 0) {
         Counter_low -= 1;
         return;
     }
-    Counter_low = cw->hoji_counter;
+    Counter_low = (*&count_work).hoji_counter;
     Counter_hi -= 1;
     if (Counter_hi == 0) {
         sq_paint_chenge(22, 0, 4, 5, 8);
     }
-    round_timer.half.h = Counter_hi;
-    hi = (u16)Counter_hi / 10;
+    *(s16*)&round_timer = Counter_hi;
+    hi = (u16)Counter_hi;
+    hi = hi / 10;
+    lo = Counter_hi - hi * 10;
     if (Counter_hi) {
-        count_digit_trans(0, hi, Counter_hi - hi * 10);
+        count_digit_trans(0, hi, lo);
     } else {
         count_digit_trans(0, 0, 0);
     }
@@ -140,7 +142,7 @@ void bcount_cont_reset(void) {
     count_work.hoji_counter = 60;
     Counter_hi = 50;
     Counter_low = count_work.hoji_counter;
-    round_timer.half.h = Counter_hi;
+    *(s16*)&round_timer = Counter_hi;
     bcount_digit_trans(0, 5, 0);
     bcount_mark_trans(0);
     sc_ram_to_vram(29, 0, 0);
@@ -169,7 +171,6 @@ void bcount_cont_main(void) {
 void bcounter_control(void) {
     u16 hi;
     u16 lo;
-    const COUNT_WORK* cw;
     if (Counter_hi == 0) {
         return;
     }
@@ -177,19 +178,19 @@ void bcounter_control(void) {
         Counter_low -= 1;
         return;
     }
-    cw = &count_work;
-    Counter_low = cw->hoji_counter;
+    Counter_low = (*&count_work).hoji_counter;
     Counter_hi -= 1;
-    round_timer.half.h = Counter_hi;
-    hi = (u16)Counter_hi / 10;
+    *(s16*)&round_timer = Counter_hi;
+    hi = Counter_hi;
+    hi = hi / 10;
     lo = Counter_hi - hi * 10;
     if (Counter_hi) {
         bcount_digit_trans(0, hi, lo);
-        return;
+    } else {
+        hi = lo = 0;
+        bcount_digit_trans(0, hi, lo);
+        Time_Over = 1;
     }
-    hi = lo = 0;
-    bcount_digit_trans(0, hi, lo);
-    Time_Over = 1;
 }
 
 
@@ -204,7 +205,8 @@ s32 bcounter_down(u8 stop) {
     if (stop) {
         Counter_hi = 0;
     }
-    hi = (u16)Counter_hi / 10;
+    hi = Counter_hi;
+    hi = hi / 10;
     lo = Counter_hi - hi * 10;
     if (Counter_hi) {
         bcount_digit_trans(0, hi, lo);

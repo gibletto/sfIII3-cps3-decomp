@@ -22,6 +22,9 @@
 
 void effect_G6_move(WORK_Other* ewk) {
     WORK* mwk = (WORK*)ewk->my_master;
+    s16* er;
+    s16* mr;
+    XY* mp;
     switch (ewk->wu.routine_no[0]) {
     case 0:
         ewk->wu.routine_no[0] += 1;
@@ -43,17 +46,25 @@ void effect_G6_move(WORK_Other* ewk) {
     case 1:
         if (ewk->wu.dead_f == 1) {
             ewk->wu.routine_no[0] += 1;
-            return;
+            break;
         }
-        if (((ewk->wu.dmcal_m & 1) && (ewk->wu.old_pos[1] != mwk->xyz[1].disp.pos)) ||
-            ((ewk->wu.dmcal_m & 2) && (!mwk->disp_flag)) ||
-            ((ewk->wu.dmcal_m & 4) && (ewk->wu.dm_vital != mwk->dm_count_up)) ||
-            ((ewk->wu.dmcal_m & 8) &&
-             ((ewk->wu.old_rno[0] != mwk->routine_no[0]) || (ewk->wu.old_rno[1] != mwk->routine_no[1]) ||
-              (ewk->wu.old_rno[2] != mwk->routine_no[2])))) {
-        block_22:
-            ewk->wu.routine_no[0] += 1;
-            return;
+        if ((ewk->wu.dmcal_m & 1) && (ewk->wu.old_pos[1] != mwk->xyz[1].disp.pos)) {
+            goto block_22;
+        }
+        if ((ewk->wu.dmcal_m & 2) && (!mwk->disp_flag)) {
+            goto block_22;
+        }
+        if ((ewk->wu.dmcal_m & 4) && (ewk->wu.dm_vital != mwk->dm_count_up)) {
+            goto block_22;
+        }
+        if (ewk->wu.dmcal_m & 8) {
+            er = ewk->wu.old_rno;
+            mr = mwk->routine_no;
+            if ((er[0] != mr[0]) || (er[1] != mr[1]) || (er[2] != mr[2])) {
+            block_22:
+                ewk->wu.routine_no[0] += 1;
+                break;
+            }
         }
         if ((EXE_flag != 0) || (Game_pause != 0)) {
             break;
@@ -63,16 +74,23 @@ void effect_G6_move(WORK_Other* ewk) {
                 goto block_22;
             }
         }
-        if (ewk->wu.now_koc & (pcon_timer + ewk->wu.blink_timing)) {
+        if ((pcon_timer + ewk->wu.blink_timing) & ewk->wu.now_koc) {
             break;
         }
         if (ewk->wu.dmcal_m & 0x20) {
-            if ((!mwk->hit_stop) && (ewk->wu.old_pos[0] == mwk->xyz[0].disp.pos) &&
-                (ewk->wu.old_pos[1] == mwk->xyz[1].disp.pos)) {
-                goto block_22;
+            if (!mwk->hit_stop) {
+                er = ewk->wu.old_pos;
+                mp = mwk->xyz;
+                if ((er[0] == mp[0].disp.pos) && (er[1] == mp[1].disp.pos)) {
+                    goto block_22;
+                }
             }
-        } else if ((ewk->wu.old_pos[0] == mwk->xyz[0].disp.pos) && (ewk->wu.old_pos[1] == mwk->xyz[1].disp.pos)) {
-            break;
+        } else {
+            er = ewk->wu.old_pos;
+            mp = mwk->xyz;
+            if ((er[0] == mp[0].disp.pos) && (er[1] == mp[1].disp.pos)) {
+                break;
+            }
         }
         ewk->wu.old_pos[0] = mwk->xyz[0].disp.pos;
         ewk->wu.old_pos[1] = mwk->xyz[1].disp.pos;
