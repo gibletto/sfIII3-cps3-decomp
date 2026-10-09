@@ -1155,7 +1155,7 @@ extern DBG_SLOT * dbg_slot;
 extern s16 dbg_slot_w[2][9];
 extern SNAPSHOT* dbg_snap_ptr;
 extern SNAPSHOT dbg_snap_w[][128];
-extern WORK_Other * dbg_ghost_ewk[][3];
+extern WORK_Other * dbg_ghost_ewk[2][3];
 extern s16 dbg_col_no;
 extern PATTERN_BUF dbg_look_buf;
 extern PATTERN_BUF dbg_copy_buf;

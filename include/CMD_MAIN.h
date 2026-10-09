@@ -110,7 +110,7 @@ void debug_hit_a_judgement_cleanup(void);
 s32 debug_hit_a_judgement_column_nav(WORK* wk);
 s32 debug_hit_a_judgement_edit_grid(WORK* wk);
 s32 debug_hit_a_judgement_edit_step(void);
-s16 debug_hit_a_judgement_held_step(void);
+s32 debug_hit_a_judgement_held_step(void);
 void debug_hit_a_judgement_init(void);
 void debug_hit_a_judgement_navigate_xy(WORK* wk);
 void debug_hit_a_draw_cursor(s16 col, s16 flags);

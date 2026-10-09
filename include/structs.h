@@ -2107,8 +2107,12 @@ typedef struct {
 typedef struct {
     s16 x;
     s16 y;
-    s16 x2;
-    s16 y2;
+} GRID_POS;
+
+typedef struct {
+    s16 x;
+    s16 y;
+    GRID_POS hit[1];
 } GRID_ROW;
 
 typedef struct {
