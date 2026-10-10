@@ -337,7 +337,7 @@ s32 check_super_arts_attack(PLW* wk) {
             return 0;
         }
     }
-    conpane = &wk->cp->sw_lvbt;
+    conpane = (u16*)wk->cp;
     if (wk->cp->waza_flag[wk->sa->nmsa_a_ix] == -1) {
         return 0;
     }

@@ -129,23 +129,86 @@ void spgauge_cont_init(void) {
 
 
 void spgauge_cont_demo_init(void) {
-    u8 lpy;
-    do { SPG_DAT* spg = &spg_dat[0]; demo_set_sa_full(&super_arts[0]); spg->current_spg = super_arts[0].gauge_len; spg->old_spg = super_arts[0].gauge_len; spg->spgcol_number = 34; spg->spgtbl_ptr = spgauge_puttbl[0]; spg->spg_level = super_arts[0].store; spg->spg_maxlevel = super_arts[0].store_max; spg->spg_len = super_arts[0].gauge_len / 8; spg->spg_dotlen = super_arts[0].gauge_len; spg->flag = 0; spg->flag2 = 0; spg->timer = 60; spg->timer2 = 2; spg->kind = 1; spg->max = 1; spg->max_old = 0; spg->max_rno = 2; spg->time_rno = 0; spg->gauge_flash_time = 2; spg->gauge_flash_col = 0; spg->sa_flag = 0; spg->ex_flag = 0; spg->no_chgcol = 0; spg->time_no_clear = 0; spg->sa_mukou = 0; sa_gauge_flash[0] = 0; if (super_arts[0].gauge_type == 1) { spg->time = 1; time_flag[0] = 1; } else { spg->time = 0; time_flag[0] = 0; } } while (0);
-    do { SPG_DAT* spg = &spg_dat[1]; demo_set_sa_full(&super_arts[1]); spg->current_spg = super_arts[1].gauge_len; spg->old_spg = super_arts[1].gauge_len; spg->spgcol_number = 162; spg->spgtbl_ptr = spgauge_puttbl[0]; spg->spg_level = super_arts[1].store; spg->spg_maxlevel = super_arts[1].store_max; spg->spg_len = super_arts[1].gauge_len / 8; spg->spg_dotlen = super_arts[1].gauge_len; spg->flag = 0; spg->flag2 = 0; spg->timer = 60; spg->timer2 = 2; spg->kind = 1; spg->max = 1; spg->max_old = 0; spg->max_rno = 2; spg->time_rno = 0; spg->gauge_flash_time = 2; spg->gauge_flash_col = 0; spg->sa_flag = 0; spg->ex_flag = 0; spg->no_chgcol = 0; spg->time_no_clear = 0; spg->sa_mukou = 0; sa_gauge_flash[1] = 0; if (super_arts[1].gauge_type == 1) { spg->time = 1; time_flag[1] = 1; } else { spg->time = 0; time_flag[1] = 0; } } while (0);
+    s8 lpy;
+    demo_set_sa_full(&super_arts[0]);
+    spg_dat[0].current_spg = super_arts[0].gauge_len;
+    spg_dat[0].old_spg = super_arts[0].gauge_len;
+    spg_dat[0].spgcol_number = 34;
+    spg_dat[0].spgtbl_ptr = spgauge_puttbl[0];
+    spg_dat[0].spg_level = super_arts[0].store;
+    spg_dat[0].spg_maxlevel = super_arts[0].store_max;
+    spg_dat[0].spg_len = super_arts[0].gauge_len / 8;
+    spg_dat[0].spg_dotlen = super_arts[0].gauge_len;
+    spg_dat[0].flag = 0;
+    spg_dat[0].flag2 = 0;
+    spg_dat[0].timer = 60;
+    spg_dat[0].timer2 = 2;
+    spg_dat[0].kind = 1;
+    spg_dat[0].max = 1;
+    spg_dat[0].max_old = 0;
+    spg_dat[0].max_rno = 2;
+    spg_dat[0].time_rno = 0;
+    spg_dat[0].gauge_flash_time = 2;
+    spg_dat[0].gauge_flash_col = 0;
+    spg_dat[0].sa_flag = 0;
+    spg_dat[0].ex_flag = 0;
+    spg_dat[0].no_chgcol = 0;
+    spg_dat[0].time_no_clear = 0;
+    spg_dat[0].sa_mukou = 0;
+    sa_gauge_flash[0] = 0;
+    if (super_arts[0].gauge_type == 1) {
+        spg_dat[0].time = 1;
+        time_flag[0] = 1;
+    } else {
+        spg_dat[0].time = 0;
+        time_flag[0] = 0;
+    }
+    demo_set_sa_full(&super_arts[1]);
+    spg_dat[1].current_spg = super_arts[1].gauge_len;
+    spg_dat[1].old_spg = super_arts[1].gauge_len;
+    spg_dat[1].spgcol_number = 162;
+    spg_dat[1].spgtbl_ptr = spgauge_puttbl[0];
+    spg_dat[1].spg_level = super_arts[1].store;
+    spg_dat[1].spg_maxlevel = super_arts[1].store_max;
+    spg_dat[1].spg_len = super_arts[1].gauge_len / 8;
+    spg_dat[1].spg_dotlen = super_arts[1].gauge_len;
+    spg_dat[1].flag = 0;
+    spg_dat[1].flag2 = 0;
+    spg_dat[1].timer = 60;
+    spg_dat[1].timer2 = 2;
+    spg_dat[1].kind = 1;
+    spg_dat[1].max = 1;
+    spg_dat[1].max_old = 0;
+    spg_dat[1].max_rno = 2;
+    spg_dat[1].time_rno = 0;
+    spg_dat[1].gauge_flash_time = 2;
+    spg_dat[1].gauge_flash_col = 0;
+    spg_dat[1].sa_flag = 0;
+    spg_dat[1].ex_flag = 0;
+    spg_dat[1].no_chgcol = 0;
+    spg_dat[1].time_no_clear = 0;
+    spg_dat[1].sa_mukou = 0;
+    sa_gauge_flash[1] = 0;
+    if (super_arts[1].gauge_type == 1) {
+        spg_dat[1].time = 1;
+        time_flag[1] = 1;
+    } else {
+        spg_dat[1].time = 0;
+        time_flag[1] = 0;
+    }
     spg_dat[0].spgptbl_ptr = spgauge_postbl[0];
     spg_dat[1].spgptbl_ptr = spgauge_postbl[1];
     for (lpy = 0; lpy < 2; lpy++) {
-        SPG_DAT* spg = &spg_dat[lpy];
-        spg->mass_len = spg->spg_len - 5;
-        if (spg->spg_len & 1) {
-            spg->mchar = 5;
-            spg->mass_odd = 1;
+        spg_dat[lpy].mass_len = spg_dat[lpy].spg_len - 5;
+        if (spg_dat[lpy].spg_len & 1) {
+            spg_dat[lpy].mchar = 5;
+            spg_dat[lpy].mass_odd = 1;
         } else {
-            spg->mass_len = spg->mass_len - 1;
-            spg->mchar = 6;
-            spg->mass_odd = 0;
+            spg_dat[lpy].mass_len = spg_dat[lpy].mass_len - 1;
+            spg_dat[lpy].mchar = 6;
+            spg_dat[lpy].mass_odd = 0;
         }
-        spg->mass_len /= 2;
+        spg_dat[lpy].mass_len /= 2;
     }
     sa_stock_trans(spg_dat[0].spg_maxlevel, 1, 0);
     sa_stock_trans(spg_dat[1].spg_maxlevel, 1, 1);
@@ -545,27 +608,27 @@ void sagauge_color_chenge(s8 Stpl_Num) {
         return;
     }
     spg_dat[Stpl_Num].gauge_flash_time--;
-    if (spg_dat[Stpl_Num].gauge_flash_time != 0) {
-        return;
-    }
-    spg_dat[Stpl_Num].gauge_flash_time = 2;
-    if (Stpl_Num == 0) {
-        sq_paint_chenge(6, 26, spg_dat[0].spg_len, 1, sagauge_colchg_tbl[spg_dat[0].gauge_flash_col][0]);
-    } else if (spg_dat[1].max == 1 || spg_dat[1].max_old == 1 || spg_dat[1].spg_level == spg_dat[1].spg_maxlevel) {
-        sq_paint_chenge(42 - spg_dat[1].spg_len, 26, spg_dat[1].mass_len, 1, sagauge_colchg_tbl[spg_dat[1].gauge_flash_col][1]);
-        sq_paint_chenge(42 - spg_dat[1].spg_len + spg_dat[1].mass_len, 26, spg_dat[1].mchar, 1, sagauge_colchg_tbl[spg_dat[1].gauge_flash_col][0]);
-        sq_paint_chenge(42 - spg_dat[1].spg_len + spg_dat[1].mass_len + spg_dat[1].mchar,
-                     26,
-                     spg_dat[1].mass_len,
-                     1,
-                     sagauge_colchg_tbl[spg_dat[1].gauge_flash_col][1]);
-    } else {
-        sq_paint_chenge(42 - spg_dat[1].spg_len, 26, spg_dat[1].spg_len, 1, sagauge_colchg_tbl[spg_dat[1].gauge_flash_col][1]);
-    }
-    if (spg_dat[Stpl_Num].gauge_flash_col == 3) {
-        spg_dat[Stpl_Num].gauge_flash_col = 0;
-    } else {
-        spg_dat[Stpl_Num].gauge_flash_col++;
+    if (spg_dat[Stpl_Num].gauge_flash_time == 0) {
+        spg_dat[Stpl_Num].gauge_flash_time = 2;
+        if (Stpl_Num == 0) {
+            sq_paint_chenge(6, 26, spg_dat[0].spg_len, 1, sagauge_colchg_tbl[spg_dat[0].gauge_flash_col][0]);
+        } else if (spg_dat[1].max == 1 || spg_dat[1].max_old == 1 || spg_dat[1].spg_level == spg_dat[1].spg_maxlevel) {
+            sq_paint_chenge(42 - spg_dat[1].spg_len, 26, spg_dat[1].mass_len, 1, sagauge_colchg_tbl[spg_dat[1].gauge_flash_col][1]);
+            sq_paint_chenge(42 - spg_dat[1].spg_len + spg_dat[1].mass_len, 26, spg_dat[1].mchar, 1, sagauge_colchg_tbl[spg_dat[1].gauge_flash_col][0]);
+            sq_paint_chenge(42 - spg_dat[1].spg_len + spg_dat[1].mass_len + spg_dat[1].mchar,
+                         26,
+                         spg_dat[1].mass_len,
+                         1,
+                         sagauge_colchg_tbl[spg_dat[1].gauge_flash_col][1]);
+        } else {
+            SPG_DAT* spg = &spg_dat[1];
+            sq_paint_chenge(42 - spg_dat[1].spg_len, 26, spg->spg_len, 1, sagauge_colchg_tbl[spg->gauge_flash_col][1]);
+        }
+        if (spg_dat[Stpl_Num].gauge_flash_col == 3) {
+            spg_dat[Stpl_Num].gauge_flash_col = 0;
+        } else {
+            spg_dat[Stpl_Num].gauge_flash_col++;
+        }
     }
 }
 

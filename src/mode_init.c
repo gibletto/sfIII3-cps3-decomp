@@ -161,10 +161,7 @@ void mode_init_task(void) {
     No_Death = 0;
     Get_Demo_Index = Request_Break[0] = Request_Break[1] = 0;
     Battle_Round[0] = Game_setting.set4 & 3;
-    {
-        u8 t = (Game_setting.set4 / 16) & 3;
-        Battle_Round[1] = t;
-    }
+    Battle_Round[1] = (Game_setting.set4 / 16) & 3;
     G_No0 = G_No1 = G_No2 = G_No3 = 0;
     E_No0 = E_No1 = E_No2 = E_No3 = 0;
     S_No = S_Sub_No = S_Sub2_No = S_Sub3_No = 0;

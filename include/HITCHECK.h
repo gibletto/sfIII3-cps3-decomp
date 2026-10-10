@@ -18,7 +18,6 @@ s32 check_dm_att_blocking(WORK* as, WORK* ds, s16 dnum);
 s32 check_dm_att_guard(WORK* as, WORK* ds);
 s32 check_head_damage(s16 ix);
 s32 check_normal_attack();
-s32 check_normal_waza(u8 waza);
 s32 check_pat_status(WORK* wk);
 void check_result_extra(void);
 s32 check_trunk_damage(s16 ix);

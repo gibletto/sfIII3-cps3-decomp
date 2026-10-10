@@ -47,6 +47,7 @@ s32 effect_14_init(id, x, y, atr)
 void effect_14_move(WORK_Other* ewk) {
     E14_SCR* scrn = scrn_map_ptr;
     u32* data;
+    u16* ofs;
     u32 scr;
     s8 put;
     switch (ewk->wu.routine_no[0]) {
@@ -58,10 +59,11 @@ void effect_14_move(WORK_Other* ewk) {
         data++;
         eff14_work[ewk->wu.rl_flag].scr = scr;
         eff14_work[ewk->wu.rl_flag].adrs = scrn[eff14_work[ewk->wu.rl_flag].scr].adrs;
-        if ((*(s16(*)[][8])&(scrn_pos[0].cur_y))[eff14_work[ewk->wu.rl_flag].scr][0] < 0x200) {
+        if (scrn_pos[eff14_work[ewk->wu.rl_flag].scr].cur_y.disp.pos < 0x200) {
             eff14_work[ewk->wu.rl_flag].adrs += 0x2000;
         }
-        eff14_work[ewk->wu.rl_flag].dst = eff14_work[ewk->wu.rl_flag].adrs + eff14_ofs_tbl[ewk->wu.type];
+        ofs = &eff14_ofs_tbl[ewk->wu.type];
+        eff14_work[ewk->wu.rl_flag].dst = eff14_work[ewk->wu.rl_flag].adrs + *ofs;
         eff14_work[ewk->wu.rl_flag].row = eff14_work[ewk->wu.rl_flag].dst;
         eff14_work[ewk->wu.rl_flag].script_top = (s8*)*data;
         eff14_work[ewk->wu.rl_flag].script = (s8*)*data;
@@ -100,11 +102,12 @@ void effect_14_move(WORK_Other* ewk) {
             eff14_work[ewk->wu.rl_flag].adrs = scrn[eff14_work[ewk->wu.rl_flag].scr].adrs;
             put = 1;
         }
-        if ((*(s16(*)[][8])&(scrn_pos[0].cur_y))[eff14_work[ewk->wu.rl_flag].scr][0] < 0x200) {
+        if (scrn_pos[eff14_work[ewk->wu.rl_flag].scr].cur_y.disp.pos < 0x200) {
             put = 1;
             eff14_work[ewk->wu.rl_flag].adrs += 0x2000;
         }
-        eff14_work[ewk->wu.rl_flag].dst = eff14_work[ewk->wu.rl_flag].adrs + eff14_ofs_tbl[ewk->wu.type];
+        ofs = &eff14_ofs_tbl[ewk->wu.type];
+        eff14_work[ewk->wu.rl_flag].dst = *ofs + eff14_work[ewk->wu.rl_flag].adrs;
         eff14_work[ewk->wu.rl_flag].row = eff14_work[ewk->wu.rl_flag].dst;
         eff14_work[ewk->wu.rl_flag].timer--;
         if (eff14_work[ewk->wu.rl_flag].timer == 0) {

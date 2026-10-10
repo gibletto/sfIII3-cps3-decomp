@@ -25,7 +25,6 @@ s32 check_hijump_only(PLW* wk);
 s32 check_hurimuki(WORK* wk);
 s32 check_jump_ready(PLW* wk);
 s32 check_rl_flag(WORK* wk);
-s32 check_hurimuki_bs2(WORK* wk);
 s32 check_rl_on_car(PLW* wk);
 s32 check_sankaku_tobi(PLW* wk);
 s32 check_stand_up(PLW* wk);

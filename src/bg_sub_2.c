@@ -508,8 +508,7 @@ void scr_12_22(void) {
     } else {
         meri = p2->wu.scr_mv_x + satse[p2->player_number];
     }
-    meri = meri - (ideal_w.iw[0].disp.pos + bg_w.pos_offset - 0x3F);
-    x_right_check(meri);
+    x_right_check(meri - (ideal_w.iw[0].disp.pos + bg_w.pos_offset - 0x3F));
 }
 
 

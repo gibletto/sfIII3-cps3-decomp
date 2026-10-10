@@ -303,7 +303,7 @@ s32 get_cg_slot_addr(u16 id) {
 
 
 /* provisional name */
-s32 cg_data_exist(u16 id) {
+static s32 cg_data_exist(u16 id) {
     if (cg_data_list[id].set != 0) {
         return 1;
     }
@@ -387,7 +387,7 @@ s32 trans_char_cells(WORK* wk) {
     u32 base;
     u16 no;
     u16 addr;
-    s16 blk10;
+    s32 blk10;
     s16 blk40;
     s16 i;
     s32 err;
@@ -402,9 +402,9 @@ s32 trans_char_cells(WORK* wk) {
         if (cg_slot_tbl[set->slot].addr == 0 && !load_char_gfx(no, wk->cgromtype)) {
             return 0;
         }
-        addr = cg_slot_tbl[set->slot].addr;
-        wk->spr.slot_addr = addr;
-        cells = (CHAR_CELL*)&set->chunk[set->count];
+        wk->spr.slot_addr = addr = cg_slot_tbl[set->slot].addr;
+        cells = (CHAR_CELL*)set->chunk;
+        cells = (CHAR_CELL*)((u8*)cells + set->count * sizeof(CharGfxChunk));
         wk->spr.cells = cells;
         if ((blk40 = simmram_block_alloc_40((set->cells >> 4) + 1, 1)) == 0) {
             return 0;
@@ -445,13 +445,11 @@ s32 trans_char_cells(WORK* wk) {
             return 1;
         }
         polygon2d_submit_line(set->prep, 0, 0, 3);
-        blk10 = ((s16)simmram_block_alloc_10((set->size >> 5) + 1, 1));
-        if (blk10 == 0) {
+        if ((s16)(blk10 = simmram_block_alloc_10((set->size >> 5) + 1, 1)) == 0) {
             return 0;
         }
         base = simmram_slot_to_offset(blk10);
-        addr = ((u16)simmram_slot_to_cg_no(blk10));
-        wk->spr.slot_addr = addr;
+        addr = wk->spr.slot_addr = ((u16)simmram_slot_to_cg_no(blk10));
         chunk = set->chunk;
         for (i = 0; i < set->count; i++) {
             adr = base + chunk[i].dst * 16;
@@ -469,14 +467,14 @@ s32 trans_char_cells(WORK* wk) {
         }
         dst = (CHAR_SPRITE*)simmram_slot_addr(blk40);
         if (wk->spr.gfx_blk10[2]) {
-            ((void(*)(s16 handle))simmram_block_free_10)(wk->spr.gfx_blk10[2]);
+            simmram_block_free_10(wk->spr.gfx_blk10[2]);
         }
         wk->spr.gfx_blk10[2] = wk->spr.gfx_blk10[1];
         wk->spr.gfx_blk10[1] = wk->spr.gfx_blk10[0];
         wk->spr.gfx_blk10[0] = blk10;
     }
     if (wk->spr.gfx_blk40[2]) {
-        ((void(*)(s16 handle))simmram_block_free_40)(wk->spr.gfx_blk40[2]);
+        simmram_block_free_40(wk->spr.gfx_blk40[2]);
     }
     wk->spr.gfx_blk40[2] = wk->spr.gfx_blk40[1];
     wk->spr.gfx_blk40[1] = wk->spr.gfx_blk40[0];
@@ -977,7 +975,8 @@ void release_char_cell_blocks(WORK* wk) {
 }
 
 s32 sort_push_request(WORK* wk) {
-    u16* spr;
+    SPRITE_ENTRY* spr;
+    u32 flip_mask;
     if (wk->disp_flag == 0 || wk->cg_number == 0) {
         return 1;
     }
@@ -987,7 +986,7 @@ s32 sort_push_request(WORK* wk) {
     if (!trans_char_cells(wk)) {
         return 0;
     }
-    if ((spr = (u16*)sprite_entry_alloc(0)) == 0) {
+    if ((spr = sprite_entry_alloc(0)) == 0) {
         return 0;
     }
     wk->spr.disp_colcd = wk->current_colcd;
@@ -997,16 +996,17 @@ s32 sort_push_request(WORK* wk) {
     if (wk->extra_col) {
         wk->spr.disp_colcd = wk->extra_col;
     }
-    push_char_sprite(wk, spr, base_y_pos);
+    push_char_sprite(wk, (u16*)spr, base_y_pos);
     if (wk->my_mr_flag && *(u32*)&wk->spr.old_mr != *(u32*)&wk->my_mr) {
         char_sprite_zoom_cells(wk);
     }
-    if (wk->work_id == 1 && (wk->spr.sprite_flip & 1)) {
-        spr[4] |= 8;
+    flip_mask = 1;
+    if (wk->work_id == 1 && (wk->spr.sprite_flip & flip_mask)) {
+        spr->w8 |= 8;
     }
     if (wk->work_id == 0x20 && wk->my_col_code == ((WORK*)((WORK_Other*)wk)->my_master)->my_col_code &&
-        (wk->spr.sprite_flip & 1)) {
-        spr[4] |= 8;
+        (wk->spr.sprite_flip & flip_mask)) {
+        spr->w8 |= 8;
     }
     if (wk->kage_flag) {
         shadow_drawing(wk, base_y_pos);
@@ -1018,6 +1018,7 @@ s32 sort_push_request(WORK* wk) {
 
 s32 sort_push_request2(WORK_Other* wk) {
     SPRITE_ENTRY* spr;
+    u32 flip_mask;
     s16 i;
     CHAR_SPRITE* cell;
 
@@ -1048,6 +1049,7 @@ s32 sort_push_request2(WORK_Other* wk) {
 
 s32 sort_push_request3(WORK* wk) {
     SPRITE_ENTRY* spr;
+    u32 flip_mask;
     s16 i;
     CHAR_SPRITE* cell;
 
@@ -1082,7 +1084,8 @@ s32 sort_push_request3(WORK* wk) {
 }
 
 s32 sort_push_request4(WORK* wk) {
-    u16* spr;
+    SPRITE_ENTRY* spr;
+    u32 flip_mask;
     if (wk->disp_flag == 0 || wk->cg_number == 0) {
         return 1;
     }
@@ -1092,7 +1095,7 @@ s32 sort_push_request4(WORK* wk) {
     if (trans_char_cells(wk) == 0) {
         return 0;
     }
-    if ((spr = (u16*)sprite_entry_alloc(0)) == 0) {
+    if ((spr = sprite_entry_alloc(0)) == 0) {
         return 0;
     }
     wk->spr.disp_colcd = wk->current_colcd;

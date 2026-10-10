@@ -140,7 +140,7 @@ void Name_Input_wait(void) {
 
 /* provisional name */
 void Name_Input_end(void) {
-    s16 i;
+    register s16 i;
     name_ptr->r_no_0++;
     if (name_ptr->index > 0) {
         if (name_slang_check() != 0) {
@@ -586,16 +586,15 @@ void all_name_display(void) {
 void start_cut_check(pl_id)
 s16 pl_id;
 {
-    s16 i;
     if (Naming_Cut[pl_id]) {
         if (name_ptr->r_no_0 < 6) {
             name_ptr->r_no_0 = 6;
         }
-        i = 0;
+        pl_id = 0;
         do {
-            if (name_ptr->end_flag[i] == 0) {
-                name_ptr->code[i] = 44;
+            if (name_ptr->end_flag[pl_id] == 0) {
+                name_ptr->code[pl_id] = 44;
             }
-        } while (++i < 3);
+        } while (++pl_id < 3);
     }
 }

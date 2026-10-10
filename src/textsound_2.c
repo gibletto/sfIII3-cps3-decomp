@@ -84,15 +84,19 @@ void sound_init(u8* data, SNDSAMPLE* bank_a, u8** bank_b, u8 stereo, u8 volume, 
     snd_fade_speed = 0;
     bgm_tempo_add = 0;
     q = &bgm_status_save[0];
-    for (v = &bgm_voice[0]; v < &bgm_voice[16]; v++) {
-        v->status = 0xC0;
+    for (v = &bgm_voice[0]; v < &bgm_voice[16];) {
+        (v++)->status = 0xC0;
+        *q++ = 0xC0;
+        (v++)->status = 0xC0;
         *q++ = 0xC0;
     }
-    for (v = se_voice; v < &se_voice[16]; v++) {
-        v->status = 0xC0;
+    for (v = se_voice; v < &se_voice[16];) {
+        (v++)->status = 0xC0;
+        (v++)->status = 0xC0;
     }
-    for (q = gSeqStatus; q < &gSeqStatus[16]; q++) {
-        *q = 0;
+    for (q = gSeqStatus; q < &gSeqStatus[16];) {
+        *q++ = 0;
+        *q++ = 0;
     }
 }
 

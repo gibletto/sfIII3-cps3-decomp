@@ -203,8 +203,7 @@ void zoom_ud_check(void) {
     }
     work2 = zoom_request_flag & 0xFF;
     bg_w.frame_deff = 64 - zoom_request_level;
-    work = ~zoom_req_flag_old & zoom_request_flag;
-    work &= 0xFF;
+    work = 0xFF & (~zoom_req_flag_old & zoom_request_flag);
     if (work && !bg_w.frame_flag) {
         bg_w.frame_flag = 1;
         bg_w.old_frame_flag = 1;
@@ -224,7 +223,9 @@ void zoom_ud_check(void) {
             if (Monitor_Flip) {
                 bg_w.center_x = bg_w.pos_offset * 2 - bg_w.center_x;
             }
-        } else if (bg_w.bgw[1].r_limit2 < x) {
+            goto zoom_check;
+        }
+        if (bg_w.bgw[1].r_limit2 < x) {
             if (bg_w.bgw[1].zuubun != 0) {
                 bg_w.center_x = x2;
                 pos_w = bg_w.bgw[1].wxy[0].disp.pos + 512;
@@ -242,6 +243,7 @@ void zoom_ud_check(void) {
             bg_w.center_y = 224;
         }
     }
+zoom_check:
     if (work2) {
         if (bg_w.bg_f_x > bg_w.frame_deff) {
             Frame_Up(bg_w.center_x, bg_w.center_y, 1, 1);
@@ -469,7 +471,9 @@ void suzi_line_calc(s16 bg_num) {
 /* provisional name */
 void suzi_line_calc_fill(s16 bg_num) {
     BGW* bgw;
+    SUZI_CALC* calc;
     s32* line;
+    s32* first_line;
     u16* dst;
     u16 top;
     s16 dist;
@@ -491,14 +495,16 @@ void suzi_line_calc_fill(s16 bg_num) {
         return;
     }
     dist -= bgw->old_pos_x;
-    line = (s32*)suzi_line_buf;
+    line = first_line = (s32*)suzi_line_buf;
     if (dist < 0) {
-        suzi_calc_w.step = bg_w.bgw[bg_num].zuubun * -dist;
+        dist = -dist;
+        suzi_calc_w.step = bg_w.bgw[bg_num].zuubun * dist;
         dst = bg_w.bgw[bg_num].start_suzi;
         suzi_calc_w.ofs = suzi_calc_w.step * bg_w.bgw[bg_num].u_line;
         for (i = 0; i < bg_w.bgw[bg_num].u_line; i++) {
             *line += suzi_calc_w.ofs;
-            suzi_calc_w.ofs -= suzi_calc_w.step;
+            calc = &suzi_calc_w;
+            calc->ofs -= calc->step;
             *dst = *(u16*)line;
             line++;
             dst += 2;
@@ -506,14 +512,16 @@ void suzi_line_calc_fill(s16 bg_num) {
         suzi_calc_w.ofs = 0;
         for (i = 0; i < bg_w.bgw[bg_num].d_line; i++) {
             *line -= suzi_calc_w.ofs;
-            suzi_calc_w.ofs += suzi_calc_w.step;
+            calc = &suzi_calc_w;
+            calc->ofs += calc->step;
             *dst = *(u16*)line;
             line++;
             dst += 2;
         }
+        line--;
         count = 41 - bg_w.bgw[bg_num].d_line;
         for (i = 0; i < count; i++) {
-            *dst = *(u16*)(line - 1);
+            *dst = *(u16*)line;
             dst += 2;
         }
     } else {
@@ -522,7 +530,8 @@ void suzi_line_calc_fill(s16 bg_num) {
         suzi_calc_w.ofs = suzi_calc_w.step * bg_w.bgw[bg_num].u_line;
         for (i = 0; i < bg_w.bgw[bg_num].u_line; i++) {
             *line -= suzi_calc_w.ofs;
-            suzi_calc_w.ofs -= suzi_calc_w.step;
+            calc = &suzi_calc_w;
+            calc->ofs -= calc->step;
             *dst = *(u16*)line;
             line++;
             dst += 2;
@@ -530,18 +539,20 @@ void suzi_line_calc_fill(s16 bg_num) {
         suzi_calc_w.ofs = 0;
         for (i = 0; i < bg_w.bgw[bg_num].d_line; i++) {
             *line += suzi_calc_w.ofs;
-            suzi_calc_w.ofs += suzi_calc_w.step;
+            calc = &suzi_calc_w;
+            calc->ofs += calc->step;
             *dst = *(u16*)line;
             line++;
             dst += 2;
         }
+        line--;
         count = 41 - bg_w.bgw[bg_num].d_line;
         for (i = 0; i < count; i++) {
-            *dst = *(u16*)(line - 1);
+            *dst = *(u16*)line;
             dst = dst + 2;
         }
     }
-    top = suzi_line_buf[0];
+    top = *(u16*)first_line;
     dst = (u16*)((u8*)bg_w.bgw[bg_num].suzi_adrs + 2048);
     for (i = 0; i < bg_w.bgw[bg_num].no_suzi_line - 512; i++) {
         *dst = top;
@@ -1360,6 +1371,7 @@ void bg_rect_attr_preset(void) {
 
 void oh_opening_demo(u16* adrs, s32 x, s16 w, s32 y, s16 h, s16 attr, s16 prio) {
     s16 i;
+    u16 cell;
     s16 j;
     u16* p;
     adrs += x;
@@ -1369,7 +1381,10 @@ void oh_opening_demo(u16* adrs, s32 x, s16 w, s32 y, s16 h, s16 attr, s16 prio) 
         p = adrs;
         for (j = 0; j < w; j++) {
             p++;
-            *p = (*p & 0xFE00) | attr | prio;
+            cell = *p;
+            cell &= 0xFE00;
+            cell |= attr;
+            *p = cell | prio;
             p++;
         }
         adrs += 0x80;

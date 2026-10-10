@@ -15,7 +15,7 @@ void grade_makeup_judgement_gals(void);
 void check_guard_miss();
 void renew_judge_final_work();
 s32 get_offence_total();
-s16 get_defence_total();
+s32 get_defence_total();
 s32 get_ex_point_total();
 s32 get_grade_ix();
 s32 get_tech_pts_total();

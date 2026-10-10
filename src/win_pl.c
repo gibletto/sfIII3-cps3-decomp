@@ -436,8 +436,7 @@ void Win_05000(PLW* wk) {
     }
     switch (wk->wu.routine_no[3]) {
     case 0:
-        win_rno[1] = 0;
-        win_rno[0] = 0;
+        win_rno[0] = win_rno[1] = 0;
         wk->wu.routine_no[3]++;
         if (Round_num >= (Battle_Round[Play_Type] * 2) ||
             PL_Wins[wk->wu.id] >= Battle_Round[Play_Type]) {
@@ -614,12 +613,9 @@ void Win_09000(PLW* wk) {
     }
     switch (wk->wu.routine_no[3]) {
     case 0:
-        {
-            s16 t = win_rno[1] = 0;
-            win_rno[0] = t;
-        }
+        win_rno[0] = win_rno[1] = 0;
         wk->wu.routine_no[3]++;
-        work = random_16_com() & 7;
+        work = win_select(wk, 7);
         if (work == 7) {
             set_char_move_init(&wk->wu, 9, 32);
         } else {
@@ -629,36 +625,35 @@ void Win_09000(PLW* wk) {
             PL_Wins[wk->wu.id] < Battle_Round[Play_Type] + 1) {
             break;
         }
-        if (poison_flag[wk->wu.id] != 0) {
-            break;
-        }
-        switch (work) {
-        case 0:
-            effect_L6_init(&wk->wu, 0);
-            break;
-        case 3:
-            effect_30_init(&wk->wu);
-            break;
-        case 4:
-            effect_31_init(&wk->wu);
-            break;
-        case 5:
-            effect_32_init(&wk->wu);
-            break;
-        case 7:
-            wk->wu.cmwk[0] = 0;
-            effect_L6_init(&wk->wu, 1);
-            set_char_move_init(&wk->wu, 0, 0);
-            win_rno[0] = 1;
-            break;
+        if (!poison_flag[wk->wu.id]) {
+            switch (work) {
+            case 0:
+                effect_L6_init(&wk->wu, 0);
+                break;
+            case 3:
+                effect_30_init(&wk->wu);
+                break;
+            case 4:
+                effect_31_init(&wk->wu);
+                break;
+            case 5:
+                effect_32_init(&wk->wu);
+                break;
+            case 7:
+                wk->wu.cmwk[0] = 0;
+                effect_L6_init(&wk->wu, 1);
+                set_char_move_init(&wk->wu, 0, 0);
+                win_rno[0] = 1;
+                break;
+            }
         }
         break;
     default:
-        if (win_rno[0] != 0) {
+        if (win_rno[0]) {
             switch (win_rno[1]) {
             case 0:
                 char_move(&wk->wu);
-                if (wk->wu.cmwk[0] != 0) {
+                if (wk->wu.cmwk[0]) {
                     win_rno[1]++;
                     set_char_move_init(&wk->wu, 9, 39);
                 }
@@ -973,27 +968,26 @@ void Win_11000(PLW* wk) {
         }
         win_rno[0] = win_rno[1] = 0;
         wk->wu.routine_no[3]++;
-        work = random_16_com();
-        work &= 3;
+        work = win_select(wk, 3);
         if (Round_num >= (Battle_Round[Play_Type] * 2) ||
             PL_Wins[wk->wu.id] >= Battle_Round[Play_Type] + 1) {
             if (Perfect_Flag) {
                 win_rno[0] = 1;
                 set_char_move_init(&wk->wu, 9, 38);
                 effect_L3_init(wk);
-                return;
-            }
-            set_char_move_init(&wk->wu, 9, work + 36);
-            switch (work) {
-            case 0:
-                win_rno[0] = 2;
-                break;
-            case 1:
-                break;
-            default:
-                effect_L3_init(wk);
-                win_rno[0] = 1;
-                break;
+            } else {
+                set_char_move_init(&wk->wu, 9, work + 36);
+                switch (work) {
+                case 0:
+                    win_rno[0] = 2;
+                    break;
+                case 1:
+                    break;
+                default:
+                    effect_L3_init(wk);
+                    win_rno[0] = 1;
+                    break;
+                }
             }
         } else {
             win_rno[0] = 0;

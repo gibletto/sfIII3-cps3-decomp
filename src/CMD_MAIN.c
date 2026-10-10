@@ -1608,6 +1608,7 @@ s32 debug_hit_a_judgement_edit_grid(WORK* wk) {
     s16 page = pat[ix].bits >> 13;
     s16 hit = page;
     HITA_IX* h = &ixtbl[hit];
+    s16 zero = 0;
     s16 step;
     s16 i;
     s32 sw;
@@ -1625,8 +1626,8 @@ s32 debug_hit_a_judgement_edit_grid(WORK* wk) {
             break;
         case 1:
             step += pat[ix].bits >> 13;
-            if (step < 0) {
-                step = 0;
+            if (step < zero) {
+                step = zero;
             }
             if (step > wk->dmcal_d) {
                 step = wk->dmcal_d;
@@ -1635,8 +1636,8 @@ s32 debug_hit_a_judgement_edit_grid(WORK* wk) {
             break;
         case 2:
             step += h->body;
-            if (step < 0) {
-                step = 0;
+            if (step < zero) {
+                step = zero;
             }
             if (step > wk->vitality) {
                 step = wk->vitality;
@@ -1645,8 +1646,8 @@ s32 debug_hit_a_judgement_edit_grid(WORK* wk) {
             break;
         case 3:
             step += h->hand;
-            if (step < 0) {
-                step = 0;
+            if (step < zero) {
+                step = zero;
             }
             if (step > wk->vital_new) {
                 step = wk->vital_new;
@@ -1669,8 +1670,8 @@ s32 debug_hit_a_judgement_edit_grid(WORK* wk) {
             break;
         case 6:
             step += h->attack;
-            if (step < 0) {
-                step = 0;
+            if (step < zero) {
+                step = zero;
             }
             if (step > wk->vital_old) {
                 step = wk->vital_old;
@@ -1693,8 +1694,8 @@ s32 debug_hit_a_judgement_edit_grid(WORK* wk) {
             break;
         case 1:
             step += pat[ix].bits >> 13;
-            if (step < 0) {
-                step = 0;
+            if (step < zero) {
+                step = zero;
             }
             if (step > wk->dmcal_d) {
                 step = wk->dmcal_d;
@@ -1703,8 +1704,8 @@ s32 debug_hit_a_judgement_edit_grid(WORK* wk) {
             break;
         case 2:
             step += h->body;
-            if (step < 0) {
-                step = 0;
+            if (step < zero) {
+                step = zero;
             }
             if (step > wk->vitality) {
                 step = wk->vitality;
@@ -1713,8 +1714,8 @@ s32 debug_hit_a_judgement_edit_grid(WORK* wk) {
             break;
         case 3:
             step += h->hand;
-            if (step < 0) {
-                step = 0;
+            if (step < zero) {
+                step = zero;
             }
             if (step > wk->vital_new) {
                 step = wk->vital_new;
@@ -1737,8 +1738,8 @@ s32 debug_hit_a_judgement_edit_grid(WORK* wk) {
             break;
         case 6:
             step += h->attack;
-            if (step < 0) {
-                step = 0;
+            if (step < zero) {
+                step = zero;
             }
             if (step > wk->vital_old) {
                 step = wk->vital_old;
@@ -1924,6 +1925,7 @@ void debug_hit_a_print_pattern_rows(WORK* wk, GRID_REC* recs) {
     s16 ix;
     s16 attr;
     s16 v;
+    const GRID_POS* hit;
     ix = wk->cg_ix / wk->cgd_type - 4;
     for (i = 0; i < 9; i++, ix++) {
         if (ix < 0 || ix >= wk->dmcal_m) {
@@ -1938,8 +1940,9 @@ void debug_hit_a_print_pattern_rows(WORK* wk, GRID_REC* recs) {
             tilemap_print_string_attr(hit_grid5_pos_tbl[i].x, hit_grid5_pos_tbl[i].y, attr, debug_blank3_msg);
             tilemap_print_hex(hit_grid5_pos_tbl[i].x, hit_grid5_pos_tbl[i].y, attr, Convert_BCD(v, 3), 3, 2);
             v = recs[ix].bits >> 13;
-            tilemap_print_string_attr(hit_grid5_pos_tbl[i].hit[0].x, hit_grid5_pos_tbl[i].hit[0].y, attr, debug_zero2_msg);
-            tilemap_print_hex(hit_grid5_pos_tbl[i].hit[0].x, hit_grid5_pos_tbl[i].hit[0].y, attr, Convert_BCD(v, 2), 2, 2);
+            hit = hit_grid5_pos_tbl[i].hit;
+            tilemap_print_string_attr(hit->x, hit->y, attr, debug_zero2_msg);
+            tilemap_print_hex(hit->x, hit->y, attr, Convert_BCD(v, 2), 2, 2);
         }
     }
 }
@@ -1953,7 +1956,7 @@ void debug_hit_a_print_hit_ix_rows(WORK* wk, GRID9_REC* recs) {
     u16 attr;
     ix = wk->cg_hit_ix;
     ix -= 3;
-    for (i = 0; i < 7; i++, ix++) {
+    for (i = 0; i < 7; ix++, i++) {
         if (ix < 0 || ix > wk->dmcal_d) {
             tilemap_print_string_attr(31, hit_grid9_pos_tbl[i].y + 0xFFFF, 0, grid9_empty_box_msg);
             tilemap_print_string_attr(31, hit_grid9_pos_tbl[i].y, 0, dbg_hit_row_empty_str);
@@ -3825,7 +3828,7 @@ void debug_cg_number_browse(void) {
     u16 kind;
     s16 moved;
     s16 ix;
-    u16 code;
+    long code;
     u16 group;
     debug_position_by_pad();
     debug_flip_cycle(~dbg_p1sw_1 & dbg_p1sw_0);
@@ -4357,6 +4360,7 @@ void debug_slot_char_load(void) {
     s16 row;
     s16 col;
     u16 group;
+    s16 col_mode = 0x4200;
     if (dbg_slot->sel[0] <= 0xd8) {
         dbg_pl->wu.operator = 0;
         if (dbg_slot->sel[0] < 10) {
@@ -4367,7 +4371,7 @@ void debug_slot_char_load(void) {
         if (dbg_pl->player_number != ix) {
             dbg_pl->player_number = ix;
             dbg_pl->wu.charset_id = debug_charset_tbl[dbg_pl->player_number];
-            dbg_pl->wu.my_col_mode = 0x4200;
+            dbg_pl->wu.my_col_mode = col_mode;
             debug_char_table_load();
             set_char_base_data_init(&dbg_pl->wu);
             if (dbg_pl->wu.id) {
@@ -4413,7 +4417,7 @@ void debug_slot_char_load(void) {
             load_any_color(dbg_obj_color_tbl[dbg_slot->sel[0] - 0xd7]);
             break;
         default:
-            dbg_pl->wu.my_col_mode = 0x4200;
+            dbg_pl->wu.my_col_mode = col_mode;
             dbg_pl->wu.my_col_code = 0x4080;
             break;
         }

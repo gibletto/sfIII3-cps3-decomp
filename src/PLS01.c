@@ -460,7 +460,7 @@ s32 check_F_R_step(PLW* wk) {
 
 
 /* provisional name */
-s32 check_hurimuki_bs2(WORK* wk) {
+static s32 check_hurimuki_bs2(WORK* wk) {
     return wk->rl_flag == wk->rl_waza;
 }
 

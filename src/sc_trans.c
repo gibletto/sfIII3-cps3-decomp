@@ -1058,39 +1058,44 @@ void combo_hitnum_set(s8 pl, s8 kind, u16 hits) {
 
 
 s16 combo_pts_set(s8 PL, u32 pts) {
+    u32 number = pts;
     s16 digit[4];
     s16 i;
     s16 first;
     s32 xx;
     u16 x;
     s16 y;
+    s16 y2;
     s16 x2;
     xx = 100000;
     first = -1;
-    for (i = 3; i >= 0; i--) {
-        digit[i] = pts / xx;
-        pts -= digit[i] * xx;
+    for (i = 3; i >= 0; i--, xx = xx / 10) {
+        digit[i] = number / xx;
+        number -= digit[i] * xx;
         if (first < 0) {
             if (digit[i] != 0) {
                 first = i;
             }
         }
-        xx /= 10;
     }
     x = (15 - first) * PL;
     y = PL * 2 + 34;
-    for (i = first; i >= 0; i--) {
+    for (i = first; i >= 0; i--, x++) {
         score8x16_put(x, y, 16, digit[i]);
-        x++;
     }
     score8x16_put(x, y, 16, 0);
     score8x16_put(x + 1, y, 16, 0);
     tilemap_put_cell(x + 2, y, 16, 32);
-    tilemap_put_cell(x + 2, y + 1, 16, 0xD6);
+    tilemap_put_cell(x + 2, y2 = y + 1, 16, 0xD6);
     tilemap_put_cell(x + 3, y, 16, 32);
-    tilemap_put_cell(x + 3, y + 1, 16, 0xD7);
-    tilemap_put_cell(x2 = (PL == 0) ? x + 4 : 14 - first, y, 16, 32);
-    tilemap_put_cell(x2, y + 1, 16, 32);
+    tilemap_put_cell(x + 3, y2, 16, 0xD7);
+    if (PL == 0) {
+        tilemap_put_cell(x2 = x + 4, y, 16, 32);
+        tilemap_put_cell(x2, y2, 16, 32);
+    } else {
+        tilemap_put_cell(x2 = 14 - first, y, 16, 32);
+        tilemap_put_cell(x2, y2, 16, 32);
+    }
     return first + 6;
 }
 

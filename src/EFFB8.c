@@ -29,7 +29,7 @@ void effect_B8_move(WORK_Other_CONN* ewk) {
     const CONN* conn_data;
     const u16* chr_data;
     s32 variant;
-    s32 sw;
+    u16 sw;
     s16 num;
     s16 i;
     switch (ewk->wu.routine_no[0]) {
