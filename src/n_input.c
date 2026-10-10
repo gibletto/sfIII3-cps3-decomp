@@ -458,7 +458,7 @@ s16 pl_id;
 /* provisional name */
 void name_entry_commit_row(s16 pl_id, s16 pos_y) {
     s16 pos_x;
-    if (Game_setting.mode == 0) {
+    if (Game_setting.mode) {
     } else {
     }
     if (pl_id) {
@@ -484,9 +484,9 @@ void name_entry_commit_row(s16 pl_id, s16 pos_y) {
     tilemap_put_cell(pos_x, pos_y, 16, pl_id * 2 + 106);
     tilemap_put_cell(pos_x + 1, pos_y, 16, pl_id * 2 + 107);
     if (pl_id) {
-        sc_ram_to_vram_opc(25, Game_setting.mode << 3, pos_y, 16);
+        sc_ram_to_vram_opc(25, Game_setting.mode * 8, pos_y, 16);
     } else {
-        sc_ram_to_vram_opc(24, Game_setting.mode << 2, pos_y, 16);
+        sc_ram_to_vram_opc(24, Game_setting.mode * 4, pos_y, 16);
     }
 }
 

@@ -45,7 +45,7 @@
 #include "effa0.h"
 #include "EFFA3.h"
 #include "effa5.h"
-#include "effa5_input.h"
+#include "EFFA6.h"
 #include "sys_test.h"
 #include "sys_test_2.h"
 #include "sys_test_2b.h"
@@ -1263,19 +1263,14 @@ s32 Check_Bonus_Stage(void) {
 
 
 u8 Check_Bonus_Type(void) {
-    s32 m = 0x80;
-    s16* w;
-    s8* p;
-    w = &VS_Index[Player_id];
-    p = Completion_Bonus[Player_id];
-    if (*w >= 6) {
-        if (p[1] & m) {
+    if (VS_Index[Player_id] >= 6) {
+        if (Completion_Bonus[Player_id][1] & 0x80) {
             return 0;
         }
         return 22;
     }
-    if (*w >= 3) {
-        if (p[0] & m) {
+    if (VS_Index[Player_id] >= 3) {
+        if (Completion_Bonus[Player_id][0] & 0x80) {
             return 0;
         }
         return 21;

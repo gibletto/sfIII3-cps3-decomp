@@ -186,7 +186,6 @@ void tilemap_rect_fill(u16 x, u16 y, u16 w, u16 h, u16 attr, u16 code) {
     s32 cw;
     s32 row;
     s32 col;
-    s16 bank;
     if (attr == 0xFFFF && code == 0xFFFF) {
         return;
     }
@@ -208,11 +207,10 @@ void tilemap_rect_fill(u16 x, u16 y, u16 w, u16 h, u16 attr, u16 code) {
             }
         }
     } else if (attr == 0xFFFF && code != 0xFFFF) {
-        bank = (code & 0x100) >> 8;
         for (row = 0; row < h; row++) {
             for (col = 0; col < cw; col++) {
                 p[0] = code;
-                p[1] = (p[1] & 0xFFFE) | bank;
+                p[1] = (p[1] & 0xFFFE) | ((code & 0x100) >> 8);
                 p += 2;
                 if (p > ((u16*)(SS_RAM + 0x3FFF))) {
                     p = ((u16*)SS_RAM);
@@ -247,25 +245,21 @@ void tilemap_rect_fill(u16 x, u16 y, u16 w, u16 h, u16 attr, u16 code) {
 /* provisional name */
 void tilemap_print_hex_block(u16 x, u16 y, u16 attr, u32 value, u16 digits, u16 mode) {
     TEXT_CELL* p;
-    s32 n;
     u32 mask;
     s32 started;
     s32 sign;
     s32 i;
     u16 d;
-    u16 font;
     s32 cells;
-    s32 code;
-    font = num_font_code;
-    cells = (((font & 0x7000) >> 12) + 1) * (((font & 0xE00) >> 9) + 1);
+    u16 code;
+    cells = (((num_font_code & 0x7000) >> 12) + 1) * (((num_font_code & 0xE00) >> 9) + 1);
     p = (TEXT_CELL*)((u32)((u16*)SS_RAM) + (x << 2) + (y << 8));
     started = 0;
-    n = digits;
-    mask = 15 << ((n - 1) * 4);
+    mask = 15 << ((digits - 1) * 4);
     sign = (mode & 4) != 0;
-    for (i = n; i > 0; i--) {
+    for (i = digits; i > 0; i--) {
         d = (value & mask) >> ((i - 1) * 4);
-        if (i == n && sign) {
+        if (i == digits && sign) {
             if (d < 0) {
                 p->code = '-';
                 d &= 0x7FFF;
@@ -314,20 +308,16 @@ void tilemap_print_hex_block(u16 x, u16 y, u16 attr, u32 value, u16 digits, u16 
 /* provisional name */
 void tilemap_print_hex(u16 x, u16 y, u16 attr, u32 value, u16 digits, u16 mode) {
     TEXT_CELL* p;
-    u16 n;
     u32 mask;
     s32 started;
-    s32 sign;
     s32 i;
     u16 d;
     p = (TEXT_CELL*)((u32)((u16*)SS_RAM) + (x << 2) + (y << 8));
     started = 0;
-    n = digits;
-    mask = 15 << ((n - 1) * 4);
-    sign = (mode & 4) != 0;
-    for (i = n; i > 0; i--) {
+    mask = 15 << ((digits - 1) * 4);
+    for (i = digits; i > 0; i--) {
         d = (value & mask) >> ((i - 1) * 4);
-        if (i == n && sign) {
+        if (i == digits && (mode & 4) != 0) {
             if (d < 0) {
                 p->code = '-';
                 d &= 0x7FFF;

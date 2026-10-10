@@ -343,6 +343,8 @@ shc src\sc_sub.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortn
 if errorlevel 1 goto fail
 shc src\sc_sub_2.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -noinline -object=obj\sc_sub_2.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
+shc src\sc_sub_3.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -noinline -object=obj\sc_sub_3.obj >obj\shc.log 2>&1
+if errorlevel 1 goto fail
 shc src\cmb_cont.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\cmb_cont.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\EFFECT.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\EFFECT.obj >obj\shc.log 2>&1
@@ -548,8 +550,6 @@ shc src\EFFA4.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortne
 if errorlevel 1 goto fail
 shc src\effa5.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\effa5.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\effa5_input.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\effa5_input.obj >obj\shc.log 2>&1
-if errorlevel 1 goto fail
 shc src\EFFA6.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\EFFA6.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 if errorlevel 1 goto fail
@@ -644,6 +644,8 @@ shc src\effe9.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortne
 if errorlevel 1 goto fail
 shc src\efff0.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\efff0.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
+shc src\efff0_2.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\efff0_2.obj >obj\shc.log 2>&1
+if errorlevel 1 goto fail
 shc src\EFFF1.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\EFFF1.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\EFFF2_code.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\EFFF2_code.obj >obj\shc.log 2>&1
@@ -697,6 +699,8 @@ if errorlevel 1 goto fail
 shc src\EFFI0.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\EFFI0.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\EFFI3.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\EFFI3.obj >obj\shc.log 2>&1
+if errorlevel 1 goto fail
+shc src\EFFI3_2.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\EFFI3_2.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\EFFI4MV.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\EFFI4MV.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
@@ -900,6 +904,8 @@ if errorlevel 1 goto fail
 shc src\sys_test_5.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=0 -nospeed -object=obj\sys_test_5.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\coin_sw.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=0 -nospeed -object=obj\coin_sw.obj >obj\shc.log 2>&1
+if errorlevel 1 goto fail
+shc src\coin_sw_2.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=0 -nospeed -object=obj\coin_sw_2.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\eeprom.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=0 -nospeed -object=obj\eeprom.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail

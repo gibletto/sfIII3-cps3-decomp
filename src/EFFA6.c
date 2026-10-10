@@ -25,16 +25,33 @@
 #include "EFFECT.h"
 #include "effect_2.h"
 
-#pragma inline(check2_A6_shortcut)
+#pragma inline(effA5_start_pressed)
 
-s32 check2_A6_shortcut(void) {
-    u16 sw_w;
+/* provisional name */
+s32 effA5_shot_pressed(void) {
+    u16 sw;
     if (Player_id) {
-        sw_w = p2sw_0;
+        sw = p2sw_0;
     } else {
-        sw_w = p1sw_0;
+        sw = p1sw_0;
     }
-    if (sw_w & 0x1000) {
+    if (sw & 0x3F0) {
+        return 1;
+    }
+    return 0;
+}
+
+
+
+/* provisional name */
+s32 effA5_start_pressed(void) {
+    u16 sw;
+    if (Player_id) {
+        sw = p2sw_0;
+    } else {
+        sw = p1sw_0;
+    }
+    if (sw & 0x1000) {
         return 1;
     }
     return 0;
@@ -47,11 +64,10 @@ void effect_A6_move(WORK_Other_CONN* ewk) {
     const EFFA6_MESSAGE* mes;
     const CONN* conn_data;
     const u16* chr_data;
-    s32 variant;
     s16 i;
     switch (ewk->wu.routine_no[0]) {
     case 0:
-        if (check2_A6_shortcut() != 0) {
+        if (effA5_start_pressed() != 0) {
             Next_Step |= ~0x7F;
         }
         if (Auto_Cut_Sub() != 0) {
@@ -91,14 +107,13 @@ void effect_A6_move(WORK_Other_CONN* ewk) {
                 }
                 conn_data = mes->conn;
                 chr_data = mes->chr;
-                variant = Language;
                 switch (Country) {
                 case 1:
                     conn_data = effA6_mes_jp[ewk->master_player][mmes_already].conn;
                     chr_data = effA6_mes_jp[ewk->master_player][mmes_already].chr;
                     break;
                 case 3:
-                    switch (variant) {
+                    switch (Language) {
                     case 0:
                         conn_data = effA6_mes_en[ewk->master_player][mmes_already].conn;
                         chr_data = effA6_mes_en[ewk->master_player][mmes_already].chr;
@@ -122,7 +137,7 @@ void effect_A6_move(WORK_Other_CONN* ewk) {
                     chr_data = effA6_mes_pt[ewk->master_player][mmes_already].chr;
                     break;
                 case 7:
-                    switch (variant) {
+                    switch (Language) {
                     case 0:
                         conn_data = effA6_mes_en[ewk->master_player][mmes_already].conn;
                         chr_data = effA6_mes_en[ewk->master_player][mmes_already].chr;

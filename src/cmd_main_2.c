@@ -1478,10 +1478,9 @@ void pl_lvr_set(void) {
     u16 sw_hana;
     u16 hana2;
     sw_0 = wcp[cmd_id].sw_lvbt;
-    sw_work = sw_0 & 0xC;
     if (check_rl_on_car(cmd_pl)) {
         if (cmd_pl->wu.rl_flag) {
-            work2 = sw_work;
+            work2 = sw_0 & 0xC;
             if (work2) {
                 sw_0 &= 0xFF3;
                 work2 ^= 0xC;
@@ -1489,7 +1488,7 @@ void pl_lvr_set(void) {
             }
         }
     } else if (cmd_pl->wu.rl_waza) {
-        work2 = sw_work;
+        work2 = sw_0 & 0xC;
         if (work2) {
             sw_0 &= 0xFF3;
             work2 ^= 0xC;

@@ -791,8 +791,7 @@ s32 q_em_dir(PLW* wk) {
 
 
 void q_keeping_action(PLW* wk) {
-    s16* p = &win_rno[1];
-    switch (*p) {
+    switch (win_rno[1]) {
     case 0:
         if (q_em_dir(wk) != 0) {
             if (wk->wu.direction == wk->wu.rl_flag) {
@@ -811,7 +810,7 @@ void q_keeping_action(PLW* wk) {
         }
         break;
     case 2:
-        (*p)++;
+        (win_rno[1])++;
         set_char_move_init(&wk->wu, 9, 41);
         wk->wu.mvxy.d[0].sp = 0;
         if (wk->wu.rl_flag) {

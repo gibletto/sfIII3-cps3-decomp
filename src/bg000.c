@@ -71,7 +71,6 @@
  * Zoom: zoom_frame_judge, zoom_ud_check, zoom_x_width_check, bg_base_y_move_check. Line scroll:
  * suzi_line_clear, suzi_offset_set, suzi_sync_pos_set.
  */
-#pragma inline(remake_x_mvstep)
 
 
 
@@ -701,7 +700,8 @@ void suzi_line_calc2(s16 bg_num) {
 
 /* provisional name */
 s32 bg_cell_offset(s16 x, s16 y) {
-    return ((((0x400 - (y & 0x300) - (y & 0xF0)) & 0x3F0) << 4) + ((x & 0x3F0) >> 2)) >> 1;
+    s32 ix = x & 0x3F0;
+    return ((((0x400 - (y & 0x300) - (y & 0xF0)) & 0x3F0) << 4) + (ix >> 2)) >> 1;
 }
 
 
@@ -846,7 +846,6 @@ void ake_Family_Set2(void) {
 void bg_pos_hosei_sub2(s32 bg_no) {
     u16 pos;
     u16 pos2;
-    u16 work;
     pos2 = bg_w.bgw[bg_no].wxy[0].disp.pos;
     pos = pos2 & 0x3FF;
     pos -= bg_w.pos_offset;
@@ -858,9 +857,8 @@ void bg_pos_hosei_sub2(s32 bg_no) {
     bg_w.bgw[bg_no].abs_x = pos2;
     pos2 = bg_w.bgw[bg_no].xy[1].disp.pos;
     pos = pos2 & 0x3FF;
-    work = quake_y_tbl[bg_w.quake_y_index];
-    pos += work;
-    pos2 += work;
+    pos += quake_y_tbl[bg_w.quake_y_index];
+    pos2 += quake_y_tbl[bg_w.quake_y_index];
     bg_w.bgw[bg_no].position_y = pos & 0x3FF;
     bg_w.bgw[bg_no].abs_y = pos2;
 }
@@ -917,8 +915,8 @@ void bg_pos_hosei2(void)
             pos2 = bg_w.bgw[i].xy[1].disp.pos;
         }
         pos = pos2 & 0x3FF;
-        pos += quake_y_tbl[bg_w.quake_y_index];
-        pos2 += quake_y_tbl[bg_w.quake_y_index];
+        pos = pos + quake_y_tbl[bg_w.quake_y_index];
+        pos2 = pos2 + quake_y_tbl[bg_w.quake_y_index];
         bg_w.bgw[i].position_y = pos & 0x3FF;
         bg_w.bgw[i].abs_y = pos2;
     }
@@ -1091,13 +1089,16 @@ void bg_cell_write_yflip(s16 bg, s32 ofs, s32 cell, u32 src, s16 u5, s16 attr) {
 void blit_16x16_xyflip(u16* src, s16 code, u16* dst, s16 attr) {
     u16 i;
     u16 j;
+    s16 ix;
     u16* s;
     u16* d;
 
     for (i = 0; i < 16; i++) {
         d = dst;
         for (j = 0; j < 16; j++) {
-            s = &src[(15 - i) * 32 + (15 - j) * 2];
+            ix = (15 - i) * 32;
+            ix += (15 - j) << 1;
+            s = src + ix;
             *d++ = *s++ + code;
             *d = *s + attr;
             *d++ |= 0x1800;
@@ -1398,19 +1399,19 @@ void oh_opening_demo(u16* adrs, s32 x, s16 w, s32 y, s16 h, s16 attr, s16 prio) 
 void bg_rect_attr_add(u16* adrs, s32 x, s16 w, s32 y, s16 h, s16 bits, s16 add) {
     s16 i;
     s16 j;
+    s16 cell;
     u16* p;
     adrs += x;
-    adrs = adrs + y;
-    i = 0;
-    while (i < h) {
+    adrs += y;
+    for (i = 0; i < h; i++) {
         p = adrs;
         for (j = 0; j < w; j++) {
             p++;
-            *p = (*p | bits) + add;
-            p++;
+            cell = *p;
+            cell = cell | bits;
+            *p++ = cell + add;
         }
-        adrs = adrs + 0x80;
-        i++;
+        adrs += 0x80;
     }
 }
 
@@ -1730,11 +1731,7 @@ void bg_etc_write(s16 type) {
     polygon2d_submit_line(gfx->prep, 0, 0, 3);
     mode = gfx->mode;
     polygon2d_submit_line(gfx->src, bg_w.scroll_cg_adr, gfx->size, mode);
-    if (Game_setting.mode) {
-        bg_w.pos_offset = 0xF8;
-    } else {
-        bg_w.pos_offset = 0xC0;
-    }
+    bg_w.pos_offset = Game_setting.mode ? 0xF8 : 0xC0;
     for (i = 0; i < 7; i++) {
         bg_w.bgw[i].pos_x_work = 0;
         bg_w.bgw[i].pos_y_work = 0;
@@ -1793,10 +1790,12 @@ void bg_etc_write(s16 type) {
         bg_w.bgw[i].frame_deff = 64;
         bg_w.bgw[i].max_x_limit = bg_w.bgw[i].speed_x * bg_w.max_x;
     }
-    if (type == 1 && Game_setting.mode) {
-        bg_w.bgw[0].xy[0].cal = 0x2000000;
-        bg_w.bgw[0].wxy[0].cal = 0x2000000;
-        bg_w.bgw[0].pos_x_work = 0x200;
+    if (type == 1) {
+        if (Game_setting.mode) {
+            bg_w.bgw[0].xy[0].cal = 0x2000000;
+            bg_w.bgw[0].wxy[0].cal = 0x2000000;
+            bg_w.bgw[0].pos_x_work = 0x200;
+        }
     }
     base_y_pos = 40;
 }

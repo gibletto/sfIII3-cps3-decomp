@@ -196,10 +196,9 @@ void init_app_20000(void) {
 
 void init_app_30000(void) {
     s16 i;
-    s16* rno = &pcon_rno[1];
-    switch (*rno) {
+    switch (pcon_rno[1]) {
     case 0:
-        (*rno)++;
+        pcon_rno[1]++;
         round_slow_flag = 0;
         dead_voice_flag = 0;
         for (i = 1; i < 8; i++) {

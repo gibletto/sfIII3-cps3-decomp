@@ -125,8 +125,8 @@ u16 ix;
         id = wk->master_id;
     }
     Score[(u8)id][2] += Score_Data[ix];
-    if (plw[id].wu.operator != 0) {
-        if (!Play_Type) {
+    if (plw[id].wu.operator) {
+        if (Play_Type == 0) {
             Score[(u8)id][0] += Score_Data[ix];
             if (Score[(u8)id][0] >= 99999900) {
                 Score[(u8)id][0] = 99999900;
@@ -174,23 +174,18 @@ void Disp_Player_Score(s16 id) {
 void Score_Sub(void) {
     u16 num;
     u16 tens;
-    s16 x;
-    if (plw[0].wu.operator != 0) {
-        if (Demo_Flag != 0) {
-            x = Score_X_Pos_Data[0][Game_setting.mode];
-            tilemap_clear_rect(x + 0xFFF9, 0, Score_X_Pos_Data[0][Game_setting.mode], 1);
-            Disp_Player_Score(0);
-            tens = Continue_Coin[0];
-            num = Continue_Coin[0];
-            tens = tens / 10;
-            score8x16_put(Score_X_Pos_Data[0][Game_setting.mode] - 1, 0, 16, tens);
-            num -= tens * 10;
-            score8x16_put(Score_X_Pos_Data[0][Game_setting.mode], 0, 16, num);
-        }
+    if (plw[0].wu.operator != 0 && Demo_Flag != 0) {
+        tilemap_clear_rect(Score_X_Pos_Data[0][Game_setting.mode] - 7, 0, Score_X_Pos_Data[0][Game_setting.mode], 1);
+        Disp_Player_Score(0);
+        tens = Continue_Coin[0];
+        num = Continue_Coin[0];
+        tens = tens / 10;
+        score8x16_put(Score_X_Pos_Data[0][Game_setting.mode] - 1, 0, 16, tens);
+        num -= tens * 10;
+        score8x16_put(Score_X_Pos_Data[0][Game_setting.mode], 0, 16, num);
     }
     if (plw[1].wu.operator != 0 && Demo_Flag != 0) {
-        x = Score_X_Pos_Data[1][Game_setting.mode];
-        tilemap_clear_rect(x + 0xFFF9, 0, Score_X_Pos_Data[1][Game_setting.mode], 1);
+        tilemap_clear_rect(Score_X_Pos_Data[1][Game_setting.mode] - 7, 0, Score_X_Pos_Data[1][Game_setting.mode], 1);
         Disp_Player_Score(1);
         tens = Continue_Coin[1];
         num = Continue_Coin[1];

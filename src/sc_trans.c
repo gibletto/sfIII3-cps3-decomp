@@ -277,7 +277,7 @@ void sc_chr_sheet_to_ram(u16 chr, u16 pos, u16 w, u16 h) {
     for (; (u16)i < h; i++) {
         for (j = 0; (u16)j < w; j++) {
             k = 0;
-            do {
+            for (;;) {
                 k += 2;
                 {
                     u8 v = *sc_trans_src;
@@ -291,7 +291,10 @@ void sc_chr_sheet_to_ram(u16 chr, u16 pos, u16 w, u16 h) {
                 }
                 sc_bak_ptr++;
                 sc_trans_src++;
-            } while ((u16)k < 32);
+                if ((u16)k >= 32) {
+                    break;
+                }
+            }
         }
         sc_trans_src = src + 0x200;
         src = sc_trans_src;
@@ -631,16 +634,12 @@ void tilemap_clear_rect(x0, y0, x1, y1)
     u32 y1;
 {
     u16 *line;
-    s32 width;
-    s32 height;
     u16 row;
     u16 col;
 
     line = (u16 *)(SS_RAM + (u16)x0 * 4 + (u16)y0 * 0x100);
-    width = (u16)x1 - (u16)x0 + 1;
-    height = (u16)y1 - (u16)y0 + 1;
-    for (row = 0; row < height; row++) {
-        for (col = 0; col < width; col++) {
+    for (row = 0; row < (u16)y1 - (u16)y0 + 1; row++) {
+        for (col = 0; col < (u16)x1 - (u16)x0 + 1; col++) {
             line[col * 2] = 0x20;
             line[col * 2 + 1] = 0;
         }
@@ -656,10 +655,10 @@ void sc_fill_rect(u32 x, u32 y, u16 w, u16 h, u16 code, u16 attr)
     u16 col;
     u16 at;
 
-    line = (u16 *)(SS_RAM + (u16)x * 4 + (u16)y * 0x100);
     at = ((code & 0x100) >> 8) | attr;
+    line = (u16 *)(SS_RAM + (u16)x * 4 + (u16)y * 0x100);
     for (row = 0; row < h; row++) {
-        for (col = 0; col < w; col++) {
+        for (col = 0; col < w; col = col + 1) {
             line[col * 2] = code;
             line[col * 2 + 1] = at;
         }

@@ -44,8 +44,8 @@ void screentest_draw_crosshatch(void) {
     rows = 14;
     tilemap_fill_all(0, 32);
     p = (u16*)SS_RAM_CACHED;
-    for (y = 0; y < rows; y++) {
-        for (x = 0; x < cols; x++) {
+    for (y = 0; y < rows; y++, p += 0x100 - cols * 4) {
+        for (x = 0; x < cols; x++, p += 4) {
             if (y == 0 || x == 0 || x == cols - 1 || y == rows - 1) {
                 attr = 8;
             } else {
@@ -59,9 +59,7 @@ void screentest_draw_crosshatch(void) {
             p[0x81] = attr | 0x40;
             p[0x82] = 127;
             p[0x83] = attr | 0xC0;
-            p += 4;
         }
-        p += 0x100 - cols * 4;
     }
     tilemap_print_string(ofs, 0, 0xFFFF, crosshatch_scr);
     screentest_no++;

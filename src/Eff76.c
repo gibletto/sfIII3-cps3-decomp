@@ -340,9 +340,9 @@ void Setup_Pos_76(WORK_Other* ewk) {
         ewk->wu.position_z = 70;
         if (Champion == 0) {
             ewk->wu.xyz[0].disp.pos += 24;
-        } else {
-            ewk->wu.xyz[0].disp.pos -= 24;
+            break;
         }
+        ewk->wu.xyz[0].disp.pos -= 24;
         break;
     case 0x49:
         ix = isAkumaName(My_char[Champion]);

@@ -109,10 +109,9 @@ s32 Player_control_bonus(void) {
 
 
 void plcnt_b_init(void) {
-    s16* rno = &pcon_rno[1];
-    switch (*rno) {
+    switch (pcon_rno[1]) {
     case 0:
-        *rno = 2;
+        pcon_rno[1] = 2;
         work_init_zero((s32*)&plw[0], sizeof(PLW));
         work_init_zero((s32*)&plw[1], sizeof(PLW));
         setup_base_and_other_data();
@@ -125,23 +124,19 @@ void plcnt_b_init(void) {
         clear_super_arts_point(&plw[1]);
         break;
     case 1:
-        if (plw[0].wu.routine_no[0] != 3) {
+        if (plw[0].wu.routine_no[0] != 3 || plw[1].wu.routine_no[0] != 3) {
             break;
         }
-        if (plw[1].wu.routine_no[0] != 3) {
-            break;
+        if (Allow_a_battle_f) {
+            pcon_rno[0] = 1;
+            pcon_rno[1] = 0;
+            plw[0].wu.routine_no[0] = 4;
+            plw[1].wu.routine_no[0] = 4;
+            ca_check_flag = 1;
         }
-        if (!Allow_a_battle_f) {
-            break;
-        }
-        pcon_rno[0] = 1;
-        pcon_rno[1] = 0;
-        plw[0].wu.routine_no[0] = 4;
-        plw[1].wu.routine_no[0] = 4;
-        ca_check_flag = 1;
         break;
     case 2:
-        *rno = 3;
+        pcon_rno[1] = 3;
         if (Bonus_Game_Flag == 22) {
             setup_bs_scrrrl_bs();
         }
@@ -162,7 +157,7 @@ void plcnt_b_init(void) {
         }
         break;
     case 3:
-        *rno = 1;
+        pcon_rno[1] = 1;
         pli_3000();
         break;
     }

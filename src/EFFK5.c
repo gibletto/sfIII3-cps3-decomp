@@ -295,8 +295,7 @@ void init_K5_work(WORK* ewk, WORK* mwk, MVJ* mvj) {
     s16 i;
 
     for (i = 0; i < 10; i++) {
-        MVJ* mj = &mvj[i];
-        mvj[i].index = mj->rno = 0;
+        mvj[i].index = mvj[i].rno = 0;
     }
     ewk->cg_hit_ix = mwk->cg_hit_ix;
     ewk->hit_ix_table = mwk->hit_ix_table;

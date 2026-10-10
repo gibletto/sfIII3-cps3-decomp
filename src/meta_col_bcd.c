@@ -42,7 +42,7 @@ u32 hex_to_bcd(u32 dat) {
 /* provisional name */
 u8 abcd(u8 a, u8 b) {
     u16 d;
-    if ((d = (a & 0xF) + (bcdext & 1) + (b & 0xF)) > 9) {
+    if ((d = (bcdext & 1) + (a & 0xF) + (b & 0xF)) > 9) {
         d -= 10;
         d |= 16;
     }

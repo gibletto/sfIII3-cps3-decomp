@@ -30,28 +30,6 @@
 #include "textsound_3.h"
 #include "sys_test.h"
 #include "cps3.h"
-
-
-
-void Irl_Family(void) {
-    volatile u16* reg;
-    s32 i;
-    u16 v;
-    reg = (volatile u16*)VIDEO_REG;
-    for (i = 0; i < 8; i++) {
-        v = fm_pos[i].cur_x.disp.pos - zoom_adj_x + flip_obj_ofs_x;
-        *reg = v & 0x3FF;
-        reg++;
-        v = fm_pos[i].cur_y.disp.pos + zoom_adj_y + flip_obj_ofs_y + 0xFFFE;
-        *reg = v & 0x3FF;
-        reg++;
-        fm_pos[i].cur_x.cal = fm_pos[i].set_x.cal;
-        fm_pos[i].cur_y.cal = fm_pos[i].set_y.cal;
-    }
-}
-
-
-
 /* provisional name: unreferenced; toggles a scroll layer's flip bits and applies them */
 void scrn_flip_set(u16 n, u16 flip) {
     s32 r;
@@ -410,8 +388,9 @@ void scroll_layers_finalize_frame(void) {
     }
     (*(volatile u16*)(SS_REG + (0x0E))) = w = scrn_pos[4].cur_x.disp.pos + screen_base_x + flip_crt_ofs_x;
     (*(volatile u16*)(SS_REG + (0x10))) = w = w >> 8;
-    (*(volatile u16*)(SS_REG + (0x20))) = w = -scrn_pos[4].cur_y.disp.pos + screen_base_y + flip_crt_ofs_y;
-    (*(volatile u16*)(SS_REG + (0x22))) = w = w >> 8;
+    w = -scrn_pos[4].cur_y.disp.pos + screen_base_y + flip_crt_ofs_y;
+    (*(volatile u16*)(SS_REG + (0x20))) = w;
+    (*(volatile u16*)(SS_REG + (0x22))) = w >>= 8;
     scrn_pos[4].cur_x = scrn_pos[4].set_x;
     scrn_pos[4].cur_y = scrn_pos[4].set_y;
 }

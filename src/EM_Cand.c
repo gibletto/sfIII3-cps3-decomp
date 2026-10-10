@@ -233,9 +233,8 @@ void clear_chainex_check(s16 ix) {
 
 /* provisional name */
 s32 stage_intro_value_get(void) {
-    s32 v = Stage_Intro_Flag;
-    if (v == 0x80) {
+    if (Stage_Intro_Flag == 0x80U) {
         return Text_Page_Y;
     }
-    return v;
+    return Stage_Intro_Flag;
 }

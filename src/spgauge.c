@@ -561,7 +561,8 @@ void sa_gauge_color_set(s8 pl) {
             spg_dat[1].spgcol_number = 156;
         }
         return;
-    } else if (plw[pl].sa->store != 0) {
+    }
+    if (plw[pl].sa->store) {
         spg_col = 1;
         if (pl == 0) {
             spg_dat[0].spgcol_number = 36;
@@ -680,15 +681,16 @@ void sa_waku_trans(pl_kind)
 s8 pl_kind;
 {
     s8 i;
-    s32 len;
+    s16 len;
     const u16* sa_char_ptr;
     SPG_DAT* spg;
     spg_work = 0;
     spg_number = 0;
     sa_char_ptr = spgauge_puttbl[0];
     len = super_arts[pl_kind].gauge_len / 8;
+    i = 0;
     spg = &spg_dat[pl_kind];
-    for (i = 0; i < len; i++) {
+    for (; i < len; i++) {
         spg_work += 8;
         if (spg_work >= spg->current_spg) {
             if (spg->current_spg >= (spg_work - 8)) {
@@ -702,7 +704,7 @@ s8 pl_kind;
                     (&spg->spgptbl_ptr[spg_number])[16 - len], 26, spg->spgcol_number, sa_char_ptr[0]);
             }
         } else {
-            tilemap_put_cell((&spg->spgptbl_ptr[spg_number])[16 - len], 26, spg->spgcol_number, sa_char_ptr[8]);
+            tilemap_put_cell((&spg_dat[pl_kind].spgptbl_ptr[spg_number])[16 - len], 26, spg->spgcol_number, sa_char_ptr[8]);
         }
         spg_number++;
     }

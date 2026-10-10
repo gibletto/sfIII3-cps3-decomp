@@ -55,7 +55,8 @@ u32 sound_voice_volume_compute(u16 level, u32 pan_scale, s8 pan, SOUND_VOICE* v)
     a = v->velocity * ((vol = v->volume) ? vol + 1 : vol) * 2;
     a = (a * ((v->expression + 64) & 127)) >> 6;
     a = (a * ((v->track[2] + 64) & 127)) >> 6;
-    t = (a * ((snd_master_vol + 64) & 127)) >> 6;
+    t = a * ((snd_master_vol + 64) & 127);
+    t >>= 6;
     if (!v->no_master) {
         t = (t * ((bgm_master_vol + 64) & 127)) >> 6;
     }
@@ -418,10 +419,10 @@ u32 voice_process_secondary(SNDVOICE* voice, u8 voice_index, u8 is_bgm) {
 void sound_reg_write_verify(s16 *reg, s16 value)
 {
     *reg = value;
-    for (;;) {
+    do {
         if ((u16)value == *(volatile u16 *)reg) {
             break;
         }
         *reg = value;
-    }
+    } while (1);
 }

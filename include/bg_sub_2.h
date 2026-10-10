@@ -13,7 +13,6 @@ void scr_12_22(void);
 void scr_11_22_2(void);
 void scr_12_21_2(void);
 void bg_base_x_move_sub(void);
-s32 remake_x_mvstep(s16 x);
 void scr_10_22(void);
 void scr_11_21(void);
 void scr_12_20(void);

@@ -325,8 +325,14 @@ s32 arts_finish_check(s8 PL) {
 
 
 s32 arts_finish_check2(s8 PL) {
-    if (Conclusion_Flag && Conclusion_Type == 0 && Loser_id == PL && (plw[PL].cb->new_dm & 0x3F) >= 32) {
-        return 1;
+    if (Conclusion_Flag) {
+        if (Conclusion_Type == 0) {
+            if (Loser_id == PL) {
+                if ((plw[PL].cb->new_dm & 0x3F) >= 32) {
+                    return 1;
+                }
+            }
+        }
     }
     return 0;
 }

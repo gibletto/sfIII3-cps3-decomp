@@ -137,9 +137,10 @@ void color_trans_dummy(void)
 /* provisional name */
 void color_dma_error_disp(void)
 {
-    if (col_trans_result == -1) {
-        tilemap_print_string_attr(16, Text_Page_Y + 7, 18, "COLOR DMA ERROR");
+    if (col_trans_result != -1) {
+        return;
     }
+    tilemap_print_string_attr(16, Text_Page_Y + 7, 18, "COLOR DMA ERROR");
 }
 
 
@@ -152,7 +153,7 @@ void load_player_color(a, b, c)
 {
     s32 zero;
     const XFER* p = player_color_tbl[a][b][c];
-    s8 i;
+    register s8 i;
     for (zero = i = 0; i < 14; i++, p++) {
         if (p->size) {
             col_trans_result = polygon2d_submit_quad(p->src, p->dst, p->size, zero, zero, zero);

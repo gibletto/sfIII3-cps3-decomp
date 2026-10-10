@@ -80,7 +80,6 @@ void wipe_mask_set_cols(s16 kind, s16 row) {
     u8* map;
     u16* dst;
     u8* mask;
-    u8 code;
     src = wipe_column_tbl[kind].adr;
     src += wipe_column_tbl[kind].w * row;
     map = wipe_set_pattern_tbl[kind].adr;
@@ -90,8 +89,7 @@ void wipe_mask_set_cols(s16 kind, s16 row) {
     for (i = 0; i < 6; i++) {
         for (y = 0; y < 16; y++) {
             for (x = 0; x < wipe_column_tbl[kind].w; x++) {
-                code = src[x];
-                dst[code] = (u8)(mask[code] & map[code]);
+                dst[src[x]] = (u8)(mask[src[x]] & map[src[x]]);
             }
             dst += 32;
             mask += 32;

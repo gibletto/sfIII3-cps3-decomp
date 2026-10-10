@@ -280,7 +280,8 @@ void remake_sankaku_tobi_mvxy(WORK* wk, u8 kabe) {
         wk->mvxy.a[1].real.h = kabe;
         wk->mvxy.a[0].real.h = wk->mvxy.a[0].real.h * 5 / kabe;
     } else {
-        wk->mvxy.a[1].real.h = wk->mvxy.a[1].real.h * 4 / 3;
+        s16* h = &wk->mvxy.a[1].real.h;
+        *h = *h * 4 / 3;
         wk->mvxy.a[0].real.h = wk->mvxy.a[0].real.h * 5 / 4;
         wk->mvxy.a[1].real.h += 2;
     }

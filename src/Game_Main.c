@@ -938,13 +938,10 @@ void Game09(void) {
         win_lose_work_clear();
         bg_w.stage = Bonus_Type;
         bg_w.area = 0;
-        {
-            u8 *cp = &My_char[COM_id];
-            if (Bonus_Game_Flag == 22) {
-                *cp = 12;
-            } else {
-                *cp = My_char[Player_id];
-            }
+        if (Bonus_Game_Flag == 22) {
+            My_char[COM_id] = 12;
+        } else {
+            My_char[COM_id] = My_char[Player_id];
         }
         Setup_Com_Color();
         Setup_PL_Color(COM_id, Com_Color_Shot);
@@ -1119,8 +1116,7 @@ void Game08(void) {
             plw[1].wu.operator = 0;
             Operator_Status[0] = 0;
             Operator_Status[1] = 0;
-            Player_Number = -1;
-            Last_Player_id = -1;
+            Player_Number = Last_Player_id = -1;
             load_any_color(2);
             load_any_color(5);
         }
@@ -1136,8 +1132,7 @@ void Game08(void) {
             Clear_Personal_Data(WINNER);
             plw[WINNER].wu.operator = 0;
             Operator_Status[WINNER] = 0;
-            Player_Number = -1;
-            Last_Player_id = -1;
+            Player_Number = Last_Player_id = -1;
         }
         break;
     }

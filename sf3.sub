@@ -166,6 +166,7 @@ INPUT obj\count.obj
 INPUT obj\spgauge.obj
 INPUT obj\sc_sub.obj
 INPUT obj\sc_sub_2.obj
+INPUT obj\sc_sub_3.obj
 INPUT obj\cmb_cont.obj
 INPUT obj\EFFECT.obj
 INPUT obj\EFF00.obj
@@ -268,7 +269,6 @@ INPUT obj\EFFA2_MAIN.obj
 INPUT obj\EFFA3.obj
 INPUT obj\EFFA4.obj
 INPUT obj\effa5.obj
-INPUT obj\effa5_input.obj
 INPUT obj\EFFA6.obj
 INPUT obj\EFFA7.obj
 INPUT obj\effa8.obj
@@ -315,6 +315,7 @@ INPUT obj\EFFE7.obj
 INPUT obj\EFFE8.obj
 INPUT obj\effe9.obj
 INPUT obj\efff0.obj
+INPUT obj\efff0_2.obj
 INPUT obj\EFFF1.obj
 INPUT obj\EFFF2_code.obj
 INPUT obj\EFFF3.obj
@@ -342,6 +343,7 @@ INPUT obj\effh6_code.obj
 INPUT obj\EFFH9.obj
 INPUT obj\EFFI0.obj
 INPUT obj\EFFI3.obj
+INPUT obj\EFFI3_2.obj
 INPUT obj\EFFI4MV.obj
 INPUT obj\EFFI5.obj
 INPUT obj\effi6.obj
@@ -443,6 +445,7 @@ INPUT obj\sys_test_3.obj
 INPUT obj\sys_test_4.obj
 INPUT obj\sys_test_5.obj
 INPUT obj\coin_sw.obj
+INPUT obj\coin_sw_2.obj
 INPUT obj\eeprom.obj
 INPUT obj\sys_config.obj
 INPUT obj\sys_config_2.obj
