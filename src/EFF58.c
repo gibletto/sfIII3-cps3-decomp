@@ -97,14 +97,18 @@ void effect_58_move(WORK_Other* ewk) {
             push_effect_work(&ewk->wu);
             break;
         case 8:
-            if ((Demo_Sound || Demo_Flag) && !Keep_BGM_Flag) {
-                bgm_request(ewk->wu.direction);
+            if (Demo_Sound || Demo_Flag) {
+                if (!Keep_BGM_Flag) {
+                    bgm_request(ewk->wu.direction);
+                }
             }
             push_effect_work(&ewk->wu);
             break;
         case 9:
-            if ((Demo_Sound || Demo_Flag) && !Keep_BGM_Flag) {
-                sound_fade_in_submit(ewk->wu.direction, 0x222);
+            if (Demo_Sound || Demo_Flag) {
+                if (!Keep_BGM_Flag) {
+                    sound_fade_in_submit(ewk->wu.direction, 0x222);
+                }
             }
             push_effect_work(&ewk->wu);
             break;

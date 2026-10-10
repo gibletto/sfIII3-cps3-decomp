@@ -47,7 +47,7 @@ void effect_A6_move(WORK_Other_CONN* ewk) {
     const EFFA6_MESSAGE* mes;
     const CONN* conn_data;
     const u16* chr_data;
-    s16 variant;
+    s32 variant;
     s16 i;
     switch (ewk->wu.routine_no[0]) {
     case 0:
@@ -91,67 +91,57 @@ void effect_A6_move(WORK_Other_CONN* ewk) {
                 }
                 conn_data = mes->conn;
                 chr_data = mes->chr;
-                variant = (s8)Language;
+                variant = Language;
                 switch (Country) {
                 case 1:
-                    mes = &effA6_mes_jp[ewk->master_player][mmes_already];
-                    conn_data = mes->conn;
-                    chr_data = mes->chr;
+                    conn_data = effA6_mes_jp[ewk->master_player][mmes_already].conn;
+                    chr_data = effA6_mes_jp[ewk->master_player][mmes_already].chr;
                     break;
                 case 3:
                     switch (variant) {
                     case 0:
-                        mes = &effA6_mes_en[ewk->master_player][mmes_already];
-                        conn_data = mes->conn;
-                        chr_data = mes->chr;
+                        conn_data = effA6_mes_en[ewk->master_player][mmes_already].conn;
+                        chr_data = effA6_mes_en[ewk->master_player][mmes_already].chr;
                         break;
                     case 1:
-                        mes = &effA6_mes_es[ewk->master_player][mmes_already];
-                        conn_data = mes->conn;
-                        chr_data = mes->chr;
+                        conn_data = effA6_mes_es[ewk->master_player][mmes_already].conn;
+                        chr_data = effA6_mes_es[ewk->master_player][mmes_already].chr;
                         break;
                     case 2:
-                        mes = &effA6_mes_pt[ewk->master_player][mmes_already];
-                        conn_data = mes->conn;
-                        chr_data = mes->chr;
+                        conn_data = effA6_mes_pt[ewk->master_player][mmes_already].conn;
+                        chr_data = effA6_mes_pt[ewk->master_player][mmes_already].chr;
                         break;
                     }
                     break;
                 case 5:
-                    mes = &effA6_mes_es[ewk->master_player][mmes_already];
-                    conn_data = mes->conn;
-                    chr_data = mes->chr;
+                    conn_data = effA6_mes_es[ewk->master_player][mmes_already].conn;
+                    chr_data = effA6_mes_es[ewk->master_player][mmes_already].chr;
                     break;
                 case 6:
-                    mes = &effA6_mes_pt[ewk->master_player][mmes_already];
-                    conn_data = mes->conn;
-                    chr_data = mes->chr;
+                    conn_data = effA6_mes_pt[ewk->master_player][mmes_already].conn;
+                    chr_data = effA6_mes_pt[ewk->master_player][mmes_already].chr;
                     break;
                 case 7:
                     switch (variant) {
                     case 0:
-                        mes = &effA6_mes_en[ewk->master_player][mmes_already];
-                        conn_data = mes->conn;
-                        chr_data = mes->chr;
+                        conn_data = effA6_mes_en[ewk->master_player][mmes_already].conn;
+                        chr_data = effA6_mes_en[ewk->master_player][mmes_already].chr;
                         break;
                     case 1:
-                        mes = &effA6_mes_es[ewk->master_player][mmes_already];
-                        conn_data = mes->conn;
-                        chr_data = mes->chr;
+                        conn_data = effA6_mes_es[ewk->master_player][mmes_already].conn;
+                        chr_data = effA6_mes_es[ewk->master_player][mmes_already].chr;
                         break;
                     case 2:
-                        mes = &effA6_mes_pt[ewk->master_player][mmes_already];
-                        conn_data = mes->conn;
-                        chr_data = mes->chr;
+                        conn_data = effA6_mes_pt[ewk->master_player][mmes_already].conn;
+                        chr_data = effA6_mes_pt[ewk->master_player][mmes_already].chr;
                         break;
                     }
                     break;
                 case 2:
                 case 4:
                 default:
-                    mes = &effA6_mes_en[ewk->master_player][mmes_already];
-                    conn_data = mes->conn;
-                    chr_data = mes->chr;
+                    conn_data = effA6_mes_en[ewk->master_player][mmes_already].conn;
+                    chr_data = effA6_mes_en[ewk->master_player][mmes_already].chr;
                     break;
                 }
                 for (i = 0; i < chr_data[0]; i++) {
@@ -194,14 +184,16 @@ void effect_A6_move(WORK_Other_CONN* ewk) {
         case 1:
             switch (ewk->wu.dir_old) {
             case 0x43:
-                ewk->wu.position_x = ewk->wu.xyz[0].disp.pos += 10;
+                ewk->wu.xyz[0].disp.pos += 10;
+                ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;
                 if (ewk->wu.position_x >= 320) {
                     ewk->wu.routine_no[1]++;
                     ewk->wu.position_x = ewk->wu.xyz[0].disp.pos = 320;
                 }
                 break;
             default:
-                ewk->wu.position_x = ewk->wu.xyz[0].disp.pos -= 10;
+                ewk->wu.xyz[0].disp.pos -= 10;
+                ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;
                 if (ewk->wu.position_x <= 392) {
                     ewk->wu.routine_no[1]++;
                     ewk->wu.position_x = ewk->wu.xyz[0].disp.pos = 392;

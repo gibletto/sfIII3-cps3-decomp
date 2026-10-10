@@ -187,7 +187,7 @@ extern void (*const Shell13_Tbl[12])(PLW*);
 extern void (*const Shell14_Tbl[13])(PLW*);
 extern s16 kage_width_tbl[];
 extern s32 (*const char_cell_flip_tbl[4][4])(WORK* wk);
-extern void (*const make_char_cells_tbl[4])(WORK* wk, CHAR_CELL* cell, CHAR_SPRITE* spr, u16 count, s16 x, s16 y);
+extern void (*const make_char_cells_tbl[4])();
 extern const s16 judge_area_code_tbl[];
 extern const s16 cell_zoom_tbl[][128];
 extern const s16 jphos_table[16];

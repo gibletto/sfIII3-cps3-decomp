@@ -9,10 +9,10 @@
 #include "work.h"
 #include "romdata.h"
 #include "extern.h"
-#include "sound_voice.h"
 #include "sound_voice_2.h"
 #include "cps3.h"
 
+u32 sound_envelope_rate();
 
 
 /* provisional name */
@@ -46,7 +46,7 @@ s32 sound_note_to_pitch(s32 note) {
 
 /* provisional name */
 u32 sound_voice_volume_compute(u16 level, u32 pan_scale, s8 pan, SOUND_VOICE* v) {
-    volatile s32 a;
+    s32 a;
     s32 t;
     u32 vol;
     u16 out;
@@ -63,7 +63,7 @@ u32 sound_voice_volume_compute(u16 level, u32 pan_scale, s8 pan, SOUND_VOICE* v)
     if (pan == -128) {
         t = 0;
     } else {
-        t = (s16)((out * pan_scale) >> 16) + (pan << 8) + out;
+        t = (s16)((out * pan_scale) >> 16) + (pan * 256) + out;
     }
     if (t > 0x7FFF) {
         out = 0x7FFF;
@@ -210,14 +210,12 @@ u32 voice_process_secondary(SNDVOICE* voice, u8 voice_index, u8 is_bgm) {
     if ((voice->status & 0x02) &&
         voice->current_pitch != voice->target_pitch) {
         if (voice->current_pitch > voice->target_pitch) {
-            next = voice->current_pitch - voice->portamento_step;
-            voice->current_pitch = next;
+            next = voice->current_pitch -= voice->portamento_step;
             if (next <= voice->target_pitch) {
                 voice->current_pitch = voice->target_pitch;
             }
         } else {
-            next = voice->current_pitch + voice->portamento_step;
-            voice->current_pitch = next;
+            next = voice->current_pitch += voice->portamento_step;
             if (next >= voice->target_pitch) {
                 voice->current_pitch = voice->target_pitch;
             }

@@ -4155,12 +4155,8 @@ s16 Power_Level;
             Next_End(wk);
             break;
         }
-        if (Stock_Hit_Flag[wk->wu.id]) {
+        if (Stock_Hit_Flag[wk->wu.id] || wk->wu.routine_no[1] != 4 || wk->wu.cg_type == 0x40) {
             Reaction_Exit_Sub(wk);
-        } else {
-            if ((wk->wu.routine_no[1] != 4) || (wk->wu.cg_type == 0x40)) {
-                Reaction_Exit_Sub(wk);
-            }
         }
         break;
     case 11:

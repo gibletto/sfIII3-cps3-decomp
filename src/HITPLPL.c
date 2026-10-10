@@ -10,10 +10,14 @@
 #include "work.h"
 #include "romdata.h"
 #include "extern.h"
-#include "HITCHECK.h"
 #include "PLS02.h"
 #include "PLSGAUGE.h"
 #include "HITPLPL.h"
+
+void cal_hit_mark_pos();
+void plef_at_vs_player_damage_union();
+void set_damage_and_piyo(PLW* as, PLW* ds);
+void setup_dm_rl(WORK* as, WORK* ds);
 
 
 

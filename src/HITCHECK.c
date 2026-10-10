@@ -824,7 +824,7 @@ void blocking_point_count_up(PLW* wk) {
 
 
 /* provisional name */
-s32 check_normal_waza(u8 waza) {
+static s32 check_normal_waza(u8 waza) {
     return sel_sp_ch_tbl[waza >> 3] == 0;
 }
 
@@ -1067,18 +1067,21 @@ void cal_combo_waribiki(PLW* as, PLW* ds) {
     tbl.ixl = 0;
     for (i = 0; i < 9; i++) {
         for (j = 0; j < 4; j++) {
-            k = ds->rp->kind_of[i][j][0] + ds->rp->kind_of[i][j][1];
-            if (k != 0) {
-                tbl.ixl += k * koatt->step[i][j] * 256;
+            k = ds->rp->kind_of[i][j][0];
+            k += *(s16*)((u8*)ds->rp->kind_of[i][j] + sizeof(s16));
+            if (k) {
+                tbl.ixl += koatt->step[i][j] * k * 256;
             }
         }
     }
-    if (tbl.ixs.l != 0) {
+    if (tbl.ixs.l) {
         tbl.ixs.h++;
     }
     power = (POWER*)exchange_pow[as->wu.kind_of_waza >> 1];
-    if ((as->player_number == PL_YUN || as->player_number == PL_YANG) && (as->sa->kind_of_arts == 2 && as->sa->ok == -1)) {
-        power = (POWER*)exchange_pow_pl03_sa3[as->wu.kind_of_waza >> 1];
+    if (as->player_number == PL_YUN || as->player_number == PL_YANG) {
+        if (as->sa->kind_of_arts == 2 && as->sa->ok == -1) {
+            power = (POWER*)exchange_pow_pl03_sa3[as->wu.kind_of_waza >> 1];
+        }
     }
     if (tbl.ixs.h > 31) {
         tbl.ixs.h = 31;
@@ -1119,7 +1122,8 @@ void catch_hit_check(void) {
     s16* sh;
     s16 mi;
     s16 si;
-    for (mi = 0; mi < hpq_in; mi++) {
+    s32 index;
+    for (mi = 0; (index = mi) < hpq_in; mi++) {
         if (hs[mi].flag.results & 0x1000) {
             continue;
         }
@@ -1135,7 +1139,7 @@ void catch_hit_check(void) {
             continue;
         }
         for (si = 0; si < hpq_in; si++) {
-            if (si == mi) {
+            if (si == index) {
                 continue;
             }
             if (hs[si].flag.results & 0x100) {
@@ -1195,6 +1199,7 @@ void attack_hit_check(void) {
     s16 lp;
     s16 lp2;
     s16 mw;
+    s16** slot;
     for (si = 0; si < hpq_in; si++) {
         if (hs[si].flag.results & 0x1101) {
             continue;
@@ -1203,11 +1208,13 @@ void attack_hit_check(void) {
         sh = sad->h_bod->body_dm[0];
         mh = sad->h_han->hand_dm[0];
         for (lp = 0; lp < 4; lp++, sh += 4, mh += 4) {
-            dmdat_adrs[lp] = sh;
-            dmdat_adrs[lp + 4] = mh;
+            slot = &dmdat_adrs[lp];
+            *slot = sh;
+            slot += 4;
+            *slot = mh;
         }
-        dmdat_adrs[8] = &sad->h_att->att_box[2][0];
-        dmdat_adrs[9] = &sad->h_att->att_box[3][0];
+        dmdat_adrs[8] = (s16*)sad->h_att + 8;
+        dmdat_adrs[9] = (s16*)sad->h_att + 12;
         dmdat_adrs[10] = &sad->h_hos->hos_box[0];
         for (mi = 0; mi < hpq_in; mi++) {
             if (mi == si) {
@@ -1245,14 +1252,16 @@ void attack_hit_check(void) {
             }
             mh = &mad->h_att->att_box[0][0];
             for (lp = 0; lp < 4; lp++, mh += 4) {
-                if (mh[1] == 0) {
+                sh = mh + 1;
+                if (*sh == 0) {
                     continue;
                 }
                 for (lp2 = 0; lp2 < 11; lp2++) {
                     if (lp2 > 3 && mad->att_hit_ok == 0) {
                         goto end;
                     }
-                    if (dmdat_adrs[lp2][1] == 0) {
+                    sh = dmdat_adrs[lp2];
+                    if (sh[1] == 0) {
                         continue;
                     }
                     if ((lp == 2 || lp == 3) && (lp2 == 8 || lp2 == 9)) {
@@ -1497,15 +1506,13 @@ void clear_hit_queue(void) {
 
 
 s32 change_damage_attribute(PLW* as, u16 atr, u16 ix) {
-    const s16* flame = &attr_flame_tbl[ix - 32];
-    const s16* freeze = &attr_freeze_tbl[ix - 32];
     switch (atr) {
     case 1:
         if (as->wu.work_id == 1 && as->player_number == PL_GILL && as->wu.rl_flag) {
-            ix = *freeze;
+            ix = attr_freeze_tbl[ix - 32];
             as->wu.at_attribute = 3;
         } else {
-            ix = *flame;
+            ix = attr_flame_tbl[ix - 32];
         }
         break;
     case 2:
@@ -1513,10 +1520,10 @@ s32 change_damage_attribute(PLW* as, u16 atr, u16 ix) {
         break;
     case 3:
         if (as->wu.work_id == 1 && as->player_number == PL_GILL && as->wu.rl_flag) {
-            ix = *flame;
+            ix = attr_flame_tbl[ix - 32];
             as->wu.at_attribute = 1;
         } else {
-            ix = *freeze;
+            ix = attr_freeze_tbl[ix - 32];
         }
         break;
     }

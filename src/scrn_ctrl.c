@@ -222,7 +222,8 @@ void screen_window_regs_update(void) {
     t = win1[3];
     *(u16*)(SS_REG + 0x1C) = t;
     *(u16*)(SS_REG + 0x1E) = t >> 8;
-    *(u16*)(SS_REG + 0x26) = screen_disp_ctrl & 7;
+    t = screen_disp_ctrl & 7;
+    *(u16*)(SS_REG + 0x26) = t;
     *(u16*)(SS_REG + 0x28) = Monitor_Flip ? 3 : 0;
 }
 
