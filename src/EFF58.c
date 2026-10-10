@@ -327,7 +327,6 @@ void EFF58_Type_02(WORK_Other* ewk) {
 
 void EFF58_Type_05(WORK_Other* ewk) {
     s16 x;
-    s32 pl;
     switch (ewk->wu.routine_no[2]) {
     case 0:
         ewk->wu.routine_no[2]++;
@@ -335,8 +334,7 @@ void EFF58_Type_05(WORK_Other* ewk) {
         ewk->wu.my_col_mode = 0x4200;
         ewk->wu.my_col_code = 0x2040;
         ewk->wu.my_family = 2;
-        pl = ewk->wu.dir_old;
-        ewk->wu.my_priority = plw[pl].wu.my_priority - 10;
+        ewk->wu.my_priority = plw[ewk->wu.dir_old].wu.my_priority - 10;
         ewk->wu.position_z = plw[ewk->wu.dir_old].wu.position_z - 10;
         ewk->wu.char_index = 26;
         ewk->wu.char_table[0] = sel_pl_char_table;

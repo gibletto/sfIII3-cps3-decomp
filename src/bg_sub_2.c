@@ -451,7 +451,7 @@ void scr_11_21(void) {
 
 
 void scr_11_22(void) {
-    s32 meri;
+    s16 meri;
     s16 meri2;
     meri = (satse[plw[1].player_number] - satse[plw[0].player_number]);
     meri >>= 1;
@@ -521,14 +521,14 @@ void scr_11_22_2(void) {
     meri >>= 1;
     meri2 = plw[0].wu.scr_mv_x + plw[1].wu.scr_mv_x;
     meri2 >>= 1;
-    meri2 += meri;
-    meri2 -= ideal_w.iw[0].disp.pos;
-    if (meri2 < 0) {
+    meri += meri2;
+    meri -= ideal_w.iw[0].disp.pos;
+    if (meri < 0) {
         if (plw[1].micchaku_flag != 1) {
-            x_left_check(meri2);
+            x_left_check(meri);
         }
     } else if (plw[0].micchaku_flag != 2) {
-        x_right_check(meri2);
+        x_right_check(meri);
     }
 }
 
@@ -542,14 +542,14 @@ void scr_12_21_2(void) {
     meri >>= 1;
     meri2 = plw[0].wu.scr_mv_x + plw[1].wu.scr_mv_x;
     meri2 >>= 1;
-    meri2 += meri;
-    meri2 -= ideal_w.iw[0].disp.pos;
-    if (meri2 < 0) {
+    meri += meri2;
+    meri -= ideal_w.iw[0].disp.pos;
+    if (meri < 0) {
         if (plw[0].micchaku_flag != 1) {
-            x_left_check(meri2);
+            x_left_check(meri);
         }
     } else if (plw[1].micchaku_flag != 2) {
-        x_right_check(meri2);
+        x_right_check(meri);
     }
 }
 
@@ -605,7 +605,7 @@ void bg_base_x_move_sub(void) {
     scr_x_mv_jp[(st_tbl[work0] << 4) + st_tbl[work1]]();
 }
 
-s32 remake_x_mvstep(s16 x) {
+static s32 remake_x_mvstep(s16 x) {
     return x * 80 / 100;
 }
 

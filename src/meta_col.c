@@ -50,24 +50,31 @@ void metamor_color_copy(s16 page) {
     u16* src;
     u16* src2;
     s16 i;
-    dst = (u16*)COLOR_RAM + (page == 1) * 0x400;
+    u16* base;
+    base = (u16*)COLOR_RAM;
+    dst = base;
+    dst += (page == 1) * 0x400;
     dst += 0x40;
     dst2 = dst + 0x200;
-    src = (u16*)COLOR_RAM + (!page) * 0x400;
+    src = base + (!page) * 0x400;
     src += 0x40;
     src2 = src + 0x200;
     for (i = 0; i < 0x180; i++) {
-        *dst++ = *src++;
-        *dst2++ = *src2++;
+        *dst = *src++;
+        dst++;
+        *dst2 = *src2++;
+        dst2++;
     }
 }
 
 
 
 void metamor_color_store(s16 pl) {
-    u16* src = (u16*)COLOR_RAM + (pl == 1) * 0x400;
+    u16* src;
     u16* src2;
     s16 i;
+    src = (u16*)COLOR_RAM;
+    src += (pl == 1) * 0x400;
     src += 0x40;
     src2 = src + 0x80;
     for (i = 0; i < 64; i++) {
@@ -86,8 +93,8 @@ void metamor_color_reset(s16 pl) {
     u16* dst4;
     s16 i;
     dst += 0x40;
-    dst2 += 0x40;
     dst3 = dst + 0x80;
+    dst2 += 0x40;
     dst4 = dst2 + 0x80;
     for (i = 0; i < 64; i++) {
         *dst++ = metamor_original[i];

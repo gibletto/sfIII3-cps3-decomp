@@ -43,8 +43,8 @@ void wipe_pattern_or_cols(s16 kind, s16 row) {
     y = 0;
     do {
         for (x = 0; x < wipe_column_tbl[kind].w; x++) {
-            code = src[x];
             p = dst;
+            code = src[x];
             p += code;
             *p |= map[code];
         }

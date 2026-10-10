@@ -34,9 +34,6 @@
 #include "bg_sub_5.h"
 #include "bg_sub.h"
 
-#pragma inline(remake_x_mvstep)
-
-s32 remake_x_mvstep(s16 x);
 
 
 

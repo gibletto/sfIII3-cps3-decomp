@@ -311,12 +311,14 @@ void effc2_parts_work_chain_check(s16 flag) {
     s16 bhf;
     s16 bf[4];
     s16 bh[4];
+    s32 type;
     if (wix == -1) {
         return;
     }
     while (wix != -1) {
         adr1 = (WORK*)frw[wix];
-        if (adr1->type == 4 || adr1->type == 5) {
+        type = adr1->type;
+        if (type == 4 || type == 5) {
             goto jump;
         }
         wix = adr1->behind;

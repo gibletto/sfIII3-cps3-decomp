@@ -173,10 +173,7 @@ void test_menu_init(void) {
     test_menu_no = 0;
     sound_driver_init();
     sound_reg_level_set(0, 0);
-    Debug_Menu_No = 0;
-    Debug_Select_No = 0;
-    Debug_R_No = 0;
-    bg_vbl_trans_flag = 0;
+    bg_vbl_trans_flag = Debug_R_No = Debug_Select_No = Debug_Menu_No = 0;
     tilemap_fill_all(0, 32);
     palette_write(0, (u16*)((u32)sys_palette), 256);
     switch (Country) {

@@ -28,7 +28,7 @@
 
 
 
-void grade_data_disp(void) {}
+static void grade_data_disp(void) {}
 
 
 

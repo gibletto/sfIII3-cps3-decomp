@@ -62,15 +62,21 @@ loop:
             goto two;
         }
     } else if (as->wu.kind_of_waza & 2) {
-        if (!(ds->wu.att.dipsw & 0x60) && !(ds->wu.kind_of_waza & 4)) {
-            if (ds->wu.kind_of_waza & 2) {
-                goto end;
+        if (!(ds->wu.att.dipsw & 0x60)) {
+            if (!(ds->wu.kind_of_waza & 4)) {
+                if (ds->wu.kind_of_waza & 2) {
+                    goto end;
+                }
+                goto two;
             }
-            goto two;
         }
-    } else if (!(as->wu.kind_of_waza & 6) && !(ds->wu.att.dipsw & 0x60) && !(ds->wu.kind_of_waza & 4)) {
-        if (!(ds->wu.kind_of_waza & 2)) {
-            goto end;
+    } else if (!(as->wu.kind_of_waza & 6)) {
+        if (!(ds->wu.att.dipsw & 0x60)) {
+            if (!(ds->wu.kind_of_waza & 4)) {
+                if (!(ds->wu.kind_of_waza & 2)) {
+                    goto end;
+                }
+            }
         }
     }
     hs[ix2].flag.results &= 0x1101;

@@ -22,6 +22,5 @@ void effL1_w_win_init(WORK_Other_CONN* ewk);
 s32 effect_L1_init(s16 flag);
 void effect_L1_move(WORK_Other_CONN* ewk);
 void effL1_trans(WORK* ewk);
-void grade_data_disp();
 
 #endif

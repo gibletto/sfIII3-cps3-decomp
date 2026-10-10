@@ -74,30 +74,29 @@ void effect_G6_move(WORK_Other* ewk) {
                 goto block_22;
             }
         }
-        if ((pcon_timer + ewk->wu.blink_timing) & ewk->wu.now_koc) {
-            break;
-        }
-        if (ewk->wu.dmcal_m & 0x20) {
-            if (!mwk->hit_stop) {
+        if (!((pcon_timer + ewk->wu.blink_timing) & ewk->wu.now_koc)) {
+            if (ewk->wu.dmcal_m & 0x20) {
+                if (!mwk->hit_stop) {
+                    er = ewk->wu.old_pos;
+                    mp = mwk->xyz;
+                    if ((er[0] == mp[0].disp.pos) && (er[1] == mp[1].disp.pos)) {
+                        goto block_22;
+                    }
+                }
+            } else {
                 er = ewk->wu.old_pos;
                 mp = mwk->xyz;
                 if ((er[0] == mp[0].disp.pos) && (er[1] == mp[1].disp.pos)) {
-                    goto block_22;
+                    break;
                 }
             }
-        } else {
-            er = ewk->wu.old_pos;
-            mp = mwk->xyz;
-            if ((er[0] == mp[0].disp.pos) && (er[1] == mp[1].disp.pos)) {
-                break;
-            }
+            ewk->wu.old_pos[0] = mwk->xyz[0].disp.pos;
+            ewk->wu.old_pos[1] = mwk->xyz[1].disp.pos;
+            ewk->wu.xyz[0].disp.pos = ewk->wu.old_pos[0] + ewk->wu.next_x;
+            ewk->wu.xyz[1].disp.pos = ewk->wu.old_pos[1] + ewk->wu.next_y;
+            ewk->wu.position_z = mwk->position_z;
+            effect_G9_init(&ewk->wu);
         }
-        ewk->wu.old_pos[0] = mwk->xyz[0].disp.pos;
-        ewk->wu.old_pos[1] = mwk->xyz[1].disp.pos;
-        ewk->wu.xyz[0].disp.pos = ewk->wu.old_pos[0] + ewk->wu.next_x;
-        ewk->wu.xyz[1].disp.pos = ewk->wu.old_pos[1] + ewk->wu.next_y;
-        ewk->wu.position_z = mwk->position_z;
-        effect_G9_init(&ewk->wu);
         break;
     case 2:
     default:

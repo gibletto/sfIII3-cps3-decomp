@@ -934,8 +934,6 @@ void op_108_move(void) {
 
 
 void op_109_move(void) {
-    const s16* lim = &op_109_tbl[op_w.r_no_2];
-    u8* seq = gSeqStatus;
     switch (op_w.r_no_2) {
     case 0:
         op_w.r_no_2 += 1;
@@ -948,7 +946,7 @@ void op_109_move(void) {
         effect_48_init(16);
         break;
     case 1:
-        if ((*seq >= *lim) && (*seq != 0x6D)) {
+        if ((*gSeqStatus >= op_109_tbl[op_w.r_no_2]) && (*gSeqStatus != 0x6D)) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 55;
@@ -958,7 +956,7 @@ void op_109_move(void) {
         }
         break;
     case 2:
-        if (*seq >= *lim) {
+        if (*gSeqStatus >= op_109_tbl[op_w.r_no_2]) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 56;
@@ -967,7 +965,7 @@ void op_109_move(void) {
         }
         break;
     case 3:
-        if (*seq >= *lim) {
+        if (*gSeqStatus >= op_109_tbl[op_w.r_no_2]) {
             op_w.r_no_2 += 1;
             op_scrn_end = 0;
             op_work_clear();
@@ -979,7 +977,7 @@ void op_109_move(void) {
         }
         break;
     case 4:
-        if (*seq >= *lim) {
+        if (*gSeqStatus >= op_109_tbl[op_w.r_no_2]) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 58;
@@ -997,8 +995,6 @@ void op_109_move(void) {
 
 
 void op_110_move(void) {
-    u8* seq = gSeqStatus;
-    const s16* lim = &op_110_tbl[op_w.r_no_2];
     switch (op_w.r_no_2) {
     case 0:
         op_w.r_no_2 += 1;
@@ -1009,7 +1005,7 @@ void op_110_move(void) {
         effect_48_init(2);
         break;
     case 1:
-        if ((*seq >= *lim) && (*seq != 0x6E)) {
+        if ((*gSeqStatus >= op_110_tbl[op_w.r_no_2]) && (*gSeqStatus != 0x6E)) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 60;
@@ -1019,7 +1015,7 @@ void op_110_move(void) {
         }
         break;
     case 2:
-        if (*seq >= *lim) {
+        if (*gSeqStatus >= op_110_tbl[op_w.r_no_2]) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 61;
@@ -1030,7 +1026,7 @@ void op_110_move(void) {
         }
         break;
     case 3:
-        if (*seq >= *lim) {
+        if (*gSeqStatus >= op_110_tbl[op_w.r_no_2]) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 62;
@@ -1040,7 +1036,7 @@ void op_110_move(void) {
         }
         break;
     case 4:
-        if (*seq >= *lim) {
+        if (*gSeqStatus >= op_110_tbl[op_w.r_no_2]) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 63;
@@ -1051,7 +1047,7 @@ void op_110_move(void) {
         }
         break;
     case 5:
-        if (*seq >= *lim) {
+        if (*gSeqStatus >= op_110_tbl[op_w.r_no_2]) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 64;
@@ -1240,7 +1236,6 @@ void op_112_move(void) {
 
 void op_113_move(void) {
     u8* seq = gSeqStatus;
-    const s16* lim = &op_113_tbl[op_w.r_no_2];
     switch (op_w.r_no_2) {
     case 0:
         op_w.r_no_2 += 1;
@@ -1255,7 +1250,7 @@ void op_113_move(void) {
         effect_48_init(20);
         break;
     case 1:
-        if ((*seq >= *lim) && (*seq != 0x71)) {
+        if ((*seq >= op_113_tbl[op_w.r_no_2]) && (*seq != 0x71)) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 80;
@@ -1265,7 +1260,7 @@ void op_113_move(void) {
         }
         break;
     case 2:
-        if (*seq >= *lim) {
+        if (*seq >= op_113_tbl[op_w.r_no_2]) {
             op_w.r_no_2 += 1;
             op_scrn_end = 0;
             op_work_clear();
@@ -1277,7 +1272,7 @@ void op_113_move(void) {
         }
         break;
     case 3:
-        if (*seq >= *lim) {
+        if (*seq >= op_113_tbl[op_w.r_no_2]) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 82;
@@ -1295,8 +1290,6 @@ void op_113_move(void) {
 
 
 void op_114_move(void) {
-    u8* seq = gSeqStatus;
-    const s16* lim = &op_114_tbl[op_w.r_no_2];
     switch (op_w.r_no_2) {
     case 0:
         op_w.r_no_2 += 1;
@@ -1307,7 +1300,7 @@ void op_114_move(void) {
         effect_48_init(5);
         break;
     case 1:
-        if ((*seq >= *lim) && (*seq != 0x72)) {
+        if ((*gSeqStatus >= op_114_tbl[op_w.r_no_2]) && (*gSeqStatus != 0x72)) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 84;
@@ -1317,7 +1310,7 @@ void op_114_move(void) {
         }
         break;
     case 2:
-        if (*seq >= *lim) {
+        if (*gSeqStatus >= op_114_tbl[op_w.r_no_2]) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 85;
@@ -1328,7 +1321,7 @@ void op_114_move(void) {
         }
         break;
     case 3:
-        if (*seq >= *lim) {
+        if (*gSeqStatus >= op_114_tbl[op_w.r_no_2]) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 86;
@@ -1338,7 +1331,7 @@ void op_114_move(void) {
         }
         break;
     case 4:
-        if (*seq >= *lim) {
+        if (*gSeqStatus >= op_114_tbl[op_w.r_no_2]) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 87;
@@ -1349,7 +1342,7 @@ void op_114_move(void) {
         }
         break;
     case 5:
-        if (*seq >= *lim) {
+        if (*gSeqStatus >= op_114_tbl[op_w.r_no_2]) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 88;
@@ -2740,7 +2733,11 @@ void common_end_init00(s16 pl_num) {
         ake_scrl_w[0].adrs = (u32)simmram_slot_addr(ake_scrl_w[0].handle);
         break;
     }
-    bg_w.pos_offset = (Game_setting.mode) ? 0xF8 : 0xC0;
+    if (Game_setting.mode) {
+        bg_w.pos_offset = 0xF8;
+    } else {
+        bg_w.pos_offset = 0xC0;
+    }
     base_y_pos = 40;
     for (i = 0; i < 7; i++) {
         bg_w.bgw[i].r_no_0 = 0;
@@ -2978,10 +2975,10 @@ void end_ake_cell_put(s8 map, s32 ofs, s32 cell, u32 src) {
     u16* s;
     s32 x;
     ofs += ake_scrl_w[map].adrs;
-    dst = (u16*)ofs;
+    cell = (cell << 10) + src;
     x = 0;
     x += bg_w.ake_cg_adr >> 7;
-    cell = (cell << 10) + src;
+    dst = (u16*)ofs;
     s = (u16*)cell;
     ((void(*)())blit_16x16_tile)(s, (u16)x, dst, 0x220);
 }

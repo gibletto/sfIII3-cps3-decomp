@@ -1004,12 +1004,12 @@ void Game_Manage_9th(void) {
             C_Timer = 75;
             sc_vram_to_ram();
             if (Play_Type != 1) {
-                if (Round_Operator[WINNER] && Battle_Q[WINNER]) {
-                    C_No0 = 10;
-                    break;
+                if (Round_Operator[WINNER]) {
+                    if (Battle_Q[WINNER]) {
+                        C_No0 = 10;
+                    }
                 }
             }
-            break;
         } else {
             C_No1++;
             C_Timer = 60;
@@ -1017,8 +1017,8 @@ void Game_Manage_9th(void) {
             sc_vram_to_ram();
             Stop_Combo = 1;
             BGM_Timer[1] = 1;
-            break;
         }
+        break;
     case 1:
         if (Scene_Cut) {
             C_Timer = 1;

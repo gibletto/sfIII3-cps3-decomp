@@ -1255,9 +1255,9 @@ s32 scsi_decode_sense_key(s32 status) {
         default:
             return -1;
         }
-    case 5:
-        return -1;
     case 7:
+        return -1;
+    case 5:
         return -1;
     case 3:
     case 4:

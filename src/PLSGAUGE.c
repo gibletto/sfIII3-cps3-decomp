@@ -158,8 +158,10 @@ void add_sp_arts_gauge_hit_dm(PLW* wk) {
             asag = 1;
         }
         asag = cal_sa_gauge_waribiki(wk, asag);
-        if (emwk->wu.operator == 0 && Break_Into_CPU == 1) {
-            asag = (asag * 120) / 100;
+        if (emwk->wu.operator == 0) {
+            if (Break_Into_CPU == 1) {
+                asag = (asag * 120) / 100;
+            }
         }
         add_super_arts_gauge(emwk->sa, emwk->wu.id, asag, emwk->metamorphose);
     }
@@ -427,8 +429,8 @@ s16 gauge_rank_value(s16 v) {
 /* provisional name */
 s32 short_to_bcd(s16 num) {
     u16 bcd = 0;
-    u16 div = 1000;
     u16 digit = 0x1000;
+    u16 div = 1000;
     s16 i;
     i = 0;
     goto test;

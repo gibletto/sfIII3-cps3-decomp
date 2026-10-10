@@ -787,8 +787,8 @@ void kotp_06000(WORK_Other* ewk, TAMA* twk) {
             emdir = caldir_pos_256(ewk->wu.xyz[0].disp.pos, ewk->wu.xyz[1].disp.pos, *target_x, *target_y);
             dir += (emdir - (dir - 0x80) & 0xFF) > 0x80 ? 4 : -4;
             dir = dir & 0xFF;
-            t = rate_256_table[dir][0];
-            t *= 480;
+            t = 480;
+            t *= rate_256_table[dir][0];
             ewk->wu.mvxy.a[0].sp = t / 256;
             ewk->wu.mvxy.a[0].sp *= ewk->wu.rl_flag ? 1 : -1;
             ewk->wu.mvxy.a[1].sp = (rate_256_table[dir][1] * 512) / 256;
@@ -1477,7 +1477,7 @@ void kotp_16000(WORK_Other* ewk, TAMA* twk) {
                 ewk->wu.hit_stop = 0;
             } else {
                 ewk->wu.hit_stop--;
-                break;
+                return;
             }
         } else {
             add_mvxy_speed(&ewk->wu);
@@ -1548,7 +1548,7 @@ void kotp_16000(WORK_Other* ewk, TAMA* twk) {
         }
         ewk->wu.hf.hit_flag = 0;
         ewk->wu.hit_quake = 0;
-        return;
+        break;
     case 2:
         switch (ewk->wu.routine_no[2]) {
         case 0:

@@ -47,7 +47,7 @@
 #include "EFF70.h"
 #include "EFFA3.h"
 #include "effa5.h"
-#include "effa5_input.h"
+#include "EFFA6.h"
 #include "sys_test.h"
 #include "sys_test_2.h"
 #include "sys_test_2b.h"
@@ -403,21 +403,20 @@ s32 Deley_Shot_Sub(s16 PL_id) {
     sw = sw & 0x3F0;
     switch (Deley_Shot_No[PL_id]) {
     case 0:
-        if (!(sw & 0x3F0)) {
-            break;
+        if (sw & 0x3F0) {
+            if (sw == 0x150) {
+                return lever | 0x150;
+            }
+            if (sw & 0x2A0) {
+                return sw | lever;
+            }
+            Color7[PL_id] = sw;
+            Deley_Shot_No[PL_id] = 1;
+            Deley_Shot_Timer[PL_id] = 3;
         }
-        if (sw == 0x150) {
-            return lever | 0x150;
-        }
-        if (sw & 0x2A0) {
-            return sw | lever;
-        }
-        Color7[PL_id] = sw;
-        Deley_Shot_No[PL_id] = 1;
-        Deley_Shot_Timer[PL_id] = 3;
         break;
     case 1:
-        Color7[PL_id] = Color7[PL_id] | sw;
+        Color7[PL_id] |= sw;
         if ((Deley_Shot_Timer[PL_id] -= 1) == 0) {
             return lever | Color7[PL_id];
         }
@@ -745,11 +744,11 @@ s32 Auto_Repeat_Sub_Wife(s16 pl) {
         if (sw & 1) {
             Auto_No[pl] = 1;
             Auto_Cursor[pl] = 1;
-        } else if (sw & 2) {
+        } else if (!(sw & 2)) {
+            break;
+        } else {
             Auto_No[pl] = 1;
             Auto_Cursor[pl] = 2;
-        } else {
-            break;
         }
         Auto_Timer[pl] = Auto_Repeat_Wife_Data[0];
         Auto_Index[pl] = 1;
@@ -801,7 +800,7 @@ u16 sw;
     }
     lever_sw = sw & 0xF;
     if (lever_sw == 0) {
-        sw = sw | Auto_Repeat_Sub_Wife(PL_id);
+        sw |= Auto_Repeat_Sub_Wife(PL_id);
     }
     if (sw & 2) {
         Sound_SE(ID + 96);

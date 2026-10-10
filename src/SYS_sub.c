@@ -432,14 +432,11 @@ u32 ranking_insert_all_four(s16 PL_id)
 
 /* provisional name */
 void rank_in_push_other(s16 dir_step, s16 PL_id) {
-    s8* p;
-    u32 other = PL_id ^ 1;
-    p = Rank_In[other];
-    if (Rank_In[PL_id][dir_step] > p[dir_step]) {
+    if (Rank_In[PL_id][dir_step] > Rank_In[PL_id ^ 1][dir_step]) {
         return;
     }
-    p[dir_step]++;
-    if (p[dir_step] > 4) {
+    Rank_In[PL_id ^ 1][dir_step]++;
+    if (Rank_In[PL_id ^ 1][dir_step] > 4) {
         Rank_In[PL_id ^ 1][dir_step] = -1;
     }
 }

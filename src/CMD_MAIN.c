@@ -2083,7 +2083,8 @@ void debug_rgb_editor_navigate(s16 mode) {
     u16 sw;
     s32 all;
     s16 i;
-    all = (sw = ~dbg_p2sw_1 & dbg_p2sw_0) & 0x200;
+    all = sw = ~dbg_p2sw_1 & dbg_p2sw_0;
+    all &= 0x200;
     if (mode != 1) {
         if (mode == 2) {
             if (dbg_p2sw_0 & 0x200) {
@@ -3831,7 +3832,7 @@ void debug_cg_number_browse(void) {
     long code;
     u16 group;
     debug_position_by_pad();
-    debug_flip_cycle(~dbg_p1sw_1 & dbg_p1sw_0);
+    debug_flip_cycle(dbg_p1sw_0 & ~dbg_p1sw_1);
     kind = debug_cg_bank_kind((s16)dbg_pl->wu.cg_number);
     moved = 0;
     if (dbg_p1sw_0 & 0x1000) {
@@ -4604,8 +4605,10 @@ void debug_parts_disp(void) {
             dbg_parts_plw[i].wu.position_x += dbg_parts_plw[i].wu.dir_step;
         }
         dbg_parts_plw[i].wu.position_y += dbg_parts_plw[i].wu.dir_timer;
-        if ((dbg_parts_plw[i].wu.dir_old & 4) && (plw[0].wu.cg_flip & 2)) {
-            dbg_parts_plw[i].wu.position_y -= dbg_parts_plw[i].wu.dir_timer * 2;
+        if (dbg_parts_plw[i].wu.dir_old & 4) {
+            if (plw[0].wu.cg_flip & 2) {
+                dbg_parts_plw[i].wu.position_y -= dbg_parts_plw[i].wu.dir_timer * 2;
+            }
         }
         if (dbg_parts_plw[i].wu.old_rno[1] == 2) {
             dbg_parts_plw[i].wu.position_z -= (i + 1) * 2;
@@ -4961,7 +4964,7 @@ s32 debug_hex4_to_bcd(s16 x) {
     s32 c;
     for (i = 0; i < 4; i++) {
         n = 0;
-        for (;;) {
+        while (1) {
             x -= div;
             if (x < 0) {
                 break;

@@ -129,20 +129,18 @@ void card_win_check(s16 vs_mode)
 
 /* provisional name */
 void card_msg_disp(void) {
-    SELPL* rec;
     if (!Card_Dispenser) {
         return;
     }
     if (Country != 6 && Country != 5) {
         return;
     }
-    rec = &card_pl_w[Winner_id];
-    switch (rec->card_state) {
+    switch (card_pl_w[Winner_id].card_state) {
     case 0:
         if (card_out_busy != 0 || card_empty_flag != -1) {
             break;
         }
-        rec->card_state++;
+        card_pl_w[Winner_id].card_state++;
         card_pl_w[Winner_id].blink = 0;
     case 1:
         switch (card_pl_w[Winner_id].blink & 31) {
@@ -163,12 +161,12 @@ void card_msg_disp(void) {
             return;
         }
     }
-    switch (rec->msg_state) {
+    switch (card_pl_w[Winner_id].msg_state) {
     case 0:
-        if (rec->flag == 0) {
+        if (card_pl_w[Winner_id].flag == 0) {
             break;
         }
-        rec->msg_state++;
+        card_pl_w[Winner_id].msg_state++;
         card_pl_w[Winner_id].msg_timer = -32;
         card_msg_cnt = -1;
     case 1:

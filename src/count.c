@@ -62,7 +62,7 @@ void count_cont_main(void) {
 
 void counter_control(void) {
     s32 hi;
-    s32 lo;
+    register s32 lo;
     if (Counter_hi == 0) {
         return;
     }
@@ -92,7 +92,8 @@ void counter_control(void) {
     *(s16*)&round_timer = Counter_hi;
     hi = (u16)Counter_hi;
     hi = hi / 10;
-    lo = Counter_hi - hi * 10;
+    lo = Counter_hi;
+    lo -= hi * 10;
     if (Counter_hi) {
         count_digit_trans(0, hi, lo);
     } else {

@@ -20,34 +20,31 @@ s16 bg_num;
 s16 tm;
 {
     MotionState ms;
-    MotionState* motion = &ms;
-    XY* c = bg_w.bgw[bg_num].chase_xy;
-    c[0].disp.low = c[1].disp.low = 0;
-    motion->timer = tm;
-    motion->timer2 = ((motion->timer * (motion->timer - 1)) / 2) + motion->timer;
-    motion->x.ps.h = chase_x - bg_w.bgw[bg_num].chase_xy[0].disp.pos;
-    motion->y.ps.h = chase_y - bg_w.bgw[bg_num].chase_xy[1].disp.pos;
-    motion->y.ps.l = 0;
-    motion->x.ps.l = 0;
-    if (!motion->timer) {
-        motion->amy = 0;
-        motion->amx = 0;
-        motion->dly = 0;
-        motion->spy = 0;
-        motion->dlx = 0;
-        motion->spx = 0;
+    bg_w.bgw[bg_num].chase_xy[0].disp.low = bg_w.bgw[bg_num].chase_xy[1].disp.low = 0;
+    ms.timer = tm;
+    ms.timer2 = ((ms.timer * (ms.timer - 1)) / 2) + ms.timer;
+    ms.x.ps.h = chase_x - bg_w.bgw[bg_num].chase_xy[0].disp.pos;
+    ms.y.ps.h = chase_y - bg_w.bgw[bg_num].chase_xy[1].disp.pos;
+    ms.y.ps.l = 0;
+    ms.x.ps.l = 0;
+    if (!ms.timer) {
+        ms.amy = 0;
+        ms.amx = 0;
+        ms.spy = ms.dly = 0;
+        ms.dlx = 0;
+        ms.spx = 0;
     } else {
-        motion->amx = motion->x.pl % motion->timer2;
-        motion->spx = motion->dlx = motion->x.pl / motion->timer2;
-        motion->amy = motion->y.pl % motion->timer2;
-        motion->spy = motion->dly = motion->y.pl / motion->timer2;
+        ms.amx = ms.x.pl % ms.timer2;
+        ms.spx = ms.dlx = ms.x.pl / ms.timer2;
+        ms.amy = ms.y.pl % ms.timer2;
+        ms.spy = ms.dly = ms.y.pl / ms.timer2;
     }
-    bg_mvxy.a[0].sp = motion->spx;
-    bg_mvxy.d[0].sp = motion->dlx;
-    bg_mvxy.a[1].sp = motion->spy;
-    bg_mvxy.d[1].sp = motion->dly;
-    bg_w.bgw[bg_num].chase_xy[0].cal += motion->amx;
-    bg_w.bgw[bg_num].chase_xy[1].cal += motion->amy;
+    bg_mvxy.a[0].sp = ms.spx;
+    bg_mvxy.d[0].sp = ms.dlx;
+    bg_mvxy.a[1].sp = ms.spy;
+    bg_mvxy.d[1].sp = ms.dly;
+    bg_w.bgw[bg_num].chase_xy[0].cal += ms.amx;
+    bg_w.bgw[bg_num].chase_xy[1].cal += ms.amy;
     bg_mvxy.kop[0] = bg_mvxy.kop[1] = 0;
 }
 

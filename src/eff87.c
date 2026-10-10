@@ -77,7 +77,8 @@ s32 effect_87_init(s16 type) {
     if (!lp_cnt) {
         return;
     }
-    for (data_ptr = scr_obj_data87[type][bg_w.compel_flag], i = 0; i < lp_cnt; i++) {
+    data_ptr = scr_obj_data87[type][bg_w.compel_flag];
+    for (i = 0; i < lp_cnt; i++) {
         if ((ix = pull_effect_work(4)) == -1) {
             return -1;
         }

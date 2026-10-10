@@ -139,7 +139,7 @@ s16 score_bunkai_G0(WORK_Other_CONN* ewk, u32 tsc) {
     s16 ixa[6];
     for (i = 5; i > 0; i--) {
         ixa[i] = tsc / suji_table_G0[i];
-        ixs[i] = tsc %= suji_table_G0[i];
+        ixs[i] = tsc = tsc % suji_table_G0[i];
     }
     ixa[i] = tsc;
     for (i = 0; i < 6; i++) {
@@ -147,10 +147,7 @@ s16 score_bunkai_G0(WORK_Other_CONN* ewk, u32 tsc) {
             noobjans = i + 1;
         }
     }
-    if (noobjans == 0) {
-        return 1;
-    }
-    return noobjans;
+    return noobjans == 0 ? 1 : noobjans;
 }
 
 

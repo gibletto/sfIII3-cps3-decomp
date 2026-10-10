@@ -1,0 +1,110 @@
+/*
+ * EFFF0_2.C  Effect F0 scroll helpers and init
+ */
+
+#include "structs.h"
+#include "work.h"
+#include "romdata.h"
+#include "extern.h"
+#include "sys_test.h"
+#include "sys_test_2.h"
+#include "sys_test_2b.h"
+#include "sys_test_2c.h"
+#include "sys_test_3.h"
+#include "sys_test_4.h"
+#include "sys_test_5.h"
+#include "EFFB6.h"
+#include "fifo.h"
+#include "EFFECT.h"
+#include "effect_2.h"
+#include "aboutspr.h"
+#include "textsound.h"
+#include "textsound_2.h"
+#include "textsound_3.h"
+#include "efff0.h"
+
+
+
+/* provisional name */
+void effF0_scroll_reset(WORK_Other* ewk) {
+    s16 i;
+    seraph_flag = 0;
+    if (!sa_pa_flag) {
+        Bg_Off_W(8);
+        for (i = 0; i < bg_w.scno; i++) {
+            Bg_On_W(1 << i);
+        }
+    }
+    ake_scrl_w[0].xy[0].cal = 0x2000000;
+    ake_scrl_w[0].xy[1].cal = 0;
+    ake_scrl_w[3].xy[0].cal = 0x2000000;
+    ake_scrl_w[3].xy[1].cal = 0;
+    ake_scrl_w[4].xy[0].cal = 0x2000000;
+    ake_scrl_w[4].xy[1].cal = 0;
+    ake_scrl_w[0].pos_x = ake_scrl_w[0].xy[0].disp.pos;
+    ake_scrl_w[0].pos_y = ake_scrl_w[0].xy[1].disp.pos;
+    ake_scrl_w[3].pos_x = ake_scrl_w[3].xy[0].disp.pos;
+    ake_scrl_w[3].pos_y = ake_scrl_w[3].xy[1].disp.pos;
+    ake_scrl_w[4].pos_x = ake_scrl_w[4].xy[0].disp.pos;
+    ake_scrl_w[4].pos_y = ake_scrl_w[4].xy[1].disp.pos;
+}
+
+
+
+/* provisional name */
+void effF0_scroll_set(WORK_Other* ewk) {
+    s32 x;
+    s32 y;
+    switch (another_bg[ewk->wu.type]) {
+    case 2:
+        ake_scrl_w[3].pos_x = ake_scrl_w[3].xy[0].disp.pos & 0x3FF;
+        ake_scrl_w[3].pos_x -= bg_w.pos_offset;
+        ake_scrl_w[3].pos_y = bg_w.bgw[1].wxy[1].disp.pos;
+        x = ake_scrl_w[3].pos_x;
+        y = ake_scrl_w[3].pos_y;
+        break;
+    case 3:
+        ake_scrl_w[3].pos_x = ake_scrl_w[3].xy[0].disp.pos & 0x3FF;
+        ake_scrl_w[3].pos_x -= bg_w.pos_offset;
+        ake_scrl_w[3].pos_y = bg_w.bgw[1].wxy[1].disp.pos;
+        x = ake_scrl_w[3].pos_x;
+        y = ake_scrl_w[3].pos_y;
+        y += 0x200;
+        break;
+    case 4:
+        ake_scrl_w[4].pos_x = bg_w.bgw[1].wxy[0].disp.pos;
+        ake_scrl_w[4].pos_x -= bg_w.pos_offset;
+        ake_scrl_w[4].pos_y = ake_scrl_w[4].xy[1].disp.pos & 0x3FF;
+        x = ake_scrl_w[4].pos_x;
+        y = ake_scrl_w[4].pos_y;
+        break;
+    default:
+        ake_scrl_w[0].pos_x = bg_w.bgw[1].wxy[0].disp.pos;
+        ake_scrl_w[0].pos_x -= bg_w.pos_offset;
+        ake_scrl_w[0].pos_y = ake_scrl_w[0].xy[1].disp.pos & 0x3FF;
+        x = ake_scrl_w[0].pos_x;
+        y = ake_scrl_w[0].pos_y;
+        break;
+    }
+    Scrn_Move_Set(3, x, y);
+    Family_Set_W(4, -x & 0x3FF, (0x300 - (y & 0x3FF)) & 0x3FF);
+}
+
+
+
+s32 effect_F0_init(WORK* wk) {
+    s16 ix;
+    WORK_Other* ewk;
+    s32 zero = 0;
+
+    ix = pull_effect_work(4);
+    if (ix == -1) {
+        return -1;
+    }
+    ewk = (WORK_Other*)frw[ix];
+    ewk->wu.id = 150;
+    another_bg[1] = another_bg[0] = another_bg[1] = zero;
+    another_bg_old[0] = zero;
+    effect_B6_init(ewk, zero);
+    return effect_B6_init(ewk, 1);
+}

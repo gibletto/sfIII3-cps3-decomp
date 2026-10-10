@@ -1762,8 +1762,8 @@ s32 comm_myhp(WORK* wk, CHAR_CMD* ctc) {
 
 s32 comm_emhp(WORK* wk, CHAR_CMD* ctc) {
     WORK* emwk = (WORK*)wk->target_adrs;
-    s16 num = 0;
     s32 cmpvital = (Max_vitality * ctc->ix) / 100;
+    s16 num = 0;
     switch (ctc->koc) {
     case 1:
         if (emwk->vital_new > cmpvital) {

@@ -149,7 +149,7 @@ void Main_Program(PLW* wk) {
 
 void Com_Initialize(PLW* wk) {
     const s16* xx;
-    s16 i;
+    register s16 i;
     CP_No[wk->wu.id][0] = 1;
     CP_No[wk->wu.id][1] = 0;
     CP_No[wk->wu.id][2] = 0;

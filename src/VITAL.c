@@ -99,10 +99,12 @@ s32 vital_control(s8 pl) {
     if (plw[pl].wu.vital_new > 0xA0) {
         return 0;
     }
-    if ((vit_bar[pl].cyerw == *(volatile s16*)&plw[pl].wu.vital_new) &&
-        (vit_bar[pl].cred == *(volatile s16*)&plw[pl].wu.vital_new) &&
-        (vit_bar[pl].ored != (*(volatile s16*)&plw[pl].wu.vital_new + 1))) {
-        return 0;
+    if (vit_bar[pl].cyerw == *(volatile s16*)&plw[pl].wu.vital_new) {
+        if (vit_bar[pl].cred == *(volatile s16*)&plw[pl].wu.vital_new) {
+            if (vit_bar[pl].ored != (*(volatile s16*)&plw[pl].wu.vital_new + 1)) {
+                return 0;
+            }
+        }
     }
     if (vit_bar[pl].cred < plw[pl].wu.vital_new) {
         vit_bar[pl].cred = plw[pl].wu.vital_new;

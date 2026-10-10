@@ -58,14 +58,13 @@ void effect_89_move(WORK_Other* ewk)
         attr = *ewk->wu.move_xy_table++;
         ewk->wu.dir_timer = *ewk->wu.move_xy_table++;
         eff89_cell_attr_set(ewk, attr);
-        if (--ewk->wu.dir_step != 0) {
-            break;
-        }
-        if (ewk->wu.dir_old) {
-            ewk->wu.dir_step = ewk->wu.vitality;
-            ewk->wu.move_xy_table = ewk->wu.step_xy_table;
-        } else {
-            ewk->wu.routine_no[0] = 2;
+        if (--ewk->wu.dir_step == 0) {
+            if (ewk->wu.dir_old) {
+                ewk->wu.dir_step = ewk->wu.vitality;
+                ewk->wu.move_xy_table = ewk->wu.step_xy_table;
+            } else {
+                ewk->wu.routine_no[0] = 2;
+            }
         }
         break;
     default:
@@ -86,13 +85,15 @@ void eff89_cell_attr_set(WORK_Other* ewk, s16 attr) {
     s16 w;
     cell = (SCR_CELL*)(ewk->wu.vital_new * 4 + (ewk->wu.vital_old << 8) + SS_RAM);
     row = cell;
-    for (h = ewk->wu.dmcal_m; h > 0; h--) {
+    h = ewk->wu.dmcal_m;
+    while (h > 0) {
         for (w = ewk->wu.dm_vital; w > 0; w--) {
             p = &cell->attr;
             *p = (*p & 1) | attr;
             cell++;
         }
         row += 64;
+        h--;
         cell = row;
     }
 }
