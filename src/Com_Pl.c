@@ -112,6 +112,13 @@
 s32 Check_Hamari(PLW* wk);
 
 
+const u16 Correct_Lv_Data[22] = {
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0x106, 0x16,
+    288, 0, 265, 0, 0, 0,
+};
+
+
 s32 CPU_Sub(PLW* wk) {
     WORK* em = (WORK*)wk->wu.target_adrs;
     if (Allow_a_battle_f == 0 || pcon_dp_flag == 1) {
@@ -1278,6 +1285,18 @@ s16 Decide_Exit_Catch(PLW* wk) {
 
 
 
+const u16 Rapid_Lever_Data[2] = {
+    8, 4,
+};
+
+/* Stored after Rapid_Lever_Data. Nothing in the program refers to it by name or address; if it is read,
+   it is through an index past the end of Rapid_Lever_Data. */
+const u8 Rapid_Lever_Data_tail[17] = {
+    0, 0, 0, 0, 9, 9, 37, 9, 9, 9, 9, 9, 9, 9, 9, 9,
+    9,
+};
+
+
 s32 Com_Rapid_Sub(PLW* wk, s16 Shot, s16* dir_step) {
     u16 xx;
     if (--Timer_00[wk->wu.id] == 0) {
@@ -1551,6 +1570,31 @@ void Setup_Bullet_Counter(PLW* wk) {
     Bullet_Counter[wk->wu.id] += random_32_com() & 1;
 }
 
+
+
+const u8 Pattern_Insurance_Data[21][4] = {
+    { 67, 157, 10, 3 },
+    { 69, 175, 9, 3 },
+    { 74, 132, 10, 3 },
+    { 71, 135, 10, 3 },
+    { 67, 141, 11, 3 },
+    { 66, 101, 10, 3 },
+    { 63, 146, 10, 3 },
+    { 75, 213, 11, 3 },
+    { 70, 213, 10, 3 },
+    { 100, 131, 10, 3 },
+    { 69, 137, 10, 3 },
+    { 89, 254, 13, 3 },
+    { 85, 230, 10, 3 },
+    { 80, 167, 11, 3 },
+    { 150, 252, 12, 3 },
+    { 148, 248, 12, 3 },
+    { 68, 163, 13, 3 },
+    { 69, 166, 13, 3 },
+    { 82, 181, 13, 3 },
+    { 108, 203, 13, 3 },
+    { 78, 175, 13, 3 },
+};
 
 
 void Pattern_Insurance(PLW* wk, s16 Kind_Of_Insurance, s16 Forced_Number) {

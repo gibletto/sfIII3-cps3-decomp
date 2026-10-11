@@ -159,9 +159,8 @@ void kill_tasks_by_func(void (*func)()) {
     s32 i;
     TCB* tp;
     for (i = 0; i < 8; i++) {
-        if (task_tbl[i].status) {
-            tp = &task_tbl[i];
-            if (tp->func == func && current_task != tp) {
+        if (task_tbl[i].status != 0) {
+            if ((tp = &task_tbl[i])->func == func && current_task != tp) {
                 task_tbl[i].status = 0;
                 task_free_count++;
             }

@@ -647,7 +647,7 @@ void eff09_11000(WORK_Other* ewk) {
             char_move(&ewk->wu);
             add_x_sub(ewk);
             ewk->wu.old_rno[0]--;
-            if (ewk->wu.old_rno[0] < 1) {
+            if (ewk->wu.old_rno[0] <= 0) {
                 ewk->wu.routine_no[1]++;
                 oya_ptr->cmwk[0] = 9;
             }
@@ -959,7 +959,10 @@ void eff09_18000(WORK_Other* ewk) {
         } else if (oya_ptr->xyz[0].disp.pos > bg_w.bgw[1].wxy[0].disp.pos) {
             ewk->wu.xyz[0].disp.pos = oya_ptr->xyz[0].disp.pos + 256;
         } else {
-            ewk->wu.xyz[0].disp.pos = bg_w.bgw[1].wxy[0].disp.pos + (bg_w.pos_offset + 32);
+            s16 pos = bg_w.pos_offset;
+            pos += bg_w.bgw[1].wxy[0].disp.pos;
+            pos += 32;
+            ewk->wu.xyz[0].disp.pos = pos;
         }
         ewk->wu.xyz[1].disp.pos = base_y_pos + 160;
         ewk->wu.old_rno[0] = 35;

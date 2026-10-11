@@ -275,19 +275,15 @@ zoom_check:
 /* provisional name */
 /* An earlier frame judgement on the two players' distance alone. */
 s32 zoom_frame_judge_dist(void) {
-    PLW* p1;
-    PLW* p2;
-    s16 left;
     s16 right;
+    s32 left;
     bg_w.frame_flag = 0;
-    p1 = &plw[0];
-    p2 = p1 + 1;
-    if (p1->wu.scr_mv_x < plw[1].wu.scr_mv_x) {
-        left = p1->wu.scr_mv_x;
-        right = p2->wu.scr_mv_x;
+    if (plw[0].wu.scr_mv_x < plw[1].wu.scr_mv_x) {
+        left = plw[0].wu.scr_mv_x;
+        right = plw[1].wu.scr_mv_x;
     } else {
-        left = p2->wu.scr_mv_x;
-        right = p1->wu.scr_mv_x;
+        left = plw[1].wu.scr_mv_x;
+        right = plw[0].wu.scr_mv_x;
     }
     right -= left;
     if (right > 304) {
@@ -1090,20 +1086,23 @@ void blit_16x16_xyflip(u16* src, s16 code, u16* dst, s16 attr) {
     u16 i;
     u16 j;
     s16 ix;
-    u16* s;
+    register u16* s;
     u16* d;
+    s32 q;
 
+    q = (s32)src - 0x440;
     for (i = 0; i < 16; i++) {
         d = dst;
         for (j = 0; j < 16; j++) {
-            ix = (15 - i) * 32;
+            ix = (32 - i * 2) * 32;
             ix += (15 - j) << 1;
-            s = src + ix;
+            s = (u16*)(q + ix * 2);
             *d++ = *s++ + code;
             *d = *s + attr;
             *d++ |= 0x1800;
         }
         dst += 0x80;
+        q += 0x40;
     }
 }
 
@@ -1703,10 +1702,9 @@ void akebono_initialize(void) {
 
 
 void bg_etc_write(s16 type) {
-    const BG_GFX* gfx;
-    s16 i;
     u8 mode;
-    const u16* col;
+    s16 i;
+    s16 j;
     Family_Init();
     clear_scroll_layer_state_and_mask();
     scrn_pos_clear();
@@ -1714,23 +1712,21 @@ void bg_etc_write(s16 type) {
     scr_cg_c_no = ((s16)simmram_block_alloc_10(((etc_bg_gfx_tbl[type].size << 4) + 0xFFF) / 0x1000, 1));
     bg_w.scroll_cg_adr = simmram_slot_to_offset(scr_cg_c_no);
     bg_w.scno = etc_bg_scno_tbl[type];
-    col = &etc_bg_color_tbl[type];
     switch (type) {
-    case 4:
-        load_any_color(*col);
-        load_any_color(40);
-        break;
     case 5:
     case 6:
         break;
+    case 4:
+        load_any_color(etc_bg_color_tbl[type]);
+        load_any_color(40);
+        break;
     default:
-        load_any_color(*col);
+        load_any_color(etc_bg_color_tbl[type]);
         break;
     }
-    gfx = &etc_bg_gfx_tbl[type];
-    polygon2d_submit_line(gfx->prep, 0, 0, 3);
-    mode = gfx->mode;
-    polygon2d_submit_line(gfx->src, bg_w.scroll_cg_adr, gfx->size, mode);
+    polygon2d_submit_line(etc_bg_gfx_tbl[type].prep, 0, 0, 3);
+    mode = etc_bg_gfx_tbl[type].mode;
+    polygon2d_submit_line(etc_bg_gfx_tbl[type].src, bg_w.scroll_cg_adr, etc_bg_gfx_tbl[type].size, mode);
     bg_w.pos_offset = Game_setting.mode ? 0xF8 : 0xC0;
     for (i = 0; i < 7; i++) {
         bg_w.bgw[i].pos_x_work = 0;
@@ -1772,30 +1768,26 @@ void bg_etc_write(s16 type) {
     bg_stop2 = 0;
     bg_w.max_x = 8;
     bg_zoom_x_pos = 0xC0;
-    bg_w.quake_x_index = 0;
-    bg_w.quake_y_index = 0;
-    for (i = 0; i < bg_w.scno; i++) {
-        scroll_layer_mask_disable(16 << i);
-        scroll_layer_mask_enable(1 << i);
-        scrn_attr_set(i, 0, 24);
-        scrn_reg_w[i].ctrl &= 0xFE7F;
-        bg_w.bgw[i].hos_xy[0].cal = bg_w.bgw[i].wxy[0].cal = bg_w.bgw[i].xy[0].cal = etc_bg_pos_tbl[type][i][0];
-        bg_w.bgw[i].hos_xy[1].cal = bg_w.bgw[i].wxy[1].cal = bg_w.bgw[i].xy[1].cal = etc_bg_pos_tbl[type][i][1];
-        bg_w.bgw[i].pos_y_work = bg_w.bgw[i].xy[1].disp.pos;
-        bg_w.bgw[i].old_pos_x = bg_w.bgw[i].pos_x_work = bg_w.bgw[i].xy[0].disp.pos;
-        bg_w.bgw[i].speed_x = etc_bg_speed_tbl[type][i][0];
-        bg_w.bgw[i].speed_y = etc_bg_speed_tbl[type][i][1];
-        bg_w.bgw[i].rewrite_flag = 0;
-        bg_w.bgw[i].zuubun = etc_bg_zuubun_tbl[type][i];
-        bg_w.bgw[i].frame_deff = 64;
-        bg_w.bgw[i].max_x_limit = bg_w.bgw[i].speed_x * bg_w.max_x;
+    bg_w.quake_y_index = bg_w.quake_x_index = 0;
+    for (j = 0; j < bg_w.scno; j++) {
+        scroll_layer_mask_disable(16 << j);
+        scroll_layer_mask_enable(1 << j);
+        scrn_attr_set(j, 0, 24);
+        scrn_reg_w[j].ctrl &= 0xFE7F;
+        bg_w.bgw[j].hos_xy[0].cal = bg_w.bgw[j].wxy[0].cal = bg_w.bgw[j].xy[0].cal = etc_bg_pos_tbl[type][j][0];
+        bg_w.bgw[j].hos_xy[1].cal = bg_w.bgw[j].wxy[1].cal = bg_w.bgw[j].xy[1].cal = etc_bg_pos_tbl[type][j][1];
+        bg_w.bgw[j].pos_y_work = bg_w.bgw[j].xy[1].disp.pos;
+        bg_w.bgw[j].old_pos_x = bg_w.bgw[j].pos_x_work = bg_w.bgw[j].xy[0].disp.pos;
+        bg_w.bgw[j].speed_x = etc_bg_speed_tbl[type][j][0];
+        bg_w.bgw[j].speed_y = etc_bg_speed_tbl[type][j][1];
+        bg_w.bgw[j].rewrite_flag = 0;
+        bg_w.bgw[j].zuubun = etc_bg_zuubun_tbl[type][j];
+        bg_w.bgw[j].frame_deff = 64;
+        bg_w.bgw[j].max_x_limit = bg_w.bgw[j].speed_x * bg_w.max_x;
     }
-    if (type == 1) {
-        if (Game_setting.mode) {
-            bg_w.bgw[0].xy[0].cal = 0x2000000;
-            bg_w.bgw[0].wxy[0].cal = 0x2000000;
-            bg_w.bgw[0].pos_x_work = 0x200;
-        }
+    if (type == 1 && Game_setting.mode) {
+        bg_w.bgw[0].wxy[0].cal = bg_w.bgw[0].xy[0].cal = 0x2000000;
+        bg_w.bgw[0].pos_x_work = 0x200;
     }
     base_y_pos = 40;
 }

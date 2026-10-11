@@ -211,25 +211,3 @@ const s8 pos_area_wide_tbl[692] = {
     65, 82, 69, 65, 32, 32, 61, 32,
     0, 0, 0, 0,
 };
-
-const JMP_TBL3 bg0402_jmp_tbl[1] = {
-    { { bg0001_init00, bg0000_demo, bg_base_move_common } },
-};
-
-const JMP_TBL3 bg0401_jmp_tbl[15] = {
-    { { bg0000_init00, bg0000_demo, bg_move_common } },
-    { { bg0101_init00, bg_move_common, bg0102_init00 } },
-    { { bg_base_move_common, bg0201_init00, bg_move_common } },
-    { { bg0202_init00, bg_base_move_common, bg020_sync_init } },
-    { { bg020_sync_move, bg0300_init00, bg_move_common } },
-    { { bg0301_init, bg_base_move_common, bg0401_init00 } },
-    { { bg0401_init01, bg_move_common, bg0402_init00 } },
-    { { bg0402_init01, bg_base_move_common, bg0501_init00 } },
-    { { bg_move_common, bg0502_init00, bg_base_move_common } },
-    { { bg050_sync_init, bg050_sync_move, bg1801_init00 } },
-    { { bg1801_move, bg1802_init00, bg1802_move } },
-    { { bg180_sync_init, bg180_sync_move, bg0601_init00 } },
-    { { bg_move_common, bg0602_init00, bg_base_move_common } },
-    { { bg0701_init00, bg0701_move00, bg0702_init00 } },
-    { { bg_base_move_common, bg0801_init00, bg_move_common } },
-};

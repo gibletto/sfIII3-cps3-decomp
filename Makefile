@@ -14,9 +14,12 @@ NOINLINE = Entry entry_2 SYS_sub sel_pl next_cpu game_config_jp game_config_en C
 OPT0 = family sys_test sys_test_2 sys_test_2a sys_test_2b sys_test_2c sys_test_3 sys_test_4 sys_test_5 \
 	coin_sw coin_sw_2 eeprom sys_config sys_config_2 sys_config_3 spr_pool spr_pool_2 simmram_slot \
 	poly_que spr_list cram_bank
+CONSTTBL = Com_Pl bg000 bg020 bg040 BG050 bg090 bg100 bg120 bg130 bg140 bg150 bg160 bg190 bonus_bg bns_bg2 \
+	end_1 end_7 end_8 end_9 end_11 end_12 end_16 end_18 end_19 end_20 EFF85 EFF86 efff5 effh5 effL3
 
 $(NOINLINE:%=obj/%.obj): OPT += -noinline
 $(OPT0:%=obj/%.obj): OPT = -optimize=0 -nospeed
+$(CONSTTBL:%=obj/%.obj): CFLAGS += -section=const=CTBL
 
 # the link order is sf3.sub's
 SRCS = $(wildcard src/*.c src/*.src data/*.c data/*.src lib/*.src)

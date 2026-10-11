@@ -15,10 +15,3 @@ const s8 effl2_dir_tbl[2][16] = {
     { 0, 0, 0, 1, 2, 2, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4 },
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3 },
 };
-
-/* Initial values of effl3_jp (effect_L3_move) in effL3.c. */
-const u32 effl3_jp_init[3] = {
-    (u32)effl3_0000,
-    (u32)effl3_0001,
-    (u32)effl3_0002,
-};

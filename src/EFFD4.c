@@ -121,7 +121,7 @@ void effect_D4_move(WORK_Other* ewk) {
 
 
 s32 distance2speed(WORK_Other* ewk, WORK* wk, s32 dir) {
-    s32 x, y;
+    register s32 x, y;
 
     x = y = 0;
     if (ewk->wu.xyz[0].disp.pos < wk->xyz[0].disp.pos) {

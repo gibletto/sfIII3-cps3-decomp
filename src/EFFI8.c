@@ -282,7 +282,6 @@ s16 y;
     s16 col;
     s16 row;
     s16 bit;
-    s32 dx;
     u16 dat;
     if (bg_w.stage == 10) {
         return 2;
@@ -297,18 +296,14 @@ s16 y;
     if (y > -8 || y < -24) {
         return 0;
     }
-    dx = x - 0x190;
-    col = dx / 64;
-    if (col > 4) {
+    if ((col = (x - 0x190) / 64) > 4) {
         col = 4;
     }
-    row = (y + 24) / 2;
-    if (row > 7) {
+    if ((row = (y + 24) / 2) > 7) {
         row = 7;
     }
     dat = cbm_table[row][col];
-    bit = dx % 64 / 4;
-    if (bit > 15) {
+    if ((bit = (x - 0x190) % 64 / 4) > 15) {
         bit = 15;
     }
     if ((dat << bit) & 0x8000) {

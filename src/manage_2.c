@@ -296,7 +296,7 @@ void Game_Manage_2_4(void) {
         C_No1 = 0;
         C_No2 = 0;
         Allow_a_battle_f = 1;
-        if (!Play_Type && !EM_id) {
+        if (!Play_Type && EM_id == 0) {
             if (!(Introduce_Boss[Player_id][1] & 0x80)) {
                 Introduce_Boss[Player_id][1] |= 0x80;
                 Check_Stage_BGM();
@@ -449,19 +449,16 @@ void Setup_Win_Mark(void) {
 
 void Update_BI_Term(void)
 {
-    s8 pl;
-
     if (Play_Type == 1) {
         return;
     }
-    pl = Winner_id;
-    if (plw[pl].sa_healing) {
-        Super_Arts_Finish[pl]++;
+    if (plw[Winner_id].sa_healing) {
+        Super_Arts_Finish[Winner_id]++;
         Stage_SA_Finish[Winner_id]++;
         return;
     }
-    if (plw[pl].wu.vitality == plw[pl].wu.vital_new) {
-        Perfect_Finish[pl]++;
+    if (plw[Winner_id].wu.vitality == plw[Winner_id].wu.vital_new) {
+        Perfect_Finish[Winner_id]++;
         Stage_Perfect_Finish[Winner_id]++;
         if (Round_Result & 0x980) {
             Super_Arts_Finish[Winner_id]++;
@@ -470,12 +467,12 @@ void Update_BI_Term(void)
         return;
     }
     if (Round_Result & 0x200) {
-        Cheap_Finish[pl]++;
+        Cheap_Finish[Winner_id]++;
         Stage_Cheap_Finish[Winner_id]++;
         return;
     }
     if (Round_Result & 0x980) {
-        Super_Arts_Finish[pl]++;
+        Super_Arts_Finish[Winner_id]++;
         Stage_SA_Finish[Winner_id]++;
     }
 }
@@ -1729,10 +1726,10 @@ void Disp_Win_Record_Sub(s16 PL_id) {
     }
     switch (Win_Record[PL_id]) {
     case 1:
-        tilemap_print_string_attr(zz, Text_Page_Y, 18, "WIN");
+        tilemap_print_string_attr(zz, Text_Page_Y, 18, Game_Manage_7_2_sub0_table);
         break;
     default:
-        tilemap_print_string_attr(zz, Text_Page_Y, 18, "WINS");
+        tilemap_print_string_attr(zz, Text_Page_Y, 18, Wins_msg);
         break;
     }
     First_Digit = 0;

@@ -36,7 +36,7 @@ void effect_C9_move(WORK_Other* ewk) {
     s16 scrc;
     switch (ewk->wu.routine_no[0]) {
     case 0:
-        ewk->wu.routine_no[0] = ewk->wu.routine_no[0] + 1;
+        ++ewk->wu.routine_no[0];
         ewk->wu.disp_flag = 1;
         scrc = get_center_position();
         ewk->wu.xyz[0].disp.pos = app_pos_hosei[ewk->wu.type][0] + scrc;
@@ -67,88 +67,89 @@ void effect_C9_move(WORK_Other* ewk) {
             ewk->wu.routine_no[0] = 2;
             break;
         }
-        if ((EXE_flag == 0) && (Game_pause == 0)) {
-            char_move(&ewk->wu);
-            switch (ewk->wu.routine_no[1]) {
-            case 0:
-                if (ewk->wu.charset_id == 7) {
-                    switch (ewk->wu.routine_no[2]) {
-                    case 0:
-                        ewk->wu.next_x -= 1;
-                        if (ewk->wu.next_x > 0) {
+        if (EXE_flag == 0) {
+            if (!Game_pause) {
+                char_move(&ewk->wu);
+                switch (ewk->wu.routine_no[1]) {
+                case 0:
+                    if (ewk->wu.charset_id == 7) {
+                        switch (ewk->wu.routine_no[2]) {
+                        case 0:
+                            ewk->wu.next_x -= 1;
+                            if (ewk->wu.next_x > 0) {
+                                break;
+                            }
+                            ewk->wu.routine_no[2] += 1;
+                        case 1:
+                            ewk->wu.mvxy.a[0].sp = efy_data[2];
+                            ewk->wu.mvxy.d[0].sp = efy_data[3];
+                            ewk->wu.mvxy.a[1].sp = efy_data[4];
+                            ewk->wu.mvxy.d[1].sp = efy_data[5];
+                            ewk->wu.mvxy.kop[0] = 2;
+                            ewk->wu.routine_no[2] += 1;
+                        case 2:
+                            add_mvxy_speed(&ewk->wu);
+                            cal_mvxy_speed(&ewk->wu);
+                            if (ewk->wu.xyz[1].disp.pos <= ewk->wu.next_y) {
+                                ewk->wu.routine_no[2] += 1;
+                                ewk->wu.xyz[1].disp.pos = ewk->wu.next_y;
+                                ewk->wu.mvxy.a[1].sp = ewk->wu.mvxy.d[1].sp = 0;
+                                ewk->wu.mvxy.kop[0] = 1;
+                                effect_03_init(&ewk->wu, 110);
+                                sound_effect_request[309](ewk, 309);
+                                char_move_z(&ewk->wu);
+                            }
+                            break;
+                        default:
+                            add_mvxy_speed(&ewk->wu);
+                            cal_mvxy_speed(&ewk->wu);
                             break;
                         }
-                        ewk->wu.routine_no[2] += 1;
-                    case 1:
-                        ewk->wu.mvxy.a[0].sp = efy_data[2];
-                        ewk->wu.mvxy.d[0].sp = efy_data[3];
-                        ewk->wu.mvxy.a[1].sp = efy_data[4];
-                        ewk->wu.mvxy.d[1].sp = efy_data[5];
-                        ewk->wu.mvxy.kop[0] = 2;
-                        ewk->wu.routine_no[2] += 1;
-                    case 2:
-                        add_mvxy_speed(&ewk->wu);
-                        cal_mvxy_speed(&ewk->wu);
-                        if (ewk->wu.xyz[1].disp.pos <= ewk->wu.next_y) {
-                            ewk->wu.routine_no[2] += 1;
-                            ewk->wu.xyz[1].disp.pos = ewk->wu.next_y;
-                            ewk->wu.mvxy.d[1].sp = 0;
-                            ewk->wu.mvxy.a[1].sp = 0;
-                            ewk->wu.mvxy.kop[0] = 1;
-                            effect_03_init(&ewk->wu, 110);
-                            sound_effect_request[309](ewk, 309);
-                            char_move_z(&ewk->wu);
-                        }
-                        break;
-                    default:
-                        add_mvxy_speed(&ewk->wu);
-                        cal_mvxy_speed(&ewk->wu);
-                        break;
                     }
-                }
-                if (Event_Judge_Gals) {
-                    ewk->wu.routine_no[1] += 1;
-                    set_char_move_init(&ewk->wu, 0, 1);
-                }
-                break;
-            case 1:
-                if (ewk->wu.cg_type == 0xFF) {
-                    ewk->wu.routine_no[1] += 1;
-                    set_char_move_init(&ewk->wu, 0, 2);
-                    effect_37_init(&ewk->wu, ewk->wu.charset_id, EJG_Index[ewk->wu.type]);
-                }
-                break;
-            case 2:
-                if (ewk->wu.cg_type == 0xFF) {
-                    ewk->wu.routine_no[1] += 1;
-                    Event_Judge_Gals -= 1;
-                }
-                break;
-            case 3:
-                if (Event_Judge_Gals < 0) {
-                    ewk->wu.routine_no[1] += 1;
-                }
-            case 4:
-                if (bg_w.stage == 8 && Round_num == 0) {
-                    ewk->wu.routine_no[1] += 1;
-                    ewk->wu.routine_no[2] = 0;
-                } else {
-                    ewk->wu.routine_no[1] += 9;
-                }
-                break;
-            case 5:
-                switch (ewk->wu.routine_no[2]) {
-                case 0:
+                    if (Event_Judge_Gals) {
+                        ewk->wu.routine_no[1] += 1;
+                        set_char_move_init(&ewk->wu, 0, 1);
+                    }
                     break;
                 case 1:
-                    add_mvxy_speed(&ewk->wu);
-                    cal_mvxy_speed(&ewk->wu);
-                    if (ewk->wu.mvxy.a[1].sp < -0x100000) {
-                        ewk->wu.mvxy.d[1].sp = 0;
+                    if (ewk->wu.cg_type == 0xFF) {
+                        ewk->wu.routine_no[1] += 1;
+                        set_char_move_init(&ewk->wu, 0, 2);
+                        effect_37_init(&ewk->wu, ewk->wu.charset_id, EJG_Index[ewk->wu.type]);
+                    }
+                    break;
+                case 2:
+                    if (ewk->wu.cg_type == 0xFF) {
+                        ewk->wu.routine_no[1] += 1;
+                        Event_Judge_Gals -= 1;
+                    }
+                    break;
+                case 3:
+                    if (Event_Judge_Gals < 0) {
+                        ewk->wu.routine_no[1] += 1;
+                    }
+                case 4:
+                    if (bg_w.stage == 8 && Round_num == 0) {
+                        ewk->wu.routine_no[1] += 1;
+                        ewk->wu.routine_no[2] = 0;
+                    } else {
+                        ewk->wu.routine_no[1] += 9;
+                    }
+                    break;
+                case 5:
+                    switch (ewk->wu.routine_no[2]) {
+                    case 0:
+                        break;
+                    case 1:
+                        add_mvxy_speed(&ewk->wu);
+                        cal_mvxy_speed(&ewk->wu);
+                        if (ewk->wu.mvxy.a[1].sp < -0x100000) {
+                            ewk->wu.mvxy.d[1].sp = 0;
+                        }
+                        break;
                     }
                     break;
                 }
-                break;
             }
         }
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;

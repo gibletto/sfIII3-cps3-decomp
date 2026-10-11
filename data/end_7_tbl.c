@@ -30,15 +30,3 @@ const s16 end_7_pos[4][2] = {
     { 768, 512 },
     { 256, 256 },
 };
-
-/* Initial values of end_800_jp (end_700_move), end_701_jp (end_701_move) in end_7.c. */
-const u32 end_7_local_init[8] = {
-    (u32)end_700_0000,
-    (u32)end_700_0000,
-    (u32)end_700_2000,
-    (u32)end_700_0000,
-    (u32)end_X_com01,
-    (u32)end_700_0000,
-    (u32)end_X_com01,
-    (u32)end_700_0000,
-};

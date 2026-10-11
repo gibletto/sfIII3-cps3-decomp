@@ -98,9 +98,11 @@ void eeprom_config_reset(void) {
         key = *(u8**)(table + ix * 4);
         ref = eeprom_game_cfg;
         name = game_cfg_default_tbl[ix];
-        if (config_bytes_equal(rec, key, 32) && config_bytes_equal(ref, name, 16)) {
-            eeprom_config_apply(eeprom_w);
-            return;
+        if (config_bytes_equal(rec, key, 32)) {
+            if (config_bytes_equal(ref, name, 16)) {
+                eeprom_config_apply(eeprom_w);
+                return;
+            }
         }
     }
     eeprom_error_halt();

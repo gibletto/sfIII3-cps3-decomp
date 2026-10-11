@@ -49,12 +49,3 @@ const s16 effH5_data_tbl[11][8] = {
     { 2, 32, 32, 512, 48, 80, 1, 3 },
     { 1, 32, 27, 143, 56, 81, 5, 0 },
 };
-
-/* Initial values of H5_Jmp_Tbl (effect_H5_move) in EFFH3.c. */
-const u32 H5_Jmp_Tbl_init[5] = {
-    (u32)effH5_0000,
-    (u32)effH5_0001,
-    (u32)effH5_0002,
-    (u32)effH5_0003,
-    (u32)effH5_0004,
-};

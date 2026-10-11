@@ -713,13 +713,13 @@ void bs2_get_parts_break(WORK* wk) {
 
 
 void setup_parts_break(WORK* wk) {
-    s32 vint;
     s16 i;
+    s32 vint;
     s16 j;
     s16 ix;
-    const s16* xp = ix_exchange;
-    for (i = 0; i < 8; i++) {
-        ix = *xp;
+    i = 0;
+    do {
+        ix = ix_exchange[i];
         vint = bs2_data_table[ix].vital;
         for (j = 0; j < 7; j++) {
             if (wk->shell_ix[ix] > (vint * pbl_select[ix][j]) / 100) {
@@ -727,8 +727,8 @@ void setup_parts_break(WORK* wk) {
             }
         }
         wk->cmwk[i] = j;
-        xp++;
-    }
+        i++;
+    } while (i < 8);
 }
 
 

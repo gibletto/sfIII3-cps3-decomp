@@ -433,15 +433,15 @@ void settle_type_20000(void) {
         plw[0].image_setup_flag = plw[1].image_setup_flag = 0;
         pcon_rno[2]++;
     case 1:
-        if (footwork_check(0) && footwork_check(1)) {
-            pcon_rno[2]++;
-            if (plw[0].wu.operator == 0) {
-                if (plw[0].player_number == PL_GILL) {
+        if (footwork_check(0)) {
+            if (footwork_check(1)) {
+                pcon_rno[2]++;
+                if (!plw[0].wu.operator && plw[0].player_number == PL_GILL) {
                     Gill_Pos_X = plw[0].wu.xyz[0].disp.pos;
                 }
-            }
-            if (!plw[1].wu.operator && plw[1].player_number == PL_GILL) {
-                Gill_Pos_X = plw[1].wu.xyz[0].disp.pos;
+                if (!plw[1].wu.operator && plw[1].player_number == PL_GILL) {
+                    Gill_Pos_X = plw[1].wu.xyz[0].disp.pos;
+                }
             }
         }
         break;
@@ -455,14 +455,15 @@ void settle_type_20000(void) {
         plw[Winner_id].wu.routine_no[2] = 40;
         plw[Loser_id].wu.routine_no[2] = 41;
         plw[0].wu.routine_no[3] = plw[1].wu.routine_no[3] = 0;
-        plw[0].wu.cg_type = plw[1].wu.cg_type = 0;
+        plw->wu.cg_type = plw[1].wu.cg_type = 0;
         pcon_rno[2]++;
         return;
     case 3:
-        if ((plw[0].wu.routine_no[3] == 9)) {
-            if ((plw[1].wu.routine_no[3] == 9)) {
-                pcon_rno[2]++;
-            }
+        if (plw[0].wu.routine_no[3] != 9) {
+            break;
+        }
+        if (plw[1].wu.routine_no[3] == 9) {
+            pcon_rno[2]++;
         }
         break;
     }

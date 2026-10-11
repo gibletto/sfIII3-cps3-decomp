@@ -28,12 +28,3 @@ const s16 end_1_pos[5][2] = {
     { 256, 256 },
     { 768, 240 },
 };
-
-/* Initial values of end_200_jp (end_100_move) in end_1.c. */
-void (*const end_200_jp_init[5])() = {
-    end_100_0000,
-    end_100_0001,
-    end_100_0002,
-    end_100_0002,
-    end_100_0004,
-};
