@@ -33,23 +33,18 @@ void wipe_pattern_or_cols(s16 kind, s16 row) {
     u8* src;
     u8* map;
     u16* dst;
-    u16* p;
     s16 x;
     s16 y;
-    u32 code;
-    src = wipe_column_tbl[kind].adr + wipe_column_tbl[kind].w * row;
-    map = wipe_set_pattern_tbl[kind].adr + row * 32;
+    src = wipe_column_tbl[kind].adr;
+    src += wipe_column_tbl[kind].w * row;
+    map = wipe_set_pattern_tbl[kind].adr;
+    map += row * 32;
     dst = (u16*)(SS_RAM + 0x8000);
-    y = 0;
-    do {
+    for (y = 0; y < 464; y++, dst += 32) {
         for (x = 0; x < wipe_column_tbl[kind].w; x++) {
-            p = dst;
-            code = src[x];
-            p += code;
-            *p |= map[code];
+            dst[src[x]] |= map[src[x]];
         }
-        dst += 32;
-    } while (++y < 464);
+    }
 }
 
 

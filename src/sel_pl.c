@@ -273,15 +273,11 @@ void Setup_EFF69(void) {
 
 
 void Setup_Face_Sub(void) {
-    s16 i = 0;
-    volatile s8* p = Face_Order_Data;
-
+    s16 i;
     Complete_Face = 19;
-    do {
-        effect_70_init(*p);
-        i++;
-        p++;
-    } while (i < 19);
+    for (i = 0; i < 19; i++) {
+        effect_70_init(Face_Order_Data[i]);
+    }
 }
 
 

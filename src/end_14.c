@@ -690,14 +690,15 @@ void end_e02_7000(void) {
 /* provisional name */
 void end_e00_cell_set(void) {
     s16 i;
-    for (i = 0; i < 16; i++) {
-        bg_cell_write(0, end_e00_bg0_cell_tbl[i].ofs, end_e00_bg0_cell_tbl[i].cell, (u32)end_e00_scrn_data, 0, 0x220);
+    const PANEL* p;
+    for (p = end_e00_bg0_cell_tbl, i = 0; i < 16; i++, p++) {
+        bg_cell_write(0, p->ofs, p->cell, (u32)end_e00_scrn_data, 0, 0x220);
     }
-    for (i = 0; i < 14; i++) {
-        end_ake_cell_put(0, end_e00_ake_cell_tbl[i].ofs, end_e00_ake_cell_tbl[i].cell, (u32)end_ake_scrn_data);
+    for (p = end_e00_ake_cell_tbl, i = 0; i < 14; i++, p++) {
+        end_ake_cell_put(0, p->ofs, p->cell, (u32)end_ake_scrn_data);
     }
-    for (i = 0; i < 8; i++) {
-        bg_cell_write(2, end_e00_bg2_cell_tbl[i].ofs, end_e00_bg2_cell_tbl[i].cell, (u32)end_e00_scrn_data, 0, 0x220);
+    for (p = end_e00_bg2_cell_tbl, i = 0; i < 8; i++, p++) {
+        bg_cell_write(2, p->ofs, p->cell, (u32)end_e00_scrn_data, 0, 0x220);
     }
     oh_opening_demo(bg_w.bgw[2].bg_address, 64, 32, 0x800, 32, 0x220, 23);
 }

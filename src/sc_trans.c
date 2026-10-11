@@ -1104,13 +1104,13 @@ s16 combo_pts_set(s8 PL, u32 pts) {
 /* provisional name */
 void combo_window_slide(s8 pl, s16 x, s16 y, s16 n) {
     u32* src = (u32*)(SS_RAM + ((y * 4 + pl * 2 + 30) << 8) + ((pl * 19) << 2));
-    u32* dst = (u32*)((SS_RAM + 0x700) + x * 4 + ((y * 3) << 8));
+    u32* dst = (u32*)(x * 4 + y * 0x300 + (SS_RAM + 0x700));
     s32 d;
     u16 i;
     d = (pl == 0) ? 1 : -1;
     for (i = 0; i < n + 1; i++) {
         dst[0] = src[0];
-        dst[0x40] = src[0x40];
+        *(u32*)((s32)dst + 0x100) = src[0x40];
         dst += d;
         src += d;
     }

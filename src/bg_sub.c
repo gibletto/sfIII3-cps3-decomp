@@ -154,10 +154,7 @@ void bg_test_stage_select(void) {
     }
     if (changed) {
         System_all_clear_Wait();
-        pcon_rno[3] = 0;
-        pcon_rno[2] = 0;
-        pcon_rno[1] = 0;
-        pcon_rno[0] = 0;
+        pcon_rno[0] = pcon_rno[1] = pcon_rno[2] = pcon_rno[3] = 0;
         save_27 = bg_test_flag;
         save_entry = bg_select_no;
         bg_work_clear();
