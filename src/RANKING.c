@@ -648,10 +648,10 @@ void Setup_Score_Obj(void) {
 void ranking_insert_present(s16 top, s16 PL_id);
 
 void Ranking_Init(void) {
-    s16 ix;
+    s16 ix = 0;
     const RANK_DATA* src = Rank_Default_Data;
     RANK_DATA* dst = Ranking_Data;
-    for (ix = 0; ix < 20; ix++) {
+    for (; ix < 20; ix++) {
         *dst = *src;
         src++;
         dst++;

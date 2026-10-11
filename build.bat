@@ -634,7 +634,7 @@ shc src\effe3.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortne
 if errorlevel 1 goto fail
 shc src\EFFE5.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\EFFE5.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\effe6.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -noinline -object=obj\effe6.obj >obj\shc.log 2>&1
+shc src\effe6.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -noinline -section=const=CTBL -object=obj\effe6.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\EFFE7.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\EFFE7.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
@@ -1382,8 +1382,6 @@ if errorlevel 1 goto fail
 shc data\effe3_tbl.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\effe3_tbl.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc data\EFFE5_tbl.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\EFFE5_tbl.obj >obj\shc.log 2>&1
-if errorlevel 1 goto fail
-shc data\effe6_tbl.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\effe6_tbl.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc data\effe9_tbl.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\effe9_tbl.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail

@@ -1894,7 +1894,6 @@ void bg0000_demo(void) {
                 bgw_ptr->wxy[0].disp.low = 0;
                 bgw_ptr->xy[0].cal = bgw_ptr->wxy[0].cal;
                 bgw_ptr->old_pos_x = 0x1D0;
-                break;
             }
         } else {
             bgw_ptr->wxy[0].cal -= bgw_ptr->speed_x;
@@ -1904,7 +1903,6 @@ void bg0000_demo(void) {
                 bgw_ptr->wxy[0].disp.low = 0;
                 bgw_ptr->xy[0].cal = bgw_ptr->wxy[0].cal;
                 bgw_ptr->old_pos_x = 0x1D0;
-                break;
             }
         }
         break;

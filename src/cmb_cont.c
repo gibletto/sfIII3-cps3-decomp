@@ -167,7 +167,8 @@ void combo_hit_count(s8 PL) {
         first_attack_pts_check(PL);
     }
     if (rever_attack[PLS] == 1) {
-        bonus_pts[PL]++;
+        s8 index = PL;
+        bonus_pts[index]++;
     }
     hit_combo_check(PL);
     combo_hensuu_clear(PL);

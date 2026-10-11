@@ -19,6 +19,6 @@ u32 simmram_slot_to_offset(s16 slot) {
 }
 
 /* provisional name */
-u32 simmram_slot_to_cg_no(s16 n) {
-    return (n + 0xFFFF) << 5;
+u16 simmram_slot_to_cg_no(s16 n) {
+    return (u16)(n - 1) * 0x20;
 }

@@ -25,14 +25,15 @@ void player_at_vs_player_dm(s16 ix2, s16 ix) {
     PLW* as = (PLW*)q_hit_push[ix2];
     PLW* ds = (PLW*)q_hit_push[ix];
     s8 gddir;
+    HS* hit;
 loop:
-    if (ix != hs[ix2].my_hit) {
+    if (hit = &hs[ix2], ix != hit->my_hit) {
         goto loop;
     }
-    if (!(hs[ix2].flag.results & 1)) {
+    if (!(hit->flag.results & 1)) {
         goto end;
     }
-    if (ix != hs[ix2].dm_me) {
+    if (ix != hit->dm_me) {
         goto end;
     }
     if (as->wu.att.dipsw & 0x40) {
@@ -42,48 +43,34 @@ loop:
         goto end;
     }
     if (as->wu.att.dipsw & 0x20) {
-        if (!(ds->wu.att.dipsw & 0x40)) {
-            if (ds->wu.att.dipsw & 0x20) {
-                goto end;
-            }
-            if (ds->wu.kind_of_waza & 4) {
-                goto end;
-            }
-            goto two;
-        }
-    } else if (as->wu.kind_of_waza & 4) {
-        if (!(ds->wu.att.dipsw & 0x40)) {
-            if (ds->wu.att.dipsw & 0x20) {
-                goto end;
-            }
-            if (ds->wu.kind_of_waza & 4) {
-                goto end;
-            }
-            goto two;
-        }
-    } else if (as->wu.kind_of_waza & 2) {
-        if (!(ds->wu.att.dipsw & 0x60)) {
-            if (!(ds->wu.kind_of_waza & 4)) {
-                if (ds->wu.kind_of_waza & 2) {
-                    goto end;
-                }
-                goto two;
-            }
-        }
-    } else if (!(as->wu.kind_of_waza & 6)) {
-        if (!(ds->wu.att.dipsw & 0x60)) {
-            if (!(ds->wu.kind_of_waza & 4)) {
-                if (!(ds->wu.kind_of_waza & 2)) {
-                    goto end;
-                }
-            }
-        }
+        if (ds->wu.att.dipsw & 0x40) goto own;
+        if (ds->wu.att.dipsw & 0x20) goto end;
+        if (ds->wu.kind_of_waza & 4) goto end;
+        goto two;
     }
-    hs[ix2].flag.results &= 0x1101;
+    if (as->wu.kind_of_waza & 4) {
+        if (ds->wu.att.dipsw & 0x40) goto own;
+        if (ds->wu.att.dipsw & 0x20) goto end;
+        if (ds->wu.kind_of_waza & 4) goto end;
+        goto two;
+    }
+    if (as->wu.kind_of_waza & 2) {
+        if (ds->wu.att.dipsw & 0x60) goto own;
+        if (ds->wu.kind_of_waza & 4) goto own;
+        if (ds->wu.kind_of_waza & 2) goto end;
+        goto two;
+    }
+    if (as->wu.kind_of_waza & 6) goto own;
+    if (ds->wu.att.dipsw & 0x60) goto own;
+    if (ds->wu.kind_of_waza & 4) goto own;
+    if (!(ds->wu.kind_of_waza & 2)) goto end;
+
+own:
+    hit->flag.results &= 0x1101;
     hs[ix].flag.results &= 0x1110;
     return;
 two:
-    hs[ix2].flag.results &= 0x1110;
+    hit->flag.results &= 0x1110;
     hs[ix].flag.results &= 0x1101;
 end:
     ds->dm_point = hs[ix].dm_body;

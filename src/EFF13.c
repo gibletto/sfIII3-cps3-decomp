@@ -746,26 +746,30 @@ void kotp_05000(WORK_Other* ewk, TAMA* twk) {
 }
 
 void kotp_06000(WORK_Other* ewk, TAMA* twk) {
+
     PLW* mwk;
     PLW* emwk;
     s16 dir;
     s16 emdir;
     s16* target_x;
     s16* target_y;
-    s32 t;
+
     mwk = (PLW*)ewk->my_master;
     emwk = (PLW*)mwk->wu.target_adrs;
     target_x = &ewk->wu.E3_work_index;
     target_y = &ewk->wu.E4_work_index;
+
     if (ewk->wu.hf.hit_flag) {
         ewk->wu.routine_no[1] = 1;
     }
+
     switch (ewk->wu.routine_no[1]) {
     case 0:
         if (ewk->wu.hit_stop) {
             ewk->wu.hit_stop--;
             break;
         }
+
         switch (ewk->wu.routine_no[3]) {
         case 0:
             ewk->wu.routine_no[3]++;
@@ -773,12 +777,16 @@ void kotp_06000(WORK_Other* ewk, TAMA* twk) {
             ewk->wu.direction = ewk->wu.rl_flag ? twk->data01 : 256 - twk->data01 & 0xFF;
             effect_I9_init(ewk, 2, 3, 0x77);
             break;
+
         case 1:
             if (ewk->wu.kow--) {
                 break;
             }
+
             ewk->wu.routine_no[3]++;
             ewk->wu.kow = 0x70;
+            /* fallthrough */
+
         case 2:
             *target_x = homing_empos_hos[0][ewk->master_player][0];
             *target_x = mwk->wu.rl_flag ? emwk->wu.xyz[0].disp.pos - *target_x : emwk->wu.xyz[0].disp.pos + *target_x;
@@ -787,22 +795,24 @@ void kotp_06000(WORK_Other* ewk, TAMA* twk) {
             emdir = caldir_pos_256(ewk->wu.xyz[0].disp.pos, ewk->wu.xyz[1].disp.pos, *target_x, *target_y);
             dir += (emdir - (dir - 0x80) & 0xFF) > 0x80 ? 4 : -4;
             dir = dir & 0xFF;
-            t = 480;
-            t *= rate_256_table[dir][0];
-            ewk->wu.mvxy.a[0].sp = t / 256;
+            ewk->wu.mvxy.a[0].sp = (rate_256_table[dir][0] * 480) / 256;
             ewk->wu.mvxy.a[0].sp *= ewk->wu.rl_flag ? 1 : -1;
             ewk->wu.mvxy.a[1].sp = (rate_256_table[dir][1] * 512) / 256;
             ewk->wu.direction = dir;
+
             if (ewk->wu.mvxy.a[0].sp < 0) {
                 ewk->wu.routine_no[3]++;
             } else if (!ewk->wu.kow--) {
                 ewk->wu.routine_no[3]++;
             }
+
             break;
         }
+
         add_mvxy_speed(&ewk->wu);
         cal_mvxy_speed(&ewk->wu);
         char_move(&ewk->wu);
+
         if ((ewk->wu.xyz[1].disp.pos + ewk->wu.cg_jphos) <= 0) {
             ewk->wu.mvxy.a[0].sp = 0;
             ewk->wu.mvxy.a[1].sp = 0;
@@ -812,8 +822,9 @@ void kotp_06000(WORK_Other* ewk, TAMA* twk) {
             ewk->wu.routine_no[1] = 2;
             ewk->wu.routine_no[2] = 1;
             ewk->wu.xyz[1].disp.pos = -ewk->wu.cg_jphos;
-            break;
+            return;
         }
+
         if (--ewk->wu.dir_timer < 0 || screen_range_check(&ewk->wu) != 0) {
             ewk->wu.mvxy.a[0].sp /= 4;
             ewk->wu.mvxy.a[1].sp /= 4;
@@ -821,10 +832,13 @@ void kotp_06000(WORK_Other* ewk, TAMA* twk) {
             ewk->wu.routine_no[1] = 2;
             ewk->wu.routine_no[2] = 0;
         }
+
         break;
+
     case 1:
         ewk->wu.vital_new -= ewk->wu.dm_vital;
         ewk->wu.dm_vital = 0;
+
         if (ewk->wu.vital_new < 256) {
             if (ewk->wu.hf.hit.player) {
                 if (ewk->wu.hf.hit.player & 0xF0) {
@@ -835,12 +849,14 @@ void kotp_06000(WORK_Other* ewk, TAMA* twk) {
             } else {
                 set_char_move_init(&ewk->wu, 0, twk->erex);
             }
+
             ewk->wu.routine_no[1] = 2;
             ewk->wu.routine_no[2] = 1;
             ewk->wu.kage_flag = 0;
             ewk->wu.hit_stop = 0;
         } else {
             ewk->wu.routine_no[1] = 0;
+
             if (ewk->wu.hf.hit.player) {
                 if (ewk->wu.hf.hit.player & 0xF0) {
                     effect_96_init(&ewk->wu, twk->erdf, ewk->wu.disp_flag, ewk->wu.hit_stop);
@@ -851,22 +867,29 @@ void kotp_06000(WORK_Other* ewk, TAMA* twk) {
                 effect_96_init(&ewk->wu, twk->erex, ewk->wu.disp_flag, ewk->wu.hit_stop);
             }
         }
+
         ewk->wu.hf.hit_flag = 0;
         ewk->wu.hit_quake = 0;
         break;
+
     case 2:
         switch (ewk->wu.routine_no[2]) {
         case 0:
             add_mvxy_speed(&ewk->wu);
             cal_mvxy_speed(&ewk->wu);
+            /* fallthrough */
+
         case 1:
             char_move(&ewk->wu);
+
             if (ewk->wu.cg_type == 0xFF) {
                 ewk->wu.disp_flag = 0;
                 ewk->wu.routine_no[0] = 2;
             }
+
             break;
         }
+
         break;
     }
 }

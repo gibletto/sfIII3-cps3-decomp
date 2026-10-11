@@ -2106,9 +2106,9 @@ void Control_Music_Fade(s16 time)
 
 
 void BGM_Fade_Sub(void) {
-    s8* v = &BGM_Fade_Level;
-    u8* p = &BGM_Timer[1];
-    switch (BGM_No[1]) {
+    u8* p;
+    s8* v;
+    switch (v = &BGM_Fade_Level, p = &BGM_Timer[1], BGM_No[1]) {
     case 1:
         if (--*p == 0) {
             BGM_No[1]++;

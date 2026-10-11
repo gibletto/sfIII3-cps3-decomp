@@ -1072,7 +1072,7 @@ s32 scsi_send_cdb_and_read(s32 lba, u8* buf) {
     delay_cycles(17);
     (*(volatile u16*)(CD_REG + 0x2)) = (lba & 0xFF00) >> 8;
     delay_cycles(17);
-    (*(volatile u16*)(CD_REG + 0x2)) = lba % 256U;
+    (*(volatile u16*)(CD_REG + 0x2)) = lba & 0xFF;
     delay_cycles(17);
     (*(volatile u16*)CD_REG) = 21;
     delay_cycles(17);
@@ -1122,18 +1122,18 @@ s32 scsi_send_cdb_and_read(s32 lba, u8* buf) {
         }
         (*(volatile u16*)CD_REG) = 23;
         delay_cycles(17);
-        phase = (s16)(*(volatile u16*)(CD_REG + 0x2)) % 256U;
+        phase = (*(volatile u16*)(CD_REG + 0x2)) & 0xFF;
         if (phase == 22) {
             break;
         }
         (*(volatile u16*)CD_REG) = 19;
         delay_cycles(17);
-        addr = ((*(volatile u16*)(CD_REG + 0x2)) % 256U) << 16;
-        addr |= ((*(volatile u16*)(CD_REG + 0x2)) % 256U) << 8;
-        addr |= (*(volatile u16*)(CD_REG + 0x2)) % 256U;
+        addr = ((*(volatile u16*)(CD_REG + 0x2)) & 0xFF) << 16;
+        addr |= ((*(volatile u16*)(CD_REG + 0x2)) & 0xFF) << 8;
+        addr |= (*(volatile u16*)(CD_REG + 0x2)) & 0xFF;
         (*(volatile u16*)CD_REG) = 16;
         delay_cycles(17);
-        msg = (s16)(*(volatile u16*)(CD_REG + 0x2)) % 256U;
+        msg = (*(volatile u16*)(CD_REG + 0x2)) & 0xFF;
         switch (phase) {
         case 75:
             (*(volatile u16*)CD_REG) = 16;
@@ -1156,7 +1156,7 @@ s32 scsi_send_cdb_and_read(s32 lba, u8* buf) {
             }
             while (((*(volatile u16*)CD_REG) & 0x80) == 0) {
             }
-            phase = (s16)(*(volatile u16*)(CD_REG + 0x2)) % 256U;
+            phase = (*(volatile u16*)(CD_REG + 0x2)) & 0xFF;
             if (phase == 128) {
                 (*(volatile u16*)CD_REG) = 16;
                 delay_cycles(17);
@@ -1182,7 +1182,7 @@ s32 scsi_send_cdb_and_read(s32 lba, u8* buf) {
             delay_cycles(17);
             (*(volatile u16*)(CD_REG + 0x2)) = (addr & 0xFF00) >> 8;
             delay_cycles(17);
-            (*(volatile u16*)(CD_REG + 0x2)) = addr % 256U;
+            (*(volatile u16*)(CD_REG + 0x2)) = addr & 0xFF;
             delay_cycles(17);
             break;
         default:
@@ -1201,7 +1201,7 @@ s32 scsi_send_cdb_and_read(s32 lba, u8* buf) {
         }
         (*(volatile u16*)CD_REG) = 23;
         delay_cycles(17);
-        phase = (s16)(*(volatile u16*)(CD_REG + 0x2)) % 256U;
+        phase = (*(volatile u16*)(CD_REG + 0x2)) & 0xFF;
         if (phase != 133) {
             (*(volatile u16*)CD_REG) = 15;
             delay_cycles(17);

@@ -28,8 +28,8 @@ u32 simmram_slot_addr(s16 slot) {
 
 
 /* provisional name */
-u32 simmram_slot_to_code(s16 n) {
-    return ((n + 0xFFFF) << 4) + 0x200;
+u16 simmram_slot_to_code(s16 n) {
+    return (u16)(n - 1) * 0x10 + 0x200;
 }
 
 
