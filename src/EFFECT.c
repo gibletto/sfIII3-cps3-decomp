@@ -158,13 +158,14 @@ s16 index;
     if (head_ix[index] == -1) {
         ixp = &head_ix[index];
         tail_ix[index] = qix;
+        *ixp = qix;
     } else {
         ixp = &tail_ix[index];
         wrk = (WORK*)frw[*ixp];
         wrk->behind = qix;
         tadr->before = *ixp;
+        *ixp = qix;
     }
-    *ixp = qix;
     tadr->timing = exec_tm[index];
     tadr->listix = index;
     return qix;

@@ -39,19 +39,3 @@ const s16 end_20_pos[6][2] = {
     { 768, 768 },
     { 256, 224 },
 };
-
-/* Initial values of end_900_jp (end_2000_move), end_2001_jp (end_2001_move) in end_20.c. */
-const u32 end_20_local_init[12] = {
-    (u32)end_2000_0000,
-    (u32)end_2000_0001,
-    (u32)end_2000_0002,
-    (u32)end_2000_0003,
-    (u32)end_2000_0002,
-    (u32)end_2000_0005,
-    (u32)end_2001_0000,
-    (u32)end_X_com01,
-    (u32)end_2001_0002,
-    (u32)end_2001_0003,
-    (u32)end_2001_0004,
-    (u32)end_2001_0005,
-};

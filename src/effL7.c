@@ -175,7 +175,10 @@ s32 effect_L7_init(WORK* wk) {
         if (wk->xyz[0].disp.pos > bg_w.bgw[1].wxy[0].disp.pos) {
             ewk->wu.xyz[0].disp.pos = wk->xyz[0].disp.pos + 256;
         } else {
-            ewk->wu.xyz[0].disp.pos = bg_w.bgw[1].wxy[0].disp.pos + (bg_w.pos_offset + 32);
+            s16 pos = bg_w.pos_offset;
+            pos += bg_w.bgw[1].wxy[0].disp.pos;
+            pos += 32;
+            ewk->wu.xyz[0].disp.pos = pos;
         }
         ewk->wu.old_rno[1] = wk->xyz[0].disp.pos + 32;
     }

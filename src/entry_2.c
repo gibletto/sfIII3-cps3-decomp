@@ -1326,8 +1326,7 @@ s16 PL_id;
                                   (s8*)msg_blank);
         return 0;
     }
-    timer = &F_Timer[PL_id];
-    switch (F_No0[PL_id]) {
+    switch (timer = &F_Timer[PL_id], F_No0[PL_id]) {
     case 0:
         F_No0[PL_id] += 1;
         F_No1[PL_id] = F_No2[PL_id] = 0;
@@ -1344,7 +1343,9 @@ s16 PL_id;
         if (Two_Coin_Start) {
             tilemap_print_string_attr(Entry_Mes_X[PL_id] + DE_X[Entry_Mes_Wide[PL_id]], Text_Page_Y, 18,
                                       (s8*)msg_insert_2coins);
-        } else if (coin_chute1_w.per_credit == 1) {
+            break;
+        }
+        if (coin_chute1_w.per_credit == 1) {
             tilemap_print_string_attr(Entry_Mes_X[PL_id] + DE_X[Entry_Mes_Wide[PL_id]], Text_Page_Y, 18,
                                       (s8*)msg_insert_coin);
         } else {
@@ -1356,7 +1357,7 @@ s16 PL_id;
         break;
     case 2:
         if (--*timer != 0) {
-            break;
+            return 0;
         }
         F_No0[PL_id] -= 1;
         F_Timer[PL_id] = 50;

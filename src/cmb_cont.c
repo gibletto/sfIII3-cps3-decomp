@@ -302,9 +302,10 @@ void hit_combo_check(s8 PL) {
                 }
                 combo_window_push(PL, 2);
                 return;
+            } else {
+                combo_window_push(PL, 1);
+                return;
             }
-            combo_window_push(PL, 1);
-            return;
         }
     }
     combo_window_push(PL, 0);

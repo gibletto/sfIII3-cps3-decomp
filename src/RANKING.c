@@ -259,7 +259,7 @@ void Ranking_01_1st(void) {
 
 void Ranking_01_2nd(void) {
     s16 Char_Index;
-    RANK_DATA* rd;
+    RANK_DATA *wp;
     D_No1++;
     D_Timer = 420;
     Rank_X = 0;
@@ -303,20 +303,20 @@ void Ranking_01_2nd(void) {
     effect_67_init(24, bg_w.bgw[0].xy[0].disp.pos + 504, bg_w.bgw[0].xy[1].disp.pos + 40, 180, 13, 35, 0, 0);
     effect_67_init(24, bg_w.bgw[0].xy[0].disp.pos + 240, bg_w.bgw[0].xy[1].disp.pos + 68, 180, 7, 30, 0, 0);
     base_y_pos = 40;
-    rd = Ranking_Data;
     switch (Rank_Type) {
     case 0:
-        if (rd[10].cpu_grade == 0xFF) {
+        wp = &Ranking_Data[10];
+        if (wp->cpu_grade == 0xFF) {
             Char_Index = 0;
         } else {
-            Char_Index = rd[10].cpu_grade;
+            Char_Index = wp->cpu_grade;
         }
         break;
     case 5:
-        if (rd[15].grade == 0xFF) {
+        if (Ranking_Data[15].grade == 0xFF) {
             Char_Index = 0;
         } else {
-            Char_Index = rd[15].grade;
+            Char_Index = Ranking_Data[15].grade;
         }
         break;
     }

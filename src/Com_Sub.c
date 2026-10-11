@@ -5624,7 +5624,7 @@ void Setup_Com_Max_Range(void) {
         limit = Lv18_Time_Data[type][Game_setting.level][16];
     }
     limit += 20;
-    xx = (type == 2 ? Lv18_Time_Data[type][8][14] : Lv18_Time_Data[type][8][16]) + 20;
+    xx = *(type == 2 ? &Lv18_Time_Data[type][8][14] : &Lv18_Time_Data[type][8][16]) + 20;
     if (limit < xx) {
         limit = xx;
     }

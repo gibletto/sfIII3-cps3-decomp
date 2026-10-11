@@ -44,19 +44,3 @@ const s16 efff5_data_tbl[22][6] = {
     { 10, 608, 408, 54, 91, 0 },
     { 11, 864, 120, 54, 92, 0 },
 };
-
-/* Initial values of efff5_jp (effect_F5_move) in efff5.c. */
-const u32 efff5_jp_init[12] = {
-    (u32)efff5_0000,
-    (u32)efff5_0001,
-    (u32)efff5_0002,
-    (u32)efff5_0003,
-    (u32)efff5_0004,
-    (u32)efff5_0005,
-    (u32)efff5_0006,
-    (u32)efff5_0007,
-    (u32)efff5_0008,
-    (u32)efff5_0009,
-    (u32)efff5_0010,
-    (u32)efff5_0011,
-};

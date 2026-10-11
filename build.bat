@@ -35,7 +35,7 @@ shc src\test_mode.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -no
 if errorlevel 1 goto fail
 shc src\scrn_ctrl.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\scrn_ctrl.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\Com_Pl.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\Com_Pl.obj >obj\shc.log 2>&1
+shc src\Com_Pl.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -section=const=CTBL -object=obj\Com_Pl.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\Com_Sub.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\Com_Sub.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
@@ -232,33 +232,33 @@ shc src\bg_sub.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortn
 if errorlevel 1 goto fail
 shc src\bg_sub_2.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\bg_sub_2.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\bg000.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\bg000.obj >obj\shc.log 2>&1
+shc src\bg000.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -section=const=CTBL -object=obj\bg000.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\bg020.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\bg020.obj >obj\shc.log 2>&1
+shc src\bg020.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -section=const=CTBL -object=obj\bg020.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\bg040.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\bg040.obj >obj\shc.log 2>&1
+shc src\bg040.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -section=const=CTBL -object=obj\bg040.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\BG050.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\BG050.obj >obj\shc.log 2>&1
+shc src\BG050.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -section=const=CTBL -object=obj\BG050.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\bg090.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\bg090.obj >obj\shc.log 2>&1
+shc src\bg090.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -section=const=CTBL -object=obj\bg090.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\bg100.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\bg100.obj >obj\shc.log 2>&1
+shc src\bg100.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -section=const=CTBL -object=obj\bg100.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\bg120.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\bg120.obj >obj\shc.log 2>&1
+shc src\bg120.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -section=const=CTBL -object=obj\bg120.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\bg130.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\bg130.obj >obj\shc.log 2>&1
+shc src\bg130.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -section=const=CTBL -object=obj\bg130.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\bg140.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\bg140.obj >obj\shc.log 2>&1
+shc src\bg140.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -section=const=CTBL -object=obj\bg140.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\bg150.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\bg150.obj >obj\shc.log 2>&1
+shc src\bg150.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -section=const=CTBL -object=obj\bg150.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\bg160.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\bg160.obj >obj\shc.log 2>&1
+shc src\bg160.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -section=const=CTBL -object=obj\bg160.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\bg190.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\bg190.obj >obj\shc.log 2>&1
+shc src\bg190.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -section=const=CTBL -object=obj\bg190.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\bonus_bg.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\bonus_bg.obj >obj\shc.log 2>&1
+shc src\bonus_bg.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -section=const=CTBL -object=obj\bonus_bg.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\bns_bg2.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\bns_bg2.obj >obj\shc.log 2>&1
+shc src\bns_bg2.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -section=const=CTBL -object=obj\bns_bg2.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\n_input.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\n_input.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
@@ -271,7 +271,7 @@ if errorlevel 1 goto fail
 if errorlevel 1 goto fail
 shc src\end_main.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -noinline -object=obj\end_main.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\end_1.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\end_1.obj >obj\shc.log 2>&1
+shc src\end_1.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -section=const=CTBL -object=obj\end_1.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\end_2.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\end_2.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
@@ -283,31 +283,31 @@ shc src\end_5.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortne
 if errorlevel 1 goto fail
 shc src\end_6.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\end_6.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\end_7.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\end_7.obj >obj\shc.log 2>&1
+shc src\end_7.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -section=const=CTBL -object=obj\end_7.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\end_8.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\end_8.obj >obj\shc.log 2>&1
+shc src\end_8.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -section=const=CTBL -object=obj\end_8.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\end_9.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\end_9.obj >obj\shc.log 2>&1
+shc src\end_9.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -section=const=CTBL -object=obj\end_9.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\end_10.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\end_10.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\end_11.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\end_11.obj >obj\shc.log 2>&1
+shc src\end_11.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -section=const=CTBL -object=obj\end_11.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\end_12.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\end_12.obj >obj\shc.log 2>&1
+shc src\end_12.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -section=const=CTBL -object=obj\end_12.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\end_13.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\end_13.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\end_14.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\end_14.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\end_16.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\end_16.obj >obj\shc.log 2>&1
+shc src\end_16.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -section=const=CTBL -object=obj\end_16.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\end_17.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\end_17.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\end_18.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\end_18.obj >obj\shc.log 2>&1
+shc src\end_18.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -section=const=CTBL -object=obj\end_18.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\end_19.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\end_19.obj >obj\shc.log 2>&1
+shc src\end_19.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -section=const=CTBL -object=obj\end_19.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\end_20.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\end_20.obj >obj\shc.log 2>&1
+shc src\end_20.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -section=const=CTBL -object=obj\end_20.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\end_sub.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\end_sub.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
@@ -508,9 +508,9 @@ shc src\EFF83.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortne
 if errorlevel 1 goto fail
 shc src\EFF84.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\EFF84.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\EFF85.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\EFF85.obj >obj\shc.log 2>&1
+shc src\EFF85.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -section=const=CTBL -object=obj\EFF85.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\EFF86.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\EFF86.obj >obj\shc.log 2>&1
+shc src\EFF86.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -section=const=CTBL -object=obj\EFF86.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\eff87.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\eff87.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
@@ -654,7 +654,7 @@ shc src\EFFF3.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortne
 if errorlevel 1 goto fail
 shc src\EFFF4.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\EFFF4.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\efff5.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\efff5.obj >obj\shc.log 2>&1
+shc src\efff5.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -section=const=CTBL -object=obj\efff5.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\efff6.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\efff6.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
@@ -690,7 +690,7 @@ shc src\EFFH3.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortne
 if errorlevel 1 goto fail
 shc src\effh4.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\effh4.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\effh5.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\effh5.obj >obj\shc.log 2>&1
+shc src\effh5.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -section=const=CTBL -object=obj\effh5.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\effh6_code.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\effh6_code.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
@@ -756,7 +756,7 @@ shc src\EFFL1.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortne
 if errorlevel 1 goto fail
 shc src\effL2.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\effL2.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\effL3.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\effL3.obj >obj\shc.log 2>&1
+shc src\effL3.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -section=const=CTBL -object=obj\effL3.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\EFFL4.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\EFFL4.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
@@ -1128,12 +1128,6 @@ if errorlevel 1 goto fail
 shc data\bg_data2.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\bg_data2.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc data\bg000_tbl3.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\bg000_tbl3.obj >obj\shc.log 2>&1
-if errorlevel 1 goto fail
-shc data\BG050_tbl.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\BG050_tbl.obj >obj\shc.log 2>&1
-if errorlevel 1 goto fail
-shc data\bg100_tbl.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\bg100_tbl.obj >obj\shc.log 2>&1
-if errorlevel 1 goto fail
-shc data\bg130_tbl.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\bg130_tbl.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc data\n_input_tbl.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\n_input_tbl.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail

@@ -26,8 +26,7 @@
 
 
 void bbbs_com_execute(PLW* wk) {
-    s16* rno = Bonus_Stage_RNO;
-    switch (rno[0]) {
+    switch (Bonus_Stage_RNO[0]) {
     case 0:
         if (Allow_a_battle_f == 0) {
             break;
@@ -46,13 +45,13 @@ void bbbs_com_execute(PLW* wk) {
         effect_H0_init(&wk->wu);
         break;
     case 1:
-        switch (rno[1]) {
+        switch (Bonus_Stage_RNO[1]) {
         case 0:
             if (wk->wu.routine_no[1] != 0) {
                 break;
             }
             if (wk->wu.routine_no[2] != 1 && (wk->wu.routine_no[2] < 36 || wk->wu.routine_no[2] > 38)) {
-                break;
+                return;
             }
             Bonus_Stage_Tix++;
             if (bbbs_table[bbbs_type][Bonus_Stage_Level][Bonus_Stage_Tix].timer == -1) {
@@ -63,23 +62,20 @@ void bbbs_com_execute(PLW* wk) {
             if ((wk->wu.dir_timer = bbbs_table[bbbs_type][Bonus_Stage_Level][Bonus_Stage_Tix].timer)) {
                 if (bbbs_table[bbbs_type][Bonus_Stage_Level][Bonus_Stage_Tix].kosuu) {
                     Bonus_Stage_RNO[1] = 1;
-                    break;
                 } else {
                     Bonus_Stage_RNO[1] = 5;
-                    break;
                 }
-            } else {
-                if (bbbs_table[bbbs_type][Bonus_Stage_Level][Bonus_Stage_Tix].kosuu) {
-                    Bonus_Stage_RNO[1] = 2;
-                    break;
-                } else {
-                    Bonus_Stage_RNO[1] = 6;
-                    break;
-                }
+                break;
             }
-            break;
+            if (bbbs_table[bbbs_type][Bonus_Stage_Level][Bonus_Stage_Tix].kosuu) {
+                Bonus_Stage_RNO[1] = 2;
+                break;
+            } else {
+                Bonus_Stage_RNO[1] = 6;
+                break;
+            }
         case 1:
-            if (--wk->wu.dir_timer < 1) {
+            if (--wk->wu.dir_timer <= 0) {
                 Bonus_Stage_RNO[1] = 2;
             }
             break;
@@ -113,7 +109,7 @@ void bbbs_com_execute(PLW* wk) {
             }
             break;
         case 6:
-            rno[0] = 2;
+            Bonus_Stage_RNO[0] = 2;
             Bonus_Stage_RNO[1] = 0;
         }
     case 2:

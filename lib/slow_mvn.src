@@ -279,4 +279,36 @@ sftrl_in_range_3:
           .DATA.W     H'4009
           .DATA.W     H'4009
           .DATA.W     H'4009
+          RTS
+          SHLR16      R0
+          SHLR2       R0
+          SHLR2       R0
+          SHLR2       R0
+          SHLR        R0
+          RTS
+          SHLR16      R0
+          SHLR2       R0
+          SHLR2       R0
+          SHLR8       R0
+          RTS
+          SHLR16      R0
+          SHLR2       R0
+          SHLR        R0
+          SHLR8       R0
+          RTS
+          SHLR16      R0
+          ROTL        R0
+          ROTL        R0
+          ROTL        R0
+          RTS
+          AND         #7,R0
+          ROTL        R0
+          ROTL        R0
+          RTS
+          AND         #3,R0
+          ROTL        R0
+          RTS
+          AND         #1,R0
+          SHAR        R0
+          SHAR        R0
           .END

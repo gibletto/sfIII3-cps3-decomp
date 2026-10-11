@@ -344,8 +344,6 @@ void op_102_move(void) {
 
 
 void op_103_move(void) {
-    u8* seq = gSeqStatus;
-    register const s16* lim = &op_103_tbl[op_w.r_no_2];
     switch (op_w.r_no_2) {
     case 0:
         op_w.r_no_2 += 1;
@@ -360,7 +358,7 @@ void op_103_move(void) {
         opening_bg_move_broadcast(5);
         break;
     case 1:
-        if ((*seq >= *lim) && (*seq != 0x67)) {
+        if ((*gSeqStatus >= op_103_tbl[op_w.r_no_2]) && (*gSeqStatus != 0x67)) {
             op_w.r_no_2 += 1;
             op_w.index = 6;
             op_work_clear();
@@ -375,7 +373,7 @@ void op_103_move(void) {
         }
         break;
     case 2:
-        if (*seq >= *lim) {
+        if (*gSeqStatus >= op_103_tbl[op_w.r_no_2]) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 7;
@@ -386,7 +384,7 @@ void op_103_move(void) {
         }
         break;
     case 3:
-        if (*seq >= *lim) {
+        if (*gSeqStatus >= op_103_tbl[op_w.r_no_2]) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 8;
@@ -398,7 +396,7 @@ void op_103_move(void) {
         }
         break;
     case 4:
-        if (*seq >= *lim) {
+        if (*gSeqStatus >= op_103_tbl[op_w.r_no_2]) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 9;
@@ -407,7 +405,7 @@ void op_103_move(void) {
         }
         break;
     case 5:
-        if (*seq >= *lim) {
+        if (*gSeqStatus >= op_103_tbl[op_w.r_no_2]) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 10;
@@ -416,7 +414,7 @@ void op_103_move(void) {
         }
         break;
     case 6:
-        if (*seq >= *lim) {
+        if (*gSeqStatus >= op_103_tbl[op_w.r_no_2]) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 11;
@@ -425,7 +423,7 @@ void op_103_move(void) {
         }
         break;
     case 7:
-        if (*seq >= *lim) {
+        if (*gSeqStatus >= op_103_tbl[op_w.r_no_2]) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 12;
@@ -436,7 +434,7 @@ void op_103_move(void) {
         }
         break;
     case 8:
-        if (*seq >= *lim) {
+        if (*gSeqStatus >= op_103_tbl[op_w.r_no_2]) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 13;
@@ -446,7 +444,7 @@ void op_103_move(void) {
         }
         break;
     case 9:
-        if (*seq >= *lim) {
+        if (*gSeqStatus >= op_103_tbl[op_w.r_no_2]) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 14;
@@ -457,7 +455,7 @@ void op_103_move(void) {
         }
         break;
     case 10:
-        if (*seq >= *lim) {
+        if (*gSeqStatus >= op_103_tbl[op_w.r_no_2]) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 15;
@@ -465,7 +463,7 @@ void op_103_move(void) {
         opening_bg_move_broadcast(14);
         break;
     case 11:
-        if (*seq >= *lim) {
+        if (*gSeqStatus >= op_103_tbl[op_w.r_no_2]) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 16;
@@ -1775,6 +1773,8 @@ void op_bg0_0004(s16 r_index) {
         bg_cell_write(0, 0x3040, 57, (u32)op_bg0_scrn_data, 0, 0x2C0);
         bg_cell_write(0, 0x3080, 57, (u32)op_bg0_scrn_data, 0, 0x2C0);
         break;
+    case 3:
+        break;
     case 1:
         if (!op_scrn_end) {
             break;
@@ -1793,8 +1793,6 @@ void op_bg0_0004(s16 r_index) {
                 oh_opening_demo(bgw_ptr->bg_address, 32, 32, 0x1800, 16, 0x2C0, op_bg0_0004_tbl[bgw_ptr->l_limit]);
             }
         }
-        break;
-    case 3:
         break;
     }
     opening_bgw_commit_pos(0);
@@ -2728,7 +2726,7 @@ void common_end_init00(s16 pl_num) {
         ake_cg_c_no = ((s16)simmram_block_alloc_10(blocks, 1));
         bg_w.ake_cg_adr = simmram_slot_to_offset(ake_cg_c_no);
         polygon2d_submit_line(gfx->prep, 0, 0, 3);
-        polygon2d_submit_line(gfx->src, bg_w.ake_cg_adr, gfx->size, 1);
+        polygon2d_submit_line(end_bg_gfx_tbl[3].src, bg_w.ake_cg_adr, gfx->size, 1);
         ake_scrl_w[0].handle = simmram_big_page_alloc_40(1);
         ake_scrl_w[0].adrs = (u32)simmram_slot_addr(ake_scrl_w[0].handle);
         break;
@@ -2971,15 +2969,17 @@ void Cut_Cut_Cut_dummy(void) {}
 
 
 void end_ake_cell_put(s8 map, s32 ofs, s32 cell, u32 src) {
-    u16* dst;
-    u16* s;
+    register u16* s;
     s32 x;
-    ofs += ake_scrl_w[map].adrs;
-    cell = (cell << 10) + src;
+    u16* dst;
+    u32 adrs;
+    adrs = ake_scrl_w[map].adrs;
+    ofs += adrs;
     x = 0;
-    x += bg_w.ake_cg_adr >> 7;
+    cell = (cell << 10) + src;
     dst = (u16*)ofs;
     s = (u16*)cell;
+    x += bg_w.ake_cg_adr >> 7;
     ((void(*)())blit_16x16_tile)(s, (u16)x, dst, 0x220);
 }
 

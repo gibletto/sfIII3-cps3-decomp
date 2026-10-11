@@ -45,28 +45,42 @@ void EFFK6_SLIDE_IN(WORK_Other* ewk) {
     if ((Order[ewk->wu.dir_old]) == 5) {
         ewk->wu.routine_no[0] = 5;
         ewk->wu.routine_no[1] = 0;
-        return;
-    }
-    switch (ewk->wu.routine_no[1]) {
-    case 0:
-        if (--Order_Timer[ewk->wu.dir_old]) {
+    } else {
+        switch (ewk->wu.routine_no[1]) {
+        case 0:
+            if (--Order_Timer[ewk->wu.dir_old]) {
+                break;
+            }
+            ewk->wu.routine_no[1]++;
+            ewk->wu.disp_flag = 1;
+            if (ewk->wu.dir_old == 27 || ewk->wu.dir_old == 28) {
+                xx = ID_of_Face[Cursor_Y[ewk->master_id]][Cursor_X[ewk->master_id]];
+            } else {
+                xx = ewk->wu.dir_step;
+            }
+            Setup_1st_PosK6(ewk, xx, Play_Type);
+            set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
             break;
-        }
-        ewk->wu.routine_no[1]++;
-        ewk->wu.disp_flag = 1;
-        if (ewk->wu.dir_old == 27 || ewk->wu.dir_old == 28) {
-            xx = ID_of_Face[Cursor_Y[ewk->master_id]][Cursor_X[ewk->master_id]];
-        } else {
-            xx = ewk->wu.dir_step;
-        }
-        Setup_1st_PosK6(ewk, xx, Play_Type);
-        set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
-        break;
-    default:
-        ewk->wu.xyz[0].cal += ewk->wu.mvxy.a[0].sp;
-        ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;
-        if (0 < ewk->wu.mvxy.a[0].sp) {
-            if (ewk->wu.hit_quake <= ewk->wu.xyz[0].disp.pos) {
+        default:
+            ewk->wu.xyz[0].cal += ewk->wu.mvxy.a[0].sp;
+            ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;
+            if (0 < ewk->wu.mvxy.a[0].sp) {
+                if (ewk->wu.hit_quake <= ewk->wu.xyz[0].disp.pos) {
+                    if (Order[ewk->wu.dir_old] == ewk->wu.routine_no[0]) {
+                        Order[ewk->wu.dir_old] = 0;
+                    }
+                    ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake;
+                    if (ewk->wu.dir_old < 31) {
+                        Order[ewk->wu.dir_old] = 4;
+                        ewk->wu.routine_no[0] = 4;
+                        ewk->wu.routine_no[6] = 0;
+                        break;
+                    }
+                    ewk->wu.routine_no[0] = 0;
+                }
+                break;
+            }
+            if (ewk->wu.hit_quake >= ewk->wu.xyz[0].disp.pos) {
                 if (Order[ewk->wu.dir_old] == ewk->wu.routine_no[0]) {
                     Order[ewk->wu.dir_old] = 0;
                 }
@@ -81,20 +95,6 @@ void EFFK6_SLIDE_IN(WORK_Other* ewk) {
             }
             break;
         }
-        if (ewk->wu.hit_quake >= ewk->wu.xyz[0].disp.pos) {
-            if (Order[ewk->wu.dir_old] == ewk->wu.routine_no[0]) {
-                Order[ewk->wu.dir_old] = 0;
-            }
-            ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake;
-            if (ewk->wu.dir_old < 31) {
-                Order[ewk->wu.dir_old] = 4;
-                ewk->wu.routine_no[0] = 4;
-                ewk->wu.routine_no[6] = 0;
-                break;
-            }
-            ewk->wu.routine_no[0] = 0;
-        }
-        break;
     }
 }
 

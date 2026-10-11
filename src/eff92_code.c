@@ -55,10 +55,11 @@ void effect_92_move(WORK_Other* ewk) {
     default:
         if (--ewk->wu.dir_timer != 0) {
             return;
+        } else {
+            win_mark_new[ewk->master_id] = 1;
+            push_effect_work((WORK*)ewk);
+            break;
         }
-        win_mark_new[ewk->master_id] = 1;
-        push_effect_work((WORK*)ewk);
-        break;
     }
 }
 

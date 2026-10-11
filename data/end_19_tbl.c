@@ -27,13 +27,3 @@ const s16 end_19_pos[6][2] = {
     { 256, 256 },
     { 256, 256 },
 };
-
-/* Initial values of end_1900_move_jp (end_1900_move) in end_19.c. */
-const u32 end_1900_move_jp_init[6] = {
-    (u32)end_1900_0,
-    (u32)end_1900_common,
-    (u32)end_1900_common,
-    (u32)end_1900_common,
-    (u32)end_1900_common,
-    (u32)end_1900_common,
-};

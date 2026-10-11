@@ -71,11 +71,10 @@ void metamor_color_copy(s16 page) {
 
 void metamor_color_store(s16 pl) {
     u16* src;
-    u16* src2;
     s16 i;
-    src = (u16*)COLOR_RAM;
-    src += (pl == 1) * 0x400;
-    src += 0x40;
+    u16* src2;
+    src = (u16*)COLOR_RAM + (pl == 1) * 0x400;
+    src = src + 0x40;
     src2 = src + 0x80;
     for (i = 0; i < 64; i++) {
         metamor_original[i] = *src++;

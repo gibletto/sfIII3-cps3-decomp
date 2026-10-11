@@ -30,12 +30,3 @@ const s16 timer_b_tbl[7] = {
 const s16 end_b_pos[7][2] = {
     { 256, 0 }, { 256, 768 }, { 768, 0 }, { 768, 768 }, { 256, 512 }, { 768, 512 }, { 768, 512 },
 };
-
-/* Stored after end_b_pos. Nothing in the program refers to it by name or address; if it is read,
-   it is through an index past the end of end_b_pos. */
-void (*const end_b_pos_tail[14])() = {
-    end_b00_0000,  end_b00_1000,  end_b00_0000,  end_b00_3000,  /* 0 */
-    end_b00_0000,  end_b00_0000,  end_b00_0000,  end_b01_0000,  /* 4 */
-    end_X_com01,   end_b01_0000,  end_b01_3000,  end_X_com01,  /* 8 */
-    end_X_com01,   end_X_com01,  /* 12 */
-};

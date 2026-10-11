@@ -128,8 +128,10 @@ u32 memtest_pattern_masked_word(volatile u16* addr, u32 size) {
         *p = 0xAAAA;
         got = *p;
         *p = save;
-        if ((got & 0x7FFF) != 0x2AAA && got != 0xAAAA) {
-            return (u32)p;
+        if ((got & 0x7FFF) != 0x2AAA) {
+            if (got != 0xAAAA) {
+                return (u32)p;
+            }
         }
         *p = 0x5555;
         got = *p;

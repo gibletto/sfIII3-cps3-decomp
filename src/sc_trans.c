@@ -845,7 +845,8 @@ void win_mark_ram_clear(void) {
     u8* dst = &sc_chr_ram[0x200];
     s32 blank = 0xBDC0;
     for (i = 0; i < 8; i++) {
-        sc_trans_src = (u8*)((u32)sc_chr_data + blank);
+        u32 src = (u32)sc_chr_data;
+        sc_trans_src = (u8*)(src + blank);
         sc_bak_ptr = dst;
         sc_chr_to_ram(64);
         dst += 64;
