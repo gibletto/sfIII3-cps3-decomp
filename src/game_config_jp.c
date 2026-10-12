@@ -61,7 +61,9 @@
 /* provisional name */
 void game_config_init_jp(void) {
     s8 n;
-
+    char *wk;
+    register int n2;
+    char *wk1;
     Config_No_2++;
     Config_Exit_jp = 0;
     tilemap_fill_all(0, 32);
@@ -70,10 +72,12 @@ void game_config_init_jp(void) {
     tilemap_chunk_copy_16b((s16*)(SS_RAM + 0x8000), (char*)jp_menu_font_cg, 0x200);
     tilemap_chunk_copy_16b((s16*)(SS_RAM + 0xCD00), (char*)config_jp_chr_0, 4);
     tilemap_chunk_copy_16b((s16*)(SS_RAM + 0xCB00), (char*)config_jp_chr_1, 4);
-    tilemap_chunk_copy_16b((s16*)(SS_RAM + 0xCA00), (char*)jp_menu_cg_2, 4);
+    wk = (char*)jp_menu_cg_2;
+    tilemap_chunk_copy_16b((s16*)(SS_RAM + 0xCA00), wk, 4);
     tilemap_chunk_copy_16b((s16*)(SS_RAM + 0x8200), (char*)jp_menu_cg_3, 4);
     tilemap_chunk_copy_16b((s16*)(SS_RAM + 0x9B00), (char*)jp_menu_cg_4, 4);
-    tilemap_chunk_copy_16b((s16*)(SS_RAM + 0x9C00), (char*)jp_menu_cg_5, 4);
+    wk1 = (char*)jp_menu_cg_5;
+    tilemap_chunk_copy_16b((s16*)(SS_RAM + 0x9C00), wk1, 4);
     tilemap_fill_all(0, 0x1200);
     tilemap_print_script_seq(0, 0, 0xFFFF, (TMSCRIPT*)gcfg_title_scr_jp);
     Config_Attr_jp = 2;

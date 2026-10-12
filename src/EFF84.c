@@ -84,12 +84,13 @@ void effect_84_move(WORK_Other* ewk) {
         case 1:
             if ((ewk->wu.dir_timer -= 1) != 0) {
                 break;
+            } else {
+                eff84_message_clear();
+                dead_voice_request();
+                request_message = 0;
+                Game_pause = 0;
+                ewk->wu.routine_no[0] = ewk->wu.routine_no[1] = 0;
             }
-            eff84_message_clear();
-            dead_voice_request();
-            request_message = 0;
-            Game_pause = 0;
-            ewk->wu.routine_no[0] = ewk->wu.routine_no[1] = 0;
             break;
         }
         break;

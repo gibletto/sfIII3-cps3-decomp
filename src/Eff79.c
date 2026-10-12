@@ -169,11 +169,12 @@ void effect_79_move(WORK_Other* ewk) {
             arrived[1] = EFF79_Move_Y(ewk);
             if (arrived[0] == 0 || arrived[1] == 0) {
                 break;
+            } else {
+                ewk->wu.routine_no[0] = 10;
+                ewk->wu.disp_flag = 0;
+                Extra_Counter[ewk->master_id]--;
+                return;
             }
-            ewk->wu.routine_no[0] = 10;
-            ewk->wu.disp_flag = 0;
-            Extra_Counter[ewk->master_id]--;
-            return;
         default:
             break;
         }

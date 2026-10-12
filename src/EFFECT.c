@@ -331,10 +331,17 @@ void work_init_copy(s32* src, s32* dst, s16 size) {
 
 void write_my_shell_ix(WORK* wk, s16 ix) {
     s32 i;
-    for (i = 7; i > 0; i--) {
-        wk->shell_ix[i] = wk->shell_ix[i - 1];
+    register u16 wk2;
+    register WORK *wp;
+    wk2 = 7;
+    if ((i = wk2) >= 1) {
+        do {
+            *(i + wk->shell_ix) = (s16)wk->shell_ix[(i - 1)];
+            i--;
+        } while (((0 < i)));
     }
-    wk->shell_ix[0] = ix;
+    wp = wk;
+    wp->shell_ix[0] = ix;
 }
 
 

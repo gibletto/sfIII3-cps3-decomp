@@ -238,45 +238,89 @@ static u16 b8_sel_1_by_8(void) {
 
 
 
-s32 effect_B8_init(s8 WIN_PL_NO, s16 timer) {
-    PLW* wk;
-    WORK_Other_CONN* ewk;
-    s16 ix;
-    u16 mes_no;
+s32 effect_B8_init(s8 WIN_PL_NO, s16 timer)
+{
+    PLW *wk;
+    WORK_Other_CONN *ewk;
+    s16 work_index;
+    u16 message;
+
     test_in = 0;
     wk = &plw[WIN_PL_NO];
-    if ((ix = pull_effect_work(4)) == -1) {
+    work_index = pull_effect_work(4);
+    if (work_index == -1) {
         return -1;
     }
-    ewk = (WORK_Other_CONN*)frw[ix];
+    ewk = (WORK_Other_CONN *)frw[work_index];
     ewk->wu.routine_no[0] = 0;
     wk_set(ewk);
     mes_timer = timer;
-    ewk->my_master = (u32*)wk;
+    ewk->my_master = (u32 *)wk;
     ewk->master_work_id = wk->wu.work_id;
     ewk->master_id = wk->wu.id;
     ewk->master_player = My_char[wk->wu.id];
     test_pl_no = My_char[wk->wu.id];
+
     if (((random_16_com() >> 3) & 1) == 0) {
         if (Country == 1) {
-            mes_no = My_char[wk->wu.id ^ 1];
-            if (mes_no >= 15) {
-                mes_no--;
+            message = My_char[wk->wu.id ^ 1];
+            if (message >= 15) {
+                message--;
             }
-            if (old_mes_no_pl == mes_no) {
-                mes_no = b8_sel_1_by_8();
-            } else {
+            if (old_mes_no_pl == message) {
+                message = (random_16_com() >> 1) & 7;
+                old_mes_no2 &= 7;
+                old_mes_no3 &= 7;
+                if (old_mes_no2 == message) {
+                    message = (message + 1) & 7;
+                }
+                if (old_mes_no3 == message) {
+                    message = (message + 1) & 7;
+                    if (old_mes_no2 == message) {
+                        message = (message + 1) & 7;
+                    }
+                }
+                old_mes_no3 = old_mes_no2;
+                old_mes_no2 = message;
+                message += 20;
             }
-            old_mes_no_pl = mes_no;
+            old_mes_no_pl = message;
         } else {
-            mes_no = b8_sel_1_by_8();
+            message = (random_16_com() >> 1) & 7;
+            old_mes_no2 &= 7;
+            old_mes_no3 &= 7;
+            if (old_mes_no2 == message) {
+                message = (message + 1) & 7;
+            }
+            if (old_mes_no3 == message) {
+                message = (message + 1) & 7;
+                if (old_mes_no2 == message) {
+                    message = (message + 1) & 7;
+                }
+            }
+            old_mes_no3 = old_mes_no2;
+            old_mes_no2 = message;
+            message += 20;
         }
-        mes_already = mes_no;
     } else {
-        mes_no = b8_sel_1_by_8();
-        mes_already = mes_no;
+        message = (random_16_com() >> 1) & 7;
+        old_mes_no2 &= 7;
+        old_mes_no3 &= 7;
+        if (old_mes_no2 == message) {
+            message = (message + 1) & 7;
+        }
+        if (old_mes_no3 == message) {
+            message = (message + 1) & 7;
+            if (old_mes_no2 == message) {
+                message = (message + 1) & 7;
+            }
+        }
+        old_mes_no3 = old_mes_no2;
+        old_mes_no2 = message;
+        message += 20;
     }
-    test_mes_no = mes_no;
+    mes_already = message;
+    test_mes_no = message;
     return 0;
 }
 

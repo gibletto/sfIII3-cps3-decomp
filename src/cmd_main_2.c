@@ -101,25 +101,34 @@ void cmd_data_set(PLW* _p0, s16 i) {
 
 
 void cmd_init(PLW* pl) {
+    WORK *wp;
+    s16 i2;
     s16 i;
     s16 j;
     s32* ptr;
+    wp = &pl->wu;
     cmd_id = pl->wu.id;
-    pl->cp = &wcp[cmd_id];
+    (*pl).cp = &wcp[cmd_id];
+    i = 0;
     ptr = (s32*)&waza_work[cmd_id][0];
-    for (i = 0; i < 56; i++) {
+    while (i < 56) {
         for (j = 0; j < 6; j++) {
             *ptr++ = 0;
         }
+        i++;
     }
-    for (i = 0; i < 56; i++) {
-        (&wcp[cmd_id].waza_flag[0])[i] = 0;
-        for (j = 0; j < 4; ) {
-            (&wcp[cmd_id].waza_r[i][0])[j] = 0;
-            j++;
-            (&wcp[cmd_id].waza_r[i][0])[j] = 0;
+    i2 = 0;
+    for (;;) {
+        (&wcp[cmd_id].waza_flag[0])[i2] =0;
+        j = 0;
+        while (j < 4) {
+            (&wcp[cmd_id].waza_r[i2][0])[j] = 0;
+            j = j + 1;
+            (&wcp[cmd_id].waza_r[i2][0])[j] = 0;
             j++;
         }
+        i2 = i2 + 1;
+        if (i2 >= 56) break;
     }
     waza_compel_all_init(pl);
 }

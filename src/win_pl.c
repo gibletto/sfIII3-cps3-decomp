@@ -1306,14 +1306,25 @@ s32 win_select(PLW* wk, s16 num) {
 }
 
 
-void bonus_game_win_pause(PLW* wk) {
+void bonus_game_win_pause(wk)
+PLW *wk;
+{
     bg_app_stop = 1;
-    if (set_field_hosei_flag(&plw[1], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
-        set_field_hosei_flag(&plw[1], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
+    if (set_field_hosei_flag(&plw[1],
+                             bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset,
+                             1)) {
+        set_field_hosei_flag(&plw[1],
+                             bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset,
+                             0);
     }
-    if (set_field_hosei_flag(&plw[0], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
-        set_field_hosei_flag(&plw[0], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
+    if (set_field_hosei_flag(&plw[0],
+                             bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset,
+                             1)) {
+        set_field_hosei_flag(&plw[0],
+                             bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset,
+                             0);
     }
+
     switch (wk->wu.routine_no[3]) {
     case 0:
         wk->wu.routine_no[3]++;
@@ -1325,39 +1336,38 @@ void bonus_game_win_pause(PLW* wk) {
                 } else {
                     set_char_move_init(&wk->wu, 9, 65);
                 }
-                break;
-            }
-            wk->wu.routine_no[3] = 99;
-            break;
-        }
-        if (wk->wu.operator) {
-            if (Bonus_Game_result == 20 || Bonus_Game_ex_result == 20) {
-                set_char_move_init(&wk->wu, 9, 65);
-                break;
-            }
-            if (Bonus_Game_result > 10) {
-                set_char_move_init(&wk->wu, 9, 66);
             } else {
-                set_char_move_init(&wk->wu, 9, 67);
+                wk->wu.routine_no[3] = 99;
             }
-            break;
-        }
-        if (Bonus_Game_result == 20 || Bonus_Game_ex_result == 20) {
-            win_rno[0] = 1;
-            if (wk->wu.rl_flag) {
-                wk->wu.mvxy.a[0].sp = 0x20000;
+        } else {
+            if (wk->wu.operator) {
+                if (Bonus_Game_result == 20 || Bonus_Game_ex_result == 20) {
+                    set_char_move_init(&wk->wu, 9, 65);
+                } else if (Bonus_Game_result > 10) {
+                    set_char_move_init(&wk->wu, 9, 66);
+                } else {
+                    set_char_move_init(&wk->wu, 9, 67);
+                }
             } else {
-                wk->wu.mvxy.a[0].sp = -0x20000;
+                if (Bonus_Game_result == 20 || Bonus_Game_ex_result == 20) {
+                    win_rno[0] = 1;
+                    if (wk->wu.rl_flag) {
+                        wk->wu.mvxy.a[0].sp = 0x20000;
+                    } else {
+                        wk->wu.mvxy.a[0].sp = -0x20000;
+                    }
+                    wk->wu.mvxy.d[0].sp = 0;
+                    wk->wu.mvxy.a[1].sp = 0x80000;
+                    wk->wu.mvxy.d[1].sp = -0x6000;
+                    win_rno[0] = 0;
+                    set_char_move_init(&wk->wu, 9, 66);
+                } else {
+                    set_char_move_init(&wk->wu, 9, 52);
+                }
             }
-            wk->wu.mvxy.d[0].sp = 0;
-            wk->wu.mvxy.a[1].sp = 0x80000;
-            wk->wu.mvxy.d[1].sp = -0x6000;
-            win_rno[0] = 0;
-            set_char_move_init(&wk->wu, 9, 66);
-            break;
         }
-        set_char_move_init(&wk->wu, 9, 52);
         break;
+
     case 1:
     case 9:
         char_move(&wk->wu);

@@ -1618,26 +1618,27 @@ u32 Setup_Final_Score(s16 Type) {
             xx = 99999900;
         }
         return xx;
+    } else {
+        switch (Bonus_Game_result) {
+        case 2:
+            xx = 30000;
+            break;
+        case 3:
+            xx = 50000;
+            break;
+        default:
+            xx = 0;
+            break;
+        }
+        Bonus_Score = xx;
+        xx += Counter_hi * 1000;
+        Bonus_Score_Plus = xx;
+        xx += Score[Player_id][0];
+        if (xx >= 99999900) {
+            xx = 99999900;
+        }
+        return xx;
     }
-    switch (Bonus_Game_result) {
-    case 2:
-        xx = 30000;
-        break;
-    case 3:
-        xx = 50000;
-        break;
-    default:
-        xx = 0;
-        break;
-    }
-    Bonus_Score = xx;
-    xx += Counter_hi * 1000;
-    Bonus_Score_Plus = xx;
-    xx += Score[Player_id][0];
-    if (xx >= 99999900) {
-        xx = 99999900;
-    }
-    return xx;
 }
 
 

@@ -3467,6 +3467,7 @@ s16 n;
 void debug_hit_box_cursor(void) {
     u16 now;
     u16 sw;
+    u16 *input = &now;
     if (Debug_PL_id) {
         return;
     }
@@ -3795,6 +3796,7 @@ void debug_cmd_panel_run(void) {
                 dbg_cmd_panel ^= 1;
             }
             goto draw;
+            break;
         }
     }
     dbg_cmd_panel = 0;
