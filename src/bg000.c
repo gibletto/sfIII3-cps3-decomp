@@ -987,12 +987,12 @@ void blit_8x16_tile(u16* src, s16 code, u16* dst, s16 attr) {
 /* provisional name */
 void bg_cell_write(s16 bg, s32 ofs, s32 cell, u32 src, u16 u5, s16 attr) {
     u32 dst;
-    u32 s;
+    u16* s;
     u16 code;
     dst = (u32)bg_w.bgw[bg].bg_address + ofs;
-    s = (cell << 10) + src;
+    s = (u16*)((cell << 10) + src);
     code = bg_w.scroll_cg_adr >> 7;
-    blit_16x16_tile((u16*)s, code, (u16*)dst, attr);
+    blit_16x16_tile(s, code, (u16*)dst, attr);
 }
 
 

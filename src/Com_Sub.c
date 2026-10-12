@@ -3921,6 +3921,7 @@ s32 Select_Combo_Speed(PLW* wk) {
 s32 Select_Reflection_Time(PLW* wk) {
     s8 Lv;
     s8 xx;
+    s8 zz;
     xx = random_32_com();
     Lv = Setup_Lv18(Game_setting.level);
     Lv += CC_Value[0];
@@ -3931,9 +3932,9 @@ s32 Select_Reflection_Time(PLW* wk) {
         Lv = 2;
     }
     if ((Break_Into_CPU == 1) || (Break_Into_CPU == 2)) {
-        return Reflection_Time_Data[18][Lv][xx];
+        return zz = Reflection_Time_Data[18][Lv][xx];
     }
-    return Reflection_Time_Data[My_char[wk->wu.id]][Lv][xx];
+    return zz = Reflection_Time_Data[My_char[wk->wu.id]][Lv][xx];
 }
 
 

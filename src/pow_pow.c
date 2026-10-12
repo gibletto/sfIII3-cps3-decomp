@@ -135,7 +135,7 @@ u16 ix;
             Score[(u8)id][1] += Score_Data[ix];
         }
     }
-    if (plw[id].wu.operator && bg_w.stage != 22 && bg_w.stage != 21) {
+    if (plw[id].wu.operator != 0 && bg_w.stage != 22 && bg_w.stage != 21) {
         Disp_Player_Score(id);
     }
 }

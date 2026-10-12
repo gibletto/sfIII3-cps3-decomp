@@ -166,19 +166,18 @@ s32 effect_A0_init(s16 pl) {
         }
         Player_Color[twk->id] = ewk->wu.old_rno[2];
     }
-    offset = bg_w.pos_offset;
     if (mwk->wu.rl_flag) {
         if (mwk->wu.xyz[0].disp.pos < bg_w.bgw[1].wxy[0].disp.pos) {
             ewk->wu.xyz[0].disp.pos = mwk->wu.xyz[0].disp.pos - 0x100;
         } else {
-            ewk->wu.xyz[0].disp.pos = bg_w.bgw[1].wxy[0].disp.pos - offset - 32;
+            ewk->wu.xyz[0].disp.pos = bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset - 32;
         }
         ewk->wu.old_rno[1] = twk->xyz[0].disp.pos - 16;
     } else {
         if (mwk->wu.xyz[0].disp.pos > bg_w.bgw[1].wxy[0].disp.pos) {
             ewk->wu.xyz[0].disp.pos = mwk->wu.xyz[0].disp.pos + 0x100;
         } else {
-            ewk->wu.xyz[0].disp.pos = offset + bg_w.bgw[1].wxy[0].disp.pos + 32;
+            ewk->wu.xyz[0].disp.pos = bg_w.pos_offset + bg_w.bgw[1].wxy[0].disp.pos + 32;
         }
         ewk->wu.old_rno[1] = twk->xyz[0].disp.pos + 16;
     }
