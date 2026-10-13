@@ -1040,14 +1040,11 @@ s32 Loser_Sub_2P(void) {
 
 
 s32 Credit_Sub_1P(void) {
-    s8 credits;
     s8 status;
-    volatile s8* credit_p = &credit_1p;
-    credits = *credit_p;
-    if (Two_Coin_Start && Request_Break[0] == 0 && *credit_p < 2) {
+    if (Two_Coin_Start != 0 && Request_Break[0] == 0 && credit_1p < 2) {
         status = 99;
     } else {
-        status = Request_Break[0] | credits;
+        status = Request_Break[0] | credit_1p;
     }
     switch (status) {
     case 0:
@@ -1058,7 +1055,7 @@ s32 Credit_Sub_1P(void) {
         }
         break;
     case 99:
-        if (credits) {
+        if (credit_1p) {
             Flash_More_Coins(0, Entry_Msg_X_Data[4][Game_setting.mode], 1);
         } else {
             Flash_Insert_Coin(0, Entry_Msg_X_Data[0][Game_setting.mode]);
@@ -1628,14 +1625,14 @@ void Disp_Start_Message(void) {
     s8 needed;
     const s8* blank;
     const s8* one_more;
-    s8 cr;
-    cr = credit_1p;
-    if (Two_Coin_Start && cr < 2) {
+    if (Two_Coin_Start != 0 && credit_1p < 2) {
         credits = 99;
     } else {
-        credits = cr;
+        credits = credit_1p;
     }
-    switch (blank = msg_blank25, one_more = msg_insert_1_more, Chute_Mode) {
+    one_more = msg_insert_1_more;
+    blank = msg_blank25;
+    switch (Chute_Mode) {
     case 0:
     case 1:
         switch (credits) {
@@ -1675,7 +1672,7 @@ void Disp_Start_Message(void) {
             }
             break;
         case 99:
-            if (cr) {
+            if (credit_1p) {
                 tilemap_print_string_attr(DE_X[0] + 2, 21, 18, one_more);
             } else {
                 tilemap_print_string_attr(DE_X[0] + 2, 21, 18, msg_insert_2_more);
@@ -1685,13 +1682,11 @@ void Disp_Start_Message(void) {
             tilemap_print_string_attr(DE_X[0] + 2, 21, 18, msg_press_1p_button);
             break;
         }
-        break;
     }
-    cr = credit_2p;
-    if (Two_Coin_Start && cr < 2) {
+    if (Two_Coin_Start != 0 && credit_2p < 2) {
         credits = 99;
     } else {
-        credits = cr;
+        credits = credit_2p;
     }
     switch (credits) {
     case 0:
@@ -1710,7 +1705,7 @@ void Disp_Start_Message(void) {
         }
         break;
     case 99:
-        if (cr) {
+        if (credit_2p) {
             tilemap_print_string_attr(DE_X[0] + 25, 21, 18, one_more);
         } else {
             tilemap_print_string_attr(DE_X[0] + 25, 21, 18, msg_insert_2_more);
@@ -1831,9 +1826,11 @@ s16 PL_id;
         case 1:
             if (credit_1p < 2) {
                 return 0;
+            } else {
+                credit_1p -= 2;
+                return 1;
             }
-            credit_1p -= 2;
-            return 1;
+            break;
         default:
             if (PL_id) {
                 credit = &credit_2p;
@@ -1842,12 +1839,15 @@ s16 PL_id;
             }
             if (*credit < 2) {
                 return 0;
+            } else {
+                *credit -= 2;
+                return 1;
             }
-            *credit -= 2;
-            return 1;
+            break;
         }
+    } else {
+        return (s8)credit_use(PL_id);
     }
-    return (s8)credit_use(PL_id);
 }
 
 

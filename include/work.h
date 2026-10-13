@@ -1171,6 +1171,7 @@ extern SELPL card_pl_w[2];
 extern u16 * sc_trans_dst;
 extern u8 * sc_trans_src;
 extern VITAL_BAR vit_bar[2];
+extern VITAL_BAR vit_bar_2p;
 extern COUNT_WORK count_work;
 extern s16 win_mark_rno[2];
 extern STN_DAT sdat[2];

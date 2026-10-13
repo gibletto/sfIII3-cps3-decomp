@@ -458,8 +458,7 @@ s16 pl_id;
 /* provisional name */
 void name_entry_commit_row(s16 pl_id, s16 pos_y) {
     s16 pos_x;
-    if (Game_setting.mode) {
-    } else {
+    if (!Game_setting.mode) {
     }
     if (pl_id) {
         pos_x = DE_X[0] + 37;

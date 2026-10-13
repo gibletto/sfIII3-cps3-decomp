@@ -42,6 +42,10 @@ void effect_E4_dummy(void) {}
 void effect_E5_move(WORK_Other* ewk) {
     PLW* mwk = (PLW*)ewk->my_master;
     s16 i;
+    u8 dp;
+    s32 rno;
+    s16* er;
+    s16* mr;
     switch (ewk->wu.routine_no[0]) {
     case 0:
         if (ewk->wu.dead_f == 1) {
@@ -72,20 +76,58 @@ void effect_E5_move(WORK_Other* ewk) {
         if (check_new_after_image(ewk, mwk) != 0) {
             goto jump;
         }
-        if ((ewk->wu.dir_old & 1 && EXE_flag == 0 && Game_pause == 0 && mwk->wu.hit_stop <= 0 &&
-             --ewk->wu.direction == 0) ||
-            (ewk->wu.dir_old & 2 &&
-             (ewk->wu.routine_no[5] != mwk->wu.routine_no[1] || ewk->wu.routine_no[6] != mwk->wu.routine_no[2]) &&
-             (mwk->image_data_index != 11 || mwk->wu.routine_no[1] != 4 || mwk->wu.routine_no[3] != 0)) ||
-            (ewk->wu.dir_old & 4 && mwk->sa->ok != -1) ||
-            (ewk->wu.dir_old & 8 && ((WORK*)mwk->wu.target_adrs)->routine_no[1] != 4 &&
-             ((WORK*)mwk->wu.target_adrs)->routine_no[1] != 2) ||
-            (ewk->wu.dir_old & 0x10 && mwk->wu.routine_no[1] != 4 && mwk->wu.routine_no[1] != 2) ||
-            (ewk->wu.dir_old & 0x20 && ewk->wu.total_att_set != ((WORK*)mwk->wu.target_adrs)->kind_of_waza) ||
-            (ewk->wu.dir_old & 0x40 && ewk->wu.total_paring != mwk->wu.kind_of_waza) ||
-            (ewk->wu.dir_old & 0x80 && pcon_dp_flag) ||
-            (ewk->wu.olc_work_ix[1] && pcon_dp_flag && (bg_w.stage == 3 || bg_w.stage == 9)) ||
-            !mwk->image_setup_flag) {
+        if (ewk->wu.dir_old & 1 && EXE_flag == 0 && Game_pause == 0 && mwk->wu.hit_stop <= 0) {
+            if (--ewk->wu.direction == 0) {
+                goto off;
+            }
+        }
+        if (ewk->wu.dir_old & 2) {
+            er = ewk->wu.routine_no;
+            if (er[5] != (mr = mwk->wu.routine_no)[1] || er[6] != mr[2]) {
+                if (mwk->image_data_index != 11) {
+                    goto off;
+                }
+                er = mwk->wu.routine_no;
+                if (er[1] != 4 || er[3] != 0) {
+                    goto off;
+                }
+            }
+        }
+        if (ewk->wu.dir_old & 4 && mwk->sa->ok != -1) {
+            goto off;
+        }
+        if (ewk->wu.dir_old & 8) {
+            rno = ((WORK*)mwk->wu.target_adrs)->routine_no[1];
+            if (rno != 4 && rno != 2) {
+                goto off;
+            }
+        }
+        if (ewk->wu.dir_old & 0x10) {
+            rno = mwk->wu.routine_no[1];
+            if (rno != 4 && rno != 2) {
+                goto off;
+            }
+        }
+        if (ewk->wu.dir_old & 0x20 && ewk->wu.total_att_set != ((WORK*)mwk->wu.target_adrs)->kind_of_waza) {
+            goto off;
+        }
+        if (ewk->wu.dir_old & 0x40 && ewk->wu.total_paring != mwk->wu.kind_of_waza) {
+            goto off;
+        }
+        dp = pcon_dp_flag;
+        if (ewk->wu.dir_old & 0x80) {
+            if (dp) {
+                goto off;
+            }
+        }
+        if (ewk->wu.olc_work_ix[1] && dp) {
+            rno = bg_w.stage;
+            if (rno == 3 || rno == 9) {
+                goto off;
+            }
+        }
+        if (!mwk->image_setup_flag) {
+        off:
             mwk->image_setup_flag = 0;
         jump:
             ewk->wu.routine_no[0] = ewk->wu.routine_no[1] = ewk->wu.routine_no[2] = 0;

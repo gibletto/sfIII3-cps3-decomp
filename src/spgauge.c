@@ -320,12 +320,8 @@ void spgauge_control(s8 Spg_Num) {
 
 
 void wipe_check(void) {
-    PLW* pl;
     if (Old_Stop_SG) {
-        if (Exec_Wipe != 0) {
-            return;
-        }
-        if (Exec_Wipe_F != 0) {
+        if (Exec_Wipe != 0 || Exec_Wipe_F != 0) {
             return;
         }
         Exec_Wipe_F = 1;
@@ -347,23 +343,21 @@ void wipe_check(void) {
                 satime_ko_after_clear(1);
             }
         }
-        return;
-    }
-    pl = &plw[0];
-    if (pl->sa->ok == -1) {
-        pl->sa->ok = 0;
-        time_clear[0] = 1;
-        pl->sa->gauge.i = 0;
-        spg_dat[0].current_spg = 0;
-        spg_dat[0].spg_level = 0;
-    }
-    pl = &plw[1];
-    if (pl->sa->ok == -1) {
-        pl->sa->ok = 0;
-        time_clear[1] = 1;
-        pl->sa->gauge.i = 0;
-        spg_dat[1].current_spg = 0;
-        spg_dat[1].spg_level = 0;
+    } else {
+        if (plw[0].sa->ok == -1) {
+            plw[0].sa->ok = 0;
+            time_clear[0] = 1;
+            plw[0].sa->gauge.i = 0;
+            spg_dat[0].current_spg = 0;
+            spg_dat[0].spg_level = 0;
+        }
+        if (plw[1].sa->ok == -1) {
+            plw[1].sa->ok = 0;
+            time_clear[1] = 1;
+            plw[1].sa->gauge.i = 0;
+            spg_dat[1].current_spg = 0;
+            spg_dat[1].spg_level = 0;
+        }
     }
 }
 
@@ -463,7 +457,20 @@ void samoji_control(s8 Stpl_Num) {
                 }
             }
             if (spg_dat[Stpl_Num].spg_level == plw[Stpl_Num].sa->store) {
-                do { spg_dat[Stpl_Num].timer2--; if (spg_dat[Stpl_Num].kind == 0) { if (spg_dat[Stpl_Num].timer2 == 0) { sa_stock_trans(spg_dat[Stpl_Num].spg_level, 0, Stpl_Num); sa_gauge_trans(Stpl_Num, 0); spg_dat[Stpl_Num].kind = 1; spg_dat[Stpl_Num].timer2 = 2; } } else if (spg_dat[Stpl_Num].timer2 == 0) { sa_stock_trans(spg_dat[Stpl_Num].spg_level, 1, Stpl_Num); sa_gauge_trans(Stpl_Num, 1); spg_dat[Stpl_Num].kind = 0; spg_dat[Stpl_Num].timer2 = 2; } } while (0);
+                spg_dat[Stpl_Num].timer2--;
+                if (spg_dat[Stpl_Num].kind == 0) {
+                    if (spg_dat[Stpl_Num].timer2 == 0) {
+                        sa_stock_trans(spg_dat[Stpl_Num].spg_level, 0, Stpl_Num);
+                        sa_gauge_trans(Stpl_Num, 0);
+                        spg_dat[Stpl_Num].kind = 1;
+                        spg_dat[Stpl_Num].timer2 = 2;
+                    }
+                } else if (spg_dat[Stpl_Num].timer2 == 0) {
+                    sa_stock_trans(spg_dat[Stpl_Num].spg_level, 1, Stpl_Num);
+                    sa_gauge_trans(Stpl_Num, 1);
+                    spg_dat[Stpl_Num].kind = 0;
+                    spg_dat[Stpl_Num].timer2 = 2;
+                }
                 return;
             }
         off:
@@ -489,7 +496,20 @@ void samoji_control(s8 Stpl_Num) {
         case_3:
             spg_dat[Stpl_Num].timer--;
             if (spg_dat[Stpl_Num].timer != 0) {
-                do { spg_dat[Stpl_Num].timer2--; if (spg_dat[Stpl_Num].kind == 0) { if (spg_dat[Stpl_Num].timer2 == 0) { sa_stock_trans(spg_dat[Stpl_Num].spg_level, 0, Stpl_Num); sa_gauge_trans(Stpl_Num, 0); spg_dat[Stpl_Num].kind = 1; spg_dat[Stpl_Num].timer2 = 2; } } else if (spg_dat[Stpl_Num].timer2 == 0) { sa_stock_trans(spg_dat[Stpl_Num].spg_level, 1, Stpl_Num); sa_gauge_trans(Stpl_Num, 1); spg_dat[Stpl_Num].kind = 0; spg_dat[Stpl_Num].timer2 = 2; } } while (0);
+                spg_dat[Stpl_Num].timer2--;
+                if (spg_dat[Stpl_Num].kind == 0) {
+                    if (spg_dat[Stpl_Num].timer2 == 0) {
+                        sa_stock_trans(spg_dat[Stpl_Num].spg_level, 0, Stpl_Num);
+                        sa_gauge_trans(Stpl_Num, 0);
+                        spg_dat[Stpl_Num].kind = 1;
+                        spg_dat[Stpl_Num].timer2 = 2;
+                    }
+                } else if (spg_dat[Stpl_Num].timer2 == 0) {
+                    sa_stock_trans(spg_dat[Stpl_Num].spg_level, 1, Stpl_Num);
+                    sa_gauge_trans(Stpl_Num, 1);
+                    spg_dat[Stpl_Num].kind = 0;
+                    spg_dat[Stpl_Num].timer2 = 2;
+                }
                 return;
             }
             spg_dat[Stpl_Num].time_rno = 4;
@@ -532,7 +552,20 @@ void samoji_control(s8 Stpl_Num) {
     case 1:
         spg_dat[Stpl_Num].timer--;
         if (spg_dat[Stpl_Num].timer != 0) {
-            do { spg_dat[Stpl_Num].timer2--; if (spg_dat[Stpl_Num].kind == 0) { if (spg_dat[Stpl_Num].timer2 == 0) { sa_stock_trans(spg_dat[Stpl_Num].spg_level, 0, Stpl_Num); sa_gauge_trans(Stpl_Num, 0); spg_dat[Stpl_Num].kind = 1; spg_dat[Stpl_Num].timer2 = 2; } } else if (spg_dat[Stpl_Num].timer2 == 0) { sa_stock_trans(spg_dat[Stpl_Num].spg_level, 1, Stpl_Num); sa_gauge_trans(Stpl_Num, 1); spg_dat[Stpl_Num].kind = 0; spg_dat[Stpl_Num].timer2 = 2; } } while (0);
+            spg_dat[Stpl_Num].timer2--;
+            if (spg_dat[Stpl_Num].kind == 0) {
+                if (spg_dat[Stpl_Num].timer2 == 0) {
+                    sa_stock_trans(spg_dat[Stpl_Num].spg_level, 0, Stpl_Num);
+                    sa_gauge_trans(Stpl_Num, 0);
+                    spg_dat[Stpl_Num].kind = 1;
+                    spg_dat[Stpl_Num].timer2 = 2;
+                }
+            } else if (spg_dat[Stpl_Num].timer2 == 0) {
+                sa_stock_trans(spg_dat[Stpl_Num].spg_level, 1, Stpl_Num);
+                sa_gauge_trans(Stpl_Num, 1);
+                spg_dat[Stpl_Num].kind = 0;
+                spg_dat[Stpl_Num].timer2 = 2;
+            }
             break;
         }
         if (spg_dat[Stpl_Num].max_old != 0 && spg_dat[Stpl_Num].sa_mukou == 0) {
@@ -788,7 +821,7 @@ void spgauge_wipe_write(s32 Stpl_Num) {
 void sa_gauge_trans(s8 Stpl_Num, s16 Spg_Col) {
     s8 lpy;
     sc_ram_to_vram(Stpl_Num + (Spg_Col * 2) + 6, 0, 0);
-    if (!Stpl_Num) {
+    if (Stpl_Num == 0) {
         for (lpy = 0; lpy < spg_dat[0].spg_len; lpy++) {
             tilemap_put_cell(lpy + 6, 27, sa_color_data2_tbl[Spg_Col][0], 0xCF);
         }

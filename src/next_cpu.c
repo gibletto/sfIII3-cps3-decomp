@@ -1002,7 +1002,7 @@ u16 sw;
         EM_id = EM_List[Player_id][Temporary_EM[Player_id] - 1];
         My_char[COM_id] = EM_id;
         Time_Stop = 2;
-        if ((&VS_Index[0])[PL_id] < 8) {
+        if (VS_Index[PL_id] < 8) {
             Sound_SE(ID + 98);
             Sound_SE(EM_Select_SE_Data[random_16_com()]);
         }

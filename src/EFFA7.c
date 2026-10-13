@@ -80,11 +80,11 @@ void effect_A7_move(WORK_Other* ewk) {
                 edt = &explem[tad->myhix];
             }
             if (ewk->wu.rl_flag) {
-                ewk->wu.xyz[0].disp.pos -= *(s16*)&edt->hx;
+                ewk->wu.xyz[0].disp.pos -= edt->hx;
             } else {
-                ewk->wu.xyz[0].disp.pos += *(s16*)&edt->hx;
+                ewk->wu.xyz[0].disp.pos += edt->hx;
             }
-            ewk->wu.xyz[1].disp.pos += *(s16*)&edt->hy;
+            ewk->wu.xyz[1].disp.pos += edt->hy;
         }
         if (tad->status & 2) {
             ewk->wu.xyz[0].disp.pos += random_16_com() - 7;

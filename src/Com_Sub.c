@@ -2692,7 +2692,7 @@ s16 Ex_Shot;
         }
         break;
     case 3:
-        (&Lever_Buff[0])[wk->wu.id] = Lever_LR[wk->wu.id];
+        Lever_Buff[wk->wu.id] = Lever_LR[wk->wu.id];
         if (plw[wk->wu.id].tsukami_f) {
             break;
         }

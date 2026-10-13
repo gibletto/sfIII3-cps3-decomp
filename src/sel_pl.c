@@ -819,7 +819,7 @@ u16 sw;
         Last_Super_Arts[PL_id] = Super_Arts[PL_id] = Arts_Y[PL_id];
         Sound_SE(ID + 98);
         Sound_SE(*Free_Ptr[PL_id]++);
-        if (ID) {
+        if (ID != 0) {
             Setup_ID();
         } else {
             Setup_ID();

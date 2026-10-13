@@ -57,6 +57,8 @@
 #include "CMD_MAIN.h"
 #include "cps3.h"
 
+void bg_cell_write(s16 bg, s32 ofs, s32 cell, u32 src, u32 u5, s16 attr);
+
 /* provisional name */
 s32 debug_scene_outer_dispatch(void) {
     dbg_p1sw_1 = dbg_p1sw_0;
@@ -1188,11 +1190,9 @@ void debug_hit_judgment_init(void) {
 
 /* provisional name */
 void debug_hit_judgment_move(void) {
-    DBG_SLOT* slot;
     WORK* wk;
     Debug_Command = 0;
     debug_hit_judgment_input();
-    slot = dbg_slot;
     switch (Debug_Command) {
     case 1:
         debug_slot_char_load_keep_col();
@@ -1210,10 +1210,10 @@ void debug_hit_judgment_move(void) {
         }
         break;
     case 2:
-        if (slot->sel[0] > 0xD8) {
-            set_char_move_init(&dbg_pl->wu, 0, slot->sel[1] - 1);
+        if (dbg_slot->sel[0] > 0xD8) {
+            set_char_move_init(&dbg_pl->wu, 0, dbg_slot->sel[1] - 1);
         } else {
-            set_char_move_init(&dbg_pl->wu, slot->row, slot->sel[1] - 1);
+            set_char_move_init(&dbg_pl->wu, dbg_slot->row, dbg_slot->sel[1] - 1);
         }
         dbg_pl->wu.disp_flag = check_cg_data(dbg_pl->wu.cg_number);
         if (dbg_pl->wu.disp_flag == 0) {

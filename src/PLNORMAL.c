@@ -456,7 +456,7 @@ u8 ps;
         i = 4;
     }
     set_char_move_init(&wk->wu, 0, jpdat_tbl[i][0]);
-    setup_mvxy_data(&wk->wu, *(u16*)&jpdat_tbl[i][1]);
+    setup_mvxy_data(&wk->wu, jpdat_tbl[i][1]);
     add_mvxy_speed(&wk->wu);
 }
 

@@ -79,6 +79,8 @@
 #include "Entry.h"
 #include "entry_2.h"
 
+void Scrn_Move_Set(s32 n, s16 x, s16 y);
+
 #pragma inline(request_center_message)
 
 void sound_reg_level_set(s16 level, s8 flag);
@@ -289,23 +291,22 @@ void Game_Manage_2_4(void) {
         Stage_Intro_Flag = 0x80;
         break;
     case 3:
-        if (Next_Step == 0) {
-            break;
-        }
-        C_No0++;
-        C_No1 = 0;
-        C_No2 = 0;
-        Allow_a_battle_f = 1;
-        if (!Play_Type && EM_id == 0) {
-            if (!(Introduce_Boss[Player_id][1] & 0x80)) {
-                Introduce_Boss[Player_id][1] |= 0x80;
-                Check_Stage_BGM();
+        if (Next_Step != 0) {
+            C_No0++;
+            C_No1 = 0;
+            C_No2 = 0;
+            Allow_a_battle_f = 1;
+            if (Play_Type == 0 && EM_id == 0) {
+                if (!(Introduce_Boss[Player_id][1] & 0x80)) {
+                    Introduce_Boss[Player_id][1] |= 0x80;
+                    Check_Stage_BGM();
+                }
             }
-        }
-        load_char_eff_color(My_char[0], 0);
-        load_char_eff_color(My_char[1], 1);
-        if (Demo_Flag == 0) {
-            effect_58_init(10, 60, -1);
+            load_char_eff_color(My_char[0], 0);
+            load_char_eff_color(My_char[1], 1);
+            if (Demo_Flag == 0) {
+                effect_58_init(10, 60, -1);
+            }
         }
         break;
     }
@@ -1845,7 +1846,7 @@ s32 Check_Disp_Winner(void) {
 
 void Disp_Winner(void) {
     if (Play_Type == 1) {
-        winner_name_put((s32)(s8)My_char[Winner_id]);
+        winner_name_put((s32)My_char[Winner_id]);
         effect_89_init(1, DE_X[3] + 10, 9, 29, 4);
         sound_request(0x8D);
     } else {

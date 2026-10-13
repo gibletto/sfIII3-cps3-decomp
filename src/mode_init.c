@@ -188,9 +188,9 @@ void mode_init_task(void) {
     no_cd_flag = bios_cd_flags & 1;
     display_mode_setup();
     tilemap_print_string((*&DE_X)[3], 0, color * 2, boot_title_str);
-    tilemap_print_string((*&DE_X)[3], 0, color * 2, &boot_region_str[region]);
+    tilemap_print_string(DE_X[3], 0, color * 2, &boot_region_str[region]);
     if (no_cd_flag) {
-        tilemap_print_string((*&DE_X)[3], 0, color * 2, boot_no_cd_str);
+        tilemap_print_string(DE_X[3], 0, color * 2, boot_no_cd_str);
     }
     task_sleep(6);
     for (wait = 166; --wait > 0; ) {
@@ -204,7 +204,7 @@ void mode_init_task(void) {
     tilemap_fill_all(0, 32);
     load_char_gfx(0x9000, 1);
     setup_kage_cells();
-    tilemap_print_string((*&DE_X)[3], 0, 0xFFFF, warning_mes[Country - 1]);
+    tilemap_print_string(DE_X[3], 0, 0xFFFF, warning_mes[Country - 1]);
     task_sleep(16);
     for (wait = 100; --wait > 0; ) {
         if ((p1sw_0 | p2sw_0) & 0x3F0) {

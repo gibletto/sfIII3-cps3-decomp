@@ -79,34 +79,35 @@ void bg_base_y_move_check(void) {
     s32 pos_w;
     s32 kake;
     s16 hi_pos;
-    PLW* p0;
-    PLW* p1;
-    if (!bg_stop && !bg_app_stop) {
-        p0 = &plw[0];
-        p1 = &plw[1];
-        if (p0->wu.scr_mv_y > p1->wu.scr_mv_y) {
-            hi_pos = p0->wu.scr_mv_y;
-        } else {
-            hi_pos = p1->wu.scr_mv_y;
-        }
-        hi_pos -= 0x58;
-        if (hi_pos <= 0) {
-            bgw_ptr->xy[1].cal = bgw_ptr->wxy[1].cal = 0;
-        } else {
-            kake = 0x1C000;
-            pos_w = kake * hi_pos;
-            bgw_ptr->wxy[1].cal = bgw_ptr->xy[1].cal = 0;
-            bgw_ptr->xy[1].cal += pos_w;
-            bgw_ptr->wxy[1].cal += pos_w;
-            if (bgw_ptr->xy[1].disp.pos > bgw_ptr->y_limit2) {
-                bgw_ptr->xy[1].disp.pos = bgw_ptr->y_limit2;
-                bgw_ptr->xy[1].disp.low = 0;
-                bgw_ptr->wxy[1].disp.pos = bgw_ptr->y_limit2;
-                bgw_ptr->wxy[1].disp.low = 0;
-                bg_w.scr_stop &= 0x7FFF;
-            }
+    if (bg_stop) {
+        goto skip;
+    }
+    if (bg_app_stop) {
+        goto skip;
+    }
+    if (plw[0].wu.scr_mv_y > plw[1].wu.scr_mv_y) {
+        hi_pos = plw[0].wu.scr_mv_y;
+    } else {
+        hi_pos = plw[1].wu.scr_mv_y;
+    }
+    hi_pos -= 0x58;
+    if (hi_pos <= 0) {
+        bgw_ptr->xy[1].cal = bgw_ptr->wxy[1].cal = 0;
+    } else {
+        kake = 0x1C000;
+        pos_w = kake * hi_pos;
+        bgw_ptr->wxy[1].cal = bgw_ptr->xy[1].cal = 0;
+        bgw_ptr->xy[1].cal += pos_w;
+        bgw_ptr->wxy[1].cal += pos_w;
+        if (bgw_ptr->xy[1].disp.pos > bgw_ptr->y_limit2) {
+            bgw_ptr->xy[1].disp.pos = bgw_ptr->y_limit2;
+            bgw_ptr->xy[1].disp.low = 0;
+            bgw_ptr->wxy[1].disp.pos = bgw_ptr->y_limit2;
+            bgw_ptr->wxy[1].disp.low = 0;
+            bg_w.scr_stop &= 0x7FFF;
         }
     }
+skip:
     bg_w.bg2_sp_y = bgw_ptr->xy[1].disp.pos - bgw_ptr->pos_y_work;
 }
 

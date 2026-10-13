@@ -24,12 +24,14 @@
 
 
 void effect_I3_move(WORK_Other* ewk) {
+    const I3_Data* tp;
     WORK* mwk = (WORK*)ewk->my_master;
+    tp = i3_data;
     switch (ewk->wu.routine_no[0]) {
     case 0:
         ewk->wu.routine_no[0]++;
         bg_stop = 1;
-        switch (i3_data[ewk->wu.type].sour) {
+        switch (tp[ewk->wu.type].sour) {
         case 1:
             if ((ewk->wu.dir_timer = ewk->wu.hit_stop) < 0) {
                 ewk->wu.dir_timer = -ewk->wu.dir_timer;
@@ -39,7 +41,7 @@ void effect_I3_move(WORK_Other* ewk) {
             ewk->wu.dir_timer = ewk->wu.cg_type;
             break;
         default:
-            ewk->wu.dir_timer = i3_data[ewk->wu.type].tm;
+            ewk->wu.dir_timer = tp[ewk->wu.type].tm;
             break;
         }
     case 1:
@@ -50,11 +52,17 @@ void effect_I3_move(WORK_Other* ewk) {
         if (EXE_flag != 0 || Game_pause != 0) {
             break;
         }
-        if ((i3_data[ewk->wu.type].flag & 1 && --ewk->wu.dir_timer < 0) ||
-            (i3_data[ewk->wu.type].flag & 2 &&
-             (ewk->wu.now_koc != mwk->now_koc || ewk->wu.char_index != mwk->char_index))) {
-            ewk->wu.routine_no[0] = 2;
+        if (tp[ewk->wu.type].flag & 1 && --ewk->wu.dir_timer < 0) {
+            goto next;
         }
+        if (tp[ewk->wu.type].flag & 2) {
+            if (ewk->wu.now_koc != mwk->now_koc || ewk->wu.char_index != mwk->char_index) {
+                goto next;
+            }
+        }
+        break;
+    next:
+        ewk->wu.routine_no[0] = 2;
         break;
     case 2:
     default:

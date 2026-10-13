@@ -648,38 +648,38 @@ s16 wf;
 
     if (wf != 0) {
         for (i = 0; i < 20; i++) {
-            if (judge_item[ix][(u16)(s8)Play_Type].tairyokusa < grade_t_tairyokusa[i + 1][0]) {
+            if (judge_item[ix][(u16)Play_Type].tairyokusa < grade_t_tairyokusa[i + 1][0]) {
                 break;
             }
         }
         point += grade_t_tairyokusa[i][1];
-        point += grade_t_kimarite[judge_item[ix][(u16)(s8)Play_Type].kimarite];
+        point += grade_t_kimarite[judge_item[ix][(u16)Play_Type].kimarite];
     }
     for (i = 0; i < 5; i++) {
-        if (judge_item[ix][(u16)(s8)Play_Type].onaji_waza < grade_t_onaji_waza[i + 1][0]) {
+        if (judge_item[ix][(u16)Play_Type].onaji_waza < grade_t_onaji_waza[i + 1][0]) {
             break;
         }
     }
     point += grade_t_onaji_waza[i][1];
-    if (judge_item[ix][(u16)(s8)Play_Type].app_nml_block != -1) {
+    if (judge_item[ix][(u16)Play_Type].app_nml_block != -1) {
         for (i = 0; i < 6; i++) {
-            if (judge_item[ix][(u16)(s8)Play_Type].app_nml_block < grade_t_app_nmlblock[i + 1][0]) {
+            if (judge_item[ix][(u16)Play_Type].app_nml_block < grade_t_app_nmlblock[i + 1][0]) {
                 break;
             }
         }
         point += grade_t_app_nmlblock[i][1];
     }
-    if (judge_item[ix][(u16)(s8)Play_Type].app_rpd_block != -1) {
+    if (judge_item[ix][(u16)Play_Type].app_rpd_block != -1) {
         for (i = 0; i < 6; i++) {
-            if (judge_item[ix][(u16)(s8)Play_Type].app_rpd_block < grade_t_app_rpdblock[i + 1][0]) {
+            if (judge_item[ix][(u16)Play_Type].app_rpd_block < grade_t_app_rpdblock[i + 1][0]) {
                 break;
             }
         }
         point += grade_t_app_rpdblock[i][1];
     }
-    if (judge_item[ix][(u16)(s8)Play_Type].app_grd_block != -1) {
+    if (judge_item[ix][(u16)Play_Type].app_grd_block != -1) {
         for (i = 0; i < 6; i++) {
-            if (judge_item[ix][(u16)(s8)Play_Type].app_grd_block < grade_t_app_grdblock[i + 1][0]) {
+            if (judge_item[ix][(u16)Play_Type].app_grd_block < grade_t_app_grdblock[i + 1][0]) {
                 break;
             }
         }
@@ -745,8 +745,8 @@ void grade_add_em_stun(s16 ix) {
 
 
 void grade_max_combo_check(s16 ix, s16 num) {
-    if (judge_item[ix][(u16)(s8)Play_Type].max_combo < num) {
-        judge_item[ix][(u16)(s8)Play_Type].max_combo = num;
+    if (judge_item[ix][(u16)Play_Type].max_combo < num) {
+        judge_item[ix][(u16)Play_Type].max_combo = num;
     }
 }
 

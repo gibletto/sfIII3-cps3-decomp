@@ -1139,9 +1139,16 @@ void Win_13000(PLW* wk) {
         wk->wu.routine_no[3]++;
         if (Round_num >= (Battle_Round[Play_Type] * 2) ||
             PL_Wins[wk->wu.id] >= Battle_Round[Play_Type] + 1) {
-            if (wk->wu.id ? (p2sw_0 & 0x1000) : (p1sw_0 & 0x1000)) {
-                set_char_move_init(&wk->wu, 9, 40);
-                break;
+            if (wk->wu.id) {
+                if (p2sw_0 & 0x1000) {
+                    set_char_move_init(&wk->wu, 9, 40);
+                    break;
+                }
+            } else {
+                if (p1sw_0 & 0x1000) {
+                    set_char_move_init(&wk->wu, 9, 40);
+                    break;
+                }
             }
             work = win_select(wk, 3);
             set_char_move_init(&wk->wu, 9, work + 36);

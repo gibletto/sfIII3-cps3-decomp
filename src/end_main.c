@@ -652,13 +652,9 @@ void op_106_move(void) {
 
 
 void op_107_move(void) {
-    s16* e = &op_obj_disp;
-    s8 s = op_w.r_no_2;
-    register u8* g = gSeqStatus;
-    s16* t = &op_107_tbl[s];
-    switch (s) {
+    switch (op_w.r_no_2) {
     case 0:
-        *e = 1;
+        op_obj_disp = 1;
         op_w.r_no_2++;
         op_work_clear();
         op_w.index = 29;
@@ -671,7 +667,7 @@ void op_107_move(void) {
         effect_F6_init(34);
         break;
     case 1:
-        if (*g >= *t && *g != 107) {
+        if (gSeqStatus[0] >= op_107_tbl[op_w.r_no_2] && gSeqStatus[0] != 107) {
             op_w.r_no_2++;
             op_work_clear();
             op_w.index = 30;
@@ -680,7 +676,7 @@ void op_107_move(void) {
         }
         break;
     case 2:
-        if (*g >= *t) {
+        if (gSeqStatus[0] >= op_107_tbl[op_w.r_no_2]) {
             op_w.r_no_2++;
             op_work_clear();
             op_w.index = 31;
@@ -689,28 +685,28 @@ void op_107_move(void) {
         }
         break;
     case 3:
-        if (*g >= *t) {
+        if (gSeqStatus[0] >= op_107_tbl[op_w.r_no_2]) {
             op_w.r_no_2++;
             op_work_clear();
             op_w.index = 32;
-            *e = 0;
+            op_obj_disp = 0;
             effect_48_init(13);
         } else {
             opening_bg_move_broadcast(31);
         }
         break;
     case 4:
-        if (*g >= *t) {
+        if (gSeqStatus[0] >= op_107_tbl[op_w.r_no_2]) {
             op_w.r_no_2++;
             op_work_clear();
             op_w.index = 33;
-            *e = 1;
+            op_obj_disp = 1;
         } else {
             opening_bg_move_broadcast(32);
         }
         break;
     case 5:
-        if (*g >= *t) {
+        if (gSeqStatus[0] >= op_107_tbl[op_w.r_no_2]) {
             op_w.r_no_2++;
             op_work_clear();
             op_w.index = 34;
@@ -725,7 +721,7 @@ void op_107_move(void) {
         }
         break;
     case 6:
-        if (*g >= *t) {
+        if (gSeqStatus[0] >= op_107_tbl[op_w.r_no_2]) {
             op_w.r_no_2++;
             op_work_clear();
             op_w.index = 35;
@@ -734,28 +730,28 @@ void op_107_move(void) {
         }
         break;
     case 7:
-        if (*g >= *t) {
+        if (gSeqStatus[0] >= op_107_tbl[op_w.r_no_2]) {
             op_w.r_no_2++;
             op_work_clear();
             op_w.index = 36;
-            *e = 0;
+            op_obj_disp = 0;
             effect_48_init(14);
         } else {
             opening_bg_move_broadcast(35);
         }
         break;
     case 8:
-        if (*g >= *t) {
+        if (gSeqStatus[0] >= op_107_tbl[op_w.r_no_2]) {
             op_w.r_no_2++;
             op_work_clear();
             op_w.index = 37;
-            *e = 1;
+            op_obj_disp = 1;
         } else {
             opening_bg_move_broadcast(36);
         }
         break;
     case 9:
-        if (*g >= *t) {
+        if (gSeqStatus[0] >= op_107_tbl[op_w.r_no_2]) {
             op_w.r_no_2++;
             op_work_clear();
             op_w.index = 38;
@@ -764,7 +760,7 @@ void op_107_move(void) {
         }
         break;
     case 10:
-        if (*g >= *t) {
+        if (gSeqStatus[0] >= op_107_tbl[op_w.r_no_2]) {
             op_w.r_no_2++;
             op_work_clear();
             op_w.index = 39;
@@ -773,7 +769,7 @@ void op_107_move(void) {
         }
         break;
     case 11:
-        if (*g >= *t) {
+        if (gSeqStatus[0] >= op_107_tbl[op_w.r_no_2]) {
             op_w.r_no_2++;
             op_work_clear();
             op_w.index = 40;
@@ -1234,7 +1230,6 @@ void op_112_move(void) {
 
 
 void op_113_move(void) {
-    u8* seq = gSeqStatus;
     switch (op_w.r_no_2) {
     case 0:
         op_w.r_no_2 += 1;
@@ -1249,7 +1244,7 @@ void op_113_move(void) {
         effect_48_init(20);
         break;
     case 1:
-        if ((*seq >= op_113_tbl[op_w.r_no_2]) && (*seq != 0x71)) {
+        if ((gSeqStatus[0] >= op_113_tbl[op_w.r_no_2]) && (gSeqStatus[0] != 0x71)) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 80;
@@ -1259,7 +1254,7 @@ void op_113_move(void) {
         }
         break;
     case 2:
-        if (*seq >= op_113_tbl[op_w.r_no_2]) {
+        if (gSeqStatus[0] >= op_113_tbl[op_w.r_no_2]) {
             op_w.r_no_2 += 1;
             op_scrn_end = 0;
             op_work_clear();
@@ -1271,7 +1266,7 @@ void op_113_move(void) {
         }
         break;
     case 3:
-        if (*seq >= op_113_tbl[op_w.r_no_2]) {
+        if (gSeqStatus[0] >= op_113_tbl[op_w.r_no_2]) {
             op_w.r_no_2 += 1;
             op_work_clear();
             op_w.index = 82;

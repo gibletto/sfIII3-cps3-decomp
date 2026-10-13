@@ -81,7 +81,7 @@ void effect_70_move(WORK_Other* ewk) {
             if (ewk->wu.my_mr.size.x <= 0 && ewk->wu.my_mr.size.y <= 0) {
                 ewk->wu.routine_no[1]++;
                 ewk->wu.my_mr_flag = 0;
-                *(volatile u8*)&ewk->wu.disp_flag = 0;
+                ewk->wu.disp_flag = 0;
                 return;
             }
             sort_push_request4(&ewk->wu);

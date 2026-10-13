@@ -48,7 +48,9 @@ void EFF76_WAIT(WORK_Other* ewk) {
         ewk->wu.routine_no[0] = 4;
         ewk->wu.routine_no[1] = 0;
         Order_Timer[ewk->wu.dir_old] = 1;
-    } else if (Suicide[ewk->wu.direction] != 0) {
+        return;
+    }
+    if (Suicide[ewk->wu.direction] != 0) {
         Order[ewk->wu.dir_old] = 4;
         ewk->wu.routine_no[0] = 4;
         ewk->wu.routine_no[1] = 1;
@@ -340,9 +342,9 @@ void Setup_Pos_76(WORK_Other* ewk) {
         ewk->wu.position_z = 70;
         if (Champion == 0) {
             ewk->wu.xyz[0].disp.pos += 24;
-            break;
+        } else {
+            ewk->wu.xyz[0].disp.pos -= 24;
         }
-        ewk->wu.xyz[0].disp.pos -= 24;
         break;
     case 0x49:
         ix = isAkumaName(My_char[Champion]);
@@ -371,16 +373,16 @@ void Setup_Pos_76(WORK_Other* ewk) {
             ewk->wu.position_z = 72;
             ewk->wu.mvxy.a[0].sp = 0x10000;
             ewk->wu.mvxy.d[0].sp = 0;
-            break;
+        } else {
+            ewk->wu.xyz[1].disp.pos = bg_w.bgw[0].wxy[1].disp.pos + EFF76_Face_Pos_Data[my_char][1] - 32;
+            if (Order[ewk->wu.dir_old] == 1) {
+                ewk->wu.xyz[0].disp.pos = bg_w.bgw[0].wxy[0].disp.pos + EFF76_Face_Pos_Data[my_char][0] + 384;
+            }
+            ewk->wu.position_z = 79;
+            ewk->wu.mvxy.a[0].sp = -0xA0000;
+            ewk->wu.mvxy.d[0].sp = 0;
         }
-        ewk->wu.xyz[1].disp.pos = bg_w.bgw[0].wxy[1].disp.pos + EFF76_Face_Pos_Data[my_char][1] - 32;
-        if (Order[ewk->wu.dir_old] == 1) {
-            ewk->wu.xyz[0].disp.pos = bg_w.bgw[0].wxy[0].disp.pos + EFF76_Face_Pos_Data[my_char][0] + 384;
-        }
-        ewk->wu.position_z = 79;
-        ewk->wu.mvxy.a[0].sp = -0xA0000;
-        ewk->wu.mvxy.d[0].sp = 0;
-        return;
+        break;
     case 0x4A:
     case 0x4B:
     case 0x4C:

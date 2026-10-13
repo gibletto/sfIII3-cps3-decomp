@@ -365,18 +365,15 @@ void Frame_Adgjust(u16 pos_x, u16 pos_y) {
 
 /* provisional name */
 void zoom_regs_update(void) {
-    SCROLL_WINDOW* win;
     if (zoom_req_flag) {
         zoom_req_flag = 0;
-        win = zoom_frame;
-        *(s16*)(VIDEO_REG + 0x68) = (win->pos + flip_zoom_ofs_x) & 0x3FF;
-        *(s16*)(VIDEO_REG + 0x6A) = win->size;
-        *(s16*)(VIDEO_REG + 0x6C) = win->mask;
-        *(s16*)(VIDEO_REG + 0x6E) = win->zoom;
-        win = &zoom_frame[1];
-        *(s16*)(VIDEO_REG + 0x78) = (win->pos + flip_zoom_ofs_y) & 0x3FF;
-        *(s16*)(VIDEO_REG + 0x7A) = win->size;
-        *(s16*)(VIDEO_REG + 0x7C) = win->mask;
-        *(s16*)(VIDEO_REG + 0x7E) = win->zoom;
+        *(s16*)(VIDEO_REG + 0x68) = (zoom_frame[0].pos + flip_zoom_ofs_x) & 0x3FF;
+        *(s16*)(VIDEO_REG + 0x6A) = zoom_frame[0].size;
+        *(s16*)(VIDEO_REG + 0x6C) = zoom_frame[0].mask;
+        *(s16*)(VIDEO_REG + 0x6E) = zoom_frame[0].zoom;
+        *(s16*)(VIDEO_REG + 0x78) = (zoom_frame[1].pos + flip_zoom_ofs_y) & 0x3FF;
+        *(s16*)(VIDEO_REG + 0x7A) = zoom_frame[1].size;
+        *(s16*)(VIDEO_REG + 0x7C) = zoom_frame[1].mask;
+        *(s16*)(VIDEO_REG + 0x7E) = zoom_frame[1].zoom;
     }
 }
