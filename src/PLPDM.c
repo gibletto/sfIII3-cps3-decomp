@@ -1055,15 +1055,19 @@ void setup_smoke_type(PLW* wk) {
     }
     if (total >= 32) {
         ix = 0;
-        if (total >= 48) {
-            ix = 1;
-            if (total >= 64) {
-                ix = 2;
-                if (total >= 80) {
-                    ix = 3;
-                }
-            }
+        if (total < 48) {
+            goto set;
         }
+        ix = 1;
+        if (total < 64) {
+            goto set;
+        }
+        ix = 2;
+        if (total < 80) {
+            goto set;
+        }
+        ix = 3;
+set:
         effect_G6_init((WORK*)wk, ix);
     }
 }

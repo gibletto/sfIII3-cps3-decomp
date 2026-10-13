@@ -317,7 +317,8 @@ void sprite_display_list_build(void) {
                 *dst = 0;
                 dst += 3;
             }
-            if (++count >= 0x1FF) {
+            count++;
+            if (count >= 0x1FF) {
                 *dst = 0x8000;
                 return;
             }

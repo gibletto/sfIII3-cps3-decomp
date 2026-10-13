@@ -450,7 +450,7 @@ s32 trans_char_cells(WORK* wk) {
             return 0;
         }
         base = simmram_slot_to_offset(blk10);
-        addr = wk->spr.slot_addr = ((u16)simmram_slot_to_cg_no(blk10));
+        wk->spr.slot_addr = addr = ((u16)simmram_slot_to_cg_no(blk10));
         chunk = set->chunk;
         for (i = 0; i < set->count; i++) {
             adr = base + chunk[i].dst * 16;

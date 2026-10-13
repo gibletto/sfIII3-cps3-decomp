@@ -128,12 +128,13 @@ void combo_control(s8 PL) {
         return;
     }
     wk = &plw[PL];
-    if (wk->cb->total == 0) {
-        return;
-    }
-    if (first_attack == 0) {
-        first_attack = wk->wu.id + 1;
-        combo_window_push(PL, 4);
+    if (wk->cb->total) {
+        if (first_attack == 0) {
+            first_attack = wk->wu.id + 1;
+            combo_window_push(PL, 4);
+            return;
+        }
+    } else {
         return;
     }
     if (pcon_dp_flag == 1 && last_hit_time == 0) {
@@ -235,8 +236,8 @@ s32 reversal_check(s8 PL) {
     if (rever_attack[PL]) {
         return 0;
     }
-    if (plw[PL].wu.routine_no[1] == 4) {
-        if (plw[PL].wu.old_rno[1] == 1 && pcon_dp_flag == 0 && plw[PL].wu.routine_no[2] >= 0x10) {
+    if (plw[PL].wu.routine_no[1] == 4 && plw[PL].wu.old_rno[1] == 1 && pcon_dp_flag == 0) {
+        if (plw[PL].wu.routine_no[2] >= 0x10) {
             rever_attack[PL] = 1;
             if (PL == 0) {
                 PLS = (1);

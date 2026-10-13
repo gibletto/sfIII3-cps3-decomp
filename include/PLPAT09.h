@@ -11,6 +11,6 @@ void Att_PL09_EX_TENGUIWA(PLW* wk);
 void Att_PL09_TOKUSHUKOUDOU(PLW* wk);
 void mvxy_table_reader(PLW* wk);
 void pl09_extra_attack(PLW* wk);
-s32 set_tenguiwa(PLW* wk, u8 data);
+void set_tenguiwa(PLW* wk, u8 data);
 
 #endif

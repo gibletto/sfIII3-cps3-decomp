@@ -619,52 +619,57 @@ void bg_base_x_move_check() {
 
     bg_w.bg2_sp_x2 = bg_w.bg2_sp_x = 0;
 
-    if (!bg_stop && !bg_app_stop) {
-        if (bg_w.chase_flag & 0xF) {
-            bgw_ptr->old_pos_x = bgw_ptr->chase_xy[0].disp.pos;
-        } else {
-            bgw_ptr->old_pos_x = bgw_ptr->wxy[0].disp.pos;
-        }
+    if (bg_stop) {
+        goto move_end;
+    }
+    if (bg_app_stop) {
+        goto move_end;
+    }
+    if (bg_w.chase_flag & 0xF) {
+        bgw_ptr->old_pos_x = bgw_ptr->chase_xy[0].disp.pos;
+    } else {
+        bgw_ptr->old_pos_x = bgw_ptr->wxy[0].disp.pos;
+    }
 
-        old_work = bgw_ptr->wxy[0].disp.pos;
-        ideal_w.iw[0].cal = bgw_ptr->wxy[0].cal;
-        bg_base_x_move_sub();
-        mvstep = ideal_w.iw[0].disp.pos;
-        mvstep -= old_work;
-        ideal_w.iw[0].cal = 0;
-        ideal_w.iw[0].disp.pos = mvstep;
+    old_work = bgw_ptr->wxy[0].disp.pos;
+    ideal_w.iw[0].cal = bgw_ptr->wxy[0].cal;
+    bg_base_x_move_sub();
+    mvstep = ideal_w.iw[0].disp.pos;
+    mvstep -= old_work;
+    ideal_w.iw[0].cal = 0;
+    ideal_w.iw[0].disp.pos = mvstep;
 
-        if (mvstep) {
-            if (mvstep < 0) {
-                if (mvstep < -bg_w.max_x) {
-                    mvstep = -bg_w.max_x;
-                }
-                mvstep = -remake_x_mvstep(-mvstep);
-            } else {
-                if (mvstep > bg_w.max_x) {
-                    mvstep = bg_w.max_x;
-                }
-                mvstep = remake_x_mvstep(mvstep);
+    if (mvstep) {
+        if (mvstep < 0) {
+            if (mvstep < -bg_w.max_x) {
+                mvstep = -bg_w.max_x;
             }
-        }
-
-        ideal_w.iw[0].disp.pos = mvstep;
-        Bg_mv_tw(ideal_w.iw[0].cal, 0);
-
-        if (bgw_ptr->wxy[0].disp.pos < bgw_ptr->l_limit2) {
-            bgw_ptr->wxy[0].disp.pos = bgw_ptr->l_limit2;
-            bgw_ptr->wxy[0].disp.low = 0;
-            bgw_ptr->xy[0].disp.pos = bgw_ptr->l_limit2;
-            bgw_ptr->xy[0].disp.low = 0;
-        }
-
-        if (bgw_ptr->wxy[0].disp.pos > bgw_ptr->r_limit2) {
-            bgw_ptr->wxy[0].disp.pos = bgw_ptr->r_limit2;
-            bgw_ptr->wxy[0].disp.low = 0;
-            bgw_ptr->xy[0].disp.pos = bgw_ptr->r_limit2;
-            bgw_ptr->xy[0].disp.low = 0;
+            mvstep = -remake_x_mvstep(-mvstep);
+        } else {
+            if (mvstep > bg_w.max_x) {
+                mvstep = bg_w.max_x;
+            }
+            mvstep = remake_x_mvstep(mvstep);
         }
     }
+
+    ideal_w.iw[0].disp.pos = mvstep;
+    Bg_mv_tw(ideal_w.iw[0].cal, 0);
+
+    if (bgw_ptr->wxy[0].disp.pos < bgw_ptr->l_limit2) {
+        bgw_ptr->wxy[0].disp.pos = bgw_ptr->l_limit2;
+        bgw_ptr->wxy[0].disp.low = 0;
+        bgw_ptr->xy[0].disp.pos = bgw_ptr->l_limit2;
+        bgw_ptr->xy[0].disp.low = 0;
+    }
+
+    if (bgw_ptr->wxy[0].disp.pos > bgw_ptr->r_limit2) {
+        bgw_ptr->wxy[0].disp.pos = bgw_ptr->r_limit2;
+        bgw_ptr->wxy[0].disp.low = 0;
+        bgw_ptr->xy[0].disp.pos = bgw_ptr->r_limit2;
+        bgw_ptr->xy[0].disp.low = 0;
+    }
+move_end:
 
     bg_w.bg2_sp_x = bgw_ptr->xy[0].disp.pos - bgw_ptr->pos_x_work;
     bg_w.bg2_sp_x2 = bgw_ptr->wxy[0].disp.pos - bgw_ptr->pos_x_work;

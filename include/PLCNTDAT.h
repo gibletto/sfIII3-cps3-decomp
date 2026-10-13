@@ -3,7 +3,7 @@
 
 #include "structs.h"
 
-s16 debug_player_change(void);
+s32 debug_player_change(void);
 void reset_piyori_and_fight(void);
 void reset_fight_status(void);
 void reset_round_and_screen(void);

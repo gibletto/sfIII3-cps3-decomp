@@ -1032,13 +1032,24 @@ void check_guard_miss(WORK* as, PLW* ds, s8 gddir) {
         return;
     }
     judge_item[ds->wu.id][Play_Type].grd_mcnt++;
-    if ((ds->guard_flag != 3) && (as->att.guard & 0x3F) && (ds->wu.xyz[1].disp.pos <= 1) &&
-        (as->work_id != 1 || !as->jump_att_flag || !(ds->cp->sw_new & 0xF)) && (!(ds->cp->sw_new & 1)) &&
-        (!(ds->saishin_lvdir & gddir))) {
+    if (ds->guard_flag == 3) {
+        goto miss;
+    }
+    if (!(as->att.guard & 0x3F)) {
+        goto miss;
+    }
+    if (ds->wu.xyz[1].disp.pos > 1) {
+        goto miss;
+    }
+    if ((as->work_id == 1 && as->jump_att_flag && (ds->cp->sw_new & 0xF)) || (ds->cp->sw_new & 1)) {
+        goto miss;
+    }
+    if (!(ds->saishin_lvdir & gddir)) {
         wf = ds->cp->waza_flag;
         if ((wf[3] + wf[4]) == 0) {
             return;
         }
     }
+miss:
     judge_item[ds->wu.id][Play_Type].grd_miss++;
 }

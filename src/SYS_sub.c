@@ -672,7 +672,7 @@ void Disp_Digit8x16(u32 value, s16 x, s16 y) {
 
 
 
-void Disp_Digit16x24(u32 value, s16 x, s16 y, s16 attr) {
+void Disp_Digit16x24(u32 value, s16 x, s16 y, u16 attr) {
     s16 i;
     s16 j;
     s32 xx;

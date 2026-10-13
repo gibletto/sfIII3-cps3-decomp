@@ -84,7 +84,8 @@ s32 check_nm_attack(PLW* wk) {
         wk->as = &asstbl_lv_10010[wk->player_number][kos][koa].as;
         break;
     default:
-        if (((Bonus_Game_Flag != 21) || !wk->bs2_on_car) && (wk->wu.xyz[1].disp.pos > 0)) {
+        if ((Bonus_Game_Flag == 21) && wk->bs2_on_car) {
+        } else if (wk->wu.xyz[1].disp.pos > 0) {
             return 0;
         }
         if (wk->cp->sw_lvbt & 2) {

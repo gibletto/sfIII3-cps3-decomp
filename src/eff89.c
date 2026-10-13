@@ -37,7 +37,7 @@
 
 void effect_89_move(WORK_Other* ewk)
 {
-    volatile s16 attr;
+    u16 attr;
 
     switch (ewk->wu.routine_no[0]) {
     case 0:

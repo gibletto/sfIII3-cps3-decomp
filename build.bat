@@ -13,11 +13,7 @@ if errorlevel 1 goto fail
 
 asmsh src\fixed_addr.src -object=obj\fixed_addr.obj
 if errorlevel 1 goto fail
-shc src\vbl_hook.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\vbl_hook.obj >obj\shc.log 2>&1
-if errorlevel 1 goto fail
 asmsh src\intr.src -object=obj\intr.obj
-if errorlevel 1 goto fail
-shc src\Game.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\Game.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\Entry.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -noinline -object=obj\Entry.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
@@ -790,8 +786,6 @@ if errorlevel 1 goto fail
 shc src\plcntset_2.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -noinline -object=obj\plcntset_2.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\PLCNTDAT.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\PLCNTDAT.obj >obj\shc.log 2>&1
-if errorlevel 1 goto fail
-shc src\plcntdat_2.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\plcntdat_2.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\PLCNT2.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\PLCNT2.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail

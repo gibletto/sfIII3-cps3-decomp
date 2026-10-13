@@ -100,6 +100,7 @@ void setup_ase_extra(WORK* wk, u8 num) {
     s16 way;
     s16 rnd_00;
     s16 rnd_01;
+    s16 *direction = &way;
     if (num_of_ase[num] == 0) {
         return;
     }

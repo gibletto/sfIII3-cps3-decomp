@@ -1299,92 +1299,97 @@ s32 Game_Manage_12_3(void) {
 void Game_Manage_12_4(void) {
     switch (C_No2) {
     case 0:
-        if (Bonus_Cut_Sub() == 0) {
-            if (--C_Timer == 0) {
-                C_No2++;
-                C_Timer = 20;
-                sc_ram_to_vram_opc(27, Game_setting.mode * 7, 1, 30);
-                Disp_Digit16x24(Bonus_Score, DE_X[3] + 35, 11, 30);
-            }
+        if (Bonus_Cut_Sub() != 0) {
+            break;
+        }
+        if (--C_Timer == 0) {
+            C_No2++;
+            C_Timer = 20;
+            sc_ram_to_vram_opc(27, Game_setting.mode * 7, 1, 30);
+            Disp_Digit16x24(Bonus_Score, DE_X[3] + 35, 11, 30);
         }
         break;
     case 1:
-        if (Bonus_Cut_Sub() == 0) {
-            if (--C_Timer == 0) {
-                C_No2++;
-                C_Timer = 1;
-                Bonus_Score = 0;
-            }
+        if (Bonus_Cut_Sub() != 0) {
+            break;
+        }
+        if (--C_Timer == 0) {
+            C_No2++;
+            C_Timer = 1;
+            Bonus_Score = 0;
         }
         break;
     case 2:
-        if (Bonus_Cut_Sub() == 0) {
-            if (--C_Timer == 0) {
-                if (Bonus_Game_result == 0 && !(PB_Status & 2)) {
-                    C_No2 = 4;
-                    C_Timer = 30;
-                    break;
-                }
-                if (Bonus_Game_result == 0) {
-                    Bonus_Game_result = 1;
+        if (Bonus_Cut_Sub() != 0) {
+            break;
+        }
+        if (--C_Timer == 0) {
+            if (Bonus_Game_result == 0 && !(PB_Status & 2)) {
+                C_No2 = 4;
+                C_Timer = 30;
+                break;
+            }
+            if (Bonus_Game_result == 0) {
+                Bonus_Game_result = 1;
+            } else {
+                Bonus_Score += 1000;
+                Score[Player_id][0] += 1000;
+                Disp_Digit16x24(Bonus_Score, DE_X[3] + 35, 11, 30);
+                Sound_SE(100);
+            }
+            if (--Bonus_Game_result == 0) {
+                C_No2++;
+                if (PB_Status) {
+                    C_No3 = 1;
+                    C_Timer = 10;
                 } else {
-                    Bonus_Score += 1000;
-                    Score[Player_id][0] += 1000;
-                    Disp_Digit16x24(Bonus_Score, DE_X[3] + 35, 11, 30);
-                    Sound_SE(100);
-                }
-                if (--Bonus_Game_result == 0) {
-                    C_No2++;
-                    if (PB_Status) {
-                        C_No3 = 1;
-                        C_Timer = 10;
-                        break;
-                    }
                     C_No3 = 0;
                     C_Timer = 20;
-                    break;
                 }
-                C_Timer = 3;
+                break;
             }
+            C_Timer = 3;
         }
         break;
     case 3:
         switch (C_No3) {
         case 0:
-            if (Bonus_Cut_Sub() == 0) {
-                if (--C_Timer == 0) {
-                    C_No2++;
-                    C_Timer = 30;
-                    Bonus_Game_result = Stock_Bonus_Game_Result;
-                }
+            if (Bonus_Cut_Sub() != 0) {
+                break;
+            }
+            if (--C_Timer == 0) {
+                C_No2++;
+                C_Timer = 30;
+                Bonus_Game_result = Stock_Bonus_Game_Result;
             }
             break;
         case 1:
-            if (Bonus_Cut_Sub() == 0) {
-                if (--C_Timer == 0) {
-                    C_No3++;
-                    C_Timer = 10;
-                    Disp_Bonus_Perfect();
-                }
+            if (Bonus_Cut_Sub() != 0) {
+                break;
+            }
+            if (--C_Timer == 0) {
+                C_No3++;
+                C_Timer = 10;
+                Disp_Bonus_Perfect();
             }
             break;
         case 2:
-            if (Bonus_Cut_Sub() == 0) {
-                if (--C_Timer == 0) {
-                    C_No3++;
-                    C_Timer = 40;
-                    if (PB_Status & 1) {
-                        Score[Player_id][0] += Ball_Perfect_PTS[0][Bonus_Stage_Level];
-                    }
-                    if (PB_Status & 2) {
-                        Score[Player_id][0] += Ball_Perfect_PTS[1][Bonus_Stage_Level];
-                    }
-                    if (Score[Player_id][0] >= 99999900) {
-                        Score[Player_id][0] = 99999900;
-                    }
-                    Flash_Bonus_Perfect();
-                    break;
+            if (Bonus_Cut_Sub() != 0) {
+                break;
+            }
+            if (--C_Timer == 0) {
+                C_No3++;
+                C_Timer = 40;
+                if (PB_Status & 1) {
+                    Score[Player_id][0] += Ball_Perfect_PTS[0][Bonus_Stage_Level];
                 }
+                if (PB_Status & 2) {
+                    Score[Player_id][0] += Ball_Perfect_PTS[1][Bonus_Stage_Level];
+                }
+                if (Score[Player_id][0] >= 99999900) {
+                    Score[Player_id][0] = 99999900;
+                }
+                Flash_Bonus_Perfect();
             }
             break;
         default:
@@ -1483,6 +1488,8 @@ void Game_Manage_12_8(void) {
                 C_Timer = 30;
             }
             break;
+        default:
+            break;
         }
         break;
     case 1:
@@ -1501,26 +1508,31 @@ void Game_Manage_12_8(void) {
         }
         break;
     case 2:
-        if (Bonus_Cut_Sub() == 0) {
-            if (--C_Timer == 0) {
-                C_No2++;
-                C_Timer = 1;
-            }
+        if (Bonus_Cut_Sub() != 0) {
+            break;
+        }
+        if (--C_Timer == 0) {
+            C_No2++;
+            C_Timer = 1;
         }
         break;
     case 3:
-        if (Bonus_Cut_Sub() == 0) {
-            if (--C_Timer == 0) {
-                if (bcounter_down(0) == 0) {
-                    C_No2++;
-                    C_Timer = 3;
-                    Bonus_Score += 1000;
-                    Score[Player_id][0] += 1000;
-                } else {
-                    C_Timer = 3;
-                    Bonus_Score += 1000;
-                    Score[Player_id][0] += 1000;
-                }
+        if (Bonus_Cut_Sub() != 0) {
+            break;
+        }
+        if (--C_Timer == 0) {
+            if (bcounter_down(0) == 0) {
+                C_No2++;
+                C_Timer = 30;
+                C_Timer = 3;
+                Bonus_Score += 1000;
+                Score[Player_id][0] += 1000;
+                Disp_Digit16x24(Bonus_Score, 35, 11, 30);
+                Sound_SE(100);
+            } else {
+                C_Timer = 3;
+                Bonus_Score += 1000;
+                Score[Player_id][0] += 1000;
                 Disp_Digit16x24(Bonus_Score, 35, 11, 30);
                 Sound_SE(100);
             }
@@ -1752,9 +1764,8 @@ void Disp_Win_Record_Sub(s16 PL_id) {
 
 
 void Disp_Win_Record(void) {
+    s16 x;
     s16 pl;
-    s32 x;
-    s8* str;
     s16 num;
     s16 digit;
     s16 shown;
@@ -1762,7 +1773,7 @@ void Disp_Win_Record(void) {
         if (Win_Record[0] == 0 && Win_Record[1] == 0) {
             return;
         }
-        if (Win_Record[0] != 0) {
+        if (Win_Record[0]) {
             pl = 0;
             x = 5;
         } else {
@@ -1782,13 +1793,12 @@ void Disp_Win_Record(void) {
     }
     switch (Win_Record[pl]) {
     case 1:
-        str = Game_Manage_7_2_sub0_table;
+        tilemap_print_string_attr(x, 0, 18, Game_Manage_7_2_sub0_table);
         break;
     default:
-        str = Wins_msg;
+        tilemap_print_string_attr(x, 0, 18, Wins_msg);
         break;
     }
-    tilemap_print_string_attr(x, 0, 18, str);
     shown = 0;
     num = Win_Record[pl];
     digit = num / 100;
@@ -1801,7 +1811,8 @@ void Disp_Win_Record(void) {
     if (shown != 0 || digit > 0) {
         tilemap_print_hex_block(x - 3, 0, 18, (s8)digit, 1, 1);
     }
-    tilemap_print_hex_block(x - 2, 0, 18, (s8)(num - digit * 10), 1, 1);
+    num -= digit * 10;
+    tilemap_print_hex_block(x - 2, 0, 18, (s8)num, 1, 1);
 }
 
 

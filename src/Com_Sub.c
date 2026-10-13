@@ -4755,8 +4755,9 @@ s32 Check_Flip_Term(PLW* wk) {
 s32 Setup_EM_Rank_Index(PLW* wk) {
     if (EM_Rank != 0) {
         return 0x12;
+    } else {
+        return wk->player_number;
     }
-    return wk->player_number;
 }
 
 
