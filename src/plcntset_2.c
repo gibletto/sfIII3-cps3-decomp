@@ -72,7 +72,11 @@
 void Player_control(void) {
     s16 i;
     pl_eff_disp_stop = 0;
-    if (((pcon_rno[0] + pcon_rno[1]) == 0) || (!Game_pause && EXE_flag == 0)) {
+    if ((pcon_rno[0] + pcon_rno[1]) == 0) {
+        goto run;
+    }
+    if (!Game_pause && !EXE_flag) {
+run:
         pcon_timer++;
         pcon_timer &= 0x7FFF;
         set_scrrrl();
@@ -224,10 +228,10 @@ void init_app_30000(void) {
         load_char_gfx(0x9DA8, 1);
         if (bg_w.stage != 8 || Round_num != 0) {
             if (plw[0].player_number == PL_HUGO) {
-                effect_33_init(&plw[0].wu, 0);
+                effect_33_init((WORK*)&plw[0], 0);
             }
             if (plw[1].player_number == PL_HUGO) {
-                effect_33_init(&plw[1].wu, 0);
+                effect_33_init((WORK*)&plw[1], 0);
             }
         }
         break;

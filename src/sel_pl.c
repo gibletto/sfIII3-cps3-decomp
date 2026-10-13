@@ -721,7 +721,6 @@ void Auto_Repeat_Sub(s16 PL_id) {
 
 s32 Auto_Repeat_Sub_Wife(s16 pl) {
     u16 sw;
-    s8* cnt;
     if (Cursor_Move[pl] || !Demo_Flag) {
         return 0;
     }
@@ -735,21 +734,23 @@ s32 Auto_Repeat_Sub_Wife(s16 pl) {
         if (sw & 1) {
             Auto_No[pl] = 1;
             Auto_Cursor[pl] = 1;
-        } else if (!(sw & 2)) {
+            Auto_Timer[pl] = Auto_Repeat_Wife_Data[0];
+            Auto_Index[pl] = 1;
             break;
-        } else {
+        }
+        if (sw & 2) {
             Auto_No[pl] = 1;
             Auto_Cursor[pl] = 2;
+            Auto_Timer[pl] = Auto_Repeat_Wife_Data[0];
+            Auto_Index[pl] = 1;
+            break;
         }
-        Auto_Timer[pl] = Auto_Repeat_Wife_Data[0];
-        Auto_Index[pl] = 1;
         break;
     case 1:
         if (sw &= Auto_Cursor[pl]) {
             if (--Auto_Timer[pl] == 0) {
-                cnt = &Auto_Index[pl];
-                Auto_Timer[pl] = Auto_Repeat_Wife_Data[(*cnt)++];
-                if (*cnt > 2) {
+                Auto_Timer[pl] = Auto_Repeat_Wife_Data[Auto_Index[pl]++];
+                if (Auto_Index[pl] > 2) {
                     Auto_Index[pl] = 2;
                 }
                 if (sw & 1) {

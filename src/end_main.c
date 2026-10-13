@@ -174,10 +174,11 @@ void opning_init_00000(void) {
         op_w.bgw[i].r_no_1 = 0;
         op_w.bgw[i].bg_no = i;
     }
-    sprite_list_setup(0, 1, (s16*)((u32)op_scr_record_data[0]));
-    sprite_list_setup(1, 1, (s16*)((u32)op_scr_record_data[1]));
-    sprite_list_setup(2, 1, (s16*)((u32)op_scr_record_data[2]));
-    sprite_list_setup(3, 1, (s16*)((u32)op_scr_record_data[3]));
+    sprite_list_setup(0, 1, (s16*)op_scr_record_data_0);
+    sprite_list_setup(1, 1, (s16*)op_scr_record_data_1);
+    sprite_list_setup(2, 1, (s16*)op_scr_record_data_2);
+    sprite_list_setup(3, 1, (s16*)op_scr_record_data_3);
+clear_flags:
     op_w.r_no_2 = 0;
     op_end_flag = 0;
     bg_stop = 0;
@@ -1755,6 +1756,8 @@ void op_bg0_0003(s16 r_index) {
         break;
     case 1:
         break;
+    default:
+        break;
     }
     opening_bgw_commit_pos(0);
 }
@@ -1834,6 +1837,8 @@ void op_bg0_0005(s16 r_index) {
             bgw_ptr->wxy[0].disp.pos += op_bg0_0005_tbl[bgw_ptr->free];
             bgw_ptr->xy[1].disp.pos += op_bg0_0005_tbl[bgw_ptr->free];
         }
+        break;
+    default:
         break;
     }
     opening_bgw_commit_pos(0);
@@ -2421,7 +2426,7 @@ void opening_title_00(void) {
     bg_w.bgw[0].bg_address = (u16*)simmram_slot_addr(bg_w.bgw[0].bg_adrs_c_no);
     scrn_map_set_now(0, (u32)bg_w.bgw[0].bg_address);
     scrn_map_set(0, (u32)bg_w.bgw[0].bg_address);
-    sprite_list_setup(0, 1, (s16*)((u32)op_scr_record_data[0]));
+    sprite_list_setup(0, 1, (s16*)op_scr_record_data_0);
     load_char_gfx(0xE3D0, 1);
 }
 

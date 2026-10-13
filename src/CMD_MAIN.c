@@ -2016,9 +2016,9 @@ void debug_hit_a_print_box_values(WORK* wk) {
             tilemap_print_hex(21, i + 5, 2, v, 3, 0);
             tilemap_print_hex(25, i + 5, 2, box->body_dm[i][3], 3, 0);
         }
-    } else {
-        tilemap_print_string(0, 0, 0xFFFF, dbg_blank4_str);
+        return;
     }
+    tilemap_print_string(0, 0, 0xFFFF, dbg_blank4_str);
 }
 
 

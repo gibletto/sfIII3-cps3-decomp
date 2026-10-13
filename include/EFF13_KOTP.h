@@ -8,6 +8,6 @@ void kotp_14000(WORK_Other* ewk);
 void kotp_16000(WORK_Other* ewk, TAMA* twk);
 void kotp_13000(WORK_Other* ewk, TAMA* twk);
 void kotp_15000(WORK_Other* ewk, TAMA* twk);
-s32 effect_13_init(WORK* wk, u8 data);
+s32 effect_13_init();
 
 #endif

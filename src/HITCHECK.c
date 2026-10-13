@@ -163,12 +163,10 @@ wait_dm:
         case 3:
             ds->hazusenai_flag = 1;
             as->hazusenai_flag = 1;
-            break;
-        default:
-            ds->cat_break_reserve = 1;
-            as->cat_break_reserve = 1;
-            break;
+            goto timer;
         }
+        ds->cat_break_reserve = 1;
+        as->cat_break_reserve = 1;
     timer:
         if (Game_timer & 1) {
             goto two;
@@ -193,7 +191,10 @@ wait_dm:
     set_damage_and_piyo(as, ds);
     ds->wu.dm_guard_success = -1;
     if (ds->guard_flag == 3 || as->wu.att.guard == 0 || ds->py->flag != 0) {
-        if (ds->wu.xyz[1].disp.pos > 0 || check_pat_status(&ds->wu)) {
+        if (ds->wu.xyz[1].disp.pos > 0) {
+            goto three;
+        }
+        if (check_pat_status(&ds->wu)) {
             goto three;
         }
         goto four;
@@ -378,7 +379,10 @@ void plef_at_vs_player_damage_union(PLW* as, PLW* ds, s8 gddir) {
             goto switch_defense_ground;
         }
         if (ds->wu.routine_no[1] == 1) {
-            if (ds->wu.xyz[1].disp.pos > 0 || check_pat_status(&ds->wu)) {
+            if (ds->wu.xyz[1].disp.pos > 0) {
+                goto jump_one;
+            }
+            if (check_pat_status(&ds->wu)) {
                 goto jump_one;
             } else {
                 goto jump_two;
@@ -395,10 +399,10 @@ void plef_at_vs_player_damage_union(PLW* as, PLW* ds, s8 gddir) {
     jump_one:
         as->wu.hf.hit.player = 2;
         dm_reaction_init_set(as, ds);
-        if (!(as->wu.att.dipsw & 0x10)) {
-            ds->wu.routine_no[2] = get_sky_nm_damage(ds->wu.routine_no[2]);
-        } else {
+        if (as->wu.att.dipsw & 0x10) {
             ds->wu.routine_no[2] = get_sky_sp_damage(ds->wu.routine_no[2]);
+        } else {
+            ds->wu.routine_no[2] = get_sky_nm_damage(ds->wu.routine_no[2]);
         }
     } else {
     switch_defense_ground:

@@ -7,8 +7,6 @@ INPUT obj\sections.obj
 INPUT obj\tasksw_tbl.obj
 INPUT obj\Entry_tbl.obj
 INPUT obj\Com_Pl_tbl.obj
-INPUT obj\vbl_hook.obj
-INPUT obj\Game.obj
 INPUT obj\Entry.obj
 INPUT obj\entry_2.obj
 INPUT obj\tasksw.obj
@@ -652,7 +650,6 @@ INPUT obj\gill_char.obj
 INPUT obj\alex_char.obj
 INPUT obj\plcntset_2.obj
 INPUT obj\PLCNTDAT.obj
-INPUT obj\plcntdat_2.obj
 INPUT obj\PLCNT2.obj
 INPUT obj\PLCNT3.obj
 INPUT obj\PLMAIN.obj

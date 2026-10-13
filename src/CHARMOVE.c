@@ -1285,6 +1285,7 @@ s32 comm_schx(WORK* wk, CHAR_CMD* ctc) {
         wk->mvxy.a[0].sp = (wk->mvxy.a[0].sp * ctc->ix) / ctc->pat;
     case 1:
         wk->mvxy.d[0].sp = (wk->mvxy.d[0].sp * ctc->ix) / ctc->pat;
+    default:
         break;
     }
     return 1;
@@ -1301,6 +1302,7 @@ s32 comm_schy(WORK* wk, CHAR_CMD* ctc) {
         wk->mvxy.a[1].sp = (wk->mvxy.a[1].sp * ctc->ix) / ctc->pat;
     case 1:
         wk->mvxy.d[1].sp = (wk->mvxy.d[1].sp * ctc->ix) / ctc->pat;
+    default:
         break;
     }
     return 1;

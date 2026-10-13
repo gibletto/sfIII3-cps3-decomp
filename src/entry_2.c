@@ -775,11 +775,12 @@ s16 Jump_Index;
             tilemap_print_string_attr(DE_X[Entry_Mes_Wide[PL_id]] + Entry_Mes_X[PL_id], 32, 18, msg_blank);
             break;
         case 1:
-            if (--Personal_Timer[PL_id] == 0) {
-                E_Number[PL_id][1] += 1;
-                Naming_Init(PL_id);
-                commit_name_entry_row_both_players(Text_Page_Y);
+            if (--Personal_Timer[PL_id] != 0) {
+                break;
             }
+            E_Number[PL_id][1] += 1;
+            Naming_Init(PL_id);
+            commit_name_entry_row_both_players(Text_Page_Y);
             break;
         case 2:
             if (Forbid_Break == 1) {
@@ -1357,13 +1358,12 @@ s16 PL_id;
         break;
     case 2:
         if (--*timer != 0) {
-            return 0;
+            break;
         }
         F_No0[PL_id] -= 1;
         F_Timer[PL_id] = 50;
         tilemap_print_string_attr(Entry_Mes_X[PL_id] + DE_X[Entry_Mes_Wide[PL_id]], Text_Page_Y, 18,
                                   (s8*)msg_join_in);
-        break;
     }
     return 0;
 }
@@ -1456,12 +1456,11 @@ s16 unused;
 s8 coins;
 {
     s32 count = coins;
-    s16 *timer;
-    switch (timer = F_Timer, F_No2[PL_id]) {
+    switch (F_No2[PL_id]) {
     case 0:
         F_No2[PL_id] += 1;
         F_No1[PL_id] = F_No0[PL_id] = 0;
-        timer[PL_id] = 1;
+        F_Timer[PL_id] = 1;
         tilemap_print_string_attr(Entry_Mes_X[PL_id] + DE_X[Entry_Mes_Wide[PL_id]], Text_Page_Y, 18,
                                   (s8*)msg_blank);
         if (E_No0 == 6 && PL_id == LOSER) {
@@ -1470,11 +1469,11 @@ s8 coins;
         break;
     case 1:
         if (Disp_More_Coins(PL_id, unused, count) == 0) {
-            if (--timer[PL_id] != 0) {
+            if (--F_Timer[PL_id] != 0) {
                 break;
             }
             F_No2[PL_id] += 1;
-            timer[PL_id] = 50;
+            F_Timer[PL_id] = 50;
             if (count == 1) {
                 tilemap_print_string_attr(Entry_Mes_X[PL_id] + DE_X[Entry_Mes_Wide[PL_id]], Text_Page_Y, 18,
                                           (s8*)msg_insert_more_coin);
@@ -1490,9 +1489,9 @@ s8 coins;
         break;
     case 2:
         Disp_More_Coins(PL_id, unused, count);
-        if (--timer[PL_id] == 0) {
+        if (--F_Timer[PL_id] == 0) {
             F_No2[PL_id] -= 1;
-            timer[PL_id] = 30;
+            F_Timer[PL_id] = 30;
             tilemap_print_string_attr(Entry_Mes_X[PL_id] + DE_X[Entry_Mes_Wide[PL_id]], Text_Page_Y, 18,
                                       (s8*)msg_blank);
         }

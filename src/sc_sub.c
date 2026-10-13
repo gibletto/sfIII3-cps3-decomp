@@ -43,11 +43,12 @@ void win_mark_control(s16 pl) {
         if (PL_Wins[pl] == 0) {
             win_mark_rno[pl] = 99;
             return;
+        } else {
+            win_mark_rno[pl]++;
+            win_mark_timer[pl] = 1;
+            win_mark_phase[pl] = 0;
+            win_mark_pos_set(pl);
         }
-        win_mark_rno[pl]++;
-        win_mark_timer[pl] = 1;
-        win_mark_phase[pl] = 0;
-        win_mark_pos_set(pl);
         return;
     case 1:
         if (win_mark_new[pl]) {
@@ -63,9 +64,9 @@ void win_mark_control(s16 pl) {
         } else {
             win_mark_phase[pl] = 0;
         }
-        return;
+        break;
     default:
-        if (win_mark_new[pl]) {
+        if (win_mark_new[pl] != 0) {
             if (win_mark_phase[pl ^ 1] == 0) {
                 win_mark_rno[pl] = 1;
                 win_mark_new[pl] = 0;

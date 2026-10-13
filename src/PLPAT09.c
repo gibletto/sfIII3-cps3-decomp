@@ -83,24 +83,23 @@ void Att_SP_YAGYOUDAMA(PLW* wk) {
 
 
 
-s32 set_tenguiwa(PLW* wk, u8 data) {
+void set_tenguiwa(PLW* wk, u8 data) {
     s16 i;
     s16 j;
     u16 num;
-    s16 rv;
     const u8* tengu;
     WORK* tmw;
-    if (!data) {
+    if (data) {
+    } else {
         tengu = tenguiwa_stand_by[tenguiwa_stage_data[bg_w.stage][0]];
         for (i = 0; i < 3; i++) {
             effect_13_init((WORK*)wk, tengu[random_16_com() & 7]);
         }
         for (j = 0, i = 0; i < 8; i++) {
-            if (!(rv = get_my_shell_ix((WORK*)wk, i, &tmw))) {
+            if (!get_my_shell_ix((WORK*)wk, i, &tmw)) {
                 continue;
             }
-            rv = tmw->type;
-            num = rv - 24;
+            num = tmw->type - 24;
             if (num > 35) {
                 continue;
             }
@@ -109,13 +108,13 @@ s32 set_tenguiwa(PLW* wk, u8 data) {
             tmw->old_pos[2] = tenguiwa_pos_hosei[j][2];
             tmw->scr_mv_x = tenguiwa_pos_hosei[j][3];
             tmw->scr_mv_y = tenguiwa_pos_hosei[j][4];
-            rv = tmw->direction = tenguiwa_pos_hosei[j][5];
+            tmw->direction = tenguiwa_pos_hosei[j][5];
             j++;
             if (j > 2) {
                 break;
             }
         }
-        return rv;
+        return;
     }
     tengu = tenguiwa_stand_by[tenguiwa_stage_data[bg_w.stage][1]];
     for (i = 0; i < 5; i++) {
@@ -123,11 +122,10 @@ s32 set_tenguiwa(PLW* wk, u8 data) {
         continue;
     }
     for (j = 0, i = 0; i < 8; i++) {
-        if (!(rv = get_my_shell_ix((WORK*)wk, i, &tmw))) {
+        if (!get_my_shell_ix((WORK*)wk, i, &tmw)) {
             continue;
         }
-        rv = tmw->type;
-        num = rv - 24;
+        num = tmw->type - 24;
         if (num > 35) {
             continue;
         }
@@ -136,13 +134,12 @@ s32 set_tenguiwa(PLW* wk, u8 data) {
         tmw->old_pos[2] = tenguiwa_pos_hosei2[j][2];
         tmw->scr_mv_x = tenguiwa_pos_hosei2[j][3];
         tmw->scr_mv_y = tenguiwa_pos_hosei2[j][4];
-        rv = tmw->direction = tenguiwa_pos_hosei2[j][5];
+        tmw->direction = tenguiwa_pos_hosei2[j][5];
         j++;
         if (j > 4) {
             break;
         }
     }
-    return rv;
 }
 
 

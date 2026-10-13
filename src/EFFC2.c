@@ -413,14 +413,15 @@ void effC2_main_process_second(WORK_Other* ewk, PLW* twk) {
                 default:
                     break;
                 }
-                if (ewk->wu.cg_type == 0xFF) {
-                    set_char_move_init(&ewk->wu, 0, 70);
-                    ewk->wu.dir_old = 0;
-                    ewk->wu.routine_no[2] = 0;
-                    ewk->wu.original_vitality = ewk->wu.shell_ix[0] = 0x640;
-                    ewk->wu.vital_old = 0;
-                    Time_Stop = 0;
+                if (ewk->wu.cg_type != 0xFF) {
+                    break;
                 }
+                set_char_move_init(&ewk->wu, 0, 70);
+                ewk->wu.dir_old = 0;
+                ewk->wu.routine_no[2] = 0;
+                ewk->wu.original_vitality = ewk->wu.shell_ix[0] = 0x640;
+                ewk->wu.vital_old = 0;
+                Time_Stop = 0;
                 break;
             }
             break;

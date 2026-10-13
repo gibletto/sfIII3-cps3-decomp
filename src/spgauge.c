@@ -295,7 +295,7 @@ void spgauge_control(s8 Spg_Num) {
             sa_gauge_flash[Spg_Num] &= ~1;
         }
     }
-    if (spg_dat[Spg_Num].max != 0) {
+    if (spg_dat[Spg_Num].max) {
         sast_control(Spg_Num);
     } else if (spg_dat[Spg_Num].flag != 0) {
         samoji_control(Spg_Num);
@@ -304,7 +304,7 @@ void spgauge_control(s8 Spg_Num) {
         sagauge_color_chenge(Spg_Num);
     }
     if (spg_dat[Spg_Num].current_spg != plw[Spg_Num].sa->gauge.s.h || spg_dat[Spg_Num].max != 0) {
-        if (spg_dat[Spg_Num].max != 0) {
+        if (spg_dat[Spg_Num].max) {
             spg_dat[Spg_Num].current_spg = spg_dat[Spg_Num].spg_dotlen;
         } else {
             spg_dat[Spg_Num].current_spg = plw[Spg_Num].sa->gauge.s.h;
@@ -418,14 +418,15 @@ void sast_control(s8 Stpl_Num) {
             spg_dat[Stpl_Num].timer2--;
             if (spg_dat[Stpl_Num].timer2 != 0) {
                 break;
+            } else {
+                spg_dat[Stpl_Num].kind++;
+                if (spg_dat[Stpl_Num].kind == 3) {
+                    spg_dat[Stpl_Num].kind = 0;
+                }
+                sa_gauge_trans(Stpl_Num, spg_dat[Stpl_Num].kind);
+                sa_stock_trans(spg_dat[Stpl_Num].spg_level, spg_dat[Stpl_Num].kind, Stpl_Num);
+                spg_dat[Stpl_Num].timer2 = 1;
             }
-            spg_dat[Stpl_Num].kind++;
-            if (spg_dat[Stpl_Num].kind == 3) {
-                spg_dat[Stpl_Num].kind = 0;
-            }
-            sa_gauge_trans(Stpl_Num, spg_dat[Stpl_Num].kind);
-            sa_stock_trans(spg_dat[Stpl_Num].spg_level, spg_dat[Stpl_Num].kind, Stpl_Num);
-            spg_dat[Stpl_Num].timer2 = 1;
         } else {
             sa_gauge_trans(Stpl_Num, 1);
             sa_stock_trans(spg_dat[Stpl_Num].spg_level, 1, Stpl_Num);
@@ -456,10 +457,16 @@ void samoji_control(s8 Stpl_Num) {
             }
         case 1:
             spg_dat[Stpl_Num].timer--;
-            if ((!spg_dat[Stpl_Num].sa_mukou || spg_dat[Stpl_Num].timer != 0) && spg_dat[Stpl_Num].spg_level == plw[Stpl_Num].sa->store) {
+            if (spg_dat[Stpl_Num].sa_mukou) {
+                if (spg_dat[Stpl_Num].timer == 0) {
+                    goto off;
+                }
+            }
+            if (spg_dat[Stpl_Num].spg_level == plw[Stpl_Num].sa->store) {
                 do { spg_dat[Stpl_Num].timer2--; if (spg_dat[Stpl_Num].kind == 0) { if (spg_dat[Stpl_Num].timer2 == 0) { sa_stock_trans(spg_dat[Stpl_Num].spg_level, 0, Stpl_Num); sa_gauge_trans(Stpl_Num, 0); spg_dat[Stpl_Num].kind = 1; spg_dat[Stpl_Num].timer2 = 2; } } else if (spg_dat[Stpl_Num].timer2 == 0) { sa_stock_trans(spg_dat[Stpl_Num].spg_level, 1, Stpl_Num); sa_gauge_trans(Stpl_Num, 1); spg_dat[Stpl_Num].kind = 0; spg_dat[Stpl_Num].timer2 = 2; } } while (0);
                 return;
             }
+        off:
             if (spg_dat[Stpl_Num].sa_flag == 0 || spg_dat[Stpl_Num].sa_mukou != 0) {
                 goto jump;
             }
@@ -526,7 +533,7 @@ void samoji_control(s8 Stpl_Num) {
         spg_dat[Stpl_Num].timer--;
         if (spg_dat[Stpl_Num].timer != 0) {
             do { spg_dat[Stpl_Num].timer2--; if (spg_dat[Stpl_Num].kind == 0) { if (spg_dat[Stpl_Num].timer2 == 0) { sa_stock_trans(spg_dat[Stpl_Num].spg_level, 0, Stpl_Num); sa_gauge_trans(Stpl_Num, 0); spg_dat[Stpl_Num].kind = 1; spg_dat[Stpl_Num].timer2 = 2; } } else if (spg_dat[Stpl_Num].timer2 == 0) { sa_stock_trans(spg_dat[Stpl_Num].spg_level, 1, Stpl_Num); sa_gauge_trans(Stpl_Num, 1); spg_dat[Stpl_Num].kind = 0; spg_dat[Stpl_Num].timer2 = 2; } } while (0);
-            return;
+            break;
         }
         if (spg_dat[Stpl_Num].max_old != 0 && spg_dat[Stpl_Num].sa_mukou == 0) {
             sa_moji_trans(Stpl_Num, 0, 0);
@@ -544,6 +551,8 @@ void samoji_control(s8 Stpl_Num) {
         spg_dat[Stpl_Num].sa_flag = 0;
         spg_dat[Stpl_Num].ex_flag = 0;
         spg_dat[Stpl_Num].sa_mukou = 0;
+        break;
+    case 2:
         break;
     }
 }
@@ -677,9 +686,7 @@ void sa_moji_trans(Stpl_Num, Kind, OnOff)
 
 
 
-void sa_waku_trans(pl_kind)
-s8 pl_kind;
-{
+void sa_waku_trans(s8 pl_kind, s8 pl) {
     s8 i;
     s16 len;
     const u16* sa_char_ptr;

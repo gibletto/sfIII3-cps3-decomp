@@ -698,9 +698,11 @@ void jumping_union_process(WORK* wk, s16 num) {
     add_mvxy_speed(wk);
     cal_mvxy_speed(wk);
     char_move(wk);
-    if ((Bonus_Game_Flag == 21) && (wk->operator != 0) && (saishin_bs2_area_car((PLW*)wk) == 0)) {
-        if (wk->xyz[1].disp.pos + wk->cg_jphos > bs2_floor[2]) {
-        } else {
+    if ((Bonus_Game_Flag == 21) && (wk->operator != 0)) {
+        if (saishin_bs2_area_car((PLW*)wk) != 0) {
+            goto ground;
+        }
+        if (wk->xyz[1].disp.pos + wk->cg_jphos <= bs2_floor[2]) {
             wk->position_y = wk->xyz[1].disp.pos = bs2_floor[2];
             wk->mvxy.a[1].sp = 0;
             wk->routine_no[3] = num;
@@ -709,6 +711,7 @@ void jumping_union_process(WORK* wk, s16 num) {
         }
         return;
     }
+ground:
     if ((wk->xyz[1].disp.pos + wk->cg_jphos) <= 0) {
         wk->position_y = 0;
         wk->xyz[1].cal = 0;
