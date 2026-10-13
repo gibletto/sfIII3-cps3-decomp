@@ -29,7 +29,6 @@ void stun_mark_put(s8 pl);
 void fade_cont_init(void) {
     const s16* tbl;
     const s16* dat;
-    FADE_LAYER* fw;
     s8 i;
     s8 num;
     fade_layer_num = 0;
@@ -38,21 +37,20 @@ void fade_cont_init(void) {
     tbl = fade_data_tbl[Fade_Number];
     fade_layer_num = num = *tbl++;
     for (i = 0; i < num; i++) {
-        fw = &fade_layer[i];
-        fw->adrs = fade_adrs_tbl[tbl[0]];
-        fw->cur = fw->adrs;
+        fade_layer[i].adrs = fade_adrs_tbl[tbl[0]];
+        fade_layer[i].cur = fade_layer[i].adrs;
         dat = fade_param_tbl[tbl[1]];
-        fw->v8 = dat[0];
-        fw->v10 = dat[1];
-        fw->v12 = fw->v10;
-        fw->v14 = fw->v10;
-        fw->v16 = dat[2];
-        fw->kind = dat[3];
-        fw->v20 = dat[4];
-        fw->v22 = fw->v20;
-        fw->v24 = dat[5];
-        fw->on = 1;
-        switch (fw->kind) {
+        fade_layer[i].v8 = dat[0];
+        fade_layer[i].v10 = dat[1];
+        fade_layer[i].v12 = fade_layer[i].v10;
+        fade_layer[i].v14 = fade_layer[i].v10;
+        fade_layer[i].v16 = dat[2];
+        fade_layer[i].kind = dat[3];
+        fade_layer[i].v20 = dat[4];
+        fade_layer[i].v22 = fade_layer[i].v20;
+        fade_layer[i].v24 = dat[5];
+        fade_layer[i].on = 1;
+        switch (fade_layer[i].kind) {
         case 0:
         case 1:
             fade_layer[i].step = 64;

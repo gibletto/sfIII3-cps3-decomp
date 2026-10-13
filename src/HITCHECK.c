@@ -435,6 +435,7 @@ void plef_at_vs_player_damage_union(PLW* as, PLW* ds, s8 gddir) {
                     if (check_trunk_damage(ds->wu.routine_no[2])) {
                         ds->wu.routine_no[2] = get_kind_of_trunk_dm(as->wu.dir_atthit, ds->wu.dm_rl);
                     }
+                    break;
                 }
             }
         }

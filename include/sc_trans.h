@@ -18,7 +18,7 @@ void sc_chr_sheet_to_ram(u16 chr, u16 pos, u16 w, u16 h);
 void sc_chr_backup(s8 flag);
 void sc_chr_list_trans(s8 ix);
 void sc_chr_slot_trans(s8 ix, u16 code, s8 to_ram);
-void sc_ram_to_vram();
+void sc_ram_to_vram(s8 ix, s8 dx, s8 dy);
 void sc_ram_to_vram_opc(s8 ix, s8 dx, s8 dy, u16 attr);
 void score8x16_put(u16 x, u16 y, u16 attr, u16 code);
 void score16x24_put(u16 x, u16 y, u16 attr, s32 n);

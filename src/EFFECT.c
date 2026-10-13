@@ -28,7 +28,7 @@ void move_effect_work(s16 index) {
     s16 next_ix;
     WORK* c_addr;
     exec_tm[index]++;
-    curr_ix = (&head_ix[0])[index];
+    curr_ix = head_ix[index];
     while (curr_ix != -1) {
         c_addr = (WORK*)frw[curr_ix];
         next_ix = c_addr->behind;
@@ -127,7 +127,7 @@ s16 iid;
             push_effect_work(c_addr);
             curr_ix = next_ix;
         }
-        (&exec_tm[0])[lix] = 0;
+        exec_tm[lix] = 0;
     } else {
         while (curr_ix != -1) {
             c_addr = (WORK*)frw[curr_ix];

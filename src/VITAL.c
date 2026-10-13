@@ -50,24 +50,22 @@ void debug_scrfont_view(void) {
 
 
 void vital_cont_init(void) {
-    VITAL_BAR* v0 = &vit_bar[0];
-    VITAL_BAR* v1 = &vit_bar[1];
-    v0->cyerw = 160;
-    v0->cred = 160;
-    v0->ored = 160;
-    v0->unused = 0;
-    v0->colnum = 0;
-    v0->cell = vital_cell_tbl;
-    v0->attr = vital_attr_tbl[0];
-    v1->cyerw = 160;
-    v1->cred = 160;
-    v1->ored = 160;
-    v1->unused = 0;
-    v1->colnum = 0;
-    v1->cell = vital_cell_tbl;
-    v1->attr = vital_attr_tbl[1];
-    v0->xpos = vital_npos_tbl[0];
-    v1->xpos = vital_npos_tbl[1];
+    vit_bar[0].cyerw = 160;
+    vit_bar[0].cred = 160;
+    vit_bar[0].ored = 160;
+    vit_bar[0].unused = 0;
+    vit_bar[0].colnum = 0;
+    vit_bar[0].cell = vital_cell_tbl;
+    vit_bar[0].attr = vital_attr_tbl[0];
+    vit_bar_2p.cyerw = 160;
+    vit_bar_2p.cred = 160;
+    vit_bar_2p.ored = 160;
+    vit_bar_2p.unused = 0;
+    vit_bar_2p.colnum = 0;
+    vit_bar_2p.cell = vital_cell_tbl;
+    vit_bar_2p.attr = vital_attr_tbl[1];
+    vit_bar[0].xpos = vital_npos_tbl[0];
+    vit_bar_2p.xpos = vital_npos_tbl[1];
     sc_ram_to_vram(4, 0, 0);
     sc_ram_to_vram(5, 0, 0);
     gauge_stop_flag[0] = 0;
@@ -99,9 +97,9 @@ s32 vital_control(s8 pl) {
     if (plw[pl].wu.vital_new > 0xA0) {
         return 0;
     }
-    if (vit_bar[pl].cyerw == *(volatile s16*)&plw[pl].wu.vital_new) {
-        if (vit_bar[pl].cred == *(volatile s16*)&plw[pl].wu.vital_new) {
-            if (vit_bar[pl].ored != (*(volatile s16*)&plw[pl].wu.vital_new + 1)) {
+    if (vit_bar[pl].cyerw == plw[pl].wu.vital_new) {
+        if (vit_bar[pl].cred == plw[pl].wu.vital_new) {
+            if (vit_bar[pl].ored != (plw[pl].wu.vital_new + 1)) {
                 return 0;
             }
         }

@@ -88,7 +88,6 @@ void Ranking_00_1st(void)
 
 void Ranking_00_2nd(void) {
     s16 Char_Index;
-    RANK_DATA* rd;
     D_No1++;
     D_Timer = 1;
     Rank_X = Flash_Rank_Time = 0;
@@ -103,20 +102,19 @@ void Ranking_00_2nd(void) {
         effect_67_init(24, bg_w.bgw[0].xy[0].disp.pos + 120, bg_w.bgw[0].xy[1].disp.pos + 40, 180, 13, 35, 5, 0);
         effect_67_init(24, bg_w.bgw[0].xy[0].disp.pos - 144, bg_w.bgw[0].xy[1].disp.pos + 68, 180, 7, 30, 5, 0);
         base_y_pos = 40;
-        rd = Ranking_Data;
         switch (Rank_Type) {
         case 10:
-            if (rd[10].cpu_grade == 0xFF) {
+            if (Ranking_Data[10].cpu_grade == 0xFF) {
                 Char_Index = 0;
             } else {
-                Char_Index = rd[10].cpu_grade;
+                Char_Index = Ranking_Data[10].cpu_grade;
             }
             break;
         case 15:
-            if (rd[15].grade == 0xFF) {
+            if (Ranking_Data[15].grade == 0xFF) {
                 Char_Index = 0;
             } else {
-                Char_Index = rd[15].grade;
+                Char_Index = Ranking_Data[15].grade;
             }
             break;
         }

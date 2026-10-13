@@ -71,25 +71,23 @@ void stngauge_cont_main(void) {
 
 void stngauge_control(s32 player) {
     s8 pl = player;
-    STN_DAT* g = &sdat[pl];
-    PLW* wk = &plw[pl];
-    if (Exec_Wipe) {
-        g->cstn = wk->py->now.quantity.h;
+    if (Exec_Wipe != 0) {
+        sdat[pl].cstn = plw[pl].py->now.quantity.h;
         return;
     }
-    if (g->proccess_dead) {
+    if (sdat[pl].proccess_dead) {
         return;
     }
-    if (wk->dead_flag) {
-        g->proccess_dead = 1;
-        g->cstn = 0;
+    if (plw[pl].dead_flag) {
+        sdat[pl].proccess_dead = 1;
+        sdat[pl].cstn = 0;
         stun_put(pl);
         return;
     }
-    if ((wk->wu.routine_no[1] == 1 && wk->wu.routine_no[2] == 25 && wk->wu.routine_no[3] != 0) ||
-        wk->py->flag == 1) {
-        g->sflag = 1;
-        if (g->osflag == 0) {
+    if ((plw[pl].wu.routine_no[1] == 1 && plw[pl].wu.routine_no[2] == 25 && plw[pl].wu.routine_no[3] != 0) ||
+        plw[pl].py->flag == 1) {
+        sdat[pl].sflag = 1;
+        if (sdat[pl].osflag == 0) {
             sdat[pl].cstn = stun_genkai_tbl[My_char[pl] & 0x7F];
         }
         sdat[pl].stimer--;
@@ -107,12 +105,12 @@ void stngauge_control(s32 player) {
         sdat[pl].osflag = sdat[pl].sflag;
         return;
     }
-    g->sflag = 0;
-    if (g->osflag == 1) {
+    sdat[pl].sflag = 0;
+    if (sdat[pl].osflag == 1) {
         sdat[pl].osflag = sdat[pl].sflag;
         sdat[pl].g_or_s = 0;
         sdat[pl].stimer = 2;
-        sdat[pl].cstn = wk->py->now.quantity.h;
+        sdat[pl].cstn = plw[pl].py->now.quantity.h;
         sdat[pl].osflag = sdat[pl].sflag;
         stun_put(pl);
         return;
@@ -125,6 +123,8 @@ void stngauge_control(s32 player) {
 
 
 
+#define BAR_WORD(tbl, ix) (*(s16*)((u32)(tbl) + (ix) * 2))
+
 void stun_put(pl)
 s8 pl;
 {
@@ -136,12 +136,12 @@ s8 pl;
         if (stn_work >= sdat[pl].cstn) {
             if (sdat[pl].cstn >= stn_work - 8) {
                 stn_offset = sdat[pl].cstn - i * 8;
-                tilemap_put_cell(sdat[pl].stnptbl_ptr[stn_number], 3, sdat[pl].stncol_number, sdat[pl].stntbl_ptr[stn_offset]);
+                tilemap_put_cell(BAR_WORD(sdat[pl].stnptbl_ptr, stn_number), 3, sdat[pl].stncol_number, BAR_WORD(sdat[pl].stntbl_ptr, stn_offset));
             } else {
-                tilemap_put_cell(sdat[pl].stnptbl_ptr[stn_number], 3, sdat[pl].stncol_number, sdat[pl].stntbl_ptr[0]);
+                tilemap_put_cell(BAR_WORD(sdat[pl].stnptbl_ptr, stn_number), 3, sdat[pl].stncol_number, BAR_WORD(sdat[pl].stntbl_ptr, 0));
             }
         } else {
-            tilemap_put_cell(sdat[pl].stnptbl_ptr[stn_number], 3, sdat[pl].stncol_number, sdat[pl].stntbl_ptr[8]);
+            tilemap_put_cell(BAR_WORD(sdat[pl].stnptbl_ptr, stn_number), 3, sdat[pl].stncol_number, BAR_WORD(sdat[pl].stntbl_ptr, 8));
         }
         stn_number++;
     }

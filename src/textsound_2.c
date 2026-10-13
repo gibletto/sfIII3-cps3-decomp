@@ -321,7 +321,7 @@ s32 sound_seq_start(u16 code, s16 ramp) {
         rec->step = 0;
         rec->mode = -1;
     }
-    (&se_voice[0])[ch].status = 0;
+    se_voice[ch].status = 0;
 }
 
 

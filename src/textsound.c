@@ -127,10 +127,10 @@ u16 code;
 u16* tilemap_put_block_next(u16* p, u16 attr, u16 code) {
     u32 w = ((code & 0x0E00) >> 9) + 1;
     u32 h = ((code & 0x7000) >> 12) + 1;
-    s32 w2 = w * 2;
+    s32 w2;
     u32 i;
     u32 j;
-    for (i = 0; i < h; i++) {
+    for (i = 0, w2 = w * 2; i < h; i++) {
         for (j = 0; j < w; j++) {
             p[0] = code;
             p[1] = attr | ((code & 0x100) >> 8);
@@ -256,8 +256,7 @@ void tilemap_print_hex_block(u16 x, u16 y, u16 attr, u32 value, u16 digits, u16 
     p = (TEXT_CELL*)((u32)((u16*)SS_RAM) + (x << 2) + (y << 8));
     started = 0;
     mask = 15 << ((digits - 1) * 4);
-    sign = (mode & 4) != 0;
-    for (i = digits; i > 0; i--) {
+    for (i = digits, sign = (mode & 4) != 0; i > 0; i--) {
         d = (value & mask) >> ((i - 1) * 4);
         if (i == digits && sign) {
             if (d < 0) {

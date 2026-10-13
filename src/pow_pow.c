@@ -145,12 +145,15 @@ u16 ix;
 /* provisional name */
 void Disp_Player_Score(s16 id) {
     s16 digit[8];
-    u32 score = Score[id][Play_Type];
-    s32 div = 10000000;
-    s16 top = -1;
+    u32 score;
+    s32 div;
+    s16 top;
     s16 x;
     s16 i;
+    score = Score[id][Play_Type];
     i = 6;
+    div = 10000000;
+    top = -1;
     while (i >= 1) {
         digit[i] = score / div;
         score -= digit[i] * div;

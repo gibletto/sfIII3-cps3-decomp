@@ -18,14 +18,18 @@
 
 
 void count_cont_init(pl)
-s8 pl;
+u8 pl;
 {
-    (*&count_work).hoji_counter = hoji_counter_tbl[Game_setting.set3];
+    SETTINGS *g;
+    const s16 *t;
+    g = &Game_setting;
+    t = hoji_counter_tbl;
+    (*&count_work).hoji_counter = t[g->set3];
     Counter_hi = 99;
-    Counter_low = hoji_counter_tbl[Game_setting.set3];
+    Counter_low = t[g->set3];
     *(s16*)&round_timer = Counter_hi;
-    count_digit_trans(pl, 9, 9);
-    if (!pl) {
+    count_digit_trans((s8)pl, 9, 9);
+    if (pl == 0) {
         sc_ram_to_vram(2, 0, 0);
         sc_ram_to_vram(3, 0, 0);
     }
@@ -39,9 +43,9 @@ s8 pl;
 
 /* provisional name */
 void count_cont_reset(void) {
-    (*&count_work).hoji_counter = hoji_counter_tbl[(*&Game_setting).set3];
+    (*&count_work).hoji_counter = hoji_counter_tbl[Game_setting.set3];
     Counter_hi = 99;
-    Counter_low = hoji_counter_tbl[(*&Game_setting).set3];
+    Counter_low = hoji_counter_tbl[Game_setting.set3];
     *(s16*)&round_timer = Counter_hi;
     flash_r_num = 0;
     flash_col = 0;

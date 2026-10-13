@@ -75,6 +75,8 @@ throughout the ROM but Release 26 doesn't:
   the same goes for an expression several branches compute, when the first of them can't share its value, and
   for the uses a call or store cuts off from the first: only the uses reached from the first share its value;
 - after a multiply the multiplier counts as busy for one instruction, not two, so `sts macl` can follow the next load;
+  and that one instruction is the first that is ready, in either half of a long word (Release 26 keeps memory
+  accesses to the first half there too, so it would take a literal load ahead of a register move);
 - a switch's compare-and-branch jumps leave r1 free, so a value live into the cases can move into it and r13/r14 is not saved;
 - a load through a pointer and a later separate `add` to the pointer stay apart (Release 26 folds them into a
   post-increment load, `mov.w @r5+,r0`); the arcade has post-increments only where the source has `*p++`;
@@ -99,7 +101,8 @@ throughout the ROM but Release 26 doesn't:
 - when an address is the sum of a pointer still in memory (a row of a table of pointers, `table[a]` in
   `table[a][b]`) and an index in a register, the pointer is loaded and added (`mov.l @(r0,r3),r3`, `add r3,r2`,
   `mov.l @r2,r1`); Release 26 loads it into r0 and indexes with it; the same holds when the other part of the
-  sum is the address of a table or is already in r0;
+  sum is the address of a table or is already in r0, and for a fixed offset from an address the compiler itself
+  keeps on the stack: the address is loaded and the offset added;
 - an index used by several arrays in one statement stays in its own register, and each access takes its array's
   address into r0 or adds (Release 26 copies the index into r0 once and uses every array as a base);
 - a zero that is added or subtracted (the index of `a[0]`) and the constant of a bit-and (`v & 3`) count when a
@@ -125,7 +128,8 @@ throughout the ROM but Release 26 doesn't:
 - the index of a `char` array that is read from memory (`flags[p->id]`, `cols[src[i]]`) is the converted value
   itself, so `flags[p->id] &= 0x80` keeps the index in r0, loads the array's address once, reads through it
   indexed and copies it for the store; Release 26 takes the index for a second value, copies it out of r0 and
-  loads the address twice;
+  loads the address twice; a `char` or `short` variable used as such an index is taken the same way, unless its
+  first use as an index in the function is the test of an `if`;
 - an expression used in several blocks is shared even when it holds a temporary: with `table[ix]` read in
   several places the element address is computed once in front of its uses; Release 26 leaves such an
   expression alone, shares only the index and adds the table's address again at each use;
@@ -150,8 +154,8 @@ setting in that source (thirty-nine settings for the thirty-seven rules: the swi
 `MDL_ARG_CONST`, `MDL_CAST_CSE`, `MDL_ARG_CAST`, `MDL_GCSE`, `ASM_MULWAIT`, `GEN_CHAIN_JUMP`, `GEN_CHAIN_SCRATCH_R0`, `GEN_NARROW_CONST`, `GEN_OR_INDEX_EARLY`, `PEP_AUTOINC`, `MDL_IV`, `GEN_POOL_MOVLOC`, `MDL_LOOP_INV`, `GEN_RELOAD`, `GEN_EVICT_ORDER`, `MDL_CAST_MUL`, `MDL_MUL_CONST`, `PEP_RET_R0`, `GEN_MEM_INDEX`, `GEN_R0VAR`, `MDL_IMM_REG`, `MDL_MASK_AND`, `MDL_IV_BASE`, `MDL_IV_TEMP`, `GEN_JUMP_TEMP`, `MDL_TEST_REPLACE`, `MDL_MUL_ONE`, `MDL_TEMP_EXPR`, `PEP_CASE_WORD`, `PEP_RET_MAC` and `ASM_SPECREG` to 0 gives Release 26's behaviour back. The
 original files are in `bin/original`.
 
-With the changes, 9,814 of the 10,066 C routines compile to the arcade's instructions (3,803 with the original
-Release 26), and 9,767 to its exact bytes (1,911). Over 254 Fightcade replays compared with the original ROM,
+With the changes, 9,871 of the 10,066 C routines compile to the arcade's instructions (3,796 with the original
+Release 26), and 9,834 to its exact bytes (1,905). Over 254 Fightcade replays compared with the original ROM,
 253 keep identical game state throughout (218 before) and 253 identical slowdown (214).
 
 ## Fightcade replays

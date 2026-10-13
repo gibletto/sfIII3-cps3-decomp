@@ -904,10 +904,10 @@ s32 Check_After_Attack(PLW* wk, WORK* em, s16 VS_Technique) {
         return 0;
     }
     Last_Attack_Counter[wk->wu.id] = Attack_Counter[wk->wu.id];
-    if ((*(volatile u8*)&em->kind_of_waza & 0x20) == 0 && (*(volatile u8*)&em->kind_of_waza & 0x30) == 0 &&
-        (*(volatile u8*)&em->kind_of_waza & 0x28) == 0 && (*(volatile u8*)&em->kind_of_waza & 0x38) == 0 &&
-        (*(volatile u8*)&em->kind_of_waza & 8) == 0) {
-        xx = *(volatile u8*)&em->kind_of_waza & 6;
+    if ((*(volatile u8*)&em->kind_of_waza & 0x20) == 0 && (em->kind_of_waza & 0x30) == 0 &&
+        (em->kind_of_waza & 0x28) == 0 && (em->kind_of_waza & 0x38) == 0 &&
+        (em->kind_of_waza & 8) == 0) {
+        xx = em->kind_of_waza & 6;
         if (xx == 0) {
             return 0;
         }
@@ -925,11 +925,11 @@ s32 Check_F_Cross_Chop(PLW* wk, WORK* em, s16 VS_Technique) {
     if (Last_Attack_Counter[wk->wu.id] == Attack_Counter[wk->wu.id]) {
         return 0;
     }
-    if (*(volatile u8*)&em->kind_of_waza != 4) {
+    if (em->kind_of_waza != 4) {
         return 0;
     }
-    if (*(volatile u8*)&em->pat_status != 0x16 && *(volatile u8*)&em->pat_status != 0x14 &&
-        *(volatile u8*)&em->pat_status != 0x1A && *(volatile u8*)&em->pat_status != 0x1C) {
+    if (*(volatile u8*)&em->pat_status != 0x16 && em->pat_status != 0x14 &&
+        em->pat_status != 0x1A && em->pat_status != 0x1C) {
         return 0;
     }
     VS_Tech[wk->wu.id] = VS_Technique;

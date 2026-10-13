@@ -76,11 +76,11 @@ void effect_02_move(WORK_Other* ewk) {
                 edt = &explem[tad->myhix];
             }
             if (ewk->wu.rl_flag) {
-                ewk->wu.xyz[0].disp.pos -= *(s16*)&edt->hx;
+                ewk->wu.xyz[0].disp.pos -= edt->hx;
             } else {
-                ewk->wu.xyz[0].disp.pos += *(s16*)&edt->hx;
+                ewk->wu.xyz[0].disp.pos += edt->hx;
             }
-            ewk->wu.xyz[1].disp.pos += *(s16*)&edt->hy;
+            ewk->wu.xyz[1].disp.pos += edt->hy;
         } else {
             ewk->wu.xyz[0].disp.pos += ewk->wu.old_pos[0];
             ewk->wu.xyz[1].disp.pos += ewk->wu.old_pos[1];
