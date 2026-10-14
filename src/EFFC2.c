@@ -728,7 +728,7 @@ void setup_parts_break(WORK* wk) {
             }
         }
         wk->cmwk[i] = j;
-        i++;
+        i = i + 1;
     } while (i < 8);
 }
 

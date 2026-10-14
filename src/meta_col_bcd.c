@@ -17,19 +17,22 @@
 
 /* provisional name */
 u32 hex_to_bcd(u32 dat) {
-    u32 sum;
+    u32 sum = 0;
     u8* bcd = (u8*)&sum;
     const u8* p = bcd_weight_end;
     u32 mask;
-    sum = 0;
     p--;
-    for (mask = 0x8000; mask > 0; mask >>= 1) {
+    for (mask = 0x8000; mask > 0; mask = mask >> 1) {
         if (dat & mask) {
             bcdext = 0;
-            bcd[3] = abcd(bcd[3], *p--);
-            bcd[2] = abcd(bcd[2], *p--);
-            bcd[1] = abcd(bcd[1], *p--);
-            bcd[0] = abcd(bcd[0], *p--);
+            bcd[3] = abcd(bcd[3], *p);
+            p--;
+            bcd[2] = abcd(bcd[2], *p);
+            p--;
+            bcd[1] = abcd(bcd[1], *p);
+            p--;
+            bcd[0] = abcd(bcd[0], *p);
+            p--;
         } else {
             p -= 4;
         }

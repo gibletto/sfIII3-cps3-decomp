@@ -10,7 +10,6 @@
 #include "work.h"
 #include "romdata.h"
 #include "extern.h"
-#include "HITCHECK.h"
 #include "Win.h"
 #include "win_2.h"
 #include "gameover.h"
@@ -20,14 +19,19 @@
 #include "PLS02.h"
 #include "HITEFPL.h"
 
+void cal_combo_waribiki(PLW* as, PLW* ds);
+void cal_combo_waribiki2(PLW* ds);
+void cal_hit_mark_pos();
+void plef_at_vs_player_damage_union();
+s16 remake_score_index(s16 dmv);
+
 
 
 void effect_at_vs_player_dm(s16 ix2, s16 ix) {
     WORK_Other* as = (WORK_Other*)q_hit_push[ix2];
     PLW* ds = (PLW*)q_hit_push[ix];
     PLW* ms;
-    s32 gddir;
-    s32 t;
+    s8 gddir;
     ds->dm_point = hs[ix].dm_body;
     gddir = get_guard_direction(&as->wu, &ds->wu);
     setup_saishin_lvdir(ds, gddir);
@@ -36,13 +40,9 @@ void effect_at_vs_player_dm(s16 ix2, s16 ix) {
     cal_damage_vitality_eff(as, ds);
     ds->wu.dm_piyo = add_piyo_gauge[as->master_player][as->wu.att.piyo];
     if ((ds->wu.pat_status == 32 || ds->wu.pat_status == 3) || ds->wu.pat_status == 25) {
-        t = ds->wu.dm_vital;
-        t *= 125;
-        ds->wu.dm_vital = t / 100;
+        ds->wu.dm_vital = (ds->wu.dm_vital * 125) / 100;
     } else if (ds->wu.pat_status == 7 || ds->wu.pat_status == 23 || ds->wu.pat_status == 35) {
-        t = ds->wu.dm_vital;
-        t *= 150;
-        ds->wu.dm_vital = t / 100;
+        ds->wu.dm_vital = (ds->wu.dm_vital * 150) / 100;
     } else if (ds->wu.pat_status == 1 || ds->wu.pat_status == 21 || ds->wu.pat_status == 37) {
         ds->wu.dm_vital *= 2;
     }

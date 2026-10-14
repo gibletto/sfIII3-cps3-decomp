@@ -244,11 +244,11 @@ void test_menu_run(void) {
         done = memtest_page();
         break;
     case 9:
-        if (no_cd_flag != 0) {
-            test_rno += 1;
-            break;
+        if (no_cd_flag) {
+            test_rno++;
+        } else {
+            done = rewrite_page();
         }
-        done = rewrite_page();
         break;
     case 10:
         test_rno += 1;

@@ -283,8 +283,10 @@ s32 effect_B8_init(s8 WIN_PL_NO, s16 timer)
                 old_mes_no3 = old_mes_no2;
                 old_mes_no2 = message;
                 message += 20;
+                old_mes_no_pl = message;
+            } else {
+                old_mes_no_pl = message;
             }
-            old_mes_no_pl = message;
         } else {
             message = (random_16_com() >> 1) & 7;
             old_mes_no2 &= 7;

@@ -71,7 +71,12 @@ s32 effect_G5_move(WORK_Other* ewk) {
 
 
 
-s32 effect_G5_init(WORK* wk, s16 dr, s16 sp, s16 dl) {
+s32 effect_G5_init(wk, dr, sp, dl)
+WORK* wk;
+s16 dr;
+s16 sp;
+s16 dl;
+{
     WORK_Other* ewk;
     s16 ix;
     if ((ix = pull_effect_work(3)) == -1) {
@@ -100,7 +105,6 @@ void setup_ase_extra(WORK* wk, u8 num) {
     s16 way;
     s16 rnd_00;
     s16 rnd_01;
-    s16 *direction = &way;
     if (num_of_ase[num] == 0) {
         return;
     }

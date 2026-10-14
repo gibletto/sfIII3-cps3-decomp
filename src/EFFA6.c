@@ -199,16 +199,14 @@ void effect_A6_move(WORK_Other_CONN* ewk) {
         case 1:
             switch (ewk->wu.dir_old) {
             case 0x43:
-                ewk->wu.xyz[0].disp.pos += 10;
-                ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;
+                ewk->wu.position_x = *(s16*)&ewk->wu.xyz[0] += 10;
                 if (ewk->wu.position_x >= 320) {
                     ewk->wu.routine_no[1]++;
                     ewk->wu.position_x = ewk->wu.xyz[0].disp.pos = 320;
                 }
                 break;
             default:
-                ewk->wu.xyz[0].disp.pos -= 10;
-                ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;
+                ewk->wu.position_x = *(s16*)&ewk->wu.xyz[0] -= 10;
                 if (ewk->wu.position_x <= 392) {
                     ewk->wu.routine_no[1]++;
                     ewk->wu.position_x = ewk->wu.xyz[0].disp.pos = 392;

@@ -78,6 +78,8 @@
 #include "EFFC1.h"
 #include "PLS02.h"
 
+extern s32 staff_r_no;
+
 void scrn_attr_set(s16 n, s16 attr, s16 bits);
 
 

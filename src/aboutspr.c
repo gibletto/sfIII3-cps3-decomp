@@ -736,7 +736,8 @@ s32 set_judge_area_sprite(WORK_Other* owk) {
     s16 cell;
     s16 y_ofs;
     s16 i;
-    s16 k;
+    u32 k;
+    s32 n;
     if (wk->wu.spr.gfx_cells == 0) {
         return 0;
     }
@@ -762,11 +763,11 @@ s32 set_judge_area_sprite(WORK_Other* owk) {
         if (i == wk->curr_ja) {
             y_ofs = wk->fade_cja.w * 2;
         }
-        for (k = 0, flip = flip_attr_tbl; k < 4; k++, flip++) {
+        for (k = 0, n = i * 4, flip = flip_attr_tbl; k < 4; k++, n++, flip++) {
             base[cell].w[0] = judge_area_code_tbl[i] + base_code + y_ofs;
             base[cell].w[1] = *flip;
-            base[cell].w[2] = wk->ja[i * 4 + k][0] & 0x3FF;
-            base[cell].w[3] = wk->ja[i * 4 + k][1] & 0x3FF;
+            base[cell].w[2] = wk->ja[n][0] & 0x3FF;
+            base[cell].w[3] = wk->ja[n][1] & 0x3FF;
             base[cell].w[5] = 0x305;
             base[cell].w[4] = cell_size_tbl[5];
             cell++;
@@ -883,13 +884,13 @@ s32 make_conn_cells(WORK_Other_CONN* ewk) {
     CharSpriteK* dst;
     CharSpriteK* s;
     CHAR_CELL* cells;
-    CHAR_CELL* c;
     CharGfxSet* set;
     s16 base;
     u16 chr;
     s16 i;
     s16 j;
     s16 n;
+    u16 size;
     if (ewk->wu.old_cgnum == ewk->wu.cg_number) {
         return 1;
     }
@@ -922,13 +923,13 @@ s32 make_conn_cells(WORK_Other_CONN* ewk) {
         cells += set->count;
         for (j = 0; j < set->cells; j++) {
             s = &dst[n];
-            c = &cells[j];
-            s->code = base + c->code;
-            s->pal = c->col + ewk->wu.spr.disp_colcd + ewk->conn[i].col;
-            s->x = (c->x + ewk->conn[i].nx + cg_data_list[chr].x) & 0x3FF;
+            s->code = base + cells[j].code;
+            s->pal = cells[j].col + ewk->wu.spr.disp_colcd + ewk->conn[i].col;
+            s->x = (cells[j].x + ewk->conn[i].nx + cg_data_list[chr].x) & 0x3FF;
             n++;
-            s->y = (ewk->conn[i].ny - c->y - cg_data_list[chr].y) & 0x3FF;
-            s->attr = (*((u8*)c + 6) >> 4) | 0x300;
+            s->y = (ewk->conn[i].ny - cells[j].y - cg_data_list[chr].y) & 0x3FF;
+            size = *((u8*)&cells[j] + 6) >> 4;
+            s->attr = size | 0x300;
             s->zoom = 0x3F3F;
         }
     }

@@ -460,8 +460,10 @@ ground:
         if (wk->cp->waza_flag[i] == -1) {
             continue;
         }
-        if ((wk->cp->btix[i] & 0x800) && shell_live_check(wk, i)) {
-            continue;
+        if (wk->cp->btix[i] & 0x800) {
+            if (shell_live_check(wk, i)) {
+                continue;
+            }
         }
         if ((wk->cp->btix[i] & 0x1000) && (wk->metamorphose || (wk->sa->ok != -1))) {
             continue;

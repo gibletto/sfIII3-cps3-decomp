@@ -209,10 +209,12 @@ void effect_H8_move(WORK_Other* ewk) {
                 }
                 ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;
                 ewk->wu.position_y = ewk->wu.xyz[1].disp.pos;
+            default:
+                break;
             }
         }
         sort_push_request(ewk);
-        return;
+        break;
     case 2:
         ewk->wu.routine_no[0] = 3;
         break;

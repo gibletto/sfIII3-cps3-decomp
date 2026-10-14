@@ -312,7 +312,7 @@ void soundtest_monitor_task(void) {
     u16 pan;
     u16 level_l;
     u16 level_r;
-    volatile SNDVOICEREG* voice;
+    u32 voice;
     s32 unused1;
     s32 unused2;
     req = 0;
@@ -345,7 +345,7 @@ void soundtest_monitor_task(void) {
             req -= 16;
             tilemap_print_hex(30, 3, 2, req, 4, 0);
         } else if ((p1sw_0 & 0x10) == 0x10 && (p1sw_1 & 0x10) != 0x10) {
-            sound_request(req);
+            sound_request((s16)req);
         } else if ((p1sw_0 & 0x20) == 0x20 && (p1sw_1 & 0x20) != 0x20) {
             sound_driver_init();
         }
@@ -368,22 +368,22 @@ void soundtest_monitor_task(void) {
         }
         on = snd_key_on_reg;
         bit = 1;
-        voice = (volatile SNDVOICEREG*)SOUND_REG;
+        voice = SOUND_REG;
         for (i = 0; i < 16; i++) {
-            pan = voice->pan;
+            pan = *(volatile u16*)(voice + 12);
             if ((on & bit) == 0) {
                 soundtest_print_pan_bar(4, i + 9, -1);
             } else {
                 soundtest_print_pan_bar(4, i + 9, ((pan & 0xFFF) + 1) / 256);
             }
-            level_l = voice->level_l;
-            level_r = voice->level_r;
+            level_l = *(volatile u16*)(voice + 28);
+            level_r = *(volatile u16*)(voice + 30);
             tilemap_print_hex(21, i + 9, 2, pan, 4, 0);
             level = ((level_l & 0x7FFF) + (level_r & 0x7FFF)) / 2 + 1;
             soundtest_print_level_bar(40, i + 9, (u32)level >> 12);
             soundtest_print_lr_balance(30, i + 9, level_l, level_r);
             bit <<= 1;
-            voice++;
+            voice += 32;
         }
         task_sleep(1);
     }

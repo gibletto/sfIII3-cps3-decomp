@@ -29,22 +29,17 @@ void effect_L2_move(WORK_Other* ewk) {
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         effl2_dir_check(ewk);
-        {
-            s32 z = 0;
-            set_char_move_init2(&ewk->wu, z, z, 1, z);
-        }
-        return;
+        set_char_move_init2(&ewk->wu, 0, 0, 1, 0);
+        break;
     case 1:
-        if (!Allow_a_battle_f && Conclusion_Flag == 1 && C_No0 >= 2) {
-            if (!(!Complete_Victory)) {
-                if (Conclusion_Flag != 0) {
-                    ewk->wu.routine_no[0]++;
-                    ewk->wu.old_rno[0] = 0;
-                    if (Winner_id != ewk->master_id) {
-                        set_char_move_init(&ewk->wu, 0, 2);
-                    } else {
-                        set_char_move_init(&ewk->wu, 0, 1);
-                    }
+        if (Allow_a_battle_f == 0 && Conclusion_Flag == 1 && C_No0 >= 2) {
+            if (!(Complete_Victory == 0) && Conclusion_Flag) {
+                ewk->wu.routine_no[0]++;
+                ewk->wu.old_rno[0] = 0;
+                if (Winner_id != ewk->master_id) {
+                    set_char_move_init(&ewk->wu, 0, 2);
+                } else {
+                    set_char_move_init(&ewk->wu, 0, 1);
                 }
             }
         } else if (!EXE_flag && !Game_pause) {
@@ -55,10 +50,10 @@ void effect_L2_move(WORK_Other* ewk) {
         sort_push_request(&ewk->wu);
         break;
     case 2:
-        if (Exec_Wipe != 0) {
+        if (Exec_Wipe) {
             ewk->wu.old_rno[0] = 1;
         }
-        if (ewk->wu.old_rno[0] != 0 && !Exec_Wipe) {
+        if (ewk->wu.old_rno[0] && !Exec_Wipe) {
             ewk->wu.routine_no[0] = 0;
         }
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;
@@ -68,7 +63,7 @@ void effect_L2_move(WORK_Other* ewk) {
     default:
         all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
-        return;
+        break;
     }
 }
 

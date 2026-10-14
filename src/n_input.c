@@ -93,37 +93,37 @@ void Name_Input_comm(void) {
         for (i = name_ptr->index; i < 4; i++) {
             name_ptr->code[i] = 0x2C;
         }
-        return;
-    }
-    cmd = Name_Input_sub();
-    switch (cmd) {
-    case 1:
-        name_ptr->r_no_0++;
-        name_ptr->timer += 420;
-        name_ptr->end_flag[name_ptr->index] = 1;
-        name_ptr->index++;
-        name_ptr->index &= 3;
-        name_ptr->wait_cnt = 10;
-        name_ptr->code[name_ptr->index] = name_ptr->code[name_ptr->index - 1];
-        break;
-    case 2:
-        name_ptr->timer = name_ptr->timer + 420;
-        name_ptr->index--;
-        name_ptr->r_no_0 -= 2;
-        if (name_ptr->index < 0) {
-            name_ptr->index = 0;
-            name_ptr->r_no_0 = 0;
-        } else {
-            name_ptr->code[name_ptr->index + 1] = 0x2F;
+    } else {
+        cmd = Name_Input_sub();
+        switch (cmd) {
+        case 1:
+            name_ptr->r_no_0++;
+            name_ptr->timer += 420;
+            name_ptr->end_flag[name_ptr->index] = 1;
+            name_ptr->index++;
+            name_ptr->index &= 3;
+            name_ptr->wait_cnt = 10;
+            name_ptr->code[name_ptr->index] = name_ptr->code[name_ptr->index - 1];
+            break;
+        case 2:
+            name_ptr->timer = name_ptr->timer + 420;
+            name_ptr->index--;
+            name_ptr->r_no_0 -= 2;
+            if (name_ptr->index < 0) {
+                name_ptr->index = 0;
+                name_ptr->r_no_0 = 0;
+            } else {
+                name_ptr->code[name_ptr->index + 1] = 0x2F;
+            }
+            name_ptr->end_flag[name_ptr->index] = 0;
+            break;
+        case 3:
+            name_ptr->r_no_0 = 6;
+            for (i = name_ptr->index; i < 4; i++) {
+                name_ptr->code[i] = 0x2C;
+            }
+            break;
         }
-        name_ptr->end_flag[name_ptr->index] = 0;
-        break;
-    case 3:
-        name_ptr->r_no_0 = 6;
-        for (i = name_ptr->index; i < 4; i++) {
-            name_ptr->code[i] = 0x2C;
-        }
-        break;
     }
 }
 

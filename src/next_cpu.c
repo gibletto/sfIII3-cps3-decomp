@@ -1063,8 +1063,8 @@ void Setup_Com_Color(void) {
 void Setup_PL_Color(s16 PL_id, u16 sw) {
     s8 id_0;
     s8 id_1;
-    s8* mine = &Player_Color[PL_id];
-    s8* other = &Player_Color[PL_id ^ 1];
+    s8* mine;
+    s8* other;
     if (plw[PL_id ^ 1].wu.operator == 0) {
         id_0 = -1;
         id_1 = 1;
@@ -1072,7 +1072,9 @@ void Setup_PL_Color(s16 PL_id, u16 sw) {
         id_0 = My_char[PL_id];
         id_1 = My_char[PL_id ^ 1];
     }
-    if (Sel_PL_Complete[PL_id ^ 1] == 0) {
+    other = &Player_Color[(PL_id + 1) & 1];
+    mine = &Player_Color[PL_id];
+    if (Sel_PL_Complete[(PL_id + 1) & 1] == 0) {
         id_0 = 127;
     }
     switch (sw) {
@@ -1147,12 +1149,12 @@ void Setup_Regular_OBJ(s16 PL_id) {
         Order[10] = 0;
         Order_Timer[9] = 1;
         Order_Timer[10] = 1;
-        return;
+    } else {
+        effect_A9_init(33, EM_List[PL_id][1], 5, 0);
+        effect_A9_init(34, EM_List[PL_id][1], 20, 0);
+        effect_A9_init(12, EM_List[PL_id][1], 21, 0);
+        effect_A9_init(57, 0, 22, 0);
     }
-    effect_A9_init(33, EM_List[PL_id][1], 5, 0);
-    effect_A9_init(34, EM_List[PL_id][1], 20, 0);
-    effect_A9_init(12, EM_List[PL_id][1], 21, 0);
-    effect_A9_init(57, 0, 22, 0);
 }
 
 

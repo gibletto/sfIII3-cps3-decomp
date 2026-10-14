@@ -572,8 +572,8 @@ s32 check_meoshi_cancel(PLW* wk) {
     }
     tdat = wk->wu.cg_meoshi & 0x8F;
     if (tdat != 0) {
-        wdat = cnmc_conv_data[wk->cp->sw_new & 0xF];
         tdat &= 0xF;
+        wdat = cnmc_conv_data[wk->cp->sw_new & 0xF];
         if (wk->wu.cg_meoshi & 0x80) {
             for (i = 0; i < 6; i++) {
                 if (cnmc_Z_lever_data[tdat][i] == -1) {

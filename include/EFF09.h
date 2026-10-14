@@ -3,7 +3,7 @@
 
 #include "structs.h"
 
-void sean_ball_move(WORK_Other* ewk, u16 sw_work);
+void sean_ball_move();
 void jijii_win_tama_sub(WORK_Other* ewk);
 void ball_bound_set(WORK_Other* ewk);
 void eff09_22000(WORK_Other* ewk);

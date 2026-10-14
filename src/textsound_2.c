@@ -146,7 +146,7 @@ s32 sound_seq_start(u16 code, s16 ramp) {
         for (i = 0; i < 16; i++, vp++, mv++) {
             off = *p++ << 8;
             off += *p++;
-            if (off != 0) {
+            if (off) {
                 track = seq + off;
                 v = vp;
                 v->origin = track;
@@ -216,7 +216,7 @@ s32 sound_seq_start(u16 code, s16 ramp) {
         for (i = 0; i < 16; i++) {
             off = *p++ << 8;
             off += *p++;
-            if (off != 0) {
+            if (off) {
                 if (((hdr >= se_voice[i].priority_flags) & 0x7F) || (se_voice[i].status & 0x80)) {
                     track = seq + off;
                     n = midi_vlq_decode_while(track, &ticks);

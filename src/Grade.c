@@ -319,7 +319,6 @@ void grade_makeup_stage_parameter(s16 ix) {
     s16 point = 0;
     s16 bs;
     s16 qc;
-    s32 em_char;
     s32 em;
     if (Round_Operator[ix] == 0) {
         grade_makeup_stage_para_com(ix);
@@ -377,8 +376,7 @@ void grade_makeup_stage_parameter(s16 ix) {
                 judge_final[ix][Play_Type].vs_cpu_grade[15] = grade;
                 judge_final[ix][Play_Type].vs_cpu_player[15] = judge_final[ix][Play_Type].vcr_ix;
             } else {
-                em_char = My_char[em];
-                plnum = em_char + chkNameAkuma(em_char);
+                plnum = My_char[em] + chkNameAkuma(My_char[em]);
                 judge_final[ix][Play_Type].vs_cpu_result[judge_final[ix][Play_Type].vcr_ix] = point;
                 judge_final[ix][Play_Type].vs_cpu_grade[judge_final[ix][Play_Type].vcr_ix] = grade;
                 judge_final[ix][Play_Type].vs_cpu_player[judge_final[ix][Play_Type].vcr_ix] = plnum;
@@ -504,7 +502,9 @@ s16 wf;
     s32 point;
     s32 point2;
     s32 successes;
-    point2 = ((judge_item[(ix + 1) & 1][Play_Type].att_renew - judge_item[(ix + 1) & 1][Play_Type].clean_hits) * 100) / judge_item[(ix + 1) & 1][Play_Type].att_renew;
+    s16 renew;
+    renew = judge_item[(ix + 1) & 1][Play_Type].att_renew;
+    point2 = ((renew - judge_item[(ix + 1) & 1][Play_Type].clean_hits) * 100) / renew;
     for (i = 0; i < 13; i++) {
         if (point2 < grade_t_bougyoritsu2[i + 1][0]) {
             break;
@@ -925,13 +925,14 @@ void grade_check_tairyokusa(void) {
 void grade_add_onaji_waza(s16 ix) {
     s16 num;
     num = plw[ix].wu.char_index + ((plw[ix].wu.now_koc == 5) * 0xF0);
-    if (num <= 0x17F) {
-        if (ji_sat[ix][num] != 0xFF) {
-            ji_sat[ix][num]++;
-        }
-        if (judge_item[ix][Play_Type].onaji_waza < ji_sat[ix][num]) {
-            judge_item[ix][Play_Type].onaji_waza = ji_sat[ix][num];
-        }
+    if (num > 0x17F) {
+        return;
+    }
+    if (ji_sat[ix][num] != 0xFF) {
+        ji_sat[ix][num]++;
+    }
+    if (judge_item[ix][Play_Type].onaji_waza < ji_sat[ix][num]) {
+        judge_item[ix][Play_Type].onaji_waza = ji_sat[ix][num];
     }
 }
 

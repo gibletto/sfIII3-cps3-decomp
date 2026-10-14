@@ -267,7 +267,7 @@ s16 cal_move_quantity2(s16 x1, s16 x2, s16 y1, s16 y2) {
     }
     kakudo = dir_sel_table[y1][y2];
     ms.psi = (x1 * rate_256_table[kakudo][0]);
-    ms.psi = (x2 * rate_256_table[kakudo][1]) + ms.psi;
+    ms.psi += x2 * rate_256_table[kakudo][1];
     return ms.pss.h;
 }
 
@@ -451,7 +451,12 @@ s8 ysw;
 
 
 
-void cal_initial_speed(WORK* wk, s16 tm, s16 x1, s16 y1) {
+void cal_initial_speed(wk, tm, x1, y1)
+WORK* wk;
+s16 tm;
+s16 x1;
+s16 y1;
+{
     MotionState bb;
     wk->xyz[0].disp.low = wk->xyz[1].disp.low = 0;
     bb.timer = tm;

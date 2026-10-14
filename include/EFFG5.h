@@ -4,7 +4,7 @@
 #include "structs.h"
 
 void setup_ase_extra(WORK* wk, u8 num);
-s32 effect_G5_init(WORK* wk, s16 dr, s16 sp, s16 dl);
+s32 effect_G5_init();
 s32 effect_G5_move(WORK_Other* ewk);
 
 #endif

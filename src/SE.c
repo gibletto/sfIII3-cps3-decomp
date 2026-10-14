@@ -51,24 +51,23 @@ void wipe_pattern_or_cols(s16 kind, s16 row) {
 
 /* provisional name */
 void wipe_pattern_restore_cols(s16 kind, s16 row) {
-    s32 ofs;
     u8* src;
     u8* map;
     u8* cell;
     u16* dst;
+    u16* p;
     s16 x;
     s16 y;
-    u32 code;
-    u8 a;
-    src = wipe_column_tbl[kind].adr + wipe_column_tbl[kind].w * row;
-    map = wipe_clear_pattern_tbl[kind].adr + row * 32;
+    src = wipe_column_tbl[kind].adr;
+    src += wipe_column_tbl[kind].w * row;
+    map = wipe_clear_pattern_tbl[kind].adr;
+    map += row * 32;
     cell = sc_chr_ram;
     dst = (u16*)(SS_RAM + 0x8000);
     for (y = 0; y < 464; y++) {
         for (x = 0; x < wipe_column_tbl[kind].w; x++) {
-            code = src[x];
-            a = cell[code] | map[code];
-            dst[code] = a;
+            p = &dst[src[x]];
+            *p = cell[src[x]] | map[src[x]];
         }
         dst += 32;
         cell += 32;

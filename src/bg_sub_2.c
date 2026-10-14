@@ -572,7 +572,7 @@ void bg_base_x_move_sub(void) {
         work0 = pl->wu.scr_mv_x + satse[pl->player_number];
     }
     work0 -= bg_pos;
-    pl = &plw[1];
+    pl++;
     if (pl->wu.scr_mv_x < ideal_w.iw[0].disp.pos) {
         work1 = pl->wu.scr_mv_x - satse[pl->player_number];
     } else {
@@ -604,7 +604,9 @@ void bg_base_x_move_sub(void) {
         }
         st_tbl = pos_area_tbl;
     }
-    scr_x_mv_jp[(st_tbl[work0] << 4) + st_tbl[work1]]();
+    work0 = st_tbl[work0] << 4;
+    work0 += st_tbl[work1];
+    scr_x_mv_jp[work0]();
 }
 
 static s32 remake_x_mvstep(s16 x) {

@@ -1200,7 +1200,6 @@ void Entry_Continue_Sub(s16 PL_id) {
 
 void Setup_Next_Step(s16 PL_id) {
     s16 xx;
-    s16 *other;
     E_Number[PL_id][1] = 0;
     E_Number[PL_id][2] = 0;
     E_Number[PL_id][3] = 0;
@@ -1223,29 +1222,30 @@ void Setup_Next_Step(s16 PL_id) {
         E_Number[PL_id][0] = 8;
         E_Number[PL_id][1] = 0;
         return;
-    }
-    set_result_target_loser();
-    other = E_Number[PL_id ^ 1];
-    if (ranking_insert_all_four(PL_id) != 0) {
-        Request_Disp_Rank[PL_id][0] = Rank_In[PL_id][0];
-        Request_Disp_Rank[PL_id][1] = Rank_In[PL_id][1];
-        Request_Disp_Rank[PL_id][2] = Rank_In[PL_id][2];
-        Request_Disp_Rank[PL_id][3] = Rank_In[PL_id][3];
-        if (other[0] != 0) {
-            E_Number[PL_id][0] = 2;
+    } else {
+        set_result_target_loser();
+        if (ranking_insert_all_four(PL_id) != 0) {
+            Request_Disp_Rank[PL_id][0] = Rank_In[PL_id][0];
+            Request_Disp_Rank[PL_id][1] = Rank_In[PL_id][1];
+            Request_Disp_Rank[PL_id][2] = Rank_In[PL_id][2];
+            Request_Disp_Rank[PL_id][3] = Rank_In[PL_id][3];
+            if (E_Number[PL_id ^ 1][0] != 0) {
+                E_Number[PL_id][0] = 2;
+                return;
+            }
+            E_Number[PL_id][0] = 3;
+            E_Number[PL_id][1] = 0;
             return;
+        } else {
+            if (E_Number[PL_id ^ 1][0] != 0) {
+                E_Number[PL_id][0] = 8;
+                E_Number[PL_id][1] = 0;
+            } else {
+                E_Number[PL_id][0] = 3;
+                E_Number[PL_id][1] = 1;
+            }
         }
-        E_Number[PL_id][0] = 3;
-        E_Number[PL_id][1] = 0;
-        return;
     }
-    if (other[0] != 0) {
-        E_Number[PL_id][0] = 8;
-        E_Number[PL_id][1] = 0;
-        return;
-    }
-    E_Number[PL_id][0] = 3;
-    E_Number[PL_id][1] = 1;
 }
 
 

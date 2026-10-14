@@ -951,7 +951,7 @@ void Pool_Score(s16 PL_id) {
     Score_Buff = plw[PL_id].wu.vital_new * 100 / Max_vitality;
     Score_Buff *= 500;
     Vital_Bonus[Winner_id] += Score_Buff;
-    Time_Bonus[Winner_id] += (s32)round_timer.half.h * 300;
+    Time_Bonus[Winner_id] += *(s16*)&round_timer * 300;
 }
 
 

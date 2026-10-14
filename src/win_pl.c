@@ -21,7 +21,6 @@
 #include "EFFM7.h"
 #include "PLS02.h"
 #include "ta_sub.h"
-#include "CHARMOVE.h"
 #include "charmove_2.h"
 #include "EFF30.h"
 #include "EFF31.h"
@@ -65,6 +64,12 @@
 #include "win_pl.h"
 #include "fighter.h"
 
+void char_move(WORK* wk);
+void char_move_cmja(WORK* wk);
+void char_move_z(WORK* wk);
+void set_char_move_init();
+void set_char_move_init2();
+
 
 /* provisional name */
 void win_player(PLW* wk) {
@@ -96,7 +101,7 @@ void Win_01000(PLW* wk) {
     case 0:
         win_rno[0] = win_rno[1] = 0;
         wk->wu.routine_no[3]++;
-        work = random_16_com() & 7;
+        work = win_select(wk, 7);
         if ((Round_num >= Battle_Round[Play_Type] * 2) || (PL_Wins[wk->wu.id] >= Battle_Round[Play_Type] + 1)) {
             if (Round_Result & 0x800) {
                 wk->wu.cmwk[0] = 0;
@@ -344,8 +349,8 @@ void Win_03000(PLW* wk) {
 
 
 void Win_04000(PLW* wk) {
-    s32 work;
-    s32 work2;
+    s16 work;
+    s16 work2;
     bg_app_stop = 1;
     if (set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
         set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);

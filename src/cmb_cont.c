@@ -439,6 +439,8 @@ void combo_window_push(s8 PL, s8 KIND) {
             score = paring_counter[PLS];
             score *= 100;
             break;
+        default:
+            break;
         }
         if (score >= 1000000) {
             score = 999900;
@@ -448,55 +450,56 @@ void combo_window_push(s8 PL, s8 KIND) {
             Disp_Player_Score(PLS);
         }
         return;
-    }
-    cmb_stock[PL]++;
-    cmst_buff[PL][cst_write[PL]].routine_num = 0;
-    cmst_buff[PL][cst_write[PL]].hit = hit_num;
-    cmst_buff[PL][cst_write[PL]].kind = KIND;
-    if (plw[PLS].wu.operator) {
-        cmst_buff[PL][cst_write[PL]].pts_flag = 1;
     } else {
-        cmst_buff[PL][cst_write[PL]].pts_flag = 0;
-    }
-    switch (KIND) {
-    case 0:
-    case 1:
-        break;
-    case 2:
-        if (sa_kind == 2) {
-            score += 20000;
+        cmb_stock[PL]++;
+        cmst_buff[PL][cst_write[PL]].routine_num = 0;
+        cmst_buff[PL][cst_write[PL]].hit = hit_num;
+        cmst_buff[PL][cst_write[PL]].kind = KIND;
+        if (plw[PLS].wu.operator) {
+            cmst_buff[PL][cst_write[PL]].pts_flag = 1;
         } else {
-            score += 30000;
+            cmst_buff[PL][cst_write[PL]].pts_flag = 0;
         }
-        break;
-    case 3:
-        if (sa_kind == 2) {
-            score = 20000;
+        switch (KIND) {
+        case 0:
+        case 1:
+            break;
+        case 2:
+            if (sa_kind == 2) {
+                score += 20000;
+            } else {
+                score += 30000;
+            }
+            break;
+        case 3:
+            if (sa_kind == 2) {
+                score = 20000;
+            } else {
+                score = 30000;
+            }
+            break;
+        case 4:
+            score = 1500;
+            grade_get_first_attack(PLS);
+            break;
+        case 5:
+            score = 0;
+            cmst_buff[PL][cst_write[PL]].pts_flag = 0;
+            break;
+        case 6:
+            score = paring_counter[PLS];
+                score *= 100;
+            break;
+        }
+        if (score >= 1000000) {
+            score = 999900;
+        }
+        cmst_buff[PL][cst_write[PL]].pts = score;
+        if (cst_write[PL] == 3) {
+            cst_write[PL] = 0;
         } else {
-            score = 30000;
+            cst_write[PL]++;
         }
-        break;
-    case 4:
-        score = 1500;
-        grade_get_first_attack(PLS);
-        break;
-    case 5:
-        cmst_buff[PL][cst_write[PL]].pts_flag = 0;
-        score = 0;
-        break;
-    case 6:
-        score = paring_counter[PLS];
-            score *= 100;
-        break;
-    }
-    if (score >= 1000000) {
-        score = 999900;
-    }
-    cmst_buff[PL][cst_write[PL]].pts = score;
-    if (cst_write[PL] == 3) {
-        cst_write[PL] = 0;
-    } else {
-        cst_write[PL]++;
     }
 }
 

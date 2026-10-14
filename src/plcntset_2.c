@@ -453,15 +453,15 @@ void settle_type_20000(void) {
         complete_victory_pause();
         if (plw[0].wu.vital_new == plw[1].wu.vital_new) {
             pcon_rno[2] = 4;
-            break;
+        } else {
+            grade_set_round_result(Winner_id);
+            plw[Winner_id].wu.routine_no[2] = 40;
+            plw[Loser_id].wu.routine_no[2] = 41;
+            plw[0].wu.routine_no[3] = plw[1].wu.routine_no[3] = 0;
+            plw[0].wu.cg_type = plw[1].wu.cg_type = 0;
+            pcon_rno[2]++;
         }
-        grade_set_round_result(Winner_id);
-        plw[Winner_id].wu.routine_no[2] = 40;
-        plw[Loser_id].wu.routine_no[2] = 41;
-        plw[0].wu.routine_no[3] = plw[1].wu.routine_no[3] = 0;
-        plw->wu.cg_type = plw[1].wu.cg_type = 0;
-        pcon_rno[2]++;
-        return;
+        break;
     case 3:
         if (plw[0].wu.routine_no[3] != 9) {
             break;

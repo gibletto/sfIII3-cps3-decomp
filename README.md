@@ -105,8 +105,8 @@ throughout the ROM but Release 26 doesn't:
   keeps on the stack: the address is loaded and the offset added;
 - an index used by several arrays in one statement stays in its own register, and each access takes its array's
   address into r0 or adds (Release 26 copies the index into r0 once and uses every array as a base);
-- a zero that is added or subtracted (the index of `a[0]`) and the constant of a bit-and (`v & 3`) count when a
-  constant is weighed for a register, and read the register that holds it (Release 26 passes over every use that
+- a zero that is added or subtracted (the index of `a[0]`) and the constant of a bit-and (`v & 3`) or of a
+  bit-xor (`p->flag ^ 1`) count when a constant is weighed for a register, and read the register that holds it (Release 26 passes over every use that
   can be an immediate); so do a constant added to or subtracted from a local variable (`(ix + 1) & 1`) and the
   constant of `+=` and `-=`, while a constant added to a value just read from memory (`p->m + 1`) stays an immediate;
 - a mask by 0xff, `x & 0xFF` or `v &= 0xFF`, stays an `and` (Release 26 turns it into a cast, so the code
@@ -154,9 +154,9 @@ setting in that source (thirty-nine settings for the thirty-seven rules: the swi
 `MDL_ARG_CONST`, `MDL_CAST_CSE`, `MDL_ARG_CAST`, `MDL_GCSE`, `ASM_MULWAIT`, `GEN_CHAIN_JUMP`, `GEN_CHAIN_SCRATCH_R0`, `GEN_NARROW_CONST`, `GEN_OR_INDEX_EARLY`, `PEP_AUTOINC`, `MDL_IV`, `GEN_POOL_MOVLOC`, `MDL_LOOP_INV`, `GEN_RELOAD`, `GEN_EVICT_ORDER`, `MDL_CAST_MUL`, `MDL_MUL_CONST`, `PEP_RET_R0`, `GEN_MEM_INDEX`, `GEN_R0VAR`, `MDL_IMM_REG`, `MDL_MASK_AND`, `MDL_IV_BASE`, `MDL_IV_TEMP`, `GEN_JUMP_TEMP`, `MDL_TEST_REPLACE`, `MDL_MUL_ONE`, `MDL_TEMP_EXPR`, `PEP_CASE_WORD`, `PEP_RET_MAC` and `ASM_SPECREG` to 0 gives Release 26's behaviour back. The
 original files are in `bin/original`.
 
-With the changes, 9,871 of the 10,066 C routines compile to the arcade's instructions (3,796 with the original
-Release 26), and 9,834 to its exact bytes (1,905). Over 254 Fightcade replays compared with the original ROM,
-253 keep identical game state throughout (218 before) and 253 identical slowdown (214).
+With the changes, 9,908 of the 10,066 C routines compile to the arcade's instructions (3,798 with the original
+Release 26), and 9,889 to its exact bytes (1,906). Over 254 Fightcade replays compared with the original ROM,
+all 254 keep identical game state throughout (218 before) and identical slowdown (214).
 
 ## Fightcade replays
 

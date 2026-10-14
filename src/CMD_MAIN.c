@@ -1424,7 +1424,7 @@ void debug_hit_a_judgement_build_table(void) {
             }
         }
         if (j == -1) {
-            n++;
+            n = n + 1;
             ((HITA_KEY*)&ixkey[n * 4])->key = keys[i].key;
             pat[i - 1].bits = n;
         }
@@ -1756,8 +1756,12 @@ s32 debug_hit_a_judgement_edit_grid(WORK* wk) {
                     goto none;
                 }
                 wk->dmcal_m++;
-                for (i = wk->dmcal_m + 1; i > ix; i--) {
-                    pat[i] = pat[i - 1];
+                i = wk->dmcal_m + 1;
+                if (i > ix) {
+                    do {
+                        pat[i] = pat[i - 1];
+                        i--;
+                    } while (i > ix);
                 }
             } else {
                 if (wk->dmcal_d > 95) {
@@ -5202,21 +5206,16 @@ void debug_draw_edit_side(void) {
 /* provisional name */
 void debug_draw_hit_edit_info(void)
 {
-    const char *str;
-    u16 attr;
     s16 i;
     s16 num;
     HIT_IX *hit;
 
     tilemap_rect_fill(dbg_hud_x + 40, ((WORK_Other_JUDGE *)dbg_judge_ewk)->curr_ja + 12, 8, 1, 14, 0xFFFF);
     if (Debug_Box_Edit) {
-        str = dbg_hold_str;
-        attr = 6;
+        tilemap_print_string_attr(dbg_hud_x + 40, 8, 6, dbg_hold_str);
     } else {
-        str = dbg_free_str;
-        attr = 14;
+        tilemap_print_string_attr(dbg_hud_x + 40, 8, 14, dbg_free_str);
     }
-    tilemap_print_string_attr(dbg_hud_x + 40, 8, attr, str);
     if (dbg_copy_done) {
         if (dbg_copy_pat == dbg_slot->sel[2] && dbg_pl->wu.char_index == dbg_copy_char) {
             tilemap_print_string_attr(dbg_hud_x + 40, 9, 6, dbg_copy_str);
@@ -5227,11 +5226,10 @@ void debug_draw_hit_edit_info(void)
         tilemap_print_string_attr(dbg_hud_x + 40, 9, 14, dbg_copy_str);
     }
     if (((WORK_Other_JUDGE *)dbg_judge_ewk)->look_up_flag) {
-        str = dbg_user_str;
+        tilemap_print_string_attr(dbg_hud_x + 40, 10, 2, dbg_user_str);
     } else {
-        str = dbg_define_str;
+        tilemap_print_string_attr(dbg_hud_x + 40, 10, 2, dbg_define_str);
     }
-    tilemap_print_string_attr(dbg_hud_x + 40, 10, 2, str);
 
     /* the four edit-box values, signed */
     for (i = 0; i < 4; i++) {
@@ -5967,10 +5965,10 @@ void debug_draw_cg_data(void) {
         off = dbg_cancel_off_str;
         on = dbg_cancel_on_str;
         for (; i < 8; i++, off++, on++) {
-            if (plw[0].wu.cg_cancel & bit) {
-                tilemap_print_string(dbg_hud_x, 0, 0xFFFF, on);
-            } else {
+            if (!(plw[0].wu.cg_cancel & bit)) {
                 tilemap_print_string(dbg_hud_x, 0, 0xFFFF, off);
+            } else {
+                tilemap_print_string(dbg_hud_x, 0, 0xFFFF, on);
             }
             bit = bit << 1;
         }
