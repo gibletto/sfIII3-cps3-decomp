@@ -107,20 +107,20 @@ s16 pl;
 
 /* provisional name */
 void win_mark_write(s16 pl) {
-    u16 (*cell)[4] = (u16 (*)[4])((SS_RAM + 0x400) + win_mark_pos[pl] * 4);
-    s16* type = win_type[pl];
+    u16* cell = (u16*)((SS_RAM + 0x400) + win_mark_pos[pl] * 4);
     s16 n;
+    s16 i;
     if (pl == 0) {
-        for (n = win_mark_num[pl]; n > 0; n -= 2) {
-            (*cell)[1] = win_mark_blink_tbl[*type][win_mark_phase[pl]] | ((*cell)[1] & 1);
-            (*cell)[3] = win_mark_blink_tbl[*type++][win_mark_phase[pl]] | (cell[-1][3] & 1);
-            cell--;
+        for (n = win_mark_num[pl], i = 0; n > 0; n -= 2, cell -= 4) {
+            cell[1] = win_mark_blink_tbl[win_type[pl][i]][win_mark_phase[pl]] | (cell[1] & 1);
+            cell[3] = win_mark_blink_tbl[win_type[pl][i]][win_mark_phase[pl]] | (cell[-1] & 1);
+            i++;
         }
     } else {
-        for (n = win_mark_num[pl]; n > 0; n -= 2) {
-            (*cell)[1] = win_mark_blink_tbl[*type][win_mark_phase[pl]] | ((*cell)[1] & 1);
-            (*cell)[3] = win_mark_blink_tbl[*type++][win_mark_phase[pl]] | ((*cell)[3] & 1);
-            cell = cell + 1;
+        for (n = win_mark_num[pl], i = 0; n > 0; n -= 2, cell += 4) {
+            cell[1] = win_mark_blink_tbl[win_type[pl][i]][win_mark_phase[pl]] | (cell[1] & 1);
+            cell[3] = win_mark_blink_tbl[win_type[pl][i]][win_mark_phase[pl]] | (cell[3] & 1);
+            i++;
         }
     }
 }
@@ -134,27 +134,25 @@ typedef struct {
 u32 win_mark_all_write(s16 pl)
 {
     WIN_CELL* cell;
-    s16* type;
     s16 n;
     s32 i;
 
     win_mark_phase[pl] = 0;
     win_mark_pos_set(pl);
-    type = win_type[pl];
     cell = (WIN_CELL*)((SS_RAM + 0x400) + win_mark_pos[pl] * 4);
     if (!pl) {
         i = 0;
         for (n = (Battle_Round[Play_Type] + 1) * 2; n > 0; n -= 2) {
-            cell->w[1] = win_mark_blink_tbl[type[i]][win_mark_phase[pl]] | (cell->w[1] & 1);
-            cell->w[3] = win_mark_blink_tbl[type[i]][win_mark_phase[pl]] | (((u16*)cell)[-1] & 1);
+            cell->w[1] = win_mark_blink_tbl[win_type[pl][i]][win_mark_phase[pl]] | (cell->w[1] & 1);
+            cell->w[3] = win_mark_blink_tbl[win_type[pl][i]][win_mark_phase[pl]] | (((u16*)cell)[-1] & 1);
             i++;
             cell--;
         }
     } else {
         i = 0;
         for (n = (Battle_Round[Play_Type] + 1) * 2; n > 0; n -= 2) {
-            cell->w[1] = win_mark_blink_tbl[type[i]][win_mark_phase[pl]] | (cell->w[1] & 1);
-            cell->w[3] = win_mark_blink_tbl[type[i]][win_mark_phase[pl]] | (cell->w[3] & 1);
+            cell->w[1] = win_mark_blink_tbl[win_type[pl][i]][win_mark_phase[pl]] | (cell->w[1] & 1);
+            cell->w[3] = win_mark_blink_tbl[win_type[pl][i]][win_mark_phase[pl]] | (cell->w[3] & 1);
             i++;
             cell++;
         }

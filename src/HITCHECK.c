@@ -883,9 +883,19 @@ s32 defense_ground(PLW* as, PLW* ds, s8 gddir) {
                 return 0;
             }
         }
-        if (as->wu.att.guard & 1 && !(ds->spmv_ng_flag & 0x200)) {
-            if (just_now) {
-                if (ds->cp->waza_flag[4] >= blocking_term_tbl[attr_att][1]) {
+        if (as->wu.att.guard & 1) {
+            if (!(ds->spmv_ng_flag & 0x200)) {
+                if (just_now) {
+                    if (ds->cp->waza_flag[4] >= blocking_term_tbl[attr_att][1]) {
+                        blocking_point_count_up(ds);
+                        as->wu.hf.hit.player = 64;
+                        ds->wu.routine_no[2] = 33;
+                        if (check_dm_att_blocking(&as->wu, &ds->wu, 6)) {
+                            return 2;
+                        }
+                        return 0;
+                    }
+                } else if (ds->cp->waza_flag[4] != 0) {
                     blocking_point_count_up(ds);
                     as->wu.hf.hit.player = 64;
                     ds->wu.routine_no[2] = 33;
@@ -894,14 +904,6 @@ s32 defense_ground(PLW* as, PLW* ds, s8 gddir) {
                     }
                     return 0;
                 }
-            } else if (ds->cp->waza_flag[4] != 0) {
-                blocking_point_count_up(ds);
-                as->wu.hf.hit.player = 64;
-                ds->wu.routine_no[2] = 33;
-                if (check_dm_att_blocking(&as->wu, &ds->wu, 6)) {
-                    return 2;
-                }
-                return 0;
             }
         }
     }
@@ -914,7 +916,8 @@ s32 defense_ground(PLW* as, PLW* ds, s8 gddir) {
     if (ds->spmv_ng_flag & 0x10) {
         return 2;
     }
-    if (!ds->auto_guard) {
+    if (ds->auto_guard) {
+    } else {
         if (!(ds->saishin_lvdir & gddir)) {
             return 2;
         }

@@ -37,39 +37,3 @@ const s16 end_2_pos[5][2] = {
     { 320, 256 },
     { 320, 256 },
 };
-
-/* Initial values of end_100_jp (end_200_move) in end_2.c. */
-void (*const end_100_jp_init[5])() = {
-    end_200_0000,
-    end_200_1000,
-    end_200_2000,
-    end_200_3000,
-    end_200_3000,
-};
-
-const s16 end_200_1000_anm_tbl[4] = {
-    12, 13, 14, 15,
-};
-
-/* Initial values of end_202_jp (end_201_move) in end_2.c. */
-void (*const end_202_jp_init[5])() = {
-    end_X_com01,
-    end_201_1000,
-    end_X_com01,
-    end_201_3000,
-    end_201_3000,
-};
-
-const s16 end_201_anm_tbl[10] = {
-    16, 17, 18, 19, 20, 21, 22, 23,
-    24, 25,
-};
-
-/* Initial values of end_202_jp (end_202_move) in end_2.c. */
-void (*const end_202_jp_init_2[5])() = {
-    end_X_com01,
-    end_202_1000,
-    end_X_com01,
-    end_202_3000,
-    end_202_4000,
-};

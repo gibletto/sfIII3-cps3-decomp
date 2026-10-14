@@ -606,12 +606,14 @@ matched:
     if (wdat & ~tdat) {
         return 0;
     }
-    if (shot_data_convert(wk->cp->sw_now) >= 0) {
-        if (wk->wu.cg_meoshi & 0x800) {
-            goto cancel;
-        }
-        goto end;
+    if (shot_data_convert(wk->cp->sw_now) < 0) {
+        goto off;
     }
+    if (wk->wu.cg_meoshi & 0x800) {
+        goto cancel;
+    }
+    goto end;
+off:
     if (!(wk->wu.cg_cancel & 0x80)) {
         return 0;
     }

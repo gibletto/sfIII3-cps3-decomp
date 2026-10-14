@@ -235,8 +235,8 @@ void entry_to_in_game(void) {
     E_No1 = 0;
     E_No2 = 0;
     E_No3 = 0;
-    F_No3[0] = F_No2[0] = F_No1[0] = 0;
-    F_No3[1] = F_No2[1] = F_No1[1] = 0;
+    F_No1[0] = F_No2[0] = F_No3[0] = 0;
+    F_No1[1] = F_No2[1] = F_No3[1] = 0;
     for (i = 0; i < 2; i++) {
         for (j = 0; j < 4; j++) {
             E_Number[i][j] = 0;
@@ -1456,7 +1456,7 @@ s8 coins;
     switch (F_No2[PL_id]) {
     case 0:
         F_No2[PL_id] += 1;
-        F_No1[PL_id] = F_No0[PL_id] = 0;
+        F_No0[PL_id] = F_No1[PL_id] = 0;
         F_Timer[PL_id] = 1;
         tilemap_print_string_attr(Entry_Mes_X[PL_id] + DE_X[Entry_Mes_Wide[PL_id]], Text_Page_Y, 18,
                                   (s8*)msg_blank);

@@ -956,6 +956,12 @@ void Pool_Score(s16 PL_id) {
 
 
 
+const u32 Comp_Bonus_Data[11] = {
+    0x7530, 0x9C40, 0xC350, 0xEA60, 0x11170, 0x13880, 0x15F90, 0x186A0,
+    0x1ADB0, 0x1D4C0, 0x1FBD0,
+};
+
+
 void Additional_Bonus(s16 PL_id) {
     Complete_Bonus = Setup_Comp_Bonus();
     Score[PL_id][Play_Type] += Perfect_Bonus[Winner_id];
@@ -1264,8 +1270,7 @@ s32 Game_Manage_12_3(void) {
         if (Cut_Cut_C_Timer() == 0) {
             C_No2++;
             C_Timer = 10;
-            request_message = 1;
-            message_index = 4;
+            request_center_message(4);
             effect_58_init(6, 1, 155);
             return effect_58_init(6, 60, 156);
         }

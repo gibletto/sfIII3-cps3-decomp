@@ -293,7 +293,7 @@ void test_menu_select(void) {
 void test_mode_exit(void)
 {
     tilemap_fill_all(0, 32);
-    test_cursor = test_menu_no = test_rno = 0;
+    test_rno = test_menu_no = test_cursor = 0;
     coin_lock_set(-1);
     Cd_Error_Flag = 1;
     switch_read(1);

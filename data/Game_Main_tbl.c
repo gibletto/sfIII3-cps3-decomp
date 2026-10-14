@@ -29,28 +29,3 @@ extern void Game2_2();
 extern void Game2_3();
 extern void Game2_4();
 extern void Game2_5();
-
-const s8 Insert_Coin_Erase_msg[16] = "              ";
-
-/* Initial values of Game_Jmp_Tbl (game_phase_dispatch) in Game_Main.c. */
-const u32 Game_Jmp_Tbl_init[12] = {
-    (u32)Game00, (u32)Game01, (u32)Game02, (u32)Game03, (u32)Game04, (u32)Game05, (u32)Game06, (u32)Game07,
-    (u32)Game08, (u32)Game09, (u32)Game10, (u32)Game11,
-};
-
-/* Initial values of Game00_Jmp_Tbl (Game00) in bg0001.c. */
-const u32 Game00_Jmp_Tbl_init[6] = {
-    (u32)Game0_0, (u32)Game0_1, (u32)Game0_2, (u32)Game0_3, (u32)Game0_2, (u32)Game0_3,
-};
-
-const s8 Game01_Erase_msg[20] = "                   ";
-
-/* Initial values of Game02_Jmp_Tbl (Game02) in Game_Main.c. */
-const u32 Game02_Jmp_Tbl_init[6] = {
-    (u32)Game2_0,
-    (u32)Game2_1,
-    (u32)Game2_2,
-    (u32)Game2_3,
-    (u32)Game2_4,
-    (u32)Game2_5,
-};

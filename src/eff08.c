@@ -119,11 +119,13 @@ void effect_08_move(WORK_Other* ewk) {
 void effect_08_build_tile_grid()
 {
     const GRID_CELL* cell;
+    const GRID_CELL* row;
     s16 i;
     s16 j;
     for (i = 0; i < 2; i++) {
+        row = &eff08_cell_tbl[i][0];
         for (j = 0; j < 16; j++) {
-            cell = (const GRID_CELL*)eff08_cell_tbl[i];
+            cell = row;
             cell += j;
             scroll_cell_write(i, cell->a, cell->b, (u32)eff08_scrn_data);
         }

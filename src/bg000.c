@@ -672,8 +672,8 @@ void suzi_line_calc2(s16 bg_num) {
         }
     } else {
         suzi_calc_w.step = bg_w.bgw[bg_num].zuubun * dist;
-        dst = bg_w.bgw[bg_num].start_suzi;
         suzi_calc_w.ofs = suzi_calc_w.step * bg_w.bgw[bg_num].u_line;
+        dst = bg_w.bgw[bg_num].start_suzi;
         for (i = 0; i < bg_w.bgw[bg_num].u_line; i++) {
             *line -= suzi_calc_w.ofs;
             suzi_calc_w.ofs -= suzi_calc_w.step;
@@ -695,8 +695,7 @@ void suzi_line_calc2(s16 bg_num) {
 
 /* provisional name */
 s32 bg_cell_offset(s16 x, s16 y) {
-    s32 ix = x & 0x3F0;
-    return ((((0x400 - (y & 0x300) - (y & 0xF0)) & 0x3F0) << 4) + (ix >> 2)) >> 1;
+    return ((((0x400 - (y & 0x300) - (y & 0xF0)) & 0x3F0) << 4) + ((x & 0x3F0) >> 2)) >> 1;
 }
 
 
@@ -862,23 +861,21 @@ void bg_pos_hosei_sub2(s32 bg_no) {
 
 
 void bg_pos_hosei_sub3(s32 bg_no) {
-    s32 pos;
-    s32 pos2;
-    volatile s16 work;
-    volatile s16 work2;
+    u16 pos;
+    u16 pos2;
     pos2 = bg_w.bgw[bg_no].wxy[0].disp.pos;
     pos = pos2 & 0x3FF;
-    pos -= work = bg_w.pos_offset;
+    pos -= bg_w.pos_offset;
+    pos2 -= bg_w.pos_offset;
     pos &= 0x3FF;
-    pos2 -= work;
-    pos += work = quake_x_tbl[bg_w.quake_x_index];
-    pos2 += work;
+    pos += quake_x_tbl[bg_w.quake_x_index];
+    pos2 += quake_x_tbl[bg_w.quake_x_index];
     bg_w.bgw[bg_no].position_x = pos & 0x3FF;
     bg_w.bgw[bg_no].abs_x = pos2;
     pos2 = bg_w.bgw[bg_no].xy[1].disp.pos;
     pos = pos2 & 0x3FF;
-    pos += work2 = quake_y_tbl[bg_w.quake_y_index];
-    pos2 += work2;
+    pos += quake_y_tbl[bg_w.quake_y_index];
+    pos2 += quake_y_tbl[bg_w.quake_y_index];
     bg_w.bgw[bg_no].position_y = pos & 0x3FF;
     bg_w.bgw[bg_no].abs_y = pos2;
 }
@@ -1005,7 +1002,7 @@ void bg_cell_write(s16 bg, s32 ofs, s32 cell, u32 src, u16 u5, s16 attr) {
 void blit_16x16_xflip(u16* src, s16 code, u16* dst, s16 attr) {
     u16 i;
     u16 j;
-    u16* s;
+    register u16* s;
     u16* d;
     u16* p;
     p = src;
@@ -1388,11 +1385,11 @@ void oh_opening_demo(u16* adrs, s32 x, s16 w, s32 y, s16 h, s16 attr, s16 prio) 
     while (i < h) {
         p = adrs;
         for (j = 0; j < w; j++) {
-            p++;
-            cell = *p;
+            cell = *++p;
             cell &= 0xFE00;
             cell |= attr;
-            *p = cell | prio;
+            cell |= prio;
+            *p = cell;
             p++;
         }
         adrs += 0x80;
@@ -1664,7 +1661,11 @@ void bg_initialize(void) {
         bg_w.bgw[i].frame_deff = 0;
         bg_w.bgw[i].max_x_limit = bg_w.bgw[i].speed_x * bg_w.max_x;
     }
-    base_y_pos = (bg_w.stage != 4) ? 40 : 48;
+    if (bg_w.stage != 4) {
+        base_y_pos = 40;
+    } else {
+        base_y_pos = 48;
+    }
     bg_pos_hosei2();
     Bg_Family_Set();
 }

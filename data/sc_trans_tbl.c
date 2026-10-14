@@ -67,27 +67,27 @@ extern const u16 sc_vram_29_attr[];
 extern const u16 sc_vram_29_code[];
 extern const u16 sc_vram_29_pos[];
 
-extern const u32 opt_color_tbl[1349];
+extern const u32 sc_celllist_data[1324];
 extern const void* const sc_celllist_tbl[];
 
 const void* const sc_celllist_tbl[17] = {
-    (void*)&opt_color_tbl[25],
-    (void*)&opt_color_tbl[25],
-    (void*)&opt_color_tbl[67],
-    (void*)&opt_color_tbl[193],
-    (void*)&opt_color_tbl[243],
-    (void*)&opt_color_tbl[263],
-    (void*)&opt_color_tbl[283],
-    (void*)&opt_color_tbl[1057],
-    (void*)&opt_color_tbl[1107],
-    (void*)&opt_color_tbl[1157],
-    (void*)&opt_color_tbl[1219],
-    (void*)&opt_color_tbl[477],
-    (void*)&opt_color_tbl[735],
-    (void*)&opt_color_tbl[1305],
-    (void*)&opt_color_tbl[1327],
-    (void*)&opt_color_tbl[109],
-    (void*)&opt_color_tbl[151],
+    (void*)&sc_celllist_data[0],
+    (void*)&sc_celllist_data[0],
+    (void*)&sc_celllist_data[42],
+    (void*)&sc_celllist_data[168],
+    (void*)&sc_celllist_data[218],
+    (void*)&sc_celllist_data[238],
+    (void*)&sc_celllist_data[258],
+    (void*)&sc_celllist_data[1032],
+    (void*)&sc_celllist_data[1082],
+    (void*)&sc_celllist_data[1132],
+    (void*)&sc_celllist_data[1194],
+    (void*)&sc_celllist_data[452],
+    (void*)&sc_celllist_data[710],
+    (void*)&sc_celllist_data[1280],
+    (void*)&sc_celllist_data[1302],
+    (void*)&sc_celllist_data[84],
+    (void*)&sc_celllist_data[126],
 };
 
 /* the screen parts sc_ram_vram_tbl copies to the SS layer: for each, a list of screen positions, one of

@@ -72,9 +72,11 @@ void effJ5_bg_write(void) {
     s16 i;
     s16 j;
     const J5_ENTRY* p;
+    const J5_ENTRY* row;
     for (i = 0; i < 2; i++) {
+        row = &effJ5_cell_tbl[i][0];
         for (j = 0; j < 16; j++) {
-            p = (const J5_ENTRY*)effJ5_cell_tbl[i];
+            p = row;
             p += j;
             scroll_cell_write(i, p->a, p->b, (u32)effJ5_scrn_data);
         }

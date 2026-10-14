@@ -4611,12 +4611,13 @@ s32 Check_Dramatic(wk, PL_id)
 PLW* wk;
 s16 PL_id;
 {
-    s32 rnd = Rnd;
-    if (plw[wk->wu.id].sa->ok) {
-        return rnd | 8;
+    s32 rnd;
+    s32 rnd8;
+    if (rnd = Rnd, rnd8 = rnd | 8, plw[wk->wu.id].sa->ok) {
+        return rnd8;
     }
     if ((plw[PL_id].wu.vital_new <= 0x30) || (plw[PL_id ^ 1].wu.vital_new <= 0x30)) {
-        return rnd | 8;
+        return rnd8;
     }
     return rnd;
 }

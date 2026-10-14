@@ -104,6 +104,8 @@ s16 Select_Player(void) {
 
 
 
+#pragma inline(Check_Exit)
+
 void Sel_PL_Control(void) {
     void (*cont_tbl[4])() = { Sel_PL_Cont_1st, Sel_PL_Cont_2nd, Sel_PL_Cont_3rd, Sel_PL_Cont_4th };
     Setup_Select_Status();
@@ -114,10 +116,7 @@ void Sel_PL_Control(void) {
     Player_Select_Control();
     ID2 = 1;
     Player_Select_Control();
-    {
-        void (*exit_tbl[7])() = { Exit_1st, Exit_2nd, Exit_3rd, Exit_4th, Exit_5th, Exit_6th, Exit_7th };
-        exit_tbl[Exit_No]();
-    }
+    Check_Exit();
 }
 
 
@@ -127,7 +126,7 @@ void Sel_PL_Cont_1st(void) {
     if (Demo_Flag) {
         tilemap_fill_all(0, 32);
     } else {
-        tilemap_print_string_attr(DE_X[0] + 14, Text_Page_Y + 23, 18, Sel_PL_Erase_msg);
+        tilemap_print_string_attr(DE_X[0] + 14, Text_Page_Y + 23, 18, "                    ");
     }
     S_No++;
     All_Clear_Suicide();
@@ -270,6 +269,13 @@ void Setup_EFF69(void) {
     }
 }
 
+
+
+const s8 Face_Order_Data[19] = {
+    1, 2, 3, 4, 5, 6, 7, 8,
+    9, 10, 11, 12, 13, 14, 16, 17,
+    18, 19, 20,
+};
 
 
 void Setup_Face_Sub(void) {
@@ -638,6 +644,16 @@ void Sel_PL_Sub_CD(s16 PL_id) {
     }
 }
 
+
+
+const s8 Auto_Repeat_Data[3] = {
+    26, 9, 7,
+};
+
+
+const s8 Auto_Repeat_Wife_Data[5] = {
+    1, 1, 1, 0, 0,
+};
 
 
 void Auto_Repeat_Sub(s16 PL_id) {
@@ -1158,6 +1174,11 @@ void PL_Sel_4th(void) {}
 
 
 
+const u8 Setup_Aborigine_table[3][3] = {
+    { 0, 1, 2 }, { 2, 0, 1 }, { 1, 2, 0 },
+};
+
+
 void sel_pl_disp_char_effect_trio(s8 PL_id, s16 Time) {
     Move_Super_Arts[PL_id] = 3;
     Select_Arts[PL_id] = 3;
@@ -1289,6 +1310,12 @@ void Setup_BG_Layer3(void) {
     Bg_Family_Set_Ex(3);
 }
 
+
+
+const s16 Cursor_Y_Data[13] = {
+    80, 104, 128, 80, 104, 128, 16, 32,
+    64, 128, 256, 512, 0,
+};
 
 
 void Setup_Cursor_Y(void) {

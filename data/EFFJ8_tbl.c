@@ -21,26 +21,3 @@ const s16 effj8_timer_tbl[8] = {
 const s16 effj8_y_tbl[8] = {
     128, 80, 96, 160, 176, 112, 144, 168,
 };
-
-/* Initial values of dragonfly_move_jp1 (dragonfly_move) in EFFJ8.c. */
-const u32 dragonfly_move_jp1_init[8] = {
-    (u32)dragonfly_move_0000,
-    (u32)dragonfly_move_0001,
-    (u32)dragonfly_r_move,
-    (u32)dragonfly_l_move,
-    (u32)dragonfly_move_0004,
-    (u32)dragonfly_move_0005,
-    (u32)dragonfly_l_move,
-    (u32)dragonfly_r_move,
-};
-
-const s32 effj8_sp_tbl[8][4] = {
-    { 393216, -16384, 16384, 0 },
-    { 393216, -18432, -16384, 0 },
-    { 393216, -4096, 16384, 0 },
-    { 393216, -8192, -16384, 0 },
-    { 524288, -40960, 16384, 0 },
-    { 524288, -8192, -16384, 0 },
-    { 524288, -24576, 16384, 0 },
-    { 524288, -16384, -16384, 0 },
-};

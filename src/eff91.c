@@ -82,11 +82,11 @@ void eff91_cell_data_set(WORK_Other* ewk)
     row = cell;
     for (h = ewk->wu.dmcal_m; h > 0; h--) {
         cell = row;
-        for (w = ewk->wu.dm_vital; w > 0; w--) {
+        for (w = ewk->wu.dm_vital; w > 0;) {
+            w--;
             code = ewk->wu.move_xy_table++;
-            attr = *ewk->wu.move_xy_table++;
             dst = cell++;
-            *cell++ = attr;
+            *cell++ = attr = *ewk->wu.move_xy_table++;
             *dst = *code | ((attr & 0x100) >> 8);
         }
         row = row + 128;

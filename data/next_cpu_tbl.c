@@ -149,7 +149,7 @@ const u32 gcfg_gauge_clr_scr_jp_0[3] = {
     0x10001, 2, 0x13CC0000,
 };
 
-const u32 gcfg_title_scr_jp_0[79] = {
+const u32 gcfg_title_scr_jp_0[67] = {
     0x50013, 2, 0x129C13C8, 0x12FC133C, 0x13400002, 0x40002, 0x21398, 0x13A0000A,
     0x190002, 0x2139C, 0x13CC13CC, 0x13CC13CC, 0x13CC13CC, 0x13CC13CC, 0x13980003, 0x40004,
     0x21390, 0x13941330, 0x60019, 0x40002, 0x13A413CC, 0x13CC13CC, 0x13CC13A8, 0x40004,
@@ -158,7 +158,6 @@ const u32 gcfg_title_scr_jp_0[79] = {
     0x13C41328, 0x132C1388, 0x138C1208, 0x40004, 0xC0002, 0x128812F0, 0x131C12CC, 0x70004,
     0xE0002, 0x12F413C8, 0x133412B0, 0x129C13C8, 0x12FC0009, 0x40010, 0x2133C, 0x13401300,
     0x12D41308, 0x13C8125C, 0x13441264, 0xA000E, 0x160002, 0x121813C4, 0x131812DC, 0x13C81348,
-    0x134C1254, 0x1358135C, 0, (u32)game_config_init_jp, (u32)game_config_move_jp, (u32)game_config_init_jp, (u32)game_config_move_jp, (u32)game_config_level_item_jp,
-    (u32)game_config_damage_item_jp, (u32)game_config_timer_item_jp, (u32)game_config_1p_round_item_jp, (u32)game_config_2p_round_item_jp, (u32)game_config_event_item_jp, (u32)game_config_bonus_item_jp, (u32)game_config_exit_item_jp,
+    0x134C1254, 0x1358135C, 0,
 };
 

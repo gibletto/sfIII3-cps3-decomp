@@ -254,6 +254,11 @@ void end_300_0005(void) {
 
 
 
+const u8 end_300_col_tbl[4] = {
+    59, 60, 61, 0,
+};
+
+
 void end_301_move(void) {
     void (*end_301_jp[6])() = { end_X_com01, end_X_com01, end_X_com01, end_301_0003, end_X_com01, end_X_com01 };
     bgw_ptr = &bg_w.bgw[1];

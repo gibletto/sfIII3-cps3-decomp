@@ -163,9 +163,10 @@ void load_player_color(a, b, c)
 
 
 
+typedef const u32 METAMOR_PL[7][14][3];
 void metamor_color_restore(u16 wkid) {
     s16 zero = 0;
-    const u32* p = metamor_color_tbl[wkid][Player_Color[wkid]][0];
+    const u32* p = (*(METAMOR_PL*)&metamor_color_tbl[wkid])[Player_Color[wkid]][0];
     col_trans_result = polygon2d_submit_quad(p[0], p[1], p[2], zero, zero, zero);
     col_trans_result = polygon2d_submit_quad(p[0], p[1] + 0x400, p[2], zero, zero, zero);
 }

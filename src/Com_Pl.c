@@ -156,7 +156,8 @@ void Main_Program(PLW* wk) {
 
 void Com_Initialize(PLW* wk) {
     const s16* xx;
-    register s16 i;
+    s16 i;
+    register s16 j;
     CP_No[wk->wu.id][0] = 1;
     CP_No[wk->wu.id][1] = 0;
     CP_No[wk->wu.id][2] = 0;
@@ -188,9 +189,9 @@ void Com_Initialize(PLW* wk) {
     for (i = 0; i < 20; i++) {
         (&Resume_Lever[wk->wu.id][0])[i] = 0;
     }
-    i = 0;
-    while (i < 3) {
-        Attack_Count_Buff[wk->wu.id][i++] = -1;
+    j = 0;
+    while (j < 3) {
+        Attack_Count_Buff[wk->wu.id][j++] = -1;
     }
 }
 
@@ -1288,11 +1289,15 @@ const u16 Rapid_Lever_Data[2] = {
     8, 4,
 };
 
-/* Stored after Rapid_Lever_Data. Nothing in the program refers to it by name or address; if it is read,
-   it is through an index past the end of Rapid_Lever_Data. */
-const u8 Rapid_Lever_Data_tail[17] = {
-    0, 0, 0, 0, 9, 9, 37, 9, 9, 9, 9, 9, 9, 9, 9, 9,
-    9,
+/* Stored after Rapid_Lever_Data; nothing in the program refers to it. */
+const u8 Rapid_Lever_Data_tail[4] = {
+    0, 0, 0, 0,
+};
+
+/* The attack pattern a computer player starts from when it turns active, per character. It has thirteen
+   entries; the characters after them read on into Pattern_Insurance_Data. */
+const s8 Active_Pattern_Data[13] = {
+    9, 9, 37, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
 };
 
 
@@ -1427,7 +1432,7 @@ void Next_Be_Active(PLW* wk) {
     for (xx = 0; xx <= 7; xx++) {
         CP_Index[wk->wu.id][xx] = 0;
     }
-    Com_Width_Data[wk->wu.id] = PL_Body_Width_Data[wk->player_number];
+    Pattern_Index[wk->wu.id] = Active_Pattern_Data[wk->player_number];
 }
 
 void Next_Be_Free(wk)

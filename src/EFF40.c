@@ -17,13 +17,14 @@
 #include "Eff59.h"
 #include "EFFECT.h"
 #include "effect_2.h"
-#include "CHARMOVE.h"
 #include "charmove_2.h"
 #include "Eff39.h"
 #include "EFFD9.h"
 #include "Grade.h"
 #include "EFF41.h"
 #include "EFF42.h"
+
+void set_char_move_init2();
 
 void effect_40_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
@@ -32,8 +33,8 @@ void effect_40_move(WORK_Other* ewk) {
             return;
         }
         ewk->wu.routine_no[0]++;
-        ewk->wu.dir_timer = 1;
         ewk->wu.disp_flag = 1;
+        ewk->wu.dir_timer = 1;
         ewk->wu.mvxy.a[0].sp = 0x80000;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
         break;

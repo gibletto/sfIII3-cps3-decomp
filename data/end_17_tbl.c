@@ -37,30 +37,3 @@ const s16 end_11_pos[7][2] = {
     { 256, 256 },
     { 768, 256 },
 };
-
-/* Initial values of end_1102_move_jp (end_1100_move) in end_17.c. */
-void (*const end_1102_move_jp_init[7])() = {
-    end_1100_common,
-    end_1100_common,
-    end_1100_common,
-    end_1100_3,
-    end_1100_common,
-    end_1100_common,
-    end_1100_6,
-};
-
-const s16 end_11_115_pos[4][3] = {
-    { 768, 256, 1 },
-    { 256, 0, 2 },
-    { 768, 0, 2 },
-    { 256, 768, 1 },
-};
-
-/* Stored after end_11_115_pos. Nothing in the program refers to it by name or address; if it is read,
-   it is through an index past the end of end_11_115_pos. */
-void (*const end_11_115_pos_tail[14])() = {
-    end_X_com01,  end_X_com01,  end_1101_2,   end_1101_2,  /* 0 */
-    end_X_com01,  end_X_com01,  end_X_com01,  end_X_com01,  /* 4 */
-    end_X_com01,  end_1101_2,   end_X_com01,  end_X_com01,  /* 8 */
-    end_X_com01,  end_X_com01,  /* 12 */
-};
