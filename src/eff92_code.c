@@ -35,7 +35,8 @@
 
 
 void effect_92_move(WORK_Other* ewk) {
-    u16 kind;
+    s32 kind;
+    s32 col;
     switch (ewk->wu.routine_no[0]) {
     case 0:
         if (--ewk->wu.dir_timer != 0) {
@@ -43,10 +44,11 @@ void effect_92_move(WORK_Other* ewk) {
         }
         kind = *ewk->wu.move_xy_table++;
         ewk->wu.dir_timer = *ewk->wu.move_xy_table++;
-        if (kind == 0x8000) {
+        if ((u16)kind == 0x8000) {
             kind = ewk->wu.dmcal_m;
         }
-        win_mark_put(ewk->master_id * 4 + PL_Wins[ewk->master_id] - 1, kind, win_mark_col_tbl[kind]);
+        col = win_mark_col_tbl[(u16)kind];
+        win_mark_put(ewk->master_id * 4 + PL_Wins[ewk->master_id] - 1, kind, col);
         if (ewk->wu.dir_timer == -1) {
             ewk->wu.routine_no[0]++;
             ewk->wu.dir_timer = 1;

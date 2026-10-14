@@ -18,16 +18,3 @@ const s16 lose_type_tbl[24] = {
     0, 0, 0, 0,
     0, 0, 0, 0,
 };
-
-/* Initial values of lose_jp_tbl (lose_player) in lose_pl.c. */
-const u32 lose_jp_tbl_init[4] = {
-    (u32)Lose_00000, (u32)Lose_10000, (u32)Lose_20000, (u32)Lose_30000,
-};
-
-const s16 meta_lose_tbl[21] = {
-    24, 24, 24, 24, 24, 24, 24, 24,
-    24, 24, 24, 24, 24, 28, 24, 24,
-    24, 24, 24, 24,
-    24,
-};
-

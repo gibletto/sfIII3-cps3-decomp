@@ -32,17 +32,5 @@ const s8 Demo_PL_Data[4] = {
     0, 1, 0, 1,
 };
 
-/* Initial values of jmp_tbl (Ranking_Main), jmp_tbl (Ranking_00), jmp_tbl (Ranking_01) in RANKING.c. */
-const u32 RANKING_local_init[13] = {
-    (u32)Ranking_01, (u32)Ranking_00, (u32)Ranking_00_1st, (u32)Ranking_00_2nd,
-    (u32)Ranking_00_3rd, (u32)Ranking_00_4th, (u32)Ranking_00_5th, (u32)Ranking_00_Last,
-    (u32)Ranking_01_1st, (u32)Ranking_01_2nd, (u32)Ranking_00_3rd, (u32)Ranking_01_4th,
-    (u32)Ranking_01_5th,
-};
-
 /* Stored after Demo_PL_Data. Nothing in the program refers to it by name or address; if it is read,
    it is through an index past the end of Demo_PL_Data. */
-const u32 RANKING_local_tail[1] = {
-    0x90E1000,
-};
-

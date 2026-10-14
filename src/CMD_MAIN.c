@@ -59,6 +59,8 @@
 
 void bg_cell_write(s16 bg, s32 ofs, s32 cell, u32 src, u32 u5, s16 attr);
 
+#pragma inline(debug_menu_select_dispatch)
+
 /* provisional name */
 s32 debug_scene_outer_dispatch(void) {
     dbg_p1sw_1 = dbg_p1sw_0;
@@ -79,10 +81,8 @@ s32 debug_scene_outer_dispatch(void) {
     case 2:
         debug_menu_player_setup();
         break;
-    case 3: {
-        void (*Stage_Tbl[2])() = { debug_menu_select_init, debug_menu_select_run };
-        (*Stage_Tbl[Debug_Select_No])();
-    }
+    case 3:
+        debug_menu_select_dispatch();
         break;
     case 4:
         if (!debug_menu_exit_check()) {
@@ -240,7 +240,7 @@ void debug_menu_select_init(void)
     tilemap_fill_all(0, 0x20);
     Debug_Menu_No += 4;
     tilemap_print_string(0, 0, 0xFFFF, dbg_menu_str);
-    tilemap_print_string_attr(8, Debug_Menu_No, 6, debug_cursor_msg);
+    tilemap_print_string_attr(8, Debug_Menu_No, 6, "T");
     Game_pause = 0;
 }
 
@@ -327,6 +327,9 @@ void debug_bg_select_navigate_updown(void) {
     }
 }
 
+
+
+const char bg_select_msg[12] = "BG SELECT";
 
 
 /* provisional name */
@@ -451,6 +454,9 @@ void debug_object_look_run(void) {
     sort_push_request(&dbg_pl->wu);
 }
 
+
+
+const char object_look_msg[12] = "OBJECT LOOK";
 
 
 /* provisional name */
@@ -741,6 +747,15 @@ void debug_object_edit_snapshot_restore(void) {
     }
 }
 
+
+
+const char object_edit_msg[12] = "OBJECT EDIT";
+
+
+const char no_edit_erase_msg[8] = "       ";
+
+
+const char no_edit_msg[8] = "NO EDIT";
 
 
 /* provisional name */
@@ -1109,6 +1124,9 @@ void debug_draw_record_ghosts(void) {
     }
 }
 
+
+
+const char object_edit_all_msg[32] = "OBJECT EDIT  -ALL CHAR VERSION-";
 
 
 /* provisional name */
@@ -2188,6 +2206,60 @@ void debug_rgb_editor_print(s16 print) {
 
 
 
+const char hit_judgment_msg[16] = "HIT JUDGMENT";
+
+
+const char hit_a_judgement_msg[20] = "HIT -A- JUDGEMENT";
+
+
+const char hit_tbl_label_msg[12] = "HIT TBL:";
+
+
+const char pattern_label_msg[16] = "PATTERN:  /  ";
+
+
+const s8 debug_blank6_msg[8] = "      ";
+
+
+const s8 debug_blank18_msg[20] = "                  ";
+
+
+const char debug_zero2_msg[4] = "00";
+
+
+const char grid_empty_row_msg[8] = "---,--";
+
+
+const char grid_row_frame_msg[8] = "   ,  ";
+
+
+const char debug_blank3_msg[4] = "   ";
+
+
+const char grid9_empty_box_msg[8] = "[--]";
+
+
+const char dbg_hit_row_empty_str[20] = " --,--,M__B__,--";
+
+
+const char dbg_hit_row_ix_str[8] = "[  ]";
+
+
+const char dbg_hit_row_blank_str[20] = "   ,  ,      ,  ";
+
+
+const char dbg_hit_row_mb_str[8] = "M__B__";
+
+
+const char dbg_space2_str[4] = "  ";
+
+
+const char dbg_hitbox_row_str[20] = " 000,000, 000,000";
+
+
+const char dbg_minus_str[4] = "-";
+
+
 /* provisional name */
 void debug_catch_judgment_dispatch(void) {
     void (*Catch_Tbl[2])() = { debug_catch_judgment_init, debug_catch_judgment_run };
@@ -2296,6 +2368,9 @@ void debug_catch_judgment_run(void) {
     debug_char_disp((WORK*)&plw[1]);
 }
 
+
+
+const char dbg_catch_judge_title[16] = "CATCH JUDJEMENT";
 
 
 /* provisional name */
@@ -2528,6 +2603,12 @@ void debug_char_preview_run(void) {
     debug_rgb_editor_print(1);
 }
 
+
+
+const char dbg_tikuji_str[8] = "TIKUJI";
+
+
+const char dbg_ikkatu_str[8] = "IKKATU";
 
 
 /* provisional name */
@@ -3474,23 +3555,23 @@ void debug_hit_box_cursor(void) {
     u16 *input = &now;
     if (Debug_PL_id) {
         return;
-    }
-    now = dbg_p2sw_0;
-    sw = ~dbg_p2sw_1 & now;
-    if (!(now & 0x240)) {
-        return;
-    }
-    tilemap_rect_fill(dbg_hud_x + 40, (s8)((WORK_Other*)dbg_judge_ewk)->refrected + 12, 8, 1, 2, 0xFFFF);
-    if (sw & 0x40) {
-        ((WORK_Other*)dbg_judge_ewk)->refrected--;
-        if ((s8)((WORK_Other*)dbg_judge_ewk)->refrected < 0) {
-            ((WORK_Other*)dbg_judge_ewk)->refrected = 14;
-        }
-    }
-    if (sw & 0x200) {
-        ((WORK_Other*)dbg_judge_ewk)->refrected++;
-        if ((s8)((WORK_Other*)dbg_judge_ewk)->refrected > 14) {
-            ((WORK_Other*)dbg_judge_ewk)->refrected = 0;
+    } else {
+        now = dbg_p2sw_0;
+        sw = ~dbg_p2sw_1 & now;
+        if (now & 0x240) {
+            tilemap_rect_fill(dbg_hud_x + 40, (s8)((WORK_Other*)dbg_judge_ewk)->refrected + 12, 8, 1, 2, 0xFFFF);
+            if (sw & 0x40) {
+                ((WORK_Other*)dbg_judge_ewk)->refrected--;
+                if ((s8)((WORK_Other*)dbg_judge_ewk)->refrected < 0) {
+                    ((WORK_Other*)dbg_judge_ewk)->refrected = 14;
+                }
+            }
+            if (sw & 0x200) {
+                ((WORK_Other*)dbg_judge_ewk)->refrected++;
+                if ((s8)((WORK_Other*)dbg_judge_ewk)->refrected > 14) {
+                    ((WORK_Other*)dbg_judge_ewk)->refrected = 0;
+                }
+            }
         }
     }
 }
@@ -5134,6 +5215,85 @@ void debug_draw_object_info(void) {
 
 
 
+const char dbg_parts_title[8] = "PARTS";
+
+
+const char dbg_slot_1p_s1_str[12] = "1P S1 UJA ";
+
+
+const char dbg_slot_1p_s2_str[12] = "   S2 UJA2";
+
+
+const char dbg_slot_1p_s3_str[12] = "   S3 UJA3";
+
+
+const char dbg_slot_1p_s4_str[12] = "   S4 UJA4";
+
+
+const char dbg_slot_s5_str[12] = "   S5  -  ";
+
+
+const char dbg_slot_s6_str[12] = "   S6  -  ";
+
+
+const char dbg_slot_2p_s1_str[12] = "2P S1 ROA ";
+
+
+const char dbg_slot_2p_s2_str[12] = "   S2 WCA ";
+
+
+const char dbg_slot_2p_s3_str[12] = "   S3 UMJA";
+
+
+const char dbg_slot_2p_s4_str[12] = "   S4  -  ";
+
+
+const char dbg_space10_str[12] = "          ";
+
+
+const char dbg_no_wca_str[8] = "NO WCA ";
+
+
+const char dbg_no_cmja_str[8] = "NO CMJA";
+
+
+const u16 dbg_pl_color_tbl[24] = {
+    0, 1, 2, 3, 4, 5, 6, 7,
+    8, 9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF,
+    0x10, 0x11, 0x12, 0x13, 0x14, 0, 0, 0,
+};
+
+
+const char dbg_bcp_str[8] = "BCP  ";
+
+
+const char dbg_bce_str[8] = "BCE  ";
+
+
+const char dbg_bcb_str[8] = "BCB  ";
+
+
+const char dbg_plus_str[4] = "+";
+
+
+const char dbg_flip_no_str[4] = "NO";
+
+
+const char dbg_flip_h_str[4] = "H ";
+
+
+const char dbg_flip_v_str[4] = "V ";
+
+
+const char dbg_flip_hv_str[4] = "HV";
+
+
+const char dbg_flag_on_str[4] = "[1]";
+
+
+const char dbg_flag_off_str[4] = "[0]";
+
+
 /* provisional name */
 void debug_draw_kakusyuku_frame_flags(void) {
     switch (dbg_kakusyuku_mode) {
@@ -5166,7 +5326,7 @@ void debug_draw_position_delta(void) {
         tilemap_print_string_attr(10, 15, 2, dbg_minus_str);
         d = -d;
     } else {
-        tilemap_print_string_attr(10, 15, 2, debug_space_msg);
+        tilemap_print_string_attr(10, 15, 2, " ");
     }
     if (Debug_Dec_Disp) {
         bcd = debug_hex4_to_bcd(d);
@@ -5182,7 +5342,7 @@ void debug_draw_position_delta(void) {
         tilemap_print_string_attr(10, 16, 2, dbg_minus_str);
         d = -d;
     } else {
-        tilemap_print_string_attr(10, 16, 2, debug_space_msg);
+        tilemap_print_string_attr(10, 16, 2, " ");
     }
     if (Debug_Dec_Disp) {
         bcd = debug_hex4_to_bcd(d);
@@ -5238,7 +5398,7 @@ void debug_draw_hit_edit_info(void)
             tilemap_print_string_attr(10, i + 15, 2, dbg_minus_str);
             num = -num;
         } else {
-            tilemap_print_string_attr(10, i + 15, 2, debug_space_msg);
+            tilemap_print_string_attr(10, i + 15, 2, " ");
         }
         tilemap_print_hex(11, i + 15, 2, num, 4, 0);
     }
@@ -5521,7 +5681,7 @@ void debug_draw_parts_info(void)
         tilemap_print_string_attr(10, 14, 10, dbg_minus_str);
         num = -num;
     } else {
-        tilemap_print_string_attr(10, 14, 10, debug_space_msg);
+        tilemap_print_string_attr(10, 14, 10, " ");
     }
     tilemap_print_hex(11, 14, 2, num, 4, 0);
     num = dbg_parts_plw[dbg_parts_sel].wu.dir_timer;
@@ -5529,7 +5689,7 @@ void debug_draw_parts_info(void)
         tilemap_print_string_attr(10, 15, 10, dbg_minus_str);
         num = -num;
     } else {
-        tilemap_print_string_attr(10, 15, 10, debug_space_msg);
+        tilemap_print_string_attr(10, 15, 10, " ");
     }
     tilemap_print_hex(11, 15, 2, num, 4, 0);
     switch (dbg_parts_plw[dbg_parts_sel].wu.cg_flip) {
@@ -5838,7 +5998,7 @@ void debug_draw_att_data(void)
     if (plw[0].wu.meoshi_hit_flag != 1) {
         tilemap_print_string_attr(dbg_hud_x + 36, 2, 10, dbg_minus_str);
     } else {
-        tilemap_print_string_attr(dbg_hud_x + 36, 2, 14, debug_space_msg);
+        tilemap_print_string_attr(dbg_hud_x + 36, 2, 14, " ");
     }
     bcd = debug_hex4_to_bcd(plw[0].wu.cg_att_ix);
     tilemap_print_hex(dbg_hud_x + 37, 2, 10, bcd, 4, 0);
@@ -5941,8 +6101,8 @@ void debug_draw_cg_data(void) {
             n = -plw[0].wu.cg_att_ix;
             tilemap_print_string_attr(dbg_hud_x + 42, 14, 2, dbg_minus_str);
         } else {
-            tilemap_print_string_attr(dbg_hud_x + 37, 14, 2, debug_space_msg);
-            tilemap_print_string_attr(dbg_hud_x + 42, 14, 2, debug_space_msg);
+            tilemap_print_string_attr(dbg_hud_x + 37, 14, 2, " ");
+            tilemap_print_string_attr(dbg_hud_x + 42, 14, 2, " ");
             n = plw[0].wu.cg_att_ix;
         }
         tilemap_print_hex(dbg_hud_x + 38, 10, 10, plw[0].wu.cg_att_ix, 3, 0);
@@ -5962,13 +6122,13 @@ void debug_draw_cg_data(void) {
         }
         bit = 1;
         i = 0;
-        off = dbg_cancel_off_str;
         on = dbg_cancel_on_str;
-        for (; i < 8; i++, off++, on++) {
-            if (!(plw[0].wu.cg_cancel & bit)) {
-                tilemap_print_string(dbg_hud_x, 0, 0xFFFF, off);
-            } else {
+        off = dbg_cancel_off_str;
+        for (; i < 8; i++, on++, off++) {
+            if (plw[0].wu.cg_cancel & bit) {
                 tilemap_print_string(dbg_hud_x, 0, 0xFFFF, on);
+            } else {
+                tilemap_print_string(dbg_hud_x, 0, 0xFFFF, off);
             }
             bit = bit << 1;
         }

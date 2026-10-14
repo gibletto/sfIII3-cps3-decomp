@@ -124,6 +124,11 @@ void eff94_1000(WORK_Other* ewk) {
 
 
 
+const s16 eff94_2000_tbl[8] = {
+    288, 336, 320, 288, 328, 296, 344, 304,
+};
+
+
 void eff94_2000(WORK_Other* ewk) {
     void (*const eff94_2000_jp[5])(
         WORK_Other*) = { eff94_2000_0, eff94_2000_1, eff94_2000_2, eff94_2000_3, eff94_2000_4 };
@@ -201,6 +206,12 @@ void eff94_2000_4(WORK_Other* ewk) {
     }
 }
 
+
+
+const s8 eff94_2000_1_tbl[16] = {
+    0, 1, 0, 0, 1, 0, 0, 0,
+    1, 1, 0, 0, 1, 1, 0, 1,
+};
 
 
 void eff94_3000(WORK_Other* ewk) {

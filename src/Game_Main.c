@@ -320,8 +320,8 @@ void Loop_Demo_Sub(void) {
 
 /* provisional name */
 void Erase_Insert_Coin(void) {
-    tilemap_print_string_attr(DE_X[0] + 14, (s32)Insert_Y, 18, Insert_Coin_Erase_msg);
-    tilemap_print_string_attr(DE_X[0] + 14, Insert_Y + 32, 18, Insert_Coin_Erase_msg);
+    tilemap_print_string_attr(DE_X[0] + 14, (s32)Insert_Y, 18, "              ");
+    tilemap_print_string_attr(DE_X[0] + 14, Insert_Y + 32, 18, "              ");
 }
 
 
@@ -499,8 +499,8 @@ void Game01(void) {
 
 
 void Game01_Sub(void) {
-    tilemap_print_string_attr((*(const s16(*)[2][2])&(Entry_Msg_X_Data[4]))[0][Game_setting.mode], 0, 18, Game01_Erase_msg);
-    tilemap_print_string_attr((*(const s16(*)[2][2])&(Entry_Msg_X_Data[4]))[1][Game_setting.mode], 0, 18, Game01_Erase_msg);
+    tilemap_print_string_attr((*(const s16(*)[2][2])&(Entry_Msg_X_Data[4]))[0][Game_setting.mode], 0, 18, "                   ");
+    tilemap_print_string_attr((*(const s16(*)[2][2])&(Entry_Msg_X_Data[4]))[1][Game_setting.mode], 0, 18, "                   ");
     vital_cont_init();
     combo_cont_init();
     count_cont_init(0);
@@ -1119,7 +1119,7 @@ void Game08(void) {
             plw[1].wu.operator = 0;
             Operator_Status[0] = 0;
             Operator_Status[1] = 0;
-            Player_Number = Last_Player_id = -1;
+            Last_Player_id = Player_Number = -1;
             load_any_color(2);
             load_any_color(5);
         }
@@ -1135,7 +1135,7 @@ void Game08(void) {
             Clear_Personal_Data(WINNER);
             plw[WINNER].wu.operator = 0;
             Operator_Status[WINNER] = 0;
-            Player_Number = Last_Player_id = -1;
+            Last_Player_id = Player_Number = -1;
         }
         break;
     }

@@ -21,10 +21,3 @@ const s16 eff47_data_tbl[12] = {
     16, 144, 50, -68, 122, 50, 24, 48,
     30, -37, 70, 30,
 };
-
-/* Initial values of eff48_jp (effect_48_move) in EFF48.c. */
-const u32 eff48_jp_init[3] = {
-    (u32)eff48_0000,
-    (u32)eff48_1000,
-    (u32)eff48_0000,
-};

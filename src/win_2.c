@@ -381,6 +381,38 @@ void Setup_Wins_OBJ(void) {
 
 
 
+const u16 Entry_Msg_X_Data[12][2] = {
+    { 6, 0xA }, { 0x1F, 0x28 },
+    { 5, 0xA }, { 0x1E, 0x27 },
+    { 2, 0xA }, { 0x1B, 0x24 },
+    { 2, 9 }, { 27, 40 },
+    { 7, 15 }, { 32, 41 },
+    { 7, 15 }, { 32, 41 },
+};
+
+
+const u16 Score_X_Pos_Data[4][2] = {
+    { 17, 23 }, { 37, 46 },
+    { 6, 14 },
+    { 31, 40 },
+};
+
+
+const s16 Loser_X_Pos_Data[6][2] = {
+    { 5, 5 }, { 42, 55 },
+    { 8, 15 },
+    { 31, 40 },
+    { 7, 15 },
+    { 32, 41 },
+};
+
+
+const s16 EFFA3_Area_Data[2][2][4] = {
+    { { 0, 9, 48, 10 }, { 8, 9, 62, 10 } },
+    { { 0, 15, 48, 16 }, { 8, 15, 62, 16 } },
+};
+
+
 s32 Game_Over(void) {
     void (*Scene_Tbl[3])() = { GameOver_1st, GameOver_2nd, GameOver_3rd };
     WIN_X = 0;

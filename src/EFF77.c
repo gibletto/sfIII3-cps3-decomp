@@ -55,6 +55,7 @@ void effect_77_move(WORK_Other* ewk) {
         Bg_On_W(8);
         ewk->wu.old_rno[0] = eff77_data_tbl[ewk->wu.type][0];
         eff77_scroll_set(ewk);
+        return;
         break;
     case 2:
         if (Game_pause || EXE_flag) {
@@ -67,7 +68,8 @@ void effect_77_move(WORK_Other* ewk) {
         Bg_On_W(8);
         sa_pa_flag = 1;
     case 3:
-        if (!Game_pause && !EXE_flag) {
+        if (Game_pause || EXE_flag) {
+        } else {
             ewk->wu.old_rno[0]--;
             if (ewk->wu.old_rno[0] <= 0) {
                 sa_pa_flag = 0;
@@ -79,6 +81,7 @@ void effect_77_move(WORK_Other* ewk) {
             sa_pa_flag = 1;
         }
         eff77_scroll_set(ewk);
+        return;
         break;
     case 4:
         if (Game_pause || EXE_flag) {
@@ -94,7 +97,8 @@ void effect_77_move(WORK_Other* ewk) {
         Bg_Off_W(8);
         break;
     default:
-        if (!Game_pause && !EXE_flag) {
+        if (Game_pause || EXE_flag) {
+        } else {
             sa_pa_flag = 0;
             all_cgps_put_back(ewk);
             push_effect_work(&ewk->wu);

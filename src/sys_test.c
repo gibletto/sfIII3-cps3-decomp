@@ -390,9 +390,10 @@ void scroll_layers_finalize_frame(void) {
     (*(volatile u16*)(SS_REG + (0x10))) = w = w >> 8;
     w = -scrn_pos[4].cur_y.disp.pos + screen_base_y + flip_crt_ofs_y;
     (*(volatile u16*)(SS_REG + (0x20))) = w;
-    (*(volatile u16*)(SS_REG + (0x22))) = w >>= 8;
-    scrn_pos[4].cur_x = scrn_pos[4].set_x;
-    scrn_pos[4].cur_y = scrn_pos[4].set_y;
+    w >>= 8;
+    (*(volatile u16*)(SS_REG + (0x22))) = w;
+    scrn_pos[4].cur_x.cal = scrn_pos[4].set_x.cal;
+    scrn_pos[4].cur_y.cal = scrn_pos[4].set_y.cal;
 }
 
 

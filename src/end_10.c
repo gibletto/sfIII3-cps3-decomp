@@ -222,6 +222,16 @@ void end_1000_4000(void) {
 
 
 
+const s16 end_1000_0000_anm_tbl[6] = {
+    16, 17, 18, 19, 18, 17,
+};
+
+
+const s16 end_1000_4000_anm_tbl[5] = {
+    20, 21, 22, 23, 24,
+};
+
+
 void end_1001_move(void) {
     void (*end_101_jp[6])() = { end_X_com01, end_1001_1000, end_X_com01, end_X_com01, end_X_com01, end_X_com01 };
     bgw_ptr = &bg_w.bgw[1];

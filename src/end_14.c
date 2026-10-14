@@ -464,6 +464,22 @@ void end_e00_7000(void) {
 
 
 
+const s16 end_e00_0000_col_tbl[12] = {
+    16, 17, 18, 19, 20, 21, 22, 23,
+    22, 23, 22, 23,
+};
+
+
+const s16 end_e00_1000_col_tbl[8] = {
+    8, 9, 10, 11, 12, 13, 14, 15,
+};
+
+
+const s16 end_e00_2000_col_tbl[8] = {
+    15, 14, 13, 12, 11, 10, 9, 8,
+};
+
+
 void end_e01_move(void) {
     void (*end_101_jp[8])() = { end_e01_0000, end_X_com01, end_X_com01, end_X_com01, end_X_com01, end_X_com01, end_X_com01, end_e01_7000 };
     bgw_ptr = &bg_w.bgw[1];

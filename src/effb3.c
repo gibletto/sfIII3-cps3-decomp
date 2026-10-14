@@ -15,7 +15,8 @@
 #include "work.h"
 #include "romdata.h"
 #include "extern.h"
-#include "CHARMOVE.h"
+void char_move(WORK* wk);
+void set_char_move_init2();
 #include "charmove_2.h"
 #include "ta_sub.h"
 #include "aboutspr.h"
@@ -83,7 +84,8 @@ void round_move_init(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
     case 0:
         ewk->wu.routine_no[1] += 1;
-        ewk->wu.my_mr_flag = ewk->wu.disp_flag = 1;
+        ewk->wu.disp_flag = 1;
+        ewk->wu.my_mr_flag = 1;
         set_char_move_init2(&ewk->wu, 0, 2, 1, 0);
     case 1:
         ewk->wu.my_mr.size.x = effb3_oya->wu.my_mr.size.x;

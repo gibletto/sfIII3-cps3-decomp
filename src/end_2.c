@@ -208,6 +208,11 @@ void end_200_3000(void) {
 
 
 
+const s16 end_200_1000_anm_tbl[4] = {
+    12, 13, 14, 15,
+};
+
+
 void end_201_move(void) {
     void (*end_202_jp[5])() = { end_X_com01, end_201_1000, end_X_com01, end_201_3000, end_201_3000 };
     bgw_ptr = &bg_w.bgw[1];
@@ -276,6 +281,12 @@ void end_201_3000(void) {
     }
 }
 
+
+
+const s16 end_201_anm_tbl[10] = {
+    16, 17, 18, 19, 20, 21, 22, 23,
+    24, 25,
+};
 
 
 void end_202_move(void) {

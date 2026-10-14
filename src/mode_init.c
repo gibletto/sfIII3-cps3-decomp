@@ -177,8 +177,13 @@ void mode_init_task(void) {
     }
 
     /* title and region name, in the region's colour */
-    region = bios_region_code & 15;
-    region = (region >= 8) ? 8 : region & 7;
+    region = bios_region_code;
+    region &= 15;
+    if (region >= 8) {
+        region = 8;
+    } else {
+        region &= 7;
+    }
     if (region >= 8) {
         color = 2;
     } else {

@@ -34,14 +34,17 @@ void effect_23_move(WORK_Other_CONN* ewk) {
     s16 slot;
     s16 pos_y;
     const EFF23_CELL_REQ* cell;
+    const EFF23_CELL_REQ* row;
     switch (ewk->wu.routine_no[0]) {
     case 0:
         ewk->wu.routine_no[0]++;
-        ewk->wu.char_index = ewk->wu.cg_ix = 0;
+        ewk->wu.cg_ix = 0;
+        ewk->wu.char_index = 0;
         ewk->wu.cg_ctr = eff23_anm_tbl[ewk->wu.cg_ix].timer;
         for (i = 0; i < 2; i++) {
+            row = &eff23_cell_tbl[i][0];
             for (j = 0; j < 16; j++) {
-                cell = (const EFF23_CELL_REQ*)eff23_cell_tbl[i];
+                cell = row;
                 cell += j;
                 scroll_cell_write(i, cell->a, cell->b, (u32)eff23_scrn_data);
             }

@@ -244,7 +244,7 @@ s32 swallow_sprize_check(WORK_Other* ewk) {
 void eff85_0200(WORK_Other* ewk)
 {
     all_cgps_put_back(&ewk->wu);
-    push_effect_work(&ewk->wu);
+    push_effect_work((WORK*)ewk);
 }
 
 

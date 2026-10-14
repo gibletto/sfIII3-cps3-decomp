@@ -204,6 +204,14 @@ void end_1100_6(void) {
 
 
 
+const s16 end_11_115_pos[4][3] = {
+    { 768, 256, 1 },
+    { 256, 0, 2 },
+    { 768, 0, 2 },
+    { 256, 768, 1 },
+};
+
+
 void end_1101_move(void) {
     void (*end_1101_move_jp[7])() = { end_X_com01, end_X_com01, end_1101_2, end_1101_2, end_X_com01, end_X_com01, end_X_com01 };
     bgw_ptr = &bg_w.bgw[1];

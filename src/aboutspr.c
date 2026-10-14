@@ -1127,10 +1127,10 @@ void push_char_sprite(WORK* wk, u16* spr, s16 y_ofs) {
 
 
 /* provisional name */
-void sprite_entry_debug_halt(s16* spr) {
+void sprite_entry_debug_halt(SPRITE_ENTRY* spr) {
 loop:
-    tilemap_print_hex(10, 10, 18, spr[3], 4, 0);
-    tilemap_print_hex(10, 11, 18, spr[4], 4, 0);
+    tilemap_print_hex(10, 10, 18, (s16)spr->w6, 4, 0);
+    tilemap_print_hex(10, 11, 18, (s16)spr->w8, 4, 0);
     goto loop;
 }
 

@@ -33,31 +33,3 @@ const s16 end_10_pos[6][2] = {
     { 256, 0 },
     { 256, 256 },
 };
-
-/* Initial values of end_1000_jp (end_1000_move) in end_10.c. */
-void (*const end_1000_jp_init_4[6])() = {
-    end_1000_0000,
-    end_1000_1000,
-    end_1000_2000,
-    end_1000_2000,
-    end_1000_4000,
-    end_1000_2000,
-};
-
-const s16 end_1000_0000_anm_tbl[6] = {
-    16, 17, 18, 19, 18, 17,
-};
-
-const s16 end_1000_4000_anm_tbl[5] = {
-    20, 21, 22, 23, 24,
-};
-
-/* Stored after end_1000_4000_anm_tbl. Nothing in the program refers to it by name or address; if it is read,
-   it is through an index past the end of end_1000_4000_anm_tbl. */
-void (*const end_1000_4000_anm_tbl_tail[18])() = {
-    end_X_com01,    end_1001_1000,  end_X_com01,    end_X_com01,  /* 0 */
-    end_X_com01,    end_X_com01,    end_X_com01,    end_1002_1000,  /* 4 */
-    end_X_com01,    end_X_com01,    end_X_com01,    end_X_com01,  /* 8 */
-    end_X_com01,    end_1003_1000,  end_1003_2000,  end_X_com01,  /* 12 */
-    end_X_com01,    end_X_com01,  /* 16 */
-};

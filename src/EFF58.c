@@ -87,7 +87,7 @@ void effect_58_move(WORK_Other* ewk) {
             EFF58_Type_05(ewk);
             break;
         case 6:
-            if (Demo_Sound || Demo_Flag) {
+            if (Demo_Sound != 0 || Demo_Flag) {
                 sound_request(ewk->wu.direction);
             }
             push_effect_work(&ewk->wu);
@@ -97,15 +97,15 @@ void effect_58_move(WORK_Other* ewk) {
             push_effect_work(&ewk->wu);
             break;
         case 8:
-            if (Demo_Sound || Demo_Flag) {
-                if (!Keep_BGM_Flag) {
+            if (Demo_Sound != 0 || Demo_Flag) {
+                if (Keep_BGM_Flag == 0) {
                     bgm_request(ewk->wu.direction);
                 }
             }
             push_effect_work(&ewk->wu);
             break;
         case 9:
-            if (Demo_Sound || Demo_Flag) {
+            if (Demo_Sound != 0 || Demo_Flag) {
                 if (!Keep_BGM_Flag) {
                     sound_fade_in_submit(ewk->wu.direction, 0x222);
                 }
@@ -119,7 +119,7 @@ void effect_58_move(WORK_Other* ewk) {
             EFF58_Type_11(ewk);
             break;
         case 12:
-            if (!Cut_Scroll) {
+            if (Cut_Scroll == 0) {
                 xx = 3;
             } else {
                 xx = Cut_Cut_Sub(3);
@@ -143,7 +143,7 @@ void effect_58_move(WORK_Other* ewk) {
             }
             break;
         case 13:
-            if (!Cut_Scroll) {
+            if (Cut_Scroll == 0) {
                 xx = 5;
             } else {
                 xx = Cut_Cut_Sub(5);
