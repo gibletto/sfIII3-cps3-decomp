@@ -307,6 +307,7 @@ void EFF38_MOVE(WORK_Other* ewk) {
 s32 effect_38_init(s16 PL_id, s16 dir_old, s16 Your_Char, s16 Play_Status, s16 Target_BG) {
     WORK_Other* ewk;
     s16 ix;
+    s16 y;
     if ((ix = pull_effect_work(4)) == -1) {
         return -1;
     }
@@ -319,7 +320,8 @@ s32 effect_38_init(s16 PL_id, s16 dir_old, s16 Your_Char, s16 Play_Status, s16 T
     ewk->wu.my_col_mode = 0x4200;
     ewk->wu.my_col_code = 64;
     ewk->wu.my_family = Target_BG + 1;
-    ewk->wu.xyz[1].disp.pos = bg_w.bgw[ewk->wu.my_family - 1].wxy[1].disp.pos + 16;
+    y = bg_w.bgw[ewk->wu.my_family - 1].wxy[1].disp.pos;
+    ewk->wu.xyz[1].disp.pos = y + 16;
     ewk->wu.char_index = 2;
     *ewk->wu.char_table = sel_pl_char_table;
     ewk->master_id = PL_id;

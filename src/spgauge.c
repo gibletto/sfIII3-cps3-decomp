@@ -472,26 +472,32 @@ void samoji_control(s8 Stpl_Num) {
                     spg_dat[Stpl_Num].timer2 = 2;
                 }
                 return;
-            }
-        off:
-            if (spg_dat[Stpl_Num].sa_flag == 0 || spg_dat[Stpl_Num].sa_mukou != 0) {
+            } else {
+            off:
+                if (spg_dat[Stpl_Num].sa_flag == 0 || spg_dat[Stpl_Num].sa_mukou != 0) {
+                    goto skip;
+                }
+                sa_gauge_trans(Stpl_Num, 1);
+                sa_moji_trans(Stpl_Num, 1, 1);
+                sa_gauge_color_set(Stpl_Num);
+                spg_dat[Stpl_Num].time_rno = 2;
+                spg_dat[Stpl_Num].no_chgcol = 1;
+                goto case_2;
+            skip:
                 goto jump;
             }
-            sa_gauge_trans(Stpl_Num, 1);
-            sa_moji_trans(Stpl_Num, 1, 1);
-            sa_gauge_color_set(Stpl_Num);
-            spg_dat[Stpl_Num].time_rno = 2;
-            spg_dat[Stpl_Num].no_chgcol = 1;
         case 2:
+        case_2:
             if (spg_dat[Stpl_Num].current_spg > 0 && plw[Stpl_Num].sa->ok == -1) {
                 if (spg_dat[Stpl_Num].current_spg != spg_dat[Stpl_Num].old_spg) {
                     sa_waku_trans(Stpl_Num, Stpl_Num);
                 }
                 spg_dat[Stpl_Num].old_spg = spg_dat[Stpl_Num].current_spg;
                 return;
+            } else {
+                spg_dat[Stpl_Num].time_rno = 4;
+                return;
             }
-            spg_dat[Stpl_Num].time_rno = 4;
-            return;
         case 3:
         case_3:
             spg_dat[Stpl_Num].timer--;
@@ -511,8 +517,9 @@ void samoji_control(s8 Stpl_Num) {
                     spg_dat[Stpl_Num].timer2 = 2;
                 }
                 return;
+            } else {
+                spg_dat[Stpl_Num].time_rno = 4;
             }
-            spg_dat[Stpl_Num].time_rno = 4;
         case 4:
             if (spg_dat[Stpl_Num].sa_mukou == 0) {
                 sa_moji_trans(Stpl_Num, 1, 0);
@@ -539,54 +546,55 @@ void samoji_control(s8 Stpl_Num) {
         default:
             return;
         }
-    }
-    switch (spg_dat[Stpl_Num].max_rno) {
-    case 0:
-        if (plw[Stpl_Num].sa->store > spg_dat[Stpl_Num].spg_level) {
-            spg_dat[Stpl_Num].current_spg = spg_dat[Stpl_Num].spg_dotlen;
-            sa_waku_trans(Stpl_Num, Stpl_Num);
-            spg_dat[Stpl_Num].spg_level = plw[Stpl_Num].sa->store;
-            sa_stock_trans(spg_dat[Stpl_Num].spg_level, spg_col, Stpl_Num);
-        }
-        spg_dat[Stpl_Num].max_rno = 1;
-    case 1:
-        spg_dat[Stpl_Num].timer--;
-        if (spg_dat[Stpl_Num].timer != 0) {
-            spg_dat[Stpl_Num].timer2--;
-            if (spg_dat[Stpl_Num].kind == 0) {
-                if (spg_dat[Stpl_Num].timer2 == 0) {
-                    sa_stock_trans(spg_dat[Stpl_Num].spg_level, 0, Stpl_Num);
-                    sa_gauge_trans(Stpl_Num, 0);
-                    spg_dat[Stpl_Num].kind = 1;
+    } else {
+        switch (spg_dat[Stpl_Num].max_rno) {
+        case 0:
+            if (plw[Stpl_Num].sa->store > spg_dat[Stpl_Num].spg_level) {
+                spg_dat[Stpl_Num].current_spg = spg_dat[Stpl_Num].spg_dotlen;
+                sa_waku_trans(Stpl_Num, Stpl_Num);
+                spg_dat[Stpl_Num].spg_level = plw[Stpl_Num].sa->store;
+                sa_stock_trans(spg_dat[Stpl_Num].spg_level, spg_col, Stpl_Num);
+            }
+            spg_dat[Stpl_Num].max_rno = 1;
+        case 1:
+            spg_dat[Stpl_Num].timer--;
+            if (spg_dat[Stpl_Num].timer != 0) {
+                spg_dat[Stpl_Num].timer2--;
+                if (spg_dat[Stpl_Num].kind == 0) {
+                    if (spg_dat[Stpl_Num].timer2 == 0) {
+                        sa_stock_trans(spg_dat[Stpl_Num].spg_level, 0, Stpl_Num);
+                        sa_gauge_trans(Stpl_Num, 0);
+                        spg_dat[Stpl_Num].kind = 1;
+                        spg_dat[Stpl_Num].timer2 = 2;
+                    }
+                } else if (spg_dat[Stpl_Num].timer2 == 0) {
+                    sa_stock_trans(spg_dat[Stpl_Num].spg_level, 1, Stpl_Num);
+                    sa_gauge_trans(Stpl_Num, 1);
+                    spg_dat[Stpl_Num].kind = 0;
                     spg_dat[Stpl_Num].timer2 = 2;
                 }
-            } else if (spg_dat[Stpl_Num].timer2 == 0) {
-                sa_stock_trans(spg_dat[Stpl_Num].spg_level, 1, Stpl_Num);
-                sa_gauge_trans(Stpl_Num, 1);
-                spg_dat[Stpl_Num].kind = 0;
-                spg_dat[Stpl_Num].timer2 = 2;
+                break;
             }
+            if (spg_dat[Stpl_Num].max_old != 0 && spg_dat[Stpl_Num].sa_mukou == 0) {
+                sa_moji_trans(Stpl_Num, 0, 0);
+                spg_dat[Stpl_Num].max_old = 0;
+            }
+            sa_gauge_color_set(Stpl_Num);
+            spg_dat[Stpl_Num].spg_level = plw[Stpl_Num].sa->store;
+            sa_stock_trans(spg_dat[Stpl_Num].spg_level, spg_col, Stpl_Num);
+            sa_gauge_trans(Stpl_Num, spg_col);
+            if (spg_dat[Stpl_Num].max_old == 0 && spg_dat[Stpl_Num].sa_mukou == 0) {
+                sa_waku_trans(Stpl_Num, Stpl_Num);
+            }
+            spg_dat[Stpl_Num].flag = 0;
+            spg_dat[Stpl_Num].max_rno = 2;
+            spg_dat[Stpl_Num].sa_flag = 0;
+            spg_dat[Stpl_Num].ex_flag = 0;
+            spg_dat[Stpl_Num].sa_mukou = 0;
+            break;
+        case 2:
             break;
         }
-        if (spg_dat[Stpl_Num].max_old != 0 && spg_dat[Stpl_Num].sa_mukou == 0) {
-            sa_moji_trans(Stpl_Num, 0, 0);
-            spg_dat[Stpl_Num].max_old = 0;
-        }
-        sa_gauge_color_set(Stpl_Num);
-        spg_dat[Stpl_Num].spg_level = plw[Stpl_Num].sa->store;
-        sa_stock_trans(spg_dat[Stpl_Num].spg_level, spg_col, Stpl_Num);
-        sa_gauge_trans(Stpl_Num, spg_col);
-        if (spg_dat[Stpl_Num].max_old == 0 && spg_dat[Stpl_Num].sa_mukou == 0) {
-            sa_waku_trans(Stpl_Num, Stpl_Num);
-        }
-        spg_dat[Stpl_Num].flag = 0;
-        spg_dat[Stpl_Num].max_rno = 2;
-        spg_dat[Stpl_Num].sa_flag = 0;
-        spg_dat[Stpl_Num].ex_flag = 0;
-        spg_dat[Stpl_Num].sa_mukou = 0;
-        break;
-    case 2:
-        break;
     }
 }
 

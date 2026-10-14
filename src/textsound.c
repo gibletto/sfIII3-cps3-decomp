@@ -191,7 +191,7 @@ void tilemap_rect_fill(u16 x, u16 y, u16 w, u16 h, u16 attr, u16 code) {
     }
     p = (u16*)((u32)((u16*)SS_RAM) + (x << 2) + (y << 8));
     cw = w;
-    skip = 0x80 - cw * 2;
+    skip = 0x80 - w * 2;
     if (attr != 0xFFFF && code == 0xFFFF) {
         for (row = 0; row < h; row++) {
             for (col = 0; col < cw; col++) {
@@ -222,7 +222,7 @@ void tilemap_rect_fill(u16 x, u16 y, u16 w, u16 h, u16 attr, u16 code) {
             }
         }
     } else {
-        attr |= (code & 0x100) >> 8;
+        attr = attr | ((code & 0x100) >> 8);
         for (row = 0; row < h; row++) {
             for (col = 0; col < cw; col++) {
                 p[0] = code;
@@ -280,7 +280,6 @@ void tilemap_print_hex_block(u16 x, u16 y, u16 attr, u32 value, u16 digits, u16 
                         p->attr = attr;
                     case 2:
                         p++;
-                        break;
                     case 3:
                         break;
                     default:
@@ -319,7 +318,7 @@ void tilemap_print_hex(u16 x, u16 y, u16 attr, u32 value, u16 digits, u16 mode) 
         if (i == digits && (mode & 4) != 0) {
             if (d < 0) {
                 p->code = '-';
-                d &= 0x7FFF;
+                d = d & 0x7FFF;
             } else {
                 p->code = '+';
             }
@@ -338,7 +337,6 @@ void tilemap_print_hex(u16 x, u16 y, u16 attr, u32 value, u16 digits, u16 mode) 
                         p->attr = attr;
                     case 2:
                         p++;
-                        break;
                     case 3:
                         break;
                     default:

@@ -43,7 +43,7 @@ void voice_process_null(void)
 
 
 /* provisional name */
-void voice_process_primary(SNDVOICE* voice, s8 is_bgm, u32 voice_index) {
+void voice_process_primary(SNDVOICE* voice, s8 is_bgm, u8 voice_index) {
     u8* argument;
     u8 event;
     u8 loop_index;
@@ -61,11 +61,11 @@ void voice_process_primary(SNDVOICE* voice, s8 is_bgm, u32 voice_index) {
     if (voice->status & 0x60) {
         return;
     }
-    sfx_ticks = &se_tick_step[(u8)voice_index];
+    sfx_ticks = &se_tick_step[voice_index];
     bgm_ticks = &bgm_tick_step;
     event_mask = 0x80;
-    paired_bgm_voice = &bgm_voice[(u8)voice_index];
-    automation = &se_pan_ramp[(u8)voice_index];
+    paired_bgm_voice = &bgm_voice[voice_index];
+    automation = &se_pan_ramp[voice_index];
 next_event:
     argument = voice->cursor;
     event = *argument++;

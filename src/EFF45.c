@@ -36,8 +36,7 @@ void effect_45_move(WORK_Other_CONN* ewk) {
     switch (ewk->wu.routine_no[0]) {
     case 0:
         ewk->wu.routine_no[0]++;
-        ewk->wu.cg_ix = 0;
-        ewk->wu.char_index = 0;
+        ewk->wu.char_index = ewk->wu.cg_ix = 0;
         ewk->wu.cg_ctr = eff45_anm_tbl[ewk->wu.cg_ix].timer;
         for (i = 0; i < 2; i++) {
             for (j = 0; j < 16; j++) {

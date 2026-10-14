@@ -299,7 +299,9 @@ two:
 
 
 
-s32 meri_case_switch(s16 meri) {
+s32 meri_case_switch(meri)
+    s16 meri;
+{
     switch (meri & 0xFFF8) {
     case 0:
         if (meri < 4) {
@@ -324,7 +326,6 @@ void check_body_touch2(void) {
     PLW* hmw;
     PLW* cmw;
     PLW* p0;
-    PLW* p1;
     WORK* efw;
     s16* dad0;
     s16* dad1;
@@ -333,12 +334,11 @@ void check_body_touch2(void) {
     s16 dad2[4];
     s16 dad3[4];
     p0 = &plw[0];
-    p1 = &plw[1];
     if (p0->wu.operator) {
         hmw = p0;
-        cmw = p1;
+        cmw = &plw[1];
     } else {
-        hmw = p1;
+        hmw = &plw[1];
         cmw = p0;
     }
     if (!saishin_bs2_on_car(hmw)) {

@@ -60,6 +60,8 @@
 #include "end_sub_2.h"
 #include "cps3.h"
 
+extern volatile s32 staff_r_no;
+
 #pragma inline(card_pl_work_clear)
 
 

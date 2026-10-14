@@ -662,31 +662,25 @@ void Auto_Repeat_Sub(s16 PL_id) {
             Auto_Timer[PL_id] = Auto_Repeat_Data[0];
             Auto_Index[PL_id] = 1;
             break;
-        }
-        if (sw & 4) {
+        } else if (sw & 4) {
             Auto_No[PL_id] = 1;
             Auto_Cursor[PL_id] = 4;
-            {
-                s8 t = Auto_Repeat_Data[0];
-                Auto_Timer[PL_id] = t;
-            }
+            Auto_Timer[PL_id] = Auto_Repeat_Data[0];
             Auto_Index[PL_id] = 1;
             break;
-        }
-        if (sw & 1) {
+        } else if (sw & 1) {
             Auto_No[PL_id] = 1;
             Auto_Cursor[PL_id] = 1;
             Auto_Timer[PL_id] = Auto_Repeat_Data[0];
             Auto_Index[PL_id] = 1;
             break;
-        }
-        if (!(sw & 2)) {
+        } else if (sw & 2) {
+            Auto_No[PL_id] = 1;
+            Auto_Cursor[PL_id] = 2;
+            Auto_Timer[PL_id] = Auto_Repeat_Data[0];
+            Auto_Index[PL_id] = 1;
             break;
         }
-        Auto_No[PL_id] = 1;
-        Auto_Cursor[PL_id] = 2;
-        Auto_Timer[PL_id] = Auto_Repeat_Data[0];
-        Auto_Index[PL_id] = 1;
         break;
     case 1:
         if (sw != Auto_Cursor[PL_id]) {

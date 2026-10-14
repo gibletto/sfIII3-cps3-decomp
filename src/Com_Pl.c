@@ -372,9 +372,8 @@ s32 Check_Hamari(PLW* wk) {
     } else if (tech != 0 && tech != 1) {
         return 0;
     }
-    xx = 1;
-    while (xx < limit) {
-        if (tech != Attack_Count_Buff[wk->wu.id][xx++]) {
+    for (xx = 1; xx < limit; xx++) {
+        if (Attack_Count_Buff[wk->wu.id][xx] != tech) {
             return 0;
         }
     }

@@ -137,11 +137,10 @@ void eff64_04(WORK_Other* ewk) {
                 ewk->wu.routine_no[2] = 1;
                 ix = random_16_com();
                 if (ewk->wu.routine_no[1] > 5) {
-                    ix = eff64_move2_tbl[ix];
+                    ewk->wu.old_rno[1] = eff64_move2_tbl[ix];
                 } else {
-                    ix = eff64_move_tbl[ix];
+                    ewk->wu.old_rno[1] = eff64_move_tbl[ix];
                 }
-                ewk->wu.old_rno[1] = ix;
             }
         }
         disp_pos_trans_entry_rs(ewk);

@@ -152,7 +152,7 @@ u16 h;
     }
 }
 
-void scfont_sqput(s16 x, s16 y, u16 w, u16 h, s16 attr, s16 code)
+void scfont_sqput(s16 x, s16 y, u16 w, u16 h, u16 attr, s16 code)
 {
     u16 row;
     u16 col;
@@ -356,7 +356,7 @@ void sc_chr_list_trans(s8 ix) {
     const u16* slot = sc_chr_list_tbl[ix].slot;
     const u16* src = sc_chr_list_tbl[ix].src;
     u16 n = *slot++;
-    u16 i;
+    s32 i;
     for (i = 0; i < n; i++) {
         sc_trans_dst = (u16*)((SS_RAM + 0x8000) + *slot++ * 64);
         sc_trans_src = (u8*)sc_chr_data + *src++ * 32;
@@ -842,9 +842,9 @@ void win_mark_put(s16 pl, u16 n, s16 attr) {
 /* provisional name */
 void win_mark_ram_clear(void) {
     u16 i;
-    u8* dst = &sc_chr_ram[0x200];
+    u8* dst;
     s32 blank = 0xBDC0;
-    for (i = 0; i < 8; i++) {
+    for (i = 0, dst = &sc_chr_ram[0x200]; i < 8; i++) {
         u32 src = (u32)sc_chr_data;
         sc_trans_src = (u8*)(src + blank);
         sc_bak_ptr = dst;
@@ -1026,10 +1026,10 @@ s16 kind;
  */
 
 void combo_message_set(s8 pl, s8 kind) {
-    const CMB_FRAME* fr = &combo_mtbl[kind];
+    const u16* fr = combo_mtbl[kind].v;
     s16 y = pl * 2 + 30;
-    sc_chr_sheet_trans(fr->chr, pl * 32 + 0x140, fr->w, fr->h);
-    scfont_sqput(combo_mpos_tbl[kind][pl], y, fr->w, fr->h, 16, pl * 32 + 0x140);
+    sc_chr_sheet_trans(fr[0], pl * 32 + 0x140, fr[1], fr[2]);
+    scfont_sqput(combo_mpos_tbl[kind][pl], y, fr[1], fr[2], 16, pl * 32 + 0x140);
     tilemap_put_cell(combo_mclr_pos_tbl[kind][pl], y, 16, 32);
     tilemap_put_cell(combo_mclr_pos_tbl[kind][pl], y + 1, 16, 32);
 }

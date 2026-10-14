@@ -411,6 +411,8 @@ void plef_at_vs_player_damage_union(PLW* as, PLW* ds, s8 gddir) {
             goto set_paring_status;
         case 1:
             goto set_guard_status;
+        default:
+            break;
         }
     jump_two:
         as->wu.hf.hit.player = 1;
@@ -1127,54 +1129,63 @@ void catch_hit_check(void) {
     s16* sh;
     s16 mi;
     s16 si;
-    s32 index;
-    for (mi = 0; (index = mi) < hpq_in; mi++) {
+
+    mi = 0;
+    goto next_mi;
+loop_mi:
+    {
         if (hs[mi].flag.results & 0x1000) {
-            continue;
+            goto cont_mi;
         }
         mad = q_hit_push[mi];
         if (mad->work_id != 1) {
-            continue;
+            goto cont_mi;
         }
         if (mad->att_hit_ok == 0) {
-            continue;
+            goto cont_mi;
         }
         mh = &mad->h_cat->cat_box[0];
         if (mh[1] == 0) {
-            continue;
+            goto cont_mi;
         }
-        for (si = 0; si < hpq_in; si++) {
-            if (si == index) {
-                continue;
+        si = 0;
+        goto next_si;
+    loop_si:
+            if (si == mi) {
+                goto cont_si;
             }
             if (hs[si].flag.results & 0x100) {
-                continue;
+                goto cont_si;
             }
             sad = q_hit_push[si];
             if (sad->work_id != 1) {
-                continue;
+                goto cont_si;
             }
             sh = &sad->h_cau->cau_box[0];
             if (sh[1] == 0) {
-                continue;
+                goto cont_si;
             }
-            if (!(mad->att.guard & 0x18)) {
-                if (!((PLW*)sad)->tsukamarenai_flag) {
-                    if (!(mad->att.dipsw & 0x60)) {
-                        if ((sad->routine_no[1] == 1) && (sad->routine_no[3] != 0)) {
-                            if (sad->routine_no[2] != 0x19) {
-                                continue;
-                            }
-                        }
-                    } else if ((sad->routine_no[1] == 1) && (sad->routine_no[3] != 0) && (sad->cg_type != 10)) {
-                        if (!dm_oiuchi_catch[sad->routine_no[2]]) {
-                            continue;
-                        }
+            if (mad->att.guard & 0x18) {
+                goto hit;
+            }
+            if (((PLW*)sad)->tsukamarenai_flag) {
+                goto cont_si;
+            }
+            if (!(mad->att.dipsw & 0x60)) {
+                if ((sad->routine_no[1] == 1) && (sad->routine_no[3] != 0)) {
+                    if (sad->routine_no[2] != 0x19) {
+                        goto cont_si;
                     }
-                } else {
-                    continue;
+                }
+            } else {
+                if (!((sad->routine_no[1] == 1) && (sad->routine_no[3] != 0) && (sad->cg_type != 10))) {
+                    goto hit;
+                }
+                if (!dm_oiuchi_catch[sad->routine_no[2]]) {
+                    goto cont_si;
                 }
             }
+        hit:
             if (hit_check_subroutine(mad, sad, mh, sh)) {
                 hs[mi].flag.results |= 0x1000;
                 hs[mi].my_hit = (u16)si;
@@ -1185,10 +1196,21 @@ void catch_hit_check(void) {
                 hs[si].dh = sh;
                 mad->att_hit_ok = 0;
             } else {
-                continue;
+                goto cont_si;
             }
-            break;
+            goto cont_mi;
+    cont_si:
+        si++;
+    next_si:
+        if (si < hpq_in) {
+            goto loop_si;
         }
+    }
+cont_mi:
+    mi++;
+next_mi:
+    if (mi < hpq_in) {
+        goto loop_mi;
     }
 }
 
@@ -1205,91 +1227,112 @@ void attack_hit_check(void) {
     s16 lp2;
     s16 mw;
     s16** slot;
-    for (si = 0; si < hpq_in; si++) {
+    si = 0;
+    goto test0;
+    loop0:
+    {
         if (hs[si].flag.results & 0x1101) {
-            continue;
+            goto next0;
         }
         sad = q_hit_push[si];
         sh = sad->h_bod->body_dm[0];
         mh = sad->h_han->hand_dm[0];
-        for (lp = 0; lp < 4; lp++, sh += 4, mh += 4) {
-            slot = &dmdat_adrs[lp];
-            *slot = sh;
-            slot += 4;
-            *slot = mh;
+        lp = 0;
+        goto test1;
+        loop1:
+        {
+            dmdat_adrs[lp] = sh;
+            dmdat_adrs[lp + 4] = mh;
         }
+        next1:
+            lp++;
+            sh += 4;
+            mh += 4;
+        test1:
+        if (lp < 4) {
+            goto loop1;
+        }
+        exit1:;
         dmdat_adrs[8] = (s16*)sad->h_att + 8;
         dmdat_adrs[9] = (s16*)sad->h_att + 12;
         dmdat_adrs[10] = &sad->h_hos->hos_box[0];
-        for (mi = 0; mi < hpq_in; mi++) {
+        mi = 0;
+        goto test2;
+        loop2:
+        {
             if (mi == si) {
-                continue;
+                goto next2;
             }
             if (hs[mi].flag.results & 0x1110) {
-                continue;
+                goto next2;
             }
             mad = q_hit_push[mi];
             if (mad->cg_ja.atix == 0) {
-                continue;
+                goto next2;
             }
             if (mad->att_hit_ok == 0) {
-                continue;
+                goto next2;
             }
             if (!(mad->att.dipsw & 2) ||
                 (!(sad->att.dipsw & 2) && (sad->work_id == 1 || !(((WORK_Other*)sad)->refrected)))) {
                 if ((mad->work_id != 1 && mad->work_id != 8) || !(sad->att.dipsw & 2)) {
                     if (!(mad->vs_id & sad->work_id)) {
-                        continue;
+                        goto next2;
                     }
                 }
             }
             if (mad->work_id != 1) {
                 if (sad->work_id == 1) {
                     if (((WORK_Other*)mad)->master_id == sad->id) {
-                        continue;
+                        goto next2;
                     }
                 } else if (((WORK_Other*)mad)->master_id == ((WORK_Other*)sad)->master_id) {
-                    continue;
+                    goto next2;
                 }
             } else if ((sad->work_id != 1 && ((WORK_Other*)sad)->refrected == 0) &&
                        (mad->id == ((WORK_Other*)sad)->master_id)) {
-                continue;
+                goto next2;
             }
             mh = &mad->h_att->att_box[0][0];
-            for (lp = 0; lp < 4; lp++, mh += 4) {
-                sh = mh + 1;
-                if (*sh == 0) {
-                    continue;
+            lp = 0;
+            goto test3;
+            loop3:
+            {
+                if (mh[1] == 0) {
+                    goto next3;
                 }
-                for (lp2 = 0; lp2 < 11; lp2++) {
+                lp2 = 0;
+                goto test4;
+                loop4:
+                {
                     if (lp2 > 3 && mad->att_hit_ok == 0) {
                         goto end;
                     }
                     sh = dmdat_adrs[lp2];
                     if (sh[1] == 0) {
-                        continue;
+                        goto next4;
                     }
                     if ((lp == 2 || lp == 3) && (lp2 == 8 || lp2 == 9)) {
-                        continue;
+                        goto next4;
                     }
                     if ((lp2 > 3) && (lp2 < 0xA)) {
                         if (!(((mad->rl_flag) + (sad->rl_flag)) & 1)) {
                             if (mad->rl_flag) {
                                 if (!(mad->xyz[0].disp.pos <= sad->xyz[0].disp.pos)) {
-                                    continue;
+                                    goto next4;
                                 }
                             } else if (!(mad->xyz[0].disp.pos >= sad->xyz[0].disp.pos)) {
-                                continue;
+                                goto next4;
                             }
                         }
                         if (mad->att.dipsw & 4 && (lp2 > 7 || sad->cg_ja.bhix == 0)) {
-                            continue;
+                            goto next4;
                         }
                     }
                     if (lp2 == 10) {
                         if (!(mad->att.dipsw & 64) || sad->kind_of_waza & 0x60 || pcon_dp_flag ||
                             sad->pat_status == 0x26) {
-                            continue;
+                            goto next4;
                         }
                     }
                     mw = hit_check_subroutine(mad, sad, mh, dmdat_adrs[lp2]);
@@ -1306,11 +1349,40 @@ void attack_hit_check(void) {
                         hs[si].dh = dmdat_adrs[lp2];
                     }
                 }
+                next4:
+                    lp2++;
+                test4:
+                if (lp2 < 11) {
+                    goto loop4;
+                }
+                exit4:;
             }
+            next3:
+                lp++;
+                mh += 4;
+            test3:
+            if (lp < 4) {
+                goto loop3;
+            }
+            exit3:;
         }
+        next2:
+            mi++;
+        test2:
+        if (mi < hpq_in) {
+            goto loop2;
+        }
+        exit2:;
     end:
-        continue;
+        goto next0;
     }
+    next0:
+        si++;
+    test0:
+    if (si < hpq_in) {
+        goto loop0;
+    }
+    exit0:;
 }
 
 

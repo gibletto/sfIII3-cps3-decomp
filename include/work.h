@@ -861,7 +861,6 @@ extern s8 end_staff_flag;
 extern u8 end_cont_coin;
 extern u8 end_obj_sync;
 extern s16 staff_roll_timer;
-extern s32 staff_r_no;
 extern s8 end5_col_ix;
 extern s8 end5_pal_ix;
 extern s16 end5_bg1_pos;

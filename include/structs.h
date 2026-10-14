@@ -1939,9 +1939,7 @@ typedef struct {
 } CELL_SET;
 
 typedef struct {
-    u16 chr;
-    u16 w;
-    u16 h;
+    u16 v[3];
 } CMB_FRAME;
 
 typedef struct {

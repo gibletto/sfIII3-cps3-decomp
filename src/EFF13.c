@@ -753,11 +753,13 @@ void kotp_06000(WORK_Other* ewk, TAMA* twk) {
     s16 emdir;
     s16* target_x;
     s16* target_y;
+    s16* tp;
 
     mwk = (PLW*)ewk->my_master;
     emwk = (PLW*)mwk->wu.target_adrs;
-    target_x = &ewk->wu.E3_work_index;
-    target_y = &ewk->wu.E4_work_index;
+    tp = (s16*)&ewk->wu.kow;
+    target_x = tp + 1;
+    target_y = tp + 2;
 
     if (ewk->wu.hf.hit_flag) {
         ewk->wu.routine_no[1] = 1;
@@ -790,7 +792,7 @@ void kotp_06000(WORK_Other* ewk, TAMA* twk) {
         case 2:
             *target_x = homing_empos_hos[0][ewk->master_player][0];
             *target_x = mwk->wu.rl_flag ? emwk->wu.xyz[0].disp.pos - *target_x : emwk->wu.xyz[0].disp.pos + *target_x;
-            *target_y = homing_empos_hos[0][ewk->master_player][1] + emwk->wu.xyz[1].disp.pos;
+            *target_y = emwk->wu.xyz[1].disp.pos + homing_empos_hos[0][ewk->master_player][1];
             dir = ewk->wu.direction;
             emdir = caldir_pos_256(ewk->wu.xyz[0].disp.pos, ewk->wu.xyz[1].disp.pos, *target_x, *target_y);
             dir += (emdir - (dir - 0x80) & 0xFF) > 0x80 ? 4 : -4;
@@ -823,9 +825,7 @@ void kotp_06000(WORK_Other* ewk, TAMA* twk) {
             ewk->wu.routine_no[2] = 1;
             ewk->wu.xyz[1].disp.pos = -ewk->wu.cg_jphos;
             return;
-        }
-
-        if (--ewk->wu.dir_timer < 0 || screen_range_check(&ewk->wu) != 0) {
+        } else if (--ewk->wu.dir_timer < 0 || screen_range_check(&ewk->wu) != 0) {
             ewk->wu.mvxy.a[0].sp /= 4;
             ewk->wu.mvxy.a[1].sp /= 4;
             set_char_move_init(&ewk->wu, 0, twk->ernm);

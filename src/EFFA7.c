@@ -110,14 +110,15 @@ void effect_A7_move(WORK_Other* ewk) {
         }
         set_char_move_init(&ewk->wu, 0, index);
         if (Pause_Hit_Marks) {
-            return;
+            break;
         }
+        sort_push_request8(&ewk->wu);
         break;
     case 1:
         if (ewk->wu.dead_f == 1) {
             ewk->wu.disp_flag = 0;
             ewk->wu.routine_no[0]++;
-            return;
+            break;
         }
         if (Pause_Hit_Marks) {
             return;
@@ -134,16 +135,16 @@ void effect_A7_move(WORK_Other* ewk) {
                 bg_w.quake_y_index = ewk->wu.scr_mv_y;
             }
         }
+        sort_push_request8(&ewk->wu);
         break;
     case 2:
         ewk->wu.routine_no[0] = 3;
-        return;
+        break;
     default:
         all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
-        return;
+        break;
     }
-    sort_push_request8(&ewk->wu);
 }
 
 

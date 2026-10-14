@@ -355,7 +355,7 @@ s32 effect_27_init(WORK_Other* oya, s16 type) {
             ewk->wu.old_rno[0] = *data_ptr++;
             ewk->wu.old_rno[1] = *data_ptr++;
             ewk->wu.old_rno[2] = *data_ptr++;
-            ewk->wu.mvxy.a[0].real.h = *data_ptr++;
+            *(s16*)&ewk->wu.mvxy.a[0] = *data_ptr++;
             ewk->wu.mvxy.a[0].real.l = *data_ptr++;
             ewk->wu.mvxy.d[0].real.h = *data_ptr++;
             ewk->wu.mvxy.d[0].real.l = *data_ptr++;

@@ -211,9 +211,9 @@ void eff09_2000(WORK_Other* ewk) {
                 effect_B4_init(ewk);
                 work = random_16_com();
                 work &= 7;
-                hit_pl = &plw[ewk->master_id];
-                add_super_arts_gauge(hit_pl->sa, hit_pl->wu.id, 1, hit_pl->metamorphose);
-                return;
+                add_super_arts_gauge(
+                    plw[ewk->master_id].sa, plw[ewk->master_id].wu.id, 1, plw[ewk->master_id].metamorphose);
+                break;
             }
             if (ewk->wu.xyz[1].disp.pos < 0) {
                 Sound_SE((ewk->master_id * 0x300) + 0x157);
@@ -250,7 +250,10 @@ void eff09_2000(WORK_Other* ewk) {
 
 
 
-void sean_ball_move(WORK_Other* ewk, u16 sw_work) {
+void sean_ball_move(ewk, sw_work)
+WORK_Other* ewk;
+u16 sw_work;
+{
     if (!plw[ewk->master_id].wu.operator) {
         return;
     }

@@ -111,23 +111,25 @@ void get_okuri_time(WORK* ewk, WORK* mwk, MVJ* mvj) {
         {
             ewk->cg_ix += mwk->cgd_type;
             gotcp.cpl = &mwk->set_char_ad[ewk->cg_ix];
-            if (gotcp.cps[0] >= 0x100) {
-                st.l = gotcp.cpl[2];
-                st.l *= 8;
-                ewk->cg_hit_ix = st.w.h & 0x1FF;
-                if (ewk->old_rno[1] == ewk->cg_hit_ix) {
-                    if ((gotcp.cpc[1] != 0xFF) || (gotcp.cpc[0] < 0xC8)) {
-                        ewk->old_rno[0] += gotcp.cpc[0];
-                    }
-                    goto loop;
-                }
-                if (ewk->old_rno[0] >= 2) {
-                    K5_decode_new_hit_index(ewk, mvj, now_mf);
-                    ewk->routine_no[1] = 1;
-                    return;
-                }
-                goto end;
+            if (gotcp.cps[0] < 0x100) {
+                goto skip;
             }
+            st.l = gotcp.cpl[2];
+            st.l *= 8;
+            ewk->cg_hit_ix = st.w.h & 0x1FF;
+            if (ewk->old_rno[1] == ewk->cg_hit_ix) {
+                if ((gotcp.cpc[1] != 0xFF) || (gotcp.cpc[0] < 0xC8)) {
+                    ewk->old_rno[0] += gotcp.cpc[0];
+                }
+                goto loop;
+            }
+            if (ewk->old_rno[0] >= 2) {
+                K5_decode_new_hit_index(ewk, mvj, now_mf);
+                ewk->routine_no[1] = 1;
+                return;
+            }
+            goto end;
+        skip:
             if (k5_exc_check[gotcp.cps[0]] == 2) {
                 goto end;
             }
@@ -150,7 +152,6 @@ void get_okuri_time(WORK* ewk, WORK* mwk, MVJ* mvj) {
                 if ((test_flag == 0) || (ixbfw_cut == 0)) {
                     ewk->cg_ix -= (gotcp.cps[3] + 1) * mwk->cgd_type;
                 }
-                break;
             }
             goto loop;
         }
@@ -171,10 +172,8 @@ void K5_decode_new_hit_index(WORK* wk, MVJ* mvj, u16 mf) {
     mvsw.swi = decode_mvsw(mf);
     if (wk->cg_ja.boix != mvj[0].index) {
         i = 0;
-        for (;;) {
-            if (i >= 4) {
-                break;
-            }
+        goto test0;
+    loop0:
             if (mvj[i].r[1].pos.h != 0) {
                 wk->xyz[0].disp.pos = mvj[i].r[0].pos.h;
                 wk->xyz[1].disp.pos = mvj[i].r[1].pos.h;
@@ -209,15 +208,15 @@ void K5_decode_new_hit_index(WORK* wk, MVJ* mvj, u16 mf) {
                 mvj[i].rno = 0;
             }
             mvj[i++].index = wk->cg_ja.boix;
-            continue;
-        }
+        test0:
+            if (i < 4) {
+                goto loop0;
+            }
     }
     if ((wk->cg_ja.bhix + wk->cg_ja.haix) != mvj[4].index) {
         i = 4;
-        for (;;) {
-            if (i >= 8) {
-                break;
-            }
+        goto test1;
+    loop1:
             if (mvj[i].r[1].pos.h != 0) {
                 wk->xyz[0].disp.pos = mvj[i].r[0].pos.h;
                 wk->xyz[1].disp.pos = mvj[i].r[1].pos.h;
@@ -252,8 +251,10 @@ void K5_decode_new_hit_index(WORK* wk, MVJ* mvj, u16 mf) {
                 mvj[i].rno = 0;
             }
             mvj[i++].index = wk->cg_ja.bhix + wk->cg_ja.haix;
-            continue;
-        }
+        test1:
+            if (i < 8) {
+                goto loop1;
+            }
     }
 }
 

@@ -46,7 +46,7 @@ void effect_B6_move(WORK_Other_CONN* ewk_conn) {
             ewk->wu.routine_no[0]++;
             break;
         }
-        if (!akebono_flag) {
+        if (akebono_flag == 0) {
             switch (ewk->wu.routine_no[1]) {
             case 0:
                 if (another_bg[0] | another_bg[1]) {
@@ -62,7 +62,6 @@ void effect_B6_move(WORK_Other_CONN* ewk_conn) {
                             for (i = 0; i < ewk->num; i++) {
                                 ewk->pos[i][1] += ewk->src[i].d[3];
                                 ewk->pos[i][2] = ewk->src[i].d[4];
-                                continue;
                             }
                             ewk->wu.disp_flag = 1;
                         }
@@ -72,7 +71,6 @@ void effect_B6_move(WORK_Other_CONN* ewk_conn) {
                             for (i = 0; i < ewk->num; i++) {
                                 ewk->pos[i][0] += ewk->src[i].d[1];
                                 ewk->pos[i][2] = ewk->src[i].d[5];
-                                continue;
                             }
                             ewk->wu.disp_flag = 1;
                         }
@@ -84,7 +82,6 @@ void effect_B6_move(WORK_Other_CONN* ewk_conn) {
                         for (i = 0; i < ewk->num; i++) {
                             ewk->pos[i][0] -= ewk->src[i].d[1];
                             ewk->pos[i][2] = ewk->src[i].d[4];
-                            continue;
                         }
                         ewk->wu.disp_flag = 1;
                         break;
@@ -95,7 +92,6 @@ void effect_B6_move(WORK_Other_CONN* ewk_conn) {
                         for (i = 0; i < ewk->num; i++) {
                             ewk->pos[i][1] -= ewk->src[i].d[3];
                             ewk->pos[i][2] = ewk->src[i].d[5];
-                            continue;
                         }
                         ewk->wu.disp_flag = 1;
                     }
@@ -107,7 +103,7 @@ void effect_B6_move(WORK_Other_CONN* ewk_conn) {
             }
             disp_car_parts_cells(&ewk->wu);
         }
-        return;
+        break;
     case 2:
     default:
         push_effect_work(&ewk->wu);

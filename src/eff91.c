@@ -77,8 +77,9 @@ void eff91_cell_data_set(WORK_Other* ewk)
     s16 h;
     s16 w;
 
-    row = (u16*)(ewk->wu.vital_new * 4 + (ewk->wu.vital_old << 8) + SS_RAM);
+    cell = (u16*)(ewk->wu.vital_new * 4 + (ewk->wu.vital_old << 8) + SS_RAM);
     ewk->wu.dir_timer = *ewk->wu.move_xy_table++;
+    row = cell;
     for (h = ewk->wu.dmcal_m; h > 0; h--) {
         cell = row;
         for (w = ewk->wu.dm_vital; w > 0; w--) {

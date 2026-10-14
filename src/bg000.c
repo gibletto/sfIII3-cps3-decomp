@@ -190,7 +190,6 @@ void zoom_ud_check(void) {
     s16 work;
     s16 work2;
     s16 pos_w;
-    s16 x2;
     s16 x;
     if (bg_app) {
         return;
@@ -209,10 +208,9 @@ void zoom_ud_check(void) {
         bg_w.old_frame_flag = 1;
         bg_w.center_y = 224 - scr_req_y;
         x = scr_req_x;
-        x2 = x + 512;
         if (x < bg_w.bgw[1].l_limit2) {
             if (bg_w.bgw[1].zuubun != 0) {
-                bg_w.center_x = x2;
+                bg_w.center_x = x + 512;
                 pos_w = bg_w.bgw[1].wxy[0].disp.pos + 512;
             } else {
                 bg_w.center_x = x;
@@ -227,7 +225,7 @@ void zoom_ud_check(void) {
         }
         if (bg_w.bgw[1].r_limit2 < x) {
             if (bg_w.bgw[1].zuubun != 0) {
-                bg_w.center_x = x2;
+                bg_w.center_x = x + 512;
                 pos_w = bg_w.bgw[1].wxy[0].disp.pos + 512;
             } else {
                 bg_w.center_x = x;
@@ -424,7 +422,7 @@ void suzi_line_calc(s16 bg_num) {
             suzi_calc_w.ofs -= suzi_calc_w.step;
             *dst = *(u16*)line;
             line++;
-            dst += 2;
+            dst = dst + 2;
         }
         suzi_calc_w.ofs = 0;
         for (i = 0; i < bg_w.bgw[bg_num].d_line; i++) {
@@ -503,7 +501,7 @@ void suzi_line_calc_fill(s16 bg_num) {
             calc->ofs -= calc->step;
             *dst = *(u16*)line;
             line++;
-            dst += 2;
+            dst = dst + 2;
         }
         suzi_calc_w.ofs = 0;
         for (i = 0; i < bg_w.bgw[bg_num].d_line; i++) {
@@ -732,7 +730,8 @@ u32 suzi_offset_set_sub(WORK* wk)
     work += work2;
     work += work;
     adrs = bg_w.bgw[wk->my_family - 1].suzi_adrs;
-    wk->suzi_offset = adrs + work;
+    adrs += work;
+    wk->suzi_offset = adrs;
     return 0;
 }
 
@@ -987,13 +986,17 @@ void blit_8x16_tile(u16* src, s16 code, u16* dst, s16 attr) {
 
 /* provisional name */
 void bg_cell_write(s16 bg, s32 ofs, s32 cell, u32 src, u16 u5, s16 attr) {
-    u32 dst;
-    u16* s;
+    u16* dst;
+    u32 base;
     u16 code;
-    dst = (u32)bg_w.bgw[bg].bg_address + ofs;
-    s = (u16*)((cell << 10) + src);
+    u16* s;
+    base = (u32)bg_w.bgw[bg].bg_address;
+    ofs += base;
     code = bg_w.scroll_cg_adr >> 7;
-    blit_16x16_tile(s, code, (u16*)dst, attr);
+    cell = (cell << 10) + src;
+    dst = (u16*)ofs;
+    s = (u16*)cell;
+    blit_16x16_tile(s, code, dst, attr);
 }
 
 
@@ -1004,16 +1007,20 @@ void blit_16x16_xflip(u16* src, s16 code, u16* dst, s16 attr) {
     u16 j;
     u16* s;
     u16* d;
-    for (i = 0; i < 16; i++) {
+    u16* p;
+    p = src;
+    i = 0;
+    do {
         d = dst;
         for (j = 0; j < 16; j++) {
-            s = src + i * 32 + 30 - j * 2;
+            s = p + 30 - j * 2;
             *d++ = *s++ + code;
             *d = *s + attr;
             *d++ |= 0x1000;
         }
         dst = dst + 0x80;
-    }
+        p += 0x20;
+    } while (++i < 16);
 }
 
 

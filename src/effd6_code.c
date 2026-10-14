@@ -28,7 +28,6 @@
 #include "PLS01.h"
 #include "CHARID.h"
 #include "effd6_code.h"
-#include "EFFD5.h"
 
 
 
@@ -93,7 +92,13 @@ void effect_D6_move(WORK_Other* ewk) {
 
 
 
-s32 effect_D6_init(WORK_Other* wk, s16 dr, s16 sp, s16 dl, s16 acc) {
+s32 effect_D6_init(wk, dr, sp, dl, acc)
+    WORK_Other* wk;
+    s16 dr;
+    s16 sp;
+    s16 dl;
+    s16 acc;
+{
     WORK_Other* ewk;
     s16 ix;
     if ((ix = pull_effect_work(3)) == -1) {
@@ -125,7 +130,7 @@ void setup_hana_extra(WORK* wk, s16 num, s16 acc) {
     s16 i;
     s16 way = wk->direction * 4;
     s16 rnd_00 = random_16_com() & 3;
-    s32 rnd_01;
+    s16 rnd_01;
     for (i = 0; i < num_of_hana[num]; i++) {
         rnd_01 = random_16_com() & 3;
         effect_D6_init((WORK_Other*)wk,

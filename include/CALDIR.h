@@ -30,7 +30,7 @@ s16 dir256_to_016(s16 dir);
 s16 dir256_to_008(s16 dir);
 void cal_all_speed_data();
 void cal_delta_speed();
-void cal_initial_speed(WORK* wk, s16 tm, s16 x1, s16 y1);
+void cal_initial_speed();
 void cal_initial_speed_y(WORK* wk, s16 tm, s16 y1);
 s32 cal_move_dir_forecast(WORK* wk, s16 tm);
 s16 cal_move_quantity2(s16 x1, s16 x2, s16 y1, s16 y2);

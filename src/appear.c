@@ -1440,6 +1440,7 @@ void Appear_29000(PLW* wk) {
                 } else {
                     cal_initial_speed(&wk->wu, app_counter[wk->wu.id], bg_w.bgw[1].pos_x_work - 0x58, 0);
                 }
+                break;
             }
         }
         break;
@@ -1448,10 +1449,10 @@ void Appear_29000(PLW* wk) {
         add_x_sub((WORK_Other*)&wk->wu);
         if (wk->wu.id) {
             if (!(wk->wu.xyz[0].disp.pos <= (bg_w.bgw[1].pos_x_work + 0x58))) {
-                return;
+                break;
             }
         } else if (wk->wu.xyz[0].disp.pos < (bg_w.bgw[1].pos_x_work - 0x58)) {
-            return;
+            break;
         }
         wk->wu.routine_no[2] = 1;
         wk->wu.routine_no[3] = 0;
