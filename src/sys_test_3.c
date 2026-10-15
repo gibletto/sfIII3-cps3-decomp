@@ -429,6 +429,8 @@ s32 cd_check_drive_inquiry(void) {
 
 
 
+#define CD_VOLUME_ID ((s8*)0x067FFFE0)
+
 /* provisional name */
 s32 cd_check_disc_id(void) {
     s32 rc;
@@ -479,12 +481,12 @@ s32 cd_check_disc_id(void) {
         }
         if (cd_sector_buf[1] == 'C' && cd_sector_buf[2] == 'D' && cd_sector_buf[3] == '0' &&
             cd_sector_buf[4] == '0' && cd_sector_buf[5] == '1') {
-            if (cd_sector_buf[0x28] == game_volume_id[0] && cd_sector_buf[0x29] == game_volume_id[1] &&
-                cd_sector_buf[0x2a] == game_volume_id[2] && cd_sector_buf[0x2b] == game_volume_id[3] &&
-                cd_sector_buf[0x2c] == game_volume_id[4] && cd_sector_buf[0x2d] == game_volume_id[5] &&
-                cd_sector_buf[0x2e] == game_volume_id[6] && cd_sector_buf[0x2f] == game_volume_id[7] &&
-                cd_sector_buf[0x30] == game_volume_id[8] && cd_sector_buf[0x31] == game_volume_id[9] &&
-                cd_sector_buf[0x32] == game_volume_id[10]) {
+            if (cd_sector_buf[0x28] == CD_VOLUME_ID[0] && cd_sector_buf[0x29] == CD_VOLUME_ID[1] &&
+                cd_sector_buf[0x2a] == CD_VOLUME_ID[2] && cd_sector_buf[0x2b] == CD_VOLUME_ID[3] &&
+                cd_sector_buf[0x2c] == CD_VOLUME_ID[4] && cd_sector_buf[0x2d] == CD_VOLUME_ID[5] &&
+                cd_sector_buf[0x2e] == CD_VOLUME_ID[6] && cd_sector_buf[0x2f] == CD_VOLUME_ID[7] &&
+                cd_sector_buf[0x30] == CD_VOLUME_ID[8] && cd_sector_buf[0x31] == CD_VOLUME_ID[9] &&
+                cd_sector_buf[0x32] == CD_VOLUME_ID[10]) {
                 return 0;
             } else {
                 return -1;

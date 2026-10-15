@@ -18,7 +18,6 @@
 #include "EFFH3.h"
 #include "effh4.h"
 #include "effh5.h"
-#include "effh6_code.h"
 #include "PLCNTDAT.h"
 #include "plcntdat_2.h"
 #include "sys_test.h"
@@ -59,6 +58,8 @@
 #include "end_sub.h"
 #include "end_sub_2.h"
 #include "cps3.h"
+
+s32 effect_H6_init(s16 timer, s8* str, s16 X, s16 Y, s16 Original_Color, s32 unused);
 
 extern volatile s32 staff_r_no;
 
@@ -147,21 +148,29 @@ s32 id;
 s32 x;
 s32 y;
 s32 a;
-s32 b;
+s8* b;
 {
-    x += bg_w.bgw[5].xy[0].disp.pos - 192;
-    y += bg_w.bgw[5].position_y;
-    effect_H6_init(id, b, x, y, a, -1);
+    s8* su;
+    s16 xu;
+    s16 yu;
+    su = b;
+    xu = x;
+    yu = y;
+    xu += bg_w.bgw[5].xy[0].disp.pos - 192;
+    yu += bg_w.bgw[5].position_y;
+    effect_H6_init(id, su, xu, yu, a, -1);
 }
+
 
 
 
 /* provisional name */
 s32 staff_roll_main(void) {
-    const STAFF_LINE* line;
     s16 x;
     s16 y;
     s16 attr;
+    s32 fx;
+    s32 fy;
     switch (staff_r_no) {
     case 0:
         staff_r_no++;
@@ -170,7 +179,11 @@ s32 staff_roll_main(void) {
         bg_w.bgw[5].xy[1].cal = 0;
         bg_w.bgw[5].position_x = 0x100 - bg_w.pos_offset;
         bg_w.bgw[5].position_y = 0;
-        Family_Set_R(6, -bg_w.bgw[5].position_x & 0x3FF, (0x300 - (bg_w.bgw[5].position_y & 0x3FF)) & 0x3FF);
+        fx = bg_w.bgw[5].position_x;
+        fy = bg_w.bgw[5].position_y;
+        fx = -fx & 0x3FF;
+        fy = (0x300 - (fy & 0x3FF)) & 0x3FF;
+        Family_Set_R(6, fx, fy);
         roll_rate2 = 1;
         roll_stop = staff_name_ptr = 0;
         end_w.timer = 0;
@@ -194,27 +207,24 @@ s32 staff_roll_main(void) {
                 break;
             }
             name_timer = 0x7FFF;
-            line = &staff_roll_tbl[staff_name_ptr];
-            x = line->x;
-            y = line->y;
-            attr = line->attr;
-            staff_roll_put(240, x, y, attr, line->str);
+            x = staff_roll_tbl[staff_name_ptr].x;
+            y = staff_roll_tbl[staff_name_ptr].y;
+            attr = staff_roll_tbl[staff_name_ptr].attr;
+            staff_roll_put(240, x, y, attr, staff_roll_tbl[staff_name_ptr].str);
             end_w.timer = staff_roll_tbl[staff_name_ptr].wait;
             staff_name_ptr++;
             if (end_w.timer <= 0) {
-                line = &staff_roll_tbl[staff_name_ptr];
-                x = line->x;
-                y = line->y;
-                attr = line->attr;
-                staff_roll_put(240, x, y, attr, line->str);
+                x = staff_roll_tbl[staff_name_ptr].x;
+                y = staff_roll_tbl[staff_name_ptr].y;
+                attr = staff_roll_tbl[staff_name_ptr].attr;
+                staff_roll_put(240, x, y, attr, staff_roll_tbl[staff_name_ptr].str);
                 end_w.timer = staff_roll_tbl[staff_name_ptr].wait;
                 staff_name_ptr++;
                 if (end_w.timer <= 0) {
-                    line = &staff_roll_tbl[staff_name_ptr];
-                    x = line->x;
-                    y = line->y;
-                    attr = line->attr;
-                    staff_roll_put(240, x, y, attr, line->str);
+                    x = staff_roll_tbl[staff_name_ptr].x;
+                    y = staff_roll_tbl[staff_name_ptr].y;
+                    attr = staff_roll_tbl[staff_name_ptr].attr;
+                    staff_roll_put(240, x, y, attr, staff_roll_tbl[staff_name_ptr].str);
                     end_w.timer = 240;
                     staff_name_ptr++;
                 }
@@ -224,74 +234,73 @@ s32 staff_roll_main(void) {
             name_timer = name_timer - roll_rate_t2;
             break;
         }
-        line = &staff_roll_tbl[staff_name_ptr];
-        name_timer = line->wait;
-        x = line->x;
-        y = line->y;
-        attr = line->attr;
-        staff_roll_put(20, x, y, attr, line->str);
+        name_timer = staff_roll_tbl[staff_name_ptr].wait;
+        x = staff_roll_tbl[staff_name_ptr].x;
+        y = staff_roll_tbl[staff_name_ptr].y;
+        attr = staff_roll_tbl[staff_name_ptr].attr;
+        staff_roll_put(20, x, y, attr, staff_roll_tbl[staff_name_ptr].str);
         staff_name_ptr++;
-        line = &staff_roll_tbl[staff_name_ptr];
-        x = line->x;
-        y = line->y;
-        attr = line->attr;
-        staff_roll_put(20, x, y, attr, line->str);
+        x = staff_roll_tbl[staff_name_ptr].x;
+        y = staff_roll_tbl[staff_name_ptr].y;
+        attr = staff_roll_tbl[staff_name_ptr].attr;
+        staff_roll_put(20, x, y, attr, staff_roll_tbl[staff_name_ptr].str);
         staff_name_ptr++;
         if (staff_roll_tbl[staff_name_ptr].wait == 0) {
-            line = &staff_roll_tbl[staff_name_ptr];
-            x = line->x;
-            y = line->y;
-            attr = line->attr;
-            staff_roll_put(20, x, y, attr, line->str);
+            x = staff_roll_tbl[staff_name_ptr].x;
+            y = staff_roll_tbl[staff_name_ptr].y;
+            attr = staff_roll_tbl[staff_name_ptr].attr;
+            staff_roll_put(20, x, y, attr, staff_roll_tbl[staff_name_ptr].str);
             staff_name_ptr++;
-            line = &staff_roll_tbl[staff_name_ptr];
-            x = line->x;
-            y = line->y;
-            attr = line->attr;
-            staff_roll_put(20, x, y, attr, line->str);
+            x = staff_roll_tbl[staff_name_ptr].x;
+            y = staff_roll_tbl[staff_name_ptr].y;
+            attr = staff_roll_tbl[staff_name_ptr].attr;
+            staff_roll_put(20, x, y, attr, staff_roll_tbl[staff_name_ptr].str);
             staff_name_ptr++;
-            if (staff_roll_tbl[staff_name_ptr].wait == 0) {
-                line = &staff_roll_tbl[staff_name_ptr];
-                x = line->x;
-                y = line->y;
-                attr = line->attr;
-                staff_roll_put(20, x, y, attr, line->str);
-                staff_name_ptr++;
-                line = &staff_roll_tbl[staff_name_ptr];
-                x = line->x;
-                y = line->y;
-                attr = line->attr;
-                staff_roll_put(20, x, y, attr, line->str);
-                staff_name_ptr++;
-                if (staff_roll_tbl[staff_name_ptr].wait == 0) {
-                    line = &staff_roll_tbl[staff_name_ptr];
-                    x = line->x;
-                    y = line->y;
-                    attr = line->attr;
-                    staff_roll_put(20, x, y, attr, line->str);
-                    staff_name_ptr++;
-                    line = &staff_roll_tbl[staff_name_ptr];
-                    x = line->x;
-                    y = line->y;
-                    attr = line->attr;
-                    staff_roll_put(20, x, y, attr, line->str);
-                    staff_name_ptr++;
-                    if (staff_roll_tbl[staff_name_ptr].wait == 0) {
-                        line = &staff_roll_tbl[staff_name_ptr];
-                        x = line->x;
-                        y = line->y;
-                        attr = line->attr;
-                        staff_roll_put(20, x, y, attr, line->str);
-                        staff_name_ptr++;
-                        line = &staff_roll_tbl[staff_name_ptr];
-                        x = line->x;
-                        y = line->y;
-                        attr = line->attr;
-                        staff_roll_put(20, x, y, attr, line->str);
-                        staff_name_ptr++;
-                    }
-                }
-            }
+        } else {
+            return staffroll_end;
+            break;
+        }
+        if (staff_roll_tbl[staff_name_ptr].wait == 0) {
+            x = staff_roll_tbl[staff_name_ptr].x;
+            y = staff_roll_tbl[staff_name_ptr].y;
+            attr = staff_roll_tbl[staff_name_ptr].attr;
+            staff_roll_put(20, x, y, attr, staff_roll_tbl[staff_name_ptr].str);
+            staff_name_ptr++;
+            x = staff_roll_tbl[staff_name_ptr].x;
+            y = staff_roll_tbl[staff_name_ptr].y;
+            attr = staff_roll_tbl[staff_name_ptr].attr;
+            staff_roll_put(20, x, y, attr, staff_roll_tbl[staff_name_ptr].str);
+            staff_name_ptr++;
+        } else {
+            return staffroll_end;
+            break;
+        }
+        if (staff_roll_tbl[staff_name_ptr].wait == 0) {
+            x = staff_roll_tbl[staff_name_ptr].x;
+            y = staff_roll_tbl[staff_name_ptr].y;
+            attr = staff_roll_tbl[staff_name_ptr].attr;
+            staff_roll_put(20, x, y, attr, staff_roll_tbl[staff_name_ptr].str);
+            staff_name_ptr++;
+            x = staff_roll_tbl[staff_name_ptr].x;
+            y = staff_roll_tbl[staff_name_ptr].y;
+            attr = staff_roll_tbl[staff_name_ptr].attr;
+            staff_roll_put(20, x, y, attr, staff_roll_tbl[staff_name_ptr].str);
+            staff_name_ptr++;
+        } else {
+            return staffroll_end;
+            break;
+        }
+        if (staff_roll_tbl[staff_name_ptr].wait == 0) {
+            x = staff_roll_tbl[staff_name_ptr].x;
+            y = staff_roll_tbl[staff_name_ptr].y;
+            attr = staff_roll_tbl[staff_name_ptr].attr;
+            staff_roll_put(20, x, y, attr, staff_roll_tbl[staff_name_ptr].str);
+            staff_name_ptr++;
+            x = staff_roll_tbl[staff_name_ptr].x;
+            y = staff_roll_tbl[staff_name_ptr].y;
+            attr = staff_roll_tbl[staff_name_ptr].attr;
+            staff_roll_put(20, x, y, attr, staff_roll_tbl[staff_name_ptr].str);
+            staff_name_ptr++;
         }
         break;
     case 2:

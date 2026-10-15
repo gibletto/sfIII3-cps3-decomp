@@ -507,6 +507,7 @@ void combo_window_push(s8 PL, s8 KIND) {
 
 void combo_window_trans(s8 PL) {
     s8 PLS;
+    s32 mask;
     if (cmb_stock[PL] != 0) {
         if (cmst_buff[PL][cst_read[PL]].pts_flag) {
             switch (cmst_buff[PL][cst_read[PL]].routine_num) {
@@ -565,7 +566,8 @@ void combo_window_trans(s8 PL) {
                         }
                     }
                 }
-                if ((end_flag[PL] & 3) == 3) {
+                mask = 3;
+                if ((end_flag[PL] & mask) == mask) {
                     cmst_buff[PL][cst_read[PL]].routine_num++;
                     cmst_buff[PL][cst_read[PL]].timer[1] = cmb_window_time_tbl[cmst_buff[PL][cst_read[PL]].kind];
                     if (PL == 0) {
@@ -631,7 +633,7 @@ void combo_window_trans(s8 PL) {
                     combo_window_erase(PL, cmst_buff[PL][cst_read[PL]].kind, 0);
                     if (cmst_buff[PL][cst_read[PL]].pts_flag) {
                         cmst_buff[PL][cst_read[PL]].routine_num++;
-                        return;
+                        break;
                     }
                     if (cst_read[PL] == 3) {
                         cst_read[PL] = 0;

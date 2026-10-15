@@ -161,6 +161,7 @@ void disasm_sh_opcode(u16 code, char* str) {
     }
     kind = code & 0xF000;
     if (kind == 0x4000) {
+    ldm:;
         side = &reg_name_tbl[(s32)(code & 0xF00) >> 8];
         for (p = sh_op_ldm_tbl; p->name != 0; p++) {
             if ((code & 0xF0FF) == p->code) {

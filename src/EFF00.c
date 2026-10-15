@@ -33,7 +33,12 @@ void effect_00_move(WORK_Other_JUDGE* judge) {
         ewk->curr_ja = ewk->look_up_flag = 0;
         break;
     case 1:
-        if (ewk->wu.dead_f == 1 || ewk->my_master->waku_work_index != ewk->wu.myself) {
+        if (ewk->wu.dead_f == 1) {
+            ewk->wu.disp_flag = 0;
+            ewk->wu.routine_no[0] = 2;
+            break;
+        }
+        if (ewk->my_master->waku_work_index != ewk->wu.myself) {
             ewk->wu.disp_flag = 0;
             ewk->wu.routine_no[0] = 2;
             break;
@@ -44,7 +49,11 @@ void effect_00_move(WORK_Other_JUDGE* judge) {
         if (judge_disp_all) {
             ewk->ja_disp_bit = jdb[15];
             ewk->wu.spr.gfx_cells = jdb2[15];
-        } else if ((ewk->master_work_id == 1) ? (dip & 0x1000) : (dip & 0x2000)) {
+        } else if (ewk->master_work_id != 1) {
+            if (!(dip & 0x2000)) {
+            } else goto jump;
+        } else if (dip & 0x1000) {
+        jump:
             dip = (dip >> 8) & 0xF;
             ewk->ja_disp_bit = jdb[dip];
             ewk->wu.spr.gfx_cells = jdb2[dip];

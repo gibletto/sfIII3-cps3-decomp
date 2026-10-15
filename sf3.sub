@@ -199,7 +199,6 @@ INPUT obj\cmd_data.obj
 INPUT obj\ta_sub_tbl.obj
 INPUT obj\bg_sub_tbl.obj
 INPUT obj\tate00.obj
-INPUT obj\bg_sub.obj
 INPUT obj\bg_sub_2.obj
 INPUT obj\bg_sub_tbl_b.obj
 INPUT obj\bg000_tbl.obj

@@ -617,13 +617,25 @@ s16 Time;
 
 
 
+#pragma inline(Check_Squat)
+
+static s32 Check_Squat(wk)
+PLW* wk;
+{
+    if (((WORK*)wk->wu.target_adrs)->pat_status == 0x20) {
+        return 0;
+    }
+    return 2;
+}
+
+
+
 void Adjust_Attack(wk, Reaction, Lever_Data)
 PLW* wk;
 s16 Reaction;
 u16 Lever_Data;
 {
     u16 xx;
-    WORK* mwk;
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
         if (Check_Passive(wk) != 0) {
@@ -639,12 +651,7 @@ u16 Lever_Data;
             break;
         }
         if (--Combo_Speed[wk->wu.id] == 0) {
-            mwk = &wk->wu;
-            if (((WORK*)mwk->target_adrs)->pat_status == 0x20) {
-                xx = 0;
-            } else {
-                xx = 2;
-            }
+            xx = Check_Squat(wk);
             Lever_Buff[wk->wu.id] = Lever_Data | xx;
             Lever_LR[wk->wu.id] = xx;
             Lever_Buff[wk->wu.id] |= Small_Jump_Measure(wk);
@@ -5620,14 +5627,18 @@ s32 ETC_Term_0009(PLW* wk)
 void Setup_Com_Max_Range(void) {
     s16 limit;
     s16 xx;
+    const s16* row;
     u8 type = CC_Type;
     if (type == 2) {
-        limit = Lv18_Time_Data[type][Game_setting.level][14];
+        limit = Lv18_Time_Data[type][Game_setting.level][14] + 20;
     } else {
-        limit = Lv18_Time_Data[type][Game_setting.level][16];
+        limit = Lv18_Time_Data[type][Game_setting.level][16] + 20;
     }
-    limit += 20;
-    xx = *(type == 2 ? &Lv18_Time_Data[type][8][14] : &Lv18_Time_Data[type][8][16]) + 20;
+    if (type == 2) {
+        xx = Lv18_Time_Data[type][8][14] + 20;
+    } else {
+        xx = Lv18_Time_Data[type][8][16] + 20;
+    }
     if (limit < xx) {
         limit = xx;
     }
@@ -5648,7 +5659,8 @@ void Setup_Com_Max_Range(void) {
     if (limit < xx) {
         limit = xx;
     }
-    xx = Lv08_Time_Data[type][2][6] + 20;
+    row = Lv08_Time_Data[type][2];
+    xx = row[6] + 20;
     if (limit < xx) {
         limit = xx;
     }

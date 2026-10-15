@@ -1353,6 +1353,7 @@ void debug_hit_a_judgement_build_table(void) {
     plw[0].wu.timing = wk->timing;
     dst = (u32*)dbg_hita_ewk[0];
     src = (u32*)&plw[0];
+copy:;
     for (i = 0; i < 512; i++) {
         *dst++ = *src++;
     }
@@ -1624,9 +1625,9 @@ s32 debug_hit_a_judgement_edit_grid(WORK* wk) {
     HITA_PAT* pat = (HITA_PAT*)wk->set_char_ad;
     s16 ix = wk->cg_ix / wk->cgd_type;
     s16 page = pat[ix].bits >> 13;
+    s16 zero = 0;
     s16 hit = page;
     HITA_IX* h = &ixtbl[hit];
-    s16 zero = 0;
     s16 step;
     s16 i;
     s32 sw;
@@ -1774,12 +1775,8 @@ s32 debug_hit_a_judgement_edit_grid(WORK* wk) {
                     goto none;
                 }
                 wk->dmcal_m++;
-                i = wk->dmcal_m + 1;
-                if (i > ix) {
-                    do {
-                        pat[i] = pat[i - 1];
-                        i--;
-                    } while (i > ix);
+                for (i = wk->dmcal_m + 1; i > ix; i--) {
+                    pat[i] = pat[i - 1];
                 }
             } else {
                 if (wk->dmcal_d > 95) {
@@ -2103,10 +2100,8 @@ void debug_clear_rgb_triplet_table(void) {
 /* provisional name */
 void debug_rgb_editor_navigate(s16 mode) {
     u16 sw;
-    s32 all;
     s16 i;
-    all = sw = ~dbg_p2sw_1 & dbg_p2sw_0;
-    all &= 0x200;
+    sw = ~dbg_p2sw_1 & dbg_p2sw_0;
     if (mode != 1) {
         if (mode == 2) {
             if (dbg_p2sw_0 & 0x200) {
@@ -2114,7 +2109,7 @@ void debug_rgb_editor_navigate(s16 mode) {
                     Debug_RGB[i]++;
                 }
             }
-            if (all) {
+            if (sw & 0x200) {
                 for (i = 0; i < 3; i++) {
                     Debug_RGB[i] += 3;
                 }
@@ -2154,7 +2149,7 @@ void debug_rgb_editor_navigate(s16 mode) {
     }
     if (dbg_p2sw_0 & 0x200) {
         Debug_RGB[2]++;
-        if (all) {
+        if (sw & 0x200) {
             Debug_RGB[2] += 3;
         }
     }
@@ -3333,6 +3328,7 @@ void debug_hit_box_edit(void) {
             break;
         case 14:
             box = (s16*)dbg_copy_buf.h_hos;
+        hos:;
             break;
         }
         dbg_edit_box = box;

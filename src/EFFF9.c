@@ -37,23 +37,24 @@
 
 
 
-void effect_F9_move(WORK_Other* owk) {
-    WORK_Other_CONN* ewk = (WORK_Other_CONN*)owk;
+void effect_F9_move(WORK_Other_CONN* ewk) {
     const u16* chr_data;
     const CONN* conn_data;
-    s32 variant;
     s16 i;
     switch (ewk->wu.routine_no[0]) {
     case 0:
         ewk->wu.routine_no[0]++;
-        variant = Language;
         switch (Country) {
         case 1:
             conn_data = effF9_mes_jp[ewk->master_player][mes_already].conn;
             chr_data = effF9_mes_jp[ewk->master_player][mes_already].chr;
             break;
+        case 2:
+            conn_data = effF9_mes_en[ewk->master_player][mes_already].conn;
+            chr_data = effF9_mes_en[ewk->master_player][mes_already].chr;
+            break;
         case 3:
-            switch (variant) {
+            switch (Language) {
             case 0:
                 conn_data = effF9_mes_en[ewk->master_player][mes_already].conn;
                 chr_data = effF9_mes_en[ewk->master_player][mes_already].chr;
@@ -67,6 +68,10 @@ void effect_F9_move(WORK_Other* owk) {
                 chr_data = effF9_mes_pt[ewk->master_player][mes_already].chr;
                 break;
             }
+            break;
+        case 4:
+            conn_data = effF9_mes_en[ewk->master_player][mes_already].conn;
+            chr_data = effF9_mes_en[ewk->master_player][mes_already].chr;
             break;
         case 5:
             conn_data = effF9_mes_es[ewk->master_player][mes_already].conn;
@@ -77,7 +82,7 @@ void effect_F9_move(WORK_Other* owk) {
             chr_data = effF9_mes_pt[ewk->master_player][mes_already].chr;
             break;
         case 7:
-            switch (variant) {
+            switch (Language) {
             case 0:
                 conn_data = effF9_mes_en[ewk->master_player][mes_already].conn;
                 chr_data = effF9_mes_en[ewk->master_player][mes_already].chr;
@@ -91,14 +96,6 @@ void effect_F9_move(WORK_Other* owk) {
                 chr_data = effF9_mes_pt[ewk->master_player][mes_already].chr;
                 break;
             }
-            break;
-        case 2:
-            conn_data = effF9_mes_en[ewk->master_player][mes_already].conn;
-            chr_data = effF9_mes_en[ewk->master_player][mes_already].chr;
-            break;
-        case 4:
-            conn_data = effF9_mes_en[ewk->master_player][mes_already].conn;
-            chr_data = effF9_mes_en[ewk->master_player][mes_already].chr;
             break;
         default:
             conn_data = effF9_mes_en[ewk->master_player][mes_already].conn;

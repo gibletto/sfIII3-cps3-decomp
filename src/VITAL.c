@@ -6,8 +6,7 @@
  * cells from the yellow and red levels. count_cont_init/reset/main, counter_control and
  * counter_flash run the 99-count round timer, with a tick rate from the game-speed setting and
  * flashing below 30 and 10. bcount_cont_* and bcounter_* run the 50-second bonus-stage timer and
- * count it down for the result tally. The file starts with debug_scrfont_view, a debug viewer for
- * scroll characters and palettes.
+ * count it down for the result tally.
  */
 
 #include "structs.h"
@@ -19,36 +18,6 @@
 #include "count.h"
 #include "VITAL.h"
 #include "cps3.h"
-/* provisional name */
-void debug_scrfont_view(void) {
-    s32 i;
-    s32 j;
-    s32 code = 0;
-    if ((p1sw_0 & 0x3F0) == 0xA0) {
-        if ((~p1sw_1 & p1sw_0 & 15) == 1) {
-            scrfont_view_attr = scrfont_view_attr + 2;
-        }
-        if ((~p1sw_1 & p1sw_0 & 15) == 2) {
-            scrfont_view_attr -= 2;
-        }
-        scrfont_view_attr = scrfont_view_attr & 62;
-    }
-    for (i = 0; i < 16; i++) {
-        for (j = 0; j < 16; j++) {
-            tilemap_put_cell(j + 8, i + 6, scrfont_view_attr, code++);
-        }
-    }
-    for (i = 0; i < 16; i++) {
-        for (j = 0; j < 16; j++) {
-            tilemap_put_cell(j + 24, i + 6, scrfont_view_attr, code++);
-        }
-    }
-    tilemap_put_cell(23, 5, 42, (scrfont_view_attr >> 5) & 15);
-    tilemap_put_cell(24, 5, 42, (scrfont_view_attr >> 1) & 15);
-}
-
-
-
 void vital_cont_init(void) {
     vit_bar[0].cyerw = 160;
     vit_bar[0].cred = 160;

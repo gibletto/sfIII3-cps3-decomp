@@ -572,7 +572,7 @@ s32 either_pl_hissatsu_check(void) {
 
 
 s32 compel_dead_check(WORK_Other* ewk) {
-    if (bg_w.compel_on[0] != 0 && ewk->wu.dead_f != 0) {
+    if (bg_w.compel_on && ewk->wu.dead_f) {
         return 1;
     }
     return 0;

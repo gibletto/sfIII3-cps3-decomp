@@ -16,7 +16,8 @@
  * passed in (called by effect 59). break_into_banner_trans is called from the effect A2 main
  * routine while the new challenger banner is shown: kind 0 clears the banner characters and
  * redraws the text layer; any other kind copies the kind-th three-cell column of the banner
- * graphics from sc_chr_data into character RAM.
+ * graphics from sc_chr_data into character RAM. The file ends with debug_scrfont_view, a debug
+ * viewer for scroll characters and palettes.
  */
 
 #include "structs.h"
@@ -1188,4 +1189,33 @@ void end_waku_write(s8 mode) {
         tilemap_clear_rect(0, 0, 48, 27);
         break;
     }
+}
+
+
+/* provisional name */
+void debug_scrfont_view(void) {
+    s32 i;
+    long j;
+    s32 code = 0;
+    if ((p1sw_0 & 0x3F0) == 0xA0) {
+        if ((~p1sw_1 & p1sw_0 & 15) == 1) {
+            scrfont_view_attr = scrfont_view_attr + 2;
+        }
+        if ((~p1sw_1 & p1sw_0 & 15) == 2) {
+            scrfont_view_attr -= 2;
+        }
+        scrfont_view_attr = scrfont_view_attr & 62;
+    }
+    for (i = 0; i < 16; i++) {
+        for (j = 0; j < 16; j++) {
+            tilemap_put_cell(j + 8, i + 6, scrfont_view_attr, code++);
+        }
+    }
+    for (i = 0; i < 16; i++) {
+        for (j = 0; j < 16; j++) {
+            tilemap_put_cell(j + 24, i + 6, scrfont_view_attr, code++);
+        }
+    }
+    tilemap_put_cell(23, 5, 42, (scrfont_view_attr >> 5) & 15);
+    tilemap_put_cell(24, 5, 42, (scrfont_view_attr >> 1) & 15);
 }

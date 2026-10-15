@@ -635,8 +635,9 @@ void sa_color_chenge(pl, step)
 s8 pl;
 s8 step;
 {
-    SPG_DAT* p0 = &spg_dat[0];
-    SPG_DAT* p1 = &spg_dat[1];
+    SPG_DAT* p0;
+    SPG_DAT* p1;
+    p0 = &spg_dat[0], p1 = &spg_dat[1];
     if (spg_dat[pl].kind) {
         if (pl == 0) {
             p0->spgcol_number = step * 2 + 34;
