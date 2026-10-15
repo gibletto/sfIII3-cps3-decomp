@@ -66,8 +66,7 @@ void effect_I9_move(WORK_Other* ewk) {
 void push_image_buff(WORK_Other* wk, ImageBuff* image_buff) {
     s16 i;
     for (i = 16; i > 0; i--) {
-        image_buff[i].pos_x = image_buff[i - 1].pos_x;
-        image_buff[i].pos_y = image_buff[i - 1].pos_y;
+        image_buff[i] = image_buff[i - 1];
     }
     image_buff->pos_x = wk->wu.position_x;
     image_buff->pos_y = wk->wu.position_y;

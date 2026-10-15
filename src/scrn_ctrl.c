@@ -108,6 +108,8 @@
 #include "fighter.h"
 #include "RANKING.h"
 
+#define WINDOW_ROW(m) ((const s16*)((const u8*)screen_window_tbl + (u8)((m) * sizeof(screen_window_tbl[0]))))
+
 
 /* provisional name */
 void screen_flip_offsets_set(void) {
@@ -141,32 +143,30 @@ void screen_flip_offsets_set(void) {
 void set_screen_mode(mode)
 s32 mode;
 {
-    register const s16* row;
     window_req_flag = 1;
     screen_mode = mode;
     screen_base_x = screen_origin_tbl[mode][0];
     screen_base_y = screen_origin_tbl[mode][1];
     if (screen_mode == 7 && Monitor_Flip) {
-        screen_window[0][0] = screen_window_flip_tbl[0];
-        screen_window[0][1] = screen_window_flip_tbl[1];
-        screen_window[0][2] = screen_window_flip_tbl[2];
-        screen_window[0][3] = screen_window_flip_tbl[3];
-        screen_window[1][0] = screen_window_flip_tbl[4];
-        screen_window[1][1] = screen_window_flip_tbl[5];
-        screen_window[1][2] = screen_window_flip_tbl[6];
-        screen_window[1][3] = screen_window_flip_tbl[7];
+        screen_window[0].l = screen_window_flip_tbl[0];
+        screen_window[0].t = screen_window_flip_tbl[1];
+        screen_window[0].r = screen_window_flip_tbl[2];
+        screen_window[0].b = screen_window_flip_tbl[3];
+        screen_window[1].l = screen_window_flip_tbl[4];
+        screen_window[1].t = screen_window_flip_tbl[5];
+        screen_window[1].r = screen_window_flip_tbl[6];
+        screen_window[1].b = screen_window_flip_tbl[7];
         screen_disp_ctrl = screen_window_flip_tbl[8];
     } else {
-        row = (const s16*)((const u8*)screen_window_tbl + (u8)(mode * sizeof(screen_window_tbl[0])));
-        screen_window[0][0] = row[0];
-        screen_window[0][1] = row[1];
-        screen_window[0][2] = row[2];
-        screen_window[0][3] = row[3];
-        screen_window[1][0] = row[4];
-        screen_window[1][1] = row[5];
-        screen_window[1][2] = row[6];
-        screen_window[1][3] = row[7];
-        screen_disp_ctrl = row[8];
+        screen_window[0].l = WINDOW_ROW(mode)[0];
+        screen_window[0].t = WINDOW_ROW(mode)[1];
+        screen_window[0].r = WINDOW_ROW(mode)[2];
+        screen_window[0].b = WINDOW_ROW(mode)[3];
+        screen_window[1].l = WINDOW_ROW(mode)[4];
+        screen_window[1].t = WINDOW_ROW(mode)[5];
+        screen_window[1].r = WINDOW_ROW(mode)[6];
+        screen_window[1].b = WINDOW_ROW(mode)[7];
+        screen_disp_ctrl = WINDOW_ROW(mode)[8];
     }
 }
 
@@ -174,8 +174,6 @@ s32 mode;
 
 /* provisional name */
 void screen_window_regs_update(void) {
-    s16* win;
-    s16* win1;
     u16 ctrl;
     u16 t;
     if (Monitor_Flip != Monitor_Flip_Old) {
@@ -187,39 +185,37 @@ void screen_window_regs_update(void) {
         }
         window_req_flag = 0;
     }
-    win = screen_window[0];
-    *(u16*)(VIDEO_REG + 0x60) = win[0];
-    *(u16*)(VIDEO_REG + 0x62) = win[1];
-    *(u16*)(VIDEO_REG + 0x64) = win[2];
-    *(u16*)(VIDEO_REG + 0x66) = win[3];
-    win1 = win + 4;
-    *(u16*)(VIDEO_REG + 0x70) = win1[0];
-    *(u16*)(VIDEO_REG + 0x72) = win1[1];
-    *(u16*)(VIDEO_REG + 0x74) = win1[2];
-    *(u16*)(VIDEO_REG + 0x76) = win1[3];
+    *(u16*)(VIDEO_REG + 0x60) = screen_window[0].l;
+    *(u16*)(VIDEO_REG + 0x62) = screen_window[0].t;
+    *(u16*)(VIDEO_REG + 0x64) = screen_window[0].r;
+    *(u16*)(VIDEO_REG + 0x66) = screen_window[0].b;
+    *(u16*)(VIDEO_REG + 0x70) = screen_window[1].l;
+    *(u16*)(VIDEO_REG + 0x72) = screen_window[1].t;
+    *(u16*)(VIDEO_REG + 0x74) = screen_window[1].r;
+    *(u16*)(VIDEO_REG + 0x76) = screen_window[1].b;
     ctrl = screen_disp_ctrl;
     if (Monitor_Flip) {
         ctrl |= 24;
     }
     *(u16*)(VIDEO_REG + 0x80) = ctrl;
-    win = screen_window[0];
-    *(u16*)SS_REG = win[0];
+    *(u16*)SS_REG = screen_window[0].l;
     *(u16*)(SS_REG + 0x2) = screen_disp_reg_tbl[screen_mode][0];
     *(u16*)(SS_REG + 0x4) = screen_disp_reg_tbl[screen_mode][1];
     *(u16*)(SS_REG + 0x6) = screen_disp_reg_tbl[screen_mode][2];
     *(u16*)(SS_REG + 0x8) = screen_disp_reg_tbl[screen_mode][3];
-    win1 = win + 4;
-    t = win[3];
+    t = screen_window[0].b;
     *(u16*)(SS_REG + 0xA) = t;
     *(u16*)(SS_REG + 0xC) = t >> 8;
-    *(u16*)(SS_REG + 0x12) = win1[0];
-    t = win1[1];
+    t = screen_window[1].l;
+    *(u16*)(SS_REG + 0x12) = t;
+    t = screen_window[1].t;
     *(u16*)(SS_REG + 0x14) = t;
     *(u16*)(SS_REG + 0x16) = t >> 8;
-    t = win1[2] + 2;
+    t = screen_window[1].r;
+    t += 2;
     *(u16*)(SS_REG + 0x18) = t;
     *(u16*)(SS_REG + 0x1A) = t >> 8;
-    t = win1[3];
+    t = screen_window[1].b;
     *(u16*)(SS_REG + 0x1C) = t;
     *(u16*)(SS_REG + 0x1E) = t >> 8;
     t = screen_disp_ctrl & 7;

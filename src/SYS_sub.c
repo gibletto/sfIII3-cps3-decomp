@@ -504,13 +504,12 @@ s32 insert_ranking_cpu_grade(s16 PL_id) {
 s32 insert_ranking_grade(s16 PL_id) {
     s16 i;
     s16 j;
-    RANK_DATA *rp;
     for (i = 0; i < 5; i++) {
         if (!Check_Grade_Score(PL_id, i)) {
             continue;
         }
-        for (j = 3, rp = Ranking_Data; j >= i; j--) {
-            rp[j + 15 + 1] = rp[j + 15];
+        for (j = 3; j >= i; j--) {
+            Ranking_Data[j + 15 + 1] = Ranking_Data[j + 15];
         }
         Ranking_Data[i + 15] = Present_Data[PL_id];
         return i;

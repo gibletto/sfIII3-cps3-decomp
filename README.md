@@ -46,7 +46,7 @@ and loads it over the ROM files.
 
 ## Compiler
 
-The compiler is SHC 5.0 Release 26 with thirty-seven changes, each one a rule the arcade's own compiler visibly follows
+The compiler is SHC 5.0 Release 26 with thirty-eight changes, each one a rule the arcade's own compiler visibly follows
 throughout the ROM but Release 26 doesn't:
 
 - a switch case is tested with `bt case` / `bra default` (Release 26 folds it into `bf default`), and a jump whose
@@ -84,6 +84,9 @@ throughout the ROM but Release 26 doesn't:
   a pre-decrement store), so `*--p = x` is `mov.l r1,@-r4` only while `p` is used again;
 - a `char` cast of a loop counter's multiple, `(char)(i * 6)`, still counts as a multiple of the counter, so the
   value steps by 6 on each pass instead of being multiplied again (a cast to `short` is still recomputed, as in the arcade);
+- a structure copied in a loop that counts down, `a[i] = a[i - 1]`, is copied first and its pointers are stepped
+  after the copy (Release 26 makes the destination a pre-decrement access, which a block move can't use, so the
+  pointer starts one element further on and is stepped before each copy);
 - in the files compiled without optimization, a load or store of a local variable counts as 4 bytes, not 6, when
   the compiler decides where a literal pool goes, so those pools come later;
 - a `for` or `while` loop is entered by a jump to its test at the bottom (Release 26, asked for speed, puts a copy
@@ -149,14 +152,15 @@ throughout the ROM but Release 26 doesn't:
 
 The four changed stages (`shcmdl.exe`, `shcgen.exe`, `shcpep.exe` and `shcasm.exe`) are rebuilt from a C
 decompilation of the originals (source: https://github.com/gibletto/shc-5r26-decomp-sf3), and each rule is a
-setting in that source (thirty-nine settings for the thirty-seven rules: the switch rule and the return rule have two each). With every rule off they give the same output as Release 26. Setting `SWITCH_ARCADE_BRANCH`,
+setting in that source (thirty-nine settings for the thirty-eight rules: the switch rule and the return rule have two each, and the `char` cast rule and the structure copy rule share `MDL_IV`). With every rule off they give the same output as Release 26. Setting `SWITCH_ARCADE_BRANCH`,
 `SWITCH_ARCADE_JUMP`, `XJUMP_OFF`, `PEP_R0_FORGET`, `SLOT_NO_STACK`, `PEP_NO_THREAD`, `GEN_TST_R0`, `GEN_MUL_L`,
 `MDL_ARG_CONST`, `MDL_CAST_CSE`, `MDL_ARG_CAST`, `MDL_GCSE`, `ASM_MULWAIT`, `GEN_CHAIN_JUMP`, `GEN_CHAIN_SCRATCH_R0`, `GEN_NARROW_CONST`, `GEN_OR_INDEX_EARLY`, `PEP_AUTOINC`, `MDL_IV`, `GEN_POOL_MOVLOC`, `MDL_LOOP_INV`, `GEN_RELOAD`, `GEN_EVICT_ORDER`, `MDL_CAST_MUL`, `MDL_MUL_CONST`, `PEP_RET_R0`, `GEN_MEM_INDEX`, `GEN_R0VAR`, `MDL_IMM_REG`, `MDL_MASK_AND`, `MDL_IV_BASE`, `MDL_IV_TEMP`, `GEN_JUMP_TEMP`, `MDL_TEST_REPLACE`, `MDL_MUL_ONE`, `MDL_TEMP_EXPR`, `PEP_CASE_WORD`, `PEP_RET_MAC` and `ASM_SPECREG` to 0 gives Release 26's behaviour back. The
 original files are in `bin/original`.
 
-With the changes, 9,936 of the 10,066 C routines compile to the arcade's instructions (3,807 with the original
-Release 26), and 9,920 to its exact bytes (1,910). Over 254 Fightcade replays compared with the original ROM,
-all 254 keep identical game state throughout (218 before) and identical slowdown (214).
+With the changes, 9,959 of the 10,066 C routines compile to the arcade's instructions (3,808 with the original
+Release 26), and 9,947 to its exact bytes (1,909). Fightcade replays are kept as a sanity check and were last run
+on the build of 14 October 2026: of 254 replays compared with the original ROM, all 254 kept identical game state
+throughout (218 before) and identical slowdown (214).
 
 ## Fightcade replays
 

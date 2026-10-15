@@ -102,7 +102,7 @@ s32 effect_G8_init(void) {
         if ((ix = pull_effect_work(4)) == -1) {
             return -1;
         }
-        ewk = (WORK_Other*)frw[ix];
+        ewk = (WORK_Other*)((u32)frw + (ix << 11));
         ewk->wu.id = 168;
         ewk->wu.be_flag = 1;
         ewk->wu.type = i;

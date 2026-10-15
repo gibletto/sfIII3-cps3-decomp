@@ -226,7 +226,6 @@ shc src\ta_sub2.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nort
 if errorlevel 1 goto fail
 shc src\tate00.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -section=const=CTBL -object=obj\tate00.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
-shc src\bg_sub.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\bg_sub.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail
 shc src\bg_sub_2.c -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include -optimize=1 -speed -object=obj\bg_sub_2.obj >obj\shc.log 2>&1
 if errorlevel 1 goto fail

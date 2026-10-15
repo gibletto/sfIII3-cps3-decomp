@@ -684,7 +684,7 @@ typedef struct {
     s8 stage;
     s8 area;
     s8 compel_flag;     /* random 0-3 layout variant */
-    s8 compel_on[1];    /* forced-position mode on */
+    s8 compel_on;       /* forced-position mode on */
     s32 scroll_cg_adr;
     s32 ake_cg_adr;
     s16 scno;
@@ -1664,6 +1664,14 @@ typedef struct {
     s16 mask;
     u16 zoom;
 } SCROLL_WINDOW;
+
+/* screen window rectangle: left, top, right, bottom */
+typedef struct {
+    s16 l;
+    s16 t;
+    s16 r;
+    s16 b;
+} SCREEN_WINDOW;
 
 typedef struct {
     u16 slot;

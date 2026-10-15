@@ -119,6 +119,7 @@ void Ranking_00_2nd(void) {
             break;
         }
         effect_67_init(0, bg_w.bgw[0].xy[0].disp.pos - 136, bg_w.bgw[0].xy[1].disp.pos + 60, 180, Char_Index, 10, 6, 1);
+    rank_pos:;
         Rank_Pos_X = bg_w.bgw[0].xy[0].disp.pos - 72;
         Rank_Pos_Y = bg_w.bgw[0].xy[1].disp.pos + 120;
         Rank_Pos_X += 16;

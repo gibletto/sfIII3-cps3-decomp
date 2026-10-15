@@ -29,7 +29,6 @@
 #include "ta_sub2.h"
 #include "tate00.h"
 #include "ta_sub.h"
-#include "sys_config.h"
 #include "sys_config_2.h"
 #include "sys_config_3.h"
 #include "bg_sub_2.h"
@@ -62,6 +61,18 @@
 #include "aboutspr.h"
 #include "bg000.h"
 #include "fighter.h"
+
+s32 polygon2d_submit_line();
+s32 simmram_block_alloc_10(s32 blocks, s32 kind);
+u32 simmram_big_page_alloc_40(s32 kind);
+u32 simmram_slot_addr(s16 no);
+u32 simmram_slot_to_offset(s16 handle);
+s32 sprite_list_setup();
+void scrn_attr_set(s16 n, u16 attr, s16 bits);
+void scrn_map_set_now(u16 n, u32 p);
+void scrn_map_set(u16 n, u32 p);
+#define SUZI_W  ((SUZI_CALC*)suzi_calc_w)
+#define SUZI_W0 (&suzi_calc_w[0])
 
 
 
@@ -390,10 +401,10 @@ void suzi_line_clear(s16 bg_num) {
 
 /* provisional name */
 void suzi_line_calc(s16 bg_num) {
-    BGW* bgw;
     s32* line;
     u16* dst;
     u16 top;
+    s16 pos;
     s16 dist;
     s16 i;
     if (bg_stop) {
@@ -402,53 +413,144 @@ void suzi_line_calc(s16 bg_num) {
     if (bg_app_stop) {
         return;
     }
-    bgw = &bg_w.bgw[bg_num];
     if (bg_w.chase_flag & 0xF) {
-        dist = bgw->chase_xy[0].disp.pos;
+        pos = bg_w.bgw[bg_num].chase_xy[0].disp.pos;
     } else {
-        dist = bgw->wxy[0].disp.pos;
+        pos = bg_w.bgw[bg_num].wxy[0].disp.pos;
     }
-    if (dist == bgw->old_pos_x) {
+    if (bg_w.bgw[bg_num].old_pos_x == pos) {
         return;
     }
-    dist -= bgw->old_pos_x;
-    line = (s32*)suzi_line_buf;
+    dist = pos;
+    dist -= bg_w.bgw[bg_num].old_pos_x;
     if (dist < 0) {
-        suzi_calc_w.step = bg_w.bgw[bg_num].zuubun * -dist;
+        dist = -dist;
+        suzi_calc_w->step = bg_w.bgw[bg_num].zuubun * dist;
         dst = bg_w.bgw[bg_num].start_suzi;
-        suzi_calc_w.ofs = suzi_calc_w.step * bg_w.bgw[bg_num].u_line;
+        SUZI_W0->ofs = SUZI_W0->step * bg_w.bgw[bg_num].u_line;
+        line = (s32*)suzi_line_buf;
         for (i = 0; i < bg_w.bgw[bg_num].u_line; i++) {
-            *line += suzi_calc_w.ofs;
-            suzi_calc_w.ofs -= suzi_calc_w.step;
+            *line += suzi_calc_w->ofs;
+            SUZI_W->ofs -= SUZI_W->step;
             *dst = *(u16*)line;
             line++;
             dst = dst + 2;
         }
-        suzi_calc_w.ofs = 0;
+        suzi_calc_w->ofs = 0;
         for (i = 0; i < bg_w.bgw[bg_num].d_line; i++) {
-            *line -= suzi_calc_w.ofs;
-            suzi_calc_w.ofs += suzi_calc_w.step;
+            *line -= suzi_calc_w->ofs;
+            SUZI_W->ofs += SUZI_W->step;
             *dst = *(u16*)line;
             line++;
-            dst += 2;
+            dst = dst + 2;
         }
     } else {
-        suzi_calc_w.step = bg_w.bgw[bg_num].zuubun * dist;
+        suzi_calc_w->step = bg_w.bgw[bg_num].zuubun * dist;
         dst = bg_w.bgw[bg_num].start_suzi;
-        suzi_calc_w.ofs = suzi_calc_w.step * bg_w.bgw[bg_num].u_line;
+        SUZI_W0->ofs = SUZI_W0->step * bg_w.bgw[bg_num].u_line;
+        line = (s32*)suzi_line_buf;
         for (i = 0; i < bg_w.bgw[bg_num].u_line; i++) {
-            *line -= suzi_calc_w.ofs;
-            suzi_calc_w.ofs -= suzi_calc_w.step;
+            *line -= suzi_calc_w->ofs;
+            SUZI_W->ofs -= SUZI_W->step;
+            *dst = *(u16*)line;
+            line++;
+            dst = dst + 2;
+        }
+        suzi_calc_w->ofs = 0;
+        for (i = 0; i < bg_w.bgw[bg_num].d_line; i++) {
+            *line += suzi_calc_w->ofs;
+            SUZI_W->ofs += SUZI_W->step;
+            *dst = *(u16*)line;
+            line++;
+            dst = dst + 2;
+        }
+    }
+    top = suzi_line_buf[0];
+    dst = (u16*)((u8*)bg_w.bgw[bg_num].suzi_adrs + 2048);
+    for (i = 0; i < bg_w.bgw[bg_num].no_suzi_line - 512; i++) {
+        *dst = top;
+        dst = dst + 2;
+    }
+}
+
+
+
+/* provisional name */
+void suzi_line_calc_fill(s16 bg_num) {
+    s32* line;
+    u16* dst;
+    u16 top;
+    s16 pos;
+    s16 dist;
+    s16 count;
+    s16 i;
+    if (bg_stop) {
+        return;
+    }
+    if (bg_app_stop) {
+        return;
+    }
+    if (bg_w.chase_flag & 0xF) {
+        pos = bg_w.bgw[bg_num].chase_xy[0].disp.pos;
+    } else {
+        pos = bg_w.bgw[bg_num].wxy[0].disp.pos;
+    }
+    if (bg_w.bgw[bg_num].old_pos_x == pos) {
+        return;
+    }
+    dist = pos;
+    dist -= bg_w.bgw[bg_num].old_pos_x;
+    if (dist < 0) {
+        dist = -dist;
+        suzi_calc_w->step = bg_w.bgw[bg_num].zuubun * dist;
+        dst = bg_w.bgw[bg_num].start_suzi;
+        SUZI_W0->ofs = SUZI_W0->step * bg_w.bgw[bg_num].u_line;
+        line = (s32*)suzi_line_buf;
+        for (i = 0; i < bg_w.bgw[bg_num].u_line; i++) {
+            *line += suzi_calc_w->ofs;
+            SUZI_W->ofs -= SUZI_W->step;
+            *dst = *(u16*)line;
+            line++;
+            dst = dst + 2;
+        }
+        suzi_calc_w->ofs = 0;
+        for (i = 0; i < bg_w.bgw[bg_num].d_line; i++) {
+            *line -= suzi_calc_w->ofs;
+            SUZI_W->ofs += SUZI_W->step;
+            *dst = *(u16*)line;
+            line++;
+            dst = dst + 2;
+        }
+        line--;
+        count = 41 - bg_w.bgw[bg_num].d_line;
+        for (i = 0; i < count; i++) {
+            *dst = *(u16*)line;
+            dst = dst + 2;
+        }
+    } else {
+        suzi_calc_w->step = bg_w.bgw[bg_num].zuubun * dist;
+        dst = bg_w.bgw[bg_num].start_suzi;
+        SUZI_W0->ofs = SUZI_W0->step * bg_w.bgw[bg_num].u_line;
+        line = (s32*)suzi_line_buf;
+        for (i = 0; i < bg_w.bgw[bg_num].u_line; i++) {
+            *line -= suzi_calc_w->ofs;
+            SUZI_W->ofs -= SUZI_W->step;
+            *dst = *(u16*)line;
+            line++;
+            dst = dst + 2;
+        }
+        suzi_calc_w->ofs = 0;
+        for (i = 0; i < bg_w.bgw[bg_num].d_line; i++) {
+            *line += suzi_calc_w->ofs;
+            SUZI_W->ofs += SUZI_W->step;
             *dst = *(u16*)line;
             line++;
             dst += 2;
         }
-        suzi_calc_w.ofs = 0;
-        for (i = 0; i < bg_w.bgw[bg_num].d_line; i++) {
-            *line += suzi_calc_w.ofs;
-            suzi_calc_w.ofs += suzi_calc_w.step;
+        line--;
+        count = 41 - bg_w.bgw[bg_num].d_line;
+        for (i = 0; i < count; i++) {
             *dst = *(u16*)line;
-            line++;
             dst += 2;
         }
     }
@@ -460,106 +562,12 @@ void suzi_line_calc(s16 bg_num) {
     }
 }
 
-
-
-/* provisional name */
-void suzi_line_calc_fill(s16 bg_num) {
-    BGW* bgw;
-    SUZI_CALC* calc;
-    s32* line;
-    s32* first_line;
-    u16* dst;
-    u16 top;
-    s16 dist;
-    s16 count;
-    s16 i;
-    if (bg_stop) {
-        return;
-    }
-    if (bg_app_stop) {
-        return;
-    }
-    bgw = &bg_w.bgw[bg_num];
-    if (bg_w.chase_flag & 0xF) {
-        dist = bgw->chase_xy[0].disp.pos;
-    } else {
-        dist = bgw->wxy[0].disp.pos;
-    }
-    if (bgw->old_pos_x == dist) {
-        return;
-    }
-    dist -= bgw->old_pos_x;
-    line = first_line = (s32*)suzi_line_buf;
-    if (dist < 0) {
-        dist = -dist;
-        suzi_calc_w.step = bg_w.bgw[bg_num].zuubun * dist;
-        dst = bg_w.bgw[bg_num].start_suzi;
-        suzi_calc_w.ofs = suzi_calc_w.step * bg_w.bgw[bg_num].u_line;
-        for (i = 0; i < bg_w.bgw[bg_num].u_line; i++) {
-            *line += suzi_calc_w.ofs;
-            calc = &suzi_calc_w;
-            calc->ofs -= calc->step;
-            *dst = *(u16*)line;
-            line++;
-            dst = dst + 2;
-        }
-        suzi_calc_w.ofs = 0;
-        for (i = 0; i < bg_w.bgw[bg_num].d_line; i++) {
-            *line -= suzi_calc_w.ofs;
-            calc = &suzi_calc_w;
-            calc->ofs += calc->step;
-            *dst = *(u16*)line;
-            line++;
-            dst += 2;
-        }
-        line--;
-        count = 41 - bg_w.bgw[bg_num].d_line;
-        for (i = 0; i < count; i++) {
-            *dst = *(u16*)line;
-            dst += 2;
-        }
-    } else {
-        suzi_calc_w.step = bg_w.bgw[bg_num].zuubun * dist;
-        dst = bg_w.bgw[bg_num].start_suzi;
-        suzi_calc_w.ofs = suzi_calc_w.step * bg_w.bgw[bg_num].u_line;
-        for (i = 0; i < bg_w.bgw[bg_num].u_line; i++) {
-            *line -= suzi_calc_w.ofs;
-            calc = &suzi_calc_w;
-            calc->ofs -= calc->step;
-            *dst = *(u16*)line;
-            line++;
-            dst += 2;
-        }
-        suzi_calc_w.ofs = 0;
-        for (i = 0; i < bg_w.bgw[bg_num].d_line; i++) {
-            *line += suzi_calc_w.ofs;
-            calc = &suzi_calc_w;
-            calc->ofs += calc->step;
-            *dst = *(u16*)line;
-            line++;
-            dst += 2;
-        }
-        line--;
-        count = 41 - bg_w.bgw[bg_num].d_line;
-        for (i = 0; i < count; i++) {
-            *dst = *(u16*)line;
-            dst = dst + 2;
-        }
-    }
-    top = *(u16*)first_line;
-    dst = (u16*)((u8*)bg_w.bgw[bg_num].suzi_adrs + 2048);
-    for (i = 0; i < bg_w.bgw[bg_num].no_suzi_line - 512; i++) {
-        *dst = top;
-        dst += 2;
-    }
-}
-
 /* provisional name */
 void suzi_line_calc_flat(s16 bg_num) {
-    BGW* bgw;
     s32* line;
     u16* dst;
-    s32 top;
+    u16 top;
+    s16 pos;
     s16 dist;
     s16 count;
     s16 i;
@@ -569,24 +577,25 @@ void suzi_line_calc_flat(s16 bg_num) {
     if (bg_app_stop) {
         return;
     }
-    bgw = &bg_w.bgw[bg_num];
     if (bg_w.chase_flag & 0xF) {
-        dist = bgw->chase_xy[0].disp.pos;
+        pos = bg_w.bgw[bg_num].chase_xy[0].disp.pos;
     } else {
-        dist = bgw->wxy[0].disp.pos;
+        pos = bg_w.bgw[bg_num].wxy[0].disp.pos;
     }
-    if (dist == bgw->old_pos_x) {
+    if (bg_w.bgw[bg_num].old_pos_x == pos) {
         return;
     }
-    dist -= bgw->old_pos_x;
-    line = (s32*)suzi_line_buf;
+    dist = pos;
+    dist -= bg_w.bgw[bg_num].old_pos_x;
     if (dist < 0) {
-        suzi_calc_w.step = bg_w.bgw[bg_num].zuubun * -dist;
+        dist = -dist;
+        suzi_calc_w->step = bg_w.bgw[bg_num].zuubun * dist;
         dst = bg_w.bgw[bg_num].start_suzi;
-        suzi_calc_w.ofs = suzi_calc_w.step * bg_w.bgw[bg_num].u_line;
+        SUZI_W0->ofs = SUZI_W0->step * bg_w.bgw[bg_num].u_line;
+        line = (s32*)suzi_line_buf;
         for (i = 0; i < bg_w.bgw[bg_num].u_line; i++) {
-            *line += suzi_calc_w.ofs;
-            suzi_calc_w.ofs -= suzi_calc_w.step;
+            *line += suzi_calc_w->ofs;
+            SUZI_W->ofs -= SUZI_W->step;
             *dst = *(u16*)line;
             line++;
             dst += 2;
@@ -598,12 +607,13 @@ void suzi_line_calc_flat(s16 bg_num) {
             dst += 2;
         }
     } else {
-        suzi_calc_w.step = bg_w.bgw[bg_num].zuubun * dist;
+        suzi_calc_w->step = bg_w.bgw[bg_num].zuubun * dist;
         dst = bg_w.bgw[bg_num].start_suzi;
-        suzi_calc_w.ofs = suzi_calc_w.step * bg_w.bgw[bg_num].u_line;
+        SUZI_W0->ofs = SUZI_W0->step * bg_w.bgw[bg_num].u_line;
+        line = (s32*)suzi_line_buf;
         for (i = 0; i < bg_w.bgw[bg_num].u_line; i++) {
-            *line -= suzi_calc_w.ofs;
-            suzi_calc_w.ofs -= suzi_calc_w.step;
+            *line -= suzi_calc_w->ofs;
+            SUZI_W->ofs -= SUZI_W->step;
             *dst = *(u16*)line;
             line++;
             dst += 2;
@@ -635,10 +645,10 @@ void suzi_line_calc_flat(s16 bg_num) {
 
 /* provisional name */
 void suzi_line_calc2(s16 bg_num) {
-    BGW* bgw;
     s32* line;
     u16* dst;
     u16* src;
+    s16 pos;
     s16 dist;
     s16 i;
     if (bg_stop) {
@@ -647,39 +657,40 @@ void suzi_line_calc2(s16 bg_num) {
     if (bg_app_stop) {
         return;
     }
-    bgw = &bg_w.bgw[bg_num];
     if (bg_w.chase_flag & 0xF) {
-        dist = bgw->chase_xy[0].disp.pos;
+        pos = bg_w.bgw[bg_num].chase_xy[0].disp.pos;
     } else {
-        dist = bgw->wxy[0].disp.pos;
+        pos = bg_w.bgw[bg_num].wxy[0].disp.pos;
     }
-    if (dist == bgw->old_pos_x) {
+    if (bg_w.bgw[bg_num].old_pos_x == pos) {
         return;
     }
-    dist -= bgw->old_pos_x;
-    line = (s32*)suzi_line_buf;
+    dist = pos;
+    dist -= bg_w.bgw[bg_num].old_pos_x;
     if (dist < 0) {
         dist = -dist;
-        suzi_calc_w.step = bg_w.bgw[bg_num].zuubun * dist;
+        suzi_calc_w->step = bg_w.bgw[bg_num].zuubun * dist;
         dst = bg_w.bgw[bg_num].start_suzi;
-        suzi_calc_w.ofs = suzi_calc_w.step * bg_w.bgw[bg_num].u_line;
+        SUZI_W0->ofs = SUZI_W0->step * bg_w.bgw[bg_num].u_line;
+        line = (s32*)suzi_line_buf;
         for (i = 0; i < bg_w.bgw[bg_num].u_line; i++) {
-            *line += suzi_calc_w.ofs;
-            suzi_calc_w.ofs -= suzi_calc_w.step;
+            *line += suzi_calc_w->ofs;
+            SUZI_W->ofs -= SUZI_W->step;
             *dst = *(u16*)line;
             line++;
-            dst += 2;
+            dst = dst + 2;
         }
     } else {
-        suzi_calc_w.step = bg_w.bgw[bg_num].zuubun * dist;
-        suzi_calc_w.ofs = suzi_calc_w.step * bg_w.bgw[bg_num].u_line;
+        suzi_calc_w->step = bg_w.bgw[bg_num].zuubun * dist;
         dst = bg_w.bgw[bg_num].start_suzi;
+        SUZI_W0->ofs = SUZI_W0->step * bg_w.bgw[bg_num].u_line;
+        line = (s32*)suzi_line_buf;
         for (i = 0; i < bg_w.bgw[bg_num].u_line; i++) {
-            *line -= suzi_calc_w.ofs;
-            suzi_calc_w.ofs -= suzi_calc_w.step;
+            *line -= suzi_calc_w->ofs;
+            SUZI_W->ofs -= SUZI_W->step;
             *dst = *(u16*)line;
             line++;
-            dst += 2;
+            dst = dst + 2;
         }
     }
     src = bg_w.bgw[bg_num].suzi_adrs;
@@ -687,8 +698,8 @@ void suzi_line_calc2(s16 bg_num) {
     src += 1024;
     for (i = 0; i < 512; i++) {
         *dst = *src++;
-        src++;
         dst += 2;
+        src++;
     }
 }
 
@@ -1291,7 +1302,7 @@ void bg_work_clear(void) {
     bg_w.bg_routine = 0;
     bg_w.bg_r_1 = 0;
     bg_w.bg_r_2 = 0;
-    bg_w.compel_on[0] = 0;
+    bg_w.compel_on = 0;
     win_sp_flag = 0;
     bg_stop = 0;
     bg_stop2 = 0;
@@ -1317,7 +1328,7 @@ void bg_work_clear_dummy(void) {}
 /* provisional name */
 void compel_bg_init_position(void) {
     s16 i;
-    bg_w.compel_on[0] = 1;
+    bg_w.compel_on = 1;
     Zoomf_Init();
     bg_w.bg_f_x = 64;
     bg_w.old_bg_f_x = 64;
@@ -1342,7 +1353,7 @@ void compel_bg_init_position(void) {
 
 void reset_all_char_display_with_backup(void) {
     s16 i;
-    bg_w.compel_on[0] = 0;
+    bg_w.compel_on = 0;
     Zoomf_Init();
     bg_w.bg_f_x = 64;
     bg_w.old_bg_f_x = 64;
@@ -1615,7 +1626,8 @@ void bg_initialize(void) {
         bg_w.bgw[i].bg_address = (u16 *)simmram_slot_addr(bg_w.bgw[i].bg_adrs_c_no);
         scrn_map_set_now(i, (u32)bg_w.bgw[i].bg_address);
         scrn_map_set(i, (u32)bg_w.bgw[i].bg_address);
-        sprite_list_setup((s16)i, 1, (s16*)bg_map_tbl[bg_w.bg_index][i]);
+        ptr = (const s16*)bg_map_tbl[bg_w.bg_index][i];
+        sprite_list_setup(i, 1, ptr);
     }
     bg_scr_write();
     bg_w.scr_stop = 0;
@@ -1712,13 +1724,17 @@ void akebono_initialize(void) {
 
 void bg_etc_write(s16 type) {
     u8 mode;
+    const BG_GFX* gfx;
+    s32 n;
+    const s16* ptr;
     s16 i;
     s16 j;
     Family_Init();
     clear_scroll_layer_state_and_mask();
     scrn_pos_clear();
     Zoomf_Init();
-    scr_cg_c_no = ((s16)simmram_block_alloc_10(((etc_bg_gfx_tbl[type].size << 4) + 0xFFF) / 0x1000, 1));
+    n = ((etc_bg_gfx_tbl[type].size << 4) + 0xFFF) / 0x1000;
+    scr_cg_c_no = ((s16)simmram_block_alloc_10(n, 1));
     bg_w.scroll_cg_adr = simmram_slot_to_offset(scr_cg_c_no);
     bg_w.scno = etc_bg_scno_tbl[type];
     switch (type) {
@@ -1733,9 +1749,10 @@ void bg_etc_write(s16 type) {
         load_any_color(etc_bg_color_tbl[type]);
         break;
     }
-    polygon2d_submit_line(etc_bg_gfx_tbl[type].prep, 0, 0, 3);
-    mode = etc_bg_gfx_tbl[type].mode;
-    polygon2d_submit_line(etc_bg_gfx_tbl[type].src, bg_w.scroll_cg_adr, etc_bg_gfx_tbl[type].size, mode);
+    gfx = &etc_bg_gfx_tbl[type];
+    polygon2d_submit_line(gfx->prep, 0, 0, 3);
+    mode = gfx->mode;
+    polygon2d_submit_line(gfx->src, bg_w.scroll_cg_adr, gfx->size, mode);
     bg_w.pos_offset = Game_setting.mode ? 0xF8 : 0xC0;
     for (i = 0; i < 7; i++) {
         bg_w.bgw[i].pos_x_work = 0;
@@ -1758,7 +1775,8 @@ void bg_etc_write(s16 type) {
         bg_w.bgw[i].bg_address = (u16 *)simmram_slot_addr(bg_w.bgw[i].bg_adrs_c_no);
         scrn_map_set_now(i, (u32)bg_w.bgw[i].bg_address);
         scrn_map_set(i, (u32)bg_w.bgw[i].bg_address);
-        sprite_list_setup((s16)i, 1, (s16*)bg_map_tbl2[type][i]);
+        ptr = (const s16*)bg_map_tbl2[type][i];
+        sprite_list_setup(i, 1, ptr);
     }
     bg_etc_scr_write(type);
     bg_w.scr_stop = 0;

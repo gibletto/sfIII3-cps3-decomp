@@ -482,9 +482,9 @@ s16 test_cursor_off;  /* 0200DC9C */
 s16 test_font_type;  /* 0200DC9E */
 s16 test_cursor_max;  /* 0200DCA0 */
 u8 test_cursor_max_tail[2];  /* after test_cursor_max; nothing refers to it by name or address */
-s16 screen_window[2][4];  /* 0200DCA4 */
+SCREEN_WINDOW screen_window[2];  /* 0200DCA4 */
 SCROLL_WINDOW zoom_frame[2];  /* 0200DCB4 */
-s16 screen_disp_ctrl;  /* 0200DCC4 */
+volatile s16 screen_disp_ctrl;  /* 0200DCC4 */
 s16 screen_base_x;  /* 0200DCC6 */
 s16 screen_base_y;  /* 0200DCC8 */
 s32 screen_mode;  /* 0200DCCC */
@@ -492,8 +492,8 @@ u8 zoom_req_flag;  /* 0200DCD0 */
 u8 window_req_flag;  /* 0200DCD1 */
 s16 zoom_adj_x;  /* 0200DCD2 */
 s16 zoom_adj_y;  /* 0200DCD4 */
-s16 flip_obj_ofs_x;  /* 0200DCD6 */
-s16 flip_obj_ofs_y;  /* 0200DCD8 */
+u16 flip_obj_ofs_x;  /* 0200DCD6 */
+u16 flip_obj_ofs_y;  /* 0200DCD8 */
 s16 flip_crt_ofs_x;  /* 0200DCDA */
 s16 flip_crt_ofs_y;  /* 0200DCDC */
 s16 flip_scr_ofs_x;  /* 0200DCDE */
@@ -1148,8 +1148,7 @@ BG bg_w;  /* 02026BAC */
 s16 scr_cg_c_no;  /* 02026FF0 */
 s16 ake_cg_c_no;  /* 02026FF2 */
 BGW * bgw_ptr;  /* 02026FF4 */
-SUZI_CALC suzi_calc_w;  /* 02026FF8 */
-u8 suzi_calc_w_tail[8];  /* after suzi_calc_w; nothing refers to it by name or address */
+SUZI_CALC suzi_calc_w[2];  /* 02026FF8 */
 Ideal_W ideal_w;  /* 02027008 */
 u16 suzi_line_buf[2048];  /* 02027010 */
 MVXY bg_mvxy;  /* 02028010 */

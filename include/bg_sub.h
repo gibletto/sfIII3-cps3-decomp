@@ -3,11 +3,6 @@
 
 #include "structs.h"
 
-void bg_debug_scroll_layers(void);
-void bg_layers_off(void);
-void bg_free_work_blocks(void);
-void bg_test_stage_select(void);
-s32 bg_debug_stage_change(void);
 void Bg_Family_Set_2(void);
 void Bg_Family_Set_2_appoint(s32 num_of_bg);
 void Bg_Family_Set_appoint(s32 num_of_bg);

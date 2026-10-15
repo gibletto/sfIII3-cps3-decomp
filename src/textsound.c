@@ -297,7 +297,7 @@ void tilemap_print_hex_block(u16 x, u16 y, u16 attr, u32 value, u16 digits, u16 
         if ((u32)p > (u32)((u16*)(SS_RAM + 0x3FFF))) {
             p = (TEXT_CELL*)((u16*)SS_RAM);
         }
-        mask >>= 4;
+        mask = mask >> 4;
     }
 }
 
@@ -360,7 +360,7 @@ void tilemap_print_hex(u16 x, u16 y, u16 attr, u32 value, u16 digits, u16 mode) 
         if ((u32)p > (u32)((u16*)(SS_RAM + 0x3FFF))) {
             p = (TEXT_CELL*)((u16*)SS_RAM);
         }
-        mask >>= 4;
+        mask = mask >> 4;
     }
 }
 
@@ -411,6 +411,7 @@ void tilemap_print_script_seq(u16 x, u16 y, u16 pal, const TMSCRIPT* scr) {
     u32 col;
     if (scr->kind == 0) {
         line = (TMLINE*)scr->data;
+    line_top:;
         dst = (u16*)((u8*)((u16*)SS_RAM) + (line->x << 2) + (line->y << 8));
         if (ox + oy != 0) {
             dst = (u16*)((u8*)dst + ofs);
@@ -462,12 +463,13 @@ void tilemap_print_script_seq(u16 x, u16 y, u16 pal, const TMSCRIPT* scr) {
                             dst = ((u16*)SS_RAM);
                         }
                     }
-                    dst += 0x80 - w * 2;
+                    dst += 0x80 - (w << 1);
                     if (dst > ((u16*)(SS_RAM + 0x3FFF))) {
                         dst = ((u16*)SS_RAM);
                     }
                 }
-                dst += w * 2 - h * 0x80;
+                dst += w << 1;
+                dst -= h << 7;
                 blk++;
                 if (dst > ((u16*)(SS_RAM + 0x3FFF))) {
                     dst = ((u16*)SS_RAM);
@@ -483,17 +485,20 @@ void tilemap_print_script_seq(u16 x, u16 y, u16 pal, const TMSCRIPT* scr) {
 void tilemap_print_string(u16 x, u16 y, u16 attr, const TM_STRING* sc) {
     u16* p;
     const u8* s;
+    s32 oy;
+    s32 ox;
     p = (u16*)(SS_RAM + (sc->x << 2) + (sc->y << 8));
-    if (x + y) {
-        p += x * 2 + y * 128;
+    oy = y;
+    ox = x;
+    if (ox + oy != 0) {
+        p += ox * 2 + oy * 128;
     }
-    s = (const u8*)sc->str;
-    while (*s) {
+    for (s = (const u8*)sc->str; *s != 0; s++) {
         if (*s == 10) {
             sc++;
             p = (u16*)(SS_RAM + (sc->x << 2) + (sc->y << 8));
-            if (x + y) {
-                p += x * 2 + y * 128;
+            if (ox + oy != 0) {
+                p += ox * 2 + oy * 128;
             }
             s = (const u8*)sc->str;
         }
@@ -507,7 +512,6 @@ void tilemap_print_string(u16 x, u16 y, u16 attr, const TM_STRING* sc) {
         if (p > (u16*)(SS_RAM + 0x3FFF)) {
             p = (u16*)SS_RAM;
         }
-        s++;
     }
 }
 

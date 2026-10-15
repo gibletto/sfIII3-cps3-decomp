@@ -50,20 +50,15 @@ void metamor_color_copy(s16 page) {
     u16* src;
     u16* src2;
     s16 i;
-    u16* base;
-    base = (u16*)COLOR_RAM;
-    dst = base;
-    dst += (page == 1) * 0x400;
-    dst += 0x40;
+    dst = (u16*)((page == 1) * 0x800 + COLOR_RAM);
+    dst = (u16*)((u8*)dst + 0x80);
     dst2 = dst + 0x200;
-    src = base + (!page) * 0x400;
-    src += 0x40;
+    src = (u16*)((page == 0) * 0x800 + COLOR_RAM);
+    src = (u16*)((u8*)src + 0x80);
     src2 = src + 0x200;
     for (i = 0; i < 0x180; i++) {
-        *dst = *src++;
-        dst++;
-        *dst2 = *src2++;
-        dst2++;
+        *dst++ = *src++;
+        *dst2++ = *src2++;
     }
 }
 
