@@ -164,7 +164,7 @@ original files are in `bin/original`.
 
 With the changes, 9,982 of the 10,066 C routines compile to the arcade's instructions (3,811 with the original
 Release 26), and 9,974 to its exact bytes (1,912). Fightcade replays are kept as a sanity check and were last run
-on the build of 14 October 2026: of 254 replays compared with the original ROM, all 254 kept identical game state
+on the build of 16 October 2026: of 254 replays compared with the original ROM, all 254 kept identical game state
 throughout (218 before) and identical slowdown (214).
 
 ## Fightcade replays
