@@ -85,16 +85,7 @@ void effect_14_move(WORK_Other* ewk) {
             ewk->wu.routine_no[0]++;
             break;
         }
-        if (obr_disp_off_check()) {
-            break;
-        }
-        if (EXE_flag) {
-            break;
-        }
-        if (Game_pause) {
-            break;
-        }
-        if (EXE_obroll) {
+        if (obr_disp_off_check() || EXE_flag || Game_pause || EXE_obroll) {
             break;
         }
         put = 0;
@@ -135,7 +126,6 @@ void effect_14_move(WORK_Other* ewk) {
 
 /* provisional name */
 static void effect_14_write(WORK_Other* ewk) {
-    E14_WORK* w = &eff14_work[ewk->wu.rl_flag];
     s8* pattern;
     u16* dst;
     u32 row;
@@ -144,27 +134,44 @@ static void effect_14_write(WORK_Other* ewk) {
     s8 cols;
     s16 i;
     s16 j;
-    rows = w->rows;
-    pattern = w->pattern;
-    cols = w->cols;
-    dst = (u16*)w->dst;
-    col = w->col;
-    row = w->row;
-    for (i = 0; i < rows; i++) {
-        for (j = 0; j < cols; j++) {
-            if (*pattern == 1) {
-                dst++;
-                *dst = (*dst & 0xFE00) | col;
-                dst++;
-                pattern++;
-            } else if (*(volatile s8*)pattern == 2) {
-                pattern++;
-                j = cols;
-            } else {
-                pattern++;
-                dst += 2;
-            }
+    u16 mask;
+    u16 v;
+    (void)((E14_WORK*)0)->rows;
+    rows = eff14_work[ewk->wu.rl_flag].rows;
+    mask = 0xFE00;
+    cols = eff14_work[ewk->wu.rl_flag].cols;
+    pattern = eff14_work[ewk->wu.rl_flag].pattern;
+    dst = (u16*)eff14_work[ewk->wu.rl_flag].dst;
+    col = eff14_work[ewk->wu.rl_flag].col;
+    row = eff14_work[ewk->wu.rl_flag].row;
+    (void)ewk->wu.be_flag;
+    i = 0;
+    goto test;
+loop:
+    for (j = 0; j < cols; j++) {
+        if (*pattern == 1) {
+            dst++;
+            v = *dst;
+            v &= mask;
+            v |= col;
+            *dst = v;
+            dst++;
+            pattern++;
+        } else if (*pattern == 2) {
+            j = cols;
+            pattern++;
+        } else {
+            dst += 2;
+            pattern++;
         }
-        dst = (u16*)(row += 0x100);
     }
+    (void)ewk->wu.be_flag;
+    row = (u32)(dst = (u16*)(row + 0x100));
+    (void)((E14_WORK*)row)->rows;
+    i++;
+test:
+    if (i < rows) {
+        goto loop;
+    }
+    (void)ewk->wu.be_flag;
 }

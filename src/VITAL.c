@@ -122,6 +122,7 @@ s32 vital_control(s8 pl) {
             tilemap_put_cell(BAR_WORD(vit_bar[pl].xpos, vital_col_ix), 2, BAR_WORD(vit_bar[pl].attr, vit_bar[pl].colnum), 0x122);
         }
         vital_col_ix++;
+        vit_bar[pl].cred;
     }
     vit_bar[pl].ored = vit_bar[pl].cred;
     vit_bar[pl].cred--;

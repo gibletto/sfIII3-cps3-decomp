@@ -186,12 +186,14 @@ void tilemap_rect_fill(u16 x, u16 y, u16 w, u16 h, u16 attr, u16 code) {
     s32 cw;
     s32 row;
     s32 col;
+    u16 at;
     if (attr == 0xFFFF && code == 0xFFFF) {
         return;
     }
     p = (u16*)((u32)((u16*)SS_RAM) + (x << 2) + (y << 8));
     cw = w;
-    skip = 0x80 - w * 2;
+    skip = 0x80 - cw * 2;
+    (void)((TEXT_CELL*)cw)->code;
     if (attr != 0xFFFF && code == 0xFFFF) {
         for (row = 0; row < h; row++) {
             for (col = 0; col < cw; col++) {
@@ -202,6 +204,7 @@ void tilemap_rect_fill(u16 x, u16 y, u16 w, u16 h, u16 attr, u16 code) {
                 }
             }
             p += skip;
+            (void)((TEXT_CELL*)0)->code;
             if (p > ((u16*)(SS_RAM + 0x3FFF))) {
                 p = ((u16*)SS_RAM);
             }
@@ -211,6 +214,7 @@ void tilemap_rect_fill(u16 x, u16 y, u16 w, u16 h, u16 attr, u16 code) {
             for (col = 0; col < cw; col++) {
                 p[0] = code;
                 p[1] = (p[1] & 0xFFFE) | ((code & 0x100) >> 8);
+                (void)((TEXT_CELL*)col)->code;
                 p += 2;
                 if (p > ((u16*)(SS_RAM + 0x3FFF))) {
                     p = ((u16*)SS_RAM);
@@ -222,11 +226,12 @@ void tilemap_rect_fill(u16 x, u16 y, u16 w, u16 h, u16 attr, u16 code) {
             }
         }
     } else {
-        attr = attr | ((code & 0x100) >> 8);
-        for (row = 0; row < h; row++) {
+        row = 0;
+        at = attr | ((code & 0x100) >> 8);
+        for (; row < h; row++) {
             for (col = 0; col < cw; col++) {
                 p[0] = code;
-                p[1] = attr;
+                p[1] = at;
                 p += 2;
                 if (p > ((u16*)(SS_RAM + 0x3FFF))) {
                     p = ((u16*)SS_RAM);
@@ -485,11 +490,12 @@ void tilemap_print_script_seq(u16 x, u16 y, u16 pal, const TMSCRIPT* scr) {
 void tilemap_print_string(u16 x, u16 y, u16 attr, const TM_STRING* sc) {
     u16* p;
     const u8* s;
-    s32 oy;
     s32 ox;
+    s32 oy;
     p = (u16*)(SS_RAM + (sc->x << 2) + (sc->y << 8));
-    oy = y;
     ox = x;
+    (void)((TEXT_CELL*)ox)->code;
+    oy = y;
     if (ox + oy != 0) {
         p += ox * 2 + oy * 128;
     }

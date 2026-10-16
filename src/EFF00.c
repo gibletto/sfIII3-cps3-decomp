@@ -51,13 +51,17 @@ void effect_00_move(WORK_Other_JUDGE* judge) {
             ewk->wu.spr.gfx_cells = jdb2[15];
         } else if (ewk->master_work_id != 1) {
             if (!(dip & 0x2000)) {
+                goto out;
             } else goto jump;
         } else if (dip & 0x1000) {
         jump:
             dip = (dip >> 8) & 0xF;
             ewk->ja_disp_bit = jdb[dip];
             ewk->wu.spr.gfx_cells = jdb2[dip];
+            ewk->wu.routine_no[dip];
+            ewk->wu.old_rno[dip];
         }
+    out:
         renewal_table_address(ewk, ewk->my_master);
         renewal_table_data(ewk);
         sort_push_request2((WORK_Other*)ewk);

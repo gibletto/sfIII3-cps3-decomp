@@ -69,14 +69,14 @@ void bbbs_com_execute(PLW* wk) {
             }
             if (bbbs_table[bbbs_type][Bonus_Stage_Level][Bonus_Stage_Tix].kosuu) {
                 Bonus_Stage_RNO[1] = 2;
-                break;
             } else {
                 Bonus_Stage_RNO[1] = 6;
-                break;
             }
+            break;
         case 1:
             if (--wk->wu.dir_timer <= 0) {
                 Bonus_Stage_RNO[1] = 2;
+                break;
             }
             break;
         case 2:

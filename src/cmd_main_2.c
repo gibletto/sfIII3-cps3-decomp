@@ -1774,8 +1774,12 @@ void waza_slot_clear_all_p(PLW* pl) {
 
 /* provisional name */
 s32 sw_to_lvbt(s32 value) {
-    s32 lvbt = value & 127;
-    s32 btn = ((u16)value << 1) & 0x700;
+    s32 lvbt;
+    s32 btn;
+    lvbt = value & 127;
+    goto next;
+next:
+    btn = ((u16)value << 1) & 0x700;
     btn |= lvbt;
     return btn;
 }

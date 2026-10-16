@@ -81,6 +81,7 @@ s32 effect_F2_init(void) {
     s16 ix;
     s16 i;
     const s16* data_ptr = &efff2_data_tbl1[0][0];
+    ((WORK*)end_char_table)->id;
     for (i = 0; i < 10; i++) {
         if ((ix = pull_effect_work(4)) == -1) {
             return -1;
@@ -105,5 +106,4 @@ s32 effect_F2_init(void) {
         ewk->wu.char_index = 1;
         ewk->wu.old_rno[1] = 1;
     }
-    return 0;
 }

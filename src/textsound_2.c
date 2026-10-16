@@ -285,11 +285,10 @@ s32 sound_seq_start(u16 code, s16 ramp) {
         }
         return;
     }
-    ch = hdr & 15;
-    if ((*p & 0x7F) < (SE_VOICE(ch).priority_flags & 0x7F) && !(SE_VOICE(ch).status & 0x80)) {
+    if (ch = hdr & 15, (*p & 0x7F) < (SE_VOICE(ch).priority_flags & 0x7F) && !(SE_VOICE(ch).status & 0x80)) {
         return;
     }
-    SE_VOICE(ch).cursor = p;
+    se_voice[ch].cursor = p;
     se_voice[ch].patch = (SNDPATCH*)(*snd_bank_tbl + *(u16*)*snd_bank_tbl);
     se_voice[ch].sample = &snd_sample_tbl[se_voice[ch].patch->sample_index];
     se_voice[ch].envelope_level = 0;
@@ -308,7 +307,7 @@ s32 sound_seq_start(u16 code, s16 ramp) {
     se_voice[ch].coarse_pitch_bend = 0;
     se_voice[ch].fine_pitch_control = 0x40;
     se_voice[ch].priority_flags = *p | 0x80;
-    SE_VOICE(ch).pan_override = 0x40;
+    se_voice[ch].pan_override = 0x40;
     rec = &se_pan_ramp[ch];
     if (ramp != -1) {
         rec->current = se_ramp_req.current;

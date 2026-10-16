@@ -46,7 +46,7 @@ and loads it over the ROM files.
 
 ## Compiler
 
-The compiler is SHC 5.0 Release 26 with thirty-eight changes, each one a rule the arcade's own compiler visibly follows
+The compiler is SHC 5.0 Release 26 with thirty-nine changes, each one a rule the arcade's own compiler visibly follows
 throughout the ROM but Release 26 doesn't:
 
 - a switch case is tested with `bt case` / `bra default` (Release 26 folds it into `bf default`), and a jump whose
@@ -112,6 +112,11 @@ throughout the ROM but Release 26 doesn't:
   bit-xor (`p->flag ^ 1`) count when a constant is weighed for a register, and read the register that holds it (Release 26 passes over every use that
   can be an immediate); so do a constant added to or subtracted from a local variable (`(ix + 1) & 1`) and the
   constant of `+=` and `-=`, while a constant added to a value just read from memory (`p->m + 1`) stays an immediate;
+- a zero compared unsigned with a converted value (`i < n` with `unsigned i` and `int n`, in the test in front of
+  a loop where `i` is still 0) is not an immediate: the SH has no unsigned compare with an immediate, so the zero
+  is kept in a register and the compare reads that register (`cmp/hs r10,r4`); Release 26 goes by the type of the
+  comparison itself, which is always a signed `int`, takes the zero for an immediate and copies its register
+  first (`mov r4,r3`, `cmp/hs r10,r3`). Only one routine shows this, `strstr`;
 - a mask by 0xff, `x & 0xFF` or `v &= 0xFF`, stays an `and` (Release 26 turns it into a cast, so the code
   extends with `extu.b`); `extu.b` comes from a cast or an `unsigned char`;
 - in a loop, the address of a member reached through a pointer, `p->a`, is not taken as fixed when stepping
@@ -152,13 +157,13 @@ throughout the ROM but Release 26 doesn't:
 
 The four changed stages (`shcmdl.exe`, `shcgen.exe`, `shcpep.exe` and `shcasm.exe`) are rebuilt from a C
 decompilation of the originals (source: https://github.com/gibletto/shc-5r26-decomp-sf3), and each rule is a
-setting in that source (thirty-nine settings for the thirty-eight rules: the switch rule and the return rule have two each, and the `char` cast rule and the structure copy rule share `MDL_IV`). With every rule off they give the same output as Release 26. Setting `SWITCH_ARCADE_BRANCH`,
+setting in that source (thirty-nine settings for the thirty-nine rules: the switch rule and the return rule have two each, the `char` cast rule and the structure copy rule share `MDL_IV`, and the unsigned zero rule shares `MDL_IMM_REG` with the rule for constants that are added, masked or xored). With every rule off they give the same output as Release 26. Setting `SWITCH_ARCADE_BRANCH`,
 `SWITCH_ARCADE_JUMP`, `XJUMP_OFF`, `PEP_R0_FORGET`, `SLOT_NO_STACK`, `PEP_NO_THREAD`, `GEN_TST_R0`, `GEN_MUL_L`,
 `MDL_ARG_CONST`, `MDL_CAST_CSE`, `MDL_ARG_CAST`, `MDL_GCSE`, `ASM_MULWAIT`, `GEN_CHAIN_JUMP`, `GEN_CHAIN_SCRATCH_R0`, `GEN_NARROW_CONST`, `GEN_OR_INDEX_EARLY`, `PEP_AUTOINC`, `MDL_IV`, `GEN_POOL_MOVLOC`, `MDL_LOOP_INV`, `GEN_RELOAD`, `GEN_EVICT_ORDER`, `MDL_CAST_MUL`, `MDL_MUL_CONST`, `PEP_RET_R0`, `GEN_MEM_INDEX`, `GEN_R0VAR`, `MDL_IMM_REG`, `MDL_MASK_AND`, `MDL_IV_BASE`, `MDL_IV_TEMP`, `GEN_JUMP_TEMP`, `MDL_TEST_REPLACE`, `MDL_MUL_ONE`, `MDL_TEMP_EXPR`, `PEP_CASE_WORD`, `PEP_RET_MAC` and `ASM_SPECREG` to 0 gives Release 26's behaviour back. The
 original files are in `bin/original`.
 
-With the changes, 9,959 of the 10,066 C routines compile to the arcade's instructions (3,808 with the original
-Release 26), and 9,947 to its exact bytes (1,909). Fightcade replays are kept as a sanity check and were last run
+With the changes, 9,982 of the 10,066 C routines compile to the arcade's instructions (3,811 with the original
+Release 26), and 9,974 to its exact bytes (1,912). Fightcade replays are kept as a sanity check and were last run
 on the build of 14 October 2026: of 254 replays compared with the original ROM, all 254 kept identical game state
 throughout (218 before) and identical slowdown (214).
 

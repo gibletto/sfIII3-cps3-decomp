@@ -100,6 +100,10 @@ void crow_fuss_move(WORK_Other* ewk) {
         } else {
             add_x_sub(ewk);
             add_y_sub(ewk);
+            (void)((WORK_Other*)add_x_sub)->wu.be_flag;
+            (void)((WORK_Other*)add_y_sub)->wu.be_flag;
+            (void)((WORK_Other*)char_move)->wu.be_flag;
+            (void)((WORK_Other*)set_char_move_init)->wu.be_flag;
         }
         break;
     case 3:
@@ -139,6 +143,7 @@ void crow_fuss_move(WORK_Other* ewk) {
         } else {
             add_x_sub(ewk);
             add_y_sub(ewk);
+            (void)((WORK_Other*)add_x_sub)->wu.be_flag;
         }
         break;
     case 7:

@@ -199,6 +199,8 @@ wait_dm:
         }
         goto four;
     } else if (ds->wu.xyz[1].disp.pos > 0) {
+        goto sky;
+    sky:
         switch (defense_sky(as, ds, gddir)) {
         case 0:
             goto blocking;
@@ -208,6 +210,7 @@ wait_dm:
     three:
         as->wu.hf.hit.player = 2;
         ds->wu.routine_no[2] = as->wu.att.reaction;
+        goto react;
     } else {
         switch (defense_ground(as, ds, gddir)) {
         case 0:
@@ -219,6 +222,7 @@ wait_dm:
         as->wu.hf.hit.player = 1;
         ds->wu.routine_no[2] = as->wu.att.reaction;
     }
+react:
     switch ((ds->wu.routine_no[1] == 1 && ds->wu.cg_type == 10) + (((as->wu.rl_flag + ds->wu.rl_flag) & 1) * 2)) {
     case 0:
     case 3:
