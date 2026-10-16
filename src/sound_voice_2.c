@@ -411,7 +411,7 @@ void sound_reg_write_verify(s16 *reg, u16 value)
 {
     *reg = value;
     while (1) {
-        if (*(volatile u16 *)reg == value) {
+        if (value == (u16)*reg) {
             break;
         } else {
             *reg = value;

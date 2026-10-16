@@ -1157,6 +1157,8 @@ void sc_vram_to_ram(void) {
 
 /* provisional name */
 void end_waku_write(s8 mode) {
+    (void)((WORK*)0)[mode].be_flag;
+    (void)((PLW*)0)[mode].wu.be_flag;
     switch (mode) {
     case 0:
         ToneDown(16);

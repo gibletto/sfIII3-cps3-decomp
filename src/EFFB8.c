@@ -25,11 +25,10 @@
 #pragma inline(b8_sel_1_by_8)
 
 void effect_B8_move(WORK_Other_CONN* ewk) {
-    const EFFB8_MESSAGE* mes;
     const CONN* conn_data;
     const u16* chr_data;
-    s32 variant;
     u16 sw;
+    u16 chr;
     s16 num;
     s16 i;
     switch (ewk->wu.routine_no[0]) {
@@ -41,24 +40,25 @@ void effect_B8_move(WORK_Other_CONN* ewk) {
         ewk->wu.routine_no[0]++;
         switch (Country) {
         case 1:
-            mes = &effB8_mes_jp[ewk->master_player][mes_already];
+            conn_data = effB8_mes_jp[ewk->master_player][mes_already].conn;
+            chr_data = effB8_mes_jp[ewk->master_player][mes_already].chr;
             break;
         case 4:
-            mes = &effB8_mes_en[ewk->master_player][mes_already];
+            conn_data = effB8_mes_en[ewk->master_player][mes_already].conn;
+            chr_data = effB8_mes_en[ewk->master_player][mes_already].chr;
             break;
         default:
-            mes = &effB8_mes_jp[ewk->master_player][mes_already];
+            conn_data = effB8_mes_jp[ewk->master_player][mes_already].conn;
+            chr_data = effB8_mes_jp[ewk->master_player][mes_already].chr;
+            break;
         }
-        conn_data = mes->conn;
-        chr_data = mes->chr;
-        variant = Language;
         switch (Country) {
         case 1:
             conn_data = effB8_mes_jp[ewk->master_player][mes_already].conn;
             chr_data = effB8_mes_jp[ewk->master_player][mes_already].chr;
             break;
         case 3:
-            switch (variant) {
+            switch (Language) {
             case 0:
                 conn_data = effB8_mes_en[ewk->master_player][mes_already].conn;
                 chr_data = effB8_mes_en[ewk->master_player][mes_already].chr;
@@ -82,7 +82,7 @@ void effect_B8_move(WORK_Other_CONN* ewk) {
             chr_data = effB8_mes_pt[ewk->master_player][mes_already].chr;
             break;
         case 7:
-            switch (variant) {
+            switch (Language) {
             case 0:
                 conn_data = effB8_mes_en[ewk->master_player][mes_already].conn;
                 chr_data = effB8_mes_en[ewk->master_player][mes_already].chr;
@@ -98,7 +98,13 @@ void effect_B8_move(WORK_Other_CONN* ewk) {
             }
             break;
         case 2:
+            conn_data = effB8_mes_en[ewk->master_player][mes_already].conn;
+            chr_data = effB8_mes_en[ewk->master_player][mes_already].chr;
+            break;
         case 4:
+            conn_data = effB8_mes_en[ewk->master_player][mes_already].conn;
+            chr_data = effB8_mes_en[ewk->master_player][mes_already].chr;
+            break;
         default:
             conn_data = effB8_mes_en[ewk->master_player][mes_already].conn;
             chr_data = effB8_mes_en[ewk->master_player][mes_already].chr;
@@ -150,7 +156,7 @@ void effect_B8_move(WORK_Other_CONN* ewk) {
             break;
         }
         if (exsw_2 & 4) {
-            sw = p1sw_0 & ~p1sw_1;
+            sw = (u16)(p1sw_0 & ~p1sw_1);
             if (sw & 0x380) {
                 ewk->wu.routine_no[0]++;
                 test_in = 1;
@@ -190,6 +196,7 @@ void effect_B8_move(WORK_Other_CONN* ewk) {
         break;
     case 3:
         ewk->wu.routine_no[0]++;
+        (void)((WORK_Other*)0)->wu.be_flag;
         break;
     default:
         if (test_in == 0) {
@@ -204,11 +211,16 @@ void effect_B8_move(WORK_Other_CONN* ewk) {
                 chr_data = effB8_mes_jp[ewk->master_player][mes_already].chr;
                 break;
             }
-            num = chr_data[0];
+            num = *chr_data;
+            chr_data++;
             for (i = 0; i < num; i++) {
-                purge_char_gfx(chr_data[i + 1]);
+                chr = *chr_data;
+                purge_char_gfx(chr);
+                chr_data++;
             }
+            (void)ewk->conn[i].nx;
         }
+        (void)ewk->wu.be_flag;
         all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
         break;

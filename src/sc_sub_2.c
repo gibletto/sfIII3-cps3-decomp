@@ -66,11 +66,10 @@ void fade_cont_init(void) {
 
 s32 fade_cont_main(void)
 {
-    register u16 j;
+    u16 j;
     s8 i;
     s8 done;
-    register FADE_LAYER* fl;
-    register s16 st;
+    FADE_LAYER* fl;
 
     switch (fade_cont_rno) {
     case 0:
@@ -81,10 +80,10 @@ s32 fade_cont_main(void)
                     fade_layer[i].v20 = fade_layer[i].v22;
                     fl = &fade_layer[i];
                     for (j = 0; j < fl->v8; j++) {
-                        st = fl->step;
-                        load_any_color_req(*(u32 *)fl->adrs, fl->v10 + st, fl->v12 + st, fl->v14 + st);
+                        load_any_color_req(*(u32 *)fl->adrs, fl->v10 + fl->step, fl->v12 + fl->step, fl->v14 + fl->step);
                         fl->adrs += 4;
                     }
+                    (void)fl->on;
                     if (fade_layer[i].v10 == fade_layer[i].v16) {
                         fade_layer[i].on = 0;
                     } else {
@@ -96,17 +95,21 @@ s32 fade_cont_main(void)
                         case 0:
                         case 2:
                             if (fade_layer[i].v10 < fade_layer[i].v16) {
-                                fade_layer[i].v10 = fade_layer[i].v16;
-                                fade_layer[i].v12 = fade_layer[i].v10;
-                                fade_layer[i].v14 = fade_layer[i].v10;
+                                (void)fl->on;
+                                fl = &fade_layer[i];
+                                fl->v10 = fl->v16;
+                                fl->v12 = fl->v10;
+                                fl->v14 = fl->v10;
                             }
                             break;
                         case 1:
                         case 3:
-                            if (fade_layer[i].v10 > fade_layer[i].v16) {
-                                fade_layer[i].v10 = fade_layer[i].v16;
-                                fade_layer[i].v12 = fade_layer[i].v10;
-                                fade_layer[i].v14 = fade_layer[i].v10;
+                            fl = &fade_layer[i];
+                            if (fl->v10 > fl->v16) {
+                                fl = &fade_layer[i];
+                                fl->v10 = fl->v16;
+                                fl->v12 = fl->v10;
+                                fl->v14 = fl->v10;
                             }
                             break;
                         }

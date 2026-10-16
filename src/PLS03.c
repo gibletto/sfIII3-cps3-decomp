@@ -478,46 +478,47 @@ ground:
         }
         if ((wk->cp->btix[i] & 0xFF) == 0x80) {
             continue;
-        }
-        if (!wk->cp->waza_flag[i]) {
+        } else if (!wk->cp->waza_flag[i]) {
             continue;
-        }
-        cusw = conpane[wk->cp->btix[i] & 0xFF];
-        for (j = 3; j >= 0; j--) {
-            exsw = cusw & cmdshot_conv_tbl[wk->cp->exdt[i][j]];
-            if (exsw != cmdshot_conv_tbl[wk->cp->exdt[i][j] & 0xF]) {
-                continue;
-            }
-            if (j == 3) {
-                if (!(wk->cp->btix[i] & 0x600)) {
+        } else {
+            cusw = conpane[wk->cp->btix[i] & 0xFF];
+            for (j = 3; j >= 0; j--) {
+                exsw = cusw & cmdshot_conv_tbl[wk->cp->exdt[i][j]];
+                if (exsw != cmdshot_conv_tbl[wk->cp->exdt[i][j] & 0xF]) {
                     continue;
                 }
-                if (wk->metamorphose) {
-                    if (wk->cp->btix[i] & 0x400) {
+                if (j == 3) {
+                    if (!(wk->cp->btix[i] & 0x600)) {
                         continue;
                     }
-                } else {
-                    if (wk->sa->mp == -1) {
-                        continue;
-                    }
-                    if (wk->sa->ok == -1) {
-                        continue;
-                    }
-                    if (wk->cp->btix[i] & 0x400) {
-                        if (wk->sa->ex != 1) {
+                    if (wk->metamorphose) {
+                        if (wk->cp->btix[i] & 0x400) {
                             continue;
                         }
-                        wk->sa->ex = -1;
+                    } else {
+                        if (wk->sa->mp == -1) {
+                            continue;
+                        }
+                        if (wk->sa->ok == -1) {
+                            continue;
+                        }
+                        if (wk->cp->btix[i] & 0x400) {
+                            if (wk->sa->ex != 1) {
+                                continue;
+                            } else {
+                                wk->sa->ex = -1;
+                            }
+                        }
                     }
                 }
+                setup_comm_back(&wk->wu);
+                wk->as = &asstbl_sa_ground[wk->player_number][i - 20][j].as;
+                wk->wu.cg_cancel &= 0x40;
+                hissatsu_setup_union(wk, wk->cp->waza_r[i][j]);
+                waza_flag_clear_only_1(wk->wu.id, i);
+                grade_add_command_waza(wk->wu.id);
+                return 1;
             }
-            setup_comm_back(&wk->wu);
-            wk->as = &asstbl_sa_ground[wk->player_number][i - 20][j].as;
-            wk->wu.cg_cancel &= 0x40;
-            hissatsu_setup_union(wk, wk->cp->waza_r[i][j]);
-            waza_flag_clear_only_1(wk->wu.id, i);
-            grade_add_command_waza(wk->wu.id);
-            return 1;
         }
     }
     return 0;
@@ -550,47 +551,48 @@ air:
         if ((wk->cp->btix[i] & 0xFF) != 0x80) {
             if (!wk->cp->waza_flag[i]) {
                 continue;
-            }
-            cusw = conpane[wk->cp->btix[i] & 0xFF];
-            for (j = 3; j >= 0; j--) {
-                exsw = cusw & cmdshot_conv_tbl[wk->cp->exdt[i][j]];
-                if (exsw != cmdshot_conv_tbl[wk->cp->exdt[i][j] & 0xF]) {
-                    continue;
-                }
-                if (j == 3) {
-                    if (!(wk->cp->btix[i] & 0x600)) {
+            } else {
+                cusw = conpane[wk->cp->btix[i] & 0xFF];
+                for (j = 3; j >= 0; j--) {
+                    exsw = cusw & cmdshot_conv_tbl[wk->cp->exdt[i][j]];
+                    if (exsw != cmdshot_conv_tbl[wk->cp->exdt[i][j] & 0xF]) {
                         continue;
                     }
-                    if (wk->metamorphose) {
-                        if (wk->cp->btix[i] & 0x400) {
+                    if (j == 3) {
+                        if (!(wk->cp->btix[i] & 0x600)) {
                             continue;
                         }
-                    } else {
-                        if (wk->sa->mp == -1) {
-                            continue;
-                        }
-                        if (wk->sa->ok == -1) {
-                            continue;
-                        }
-                        if (wk->cp->btix[i] & 0x400) {
-                            if (wk->sa->ex != 1) {
+                        if (wk->metamorphose) {
+                            if (wk->cp->btix[i] & 0x400) {
                                 continue;
                             }
-                            wk->sa->ex = -1;
+                        } else {
+                            if (wk->sa->mp == -1) {
+                                continue;
+                            }
+                            if (wk->sa->ok == -1) {
+                                continue;
+                            }
+                            if (wk->cp->btix[i] & 0x400) {
+                                if (wk->sa->ex != 1) {
+                                    continue;
+                                } else {
+                                    wk->sa->ex = -1;
+                                }
+                            }
                         }
                     }
+                    setup_comm_back(&wk->wu);
+                    wk->as = &asstbl_sa_air[wk->player_number][i - 38][j].as;
+                    wk->wu.cg_cancel &= 0x40;
+                    hissatsu_setup_union(wk, wk->cp->waza_r[i][j]);
+                    waza_flag_clear_only_1(wk->wu.id, i);
+                    grade_add_command_waza(wk->wu.id);
+                    return 1;
                 }
-                setup_comm_back(&wk->wu);
-                wk->as = &asstbl_sa_air[wk->player_number][i - 38][j].as;
-                wk->wu.cg_cancel &= 0x40;
-                hissatsu_setup_union(wk, wk->cp->waza_r[i][j]);
-                waza_flag_clear_only_1(wk->wu.id, i);
-                grade_add_command_waza(wk->wu.id);
-                return 1;
             }
             continue;
-        }
-        if (wk->cp->waza_flag[i]) {
+        } else if (wk->cp->waza_flag[i]) {
             setup_comm_back(&wk->wu);
             wk->as = &asstbl_sa_air[wk->player_number][i - 38][0].as;
             wk->wu.cg_cancel &= 0x40;

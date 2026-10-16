@@ -1320,6 +1320,11 @@ s16 PL_id;
 {
     s16 *timer;
     if (E_No0 == 6 || E_No0 == 8 || E_No0 == 7) {
+        tilemap_print_string_attr;
+        msg_blank;
+        Text_Page_Y;
+        Entry_Mes_X[PL_id];
+        F_Timer[PL_id];
         tilemap_print_string_attr(Entry_Mes_X[PL_id] + DE_X[Entry_Mes_Wide[PL_id]], Text_Page_Y, 18,
                                   (s8*)msg_blank);
         return 0;
@@ -1370,6 +1375,7 @@ s16 PL_id;
 u16 x;
 {
     s16 *timer;
+    F_No1[PL_id];
     switch (timer = &F_Timer[PL_id], F_No1[PL_id]) {
     case 0:
         F_No1[PL_id] += 1;
@@ -1459,6 +1465,9 @@ s8 coins;
         F_No2[PL_id] += 1;
         F_No0[PL_id] = F_No1[PL_id] = 0;
         F_Timer[PL_id] = 1;
+        tilemap_print_string_attr;
+        Text_Page_Y;
+        Entry_Mes_X[PL_id];
         tilemap_print_string_attr(Entry_Mes_X[PL_id] + DE_X[Entry_Mes_Wide[PL_id]], Text_Page_Y, 18,
                                   (s8*)msg_blank);
         if (E_No0 == 6 && PL_id == LOSER) {

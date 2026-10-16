@@ -3283,6 +3283,7 @@ void debug_hit_box_edit(void) {
         body = dbg_copy_buf.h_bod;
         hand = dbg_copy_buf.h_han;
         attack = dbg_copy_buf.h_att;
+        (void)((WORK*)attack)->id;
         switch (dbg_judge_ewk->curr_ja) {
         case 0:
             box = (s16*)body;
@@ -3337,6 +3338,7 @@ void debug_hit_box_edit(void) {
         body = dbg_look_buf.h_bod;
         hand = dbg_look_buf.h_han;
         attack = dbg_look_buf.h_att;
+        (void)((WORK*)body)->id;
         switch (dbg_judge_ewk->curr_ja) {
         case 0:
             box = (s16*)body;
@@ -3382,6 +3384,7 @@ void debug_hit_box_edit(void) {
             break;
         case 14:
             box = (s16*)dbg_look_buf.h_hos;
+        hos2:;
             break;
         }
         dbg_edit_box = box;
@@ -3424,6 +3427,7 @@ void debug_hit_box_edit(void) {
         body = dbg_edit_buf.h_bod;
         hand = dbg_edit_buf.h_han;
         attack = dbg_edit_buf.h_att;
+        (void)((WORK*)attack)->id;
         switch (dbg_judge_ewk->curr_ja) {
         case 0:
             box = (s16*)body;
@@ -3469,6 +3473,7 @@ void debug_hit_box_edit(void) {
             break;
         case 14:
             box = (s16*)dbg_edit_buf.h_hos;
+        hos3:;
             break;
         }
         dbg_edit_box = box;
@@ -4242,8 +4247,7 @@ void debug_parts_input(void) {
     if ((Debug_Command = debug_priority_swap(~dbg_p1sw_1 & dbg_p1sw_0))) {
         return;
     }
-    sw = dbg_p2sw_0;
-    sw = sw & ~dbg_p2sw_1;
+    sw = dbg_p2sw_0 & ~dbg_p2sw_1;
     if (sw & 0x10) {
         dbg_parts_sel++;
         dbg_parts_sel &= 3;
@@ -4290,6 +4294,7 @@ void debug_parts_input(void) {
             dbg_parts_plw[dbg_parts_sel].wu.dir_step++;
         }
     }
+    (void)((WORK*)dbg_p2sw_0)->id;
 }
 
 
@@ -4474,26 +4479,26 @@ void debug_slot_char_load(void) {
             dbg_pl->wu.my_col_code = 0x4007;
             break;
         case 0xda:
-            dbg_pl->wu.hit_ix_table = ef13_hit_ix_table;
-            dbg_pl->wu.body_adrs = ef13_body_box;
-            dbg_pl->wu.hand_adrs = ef13_hand_box;
-            dbg_pl->wu.attack_adrs = ef13_att_box;
-            dbg_pl->wu.catch_adrs = ef13_cat_box;
-            dbg_pl->wu.caught_adrs = ef13_cau_box;
-            dbg_pl->wu.hosei_adrs = ef13_hos_box;
-            dbg_pl->wu.att_ix_table = ef13_catt_table;
+            dbg_pl->wu.hit_ix_table = (HIT_IX*)&ef13_hit_ix_table;
+            dbg_pl->wu.body_adrs = (BODY_BOX*)&ef13_body_box;
+            dbg_pl->wu.hand_adrs = (HAND_BOX*)&ef13_hand_box;
+            dbg_pl->wu.attack_adrs = (ATTACK_BOX*)&ef13_att_box;
+            dbg_pl->wu.catch_adrs = (CATCH_BOX*)&ef13_cat_box;
+            dbg_pl->wu.caught_adrs = (CAUGHT_BOX*)&ef13_cau_box;
+            dbg_pl->wu.hosei_adrs = (HOSEI_BOX*)&ef13_hos_box;
+            dbg_pl->wu.att_ix_table = (ATTACK_ATTR*)&ef13_catt_table;
             load_any_color(dbg_obj_color_tbl[dbg_slot->sel[0] - 0xd7]);
             dbg_pl->wu.my_col_code = 0x4020;
             break;
         case 0xdb:
-            dbg_pl->wu.hit_ix_table = ef13_hit_ix_table;
-            dbg_pl->wu.body_adrs = ef13_body_box;
-            dbg_pl->wu.hand_adrs = ef13_hand_box;
-            dbg_pl->wu.attack_adrs = ef13_att_box;
-            dbg_pl->wu.catch_adrs = ef13_cat_box;
-            dbg_pl->wu.caught_adrs = ef13_cau_box;
-            dbg_pl->wu.hosei_adrs = ef13_hos_box;
-            dbg_pl->wu.att_ix_table = ef13_catt_table;
+            dbg_pl->wu.hit_ix_table = (HIT_IX*)&ef13_hit_ix_table;
+            dbg_pl->wu.body_adrs = (BODY_BOX*)&ef13_body_box;
+            dbg_pl->wu.hand_adrs = (HAND_BOX*)&ef13_hand_box;
+            dbg_pl->wu.attack_adrs = (ATTACK_BOX*)&ef13_att_box;
+            dbg_pl->wu.catch_adrs = (CATCH_BOX*)&ef13_cat_box;
+            dbg_pl->wu.caught_adrs = (CAUGHT_BOX*)&ef13_cau_box;
+            dbg_pl->wu.hosei_adrs = (HOSEI_BOX*)&ef13_hos_box;
+            dbg_pl->wu.att_ix_table = (ATTACK_ATTR*)&ef13_catt_table;
             load_any_color(dbg_obj_color_tbl[dbg_slot->sel[0] - 0xd7]);
             break;
         case 0xfb:
@@ -4505,6 +4510,7 @@ void debug_slot_char_load(void) {
             dbg_pl->wu.my_col_code = 0x4080;
             break;
         }
+        (void)((WORK*)-0xd7)->id;
         dbg_pl->player_number = 0x99;
         dbg_pl->wu.operator = 1;
         n = dbg_slot->sel[0] - 0xd8;
@@ -5365,6 +5371,7 @@ void debug_draw_hit_edit_info(void)
     s16 i;
     s16 num;
     HIT_IX *hit;
+    const char* str;
 
     tilemap_rect_fill(dbg_hud_x + 40, ((WORK_Other_JUDGE *)dbg_judge_ewk)->curr_ja + 12, 8, 1, 14, 0xFFFF);
     if (Debug_Box_Edit) {
@@ -5372,9 +5379,10 @@ void debug_draw_hit_edit_info(void)
     } else {
         tilemap_print_string_attr(dbg_hud_x + 40, 8, 14, dbg_free_str);
     }
+    str = dbg_copy_str;
     if (dbg_copy_done) {
         if (dbg_copy_pat == dbg_slot->sel[2] && dbg_pl->wu.char_index == dbg_copy_char) {
-            tilemap_print_string_attr(dbg_hud_x + 40, 9, 6, dbg_copy_str);
+            tilemap_print_string_attr(dbg_hud_x + 40, 9, 6, str);
         } else {
             tilemap_print_string_attr(dbg_hud_x + 40, 9, 14, dbg_copy_str);
         }

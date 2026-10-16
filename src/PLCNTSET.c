@@ -149,7 +149,8 @@ s32 effect_M8_init(WORK* oya, u8 data) {
     if (data) {
         s16 i;
         work = random_16_com();
-        if (effm8_random_tbl[work] == 0) {
+        work = effm8_random_tbl[work];
+        if (!work) {
             return 0;
         }
         if ((ix = pull_effect_work(3)) == -1) {
@@ -189,6 +190,7 @@ s32 effect_M8_init(WORK* oya, u8 data) {
         ewk->wu.kage_hy = 0;
         ewk->wu.kage_prio = 71;
         ewk->wu.kage_char = 8;
+        ewk->wu.be_flag;
         ewk->wu.old_rno[0] = 0;
         timer = effm8_timer_tbl;
         for (i = 0; i < 4; i++) {
@@ -220,7 +222,7 @@ s32 effect_M8_init(WORK* oya, u8 data) {
             ewk2->wu.xyz[1].cal = oya->xyz[1].cal;
             ewk2->wu.xyz[1].disp.pos -= 5;
             ewk2->wu.position_z = oya->my_priority;
-            ewk2->wu.position_z -= 2;
+            ewk2->wu.position_z = ewk2->wu.position_z - 2;
             ewk2->wu.my_priority = ewk2->wu.position_z;
             *ewk2->wu.char_table = etc2_char_table;
             ewk2->wu.char_index = 55;
@@ -229,7 +231,10 @@ s32 effect_M8_init(WORK* oya, u8 data) {
             ewk2->wu.kage_hy = 0;
             ewk2->wu.kage_prio = 71;
             ewk2->wu.kage_char = 8;
-            ewk2->wu.old_rno[0] = *timer++;
+            ewk2->wu.be_flag;
+            ewk2->wu.disp_flag;
+            ewk2->wu.old_rno[0] = *timer;
+            timer = timer + 1;
         }
     } else {
         if ((ix = pull_effect_work(3)) == -1) {
