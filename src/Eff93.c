@@ -30,7 +30,7 @@
 #include "bg_sub_3.h"
 #include "bg_sub_4.h"
 #include "bg_sub_5.h"
-#include "eff93.h"
+#include "Eff93.h"
 #include "cps3.h"
 
 

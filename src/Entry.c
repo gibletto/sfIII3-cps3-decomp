@@ -143,7 +143,7 @@ void task_sleep_tick(void) {
 #include "eff90.h"
 #include "eff91.h"
 #include "eff92_code.h"
-#include "eff93.h"
+#include "Eff93.h"
 #include "sys_test.h"
 #include "sys_test_2.h"
 #include "sys_test_2b.h"

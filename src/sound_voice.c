@@ -289,7 +289,6 @@ voice_tie_update:;
                     note *= 1;
                     note *= 1;
                     note *= 1;
-                    note *= 1;
                 }
                 if (patch) {
                     voice->patch = patch;

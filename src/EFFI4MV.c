@@ -19,7 +19,7 @@
 #include "ta_sub.h"
 #include "effj4.h"
 #include "effj5.h"
-#include "effj6.h"
+#include "effJ6.h"
 #include "EFFECT.h"
 #include "effect_2.h"
 #include "aboutspr.h"

@@ -11,7 +11,7 @@
 #include "romdata.h"
 #include "extern.h"
 #include "eff28.h"
-#include "eff29.h"
+#include "EFF29.h"
 #include "CHARMOVE.h"
 #include "charmove_2.h"
 #include "ta_sub.h"

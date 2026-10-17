@@ -55,7 +55,7 @@
 #include "charmove_2.h"
 #include "eff56.h"
 #include "eff57.h"
-#include "eff58.h"
+#include "EFF58.h"
 #include "sc_logo.h"
 
 

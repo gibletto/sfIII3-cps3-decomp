@@ -34,7 +34,7 @@
 #include "bg_sub_4.h"
 #include "bg_sub_5.h"
 #include "effb3.h"
-#include "effb4.h"
+#include "EFFB4.h"
 
 
 

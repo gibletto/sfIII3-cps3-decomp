@@ -180,7 +180,7 @@ void Se_Let(WORK_Other* ewk, u16 Code) {
     s32 se;
     s32 uid;
     s16 pos;
-    volatile s16 code = Code;
+    s16 code = Code;
 
     if (Demo_Sound == 0 && Demo_Flag == 0) {
         return;

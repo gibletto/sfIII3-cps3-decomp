@@ -28,7 +28,7 @@
 #include "eff90.h"
 #include "eff91.h"
 #include "eff92_code.h"
-#include "eff93.h"
+#include "Eff93.h"
 #include "sys_test.h"
 #include "sys_test_2.h"
 #include "sys_test_2b.h"
@@ -1597,7 +1597,6 @@ s32 credit_display_render(s8 force) {
             } else {
                 msg = (credit_1p < 2) ? &msg_credit : &msg_credits;
                 tilemap_print_string_attr(dx[0] + 6, 23, 18, msg);
-                if (0) {}
                 tilemap_print_hex_block(DE_X[0] + 14, 23, 18, credit_1p, 1, 1);
                 if (credit_2p < 2) {
                     tilemap_print_string_attr(DE_X[0] + 32, 23, 18, &msg_credit);

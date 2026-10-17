@@ -41,8 +41,6 @@ void effect_15_move(WORK_Other* ewk) {
 
 void eff15_kemuri(WORK_Other* ewk) {
     WORK* oya_ptr;
-    (void)ewk;
-    (void)oya_ptr;
 }
 
 

@@ -21,7 +21,7 @@
 #include "charmove_2.h"
 #include "aboutspr.h"
 #include "effb3.h"
-#include "effb4.h"
+#include "EFFB4.h"
 #include "EFFECT.h"
 #include "effect_2.h"
 #include "HITCHECK.h"

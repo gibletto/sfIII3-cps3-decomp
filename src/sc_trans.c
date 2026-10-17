@@ -667,7 +667,6 @@ void sc_fill_rect(u32 x, u32 y, u16 w, u16 h, u16 code, u16 attr)
     row = 0;
     line = (u16 *)(SS_RAM + (u16)x * 4 + ((u16)y << 8));
     at = ((code & 0x100) >> 8) | attr;
-    (void)((WORK*)x)->id;
     (void)((WORK*)x)->be_flag;
     for (; row < h; row++) {
         for (col = 0; col < w; col++) {

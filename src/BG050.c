@@ -26,7 +26,7 @@
 #include "bg090.h"
 #include "effj4.h"
 #include "effj5.h"
-#include "effj6.h"
+#include "effJ6.h"
 #include "sys_config.h"
 #include "sys_config_2.h"
 #include "sys_config_3.h"
@@ -53,7 +53,7 @@
 #include "meta_col_lib.h"
 #include "meta_col_bcd.h"
 #include "ta_sub.h"
-#include "bg050.h"
+#include "BG050.h"
 
 
 
