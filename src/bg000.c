@@ -467,6 +467,8 @@ void suzi_line_calc(s16 bg_num) {
     }
     top = suzi_line_buf[0];
     dst = (u16*)((u8*)bg_w.bgw[bg_num].suzi_adrs + 2048);
+    goto fill_rest;
+fill_rest:
     for (i = 0; i < bg_w.bgw[bg_num].no_suzi_line - 512; i++) {
         *dst = top;
         dst = dst + 2;
@@ -523,9 +525,15 @@ void suzi_line_calc_fill(s16 bg_num) {
         }
         line--;
         count = 41 - bg_w.bgw[bg_num].d_line;
-        for (i = 0; i < count; i++) {
-            *dst = *(u16*)line;
-            dst = dst + 2;
+        i = 0;
+        if (count > 0) {
+            goto suzi_fill_first;
+        suzi_fill_first:;
+            do {
+                *dst = *(u16*)line;
+                dst = dst + 2;
+                i++;
+            } while (i < count);
         }
     } else {
         suzi_calc_w->step = bg_w.bgw[bg_num].zuubun * dist;
@@ -549,13 +557,23 @@ void suzi_line_calc_fill(s16 bg_num) {
         }
         line--;
         count = 41 - bg_w.bgw[bg_num].d_line;
-        for (i = 0; i < count; i++) {
-            *dst = *(u16*)line;
-            dst += 2;
+        i = 0;
+        if (count > 0) {
+            goto suzi_fill_second;
+        suzi_fill_second:;
+            do {
+                *dst = *(u16*)line;
+                dst += 2;
+                i++;
+            } while (i < count);
         }
     }
+    (void)((WORK*)suzi_line_buf)->be_flag;
     top = suzi_line_buf[0];
     dst = (u16*)((u8*)bg_w.bgw[bg_num].suzi_adrs + 2048);
+    (void)((WORK*)dst)->be_flag;
+    goto suzi_finish;
+suzi_finish:;
     for (i = 0; i < bg_w.bgw[bg_num].no_suzi_line - 512; i++) {
         *dst = top;
         dst += 2;
@@ -602,9 +620,15 @@ void suzi_line_calc_flat(s16 bg_num) {
         }
         line--;
         count = bg_w.bgw[bg_num].d_line - 1;
-        for (i = 0; i < count; i++) {
-            *dst = *(u16*)line;
-            dst += 2;
+        i = 0;
+        if (count > 0) {
+            goto suzi_flat_first;
+        suzi_flat_first:;
+            do {
+                *dst = *(u16*)line;
+                dst += 2;
+                i++;
+            } while (i < count);
         }
     } else {
         suzi_calc_w->step = bg_w.bgw[bg_num].zuubun * dist;
@@ -620,16 +644,28 @@ void suzi_line_calc_flat(s16 bg_num) {
         }
         line--;
         count = bg_w.bgw[bg_num].d_line - 1;
-        for (i = 0; i < count; i++) {
-            *dst = *(u16*)line;
-            dst += 2;
+        i = 0;
+        if (count > 0) {
+            goto suzi_flat_second;
+        suzi_flat_second:;
+            do {
+                *dst = *(u16*)line;
+                dst += 2;
+                i++;
+            } while (i < count);
         }
     }
+    (void)bg_w.chase_flag;
+    (void)bg_w.scno;
+    (void)((WORK*)suzi_line_buf)->be_flag;
     top = suzi_line_buf[0];
+    (void)((WORK*)top)->be_flag;
     dst = (u16*)((u8*)bg_w.bgw[bg_num].suzi_adrs + 2048);
+    (void)((WORK*)dst)->be_flag;
     for (i = 0; i < bg_w.bgw[bg_num].no_suzi_line - 512; i++) {
         *dst = top;
         dst += 2;
+        continue;
     }
 }
 
@@ -998,11 +1034,13 @@ void bg_cell_write(s16 bg, s32 ofs, s32 cell, u32 src, u16 u5, s16 attr) {
     u32 base;
     u16 code;
     u16* s;
+    (void)((WORK*)src)->be_flag;
+    (void)((WORK*)src)->disp_flag;
+    (void)((WORK*)src)->blink_timing;
     base = (u32)bg_w.bgw[bg].bg_address;
-    ofs += base;
+    dst = (u16*)(ofs + base);
     code = bg_w.scroll_cg_adr >> 7;
     cell = (cell << 10) + src;
-    dst = (u16*)ofs;
     s = (u16*)cell;
     blit_16x16_tile(s, code, dst, attr);
 }
@@ -1285,11 +1323,19 @@ void bg_scr_clear_all(void) {
     s32 i;
     s32 j;
     s32 k;
+
     for (i = 0; i < bg_w.scno; i++) {
         for (j = 0; j < bg_w.scno; j++) {
-            u32 dst = (u32)bg_w.bgw[(s16)i].bg_address + (j << 12);
+            s32 dst = (s32)bg_w.bgw[(s16)i].bg_address;
+            dst += j << 12;
+
             for (k = 0; k < 4; k++) {
-                blit_16x16_tile((u16*)bg_cg_src_tbl[bg_w.bg_index], bg_w.scroll_cg_adr >> 7, (u16*)(dst + k * 0x40), 0);
+                u8* addr;
+                u16* target = (u16*)(dst + k * 0x40);
+                s16 code = bg_w.scroll_cg_adr >> 7;
+                addr = (u8*)0;
+                addr += bg_cg_src_tbl[bg_w.bg_index];
+                blit_16x16_tile((u16*)addr, code, target, 0);
             }
         }
     }
@@ -1587,6 +1633,7 @@ void bg_move_common_dummy(void) {}
 void bg_initialize(void) {
     const s16* ptr;
     const BG_GFX* gfx;
+    s32 n;
     s16 i;
     Family_Init();
     clear_scroll_layer_state_and_mask();
@@ -1594,7 +1641,8 @@ void bg_initialize(void) {
     Zoomf_Init();
     bg_w.bg_index = bg_index_tbl[bg_w.stage][bg_w.area];
     bg_w.scno = bg_scno_tbl[bg_w.bg_index];
-    scr_cg_c_no = ((s16)simmram_block_alloc_10(((bg_gfx_tbl[bg_w.bg_index].size << 4) + 0xFFF) / 0x1000, 1));
+    n = ((bg_gfx_tbl[bg_w.bg_index].size << 4) + 0xFFF) / 0x1000;
+    scr_cg_c_no = ((s16)simmram_block_alloc_10(n, 1));
     bg_w.scroll_cg_adr = simmram_slot_to_offset(scr_cg_c_no);
     gfx = &bg_gfx_tbl[bg_w.bg_index];
     load_bg_color(bg_palette_no_tbl[bg_w.bg_index]);
@@ -1628,7 +1676,10 @@ void bg_initialize(void) {
         scrn_map_set(i, (u32)bg_w.bgw[i].bg_address);
         ptr = (const s16*)bg_map_tbl[bg_w.bg_index][i];
         sprite_list_setup(i, 1, ptr);
+        (void)bg_w.bgw[i].bg_adrs_c_no;
     }
+    (void)((WORK*)simmram_big_page_alloc_40)->be_flag;
+    (void)((WORK*)scrn_map_set)->be_flag;
     bg_scr_write();
     bg_w.scr_stop = 0;
     bg_w.frame_flag = 0;
@@ -1650,6 +1701,7 @@ void bg_initialize(void) {
     bg_w.quake_y_index = 0;
     bg_w.frame_deff = 64;
     bg_ofs_work[0] = bg_ofs_work[1] = bg_ofs_work[2] = 0;
+    (void)((WORK*)0xFE7F)->be_flag;
     for (i = 0; i < bg_w.scno; i++) {
         scroll_layer_mask_enable(1 << i);
         scroll_layer_mask_disable(16 << i);

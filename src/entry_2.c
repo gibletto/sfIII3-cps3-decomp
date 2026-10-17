@@ -1423,14 +1423,14 @@ s32 Flash_Please(PL_id)
 s16 PL_id;
 {
     s16 *timer;
+    s16 *step;
     if (E_No0 == 6 || E_No0 == 8) {
         return 0;
     }
-    timer = &F_Timer[PL_id];
 flash:;
-    switch (F_No3[PL_id]) {
+    switch (step = F_No3, timer = &F_Timer[PL_id], step[PL_id]) {
     case 0:
-        F_No3[PL_id] += 1;
+        step[PL_id] += 1;
         F_No1[PL_id] = 0;
         F_Timer[PL_id] = 1;
         tilemap_print_string_attr(Entry_Mes_X[PL_id] + DE_X[Entry_Mes_Wide[PL_id]], Text_Page_Y, 18, msg_blank);
@@ -1548,20 +1548,21 @@ s32 credit_display_render(s8 force) {
     s32 per;
     s8 two_coin;
     const s8* msg;
+    s16* dx;
     if ((force | chute->dropped | coin_chute2_w.dropped) == 0) {
         return 0;
     }
-    switch (per = chute->per_credit, two_coin = Two_Coin_Start, Chute_Mode) {
+    switch (per = chute->per_credit, two_coin = Two_Coin_Start, dx = DE_X, Chute_Mode) {
     case 0:
     case 1:
         switch (per) {
         case 0:
         case 1:
             if (two_coin != 0) {
-                tilemap_print_string_attr(DE_X[0] + 21, 23, 18, &msg_coins);
-                tilemap_print_hex_block(DE_X[0] + 27, 23, 18, credit_1p, 1, 1);
+                tilemap_print_string_attr(dx[0] + 21, 23, 18, &msg_coins);
+                tilemap_print_hex_block(dx[0] + 27, 23, 18, credit_1p, 1, 1);
             } else {
-                tilemap_print_string_attr(DE_X[0] + 20, 23, 18, &msg_credit);
+                tilemap_print_string_attr(dx[0] + 20, 23, 18, &msg_credit);
                 if (credit_1p >= 2) {
                     tilemap_print_string_attr(DE_X[0] + 26, 23, 18, msg_plural_s);
                 }
@@ -1569,7 +1570,7 @@ s32 credit_display_render(s8 force) {
             }
             break;
         default:
-            tilemap_print_string_attr(DE_X[0] + 18, 23, 18, &msg_credits);
+            tilemap_print_string_attr(dx[0] + 18, 23, 18, &msg_credits);
             if (credit_1p < 2) {
                 tilemap_print_string_attr(DE_X[0] + 24, 23, 18, msg_space);
             }
@@ -1589,13 +1590,14 @@ s32 credit_display_render(s8 force) {
         case 0:
         case 1:
             if (two_coin != 0) {
-                tilemap_print_string_attr(DE_X[0] + 5, 23, 18, &msg_coins);
-                tilemap_print_hex_block(DE_X[0] + 11, 23, 18, credit_1p, 1, 1);
-                tilemap_print_string_attr(DE_X[0] + 31, 23, 18, &msg_coins);
-                tilemap_print_hex_block(DE_X[0] + 37, 23, 18, credit_2p, 1, 1);
+                tilemap_print_string_attr(dx[0] + 5, 23, 18, &msg_coins);
+                tilemap_print_hex_block(dx[0] + 11, 23, 18, credit_1p, 1, 1);
+                tilemap_print_string_attr(dx[0] + 31, 23, 18, &msg_coins);
+                tilemap_print_hex_block(dx[0] + 37, 23, 18, credit_2p, 1, 1);
             } else {
                 msg = (credit_1p < 2) ? &msg_credit : &msg_credits;
-                tilemap_print_string_attr(DE_X[0] + 6, 23, 18, msg);
+                tilemap_print_string_attr(dx[0] + 6, 23, 18, msg);
+                if (0) {}
                 tilemap_print_hex_block(DE_X[0] + 14, 23, 18, credit_1p, 1, 1);
                 if (credit_2p < 2) {
                     tilemap_print_string_attr(DE_X[0] + 32, 23, 18, &msg_credit);
@@ -1607,9 +1609,9 @@ s32 credit_display_render(s8 force) {
             break;
         default:
             if (credit_1p < 2) {
-                tilemap_print_string_attr(DE_X[0] + 5, 23, 18, &msg_credit);
+                tilemap_print_string_attr(dx[0] + 5, 23, 18, &msg_credit);
             } else {
-                tilemap_print_string_attr(DE_X[0] + 5, 23, 18, &msg_credits);
+                tilemap_print_string_attr(dx[0] + 5, 23, 18, &msg_credits);
             }
             tilemap_print_hex_block(DE_X[0] + 13, 23, 18, credit_1p, 1, 1);
             if (credit_1p >= 9) {

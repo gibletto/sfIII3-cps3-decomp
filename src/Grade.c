@@ -454,10 +454,13 @@ s32 get_offence_total(ix)
     s32 point;
     s32 point2;
     s16 i;
-    num2 = judge_item[(ix + 1) & 1][(u8)Play_Type].guard_succ + judge_item[(ix + 1) & 1][(u8)Play_Type].nml_blocking + judge_item[(ix + 1) & 1][(u8)Play_Type].rpd_blocking + judge_item[(ix + 1) & 1][(u8)Play_Type].grd_blocking + judge_item[ix][(u8)Play_Type].clean_hits;
-    num = judge_item[ix][(u8)Play_Type].clean_hits;
-    num *= 100;
-    num /= num2;
+    s16 ix2;
+    ix2 = (ix + 1) & 1;
+    num2 = judge_item[ix2][(u8)Play_Type].guard_succ + judge_item[ix2][(u8)Play_Type].nml_blocking +
+           judge_item[ix2][(u8)Play_Type].rpd_blocking + judge_item[ix2][(u8)Play_Type].grd_blocking +
+           judge_item[ix][(u8)Play_Type].clean_hits;
+    num = (judge_item[ix][(u8)Play_Type].clean_hits * 100) / num2;
+
     for (i = 0; i < 23; i++) {
         if (num < grade_t_meichuuritsu2[i + 1][0]) {
             break;
@@ -466,7 +469,7 @@ s32 get_offence_total(ix)
     point2 = grade_t_meichuuritsu2[i][1];
     num = (num2 * 100) / judge_item[ix][(u8)Play_Type].att_renew;
     point2 = num * point2 / 100;
-    num = (judge_item[(ix + 1) & 1][(u8)Play_Type].grd_miss * 100) / judge_item[(ix + 1) & 1][(u8)Play_Type].grd_mcnt;
+    num = (judge_item[ix2][(u8)Play_Type].grd_miss * 100) / judge_item[ix2][(u8)Play_Type].grd_mcnt;
     for (i = 0; i < 20; i++) {
         if (num < grade_t_meichuuritsu3[i + 1][0]) {
             break;
@@ -499,27 +502,27 @@ s16 wf;
 {
     s32 num = 0;
     s16 i;
+    s16 ix2;
     s32 point;
     s32 point2;
-    s32 successes;
-    s16 renew;
-    renew = judge_item[(ix + 1) & 1][Play_Type].att_renew;
-    point2 = ((renew - judge_item[(ix + 1) & 1][Play_Type].clean_hits) * 100) / renew;
+    ix2 = (ix + 1) & 1;
+    point2 = ((judge_item[ix2][Play_Type].att_renew - judge_item[ix2][Play_Type].clean_hits) * 100) /
+             judge_item[ix2][Play_Type].att_renew;
     for (i = 0; i < 13; i++) {
         if (point2 < grade_t_bougyoritsu2[i + 1][0]) {
             break;
         }
     }
     num += grade_t_bougyoritsu2[i][1];
-    successes = judge_item[ix][Play_Type].clean_hits + judge_item[(ix + 1) & 1][Play_Type].guard_succ;
-    point2 = (successes * 100) / judge_item[ix][Play_Type].att_renew;
+    point2 = judge_item[ix][Play_Type].clean_hits + judge_item[ix2][Play_Type].guard_succ;
+    point2 = (point2 * 100) / judge_item[ix][Play_Type].att_renew;
     for (i = 0; i < 12; i++) {
         if (point2 < grade_t_bougyoritsu3[i + 1][0]) {
             break;
         }
     }
     point = grade_t_bougyoritsu3[i][1];
-    if (judge_item[(ix + 1) & 1][Play_Type].att_renew == 0) {
+    if (judge_item[ix2][Play_Type].att_renew == 0) {
         point = (point * 200) / 100;
     }
     num += point;

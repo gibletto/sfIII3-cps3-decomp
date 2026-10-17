@@ -237,8 +237,9 @@ void Se_Let_SP(WORK_Other* ewk, u16 Code) {
 void Call_Se(WORK_Other* ewk, u16 Code) {
     s16 code = Code;
     s16 pos;
+    PLW* wk;
     if ((Demo_Sound != 0 || Demo_Flag != 0) && (Combo_Demo_Flag & 0x80) == 0) {
-        pos = Get_Position((PLW*)&code);
+        pos = Get_Position(wk);
         sound_request_pan(code, pos, pos, 0, 2);
     }
 }

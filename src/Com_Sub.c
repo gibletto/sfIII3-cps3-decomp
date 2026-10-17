@@ -2671,8 +2671,8 @@ s16 Ex_Shot;
             break;
         }
         switch (Tech_Address[wk->wu.id][Tech_Index[wk->wu.id]]) {
-        default:
         case 1:
+        default:
             if (Command_Type_00(wk, Power2, Tech_Number, Ex_Shot) == -1) {
                 if ((Tech_Number & 0xF) == 0 || (Tech_Number & 0xF) == 1) {
                     if (Reaction == 0xC) {
@@ -2699,7 +2699,7 @@ s16 Ex_Shot;
         }
         break;
     case 3:
-        Lever_Buff[wk->wu.id] = Lever_LR[wk->wu.id];
+        (&Lever_Buff[0])[wk->wu.id] = Lever_LR[wk->wu.id];
         if (plw[wk->wu.id].tsukami_f) {
             break;
         }
@@ -5632,7 +5632,7 @@ void Setup_Com_Max_Range(void) {
     if (type == 2) {
         limit = Lv18_Time_Data[type][Game_setting.level][14] + 20;
     } else {
-        limit = Lv18_Time_Data[type][Game_setting.level][16] + 20;
+        limit = ((const s16*)&Lv18_Time_Data[type][Game_setting.level][0])[16] + 20;
     }
     if (type == 2) {
         xx = Lv18_Time_Data[type][8][14] + 20;
@@ -5643,11 +5643,10 @@ void Setup_Com_Max_Range(void) {
         limit = xx;
     }
     if (type == 2) {
-        xx = Lv10_Time_Data[type][0][7];
+        xx = Lv10_Time_Data[type][0][7] + 20;
     } else {
-        xx = Lv10_Time_Data[type][0][8];
+        xx = Lv10_Time_Data[type][0][8] + 20;
     }
-    xx += 20;
     if (limit < xx) {
         limit = xx;
     }

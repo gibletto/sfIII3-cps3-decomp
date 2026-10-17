@@ -12,8 +12,18 @@ Right, back to it.
 C and SH-2 assembler source for the CPS3 program ROM of *Street Fighter III 3rd Strike: Fight for the Future*
 (sfiii3nr1), built with the original Hitachi toolchain (SHC 5.0, asmsh, lnk 6.0, rof2bin). PS2 was used as a reference only, it is 100% Arcade logic and code.
 
-The build is a working program, not a byte-for-byte copy of the arcade ROM as matching is in the final stages: code and data are laid out by the
-linker from this source.
+The build is a byte-for-byte copy of the arcade program: every routine compiles from this C and assembler source
+to the arcade's exact bytes. `build/prog.bin` has the arcade program's SHA-1, 7340968c4b2aba9496fa63be7a5c183205ff1dae,
+and the eight program SIMM chips written into `build/sfiii3nr1.zip` are the original ROM's:
+
+    sfiii3-simm1.0  crc 66e66235  sha1 0a98038721d176458d4f85dbd76c5edb93a65322
+    sfiii3-simm1.1  crc 186e8c5f  sha1 a63040201a660b56217a8cbab32f5c2c466ee5dd
+    sfiii3-simm1.2  crc bce18cab  sha1 a5c28063d98c22403756fc926a20631456fb7dcc
+    sfiii3-simm1.3  crc 129dc2c9  sha1 c1e634d94b1c8f7f02a47703622de5cab3d0da3f
+    sfiii3-simm2.0  crc 06eb969e  sha1 d89f6a6585b76692d57d337f0f8186398fb056da
+    sfiii3-simm2.1  crc e7039f82  sha1 8e81e66b5a4f45ae14b070a491bde47a6a74499f
+    sfiii3-simm2.2  crc 645c96f7  sha1 06d5a54874d4bf100b776131ec9060da209ad037
+    sfiii3-simm2.3  crc 610efab1  sha1 bbc21ed6ff6220ff6017a3f02ebd9a341fbc9040
 
 ## Building
 
@@ -28,7 +38,7 @@ program, and writes:
 - `build/prog.bin` - the program image, 06000000-06FFFFFF
 - `build/sfiii3nr1.zip` - your ROM set with the two program SIMMs replaced
 
-`build/prog.bin` should match the SHA-1 in `tools/prog.sha1`; the build prints whether it does.
+`build/prog.bin` should match the SHA-1 in `tools/prog.sha1`, the arcade program's; the build prints whether it does.
 
 When running a new build in MAME, use an empty `-nvram_directory`: MAME keeps the program SIMMs' flash in nvram
 and loads it over the ROM files.
@@ -46,8 +56,9 @@ and loads it over the ROM files.
 
 ## Compiler
 
-The compiler is SHC 5.0 Release 26 with thirty-nine changes, each one a rule the arcade's own compiler visibly follows
-throughout the ROM but Release 26 doesn't:
+The rebuilt SHC 5.0 Release 26 carries forty-six rules and one exception. The rules reproduce observed code-generation
+differences and include general optimizations verified across the ROM; these tests do not establish the historical
+compiler's implementation:
 
 - a switch case is tested with `bt case` / `bra default` (Release 26 folds it into `bf default`), and a jump whose
   target has become the next block is kept as a `bra` to the next instruction: the jump to a case or default
@@ -63,7 +74,7 @@ throughout the ROM but Release 26 doesn't:
 - a constant loaded into r0 is loaded again after a conditional branch (Release 26 carries it across);
 - a stack load or store never fills a branch delay slot;
 - a value that is only tested takes the lowest free register (Release 26 starts from r3);
-- constants passed to calls count when deciding which values to keep in a register;
+- constants passed to calls count when deciding which values to keep in a register, inside loops too;
 - `sts macl` is never scheduled ahead of the multiply it reads (a Release 26 scheduling fault), so array indexing
   can be written plainly;
 - a branch is not threaded through a label that merging identical code created;
@@ -87,6 +98,10 @@ throughout the ROM but Release 26 doesn't:
 - a structure copied in a loop that counts down, `a[i] = a[i - 1]`, is copied first and its pointers are stepped
   after the copy (Release 26 makes the destination a pre-decrement access, which a block move can't use, so the
   pointer starts one element further on and is stepped before each copy);
+- when the start of a loop's counter has been folded into the start of a stepping pointer (`for (i = 1; ...)`
+  over 16-byte rows starts at `16 + base`), the constant stays in front: `mov #16,r1`, `add r5,r1` (Release 26
+  moves it behind the base, `mov r5,r1`, `add #16,r1`, whenever a later pass looks at the sum again). Only one
+  routine shows this, `debug_hit_a_judgement_build_table`;
 - in the files compiled without optimization, a load or store of a local variable counts as 4 bytes, not 6, when
   the compiler decides where a literal pool goes, so those pools come later;
 - a `for` or `while` loop is entered by a jump to its test at the bottom (Release 26, asked for speed, puts a copy
@@ -119,6 +134,12 @@ throughout the ROM but Release 26 doesn't:
   first (`mov r4,r3`, `cmp/hs r10,r3`). Only one routine shows this, `strstr`;
 - a mask by 0xff, `x & 0xFF` or `v &= 0xFF`, stays an `and` (Release 26 turns it into a cast, so the code
   extends with `extu.b`); `extu.b` comes from a cast or an `unsigned char`;
+- a `char` or `short` value that is computed (not a variable or a value read from memory) and masked by a
+  constant inside its width, `(s16)-p->x & 0x3FF`, is not extended first (`neg r0,r0`, `mov r0,r5`,
+  `and r14,r5`), and the mask's constant is loaded before the value is computed (Release 26 extends the value
+  with `exts.w` before the `and`); a value masked as it is stored, `((*cell++ = *tbl++) & 0x100) >> 8`, is
+  still extended first, like a variable (`extu.w r1,r1` before `and r7,r1`). One routine shows each case,
+  `update_all_disp_pos_ending` and `eff91_cell_data_set`;
 - in a loop, the address of a member reached through a pointer, `p->a`, is not taken as fixed when stepping
   pointers are made, so for `p->a[i]` only `i * size` steps (Release 26 makes the element's address a pointer
   that steps by the element size);
@@ -153,47 +174,41 @@ throughout the ROM but Release 26 doesn't:
   pool, so the pool behind the table comes sooner (Release 26 starts over with the long reach);
 - when the place of a literal pool is worked out, a `return` in a function that saves one register and MACL
   is not counted as needing the exit's address as a literal (Release 26 counts MACH and MACL among the saved
-  registers there, and with two or more a `return` is a jump that may need one).
+  registers there, and with two or more a `return` is a jump that may need one);
+- a test of whether an `xor` gives zero, `if (!(mask ^= x))`, compares the two values instead (`cmp/eq`) when
+  the result of the `xor` is not used again on any path (Release 26 keeps `xor` and `tst`). Only one routine
+  shows this, `combo_window_trans`;
+- a compound assignment to a `char` or `short` local that is compared straight away, `if ((d += x) > 0x99)`,
+  extends the result in the local's own register (Release 26 extends it into another register and compares
+  that). Only one routine shows this, `abcd`;
+- when an operator works out its right operand first, the registers its left operand worked in count as still
+  holding their values until the operator's own instructions are done (Release 26 forgets them straight after
+  the left operand), so in `G = A[i] + B[i][0];` the store to `G` goes through the register that held an
+  earlier global's address;
+- a quotient or remainder stored through the sum of two registers, `ixa[i] = tsc / table[i];`, has the value's
+  registers chosen first, and the address is then added base first into the next free register (`mov r10,r2`,
+  `add r7,r2`, ..., `mov.w r0,@r2`); Release 26 chooses the address register first (`mov r7,r3`, `add r10,r3`);
+- when a conditional expression is assigned to a register variable, `msg = (n < 2) ? &one : &many;`, the
+  variable's register is not offered to the test, so the tested value goes where the scratch registers are
+  chosen (`cmp/ge #2` through r0); Release 26 loads the tested value into the variable's register. Only one
+  routine shows this, `credit_display_render`.
+
+One exception, for a single function: in `attack_hit_check` the stack variables `boxes` and `lp2` have equal
+frame-slot frequency, and the arcade gives `boxes` the earlier slot; Release 26 gives it to `lp2`. 335 other
+equal-frequency pairs in the game all follow Release 26's order and no general rule fits, so this site is
+recorded by name.
 
 The four changed stages (`shcmdl.exe`, `shcgen.exe`, `shcpep.exe` and `shcasm.exe`) are rebuilt from a C
-decompilation of the originals (source: https://github.com/gibletto/shc-5r26-decomp-sf3), and each rule is a
-setting in that source (thirty-nine settings for the thirty-nine rules: the switch rule and the return rule have two each, the `char` cast rule and the structure copy rule share `MDL_IV`, and the unsigned zero rule shares `MDL_IMM_REG` with the rule for constants that are added, masked or xored). With every rule off they give the same output as Release 26. Setting `SWITCH_ARCADE_BRANCH`,
+decompilation of the originals (source: https://github.com/gibletto/shc-5r26-decomp-sf3), and each rule and the
+exception is a setting in that source (forty-five settings: `MDL_FRAME_EXC` for the exception, and forty-four for the forty-six rules: the switch rule and the return rule have two each, the `char` cast rule, the structure copy rule and the pointer start rule share `MDL_IV`, the two mask rules share `MDL_MASK_AND`, and the unsigned zero rule shares `MDL_IMM_REG` with the rule for constants that are added, masked or xored). With every setting at 0 they give the same output as Release 26. Setting `SWITCH_ARCADE_BRANCH`,
 `SWITCH_ARCADE_JUMP`, `XJUMP_OFF`, `PEP_R0_FORGET`, `SLOT_NO_STACK`, `PEP_NO_THREAD`, `GEN_TST_R0`, `GEN_MUL_L`,
-`MDL_ARG_CONST`, `MDL_CAST_CSE`, `MDL_ARG_CAST`, `MDL_GCSE`, `ASM_MULWAIT`, `GEN_CHAIN_JUMP`, `GEN_CHAIN_SCRATCH_R0`, `GEN_NARROW_CONST`, `GEN_OR_INDEX_EARLY`, `PEP_AUTOINC`, `MDL_IV`, `GEN_POOL_MOVLOC`, `MDL_LOOP_INV`, `GEN_RELOAD`, `GEN_EVICT_ORDER`, `MDL_CAST_MUL`, `MDL_MUL_CONST`, `PEP_RET_R0`, `GEN_MEM_INDEX`, `GEN_R0VAR`, `MDL_IMM_REG`, `MDL_MASK_AND`, `MDL_IV_BASE`, `MDL_IV_TEMP`, `GEN_JUMP_TEMP`, `MDL_TEST_REPLACE`, `MDL_MUL_ONE`, `MDL_TEMP_EXPR`, `PEP_CASE_WORD`, `PEP_RET_MAC` and `ASM_SPECREG` to 0 gives Release 26's behaviour back. The
+`MDL_ARG_CONST`, `MDL_CAST_CSE`, `MDL_ARG_CAST`, `MDL_GCSE`, `ASM_MULWAIT`, `GEN_CHAIN_JUMP`, `GEN_CHAIN_SCRATCH_R0`, `GEN_NARROW_CONST`, `GEN_OR_INDEX_EARLY`, `PEP_AUTOINC`, `MDL_IV`, `GEN_POOL_MOVLOC`, `MDL_LOOP_INV`, `GEN_RELOAD`, `GEN_EVICT_ORDER`, `MDL_CAST_MUL`, `MDL_MUL_CONST`, `PEP_RET_R0`, `GEN_MEM_INDEX`, `GEN_R0VAR`, `MDL_IMM_REG`, `MDL_MASK_AND`, `MDL_IV_BASE`, `MDL_IV_TEMP`, `GEN_JUMP_TEMP`, `MDL_TEST_REPLACE`, `MDL_MUL_ONE`, `MDL_TEMP_EXPR`, `PEP_CASE_WORD`, `PEP_RET_MAC`, `PEP_XOR_TEST`, `GEN_NARROW_NORMALIZE`, `GEN_RIGHT_FIRST_DROP`, `GEN_STORE_INDEX`, `GEN_COND_PREF`, `MDL_FRAME_EXC` and `ASM_SPECREG` to 0 gives Release 26's behaviour back. The
 original files are in `bin/original`.
 
-With the changes, 9,982 of the 10,066 C routines compile to the arcade's instructions (3,811 with the original
-Release 26), and 9,974 to its exact bytes (1,912). Fightcade replays are kept as a sanity check and were last run
-on the build of 16 October 2026: of 254 replays compared with the original ROM, all 254 kept identical game state
-throughout (218 before) and identical slowdown (214).
-
-## Fightcade replays
-
-Fightcade replays can't be played on this build out of the box. A replay is an FBNeo savestate taken on the real
-ROM plus the inputs for each frame. Work RAM and the ROM tables are at the same addresses in this build, but the
-code isn't. The saved CPU state, task stacks and function pointers all point into arcade code, so loading the
-savestate as is will crash.
-
-You'd need a custom FBNeo build that can:
-
-- run the replay on the original ROM and save a state once the scheduler (`Game_Task`) is idle, so no task is
-  halfway through a function;
-- load that state into this build with a patch applied (registers and RAM words), then carry on feeding the
-  replay's inputs from that frame.
-
-Making the patch is the fiddly part:
-
-- `functions.tsv` gives each routine's arcade address and `sf3.map` gives where it ended up, so any code address
-  in the state can be mapped by name.
-- Restart the scheduler at `Game_Task` on its boot stack, and point each task's function slot at the new address.
-- If a sleeping task's function is just a loop around its sleep call, restart it at its entry. Otherwise fix up
-  its saved return address and whatever registers the new code expects to survive the call.
-- Some words in the initialised data (the part copied from ROM at boot) still hold arcade code addresses. Swap
-  those for the new ones. If anything else in RAM looks like a code address, check it by hand.
-
-To compare the two runs, hash the game variables every logic frame (not every video frame) and treat code
-addresses as zero, since they'll always differ. Expect the odd drift where the arcade drops a frame and this build
-doesn't. The code doesn't take exactly the same cycles yet, so that's timing, not a logic bug.
+With the changes, all 10,066 C routines compile to the arcade's exact bytes (with the original Release 26, 3,811
+compile to its instructions and 1,913 to its exact bytes), and the linked `build/prog.bin` has the arcade program's
+SHA-1. Because the program is identical to the arcade's, Fightcade replays and FBNeo savestates play on the built
+ROM unchanged.
 
 ## Thanks
 

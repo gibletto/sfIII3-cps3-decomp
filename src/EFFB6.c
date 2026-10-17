@@ -47,11 +47,14 @@ void effect_B6_move(WORK_Other_CONN* ewk_conn) {
             break;
         }
         if (akebono_flag == 0) {
+            if (0) {
+            }
             switch (ewk->wu.routine_no[1]) {
             case 0:
-                if (another_bg[0] | another_bg[1]) {
-                    ewk->wu.routine_no[1]++;
+                if (!(another_bg[0] | another_bg[1])) {
+                    break;
                 }
+                ewk->wu.routine_no[1]++;
                 break;
             case 1:
                 if (another_bg[0] | another_bg[1]) {

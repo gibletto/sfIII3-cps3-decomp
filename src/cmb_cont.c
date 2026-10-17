@@ -567,7 +567,7 @@ void combo_window_trans(s8 PL) {
                     }
                 }
                 mask = 3;
-                if ((end_flag[PL] & mask) == mask) {
+                if (!(mask ^= end_flag[PL] & mask)) {
                     cmst_buff[PL][cst_read[PL]].routine_num++;
                     cmst_buff[PL][cst_read[PL]].timer[1] = cmb_window_time_tbl[cmst_buff[PL][cst_read[PL]].kind];
                     if (PL == 0) {

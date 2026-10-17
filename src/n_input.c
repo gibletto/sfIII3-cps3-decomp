@@ -103,10 +103,10 @@ void Name_Input_comm(void) {
             name_ptr->index++;
             name_ptr->index &= 3;
             name_ptr->wait_cnt = 10;
-            name_ptr->code[name_ptr->index] = name_ptr->code[name_ptr->index - 1];
+            *(s16*)(name_ptr->code + name_ptr->index) = name_ptr->code[name_ptr->index - 1];
             break;
         case 2:
-            name_ptr->timer = name_ptr->timer + 420;
+            name_ptr->timer += 420;
             name_ptr->index--;
             name_ptr->r_no_0 -= 2;
             if (name_ptr->index < 0) {
@@ -210,7 +210,7 @@ void Name_Scs_Input_comm(void) {
             name_ptr->index &= 3;
             name_ptr->wait_cnt = 10;
             if (name_ptr->index != 3) {
-                name_ptr->code[name_ptr->index] = name_ptr->code[name_ptr->index - 1];
+                *(s16*)(name_ptr->code + name_ptr->index) = name_ptr->code[name_ptr->index - 1];
             } else {
                 name_ptr->code[name_ptr->index] = 46;
             }

@@ -102,64 +102,68 @@ void get_okuri_time(WORK* ewk, WORK* mwk, MVJ* mvj) {
     ST st;
     s16 exc;
     u16 now_mf;
-    if (mwk->cgd_type != 2) {
-        if (mwk->cg_ja.mf.full & 0x1010) {
-            now_mf = mwk->cg_ja.mf.full;
-            exc = 0;
-            ewk->old_rno[0] = mwk->cg_ctr;
-            ewk->cg_ix = mwk->cg_ix;
-        loop:
-            {
-                ewk->cg_ix += mwk->cgd_type;
-                gotcp.cpl = &mwk->set_char_ad[ewk->cg_ix];
-                if (gotcp.cps[0] < 0x100) {
-                    goto skip;
-                }
-                st.l = gotcp.cpl[2];
-                st.l *= 8;
-                ewk->cg_hit_ix = st.w.h & 0x1FF;
-                if (ewk->old_rno[1] == ewk->cg_hit_ix) {
-                    if ((gotcp.cpc[1] != 0xFF) || (gotcp.cpc[0] < 0xC8)) {
-                        ewk->old_rno[0] += gotcp.cpc[0];
-                    }
-                    goto loop;
-                }
-                if (ewk->old_rno[0] >= 2) {
-                    K5_decode_new_hit_index(ewk, mvj, now_mf);
-                    ewk->routine_no[1] = 1;
-                    return;
-                }
-                goto end;
-            skip:
-                if (k5_exc_check[gotcp.cps[0]] == 2) {
-                    goto end;
-                }
-                if (k5_exc_check[gotcp.cps[0]]) {
-                    goto loop;
-                }
-                if (exc++ >= 4) {
-                    goto end;
-                }
-                switch (gotcp.cps[0]) {
-                case 2:
-                    ewk->cg_ix = (gotcp.cps[3] - 2) * mwk->cgd_type;
-                    break;
-                case 49:
-                    if ((test_flag == 0) || (ixbfw_cut == 0)) {
-                        ewk->cg_ix += (gotcp.cps[3] - 1) * mwk->cgd_type;
-                    }
-                    break;
-                case 50:
-                    if (test_flag != 0 && ixbfw_cut != 0) {
-                    } else {
-                        ewk->cg_ix -= (gotcp.cps[3] + 1) * mwk->cgd_type;
-                    }
-                default:
-                    break;
-                }
-                goto loop;
-            }
+    if (mwk->cgd_type == 2) {
+        goto end;
+    }
+    if (!(mwk->cg_ja.mf.full & 0x1010)) {
+        goto end;
+    }
+    now_mf = mwk->cg_ja.mf.full;
+    exc = 0;
+    ewk->old_rno[0] = mwk->cg_ctr;
+    ewk->cg_ix = mwk->cg_ix;
+loop:
+    {
+        ewk->cg_ix += mwk->cgd_type;
+        gotcp.cpl = &mwk->set_char_ad[ewk->cg_ix];
+        if (gotcp.cps[0] < 0x100) {
+            goto skip;
         }
+        st.l = gotcp.cpl[2];
+        st.l *= 8;
+        ewk->cg_hit_ix = st.w.h & 0x1FF;
+        if (ewk->old_rno[1] == ewk->cg_hit_ix) {
+            if ((gotcp.cpc[1] != 0xFF) || (gotcp.cpc[0] < 0xC8)) {
+                ewk->old_rno[0] += gotcp.cpc[0];
+            }
+            goto loop;
+        }
+        if (ewk->old_rno[0] >= 2) {
+            K5_decode_new_hit_index(ewk, mvj, now_mf);
+            ewk->routine_no[1] = 1;
+            return;
+        }
+        goto end;
+    skip:
+        if (k5_exc_check[gotcp.cps[0]] == 2) {
+            goto end;
+        }
+        if (k5_exc_check[gotcp.cps[0]]) {
+            goto loop;
+        }
+        if (exc++ < 4) {
+            switch (gotcp.cps[0]) {
+            case 2:
+                ewk->cg_ix = (gotcp.cps[3] - 2) * mwk->cgd_type;
+                break;
+            case 49:
+                if ((test_flag == 0) || (ixbfw_cut == 0)) {
+                    ewk->cg_ix += (gotcp.cps[3] - 1) * mwk->cgd_type;
+                }
+                break;
+            case 50:
+                if (test_flag != 0 && ixbfw_cut != 0) {
+                    break;
+                } else {
+                    ewk->cg_ix -= (gotcp.cps[3] + 1) * mwk->cgd_type;
+                }
+            default:
+                break;
+            }
+            goto loop;
+        }
+        goto end;
+        goto end;
     }
 end:
     ewk->old_rno[0] = 1;

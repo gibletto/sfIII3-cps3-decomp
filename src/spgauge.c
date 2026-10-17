@@ -637,18 +637,22 @@ s8 step;
 {
     SPG_DAT* p0;
     SPG_DAT* p1;
-    p0 = &spg_dat[0], p1 = &spg_dat[1];
+    s16 twice;
+    p0 = &spg_dat[0],
+        p0 = &spg_dat[0],
+        twice = step * 2,
+        p1 = &spg_dat[1];
     if (spg_dat[pl].kind) {
         if (pl == 0) {
-            p0->spgcol_number = step * 2 + 34;
+            p0->spgcol_number = twice + 34;
         } else {
-            p1->spgcol_number = step * 2 + 162;
+            p1->spgcol_number = twice + 162;
         }
     } else {
         if (pl == 0) {
-            p0->spgcol_number = 36 - step * 2;
+            p0->spgcol_number = 36 - twice;
         } else {
-            p1->spgcol_number = 164 - step * 2;
+            p1->spgcol_number = 164 - twice;
         }
     }
 }

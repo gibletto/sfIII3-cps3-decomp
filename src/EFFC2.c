@@ -718,8 +718,7 @@ void setup_parts_break(WORK* wk) {
     s32 vint;
     s16 j;
     s16 ix;
-    i = 0;
-    do {
+    for (i = 0; i < 8; ) {
         ix = ix_exchange[i];
         vint = bs2_data_table[ix].vital;
         for (j = 0; j < 7; j++) {
@@ -728,8 +727,9 @@ void setup_parts_break(WORK* wk) {
             }
         }
         wk->cmwk[i] = j;
-        i = i + 1;
-    } while (i < 8);
+        i++;
+        j *= 1;
+    }
 }
 
 

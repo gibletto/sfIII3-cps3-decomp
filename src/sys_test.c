@@ -30,6 +30,10 @@
 #include "textsound_3.h"
 #include "sys_test.h"
 #include "cps3.h"
+
+extern volatile s16 flip_crt_ofs_x;
+extern volatile s16 flip_crt_ofs_y;
+
 /* provisional name: unreferenced; toggles a scroll layer's flip bits and applies them */
 void scrn_flip_set(u16 n, u16 flip) {
     s32 r;
@@ -386,8 +390,10 @@ void scroll_layers_finalize_frame(void) {
         scrn_line_prm[i][1] = scrn_line_prm[i][0];
         scrn_mode_prm[i].cur = scrn_mode_prm[i].set;
     }
-    (*(volatile u16*)(SS_REG + (0x0E))) = w = scrn_pos[4].cur_x.disp.pos + screen_base_x + flip_crt_ofs_x;
-    (*(volatile u16*)(SS_REG + (0x10))) = w = w >> 8;
+    w = scrn_pos[4].cur_x.disp.pos + screen_base_x + flip_crt_ofs_x;
+    (*(volatile u16*)(SS_REG + (0x0E))) = w;
+    w >>= 8;
+    (*(volatile u16*)(SS_REG + (0x10))) = w;
     w = -scrn_pos[4].cur_y.disp.pos + screen_base_y + flip_crt_ofs_y;
     (*(volatile u16*)(SS_REG + (0x20))) = w;
     w >>= 8;
