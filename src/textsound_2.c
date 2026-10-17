@@ -213,8 +213,6 @@ s32 sound_seq_start(u16 code, s16 ramp) {
             } else {
                 mv->status = 0xC0;
             }
-            (void)((WORK*)mv)->id;
-            (void)((WORK*)bgm_voice)->id;
             i++, vp++, mv++;
             off = *p++ << 8;
             off += *p++;
@@ -227,7 +225,6 @@ s32 sound_seq_start(u16 code, s16 ramp) {
                 v->cursor = &track[n];
                 v->status = 0x20;
                 bank_table = snd_bank_tbl;
-                (void)((WORK*)se_tick_step)->id;
                 bank = *bank_table;
                 (void)((WORK*)mv)->id;
                 (void)((TEXT_CELL*)bank_table)->code;

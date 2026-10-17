@@ -22,7 +22,7 @@
 #include "eff90.h"
 #include "eff91.h"
 #include "eff92_code.h"
-#include "eff93.h"
+#include "Eff93.h"
 #include "PLSGAUGE.h"
 #include "EFFECT.h"
 #include "effect_2.h"

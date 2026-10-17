@@ -42,7 +42,7 @@
 #include "cmb_win.h"
 #include "efff7.h"
 #include "efff8_code.h"
-#include "efff9.h"
+#include "EFFF9.h"
 #include "fifo.h"
 #include "bg_sub.h"
 #include "bg_sub_2.h"

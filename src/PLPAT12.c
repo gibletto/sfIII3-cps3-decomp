@@ -18,7 +18,7 @@
 #include "CHARMOVE.h"
 #include "charmove_2.h"
 #include "effd6_code.h"
-#include "effd7.h"
+#include "EFFD7.h"
 #include "Grade.h"
 #include "PLPAT.h"
 #include "PLS01.h"

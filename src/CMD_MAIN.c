@@ -1374,7 +1374,6 @@ copy:;
     }
     (void)((WORK*)0x180)->id;
     player = &plw[0].wu;
-    (void)player->id;
     player->xyz[0].disp.pos += 0x180;
     player->position_x += 0x180;
     plw[1].wu.xyz[0].disp.pos += 0x180;
@@ -1994,13 +1993,12 @@ void debug_hit_a_print_pattern_rows(WORK* wk, GRID_REC* recs) {
     const GRID_POS* hit;
     ix = wk->cg_ix / wk->cgd_type - 4;
     goto rows;
-    (void)((WORK*)tilemap_print_string_attr)->id;
-    (void)((WORK*)grid_empty_row_msg)->id;
-    (void)((WORK*)grid_row_frame_msg)->id;
-    (void)((WORK*)hit_grid5_pos_tbl)->id;
-    (void)((WORK*)debug_blank3_msg)->id;
-    (void)((WORK*)Convert_BCD)->id;
-    (void)((WORK*)tilemap_print_hex)->id;
+    (void)tilemap_print_string_attr;
+    (void)grid_empty_row_msg;
+    (void)grid_row_frame_msg;
+    (void)hit_grid5_pos_tbl;
+    (void)debug_blank3_msg;
+    (void)tilemap_print_hex;
 rows:;
     if (0) {}
     for (i = 0; i < 9; ix++, i++) {
@@ -5478,7 +5476,6 @@ void debug_draw_hit_edit_info(void)
     /* hit-index row of the current pattern */
     num = Convert_BCD((u16)dbg_edit_buf.rec[dbg_slot->sel[2]].box, 3);
     tilemap_print_hex(4, 20, 2, num, 3, 0);
-    (void)((WORK*)Convert_BCD)->id;
     hit = &dbg_pl->wu.hit_ix_table[(u16)dbg_edit_buf.rec[dbg_slot->sel[2]].box];
     tilemap_print_hex(12, 20, 2, Convert_BCD(hit->boix, 3), 3, 0);
     tilemap_print_hex(12, 21, 2, Convert_BCD(hit->bhix, 3), 3, 0);

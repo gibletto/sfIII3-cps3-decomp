@@ -209,3 +209,8 @@ ROM unchanged.
 
 Thanks to the 3sx Team and Artem for the 3s-decomp, which helped recover a large amount of this code style, and to
 DrewDos for his matching work and help.
+
+## License
+
+GNU Affero General Public License v3.0 (`LICENSE`): parts of the source come from the 3s-decomp, which is AGPL-3.0.
+`NOTICE.md` lists what the license does not cover.

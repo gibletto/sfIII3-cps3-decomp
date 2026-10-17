@@ -53,7 +53,7 @@
 #include "bg_sub_3.h"
 #include "bg_sub_4.h"
 #include "bg_sub_5.h"
-#include "eff58.h"
+#include "EFF58.h"
 #include "sc_logo.h"
 
 

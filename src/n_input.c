@@ -32,7 +32,7 @@
 #include "eff90.h"
 #include "eff91.h"
 #include "eff92_code.h"
-#include "eff93.h"
+#include "Eff93.h"
 #include "EFFB6.h"
 #include "EFFB8.h"
 #include "PLS02.h"

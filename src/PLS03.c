@@ -44,7 +44,6 @@ s32 check_full_gauge_attack(PLW* wk, s8 always) {
     s16 j;
     u16 cusw;
     s16 exsw;
-    (void)GAUGE_COMMAND_WORK(wk, always)->id;
     (void)GAUGE_COMMAND_WORK(wk, always)->be_flag;
     (void)GAUGE_COMMAND_WORK(wk, always)->disp_flag;
     (void)GAUGE_COMMAND_WORK(wk, always)->cg_type;
@@ -165,7 +164,6 @@ s32 check_full_gauge_attack2(PLW* wk, s8 always) {
     s16 j;
     u16 cusw;
     s16 exsw;
-    (void)GAUGE_COMMAND_WORK(wk, always)->id;
     (void)GAUGE_COMMAND_WORK(wk, always)->be_flag;
     (void)GAUGE_COMMAND_WORK(wk, always)->disp_flag;
     (void)GAUGE_COMMAND_WORK(wk, always)->cg_type;

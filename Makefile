@@ -1,7 +1,8 @@
 # Street Fighter III 3rd Strike - CPS3 program ROM (same steps as build.bat)
 BIN = bin
 PYTHON ?= python
-export SHC_LIB ?= $(CURDIR)/bin
+# relative: SHC refuses an SHC_LIB longer than 116 characters
+export SHC_LIB ?= bin
 export SHC_TMP ?= C:\TEMP
 
 CFLAGS = -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include
@@ -36,13 +37,13 @@ win = '$(subst /,\,$1)'
 
 all: build/prog.bin
 
-# the compiler writes its internal tables to stdout: keep them in a log, show only errors. Each compile gets
+# the compiler writes its internal tables to stdout: keep them in a log, show its messages. Each compile gets
 # its own temporary directory: two compilers sharing one fail with an internal error under make -j
 obj/%.obj: %.c | obj
 	@echo $<
 	@mkdir -p "$(SHC_TMP)/$(*F)"; SHC_TMP='$(SHC_TMP)\$(*F)' \
 		$(BIN)/shc.exe $(call win,$<) $(CFLAGS) $(OPT) -object=$(call win,$@) >$(@:.obj=.log) 2>&1; \
-		r=$$?; rm -rf "$(SHC_TMP)/$(*F)"; [ $$r = 0 ] || { grep ') : ' $(@:.obj=.log); exit 1; }; rm -f $(@:.obj=.log)
+		r=$$?; rm -rf "$(SHC_TMP)/$(*F)"; grep ') : ' $(@:.obj=.log); rm -f $(@:.obj=.log); [ $$r = 0 ]
 
 obj/%.obj: %.src | obj
 	$(BIN)/asmsh.exe $(call win,$<) -object=$(call win,$@)

@@ -18,7 +18,7 @@
 #include "bg_sub_5.h"
 #include "eff56.h"
 #include "eff57.h"
-#include "eff58.h"
+#include "EFF58.h"
 #include "bg000.h"
 #include "eff05.h"
 #include "eff06.h"

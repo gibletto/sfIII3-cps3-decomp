@@ -32,7 +32,7 @@
 #include "HITCHECK.h"
 #include "PLS01.h"
 #include "CHARID.h"
-#include "effd7.h"
+#include "EFFD7.h"
 #include "EFFD5.h"
 
 

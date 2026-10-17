@@ -27,7 +27,7 @@
 #include "sys_config.h"
 #include "sys_config_2.h"
 #include "sys_config_3.h"
-#include "effj6.h"
+#include "effJ6.h"
 
 
 
