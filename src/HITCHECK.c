@@ -1264,9 +1264,6 @@ void attack_hit_check(void) {
     s16** slot_copy;
     s16* width;
     si = 0;
-    (void)((HitBox*)boxes)->x;
-    (void)((WORK*)sh)->id;
-    (void)((WORK*)mi)->id;
     goto test0;
     loop0:
     {
@@ -1281,7 +1278,7 @@ void attack_hit_check(void) {
         loop1:
         {
             (void)((HitBox*)boxes)->x;
-            (void)((WORK*)dmdat_adrs)->id;
+            (void)((WORK*)lp)->id;
             dmdat_adrs[lp] = sh;
             dmdat_adrs[lp + 4] = *boxes++;
         }
@@ -1298,6 +1295,7 @@ void attack_hit_check(void) {
         dmdat_adrs[8] = (s16*)sad->h_att + 8;
         dmdat_adrs[9] = (s16*)sad->h_att + 12;
         dmdat_adrs[10] = (s16*)sad->h_hos;
+        (void)((WORK*)dmdat_adrs)->id;
         mi = 0;
         goto test2;
         loop2:
@@ -1355,7 +1353,7 @@ void attack_hit_check(void) {
                     slot = &dmdat_adrs[lp2];
                     (void)((BoxSlot*)&((s16**)0)[lp2])->box;
                     slot_copy = slot;
-                    (void)((WORK*)3)->id;
+                    (void)((WORK*)lp)->id;
                     (void)((WORK*)3)->work_id;
                     if (*(s16*)((u16*)*slot + 1) == 0) {
                         goto next4;
@@ -1391,7 +1389,6 @@ void attack_hit_check(void) {
                         }
                     }
                     mw = hit_check_subroutine(mad, sad, *boxes, *slot_copy);
-                    (void)((BoxSlot*)&((s16**)0)[lp2])->box;
                     if (mw > mkm_wk[si]) {
                         hs[mi].flag.results |= 0x10;
                         hs[mi].my_hit = si;

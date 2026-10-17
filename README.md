@@ -56,7 +56,7 @@ and loads it over the ROM files.
 
 ## Compiler
 
-The rebuilt SHC 5.0 Release 26 carries forty-six rules and one exception. The rules reproduce observed code-generation
+The rebuilt SHC 5.0 Release 26 carries forty-six rules, none of them tied to a particular function. They reproduce observed code-generation
 differences and include general optimizations verified across the ROM; these tests do not establish the historical
 compiler's implementation:
 
@@ -193,16 +193,11 @@ compiler's implementation:
   chosen (`cmp/ge #2` through r0); Release 26 loads the tested value into the variable's register. Only one
   routine shows this, `credit_display_render`.
 
-One exception, for a single function: in `attack_hit_check` the stack variables `boxes` and `lp2` have equal
-frame-slot frequency, and the arcade gives `boxes` the earlier slot; Release 26 gives it to `lp2`. 335 other
-equal-frequency pairs in the game all follow Release 26's order and no general rule fits, so this site is
-recorded by name.
-
 The four changed stages (`shcmdl.exe`, `shcgen.exe`, `shcpep.exe` and `shcasm.exe`) are rebuilt from a C
-decompilation of the originals (source: https://github.com/gibletto/shc-5r26-decomp-sf3), and each rule and the
-exception is a setting in that source (forty-five settings: `MDL_FRAME_EXC` for the exception, and forty-four for the forty-six rules: the switch rule and the return rule have two each, the `char` cast rule, the structure copy rule and the pointer start rule share `MDL_IV`, the two mask rules share `MDL_MASK_AND`, and the unsigned zero rule shares `MDL_IMM_REG` with the rule for constants that are added, masked or xored). With every setting at 0 they give the same output as Release 26. Setting `SWITCH_ARCADE_BRANCH`,
+decompilation of the originals (source: https://github.com/gibletto/shc-5r26-decomp-sf3), and each rule is a
+setting in that source (forty-four settings for the forty-six rules: the switch rule and the return rule have two each, the `char` cast rule, the structure copy rule and the pointer start rule share `MDL_IV`, the two mask rules share `MDL_MASK_AND`, and the unsigned zero rule shares `MDL_IMM_REG` with the rule for constants that are added, masked or xored). With every setting at 0 they give the same output as Release 26. Setting `SWITCH_ARCADE_BRANCH`,
 `SWITCH_ARCADE_JUMP`, `XJUMP_OFF`, `PEP_R0_FORGET`, `SLOT_NO_STACK`, `PEP_NO_THREAD`, `GEN_TST_R0`, `GEN_MUL_L`,
-`MDL_ARG_CONST`, `MDL_CAST_CSE`, `MDL_ARG_CAST`, `MDL_GCSE`, `ASM_MULWAIT`, `GEN_CHAIN_JUMP`, `GEN_CHAIN_SCRATCH_R0`, `GEN_NARROW_CONST`, `GEN_OR_INDEX_EARLY`, `PEP_AUTOINC`, `MDL_IV`, `GEN_POOL_MOVLOC`, `MDL_LOOP_INV`, `GEN_RELOAD`, `GEN_EVICT_ORDER`, `MDL_CAST_MUL`, `MDL_MUL_CONST`, `PEP_RET_R0`, `GEN_MEM_INDEX`, `GEN_R0VAR`, `MDL_IMM_REG`, `MDL_MASK_AND`, `MDL_IV_BASE`, `MDL_IV_TEMP`, `GEN_JUMP_TEMP`, `MDL_TEST_REPLACE`, `MDL_MUL_ONE`, `MDL_TEMP_EXPR`, `PEP_CASE_WORD`, `PEP_RET_MAC`, `PEP_XOR_TEST`, `GEN_NARROW_NORMALIZE`, `GEN_RIGHT_FIRST_DROP`, `GEN_STORE_INDEX`, `GEN_COND_PREF`, `MDL_FRAME_EXC` and `ASM_SPECREG` to 0 gives Release 26's behaviour back. The
+`MDL_ARG_CONST`, `MDL_CAST_CSE`, `MDL_ARG_CAST`, `MDL_GCSE`, `ASM_MULWAIT`, `GEN_CHAIN_JUMP`, `GEN_CHAIN_SCRATCH_R0`, `GEN_NARROW_CONST`, `GEN_OR_INDEX_EARLY`, `PEP_AUTOINC`, `MDL_IV`, `GEN_POOL_MOVLOC`, `MDL_LOOP_INV`, `GEN_RELOAD`, `GEN_EVICT_ORDER`, `MDL_CAST_MUL`, `MDL_MUL_CONST`, `PEP_RET_R0`, `GEN_MEM_INDEX`, `GEN_R0VAR`, `MDL_IMM_REG`, `MDL_MASK_AND`, `MDL_IV_BASE`, `MDL_IV_TEMP`, `GEN_JUMP_TEMP`, `MDL_TEST_REPLACE`, `MDL_MUL_ONE`, `MDL_TEMP_EXPR`, `PEP_CASE_WORD`, `PEP_RET_MAC`, `PEP_XOR_TEST`, `GEN_NARROW_NORMALIZE`, `GEN_RIGHT_FIRST_DROP`, `GEN_STORE_INDEX`, `GEN_COND_PREF` and `ASM_SPECREG` to 0 gives Release 26's behaviour back. The
 original files are in `bin/original`.
 
 With the changes, all 10,066 C routines compile to the arcade's exact bytes (with the original Release 26, 3,811
