@@ -78,20 +78,20 @@ void wipe_mask_set_cols(s16 kind, s16 row) {
     s16 i;
     u8* src;
     u8* map;
-    u16* dst;
+    u32 dst;
     u8* mask;
     src = wipe_column_tbl[kind].adr;
     src += wipe_column_tbl[kind].w * row;
     map = wipe_set_pattern_tbl[kind].adr;
     map += row * 32;
-    dst = (u16*)(SS_RAM + 0xE000);
+    dst = (SS_RAM + 0xE000);
     mask = wipe_mask_chr;
     for (i = 0; i < 6; i++) {
         for (y = 0; y < 16; y++) {
             for (x = 0; x < wipe_column_tbl[kind].w; x++) {
-                dst[src[x]] = (u8)(mask[src[x]] & map[src[x]]);
+                *(u16*)(dst + src[x] * 2U) = (mask[src[x]] & map[src[x]]);
             }
-            dst += 32;
+            dst += 64;
             mask += 32;
         }
     }

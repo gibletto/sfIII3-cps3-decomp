@@ -108,6 +108,9 @@
 #include "fighter.h"
 #include "RANKING.h"
 
+extern s16 flip_crt_ofs_x;
+extern s16 flip_crt_ofs_y;
+
 #define WINDOW_ROW(m) ((const s16*)((const u8*)screen_window_tbl + (u8)((m) * sizeof(screen_window_tbl[0]))))
 
 
@@ -193,12 +196,15 @@ void screen_window_regs_update(void) {
     *(u16*)(VIDEO_REG + 0x72) = screen_window[1].t;
     *(u16*)(VIDEO_REG + 0x74) = screen_window[1].r;
     *(u16*)(VIDEO_REG + 0x76) = screen_window[1].b;
+    screen_mode;
     ctrl = screen_disp_ctrl;
     if (Monitor_Flip) {
-        ctrl |= 24;
+        *(u16*)(VIDEO_REG + 0x80) = ctrl | 24;
+    } else {
+        *(u16*)(VIDEO_REG + 0x80) = ctrl;
     }
-    *(u16*)(VIDEO_REG + 0x80) = ctrl;
-    *(u16*)SS_REG = screen_window[0].l;
+    t = screen_window[0].l;
+    *(u16*)SS_REG = t;
     *(u16*)(SS_REG + 0x2) = screen_disp_reg_tbl[screen_mode][0];
     *(u16*)(SS_REG + 0x4) = screen_disp_reg_tbl[screen_mode][1];
     *(u16*)(SS_REG + 0x6) = screen_disp_reg_tbl[screen_mode][2];
@@ -212,7 +218,7 @@ void screen_window_regs_update(void) {
     *(u16*)(SS_REG + 0x14) = t;
     *(u16*)(SS_REG + 0x16) = t >> 8;
     t = screen_window[1].r;
-    t += 2;
+    t = t + 2;
     *(u16*)(SS_REG + 0x18) = t;
     *(u16*)(SS_REG + 0x1A) = t >> 8;
     t = screen_window[1].b;
@@ -220,7 +226,11 @@ void screen_window_regs_update(void) {
     *(u16*)(SS_REG + 0x1E) = t >> 8;
     t = screen_disp_ctrl & 7;
     *(u16*)(SS_REG + 0x26) = t;
-    *(u16*)(SS_REG + 0x28) = Monitor_Flip ? 3 : 0;
+    if (Monitor_Flip) {
+        *(u16*)(SS_REG + 0x28) = 3;
+    } else {
+        *(u16*)(SS_REG + 0x28) = 0;
+    }
 }
 
 

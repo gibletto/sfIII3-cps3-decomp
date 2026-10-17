@@ -734,20 +734,27 @@ s32 set_judge_area_sprite(WORK_Other* owk) {
     const u16* flip;
     s16 blk;
     s16 base_code;
+    CharGfxSet* set;
     s16 cell;
     s16 y_ofs;
     s16 i;
-    u32 k;
+    s16 j;
+    s16 k;
     s32 n;
+    s32 t;
+    (void)((WORK*)owk)->id;
     if (wk->wu.spr.gfx_cells == 0) {
         return 0;
     }
-    base_code = cg_slot_tbl[(u16)cg_data_list[wk->wu.cg_number].set->slot].addr;
+    (void)wk->wu.cg_number;
+    set = cg_data_list[wk->wu.cg_number].set;
+    base_code = cg_slot_tbl[set->slot].addr;
+    if (0) {}
     if ((blk = simmram_block_alloc_40(wk->wu.spr.gfx_cells / 16 + 1, 1)) == 0) {
         return 0;
     }
     base = (GFX_CELL *)simmram_slot_addr(blk);
-    if (wk->wu.spr.gfx_blk40[2] != 0) {
+    if (wk->wu.spr.gfx_blk40[2]) {
         simmram_block_free_40(wk->wu.spr.gfx_blk40[2]);
     }
     wk->wu.spr.gfx_blk40[2] = wk->wu.spr.gfx_blk40[1];
@@ -761,47 +768,57 @@ s32 set_judge_area_sprite(WORK_Other* owk) {
             continue;
         }
         y_ofs = 0;
-        if (i == wk->curr_ja) {
+        if (wk->curr_ja == i) {
             y_ofs = wk->fade_cja.w * 2;
         }
-        for (k = 0, n = i * 4, flip = flip_attr_tbl; k < 4; k++, n++, flip++) {
+        for (k = 0, n = i * 16, flip = flip_attr_tbl; k < 4; n = n + 4, flip++) {
             base[cell].w[0] = judge_area_code_tbl[i] + base_code + y_ofs;
             base[cell].w[1] = *flip;
-            base[cell].w[2] = wk->ja[n][0] & 0x3FF;
-            base[cell].w[3] = wk->ja[n][1] & 0x3FF;
+            base[cell].w[2] = *(s16*)((u32)wk->ja + (t = n)) & 0x3FF;
+            base[cell].w[3] = *(s16*)((u32)wk->ja + t + 2) & 0x3FF;
             base[cell].w[5] = 0x305;
             base[cell].w[4] = cell_size_tbl[5];
             cell++;
+            k++;
         }
     }
     if (wk->ja_disp_bit & 0x4000) {
-        for (k = 0, flip = flip_attr_tbl; k < 4; k++, flip++) {
+        (void)((WORK*)flip)->id;
+        (void)((WORK*)flip)->blink_timing;
+        (void)((WORK*)flip)->operator;
+        (void)((WORK*)flip)->type;
+        (void)((WORK*)flip)->charset_id;
+        (void)((WORK*)flip)->work_id;
+        for (k = 0, n = 14 * 16, flip = flip_attr_tbl; k < 4; n = n + 4, flip++) {
             base[cell].w[0] = judge_area_code_tbl[14] + base_code;
             base[cell].w[1] = *flip;
-            base[cell].w[2] = wk->ja[14 * 4 + k][0] & 0x3FF;
-            base[cell].w[3] = wk->ja[14 * 4 + k][1] & 0x3FF;
+            base[cell].w[2] = *(s16*)((u32)wk->ja + (t = n)) & 0x3FF;
+            base[cell].w[3] = *(s16*)((u32)wk->ja + t + 2) & 0x3FF;
             base[cell].w[5] = 0x305;
             base[cell].w[4] = cell_size_tbl[5];
             cell++;
+            k++;
         }
+        (void)((WORK*)flip)->operator;
+        (void)((WORK*)flip)->be_flag;
+        (void)((WORK*)flip)->disp_flag;
     }
     if (wk->ja_disp_bit & 0x8000) {
-        for (k = 0; k < 2; k++) {
-            base[cell].w[0] = judge_area_code_tbl[15 + k] + base_code;
+        for (j = 0; j < 2; j++) {
+            base[cell].w[0] = judge_area_code_tbl[15 + j] + base_code;
             base[cell].w[1] = flip_attr_tbl[0];
-            base[cell].w[2] = wk->ja[60 + k][0] & 0x3FF;
-            base[cell].w[3] = wk->ja[60 + k][1] & 0x3FF;
+            base[cell].w[2] = wk->ja[60 + (u32)j][0] & 0x3FF;
+            base[cell].w[3] = wk->ja[60 + (u32)j][1] & 0x3FF;
             base[cell].w[5] = 0x305;
             base[cell].w[4] = cell_size_tbl[5];
             cell++;
         }
     }
-    if (cell == wk->wu.spr.gfx_cells) {
-        return 1;
+    if (wk->wu.spr.gfx_cells != cell) {
+        return 2;
     }
-    return 2;
+    return 1;
 }
-
 
 
 s32 set_conn_sprite(WORK_Other_CONN* wk) {
@@ -809,7 +826,6 @@ s32 set_conn_sprite(WORK_Other_CONN* wk) {
     CharSpriteK* dst;
     CharSpriteK* s;
     CHAR_CELL* cells;
-    CHAR_CELL* c;
     CharGfxSet* set;
     s16 base;
     u16 chr;
@@ -842,6 +858,7 @@ s32 set_conn_sprite(WORK_Other_CONN* wk) {
         wk->wu.spr.disp_colcd = wk->wu.my_col_code & 0x1FF;
     }
     for (i = n = 0; i < wk->num_of_conn; i++) {
+        (void)((WORK*)n)->be_flag;
         chr = wk->conn[i].chr;
         set = cg_data_list[chr].set;
         base = cg_slot_tbl[set->slot].addr;
@@ -849,12 +866,11 @@ s32 set_conn_sprite(WORK_Other_CONN* wk) {
         cells += set->count;
         for (j = 0; j < set->cells; j++) {
             s = &dst[n];
-            c = &cells[j];
-            s->code = base + c->code;
-            s->pal = c->col + wk->wu.spr.disp_colcd + wk->conn[i].col;
-            s->x = (c->x + wk->conn[i].nx + cg_data_list[chr].x) & 0x3FF;
-            s->y = (wk->conn[i].ny - c->y - cg_data_list[chr].y) & 0x3FF;
-            size = *((u8*)c + 6) >> 4;
+            s->code = base + cells[j].code;
+            s->pal = cells[j].col + wk->wu.spr.disp_colcd + wk->conn[i].col;
+            s->x = (cells[j].x + wk->conn[i].nx + cg_data_list[chr].x) & 0x3FF;
+            s->y = (wk->conn[i].ny - cells[j].y - cg_data_list[chr].y) & 0x3FF;
+            size = *((u8*)&cells[j] + 6) >> 4;
             s->attr = size | 0x300;
             s->zoom = cell_size_tbl[size];
             n++;

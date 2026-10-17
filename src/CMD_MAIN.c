@@ -497,6 +497,7 @@ void debug_object_edit_init(void) {
     dbg_col_ix[1] = 0;
     dbg_cmd_panel = 0;
     Debug_Dec_Disp = 0;
+    Debug_Dec_Disp = 0;
     for (i = 0; i < 2; i++) {
         dbg_pl = &plw[i];
         dbg_slot = (DBG_SLOT*)(dbg_slot_w + i);
@@ -1288,7 +1289,10 @@ void debug_hit_judgment_move(void) {
         }
         break;
     }
-    debug_char_disp(&plw[0].wu);
+    wk = &plw[0].wu;
+    goto disp;
+disp:
+    debug_char_disp(wk);
     debug_char_disp(&plw[1].wu);
     debug_bg_color_preset_next();
     debug_rgb_editor_print(0);
@@ -1329,8 +1333,12 @@ fail:
 
 /* provisional name */
 void debug_hit_a_judgement_build_table(void) {
-    WORK_Other** ewk = dbg_hita_ewk;
-    WORK* wk = &dbg_hita_ewk[0]->wu;
+    s32 zero = 0;
+    s32 one;
+    WORK_Other** ewk;
+    WORK* wk;
+    WORK* player;
+    u32 work_base;
     WORK_Other* slot;
     u32* dst;
     u32* src;
@@ -1345,28 +1353,40 @@ void debug_hit_a_judgement_build_table(void) {
     s16 i;
     s16 j;
     s16 n;
+    ewk = dbg_hita_ewk;
+    work_base = (u32)ewk;
+    wk = &((WORK_Other**)work_base)[0]->wu;
+    (void)((WORK*)zero)->id;
     plw[0].wu.before = wk->before;
     plw[0].wu.myself = wk->myself;
     plw[0].wu.behind = wk->behind;
     plw[0].wu.listix = wk->listix;
     plw[0].wu.dead_f = wk->dead_f;
     plw[0].wu.timing = wk->timing;
-    dst = (u32*)dbg_hita_ewk[0];
     src = (u32*)&plw[0];
+    (void)((WORK*)src)->id;
+    (void)((WORK*)src)->rl_flag;
+    (void)((WORK*)src)->disp_flag;
+    dst = (u32*)((WORK_Other**)work_base)[0];
 copy:;
     for (i = 0; i < 512; i++) {
         *dst++ = *src++;
     }
-    plw[0].wu.xyz[0].disp.pos += 0x180;
-    plw[0].wu.position_x += 0x180;
+    (void)((WORK*)0x180)->id;
+    player = &plw[0].wu;
+    (void)player->id;
+    player->xyz[0].disp.pos += 0x180;
+    player->position_x += 0x180;
     plw[1].wu.xyz[0].disp.pos += 0x180;
     plw[1].wu.position_x += 0x180;
-    wk->hit_adrs = plw[0].wu.set_char_ad;
-    wk->dmg_adrs = (u32*)plw[0].wu.hit_ix_table;
+    wk->hit_adrs = player->set_char_ad;
+    wk->dmg_adrs = (u32*)player->hit_ix_table;
     slot = ewk[1];
     slot->wu.routine_no[4] = 4;
     pat = (HITA_PAT*)((u8*)(slot) + 0x34);
     wk->set_char_ad = (u32*)pat;
+    (void)((WORK*)pat)->id;
+    (void)((WORK*)pat)->be_flag;
     wk->cg_ix = 0;
     wk->cgd_type = 4;
     wk->dmcal_m = dbg_slot->rec_count;
@@ -1376,9 +1396,11 @@ copy:;
     }
     pat[i].frames = 0;
     pat[i].kind = 2;
+    one = 1;
     pat[i].param = 1;
     wk->cg_ctr = pat[0].frames;
-    body = (HITA_BOX*)((u8*)(ewk[3]) + 0x34);
+    body = (HITA_BOX*)ewk[3]->wu.old_rno;
+    (void)body->w[0];
     wk->body_adrs = (BODY_BOX*)body;
     hand = (HITA_BOX*)((u8*)(ewk[4]) + 0x34);
     wk->hand_adrs = (HAND_BOX*)hand;
@@ -1386,13 +1408,19 @@ copy:;
     wk->caught_adrs = (CAUGHT_BOX*)hand;
     wk->hosei_adrs = (HOSEI_BOX*)hand;
     att = (HITA_BOX*)((u8*)(ewk[5]) + 0x34);
+    (void)att->w[0];
     wk->attack_adrs = (ATTACK_BOX*)att;
-    keys = (HITA_KEY*)((u8*)(ewk[6]) + 0x34);
+    slot = ewk[6];
+    keys = (HITA_KEY*)((u8*)slot + 0x34);
+    (void)((WORK*)keys)->id;
+    (void)((WORK*)keys)->rl_flag;
+    (void)((WORK*)keys)->disp_flag;
     n = 0;
     for (i = 1; i <= wk->dmcal_m; i++) {
         for (j = n; j >= 0; j--) {
             if (debug_memcmp_u32((u32*)&body[j], (u32*)&dbg_look_body[i], 8)) {
                 keys[i].ix[0] = j;
+                (void)keys[i].key;
                 break;
             }
         }
@@ -1434,7 +1462,8 @@ copy:;
     }
     wk->vital_old = n;
     n = 0;
-    ixkey = (u32*)((u8*)(ewk[2]) + 0x34);
+    slot = ewk[2];
+    ixkey = (u32*)((u8*)slot + 0x34);
     for (i = 1; i <= wk->dmcal_m; i++) {
         for (j = n; j >= 0; j--) {
             if (keys[i].key == ixkey[j * 4]) {
@@ -1454,7 +1483,7 @@ copy:;
     ixtbl = (HITA_IX*)ixkey;
     wk->hit_ix_table = (HIT_IX*)ixtbl;
     for (i = 1; i <= n; i++) {
-        t.key = ixkey[i * 4];
+        t.key = ((HITA_KEY*)ixkey)[i * 4].key;
         ixtbl[i].body = t.ix[0];
         ixtbl[i].hand = t.ix[1];
         ixtbl[i].attack = t.ix[2];
@@ -1485,6 +1514,9 @@ copy:;
     wk->dir_timer = 0;
     wk->dir_step = 0;
     dbg_hita_grid_sw = 0;
+    (void)wk->id;
+    (void)wk->rl_flag;
+    (void)((WORK*)one)->id;
 }
 
 
@@ -1768,8 +1800,13 @@ s32 debug_hit_a_judgement_edit_grid(WORK* wk) {
         }
         return 1;
     } else {
+        (void)((WORK*)pat)->id;
+        (void)((WORK*)pat)->be_flag;
+        (void)pat[ix].frames;
         sw = ~dbg_p1sw_1 & dbg_p1sw_0;
         if (sw & 0x80) {
+            goto add;
+        add:
             if (wk->dir_step < 2) {
                 if (wk->dmcal_m > 95) {
                     goto none;
@@ -1786,7 +1823,11 @@ s32 debug_hit_a_judgement_edit_grid(WORK* wk) {
                 ixtbl[wk->dmcal_d] = *h;
             }
             return 1;
+            goto added;
+        added:;
         } else if (sw & 0x100) {
+            goto del;
+        del:
             if (wk->dir_step < 2) {
                 if (wk->dmcal_m < 2) {
                     goto none;
@@ -1851,11 +1892,15 @@ s32 debug_hit_a_judgement_column_nav(WORK* wk) {
     s16 i;
     u32 target;
     s16 ret;
+    const JUDGE_COLUMN (*col)[7];
     if (dbg_p2sw_0 & 0x70) {
         return 0;
     }
     dir = debug_held_pad_repeat(dbg_p2sw_0, dbg_p2sw_1, 1, 4) + debug_held_pad_repeat(dbg_p2sw_0, dbg_p2sw_1, 2, 5) * 2 + debug_held_pad_repeat(dbg_p2sw_0, dbg_p2sw_1, 4, 6) * 4 + debug_held_pad_repeat(dbg_p2sw_0, dbg_p2sw_1, 8, 7) * 8;
+    col = &judge_column_tbl;
+    (void)((WORK*)col)->id;
     ret = 0;
+    (void)((WORK*)1)->id;
     switch (dir) {
     case 1:
         if (wk->dir_step < 2) {
@@ -1868,8 +1913,8 @@ s32 debug_hit_a_judgement_column_nav(WORK* wk) {
             if (page == 0) {
                 break;
             }
-            for (i = 0; i < wk->dmcal_m; i++) {
-                if (tbl[i * 4 + 2] == (page - 1) << 13) {
+            for (target = (page - 1) << 13, i = 0; i < wk->dmcal_m; i++) {
+                if (tbl[i * 4 + 2] == target) {
                     break;
                 }
             }
@@ -1886,8 +1931,10 @@ s32 debug_hit_a_judgement_column_nav(WORK* wk) {
             if (page == wk->dmcal_d) {
                 break;
             }
-            for (i = 0; i < wk->dmcal_m; i++) {
-                if (tbl[i * 4 + 2] == (page + 1) << 13) {
+            for (target = (page + 1) << 13, i = 0; i < wk->dmcal_m; i++) {
+                goto scan;
+            scan:
+                if (tbl[i * 4 + 2] == target) {
                     break;
                 }
             }
@@ -1898,12 +1945,12 @@ s32 debug_hit_a_judgement_column_nav(WORK* wk) {
         ret = 1;
         break;
     case 4:
-        wk->dir_step = judge_column_tbl[wk->dir_step].rest[3];
+        wk->dir_step = (*col)[wk->dir_step].rest[3];
         ret = 1;
         break;
     case 8:
         ret = 1;
-        wk->dir_step = judge_column_tbl[wk->dir_step].rest[4];
+        wk->dir_step = (*col)[wk->dir_step].rest[4];
         break;
     }
     return ret;
@@ -1946,7 +1993,17 @@ void debug_hit_a_print_pattern_rows(WORK* wk, GRID_REC* recs) {
     s16 v;
     const GRID_POS* hit;
     ix = wk->cg_ix / wk->cgd_type - 4;
-    for (i = 0; i < 9; i++, ix++) {
+    goto rows;
+    (void)((WORK*)tilemap_print_string_attr)->id;
+    (void)((WORK*)grid_empty_row_msg)->id;
+    (void)((WORK*)grid_row_frame_msg)->id;
+    (void)((WORK*)hit_grid5_pos_tbl)->id;
+    (void)((WORK*)debug_blank3_msg)->id;
+    (void)((WORK*)Convert_BCD)->id;
+    (void)((WORK*)tilemap_print_hex)->id;
+rows:;
+    if (0) {}
+    for (i = 0; i < 9; ix++, i++) {
         if (ix < 0 || ix >= wk->dmcal_m) {
             tilemap_print_string_attr(2, hit_grid5_pos_tbl[i].y, 0, grid_empty_row_msg);
         } else {
@@ -1959,11 +2016,12 @@ void debug_hit_a_print_pattern_rows(WORK* wk, GRID_REC* recs) {
             tilemap_print_string_attr(hit_grid5_pos_tbl[i].x, hit_grid5_pos_tbl[i].y, attr, debug_blank3_msg);
             tilemap_print_hex(hit_grid5_pos_tbl[i].x, hit_grid5_pos_tbl[i].y, attr, Convert_BCD(v, 3), 3, 2);
             v = recs[ix].bits >> 13;
-            hit = hit_grid5_pos_tbl[i].hit;
-            tilemap_print_string_attr(hit->x, hit->y, attr, debug_zero2_msg);
+            tilemap_print_string_attr(hit_grid5_pos_tbl[i].hit->x,
+                                      (hit = hit_grid5_pos_tbl[i].hit)->y, attr, debug_zero2_msg);
             tilemap_print_hex(hit->x, hit->y, attr, Convert_BCD(v, 2), 2, 2);
         }
     }
+    (void)((WORK*)14)->id;
 }
 
 
@@ -2181,6 +2239,7 @@ void debug_rgb_editor_print(s16 print) {
     s32 green, blue;
     s32 word;
     s32 part;
+    (void)plw[print && print && print && print && print && print && print && 0].wu.id;
     r = Debug_RGB[0] >> 2;
     g = Debug_RGB[1] >> 2;
     b = Debug_RGB[2] >> 2;
@@ -3555,9 +3614,13 @@ void debug_hit_box_cursor(void) {
     u16 sw;
     u16 *input = &now;
     if (Debug_PL_id) {
+        goto idle;
+    idle:
         return;
     } else {
+    poll:
         now = dbg_p2sw_0;
+    held:;
         sw = ~dbg_p2sw_1 & now;
         if (now & 0x240) {
             tilemap_rect_fill(dbg_hud_x + 40, (s8)((WORK_Other*)dbg_judge_ewk)->refrected + 12, 8, 1, 2, 0xFFFF);
@@ -5143,10 +5206,13 @@ void debug_draw_cg_group_offset(code, ix, x, y, attr)
 void debug_draw_object_info(void) {
     s16 num;
     s16 pat;
+    const TM_STRING* p;
     num = debug_hex4_to_bcd(dbg_slot->sel[0]);
     tilemap_print_hex(10, 4, 2, num, 3, 0);
     num = debug_hex4_to_bcd(dbg_slot->sel0_max);
     tilemap_print_hex(14, 4, 2, num, 3, 0);
+    (void)((WORK*)tilemap_print_hex)->id;
+    (void)((WORK*)0)->id;
     num = debug_hex4_to_bcd(dbg_slot->sel[1]);
     tilemap_print_hex(10, 6, 2, num, 3, 0);
     num = debug_hex4_to_bcd(dbg_slot->sel1_max);
@@ -5210,8 +5276,10 @@ void debug_draw_object_info(void) {
         tilemap_print_string(0, 0, 0xFFFF, &dbg_char_name_str[dbg_pl->player_number]);
     } else {
         tilemap_print_string(0, 0, 0xFFFF, &dbg_act_kind_str[10]);
-        tilemap_print_string(0, 0, 0xFFFF, &dbg_act_name_tbl[10][dbg_slot->sel[0] - 217]);
-        tilemap_print_string(0, 0, 0xFFFF, (*(const TM_STRING(*)[])(&dbg_char_name_str[16])));
+        p = dbg_act_name_tbl[10];
+        p = &p[dbg_slot->sel[0] - 217];
+        tilemap_print_string(0, 0, 0xFFFF, p);
+        tilemap_print_string(0, 0, 0xFFFF, &dbg_char_name_str[16]);
     }
 }
 
@@ -5371,7 +5439,7 @@ void debug_draw_hit_edit_info(void)
     s16 i;
     s16 num;
     HIT_IX *hit;
-    const char* str;
+    u16 x;
 
     tilemap_rect_fill(dbg_hud_x + 40, ((WORK_Other_JUDGE *)dbg_judge_ewk)->curr_ja + 12, 8, 1, 14, 0xFFFF);
     if (Debug_Box_Edit) {
@@ -5379,10 +5447,10 @@ void debug_draw_hit_edit_info(void)
     } else {
         tilemap_print_string_attr(dbg_hud_x + 40, 8, 14, dbg_free_str);
     }
-    str = dbg_copy_str;
+    (void)((WORK*)&dbg_copy_str)->id;
     if (dbg_copy_done) {
         if (dbg_copy_pat == dbg_slot->sel[2] && dbg_pl->wu.char_index == dbg_copy_char) {
-            tilemap_print_string_attr(dbg_hud_x + 40, 9, 6, str);
+            tilemap_print_string_attr(dbg_hud_x + 40, 9, 6, dbg_copy_str);
         } else {
             tilemap_print_string_attr(dbg_hud_x + 40, 9, 14, dbg_copy_str);
         }
@@ -5410,6 +5478,7 @@ void debug_draw_hit_edit_info(void)
     /* hit-index row of the current pattern */
     num = Convert_BCD((u16)dbg_edit_buf.rec[dbg_slot->sel[2]].box, 3);
     tilemap_print_hex(4, 20, 2, num, 3, 0);
+    (void)((WORK*)Convert_BCD)->id;
     hit = &dbg_pl->wu.hit_ix_table[(u16)dbg_edit_buf.rec[dbg_slot->sel[2]].box];
     tilemap_print_hex(12, 20, 2, Convert_BCD(hit->boix, 3), 3, 0);
     tilemap_print_hex(12, 21, 2, Convert_BCD(hit->bhix, 3), 3, 0);
@@ -5421,7 +5490,8 @@ void debug_draw_hit_edit_info(void)
     tilemap_print_string_attr(2, 24, 2, hit_kind_tbl[hit->mf.half.bx].name);
     tilemap_print_string_attr(5, 24, 2, hit_kind_tbl[hit->mf.half.mv].name);
 
-    tilemap_print_string_attr(dbg_hud_x + 5, 21, 2, Debug_PL_id ? dbg_2p_str : dbg_1p_str);
+    x = dbg_hud_x + 5;
+    tilemap_print_string_attr(x, 21, 2, Debug_PL_id ? dbg_2p_str : dbg_1p_str);
 }
 
 
@@ -6124,11 +6194,12 @@ void debug_draw_cg_data(void) {
         } else {
             tilemap_print_string_attr(dbg_hud_x + 37, 12, 10, dbg_no_extdat_str);
         }
+        (void)((WORK*)4)->id;
         bit = 1;
         i = 0;
-        on = dbg_cancel_on_str;
         off = dbg_cancel_off_str;
-        for (; i < 8; i++, on++, off++) {
+        on = dbg_cancel_on_str;
+        for (; i < 8; i++, off++, on++) {
             if (plw[0].wu.cg_cancel & bit) {
                 tilemap_print_string(dbg_hud_x, 0, 0xFFFF, on);
             } else {

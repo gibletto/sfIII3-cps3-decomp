@@ -151,12 +151,11 @@ void load_player_color(a, b, c)
     s16 b;
     s16 c;
 {
-    s32 zero;
     const XFER* p = player_color_tbl[a][b][c];
-    register s8 i;
-    for (zero = i = 0; i < 14; i++, p++) {
+    s8 i;
+    for (i = 0; i < 14; p++, i++) {
         if (p->size) {
-            col_trans_result = polygon2d_submit_quad(p->src, p->dst, p->size, zero, zero, zero);
+            col_trans_result = polygon2d_submit_quad(p->src, p->dst, p->size, 0, 0, 0);
         }
     }
 }

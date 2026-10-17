@@ -107,6 +107,10 @@
 #include "fighter.h"
 #include "RANKING.h"
 
+#define BOOT_TITLE_ATTR(palette) ((palette) * 2)
+#define BOOT_REGION_ATTR(palette) ((palette) << 1)
+#define BOOT_NO_CD_ATTR(palette) ((palette) * 2U)
+
 
 
 
@@ -121,6 +125,7 @@ void mode_init_task(void) {
     s16 wait;
     u8 region;
     s32 color;
+    s16* title_x;
 
     region_setup();
     CC_Type = region_cc_type_tbl[Country - 1];
@@ -173,7 +178,7 @@ void mode_init_task(void) {
     }
     effect_work_init();
     task_sleep(1);
-    while (create_task(test_mode_task, 0, &task_tbl[4], 2, 0) == 0) {
+    while (create_task((void (*)())test_mode_task, 0, &task_tbl[4], 2, 0) == 0) {
     }
 
     /* title and region name, in the region's colour */
@@ -192,10 +197,10 @@ void mode_init_task(void) {
     cd_ready_flag = 0;
     no_cd_flag = bios_cd_flags & 1;
     display_mode_setup();
-    tilemap_print_string((*&DE_X)[3], 0, color * 2, boot_title_str);
-    tilemap_print_string(DE_X[3], 0, color * 2, &boot_region_str[region]);
+    tilemap_print_string(*(title_x = &DE_X[3]), 0, BOOT_TITLE_ATTR(color), boot_title_str);
+    tilemap_print_string(*title_x, 0, BOOT_REGION_ATTR(color), &boot_region_str[region]);
     if (no_cd_flag) {
-        tilemap_print_string(DE_X[3], 0, color * 2, boot_no_cd_str);
+        tilemap_print_string(DE_X[3], 0, BOOT_NO_CD_ATTR(color), boot_no_cd_str);
     }
     task_sleep(6);
     for (wait = 166; --wait > 0; ) {
@@ -228,9 +233,9 @@ void mode_init_task(void) {
     Entry_Mes_Wide[1] = 3;
     dm17_to_nm23_flag = 0;
     Ranking_Init();
-    while (create_task(game_frame_task, 0, &task_tbl[3], 3, 0) == 0) {
+    while (create_task((void (*)())game_frame_task, 0, &task_tbl[3], 3, 0) == 0) {
     }
-    while (create_task(entry_task, 0, &task_tbl[2], 3, 0) == 0) {
+    while (create_task((void (*)())entry_task, 0, &task_tbl[2], 3, 0) == 0) {
     }
     destroy_current_task();
 }

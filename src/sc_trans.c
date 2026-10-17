@@ -240,7 +240,9 @@ u16 n;
 {
     u16 i;
     u16 k;
-    sc_trans_src = (u8*)&sc_blank_chr;
+    u8* blank;
+    sc_trans_src = sc_blank_chr;
+    blank = sc_trans_src;
     sc_trans_dst = (u16*)((SS_RAM + 0x8000) + pos * 64);
     for (i = 0; i < n; i++) {
         for (k = 0; k < 16; k++) {
@@ -251,7 +253,7 @@ u16 n;
             sc_trans_dst++;
             sc_trans_src++;
         }
-        sc_trans_src = (u8*)&sc_blank_chr;
+        sc_trans_src = blank;
     }
 }
 
@@ -354,14 +356,20 @@ s32 ToneDown(s8 tone) {
 
 /* provisional name */
 void sc_chr_list_trans(s8 ix) {
-    const u16* slot = sc_chr_list_tbl[ix].slot;
-    const u16* src = sc_chr_list_tbl[ix].src;
-    u16 n = *slot++;
-    s32 i;
+    const PAL_BYTE_LIST* entry;
+    const u16* slot;
+    const u16* src;
+    u16 n;
+    u16 i;
+    entry = &sc_chr_list_tbl[ix];
+    (void)entry->slot;
+    slot = entry->slot;
+    src = entry->src;
+    n = *slot++;
     for (i = 0; i < n; i++) {
         sc_trans_dst = (u16*)((SS_RAM + 0x8000) + *slot++ * 64);
-        sc_trans_src = (u8*)sc_chr_data + *src++ * 32;
-        sc_trans_src = (u8*)&sc_chr_data[*src++ * 32 / 2];
+        sc_trans_src = (u8*)((u32)sc_chr_data + *src++ * 32);
+        sc_trans_src = (u8*)((u32)sc_chr_data + (*src++ * 32 / 2) * 2);
         *sc_trans_dst = *sc_trans_src;
     }
 }
@@ -656,15 +664,21 @@ void sc_fill_rect(u32 x, u32 y, u16 w, u16 h, u16 code, u16 attr)
     u16 col;
     u16 at;
 
+    row = 0;
+    line = (u16 *)(SS_RAM + (u16)x * 4 + ((u16)y << 8));
     at = ((code & 0x100) >> 8) | attr;
-    line = (u16 *)(SS_RAM + (u16)x * 4 + (u16)y * 0x100);
-    for (row = 0; row < h; row++) {
-        for (col = 0; col < w; col = col + 1) {
+    (void)((WORK*)x)->id;
+    (void)((WORK*)x)->be_flag;
+    for (; row < h; row++) {
+        for (col = 0; col < w; col++) {
             line[col * 2] = code;
             line[col * 2 + 1] = at;
         }
         line += 0x80;
     }
+    (void)plw[(row + 0x100) && 0].wu.id;
+    (void)((WORK*)line)->id;
+    (void)((WORK*)code)->id;
 }
 
 void Sa_frame_Clear(void)
@@ -846,8 +860,8 @@ void win_mark_ram_clear(void) {
     u8* dst;
     s32 blank = 0xBDC0;
     for (i = 0, dst = &sc_chr_ram[0x200]; i < 8; i++) {
-        u32 src = (u32)sc_chr_data;
-        sc_trans_src = (u8*)(src + blank);
+        u32 src;
+        src = (u32)sc_chr_data, sc_trans_src = (u8*)(src + blank);
         sc_bak_ptr = dst;
         sc_chr_to_ram(64);
         dst += 64;

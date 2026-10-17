@@ -519,8 +519,15 @@ void set_guard_status(PLW* as, PLW* ds) {
 
 
 /* provisional name */
+#define PARING_PLAYER_ID(row, player, hsadix, player_copy) \
+    (((row) ? (player) : ((hsadix) & 1)) | ((player_copy) != 0))
+
 void set_blocking_status(PLW* as, PLW* ds) {
     s16 hsadix;
+    u8 (*row)[2];
+    u8 (*row_copy)[2];
+    s32 player;
+    s32 player_copy;
     if ((as->wu.att.hs_you == 0) && (as->wu.att.hs_me == 0)) {
         ds->wu.routine_no[2] = ds->wu.old_rno[2];
     } else {
@@ -588,7 +595,12 @@ void set_blocking_status(PLW* as, PLW* ds) {
             paring_bonus_r[ds->wu.id] = 1;
             paring_ctr_vs[Play_Type][ds->wu.id]++;
             if (paring_ctr_vs[Play_Type][ds->wu.id] > 39) {
-                *(ds->wu.id + paring_ctr_vs[Play_Type]) = 39;
+                row = &paring_ctr_vs[Play_Type];
+                row_copy = row;
+                *(ds->wu.id + *row_copy) = 39;
+                player = 0;
+                player_copy = player;
+                (void)plw[PARING_PLAYER_ID(row, player, hsadix, player_copy)].wu.id;
             }
             paring_counter[ds->wu.id] = parisucc_pts[Play_Type][paring_ctr_vs[Play_Type][ds->wu.id] - 1];
         }
@@ -596,6 +608,8 @@ void set_blocking_status(PLW* as, PLW* ds) {
     }
     hit_pattern_extdat_check(&as->wu);
 }
+
+#undef PARING_PLAYER_ID
 
 
 
@@ -850,9 +864,37 @@ s32 defense_ground(PLW* as, PLW* ds, s8 gddir) {
         attr_att = check_normal_waza(as->wu.kind_of_waza);
     }
     if (ds->py->flag == 0 && !(ds->guard_flag & 2) && as->wu.att.guard & 3) {
-        if (as->wu.att.guard & 2 && !(ds->spmv_ng_flag & 0x100)) {
-            if (just_now) {
-                if (ds->cp->waza_flag[3] >= blocking_term_tbl[attr_att][0]) {
+        if (as->wu.att.guard & 2) {
+            if (!(ds->spmv_ng_flag & 0x100)) {
+                if (just_now) {
+                    if (ds->cp->waza_flag[3] >= blocking_term_tbl[attr_att][0]) {
+                        blocking_point_count_up(ds);
+                        as->wu.hf.hit.player = 64;
+                        if (check_attbox_dir(ds) == 0) {
+                            ds->wu.routine_no[2] = 31;
+                        } else {
+                            ds->wu.routine_no[2] = 32;
+                        }
+                        return check_dm_att_blocking(&as->wu, &ds->wu, 5) ? 2 : 0;
+                    }
+                } else if (as->wu.jump_att_flag) {
+                    if (ds->cp->waza_flag[12]) {
+                        blocking_point_count_up(ds);
+                        as->wu.hf.hit.player = 64;
+                        if (check_attbox_dir(ds) == 0) {
+                            ds->wu.routine_no[2] = 31;
+                        } else {
+                            ds->wu.routine_no[2] = 32;
+                        }
+                        if (check_dm_att_blocking(&as->wu, &ds->wu, 5)) {
+                            return 2;
+                        } else {
+                            goto jump_not_blocked;
+                        jump_not_blocked:;
+                            return 0;
+                        }
+                    }
+                } else if (ds->cp->waza_flag[3] != 0) {
                     blocking_point_count_up(ds);
                     as->wu.hf.hit.player = 64;
                     if (check_attbox_dir(ds) == 0) {
@@ -860,32 +902,15 @@ s32 defense_ground(PLW* as, PLW* ds, s8 gddir) {
                     } else {
                         ds->wu.routine_no[2] = 32;
                     }
-                    return check_dm_att_blocking(&as->wu, &ds->wu, 5) ? 2 : 0;
-                }
-            } else if (as->wu.jump_att_flag) {
-                if (ds->cp->waza_flag[12]) {
-                    blocking_point_count_up(ds);
-                    as->wu.hf.hit.player = 64;
-                    if (check_attbox_dir(ds) == 0) {
-                        ds->wu.routine_no[2] = 31;
-                    } else {
-                        ds->wu.routine_no[2] = 32;
+                    if (check_dm_att_blocking(&as->wu, &ds->wu, 5)) {
+                        return 2;
                     }
-                    return check_dm_att_blocking(&as->wu, &ds->wu, 5) ? 2 : 0;
+                    return 0;
                 }
-            } else if (ds->cp->waza_flag[3] != 0) {
-                blocking_point_count_up(ds);
-                as->wu.hf.hit.player = 64;
-                if (check_attbox_dir(ds) == 0) {
-                    ds->wu.routine_no[2] = 31;
-                } else {
-                    ds->wu.routine_no[2] = 32;
-                }
-                if (check_dm_att_blocking(&as->wu, &ds->wu, 5)) {
-                    return 2;
-                }
-                return 0;
             }
+        } else {
+            goto no_high_blocking;
+        no_high_blocking:;
         }
         if (as->wu.att.guard & 1) {
             if (!(ds->spmv_ng_flag & 0x200)) {
@@ -1224,9 +1249,11 @@ next_mi:
 
 
 void attack_hit_check(void) {
+    typedef struct { s16 x, width, y, height; } HitBox;
+    typedef struct { s16* box; } BoxSlot;
     WORK* mad;
     WORK* sad;
-    s16* mh;
+    s16 (*boxes)[4];
     s16* sh;
     s16 mi;
     s16 si;
@@ -1234,7 +1261,12 @@ void attack_hit_check(void) {
     s16 lp2;
     s16 mw;
     s16** slot;
+    s16** slot_copy;
+    s16* width;
     si = 0;
+    (void)((HitBox*)boxes)->x;
+    (void)((WORK*)sh)->id;
+    (void)((WORK*)mi)->id;
     goto test0;
     loop0:
     {
@@ -1243,26 +1275,29 @@ void attack_hit_check(void) {
         }
         sad = q_hit_push[si];
         sh = sad->h_bod->body_dm[0];
-        mh = sad->h_han->hand_dm[0];
+        boxes = sad->h_han->hand_dm;
         lp = 0;
         goto test1;
         loop1:
         {
+            (void)((HitBox*)boxes)->x;
+            (void)((WORK*)dmdat_adrs)->id;
             dmdat_adrs[lp] = sh;
-            dmdat_adrs[lp + 4] = mh;
+            dmdat_adrs[lp + 4] = *boxes++;
         }
         next1:
             lp++;
             sh += 4;
-            mh += 4;
         test1:
         if (lp < 4) {
             goto loop1;
         }
         exit1:;
+        goto fill_complete;
+        fill_complete:;
         dmdat_adrs[8] = (s16*)sad->h_att + 8;
         dmdat_adrs[9] = (s16*)sad->h_att + 12;
-        dmdat_adrs[10] = &sad->h_hos->hos_box[0];
+        dmdat_adrs[10] = (s16*)sad->h_hos;
         mi = 0;
         goto test2;
         loop2:
@@ -1282,7 +1317,9 @@ void attack_hit_check(void) {
             }
             if (!(mad->att.dipsw & 2) ||
                 (!(sad->att.dipsw & 2) && (sad->work_id == 1 || !(((WORK_Other*)sad)->refrected)))) {
+                (void)sad->xyz[sad->work_id & 2].disp.pos;
                 if ((mad->work_id != 1 && mad->work_id != 8) || !(sad->att.dipsw & 2)) {
+                    goto g1; g1:;
                     if (!(mad->vs_id & sad->work_id)) {
                         goto next2;
                     }
@@ -1300,12 +1337,12 @@ void attack_hit_check(void) {
                        (mad->id == ((WORK_Other*)sad)->master_id)) {
                 goto next2;
             }
-            mh = &mad->h_att->att_box[0][0];
+            boxes = (s16(*)[4])mad->h_att;
             lp = 0;
             goto test3;
             loop3:
             {
-                if (mh[1] == 0) {
+                if (*(s16*)&(*boxes)[1] == 0) {
                     goto next3;
                 }
                 lp2 = 0;
@@ -1315,8 +1352,12 @@ void attack_hit_check(void) {
                     if (lp2 > 3 && mad->att_hit_ok == 0) {
                         goto end;
                     }
-                    sh = dmdat_adrs[lp2];
-                    if (sh[1] == 0) {
+                    slot = &dmdat_adrs[lp2];
+                    (void)((BoxSlot*)&((s16**)0)[lp2])->box;
+                    slot_copy = slot;
+                    (void)((WORK*)3)->id;
+                    (void)((WORK*)3)->work_id;
+                    if (*(s16*)((u16*)*slot + 1) == 0) {
                         goto next4;
                     }
                     if ((lp == 2 || lp == 3) && (lp2 == 8 || lp2 == 9)) {
@@ -1332,17 +1373,25 @@ void attack_hit_check(void) {
                                 goto next4;
                             }
                         }
-                        if (mad->att.dipsw & 4 && (lp2 > 7 || sad->cg_ja.bhix == 0)) {
-                            goto next4;
+                        if (mad->att.dipsw & 4) {
+                            if (lp2 > 7) {
+                                goto next4;
+                            }
+                            if (sad->cg_ja.bhix == 0) {
+                                goto next4;
+                            }
                         }
                     }
                     if (lp2 == 10) {
-                        if (!(mad->att.dipsw & 64) || sad->kind_of_waza & 0x60 || pcon_dp_flag ||
-                            sad->pat_status == 0x26) {
+                        if (!(mad->att.dipsw & 64) || sad->kind_of_waza & 0x60) {
+                            goto next4;
+                        }
+                        if (pcon_dp_flag || sad->pat_status == 0x26) {
                             goto next4;
                         }
                     }
-                    mw = hit_check_subroutine(mad, sad, mh, dmdat_adrs[lp2]);
+                    mw = hit_check_subroutine(mad, sad, *boxes, *slot_copy);
+                    (void)((BoxSlot*)&((s16**)0)[lp2])->box;
                     if (mw > mkm_wk[si]) {
                         hs[mi].flag.results |= 0x10;
                         hs[mi].my_hit = si;
@@ -1352,7 +1401,7 @@ void attack_hit_check(void) {
                         hs[si].dm_body = lp2;
                         mad->att_hit_ok = 0;
                         mkm_wk[si] = mw;
-                        hs[mi].ah = mh;
+                        hs[mi].ah = *boxes;
                         hs[si].dh = dmdat_adrs[lp2];
                     }
                 }
@@ -1360,13 +1409,14 @@ void attack_hit_check(void) {
                     lp2++;
                 test4:
                 if (lp2 < 11) {
+                    goto g0; g0:;
                     goto loop4;
                 }
                 exit4:;
             }
             next3:
                 lp++;
-                mh += 4;
+                boxes++;
             test3:
             if (lp < 4) {
                 goto loop3;

@@ -161,6 +161,13 @@ void Att_PL10_MACH_SLIDE2(PLW* wk) {
             break;
         }
         char_move_z((WORK*)wk);
+        if (1) {
+            goto slide_continue;
+        }
+        switch (0) {
+        default:;
+        }
+slide_continue:;
         if (wk->wu.cg_type == 21) {
             reset_mvxy_data((WORK*)wk);
             wk->wu.cg_type = 0;

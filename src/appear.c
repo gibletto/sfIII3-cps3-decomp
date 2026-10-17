@@ -1386,6 +1386,7 @@ void Appear_28000(PLW* wk) {
 
 void Appear_29000(PLW* wk) {
     s16 work;
+    s32 mv;
     switch (wk->wu.routine_no[3]) {
     case 0:
         wk->wu.routine_no[3]++;
@@ -1394,8 +1395,7 @@ void Appear_29000(PLW* wk) {
         wk->wu.cmwk[1] = 0;
         wk->wu.cmwk[2] = 0;
         work = random_16_com();
-        work &= 3;
-        wk->wu.cmwk[2] = work;
+        wk->wu.cmwk[2] = work & 3;
         set_char_move_init(&wk->wu, 9, 0);
         work = random_16_com();
         if (work & 1) {
@@ -1417,16 +1417,20 @@ void Appear_29000(PLW* wk) {
                 } else {
                     wk->wu.mvxy.a[0].sp = 0x10000;
                 }
-                set_char_move_init(&wk->wu, 9, 8);
-                break;
+                while (0);
+                mv = 8;
+                goto set_move;
             case 2:
                 wk->wu.routine_no[3] = 3;
+                mv = 10;
                 if (wk->wu.id) {
+                    while (0);
                     wk->wu.xyz[0].disp.pos = bg_w.bgw[1].pos_x_work + 0xd8;
                 } else {
                     wk->wu.xyz[0].disp.pos = bg_w.bgw[1].pos_x_work + -0xd8;
                 }
-                set_char_move_init(&wk->wu, 9, 10);
+            set_move:
+                set_char_move_init(&wk->wu, 9, mv);
                 break;
             case 3:
                 wk->wu.routine_no[3] = 4;

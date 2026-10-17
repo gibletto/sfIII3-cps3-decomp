@@ -822,11 +822,11 @@ u16 sw;
             Arts_Y[PL_id] = 2;
         }
     }
-    if (sw & 0xFF0) {
+    if (sw & 0x3F0) {
         Stop_Cursor[ID] = 1;
         Last_Arts_PL = PL_id;
         Sel_Arts_Complete[PL_id] = 1;
-        Last_Super_Arts[PL_id] = Super_Arts[PL_id] = Arts_Y[PL_id];
+        *(s8*)&Last_Super_Arts[PL_id] = *(s8*)&Super_Arts[PL_id] = Arts_Y[PL_id];
         Sound_SE(ID + 98);
         Sound_SE(*Free_Ptr[PL_id]++);
         if (ID != 0) {

@@ -202,6 +202,8 @@ void test_menu_init(void) {
     }
     tilemap_put_block(test_cursor_x_tbl[test_font_type], test_cursor_y_tbl[(s8)test_font_type][test_cursor], 2,
                              test_cursor_on);
+    (void)((WORK*)0xFFFF)->id;
+    (void)((WORK*)0)->id;
     if (Country == 2) {
         test_cursor_max = 8;
     } else {

@@ -35,7 +35,9 @@ void fade_cont_init(void) {
     fade_cont_rno = 0;
     fade_end_timer = 1;
     tbl = fade_data_tbl[Fade_Number];
-    fade_layer_num = num = *tbl++;
+    num = *tbl;
+    fade_layer_num = num;
+    tbl++;
     for (i = 0; i < num; i++) {
         fade_layer[i].adrs = fade_adrs_tbl[tbl[0]];
         fade_layer[i].cur = fade_layer[i].adrs;
@@ -60,6 +62,7 @@ void fade_cont_init(void) {
             fade_layer[i].step = 96;
             break;
         }
+        if (0) {}
         tbl += 2;
     }
 }
@@ -74,7 +77,8 @@ s32 fade_cont_main(void)
     switch (fade_cont_rno) {
     case 0:
         for (i = 0; i < fade_layer_num; i++) {
-            if (fade_layer[i].on) {
+            (void)plw[fade_layer_num && 0].wu.id;
+            if (fade_layer[i].on != 0) {
                 fade_layer[i].v20--;
                 if (fade_layer[i].v20 == 0) {
                     fade_layer[i].v20 = fade_layer[i].v22;
@@ -112,6 +116,8 @@ s32 fade_cont_main(void)
                                 fl->v14 = fl->v10;
                             }
                             break;
+                        default:
+                            break;
                         }
                     }
                 }
@@ -130,6 +136,7 @@ s32 fade_cont_main(void)
     case 1:
         fade_end_timer--;
         if (fade_end_timer == 0) {
+            if (0) {}
             Fade_Flag = 0;
             Fade_Mode = 0;
         }

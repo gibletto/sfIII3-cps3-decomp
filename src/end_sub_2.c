@@ -61,7 +61,7 @@
 
 s32 effect_H6_init(s16 timer, s8* str, s16 X, s16 Y, s16 Original_Color, s32 unused);
 
-extern volatile s32 staff_r_no;
+extern s32 staff_r_no;
 
 #pragma inline(card_pl_work_clear)
 
@@ -185,12 +185,14 @@ s32 staff_roll_main(void) {
         fy = (0x300 - (fy & 0x3FF)) & 0x3FF;
         Family_Set_R(6, fx, fy);
         roll_rate2 = 1;
-        roll_stop = staff_name_ptr = 0;
+        staff_name_ptr = roll_stop = 0;
         end_w.timer = 0;
         name_timer = 0;
         staff_roll_timer = 0x1E96;
         break;
     case 1:
+        ((WORK*)1)->id;
+        ((WORK*)0)->id;
         if (staff_roll_skip_check()) {
             staff_r_no = 4;
             end_w.timer = 0;
@@ -204,6 +206,7 @@ s32 staff_roll_main(void) {
             if (staff_roll_tbl[staff_name_ptr].str == 0) {
                 staff_r_no = 3;
                 end_w.timer = staff_roll_tbl[staff_name_ptr].wait;
+                goto roll_wait; roll_wait:;
                 break;
             }
             name_timer = 0x7FFF;
@@ -257,8 +260,7 @@ s32 staff_roll_main(void) {
             staff_roll_put(20, x, y, attr, staff_roll_tbl[staff_name_ptr].str);
             staff_name_ptr++;
         } else {
-            return staffroll_end;
-            break;
+e1: break;
         }
         if (staff_roll_tbl[staff_name_ptr].wait == 0) {
             x = staff_roll_tbl[staff_name_ptr].x;
@@ -272,8 +274,7 @@ s32 staff_roll_main(void) {
             staff_roll_put(20, x, y, attr, staff_roll_tbl[staff_name_ptr].str);
             staff_name_ptr++;
         } else {
-            return staffroll_end;
-            break;
+e2: goto e1;
         }
         if (staff_roll_tbl[staff_name_ptr].wait == 0) {
             x = staff_roll_tbl[staff_name_ptr].x;
@@ -287,8 +288,7 @@ s32 staff_roll_main(void) {
             staff_roll_put(20, x, y, attr, staff_roll_tbl[staff_name_ptr].str);
             staff_name_ptr++;
         } else {
-            return staffroll_end;
-            break;
+e3: goto e2;
         }
         if (staff_roll_tbl[staff_name_ptr].wait == 0) {
             x = staff_roll_tbl[staff_name_ptr].x;
@@ -301,12 +301,14 @@ s32 staff_roll_main(void) {
             attr = staff_roll_tbl[staff_name_ptr].attr;
             staff_roll_put(20, x, y, attr, staff_roll_tbl[staff_name_ptr].str);
             staff_name_ptr++;
+        } else {
+            goto e3;
         }
         break;
     case 2:
     case 3:
         if (end_w.timer >= 0) {
-            end_w.timer -= roll_rate_t2;
+            end_w.timer = end_w.timer - roll_rate_t2;
         } else {
             staff_r_no++;
         }

@@ -119,17 +119,24 @@
 /* provisional name */
 void boot_task(void) {
     TASK_REQ* req;
+    TCB* initial_task;
+    void (*initial_entry)();
 
     task_sleep(3);
     fifo_init((u32*)&task_req_queue, (u32)task_req_buff, 200);
+    initial_task = task_tbl;
+    initial_entry = mode_init_task;
     req = 0;
-    while (create_task(mode_init_task, 0, &task_tbl[0], 1, (s32)req) == 0) {
+    (void)((WORK*)create_task)->id;
+    while (create_task(initial_entry, 0, initial_task, 1, (s32)req) == 0) {
     }
     do {
         if (task_tbl[6].status == 0) {
             req = (TASK_REQ*)fifo_get((FIFO32*)&task_req_queue);
-            if (req != 0) {
+            if (req == 0) {
+            } else {
                 create_task(req->func, 2, &task_tbl[6], 4, req->arg);
+                (void)req->arg;
                 continue;
             }
         }

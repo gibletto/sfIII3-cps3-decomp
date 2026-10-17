@@ -146,25 +146,41 @@ void disasm_sh_opcode(u16 code, char* str) {
     char buf[128];
     const MoveName* p;
     u32 hi;
+    u32 masked;
     const char** side;
-    u16 kind;
+    const char** names;
+    u32 kind;
     char* mark;
     char* mark2;
+    char* tail;
+    (void)((WORK*)strcpy)->id;
     *str = 0;
     hi = code & 0xFF00;
     if (hi == 0) {
         for (p = sh_op_none_tbl; p->name != 0; p++) {
             if (code == p->code) {
-                goto found;
+                strcpy(str, p->name);
+                return;
             }
         }
     }
+    (void)((WORK*)0xF0FF)->id;
+    (void)((WORK*)strcat)->be_flag;
+    (void)((WORK*)buf)->id;
     kind = code & 0xF000;
+    names = reg_name_tbl;
+    (void)((WORK*)names)->be_flag;
     if (kind == 0x4000) {
     ldm:;
-        side = &reg_name_tbl[(s32)(code & 0xF00) >> 8];
-        for (p = sh_op_ldm_tbl; p->name != 0; p++) {
-            if ((code & 0xF0FF) == p->code) {
+        p = sh_op_ldm_tbl;
+        masked = code & 0xF0FF;
+        while (0) {
+        }
+        side = &names[(s32)(code & 0xF00) >> 8];
+        for (; p->name != 0; p++) {
+            if (0) {
+            }
+            if (masked == p->code) {
                 strcpy(buf, p->name);
                 mark = strstr(buf, sh_str_rm);
                 *mark = 0;
@@ -176,9 +192,10 @@ void disasm_sh_opcode(u16 code, char* str) {
         }
     }
     if (kind == 0 || kind == 0x4000) {
-        side = &reg_name_tbl[(s32)(code & 0xF00) >> 8];
-        for (p = sh_op_n_tbl; p->name != 0; p++) {
-            if ((code & 0xF0FF) == p->code) {
+        for (p = sh_op_n_tbl, masked = code & 0xF0FF, side = &names[(s32)(code & 0xF00) >> 8];
+             (void)((WORK*)masked)->id, p->name != 0;
+             p++) {
+            if (masked == p->code) {
                 strcpy(buf, p->name);
                 mark = strstr(buf, sh_str_rn);
                 *mark = 0;
@@ -197,9 +214,11 @@ void disasm_sh_opcode(u16 code, char* str) {
                 *mark = 0;
                 strcpy(str, buf);
                 strcat(str, reg_name_tbl[(s32)(code & 0xF0) >> 4]);
-                mark2 = strstr(mark + 2, sh_str_rn);
+                tail = mark;
+                tail += 2;
+                mark2 = strstr(tail, sh_str_rn);
                 *mark2 = 0;
-                strcat(str, mark + 2);
+                strcat(str, tail);
                 strcat(str, reg_name_tbl[(s32)(code & 0xF00) >> 8]);
                 strcat(str, mark2 + 2);
                 return;
@@ -209,56 +228,63 @@ void disasm_sh_opcode(u16 code, char* str) {
     if (kind == 0x8000) {
         for (p = sh_op_disp_m_tbl; p->name != 0; p++) {
             if (hi == p->code) {
-                goto found;
+                strcpy(str, p->name);
+                return;
             }
         }
     }
     if (kind == 0x8000) {
         for (p = sh_op_disp_n_tbl; p->name != 0; p++) {
             if (hi == p->code) {
-                goto found;
+                strcpy(str, p->name);
+                return;
             }
         }
     }
     if (kind == 0x8000 || kind == 0xC000) {
         for (p = sh_op_d8_tbl; p->name != 0; p++) {
             if (hi == p->code) {
-                goto found;
+                strcpy(str, p->name);
+                return;
             }
         }
     }
     if (kind == 0x8000 || kind == 0xC000) {
         for (p = sh_op_imm_tbl; p->name != 0; p++) {
             if (hi == p->code) {
-                goto found;
+                strcpy(str, p->name);
+                return;
             }
         }
     }
     for (p = sh_op_disp4_tbl; p->name != 0; p++) {
         if (kind == p->code) {
-            goto found;
+            strcpy(str, p->name);
+            return;
         }
     }
     for (p = sh_op_d12_tbl; p->name != 0; p++) {
         if (kind == p->code) {
-            goto found;
+            strcpy(str, p->name);
+            return;
         }
     }
     for (p = sh_op_pcrel_tbl; p->name != 0; p++) {
         if (kind == p->code) {
-            goto found;
+            strcpy(str, p->name);
+            return;
         }
     }
     for (p = sh_op_imm_n_tbl; p->name != 0; p++) {
         if (kind == p->code) {
-            goto found;
+            strcpy(str, p->name);
+            return;
         }
     }
     if (*str == 0) {
         strcpy(str, sh_str_undef);
+        (void)((WORK*)kind)->id;
+        (void)((WORK*)hi)->id;
     }
-    return;
-found:
-    strcpy(str, p->name);
 }
 

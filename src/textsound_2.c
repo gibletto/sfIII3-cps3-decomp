@@ -58,18 +58,20 @@ void sound_init(u8* data, SNDSAMPLE* bank_a, u8** bank_b, u8 stereo, u8 volume, 
     snd_bank_tbl = bank_b;
     snd_stereo = flag;
     for (p = init; p < &init[21]; p++) {
-        *(volatile u16*)(EXT_SW + 0x202) = *p;
+        *(u16*)(EXT_SW + 0x202) = *p;
         n = 0x100;
         while (n--) {
         }
     }
+    (void)((TEXT_CELL*)n)->code;
     reg = (volatile u16*)SOUND_REG;
-    for (n = 0x100; n != 0; n--) {
-        *reg++ = 0;
+    for (n = 0x100; n != 0; reg++) {
+        *reg = 0;
+        n--;
     }
-    snd_ctrl.w.hi = (volume << 8) | (stereo & 1) | 0x22;
-    *(volatile u32*)(SOUND_REG + 0x210) = snd_ctrl.l;
-    *(volatile u16*)(SOUND_REG + 0x200) = 0;
+    ((u16 (*)[2])&snd_ctrl)[0][0] = (volume << 8) | (stereo & 1) | 0x22;
+    *(u32*)(SOUND_REG + 0x210) = ((u32 (*)[1])&snd_ctrl)[0][0];
+    *(u16*)(SOUND_REG + 0x200) = 0;
     snd_seq_data = (u32*)data;
     snd_seq_max = *data++;
     snd_seq_max <<= 8;
@@ -78,6 +80,7 @@ void sound_init(u8* data, SNDSAMPLE* bank_a, u8** bank_b, u8 stereo, u8 volume, 
     bgm_master_vol_init = bgm_master_vol;
     snd_master_vol = *data;
     sound_sample_submit_work7 = 1;
+    voice_reset:;
     voice_state_init_pair_work = 0;
     sound_sample_submit_work4 = 0;
     snd_fade_level = 0;
@@ -115,10 +118,11 @@ s32 sound_seq_start(u16 code, s16 ramp) {
     u8* p;
     u8* track;
     u8* bank;
+    u8** bank_table;
+    SNDPATCH* initial_patch;
     SNDVOICE* v;
     SNDVOICE* mv;
     SNDVOICE* vp;
-    SNDRAMP* rec;
     u32 ofs;
     s32 ticks;
     s32 n;
@@ -136,26 +140,32 @@ s32 sound_seq_start(u16 code, s16 ramp) {
     if (ofs == 0) {
         return;
     }
-    seq = (u8*)snd_seq_data + ofs;
+    seq = (u8*)((u32)snd_seq_data + ofs);
     p = seq;
+    (void)((WORK*)ofs)->id;
     hdr = *p++;
     if (!hdr) {
         bgm_stop();
+        if (0) {}
+        i = 0;
         mv = bgm_voice;
-        vp = bgm_voice;
-        for (i = 0; i < 16; i++, vp++, mv++) {
+        vp = &bgm_voice[0];
+        for (; i < 16; ) {
             off = *p++ << 8;
             off += *p++;
             if (off) {
                 track = seq + off;
-                v = vp;
-                v->origin = track;
+                (v = vp)->origin = track;
                 n = midi_vlq_decode_while(track, &ticks);
                 ticks <<= 8;
                 v->event_ticks = ticks;
-                v->cursor = track + n;
+                v->cursor = &track[n];
                 v->status = 0x20;
-                bank = *snd_bank_tbl;
+                bank_table = snd_bank_tbl;
+                (void)((WORK*)se_tick_step)->id;
+                bank = *bank_table;
+                (void)((WORK*)mv)->id;
+                (void)((TEXT_CELL*)bank_table)->code;
                 v->patch = (SNDPATCH*)(bank + *(u16*)bank);
                 v->sample = &snd_sample_tbl[v->patch->sample_index];
                 v->note_ticks = 0;
@@ -203,12 +213,212 @@ s32 sound_seq_start(u16 code, s16 ramp) {
             } else {
                 mv->status = 0xC0;
             }
+            (void)((WORK*)mv)->id;
+            (void)((WORK*)bgm_voice)->id;
+            i++, vp++, mv++;
+            off = *p++ << 8;
+            off += *p++;
+            if (off) {
+                track = seq + off;
+                (v = vp)->origin = track;
+                n = midi_vlq_decode_while(track, &ticks);
+                ticks <<= 8;
+                v->event_ticks = ticks;
+                v->cursor = &track[n];
+                v->status = 0x20;
+                bank_table = snd_bank_tbl;
+                (void)((WORK*)se_tick_step)->id;
+                bank = *bank_table;
+                (void)((WORK*)mv)->id;
+                (void)((TEXT_CELL*)bank_table)->code;
+                v->patch = (SNDPATCH*)(bank + *(u16*)bank);
+                v->sample = &snd_sample_tbl[v->patch->sample_index];
+                v->note_ticks = 0;
+                v->decoded_pitch = 0;
+                v->target_pitch = 0;
+                v->current_pitch = 0;
+                v->pitch_lfo = 0;
+                v->volume_lfo = 0;
+                v->pitch_lfo_depth = 0;
+                v->volume_lfo_depth = 0;
+                v->lfo_rate = 0;
+                v->envelope_level = 0;
+                v->saved_portamento_step = 0;
+                v->portamento_step = 0;
+                v->program_index = 0;
+                v->attack_peak = 0;
+                v->attack_rate = 0;
+                v->sustain_level = 0;
+                v->decay_rate = 0;
+                v->release_rate = 0;
+                v->forced_release_rate = 0;
+                v->loop_count[0] = 0;
+                v->loop_count[1] = 0;
+                v->loop_count[2] = 0;
+                v->loop_count[3] = 0;
+                v->loop_latch = 0;
+                v->envelope_phase = 0;
+                v->lfo_phase_flags = 0;
+                v->priority_flags = hdr;
+                v->volume = 0;
+                v->velocity = 0;
+                v->expression = 0x40;
+                v->fine_tune = 0;
+                v->transpose = 0;
+                v->coarse_pitch_bend = 0;
+                v->fine_pitch_control = 0x40;
+                v->key_on_pending = 0;
+                v->duration_enabled = 0;
+                v->note_event_pending = 0;
+                v->tie = 0;
+                v->release_pending = 0;
+                v->restart_pending = 0;
+                v->pan_override = 0x40;
+                v->control_70 = 0;
+            } else {
+                mv->status = 0xC0;
+            }
+            (void)((WORK*)mv)->id;
+            (void)((WORK*)bgm_voice)->id;
+            i++, vp++, mv++;
+            off = *p++ << 8;
+            off += *p++;
+            if (off) {
+                track = seq + off;
+                (v = vp)->origin = track;
+                n = midi_vlq_decode_while(track, &ticks);
+                ticks <<= 8;
+                v->event_ticks = ticks;
+                v->cursor = &track[n];
+                v->status = 0x20;
+                bank_table = snd_bank_tbl;
+                (void)((WORK*)se_tick_step)->id;
+                bank = *bank_table;
+                (void)((WORK*)mv)->id;
+                (void)((TEXT_CELL*)bank_table)->code;
+                v->patch = (SNDPATCH*)(bank + *(u16*)bank);
+                v->sample = &snd_sample_tbl[v->patch->sample_index];
+                v->note_ticks = 0;
+                v->decoded_pitch = 0;
+                v->target_pitch = 0;
+                v->current_pitch = 0;
+                v->pitch_lfo = 0;
+                v->volume_lfo = 0;
+                v->pitch_lfo_depth = 0;
+                v->volume_lfo_depth = 0;
+                v->lfo_rate = 0;
+                v->envelope_level = 0;
+                v->saved_portamento_step = 0;
+                v->portamento_step = 0;
+                v->program_index = 0;
+                v->attack_peak = 0;
+                v->attack_rate = 0;
+                v->sustain_level = 0;
+                v->decay_rate = 0;
+                v->release_rate = 0;
+                v->forced_release_rate = 0;
+                v->loop_count[0] = 0;
+                v->loop_count[1] = 0;
+                v->loop_count[2] = 0;
+                v->loop_count[3] = 0;
+                v->loop_latch = 0;
+                v->envelope_phase = 0;
+                v->lfo_phase_flags = 0;
+                v->priority_flags = hdr;
+                v->volume = 0;
+                v->velocity = 0;
+                v->expression = 0x40;
+                v->fine_tune = 0;
+                v->transpose = 0;
+                v->coarse_pitch_bend = 0;
+                v->fine_pitch_control = 0x40;
+                v->key_on_pending = 0;
+                v->duration_enabled = 0;
+                v->note_event_pending = 0;
+                v->tie = 0;
+                v->release_pending = 0;
+                v->restart_pending = 0;
+                v->pan_override = 0x40;
+                v->control_70 = 0;
+            } else {
+                mv->status = 0xC0;
+            }
+            (void)((WORK*)mv)->id;
+            (void)((WORK*)bgm_voice)->id;
+            i++, vp++, mv++;
+            off = *p++ << 8;
+            off += *p++;
+            if (off) {
+                track = seq + off;
+                (v = vp)->origin = track;
+                n = midi_vlq_decode_while(track, &ticks);
+                ticks <<= 8;
+                v->event_ticks = ticks;
+                v->cursor = &track[n];
+                v->status = 0x20;
+                bank_table = snd_bank_tbl;
+                (void)((WORK*)se_tick_step)->id;
+                bank = *bank_table;
+                (void)((WORK*)mv)->id;
+                (void)((TEXT_CELL*)bank_table)->code;
+                (void)((WORK*)bank_table)->id;
+                v->patch = (SNDPATCH*)(bank + *(u16*)bank);
+                v->sample = &snd_sample_tbl[v->patch->sample_index];
+                v->note_ticks = 0;
+                v->decoded_pitch = 0;
+                v->target_pitch = 0;
+                v->current_pitch = 0;
+                v->pitch_lfo = 0;
+                v->volume_lfo = 0;
+                v->pitch_lfo_depth = 0;
+                v->volume_lfo_depth = 0;
+                v->lfo_rate = 0;
+                v->envelope_level = 0;
+                v->saved_portamento_step = 0;
+                v->portamento_step = 0;
+                v->program_index = 0;
+                v->attack_peak = 0;
+                v->attack_rate = 0;
+                v->sustain_level = 0;
+                v->decay_rate = 0;
+                v->release_rate = 0;
+                v->forced_release_rate = 0;
+                v->loop_count[0] = 0;
+                v->loop_count[1] = 0;
+                v->loop_count[2] = 0;
+                v->loop_count[3] = 0;
+                v->loop_latch = 0;
+                v->envelope_phase = 0;
+                v->lfo_phase_flags = 0;
+                v->priority_flags = hdr;
+                v->volume = 0;
+                v->velocity = 0;
+                v->expression = 0x40;
+                v->fine_tune = 0;
+                v->transpose = 0;
+                v->coarse_pitch_bend = 0;
+                v->fine_pitch_control = 0x40;
+                v->key_on_pending = 0;
+                v->duration_enabled = 0;
+                v->note_event_pending = 0;
+                v->tie = 0;
+                v->release_pending = 0;
+                v->restart_pending = 0;
+                v->pan_override = 0x40;
+                v->control_70 = 0;
+            } else {
+                mv->status = 0xC0;
+            }
+            (void)((WORK*)mv)->id;
+            (void)((WORK*)bgm_voice)->id;
+            i++, vp++, mv++;
         }
         if (!(sound_sample_submit_work7 & 8)) {
             snd_fade_level = 0x8000;
         }
         bgm_tempo_add = 0;
         bgm_tick_step = 0;
+        if (0) {}
         sound_sample_submit_work7 |= 2;
         return;
     }
@@ -222,9 +432,11 @@ s32 sound_seq_start(u16 code, s16 ramp) {
                     n = midi_vlq_decode_while(track, &ticks);
                     ticks <<= 8;
                     se_voice[i].event_ticks = ticks;
-                    se_voice[i].cursor = track + n;
+                    se_voice[i].cursor = &track[n];
                     se_voice[i].status = 0;
-                    bank = *snd_bank_tbl;
+                    bank_table = snd_bank_tbl;
+                    bank = *bank_table;
+                    (void)((TEXT_CELL*)bank_table)->code;
                     se_voice[i].patch = (SNDPATCH*)(bank + *(u16*)bank);
                     se_voice[i].sample = &snd_sample_tbl[se_voice[i].patch->sample_index];
                     se_voice[i].decoded_pitch = 0;
@@ -283,13 +495,18 @@ s32 sound_seq_start(u16 code, s16 ramp) {
                 }
             }
         }
+        (void)((WORK*)se_tick_step)->id;
         return;
     }
-    if (ch = hdr & 15, (*p & 0x7F) < (SE_VOICE(ch).priority_flags & 0x7F) && !(SE_VOICE(ch).status & 0x80)) {
+    if (ch = hdr & 15, (*p & 0x7F) < (((u8*)&SE_VOICE(ch))[111] & 0x7F) && !(SE_VOICE(ch).status & 0x80)) {
         return;
     }
     se_voice[ch].cursor = p;
-    se_voice[ch].patch = (SNDPATCH*)(*snd_bank_tbl + *(u16*)*snd_bank_tbl);
+    (void)((WORK*)seq)->id;
+    bank_table = snd_bank_tbl;
+    (void)((TEXT_CELL*)bank_table)->code;
+    se_voice[ch].patch = (SNDPATCH*)(*bank_table + *(u16*)*bank_table);
+    (void)((WORK*)hdr)->id;
     se_voice[ch].sample = &snd_sample_tbl[se_voice[ch].patch->sample_index];
     se_voice[ch].envelope_level = 0;
     se_voice[ch].program_index = 0;
@@ -308,17 +525,16 @@ s32 sound_seq_start(u16 code, s16 ramp) {
     se_voice[ch].fine_pitch_control = 0x40;
     se_voice[ch].priority_flags = *p | 0x80;
     se_voice[ch].pan_override = 0x40;
-    rec = &se_pan_ramp[ch];
     if (ramp != -1) {
-        rec->current = se_ramp_req.current;
-        rec->target = se_ramp_req.target;
-        rec->step = se_ramp_req.step;
-        rec->mode = se_ramp_req.mode;
+        se_pan_ramp[ch].current = se_ramp_req.current;
+        se_pan_ramp[ch].target = se_ramp_req.target;
+        se_pan_ramp[ch].step = se_ramp_req.step;
+        se_pan_ramp[ch].mode = se_ramp_req.mode;
     } else {
-        rec->current = 0;
-        rec->target = 0;
-        rec->step = 0;
-        rec->mode = -1;
+        se_pan_ramp[ch].current = 0;
+        se_pan_ramp[ch].target = 0;
+        se_pan_ramp[ch].step = 0;
+        se_pan_ramp[ch].mode = -1;
     }
     se_voice[ch].status = 0;
 }

@@ -59,6 +59,8 @@ s32 effA5_start_pressed(void) {
 
 
 
+#define DIALOGUE_THIRD_SKIP_TIME ((void)((WORK*)630)->id, 630)
+
 void effect_A6_move(WORK_Other_CONN* ewk) {
     WORK_Other* mwk;
     const EFFA6_MESSAGE* mes;
@@ -78,7 +80,7 @@ void effect_A6_move(WORK_Other_CONN* ewk) {
             } else if (ewk->wu.routine_no[6] <= 630) {
                 ewk->wu.routine_no[6] = 420;
             } else if (ewk->wu.routine_no[6] <= 840) {
-                ewk->wu.routine_no[6] = 630;
+                ewk->wu.routine_no[6] = DIALOGUE_THIRD_SKIP_TIME;
             } else {
                 ewk->wu.routine_no[6] = 840;
             }
@@ -106,6 +108,7 @@ void effect_A6_move(WORK_Other_CONN* ewk) {
                     break;
                 }
                 conn_data = mes->conn;
+                (void)effA6_mes_jp[ewk->master_player][mmes_already].conn;
                 chr_data = mes->chr;
                 switch (Country) {
                 case 1:
@@ -179,62 +182,60 @@ void effect_A6_move(WORK_Other_CONN* ewk) {
         if (Suicide[3]) {
             ewk->wu.routine_no[0] = 1;
             break;
-        }
-        if (!ewk->wu.disp_flag) {
-            break;
-        }
-        switch (ewk->wu.routine_no[1]) {
-        case 0:
-            ewk->wu.routine_no[1]++;
-            switch (ewk->wu.dir_old) {
-            case 0x43:
-                ewk->wu.position_x = ewk->wu.xyz[0].disp.pos = 72;
-                ewk->wu.position_y = ewk->wu.xyz[1].disp.pos = bg_w.bgw[0].xy[1].disp.pos + 186;
-                break;
-            default:
-                ewk->wu.position_x = ewk->wu.xyz[0].disp.pos = 664;
-                ewk->wu.position_y = ewk->wu.xyz[1].disp.pos = bg_w.bgw[0].xy[1].disp.pos + 26;
-                break;
-            }
-        case 1:
-            switch (ewk->wu.dir_old) {
-            case 0x43:
-                ewk->wu.position_x = *(s16*)&ewk->wu.xyz[0] += 10;
-                if (ewk->wu.position_x >= 320) {
-                    ewk->wu.routine_no[1]++;
-                    ewk->wu.position_x = ewk->wu.xyz[0].disp.pos = 320;
+        } else if (ewk->wu.disp_flag) {
+            switch (ewk->wu.routine_no[1]) {
+            case 0:
+                ewk->wu.routine_no[1]++;
+                switch (ewk->wu.dir_old) {
+                case 0x43:
+                    ewk->wu.position_x = ewk->wu.xyz[0].disp.pos = 72;
+                    ewk->wu.position_y = ewk->wu.xyz[1].disp.pos = bg_w.bgw[0].xy[1].disp.pos + 186;
+                    break;
+                default:
+                    ewk->wu.position_x = ewk->wu.xyz[0].disp.pos = 664;
+                    ewk->wu.position_y = ewk->wu.xyz[1].disp.pos = bg_w.bgw[0].xy[1].disp.pos + 26;
+                    break;
+                }
+            case 1:
+                switch (ewk->wu.dir_old) {
+                case 0x43:
+                    ewk->wu.position_x = ewk->wu.xyz[0].disp.pos = ewk->wu.xyz[0].disp.pos + 10;
+                    if (ewk->wu.position_x >= 320) {
+                        ewk->wu.routine_no[1]++;
+                        ewk->wu.position_x = ewk->wu.xyz[0].disp.pos = 320;
+                    }
+                    break;
+                default:
+                    ewk->wu.position_x = ewk->wu.xyz[0].disp.pos = ewk->wu.xyz[0].disp.pos - 10;
+                    if (ewk->wu.position_x <= 392) {
+                        ewk->wu.routine_no[1]++;
+                        ewk->wu.position_x = ewk->wu.xyz[0].disp.pos = 392;
+                    }
+                    break;
                 }
                 break;
-            default:
-                ewk->wu.position_x = *(s16*)&ewk->wu.xyz[0] -= 10;
-                if (ewk->wu.position_x <= 392) {
-                    ewk->wu.routine_no[1]++;
-                    ewk->wu.position_x = ewk->wu.xyz[0].disp.pos = 392;
-                }
+            case 2:
                 break;
             }
-            break;
-        case 2:
-            break;
+            mwk = (WORK_Other*)ewk->my_master;
+            switch (ewk->wu.dir_old) {
+            case 0x43:
+                ewk->wu.position_z = ewk->wu.xyz[2].disp.pos = mwk->wu.position_z - 1;
+                effa6_pos_x_1p = mwk->wu.position_x;
+                effa6_pos_y_1p = mwk->wu.position_y;
+                effa6_pos_z_1p = mwk->wu.position_z;
+                break;
+            default:
+                ewk->wu.position_z = ewk->wu.xyz[2].disp.pos = mwk->wu.position_z - 1;
+                effa6_pos_x_2p = mwk->wu.position_x;
+                effa6_pos_y_2p = mwk->wu.position_y;
+                effa6_pos_y_2p = mwk->wu.position_y;
+                break;
+            }
+            ewk->wu.cg_number++;
+            ewk->wu.cg_number &= 0x7FFF;
+            sort_push_request3(&ewk->wu);
         }
-        mwk = (WORK_Other*)ewk->my_master;
-        switch (ewk->wu.dir_old) {
-        case 0x43:
-            ewk->wu.position_z = ewk->wu.xyz[2].disp.pos = mwk->wu.position_z - 1;
-            effa6_pos_x_1p = mwk->wu.position_x;
-            effa6_pos_y_1p = mwk->wu.position_y;
-            effa6_pos_z_1p = mwk->wu.position_z;
-            break;
-        default:
-            ewk->wu.position_z = ewk->wu.xyz[2].disp.pos = mwk->wu.position_z - 1;
-            effa6_pos_x_2p = mwk->wu.position_x;
-            effa6_pos_y_2p = mwk->wu.position_y;
-            effa6_pos_y_2p = mwk->wu.position_y;
-            break;
-        }
-        ewk->wu.cg_number = ewk->wu.cg_number + 1;
-        ewk->wu.cg_number &= 0x7FFF;
-        sort_push_request3(&ewk->wu);
         break;
     case 1:
         ewk->wu.routine_no[0]++;

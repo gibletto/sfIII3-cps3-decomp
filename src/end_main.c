@@ -80,6 +80,7 @@
 
 extern s32 staff_r_no;
 
+void Scrn_Move_Set(s32 n, s16 x, s16 y);
 void scrn_attr_set(s16 n, s16 attr, s16 bits);
 
 
@@ -2500,6 +2501,7 @@ void opening_title_00(void) {
 
 /* provisional name */
 void opening_capcom_logo_draw(void) {
+    s32 pos;
     effect_E1_init(1, 0, 1);
     effect_E1_init(0, 0, 1);
     effect_F5_init(0x10);
@@ -2514,7 +2516,8 @@ void opening_capcom_logo_draw(void) {
     scrn_reg_w[0].ctrl &= 0xFE7F;
     Scrn_Move_Set(0, 0x200 - bg_w.pos_offset, 0);
     Scrn_Move_Set(1, 0x200 - bg_w.pos_offset, 0);
-    Family_Set_W(1, -(0x200 - bg_w.pos_offset) & 0x3FF, 0x300);
+    pos = (s16)-(0x200 - bg_w.pos_offset) & 0x3FF;
+    Family_Set_W(1, pos, 0x300);
     op_end_flag = 1;
     bg_stop = 0;
     bg_stop2 = 0;
@@ -2531,7 +2534,7 @@ void opening_bgw_commit_pos(bg_no)
 s16 bg_no;
 {
     s16 pos_x = bg_w.bgw[bg_no].wxy[0].disp.pos & 0x3FF;
-    s32 pos_y = bg_w.bgw[bg_no].xy[1].disp.pos & 0x3FF;
+    s16 pos_y = bg_w.bgw[bg_no].xy[1].disp.pos & 0x3FF;
     Scrn_Move_Set(bg_no, pos_x - bg_w.pos_offset, pos_y);
 }
 

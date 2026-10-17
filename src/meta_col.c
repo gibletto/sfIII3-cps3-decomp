@@ -23,18 +23,21 @@
 void metamor_color_trans(s16 pl, s16 ix) {
     u16* dst = (u16*)COLOR_RAM + (pl == 1) * 0x400;
     u16* dst2 = dst + 0x200;
+    struct PaletteBank { u16 color[7 * 2][64]; };
     u16* src;
     u16* src2;
     s16 i;
     if (ix) {
-        src = ((u16(*)[64])metamor_color_ptr_tbl[ix])[Player_Color[pl]];
+        src = metamor_color_ptr_tbl[ix];
+        (void)((WORK*)&metamor_color_ptr_tbl[ix])->be_flag;
+        src += Player_Color[pl] * 64;
         for (i = 0; i < 64; i++) {
             *dst++ = *src;
             *dst2++ = *src++;
         }
     } else {
-        src = ((u16(*)[64])metamor_color_ptr_tbl[ix])[Player_Color[pl] * 2];
-        src2 = ((u16(*)[64])metamor_color_ptr_tbl[ix])[Player_Color[pl] * 2] + 64;
+        src = ((struct PaletteBank*)metamor_color_ptr_tbl[ix])->color[Player_Color[pl] * 2];
+        src2 = ((struct PaletteBank*)metamor_color_ptr_tbl[ix])->color[Player_Color[pl] * 2] + 64;
         for (i = 0; i < 64; i++) {
             *dst++ = *src++;
             *dst2++ = *src2++;

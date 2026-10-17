@@ -310,8 +310,6 @@ extern s16 zoom_adj_x;
 extern s16 zoom_adj_y;
 extern u16 flip_obj_ofs_x;
 extern u16 flip_obj_ofs_y;
-extern s16 flip_crt_ofs_x;
-extern s16 flip_crt_ofs_y;
 extern s16 flip_scr_ofs_x;
 extern s16 flip_scr_ofs_y;
 extern s16 flip_zoom_ofs_x;

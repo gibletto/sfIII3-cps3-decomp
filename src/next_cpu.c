@@ -1063,74 +1063,70 @@ void Setup_Com_Color(void) {
 void Setup_PL_Color(s16 PL_id, u16 sw) {
     s8 id_0;
     s8 id_1;
-    s8* mine;
-    s8* other;
     if (plw[PL_id ^ 1].wu.operator == 0) {
         id_0 = -1;
         id_1 = 1;
     } else {
         id_0 = My_char[PL_id];
-        id_1 = My_char[PL_id ^ 1];
+        id_1 = My_char[PL_id * 1 ^ 1U];
     }
-    other = &Player_Color[(PL_id + 1) & 1];
-    mine = &Player_Color[PL_id];
-    if (Sel_PL_Complete[(PL_id + 1) & 1] == 0) {
+    if (Sel_PL_Complete[PL_id ^ 1] == 0) {
         id_0 = 127;
     }
     switch (sw) {
     case 336:
         if (Version_Type == 3) {
-            if (*other == 0 && id_0 == id_1) {
-                *mine = 3;
+            if (Player_Color[PL_id ^ 1] == 0 && id_0 == id_1) {
+                Player_Color[PL_id] = 3;
             } else {
-                *mine = 0;
+                Player_Color[PL_id] = 0;
             }
-        } else if (*other == 6 && id_0 == id_1) {
-            *mine = 0;
+        } else if (Player_Color[PL_id ^ 1] == 6 && id_0 == id_1) {
+            Player_Color[PL_id] = 0;
         } else {
-            *mine = 6;
+            Player_Color[PL_id] = 6;
         }
         break;
     case 16:
-        if (*other == 0 && id_0 == id_1) {
-            *mine = 3;
+        if (Player_Color[PL_id ^ 1] == 0 && id_0 == id_1) {
+            Player_Color[PL_id] = 3;
         } else {
-            *mine = 0;
+            Player_Color[PL_id] = 0;
         }
         break;
     case 32:
-        if (*other == 1 && id_0 == id_1) {
-            *mine = 4;
+        if (Player_Color[PL_id ^ 1] == 1 && id_0 == id_1) {
+            Player_Color[PL_id] = 4;
         } else {
-            *mine = 1;
+            Player_Color[PL_id] = 1;
         }
         break;
     case 64:
-        if (*other == 2 && id_0 == id_1) {
-            *mine = 5;
+        if (Player_Color[PL_id ^ 1] == 2 && id_0 == id_1) {
+            Player_Color[PL_id] = 5;
         } else {
-            *mine = 2;
+            Player_Color[PL_id] = 2;
         }
         break;
     case 128:
-        if (*other == 3 && id_0 == id_1) {
-            *mine = 0;
+        if (Player_Color[PL_id ^ 1] == 3 && id_0 == id_1) {
+            Player_Color[PL_id] = 0;
         } else {
-            *mine = 3;
+            Player_Color[PL_id] = 3;
         }
         break;
     case 256:
-        if (*other == 4 && id_0 == id_1) {
-            *mine = 1;
+        if (Player_Color[PL_id ^ 1] == 4 && id_0 == id_1) {
+            Player_Color[PL_id] = 1;
         } else {
-            *mine = 4;
+            Player_Color[PL_id] = 4;
         }
         break;
     default:
-        if (*other == 5 && id_0 == id_1) {
-            *mine = 2;
+        if (Player_Color[PL_id ^ 1] == 5 && id_0 == id_1) {
+            Player_Color[PL_id] = 2;
         } else {
-            *mine = 5;
+            Player_Color[PL_id] = 5;
         }
         break;
     }
