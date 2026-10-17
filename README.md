@@ -12,8 +12,18 @@ Right, back to it.
 C and SH-2 assembler source for the CPS3 program ROM of *Street Fighter III 3rd Strike: Fight for the Future*
 (sfiii3nr1), built with the original Hitachi toolchain (SHC 5.0, asmsh, lnk 6.0, rof2bin). PS2 was used as a reference only, it is 100% Arcade logic and code.
 
-The build is a working program, not a byte-for-byte copy of the arcade ROM as matching is in the final stages: code and data are laid out by the
-linker from this source.
+The build is a byte-for-byte copy of the arcade program: every routine compiles from this C and assembler source
+to the arcade's exact bytes. `build/prog.bin` has the arcade program's SHA-1, 7340968c4b2aba9496fa63be7a5c183205ff1dae,
+and the eight program SIMM chips written into `build/sfiii3nr1.zip` are the original ROM's:
+
+    sfiii3-simm1.0  crc 66e66235  sha1 0a98038721d176458d4f85dbd76c5edb93a65322
+    sfiii3-simm1.1  crc 186e8c5f  sha1 a63040201a660b56217a8cbab32f5c2c466ee5dd
+    sfiii3-simm1.2  crc bce18cab  sha1 a5c28063d98c22403756fc926a20631456fb7dcc
+    sfiii3-simm1.3  crc 129dc2c9  sha1 c1e634d94b1c8f7f02a47703622de5cab3d0da3f
+    sfiii3-simm2.0  crc 06eb969e  sha1 d89f6a6585b76692d57d337f0f8186398fb056da
+    sfiii3-simm2.1  crc e7039f82  sha1 8e81e66b5a4f45ae14b070a491bde47a6a74499f
+    sfiii3-simm2.2  crc 645c96f7  sha1 06d5a54874d4bf100b776131ec9060da209ad037
+    sfiii3-simm2.3  crc 610efab1  sha1 bbc21ed6ff6220ff6017a3f02ebd9a341fbc9040
 
 ## Building
 
@@ -197,36 +207,8 @@ original files are in `bin/original`.
 
 With the changes, all 10,066 C routines compile to the arcade's exact bytes (with the original Release 26, 3,811
 compile to its instructions and 1,913 to its exact bytes), and the linked `build/prog.bin` has the arcade program's
-SHA-1. Fightcade replays are kept as a sanity check and were last run on the build of 17 October 2026: of 254
-replays compared with the original ROM, all 254 kept identical game state throughout and identical slowdown.
-
-## Fightcade replays
-
-Fightcade replays can't be played on this build out of the box. A replay is an FBNeo savestate taken on the real
-ROM plus the inputs for each frame. Work RAM and the ROM tables are at the same addresses in this build, but the
-code isn't. The saved CPU state, task stacks and function pointers all point into arcade code, so loading the
-savestate as is will crash.
-
-You'd need a custom FBNeo build that can:
-
-- run the replay on the original ROM and save a state once the scheduler (`Game_Task`) is idle, so no task is
-  halfway through a function;
-- load that state into this build with a patch applied (registers and RAM words), then carry on feeding the
-  replay's inputs from that frame.
-
-Making the patch is the fiddly part:
-
-- `functions.tsv` gives each routine's arcade address and `sf3.map` gives where it ended up, so any code address
-  in the state can be mapped by name.
-- Restart the scheduler at `Game_Task` on its boot stack, and point each task's function slot at the new address.
-- If a sleeping task's function is just a loop around its sleep call, restart it at its entry. Otherwise fix up
-  its saved return address and whatever registers the new code expects to survive the call.
-- Some words in the initialised data (the part copied from ROM at boot) still hold arcade code addresses. Swap
-  those for the new ones. If anything else in RAM looks like a code address, check it by hand.
-
-To compare the two runs, hash the game variables every logic frame (not every video frame) and treat code
-addresses as zero, since they'll always differ. Expect the odd drift where the arcade drops a frame and this build
-doesn't. The code doesn't take exactly the same cycles yet, so that's timing, not a logic bug.
+SHA-1. Because the program is identical to the arcade's, Fightcade replays and FBNeo savestates play on the built
+ROM unchanged.
 
 ## Thanks
 
