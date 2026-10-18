@@ -107,7 +107,10 @@ void effect_G6_move(WORK_Other* ewk) {
 
 
 
-s32 effect_G6_init(WORK* wk, u8 dat) {
+s32 effect_G6_init(wk, dat)
+WORK* wk;
+u8 dat;
+{
     WORK_Other* ewk;
     s16 ix;
     if ((ix = pull_effect_work(3)) == -1) {

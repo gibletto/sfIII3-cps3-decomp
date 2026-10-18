@@ -9,12 +9,6 @@
 
 extern const u8 end_5_bg1_cell_0[];
 
-extern void end_1100_3();
-extern void end_1100_6();
-extern void end_1100_common();
-extern void end_1101_2();
-extern void end_X_com01();
-
 const PANEL end_1100_bg0_cell_tbl[16] = {
     { 0, 1 }, { 64, 2 }, { 128, 3 }, { 192, 4 }, { 4096, 5 }, { 4160, 6 }, { 4224, 7 }, { 4288, 8 },
     { 8192, 9 }, { 8256, 10 }, { 8320, 11 }, { 8384, 12 }, { 12288, 13 }, { 12352, 14 }, { 12416, 15 }, { 12480, 16 },

@@ -189,7 +189,7 @@ s32 effect_L7_init(WORK* wk) {
     ewk->wu.char_table[1] = etc_char_table;
     ewk->wu.char_index = 0;
     ewk->wu.sync_suzi = 0;
-    suzi_offset_set(ewk);
+    suzi_offset_set(&ewk->wu);
     kind_w = random_16_com();
     ewk->wu.old_rno[2] = effl7_data_tbl[kind_w];
     poison_flag[wk->id] = 1;

@@ -209,7 +209,7 @@ s32 effect_24_init(void) {
         ewk->wu.old_rno[1] = 0;
         ewk->wu.old_rno[4] = ewk->wu.xyz[0].disp.pos;
         ewk->wu.old_rno[2] = ewk->wu.xyz[1].disp.pos;
-        suzi_offset_set(ewk);
+        suzi_offset_set(&ewk->wu);
     }
     return 0;
 }

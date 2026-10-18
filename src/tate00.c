@@ -35,7 +35,47 @@
 #include "bg_sub_3.h"
 #include "bg_sub_5.h"
 #include "bg_sub.h"
+#include "bg040.h"
+#include "BG050.h"
+#include "bg090.h"
+#include "BG100.h"
+#include "bg120.h"
+#include "bg130.h"
+#include "bg140.h"
+#include "bg150.h"
+#include "bg160.h"
+#include "bg190.h"
+#include "bonus_bg.h"
+#include "bns_bg2.h"
 
+
+
+/* 0200649C */
+void (*ta_move_tbl[23])() = {
+    BG000,
+    BG010,
+    BG020,
+    BG030,
+    BG040,
+    BG050,
+    BG060,
+    BG070,
+    BG080,
+    BG090,
+    BG100,
+    BG010,
+    BG120,
+    BG130,
+    BG140,
+    BG140,
+    BG150,
+    BG160,
+    BG180,
+    BG180,
+    BG190,
+    Bonus_bg1,
+    Bonus_bg2,
+};
 
 
 void TATE00(void) {

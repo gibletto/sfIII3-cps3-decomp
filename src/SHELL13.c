@@ -18,7 +18,7 @@
 
 
 void Shell13(PLW* wk) {
-    Shell13_Tbl[(s16)Pattern_Index[wk->wu.id]](wk);
+    Shell13_Tbl[Pattern_Index[wk->wu.id]](wk);
 }
 
 

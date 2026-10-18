@@ -65,12 +65,18 @@
 #include "end_sub.h"
 #include "cps3.h"
 
+SELPL card_pl_w[2];  /* 02028268 */
+s16 card_msg_cnt;  /* 02028280 */
+
+
 #pragma inline(card_pl_work_clear)
 
 
 
 /* provisional name */
-void card_pl_work_clear(s16 pl) {
+void card_pl_work_clear(pl)
+s16 pl;
+{
     memset(&card_pl_w[pl], 0, 12);
 }
 

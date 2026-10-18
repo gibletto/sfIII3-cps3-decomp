@@ -17,6 +17,10 @@
 
 
 
+s16 cram_bank_old;  /* 02079C94 */
+s16 cram_bank_now;  /* 02079C96 */
+
+
 /* provisional name */
 void cram_bank_init(void) {
     *(volatile s16*)(VIDEO_REG + 0x86) = 0;

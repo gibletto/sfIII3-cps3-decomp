@@ -148,7 +148,7 @@ void Demo01(void) {
     case 0:
         D_No1++;
         Game_pause = 0;
-        Demo_Step_Flag = 0;
+        Demo_Time_Stop = 0;
         Text_Page_Y = 32;
         scfont_page1_fill(0, 32);
         Before_Select_Sub();
@@ -164,7 +164,7 @@ void Demo01(void) {
         break;
     case 1:
         Game01();
-        if (Demo_Step_Flag) {
+        if (Demo_Time_Stop) {
             D_No1++;
             G_No2 = 0;
         }
@@ -196,7 +196,7 @@ void Demo01(void) {
             break;
         }
         D_No1++;
-        Demo_Step_Flag = 1;
+        Demo_Time_Stop = 1;
         Game_pause = 1;
         break;
     case 5:
@@ -225,8 +225,8 @@ void Demo01(void) {
 
 
 void Setup_Demo_PL(void) {
-    My_char[0] = Demo_Char_Data[Demo_PL_Index][0];
-    My_char[1] = Demo_Char_Data[Demo_PL_Index][1];
+    My_char[0] = Demo_PL_Play_Data[Demo_PL_Index][0];
+    My_char[1] = Demo_PL_Play_Data[Demo_PL_Index][1];
 }
 
 

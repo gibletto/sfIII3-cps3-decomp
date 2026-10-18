@@ -7,7 +7,7 @@
 
 #pragma section TBL
 
-extern const u32 pl00_cctbl_0[];
+extern const ColorCode pl00_cctbl_0[];
 extern const u32 pl00_cctbl_0_1[];
 extern const u32 pl00_cctbl_0_11[];
 extern const u32 pl00_cctbl_0_13[];
@@ -20,7 +20,7 @@ extern const u32 pl00_cctbl_0_3[];
 extern const u32 pl00_cctbl_0_5[];
 extern const u32 pl00_cctbl_0_7[];
 extern const u32 pl00_cctbl_0_9[];
-extern const u32 pl00_cctbl_1[];
+extern const ColorCode pl00_cctbl_1[];
 extern const u32 pl00_cctbl_1_1[];
 extern const u32 pl00_cctbl_1_11[];
 extern const u32 pl00_cctbl_1_13[];
@@ -240,21 +240,31 @@ const u32 pl00_cctbl_1_23[32] = {
     0x4A520000, 0, 0, 0, 0, 0, 0, 0,
 };
 
-const u32 pl00_cctbl_0[42] = {
-    0x40000, (u32)((const u8*)pl00_cctbl_0_1), 0x40000, (u32)((const u8*)pl00_cctbl_0_3), 0x40000, (u32)((const u8*)pl00_cctbl_0_5), 0x40000, (u32)((const u8*)pl00_cctbl_0_7),
-    0x40000, (u32)((const u8*)pl00_cctbl_0_9), 0x40000, (u32)((const u8*)pl00_cctbl_0_11), 0x40000, (u32)((const u8*)pl00_cctbl_0_13), 0x40000, (u32)((const u8*)pl00_cctbl_0_15),
-    0x40000, (u32)((const u8*)pl00_cctbl_0_17), 0x40000, (u32)((const u8*)pl00_cctbl_0_19), 0x40000, (u32)((const u8*)pl00_cctbl_0_21), 0x40000, (u32)((const u8*)pl00_cctbl_0_23),
-    0x40000, (u32)((const u8*)pl00_cctbl_0_21), 0x40000, (u32)((const u8*)pl00_cctbl_0_19), 0x40000, (u32)((const u8*)pl00_cctbl_0_17), 0x40000, (u32)((const u8*)pl00_cctbl_0_15),
-    0x40000, (u32)((const u8*)pl00_cctbl_0_13), 0x40000, (u32)((const u8*)pl00_cctbl_0_11), 0x40000, (u32)((const u8*)pl00_cctbl_0_9), 0x40000, (u32)((const u8*)pl00_cctbl_0_7),
-    0x40001, (u32)((const u8*)pl00_cctbl_0_5),
+const ColorCode pl00_cctbl_0[21] = {
+    { 4, 0, (const s16*)pl00_cctbl_0_1 }, { 4, 0, (const s16*)pl00_cctbl_0_3 },
+    { 4, 0, (const s16*)pl00_cctbl_0_5 }, { 4, 0, (const s16*)pl00_cctbl_0_7 },
+    { 4, 0, (const s16*)pl00_cctbl_0_9 }, { 4, 0, (const s16*)pl00_cctbl_0_11 },
+    { 4, 0, (const s16*)pl00_cctbl_0_13 }, { 4, 0, (const s16*)pl00_cctbl_0_15 },
+    { 4, 0, (const s16*)pl00_cctbl_0_17 }, { 4, 0, (const s16*)pl00_cctbl_0_19 },
+    { 4, 0, (const s16*)pl00_cctbl_0_21 }, { 4, 0, (const s16*)pl00_cctbl_0_23 },
+    { 4, 0, (const s16*)pl00_cctbl_0_21 }, { 4, 0, (const s16*)pl00_cctbl_0_19 },
+    { 4, 0, (const s16*)pl00_cctbl_0_17 }, { 4, 0, (const s16*)pl00_cctbl_0_15 },
+    { 4, 0, (const s16*)pl00_cctbl_0_13 }, { 4, 0, (const s16*)pl00_cctbl_0_11 },
+    { 4, 0, (const s16*)pl00_cctbl_0_9 }, { 4, 0, (const s16*)pl00_cctbl_0_7 },
+    { 4, 1, (const s16*)pl00_cctbl_0_5 },
 };
 
-const u32 pl00_cctbl_1[42] = {
-    0x40000, (u32)((const u8*)pl00_cctbl_1_1), 0x40000, (u32)((const u8*)pl00_cctbl_1_3), 0x40000, (u32)((const u8*)pl00_cctbl_1_5), 0x40000, (u32)((const u8*)pl00_cctbl_1_7),
-    0x40000, (u32)((const u8*)pl00_cctbl_1_9), 0x40000, (u32)((const u8*)pl00_cctbl_1_11), 0x40000, (u32)((const u8*)pl00_cctbl_1_13), 0x40000, (u32)((const u8*)pl00_cctbl_1_15),
-    0x40000, (u32)((const u8*)pl00_cctbl_1_17), 0x40000, (u32)((const u8*)pl00_cctbl_1_19), 0x40000, (u32)((const u8*)pl00_cctbl_1_21), 0x40000, (u32)((const u8*)pl00_cctbl_1_23),
-    0x40000, (u32)((const u8*)pl00_cctbl_1_21), 0x40000, (u32)((const u8*)pl00_cctbl_1_19), 0x40000, (u32)((const u8*)pl00_cctbl_1_17), 0x40000, (u32)((const u8*)pl00_cctbl_1_15),
-    0x40000, (u32)((const u8*)pl00_cctbl_1_13), 0x40000, (u32)((const u8*)pl00_cctbl_1_11), 0x40000, (u32)((const u8*)pl00_cctbl_1_9), 0x40000, (u32)((const u8*)pl00_cctbl_1_7),
-    0x40001, (u32)((const u8*)pl00_cctbl_1_5),
+const ColorCode pl00_cctbl_1[21] = {
+    { 4, 0, (const s16*)pl00_cctbl_1_1 }, { 4, 0, (const s16*)pl00_cctbl_1_3 },
+    { 4, 0, (const s16*)pl00_cctbl_1_5 }, { 4, 0, (const s16*)pl00_cctbl_1_7 },
+    { 4, 0, (const s16*)pl00_cctbl_1_9 }, { 4, 0, (const s16*)pl00_cctbl_1_11 },
+    { 4, 0, (const s16*)pl00_cctbl_1_13 }, { 4, 0, (const s16*)pl00_cctbl_1_15 },
+    { 4, 0, (const s16*)pl00_cctbl_1_17 }, { 4, 0, (const s16*)pl00_cctbl_1_19 },
+    { 4, 0, (const s16*)pl00_cctbl_1_21 }, { 4, 0, (const s16*)pl00_cctbl_1_23 },
+    { 4, 0, (const s16*)pl00_cctbl_1_21 }, { 4, 0, (const s16*)pl00_cctbl_1_19 },
+    { 4, 0, (const s16*)pl00_cctbl_1_17 }, { 4, 0, (const s16*)pl00_cctbl_1_15 },
+    { 4, 0, (const s16*)pl00_cctbl_1_13 }, { 4, 0, (const s16*)pl00_cctbl_1_11 },
+    { 4, 0, (const s16*)pl00_cctbl_1_9 }, { 4, 0, (const s16*)pl00_cctbl_1_7 },
+    { 4, 1, (const s16*)pl00_cctbl_1_5 },
 };
 

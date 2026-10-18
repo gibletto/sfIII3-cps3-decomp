@@ -870,12 +870,12 @@ typedef const s16* const_s16_arr;
 
 /* provisional name */
 typedef struct {
-    s8 select[8][2][32];
+    s8 xxxx[8][2][32]; /* follow-up menu choice, by CP_No[1], CP_No[2] and a random draw */
 } FOLLOW_MENU_1ST;
 
 /* provisional name */
 typedef struct {
-    s8 pattern[4][4];
+    s8 zzzz[4][4]; /* pattern index, by menu choice and area */
 } FOLLOW_MENU_2ND;
 
 typedef s32 (*Term_Tbl_t)(PLW* wk, WORK* em);
@@ -986,7 +986,7 @@ typedef struct {
 } RAMHAN;
 
 typedef struct {
-    s16 mvxy_lv[4];
+    s16 data[4];
 } K5Data;
 
 typedef struct {
@@ -1574,13 +1574,6 @@ typedef struct {
 
 
 typedef struct {
-    s16 x;
-    s16 y;
-    s16 attr;
-    const char* str;
-} SETTINGS_STRING;
-
-typedef struct {
     s16 current;
     s16 target;
     s16 step;
@@ -1799,22 +1792,6 @@ typedef struct {
     u16 attr;
 } TEXT_CELL;
 
-typedef struct {
-    u8 pad0[8];
-    s8* track;
-    u8 pad1[76];
-    s16 expression;
-    u8 pad2[4];
-    u8 pan;
-    u8 pad3[3];
-    u8 velocity;
-    u8 pad4;
-    u8 volume;
-    u8 pad5[10];
-    s8 no_master;
-    u8 pad6[4];
-} SOUND_VOICE;
-
 typedef union {
     u32 l;
     struct {
@@ -1926,12 +1903,15 @@ typedef struct {
     u16 code;
 } CELL_ENTRY;
 
-typedef union {
-    s32 timer;
-    struct {
-        s16 h;
-        s16 l;
-    } half;
+typedef struct {
+    union {
+        s32 full;
+        struct {
+            s16 h;
+            s16 l;
+        } half;
+    } size;
+    s32 step;
 } ROUND_TIMER;
 
 typedef struct {
@@ -2456,7 +2436,7 @@ typedef struct {
     u16 release_rate;
     u16 forced_release_rate;
     s16 transpose;
-    s16 fine_tune;
+    s16 volume_offset;
     u8 loop_count[4];
     u8 status;
     s8 coarse_pitch_bend;

@@ -60,6 +60,13 @@
 #include "color3rd.h"
 #include "cps3.h"
 
+u8 col_trans_req_tbl[256];  /* 02028294 */
+s16 col_trans_req_cnt0;  /* 02028394 */
+s16 col_trans_req_cnt1;  /* 02028396 */
+s16 col_trans_req_cnt2;  /* 02028398 */
+s32 col_trans_result;  /* 0202839C */
+
+
 void init_color_trans_req(void)
 {
     /* colour transfer request work: 256-byte request table and its three counters */
@@ -91,7 +98,11 @@ u8 ix;
 }
 
 /* provisional name */
-void load_bg_color_fade(u16 col_no, u8 r, u8 g, u8 b)
+void load_bg_color_fade(col_no, r, g, b)
+u16 col_no;
+u8 r;
+u8 g;
+u8 b;
 {
     const XFER *xfer = &bg_color_tbl[(u8)col_no];
 
@@ -99,7 +110,11 @@ void load_bg_color_fade(u16 col_no, u8 r, u8 g, u8 b)
 }
 
 /* provisional name */
-void load_any_color_fade(u16 col_no, u8 r, u8 g, u8 b)
+void load_any_color_fade(col_no, r, g, b)
+u16 col_no;
+u8 r;
+u8 g;
+u8 b;
 {
     const XFER *xfer = &any_color_tbl[(u8)col_no];
 

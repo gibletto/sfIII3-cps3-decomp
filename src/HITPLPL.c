@@ -21,7 +21,10 @@ void setup_dm_rl(WORK* as, WORK* ds);
 
 
 
-void player_at_vs_player_dm(s16 ix2, s16 ix) {
+void player_at_vs_player_dm(ix2, ix)
+s16 ix2;
+s16 ix;
+{
     PLW* as = (PLW*)q_hit_push[ix2];
     PLW* ds = (PLW*)q_hit_push[ix];
     s8 gddir;

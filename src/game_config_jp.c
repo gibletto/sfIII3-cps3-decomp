@@ -58,6 +58,102 @@
 #include "CMD_MAIN.h"
 #include "cps3.h"
 
+extern const u8 gcfg_bonus_scr_jp_0[];
+extern const u8 gcfg_bonus_scr_jp_1[];
+extern const u32 gcfg_cursor_clr_scr_jp_0[];
+extern const u32 gcfg_cursor_scr_jp_0[];
+extern const u8 gcfg_event_scr_jp_0[];
+extern const u8 gcfg_event_scr_jp_1[];
+extern const u32 gcfg_exit_guide_scr_jp_0[];
+extern const u32 gcfg_gauge_clr_scr_jp_0[];
+extern const u32 gcfg_gauge_scr_jp_0[];
+extern const u32 gcfg_gauge_scr_jp_1[];
+extern const u32 gcfg_gauge_scr_jp_2[];
+extern const u32 gcfg_gauge_scr_jp_3[];
+extern const u32 gcfg_gauge_scr_jp_4[];
+extern const u32 gcfg_gauge_scr_jp_5[];
+extern const u32 gcfg_gauge_scr_jp_6[];
+extern const u32 gcfg_gauge_scr_jp_7[];
+extern const u32 gcfg_guide_scr_jp_0[];
+extern const u8 gcfg_round_scr_jp_0[];
+extern const u8 gcfg_round_scr_jp_1[];
+extern const u8 gcfg_round_scr_jp_2[];
+extern const u8 gcfg_round_scr_jp_3[];
+extern const u8 gcfg_screen_scr_jp_0[];
+extern const u8 gcfg_screen_scr_jp_1[];
+extern const u32 gcfg_title_scr_jp_0[];
+
+s8 Config_Item_jp;  /* 0201703C */
+s8 Config_Exit_jp;  /* 0201703D */
+s8 Config_Move_jp;  /* 0201703E */
+s8 Config_Keep_Bits_jp;  /* 0201703F */
+s8 Config_Old_jp;  /* 02017040 */
+s8 Config_New_jp;  /* 02017041 */
+s8 Config_Org_jp;  /* 02017042 */
+s16 Config_Attr_jp;  /* 02017044 */
+s16 Config_Rep_Timer_jp[4];  /* 02017046 */
+s8 Config_Rep_Count_jp[4];  /* 0201704E */
+
+
+/* 020007EC */
+TMSCRIPT gcfg_guide_scr_jp[1] = {
+    { 1, 0, (void*)((const u8*)gcfg_guide_scr_jp_0) },
+};
+/* 020007F4 */
+TMSCRIPT gcfg_exit_guide_scr_jp[1] = {
+    { 1, 0, (void*)((const u8*)gcfg_exit_guide_scr_jp_0) },
+};
+/* 020007FC */
+TMSCRIPT gcfg_screen_scr_jp[2] = {
+    { 1, 0, (void*)((const u8*)gcfg_screen_scr_jp_0) },
+    { 1, 0, (void*)((const u8*)gcfg_screen_scr_jp_1) },
+};
+/* 0200080C */
+TMSCRIPT gcfg_round_scr_jp[4] = {
+    { 1, 0, (void*)((const u8*)gcfg_round_scr_jp_0) },
+    { 1, 0, (void*)((const u8*)gcfg_round_scr_jp_1) },
+    { 1, 0, (void*)((const u8*)gcfg_round_scr_jp_2) },
+    { 1, 0, (void*)((const u8*)gcfg_round_scr_jp_3) },
+};
+/* 0200082C */
+TMSCRIPT gcfg_event_scr_jp[2] = {
+    { 1, 0, (void*)((const u8*)gcfg_event_scr_jp_0) },
+    { 1, 0, (void*)((const u8*)gcfg_event_scr_jp_1) },
+};
+/* 0200083C */
+TMSCRIPT gcfg_bonus_scr_jp[2] = {
+    { 1, 0, (void*)((const u8*)gcfg_bonus_scr_jp_0) },
+    { 1, 0, (void*)((const u8*)gcfg_bonus_scr_jp_1) },
+};
+/* 0200084C */
+TMSCRIPT gcfg_cursor_scr_jp[1] = {
+    { 1, 0, (void*)((const u8*)gcfg_cursor_scr_jp_0) },
+};
+/* 02000854 */
+TMSCRIPT gcfg_cursor_clr_scr_jp[1] = {
+    { 1, 0, (void*)((const u8*)gcfg_cursor_clr_scr_jp_0) },
+};
+/* 0200085C */
+TMSCRIPT gcfg_gauge_scr_jp[8] = {
+    { 1, 0, (void*)((const u8*)gcfg_gauge_scr_jp_0) },
+    { 1, 0, (void*)((const u8*)gcfg_gauge_scr_jp_1) },
+    { 1, 0, (void*)((const u8*)gcfg_gauge_scr_jp_2) },
+    { 1, 0, (void*)((const u8*)gcfg_gauge_scr_jp_3) },
+    { 1, 0, (void*)((const u8*)gcfg_gauge_scr_jp_4) },
+    { 1, 0, (void*)((const u8*)gcfg_gauge_scr_jp_5) },
+    { 1, 0, (void*)((const u8*)gcfg_gauge_scr_jp_6) },
+    { 1, 0, (void*)((const u8*)gcfg_gauge_scr_jp_7) },
+};
+/* 0200089C */
+TMSCRIPT gcfg_gauge_clr_scr_jp[1] = {
+    { 1, 0, (void*)((const u8*)gcfg_gauge_clr_scr_jp_0) },
+};
+/* 020008A4 */
+TMSCRIPT gcfg_title_scr_jp[1] = {
+    { 1, 0, (void*)((const u8*)gcfg_title_scr_jp_0) },
+};
+
+
 /* provisional name */
 void game_config_init_jp(void) {
     s8 n;
@@ -79,7 +175,7 @@ void game_config_init_jp(void) {
     wk1 = (char*)jp_menu_cg_5;
     tilemap_chunk_copy_16b((s16*)(SS_RAM + 0x9C00), wk1, 4);
     tilemap_fill_all(0, 0x1200);
-    tilemap_print_script_seq(0, 0, 0xFFFF, (TMSCRIPT*)gcfg_title_scr_jp);
+    tilemap_print_script_seq(0, 0, 0xFFFF, gcfg_title_scr_jp);
     Config_Attr_jp = 2;
     n = Config_Item_jp = 6;
     Config_New_jp = game_config_work.bonus & 1;
@@ -126,9 +222,9 @@ void game_config_move_jp(void) {
     Page_Tbl[Config_Item_jp]();
     game_config_print_cursor_jp(gcfg_cursor_scr_jp);
     if (Config_Item_jp == 7) {
-        tilemap_print_script_seq(0, 0, 0xFFFF, (TMSCRIPT*)gcfg_exit_guide_scr_jp);
+        tilemap_print_script_seq(0, 0, 0xFFFF, gcfg_exit_guide_scr_jp);
     } else {
-        tilemap_print_script_seq(0, 0, 0xFFFF, (TMSCRIPT*)gcfg_guide_scr_jp);
+        tilemap_print_script_seq(0, 0, 0xFFFF, gcfg_guide_scr_jp);
     }
 }
 
@@ -171,7 +267,7 @@ void game_config_screen_item_jp(void) {
             set_screen_mode(3);
         }
         screen_flip_offsets_set();
-        tilemap_print_script_seq(24, 2, 0xFFFF, (TMSCRIPT*)&gcfg_screen_scr_jp[game_config_work.mode]);
+        tilemap_print_script_seq(24, 2, 0xFFFF, &gcfg_screen_scr_jp[game_config_work.mode]);
         if (game_config_work.mode != Game_setting.mode) {
             tilemap_rect_fill(24, 2, 8, 2, 8, 0xFFFF);
         } else {

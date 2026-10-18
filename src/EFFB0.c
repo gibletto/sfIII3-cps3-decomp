@@ -79,7 +79,7 @@ s32 effect_B0_init(void) {
         ewk->wu.cgromtype = 1;
         ewk->wu.old_rno[0] = end_w.r_no_2;
         ewk->wu.my_col_mode = 0x4200;
-        ewk->wu.char_table[0] = (u32*)end_char_table;
+        ewk->wu.char_table[0] = end_char_table;
         ewk->wu.my_col_code = 32;
         ewk->wu.my_family = 1;
         ewk->wu.old_rno[6] = 0;

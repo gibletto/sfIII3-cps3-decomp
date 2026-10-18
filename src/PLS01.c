@@ -630,7 +630,7 @@ s32 check_attbox_dir(PLW* wk) {
     s16 emdir;
     s16* dttbl;
     get_target_att_position((WORK*)wk->wu.target_adrs, &target_pos_x, &target_pos_y);
-    dttbl = (s16*)sel_hd_fg_hos[wk->player_number];
+    dttbl = sel_hd_fg_hos[wk->player_number];
     if (wk->wu.rl_flag) {
         emdir = caldir_pos_032(
             wk->wu.xyz[0].disp.pos - dttbl[0], wk->wu.xyz[1].disp.pos + dttbl[1], target_pos_x, target_pos_y);
@@ -694,7 +694,10 @@ s32 check_defense_kind(PLW* wk) {
 
 
 
-void jumping_union_process(WORK* wk, s16 num) {
+void jumping_union_process(wk, num)
+WORK* wk;
+s16 num;
+{
     add_mvxy_speed(wk);
     cal_mvxy_speed(wk);
     char_move(wk);

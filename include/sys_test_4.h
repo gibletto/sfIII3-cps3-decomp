@@ -8,6 +8,5 @@ void coin_chutes_update(s32 keep);
 s32 rewrite_page(void);
 void rewrite_menu_init(void);
 void rewrite_menu_select(void);
-void service_coin_check(void);
 
 #endif

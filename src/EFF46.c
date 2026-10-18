@@ -38,7 +38,7 @@ void effect_46_move(WORK_Other* ewk) {
             eff46_move(ewk);
         }
         suzi_sync_pos_set(ewk);
-        sort_push_request(ewk);
+        sort_push_request(&ewk->wu);
         break;
     default:
         all_cgps_put_back(ewk);
@@ -78,7 +78,7 @@ void eff46_move(WORK_Other* ewk) {
         if (ewk->wu.xyz[1].disp.pos >= ewk->wu.old_rno[0]) {
             add_y_sub(ewk);
         }
-        if (!range_x_check3(ewk, 64)) {
+        if (!range_x_check3(&ewk->wu, 64)) {
             ewk->wu.routine_no[0]++;
             ewk->wu.disp_flag = 0;
         }
@@ -147,6 +147,6 @@ s32 effect_46_init(WORK* wk, s32 _p1) {
     *ewk->wu.char_table = etc2_char_table;
     ewk->wu.char_index = 43;
     ewk->wu.sync_suzi = 0;
-    suzi_offset_set(ewk);
+    suzi_offset_set(&ewk->wu);
     return 0;
 }

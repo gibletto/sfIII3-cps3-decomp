@@ -25,6 +25,9 @@
 
 
 
+s8 stop_count[2];  /* 02069F7C */
+
+
 void pl14_extra_attack(PLW* wk) {
     pl14_exatt_table[wk->wu.routine_no[2] - 16](wk);
 }

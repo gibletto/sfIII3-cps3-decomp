@@ -1161,7 +1161,9 @@ void Game_Manage_11th(void) {
 
 
 
-void Check_Naming(s16 id) {
+void Check_Naming(id)
+s16 id;
+{
     s32 num;
     if (!Game_setting.set5) {
         num = E_Number[id][0];
@@ -1264,7 +1266,7 @@ void Game_Manage_12_7(void) {
 
 
 
-s32 Game_Manage_12_3(void) {
+void Game_Manage_12_3(void) {
     switch (C_No2) {
     case 0:
         if (Cut_Cut_C_Timer() == 0) {
@@ -1272,7 +1274,8 @@ s32 Game_Manage_12_3(void) {
             C_Timer = 10;
             request_center_message(4);
             effect_58_init(6, 1, 155);
-            return effect_58_init(6, 60, 156);
+            effect_58_init(6, 60, 156);
+            return;
         }
         break;
     case 1:
@@ -1286,7 +1289,8 @@ s32 Game_Manage_12_3(void) {
             C_No2++;
             C_Timer = 20;
             ToneDown(8);
-            return ToneDown(9);
+            ToneDown(9);
+            return;
         }
         break;
     case 3:
@@ -2067,7 +2071,7 @@ void Update_VS_Data(void) {
                 Stock_Com_Color[WINNER] = -1;
                 Stock_Com_Arts[WINNER] = -1;
                 EM_History[WINNER][VS_Index[WINNER]] = EM_id;
-                Result_Disp_Timer[WINNER] += 30;
+                Result_Timer[WINNER] += 30;
                 if (EM_id == 18) {
                     Break_Com[WINNER][EM_id] = (s8)VS_Index[WINNER];
                 } else {
@@ -2182,7 +2186,7 @@ void BGM_Control(void) {
 }
 
 void Setup_BGM_Fade_In(u8 time) {
-    if (Keep_BGM_Flag) {
+    if (PB_Music_Off) {
         return;
     }
     BGM_No[1] = 1;
@@ -2229,7 +2233,9 @@ s32 Check_Break_Into_CPU(s16 PL_id) {
 
 
 
-s32 Check_BI_Grade(s16 PL_id) {
+s32 Check_BI_Grade(PL_id)
+s16 PL_id;
+{
     s16 ix;
     for (ix = 0; ix < VS_Index[PL_id]; ix++) {
         if (judge_final[PL_id][0].vs_cpu_grade[ix] < 9) {

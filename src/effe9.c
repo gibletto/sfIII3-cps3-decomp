@@ -68,7 +68,7 @@ s32 effect_E9_init(void) {
         ewk->wu.work_id = 16;
         ewk->wu.cgromtype = 1;
         ewk->wu.my_col_mode = 0x4200;
-        ewk->wu.char_table[0] = (u32*)end_char_table;
+        ewk->wu.char_table[0] = end_char_table;
         ewk->wu.my_family = 4;
         ewk->wu.my_col_code = 1;
         ewk->wu.xyz[0].disp.pos = *data++;

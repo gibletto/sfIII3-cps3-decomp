@@ -46,66 +46,65 @@ void effect_B6_move(WORK_Other_CONN* ewk_conn) {
             ewk->wu.routine_no[0]++;
             break;
         }
-        if (akebono_flag == 0) {
-            if (0) {
-            }
-            switch (ewk->wu.routine_no[1]) {
-            case 0:
-                if (!(another_bg[0] | another_bg[1])) {
-                    break;
-                }
-                ewk->wu.routine_no[1]++;
+        if (akebono_flag != 0) {
+            break;
+        }
+        switch (ewk->wu.routine_no[1]) {
+        case 0:
+            if (!(another_bg[0] | another_bg[1])) {
                 break;
-            case 1:
-                if (another_bg[0] | another_bg[1]) {
-                    ewk->wu.disp_flag = 0;
-                    switch (another_bg[oya->type]) {
-                    case 1:
-                        if (ewk->wu.type == 0) {
-                            for (i = 0; i < ewk->num; i++) {
-                                ewk->pos[i][1] += ewk->src[i].d[3];
-                                ewk->pos[i][2] = ewk->src[i].d[4];
-                            }
-                            ewk->wu.disp_flag = 1;
-                        }
-                        break;
-                    case 2:
-                        if (ewk->wu.type != 0) {
-                            for (i = 0; i < ewk->num; i++) {
-                                ewk->pos[i][0] += ewk->src[i].d[1];
-                                ewk->pos[i][2] = ewk->src[i].d[5];
-                            }
-                            ewk->wu.disp_flag = 1;
-                        }
-                        break;
-                    case 3:
-                        if (ewk->wu.type == 0) {
-                            break;
-                        }
+            }
+            ewk->wu.routine_no[1]++;
+            break;
+        case 1:
+            if (another_bg[0] | another_bg[1]) {
+                ewk->wu.disp_flag = 0;
+                switch (another_bg[oya->type]) {
+                case 1:
+                    if (ewk->wu.type == 0) {
                         for (i = 0; i < ewk->num; i++) {
-                            ewk->pos[i][0] -= ewk->src[i].d[1];
+                            ewk->pos[i][1] += ewk->src[i].d[3];
                             ewk->pos[i][2] = ewk->src[i].d[4];
                         }
                         ewk->wu.disp_flag = 1;
-                        break;
-                    case 4:
-                        if (ewk->wu.type != 0) {
-                            break;
-                        }
+                    }
+                    break;
+                case 2:
+                    if (ewk->wu.type != 0) {
                         for (i = 0; i < ewk->num; i++) {
-                            ewk->pos[i][1] -= ewk->src[i].d[3];
+                            ewk->pos[i][0] += ewk->src[i].d[1];
                             ewk->pos[i][2] = ewk->src[i].d[5];
                         }
                         ewk->wu.disp_flag = 1;
                     }
-                } else {
-                    ewk->wu.disp_flag = 0;
-                    ewk->wu.routine_no[1] = 0;
+                    break;
+                case 3:
+                    if (ewk->wu.type == 0) {
+                        break;
+                    }
+                    for (i = 0; i < ewk->num; i++) {
+                        ewk->pos[i][0] -= ewk->src[i].d[1];
+                        ewk->pos[i][2] = ewk->src[i].d[4];
+                    }
+                    ewk->wu.disp_flag = 1;
+                    break;
+                case 4:
+                    if (ewk->wu.type != 0) {
+                        break;
+                    }
+                    for (i = 0; i < ewk->num; i++) {
+                        ewk->pos[i][1] -= ewk->src[i].d[3];
+                        ewk->pos[i][2] = ewk->src[i].d[5];
+                    }
+                    ewk->wu.disp_flag = 1;
                 }
-                break;
+            } else {
+                ewk->wu.disp_flag = 0;
+                ewk->wu.routine_no[1] = 0;
             }
-            disp_car_parts_cells(&ewk->wu);
+            break;
         }
+        disp_car_parts_cells(&ewk->wu);
         break;
     case 2:
     default:
@@ -150,6 +149,6 @@ s32 effect_B6_init(WORK_Other* oya, u8 type) {
     ewk->wu.my_priority = ewk->wu.position_z = 69;
     ewk->my_master = (u32*)oya;
     ewk->wu.sync_suzi = 0;
-    suzi_offset_set(ewk);
+    suzi_offset_set(&ewk->wu);
     return 0;
 }

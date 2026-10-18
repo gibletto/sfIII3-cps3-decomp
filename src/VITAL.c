@@ -18,6 +18,30 @@
 #include "count.h"
 #include "VITAL.h"
 #include "cps3.h"
+s16 vital_col_ix;  /* 02028638 */
+s16 vital_dot_pos;  /* 0202863A */
+s16 vital_red_ofs;  /* 0202863C */
+s16 vital_yel_ofs;  /* 0202863E */
+u16 vital_stop_flag[2];  /* 02028640 */
+u16 gauge_stop_flag[2];  /* 02028644 */
+/* vit_bar[pl] with pl 1 is the 2P bar, vit_bar_2p, which follows it */
+VITAL_BAR vit_bar[1];  /* 02028648 */
+VITAL_BAR vit_bar_2p;  /* 02028660 */
+
+
+/* 020069B4 */
+const u16* vital_npos_tbl[2] = {
+    (const u16*)&vital_cell_1p_tbl[81],
+    (const u16*)&vital_cell_1p_tbl[101],
+};
+/* 020069BC */
+const u16* vital_attr_tbl[3] = {
+    (const u16*)&vital_cell_1p_tbl[121],
+    (const u16*)&vital_cell_1p_tbl[124],
+    (const u16*)&vital_cell_1p_tbl[127],
+};
+
+
 void vital_cont_init(void) {
     vit_bar[0].cyerw = 160;
     vit_bar[0].cred = 160;

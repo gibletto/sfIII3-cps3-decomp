@@ -2,7 +2,7 @@
  * EFFL3.C  Perfect-win extras (effect L3)
  *
  * Six extra figures that join the winner's pose after a Perfect (created from WIN_PL only
- * when Perfect_Flag is set). effect_L3_init positions them from effl3_pos_data relative to
+ * when Perfect_Flag is set). effect_L3_init positions them from effl3_data_tbl relative to
  * the stage centre and the loser, borrowing the owner's character tables and colour.
  * effect_L3_move runs one of three routines: effl3_0000 walks in to a target point and
  * plays an arrival animation, effl3_0001 jumps in on a computed arc and lands, and
@@ -192,7 +192,7 @@ void effl3_tobi(WORK_Other* ewk) {
     case 3:
         add_x_sub(ewk);
         add_y_sub(ewk);
-        if (!range_x_check3(ewk, 208)) {
+        if (!range_x_check3(&ewk->wu, 208)) {
             ewk->wu.routine_no[0] = 99;
         }
         break;
@@ -235,7 +235,7 @@ s32 effect_L3_init(PLW* oya) {
     if (!Perfect_Flag) {
         return;
     }
-    t = effl3_pos_data;
+    t = effl3_data_tbl;
     k = oya->wu.id ^ 1;
     for (i = 0, f = &plw[k]; i < 6; i++) {
         s = pull_effect_work(3);

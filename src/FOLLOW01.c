@@ -16,7 +16,7 @@
 
 /* provisional name */
 void Follow01(PLW* wk) {
-    Follow01_Tbl[(s16)Pattern_Index[wk->wu.id]](wk);
+    Follow01_Tbl[Pattern_Index[wk->wu.id]](wk);
 }
 
 

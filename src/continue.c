@@ -69,6 +69,9 @@
 
 
 
+s16 CONTINUE_X;  /* 02017018 */
+
+
 s32 Continue_Scene(void) {
     void (*Scene_Tbl[5])() = { Continue_1st, Continue_2nd, Continue_3rd, Continue_4th, Continue_5th };
     CONTINUE_X = 0;
@@ -137,7 +140,7 @@ void Continue_2nd(void) {
     }
 }
 
-s32 Continue_3rd(void) {
+void Continue_3rd(void) {
     if (Cont_Timer = Check_Exit_Continue()) {
         Cont_No++;
     }
@@ -207,13 +210,19 @@ s32 Check_Exit_Continue(void) {
     return 1;
 }
 
-void Disp_Personal_Count(s16 id, char count) {
+void Disp_Personal_Count(id, count)
+s16 id;
+char count;
+{
     tilemap_print_hex_block(DE_X[Entry_Mes_Wide[id]] + Entry_Mes_X[id] + 14, Text_Page_Y, 18, count, 1, 1);
 }
 
 
 
-s32 Check_Count_Cut(s16 PL_id, s16 Limit) {
+s32 Check_Count_Cut(PL_id, Limit)
+s16 PL_id;
+s16 Limit;
+{
     s16 xx;
     Continue_Cut[PL_id] = 0;
     if (Continue_Count[PL_id] >= (Limit)) {
@@ -230,7 +239,9 @@ s32 Check_Count_Cut(s16 PL_id, s16 Limit) {
 
 
 /* provisional name */
-s32 Clear_Personal_Data(s16 PL_id) {
+s32 Clear_Personal_Data(PL_id)
+s16 PL_id;
+{
     s16 xx;
     Lost_Round[PL_id] = 0;
     Super_Arts_Finish[PL_id] = 0;
@@ -298,7 +309,9 @@ void Clear_Win_Type(void) {
 
 
 /* provisional name */
-s32 Check_Coin_In(s16 pl) {
+s32 Check_Coin_In(pl)
+s16 pl;
+{
     s32 sw1 = coin_chute1_w.dropped;
     s32 sw2 = coin_chute2_w.dropped;
     switch (Chute_Mode) {

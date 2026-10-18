@@ -34,9 +34,9 @@ void effect_F4_move(WORK_Other* ewk) {
     case 0:
         ewk->wu.routine_no[0]++;
         for (i = 0; i < bg_w.scno; i++) {
-            scroll_layer_mask_disable(1 << i);
+            Bg_Off_R(1 << i);
         }
-        scroll_layer_mask_enable(8);
+        Bg_On_R(8);
         ewk->wu.disp_flag = 1;
         scrn_map_set_now(3, (u32)bg_w.bgw[3].bg_address);
         Scrn_Move_Set_R(3, 0x100 - bg_w.pos_offset, 0x200);
@@ -47,21 +47,21 @@ void effect_F4_move(WORK_Other* ewk) {
             ewk->wu.disp_flag ^= 1;
             if (ewk->wu.disp_flag) {
                 for (i = 0; i < bg_w.scno; i++) {
-                    scroll_layer_mask_disable(1 << i);
+                    Bg_Off_R(1 << i);
                 }
-                scroll_layer_mask_enable(8);
+                Bg_On_R(8);
             } else {
                 for (i = 0; i < bg_w.scno; i++) {
-                    scroll_layer_mask_enable(1 << i);
+                    Bg_On_R(1 << i);
                 }
-                scroll_layer_mask_disable(8);
+                Bg_Off_R(8);
             }
         } else {
             ewk->wu.routine_no[0]++;
             for (i = 0; i < bg_w.scno; i++) {
-                scroll_layer_mask_enable(1 << i);
+                Bg_On_R(1 << i);
             }
-            scroll_layer_mask_disable(8);
+            Bg_Off_R(8);
         }
         scrn_map_set_now(3, (u32)bg_w.bgw[3].bg_address);
         Scrn_Move_Set_R(3, 0x100 - bg_w.pos_offset, 0x200);

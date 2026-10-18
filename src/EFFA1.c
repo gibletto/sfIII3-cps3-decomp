@@ -54,7 +54,7 @@ void effect_A1_move(WORK_Other* ewk) {
             ewk->wu.routine_no[0]++;
         }
         suzi_sync_pos_set(ewk);
-        sort_push_request(ewk);
+        sort_push_request(&ewk->wu);
         break;
     case 3:
         ewk->wu.disp_flag = 0;
@@ -97,6 +97,6 @@ s32 effect_A1_init(WORK* wk, s16 n) {
     ewk->wu.char_table[0] = wk->char_table[0];
     ewk->wu.char_index = wk->char_index;
     ewk->wu.sync_suzi = 0;
-    suzi_offset_set(ewk);
+    suzi_offset_set(&ewk->wu);
     return 0;
 }

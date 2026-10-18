@@ -343,7 +343,11 @@ void Lose_6th(void) {
 
 
 
-void Setup_Virtual_BG(s16 bg, s16 x, s16 y) {
+void Setup_Virtual_BG(bg, x, y)
+s16 bg;
+s16 x;
+s16 y;
+{
     bg_w.bgw[bg].xy[0].disp.pos = x;
     bg_w.bgw[bg].xy[1].disp.pos = y;
     bg_w.bgw[bg].wxy[0].disp.pos = x;

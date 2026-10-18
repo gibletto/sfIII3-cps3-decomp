@@ -24,8 +24,17 @@
 
 
 
+/* 02006D78 */
+void (*eff66_jp_tbl[4])(WORK_Other*) = {
+    eff66_00,
+    eff66_01,
+    eff66_02,
+    eff66_03,
+};
+
+
 void effect_66_move(WORK_Other* ewk) {
-    if (obr_disp_off_check()) {
+    if (obr_no_disp_check()) {
         return;
     }
     switch (ewk->wu.routine_no[0]) {
@@ -42,7 +51,7 @@ void effect_66_move(WORK_Other* ewk) {
         if (!EXE_flag && !Game_pause && !EXE_obroll) {
             eff66_jp_tbl[ewk->wu.routine_no[1]](ewk);
         }
-        if (!ewk->wu.old_rno[2] || range_x_check(ewk)) {
+        if (!ewk->wu.old_rno[2] || range_x_check(&ewk->wu)) {
             disp_pos_trans_entry_s(ewk);
         }
         break;
@@ -160,6 +169,6 @@ s32 effect_66_init(s16 type) {
     ewk->wu.old_rno[1] = *data_ptr++;
     ewk->wu.old_rno[2] = *data_ptr;
     ewk->wu.char_table[0] = char_add[bg_w.bg_index];
-    suzi_offset_set(ewk);
+    suzi_offset_set(&ewk->wu);
     return 0;
 }

@@ -25,12 +25,15 @@
 
 
 
-void Stage_BGM(u16 Stage_Number, s32 Round_Number) {
+void Stage_BGM(Stage_Number, Round_Number)
+u16 Stage_Number;
+s32 Round_Number;
+{
     s32 code;
     if (Demo_Sound == 0 && Demo_Flag == 0) {
         return;
     }
-    if (Keep_BGM_Flag) {
+    if (PB_Music_Off) {
         return;
     }
     code = stage_bgm_tbl[Stage_Number] + (Round_Number & 1);
@@ -42,7 +45,7 @@ void Stage_BGM(u16 Stage_Number, s32 Round_Number) {
 
 /* provisional name */
 void bgm_fade_in_stage(s16 x) {
-    if (Keep_BGM_Flag) {
+    if (PB_Music_Off) {
         return;
     }
     sound_fade_in_submit(stage_bgm_tbl[bg_w.stage], 0x8000 / x);
@@ -69,7 +72,7 @@ s16 bgm_code;
     if (Demo_Sound == 0 && Demo_Flag == 0) {
         return;
     }
-    if (Keep_BGM_Flag) {
+    if (PB_Music_Off) {
         return;
     }
     sound_reg_level_set(0, 0);
@@ -348,7 +351,7 @@ s16 Code;
     {
         s32 ofs = (Code - 0x100) * 2;
         if (Voice_Type == 0) {
-            return *(u16*)((s32)Bonus_SE_Data + ofs);
+            return *(u16*)((s32)Bonus_Voice_Data + ofs);
         }
         return *(u16*)((s32)Bonus_SE_Voice_Data + ofs);
     }

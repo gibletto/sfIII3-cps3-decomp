@@ -26,9 +26,33 @@
 
 
 
+extern const s16 scr_obj_data27_0[];
+extern const s16 scr_obj_data27_1[];
+
+/* 02006C90 */
+const s16* scr_obj_data27[2] = {
+    scr_obj_data27_0,
+    scr_obj_data27_1,
+};
+/* 02006C98 */
+void (*eff27_jp_tbl[11])(WORK_Other*) = {
+    eff27_00,
+    eff27_00,
+    eff27_02,
+    eff27_03,
+    eff27_04,
+    eff27_05,
+    eff27_06,
+    eff27_06,
+    eff27_07,
+    eff27_08,
+    eff27_09,
+};
+
+
 void effect_27_move(WORK_Other* ewk) {
     WORK_Other* oya;
-    if (obr_disp_off_check()) {
+    if (obr_no_disp_check()) {
         return;
     }
     switch (ewk->wu.routine_no[0]) {
@@ -364,7 +388,7 @@ s32 effect_27_init(WORK_Other* oya, s16 type) {
             ewk->wu.mvxy.d[1].real.h = *data_ptr++;
             ewk->wu.mvxy.d[1].real.l = *data_ptr++;
             ewk->wu.char_table[0] = char_add[bg_w.bg_index];
-            suzi_offset_set(ewk);
+            suzi_offset_set(&ewk->wu);
         }
         return 0;
     }

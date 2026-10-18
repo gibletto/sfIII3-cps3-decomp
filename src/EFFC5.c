@@ -172,6 +172,6 @@ s32 effect_C5_init(PLW* oya, s16 reverse_f) {
         }
         cal_all_speed_data(&ewk->wu, ewk->wu.old_rno[0], work, 0, 1, 1);
     }
-    suzi_offset_set(ewk);
+    suzi_offset_set(&ewk->wu);
     return effect_C6_init(ewk);
 }

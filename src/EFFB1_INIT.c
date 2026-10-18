@@ -39,7 +39,7 @@ s32 effect_B1_init(PLW* wk) {
         ewk->conn[i] = bbbs_blocking[type][i];
     }
     for (i = 0; i < 20; i++) {
-        ewk->conn[i + 20] = bbbs_clear;
+        ewk->conn[i + 20] = *bbbs_clear;
     }
     if (wk->wu.rl_flag) {
         for (i = 0; i < 20; i++) {

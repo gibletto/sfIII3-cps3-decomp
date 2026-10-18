@@ -1049,7 +1049,7 @@ void nm57_dir_select(PLW* wk) {
     s16 ix;
     efw = (WORK*)((WORK*)wk->wu.target_adrs)->my_effadrs;
     ix = get_sel_hosei_tbl_ix(wk->player_number) + 1;
-    dad = (s16*)efw->hosei_adrs[ix].hos_box;
+    dad = efw->hosei_adrs[ix].hos_box;
     wk->wu.rl_flag = 1;
     if (check_work_position_bonus((WORK*)wk, efw->xyz[0].disp.pos + dad[0] + (dad[1] / 2))) {
         wk->wu.rl_flag = 0;

@@ -57,7 +57,7 @@ void effect_K4_move(WORK_Other* ewk) {
         }
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos;
-        sort_push_request(ewk);
+        sort_push_request(&ewk->wu);
         break;
     case 2:
         ewk->wu.routine_no[0] = 3;

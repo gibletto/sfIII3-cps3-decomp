@@ -25,6 +25,9 @@
 
 
 
+s16 chk77_flag;  /* 02068C08 */
+
+
 void effect_77_move(WORK_Other* ewk) {
     s16 i;
     another_bg[0] = another_bg[1] = 0;

@@ -7,11 +7,6 @@
 
 #pragma section TBL
 
-extern void Lose_00000();
-extern void Lose_10000();
-extern void Lose_20000();
-extern void Lose_30000();
-
 const s16 lose_type_tbl[24] = {
     0, 0, 0, 0, 0, 2, 0, 0,
     1, 0, 0, 0, 0, 3, 0, 0,

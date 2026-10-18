@@ -6,6 +6,5 @@
 void cal_bg_speed_data_x();
 void cal_bg_speed_data_y();
 s32 pl_shot_trg_check(void);
-void cal_bg_speed_data();
 
 #endif

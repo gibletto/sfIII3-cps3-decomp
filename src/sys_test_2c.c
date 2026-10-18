@@ -26,6 +26,9 @@
 
 
 
+s16 config_menu_no = 0;  /* 02007CAC */
+
+
 /* provisional name */
 s16 config_menu_page(void) {
     register s16 rc;

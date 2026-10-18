@@ -57,8 +57,8 @@ void effect_A0_move(WORK_Other* ewk) {
         }
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos;
-        if (!obr_disp_off_check()) {
-            sort_push_request(ewk);
+        if (!obr_no_disp_check()) {
+            sort_push_request(&ewk->wu);
         }
         break;
     case 2:
@@ -68,8 +68,8 @@ void effect_A0_move(WORK_Other* ewk) {
         ewk->wu.routine_no[0]++;
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos;
-        if (!obr_disp_off_check()) {
-            sort_push_request(ewk);
+        if (!obr_no_disp_check()) {
+            sort_push_request(&ewk->wu);
         }
         break;
     case 3:
@@ -89,8 +89,8 @@ void effect_A0_move(WORK_Other* ewk) {
         }
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos;
-        if (!obr_disp_off_check()) {
-            sort_push_request(ewk);
+        if (!obr_no_disp_check()) {
+            sort_push_request(&ewk->wu);
         }
         break;
     case 4:
@@ -100,8 +100,8 @@ void effect_A0_move(WORK_Other* ewk) {
         }
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos;
-        if (!obr_disp_off_check()) {
-            sort_push_request(ewk);
+        if (!obr_no_disp_check()) {
+            sort_push_request(&ewk->wu);
         }
         break;
     case 5:
@@ -109,15 +109,15 @@ void effect_A0_move(WORK_Other* ewk) {
         ewk->wu.routine_no[0]++;
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos;
-        if (!obr_disp_off_check()) {
-            sort_push_request(ewk);
+        if (!obr_no_disp_check()) {
+            sort_push_request(&ewk->wu);
         }
         break;
     case 6:
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos;
-        if (!obr_disp_off_check()) {
-            sort_push_request(ewk);
+        if (!obr_no_disp_check()) {
+            sort_push_request(&ewk->wu);
         }
         break;
     case 7:
@@ -189,7 +189,7 @@ s32 effect_A0_init(s16 pl) {
     ewk->wu.sync_suzi = 0;
     load_any_color(ewk->wu.old_rno[2] + 0xAB);
     load_any_color(0xB2);
-    effect_A1_init(ewk, 1);
-    effect_A1_init(ewk, 2);
+    effect_A1_init(&ewk->wu, 1);
+    effect_A1_init(&ewk->wu, 2);
     return 0;
 }

@@ -137,7 +137,12 @@ void effD2_wipe_open(WORK_Other* ewk) {
 
 
 
-s32 effect_D2_init(s16 vital, s16 dir, s16 family, s16 timer) {
+s32 effect_D2_init(vital, dir, family, timer)
+s16 vital;
+s16 dir;
+s16 family;
+s16 timer;
+{
     WORK_Other* ewk;
     s16 ix;
     if ((ix = pull_effect_work(0)) == -1) {

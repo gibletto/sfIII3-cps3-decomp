@@ -36,6 +36,9 @@
 #include "cps3.h"
 #include "SHELL14.h"
 
+CharGfxSlot cg_slot_tbl[512];  /* 0200E3BC */
+CharGfxEntry * cg_data_list;  /* 0200EBBC */
+
 #pragma inline(check_cg_data)
 #pragma inline(cg_data_exist)
 
@@ -120,7 +123,7 @@ done:
 
 
 /* provisional name */
-s32 setup_hit_mark_cells(void) {
+void setup_hit_mark_cells(void) {
     WORK* ewk;
     WORK* tmp;
     s16* handles;
@@ -184,7 +187,7 @@ done:
     push_effect_work(tmp);
 }
 
-s32 setup_GILL_exsa_obj(void) {
+void setup_GILL_exsa_obj(void) {
     WORK* ewk;
     WORK* tmp;
     s16* handles;
@@ -237,7 +240,7 @@ done:
     push_effect_work(tmp);
 }
 
-s32 setup_bonus_car_parts(void) {
+void setup_bonus_car_parts(void) {
     WORK* ewk;
     WORK* tmp;
     s16* handles;
@@ -296,7 +299,9 @@ u32 get_cg_slot_no(id)
 }
 
 /* provisional name */
-s32 get_cg_slot_addr(u16 id) {
+s32 get_cg_slot_addr(id)
+u16 id;
+{
     return cg_slot_tbl[id].addr;
 }
 
@@ -742,14 +747,16 @@ s32 set_judge_area_sprite(WORK_Other* owk) {
     s16 k;
     s32 n;
     s32 t;
-    (void)((WORK*)owk)->id;
+    (void)&((WORK*)owk)->id;
     if (wk->wu.spr.gfx_cells == 0) {
         return 0;
     }
-    (void)wk->wu.cg_number;
     set = cg_data_list[wk->wu.cg_number].set;
     base_code = cg_slot_tbl[set->slot].addr;
-    if (0) {}
+    if (0) {
+        simmram_block_free_40(wk->wu.spr.gfx_blk40[2]);
+        wk->wu.spr.gfx_blk40[2] = wk->wu.spr.gfx_blk40[1];
+    }
     if ((blk = simmram_block_alloc_40(wk->wu.spr.gfx_cells / 16 + 1, 1)) == 0) {
         return 0;
     }
@@ -771,7 +778,7 @@ s32 set_judge_area_sprite(WORK_Other* owk) {
         if (wk->curr_ja == i) {
             y_ofs = wk->fade_cja.w * 2;
         }
-        for (k = 0, n = i * 16, flip = flip_attr_tbl; k < 4; n = n + 4, flip++) {
+        for (k = 0, n = i * 16, flip = flip_attr_tbl; k < 4; n = n + 4, flip = flip + 1) {
             base[cell].w[0] = judge_area_code_tbl[i] + base_code + y_ofs;
             base[cell].w[1] = *flip;
             base[cell].w[2] = *(s16*)((u32)wk->ja + (t = n)) & 0x3FF;
@@ -783,13 +790,7 @@ s32 set_judge_area_sprite(WORK_Other* owk) {
         }
     }
     if (wk->ja_disp_bit & 0x4000) {
-        (void)((WORK*)flip)->id;
-        (void)((WORK*)flip)->blink_timing;
-        (void)((WORK*)flip)->operator;
-        (void)((WORK*)flip)->type;
-        (void)((WORK*)flip)->charset_id;
-        (void)((WORK*)flip)->work_id;
-        for (k = 0, n = 14 * 16, flip = flip_attr_tbl; k < 4; n = n + 4, flip++) {
+        for (k = 0, n = 14 * 16, flip = flip_attr_tbl; k < 4; n = n + 4, flip = flip + 1) {
             base[cell].w[0] = judge_area_code_tbl[14] + base_code;
             base[cell].w[1] = *flip;
             base[cell].w[2] = *(s16*)((u32)wk->ja + (t = n)) & 0x3FF;
@@ -799,9 +800,6 @@ s32 set_judge_area_sprite(WORK_Other* owk) {
             cell++;
             k++;
         }
-        (void)((WORK*)flip)->operator;
-        (void)((WORK*)flip)->be_flag;
-        (void)((WORK*)flip)->disp_flag;
     }
     if (wk->ja_disp_bit & 0x8000) {
         for (j = 0; j < 2; j++) {
@@ -858,7 +856,7 @@ s32 set_conn_sprite(WORK_Other_CONN* wk) {
         wk->wu.spr.disp_colcd = wk->wu.my_col_code & 0x1FF;
     }
     for (i = n = 0; i < wk->num_of_conn; i++) {
-        (void)((WORK*)n)->be_flag;
+        (void)&((WORK*)n)->be_flag;
         chr = wk->conn[i].chr;
         set = cg_data_list[chr].set;
         base = cg_slot_tbl[set->slot].addr;
@@ -1116,7 +1114,7 @@ s32 sort_push_request4(WORK* wk) {
     if (wk->extra_col) {
         wk->spr.disp_colcd = wk->extra_col;
     }
-    push_char_sprite(wk, spr, 0);
+    push_char_sprite(wk, (u16*)spr, 0);
     if (wk->my_mr_flag && *(u32*)&wk->spr.old_mr != *(u32*)&wk->my_mr) {
         char_sprite_zoom_cells(wk);
     }
@@ -1164,7 +1162,7 @@ s32 disp_seraph_cells(WORK* wk) {
     if (cg_slot_tbl[ix].addr == 0) {
         return;
     }
-    if ((spr = sprite_entry_alloc(0)) == 0) {
+    if ((spr = (u16*)sprite_entry_alloc(0)) == 0) {
         return 0;
     }
     ix = wk->cg_number - 0xB478;
@@ -1199,7 +1197,7 @@ s32 sort_push_request8(WORK* wk) {
     if (cg_slot_tbl[no].addr == 0) {
         return;
     }
-    if ((spr = sprite_entry_alloc(0)) == 0) {
+    if ((spr = (u16*)sprite_entry_alloc(0)) == 0) {
         return 0;
     }
     ix = wk->cg_number - 0x9EC8;
@@ -1228,7 +1226,7 @@ s32 disp_car_parts_cells(WORK* wk) {
     if (cg_slot_tbl[ix].addr == 0) {
         return;
     }
-    if ((spr = sprite_entry_alloc(0)) == 0) {
+    if ((spr = (u16*)sprite_entry_alloc(0)) == 0) {
         return 0;
     }
     ix = wk->cg_number - 0xB0C8;
@@ -1255,7 +1253,7 @@ void shadow_drawing(WORK* wk, s16 y_ofs) {
     if (cg_slot_tbl[cg_data_list[0x9020].set->slot].addr == 0) {
         return;
     }
-    if ((spr = sprite_entry_alloc(0)) == 0) {
+    if ((spr = (u16*)sprite_entry_alloc(0)) == 0) {
         return;
     }
     size = wk->kage_char - get_kage_width(wk->xyz[1].disp.pos - wk->kage_hy);
@@ -1277,7 +1275,9 @@ void shadow_drawing(WORK* wk, s16 y_ofs) {
 
 
 
-s16 get_kage_width(s16 v) {
+s16 get_kage_width(v)
+s16 v;
+{
     if (v <= 0) {
         return 0;
     }

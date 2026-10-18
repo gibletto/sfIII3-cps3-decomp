@@ -34,6 +34,7 @@
 #include "charmove_2.h"
 #include "fighter.h"
 
+
 void char_move(WORK* wk);
 
 
@@ -441,17 +442,17 @@ void char_move_cmhs(PLW* wk) {
 
 
 
-void char_move_next(WORK* wk);
+void check_cm_extended_code(WORK* wk);
 
 void char_move(WORK* wk) {
     wk->K5_exec_ok = 1;
     if (--wk->cg_ctr != 0) {
         return;
     }
-    char_move_next(wk);
+    check_cm_extended_code(wk);
 }
 
-void char_move_next(WORK* wk) {
+void check_cm_extended_code(WORK* wk) {
     CHAR_CMD* cpc;
     if (wk->cg_next_ix) {
         wk->cg_ix = (wk->cg_next_ix - 1) * wk->cgd_type;
@@ -2308,7 +2309,7 @@ s32 get_comm_if_lever(WORK* wk) {
 s32 get_comm_if_shot(WORK* wk) {
     u16 num;
     if (wk->work_id == 1) {
-        num = wcp[(s16)wk->id].sw_new & 0x770;
+        num = wcp[wk->id].sw_new & 0x770;
     } else {
         num = wcp[(s16)(((WORK_Other*)wk)->master_id & 1)].sw_new & 0x770;
     }
@@ -2339,7 +2340,7 @@ s32 get_comm_if_shot_now_off(WORK* wk) {
 s32 get_comm_if_shot_now(WORK* wk) {
     u16 num;
     if (wk->work_id == 1) {
-        num = wcp[(s16)wk->id].sw_now & 0x770;
+        num = wcp[wk->id].sw_now & 0x770;
     } else {
         num = wcp[(s16)(((WORK_Other*)wk)->master_id & 1)].sw_now & 0x770;
     }
@@ -2351,7 +2352,7 @@ s32 get_comm_if_shot_now(WORK* wk) {
 s32 get_comm_if_lvsh(WORK* wk) {
     u16 num;
     if (wk->work_id == 1) {
-        num = wcp[(s16)wk->id].sw_new & 0x77F;
+        num = wcp[wk->id].sw_new & 0x77F;
     } else {
         num = wcp[(s16)(((WORK_Other*)wk)->master_id & 1)].sw_new & 0x77F;
     }
@@ -2549,7 +2550,7 @@ void check_cgd_patdat2(WORK* wk) {
 void set_new_attnum(WORK* wk) {
     s16 aag_sw;
     u32 dspadrs;
-    extern u16 att_req;
+    static u16 att_req;
     wk->renew_attack = wk->cg_att_ix;
     if ((att_req = (++att_req & 0x7FFF)) == 0) {
         att_req++;
@@ -2589,8 +2590,7 @@ void set_new_attnum(WORK* wk) {
 }
 
 
-/* provisional name */
-void kezuri_pow_init(WORK* wk) {
+void setup_metamor_kezuri(WORK* wk) {
     if (wk->kezuri_pow == 0) {
         wk->kezuri_pow = kezuri_pow_table[3];
     }

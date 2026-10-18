@@ -15,7 +15,7 @@
 
 
 void Follow02(PLW* wk) {
-    Follow02_Tbl[(s16)Pattern_Index[wk->wu.id]](wk);
+    Follow02_Tbl[Pattern_Index[wk->wu.id]](wk);
 }
 
 

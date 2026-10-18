@@ -7,7 +7,7 @@ void effe6_0002(WORK_Other* ewk);
 void effe6_0006(WORK_Other* ewk);
 void effe6_0019(WORK_Other* ewk);
 void effe6_0025(WORK_Other* ewk);
-s32 effe6_0003(WORK_Other* ewk);
+void effe6_0003(WORK_Other* ewk);
 void effe6_0009(WORK_Other* ewk);
 void effe6_0018(WORK_Other* ewk);
 void effe6_0020(WORK_Other* ewk);

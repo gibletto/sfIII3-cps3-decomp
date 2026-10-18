@@ -120,6 +120,6 @@ s32 effect_97_init(PLW* oya) {
         ewk->wu.rl_flag = 1;
         ewk->wu.xyz[0].disp.pos = oya->wu.xyz[0].disp.pos + 108;
     }
-    suzi_offset_set(ewk);
+    suzi_offset_set(&ewk->wu);
     return 0;
 }

@@ -64,6 +64,12 @@
 #include "win_pl.h"
 #include "fighter.h"
 
+s16 poison_flag[2];  /* 020281A8 */
+s16 win_rno[2];  /* 020281AC */
+s16 a_rno;  /* 020281B0 */
+s16 win_free[2];  /* 020281B2 */
+
+
 void char_move(WORK* wk);
 void char_move_cmja(WORK* wk);
 void char_move_z(WORK* wk);
@@ -288,7 +294,7 @@ void Win_02000(PLW* wk) {
         work = win_select(wk, 3);
         if (Round_num >= (Battle_Round[Play_Type] * 2) ||
             PL_Wins[wk->wu.id] >= Battle_Round[Play_Type] + 1) {
-            if (win_02000_tbl[bg_w.bg_index]) {
+            if (win_2000_tbl[bg_w.bg_index]) {
                 set_char_move_init(&wk->wu, 9, work + 36);
             } else if (work & 1) {
                 set_char_move_init(&wk->wu, 9, 32);
@@ -1004,18 +1010,17 @@ void Win_11000(PLW* wk) {
             Normal_normal_Winner(wk);
             break;
         case 1:
-            Win_11000_jump_out(wk);
+            twelve_win_away(wk);
             break;
         case 2:
-            Win_11000_leap_out(wk);
+            twelve_win_backjump(wk);
             break;
         }
         break;
     }
 }
 
-/* provisional name */
-void Win_11000_jump_out(PLW* wk) {
+void twelve_win_away(PLW* wk) {
     switch (win_rno[1]) {
     case 0:
         char_move(&wk->wu);
@@ -1046,7 +1051,7 @@ void Win_11000_jump_out(PLW* wk) {
     case 2:
         add_x_sub((WORK_Other*)wk);
         add_y_sub((WORK_Other*)wk);
-        if (!range_x_check3((WORK_Other*)wk, 208)) {
+        if (!range_x_check3((WORK*)wk, 208)) {
             win_rno[1]++;
         }
         break;
@@ -1055,8 +1060,7 @@ void Win_11000_jump_out(PLW* wk) {
     }
 }
 
-/* provisional name */
-void Win_11000_leap_out(PLW* wk) {
+void twelve_win_backjump(PLW* wk) {
     switch (win_rno[1]) {
     case 0:
         if (set_field_hosei_flag(&plw[wk->wu.id], (bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset), 1)) {

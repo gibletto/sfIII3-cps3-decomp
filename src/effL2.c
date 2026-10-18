@@ -6,7 +6,7 @@
  * placing it on that player's side with a shadow. effl2_dir_check picks its facing from
  * effl2_dir_tbl by the fighter's X position. When the match ends in a complete victory it
  * plays a win or lose reaction depending on Winner_id, and it resets after the next
- * screen wipe. Started from bg0301_init.
+ * screen wipe. Started from bg0301_init00.
  */
 
 #include "structs.h"

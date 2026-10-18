@@ -7,40 +7,6 @@
 
 #pragma section TBL
 
-extern void bg0000_demo();
-extern void bg0000_init00();
-extern void bg0001_init00();
-extern void bg0101_init00();
-extern void bg0102_init00();
-extern void bg0201_init00();
-extern void bg0202_init00();
-extern void bg020_sync_init();
-extern void bg020_sync_move();
-extern void bg0300_init00();
-extern void bg0301_init();
-extern void bg0401_init00();
-extern void bg0401_init01();
-extern void bg0402_init00();
-extern void bg0402_init01();
-extern void bg0501_init00();
-extern void bg0502_init00();
-extern void bg050_sync_init();
-extern void bg050_sync_move();
-extern void bg0601_init00();
-extern void bg0602_init00();
-extern void bg0701_init00();
-extern void bg0701_move00();
-extern void bg0702_init00();
-extern void bg0801_init00();
-extern void bg1801_init00();
-extern void bg1801_move();
-extern void bg1802_init00();
-extern void bg1802_move();
-extern void bg180_sync_init();
-extern void bg180_sync_move();
-extern void bg_base_move_common();
-extern void bg_move_common();
-
 const char ake_cell1_data[128] = {
     0, 0, 0, 0, 0, 0, 0, 1,
     0, 0, 0, 64, 0, 0, 0, 2,

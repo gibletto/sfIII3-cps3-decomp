@@ -22,6 +22,154 @@
 #include "PLS02.h"
 #include "EFFB8.h"
 
+extern const EFFB8_MESSAGE effB8_mes_en_0[];
+extern const EFFB8_MESSAGE effB8_mes_en_1[];
+extern const EFFB8_MESSAGE effB8_mes_en_10[];
+extern const EFFB8_MESSAGE effB8_mes_en_11[];
+extern const EFFB8_MESSAGE effB8_mes_en_12[];
+extern const EFFB8_MESSAGE effB8_mes_en_13[];
+extern const EFFB8_MESSAGE effB8_mes_en_14[];
+extern const EFFB8_MESSAGE effB8_mes_en_16[];
+extern const EFFB8_MESSAGE effB8_mes_en_17[];
+extern const EFFB8_MESSAGE effB8_mes_en_18[];
+extern const EFFB8_MESSAGE effB8_mes_en_19[];
+extern const EFFB8_MESSAGE effB8_mes_en_2[];
+extern const EFFB8_MESSAGE effB8_mes_en_20[];
+extern const EFFB8_MESSAGE effB8_mes_en_3[];
+extern const EFFB8_MESSAGE effB8_mes_en_4[];
+extern const EFFB8_MESSAGE effB8_mes_en_5[];
+extern const EFFB8_MESSAGE effB8_mes_en_6[];
+extern const EFFB8_MESSAGE effB8_mes_en_7[];
+extern const EFFB8_MESSAGE effB8_mes_en_8[];
+extern const EFFB8_MESSAGE effB8_mes_en_9[];
+extern const EFFB8_MESSAGE effB8_mes_jp_0[];
+extern const EFFB8_MESSAGE effB8_mes_jp_1[];
+extern const EFFB8_MESSAGE effB8_mes_jp_10[];
+extern const EFFB8_MESSAGE effB8_mes_jp_11[];
+extern const EFFB8_MESSAGE effB8_mes_jp_12[];
+extern const EFFB8_MESSAGE effB8_mes_jp_13[];
+extern const EFFB8_MESSAGE effB8_mes_jp_14[];
+extern const EFFB8_MESSAGE effB8_mes_jp_16[];
+extern const EFFB8_MESSAGE effB8_mes_jp_17[];
+extern const EFFB8_MESSAGE effB8_mes_jp_18[];
+extern const EFFB8_MESSAGE effB8_mes_jp_19[];
+extern const EFFB8_MESSAGE effB8_mes_jp_2[];
+extern const EFFB8_MESSAGE effB8_mes_jp_20[];
+extern const EFFB8_MESSAGE effB8_mes_jp_3[];
+extern const EFFB8_MESSAGE effB8_mes_jp_4[];
+extern const EFFB8_MESSAGE effB8_mes_jp_5[];
+extern const EFFB8_MESSAGE effB8_mes_jp_6[];
+extern const EFFB8_MESSAGE effB8_mes_jp_7[];
+extern const EFFB8_MESSAGE effB8_mes_jp_8[];
+extern const EFFB8_MESSAGE effB8_mes_jp_9[];
+
+s16 test_pl_no;  /* 02068C2C */
+s16 test_mes_no;  /* 02068C2E */
+s16 test_in;  /* 02068C30 */
+s16 old_mes_no2;  /* 02068C32 */
+s16 old_mes_no3;  /* 02068C34 */
+s16 old_mes_no_pl;  /* 02068C36 */
+s16 mes_timer;  /* 02068C38 */
+
+
+/* 02006EFC */
+const EFFB8_MESSAGE* effB8_mes_jp[21] = {
+    effB8_mes_jp_0,
+    effB8_mes_jp_1,
+    effB8_mes_jp_2,
+    effB8_mes_jp_3,
+    effB8_mes_jp_4,
+    effB8_mes_jp_5,
+    effB8_mes_jp_6,
+    effB8_mes_jp_7,
+    effB8_mes_jp_8,
+    effB8_mes_jp_9,
+    effB8_mes_jp_10,
+    effB8_mes_jp_11,
+    effB8_mes_jp_12,
+    effB8_mes_jp_13,
+    effB8_mes_jp_14,
+    effB8_mes_jp_14,
+    effB8_mes_jp_16,
+    effB8_mes_jp_17,
+    effB8_mes_jp_18,
+    effB8_mes_jp_19,
+    effB8_mes_jp_20,
+};
+/* 02006F50 */
+const EFFB8_MESSAGE* effB8_mes_en[21] = {
+    effB8_mes_en_0,
+    effB8_mes_en_1,
+    effB8_mes_en_2,
+    effB8_mes_en_3,
+    effB8_mes_en_4,
+    effB8_mes_en_5,
+    effB8_mes_en_6,
+    effB8_mes_en_7,
+    effB8_mes_en_8,
+    effB8_mes_en_9,
+    effB8_mes_en_10,
+    effB8_mes_en_11,
+    effB8_mes_en_12,
+    effB8_mes_en_13,
+    effB8_mes_en_14,
+    effB8_mes_en_14,
+    effB8_mes_en_16,
+    effB8_mes_en_17,
+    effB8_mes_en_18,
+    effB8_mes_en_19,
+    effB8_mes_en_20,
+};
+/* 02006FA4 */
+const EFFB8_MESSAGE* effB8_mes_es[21] = {
+    effB8_mes_en_0,
+    effB8_mes_en_1,
+    effB8_mes_en_2,
+    effB8_mes_en_3,
+    effB8_mes_en_4,
+    effB8_mes_en_5,
+    effB8_mes_en_6,
+    effB8_mes_en_7,
+    effB8_mes_en_8,
+    effB8_mes_en_9,
+    effB8_mes_en_10,
+    effB8_mes_en_11,
+    effB8_mes_en_12,
+    effB8_mes_en_13,
+    effB8_mes_en_14,
+    effB8_mes_en_14,
+    effB8_mes_en_16,
+    effB8_mes_en_17,
+    effB8_mes_en_18,
+    effB8_mes_en_19,
+    effB8_mes_en_20,
+};
+/* 02006FF8 */
+const EFFB8_MESSAGE* effB8_mes_pt[21] = {
+    effB8_mes_en_0,
+    effB8_mes_en_1,
+    effB8_mes_en_2,
+    effB8_mes_en_3,
+    effB8_mes_en_4,
+    effB8_mes_en_5,
+    effB8_mes_en_6,
+    effB8_mes_en_7,
+    effB8_mes_en_8,
+    effB8_mes_en_9,
+    effB8_mes_en_10,
+    effB8_mes_en_11,
+    effB8_mes_en_12,
+    effB8_mes_en_13,
+    effB8_mes_en_14,
+    effB8_mes_en_14,
+    effB8_mes_en_16,
+    effB8_mes_en_17,
+    effB8_mes_en_18,
+    effB8_mes_en_19,
+    effB8_mes_en_20,
+};
+
+
 #pragma inline(b8_sel_1_by_8)
 
 void effect_B8_move(WORK_Other_CONN* ewk) {
@@ -172,7 +320,7 @@ void effect_B8_move(WORK_Other_CONN* ewk) {
                     }
                 }
                 if (sw & 0x100) {
-                    test_mes_no++;
+                    test_mes_no = test_mes_no + 1;
                     if (test_mes_no > 27) {
                         if (Country == 1) {
                             test_mes_no = 0;
@@ -182,7 +330,7 @@ void effect_B8_move(WORK_Other_CONN* ewk) {
                     }
                 }
                 if (sw & 0x200) {
-                    test_mes_no--;
+                    test_mes_no = test_mes_no - 1;
                     if (test_mes_no < 0) {
                         test_mes_no = 27;
                     }
@@ -196,7 +344,6 @@ void effect_B8_move(WORK_Other_CONN* ewk) {
         break;
     case 3:
         ewk->wu.routine_no[0]++;
-        (void)((WORK_Other*)0)->wu.be_flag;
         break;
     default:
         if (test_in == 0) {
@@ -213,14 +360,12 @@ void effect_B8_move(WORK_Other_CONN* ewk) {
             }
             num = *chr_data;
             chr_data++;
-            for (i = 0; i < num; i++) {
+            for (i = 0; i < num; i = i + 1) {
                 chr = *chr_data;
                 purge_char_gfx(chr);
-                chr_data++;
+                chr_data = chr_data + 1;
             }
-            (void)ewk->conn[i].nx;
         }
-        (void)ewk->wu.be_flag;
         all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
         break;

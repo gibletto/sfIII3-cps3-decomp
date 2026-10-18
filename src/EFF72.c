@@ -27,7 +27,7 @@
 
 void effect_72_move(WORK_Other* ewk) {
     WORK_Other* oya;
-    if (obr_disp_off_check()) {
+    if (obr_no_disp_check()) {
         return;
     }
     oya = (WORK_Other*)ewk->my_master;
@@ -86,7 +86,7 @@ s32 effect_72_init(WORK_Other* oya, u8 type_id) {
             ewk->wu.char_index = 9;
         }
         ewk->wu.sync_suzi = 0;
-        suzi_offset_set(ewk);
+        suzi_offset_set(&ewk->wu);
         return 0;
     }
 }

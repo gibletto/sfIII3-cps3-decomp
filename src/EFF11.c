@@ -29,7 +29,7 @@
 
 
 void effect_11_move(WORK_Other* ewk) {
-    if (obr_disp_off_check()) {
+    if (obr_no_disp_check()) {
         return;
     }
     switch (ewk->wu.routine_no[0]) {
@@ -261,7 +261,7 @@ s32 effect_11_init(void) {
         ewk->wu.old_rno[6] = ewk->wu.char_index;
         ewk->wu.old_rno[4] = ewk->wu.xyz[0].disp.pos;
         ewk->wu.old_rno[2] = ewk->wu.xyz[1].disp.pos;
-        suzi_offset_set(ewk);
+        suzi_offset_set(&ewk->wu);
     }
     return 0;
 }

@@ -35,8 +35,16 @@
 
 
 
+extern const s16 scr_obj_data87_0[];
+
+/* 02006D8C */
+const s16* scr_obj_data87[1][4] = {
+    { scr_obj_data87_0, scr_obj_data87_0, scr_obj_data87_0, scr_obj_data87_0 },
+};
+
+
 void effect_87_move(WORK_Other* ewk) {
-    if (obr_disp_off_check()) {
+    if (obr_no_disp_check()) {
         return;
     }
     switch (ewk->wu.routine_no[0]) {
@@ -100,7 +108,7 @@ s32 effect_87_init(s16 type) {
         ewk->wu.hit_stop = *data_ptr++;
         ewk->wu.sync_suzi = *data_ptr++;
         ewk->wu.char_table[0] = char_add[bg_w.bg_index];
-        suzi_offset_set(ewk);
+        suzi_offset_set(&ewk->wu);
     }
     return 0;
 }

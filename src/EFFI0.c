@@ -178,7 +178,7 @@ void effect_I0_move(WORK_Other* ewk) {
         }
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos;
-        sort_push_request(ewk);
+        sort_push_request(&ewk->wu);
         break;
     case 2:
         ewk->wu.routine_no[0] = 3;
@@ -238,7 +238,7 @@ void effect_I0_init(WORK* wk, u8 num) {
     s16 spx;
     s16 spy;
     s16 nxy;
-    dix = (s16*)&koishi_app_area[random_16_com() & 7][0];
+    dix = &koishi_app_area[random_16_com() & 7][0];
     for (i = 0; i < num_of_koishi[num]; i++) {
         hsx = (koishi_area_hosei[dix[i]] + (random_16_com() - 7));
         hsy = -(random_16_com() & 3);

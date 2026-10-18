@@ -25,6 +25,10 @@
 
 
 
+u8 OK_Appear79[2];  /* 02068C0C */
+u8 Extra_Counter[2];  /* 02068C0E */
+
+
 void effect_79_move(WORK_Other* ewk) {
     s16 arrived[2];
     switch (ewk->wu.routine_no[0]) {
@@ -317,7 +321,13 @@ void Move_Move_79(WORK_Other* ewk) {
 
 
 
-void Setup_Move_79(WORK_Other* ewk, s32 _p1, s32 X_Value, s32 Y_Value, s16 Option) {
+void Setup_Move_79(ewk, _p1, X_Value, Y_Value, Option)
+WORK_Other* ewk;
+s32 _p1;
+s32 X_Value;
+s32 Y_Value;
+s16 Option;
+{
     ewk->wu.routine_no[1] = 1;
     ewk->wu.routine_no[2] = 0;
     ewk->wu.routine_no[5] = 0;

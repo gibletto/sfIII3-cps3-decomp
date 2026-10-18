@@ -7,79 +7,47 @@
 
 #pragma section TBL
 
-extern const u32 chute_mode_str_tbl_0[];
-extern const u32 chute_mode_str_tbl_1[];
-extern const u32 chute_mode_str_tbl_10[];
-extern const u32 chute_mode_str_tbl_11[];
-extern const u32 chute_mode_str_tbl_2[];
-extern const u32 chute_mode_str_tbl_3[];
-extern const u32 chute_mode_str_tbl_4[];
-extern const u32 chute_mode_str_tbl_5[];
-extern const u32 chute_mode_str_tbl_6[];
-extern const u32 chute_mode_str_tbl_7[];
-extern const u32 chute_mode_str_tbl_8[];
-extern const u32 chute_mode_str_tbl_9[];
-extern const void* const coin_rate_tbl_tail[];
-extern const u32 coin_setting_str_tbl_1[];
-extern const u32 coin_setting_str_tbl_10[];
-extern const u32 coin_setting_str_tbl_11[];
-extern const u32 coin_setting_str_tbl_12[];
-extern const u32 coin_setting_str_tbl_13[];
-extern const u32 coin_setting_str_tbl_14[];
-extern const u32 coin_setting_str_tbl_15[];
-extern const u32 coin_setting_str_tbl_16[];
-extern const u32 coin_setting_str_tbl_17[];
-extern const u32 coin_setting_str_tbl_18[];
-extern const u32 coin_setting_str_tbl_2[];
-extern const u32 coin_setting_str_tbl_3[];
-extern const u32 coin_setting_str_tbl_4[];
-extern const u32 coin_setting_str_tbl_5[];
-extern const u32 coin_setting_str_tbl_6[];
-extern const u32 coin_setting_str_tbl_7[];
-extern const u32 coin_setting_str_tbl_8[];
-extern const u32 coin_setting_str_tbl_9[];
-extern const u32 monitor_str_tbl_1[];
-extern const u32 on_off_str_tbl_0[];
-extern const u32 on_off_str_tbl_1[];
-extern const u32 sound_mode_str_tbl_0[];
-extern const u32 sound_mode_str_tbl_1[];
-extern const u32 sound_mode_str_tbl_2[];
-extern const u32 sound_mode_str_tbl_3[];
-extern const u32 sound_mode_str_tbl_4[];
-extern const u32 sound_mode_str_tbl_5[];
+extern const TM_STRING chute_mode_str_tbl_0[];
+extern const TM_STRING chute_mode_str_tbl_1[];
+extern const TM_STRING chute_mode_str_tbl_10[];
+extern const TM_STRING chute_mode_str_tbl_11[];
+extern const TM_STRING chute_mode_str_tbl_2[];
+extern const TM_STRING chute_mode_str_tbl_3[];
+extern const TM_STRING chute_mode_str_tbl_4[];
+extern const TM_STRING chute_mode_str_tbl_5[];
+extern const TM_STRING chute_mode_str_tbl_6[];
+extern const TM_STRING chute_mode_str_tbl_7[];
+extern const TM_STRING chute_mode_str_tbl_8[];
+extern const TM_STRING chute_mode_str_tbl_9[];
+extern const TM_STRING coin_setting_str_tbl_0[];
+extern const TM_STRING coin_setting_str_tbl_1[];
+extern const TM_STRING coin_setting_str_tbl_10[];
+extern const TM_STRING coin_setting_str_tbl_11[];
+extern const TM_STRING coin_setting_str_tbl_12[];
+extern const TM_STRING coin_setting_str_tbl_13[];
+extern const TM_STRING coin_setting_str_tbl_14[];
+extern const TM_STRING coin_setting_str_tbl_15[];
+extern const TM_STRING coin_setting_str_tbl_16[];
+extern const TM_STRING coin_setting_str_tbl_17[];
+extern const TM_STRING coin_setting_str_tbl_18[];
+extern const TM_STRING coin_setting_str_tbl_2[];
+extern const TM_STRING coin_setting_str_tbl_3[];
+extern const TM_STRING coin_setting_str_tbl_4[];
+extern const TM_STRING coin_setting_str_tbl_5[];
+extern const TM_STRING coin_setting_str_tbl_6[];
+extern const TM_STRING coin_setting_str_tbl_7[];
+extern const TM_STRING coin_setting_str_tbl_8[];
+extern const TM_STRING coin_setting_str_tbl_9[];
+extern const TM_STRING monitor_str_tbl_1[];
+extern const TM_STRING on_off_str_tbl_0[];
+extern const TM_STRING on_off_str_tbl_1[];
+extern const TM_STRING sound_mode_str_tbl_0[];
+extern const TM_STRING sound_mode_str_tbl_1[];
+extern const TM_STRING sound_mode_str_tbl_2[];
+extern const TM_STRING sound_mode_str_tbl_3[];
+extern const TM_STRING sound_mode_str_tbl_4[];
+extern const TM_STRING sound_mode_str_tbl_5[];
 
-extern const char str_config_menu_title[];
-extern const char str_config_1_system[];
-extern const char str_sys_2_chute_mode[];
-extern const char str_sys_3_continue[];
-extern const char str_sys_4_monitor[];
-extern const char str_sys_5_demo_sound[];
-extern const char str_sys_6_sound_mode[];
-extern const char str_sys_7_exit[];
-extern const char str_sys_7_language[];
-extern const char str_sys_8_exit[];
-extern const char str_sys_7_c_dispenser[];
-extern const char str_sys_8_win_point[];
-extern const char str_config_2_game[];
-extern const char str_sys_9_exit[];
-extern const char str_sys_7_voice_type[];
-extern const char str_sys_8_win_point_com[];
-extern const char str_sys_9_win_point_human[];
-extern const char str_sys_10_exit[];
-extern const char str_guide_select_option[];
-extern const char str_guide_modify_setting[];
-extern const char str_guide_modify_shot1_shot2[];
-extern const char str_guide_return_config_menu[];
-extern const char str_guide_return_shot1[];
-extern const char str_config_3_default[];
-extern const char str_saving_configuration[];
-extern const char str_saving_in_eeprom[];
-extern const char str_config_4_save_exit[];
-extern const char str_guide_select_up_down[];
-extern const char str_guide_start_shot1[];
-extern const char str_guide_reset_shot1_shot2[];
-extern const char str_sysconfig_title[];
-extern const char str_sys_1_coin[];
 extern const char str_1coin_1credit[];
 extern const char str_1coin_2credits[];
 extern const char str_3coins_1credit[];
@@ -121,179 +89,177 @@ extern const char str_1coin_8credits[];
 extern const char str_1coin_9credits[];
 extern const char str_2coins_1credit[];
 
-const u8 coin_rate_tbl[24][2] = {
+const u8 coin_rate_tbl[20][2] = {
     { 1, 1 }, { 1, 2 }, { 1, 3 }, { 1, 4 }, { 1, 5 }, { 1, 6 }, { 1, 7 }, { 1, 8 },
     { 1, 9 }, { 2, 1 }, { 3, 1 }, { 4, 1 }, { 5, 1 }, { 6, 1 }, { 7, 1 }, { 8, 1 },
-    { 9, 1 }, { 1, 1 }, { 0, 0 }, { 0, 0 }, { 0, 18 }, { 0, 5 }, { 0, 14 }, { 0, 0 },
+    { 9, 1 }, { 1, 1 }, { 0, 0 }, { 0, 0 },
 };
 
-/* Stored after coin_rate_tbl. Nothing in the program refers to it by name or address; if it is read,
-   it is through an index past the end of coin_rate_tbl. */
-const void* const coin_rate_tbl_tail[1] = {
-    str_1coin_1credit,
+const TM_STRING coin_setting_str_tbl_0[1] = {
+    { 0x12, 5, 0xE, (void*)str_1coin_1credit },
 };
 
-const u32 coin_setting_str_tbl_1[3] = {
-    0x120005, 0xE0000, (u32)str_1coin_2credits,
+const TM_STRING coin_setting_str_tbl_1[1] = {
+    { 0x12, 5, 0xE, (void*)str_1coin_2credits },
 };
 
-const u32 coin_setting_str_tbl_2[3] = {
-    0x120005, 0xE0000, (u32)str_1coin_3credits,
+const TM_STRING coin_setting_str_tbl_2[1] = {
+    { 0x12, 5, 0xE, (void*)str_1coin_3credits },
 };
 
-const u32 coin_setting_str_tbl_3[3] = {
-    0x120005, 0xE0000, (u32)str_1coin_4credits,
+const TM_STRING coin_setting_str_tbl_3[1] = {
+    { 0x12, 5, 0xE, (void*)str_1coin_4credits },
 };
 
-const u32 coin_setting_str_tbl_4[3] = {
-    0x120005, 0xE0000, (u32)str_1coin_5credits,
+const TM_STRING coin_setting_str_tbl_4[1] = {
+    { 0x12, 5, 0xE, (void*)str_1coin_5credits },
 };
 
-const u32 coin_setting_str_tbl_5[3] = {
-    0x120005, 0xE0000, (u32)str_1coin_6credits,
+const TM_STRING coin_setting_str_tbl_5[1] = {
+    { 0x12, 5, 0xE, (void*)str_1coin_6credits },
 };
 
-const u32 coin_setting_str_tbl_6[3] = {
-    0x120005, 0xE0000, (u32)str_1coin_7credits,
+const TM_STRING coin_setting_str_tbl_6[1] = {
+    { 0x12, 5, 0xE, (void*)str_1coin_7credits },
 };
 
-const u32 coin_setting_str_tbl_7[3] = {
-    0x120005, 0xE0000, (u32)str_1coin_8credits,
+const TM_STRING coin_setting_str_tbl_7[1] = {
+    { 0x12, 5, 0xE, (void*)str_1coin_8credits },
 };
 
-const u32 coin_setting_str_tbl_8[3] = {
-    0x120005, 0xE0000, (u32)str_1coin_9credits,
+const TM_STRING coin_setting_str_tbl_8[1] = {
+    { 0x12, 5, 0xE, (void*)str_1coin_9credits },
 };
 
-const u32 coin_setting_str_tbl_9[3] = {
-    0x120005, 0xE0000, (u32)str_2coins_1credit,
+const TM_STRING coin_setting_str_tbl_9[1] = {
+    { 0x12, 5, 0xE, (void*)str_2coins_1credit },
 };
 
-const u32 coin_setting_str_tbl_10[3] = {
-    0x120005, 0xE0000, (u32)str_3coins_1credit,
+const TM_STRING coin_setting_str_tbl_10[1] = {
+    { 0x12, 5, 0xE, (void*)str_3coins_1credit },
 };
 
-const u32 coin_setting_str_tbl_11[3] = {
-    0x120005, 0xE0000, (u32)str_4coins_1credit,
+const TM_STRING coin_setting_str_tbl_11[1] = {
+    { 0x12, 5, 0xE, (void*)str_4coins_1credit },
 };
 
-const u32 coin_setting_str_tbl_12[3] = {
-    0x120005, 0xE0000, (u32)str_5coins_1credit,
+const TM_STRING coin_setting_str_tbl_12[1] = {
+    { 0x12, 5, 0xE, (void*)str_5coins_1credit },
 };
 
-const u32 coin_setting_str_tbl_13[3] = {
-    0x120005, 0xE0000, (u32)str_6coins_1credit,
+const TM_STRING coin_setting_str_tbl_13[1] = {
+    { 0x12, 5, 0xE, (void*)str_6coins_1credit },
 };
 
-const u32 coin_setting_str_tbl_14[3] = {
-    0x120005, 0xE0000, (u32)str_7coins_1credit,
+const TM_STRING coin_setting_str_tbl_14[1] = {
+    { 0x12, 5, 0xE, (void*)str_7coins_1credit },
 };
 
-const u32 coin_setting_str_tbl_15[3] = {
-    0x120005, 0xE0000, (u32)str_8coins_1credit,
+const TM_STRING coin_setting_str_tbl_15[1] = {
+    { 0x12, 5, 0xE, (void*)str_8coins_1credit },
 };
 
-const u32 coin_setting_str_tbl_16[3] = {
-    0x120005, 0xE0000, (u32)str_9coins_1credit,
+const TM_STRING coin_setting_str_tbl_16[1] = {
+    { 0x12, 5, 0xE, (void*)str_9coins_1credit },
 };
 
-const u32 coin_setting_str_tbl_17[3] = {
-    0x120005, 0xE0000, (u32)str_2coins_start_1coin_cont,
+const TM_STRING coin_setting_str_tbl_17[1] = {
+    { 0x12, 5, 0xE, (void*)str_2coins_start_1coin_cont },
 };
 
-const u32 coin_setting_str_tbl_18[3] = {
-    0x120005, 0xE0000, (u32)str_coin_free_play,
+const TM_STRING coin_setting_str_tbl_18[1] = {
+    { 0x12, 5, 0xE, (void*)str_coin_free_play },
 };
 
-const u32 chute_mode_str_tbl_0[3] = {
-    0x120007, 0xE0000, (u32)str_2pl_1chute_single,
+const TM_STRING chute_mode_str_tbl_0[1] = {
+    { 0x12, 7, 0xE, (void*)str_2pl_1chute_single },
 };
 
-const u32 chute_mode_str_tbl_1[3] = {
-    0x120007, 0xE0000, (u32)str_2pl_2chutes_single,
+const TM_STRING chute_mode_str_tbl_1[1] = {
+    { 0x12, 7, 0xE, (void*)str_2pl_2chutes_single },
 };
 
-const u32 chute_mode_str_tbl_2[3] = {
-    0x120007, 0xE0000, (u32)str_2pl_2chutes_multi,
+const TM_STRING chute_mode_str_tbl_2[1] = {
+    { 0x12, 7, 0xE, (void*)str_2pl_2chutes_multi },
 };
 
-const u32 chute_mode_str_tbl_3[3] = {
-    0x120007, 0xE0000, (u32)str_3pl_1chute_single,
+const TM_STRING chute_mode_str_tbl_3[1] = {
+    { 0x12, 7, 0xE, (void*)str_3pl_1chute_single },
 };
 
-const u32 chute_mode_str_tbl_4[3] = {
-    0x120007, 0xE0000, (u32)str_3pl_2chutes_single,
+const TM_STRING chute_mode_str_tbl_4[1] = {
+    { 0x12, 7, 0xE, (void*)str_3pl_2chutes_single },
 };
 
-const u32 chute_mode_str_tbl_5[3] = {
-    0x120007, 0xE0000, (u32)str_3pl_3chutes_single,
+const TM_STRING chute_mode_str_tbl_5[1] = {
+    { 0x12, 7, 0xE, (void*)str_3pl_3chutes_single },
 };
 
-const u32 chute_mode_str_tbl_6[3] = {
-    0x120007, 0xE0000, (u32)str_3pl_3chutes_multi,
+const TM_STRING chute_mode_str_tbl_6[1] = {
+    { 0x12, 7, 0xE, (void*)str_3pl_3chutes_multi },
 };
 
-const u32 chute_mode_str_tbl_7[3] = {
-    0x120007, 0xE0000, (u32)str_4pl_1chute_single,
+const TM_STRING chute_mode_str_tbl_7[1] = {
+    { 0x12, 7, 0xE, (void*)str_4pl_1chute_single },
 };
 
-const u32 chute_mode_str_tbl_8[3] = {
-    0x120007, 0xE0000, (u32)str_4pl_2chutes_single,
+const TM_STRING chute_mode_str_tbl_8[1] = {
+    { 0x12, 7, 0xE, (void*)str_4pl_2chutes_single },
 };
 
-const u32 chute_mode_str_tbl_9[3] = {
-    0x120007, 0xE0000, (u32)str_4pl_2chutes_multi,
+const TM_STRING chute_mode_str_tbl_9[1] = {
+    { 0x12, 7, 0xE, (void*)str_4pl_2chutes_multi },
 };
 
-const u32 chute_mode_str_tbl_10[3] = {
-    0x120007, 0xE0000, (u32)str_4pl_4chutes_single,
+const TM_STRING chute_mode_str_tbl_10[1] = {
+    { 0x12, 7, 0xE, (void*)str_4pl_4chutes_single },
 };
 
-const u32 chute_mode_str_tbl_11[3] = {
-    0x120007, 0xE0000, (u32)str_4pl_4chutes_multi,
+const TM_STRING chute_mode_str_tbl_11[1] = {
+    { 0x12, 7, 0xE, (void*)str_4pl_4chutes_multi },
 };
 
-const u32 on_off_str_tbl_1[3] = {
-    0x12000B, 0xE0000, (u32)str_cfg_on,
+const TM_STRING on_off_str_tbl_1[1] = {
+    { 0x12, 11, 0xE, (void*)str_cfg_on },
 };
 
-const u32 on_off_str_tbl_0[3] = {
-    0x12000B, 0xE0000, (u32)str_cfg_off,
+const TM_STRING on_off_str_tbl_0[1] = {
+    { 0x12, 11, 0xE, (void*)str_cfg_off },
 };
 
-const u32 sound_mode_str_tbl_0[3] = {
-    0x120010, 0xE0000, (u32)str_cfg_external,
+const TM_STRING sound_mode_str_tbl_0[1] = {
+    { 0x12, 16, 0xE, (void*)str_cfg_external },
 };
 
-const u32 sound_mode_str_tbl_1[3] = {
-    0x120010, 0xE0000, (u32)str_cfg_jamma,
+const TM_STRING sound_mode_str_tbl_1[1] = {
+    { 0x12, 16, 0xE, (void*)str_cfg_jamma },
 };
 
-const u32 sound_mode_str_tbl_2[3] = {
-    0x120013, 0xE0000, (u32)str_cfg_english,
+const TM_STRING sound_mode_str_tbl_2[1] = {
+    { 0x12, 19, 0xE, (void*)str_cfg_english },
 };
 
-const u32 sound_mode_str_tbl_3[3] = {
-    0x120013, 0xE0000, (u32)str_cfg_spanish,
+const TM_STRING sound_mode_str_tbl_3[1] = {
+    { 0x12, 19, 0xE, (void*)str_cfg_spanish },
 };
 
-const u32 sound_mode_str_tbl_4[3] = {
-    0x120013, 0xE0000, (u32)str_cfg_portuguese,
+const TM_STRING sound_mode_str_tbl_4[1] = {
+    { 0x12, 19, 0xE, (void*)str_cfg_portuguese },
 };
 
-const u32 sound_mode_str_tbl_5[3] = {
-    0x12000B, 0xE0000, (u32)str_cfg_normal,
+const TM_STRING sound_mode_str_tbl_5[1] = {
+    { 0x12, 11, 0xE, (void*)str_cfg_normal },
 };
 
-const u32 monitor_str_tbl_1[3] = {
-    0x12000B, 0xE0000, (u32)str_cfg_flip,
+const TM_STRING monitor_str_tbl_1[1] = {
+    { 0x12, 11, 0xE, (void*)str_cfg_flip },
 };
 
-const u8 cursor_blank_str[4] = {
+const s8 cursor_blank_str[4] = {
     32, 0, 0, 0,
 };
 
-const u8 cursor_mark_str[4] = {
+const s8 cursor_mark_str[4] = {
     62, 0, 0, 0,
 };
 

@@ -9,9 +9,9 @@
           .EXPORT     _simmram_block_alloc_10
           .EXPORT     _simmram_block_free_10
           .EXPORT     _simmram_purge_by_owner_10
-          .IMPORT     _simm10_owner
-          .IMPORT     _simm10_link
-          .IMPORT     _simm10_used
+          .EXPORT     _simm10_owner
+          .EXPORT     _simm10_link
+          .EXPORT     _simm10_used
           .SECTION    P,CODE,ALIGN=4
 _simmram_freelist_init_10:
           MOV.L       p10_link,R2
@@ -193,4 +193,11 @@ p10_used_end:
           .DATA.L     _simm10_used+H'0080
 p10_free:
           .DATA.L     _simmram_block_free_10
+          .SECTION    B,DATA,ALIGN=4
+_simm10_owner:
+          .RES.W      4098
+_simm10_link:
+          .RES.W      2050
+_simm10_used:
+          .RES.W      64
           .END

@@ -21,7 +21,7 @@
 
 void effect_22_move(WORK_Other* ewk) {
     const s32* ptr;
-    if (obr_disp_off_check()) {
+    if (obr_no_disp_check()) {
         return;
     }
     if (compel_dead_check(ewk) != 0) {

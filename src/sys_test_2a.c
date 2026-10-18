@@ -23,6 +23,9 @@
 #include "sys_test_2.h"
 #include "cps3.h"
 
+s16 screentest_no = 0;  /* 02007CA4 */
+
+
 /* provisional name */
 void screentest_draw_crosshatch(void) {
     register s16 x;

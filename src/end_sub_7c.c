@@ -104,7 +104,7 @@ void debug_play13_init(void) {
 /* provisional name */
 void debug_play13_move(void)
 {
-    round_timer.timer = 0x990000;
+    round_timer.size.full = 0x990000;
     Game_timer++;
     set_EXE_flag();
     Player_control();

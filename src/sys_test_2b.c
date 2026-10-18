@@ -26,6 +26,9 @@
 
 
 
+s16 backup_test_no = 0;  /* 02007CA8 */
+
+
 /* provisional name */
 void gamedata_print_counters(void) {
     s32 unused;

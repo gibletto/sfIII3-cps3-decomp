@@ -4,6 +4,6 @@
 #include "structs.h"
 
 u8 *memset();
-u8* strcat(u8* dst, u8* src);
+char* strcat(char* dst, const char* src);
 
 #endif

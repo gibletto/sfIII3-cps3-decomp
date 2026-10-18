@@ -28,6 +28,27 @@
 
 
 
+extern const s16 scr_obj_data25_0[];
+
+/* 02006C48 */
+const s16* scr_obj_data25[1] = {
+    scr_obj_data25_0,
+};
+/* 02006C4C */
+void (*eff25_jp_tbl[10])(WORK_Other* ewk) = {
+    eff25_00,
+    eff25_00,
+    eff25_02,
+    eff25_02,
+    eff25_08,
+    eff25_08,
+    eff25_06,
+    eff25_06,
+    eff25_04,
+    eff25_04,
+};
+
+
 void effect_25_move(WORK_Other* ewk) {
     if (compel_dead_check(ewk)) {
         ewk->wu.routine_no[0] = 99;
@@ -288,6 +309,6 @@ s32 effect_25_init(s8 num) {
     }
     *data_ptr++;
     ewk->wu.char_table[0] = char_add[bg_w.bg_index];
-    suzi_offset_set(ewk);
+    suzi_offset_set(&ewk->wu);
     return 0;
 }

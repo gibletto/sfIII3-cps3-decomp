@@ -4,6 +4,6 @@
 #include "structs.h"
 
 void d0_speed_set(WORK* ewk, s16 num);
-s32 effect_D0_move(WORK_Other* ewk);
+void effect_D0_move(WORK_Other* ewk);
 
 #endif

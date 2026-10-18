@@ -23,8 +23,19 @@
 
 
 
+/* 02006C14 */
+const s16* scr_obj_data12[6] = {
+    (const s16*)&scr_obj_num12[6],
+    (const s16*)&scr_obj_num12[14],
+    (const s16*)&scr_obj_num12[22],
+    (const s16*)&scr_obj_num12[38],
+    (const s16*)&scr_obj_num12[54],
+    (const s16*)&scr_obj_num12[78],
+};
+
+
 void effect_12_move(WORK_Other* ewk) {
-    if (obr_disp_off_check()) {
+    if (obr_no_disp_check()) {
         return;
     }
     switch (ewk->wu.routine_no[0]) {

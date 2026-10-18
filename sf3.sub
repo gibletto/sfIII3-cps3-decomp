@@ -5,6 +5,7 @@ INPUT obj\intr.obj
 INPUT obj\intr_tbl.obj
 INPUT obj\sections.obj
 INPUT obj\tasksw_tbl.obj
+INPUT obj\work.obj
 INPUT obj\Entry_tbl.obj
 INPUT obj\Entry.obj
 INPUT obj\tasksw.obj
@@ -15,6 +16,7 @@ INPUT obj\boot_task.obj
 INPUT obj\mode_init.obj
 INPUT obj\test_mode.obj
 INPUT obj\scrn_ctrl.obj
+INPUT obj\scrn_work.obj
 INPUT obj\Entry_tbl_b.obj
 INPUT obj\Com_Pl_tbl.obj
 INPUT obj\Com_Pl.obj
@@ -151,9 +153,11 @@ INPUT obj\Se_Data.obj
 INPUT obj\SE_tbl2.obj
 INPUT obj\CALDIR_tbl.obj
 INPUT obj\SYS_sub.obj
+INPUT obj\sys_sub_work.obj
 INPUT obj\EM_Cand.obj
 INPUT obj\SYS_sub2.obj
 INPUT obj\Grade.obj
+INPUT obj\workuser.obj
 INPUT obj\SYS_sub_tbl.obj
 INPUT obj\Grade_tbl.obj
 INPUT obj\Game_Main.obj
@@ -237,6 +241,7 @@ INPUT obj\end_main.obj
 INPUT obj\end_main_tbl_b.obj
 INPUT obj\OPENING2.obj
 INPUT obj\end_main_tbl2.obj
+INPUT obj\end_data.obj
 INPUT obj\end_1_tbl.obj
 INPUT obj\end_1.obj
 INPUT obj\end_2_tbl.obj
@@ -343,6 +348,7 @@ INPUT obj\EFF33.obj
 INPUT obj\EFF34.obj
 INPUT obj\spgauge_tbl.obj
 INPUT obj\sc_data3.obj
+INPUT obj\sc_data4.obj
 INPUT obj\EFFECT_tbl.obj
 INPUT obj\EFF00_tbl.obj
 INPUT obj\EFF01.obj
@@ -360,6 +366,7 @@ INPUT obj\eff12_tbl.obj
 INPUT obj\EFF13_tbl.obj
 INPUT obj\eff14_tbl.obj
 INPUT obj\EFF16_tbl.obj
+INPUT obj\EFF17_tbl.obj
 INPUT obj\EFF18_tbl.obj
 INPUT obj\EFF19_tbl.obj
 INPUT obj\EFF21_tbl.obj
@@ -588,6 +595,7 @@ INPUT obj\EFFH0_tbl.obj
 INPUT obj\EFFH1_tbl.obj
 INPUT obj\EFFH2_tbl.obj
 INPUT obj\EFFH3_tbl.obj
+INPUT obj\EFFH4_tbl.obj
 INPUT obj\effh5.obj
 INPUT obj\EFFH6.obj
 INPUT obj\EFFH9_tbl.obj
@@ -659,6 +667,7 @@ INPUT obj\EffM3.obj
 INPUT obj\effM5.obj
 INPUT obj\effM6.obj
 INPUT obj\EFFM7.obj
+INPUT obj\test_menu_scr.obj
 INPUT obj\PLCNTSET.obj
 INPUT obj\effM0_tbl_b.obj
 INPUT obj\EFFM2_tbl.obj
@@ -710,10 +719,14 @@ INPUT obj\meta_col_strcpy.obj
 INPUT obj\meta_col_lib.obj
 INPUT obj\meta_col_bcd.obj
 INPUT obj\EffM3_tbl.obj
+INPUT obj\EffM4_tbl.obj
 INPUT obj\fifo.obj
 INPUT obj\family.obj
 INPUT obj\sys_test.obj
 INPUT obj\sys_test_2.obj
+INPUT obj\iotest_out.obj
+INPUT obj\soundtest.obj
+INPUT obj\colortest.obj
 INPUT obj\sys_test_2a.obj
 INPUT obj\sys_test_2b.obj
 INPUT obj\sys_test_2c.obj
@@ -928,8 +941,6 @@ INPUT obj\sound_voice_2.obj
 INPUT obj\sound_voice_3.obj
 INPUT obj\quick_strcpy.obj
 INPUT obj\vectors.obj
-INPUT obj\work.obj
-INPUT obj\work_b.obj
 INPUT obj\snd_bank.obj
 INPUT obj\snd_seq.obj
 INPUT obj\cd_volume.obj

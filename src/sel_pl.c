@@ -83,6 +83,13 @@
 #include "sel_pl.h"
 #include "fighter.h"
 
+u8 SEL_PL_X;  /* 0201701C */
+s16 Play_Type_1st;  /* 0201701E */
+u16 * Demo_Ptr[2];  /* 02017020 */
+u8 Demo_Ptr_tail[10];  /* after Demo_Ptr; nothing refers to it by name or address */
+u16 Color7[2];  /* 02017032 */
+
+
 #pragma inline(Setup_BG)
 
 
@@ -345,7 +352,7 @@ void Sel_PL_2nd(void) {
     Deley_Shot_No[ID] = 0;
     Cursor_Timer[ID] = 1;
     if (Demo_Flag == 0) {
-        Demo_Ptr[ID] = (u16*)Demo_Lever_Data[Select_Demo_Index];
+        Demo_Ptr[ID] = Demo_Lever_Data[Select_Demo_Index];
     }
 }
 
@@ -381,7 +388,7 @@ void Sel_PL_3rd(void) {
         grade_check_work_1st_init(ID, 1);
         Initialize_EM_Candidate(ID);
         Best_Grade[ID] = -1;
-        Result_Disp_Timer[ID] = 120;
+        Result_Timer[ID] = 120;
         Request_Disp_Rank[ID][0] = -1;
         Request_Disp_Rank[ID][1] = -1;
         Request_Disp_Rank[ID][2] = -1;
@@ -493,7 +500,10 @@ s32 Disposal_Of_Diagonal(u16 sw) {
 
 
 
-void Sel_PL_Sub(s16 PL_id, u16 sw) {
+void Sel_PL_Sub(PL_id, sw)
+s16 PL_id;
+u16 sw;
+{
     Cursor_Move[PL_id] = 0;
     if (Sel_PL_Complete[PL_id] != 0) {
         return;
@@ -646,7 +656,7 @@ void Sel_PL_Sub_CD(s16 PL_id) {
 
 
 
-const s8 Auto_Repeat_Data[3] = {
+const s8 Repeat_Time_Data[3] = {
     26, 9, 7,
 };
 
@@ -656,7 +666,9 @@ const s8 Auto_Repeat_Wife_Data[5] = {
 };
 
 
-void Auto_Repeat_Sub(s16 PL_id) {
+void Auto_Repeat_Sub(PL_id)
+s16 PL_id;
+{
     u16 sw;
     if (Demo_Flag == 0) {
         return;
@@ -675,25 +687,25 @@ void Auto_Repeat_Sub(s16 PL_id) {
         if (sw & 8) {
             Auto_No[PL_id] = 1;
             Auto_Cursor[PL_id] = 8;
-            Auto_Timer[PL_id] = Auto_Repeat_Data[0];
+            Auto_Timer[PL_id] = Repeat_Time_Data[0];
             Auto_Index[PL_id] = 1;
             break;
         } else if (sw & 4) {
             Auto_No[PL_id] = 1;
             Auto_Cursor[PL_id] = 4;
-            Auto_Timer[PL_id] = Auto_Repeat_Data[0];
+            Auto_Timer[PL_id] = Repeat_Time_Data[0];
             Auto_Index[PL_id] = 1;
             break;
         } else if (sw & 1) {
             Auto_No[PL_id] = 1;
             Auto_Cursor[PL_id] = 1;
-            Auto_Timer[PL_id] = Auto_Repeat_Data[0];
+            Auto_Timer[PL_id] = Repeat_Time_Data[0];
             Auto_Index[PL_id] = 1;
             break;
         } else if (sw & 2) {
             Auto_No[PL_id] = 1;
             Auto_Cursor[PL_id] = 2;
-            Auto_Timer[PL_id] = Auto_Repeat_Data[0];
+            Auto_Timer[PL_id] = Repeat_Time_Data[0];
             Auto_Index[PL_id] = 1;
             break;
         }
@@ -706,7 +718,7 @@ void Auto_Repeat_Sub(s16 PL_id) {
         if (Auto_Timer[PL_id] -= 1) {
             break;
         }
-        Auto_Timer[PL_id] = Auto_Repeat_Data[Auto_Index[PL_id]];
+        Auto_Timer[PL_id] = Repeat_Time_Data[Auto_Index[PL_id]];
         Auto_Index[PL_id]++;
         if (Auto_Index[PL_id] > 2) {
             Auto_Index[PL_id] = 2;
@@ -1528,7 +1540,9 @@ void Setup_Face_ID(void) {
 
 
 
-void Correct_Control_Time(s16 PL_id) {
+void Correct_Control_Time(PL_id)
+s16 PL_id;
+{
     u8 xx;
     u8 zz;
     if (Play_Type == 1) {
@@ -1548,7 +1562,7 @@ void Correct_Control_Time(s16 PL_id) {
     } else {
         xx = Stage_Continue[PL_id];
     }
-    Control_Time = SC_Personal_Time[PL_id] - Continue_Time_Data[zz][xx];
+    Control_Time = SC_Personal_Time[PL_id] - Correct_Cont_Time_Data[zz][xx];
     if (Control_Time < 0) {
         Control_Time = 0;
     }

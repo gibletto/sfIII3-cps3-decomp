@@ -14,7 +14,10 @@
 
 
 
-u8 *memset(u8 *dst, u8 c, u32 n)
+u8 *memset(dst, c, n)
+u8 *dst;
+u8 c;
+u32 n;
 {
     u32 i;
     u8 *p;
@@ -28,9 +31,9 @@ u8 *memset(u8 *dst, u8 c, u32 n)
 
 
 
-u8* strcat(u8* dst, u8* src) {
-    u8* p = dst;
-    u8* s = src;
+char* strcat(char* dst, const char* src) {
+    u8* p = (u8*)dst;
+    const u8* s = (const u8*)src;
     for (; *p != 0; p++) {
     }
     while ((*p++ = *s++) != 0) {

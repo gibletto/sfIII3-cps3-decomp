@@ -18,7 +18,7 @@
 
 
 void Computer06(PLW* wk) {
-    Pattern06_Tbl[(s16)Pattern_Index[wk->wu.id]](wk);
+    Pattern06_Tbl[Pattern_Index[wk->wu.id]](wk);
 }
 
 

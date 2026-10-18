@@ -25,8 +25,22 @@
 
 
 
+/* 02006D54 */
+void (*eff64_jp_tbl[9])(WORK_Other*) = {
+    eff64_00,
+    eff64_00,
+    eff64_02,
+    eff64_02,
+    eff64_04,
+    eff64_04,
+    eff64_04,
+    eff64_04,
+    eff64_08,
+};
+
+
 void effect_64_move(WORK_Other* ewk) {
-    if (obr_disp_off_check()) {
+    if (obr_no_disp_check()) {
         return;
     }
     switch (ewk->wu.routine_no[0]) {
@@ -264,7 +278,7 @@ s32 effect_64_init(s16 type) {
     ewk->wu.my_col_mode = 0x4200;
     ewk->wu.type = type;
     ewk->wu.routine_no[1] = eff64_data_tbl[type].dead_f;
-    ewk->wu.step_xy_table = eff64_stepxy_table;
+    ewk->wu.step_xy_table = eff64_stepxy_table[0];
     return 0;
 }
 

@@ -8,7 +8,7 @@
 #pragma section TBL
 
 
-const s32 effg8_speed_tbl[28][4] = {
+const s32 effg8_sp_tbl[28][4] = {
     { 0, 0, 8192, 16384 },
     { -65536, -32768, 4096, 32768 },
     { -32768, 32768, 0, 16384 },

@@ -123,7 +123,6 @@ s32 effect_D8_entry(s16 PL_id, s16 Type) {
     ewk->wu.direction = Type;
     ewk->wu.hit_quake = 0;
     PL_id = Setup_Face_Offset_X(Play_Type_1st);
-L1:
     effect_D8_init(ewk, PL_id);
     return 0;
 }

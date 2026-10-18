@@ -274,7 +274,7 @@ void effe6_0002(WORK_Other* ewk) {
     }
 }
 
-s32 effe6_0003(WORK_Other* ewk) {
+void effe6_0003(WORK_Other* ewk) {
     if (ewk->wu.old_rno[6] < end_w.r_no_2) {
         ewk->wu.routine_no[2] = 99;
     }

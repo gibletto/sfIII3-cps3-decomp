@@ -7,7 +7,6 @@
 
 #pragma section TBL
 
-extern const s16 hahen_data_0[];
 
 extern void effK2_parts_move_type_0();
 extern void effK2_parts_move_type_1();
@@ -18,7 +17,6 @@ extern void effK2_parts_move_type_5();
 extern void effK2_parts_move_type_6();
 extern void effK2_parts_move_type_7();
 extern void effK2_parts_move_type_8();
-extern const u8 c2quake_table[];
 extern const s16 p_00_lv_02[];
 extern const s16 p_00_lv_03[];
 extern const s16 p_00_lv_04[];
@@ -44,6 +42,25 @@ extern const s16 p_05_lv_04[];
 extern const s16 p_05_lv_06[];
 extern const s16 p_05_lv_07[];
 extern const s16 p_05_lv_08[];
+
+/* ten areas (x, y, width, height); nothing in the program reads them (provisional name) */
+const s16 hahen_area_tbl[10][4] = {
+    { 0, 0, 0, 0 },
+    { -72, 16, 80, 16 },
+    { -8, 16, 80, 16 },
+    { -104, 32, 24, 16 },
+    { -112, 32, 56, 16 },
+    { -44, 24, 56, 16 },
+    { -40, 16, 56, 16 },
+    { 136, 16, 88, 16 },
+    { 48, 32, 24, 16 },
+    { 48, 32, 40, 16 },
+};
+
+const s16 hahen_dummy[12] = {
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0,
+};
 
 const s16 p_05_lv_02[36] = {
     1, 100, -64, 88, -2, -2, 0, 1,
@@ -268,14 +285,14 @@ const s16 p_00_lv_06[24] = {
 };
 
 const HAHEN hahen_data[8][8] = {
-    { { 0, 0, (void*)((const u8*)hahen_data_0) }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 0, 0, (void*)((const u8*)hahen_data_0) } },
-    { { 5, 0, (void*)p_00_lv_02 }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 2, 1, (void*)p_04_lv_02 }, { 3, 0, (void*)p_05_lv_02 }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 0, 0, (void*)((const u8*)hahen_data_0) } },
-    { { 4, 0, (void*)p_00_lv_03 }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 3, 0, (void*)p_04_lv_03 }, { 3, 0, (void*)p_05_lv_03 }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 0, 0, (void*)((const u8*)hahen_data_0) } },
-    { { 5, 0, (void*)p_00_lv_04 }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 3, 0, (void*)p_04_lv_04 }, { 4, 0, (void*)p_05_lv_04 }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 0, 0, (void*)((const u8*)hahen_data_0) } },
-    { { 2, 0, (void*)p_00_lv_05 }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 3, 0, (void*)p_04_lv_05 }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 0, 0, (void*)((const u8*)hahen_data_0) } },
-    { { 2, 0, (void*)p_00_lv_06 }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 2, 1, (void*)p_04_lv_06 }, { 8, 1, (void*)p_05_lv_06 }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 0, 0, (void*)((const u8*)hahen_data_0) } },
-    { { 0, 0, (void*)((const u8*)hahen_data_0) }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 2, 1, (void*)p_03_lv_07 }, { 3, 0, (void*)p_04_lv_07 }, { 3, 0, (void*)p_05_lv_07 }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 0, 0, (void*)((const u8*)hahen_data_0) } },
-    { { 0, 0, (void*)((const u8*)hahen_data_0) }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 2, 0, (void*)p_03_lv_08 }, { 3, 0, (void*)p_04_lv_08 }, { 2, 1, (void*)p_05_lv_08 }, { 0, 0, (void*)((const u8*)hahen_data_0) }, { 0, 0, (void*)((const u8*)hahen_data_0) } },
+    { { 0, 0, (void*)((const u8*)hahen_dummy) }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 0, 0, (void*)((const u8*)hahen_dummy) } },
+    { { 5, 0, (void*)p_00_lv_02 }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 2, 1, (void*)p_04_lv_02 }, { 3, 0, (void*)p_05_lv_02 }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 0, 0, (void*)((const u8*)hahen_dummy) } },
+    { { 4, 0, (void*)p_00_lv_03 }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 3, 0, (void*)p_04_lv_03 }, { 3, 0, (void*)p_05_lv_03 }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 0, 0, (void*)((const u8*)hahen_dummy) } },
+    { { 5, 0, (void*)p_00_lv_04 }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 3, 0, (void*)p_04_lv_04 }, { 4, 0, (void*)p_05_lv_04 }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 0, 0, (void*)((const u8*)hahen_dummy) } },
+    { { 2, 0, (void*)p_00_lv_05 }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 3, 0, (void*)p_04_lv_05 }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 0, 0, (void*)((const u8*)hahen_dummy) } },
+    { { 2, 0, (void*)p_00_lv_06 }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 2, 1, (void*)p_04_lv_06 }, { 8, 1, (void*)p_05_lv_06 }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 0, 0, (void*)((const u8*)hahen_dummy) } },
+    { { 0, 0, (void*)((const u8*)hahen_dummy) }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 2, 1, (void*)p_03_lv_07 }, { 3, 0, (void*)p_04_lv_07 }, { 3, 0, (void*)p_05_lv_07 }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 0, 0, (void*)((const u8*)hahen_dummy) } },
+    { { 0, 0, (void*)((const u8*)hahen_dummy) }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 2, 0, (void*)p_03_lv_08 }, { 3, 0, (void*)p_04_lv_08 }, { 2, 1, (void*)p_05_lv_08 }, { 0, 0, (void*)((const u8*)hahen_dummy) }, { 0, 0, (void*)((const u8*)hahen_dummy) } },
 };
 
 const HAHEN ill_hahen_data[5] = {

@@ -138,6 +138,6 @@ s32 effect_M1_init(WORK* wk) {
         v += 32;
         ewk->wu.old_rno[1] = v;
     }
-    suzi_offset_set(ewk);
+    suzi_offset_set(&ewk->wu);
     return 0;
 }

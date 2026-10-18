@@ -26,6 +26,16 @@
 #include "sys_config_3.h"
 #include "sys_config.h"
 #include "cps3.h"
+/* eeprom_w is the start of the 128-byte EEPROM image; the variables up to eeprom_backup_cfg are its parts */
+u8 eeprom_w[6];  /* 0206ABE0 */
+u8 eeprom_saved_flip;  /* 0206ABE6 */
+u8 eeprom_saved_flip_tail[25];  /* after eeprom_saved_flip; nothing refers to it by name or address */
+u8 eeprom_game_cfg[16];  /* 0206AC00 */
+u8 eeprom_backup_cfg[80];  /* 0206AC10 */
+s16 eeprom_retry;  /* 0206AC60 */
+SETTINGS Game_setting;  /* 0206AC62 */
+
+
 /* provisional name */
 void eeprom_config_load(void) {
     register s8 side;
@@ -141,9 +151,9 @@ u32 rec;
     Language = *(s8*)(rec + 9);
     Free_Play_Enable = *(s8*)(rec + 8);
     if (Sound_Mode == 0) {
-        sound_init(snd_seq_rom_data, snd_sample_rom_tbl, snd_bank_rom_tbl, 1, 0, 1);
+        sound_init((u8*)snd_seq_rom_data, snd_sample_rom_tbl, snd_bank_rom_tbl, 1, 0, 1);
     } else {
-        sound_init(snd_seq_rom_data, snd_sample_rom_tbl, snd_bank_rom_tbl, 1, 0, 0);
+        sound_init((u8*)snd_seq_rom_data, snd_sample_rom_tbl, snd_bank_rom_tbl, 1, 0, 0);
     }
     Card_Dispenser = *(s8*)(rec + 10);
     Win_Point_Com = *(s8*)(rec + 11);
@@ -167,10 +177,10 @@ u32 rec;
     coin_chute1_w.credits = coin_rate_tbl[Coin_Mode][1];
     coin_chute2_w.per_credit = coin_rate_tbl[Coin_Mode][0];
     coin_chute2_w.credits = coin_rate_tbl[Coin_Mode][1];
-    coin3_coin_rate = coin_rate_tbl[Coin_Mode][0];
-    coin3_credit_rate = coin_rate_tbl[Coin_Mode][1];
-    coin4_coin_rate = coin_rate_tbl[Coin_Mode][0];
-    coin4_credit_rate = coin_rate_tbl[Coin_Mode][1];
+    coin_chute3_w.per_credit = coin_rate_tbl[Coin_Mode][0];
+    coin_chute3_w.credits = coin_rate_tbl[Coin_Mode][1];
+    coin_chute4_w.per_credit = coin_rate_tbl[Coin_Mode][0];
+    coin_chute4_w.credits = coin_rate_tbl[Coin_Mode][1];
     if (Coin_Mode != 17) {
         Two_Coin_Start = 0;
     } else {
@@ -209,9 +219,9 @@ void eeprom_config_save(void) {
         *(u8*)(p + 12) = Win_Point_Human;
         *(u8*)(p + 13) = Voice_Type;
         if (Sound_Mode == 0) {
-            sound_init(snd_seq_rom_data, snd_sample_rom_tbl, snd_bank_rom_tbl, 1, 0, 1);
+            sound_init((u8*)snd_seq_rom_data, snd_sample_rom_tbl, snd_bank_rom_tbl, 1, 0, 1);
         } else {
-            sound_init(snd_seq_rom_data, snd_sample_rom_tbl, snd_bank_rom_tbl, 1, 0, 0);
+            sound_init((u8*)snd_seq_rom_data, snd_sample_rom_tbl, snd_bank_rom_tbl, 1, 0, 0);
         }
         if (Free_Play_Enable == 0) {
             *(u8*)(p + 8) = 0;

@@ -1,7 +1,7 @@
 /*
  * BG040.C  Stage background BG040 (and BG030 base layer)
  *
- * bg0301 and bg0301_init finish stage BG030: its base layer is initialised at X 0x200, its
+ * bg0301 and bg0301_init00 finish stage BG030: its base layer is initialised at X 0x200, its
  * graphics loaded and the stage effects 05, 06, 08, 71 and L2 started.
  * BG040 runs one frame of stage BG040: it moves the far layer (bg0402) and the main layer
  * (bg0401) through their init and common move routines, then calls zoom_ud_check,
@@ -96,12 +96,12 @@ void bg0300_init00(void) {
 
 
 void bg0301(void) {
-    void (*bg080_sync_jmp[2])() = { bg0301_init, bg_base_move_common };
+    void (*bg080_sync_jmp[2])() = { bg0301_init00, bg_base_move_common };
     bg080_sync_jmp[bgw_ptr->r_no_0]();
 }
 
 
-void bg0301_init(void) {
+void bg0301_init00(void) {
     bgw_ptr->r_no_0++;
     bgw_ptr->old_pos_x = bgw_ptr->xy[0].disp.pos = bgw_ptr->pos_x_work = 0x200;
     bgw_ptr->hos_xy[0].cal = bgw_ptr->wxy[0].cal = bgw_ptr->xy[0].cal;

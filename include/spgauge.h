@@ -11,7 +11,7 @@ void sa_moji_trans();
 void sa_time_moji_send(void);
 void sa_waku_trans(s8 pl_kind, s8 pl);
 void samoji_control();
-void sa_gauge_color_set();
+void sast_color_chenge();
 void sagauge_color_chenge();
 void sast_control();
 void spgauge_cont_demo_init(void);

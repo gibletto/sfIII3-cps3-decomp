@@ -35,98 +35,98 @@ extern const u16 gill_yuca_063_head[];
 extern const u16 gill_yuca_064_head[];
 
 /* yuca scripts: 91 entries */
-const u16* const gill_yuca[92] = {
-    gill_yuca_000,  /* 0 APPEAR JUNBI 1 */
-    gill_yuca_000,  /* 1 APPEAR JUNBI 2 */
-    gill_yuca_000,  /* 2 APPEAR JUNBI 3 */
-    gill_yuca_000,  /* 3 APPEAR JUNBI 4 */
-    gill_yuca_004,  /* 4 APPEAR JUNBI 5 */
-    gill_yuca_004,  /* 5 APPEAR JUNBI 6 */
-    gill_yuca_004,  /* 6 APPEAR JUNBI 7 */
-    gill_yuca_004,  /* 7 APPEAR JUNBI 8 */
-    gill_yuca_008,  /* 8 APPEAR 1 */
-    gill_yuca_008,  /* 9 APPEAR 2 */
-    gill_yuca_008,  /* 10 APPEAR 3 */
-    gill_yuca_008,  /* 11 APPEAR 4 */
-    gill_yuca_012,  /* 12 APPEAR 5 */
-    gill_yuca_012,  /* 13 APPEAR 6 */
-    gill_yuca_012,  /* 14 APPEAR 7 */
-    gill_yuca_012,  /* 15 APPEAR 8 */
-    gill_yuca_016,  /* 16 SP APPEAR 1 */
-    gill_yuca_016,  /* 17 SP APPEAR 2 */
-    gill_yuca_016,  /* 18 SP APPEAR 3 */
-    gill_yuca_016,  /* 19 SP APPEAR 4 */
-    gill_yuca_016,  /* 20 SP APPEAR 5 */
-    gill_yuca_016,  /* 21 SP APPEAR 6 */
-    gill_yuca_016,  /* 22 SP APPEAR 7 */
-    gill_yuca_016,  /* 23 SP APPEAR 8 */
-    gill_yuca_024,  /* 24 ZANNEN 1 */
-    gill_yuca_024,  /* 25 ZANNEN 2 */
-    gill_yuca_024,  /* 26 ZANNEN 3 */
-    gill_yuca_024,  /* 27 ZANNEN 4 */
-    gill_yuca_024,  /* 28 ZANNEN 5 */
-    gill_yuca_024,  /* 29 ZANNEN 6 */
-    gill_yuca_024,  /* 30 ZANNEN 7 */
-    gill_yuca_024,  /* 31 ZANNEN 8 */
-    gill_yuca_032,  /* 32 WIN 1 */
-    gill_yuca_032,  /* 33 WIN 2 */
-    gill_yuca_032,  /* 34 WIN 3 */
-    gill_yuca_032,  /* 35 WIN 4 */
-    gill_yuca_032,  /* 36 WIN 5 */
-    gill_yuca_037,  /* 37 WIN 6 */
-    gill_yuca_037,  /* 38 WIN 7 */
-    gill_yuca_032,  /* 39 WIN 8 */
-    gill_yuca_040,  /* 40 SP WIN 1 */
-    gill_yuca_040,  /* 41 SP WIN 2 */
-    gill_yuca_040,  /* 42 SP WIN 3 */
-    gill_yuca_040,  /* 43 SP WIN 4 */
-    gill_yuca_040,  /* 44 SP WIN 5 */
-    gill_yuca_040,  /* 45 SP WIN 6 */
-    gill_yuca_040,  /* 46 SP WIN 7 */
-    gill_yuca_040,  /* 47 SP WIN 8 */
-    gill_yuca_048,  /* 48 JUDGMENT WAIT */
-    gill_yuca_048,  /* 49 JUDGMENT WAIT */
-    gill_yuca_048,  /* 50 JUDGMENT WAIT */
-    gill_yuca_048,  /* 51 JUDGMENT WAIT */
-    gill_yuca_052,  /* 52 JUDGMENT WIN */
-    gill_yuca_052,  /* 53 JUDGMENT WIN */
-    gill_yuca_052,  /* 54 JUDGMENT WIN */
-    gill_yuca_052,  /* 55 JUDGMENT WIN */
-    gill_yuca_056,  /* 56 JUDGMENT LOSE */
-    gill_yuca_056,  /* 57 JUDGMENT LOSE */
-    gill_yuca_056,  /* 58 JUDGMENT LOSE */
-    gill_yuca_056,  /* 59 JUDGMENT LOSE */
-    gill_yuca_060,  /* 60 WAIT */
-    gill_yuca_061,  /* 61 AFRICA JUMP */
-    gill_yuca_062,  /* 62 AFRICA LAND */
-    gill_yuca_063,  /* 63 SEAN BALL HIT */
-    gill_yuca_064,  /* 64 no name */
-    gill_yuca_032,  /* 65 BONUS WIN 1 */
-    gill_yuca_052,  /* 66 BONUS WIN 2 */
-    gill_yuca_056,  /* 67 BONUS WIN 3 */
-    gill_yuca_068,  /* 68 APPEAR USE */
-    gill_yuca_068,  /* 69 APPEAR USE */
-    gill_yuca_068,  /* 70 APPEAR USE */
-    gill_yuca_068,  /* 71 APPEAR USE */
-    gill_yuca_068,  /* 72 APPEAR USE */
-    gill_yuca_068,  /* 73 APPEAR USE */
-    gill_yuca_068,  /* 74 APPEAR USE */
-    gill_yuca_068,  /* 75 APPEAR USE */
-    gill_yuca_068,  /* 76 APPEAR USE */
-    gill_yuca_068,  /* 77 APPEAR USE */
-    gill_yuca_068,  /* 78 APPEAR USE */
-    gill_yuca_068,  /* 79 APPEAR USE */
-    gill_yuca_068,  /* 80 APPEAR USE */
-    gill_yuca_068,  /* 81 APPEAR USE */
-    gill_yuca_068,  /* 82 APPEAR USE */
-    gill_yuca_068,  /* 83 APPEAR USE */
-    gill_yuca_068,  /* 84 APPEAR USE */
-    gill_yuca_068,  /* 85 APPEAR USE */
-    gill_yuca_068,  /* 86 APPEAR USE */
-    gill_yuca_068,  /* 87 APPEAR USE */
-    gill_yuca_068,  /* 88 APPEAR USE */
-    gill_yuca_068,  /* 89 APPEAR USE */
-    gill_yuca_068,  /* 90 APPEAR USE */
+const u32 gill_yuca[92] = {
+    (u32)gill_yuca_000,  /* 0 APPEAR JUNBI 1 */
+    (u32)gill_yuca_000,  /* 1 APPEAR JUNBI 2 */
+    (u32)gill_yuca_000,  /* 2 APPEAR JUNBI 3 */
+    (u32)gill_yuca_000,  /* 3 APPEAR JUNBI 4 */
+    (u32)gill_yuca_004,  /* 4 APPEAR JUNBI 5 */
+    (u32)gill_yuca_004,  /* 5 APPEAR JUNBI 6 */
+    (u32)gill_yuca_004,  /* 6 APPEAR JUNBI 7 */
+    (u32)gill_yuca_004,  /* 7 APPEAR JUNBI 8 */
+    (u32)gill_yuca_008,  /* 8 APPEAR 1 */
+    (u32)gill_yuca_008,  /* 9 APPEAR 2 */
+    (u32)gill_yuca_008,  /* 10 APPEAR 3 */
+    (u32)gill_yuca_008,  /* 11 APPEAR 4 */
+    (u32)gill_yuca_012,  /* 12 APPEAR 5 */
+    (u32)gill_yuca_012,  /* 13 APPEAR 6 */
+    (u32)gill_yuca_012,  /* 14 APPEAR 7 */
+    (u32)gill_yuca_012,  /* 15 APPEAR 8 */
+    (u32)gill_yuca_016,  /* 16 SP APPEAR 1 */
+    (u32)gill_yuca_016,  /* 17 SP APPEAR 2 */
+    (u32)gill_yuca_016,  /* 18 SP APPEAR 3 */
+    (u32)gill_yuca_016,  /* 19 SP APPEAR 4 */
+    (u32)gill_yuca_016,  /* 20 SP APPEAR 5 */
+    (u32)gill_yuca_016,  /* 21 SP APPEAR 6 */
+    (u32)gill_yuca_016,  /* 22 SP APPEAR 7 */
+    (u32)gill_yuca_016,  /* 23 SP APPEAR 8 */
+    (u32)gill_yuca_024,  /* 24 ZANNEN 1 */
+    (u32)gill_yuca_024,  /* 25 ZANNEN 2 */
+    (u32)gill_yuca_024,  /* 26 ZANNEN 3 */
+    (u32)gill_yuca_024,  /* 27 ZANNEN 4 */
+    (u32)gill_yuca_024,  /* 28 ZANNEN 5 */
+    (u32)gill_yuca_024,  /* 29 ZANNEN 6 */
+    (u32)gill_yuca_024,  /* 30 ZANNEN 7 */
+    (u32)gill_yuca_024,  /* 31 ZANNEN 8 */
+    (u32)gill_yuca_032,  /* 32 WIN 1 */
+    (u32)gill_yuca_032,  /* 33 WIN 2 */
+    (u32)gill_yuca_032,  /* 34 WIN 3 */
+    (u32)gill_yuca_032,  /* 35 WIN 4 */
+    (u32)gill_yuca_032,  /* 36 WIN 5 */
+    (u32)gill_yuca_037,  /* 37 WIN 6 */
+    (u32)gill_yuca_037,  /* 38 WIN 7 */
+    (u32)gill_yuca_032,  /* 39 WIN 8 */
+    (u32)gill_yuca_040,  /* 40 SP WIN 1 */
+    (u32)gill_yuca_040,  /* 41 SP WIN 2 */
+    (u32)gill_yuca_040,  /* 42 SP WIN 3 */
+    (u32)gill_yuca_040,  /* 43 SP WIN 4 */
+    (u32)gill_yuca_040,  /* 44 SP WIN 5 */
+    (u32)gill_yuca_040,  /* 45 SP WIN 6 */
+    (u32)gill_yuca_040,  /* 46 SP WIN 7 */
+    (u32)gill_yuca_040,  /* 47 SP WIN 8 */
+    (u32)gill_yuca_048,  /* 48 JUDGMENT WAIT */
+    (u32)gill_yuca_048,  /* 49 JUDGMENT WAIT */
+    (u32)gill_yuca_048,  /* 50 JUDGMENT WAIT */
+    (u32)gill_yuca_048,  /* 51 JUDGMENT WAIT */
+    (u32)gill_yuca_052,  /* 52 JUDGMENT WIN */
+    (u32)gill_yuca_052,  /* 53 JUDGMENT WIN */
+    (u32)gill_yuca_052,  /* 54 JUDGMENT WIN */
+    (u32)gill_yuca_052,  /* 55 JUDGMENT WIN */
+    (u32)gill_yuca_056,  /* 56 JUDGMENT LOSE */
+    (u32)gill_yuca_056,  /* 57 JUDGMENT LOSE */
+    (u32)gill_yuca_056,  /* 58 JUDGMENT LOSE */
+    (u32)gill_yuca_056,  /* 59 JUDGMENT LOSE */
+    (u32)gill_yuca_060,  /* 60 WAIT */
+    (u32)gill_yuca_061,  /* 61 AFRICA JUMP */
+    (u32)gill_yuca_062,  /* 62 AFRICA LAND */
+    (u32)gill_yuca_063,  /* 63 SEAN BALL HIT */
+    (u32)gill_yuca_064,  /* 64 no name */
+    (u32)gill_yuca_032,  /* 65 BONUS WIN 1 */
+    (u32)gill_yuca_052,  /* 66 BONUS WIN 2 */
+    (u32)gill_yuca_056,  /* 67 BONUS WIN 3 */
+    (u32)gill_yuca_068,  /* 68 APPEAR USE */
+    (u32)gill_yuca_068,  /* 69 APPEAR USE */
+    (u32)gill_yuca_068,  /* 70 APPEAR USE */
+    (u32)gill_yuca_068,  /* 71 APPEAR USE */
+    (u32)gill_yuca_068,  /* 72 APPEAR USE */
+    (u32)gill_yuca_068,  /* 73 APPEAR USE */
+    (u32)gill_yuca_068,  /* 74 APPEAR USE */
+    (u32)gill_yuca_068,  /* 75 APPEAR USE */
+    (u32)gill_yuca_068,  /* 76 APPEAR USE */
+    (u32)gill_yuca_068,  /* 77 APPEAR USE */
+    (u32)gill_yuca_068,  /* 78 APPEAR USE */
+    (u32)gill_yuca_068,  /* 79 APPEAR USE */
+    (u32)gill_yuca_068,  /* 80 APPEAR USE */
+    (u32)gill_yuca_068,  /* 81 APPEAR USE */
+    (u32)gill_yuca_068,  /* 82 APPEAR USE */
+    (u32)gill_yuca_068,  /* 83 APPEAR USE */
+    (u32)gill_yuca_068,  /* 84 APPEAR USE */
+    (u32)gill_yuca_068,  /* 85 APPEAR USE */
+    (u32)gill_yuca_068,  /* 86 APPEAR USE */
+    (u32)gill_yuca_068,  /* 87 APPEAR USE */
+    (u32)gill_yuca_068,  /* 88 APPEAR USE */
+    (u32)gill_yuca_068,  /* 89 APPEAR USE */
+    (u32)gill_yuca_068,  /* 90 APPEAR USE */
     0
 };
 

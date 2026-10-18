@@ -151,7 +151,7 @@ const u8 convert_saishin_lvdir[2][16] = {
     { 0, 0, 0, 0, 2, 2, 2, 0, 1, 1, 1, 0, 0, 0, 0, 0 },
 };
 
-const s16 dead_voice_table[20][2] = {
+const s16 dead_voice_table[24][2] = {
     { 864, 865 },
     { 928, 929 },
     { 512, 513 },
@@ -172,15 +172,10 @@ const s16 dead_voice_table[20][2] = {
     { 448, 449 },
     { 768, 769 },
     { 960, 961 },
-};
-
-/* Stored after dead_voice_table. Nothing in the program refers to it by name or address; if it is read,
-   it is through an index past the end of dead_voice_table. */
-const s16 dead_voice_table_tail[4][2] = {
-    544, 545,
-    864, 865,
-    864, 865,
-    864, 865,
+    { 544, 545 },
+    { 864, 865 },
+    { 864, 865 },
+    { 864, 865 },
 };
 
 const s16 gauge_rank_table[6][2] = {

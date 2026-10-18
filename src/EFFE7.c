@@ -80,7 +80,7 @@ void effect_E7_move(WORK_Other* ewk) {
             get_attdata_of_illusion(ewk);
         }
         if (mwk->sa_stop_flag == 0) {
-            sort_push_request(ewk);
+            sort_push_request(&ewk->wu);
         }
         break;
     case 2:

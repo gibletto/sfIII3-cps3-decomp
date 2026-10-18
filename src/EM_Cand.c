@@ -34,7 +34,7 @@ void Combo_Demo_Init(void) {
     Allow_a_battle_f = 1;
     Game_pause = 0;
     Suicide[0] = 0;
-    round_timer.timer = 1;
+    round_timer.size.full = 1;
     pcon_rno[0] = 0;
     pcon_rno[1] = 0;
     pcon_rno[2] = 0;
@@ -93,8 +93,8 @@ void Initialize_EM_Candidate(s16 PL_id) {
         EM_Candidate[PL_id][0][ix] = Check_EM_Buff(ix, ok_urien);
         EM_Candidate[PL_id][1][ix] = Check_EM_Buff(ix, ok_urien);
     }
-    EM_Candidate[PL_id][0][8] = Rival_Char_Data[My_char[PL_id] - 1];
-    EM_Candidate[PL_id][1][8] = Rival_Char_Data[My_char[PL_id] - 1];
+    EM_Candidate[PL_id][0][8] = Middle_Class_Boss_Data[My_char[PL_id] - 1];
+    EM_Candidate[PL_id][1][8] = Middle_Class_Boss_Data[My_char[PL_id] - 1];
     EM_Candidate[PL_id][0][9] = 0;
     EM_Candidate[PL_id][1][9] = 0;
 }
@@ -112,7 +112,7 @@ void Setup_Candidate_Buff(s16 PL_id) {
         if (ix == 15) {
             continue;
         }
-        if (ix == Rival_Char_Data[My_char[PL_id] - 1]) {
+        if (ix == Middle_Class_Boss_Data[My_char[PL_id] - 1]) {
             continue;
         }
         if (Break_Com[PL_id][ix]) {
@@ -135,7 +135,7 @@ s32 Check_EM_Buff(s16 grade, s16 flag) {
         return chr;
     }
     step = random_16_com() & 1;
-    (void)((WORK*)15)->be_flag;
+    (void)&((WORK*)15)->be_flag;
     if (step == 0) {
         step = -1;
     }
@@ -208,8 +208,8 @@ void Check_Same_CPU(s16 PL_id) {
         EM_Candidate[PL_id][0][ix] = Check_EM_Buff(ix, ok_urien);
         EM_Candidate[PL_id][1][ix] = Check_EM_Buff(ix, ok_urien);
     }
-    EM_Candidate[PL_id][0][8] = Rival_Char_Data[My_char[PL_id] - 1];
-    EM_Candidate[PL_id][1][8] = Rival_Char_Data[My_char[PL_id] - 1];
+    EM_Candidate[PL_id][0][8] = Middle_Class_Boss_Data[My_char[PL_id] - 1];
+    EM_Candidate[PL_id][1][8] = Middle_Class_Boss_Data[My_char[PL_id] - 1];
 }
 
 
@@ -223,7 +223,9 @@ void All_Clear_Suicide(void) {
 
 
 
-void clear_chainex_check(s16 ix) {
+void clear_chainex_check(ix)
+s16 ix;
+{
     s16 i;
     for (i = 0; i <= 20; i++) {
         Break_Com[ix][i] = 0;

@@ -62,8 +62,6 @@ extern const u16 sc_vram_29_attr[];
 extern const u16 sc_vram_29_code[];
 extern const u16 sc_vram_29_pos[];
 
-extern const u8 sc_celllist_tbl[];
-
 const CELL_SET sc_ram_vram_tbl[30] = {
     { (void*)sc_vram_00_pos, (void*)sc_vram_00_code, (void*)sc_vram_00_attr },
     { (void*)sc_vram_01_pos, (void*)sc_vram_01_code, (void*)sc_vram_01_attr },

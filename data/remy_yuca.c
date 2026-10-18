@@ -42,98 +42,98 @@ extern const u16 remy_yuca_063_head[];
 extern const u16 remy_yuca_068_head[];
 
 /* yuca scripts: 91 entries */
-const u16* const remy_yuca[92] = {
-    remy_yuca_000,  /* 0 APPEAR JUNBI 1 */
-    remy_yuca_001,  /* 1 APPEAR JUNBI 2 */
-    remy_yuca_000,  /* 2 APPEAR JUNBI 3 */
-    remy_yuca_003,  /* 3 APPEAR JUNBI 4 */
-    remy_yuca_004,  /* 4 APPEAR JUNBI 5 */
-    remy_yuca_001,  /* 5 APPEAR JUNBI 6 */
-    remy_yuca_000,  /* 6 APPEAR JUNBI 7 */
-    remy_yuca_000,  /* 7 APPEAR JUNBI 8 */
-    remy_yuca_008,  /* 8 APPEAR 1 */
-    remy_yuca_009,  /* 9 APPEAR 2 */
-    remy_yuca_008,  /* 10 APPEAR 3 */
-    remy_yuca_011,  /* 11 APPEAR 4 */
-    remy_yuca_012,  /* 12 APPEAR 5 */
-    remy_yuca_009,  /* 13 APPEAR 6 */
-    remy_yuca_008,  /* 14 APPEAR 7 */
-    remy_yuca_008,  /* 15 APPEAR 8 */
-    remy_yuca_016,  /* 16 SP APPEAR 1 */
-    remy_yuca_016,  /* 17 SP APPEAR 2 */
-    remy_yuca_016,  /* 18 SP APPEAR 3 */
-    remy_yuca_016,  /* 19 SP APPEAR 4 */
-    remy_yuca_016,  /* 20 SP APPEAR 5 */
-    remy_yuca_016,  /* 21 SP APPEAR 6 */
-    remy_yuca_016,  /* 22 SP APPEAR 7 */
-    remy_yuca_016,  /* 23 SP APPEAR 8 */
-    remy_yuca_024,  /* 24 ZANNEN 1 */
-    remy_yuca_024,  /* 25 ZANNEN 2 */
-    remy_yuca_024,  /* 26 ZANNEN 3 */
-    remy_yuca_024,  /* 27 ZANNEN 4 */
-    remy_yuca_024,  /* 28 ZANNEN 5 */
-    remy_yuca_024,  /* 29 ZANNEN 6 */
-    remy_yuca_024,  /* 30 ZANNEN 7 */
-    remy_yuca_024,  /* 31 ZANNEN 8 */
-    remy_yuca_032,  /* 32 WIN 1 */
-    remy_yuca_033,  /* 33 WIN 2 */
-    remy_yuca_032,  /* 34 WIN 3 */
-    remy_yuca_033,  /* 35 WIN 4 */
-    remy_yuca_036,  /* 36 WIN 5 */
-    remy_yuca_037,  /* 37 WIN 6 */
-    remy_yuca_038,  /* 38 WIN 7 */
-    remy_yuca_039,  /* 39 WIN 8 */
-    remy_yuca_040,  /* 40 SP WIN 1 */
-    remy_yuca_041,  /* 41 SP WIN 2 */
-    remy_yuca_041,  /* 42 SP WIN 3 */
-    remy_yuca_041,  /* 43 SP WIN 4 */
-    remy_yuca_041,  /* 44 SP WIN 5 */
-    remy_yuca_041,  /* 45 SP WIN 6 */
-    remy_yuca_041,  /* 46 SP WIN 7 */
-    remy_yuca_041,  /* 47 SP WIN 8 */
-    remy_yuca_048,  /* 48 JUDGMENT WAIT */
-    remy_yuca_048,  /* 49 JUDGMENT WAIT */
-    remy_yuca_048,  /* 50 JUDGMENT WAIT */
-    remy_yuca_048,  /* 51 JUDGMENT WAIT */
-    remy_yuca_032,  /* 52 JUDGMENT WIN */
-    remy_yuca_032,  /* 53 JUDGMENT WIN */
-    remy_yuca_032,  /* 54 JUDGMENT WIN */
-    remy_yuca_032,  /* 55 JUDGMENT WIN */
-    remy_yuca_024,  /* 56 JUDGMENT LOSE */
-    remy_yuca_024,  /* 57 JUDGMENT LOSE */
-    remy_yuca_024,  /* 58 JUDGMENT LOSE */
-    remy_yuca_024,  /* 59 JUDGMENT LOSE */
-    remy_yuca_060,  /* 60 WAIT */
-    remy_yuca_061,  /* 61 AFRICA JUMP */
-    remy_yuca_062,  /* 62 AFRICA LAND */
-    remy_yuca_063,  /* 63 SEAN BALL HIT */
-    remy_yuca_063,  /* 64 no name */
-    remy_yuca_032,  /* 65 BONUS WIN 1 */
-    remy_yuca_040,  /* 66 BONUS WIN 2 */
-    remy_yuca_024,  /* 67 BONUS WIN 3 */
-    remy_yuca_068,  /* 68 APPEAR USE */
-    remy_yuca_068,  /* 69 APPEAR USE */
-    remy_yuca_068,  /* 70 APPEAR USE */
-    remy_yuca_068,  /* 71 APPEAR USE */
-    remy_yuca_068,  /* 72 APPEAR USE */
-    remy_yuca_068,  /* 73 APPEAR USE */
-    remy_yuca_068,  /* 74 APPEAR USE */
-    remy_yuca_068,  /* 75 APPEAR USE */
-    remy_yuca_068,  /* 76 APPEAR USE */
-    remy_yuca_068,  /* 77 APPEAR USE */
-    remy_yuca_068,  /* 78 APPEAR USE */
-    remy_yuca_068,  /* 79 APPEAR USE */
-    remy_yuca_068,  /* 80 APPEAR USE */
-    remy_yuca_068,  /* 81 APPEAR USE */
-    remy_yuca_068,  /* 82 APPEAR USE */
-    remy_yuca_068,  /* 83 APPEAR USE */
-    remy_yuca_068,  /* 84 APPEAR USE */
-    remy_yuca_068,  /* 85 APPEAR USE */
-    remy_yuca_068,  /* 86 APPEAR USE */
-    remy_yuca_068,  /* 87 APPEAR USE */
-    remy_yuca_068,  /* 88 APPEAR USE */
-    remy_yuca_068,  /* 89 APPEAR USE */
-    remy_yuca_068,  /* 90 APPEAR USE */
+const u32 remy_yuca[92] = {
+    (u32)remy_yuca_000,  /* 0 APPEAR JUNBI 1 */
+    (u32)remy_yuca_001,  /* 1 APPEAR JUNBI 2 */
+    (u32)remy_yuca_000,  /* 2 APPEAR JUNBI 3 */
+    (u32)remy_yuca_003,  /* 3 APPEAR JUNBI 4 */
+    (u32)remy_yuca_004,  /* 4 APPEAR JUNBI 5 */
+    (u32)remy_yuca_001,  /* 5 APPEAR JUNBI 6 */
+    (u32)remy_yuca_000,  /* 6 APPEAR JUNBI 7 */
+    (u32)remy_yuca_000,  /* 7 APPEAR JUNBI 8 */
+    (u32)remy_yuca_008,  /* 8 APPEAR 1 */
+    (u32)remy_yuca_009,  /* 9 APPEAR 2 */
+    (u32)remy_yuca_008,  /* 10 APPEAR 3 */
+    (u32)remy_yuca_011,  /* 11 APPEAR 4 */
+    (u32)remy_yuca_012,  /* 12 APPEAR 5 */
+    (u32)remy_yuca_009,  /* 13 APPEAR 6 */
+    (u32)remy_yuca_008,  /* 14 APPEAR 7 */
+    (u32)remy_yuca_008,  /* 15 APPEAR 8 */
+    (u32)remy_yuca_016,  /* 16 SP APPEAR 1 */
+    (u32)remy_yuca_016,  /* 17 SP APPEAR 2 */
+    (u32)remy_yuca_016,  /* 18 SP APPEAR 3 */
+    (u32)remy_yuca_016,  /* 19 SP APPEAR 4 */
+    (u32)remy_yuca_016,  /* 20 SP APPEAR 5 */
+    (u32)remy_yuca_016,  /* 21 SP APPEAR 6 */
+    (u32)remy_yuca_016,  /* 22 SP APPEAR 7 */
+    (u32)remy_yuca_016,  /* 23 SP APPEAR 8 */
+    (u32)remy_yuca_024,  /* 24 ZANNEN 1 */
+    (u32)remy_yuca_024,  /* 25 ZANNEN 2 */
+    (u32)remy_yuca_024,  /* 26 ZANNEN 3 */
+    (u32)remy_yuca_024,  /* 27 ZANNEN 4 */
+    (u32)remy_yuca_024,  /* 28 ZANNEN 5 */
+    (u32)remy_yuca_024,  /* 29 ZANNEN 6 */
+    (u32)remy_yuca_024,  /* 30 ZANNEN 7 */
+    (u32)remy_yuca_024,  /* 31 ZANNEN 8 */
+    (u32)remy_yuca_032,  /* 32 WIN 1 */
+    (u32)remy_yuca_033,  /* 33 WIN 2 */
+    (u32)remy_yuca_032,  /* 34 WIN 3 */
+    (u32)remy_yuca_033,  /* 35 WIN 4 */
+    (u32)remy_yuca_036,  /* 36 WIN 5 */
+    (u32)remy_yuca_037,  /* 37 WIN 6 */
+    (u32)remy_yuca_038,  /* 38 WIN 7 */
+    (u32)remy_yuca_039,  /* 39 WIN 8 */
+    (u32)remy_yuca_040,  /* 40 SP WIN 1 */
+    (u32)remy_yuca_041,  /* 41 SP WIN 2 */
+    (u32)remy_yuca_041,  /* 42 SP WIN 3 */
+    (u32)remy_yuca_041,  /* 43 SP WIN 4 */
+    (u32)remy_yuca_041,  /* 44 SP WIN 5 */
+    (u32)remy_yuca_041,  /* 45 SP WIN 6 */
+    (u32)remy_yuca_041,  /* 46 SP WIN 7 */
+    (u32)remy_yuca_041,  /* 47 SP WIN 8 */
+    (u32)remy_yuca_048,  /* 48 JUDGMENT WAIT */
+    (u32)remy_yuca_048,  /* 49 JUDGMENT WAIT */
+    (u32)remy_yuca_048,  /* 50 JUDGMENT WAIT */
+    (u32)remy_yuca_048,  /* 51 JUDGMENT WAIT */
+    (u32)remy_yuca_032,  /* 52 JUDGMENT WIN */
+    (u32)remy_yuca_032,  /* 53 JUDGMENT WIN */
+    (u32)remy_yuca_032,  /* 54 JUDGMENT WIN */
+    (u32)remy_yuca_032,  /* 55 JUDGMENT WIN */
+    (u32)remy_yuca_024,  /* 56 JUDGMENT LOSE */
+    (u32)remy_yuca_024,  /* 57 JUDGMENT LOSE */
+    (u32)remy_yuca_024,  /* 58 JUDGMENT LOSE */
+    (u32)remy_yuca_024,  /* 59 JUDGMENT LOSE */
+    (u32)remy_yuca_060,  /* 60 WAIT */
+    (u32)remy_yuca_061,  /* 61 AFRICA JUMP */
+    (u32)remy_yuca_062,  /* 62 AFRICA LAND */
+    (u32)remy_yuca_063,  /* 63 SEAN BALL HIT */
+    (u32)remy_yuca_063,  /* 64 no name */
+    (u32)remy_yuca_032,  /* 65 BONUS WIN 1 */
+    (u32)remy_yuca_040,  /* 66 BONUS WIN 2 */
+    (u32)remy_yuca_024,  /* 67 BONUS WIN 3 */
+    (u32)remy_yuca_068,  /* 68 APPEAR USE */
+    (u32)remy_yuca_068,  /* 69 APPEAR USE */
+    (u32)remy_yuca_068,  /* 70 APPEAR USE */
+    (u32)remy_yuca_068,  /* 71 APPEAR USE */
+    (u32)remy_yuca_068,  /* 72 APPEAR USE */
+    (u32)remy_yuca_068,  /* 73 APPEAR USE */
+    (u32)remy_yuca_068,  /* 74 APPEAR USE */
+    (u32)remy_yuca_068,  /* 75 APPEAR USE */
+    (u32)remy_yuca_068,  /* 76 APPEAR USE */
+    (u32)remy_yuca_068,  /* 77 APPEAR USE */
+    (u32)remy_yuca_068,  /* 78 APPEAR USE */
+    (u32)remy_yuca_068,  /* 79 APPEAR USE */
+    (u32)remy_yuca_068,  /* 80 APPEAR USE */
+    (u32)remy_yuca_068,  /* 81 APPEAR USE */
+    (u32)remy_yuca_068,  /* 82 APPEAR USE */
+    (u32)remy_yuca_068,  /* 83 APPEAR USE */
+    (u32)remy_yuca_068,  /* 84 APPEAR USE */
+    (u32)remy_yuca_068,  /* 85 APPEAR USE */
+    (u32)remy_yuca_068,  /* 86 APPEAR USE */
+    (u32)remy_yuca_068,  /* 87 APPEAR USE */
+    (u32)remy_yuca_068,  /* 88 APPEAR USE */
+    (u32)remy_yuca_068,  /* 89 APPEAR USE */
+    (u32)remy_yuca_068,  /* 90 APPEAR USE */
     0
 };
 

@@ -35,8 +35,14 @@
 
 
 
+/* 02006D9C */
+const s16* scr_obj_data88[1][4] = {
+    { (void*)&eff88_loop_tbl[1][0], (void*)&eff88_loop_tbl[1][0], (void*)&eff88_loop_tbl[1][0], (void*)&eff88_loop_tbl[1][0] },
+};
+
+
 void effect_88_move(WORK_Other* ewk) {
-    if (obr_disp_off_check()) {
+    if (obr_no_disp_check()) {
         return;
     }
     switch (ewk->wu.routine_no[0]) {
@@ -99,7 +105,7 @@ s32 effect_88_init(s16 type) {
             o->wu.hit_stop = *t++;
             o->wu.sync_suzi = *t++;
             o->wu.char_table[0] = char_add[bg_w.bg_index];
-            suzi_offset_set(o);
+            suzi_offset_set(&o->wu);
         }
         return 0;
     }

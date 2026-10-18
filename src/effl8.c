@@ -21,6 +21,23 @@
 
 
 
+extern void (*const effM0_tbl_top[8])();
+
+u32 spmv_ng_save;  /* 02068C58 */
+
+
+/* 020074A0 */
+const s16* effL8_data_tbl[7] = {
+    (const s16*)&effM0_tbl_top[4],
+    (const s16*)&effM0_tbl_top[4],
+    (const s16*)&effM0_tbl_top[4],
+    (const s16*)&effM0_tbl_top[4],
+    (const s16*)&effM0_tbl_top[4],
+    (const s16*)&effM0_tbl_top[4],
+    (const s16*)&effM0_tbl_top[4],
+};
+
+
 s32 effect_L8_move(WORK_Other* ewk) {
     PLW* mwk;
     s16* save_old_col_ptr;
@@ -33,12 +50,12 @@ s32 effect_L8_move(WORK_Other* ewk) {
         ewk->wu.routine_no[0]++;
         ewk->wu.hit_adrs = (u32*)effL8_data_tbl[ewk->wu.type];
         ewk->wu.step_xy_table = (s16*)((ewk->master_id == 1) * 0x800 + COLOR_RAM);
-        ewk->wu.move_xy_table = (s16*)((u8*)ewk->wu.step_xy_table + 0x400);
+        ewk->wu.move_xy_table = ewk->wu.step_xy_table + 512;
         ewk->wu.dir_timer = 0;
         ewk->wu.dir_step = 0;
         ewk->wu.dir_old = 1;
         save_old_color_data(save_old_col_ptr, ewk->wu.step_xy_table);
-        check_new_color_data_L8(&ewk->wu);
+        check_new_color_data_L8(ewk);
         mwk->att_plus = 14;
         spmv_ng_save = mwk->spmv_ng_flag;
         mwk->spmv_ng_flag |= 16;
@@ -77,11 +94,11 @@ void check_new_color_data_L8(WORK_Other* ewk) {
         ewk->wu.dir_step++;
     }
     if (ewk->wu.rl_flag) {
-        get_new_color_data_L8(ewk, ewk->wu.hit_adrs, ewk->wu.step_xy_table);
-        get_new_color_data_L8(ewk, ewk->wu.hit_adrs, ewk->wu.move_xy_table);
+        get_new_color_data_L8(&ewk->wu, (ColorCode*)ewk->wu.hit_adrs, ewk->wu.step_xy_table);
+        get_new_color_data_L8(&ewk->wu, (ColorCode*)ewk->wu.hit_adrs, ewk->wu.move_xy_table);
     } else {
-        get_new_color_data_L8(ewk, ewk->wu.hit_adrs, ewk->wu.move_xy_table);
-        get_new_color_data_L8(ewk, ewk->wu.hit_adrs, ewk->wu.step_xy_table);
+        get_new_color_data_L8(&ewk->wu, (ColorCode*)ewk->wu.hit_adrs, ewk->wu.move_xy_table);
+        get_new_color_data_L8(&ewk->wu, (ColorCode*)ewk->wu.hit_adrs, ewk->wu.step_xy_table);
     }
 }
 

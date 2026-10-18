@@ -69,7 +69,7 @@ void effect_90_move(WORK_Other* ewk) {
                 ewk->wu.xyz[0].disp.pos = bg_w.bgw[1].xy[0].disp.pos;
                 ewk->wu.disp_flag = 1;
                 suzi_sync_pos_set(ewk);
-                sort_push_request4(ewk);
+                sort_push_request4(&ewk->wu);
             }
             break;
         default:

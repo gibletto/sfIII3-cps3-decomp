@@ -26,6 +26,5 @@ s32 Scs_move_sub(void);
 void current_sc_move2(void);
 void Name_Scs_Input_end(void);
 s32 auto_n_check();
-void show_thank_you_for_playing(void);
 
 #endif

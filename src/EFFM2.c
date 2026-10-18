@@ -90,7 +90,7 @@ void effm2_move(WORK_Other* ewk) {
     case 2:
         char_move(&ewk->wu);
         add_x_sub(ewk);
-        if (!range_x_check3(ewk, 64)) {
+        if (!range_x_check3(&ewk->wu, 64)) {
             ewk->wu.routine_no[0] = 99;
             ewk->wu.routine_no[1]++;
         }

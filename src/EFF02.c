@@ -71,7 +71,7 @@ void effect_02_move(WORK_Other* ewk) {
         }
         if (tad->status & 0x10) {
             if (tad->status & 0x20) {
-                edt = &explem2[tad->emhix][(u8)ewk->wu.dir_timer];
+                edt = &explem2[tad->emhix][ewk->wu.dir_timer];
             } else {
                 edt = &explem[tad->myhix];
             }
@@ -216,7 +216,7 @@ s8 dmrl;
         ewk->wu.weight_level = 1;
     } else {
         dwk = (WORK_Other*)wk;
-        ewk->my_master = (u32*)dwk->my_master;
+        ewk->my_master = dwk->my_master;
         ewk->master_id = dwk->master_id;
         ewk->master_work_id = dwk->master_work_id;
         ewk->wu.target_adrs = ((WORK*)dwk->my_master)->target_adrs;

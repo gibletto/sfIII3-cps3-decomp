@@ -51,12 +51,12 @@ void effect_74_move(WORK_Other* ewk) {
                     if (ewk->wu.char_index <= 0) {
                         eff74_pattern_set(ewk);
                     } else {
-                        ewk->wu.old_rno[2] = eff74_anim_tbl[(s8)ewk->wu.old_rno[0]].frames->slot;
-                        ewk->wu.old_rno[1] = eff74_anim_tbl[(s8)ewk->wu.old_rno[0]].frames->y;
-                        ewk->wu.cg_ctr = eff74_anim_tbl[(s8)ewk->wu.old_rno[0]].frames->timer;
+                        ewk->wu.old_rno[2] = eff74_anim_tbl[ewk->wu.old_rno[0]].frames->slot;
+                        ewk->wu.old_rno[1] = eff74_anim_tbl[ewk->wu.old_rno[0]].frames->y;
+                        ewk->wu.cg_ctr = eff74_anim_tbl[ewk->wu.old_rno[0]].frames->timer;
                     }
                 } else {
-                    frame = eff74_anim_tbl[(s8)ewk->wu.old_rno[0]].frames;
+                    frame = eff74_anim_tbl[ewk->wu.old_rno[0]].frames;
                     frame += ewk->wu.cg_ix;
                     ewk->wu.old_rno[2] = frame->slot;
                     ewk->wu.old_rno[1] = frame->y;

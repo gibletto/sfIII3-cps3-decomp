@@ -114,6 +114,111 @@
 
 
 
+extern const u8 game_cfg_default_tbl_row0[];
+extern const u8 game_cfg_default_tbl_row1[];
+extern const u8 game_cfg_default_tbl_row2[];
+extern const u8 game_cfg_default_tbl_row3[];
+extern const u8 game_cfg_default_tbl_row4[];
+extern const u8 game_cfg_default_tbl_row5[];
+extern const u8 game_cfg_default_tbl_row6[];
+extern const u8 game_cfg_default_tbl_row7[];
+extern const u8 game_cfg_default_tbl_row8[];
+extern const char str_Asian_countries_only[];
+extern const char str_Canada_and_the_Federative_Republ[];
+extern const char str_Sales_export_or_operation_outsid[];
+extern const char str_Sales_export_or_operation_outsid_2[];
+extern const char str_This_game_is_for_use_in_japan_on[];
+extern const char str_This_game_is_for_use_in_the_Euro[];
+extern const char str_This_game_is_for_use_in_the_Fede[];
+extern const char str_This_game_is_for_use_in_the_Ocea[];
+extern const char str_This_game_is_for_use_in_the_Unit[];
+extern const char str_This_game_is_for_use_in_the_West[];
+extern const char str_This_game_is_for_use_in_the_sout[];
+extern const char str_Violators_are_subject_to_severe_[];
+extern const char str_WARNING[];
+extern const char str_and_trademark_infringement_and_i[];
+extern const char str_and_will_be_prosecuted_to_the_fu[];
+extern const char str_blank_2[];
+extern const char str_countries_except_the_United_Stat[];
+extern const char str_countries_may_be_construed_as_co[];
+extern const char str_country_may_be_construed_as_copy[];
+extern const char str_country_may_be_construed_as_copy_2[];
+extern const char str_of_America_and_Canada_only[];
+extern const char str_of_Brazil_only[];
+extern const char str_of_the_law[];
+extern const char str_only[];
+extern const char str_prohibited[];
+extern const char str_trademark_infringement_and_is_st[];
+extern const u8 sys_cfg_default_0_0[];
+extern const u8 sys_cfg_default_0_1[];
+extern const u8 sys_cfg_default_1_1[];
+extern const u8 sys_cfg_default_1_2[];
+extern const u8 sys_cfg_default_1_4[];
+extern const u8 sys_cfg_default_1_3[];
+extern const u8 sys_cfg_default_1_5[];
+extern const u8 sys_cfg_default_1_6[];
+extern const u8 sys_cfg_default_1_7[];
+extern const u8 sys_cfg_default_1_8[];
+extern const u8 sys_cfg_default_2_0[];
+extern const u8 sys_cfg_default_2_1[];
+extern const u8 sys_cfg_default_0_2[];
+extern const u8 sys_cfg_default_2_2[];
+extern const u8 sys_cfg_default_2_4[];
+extern const u8 sys_cfg_default_2_3[];
+extern const u8 sys_cfg_default_2_5[];
+extern const u8 sys_cfg_default_2_6[];
+extern const u8 sys_cfg_default_2_7[];
+extern const u8 sys_cfg_default_2_8[];
+extern const u8 sys_cfg_default_0_4[];
+extern const u8 sys_cfg_default_0_3[];
+extern const u8 sys_cfg_default_0_5[];
+extern const u8 sys_cfg_default_0_6[];
+extern const u8 sys_cfg_default_0_7[];
+extern const u8 sys_cfg_default_0_8[];
+extern const u8 sys_cfg_default_1_0[];
+
+/* 0200011C */
+TM_STRING warning_mes[9][11] = {
+    { { 0x13, 2, 2, (void*)(str_WARNING) }, { 2, 4, 2, (void*)(str_This_game_is_for_use_in_japan_on) }, { 2, 6, 2, (void*)(str_Sales_export_or_operation_outsid) }, { 2, 8, 2, (void*)(str_country_may_be_construed_as_copy) }, { 2, 0xA, 2, (void*)(str_and_trademark_infringement_and_i) }, { 2, 0xC, 2, (void*)(str_prohibited) }, { 2, 0xE, 2, (void*)(str_Violators_are_subject_to_severe_) }, { 2, 0x10, 2, (void*)(str_and_will_be_prosecuted_to_the_fu) }, { 2, 0x12, 2, (void*)(str_of_the_law) }, { 2, 0x14, 2, (void*)(str_blank_2) }, { 2, 0x16, 2, (void*)(str_blank_2) } },
+    { { 0x13, 2, 4, (void*)(str_WARNING) }, { 2, 4, 4, (void*)(str_This_game_is_for_use_in_the_sout) }, { 2, 6, 4, (void*)(str_Asian_countries_only) }, { 2, 8, 4, (void*)(str_Sales_export_or_operation_outsid_2) }, { 2, 0xA, 4, (void*)(str_countries_may_be_construed_as_co) }, { 2, 0xC, 4, (void*)(str_trademark_infringement_and_is_st) }, { 2, 0xE, 4, (void*)(str_prohibited) }, { 2, 0x10, 4, (void*)(str_Violators_are_subject_to_severe_) }, { 2, 0x12, 4, (void*)(str_and_will_be_prosecuted_to_the_fu) }, { 2, 0x14, 4, (void*)(str_of_the_law) }, { 2, 0x16, 4, (void*)(str_blank_2) } },
+    { { 0x13, 2, 6, (void*)(str_WARNING) }, { 1, 4, 6, (void*)(str_This_game_is_for_use_in_the_Euro) }, { 1, 6, 6, (void*)(str_only) }, { 1, 8, 6, (void*)(str_Sales_export_or_operation_outsid_2) }, { 1, 0xA, 6, (void*)(str_countries_may_be_construed_as_co) }, { 1, 0xC, 6, (void*)(str_trademark_infringement_and_is_st) }, { 1, 0xE, 6, (void*)(str_prohibited) }, { 1, 0x10, 6, (void*)(str_Violators_are_subject_to_severe_) }, { 1, 0x12, 6, (void*)(str_and_will_be_prosecuted_to_the_fu) }, { 1, 0x14, 6, (void*)(str_of_the_law) }, { 1, 0x16, 6, (void*)(str_blank_2) } },
+    { { 0x13, 2, 8, (void*)(str_WARNING) }, { 2, 4, 8, (void*)(str_This_game_is_for_use_in_the_Unit) }, { 2, 6, 8, (void*)(str_of_America_and_Canada_only) }, { 2, 8, 8, (void*)(str_Sales_export_or_operation_outsid_2) }, { 2, 0xA, 8, (void*)(str_countries_may_be_construed_as_co) }, { 2, 0xC, 8, (void*)(str_trademark_infringement_and_is_st) }, { 2, 0xE, 8, (void*)(str_prohibited) }, { 2, 0x10, 8, (void*)(str_Violators_are_subject_to_severe_) }, { 2, 0x12, 8, (void*)(str_and_will_be_prosecuted_to_the_fu) }, { 2, 0x14, 8, (void*)(str_of_the_law) }, { 2, 0x16, 8, (void*)(str_blank_2) } },
+    { { 0x13, 2, 0xA, (void*)(str_WARNING) }, { 1, 4, 0xA, (void*)(str_This_game_is_for_use_in_the_West) }, { 1, 6, 0xA, (void*)(str_countries_except_the_United_Stat) }, { 1, 8, 0xA, (void*)(str_Canada_and_the_Federative_Republ) }, { 1, 0xA, 0xA, (void*)(str_Sales_export_or_operation_outsid_2) }, { 1, 0xC, 0xA, (void*)(str_countries_may_be_construed_as_co) }, { 1, 0xE, 0xA, (void*)(str_trademark_infringement_and_is_st) }, { 1, 0x10, 0xA, (void*)(str_prohibited) }, { 1, 0x12, 0xA, (void*)(str_Violators_are_subject_to_severe_) }, { 1, 0x14, 0xA, (void*)(str_and_will_be_prosecuted_to_the_fu) }, { 1, 0x16, 0xA, (void*)(str_of_the_law) } },
+    { { 0x13, 2, 0xC, (void*)(str_WARNING) }, { 1, 4, 0xC, (void*)(str_This_game_is_for_use_in_the_Fede) }, { 1, 6, 0xC, (void*)(str_of_Brazil_only) }, { 1, 8, 0xC, (void*)(str_Sales_export_or_operation_outsid) }, { 1, 0xA, 0xC, (void*)(str_country_may_be_construed_as_copy_2) }, { 1, 0xC, 0xC, (void*)(str_trademark_infringement_and_is_st) }, { 1, 0xE, 0xC, (void*)(str_prohibited) }, { 1, 0x10, 0xC, (void*)(str_Violators_are_subject_to_severe_) }, { 1, 0x12, 0xC, (void*)(str_and_will_be_prosecuted_to_the_fu) }, { 1, 0x14, 0xC, (void*)(str_of_the_law) }, { 1, 0x16, 0xC, (void*)(str_blank_2) } },
+    { { 0x13, 2, 0xE, (void*)(str_WARNING) }, { 1, 4, 0xE, (void*)(str_This_game_is_for_use_in_the_Ocea) }, { 1, 6, 0xE, (void*)(str_only) }, { 1, 8, 0xE, (void*)(str_Sales_export_or_operation_outsid_2) }, { 1, 0xA, 0xE, (void*)(str_countries_may_be_construed_as_co) }, { 1, 0xC, 0xE, (void*)(str_trademark_infringement_and_is_st) }, { 1, 0xE, 0xE, (void*)(str_prohibited) }, { 1, 0x10, 0xE, (void*)(str_Violators_are_subject_to_severe_) }, { 1, 0x12, 0xE, (void*)(str_and_will_be_prosecuted_to_the_fu) }, { 1, 0x14, 0xE, (void*)(str_of_the_law) }, { 1, 0x16, 0xE, (void*)(str_blank_2) } },
+    { { 0x13, 2, 4, (void*)(str_WARNING) }, { 2, 4, 4, (void*)(str_This_game_is_for_use_in_the_sout) }, { 2, 6, 4, (void*)(str_Asian_countries_only) }, { 2, 8, 4, (void*)(str_Sales_export_or_operation_outsid_2) }, { 2, 0xA, 4, (void*)(str_countries_may_be_construed_as_co) }, { 2, 0xC, 4, (void*)(str_trademark_infringement_and_is_st) }, { 2, 0xE, 4, (void*)(str_prohibited) }, { 2, 0x10, 4, (void*)(str_Violators_are_subject_to_severe_) }, { 2, 0x12, 4, (void*)(str_and_will_be_prosecuted_to_the_fu) }, { 2, 0x14, 4, (void*)(str_of_the_law) }, { 2, 0x16, 4, (void*)(str_blank_2) } },
+    { { 0x13, 2, 2, (void*)(str_WARNING) }, { 2, 4, 2, (void*)(str_This_game_is_for_use_in_japan_on) }, { 2, 6, 2, (void*)(str_Sales_export_or_operation_outsid) }, { 2, 8, 2, (void*)(str_country_may_be_construed_as_copy) }, { 2, 10, 2, (void*)(str_and_trademark_infringement_and_i) }, { 2, 12, 2, (void*)(str_prohibited) }, { 2, 14, 2, (void*)(str_Violators_are_subject_to_severe_) }, { 2, 16, 2, (void*)(str_and_will_be_prosecuted_to_the_fu) }, { 2, 18, 2, (void*)(str_of_the_law) }, { 2, 20, 2, (void*)(str_blank_2) }, { 2, 22, 2, (void*)(str_blank_2) } },
+};
+/* 0200053C */
+/* The default settings rows of each cabinet type (sys_cfg_default_tbl), nine per type. */
+const u8* sys_cfg_default_list[3][9] = {
+    { sys_cfg_default_0_0, sys_cfg_default_0_1, sys_cfg_default_0_2, sys_cfg_default_0_3, sys_cfg_default_0_4, sys_cfg_default_0_5, sys_cfg_default_0_6, sys_cfg_default_0_7, sys_cfg_default_0_8 },
+    { sys_cfg_default_1_0, sys_cfg_default_1_1, sys_cfg_default_1_2, sys_cfg_default_1_3, sys_cfg_default_1_4, sys_cfg_default_1_5, sys_cfg_default_1_6, sys_cfg_default_1_7, sys_cfg_default_1_8 },
+    { sys_cfg_default_2_0, sys_cfg_default_2_1, sys_cfg_default_2_2, sys_cfg_default_2_3, sys_cfg_default_2_4, sys_cfg_default_2_5, sys_cfg_default_2_6, sys_cfg_default_2_7, sys_cfg_default_2_8 },
+};
+/* 0200062C */
+u32 sys_cfg_default_tbl[3] = {
+    (u32)sys_cfg_default_list[0], (u32)sys_cfg_default_list[1], (u32)sys_cfg_default_list[2],
+};
+/* 02000638 */
+u8* game_cfg_default_tbl[9] = {
+    (void*)(game_cfg_default_tbl_row0),
+    (void*)(game_cfg_default_tbl_row1),
+    (void*)(game_cfg_default_tbl_row2),
+    (void*)(game_cfg_default_tbl_row3),
+    (void*)(game_cfg_default_tbl_row4),
+    (void*)(game_cfg_default_tbl_row5),
+    (void*)(game_cfg_default_tbl_row6),
+    (void*)(game_cfg_default_tbl_row7),
+    (void*)(game_cfg_default_tbl_row8),
+};
+/* Stored after game_cfg_default_tbl. Nothing in the program refers to it by name or address; if it is read,
+   it is through an index past the end of game_cfg_default_tbl. */
+u32 game_cfg_default_tbl_tail[1] = {
+    65536,
+};
+
+
 /* Start-up task, created by boot_task (and again by the test menu when it
    returns to the game).  Sets up the region, the video and sound work, the
    coin and switch work and the settings from EEPROM, clears the game state,
@@ -162,7 +267,7 @@ void mode_init_task(void) {
     unused_flag_b = 0;
     unused_flag_c = 0;
     test_sw_lock = 0;
-    Keep_BGM_Flag = 0;
+    PB_Music_Off = 0;
     No_Death = 0;
     Get_Demo_Index = Request_Break[0] = Request_Break[1] = 0;
     Battle_Round[0] = Game_setting.set4 & 3;

@@ -43,6 +43,51 @@
 #include "PLPDM.h"
 #include "fighter.h"
 
+extern const s16 hissatsu_dageki_00[];
+extern const s16 hissatsu_dageki_01[];
+extern const s16 hissatsu_dageki_02[];
+extern const s16 super_arts_nage_00[];
+extern const s16 super_arts_nage_01[];
+extern const s16 super_arts_nage_02[];
+extern const s16 tsuujyou_dageki_00[];
+extern const s16 tsuujyou_dageki_01[];
+extern const s16 tsuujyou_dageki_02[];
+extern const s16 tsuujyou_nage_00[];
+extern const s16 tsuujyou_nage_01[];
+extern const s16 tsuujyou_nage_02[112];
+
+const s16* kizetsu_timer_table_0[4] = {
+    tsuujyou_dageki_00, tsuujyou_dageki_01, tsuujyou_dageki_02, tsuujyou_dageki_02,
+};
+const s16* kizetsu_timer_table_1[4] = {
+    hissatsu_dageki_00, hissatsu_dageki_01, hissatsu_dageki_02, hissatsu_dageki_02,
+};
+const s16* kizetsu_timer_table_2[4] = {
+    tsuujyou_nage_00, tsuujyou_nage_01, tsuujyou_nage_02, tsuujyou_nage_02,
+};
+const s16* kizetsu_timer_table_3[4] = {
+    &tsuujyou_nage_02[16], &tsuujyou_nage_02[32], &tsuujyou_nage_02[48], &tsuujyou_nage_02[48],
+};
+const s16* kizetsu_timer_table_4[4] = {
+    &tsuujyou_nage_02[64], &tsuujyou_nage_02[80], &tsuujyou_nage_02[96], &tsuujyou_nage_02[96],
+};
+const s16* kizetsu_timer_table_5[4] = {
+    super_arts_nage_00, super_arts_nage_01, super_arts_nage_02, super_arts_nage_02,
+};
+/* 02007A64 */
+const s16** kizetsu_timer_table[9] = {
+    kizetsu_timer_table_0,
+    kizetsu_timer_table_1,
+    kizetsu_timer_table_2,
+    kizetsu_timer_table_3,
+    kizetsu_timer_table_4,
+    kizetsu_timer_table_5,
+    kizetsu_timer_table_4,
+    kizetsu_timer_table_5,
+    kizetsu_timer_table_4,
+};
+
+
 #pragma inline(check_dmpat_to_dmpat)
 
 

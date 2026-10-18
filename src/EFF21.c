@@ -26,6 +26,14 @@
 
 
 
+extern const s16 eff21_data_adrs_0[];
+
+/* 02006C44 */
+const s16* eff21_data_adrs[1] = {
+    eff21_data_adrs_0,
+};
+
+
 void effect_21_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
     case 0:
@@ -94,7 +102,7 @@ s32 effect_21_init(s16 sync_index) {
         ewk->wu.char_table[0] = char_add[bg_w.bg_index];
         ewk->wu.xyz[0].disp.pos = ewk->wu.old_rno[0];
         ewk->wu.xyz[1].disp.pos = ewk->wu.old_rno[2];
-        suzi_offset_set(ewk);
+        suzi_offset_set(&ewk->wu);
     }
     return 0;
 }

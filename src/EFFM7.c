@@ -116,7 +116,7 @@ void effm7_move(WORK_Other* ewk) {
     case 5:
         add_x_sub(ewk);
         add_y_sub(ewk);
-        if (range_x_check3(ewk, 208) == 0) {
+        if (range_x_check3(&ewk->wu, 208) == 0) {
             ewk->wu.routine_no[0] = 99;
             ewk->wu.disp_flag = 0;
             ewk->wu.routine_no[1]++;

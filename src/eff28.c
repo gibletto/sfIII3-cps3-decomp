@@ -25,8 +25,14 @@
 
 
 
+/* 02006CC4 */
+const s16* scr_obj_data28[1] = {
+    (const s16*)&scr_obj_num28[1],
+};
+
+
 void effect_28_move(WORK_Other* ewk) {
-    if (obr_disp_off_check()) {
+    if (obr_no_disp_check()) {
         return;
     }
     switch (ewk->wu.routine_no[0]) {
@@ -95,7 +101,7 @@ u8 type28;
         o->wu.sync_suzi = *t++;
         o->wu.dir_step = *t++;
         o->wu.char_table[0] = char_add[bg_w.bg_index];
-        suzi_offset_set(o);
+        suzi_offset_set(&o->wu);
     }
     return 0;
 }

@@ -12,9 +12,9 @@ OPT = -optimize=1 -speed
 NOINLINE = Entry entry_2 Entry_dbg SYS_sub sel_pl next_cpu game_config_jp game_config_en CMD_MAIN cmd_main_2 \
 	ta_sub end_main end_4 sc_trans VITAL count sc_sub sc_sub_2 sc_sub_3 EFF15 EFF25 EffD8 effe6 PLCNTSET \
 	plcntset_2 PLSGAUGE textsound textsound_2 textsound_3
-OPT0 = family sys_test sys_test_2 sys_test_2a sys_test_2b sys_test_2c sys_test_3 sys_test_4 sys_test_5 \
-	coin_sw coin_sw_2 eeprom sys_config sys_config_2 sys_config_3 spr_pool spr_pool_2 simmram_slot \
-	poly_que spr_list cram_bank
+OPT0 = family sys_test sys_test_2 iotest_out soundtest colortest sys_test_2a sys_test_2b sys_test_2c \
+	sys_test_3 sys_test_4 sys_test_5 coin_sw coin_sw_2 eeprom sys_config sys_config_2 sys_config_3 \
+	spr_pool spr_pool_2 simmram_slot poly_que spr_list cram_bank
 CONSTTBL = entry_2 Com_Pl SYS_sub Game_Main demo00 demo02_code RANKING Manage manage_2 win_2 continue sel_pl \
 	next_cpu game_config_main game_config_jp game_config_en CMD_MAIN tate00 bg000 bg020 bg040 BG050 \
 	bg090 bg100 bg120 bg130 bg140 bg150 bg160 bg190 bonus_bg bns_bg2 appear win_pl lose_pl end_main \

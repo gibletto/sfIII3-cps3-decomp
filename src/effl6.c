@@ -189,6 +189,6 @@ s32 effect_L6_init(WORK* wk, u8 typel6) {
         ewk->wu.old_rno[0] = 80;
         cal_initial_speed(&ewk->wu, ewk->wu.old_rno[0], ewk->wu.old_rno[1], ewk->wu.xyz[1].disp.pos);
     }
-    suzi_offset_set(ewk);
+    suzi_offset_set(&ewk->wu);
     return 0;
 }

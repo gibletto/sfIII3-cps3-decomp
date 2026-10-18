@@ -103,7 +103,7 @@ s32 effect_54_init(WORK_Other* oya) {
         ewk->wu.char_index = *data_ptr++;
         ewk->wu.sync_suzi = 0;
         ewk->wu.char_table[0] = eng_char_table;
-        suzi_offset_set(ewk);
+        suzi_offset_set(&ewk->wu);
     }
     return 0;
 }
@@ -111,7 +111,7 @@ s32 effect_54_init(WORK_Other* oya) {
 
 
 void effect_55_move(WORK_Other* ewk) {
-    if (obr_disp_off_check()) {
+    if (obr_no_disp_check()) {
         return;
     }
     switch (ewk->wu.routine_no[0]) {
@@ -189,7 +189,7 @@ s32 effect_55_init(void) {
     ewk->wu.hit_stop = 0;
     ewk->wu.sync_suzi = 0;
     ewk->wu.char_table[0] = brz_char_table;
-    suzi_offset_set(ewk);
+    suzi_offset_set(&ewk->wu);
     return 0;
 }
 

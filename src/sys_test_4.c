@@ -28,6 +28,10 @@
 
 
 
+s16 rewrite_no = 0;  /* 02007CDC */
+s16 rewrite_cursor = 0;  /* 02007CDE */
+
+
 /* provisional name */
 void rewrite_menu_init(void) {
     s32 col;
@@ -302,7 +306,7 @@ void service_coin_check(void) {
                 credit_2p = 9;
             }
             credit_3p++;
-            coin3_in_flag = 1;
+            coin_chute3_w.dropped = 1;
             if (credit_3p > 9) {
                 credit_3p = 9;
             }
@@ -319,12 +323,12 @@ void service_coin_check(void) {
                 credit_2p = 9;
             }
             credit_3p++;
-            coin3_in_flag = 1;
+            coin_chute3_w.dropped = 1;
             if (credit_3p > 9) {
                 credit_3p = 9;
             }
             credit_4p++;
-            coin4_in_flag = 1;
+            coin_chute4_w.dropped = 1;
             if (credit_4p > 9) {
                 credit_4p = 9;
             }

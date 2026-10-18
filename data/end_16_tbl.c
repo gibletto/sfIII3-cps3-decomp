@@ -7,12 +7,6 @@
 
 #pragma section TBL
 
-extern void end_1600_0000();
-extern void end_1600_1000();
-extern void end_1600_2000();
-extern void end_1600_3000();
-extern void end_1600_5000();
-
 const char end_1600_bg0_cell_tbl[128] = {
     0, 0, 0, 0, 0, 0, 0, 1,
     0, 0, 0, 64, 0, 0, 0, 2,

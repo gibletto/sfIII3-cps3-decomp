@@ -108,6 +108,14 @@
 #include "fighter.h"
 #include "RANKING.h"
 
+s16 test_rno;  /* 0200DC94 */
+s16 test_menu_no;  /* 0200DC96 */
+s16 test_cursor;  /* 0200DC98 */
+s16 test_cursor_on;  /* 0200DC9A */
+s16 test_cursor_off;  /* 0200DC9C */
+s16 test_font_type;  /* 0200DC9E */
+s16 test_cursor_max;  /* 0200DCA0 */
+
 void tilemap_put_block(u16 x, u16 y, u16 attr, u16 code);
 
 #pragma noregsave(test_mode_task)
@@ -175,13 +183,13 @@ void test_menu_init(void) {
     sound_reg_level_set(0, 0);
     bg_vbl_trans_flag = Debug_R_No = Debug_Select_No = Debug_Menu_No = 0;
     tilemap_fill_all(0, 32);
-    palette_write(0, (u16*)((u32)sys_palette), 256);
+    palette_write(0, sys_palette, 256);
     switch (Country) {
     case 1:
         test_font_type = 1;
-        tilemap_chunk_copy_16b((s16*)(SS_RAM + 0x8000), (char*)((u32)jp_menu_font_cg), 512);
+        tilemap_chunk_copy_16b((s16*)(SS_RAM + 0x8000), (char*)jp_menu_font_cg, 512);
         tilemap_fill_all(0, 0x1200);
-        tilemap_print_script_seq(0, 0, 0xFFFF, (TMSCRIPT*)test_menu_scr_jp);
+        tilemap_print_script_seq(0, 0, 0xFFFF, test_menu_scr_jp);
         test_cursor_on = 0x1204;
         test_cursor_off = 0x1200;
         if (config_differs_from_default()) {
@@ -190,9 +198,9 @@ void test_menu_init(void) {
         break;
     default:
         test_font_type = 0;
-        tilemap_chunk_copy_16b((s16*)(SS_RAM + 0x8000), (char*)((u32)sys_font_cg), 140);
+        tilemap_chunk_copy_16b((s16*)(SS_RAM + 0x8000), (char*)sys_font_cg, 140);
         tilemap_fill_all(0, 32);
-        tilemap_print_string(0, 0, 0xFFFF, (TM_STRING*)Country == 2 ? test_menu_str_asia : test_menu_str);
+        tilemap_print_string(0, 0, 0xFFFF, Country == 2 ? test_menu_str_asia : test_menu_str);
         test_cursor_on = 62;
         test_cursor_off = 32;
         if (config_differs_from_default()) {
@@ -200,10 +208,12 @@ void test_menu_init(void) {
         }
         break;
     }
-    tilemap_put_block(test_cursor_x_tbl[test_font_type], test_cursor_y_tbl[(s8)test_font_type][test_cursor], 2,
+    tilemap_put_block(test_cursor_x_tbl[test_font_type], test_cursor_y_tbl[test_font_type][test_cursor], 2,
                              test_cursor_on);
-    (void)((WORK*)0xFFFF)->id;
-    (void)((WORK*)0)->id;
+    if (DEBUG_DISP) {
+        test_cursor = 0;
+        tilemap_print_string(0, 0, 0xFFFF, test_menu_str);
+    }
     if (Country == 2) {
         test_cursor_max = 8;
     } else {
@@ -267,26 +277,26 @@ void test_menu_run(void) {
 void test_menu_select(void) {
     u16 sw = ~p1sw_1 & p1sw_0;
     if (sw & 1) {
-        tilemap_put_block(test_cursor_x_tbl[test_font_type], test_cursor_y_tbl[(s8)test_font_type][test_cursor], 2,
+        tilemap_put_block(test_cursor_x_tbl[test_font_type], test_cursor_y_tbl[test_font_type][test_cursor], 2,
                                  test_cursor_off);
         test_cursor--;
         if (test_cursor < 0) {
             test_cursor = test_cursor_max;
         }
-        tilemap_put_block(test_cursor_x_tbl[test_font_type], test_cursor_y_tbl[(s8)test_font_type][test_cursor], 2,
+        tilemap_put_block(test_cursor_x_tbl[test_font_type], test_cursor_y_tbl[test_font_type][test_cursor], 2,
                                  test_cursor_on);
     } else if (sw & 2) {
-        tilemap_put_block(test_cursor_x_tbl[test_font_type], test_cursor_y_tbl[(s8)test_font_type][test_cursor], 2,
+        tilemap_put_block(test_cursor_x_tbl[test_font_type], test_cursor_y_tbl[test_font_type][test_cursor], 2,
                                  test_cursor_off);
         test_cursor++;
         if (test_cursor > test_cursor_max) {
             test_cursor = 0;
         }
-        tilemap_put_block(test_cursor_x_tbl[test_font_type], test_cursor_y_tbl[(s8)test_font_type][test_cursor], 2,
+        tilemap_put_block(test_cursor_x_tbl[test_font_type], test_cursor_y_tbl[test_font_type][test_cursor], 2,
                                  test_cursor_on);
     } else if (sw & 16) {
         test_menu_no = test_cursor + 1;
-        tilemap_chunk_copy_16b((s16*)(SS_RAM + 0x8000), (char*)((u32)sys_font_cg), 140);
+        tilemap_chunk_copy_16b((s16*)(SS_RAM + 0x8000), (char*)sys_font_cg, 140);
         tilemap_fill_all(0, 32);
     }
 }

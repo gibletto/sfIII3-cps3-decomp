@@ -129,6 +129,6 @@ s32 effect_C1_init(WORK* wk) {
     *ewk->wu.char_table = etc2_char_table;
     ewk->wu.char_index = 36;
     ewk->wu.sync_suzi = 0;
-    suzi_offset_set(ewk);
+    suzi_offset_set(&ewk->wu);
     return 0;
 }

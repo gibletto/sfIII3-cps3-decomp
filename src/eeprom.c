@@ -21,6 +21,24 @@
 
 
 
+u32 book_coin_count;  /* 0206AB48 */
+u32 book_service_count;  /* 0206AB4C */
+u32 book_free_count;  /* 0206AB50 */
+u32 book_card_count;  /* 0206AB54 */
+u16 eep_dummy;  /* 0206AB58 */
+u16 eep_strobe_0;  /* 0206AB5A */
+u16 eep_strobe_1;  /* 0206AB5C */
+u16 eep_strobe_2;  /* 0206AB5E */
+u16 eeprom_test_save[64];  /* 0206AB60 */
+
+
+/* 02007D40 */
+u32 bookkeep_add0 = 0;
+u32 bookkeep_add1 = 0;
+u32 bookkeep_add2 = 0;
+u32 bookkeep_add3 = 0;
+
+
 /* provisional name */
 s8 eeprom_test(u16* buf) {
     register s16 i;

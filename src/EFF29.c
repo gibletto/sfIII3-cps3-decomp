@@ -27,7 +27,7 @@
 
 void effect_29_move(WORK_Other* ewk) {
     s16 work;
-    if (obr_disp_off_check()) {
+    if (obr_no_disp_check()) {
         return;
     }
     switch (ewk->wu.routine_no[0]) {
@@ -86,7 +86,7 @@ s32 effect_29_init(void) {
     ewk->wu.char_index = 0;
     ewk->wu.sync_suzi = 0;
     ewk->wu.char_table[0] = hkg_char_table;
-    suzi_offset_set(ewk);
+    suzi_offset_set(&ewk->wu);
     ewk->wu.old_rno[0] = 120;
     ewk->wu.disp_flag = 0;
     return 0;

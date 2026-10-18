@@ -2,7 +2,7 @@
  * PLCNTDAT.C  Player base data, stun and super-art setup, round resets
  *
  * setup_base_and_other_data sets both players' base data (set_base_data), super-art and stun work
- * pointers and other data, and creates their J7 and E5 effects; set_base_data_metamor reloads it
+ * pointers and other data, and creates their J7 and E5 effects; set_base_data_metamorphose reloads it
  * after a metamorphosis, set_player_shadow sets the shadow. set_kizetsu_status loads a character's
  * stun limit and recovery; clear_kizetsu_point and clear_super_arts_point reset the stun and
  * super-art values. reset_piyori_and_fight, reset_fight_status, reset_round_and_screen and
@@ -233,8 +233,7 @@ void set_base_data(PLW* wk, s16 ix) {
 
 
 
-/* provisional name */
-void set_base_data_metamor(PLW* wk) {
+void set_base_data_metamorphose(PLW* wk) {
     set_char_base_data(&wk->wu);
     if (wk->wu.id) {
         wk->wu.my_col_code |= 0x10;
@@ -349,7 +348,9 @@ void clear_super_arts_point(PLW* wk) {
 
 
 
-s32 check_combo_end(s16 ix) {
+s32 check_combo_end(ix)
+s16 ix;
+{
     s16 rnum;
     if (plw[ix].py->flag) {
         return 1;

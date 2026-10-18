@@ -27,7 +27,7 @@
 
 
 void effect_19_move(WORK_Other* ewk) {
-    if (obr_disp_off_check()) {
+    if (obr_no_disp_check()) {
         return;
     }
     switch (ewk->wu.routine_no[0]) {
@@ -146,7 +146,7 @@ s32 effect_19_init(void) {
         ewk->wu.my_priority = ewk->wu.position_z = 80;
         ewk->wu.xyz[0].disp.pos = *data_ptr++;
         ewk->wu.xyz[1].disp.pos = *data_ptr++;
-        suzi_offset_set(ewk);
+        suzi_offset_set(&ewk->wu);
     }
     return 0;
 }

@@ -3,7 +3,7 @@
  *
  * Effect K6 (id 206) is a name plate created by effect_K6_init from sel_pl and next_cpu.
  * Setup_CharK6 and Setup_K6_Index choose the graphic, Setup_1st_PosK6 / Get_PosK6 the position
- * (Win_Name_Pos_Data, with the Akuma and export name checks); chkNameExport returns the
+ * (Name_Cover_Pos_Data, with the Akuma and export name checks); chkNameExport returns the
  * alternative name spelling index used outside region 1.
  * effect_K6_move follows the Order / Order_Timer controls: EFFK6_WAIT, EFFK6_SLIDE_IN,
  * EFFK6_SLIDE_OUT, EFFK6_SUDDENLY, EFFK6_MOVE and EFFK6_KILL.
@@ -216,7 +216,7 @@ void EFFK6_MOVE(WORK_Other* ewk) {
     }
     ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
     ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-    sort_push_request4(ewk);
+    sort_push_request4(&ewk->wu);
 }
 
 
@@ -269,7 +269,12 @@ s16 Play_Style;
 
 
 
-s16 Get_PosK6(WORK_Other* ewk, s16 Who, s16 Get_Type, s16 Play_Style) {
+s16 Get_PosK6(ewk, Who, Get_Type, Play_Style)
+WORK_Other* ewk;
+s16 Who;
+s16 Get_Type;
+s16 Play_Style;
+{
     if (ewk->master_id == 0) {
         switch (ewk->wu.direction) {
         case 25:
@@ -280,7 +285,7 @@ s16 Get_PosK6(WORK_Other* ewk, s16 Who, s16 Get_Type, s16 Play_Style) {
                 x = (Country != 1 && x == 21) ? 2 : 0;
                 Who += x;
             }
-            return Win_Name_Pos_Data[ewk->master_id][Play_Style][Who][Get_Type];
+            return Name_Cover_Pos_Data[ewk->master_id][Play_Style][Who][Get_Type];
         case 31:
         case 35:
             if (Play_Style == 1) {
@@ -301,7 +306,7 @@ s16 Get_PosK6(WORK_Other* ewk, s16 Who, s16 Get_Type, s16 Play_Style) {
         case 25:
         case 29:
             Who += chkNameAkuma(Who);
-            return Win_Name_Pos_Data[ewk->master_id][Play_Style][Who][Get_Type];
+            return Name_Cover_Pos_Data[ewk->master_id][Play_Style][Who][Get_Type];
         case 31:
         case 35:
             if (Play_Style == 1) {

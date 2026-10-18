@@ -129,7 +129,7 @@ void EFF98_SUDDENLY(WORK_Other* ewk) {
 
 
 
-void EFF98_DIE(WORK_Other* ewk) {
+void EFF98_KILL(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
     case 0:
         if (--Order_Timer[ewk->wu.dir_old] == 0) {

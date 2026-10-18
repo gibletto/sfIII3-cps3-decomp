@@ -97,5 +97,5 @@ s32 effect_C6_init(WORK_Other* oya) {
     ewk->wu.rl_flag = oya->wu.rl_flag;
     *ewk->wu.char_table = etc_char_table;
     ewk->wu.my_col_code = oya->wu.my_col_code;
-    suzi_offset_set(ewk);
+    suzi_offset_set(&ewk->wu);
 }

@@ -79,7 +79,7 @@ void effect_D7_move(WORK_Other* ewk) {
                 hit_push_request(&ewk->wu);
             }
         }
-        sort_push_request(ewk);
+        sort_push_request(&ewk->wu);
         break;
     case 2:
         ewk->wu.routine_no[0] = 3;

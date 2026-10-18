@@ -26,13 +26,15 @@ s16 tm;
     (void)bg_w.bg_r_2;
     (void)bg_w.stage;
     (void)bg_w.area;
-    (void)((WORK*)xy)->be_flag;
-    (void)((WORK*)xy)->disp_flag;
-    (void)((WORK*)xy)->blink_timing;
-    (void)((WORK*)xy)->operator;
-    (void)((WORK*)xy)->type;
+    if (0) {
+        return;
+    }
+    (void)&((WORK*)xy)->disp_flag;
+    (void)&((WORK*)xy)->blink_timing;
+    (void)&((WORK*)xy)->operator;
+    (void)&((WORK*)xy)->type;
     xy[0].disp.low = xy[1].disp.low = 0;
-    (void)((WORK*)bg_num)->be_flag;
+    (void)&((WORK*)bg_num)->be_flag;
     ms.timer = tm;
     ms.timer2 = (((ms.timer - 1) * ms.timer) / 2) + ms.timer;
     ms.x.ps.h = chase_x - bg_w.bgw[bg_num].chase_xy[0].disp.pos;
@@ -65,7 +67,11 @@ s16 tm;
 /* provisional name */
 
 
-void cal_bg_speed_data_x(s16 bg_num, s16 tm, s16 dummy) {
+void cal_bg_speed_data_x(bg_num, tm, dummy)
+s16 bg_num;
+s16 tm;
+s16 dummy;
+{
     MotionState ms;
     bg_w.bgw[bg_num].chase_xy[0].disp.low = 0;
     ms.timer = tm;
@@ -88,7 +94,11 @@ void cal_bg_speed_data_x(s16 bg_num, s16 tm, s16 dummy) {
 
 
 /* provisional name */
-void cal_bg_speed_data_y(s16 bg_num, s16 tm, s16 dummy) {
+void cal_bg_speed_data_y(bg_num, tm, dummy)
+s16 bg_num;
+s16 tm;
+s16 dummy;
+{
     MotionState ms;
     bg_w.bgw[bg_num].chase_xy[1].disp.low = 0;
     ms.timer = tm;

@@ -13,6 +13,9 @@
 #include "fifo.h"
 #include "sys_test.h"
 #include "cps3.h"
+SCRLPOS fm_pos[8];  /* 0206A084 */
+
+
 /* provisional name */
 void Family_Init(void)
 {

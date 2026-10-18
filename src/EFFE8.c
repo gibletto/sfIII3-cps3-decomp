@@ -130,7 +130,7 @@ WORK_Other* ewk;
 PLW* mwk;
 {
     if ((ewk->wu.old_rno[3] != 0 || ewk->wu.spr.gfx_cells != 0) && mwk->sa_stop_flag == 0) {
-        sort_push_request(ewk);
+        sort_push_request(&ewk->wu);
     }
 }
 

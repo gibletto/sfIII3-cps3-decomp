@@ -107,6 +107,9 @@
 #include "fighter.h"
 #include "RANKING.h"
 
+TASK_QUEUE task_req_queue;  /* 0200D9B4 */
+u8 task_req_buff[716];  /* 0200D9C8 */
+
 #pragma noregsave(boot_task)
 
 
@@ -127,7 +130,7 @@ void boot_task(void) {
     initial_task = task_tbl;
     initial_entry = mode_init_task;
     req = 0;
-    (void)((WORK*)create_task)->id;
+    (void)&((WORK*)create_task)->id;
     while (create_task(initial_entry, 0, initial_task, 1, (s32)req) == 0) {
     }
     do {

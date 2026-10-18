@@ -15,7 +15,6 @@ extern const u8 eff45_scrn_data[];
 extern const u32 eff74_scrn_data[13056];
 extern const u32 effJ5_scrn_data[38656];
 extern const u32 end_2000_scrn_data[2048];
-extern const u8 op_char_table[];
 extern const u32 russia2_scrn_data[28416];
 
 const s16 bg_scno_tbl[23] = {

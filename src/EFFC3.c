@@ -200,7 +200,10 @@ WORK* c2wk;
 
 
 
-s32 effect_C3_init(WORK_Other* wk, s16 data) {
+s32 effect_C3_init(wk, data)
+WORK_Other* wk;
+s16 data;
+{
     WORK_Other* ewk;
     s16 ix;
     if ((ix = pull_effect_work(1)) == -1) {
@@ -210,7 +213,7 @@ s32 effect_C3_init(WORK_Other* wk, s16 data) {
     ewk->wu.be_flag = 1;
     ewk->wu.id = 123;
     ewk->wu.type = data;
-    ewk->my_master = (u32*)wk->my_master;
+    ewk->my_master = wk->my_master;
     ewk->wu.target_adrs = wk->wu.target_adrs;
     ewk->wu.my_effadrs = (u32*)wk;
     ewk->master_player = wk->master_player;

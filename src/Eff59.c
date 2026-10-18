@@ -35,6 +35,18 @@
 #include "bg_sub_4.h"
 #include "bg_sub_5.h"
 #include "EFF61.h"
+extern const s16 flash_obj_data61_0[];
+extern const s16 flash_obj_data61_1[];
+extern const s16 flash_obj_data61_2[];
+
+/* 02006D48 */
+const s16* flash_obj_data61[3] = {
+    flash_obj_data61_0,
+    flash_obj_data61_1,
+    flash_obj_data61_2,
+};
+
+
 void effect_59_move(WORK_Other* ewk) {
     WORK_Other* mwk = (WORK_Other*)ewk->my_master;
     if (mwk->wu.be_flag == 0) {
@@ -223,7 +235,7 @@ s32 effect_60_init(s16 type) {
     ewk->wu.old_rno[0] = *data_ptr++;
     ewk->wu.old_rno[1] = ewk->wu.old_rno[0];
     ewk->wu.char_table[0] = char_add[bg_w.bg_index];
-    suzi_offset_set(ewk);
+    suzi_offset_set(&ewk->wu);
     return 0;
 }
 

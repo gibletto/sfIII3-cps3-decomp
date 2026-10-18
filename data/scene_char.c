@@ -372,22 +372,22 @@ extern const u16 op_char_table_011_head[];
 extern const u16 op_char_table_012_head[];
 
 /* sel_pl_char_table scripts: 87 entries */
-const u16* const sel_pl_char_table[88] = {
-    sel_pl_char_table_000, sel_pl_char_table_001, sel_pl_char_table_002, sel_pl_char_table_003, sel_pl_char_table_004, sel_pl_char_table_005,
-    sel_pl_char_table_006, sel_pl_char_table_007, sel_pl_char_table_008, sel_pl_char_table_009, sel_pl_char_table_009, sel_pl_char_table_011,
-    sel_pl_char_table_012, sel_pl_char_table_013, sel_pl_char_table_014, sel_pl_char_table_015, sel_pl_char_table_016, sel_pl_char_table_017,
-    sel_pl_char_table_018, sel_pl_char_table_019, sel_pl_char_table_020, sel_pl_char_table_021, sel_pl_char_table_022, sel_pl_char_table_023,
-    sel_pl_char_table_024, sel_pl_char_table_025, sel_pl_char_table_026, sel_pl_char_table_027, sel_pl_char_table_028, sel_pl_char_table_029,
-    sel_pl_char_table_030, sel_pl_char_table_031, sel_pl_char_table_032, sel_pl_char_table_033, sel_pl_char_table_034, sel_pl_char_table_035,
-    sel_pl_char_table_036, sel_pl_char_table_037, sel_pl_char_table_038, sel_pl_char_table_039, sel_pl_char_table_040, sel_pl_char_table_041,
-    sel_pl_char_table_042, sel_pl_char_table_043, sel_pl_char_table_044, sel_pl_char_table_045, sel_pl_char_table_046, sel_pl_char_table_047,
-    sel_pl_char_table_048, sel_pl_char_table_049, sel_pl_char_table_050, sel_pl_char_table_051, sel_pl_char_table_052, sel_pl_char_table_053,
-    sel_pl_char_table_054, sel_pl_char_table_055, sel_pl_char_table_056, sel_pl_char_table_057, sel_pl_char_table_058, sel_pl_char_table_059,
-    sel_pl_char_table_060, sel_pl_char_table_061, sel_pl_char_table_056, sel_pl_char_table_056, sel_pl_char_table_056, sel_pl_char_table_056,
-    sel_pl_char_table_056, sel_pl_char_table_056, sel_pl_char_table_056, sel_pl_char_table_056, sel_pl_char_table_056, sel_pl_char_table_056,
-    sel_pl_char_table_056, sel_pl_char_table_056, sel_pl_char_table_056, sel_pl_char_table_056, sel_pl_char_table_056, sel_pl_char_table_077,
-    sel_pl_char_table_078, sel_pl_char_table_079, sel_pl_char_table_080, sel_pl_char_table_081, sel_pl_char_table_082, sel_pl_char_table_083,
-    sel_pl_char_table_084, sel_pl_char_table_085, sel_pl_char_table_086,
+const u32 sel_pl_char_table[88] = {
+    (u32)sel_pl_char_table_000, (u32)sel_pl_char_table_001, (u32)sel_pl_char_table_002, (u32)sel_pl_char_table_003, (u32)sel_pl_char_table_004, (u32)sel_pl_char_table_005,
+    (u32)sel_pl_char_table_006, (u32)sel_pl_char_table_007, (u32)sel_pl_char_table_008, (u32)sel_pl_char_table_009, (u32)sel_pl_char_table_009, (u32)sel_pl_char_table_011,
+    (u32)sel_pl_char_table_012, (u32)sel_pl_char_table_013, (u32)sel_pl_char_table_014, (u32)sel_pl_char_table_015, (u32)sel_pl_char_table_016, (u32)sel_pl_char_table_017,
+    (u32)sel_pl_char_table_018, (u32)sel_pl_char_table_019, (u32)sel_pl_char_table_020, (u32)sel_pl_char_table_021, (u32)sel_pl_char_table_022, (u32)sel_pl_char_table_023,
+    (u32)sel_pl_char_table_024, (u32)sel_pl_char_table_025, (u32)sel_pl_char_table_026, (u32)sel_pl_char_table_027, (u32)sel_pl_char_table_028, (u32)sel_pl_char_table_029,
+    (u32)sel_pl_char_table_030, (u32)sel_pl_char_table_031, (u32)sel_pl_char_table_032, (u32)sel_pl_char_table_033, (u32)sel_pl_char_table_034, (u32)sel_pl_char_table_035,
+    (u32)sel_pl_char_table_036, (u32)sel_pl_char_table_037, (u32)sel_pl_char_table_038, (u32)sel_pl_char_table_039, (u32)sel_pl_char_table_040, (u32)sel_pl_char_table_041,
+    (u32)sel_pl_char_table_042, (u32)sel_pl_char_table_043, (u32)sel_pl_char_table_044, (u32)sel_pl_char_table_045, (u32)sel_pl_char_table_046, (u32)sel_pl_char_table_047,
+    (u32)sel_pl_char_table_048, (u32)sel_pl_char_table_049, (u32)sel_pl_char_table_050, (u32)sel_pl_char_table_051, (u32)sel_pl_char_table_052, (u32)sel_pl_char_table_053,
+    (u32)sel_pl_char_table_054, (u32)sel_pl_char_table_055, (u32)sel_pl_char_table_056, (u32)sel_pl_char_table_057, (u32)sel_pl_char_table_058, (u32)sel_pl_char_table_059,
+    (u32)sel_pl_char_table_060, (u32)sel_pl_char_table_061, (u32)sel_pl_char_table_056, (u32)sel_pl_char_table_056, (u32)sel_pl_char_table_056, (u32)sel_pl_char_table_056,
+    (u32)sel_pl_char_table_056, (u32)sel_pl_char_table_056, (u32)sel_pl_char_table_056, (u32)sel_pl_char_table_056, (u32)sel_pl_char_table_056, (u32)sel_pl_char_table_056,
+    (u32)sel_pl_char_table_056, (u32)sel_pl_char_table_056, (u32)sel_pl_char_table_056, (u32)sel_pl_char_table_056, (u32)sel_pl_char_table_056, (u32)sel_pl_char_table_077,
+    (u32)sel_pl_char_table_078, (u32)sel_pl_char_table_079, (u32)sel_pl_char_table_080, (u32)sel_pl_char_table_081, (u32)sel_pl_char_table_082, (u32)sel_pl_char_table_083,
+    (u32)sel_pl_char_table_084, (u32)sel_pl_char_table_085, (u32)sel_pl_char_table_086,
     0
 };
 
@@ -2197,26 +2197,26 @@ const s16 eff64_stepxy_table[99][2] = {
 };
 
 /* etc_char_table scripts: 109 entries */
-const u16* const etc_char_table[110] = {
-    etc_char_table_000, etc_char_table_001, etc_char_table_002, etc_char_table_003, etc_char_table_004, etc_char_table_005,
-    etc_char_table_006, etc_char_table_007, etc_char_table_008, etc_char_table_009, etc_char_table_010, etc_char_table_011,
-    etc_char_table_012, etc_char_table_013, etc_char_table_014, etc_char_table_015, etc_char_table_016, etc_char_table_017,
-    etc_char_table_018, etc_char_table_019, etc_char_table_020, etc_char_table_021, etc_char_table_022, etc_char_table_023,
-    etc_char_table_024, etc_char_table_025, etc_char_table_026, etc_char_table_027, etc_char_table_028, etc_char_table_029,
-    etc_char_table_030, etc_char_table_031, etc_char_table_032, etc_char_table_033, etc_char_table_034, etc_char_table_035,
-    etc_char_table_036, etc_char_table_037, etc_char_table_038, etc_char_table_039, etc_char_table_040, etc_char_table_041,
-    etc_char_table_042, etc_char_table_043, etc_char_table_044, etc_char_table_045, etc_char_table_046, etc_char_table_047,
-    etc_char_table_048, etc_char_table_049, etc_char_table_050, etc_char_table_051, etc_char_table_052, etc_char_table_053,
-    etc_char_table_054, etc_char_table_055, etc_char_table_056, etc_char_table_057, etc_char_table_058, etc_char_table_059,
-    etc_char_table_060, etc_char_table_061, etc_char_table_062, etc_char_table_063, etc_char_table_064, etc_char_table_065,
-    etc_char_table_066, etc_char_table_067, etc_char_table_068, etc_char_table_069, etc_char_table_070, etc_char_table_071,
-    etc_char_table_072, etc_char_table_073, etc_char_table_074, etc_char_table_075, etc_char_table_076, etc_char_table_077,
-    etc_char_table_078, etc_char_table_079, etc_char_table_080, etc_char_table_081, etc_char_table_082, etc_char_table_083,
-    etc_char_table_084, etc_char_table_085, etc_char_table_086, etc_char_table_087, etc_char_table_088, etc_char_table_089,
-    etc_char_table_090, etc_char_table_091, etc_char_table_092, etc_char_table_093, etc_char_table_094, etc_char_table_095,
-    etc_char_table_096, etc_char_table_097, etc_char_table_098, etc_char_table_099, etc_char_table_100, etc_char_table_101,
-    etc_char_table_102, etc_char_table_103, etc_char_table_104, etc_char_table_105, etc_char_table_106, etc_char_table_107,
-    etc_char_table_108,
+const u32 etc_char_table[110] = {
+    (u32)etc_char_table_000, (u32)etc_char_table_001, (u32)etc_char_table_002, (u32)etc_char_table_003, (u32)etc_char_table_004, (u32)etc_char_table_005,
+    (u32)etc_char_table_006, (u32)etc_char_table_007, (u32)etc_char_table_008, (u32)etc_char_table_009, (u32)etc_char_table_010, (u32)etc_char_table_011,
+    (u32)etc_char_table_012, (u32)etc_char_table_013, (u32)etc_char_table_014, (u32)etc_char_table_015, (u32)etc_char_table_016, (u32)etc_char_table_017,
+    (u32)etc_char_table_018, (u32)etc_char_table_019, (u32)etc_char_table_020, (u32)etc_char_table_021, (u32)etc_char_table_022, (u32)etc_char_table_023,
+    (u32)etc_char_table_024, (u32)etc_char_table_025, (u32)etc_char_table_026, (u32)etc_char_table_027, (u32)etc_char_table_028, (u32)etc_char_table_029,
+    (u32)etc_char_table_030, (u32)etc_char_table_031, (u32)etc_char_table_032, (u32)etc_char_table_033, (u32)etc_char_table_034, (u32)etc_char_table_035,
+    (u32)etc_char_table_036, (u32)etc_char_table_037, (u32)etc_char_table_038, (u32)etc_char_table_039, (u32)etc_char_table_040, (u32)etc_char_table_041,
+    (u32)etc_char_table_042, (u32)etc_char_table_043, (u32)etc_char_table_044, (u32)etc_char_table_045, (u32)etc_char_table_046, (u32)etc_char_table_047,
+    (u32)etc_char_table_048, (u32)etc_char_table_049, (u32)etc_char_table_050, (u32)etc_char_table_051, (u32)etc_char_table_052, (u32)etc_char_table_053,
+    (u32)etc_char_table_054, (u32)etc_char_table_055, (u32)etc_char_table_056, (u32)etc_char_table_057, (u32)etc_char_table_058, (u32)etc_char_table_059,
+    (u32)etc_char_table_060, (u32)etc_char_table_061, (u32)etc_char_table_062, (u32)etc_char_table_063, (u32)etc_char_table_064, (u32)etc_char_table_065,
+    (u32)etc_char_table_066, (u32)etc_char_table_067, (u32)etc_char_table_068, (u32)etc_char_table_069, (u32)etc_char_table_070, (u32)etc_char_table_071,
+    (u32)etc_char_table_072, (u32)etc_char_table_073, (u32)etc_char_table_074, (u32)etc_char_table_075, (u32)etc_char_table_076, (u32)etc_char_table_077,
+    (u32)etc_char_table_078, (u32)etc_char_table_079, (u32)etc_char_table_080, (u32)etc_char_table_081, (u32)etc_char_table_082, (u32)etc_char_table_083,
+    (u32)etc_char_table_084, (u32)etc_char_table_085, (u32)etc_char_table_086, (u32)etc_char_table_087, (u32)etc_char_table_088, (u32)etc_char_table_089,
+    (u32)etc_char_table_090, (u32)etc_char_table_091, (u32)etc_char_table_092, (u32)etc_char_table_093, (u32)etc_char_table_094, (u32)etc_char_table_095,
+    (u32)etc_char_table_096, (u32)etc_char_table_097, (u32)etc_char_table_098, (u32)etc_char_table_099, (u32)etc_char_table_100, (u32)etc_char_table_101,
+    (u32)etc_char_table_102, (u32)etc_char_table_103, (u32)etc_char_table_104, (u32)etc_char_table_105, (u32)etc_char_table_106, (u32)etc_char_table_107,
+    (u32)etc_char_table_108,
     0
 };
 
@@ -4269,17 +4269,17 @@ const u16 etc_char_table_108[60] = {
 };
 
 /* etc2_char_table scripts: 59 entries */
-const u16* const etc2_char_table[60] = {
-    etc2_char_table_000, etc2_char_table_001, etc2_char_table_002, etc2_char_table_003, etc2_char_table_004, etc2_char_table_005,
-    etc2_char_table_006, etc2_char_table_007, etc2_char_table_008, etc2_char_table_009, etc2_char_table_010, etc2_char_table_011,
-    etc2_char_table_012, etc2_char_table_013, etc2_char_table_014, etc2_char_table_015, etc2_char_table_016, etc2_char_table_017,
-    etc2_char_table_018, etc2_char_table_019, etc2_char_table_020, etc2_char_table_021, etc2_char_table_022, etc2_char_table_023,
-    etc2_char_table_024, etc2_char_table_025, etc2_char_table_026, etc2_char_table_027, etc2_char_table_028, etc2_char_table_029,
-    etc2_char_table_030, etc2_char_table_031, etc2_char_table_032, etc2_char_table_033, etc2_char_table_034, etc2_char_table_035,
-    etc2_char_table_036, etc2_char_table_037, etc2_char_table_038, etc2_char_table_039, etc2_char_table_040, etc2_char_table_041,
-    etc2_char_table_042, etc2_char_table_043, etc2_char_table_044, etc2_char_table_045, etc2_char_table_046, etc2_char_table_047,
-    etc2_char_table_048, etc2_char_table_049, etc2_char_table_050, etc2_char_table_051, etc2_char_table_052, etc2_char_table_053,
-    etc2_char_table_054, etc2_char_table_055, etc2_char_table_056, etc2_char_table_057, etc2_char_table_058,
+const u32 etc2_char_table[60] = {
+    (u32)etc2_char_table_000, (u32)etc2_char_table_001, (u32)etc2_char_table_002, (u32)etc2_char_table_003, (u32)etc2_char_table_004, (u32)etc2_char_table_005,
+    (u32)etc2_char_table_006, (u32)etc2_char_table_007, (u32)etc2_char_table_008, (u32)etc2_char_table_009, (u32)etc2_char_table_010, (u32)etc2_char_table_011,
+    (u32)etc2_char_table_012, (u32)etc2_char_table_013, (u32)etc2_char_table_014, (u32)etc2_char_table_015, (u32)etc2_char_table_016, (u32)etc2_char_table_017,
+    (u32)etc2_char_table_018, (u32)etc2_char_table_019, (u32)etc2_char_table_020, (u32)etc2_char_table_021, (u32)etc2_char_table_022, (u32)etc2_char_table_023,
+    (u32)etc2_char_table_024, (u32)etc2_char_table_025, (u32)etc2_char_table_026, (u32)etc2_char_table_027, (u32)etc2_char_table_028, (u32)etc2_char_table_029,
+    (u32)etc2_char_table_030, (u32)etc2_char_table_031, (u32)etc2_char_table_032, (u32)etc2_char_table_033, (u32)etc2_char_table_034, (u32)etc2_char_table_035,
+    (u32)etc2_char_table_036, (u32)etc2_char_table_037, (u32)etc2_char_table_038, (u32)etc2_char_table_039, (u32)etc2_char_table_040, (u32)etc2_char_table_041,
+    (u32)etc2_char_table_042, (u32)etc2_char_table_043, (u32)etc2_char_table_044, (u32)etc2_char_table_045, (u32)etc2_char_table_046, (u32)etc2_char_table_047,
+    (u32)etc2_char_table_048, (u32)etc2_char_table_049, (u32)etc2_char_table_050, (u32)etc2_char_table_051, (u32)etc2_char_table_052, (u32)etc2_char_table_053,
+    (u32)etc2_char_table_054, (u32)etc2_char_table_055, (u32)etc2_char_table_056, (u32)etc2_char_table_057, (u32)etc2_char_table_058,
     0
 };
 
@@ -5469,10 +5469,10 @@ const u16 etc2_char_table_058[16] = {
 };
 
 /* etc3_char_table scripts: 14 entries */
-const u16* const etc3_char_table[15] = {
-    etc3_char_table_000, etc3_char_table_001, etc3_char_table_002, etc3_char_table_003, etc3_char_table_004, etc3_char_table_005,
-    etc3_char_table_006, etc3_char_table_007, etc3_char_table_008, etc3_char_table_009, etc3_char_table_010, etc3_char_table_011,
-    etc3_char_table_012, etc3_char_table_013,
+const u32 etc3_char_table[15] = {
+    (u32)etc3_char_table_000, (u32)etc3_char_table_001, (u32)etc3_char_table_002, (u32)etc3_char_table_003, (u32)etc3_char_table_004, (u32)etc3_char_table_005,
+    (u32)etc3_char_table_006, (u32)etc3_char_table_007, (u32)etc3_char_table_008, (u32)etc3_char_table_009, (u32)etc3_char_table_010, (u32)etc3_char_table_011,
+    (u32)etc3_char_table_012, (u32)etc3_char_table_013,
     0
 };
 
@@ -5768,9 +5768,9 @@ const u16 etc3_char_table_013[64] = {
 };
 
 /* direct_03_char_table scripts: 7 entries */
-const u16* const direct_03_char_table[8] = {
-    direct_03_char_table_000, direct_03_char_table_001, direct_03_char_table_002, direct_03_char_table_003, direct_03_char_table_004, direct_03_char_table_005,
-    direct_03_char_table_006,
+const u32 direct_03_char_table[8] = {
+    (u32)direct_03_char_table_000, (u32)direct_03_char_table_001, (u32)direct_03_char_table_002, (u32)direct_03_char_table_003, (u32)direct_03_char_table_004, (u32)direct_03_char_table_005,
+    (u32)direct_03_char_table_006,
     0
 };
 
@@ -5860,9 +5860,9 @@ const u16 direct_03_char_table_006[128] = {
 };
 
 /* eff09_char_table scripts: 7 entries */
-const u16* const eff09_char_table[8] = {
-    eff09_char_table_000, eff09_char_table_001, eff09_char_table_002, eff09_char_table_003, eff09_char_table_004, eff09_char_table_005,
-    eff09_char_table_006,
+const u32 eff09_char_table[8] = {
+    (u32)eff09_char_table_000, (u32)eff09_char_table_001, (u32)eff09_char_table_002, (u32)eff09_char_table_003, (u32)eff09_char_table_004, (u32)eff09_char_table_005,
+    (u32)eff09_char_table_006,
     0
 };
 
@@ -5927,19 +5927,19 @@ const u16 eff09_char_table_006[8] = {
 };
 
 /* end_char_table scripts: 69 entries */
-const u16* const end_char_table[70] = {
-    end_char_table_000, end_char_table_001, end_char_table_002, end_char_table_003, end_char_table_004, end_char_table_005,
-    end_char_table_006, end_char_table_007, end_char_table_008, end_char_table_009, end_char_table_010, end_char_table_011,
-    end_char_table_012, end_char_table_013, end_char_table_014, end_char_table_015, end_char_table_016, end_char_table_017,
-    end_char_table_018, end_char_table_019, end_char_table_020, end_char_table_021, end_char_table_022, end_char_table_023,
-    end_char_table_024, end_char_table_025, end_char_table_026, end_char_table_027, end_char_table_028, end_char_table_029,
-    end_char_table_030, end_char_table_031, end_char_table_032, end_char_table_033, end_char_table_034, end_char_table_035,
-    end_char_table_036, end_char_table_037, end_char_table_038, end_char_table_039, end_char_table_040, end_char_table_041,
-    end_char_table_042, end_char_table_043, end_char_table_044, end_char_table_045, end_char_table_046, end_char_table_047,
-    end_char_table_048, end_char_table_049, end_char_table_050, end_char_table_051, end_char_table_052, end_char_table_053,
-    end_char_table_054, end_char_table_055, end_char_table_056, end_char_table_057, end_char_table_058, end_char_table_059,
-    end_char_table_060, end_char_table_061, end_char_table_062, end_char_table_063, end_char_table_064, end_char_table_065,
-    end_char_table_066, end_char_table_067, end_char_table_068,
+const u32 end_char_table[70] = {
+    (u32)end_char_table_000, (u32)end_char_table_001, (u32)end_char_table_002, (u32)end_char_table_003, (u32)end_char_table_004, (u32)end_char_table_005,
+    (u32)end_char_table_006, (u32)end_char_table_007, (u32)end_char_table_008, (u32)end_char_table_009, (u32)end_char_table_010, (u32)end_char_table_011,
+    (u32)end_char_table_012, (u32)end_char_table_013, (u32)end_char_table_014, (u32)end_char_table_015, (u32)end_char_table_016, (u32)end_char_table_017,
+    (u32)end_char_table_018, (u32)end_char_table_019, (u32)end_char_table_020, (u32)end_char_table_021, (u32)end_char_table_022, (u32)end_char_table_023,
+    (u32)end_char_table_024, (u32)end_char_table_025, (u32)end_char_table_026, (u32)end_char_table_027, (u32)end_char_table_028, (u32)end_char_table_029,
+    (u32)end_char_table_030, (u32)end_char_table_031, (u32)end_char_table_032, (u32)end_char_table_033, (u32)end_char_table_034, (u32)end_char_table_035,
+    (u32)end_char_table_036, (u32)end_char_table_037, (u32)end_char_table_038, (u32)end_char_table_039, (u32)end_char_table_040, (u32)end_char_table_041,
+    (u32)end_char_table_042, (u32)end_char_table_043, (u32)end_char_table_044, (u32)end_char_table_045, (u32)end_char_table_046, (u32)end_char_table_047,
+    (u32)end_char_table_048, (u32)end_char_table_049, (u32)end_char_table_050, (u32)end_char_table_051, (u32)end_char_table_052, (u32)end_char_table_053,
+    (u32)end_char_table_054, (u32)end_char_table_055, (u32)end_char_table_056, (u32)end_char_table_057, (u32)end_char_table_058, (u32)end_char_table_059,
+    (u32)end_char_table_060, (u32)end_char_table_061, (u32)end_char_table_062, (u32)end_char_table_063, (u32)end_char_table_064, (u32)end_char_table_065,
+    (u32)end_char_table_066, (u32)end_char_table_067, (u32)end_char_table_068,
     0
 };
 
@@ -6913,10 +6913,10 @@ const u16 end_char_table_068[24] = {
 };
 
 /* op_char_table scripts: 13 entries */
-const u16* const op_char_table[14] = {
-    op_char_table_000, op_char_table_001, op_char_table_002, op_char_table_003, op_char_table_004, op_char_table_005,
-    op_char_table_006, op_char_table_007, op_char_table_008, op_char_table_009, op_char_table_010, op_char_table_011,
-    op_char_table_012,
+const u32 op_char_table[14] = {
+    (u32)op_char_table_000, (u32)op_char_table_001, (u32)op_char_table_002, (u32)op_char_table_003, (u32)op_char_table_004, (u32)op_char_table_005,
+    (u32)op_char_table_006, (u32)op_char_table_007, (u32)op_char_table_008, (u32)op_char_table_009, (u32)op_char_table_010, (u32)op_char_table_011,
+    (u32)op_char_table_012,
     0
 };
 

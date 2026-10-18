@@ -80,11 +80,9 @@ void region_setup(void);
 void region_group_params_set(void);
 void display_mode_setup(void);
 void Zoomf_Init(void);
-void text_clear_task_exit(void);
 void set_screen_mode();
 void Damage_3rd(PLW* );
 void Damage_4th(PLW* );
 void screen_window_regs_update(void);
-void zoom_regs_update(void);
 
 #endif

@@ -37,6 +37,24 @@
 
 
 
+u16 * sc_trans_dst;  /* 020283A0 */
+u8 * sc_bak_ptr;  /* 020283A4 */
+u8 * sc_trans_src;  /* 020283A8 */
+u8 sc_trans_src_tail[6];  /* after sc_trans_src; nothing refers to it by name or address */
+u16 sc_trans_word;  /* 020283B2 */
+u8 sc_chr_bak_1p[320];  /* 020283B4 */
+u8 sc_chr_bak_2p[324];  /* 020284F4 */
+
+
+u16 scrfont_view_attr = 0;  /* 020069B0 */
+/* 020069B2 */
+/* Stored after scrfont_view_attr. Nothing in the program refers to it by name or address; if it is read,
+   it is through an index past the end of scrfont_view_attr. */
+u16 scrfont_view_attr_tail[1] = {
+    19,
+};
+
+
 /* Copies rows of font characters to the screen; returns the number of bytes copied. */
 /* provisional name */
 s32 sc_chr_trans(rows)
@@ -407,11 +425,7 @@ void sc_chr_slot_trans(s8 ix, u16 code, s8 to_ram) {
 
 extern const CELL_SET sc_ram_vram_tbl[30];
 
-void sc_ram_to_vram(ix, dx, dy)
-char ix;
-char dx;
-char dy;
-{
+void sc_ram_to_vram(char ix, char dx, char dy) {
     const u16 **tbl;
     const u16 *pos;
     const u16 *code;
@@ -600,9 +614,7 @@ void sa_number_trans(void) {
 
 
 /* provisional name */
-void stun_mark_put(pl)
-s8 pl;
-{
+void stun_mark_put(s8 pl) {
     u16 i;
     const s16* pos = &smark_pos_tbl[My_char[pl]][pl];
     s16 code = smark_kind_tbl[My_char[pl]] * 4;
@@ -667,7 +679,7 @@ void sc_fill_rect(u32 x, u32 y, u16 w, u16 h, u16 code, u16 attr)
     row = 0;
     line = (u16 *)(SS_RAM + (u16)x * 4 + ((u16)y << 8));
     at = ((code & 0x100) >> 8) | attr;
-    (void)((WORK*)x)->be_flag;
+    (void)&((WORK*)x)->be_flag;
     for (; row < h; row++) {
         for (col = 0; col < w; col++) {
             line[col * 2] = code;
@@ -676,8 +688,8 @@ void sc_fill_rect(u32 x, u32 y, u16 w, u16 h, u16 code, u16 attr)
         line += 0x80;
     }
     (void)plw[(row + 0x100) && 0].wu.id;
-    (void)((WORK*)line)->id;
-    (void)((WORK*)code)->id;
+    (void)&((WORK*)line)->id;
+    (void)&((WORK*)code)->id;
 }
 
 void Sa_frame_Clear(void)
@@ -1170,8 +1182,8 @@ void sc_vram_to_ram(void) {
 
 /* provisional name */
 void end_waku_write(s8 mode) {
-    (void)((WORK*)0)[mode].be_flag;
-    (void)((PLW*)0)[mode].wu.be_flag;
+    (void)&((WORK*)0)[mode].be_flag;
+    (void)&((PLW*)0)[mode].wu.be_flag;
     switch (mode) {
     case 0:
         ToneDown(16);

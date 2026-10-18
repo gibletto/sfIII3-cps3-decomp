@@ -22,7 +22,7 @@
 
 void effect_71_move(WORK_Other* ewk) {
     s16 work;
-    if (obr_disp_off_check()) {
+    if (obr_no_disp_check()) {
         return;
     }
     switch (ewk->wu.routine_no[0]) {

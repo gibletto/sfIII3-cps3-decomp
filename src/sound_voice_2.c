@@ -45,19 +45,19 @@ s32 sound_note_to_pitch(s32 note) {
 
 
 /* provisional name */
-u16 sound_voice_volume_compute(u16 level, u32 pan_scale, s8 pan, SOUND_VOICE* v) {
+u16 sound_voice_volume_compute(u16 level, u32 pan_scale, s8 pan, SNDVOICE* v) {
     s32 a;
     s32 t;
     u32 vol;
     u16 out;
     s32 comp;
     SOUND_CTRL ctrl;
-    a = v->velocity * ((vol = v->volume) ? vol + 1 : vol) * 2;
-    a = (a * ((v->expression + 64) & 127)) >> 6;
-    a = (a * ((v->track[2] + 64) & 127)) >> 6;
+    a = v->volume * ((vol = v->expression) ? vol + 1 : vol) * 2;
+    a = (a * ((v->volume_offset + 64) & 127)) >> 6;
+    a = (a * ((v->patch->volume_bias + 64) & 127)) >> 6;
     t = a * ((snd_master_vol + 64) & 127);
     t >>= 6;
-    if (!v->no_master) {
+    if (!v->priority_flags) {
         t = (t * ((bgm_master_vol + 64) & 127)) >> 6;
     }
     out = (level * (t + 1)) >> 15;
@@ -75,7 +75,7 @@ u16 sound_voice_volume_compute(u16 level, u32 pan_scale, s8 pan, SOUND_VOICE* v)
     }
     ctrl = snd_ctrl;
     if (ctrl.bit.stereo) {
-        if (!v->no_master) {
+        if (!v->priority_flags) {
             out = (out * (u16)((u32)snd_fade_level >> 8)) >> 7;
         }
         return out;
@@ -98,8 +98,32 @@ u16 sound_voice_volume_compute(u16 level, u32 pan_scale, s8 pan, SOUND_VOICE* v)
 
 
 
+/* loads the voice's sample addresses into its hardware voice */
+#define VOICE_LOAD_SAMPLE(regs, voice) \
+    do { \
+        u32 bias; \
+        sound_reg_write_verify((volatile s16*)&(regs)->sample_control, 0); \
+        bias = snd_wave_bias; \
+        sound_reg_write_verify((volatile s16*)&(regs)->sample_start_low, (u16)(voice)->sample->start); \
+        sound_reg_write_verify((volatile s16*)&(regs)->sample_start_high, (u16)((voice)->sample->start >> 16) + bias); \
+        sound_reg_write_verify((volatile s16*)&(regs)->sample_loop_low, (u16)(voice)->sample->loop); \
+        sound_reg_write_verify((volatile s16*)&(regs)->sample_loop_high, (u16)((voice)->sample->loop >> 16) + bias); \
+        sound_reg_write_verify((volatile s16*)&(regs)->sample_end_low_a, (u16)(voice)->sample->end); \
+        sound_reg_write_verify((volatile s16*)&(regs)->sample_end_low_b, (u16)(voice)->sample->end); \
+        sound_reg_write_verify((volatile s16*)&(regs)->sample_end_high_a, (u16)((voice)->sample->end >> 16) + bias); \
+        sound_reg_write_verify((volatile s16*)&(regs)->sample_end_high_b, (u16)((voice)->sample->end >> 16) + bias); \
+        sound_reg_write_verify((volatile s16*)&(regs)->sample_control, 0); \
+        sound_reg_write_verify((volatile s16*)&(regs)->sample_start_low, (u16)(voice)->sample->start); \
+        sound_reg_write_verify((volatile s16*)&(regs)->sample_start_high, (u16)((voice)->sample->start >> 16) + bias); \
+        if ((voice)->sample->loop == (voice)->sample->end) { \
+            sound_reg_write_verify((volatile s16*)&(regs)->sample_loop_enable, 0); \
+        } else { \
+            sound_reg_write_verify((volatile s16*)&(regs)->sample_loop_enable, 1); \
+        } \
+    } while (0)
+
 /* provisional name */
-u32 voice_process_secondary(SNDVOICE* voice, u8 voice_index, u8 is_bgm) {
+void voice_process_secondary(SNDVOICE* voice, u8 voice_index, u8 is_bgm) {
     u8 owns_hardware_voice = 1;
     SNDREGS* regs;
     s32 next;
@@ -112,7 +136,6 @@ u32 voice_process_secondary(SNDVOICE* voice, u8 voice_index, u8 is_bgm) {
     u16 key_clear_mask;
     s8 key_state_changed = 0;
     SNDRAMP* ramp;
-    (void)((WORK*)&bgm_tempo_add)->id;
     if (is_bgm && !(se_voice[voice_index].status & 0x80)) {
         owns_hardware_voice = 0;
     }
@@ -164,8 +187,10 @@ u32 voice_process_secondary(SNDVOICE* voice, u8 voice_index, u8 is_bgm) {
             voice->envelope_level = 0;
             if (owns_hardware_voice) {
                 *(u16*)&snd_key_on_reg &= key_clear_mask;
-                if (0) {}
-                do { u32 bias; sound_reg_write_verify((volatile s16*)&(regs)->sample_control, 0); bias = snd_wave_bias; sound_reg_write_verify((volatile s16*)&(regs)->sample_start_low, (u16)(voice->sample)->start); sound_reg_write_verify((volatile s16*)&(regs)->sample_start_high, (u16)((voice->sample)->start >> 16) + bias); sound_reg_write_verify((volatile s16*)&(regs)->sample_loop_low, (u16)(voice->sample)->loop); sound_reg_write_verify((volatile s16*)&(regs)->sample_loop_high, (u16)((voice->sample)->loop >> 16) + bias); sound_reg_write_verify((volatile s16*)&(regs)->sample_end_low_a, (u16)(voice->sample)->end); sound_reg_write_verify((volatile s16*)&(regs)->sample_end_low_b, (u16)(voice->sample)->end); sound_reg_write_verify((volatile s16*)&(regs)->sample_end_high_a, (u16)((voice->sample)->end >> 16) + bias); sound_reg_write_verify((volatile s16*)&(regs)->sample_end_high_b, (u16)((voice->sample)->end >> 16) + bias); sound_reg_write_verify((volatile s16*)&(regs)->sample_control, 0); sound_reg_write_verify((volatile s16*)&(regs)->sample_start_low, (u16)(voice->sample)->start); sound_reg_write_verify((volatile s16*)&(regs)->sample_start_high, (u16)((voice->sample)->start >> 16) + bias); if ((voice->sample)->loop == (voice->sample)->end) { sound_reg_write_verify((volatile s16*)&(regs)->sample_loop_enable, 0); } else { sound_reg_write_verify((volatile s16*)&(regs)->sample_loop_enable, 1); } } while (0);
+                if (0) {
+                    key_state_changed = 1;
+                }
+                VOICE_LOAD_SAMPLE(regs, voice);
             }
             if (voice->portamento_step) {
                 voice->status |= 0x02;
@@ -193,8 +218,10 @@ u32 voice_process_secondary(SNDVOICE* voice, u8 voice_index, u8 is_bgm) {
     if (is_bgm && voice->restart_pending && owns_hardware_voice) {
         voice->restart_pending = 0;
         *(u16*)&snd_key_on_reg &= key_clear_mask;
-        if (0) {}
-        do { u32 bias; sound_reg_write_verify((volatile s16*)&(regs)->sample_control, 0); bias = snd_wave_bias; sound_reg_write_verify((volatile s16*)&(regs)->sample_start_low, (u16)(voice->sample)->start); sound_reg_write_verify((volatile s16*)&(regs)->sample_start_high, (u16)((voice->sample)->start >> 16) + bias); sound_reg_write_verify((volatile s16*)&(regs)->sample_loop_low, (u16)(voice->sample)->loop); sound_reg_write_verify((volatile s16*)&(regs)->sample_loop_high, (u16)((voice->sample)->loop >> 16) + bias); sound_reg_write_verify((volatile s16*)&(regs)->sample_end_low_a, (u16)(voice->sample)->end); sound_reg_write_verify((volatile s16*)&(regs)->sample_end_low_b, (u16)(voice->sample)->end); sound_reg_write_verify((volatile s16*)&(regs)->sample_end_high_a, (u16)((voice->sample)->end >> 16) + bias); sound_reg_write_verify((volatile s16*)&(regs)->sample_end_high_b, (u16)((voice->sample)->end >> 16) + bias); sound_reg_write_verify((volatile s16*)&(regs)->sample_control, 0); sound_reg_write_verify((volatile s16*)&(regs)->sample_start_low, (u16)(voice->sample)->start); sound_reg_write_verify((volatile s16*)&(regs)->sample_start_high, (u16)((voice->sample)->start >> 16) + bias); if ((voice->sample)->loop == (voice->sample)->end) { sound_reg_write_verify((volatile s16*)&(regs)->sample_loop_enable, 0); } else { sound_reg_write_verify((volatile s16*)&(regs)->sample_loop_enable, 1); } } while (0);
+        if (0) {
+            key_state_changed = 1;
+        }
+        VOICE_LOAD_SAMPLE(regs, voice);
         key_state_changed = 1;
     }
     if (voice->status & 0x40) {
@@ -230,7 +257,6 @@ u32 voice_process_secondary(SNDVOICE* voice, u8 voice_index, u8 is_bgm) {
     case 1: {
         u32 level = voice->envelope_level + voice->attack_rate;
         u32 peak = voice->attack_peak;
-        (void)((TEXT_CELL*)peak)->code;
         if (level < peak) {
             voice->envelope_level = level;
         } else {
@@ -242,9 +268,8 @@ u32 voice_process_secondary(SNDVOICE* voice, u8 voice_index, u8 is_bgm) {
     case 2: {
         u32 sustain = voice->sustain_level;
         u32 decay = voice->decay_rate;
-        (void)((TEXT_CELL*)sustain)->code;
         if (sustain + decay < voice->envelope_level) {
-            voice->envelope_level -= decay;
+            voice->envelope_level = voice->envelope_level - decay;
         } else {
             voice->envelope_level = sustain;
             voice->envelope_phase = 3;
@@ -254,9 +279,9 @@ u32 voice_process_secondary(SNDVOICE* voice, u8 voice_index, u8 is_bgm) {
     case 3: {
         u32 rate = voice->release_rate;
         u32 level = voice->envelope_level;
-        (void)((TEXT_CELL*)level)->code;
         if (level > rate) {
-            voice->envelope_level = (u16)(level - rate);
+            level = level - rate;
+            voice->envelope_level = level;
         } else {
             voice->envelope_level = 0;
             voice->envelope_phase = 0;
@@ -281,20 +306,19 @@ u32 voice_process_secondary(SNDVOICE* voice, u8 voice_index, u8 is_bgm) {
         if (voice->pitch_lfo_depth) {
             depth = voice->pitch_lfo_depth;
             step = (s32)(depth * voice->lfo_rate);
-            (void)((TEXT_CELL*)step)->code;
+            (void)&((TEXT_CELL*)step)->code;
             depth <<= 16;
             if (voice->lfo_phase_flags & 0x01) {
                 if ((s32)(step - depth) < voice->pitch_lfo) {
                     voice->pitch_lfo -= step;
                 } else {
-                    (void)((TEXT_CELL*)step)->code;
                     voice->pitch_lfo = -(s32)depth;
                     voice->lfo_phase_flags &= 0xfe;
                 }
             } else if ((s32)(depth - step) > voice->pitch_lfo) {
                 voice->pitch_lfo += step;
             } else {
-                (void)((TEXT_CELL*)step)->code;
+                (void)&((TEXT_CELL*)step)->code;
                 voice->pitch_lfo = (s32)depth;
                 voice->lfo_phase_flags |= 0x01;
             }

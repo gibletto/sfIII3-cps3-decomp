@@ -471,7 +471,11 @@ void catch_cg_type_check(PLW* wk) {
 
 
 
-void set_char_move_init_ca(PLW* wk, s16 koc, s16 index) {
+void set_char_move_init_ca(wk, koc, index)
+PLW* wk;
+s16 koc;
+s16 index;
+{
     set_char_move_init(&wk->wu, koc, index);
     wk->cat_break_ok_timer = wk->wu.cmyd.koc >> 8;
     wk->wu.cmyd.koc &= 0xFF;

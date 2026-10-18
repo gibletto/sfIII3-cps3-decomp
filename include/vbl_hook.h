@@ -3,6 +3,5 @@
 
 #include "structs.h"
 
-void vblank_user_hook(void);
 
 #endif

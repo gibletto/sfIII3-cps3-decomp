@@ -19,7 +19,7 @@ void blit_16x16_yflip(u16* src, s16 code, u16* dst, s16 attr);
 void bg_cell_write_yflip(s16 bg, s32 ofs, s32 cell, u32 src, s16 u5, s16 attr);
 void blit_16x16_xflip(u16* src, s16 code, u16* dst, s16 attr);
 void bg_cell_write_xflip(s16 bg, s32 ofs, s32 cell, u32 src, s16 u5, s16 attr);
-void blit_16x16_tile();
+void blit_16x16_tile(u16* src, s16 code, u16* dst, s16 attr);
 void bg_cell_write(s16 bg, s32 ofs, s32 cell, u32 src, u16 u5, s16 attr);
 void blit_16x16_xyflip(u16* src, s16 code, u16* dst, s16 attr);
 void bg_cell_write_xyflip(s16 bg, s32 ofs, s32 cell, u32 src, s16 u5, s16 attr);

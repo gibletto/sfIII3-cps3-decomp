@@ -98,7 +98,7 @@ void effect_58_move(WORK_Other* ewk) {
             break;
         case 8:
             if (Demo_Sound != 0 || Demo_Flag) {
-                if (Keep_BGM_Flag == 0) {
+                if (PB_Music_Off == 0) {
                     bgm_request(ewk->wu.direction);
                 }
             }
@@ -106,7 +106,7 @@ void effect_58_move(WORK_Other* ewk) {
             break;
         case 9:
             if (Demo_Sound != 0 || Demo_Flag) {
-                if (!Keep_BGM_Flag) {
+                if (!PB_Music_Off) {
                     sound_fade_in_submit(ewk->wu.direction, 0x222);
                 }
             }
@@ -311,7 +311,7 @@ void EFF58_Type_02(WORK_Other* ewk) {
         } else {
             ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
             ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-            sort_push_request4(ewk);
+            sort_push_request4(&ewk->wu);
             break;
         }
     case 2:
@@ -350,7 +350,7 @@ void EFF58_Type_05(WORK_Other* ewk) {
         ewk->wu.xyz[1].disp.pos = plw[ewk->wu.dir_old].wu.xyz[1].disp.pos + 32;
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-        sort_push_request4(ewk);
+        sort_push_request4(&ewk->wu);
         break;
     default:
         all_cgps_put_back(ewk);
