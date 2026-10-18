@@ -16,9 +16,9 @@
           .EXPORT     _simmram_small_page_alloc_40
           .EXPORT     _simmram_block_free_40
           .EXPORT     _simmram_purge_by_owner_40
-          .IMPORT     _simm40_owner
-          .IMPORT     _simm40_link
-          .IMPORT     _simm40_used
+          .EXPORT     _simm40_owner
+          .EXPORT     _simm40_link
+          .EXPORT     _simm40_used
           .SECTION    P,CODE,ALIGN=4
 _simmram_freelist_init:
           MOV.L       p40_link,R2
@@ -334,4 +334,11 @@ p40_used_end:
           .DATA.L     _simm40_used+H'0080
 p40_free:
           .DATA.L     _simmram_block_free_40
+          .SECTION    B,DATA,ALIGN=4
+_simm40_owner:
+          .RES.W      3970
+_simm40_link:
+          .RES.W      1986
+_simm40_used:
+          .RES.W      64
           .END

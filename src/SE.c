@@ -22,6 +22,12 @@
 #include "SE.h"
 #include "cps3.h"
 
+u16 * wipe_dst_ptr;  /* 0200EED4 */
+u8 * wipe_back_ptr;  /* 0200EED8 */
+u8 * wipe_pat_top;  /* 0200EEDC */
+u8 * wipe_pat_ptr;  /* 0200EEE0 */
+static u8 se_spare[7508];  /* nothing in the program refers to it */
+
 void mix_or_128(void);
 
 void mix_put_128(void);

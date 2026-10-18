@@ -15,6 +15,9 @@
 
 
 
+s16 bcdext;  /* 0206A080 */
+
+
 /* provisional name */
 u32 hex_to_bcd(u32 dat) {
     u32 sum = 0;

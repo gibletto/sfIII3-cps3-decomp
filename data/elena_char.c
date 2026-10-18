@@ -452,58 +452,58 @@ extern const u16 elena_cbca_071_head[];
 extern const u16 elena_cbca_072_head[];
 
 /* normal scripts: 51 entries */
-const u16* const elena_nmca[52] = {
-    elena_nmca_000,  /* 0 KAMAE */
-    elena_nmca_001,  /* 1 HURIMUKI */
-    elena_nmca_002,  /* 2 FRONT WALK */
-    elena_nmca_003,  /* 3 BACK WALK */
-    elena_nmca_004,  /* 4 DASH HUMIKOMI */
-    elena_nmca_005,  /* 5 DASH TOBINOKI */
-    elena_nmca_006,  /* 6 KAGAMU */
-    elena_nmca_007,  /* 7 KAGAMI KAMAE */
-    elena_nmca_008,  /* 8 KAGAMI TURN */
-    elena_nmca_008,  /* 9 KAGAMI F WALK */
-    elena_nmca_008,  /* 10 KAGAMI B WALK */
-    elena_nmca_011,  /* 11 STAND UP */
-    elena_nmca_012,  /* 12 JUMP JUNBI */
-    elena_nmca_013,  /* 13 SP JUMP JUNBI */
-    elena_nmca_014,  /* 14 JUMP FRONT */
-    elena_nmca_015,  /* 15 JUMP VERTICAL */
-    elena_nmca_016,  /* 16 JUMP BACK */
-    elena_nmca_017,  /* 17 S JUMP FRONT */
-    elena_nmca_017,  /* 18 S JUMP V */
-    elena_nmca_017,  /* 19 S JUMP BACK */
-    elena_nmca_020,  /* 20 SP JUMP FRONT */
-    elena_nmca_021,  /* 21 SP JUMP V */
-    elena_nmca_022,  /* 22 SP JUMP BACK */
-    elena_nmca_023,  /* 23 WALK END */
-    elena_nmca_024,  /* 24 PARING HEAD */
-    elena_nmca_024,  /* 25 PARING UP */
-    elena_nmca_026,  /* 26 PARING DOWN */
-    elena_nmca_027,  /* 27 PARING AIR F */
-    elena_nmca_027,  /* 28 PARING AIR B */
-    elena_nmca_029,  /* 29 GUARD HEAD */
-    elena_nmca_030,  /* 30 GUARD UP */
-    elena_nmca_031,  /* 31 GUARD DOWN */
-    elena_nmca_032,  /* 32 GUARD AIR */
-    elena_nmca_033,  /* 33 follow-up of S PUNCH A, S PUNCH C +14 */
-    elena_nmca_034,  /* 34 follow-up of KAGAMI P A, KAGAMI K A +2 */
-    elena_nmca_035,  /* 35 no name */
-    elena_nmca_036,  /* 36 follow-up of HURIMUKI, DASH HUMIKOMI +71 */
-    elena_nmca_037,  /* 37 follow-up of KAGAMI P A, KAGAMI K A +4 */
-    elena_nmca_038,  /* 38 P BREAK ZUJOU */
-    elena_nmca_038,  /* 39 P BREAK UP */
-    elena_nmca_040,  /* 40 P BREAK DOWN */
-    elena_nmca_041,  /* 41 P BREAK AIR F */
-    elena_nmca_041,  /* 42 P BREAK AIR R */
-    elena_nmca_043,  /* 43 TUKAMIHAZUSI */
-    elena_nmca_044,  /* 44 TUKAMIHAZUSARE */
-    elena_nmca_045,  /* 45 TUKAMIHAZUSI */
-    elena_nmca_046,  /* 46 TUKAMIHAZUSARE */
-    elena_nmca_047,  /* 47 no name */
-    elena_nmca_048,  /* 48 no name */
-    elena_nmca_049,  /* 49 no name */
-    elena_nmca_050,  /* 50 no name */
+const u32 elena_nmca[52] = {
+    (u32)elena_nmca_000,  /* 0 KAMAE */
+    (u32)elena_nmca_001,  /* 1 HURIMUKI */
+    (u32)elena_nmca_002,  /* 2 FRONT WALK */
+    (u32)elena_nmca_003,  /* 3 BACK WALK */
+    (u32)elena_nmca_004,  /* 4 DASH HUMIKOMI */
+    (u32)elena_nmca_005,  /* 5 DASH TOBINOKI */
+    (u32)elena_nmca_006,  /* 6 KAGAMU */
+    (u32)elena_nmca_007,  /* 7 KAGAMI KAMAE */
+    (u32)elena_nmca_008,  /* 8 KAGAMI TURN */
+    (u32)elena_nmca_008,  /* 9 KAGAMI F WALK */
+    (u32)elena_nmca_008,  /* 10 KAGAMI B WALK */
+    (u32)elena_nmca_011,  /* 11 STAND UP */
+    (u32)elena_nmca_012,  /* 12 JUMP JUNBI */
+    (u32)elena_nmca_013,  /* 13 SP JUMP JUNBI */
+    (u32)elena_nmca_014,  /* 14 JUMP FRONT */
+    (u32)elena_nmca_015,  /* 15 JUMP VERTICAL */
+    (u32)elena_nmca_016,  /* 16 JUMP BACK */
+    (u32)elena_nmca_017,  /* 17 S JUMP FRONT */
+    (u32)elena_nmca_017,  /* 18 S JUMP V */
+    (u32)elena_nmca_017,  /* 19 S JUMP BACK */
+    (u32)elena_nmca_020,  /* 20 SP JUMP FRONT */
+    (u32)elena_nmca_021,  /* 21 SP JUMP V */
+    (u32)elena_nmca_022,  /* 22 SP JUMP BACK */
+    (u32)elena_nmca_023,  /* 23 WALK END */
+    (u32)elena_nmca_024,  /* 24 PARING HEAD */
+    (u32)elena_nmca_024,  /* 25 PARING UP */
+    (u32)elena_nmca_026,  /* 26 PARING DOWN */
+    (u32)elena_nmca_027,  /* 27 PARING AIR F */
+    (u32)elena_nmca_027,  /* 28 PARING AIR B */
+    (u32)elena_nmca_029,  /* 29 GUARD HEAD */
+    (u32)elena_nmca_030,  /* 30 GUARD UP */
+    (u32)elena_nmca_031,  /* 31 GUARD DOWN */
+    (u32)elena_nmca_032,  /* 32 GUARD AIR */
+    (u32)elena_nmca_033,  /* 33 follow-up of S PUNCH A, S PUNCH C +14 */
+    (u32)elena_nmca_034,  /* 34 follow-up of KAGAMI P A, KAGAMI K A +2 */
+    (u32)elena_nmca_035,  /* 35 no name */
+    (u32)elena_nmca_036,  /* 36 follow-up of HURIMUKI, DASH HUMIKOMI +71 */
+    (u32)elena_nmca_037,  /* 37 follow-up of KAGAMI P A, KAGAMI K A +4 */
+    (u32)elena_nmca_038,  /* 38 P BREAK ZUJOU */
+    (u32)elena_nmca_038,  /* 39 P BREAK UP */
+    (u32)elena_nmca_040,  /* 40 P BREAK DOWN */
+    (u32)elena_nmca_041,  /* 41 P BREAK AIR F */
+    (u32)elena_nmca_041,  /* 42 P BREAK AIR R */
+    (u32)elena_nmca_043,  /* 43 TUKAMIHAZUSI */
+    (u32)elena_nmca_044,  /* 44 TUKAMIHAZUSARE */
+    (u32)elena_nmca_045,  /* 45 TUKAMIHAZUSI */
+    (u32)elena_nmca_046,  /* 46 TUKAMIHAZUSARE */
+    (u32)elena_nmca_047,  /* 47 no name */
+    (u32)elena_nmca_048,  /* 48 no name */
+    (u32)elena_nmca_049,  /* 49 no name */
+    (u32)elena_nmca_050,  /* 50 no name */
     0
 };
 
@@ -1344,105 +1344,105 @@ const u16 elena_nmca_050[76] = {
 };
 
 /* damage scripts: 98 entries */
-const u16* const elena_dmca[99] = {
-    elena_dmca_000,  /* 0 GUARD HEAD */
-    elena_dmca_001,  /* 1 GUARD UP */
-    elena_dmca_002,  /* 2 GUARD DOWN */
-    elena_dmca_003,  /* 3 GUARD AIR */
-    elena_dmca_004,  /* 4 HUSHIN HEAD */
-    elena_dmca_004,  /* 5 HUSHIN UP */
-    elena_dmca_006,  /* 6 HUSHIN DOWN */
-    elena_dmca_006,  /* 7 HUSHIN AIR */
-    elena_dmca_008,  /* 8 FACE S */
-    elena_dmca_009,  /* 9 FACE M */
-    elena_dmca_010,  /* 10 FACE L */
-    elena_dmca_010,  /* 11 FACE SP */
-    elena_dmca_008,  /* 12 FOOK OKU S */
-    elena_dmca_009,  /* 13 FOOK OKU M */
-    elena_dmca_014,  /* 14 FOOK OKU L */
-    elena_dmca_015,  /* 15 FOOK OKU SP */
-    elena_dmca_008,  /* 16 FOOK TEMAE S */
-    elena_dmca_009,  /* 17 FOOK TEMAE M */
-    elena_dmca_018,  /* 18 FOOK TEMAE L */
-    elena_dmca_019,  /* 19 FOOK TEMAE SP */
-    elena_dmca_008,  /* 20 UPPER S */
-    elena_dmca_009,  /* 21 UPPER M */
-    elena_dmca_022,  /* 22 UPPER L */
-    elena_dmca_022,  /* 23 UPPER SP */
-    elena_dmca_008,  /* 24 NOUTEN S */
-    elena_dmca_025,  /* 25 NOUTEN M */
-    elena_dmca_026,  /* 26 NOUTEN L */
-    elena_dmca_026,  /* 27 NOUTEN SP */
-    elena_dmca_028,  /* 28 BODY BROW S */
-    elena_dmca_025,  /* 29 BODY BROW M */
-    elena_dmca_026,  /* 30 BODY BROW L */
-    elena_dmca_026,  /* 31 BODY BROW SP */
-    elena_dmca_028,  /* 32 BODY UPPER S */
-    elena_dmca_025,  /* 33 BODY UPPER M */
-    elena_dmca_026,  /* 34 BODY UPPER L */
-    elena_dmca_026,  /* 35 BODY UPPER SP */
-    elena_dmca_036,  /* 36 TATAKI S */
-    elena_dmca_036,  /* 37 TATAKI M */
-    elena_dmca_036,  /* 38 TATAKI L */
-    elena_dmca_036,  /* 39 TATAKI SP */
-    elena_dmca_040,  /* 40 TATAKI V. S */
-    elena_dmca_040,  /* 41 TATAKI V. M */
-    elena_dmca_040,  /* 42 TATAKI V. L */
-    elena_dmca_040,  /* 43 TATAKI V. SP */
-    elena_dmca_008,  /* 44 NOBASITA TE S */
-    elena_dmca_009,  /* 45 NOBASITA TE M */
-    elena_dmca_010,  /* 46 NOBASITA TE L */
-    elena_dmca_010,  /* 47 NOBASITA TE SP */
-    elena_dmca_048,  /* 48 KAGAMI S */
-    elena_dmca_049,  /* 49 KAGAMI M */
-    elena_dmca_050,  /* 50 KAGAMI L */
-    elena_dmca_050,  /* 51 KAGAMI SP */
-    elena_dmca_052,  /* 52 KGM TATAKI S */
-    elena_dmca_052,  /* 53 KGM TATAKI M */
-    elena_dmca_052,  /* 54 KGM TATAKI L */
-    elena_dmca_052,  /* 55 KGM TATAKI SP */
-    elena_dmca_056,  /* 56 KGM TTKI V.S */
-    elena_dmca_056,  /* 57 KGM TTKI V.M */
-    elena_dmca_056,  /* 58 KGM TTKI V.L */
-    elena_dmca_056,  /* 59 KGM TTKI V.SP */
-    elena_dmca_060,  /* 60 NEKOROBI S */
-    elena_dmca_060,  /* 61 NEKOROBI M */
-    elena_dmca_060,  /* 62 NEKOROBI L */
-    elena_dmca_060,  /* 63 NEKOROBI SP */
-    elena_dmca_064,  /* 64 OKIAGARI */
-    elena_dmca_065,  /* 65 OKIAGARI F */
-    elena_dmca_066,  /* 66 OKIAGARI B */
-    elena_dmca_067,  /* 67 LOSE NO STAND */
-    elena_dmca_068,  /* 68 LOSE SONABA */
-    elena_dmca_068,  /* 69 LOSE KAGAMI */
-    elena_dmca_070,  /* 70 PIYO */
-    elena_dmca_071,  /* 71 UKEMI MOVE F */
-    elena_dmca_072,  /* 72 UKEMI MOVE R */
-    elena_dmca_073,  /* 73 SHIMEOTASARE */
-    elena_dmca_074,  /* 74 TATI TOUKETU S */
-    elena_dmca_075,  /* 75 TATI TOUKETU M */
-    elena_dmca_076,  /* 76 TATI TOUKETU L */
-    elena_dmca_076,  /* 77 TATI TOUKETU P */
-    elena_dmca_078,  /* 78 KGM TOUKETU S */
-    elena_dmca_079,  /* 79 KGM TOUKETU M */
-    elena_dmca_080,  /* 80 KGM TOUKETU L */
-    elena_dmca_080,  /* 81 KGM TOUKETU P */
-    elena_dmca_082,  /* 82 TATI DENGEKI S */
-    elena_dmca_083,  /* 83 TATI DENGEKI M */
-    elena_dmca_084,  /* 84 TATI DENGEKI L */
-    elena_dmca_084,  /* 85 TATI DENGEKI P */
-    elena_dmca_082,  /* 86 KGM DENGEKI S */
-    elena_dmca_083,  /* 87 KGM DENGEKI M */
-    elena_dmca_084,  /* 88 KGM DENGEKI L */
-    elena_dmca_084,  /* 89 KGM DENGEKI P */
-    elena_dmca_090,  /* 90 OKIAGARI FRONT */
-    elena_dmca_091,  /* 91 OKIAGARI REAR */
-    elena_dmca_008,  /* 92 TATI MOE S */
-    elena_dmca_009,  /* 93 TATI MOE M */
-    elena_dmca_010,  /* 94 TATI MOE L */
-    elena_dmca_010,  /* 95 TATI MOE SP */
-    elena_dmca_096,  /* 96 no name */
-    elena_dmca_097,  /* 97 no name */
+const u32 elena_dmca[99] = {
+    (u32)elena_dmca_000,  /* 0 GUARD HEAD */
+    (u32)elena_dmca_001,  /* 1 GUARD UP */
+    (u32)elena_dmca_002,  /* 2 GUARD DOWN */
+    (u32)elena_dmca_003,  /* 3 GUARD AIR */
+    (u32)elena_dmca_004,  /* 4 HUSHIN HEAD */
+    (u32)elena_dmca_004,  /* 5 HUSHIN UP */
+    (u32)elena_dmca_006,  /* 6 HUSHIN DOWN */
+    (u32)elena_dmca_006,  /* 7 HUSHIN AIR */
+    (u32)elena_dmca_008,  /* 8 FACE S */
+    (u32)elena_dmca_009,  /* 9 FACE M */
+    (u32)elena_dmca_010,  /* 10 FACE L */
+    (u32)elena_dmca_010,  /* 11 FACE SP */
+    (u32)elena_dmca_008,  /* 12 FOOK OKU S */
+    (u32)elena_dmca_009,  /* 13 FOOK OKU M */
+    (u32)elena_dmca_014,  /* 14 FOOK OKU L */
+    (u32)elena_dmca_015,  /* 15 FOOK OKU SP */
+    (u32)elena_dmca_008,  /* 16 FOOK TEMAE S */
+    (u32)elena_dmca_009,  /* 17 FOOK TEMAE M */
+    (u32)elena_dmca_018,  /* 18 FOOK TEMAE L */
+    (u32)elena_dmca_019,  /* 19 FOOK TEMAE SP */
+    (u32)elena_dmca_008,  /* 20 UPPER S */
+    (u32)elena_dmca_009,  /* 21 UPPER M */
+    (u32)elena_dmca_022,  /* 22 UPPER L */
+    (u32)elena_dmca_022,  /* 23 UPPER SP */
+    (u32)elena_dmca_008,  /* 24 NOUTEN S */
+    (u32)elena_dmca_025,  /* 25 NOUTEN M */
+    (u32)elena_dmca_026,  /* 26 NOUTEN L */
+    (u32)elena_dmca_026,  /* 27 NOUTEN SP */
+    (u32)elena_dmca_028,  /* 28 BODY BROW S */
+    (u32)elena_dmca_025,  /* 29 BODY BROW M */
+    (u32)elena_dmca_026,  /* 30 BODY BROW L */
+    (u32)elena_dmca_026,  /* 31 BODY BROW SP */
+    (u32)elena_dmca_028,  /* 32 BODY UPPER S */
+    (u32)elena_dmca_025,  /* 33 BODY UPPER M */
+    (u32)elena_dmca_026,  /* 34 BODY UPPER L */
+    (u32)elena_dmca_026,  /* 35 BODY UPPER SP */
+    (u32)elena_dmca_036,  /* 36 TATAKI S */
+    (u32)elena_dmca_036,  /* 37 TATAKI M */
+    (u32)elena_dmca_036,  /* 38 TATAKI L */
+    (u32)elena_dmca_036,  /* 39 TATAKI SP */
+    (u32)elena_dmca_040,  /* 40 TATAKI V. S */
+    (u32)elena_dmca_040,  /* 41 TATAKI V. M */
+    (u32)elena_dmca_040,  /* 42 TATAKI V. L */
+    (u32)elena_dmca_040,  /* 43 TATAKI V. SP */
+    (u32)elena_dmca_008,  /* 44 NOBASITA TE S */
+    (u32)elena_dmca_009,  /* 45 NOBASITA TE M */
+    (u32)elena_dmca_010,  /* 46 NOBASITA TE L */
+    (u32)elena_dmca_010,  /* 47 NOBASITA TE SP */
+    (u32)elena_dmca_048,  /* 48 KAGAMI S */
+    (u32)elena_dmca_049,  /* 49 KAGAMI M */
+    (u32)elena_dmca_050,  /* 50 KAGAMI L */
+    (u32)elena_dmca_050,  /* 51 KAGAMI SP */
+    (u32)elena_dmca_052,  /* 52 KGM TATAKI S */
+    (u32)elena_dmca_052,  /* 53 KGM TATAKI M */
+    (u32)elena_dmca_052,  /* 54 KGM TATAKI L */
+    (u32)elena_dmca_052,  /* 55 KGM TATAKI SP */
+    (u32)elena_dmca_056,  /* 56 KGM TTKI V.S */
+    (u32)elena_dmca_056,  /* 57 KGM TTKI V.M */
+    (u32)elena_dmca_056,  /* 58 KGM TTKI V.L */
+    (u32)elena_dmca_056,  /* 59 KGM TTKI V.SP */
+    (u32)elena_dmca_060,  /* 60 NEKOROBI S */
+    (u32)elena_dmca_060,  /* 61 NEKOROBI M */
+    (u32)elena_dmca_060,  /* 62 NEKOROBI L */
+    (u32)elena_dmca_060,  /* 63 NEKOROBI SP */
+    (u32)elena_dmca_064,  /* 64 OKIAGARI */
+    (u32)elena_dmca_065,  /* 65 OKIAGARI F */
+    (u32)elena_dmca_066,  /* 66 OKIAGARI B */
+    (u32)elena_dmca_067,  /* 67 LOSE NO STAND */
+    (u32)elena_dmca_068,  /* 68 LOSE SONABA */
+    (u32)elena_dmca_068,  /* 69 LOSE KAGAMI */
+    (u32)elena_dmca_070,  /* 70 PIYO */
+    (u32)elena_dmca_071,  /* 71 UKEMI MOVE F */
+    (u32)elena_dmca_072,  /* 72 UKEMI MOVE R */
+    (u32)elena_dmca_073,  /* 73 SHIMEOTASARE */
+    (u32)elena_dmca_074,  /* 74 TATI TOUKETU S */
+    (u32)elena_dmca_075,  /* 75 TATI TOUKETU M */
+    (u32)elena_dmca_076,  /* 76 TATI TOUKETU L */
+    (u32)elena_dmca_076,  /* 77 TATI TOUKETU P */
+    (u32)elena_dmca_078,  /* 78 KGM TOUKETU S */
+    (u32)elena_dmca_079,  /* 79 KGM TOUKETU M */
+    (u32)elena_dmca_080,  /* 80 KGM TOUKETU L */
+    (u32)elena_dmca_080,  /* 81 KGM TOUKETU P */
+    (u32)elena_dmca_082,  /* 82 TATI DENGEKI S */
+    (u32)elena_dmca_083,  /* 83 TATI DENGEKI M */
+    (u32)elena_dmca_084,  /* 84 TATI DENGEKI L */
+    (u32)elena_dmca_084,  /* 85 TATI DENGEKI P */
+    (u32)elena_dmca_082,  /* 86 KGM DENGEKI S */
+    (u32)elena_dmca_083,  /* 87 KGM DENGEKI M */
+    (u32)elena_dmca_084,  /* 88 KGM DENGEKI L */
+    (u32)elena_dmca_084,  /* 89 KGM DENGEKI P */
+    (u32)elena_dmca_090,  /* 90 OKIAGARI FRONT */
+    (u32)elena_dmca_091,  /* 91 OKIAGARI REAR */
+    (u32)elena_dmca_008,  /* 92 TATI MOE S */
+    (u32)elena_dmca_009,  /* 93 TATI MOE M */
+    (u32)elena_dmca_010,  /* 94 TATI MOE L */
+    (u32)elena_dmca_010,  /* 95 TATI MOE SP */
+    (u32)elena_dmca_096,  /* 96 no name */
+    (u32)elena_dmca_097,  /* 97 no name */
     0
 };
 
@@ -2258,43 +2258,43 @@ const u16 elena_dmca_097[44] = {
 };
 
 /* knock-down scripts: 36 entries */
-const u16* const elena_btca[37] = {
-    elena_btca_000,  /* 0 AIR NORMAL */
-    elena_btca_001,  /* 1 ASIBARAI SIRI */
-    elena_btca_002,  /* 2 ASIB TUNNOMERI */
-    elena_btca_003,  /* 3 NOKEZORI */
-    elena_btca_004,  /* 4 KUNOJI */
-    elena_btca_005,  /* 5 KIRIMOMI */
-    elena_btca_003,  /* 6 UPPER */
-    elena_btca_004,  /* 7 BODY UPPER */
-    elena_btca_004,  /* 8 HARAYARARE */
-    elena_btca_009,  /* 9 TATAKI AIR */
-    elena_btca_010,  /* 10 TTKI V. AIR */
-    elena_btca_011,  /* 11 HUMI ASIB */
-    elena_btca_004,  /* 12 FACE */
-    elena_btca_013,  /* 13 ASIB SIRI LOSE */
-    elena_btca_014,  /* 14 ASIB TUN LOSE */
-    elena_btca_015,  /* 15 DENKI */
-    elena_btca_016,  /* 16 KUNOJI NOKE */
-    elena_btca_017,  /* 17 BODY UPPER SP */
-    elena_btca_018,  /* 18 HANEAGARI */
-    elena_btca_009,  /* 19 TOUKETSU A */
-    elena_btca_020,  /* 20 BODY SLAM */
-    elena_btca_020,  /* 21 IPPONZEOI */
-    elena_btca_022,  /* 22 TOMOE RYU */
-    elena_btca_022,  /* 23 MONKEY FLIP */
-    elena_btca_024,  /* 24 TOMOE ORO */
-    elena_btca_025,  /* 25 SNAKE FANG */
-    elena_btca_026,  /* 26 FLANKEN.S */
-    elena_btca_027,  /* 27 KISHINRIKI */
-    elena_btca_028,  /* 28 SPLASH.M */
-    elena_btca_029,  /* 29 HARAIGOSHI */
-    elena_btca_030,  /* 30 ALEX B.D */
-    elena_btca_031,  /* 31 GILL */
-    elena_btca_032,  /* 32 HANEKAERI HARA */
-    elena_btca_033,  /* 33 S HANEAGARI */
-    elena_btca_034,  /* 34 TATUMAKIZANKU */
-    elena_btca_027,  /* 35 no name */
+const u32 elena_btca[37] = {
+    (u32)elena_btca_000,  /* 0 AIR NORMAL */
+    (u32)elena_btca_001,  /* 1 ASIBARAI SIRI */
+    (u32)elena_btca_002,  /* 2 ASIB TUNNOMERI */
+    (u32)elena_btca_003,  /* 3 NOKEZORI */
+    (u32)elena_btca_004,  /* 4 KUNOJI */
+    (u32)elena_btca_005,  /* 5 KIRIMOMI */
+    (u32)elena_btca_003,  /* 6 UPPER */
+    (u32)elena_btca_004,  /* 7 BODY UPPER */
+    (u32)elena_btca_004,  /* 8 HARAYARARE */
+    (u32)elena_btca_009,  /* 9 TATAKI AIR */
+    (u32)elena_btca_010,  /* 10 TTKI V. AIR */
+    (u32)elena_btca_011,  /* 11 HUMI ASIB */
+    (u32)elena_btca_004,  /* 12 FACE */
+    (u32)elena_btca_013,  /* 13 ASIB SIRI LOSE */
+    (u32)elena_btca_014,  /* 14 ASIB TUN LOSE */
+    (u32)elena_btca_015,  /* 15 DENKI */
+    (u32)elena_btca_016,  /* 16 KUNOJI NOKE */
+    (u32)elena_btca_017,  /* 17 BODY UPPER SP */
+    (u32)elena_btca_018,  /* 18 HANEAGARI */
+    (u32)elena_btca_009,  /* 19 TOUKETSU A */
+    (u32)elena_btca_020,  /* 20 BODY SLAM */
+    (u32)elena_btca_020,  /* 21 IPPONZEOI */
+    (u32)elena_btca_022,  /* 22 TOMOE RYU */
+    (u32)elena_btca_022,  /* 23 MONKEY FLIP */
+    (u32)elena_btca_024,  /* 24 TOMOE ORO */
+    (u32)elena_btca_025,  /* 25 SNAKE FANG */
+    (u32)elena_btca_026,  /* 26 FLANKEN.S */
+    (u32)elena_btca_027,  /* 27 KISHINRIKI */
+    (u32)elena_btca_028,  /* 28 SPLASH.M */
+    (u32)elena_btca_029,  /* 29 HARAIGOSHI */
+    (u32)elena_btca_030,  /* 30 ALEX B.D */
+    (u32)elena_btca_031,  /* 31 GILL */
+    (u32)elena_btca_032,  /* 32 HANEKAERI HARA */
+    (u32)elena_btca_033,  /* 33 S HANEAGARI */
+    (u32)elena_btca_034,  /* 34 TATUMAKIZANKU */
+    (u32)elena_btca_027,  /* 35 no name */
     0
 };
 
@@ -2752,9 +2752,9 @@ const u16 elena_btca_034[172] = {
 };
 
 /* catch scripts: 2 entries */
-const u16* const elena_caca[3] = {
-    elena_caca_000,  /* 0 CATCH 1 */
-    elena_caca_001,  /* 1 CATCH 2 */
+const u32 elena_caca[3] = {
+    (u32)elena_caca_000,  /* 0 CATCH 1 */
+    (u32)elena_caca_001,  /* 1 CATCH 2 */
     0
 };
 
@@ -2789,75 +2789,75 @@ const u16 elena_caca_001[172] = {
 };
 
 /* caught scripts: 68 entries */
-const u16* const elena_cuca[69] = {
-    elena_cuca_000,  /* 0 ALEX ZUTUKI */
-    elena_cuca_001,  /* 1 ALEX BODY S */
-    elena_cuca_002,  /* 2 ALEX BACK D */
-    elena_cuca_003,  /* 3 ALEX POWER B */
-    elena_cuca_004,  /* 4 ALEX SLEEPER */
-    elena_cuca_005,  /* 5 RYU SEOINAGE */
-    elena_cuca_006,  /* 6 IBUKI */
-    elena_cuca_007,  /* 7 DADLEY L B */
-    elena_cuca_008,  /* 8 IBUKI KUBIORI */
-    elena_cuca_009,  /* 9 NECRO S T */
-    elena_cuca_010,  /* 10 RYU TOMOENAGE */
-    elena_cuca_011,  /* 11 YUN HIZAGERI */
-    elena_cuca_012,  /* 12 ORO KUBISIME */
-    elena_cuca_013,  /* 13 NECRO G S */
-    elena_cuca_014,  /* 14 DUDDLEY D S */
-    elena_cuca_015,  /* 15 YUN MONKEY F */
-    elena_cuca_016,  /* 16 ORO TOMOENAGE */
-    elena_cuca_017,  /* 17 ORO NIOURIKI */
-    elena_cuca_018,  /* 18 ORO GIGOKU G */
-    elena_cuca_019,  /* 19 YUN */
-    elena_cuca_020,  /* 20 NECRO SNAKE F */
-    elena_cuca_021,  /* 21 NECRO F S */
-    elena_cuca_022,  /* 22 IBUKI HARAIG */
-    elena_cuca_023,  /* 23 GILL SPLASH M */
-    elena_cuca_024,  /* 24 KEN HIZAGERI */
-    elena_cuca_025,  /* 25 ORO KISINRIKI */
-    elena_cuca_026,  /* 26 SEAN TACKLE */
-    elena_cuca_027,  /* 27 ALEX HYPER B */
-    elena_cuca_028,  /* 28 NECRO SLAM D */
-    elena_cuca_029,  /* 29 ELENA ASINAGE */
-    elena_cuca_030,  /* 30 GILL IMPACT C */
-    elena_cuca_031,  /* 31 ALEX S H B */
-    elena_cuca_032,  /* 32 ALEX F N D */
-    elena_cuca_033,  /* 33 no name */
-    elena_cuca_034,  /* 34 IBUKI */
-    elena_cuca_035,  /* 35 IBUKI YOROI D */
-    elena_cuca_036,  /* 36 no name */
-    elena_cuca_037,  /* 37 MAWARIKOMI M F */
-    elena_cuca_038,  /* 38 HUGO BODY S */
-    elena_cuca_039,  /* 39 HUGO N G T */
-    elena_cuca_040,  /* 40 HUGO M S P */
-    elena_cuca_041,  /* 41 HUGO S D B B */
-    elena_cuca_042,  /* 42 no name */
-    elena_cuca_043,  /* 43 no name */
-    elena_cuca_044,  /* 44 no name */
-    elena_cuca_045,  /* 45 no name */
-    elena_cuca_046,  /* 46 no name */
-    elena_cuca_047,  /* 47 no name */
-    elena_cuca_048,  /* 48 no name */
-    elena_cuca_049,  /* 49 no name */
-    elena_cuca_050,  /* 50 no name */
-    elena_cuca_051,  /* 51 no name */
-    elena_cuca_052,  /* 52 no name */
-    elena_cuca_053,  /* 53 no name */
-    elena_cuca_054,  /* 54 no name */
-    elena_cuca_055,  /* 55 no name */
-    elena_cuca_056,  /* 56 no name */
-    elena_cuca_057,  /* 57 no name */
-    elena_cuca_058,  /* 58 no name */
-    elena_cuca_059,  /* 59 no name */
-    elena_cuca_060,  /* 60 no name */
-    elena_cuca_061,  /* 61 no name */
-    elena_cuca_062,  /* 62 no name */
-    elena_cuca_063,  /* 63 no name */
-    elena_cuca_064,  /* 64 no name */
-    elena_cuca_065,  /* 65 no name */
-    elena_cuca_066,  /* 66 no name */
-    elena_cuca_067,  /* 67 no name */
+const u32 elena_cuca[69] = {
+    (u32)elena_cuca_000,  /* 0 ALEX ZUTUKI */
+    (u32)elena_cuca_001,  /* 1 ALEX BODY S */
+    (u32)elena_cuca_002,  /* 2 ALEX BACK D */
+    (u32)elena_cuca_003,  /* 3 ALEX POWER B */
+    (u32)elena_cuca_004,  /* 4 ALEX SLEEPER */
+    (u32)elena_cuca_005,  /* 5 RYU SEOINAGE */
+    (u32)elena_cuca_006,  /* 6 IBUKI */
+    (u32)elena_cuca_007,  /* 7 DADLEY L B */
+    (u32)elena_cuca_008,  /* 8 IBUKI KUBIORI */
+    (u32)elena_cuca_009,  /* 9 NECRO S T */
+    (u32)elena_cuca_010,  /* 10 RYU TOMOENAGE */
+    (u32)elena_cuca_011,  /* 11 YUN HIZAGERI */
+    (u32)elena_cuca_012,  /* 12 ORO KUBISIME */
+    (u32)elena_cuca_013,  /* 13 NECRO G S */
+    (u32)elena_cuca_014,  /* 14 DUDDLEY D S */
+    (u32)elena_cuca_015,  /* 15 YUN MONKEY F */
+    (u32)elena_cuca_016,  /* 16 ORO TOMOENAGE */
+    (u32)elena_cuca_017,  /* 17 ORO NIOURIKI */
+    (u32)elena_cuca_018,  /* 18 ORO GIGOKU G */
+    (u32)elena_cuca_019,  /* 19 YUN */
+    (u32)elena_cuca_020,  /* 20 NECRO SNAKE F */
+    (u32)elena_cuca_021,  /* 21 NECRO F S */
+    (u32)elena_cuca_022,  /* 22 IBUKI HARAIG */
+    (u32)elena_cuca_023,  /* 23 GILL SPLASH M */
+    (u32)elena_cuca_024,  /* 24 KEN HIZAGERI */
+    (u32)elena_cuca_025,  /* 25 ORO KISINRIKI */
+    (u32)elena_cuca_026,  /* 26 SEAN TACKLE */
+    (u32)elena_cuca_027,  /* 27 ALEX HYPER B */
+    (u32)elena_cuca_028,  /* 28 NECRO SLAM D */
+    (u32)elena_cuca_029,  /* 29 ELENA ASINAGE */
+    (u32)elena_cuca_030,  /* 30 GILL IMPACT C */
+    (u32)elena_cuca_031,  /* 31 ALEX S H B */
+    (u32)elena_cuca_032,  /* 32 ALEX F N D */
+    (u32)elena_cuca_033,  /* 33 no name */
+    (u32)elena_cuca_034,  /* 34 IBUKI */
+    (u32)elena_cuca_035,  /* 35 IBUKI YOROI D */
+    (u32)elena_cuca_036,  /* 36 no name */
+    (u32)elena_cuca_037,  /* 37 MAWARIKOMI M F */
+    (u32)elena_cuca_038,  /* 38 HUGO BODY S */
+    (u32)elena_cuca_039,  /* 39 HUGO N G T */
+    (u32)elena_cuca_040,  /* 40 HUGO M S P */
+    (u32)elena_cuca_041,  /* 41 HUGO S D B B */
+    (u32)elena_cuca_042,  /* 42 no name */
+    (u32)elena_cuca_043,  /* 43 no name */
+    (u32)elena_cuca_044,  /* 44 no name */
+    (u32)elena_cuca_045,  /* 45 no name */
+    (u32)elena_cuca_046,  /* 46 no name */
+    (u32)elena_cuca_047,  /* 47 no name */
+    (u32)elena_cuca_048,  /* 48 no name */
+    (u32)elena_cuca_049,  /* 49 no name */
+    (u32)elena_cuca_050,  /* 50 no name */
+    (u32)elena_cuca_051,  /* 51 no name */
+    (u32)elena_cuca_052,  /* 52 no name */
+    (u32)elena_cuca_053,  /* 53 no name */
+    (u32)elena_cuca_054,  /* 54 no name */
+    (u32)elena_cuca_055,  /* 55 no name */
+    (u32)elena_cuca_056,  /* 56 no name */
+    (u32)elena_cuca_057,  /* 57 no name */
+    (u32)elena_cuca_058,  /* 58 no name */
+    (u32)elena_cuca_059,  /* 59 no name */
+    (u32)elena_cuca_060,  /* 60 no name */
+    (u32)elena_cuca_061,  /* 61 no name */
+    (u32)elena_cuca_062,  /* 62 no name */
+    (u32)elena_cuca_063,  /* 63 no name */
+    (u32)elena_cuca_064,  /* 64 no name */
+    (u32)elena_cuca_065,  /* 65 no name */
+    (u32)elena_cuca_066,  /* 66 no name */
+    (u32)elena_cuca_067,  /* 67 no name */
     0
 };
 
@@ -4557,167 +4557,167 @@ const u16 elena_cuca_067[60] = {
 };
 
 /* attack scripts: 160 entries */
-const u16* const elena_atca[161] = {
-    elena_atca_000,  /* 0 S PUNCH A */
-    elena_atca_000,  /* 1 S PUNCH B */
-    elena_atca_002,  /* 2 S PUNCH C */
-    elena_atca_003,  /* 3 M PUNCH A */
-    elena_atca_003,  /* 4 M PUNCH B */
-    elena_atca_005,  /* 5 M PUNCH C */
-    elena_atca_006,  /* 6 L PUNCH A */
-    elena_atca_006,  /* 7 L PUNCH B */
-    elena_atca_006,  /* 8 L PUNCH C */
-    elena_atca_009,  /* 9 S KICK A */
-    elena_atca_009,  /* 10 S KICK B */
-    elena_atca_009,  /* 11 S KICK C */
-    elena_atca_012,  /* 12 M KICK A */
-    elena_atca_012,  /* 13 M KICK B */
-    elena_atca_014,  /* 14 M KICK C */
-    elena_atca_015,  /* 15 L KICK A */
-    elena_atca_015,  /* 16 L KICK B */
-    elena_atca_017,  /* 17 L KICK C */
-    elena_atca_018,  /* 18 KAGAMI P A */
-    elena_atca_018,  /* 19 KAGAMI P B */
-    elena_atca_018,  /* 20 KAGAMI P C */
-    elena_atca_021,  /* 21 KAGAMI P A */
-    elena_atca_021,  /* 22 KAGAMI P B */
-    elena_atca_021,  /* 23 KAGAMI P C */
-    elena_atca_024,  /* 24 KAGAMI P A */
-    elena_atca_024,  /* 25 KAGAMI P B */
-    elena_atca_024,  /* 26 KAGAMI P C */
-    elena_atca_027,  /* 27 KAGAMI K A */
-    elena_atca_027,  /* 28 KAGAMI K B */
-    elena_atca_027,  /* 29 KAGAMI K C */
-    elena_atca_030,  /* 30 KAGAMI K A */
-    elena_atca_030,  /* 31 KAGAMI K B */
-    elena_atca_030,  /* 32 KAGAMI K C */
-    elena_atca_033,  /* 33 KAGAMI K A */
-    elena_atca_033,  /* 34 KAGAMI K B */
-    elena_atca_035,  /* 35 KAGAMI K C */
-    elena_atca_036,  /* 36 V JUMP P S A */
-    elena_atca_036,  /* 37 V JUMP P S B */
-    elena_atca_038,  /* 38 V JUMP P M A */
-    elena_atca_038,  /* 39 V JUMP P M B */
-    elena_atca_040,  /* 40 V JUMP P L A */
-    elena_atca_040,  /* 41 V JUMP P L B */
-    elena_atca_042,  /* 42 V JUMP K S A */
-    elena_atca_042,  /* 43 V JUMP K S B */
-    elena_atca_044,  /* 44 V JUMP K M A */
-    elena_atca_044,  /* 45 V JUMP K M B */
-    elena_atca_046,  /* 46 V JUMP K L A */
-    elena_atca_046,  /* 47 V JUMP K L B */
-    elena_atca_048,  /* 48 F JUMP P S A */
-    elena_atca_048,  /* 49 F JUMP P S B */
-    elena_atca_050,  /* 50 F JUMP P M A */
-    elena_atca_050,  /* 51 F JUMP P M B */
-    elena_atca_052,  /* 52 F JUMP P L A */
-    elena_atca_052,  /* 53 F JUMP P L B */
-    elena_atca_054,  /* 54 F JUMP K S A */
-    elena_atca_054,  /* 55 F JUMP K S B */
-    elena_atca_056,  /* 56 F JUMP K M A */
-    elena_atca_056,  /* 57 F JUMP K M B */
-    elena_atca_058,  /* 58 F JUMP K L A */
-    elena_atca_058,  /* 59 F JUMP K L B */
-    elena_atca_060,  /* 60 B JUMP P S A */
-    elena_atca_060,  /* 61 B JUMP P S B */
-    elena_atca_062,  /* 62 B JUMP P M A */
-    elena_atca_062,  /* 63 B JUMP P M B */
-    elena_atca_064,  /* 64 B JUMP P L A */
-    elena_atca_064,  /* 65 B JUMP P L B */
-    elena_atca_066,  /* 66 B JUMP K S A */
-    elena_atca_066,  /* 67 B JUMP K S B */
-    elena_atca_068,  /* 68 B JUMP K M A */
-    elena_atca_068,  /* 69 B JUMP K M B */
-    elena_atca_070,  /* 70 B JUMP K L A */
-    elena_atca_070,  /* 71 B JUMP K L B */
-    elena_atca_072,  /* 72 SP V JP S P A */
-    elena_atca_072,  /* 73 SP V JP S P B */
-    elena_atca_074,  /* 74 SP V JP M P A */
-    elena_atca_074,  /* 75 SP V JP M P B */
-    elena_atca_076,  /* 76 SP V JP L P A */
-    elena_atca_076,  /* 77 SP V JP L P B */
-    elena_atca_078,  /* 78 SP V JP S K A */
-    elena_atca_078,  /* 79 SP V JP S K B */
-    elena_atca_080,  /* 80 SP V JP M K A */
-    elena_atca_080,  /* 81 SP V JP M K B */
-    elena_atca_082,  /* 82 SP V JP L K A */
-    elena_atca_082,  /* 83 SP V JP L K B */
-    elena_atca_084,  /* 84 SP F JP S P A */
-    elena_atca_084,  /* 85 SP F JP S P B */
-    elena_atca_086,  /* 86 SP F JP M P A */
-    elena_atca_086,  /* 87 SP F JP M P B */
-    elena_atca_088,  /* 88 SP F JP L P A */
-    elena_atca_088,  /* 89 SP F JP L P B */
-    elena_atca_090,  /* 90 SP F JP S K A */
-    elena_atca_090,  /* 91 SP F JP S K B */
-    elena_atca_092,  /* 92 SP F JP M K A */
-    elena_atca_092,  /* 93 SP F JP M K B */
-    elena_atca_094,  /* 94 SP F JP L K A */
-    elena_atca_094,  /* 95 SP F JP L K B */
-    elena_atca_096,  /* 96 SP B JP S P A */
-    elena_atca_096,  /* 97 SP B JP S P B */
-    elena_atca_098,  /* 98 SP B JP M P A */
-    elena_atca_098,  /* 99 SP B JP M P B */
-    elena_atca_100,  /* 100 SP B JP L P A */
-    elena_atca_100,  /* 101 SP B JP L P B */
-    elena_atca_102,  /* 102 SP B JP S K A */
-    elena_atca_102,  /* 103 SP B JP S K B */
-    elena_atca_104,  /* 104 SP B JP M K A */
-    elena_atca_104,  /* 105 SP B JP M K B */
-    elena_atca_106,  /* 106 SP B JP L K A */
-    elena_atca_106,  /* 107 SP B JP L K B */
-    elena_atca_108,  /* 108 S V JP S P A */
-    elena_atca_108,  /* 109 S V JP S P B */
-    elena_atca_110,  /* 110 S V JP M P A */
-    elena_atca_110,  /* 111 S V JP M P B */
-    elena_atca_112,  /* 112 S V JP L P A */
-    elena_atca_112,  /* 113 S V JP L P B */
-    elena_atca_114,  /* 114 S V JP S K A */
-    elena_atca_114,  /* 115 S V JP S K B */
-    elena_atca_116,  /* 116 S V JP M K A */
-    elena_atca_116,  /* 117 S V JP M K B */
-    elena_atca_118,  /* 118 S V JP L K A */
-    elena_atca_118,  /* 119 S V JP L K B */
-    elena_atca_108,  /* 120 S F JP S P A */
-    elena_atca_108,  /* 121 S F JP S P B */
-    elena_atca_110,  /* 122 S F JP M P A */
-    elena_atca_110,  /* 123 S F JP M P B */
-    elena_atca_112,  /* 124 S F JP L P A */
-    elena_atca_112,  /* 125 S F JP L P B */
-    elena_atca_114,  /* 126 S F JP S K A */
-    elena_atca_114,  /* 127 S F JP S K B */
-    elena_atca_116,  /* 128 S F JP M K A */
-    elena_atca_116,  /* 129 S F JP M K B */
-    elena_atca_118,  /* 130 S F JP L K A */
-    elena_atca_118,  /* 131 S F JP L K B */
-    elena_atca_108,  /* 132 S B JP S P A */
-    elena_atca_108,  /* 133 S B JP S P B */
-    elena_atca_110,  /* 134 S B JP M P A */
-    elena_atca_110,  /* 135 S B JP M P B */
-    elena_atca_112,  /* 136 S B JP L P A */
-    elena_atca_112,  /* 137 S B JP L P B */
-    elena_atca_114,  /* 138 S B JP S K A */
-    elena_atca_114,  /* 139 S B JP S K B */
-    elena_atca_116,  /* 140 S B JP M K A */
-    elena_atca_116,  /* 141 S B JP M K B */
-    elena_atca_118,  /* 142 S B JP L K A */
-    elena_atca_118,  /* 143 S B JP L K B */
-    elena_atca_144,  /* 144 TUKAMIKAKARI A */
-    elena_atca_145,  /* 145 TUKAMIKAKARI B */
-    elena_atca_144,  /* 146 TUKAMIKAKARI C */
-    elena_atca_145,  /* 147 TUKAMIKAKARI D */
-    elena_atca_145,  /* 148 TUKAMIKAKARI E */
-    elena_atca_145,  /* 149 TUKAMIKAKARI F */
-    elena_atca_145,  /* 150 TUKAMI AIR A */
-    elena_atca_145,  /* 151 TUKAMI AIR B */
-    elena_atca_145,  /* 152 TUKAMI AIR C */
-    elena_atca_145,  /* 153 TUKAMI AIR D */
-    elena_atca_145,  /* 154 TUKAMI AIR E */
-    elena_atca_145,  /* 155 TUKAMI AIR F */
-    elena_atca_156,  /* 156 follow-up of V JUMP P S A, F JUMP P S A */
-    elena_atca_157,  /* 157 follow-up of V JUMP P M A, F JUMP P M A */
-    elena_atca_158,  /* 158 follow-up of L PUNCH A */
-    elena_atca_159,  /* 159 follow-up of M KICK A */
+const u32 elena_atca[161] = {
+    (u32)elena_atca_000,  /* 0 S PUNCH A */
+    (u32)elena_atca_000,  /* 1 S PUNCH B */
+    (u32)elena_atca_002,  /* 2 S PUNCH C */
+    (u32)elena_atca_003,  /* 3 M PUNCH A */
+    (u32)elena_atca_003,  /* 4 M PUNCH B */
+    (u32)elena_atca_005,  /* 5 M PUNCH C */
+    (u32)elena_atca_006,  /* 6 L PUNCH A */
+    (u32)elena_atca_006,  /* 7 L PUNCH B */
+    (u32)elena_atca_006,  /* 8 L PUNCH C */
+    (u32)elena_atca_009,  /* 9 S KICK A */
+    (u32)elena_atca_009,  /* 10 S KICK B */
+    (u32)elena_atca_009,  /* 11 S KICK C */
+    (u32)elena_atca_012,  /* 12 M KICK A */
+    (u32)elena_atca_012,  /* 13 M KICK B */
+    (u32)elena_atca_014,  /* 14 M KICK C */
+    (u32)elena_atca_015,  /* 15 L KICK A */
+    (u32)elena_atca_015,  /* 16 L KICK B */
+    (u32)elena_atca_017,  /* 17 L KICK C */
+    (u32)elena_atca_018,  /* 18 KAGAMI P A */
+    (u32)elena_atca_018,  /* 19 KAGAMI P B */
+    (u32)elena_atca_018,  /* 20 KAGAMI P C */
+    (u32)elena_atca_021,  /* 21 KAGAMI P A */
+    (u32)elena_atca_021,  /* 22 KAGAMI P B */
+    (u32)elena_atca_021,  /* 23 KAGAMI P C */
+    (u32)elena_atca_024,  /* 24 KAGAMI P A */
+    (u32)elena_atca_024,  /* 25 KAGAMI P B */
+    (u32)elena_atca_024,  /* 26 KAGAMI P C */
+    (u32)elena_atca_027,  /* 27 KAGAMI K A */
+    (u32)elena_atca_027,  /* 28 KAGAMI K B */
+    (u32)elena_atca_027,  /* 29 KAGAMI K C */
+    (u32)elena_atca_030,  /* 30 KAGAMI K A */
+    (u32)elena_atca_030,  /* 31 KAGAMI K B */
+    (u32)elena_atca_030,  /* 32 KAGAMI K C */
+    (u32)elena_atca_033,  /* 33 KAGAMI K A */
+    (u32)elena_atca_033,  /* 34 KAGAMI K B */
+    (u32)elena_atca_035,  /* 35 KAGAMI K C */
+    (u32)elena_atca_036,  /* 36 V JUMP P S A */
+    (u32)elena_atca_036,  /* 37 V JUMP P S B */
+    (u32)elena_atca_038,  /* 38 V JUMP P M A */
+    (u32)elena_atca_038,  /* 39 V JUMP P M B */
+    (u32)elena_atca_040,  /* 40 V JUMP P L A */
+    (u32)elena_atca_040,  /* 41 V JUMP P L B */
+    (u32)elena_atca_042,  /* 42 V JUMP K S A */
+    (u32)elena_atca_042,  /* 43 V JUMP K S B */
+    (u32)elena_atca_044,  /* 44 V JUMP K M A */
+    (u32)elena_atca_044,  /* 45 V JUMP K M B */
+    (u32)elena_atca_046,  /* 46 V JUMP K L A */
+    (u32)elena_atca_046,  /* 47 V JUMP K L B */
+    (u32)elena_atca_048,  /* 48 F JUMP P S A */
+    (u32)elena_atca_048,  /* 49 F JUMP P S B */
+    (u32)elena_atca_050,  /* 50 F JUMP P M A */
+    (u32)elena_atca_050,  /* 51 F JUMP P M B */
+    (u32)elena_atca_052,  /* 52 F JUMP P L A */
+    (u32)elena_atca_052,  /* 53 F JUMP P L B */
+    (u32)elena_atca_054,  /* 54 F JUMP K S A */
+    (u32)elena_atca_054,  /* 55 F JUMP K S B */
+    (u32)elena_atca_056,  /* 56 F JUMP K M A */
+    (u32)elena_atca_056,  /* 57 F JUMP K M B */
+    (u32)elena_atca_058,  /* 58 F JUMP K L A */
+    (u32)elena_atca_058,  /* 59 F JUMP K L B */
+    (u32)elena_atca_060,  /* 60 B JUMP P S A */
+    (u32)elena_atca_060,  /* 61 B JUMP P S B */
+    (u32)elena_atca_062,  /* 62 B JUMP P M A */
+    (u32)elena_atca_062,  /* 63 B JUMP P M B */
+    (u32)elena_atca_064,  /* 64 B JUMP P L A */
+    (u32)elena_atca_064,  /* 65 B JUMP P L B */
+    (u32)elena_atca_066,  /* 66 B JUMP K S A */
+    (u32)elena_atca_066,  /* 67 B JUMP K S B */
+    (u32)elena_atca_068,  /* 68 B JUMP K M A */
+    (u32)elena_atca_068,  /* 69 B JUMP K M B */
+    (u32)elena_atca_070,  /* 70 B JUMP K L A */
+    (u32)elena_atca_070,  /* 71 B JUMP K L B */
+    (u32)elena_atca_072,  /* 72 SP V JP S P A */
+    (u32)elena_atca_072,  /* 73 SP V JP S P B */
+    (u32)elena_atca_074,  /* 74 SP V JP M P A */
+    (u32)elena_atca_074,  /* 75 SP V JP M P B */
+    (u32)elena_atca_076,  /* 76 SP V JP L P A */
+    (u32)elena_atca_076,  /* 77 SP V JP L P B */
+    (u32)elena_atca_078,  /* 78 SP V JP S K A */
+    (u32)elena_atca_078,  /* 79 SP V JP S K B */
+    (u32)elena_atca_080,  /* 80 SP V JP M K A */
+    (u32)elena_atca_080,  /* 81 SP V JP M K B */
+    (u32)elena_atca_082,  /* 82 SP V JP L K A */
+    (u32)elena_atca_082,  /* 83 SP V JP L K B */
+    (u32)elena_atca_084,  /* 84 SP F JP S P A */
+    (u32)elena_atca_084,  /* 85 SP F JP S P B */
+    (u32)elena_atca_086,  /* 86 SP F JP M P A */
+    (u32)elena_atca_086,  /* 87 SP F JP M P B */
+    (u32)elena_atca_088,  /* 88 SP F JP L P A */
+    (u32)elena_atca_088,  /* 89 SP F JP L P B */
+    (u32)elena_atca_090,  /* 90 SP F JP S K A */
+    (u32)elena_atca_090,  /* 91 SP F JP S K B */
+    (u32)elena_atca_092,  /* 92 SP F JP M K A */
+    (u32)elena_atca_092,  /* 93 SP F JP M K B */
+    (u32)elena_atca_094,  /* 94 SP F JP L K A */
+    (u32)elena_atca_094,  /* 95 SP F JP L K B */
+    (u32)elena_atca_096,  /* 96 SP B JP S P A */
+    (u32)elena_atca_096,  /* 97 SP B JP S P B */
+    (u32)elena_atca_098,  /* 98 SP B JP M P A */
+    (u32)elena_atca_098,  /* 99 SP B JP M P B */
+    (u32)elena_atca_100,  /* 100 SP B JP L P A */
+    (u32)elena_atca_100,  /* 101 SP B JP L P B */
+    (u32)elena_atca_102,  /* 102 SP B JP S K A */
+    (u32)elena_atca_102,  /* 103 SP B JP S K B */
+    (u32)elena_atca_104,  /* 104 SP B JP M K A */
+    (u32)elena_atca_104,  /* 105 SP B JP M K B */
+    (u32)elena_atca_106,  /* 106 SP B JP L K A */
+    (u32)elena_atca_106,  /* 107 SP B JP L K B */
+    (u32)elena_atca_108,  /* 108 S V JP S P A */
+    (u32)elena_atca_108,  /* 109 S V JP S P B */
+    (u32)elena_atca_110,  /* 110 S V JP M P A */
+    (u32)elena_atca_110,  /* 111 S V JP M P B */
+    (u32)elena_atca_112,  /* 112 S V JP L P A */
+    (u32)elena_atca_112,  /* 113 S V JP L P B */
+    (u32)elena_atca_114,  /* 114 S V JP S K A */
+    (u32)elena_atca_114,  /* 115 S V JP S K B */
+    (u32)elena_atca_116,  /* 116 S V JP M K A */
+    (u32)elena_atca_116,  /* 117 S V JP M K B */
+    (u32)elena_atca_118,  /* 118 S V JP L K A */
+    (u32)elena_atca_118,  /* 119 S V JP L K B */
+    (u32)elena_atca_108,  /* 120 S F JP S P A */
+    (u32)elena_atca_108,  /* 121 S F JP S P B */
+    (u32)elena_atca_110,  /* 122 S F JP M P A */
+    (u32)elena_atca_110,  /* 123 S F JP M P B */
+    (u32)elena_atca_112,  /* 124 S F JP L P A */
+    (u32)elena_atca_112,  /* 125 S F JP L P B */
+    (u32)elena_atca_114,  /* 126 S F JP S K A */
+    (u32)elena_atca_114,  /* 127 S F JP S K B */
+    (u32)elena_atca_116,  /* 128 S F JP M K A */
+    (u32)elena_atca_116,  /* 129 S F JP M K B */
+    (u32)elena_atca_118,  /* 130 S F JP L K A */
+    (u32)elena_atca_118,  /* 131 S F JP L K B */
+    (u32)elena_atca_108,  /* 132 S B JP S P A */
+    (u32)elena_atca_108,  /* 133 S B JP S P B */
+    (u32)elena_atca_110,  /* 134 S B JP M P A */
+    (u32)elena_atca_110,  /* 135 S B JP M P B */
+    (u32)elena_atca_112,  /* 136 S B JP L P A */
+    (u32)elena_atca_112,  /* 137 S B JP L P B */
+    (u32)elena_atca_114,  /* 138 S B JP S K A */
+    (u32)elena_atca_114,  /* 139 S B JP S K B */
+    (u32)elena_atca_116,  /* 140 S B JP M K A */
+    (u32)elena_atca_116,  /* 141 S B JP M K B */
+    (u32)elena_atca_118,  /* 142 S B JP L K A */
+    (u32)elena_atca_118,  /* 143 S B JP L K B */
+    (u32)elena_atca_144,  /* 144 TUKAMIKAKARI A */
+    (u32)elena_atca_145,  /* 145 TUKAMIKAKARI B */
+    (u32)elena_atca_144,  /* 146 TUKAMIKAKARI C */
+    (u32)elena_atca_145,  /* 147 TUKAMIKAKARI D */
+    (u32)elena_atca_145,  /* 148 TUKAMIKAKARI E */
+    (u32)elena_atca_145,  /* 149 TUKAMIKAKARI F */
+    (u32)elena_atca_145,  /* 150 TUKAMI AIR A */
+    (u32)elena_atca_145,  /* 151 TUKAMI AIR B */
+    (u32)elena_atca_145,  /* 152 TUKAMI AIR C */
+    (u32)elena_atca_145,  /* 153 TUKAMI AIR D */
+    (u32)elena_atca_145,  /* 154 TUKAMI AIR E */
+    (u32)elena_atca_145,  /* 155 TUKAMI AIR F */
+    (u32)elena_atca_156,  /* 156 follow-up of V JUMP P S A, F JUMP P S A */
+    (u32)elena_atca_157,  /* 157 follow-up of V JUMP P M A, F JUMP P M A */
+    (u32)elena_atca_158,  /* 158 follow-up of L PUNCH A */
+    (u32)elena_atca_159,  /* 159 follow-up of M KICK A */
     0
 };
 
@@ -6317,75 +6317,75 @@ const CatchTable elena_rival_catch_tbl[264] = {
 };
 
 /* extra scripts: 68 entries */
-const u16* const elena_exca[69] = {
-    elena_exca_000,  /* 0 follow-up of APPEAR JUNBI 2 */
-    elena_exca_001,  /* 1 follow-up of GUARD AIR, APPEAR JUNBI 2 */
-    elena_exca_000,  /* 2 follow-up of APPEAR JUNBI 5 */
-    elena_exca_001,  /* 3 follow-up of APPEAR JUNBI 5 */
-    elena_exca_004,  /* 4 follow-up of APPEAR JUNBI 4 */
-    elena_exca_005,  /* 5 follow-up of APPEAR JUNBI 4 */
-    elena_exca_006,  /* 6 follow-up of JUDGMENT WIN */
-    elena_exca_007,  /* 7 follow-up of JUDGMENT WIN */
-    elena_exca_008,  /* 8 follow-up of SP WIN 1 */
-    elena_exca_009,  /* 9 follow-up of SP WIN 1 */
-    elena_exca_010,  /* 10 follow-up of GUARD AIR */
-    elena_exca_011,  /* 11 follow-up of TOMOE RYU, TOMOE ORO +8 */
-    elena_exca_010,  /* 12 no name */
-    elena_exca_010,  /* 13 no name */
-    elena_exca_014,  /* 14 follow-up of ASIBARAI SIRI */
-    elena_exca_015,  /* 15 follow-up of ASIB TUNNOMERI, HUMI ASIB */
-    elena_exca_016,  /* 16 follow-up of NOKEZORI, KUNOJI NOKE +9 */
-    elena_exca_017,  /* 17 follow-up of KUNOJI, KIRIMOMI +13 */
-    elena_exca_018,  /* 18 follow-up of TATAKI S, TATAKI V. S +4 */
-    elena_exca_019,  /* 19 follow-up of AIR NORMAL */
-    elena_exca_020,  /* 20 follow-up of APPEAR JUNBI 6 */
-    elena_exca_020,  /* 21 follow-up of APPEAR JUNBI 6 */
-    elena_exca_010,  /* 22 no name */
-    elena_exca_023,  /* 23 follow-up of APPEAR JUNBI 7 */
-    elena_exca_024,  /* 24 follow-up of APPEAR JUNBI 7 */
-    elena_exca_025,  /* 25 follow-up of APPEAR JUNBI 8 */
-    elena_exca_026,  /* 26 follow-up of APPEAR JUNBI 8 */
-    elena_exca_027,  /* 27 follow-up of APPEAR 1 */
-    elena_exca_028,  /* 28 follow-up of APPEAR 1 */
-    elena_exca_029,  /* 29 follow-up of SP WIN 2 */
-    elena_exca_029,  /* 30 follow-up of SP WIN 2 */
-    elena_exca_031,  /* 31 follow-up of IBUKI HARAIG */
-    elena_exca_032,  /* 32 follow-up of SP WIN 3 */
-    elena_exca_033,  /* 33 follow-up of SP WIN 3 */
-    elena_exca_034,  /* 34 follow-up of SP WIN 4 */
-    elena_exca_035,  /* 35 follow-up of SP WIN 4 */
-    elena_exca_036,  /* 36 follow-up of SP WIN 6 */
-    elena_exca_037,  /* 37 follow-up of SP WIN 6 */
-    elena_exca_038,  /* 38 follow-up of SP WIN 7 */
-    elena_exca_039,  /* 39 follow-up of SP WIN 7 */
-    elena_exca_040,  /* 40 follow-up of SP WIN 8 */
-    elena_exca_041,  /* 41 follow-up of SP WIN 8 */
-    elena_exca_042,  /* 42 follow-up of JUDGMENT WAIT */
-    elena_exca_043,  /* 43 follow-up of JUDGMENT WAIT */
-    elena_exca_044,  /* 44 follow-up of GILL IMPACT C */
-    elena_exca_045,  /* 45 follow-up of GILL IMPACT C */
-    elena_exca_046,  /* 46 follow-up of AFRICA JUMP */
-    elena_exca_047,  /* 47 follow-up of AFRICA JUMP */
-    elena_exca_048,  /* 48 follow-up of FLANKEN.S */
-    elena_exca_049,  /* 49 follow-up of SEAN BALL HIT */
-    elena_exca_050,  /* 50 follow-up of SEAN BALL HIT */
-    elena_exca_049,  /* 51 no name */
-    elena_exca_050,  /* 52 no name */
-    elena_exca_053,  /* 53 follow-up of BONUS WIN 1 */
-    elena_exca_054,  /* 54 follow-up of BONUS WIN 1 */
-    elena_exca_055,  /* 55 follow-up of APPEAR USE */
-    elena_exca_056,  /* 56 follow-up of APPEAR USE */
-    elena_exca_057,  /* 57 no name */
-    elena_exca_058,  /* 58 no name */
-    elena_exca_059,  /* 59 no name */
-    elena_exca_060,  /* 60 no name */
-    elena_exca_061,  /* 61 no name */
-    elena_exca_062,  /* 62 no name */
-    elena_exca_063,  /* 63 no name */
-    elena_exca_064,  /* 64 no name */
-    elena_exca_065,  /* 65 no name */
-    elena_exca_066,  /* 66 no name */
-    elena_exca_067,  /* 67 no name */
+const u32 elena_exca[69] = {
+    (u32)elena_exca_000,  /* 0 follow-up of APPEAR JUNBI 2 */
+    (u32)elena_exca_001,  /* 1 follow-up of GUARD AIR, APPEAR JUNBI 2 */
+    (u32)elena_exca_000,  /* 2 follow-up of APPEAR JUNBI 5 */
+    (u32)elena_exca_001,  /* 3 follow-up of APPEAR JUNBI 5 */
+    (u32)elena_exca_004,  /* 4 follow-up of APPEAR JUNBI 4 */
+    (u32)elena_exca_005,  /* 5 follow-up of APPEAR JUNBI 4 */
+    (u32)elena_exca_006,  /* 6 follow-up of JUDGMENT WIN */
+    (u32)elena_exca_007,  /* 7 follow-up of JUDGMENT WIN */
+    (u32)elena_exca_008,  /* 8 follow-up of SP WIN 1 */
+    (u32)elena_exca_009,  /* 9 follow-up of SP WIN 1 */
+    (u32)elena_exca_010,  /* 10 follow-up of GUARD AIR */
+    (u32)elena_exca_011,  /* 11 follow-up of TOMOE RYU, TOMOE ORO +8 */
+    (u32)elena_exca_010,  /* 12 no name */
+    (u32)elena_exca_010,  /* 13 no name */
+    (u32)elena_exca_014,  /* 14 follow-up of ASIBARAI SIRI */
+    (u32)elena_exca_015,  /* 15 follow-up of ASIB TUNNOMERI, HUMI ASIB */
+    (u32)elena_exca_016,  /* 16 follow-up of NOKEZORI, KUNOJI NOKE +9 */
+    (u32)elena_exca_017,  /* 17 follow-up of KUNOJI, KIRIMOMI +13 */
+    (u32)elena_exca_018,  /* 18 follow-up of TATAKI S, TATAKI V. S +4 */
+    (u32)elena_exca_019,  /* 19 follow-up of AIR NORMAL */
+    (u32)elena_exca_020,  /* 20 follow-up of APPEAR JUNBI 6 */
+    (u32)elena_exca_020,  /* 21 follow-up of APPEAR JUNBI 6 */
+    (u32)elena_exca_010,  /* 22 no name */
+    (u32)elena_exca_023,  /* 23 follow-up of APPEAR JUNBI 7 */
+    (u32)elena_exca_024,  /* 24 follow-up of APPEAR JUNBI 7 */
+    (u32)elena_exca_025,  /* 25 follow-up of APPEAR JUNBI 8 */
+    (u32)elena_exca_026,  /* 26 follow-up of APPEAR JUNBI 8 */
+    (u32)elena_exca_027,  /* 27 follow-up of APPEAR 1 */
+    (u32)elena_exca_028,  /* 28 follow-up of APPEAR 1 */
+    (u32)elena_exca_029,  /* 29 follow-up of SP WIN 2 */
+    (u32)elena_exca_029,  /* 30 follow-up of SP WIN 2 */
+    (u32)elena_exca_031,  /* 31 follow-up of IBUKI HARAIG */
+    (u32)elena_exca_032,  /* 32 follow-up of SP WIN 3 */
+    (u32)elena_exca_033,  /* 33 follow-up of SP WIN 3 */
+    (u32)elena_exca_034,  /* 34 follow-up of SP WIN 4 */
+    (u32)elena_exca_035,  /* 35 follow-up of SP WIN 4 */
+    (u32)elena_exca_036,  /* 36 follow-up of SP WIN 6 */
+    (u32)elena_exca_037,  /* 37 follow-up of SP WIN 6 */
+    (u32)elena_exca_038,  /* 38 follow-up of SP WIN 7 */
+    (u32)elena_exca_039,  /* 39 follow-up of SP WIN 7 */
+    (u32)elena_exca_040,  /* 40 follow-up of SP WIN 8 */
+    (u32)elena_exca_041,  /* 41 follow-up of SP WIN 8 */
+    (u32)elena_exca_042,  /* 42 follow-up of JUDGMENT WAIT */
+    (u32)elena_exca_043,  /* 43 follow-up of JUDGMENT WAIT */
+    (u32)elena_exca_044,  /* 44 follow-up of GILL IMPACT C */
+    (u32)elena_exca_045,  /* 45 follow-up of GILL IMPACT C */
+    (u32)elena_exca_046,  /* 46 follow-up of AFRICA JUMP */
+    (u32)elena_exca_047,  /* 47 follow-up of AFRICA JUMP */
+    (u32)elena_exca_048,  /* 48 follow-up of FLANKEN.S */
+    (u32)elena_exca_049,  /* 49 follow-up of SEAN BALL HIT */
+    (u32)elena_exca_050,  /* 50 follow-up of SEAN BALL HIT */
+    (u32)elena_exca_049,  /* 51 no name */
+    (u32)elena_exca_050,  /* 52 no name */
+    (u32)elena_exca_053,  /* 53 follow-up of BONUS WIN 1 */
+    (u32)elena_exca_054,  /* 54 follow-up of BONUS WIN 1 */
+    (u32)elena_exca_055,  /* 55 follow-up of APPEAR USE */
+    (u32)elena_exca_056,  /* 56 follow-up of APPEAR USE */
+    (u32)elena_exca_057,  /* 57 no name */
+    (u32)elena_exca_058,  /* 58 no name */
+    (u32)elena_exca_059,  /* 59 no name */
+    (u32)elena_exca_060,  /* 60 no name */
+    (u32)elena_exca_061,  /* 61 no name */
+    (u32)elena_exca_062,  /* 62 no name */
+    (u32)elena_exca_063,  /* 63 no name */
+    (u32)elena_exca_064,  /* 64 no name */
+    (u32)elena_exca_065,  /* 65 no name */
+    (u32)elena_exca_066,  /* 66 no name */
+    (u32)elena_exca_067,  /* 67 no name */
     0
 };
 
@@ -7466,78 +7466,78 @@ const u16 elena_exca_067[976] = {
 };
 
 /* super art scripts: 71 entries */
-const u16* const elena_saca[72] = {
-    elena_saca_000,  /* 0 UP P GUARD P S */
-    elena_saca_001,  /* 1 UP P GUARD P M */
-    elena_saca_002,  /* 2 UP P GUARD P L */
-    elena_saca_002,  /* 3 UP P GUARD K S */
-    elena_saca_002,  /* 4 UP P GUARD K M */
-    elena_saca_002,  /* 5 UP P GUARD K L */
-    elena_saca_002,  /* 6 D P GUARD P S */
-    elena_saca_002,  /* 7 D P GUARD P M */
-    elena_saca_002,  /* 8 D P GUARD P L */
-    elena_saca_002,  /* 9 D P GUARD K S */
-    elena_saca_002,  /* 10 D P GUARD K M */
-    elena_saca_002,  /* 11 D P GUARD K L */
-    elena_saca_002,  /* 12 FUSHIN P S */
-    elena_saca_002,  /* 13 FUSHIN P M */
-    elena_saca_002,  /* 14 FUSHIN P L */
-    elena_saca_002,  /* 15 FUSHIN K S */
-    elena_saca_002,  /* 16 FUSHIN K M */
-    elena_saca_002,  /* 17 FUSHIN K L */
-    elena_saca_002,  /* 18 OKIAGARI P S */
-    elena_saca_002,  /* 19 OKIAGARI P M */
-    elena_saca_002,  /* 20 OKIAGARI P L */
-    elena_saca_002,  /* 21 OKIAGARI K S */
-    elena_saca_002,  /* 22 OKIAGARI K M */
-    elena_saca_002,  /* 23 OKIAGARI K L */
-    elena_saca_024,  /* 24 ATTACK 1 S: 623+K light (routine Att_SHOURYUUKEN) */
-    elena_saca_025,  /* 25 ATTACK 1 M: 623+K medium (routine Att_SHOURYUUKEN) */
-    elena_saca_026,  /* 26 ATTACK 1 L: 623+K heavy (routine Att_SHOURYUUKEN) */
-    elena_saca_027,  /* 27 ATTACK 1 SP: EX 623+KK (routine Att_SHOURYUUKEN) */
-    elena_saca_028,  /* 28 ATTACK 2 S: 4(123)6+K light (routine Att_SENPUUKYAKU) */
-    elena_saca_029,  /* 29 ATTACK 2 M: 4(123)6+K medium (routine Att_SENPUUKYAKU) */
-    elena_saca_030,  /* 30 ATTACK 2 L: 4(123)6+K heavy (routine Att_SENPUUKYAKU) */
-    elena_saca_031,  /* 31 ATTACK 2 SP: EX 4(123)6+KK (routine Att_SENPUUKYAKU) */
-    elena_saca_032,  /* 32 ATTACK 3 S: 6(123)4+P light (routine Att_SENPUUKYAKU) */
-    elena_saca_033,  /* 33 ATTACK 3 M: 6(123)4+P medium (routine Att_SENPUUKYAKU) */
-    elena_saca_034,  /* 34 ATTACK 3 L: 6(123)4+P heavy (routine Att_SENPUUKYAKU) */
-    elena_saca_035,  /* 35 ATTACK 3 SP: EX 6(123)4+PP (routine Att_SENPUUKYAKU) */
-    elena_saca_036,  /* 36 ATTACK 4 S: SA I 23623+K (routine Att_SHOURYUUREPPA) */
-    elena_saca_036,  /* 37 ATTACK 4 M: SA I 23623+K (routine Att_SHOURYUUREPPA) */
-    elena_saca_036,  /* 38 ATTACK 4 L: SA I 23623+K (routine Att_SHOURYUUREPPA) */
-    elena_saca_036,  /* 39 ATTACK 4 SP: SA I 23623+K (routine Att_SHOURYUUREPPA) */
-    elena_saca_040,  /* 40 ATTACK 5 S: SA II 23623+K (routine Att_SHOURYUUREPPA) */
-    elena_saca_040,  /* 41 ATTACK 5 M: SA II 23623+K (routine Att_SHOURYUUREPPA) */
-    elena_saca_040,  /* 42 ATTACK 5 L: SA II 23623+K (routine Att_SHOURYUUREPPA) */
-    elena_saca_040,  /* 43 ATTACK 5 SP: SA II 23623+K (routine Att_SHOURYUUREPPA) */
-    elena_saca_044,  /* 44 ATTACK 6 S: after SA II 23623+K (routine Att_SHOURYUUREPPA) */
-    elena_saca_044,  /* 45 ATTACK 6 M: after SA II 23623+K (routine Att_SHOURYUUREPPA) */
-    elena_saca_046,  /* 46 ATTACK 6 L: after SA II 23623+K (routine Att_SHOURYUUREPPA) */
-    elena_saca_047,  /* 47 ATTACK 6 SP: after SA II 23623+K (routine Att_SHOURYUUREPPA) */
-    elena_saca_048,  /* 48 ATTACK 7 S: SA III 23623+P (routine Att_PL08_HEALING) */
-    elena_saca_049,  /* 49 ATTACK 7 M: not started by a command */
-    elena_saca_050,  /* 50 ATTACK 7 L: not started by a command */
-    elena_saca_050,  /* 51 ATTACK 7 SP: not started by a command */
-    elena_saca_050,  /* 52 ATTACK 8 S: not started by a command */
-    elena_saca_050,  /* 53 ATTACK 8 M: not started by a command */
-    elena_saca_054,  /* 54 ATTACK 8 L: not started by a command */
-    elena_saca_054,  /* 55 ATTACK 8 SP: not started by a command */
-    elena_saca_054,  /* 56 ATTACK 9 S: not started by a command */
-    elena_saca_057,  /* 57 ATTACK 9 M: 214+K light (routine Att_SLIDE_and_JUMP) */
-    elena_saca_058,  /* 58 ATTACK 9 L: 214+K medium (routine Att_SLIDE_and_JUMP) */
-    elena_saca_059,  /* 59 ATTACK 9 SP: 214+K heavy (routine Att_SLIDE_and_JUMP) */
-    elena_saca_060,  /* 60 ATTACK 10 S: EX 214+KK (routine Att_SLIDE_and_JUMP) */
-    elena_saca_061,  /* 61 ATTACK 10 M: after 214+K (routine Att_SLIDE_and_JUMP) */
-    elena_saca_062,  /* 62 ATTACK 10 L: after 214+K (routine Att_SLIDE_and_JUMP) */
-    elena_saca_063,  /* 63 ATTACK 10 SP: after 214+K (routine Att_SLIDE_and_JUMP) */
-    elena_saca_064,  /* 64 ATTACK 11 S: after 214+K (routine Att_SLIDE_and_JUMP) */
-    elena_saca_065,  /* 65 ATTACK 11 M: 421+K light (plain script) */
-    elena_saca_066,  /* 66 ATTACK 11 L: 421+K medium (plain script) */
-    elena_saca_067,  /* 67 ATTACK 11 SP: 421+K heavy (plain script) */
-    elena_saca_068,  /* 68 ATTACK 12 S: EX 421+KK (plain script) */
-    elena_saca_069,  /* 69 ATTACK 12 M: not started by a command */
-    elena_saca_070,  /* 70 ATTACK 12 L: not started by a command */
+const u32 elena_saca[72] = {
+    (u32)elena_saca_000,  /* 0 UP P GUARD P S */
+    (u32)elena_saca_001,  /* 1 UP P GUARD P M */
+    (u32)elena_saca_002,  /* 2 UP P GUARD P L */
+    (u32)elena_saca_002,  /* 3 UP P GUARD K S */
+    (u32)elena_saca_002,  /* 4 UP P GUARD K M */
+    (u32)elena_saca_002,  /* 5 UP P GUARD K L */
+    (u32)elena_saca_002,  /* 6 D P GUARD P S */
+    (u32)elena_saca_002,  /* 7 D P GUARD P M */
+    (u32)elena_saca_002,  /* 8 D P GUARD P L */
+    (u32)elena_saca_002,  /* 9 D P GUARD K S */
+    (u32)elena_saca_002,  /* 10 D P GUARD K M */
+    (u32)elena_saca_002,  /* 11 D P GUARD K L */
+    (u32)elena_saca_002,  /* 12 FUSHIN P S */
+    (u32)elena_saca_002,  /* 13 FUSHIN P M */
+    (u32)elena_saca_002,  /* 14 FUSHIN P L */
+    (u32)elena_saca_002,  /* 15 FUSHIN K S */
+    (u32)elena_saca_002,  /* 16 FUSHIN K M */
+    (u32)elena_saca_002,  /* 17 FUSHIN K L */
+    (u32)elena_saca_002,  /* 18 OKIAGARI P S */
+    (u32)elena_saca_002,  /* 19 OKIAGARI P M */
+    (u32)elena_saca_002,  /* 20 OKIAGARI P L */
+    (u32)elena_saca_002,  /* 21 OKIAGARI K S */
+    (u32)elena_saca_002,  /* 22 OKIAGARI K M */
+    (u32)elena_saca_002,  /* 23 OKIAGARI K L */
+    (u32)elena_saca_024,  /* 24 ATTACK 1 S: 623+K light (routine Att_SHOURYUUKEN) */
+    (u32)elena_saca_025,  /* 25 ATTACK 1 M: 623+K medium (routine Att_SHOURYUUKEN) */
+    (u32)elena_saca_026,  /* 26 ATTACK 1 L: 623+K heavy (routine Att_SHOURYUUKEN) */
+    (u32)elena_saca_027,  /* 27 ATTACK 1 SP: EX 623+KK (routine Att_SHOURYUUKEN) */
+    (u32)elena_saca_028,  /* 28 ATTACK 2 S: 4(123)6+K light (routine Att_SENPUUKYAKU) */
+    (u32)elena_saca_029,  /* 29 ATTACK 2 M: 4(123)6+K medium (routine Att_SENPUUKYAKU) */
+    (u32)elena_saca_030,  /* 30 ATTACK 2 L: 4(123)6+K heavy (routine Att_SENPUUKYAKU) */
+    (u32)elena_saca_031,  /* 31 ATTACK 2 SP: EX 4(123)6+KK (routine Att_SENPUUKYAKU) */
+    (u32)elena_saca_032,  /* 32 ATTACK 3 S: 6(123)4+P light (routine Att_SENPUUKYAKU) */
+    (u32)elena_saca_033,  /* 33 ATTACK 3 M: 6(123)4+P medium (routine Att_SENPUUKYAKU) */
+    (u32)elena_saca_034,  /* 34 ATTACK 3 L: 6(123)4+P heavy (routine Att_SENPUUKYAKU) */
+    (u32)elena_saca_035,  /* 35 ATTACK 3 SP: EX 6(123)4+PP (routine Att_SENPUUKYAKU) */
+    (u32)elena_saca_036,  /* 36 ATTACK 4 S: SA I 23623+K (routine Att_SHOURYUUREPPA) */
+    (u32)elena_saca_036,  /* 37 ATTACK 4 M: SA I 23623+K (routine Att_SHOURYUUREPPA) */
+    (u32)elena_saca_036,  /* 38 ATTACK 4 L: SA I 23623+K (routine Att_SHOURYUUREPPA) */
+    (u32)elena_saca_036,  /* 39 ATTACK 4 SP: SA I 23623+K (routine Att_SHOURYUUREPPA) */
+    (u32)elena_saca_040,  /* 40 ATTACK 5 S: SA II 23623+K (routine Att_SHOURYUUREPPA) */
+    (u32)elena_saca_040,  /* 41 ATTACK 5 M: SA II 23623+K (routine Att_SHOURYUUREPPA) */
+    (u32)elena_saca_040,  /* 42 ATTACK 5 L: SA II 23623+K (routine Att_SHOURYUUREPPA) */
+    (u32)elena_saca_040,  /* 43 ATTACK 5 SP: SA II 23623+K (routine Att_SHOURYUUREPPA) */
+    (u32)elena_saca_044,  /* 44 ATTACK 6 S: after SA II 23623+K (routine Att_SHOURYUUREPPA) */
+    (u32)elena_saca_044,  /* 45 ATTACK 6 M: after SA II 23623+K (routine Att_SHOURYUUREPPA) */
+    (u32)elena_saca_046,  /* 46 ATTACK 6 L: after SA II 23623+K (routine Att_SHOURYUUREPPA) */
+    (u32)elena_saca_047,  /* 47 ATTACK 6 SP: after SA II 23623+K (routine Att_SHOURYUUREPPA) */
+    (u32)elena_saca_048,  /* 48 ATTACK 7 S: SA III 23623+P (routine Att_PL08_HEALING) */
+    (u32)elena_saca_049,  /* 49 ATTACK 7 M: not started by a command */
+    (u32)elena_saca_050,  /* 50 ATTACK 7 L: not started by a command */
+    (u32)elena_saca_050,  /* 51 ATTACK 7 SP: not started by a command */
+    (u32)elena_saca_050,  /* 52 ATTACK 8 S: not started by a command */
+    (u32)elena_saca_050,  /* 53 ATTACK 8 M: not started by a command */
+    (u32)elena_saca_054,  /* 54 ATTACK 8 L: not started by a command */
+    (u32)elena_saca_054,  /* 55 ATTACK 8 SP: not started by a command */
+    (u32)elena_saca_054,  /* 56 ATTACK 9 S: not started by a command */
+    (u32)elena_saca_057,  /* 57 ATTACK 9 M: 214+K light (routine Att_SLIDE_and_JUMP) */
+    (u32)elena_saca_058,  /* 58 ATTACK 9 L: 214+K medium (routine Att_SLIDE_and_JUMP) */
+    (u32)elena_saca_059,  /* 59 ATTACK 9 SP: 214+K heavy (routine Att_SLIDE_and_JUMP) */
+    (u32)elena_saca_060,  /* 60 ATTACK 10 S: EX 214+KK (routine Att_SLIDE_and_JUMP) */
+    (u32)elena_saca_061,  /* 61 ATTACK 10 M: after 214+K (routine Att_SLIDE_and_JUMP) */
+    (u32)elena_saca_062,  /* 62 ATTACK 10 L: after 214+K (routine Att_SLIDE_and_JUMP) */
+    (u32)elena_saca_063,  /* 63 ATTACK 10 SP: after 214+K (routine Att_SLIDE_and_JUMP) */
+    (u32)elena_saca_064,  /* 64 ATTACK 11 S: after 214+K (routine Att_SLIDE_and_JUMP) */
+    (u32)elena_saca_065,  /* 65 ATTACK 11 M: 421+K light (plain script) */
+    (u32)elena_saca_066,  /* 66 ATTACK 11 L: 421+K medium (plain script) */
+    (u32)elena_saca_067,  /* 67 ATTACK 11 SP: 421+K heavy (plain script) */
+    (u32)elena_saca_068,  /* 68 ATTACK 12 S: EX 421+KK (plain script) */
+    (u32)elena_saca_069,  /* 69 ATTACK 12 M: not started by a command */
+    (u32)elena_saca_070,  /* 70 ATTACK 12 L: not started by a command */
     0
 };
 

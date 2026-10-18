@@ -19,6 +19,9 @@
 #include "ta_sub.h"
 #include "eff14.h"
 
+E14_WORK eff14_work[8];  /* 02068AC8 */
+
+
 static void effect_14_write(WORK_Other* ewk);
 
 
@@ -45,7 +48,7 @@ s32 effect_14_init(id, x, y, atr)
 
 
 void effect_14_move(WORK_Other* ewk) {
-    E14_SCR* scrn = scrn_map_ptr;
+    E14_SCR* scrn = (E14_SCR*)scrn_map_ptr;
     u32* data;
     u16* ofs;
     u32 scr;
@@ -85,7 +88,7 @@ void effect_14_move(WORK_Other* ewk) {
             ewk->wu.routine_no[0]++;
             break;
         }
-        if (obr_disp_off_check() || EXE_flag || Game_pause || EXE_obroll) {
+        if (obr_no_disp_check() || EXE_flag || Game_pause || EXE_obroll) {
             break;
         }
         put = 0;
@@ -136,7 +139,7 @@ static void effect_14_write(WORK_Other* ewk) {
     s16 j;
     u16 mask;
     u16 v;
-    (void)((E14_WORK*)0)->rows;
+    (void)&((E14_WORK*)0)->rows;
     rows = eff14_work[ewk->wu.rl_flag].rows;
     mask = 0xFE00;
     cols = eff14_work[ewk->wu.rl_flag].cols;
@@ -167,7 +170,7 @@ loop:
     }
     (void)ewk->wu.be_flag;
     row = (u32)(dst = (u16*)(row + 0x100));
-    (void)((E14_WORK*)row)->rows;
+    (void)&((E14_WORK*)row)->rows;
     i++;
 test:
     if (i < rows) {

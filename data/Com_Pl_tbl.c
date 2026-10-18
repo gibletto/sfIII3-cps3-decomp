@@ -95,92 +95,6 @@ extern const u8 sys_cfg_default_0_7[];
 extern const u8 sys_cfg_default_0_8[];
 extern const u8 sys_cfg_default_1_0[];
 
-extern void Check_No12_Shell_Guard();
-extern void Com_Active();
-extern void Com_Before_Follow();
-extern void Com_Before_Passive();
-extern void Com_Catch();
-extern void Com_Caught();
-extern void Com_Damage();
-extern void Com_Flip();
-extern void Com_Float();
-extern void Com_Follow();
-extern void Com_Free();
-extern void Com_Guard();
-extern void Com_Initialize();
-extern void Com_Passive();
-extern void Com_VS_Shell();
-extern void Com_Wait_Lie();
-extern void Computer00();
-extern void Computer01();
-extern void Computer02();
-extern void Computer03();
-extern void Computer04();
-extern void Computer05();
-extern void Computer06();
-extern void Computer07();
-extern void Computer08();
-extern void Computer09();
-extern void Computer10();
-extern void Computer11();
-extern void Computer12();
-extern void Computer13();
-extern void Computer14();
-extern void Computer15();
-extern void Computer16();
-extern void Computer17();
-extern void Computer18();
-extern void Computer19();
-extern void Computer20();
-extern void Damage_1st();
-extern void Damage_2nd();
-extern void Damage_3rd();
-extern void Damage_4th();
-extern void Damage_5th();
-extern void Damage_6th();
-extern void Damage_7th();
-extern void Damage_8th();
-extern void Flip_1st();
-extern void Flip_2nd();
-extern void Flip_3rd();
-extern void Flip_4th();
-extern void Flip_Zero();
-extern void Float_2nd();
-extern void Float_3rd();
-extern void Float_4th();
-extern void Follow02();
-extern void Passive00();
-extern void Passive01();
-extern void Passive02();
-extern void Passive03();
-extern void Passive04();
-extern void Passive05();
-extern void Passive06();
-extern void Passive07();
-extern void Passive08();
-extern void Passive09();
-extern void Passive10();
-extern void Passive11();
-extern void Passive12();
-extern void Passive13();
-extern void Passive14();
-extern void Passive15();
-extern void Passive16();
-extern void Passive17();
-extern void Passive18();
-extern void Passive19();
-extern void Passive20();
-extern void Shell00();
-extern void Shell01();
-extern void Shell03();
-extern void Shell04();
-extern void Shell05();
-extern void Shell07();
-extern void Shell11();
-extern void Shell12();
-extern void Shell13();
-extern void Shell14();
-
 const s8 region_type_tbl[9] = {
     0, 0, 2, 5, 1, 3, 4, 7,
     2,
@@ -213,16 +127,16 @@ const TM_STRING boot_region_str[10] = {
     { 0x13, 0xD, 2, (void*)str_NO_CD },
 };
 
-/* Stored after boot_region_str. Nothing in the program refers to it by name or address; if it is read,
-   it is through an index past the end of boot_region_str. */
-const u32 boot_region_str_tail[27] = {
-    0x10000E, 0xE0000, (u32)str_PRODUCT_VERSION, 0xD000E,
-    0xE0000, (u32)str_CHARACTER_CHECK_VERSION, 0x10000E, 0xE0000,
-    (u32)str_PUBLICITY_VERSION, 0xF000E, 0xE0000, (u32)str_LOCATION_TEST_VERSION,
-    0x12000E, 0xE0000, (u32)str_SHOW_VERSION, 0x10000E,
-    0xE0000, (u32)str_BUG_CHECK_VERSION, 0x10000E, 0xE0000,
-    (u32)str_BENT_STAFF_VERSION, 0xF000E, 0xE0000, (u32)str_DEVELOPMENT_VERSION,
-    0x11000E, 0xE0000, (u32)str_CHECK_VERSION,
+const TM_STRING boot_version_str[9] = {
+    { 0x10, 0xE, 0xE, (void*)str_PRODUCT_VERSION },
+    { 0xD, 0xE, 0xE, (void*)str_CHARACTER_CHECK_VERSION },
+    { 0x10, 0xE, 0xE, (void*)str_PUBLICITY_VERSION },
+    { 0xF, 0xE, 0xE, (void*)str_LOCATION_TEST_VERSION },
+    { 0x12, 0xE, 0xE, (void*)str_SHOW_VERSION },
+    { 0x10, 0xE, 0xE, (void*)str_BUG_CHECK_VERSION },
+    { 0x10, 0xE, 0xE, (void*)str_BENT_STAFF_VERSION },
+    { 0xF, 0xE, 0xE, (void*)str_DEVELOPMENT_VERSION },
+    { 0x11, 0xE, 0xE, (void*)str_CHECK_VERSION },
 };
 
 const TM_STRING boot_no_cd_str[1] = {

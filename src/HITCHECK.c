@@ -5,9 +5,10 @@
  * (from Game_Main and end_sub) then runs catch_hit_check (throws), attack_hit_check (attack boxes
  * against damage boxes), set_judge_result and check_result_extra, and clears the queue.
  * The judged pairs go to the per-pair routines in HITPLPL, HITPLEF, HITEFPL and HITEFEF.
- * This module sets the resulting states: struck (set_struck_status), caught, guard and blocking
- * (parry, set_paring_status), damage and stun (set_damage_and_piyo), combo work and damage
- * reduction (add_combo_work, cal_combo_waribiki), hit stop and hit mark positions.
+ * This module sets the resulting states: struck (set_struck_status), caught, guard (set_guard_status) and
+ * blocking (parry: set_paring_status, which the hit judgement's parried label calls), damage and stun
+ * (set_damage_and_piyo), combo work and damage reduction (add_combo_work, cal_combo_waribiki), hit stop
+ * and hit mark positions.
  * It also provides the damage routine lookups by damage index and general helpers used by many
  * effects and moves: hit_check_subroutine, hit_check_x_only, get_target_att_position.
  */
@@ -39,6 +40,13 @@
 #include "effect_2.h"
 #include "HITCHECK.h"
 #include "fighter.h"
+
+WORK * q_hit_push[32];  /* 0200EBC4 */
+HS hs[32];  /* 0200EC44 */
+s8 ca_check_flag;  /* 0200EE44 */
+s16 * dmdat_adrs[16];  /* 0200EE48 */
+s16 mkm_wk[32];  /* 0200EE88 */
+s16 hpq_in;  /* 0200EEC8 */
 
 struct PLW_tag;
 
@@ -120,7 +128,9 @@ void check_result_extra(void) {
 
 
 
-void set_caught_status(s16 ix) {
+void set_caught_status(ix)
+s16 ix;
+{
     s16 ix2 = hs[ix].dm_me;
     PLW* as = (PLW*)q_hit_push[ix2];
     PLW* ds = (PLW*)q_hit_push[ix];
@@ -199,8 +209,9 @@ wait_dm:
         }
         goto four;
     } else if (ds->wu.xyz[1].disp.pos > 0) {
-        goto sky;
-    sky:
+        if (0) {
+            return;
+        }
         switch (defense_sky(as, ds, gddir)) {
         case 0:
             goto blocking;
@@ -267,7 +278,7 @@ guard:
     set_guard_status(as, ds);
     return;
 blocking:
-    set_blocking_status(as, ds);
+    set_paring_status(as, ds);
 }
 
 
@@ -317,7 +328,9 @@ void set_catch_hit_mark_pos(WORK* as, WORK* ds) {
 
 
 
-void set_struck_status(s16 ix) {
+void set_struck_status(ix)
+s16 ix;
+{
     WORK* as;
     WORK* ds;
     s16 ix2;
@@ -356,7 +369,12 @@ wait_hit:
 
 
 
-void cal_hit_mark_pos(WORK* as, WORK* ds, s16 ix2, s16 ix) {
+void cal_hit_mark_pos(as, ds, ix2, ix)
+WORK* as;
+WORK* ds;
+s16 ix2;
+s16 ix;
+{
     if (as->att.mkh_ix) {
         if (as->rl_flag) {
             as->hit_mark_x = as->xyz[0].disp.pos - hit_mark_hosei_table[as->att.mkh_ix][0];
@@ -372,7 +390,11 @@ void cal_hit_mark_pos(WORK* as, WORK* ds, s16 ix2, s16 ix) {
 
 
 
-void plef_at_vs_player_damage_union(PLW* as, PLW* ds, s8 gddir) {
+void plef_at_vs_player_damage_union(as, ds, gddir)
+PLW* as;
+PLW* ds;
+char gddir;
+{
     ds->wu.dm_guard_success = -1;
     if (ds->guard_flag == 3 || as->wu.att.guard == 0 || ds->py->flag != 0) {
         if (ds->wu.pat_status == 10) {
@@ -396,7 +418,7 @@ void plef_at_vs_player_damage_union(PLW* as, PLW* ds, s8 gddir) {
     if (ds->wu.xyz[1].disp.pos > 0 || check_pat_status(&ds->wu)) {
         switch (defense_sky(as, ds, gddir)) {
         case 0:
-            goto set_paring_status;
+            goto parried;
         case 1:
             goto set_guard_status;
         }
@@ -412,7 +434,7 @@ void plef_at_vs_player_damage_union(PLW* as, PLW* ds, s8 gddir) {
     switch_defense_ground:
         switch (defense_ground(as, ds, gddir)) {
         case 0:
-            goto set_paring_status;
+            goto parried;
         case 1:
             goto set_guard_status;
         default:
@@ -471,8 +493,8 @@ void plef_at_vs_player_damage_union(PLW* as, PLW* ds, s8 gddir) {
 set_guard_status:
     set_guard_status(as, ds);
     return;
-set_paring_status:
-    set_blocking_status(as, ds);
+parried:
+    set_paring_status(as, ds);
 }
 
 
@@ -522,7 +544,7 @@ void set_guard_status(PLW* as, PLW* ds) {
 #define PARING_PLAYER_ID(row, player, hsadix, player_copy) \
     (((row) ? (player) : ((hsadix) & 1)) | ((player_copy) != 0))
 
-void set_blocking_status(PLW* as, PLW* ds) {
+void set_paring_status(PLW* as, PLW* ds) {
     s16 hsadix;
     u8 (*row)[2];
     u8 (*row_copy)[2];
@@ -537,7 +559,7 @@ void set_blocking_status(PLW* as, PLW* ds) {
         }
         ds->wu.routine_no[1] = 0;
         ds->wu.routine_no[3] = 0;
-        waza_slot_clear_all_p(ds);
+        waza_compel_all_init2(ds);
         dm_status_copy(&as->wu, &ds->wu);
         ds->wu.dm_piyo = 0;
         ds->wu.cg_type = 0;
@@ -613,7 +635,9 @@ void set_blocking_status(PLW* as, PLW* ds) {
 
 
 
-s32 check_normal_attack(u8 waza) {
+s32 check_normal_attack(waza)
+u8 waza;
+{
     return sel_sp_ch_tbl[waza >> 3] == 0;
 }
 
@@ -780,7 +804,11 @@ void same_dm_stop(WORK* as, WORK* ds) {
 
 
 
-s32 defense_sky(PLW* as, PLW* ds, s8 gddir) {
+s32 defense_sky(as, ds, gddir)
+PLW* as;
+PLW* ds;
+char gddir;
+{
     if (ds->py->flag == 0 && !(ds->guard_flag & 2) && as->wu.att.guard & 4) {
         if (ds->spmv_ng_flag & 0x400 || ds->cp->waza_flag[5] == 0) {
             goto low;
@@ -855,7 +883,11 @@ static s32 check_normal_waza(u8 waza) {
 
 
 
-s32 defense_ground(PLW* as, PLW* ds, s8 gddir) {
+s32 defense_ground(as, ds, gddir)
+PLW* as;
+PLW* ds;
+char gddir;
+{
     s8 just_now;
     s8 attr_att;
     just_now = 0;
@@ -888,11 +920,8 @@ s32 defense_ground(PLW* as, PLW* ds, s8 gddir) {
                         }
                         if (check_dm_att_blocking(&as->wu, &ds->wu, 5)) {
                             return 2;
-                        } else {
-                            goto jump_not_blocked;
-                        jump_not_blocked:;
-                            return 0;
                         }
+                        return 0;
                     }
                 } else if (ds->cp->waza_flag[3] != 0) {
                     blocking_point_count_up(ds);
@@ -908,9 +937,6 @@ s32 defense_ground(PLW* as, PLW* ds, s8 gddir) {
                     return 0;
                 }
             }
-        } else {
-            goto no_high_blocking;
-        no_high_blocking:;
         }
         if (as->wu.att.guard & 1) {
             if (!(ds->spmv_ng_flag & 0x200)) {
@@ -991,7 +1017,7 @@ void setup_dm_rl(WORK* as, WORK* ds) {
     s16 dx;
     XY* pd;
     XY* pf;
-    if (as->work_id != 1 || check_aiuchi_pat(as->att.reaction) != 0) {
+    if (as->work_id != 1 || check_ttk_damage_request(as->att.reaction) != 0) {
         ds->dm_rl = as->rl_flag;
         return;
     }
@@ -1090,8 +1116,8 @@ void nise_combo_work(PLW* as, PLW* ds, s16 num) {
 
 
 void cal_combo_waribiki(PLW* as, PLW* ds) {
-    POWER* power;
-    KOATT* koatt;
+    const POWER* power;
+    const KOATT* koatt;
     s16 i;
     s16 j;
     s16 k;
@@ -1102,12 +1128,12 @@ void cal_combo_waribiki(PLW* as, PLW* ds) {
     if (ds->rp->total == 0) {
         return;
     }
-    koatt = (KOATT*)exchange_koa[(as->wu.kind_of_waza) >> 1];
+    koatt = exchange_koa[(as->wu.kind_of_waza) >> 1];
     tbl.ixl = 0;
     for (i = 0; i < 9; i++) {
         for (j = 0; j < 4; j++) {
             k = ds->rp->kind_of[i][j][0];
-            k += *(s16*)((u8*)ds->rp->kind_of[i][j] + sizeof(s16));
+            k += ds->rp->kind_of[i][j][1];
             if (k) {
                 tbl.ixl += koatt->step[i][j] * k * 256;
             }
@@ -1116,10 +1142,10 @@ void cal_combo_waribiki(PLW* as, PLW* ds) {
     if (tbl.ixs.l) {
         tbl.ixs.h++;
     }
-    power = (POWER*)exchange_pow[as->wu.kind_of_waza >> 1];
+    power = exchange_pow[as->wu.kind_of_waza >> 1];
     if (as->player_number == PL_YUN || as->player_number == PL_YANG) {
         if (as->sa->kind_of_arts == 2 && as->sa->ok == -1) {
-            power = (POWER*)exchange_pow_pl03_sa3[as->wu.kind_of_waza >> 1];
+            power = exchange_pow_pl03_sa3[as->wu.kind_of_waza >> 1];
         }
     }
     if (tbl.ixs.h > 31) {
@@ -1277,13 +1303,11 @@ void attack_hit_check(void) {
         goto test1;
         loop1:
         {
-            (void)((HitBox*)boxes)->x;
-            (void)((WORK*)lp)->id;
+            (void)&((HitBox*)boxes)->x;
             dmdat_adrs[lp] = sh;
             dmdat_adrs[lp + 4] = *boxes++;
         }
-        next1:
-            lp++;
+            lp = lp + 1;
             sh += 4;
         test1:
         if (lp < 4) {
@@ -1295,7 +1319,7 @@ void attack_hit_check(void) {
         dmdat_adrs[8] = (s16*)sad->h_att + 8;
         dmdat_adrs[9] = (s16*)sad->h_att + 12;
         dmdat_adrs[10] = (s16*)sad->h_hos;
-        (void)((WORK*)dmdat_adrs)->id;
+        (void)&((WORK*)dmdat_adrs)->id;
         mi = 0;
         goto test2;
         loop2:
@@ -1351,10 +1375,9 @@ void attack_hit_check(void) {
                         goto end;
                     }
                     slot = &dmdat_adrs[lp2];
-                    (void)((BoxSlot*)&((s16**)0)[lp2])->box;
+                    (void)&((BoxSlot*)&((s16**)0)[lp2])->box;
                     slot_copy = slot;
-                    (void)((WORK*)lp)->id;
-                    (void)((WORK*)3)->work_id;
+                    (void)&((WORK*)3)->work_id;
                     if (*(s16*)((u16*)*slot + 1) == 0) {
                         goto next4;
                     }
@@ -1409,16 +1432,14 @@ void attack_hit_check(void) {
                     goto g0; g0:;
                     goto loop4;
                 }
-                exit4:;
             }
             next3:
-                lp++;
+                lp = lp + 1;
                 boxes++;
             test3:
             if (lp < 4) {
                 goto loop3;
             }
-            exit3:;
         }
         next2:
             mi++;
@@ -1426,7 +1447,6 @@ void attack_hit_check(void) {
         if (mi < hpq_in) {
             goto loop2;
         }
-        exit2:;
     end:
         goto next0;
     }
@@ -1436,7 +1456,6 @@ void attack_hit_check(void) {
     if (si < hpq_in) {
         goto loop0;
     }
-    exit0:;
 }
 
 
@@ -1636,7 +1655,11 @@ void clear_hit_queue(void) {
 
 
 
-s32 change_damage_attribute(PLW* as, u16 atr, u16 ix) {
+s32 change_damage_attribute(as, atr, ix)
+PLW* as;
+u16 atr;
+u16 ix;
+{
     switch (atr) {
     case 1:
         if (as->wu.work_id == 1 && as->player_number == PL_GILL && as->wu.rl_flag) {
@@ -1721,8 +1744,7 @@ s32 check_trunk_damage(s16 ix) {
 
 
 
-/* provisional name */
-s32 check_aiuchi_pat(s16 pat) {
+s32 check_ttk_damage_request(s16 pat) {
     pat -= 32;
-    return check_aiuchi_pat_table1[pat];
+    return ttk_damage_req_tbl[pat];
 }

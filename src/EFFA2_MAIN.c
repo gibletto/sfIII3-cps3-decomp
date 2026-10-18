@@ -43,7 +43,9 @@ void effect_A2_move(WORK_Other* ewk) {
 
 
 
-s32 effect_A2_init(s16 timer) {
+s32 effect_A2_init(timer)
+s16 timer;
+{
     WORK_Other* ewk;
     s16 ix;
     if ((ix = pull_effect_work(4)) == -1) {

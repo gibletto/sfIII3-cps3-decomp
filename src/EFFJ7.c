@@ -21,6 +21,21 @@
 #include "fighter.h"
 
 
+extern const ColorCode pl00_cctbl_0[];
+extern const ColorCode pl00_cctbl_1[];
+
+/* 02007468 */
+const ColorCode* pl00_cctbl[7][2] = {
+    { pl00_cctbl_0, pl00_cctbl_1 },
+    { pl00_cctbl_0, pl00_cctbl_1 },
+    { pl00_cctbl_0, pl00_cctbl_1 },
+    { pl00_cctbl_0, pl00_cctbl_1 },
+    { pl00_cctbl_0, pl00_cctbl_1 },
+    { pl00_cctbl_0, pl00_cctbl_1 },
+    { pl00_cctbl_0, pl00_cctbl_1 },
+};
+
+
 void effect_J7_move(WORK_Other* ewk) {
     PLW* mwk;
 
@@ -44,7 +59,7 @@ void effect_J7_move(WORK_Other* ewk) {
         ewk->wu.dir_timer = 0;
         ewk->wu.dir_step = 0;
         ewk->wu.dir_old = 1;
-        J7_color_step(&ewk->wu);
+        check_new_color_data(&ewk->wu);
         return;
     case 1:
         if (ewk->wu.dead_f == 1) {
@@ -59,7 +74,7 @@ void effect_J7_move(WORK_Other* ewk) {
         if (EXE_flag != 0 || Game_pause != 0) {
             break;
         }
-        J7_color_step(&ewk->wu);
+        check_new_color_data(&ewk->wu);
         return;
     case 2:
         switch (ewk->wu.routine_no[1]) {
@@ -98,7 +113,7 @@ void effect_J7_move(WORK_Other* ewk) {
 
 
 /* The colour step of effect_J7_move (called from cases 0 and 1). */
-void J7_color_step(WORK* wk) {
+void check_new_color_data(WORK* wk) {
     if (--wk->dir_timer < 0) {
         if (wk->dir_old) {
             wk->dir_step = 1;

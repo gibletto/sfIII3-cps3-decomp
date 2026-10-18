@@ -146,7 +146,10 @@ s32 Check_Fade_Complete(void) {
 
 
 /* Start fade fade_code in mode fade_mode.  Returns 0 if a fade is already running. */
-s32 Request_Fade(u16 fade_code, u8 fade_mode) {
+s32 Request_Fade(fade_code, fade_mode)
+u16 fade_code;
+u8 fade_mode;
+{
     if (Fade_Flag == 0) {
         Fade_Flag = 1;
         Fade_Mode = fade_mode;
@@ -193,7 +196,10 @@ s32 Switch_Screen_Wipe_End(void) {
 
 
 /* Start screen wipe kind, drawn in wipe_mode (see Switch_Screen). */
-void Switch_Screen_Init(s16 kind, u8 wipe_mode) {
+void Switch_Screen_Init(kind, wipe_mode)
+s16 kind;
+u8 wipe_mode;
+{
     Forbid_Break = 1;
     Exec_Wipe = 1;
     Wipe_Kind = kind;
@@ -380,8 +386,8 @@ void Setup_Play_Type(void) {
 
 /* Build this player's ranking entry and try it against all four ranking tables:
    score, wins, CPU grade and grade.  Returns 1 if the player made any of them. */
-/* provisional name */
-u32 ranking_insert_all_four(s16 PL_id)
+u32 Check_Ranking(PL_id)
+s16 PL_id;
 {
     if (Version_Type == 3) {
         return 0;
@@ -402,21 +408,21 @@ u32 ranking_insert_all_four(s16 PL_id)
     } else {
         Present_Data[PL_id].all_clear = 0;
     }
-    Rank_In[PL_id][0] = insert_ranking_score(PL_id);
+    Rank_In[PL_id][0] = Check_Sort_Score(PL_id);
     if (Rank_In[PL_id][0] >= 0 && Rank_In[PL_id ^ 1][0] >= 0) {
-        rank_in_push_other(0, PL_id);
+        Check_Partners_Rank(0, PL_id);
     }
-    Rank_In[PL_id][1] = insert_ranking_wins(PL_id);
+    Rank_In[PL_id][1] = Check_Sort_Wins(PL_id);
     if (Rank_In[PL_id][1] >= 0 && Rank_In[PL_id ^ 1][1] >= 0) {
-        rank_in_push_other(1, PL_id);
+        Check_Partners_Rank(1, PL_id);
     }
-    Rank_In[PL_id][2] = insert_ranking_cpu_grade(PL_id);
+    Rank_In[PL_id][2] = Check_Sort_CPU_Grade(PL_id);
     if (Rank_In[PL_id][2]) {
         Rank_In[PL_id][2] = -1;
     } else {
         Rank_In[PL_id ^ 1][2] = -1;
     }
-    Rank_In[PL_id][3] = insert_ranking_grade(PL_id);
+    Rank_In[PL_id][3] = Check_Sort_Grade(PL_id);
     if (Rank_In[PL_id][3]) {
         Rank_In[PL_id][3] = -1;
     } else {
@@ -430,8 +436,10 @@ u32 ranking_insert_all_four(s16 PL_id)
 
 
 
-/* provisional name */
-void rank_in_push_other(s16 dir_step, s16 PL_id) {
+void Check_Partners_Rank(dir_step, PL_id)
+s16 dir_step;
+s16 PL_id;
+{
     if (Rank_In[PL_id][dir_step] > Rank_In[PL_id ^ 1][dir_step]) {
         return;
     }
@@ -443,8 +451,9 @@ void rank_in_push_other(s16 dir_step, s16 PL_id) {
 
 
 
-/* provisional name */
-s32 insert_ranking_score(s16 PL_id) {
+s32 Check_Sort_Score(PL_id)
+s16 PL_id;
+{
     s16 i;
     s16 j;
     for (i = 0; i < 5; i++) {
@@ -461,8 +470,9 @@ s32 insert_ranking_score(s16 PL_id) {
 
 
 
-/* provisional name */
-s32 insert_ranking_wins(s16 PL_id) {
+s32 Check_Sort_Wins(PL_id)
+s16 PL_id;
+{
     s16 i;
     s16 j;
     RANK_DATA *rp;
@@ -481,8 +491,9 @@ s32 insert_ranking_wins(s16 PL_id) {
 
 
 
-/* provisional name */
-s32 insert_ranking_cpu_grade(s16 PL_id) {
+s32 Check_Sort_CPU_Grade(PL_id)
+s16 PL_id;
+{
     s16 i;
     s16 j;
     for (i = 0; i < 5; i++) {
@@ -500,8 +511,9 @@ s32 insert_ranking_cpu_grade(s16 PL_id) {
 
 
 
-/* provisional name */
-s32 insert_ranking_grade(s16 PL_id) {
+s32 Check_Sort_Grade(PL_id)
+s16 PL_id;
+{
     s16 i;
     s16 j;
     for (i = 0; i < 5; i++) {
@@ -519,7 +531,10 @@ s32 insert_ranking_grade(s16 PL_id) {
 
 
 
-s32 Check_CPU_Grade_Score(s16 PL_id, s16 i) {
+s32 Check_CPU_Grade_Score(PL_id, i)
+s16 PL_id;
+s16 i;
+{
     if (Ranking_Data[i + 10].cpu_grade > Present_Data[PL_id].cpu_grade) {
         return 0;
     }
@@ -534,7 +549,10 @@ s32 Check_CPU_Grade_Score(s16 PL_id, s16 i) {
 
 
 
-s32 Check_Grade_Score(s16 PL_id, s16 i) {
+s32 Check_Grade_Score(PL_id, i)
+s16 PL_id;
+s16 i;
+{
     if (Ranking_Data[i + 15].grade > Present_Data[PL_id].grade) {
         return 0;
     }

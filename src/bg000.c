@@ -62,13 +62,17 @@
 #include "bg000.h"
 #include "fighter.h"
 
+extern const s16 bg_scr_record_data[92];
+
+
+
 s32 polygon2d_submit_line();
 s32 simmram_block_alloc_10(s32 blocks, s32 kind);
 u32 simmram_big_page_alloc_40(s32 kind);
 u32 simmram_slot_addr(s16 no);
 u32 simmram_slot_to_offset(s16 handle);
 s32 sprite_list_setup();
-void scrn_attr_set(s16 n, u16 attr, s16 bits);
+void scrn_attr_set(s16 n, u16 attr, u16 bits);
 void scrn_map_set_now(u16 n, u32 p);
 void scrn_map_set(u16 n, u32 p);
 #define SUZI_W  ((SUZI_CALC*)suzi_calc_w)
@@ -466,9 +470,10 @@ void suzi_line_calc(s16 bg_num) {
         }
     }
     top = suzi_line_buf[0];
-    dst = (u16*)((u8*)bg_w.bgw[bg_num].suzi_adrs + 2048);
-    goto fill_rest;
-fill_rest:
+    dst = bg_w.bgw[bg_num].suzi_adrs + 1024;
+    if (0) {
+        return;
+    }
     for (i = 0; i < bg_w.bgw[bg_num].no_suzi_line - 512; i++) {
         *dst = top;
         dst = dst + 2;
@@ -523,7 +528,7 @@ void suzi_line_calc_fill(s16 bg_num) {
             line++;
             dst = dst + 2;
         }
-        line--;
+        line = line - 1;
         count = 41 - bg_w.bgw[bg_num].d_line;
         i = 0;
         if (count > 0) {
@@ -532,7 +537,7 @@ void suzi_line_calc_fill(s16 bg_num) {
             do {
                 *dst = *(u16*)line;
                 dst = dst + 2;
-                i++;
+                i = i + 1;
             } while (i < count);
         }
     } else {
@@ -568,12 +573,11 @@ void suzi_line_calc_fill(s16 bg_num) {
             } while (i < count);
         }
     }
-    (void)((WORK*)suzi_line_buf)->be_flag;
     top = suzi_line_buf[0];
-    dst = (u16*)((u8*)bg_w.bgw[bg_num].suzi_adrs + 2048);
-    (void)((WORK*)dst)->be_flag;
-    goto suzi_finish;
-suzi_finish:;
+    dst = bg_w.bgw[bg_num].suzi_adrs + 1024;
+    if (0) {
+        return;
+    }
     for (i = 0; i < bg_w.bgw[bg_num].no_suzi_line - 512; i++) {
         *dst = top;
         dst += 2;
@@ -655,13 +659,8 @@ void suzi_line_calc_flat(s16 bg_num) {
             } while (i < count);
         }
     }
-    (void)bg_w.chase_flag;
-    (void)bg_w.scno;
-    (void)((WORK*)suzi_line_buf)->be_flag;
     top = suzi_line_buf[0];
-    (void)((WORK*)top)->be_flag;
-    dst = (u16*)((u8*)bg_w.bgw[bg_num].suzi_adrs + 2048);
-    (void)((WORK*)dst)->be_flag;
+    dst = bg_w.bgw[bg_num].suzi_adrs + 1024;
     for (i = 0; i < bg_w.bgw[bg_num].no_suzi_line - 512; i++) {
         *dst = top;
         dst += 2;
@@ -1034,13 +1033,11 @@ void bg_cell_write(s16 bg, s32 ofs, s32 cell, u32 src, u16 u5, s16 attr) {
     u32 base;
     u16 code;
     u16* s;
-    (void)((WORK*)src)->be_flag;
-    (void)((WORK*)src)->disp_flag;
-    (void)((WORK*)src)->blink_timing;
     base = (u32)bg_w.bgw[bg].bg_address;
     dst = (u16*)(ofs + base);
     code = bg_w.scroll_cg_adr >> 7;
-    cell = (cell << 10) + src;
+    cell = cell << 10;
+    cell = cell + src;
     s = (u16*)cell;
     blit_16x16_tile(s, code, dst, attr);
 }
@@ -1306,7 +1303,7 @@ void bg_etc_scr_write(s16 n) {
 
     for (i = 0; i < bg_w.scno; i++) {
         j = 0;
-        while (j < etc_bg_cell_cnt_tbl[n][(s16)i]) {
+        while (j < etc_bg_cell_cnt_tbl[n][i]) {
             t = bg_etc_cell_tbl[n][i];
             t = t + j;
             attr = etc_bg_attr_tbl[n] + t->attr;
@@ -1326,7 +1323,7 @@ void bg_scr_clear_all(void) {
 
     for (i = 0; i < bg_w.scno; i++) {
         for (j = 0; j < bg_w.scno; j++) {
-            s32 dst = (s32)bg_w.bgw[(s16)i].bg_address;
+            s32 dst = (s32)bg_w.bgw[i].bg_address;
             dst += j << 12;
 
             for (k = 0; k < 4; k++) {
@@ -1425,13 +1422,21 @@ void reset_all_char_display_with_backup(void) {
 
 /* provisional name */
 void bg_rect_attr_preset(void) {
-    u16* p = (u16*)scrn_map_ptr[0].ptr2;
+    u16* p = scrn_map_ptr[0].ptr2;
     oh_opening_demo(p, 0x20, 0x20, 0x1800, 0x10, 0x40, 0x24);
 }
 
 
 
-void oh_opening_demo(u16* adrs, s32 x, s16 w, s32 y, s16 h, s16 attr, s16 prio) {
+void oh_opening_demo(adrs, x, w, y, h, attr, prio)
+u16* adrs;
+s32 x;
+s16 w;
+s32 y;
+s16 h;
+s16 attr;
+s16 prio;
+{
     s16 i;
     u16 cell;
     s16 j;
@@ -1457,7 +1462,15 @@ void oh_opening_demo(u16* adrs, s32 x, s16 w, s32 y, s16 h, s16 attr, s16 prio) 
 
 
 /* provisional name */
-void bg_rect_attr_add(u16* adrs, s32 x, s16 w, s32 y, s16 h, s16 bits, s16 add) {
+void bg_rect_attr_add(adrs, x, w, y, h, bits, add)
+u16* adrs;
+s32 x;
+s16 w;
+s32 y;
+s16 h;
+s16 bits;
+s16 add;
+{
     s16 i;
     s16 j;
     s16 cell;
@@ -1532,7 +1545,7 @@ s16 capcom_logo_anim(void) {
         bg_w.bgw[1].l_limit = 2;
         bg_w.bgw[1].r_limit = 64;
         bg_vbl_trans_flag = 0;
-        if (Demo_Sound != 0 || Keep_BGM_Flag != 0) {
+        if (Demo_Sound != 0 || PB_Music_Off != 0) {
             bgm_request(48);
         }
         break;
@@ -1573,12 +1586,7 @@ s16 capcom_logo_anim(void) {
 
 
 /* provisional name */
-void scroll_cell_write(i, ofs, cell, tbl)
-s16 i;
-u32 ofs;
-u32 cell;
-u32 tbl;
-{
+void scroll_cell_write(s16 i, u32 ofs, u32 cell, u32 tbl) {
     u16* dst;
     u32 base;
     s16 code;
@@ -1602,7 +1610,6 @@ void bg_extra_color_trans(void)
 }
 
 void bg_base_move_common(void) {
-    s32 r;
     bg_base_x_move_check();
     bg_base_y_move_check();
     if (Bonus_Game_Flag) {
@@ -1610,7 +1617,7 @@ void bg_base_move_common(void) {
     }
     chase_start_check();
     if (bg_w.chase_flag) {
-        r = chase_xy_move();
+        chase_xy_move();
     }
 end:
     ;
@@ -1678,8 +1685,10 @@ void bg_initialize(void) {
         sprite_list_setup(i, 1, ptr);
         (void)bg_w.bgw[i].bg_adrs_c_no;
     }
-    (void)((WORK*)simmram_big_page_alloc_40)->be_flag;
-    (void)((WORK*)scrn_map_set)->be_flag;
+    if (0) {
+        scrn_map_set(0, simmram_big_page_alloc_40(1));
+        bg_scr_write();
+    }
     bg_scr_write();
     bg_w.scr_stop = 0;
     bg_w.frame_flag = 0;
@@ -1701,11 +1710,13 @@ void bg_initialize(void) {
     bg_w.quake_y_index = 0;
     bg_w.frame_deff = 64;
     bg_ofs_work[0] = bg_ofs_work[1] = bg_ofs_work[2] = 0;
-    (void)((WORK*)0xFE7F)->be_flag;
+    if (0) {
+        scrn_reg_w[0].ctrl &= 0xFE7F;
+    }
     for (i = 0; i < bg_w.scno; i++) {
-        scroll_layer_mask_enable(1 << i);
-        scroll_layer_mask_disable(16 << i);
-        scrn_attr_set(i, 0, bg_prio_tbl[(u8)bg_w.bg_index][i]);
+        Bg_On_R(1 << i);
+        Bg_Off_R(16 << i);
+        scrn_attr_set(i, 0, bg_prio_tbl[bg_w.bg_index][i]);
         scrn_reg_w[i].ctrl &= 0xFE7F;
         bg_w.bgw[i].speed_x = bg_speed_tbl[bg_w.bg_index][i][0];
         bg_w.bgw[i].speed_y = bg_speed_tbl[bg_w.bg_index][i][1];
@@ -1763,13 +1774,13 @@ void akebono_initialize(void) {
     ake_scrl_w[0].pos_y = 0;
     ake_scrl_w[0].xy[0].cal = 0x2000000;
     ake_scrl_w[0].xy[1].cal = 0;
-    sprite_list_setup(3, 1, (s16*)((u32)ake_scr_record_data));
+    sprite_list_setup(3, 1, (s16*)ake_scr_record_data);
     bg_w.bgw[3].r_no_1 = bg_w.bgw[3].r_no_2 = 0;
     bg_w.bgw[3].fam_no = 3;
     akebono_scr_write();
     scrn_reg_w[3].ctrl &= 0xFE7F;
     scrn_attr_set(3, 0, 24);
-    scroll_layer_mask_disable(8);
+    Bg_Off_R(8);
 }
 
 
@@ -1849,8 +1860,8 @@ void bg_etc_write(s16 type) {
     bg_zoom_x_pos = 0xC0;
     bg_w.quake_y_index = bg_w.quake_x_index = 0;
     for (j = 0; j < bg_w.scno; j++) {
-        scroll_layer_mask_disable(16 << j);
-        scroll_layer_mask_enable(1 << j);
+        Bg_Off_R(16 << j);
+        Bg_On_R(1 << j);
         scrn_attr_set(j, 0, 24);
         scrn_reg_w[j].ctrl &= 0xFE7F;
         bg_w.bgw[j].hos_xy[0].cal = bg_w.bgw[j].wxy[0].cal = bg_w.bgw[j].xy[0].cal = etc_bg_pos_tbl[type][j][0];
@@ -2073,3 +2084,123 @@ void bg0103(void) {
         break;
     }
 }
+
+/* 02006584 */
+char ake_attr_tbl[32] = {
+    0, 0, 0, 0, 0, 1, 0, 1,
+    0, 2, 0, 2, 0, 3, 0, 3,
+    0, 4, 0, 4, 0, 5, 0, 5,
+    0, 6, 0, 6, 0, 7, 0, 7,
+};
+/* 020065A4 */
+u32 bg_map_tbl[1][3] = {
+    { (u32)bg_scr_record_data, (u32)&bg_scr_record_data[16], (u32)&bg_scr_record_data[32] },
+};
+/* 020065B0 */
+void* scene_bg_map[66] = {
+    (void*)&ake_scr_record_data[56],
+    (void*)&bg_scr_record_data[16],
+    0,
+    (void*)&ake_scr_record_data[240],
+    (void*)&ake_scr_record_data[272],
+    (void*)&ake_scr_record_data[286],
+    (void*)&ake_scr_record_data[318],
+    (void*)&bg_scr_record_data[16],
+    0,
+    (void*)&ake_scr_record_data[56],
+    (void*)&bg_scr_record_data[16],
+    0,
+    (void*)&ake_scr_record_data[382],
+    (void*)&bg_scr_record_data[16],
+    0,
+    (void*)&ake_scr_record_data[56],
+    (void*)&bg_scr_record_data[16],
+    0,
+    (void*)&ake_scr_record_data[478],
+    (void*)&bg_scr_record_data[16],
+    0,
+    (void*)&ake_scr_record_data[556],
+    (void*)&ake_scr_record_data[588],
+    (void*)&ake_scr_record_data[602],
+    (void*)&ake_scr_record_data[616],
+    (void*)&ake_scr_record_data[648],
+    0,
+    (void*)&ake_scr_record_data[350],
+    (void*)&bg_scr_record_data[16],
+    0,
+    (void*)&ake_scr_record_data[56],
+    (void*)&ake_scr_record_data[208],
+    0,
+    (void*)&ake_scr_record_data[680],
+    (void*)&ake_scr_record_data[712],
+    0,
+    (void*)&ake_scr_record_data[744],
+    (void*)&bg_scr_record_data[16],
+    0,
+    (void*)&ake_scr_record_data[776],
+    (void*)&bg_scr_record_data[16],
+    0,
+    (void*)&ake_scr_record_data[776],
+    (void*)&bg_scr_record_data[16],
+    0,
+    (void*)&ake_scr_record_data[840],
+    (void*)&bg_scr_record_data[16],
+    0,
+    (void*)&ake_scr_record_data[866],
+    (void*)&bg_scr_record_data[16],
+    0,
+    (void*)&ake_scr_record_data[886],
+    (void*)&ake_scr_record_data[918],
+    0,
+    (void*)&ake_scr_record_data[382],
+    (void*)&bg_scr_record_data[16],
+    0,
+    (void*)&ake_scr_record_data[56],
+    (void*)&ake_scr_record_data[1046],
+    0,
+    (void*)&ake_scr_record_data[1078],
+    (void*)&ake_scr_record_data[1110],
+    0,
+    (void*)&ake_scr_record_data[1142],
+    (void*)&ake_scr_record_data[1174],
+    0,
+};
+/* 020066B8 */
+u32 bg_map_tbl2[12][3] = {
+    { (u32)&ake_scr_record_data[1206], (u32)&bg_scr_record_data[16], 0 },
+    { (u32)bg_scr_record_data, 0, 0 },
+    { (u32)bg_scr_record_data, 0, 0 },
+    { (u32)bg_scr_record_data, 0, 0 },
+    { (u32)bg_scr_record_data, (u32)&bg_scr_record_data[16], 0 },
+    { (u32)bg_scr_record_data, 0, 0 },
+    { (u32)&ake_scr_record_data[1206], 0, 0 },
+    { (u32)bg_scr_record_data, 0, 0 },
+    { (u32)&ake_scr_record_data[1206], 0, 0 },
+    { (u32)&ake_scr_record_data[1206], 0, 0 },
+    { (u32)&ake_scr_record_data[1206], 0, 0 },
+    { (u32)bg_scr_record_data, 0, 0 },
+};
+/* 02006748 */
+HUD_CELL* bg_rewrite_cell_tbl[6][3] = {
+    { (HUD_CELL*)&etc_bg_cg_src_tbl[12], (HUD_CELL*)&etc_bg_cg_src_tbl[28], (HUD_CELL*)&etc_bg_cg_src_tbl[44] },
+    { (HUD_CELL*)&etc_bg_cg_src_tbl[76], (HUD_CELL*)&etc_bg_cg_src_tbl[28], (HUD_CELL*)&etc_bg_cg_src_tbl[44] },
+    { (HUD_CELL*)&etc_bg_cg_src_tbl[164], (HUD_CELL*)&etc_bg_cg_src_tbl[108], (HUD_CELL*)&etc_bg_cg_src_tbl[124] },
+    { (HUD_CELL*)&etc_bg_cg_src_tbl[12], (HUD_CELL*)&etc_bg_cg_src_tbl[60], (HUD_CELL*)&etc_bg_cg_src_tbl[44] },
+    { (HUD_CELL*)&etc_bg_cg_src_tbl[12], (HUD_CELL*)&etc_bg_cg_src_tbl[28], (HUD_CELL*)&etc_bg_cg_src_tbl[44] },
+    { (HUD_CELL*)&etc_bg_cg_src_tbl[12], (HUD_CELL*)&etc_bg_cg_src_tbl[92], (HUD_CELL*)&etc_bg_cg_src_tbl[44] },
+};
+/* 02006790 */
+TILEREQ* bg_etc_cell_tbl[12][3] = {
+    { (TILEREQ*)&bg_cell_set_tbl[24], 0, 0 },
+    { (TILEREQ*)&bg_cell_set_tbl[120], 0, 0 },
+    { (TILEREQ*)&bg_cell_set_tbl[132], 0, 0 },
+    { (TILEREQ*)&bg_cell_set_tbl[156], 0, 0 },
+    { (TILEREQ*)&bg_cell_set_tbl[168], (TILEREQ*)&bg_cell_set_tbl[180], 0 },
+    { (TILEREQ*)&bg_cell_set_tbl[192], 0, 0 },
+    { (TILEREQ*)&bg_cell_set_tbl[204], 0, 0 },
+    { (TILEREQ*)&bg_cell_set_tbl[228], 0, 0 },
+    { (TILEREQ*)&bg_cell_set_tbl[48], 0, 0 },
+    { (TILEREQ*)&bg_cell_set_tbl[72], 0, 0 },
+    { (TILEREQ*)&bg_cell_set_tbl[96], 0, 0 },
+    { (TILEREQ*)&bg_cell_set_tbl[144], 0, 0 },
+};

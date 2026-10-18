@@ -50,6 +50,6 @@ void cmsd_x_initial_speed(MotionState* cc);
 void cmsd_y_delta_speed(MotionState* cc);
 void cmsd_y_initial_speed(MotionState* cc);
 
-s32 Convert_BCD();
+s32 remake_2_10();
 
 #endif

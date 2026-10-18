@@ -56,7 +56,7 @@ const s16 Area_Unit_Data[21][3] = {
     { 55, 127, 191 },
 };
 
-const s16 Shell_Area_Unit_Data[20][3] = {
+const s16 Shell_Area_Unit_Data[21][3] = {
     { 51, 155, 219 },
     { 59, 163, 91 },
     { 55, 159, 223 },
@@ -77,16 +77,21 @@ const s16 Shell_Area_Unit_Data[20][3] = {
     { 71, 159, 223 },
     { 71, 159, 223 },
     { 59, 163, 91 },
+    { 71, 159, 223 },
 };
 
-/* Stored after Shell_Area_Unit_Data. Nothing in the program refers to it by name or address; if it is read,
-   it is through an index past the end of Shell_Area_Unit_Data. */
-const s16 Shell_Area_Unit_Data_tail[35] = {
-    71, 159, 223, 2313, 2313, 2313, 2313, 2056,
-    2056, 2056, 2056, 1799, 1799, 1799, 1799, 1542,
-    1542, 1542, 1542, 1285, 1285, 1285, 1285, 1028,
-    1028, 1028, 1028, 771, 771, 771, 771, 514,
-    514, 514, 514,
+/* provisional name */
+/* Stored after Shell_Area_Unit_Data: eight rows counting down from 9 to 2. Nothing in the program refers
+   to it. */
+const s8 Shell_Area_Step_Data[8][8] = {
+    { 9, 9, 9, 9, 9, 9, 9, 9 },
+    { 8, 8, 8, 8, 8, 8, 8, 8 },
+    { 7, 7, 7, 7, 7, 7, 7, 7 },
+    { 6, 6, 6, 6, 6, 6, 6, 6 },
+    { 5, 5, 5, 5, 5, 5, 5, 5 },
+    { 4, 4, 4, 4, 4, 4, 4, 4 },
+    { 3, 3, 3, 3, 3, 3, 3, 3 },
+    { 2, 2, 2, 2, 2, 2, 2, 2 },
 };
 
 const s8 Combo_Speed_Unit_Data[21][20][32] = {
@@ -341,7 +346,7 @@ const s8 Shell_Guard_Data[21][10] = {
     { 28, 30, 31, 31, 31, 31, 31, 31, 31, 31 },
 };
 
-const u8 Caught_Timer_Data[8][8] = {
+const u8 Rapid_Exit_Data[8][8] = {
     { 24, 24, 24, 24, 24, 24, 24, 24 },
     { 24, 24, 24, 24, 24, 20, 20, 20 },
     { 24, 24, 24, 20, 20, 20, 16, 16 },
@@ -427,7 +432,7 @@ const u8 Denjin_Data[4][16] = {
     { 56, 56, 57, 57, 57, 57, 57, 58, 58, 58, 58, 59, 59, 59, 60, 60 },
 };
 
-const s16 Continue_Time_Data[2][16] = {
+const s16 Correct_Cont_Time_Data[2][16] = {
     { 0, 90, 65, 85, 65, 70, 70, 70, 75, 75, 75, 85, 85, 85, 85, 85 },
     { 0, 85, 55, 80, 55, 60, 60, 60, 65, 65, 65, 70, 70, 70, 70, 70 },
 };
@@ -466,7 +471,7 @@ const s16 Get_Up_SA_Tech_Data[21][3] = {
     { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 },
 };
 
-const s8 Be_Float_Data[4][16] = {
+const s8 Float_Attack_Data[4][16] = {
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2 },
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2 },
@@ -1005,7 +1010,7 @@ const u16 Free_Lever_Data[4] = {
     0x10, 0x20, 0x40, 0x70,
 };
 
-const u8 Rival_Char_Data[20] = {
+const u8 Middle_Class_Boss_Data[20] = {
     2, 11, 10, 2, 19, 2, 9, 17,
     14, 3, 13, 11, 5, 2, 0, 13,
     2, 14, 5, 1,

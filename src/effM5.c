@@ -44,6 +44,28 @@
 
 
 
+extern const s16 effM4_dir_tbl_0[][2];
+extern const s16 effM4_dir_tbl_1[][2];
+extern const s16 effM4_dir_tbl_2[][2];
+extern const s16 effM4_dir_tbl_3[][2];
+extern const s16 effM4_dir_tbl_4[][2];
+extern const s16 effM4_dir_tbl_5[][2];
+extern const s16 effM4_dir_tbl_6[][2];
+extern const s16 effM4_dir_tbl_7[][2];
+
+/* 020074BC */
+const s16 (*effM4_dir_tbl[8])[2] = {
+    effM4_dir_tbl_0,
+    effM4_dir_tbl_1,
+    effM4_dir_tbl_2,
+    effM4_dir_tbl_3,
+    effM4_dir_tbl_4,
+    effM4_dir_tbl_5,
+    effM4_dir_tbl_6,
+    effM4_dir_tbl_7,
+};
+
+
 void effect_M4_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
     case 0:
@@ -228,6 +250,6 @@ s32 effect_M5_init(PLW* oya) {
         }
     }
     cal_all_speed_data(&ewk->wu, ewk->wu.old_rno[0], work, 0, 1, 1);
-    suzi_offset_set(ewk);
+    suzi_offset_set(&ewk->wu);
     return effect_M6_init(ewk);
 }

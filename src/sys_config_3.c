@@ -29,6 +29,9 @@
 
 
 
+u16 sprite_dummy_code = 0;  /* 02007ED0 */
+
+
 /* provisional name */
 void init_render_lists(void) {
     s32 unused;

@@ -172,7 +172,11 @@ end:
 
 
 
-void K5_decode_new_hit_index(WORK* wk, MVJ* mvj, u16 mf) {
+void K5_decode_new_hit_index(wk, mvj, mf)
+WORK* wk;
+MVJ* mvj;
+u16 mf;
+{
     s16 i;
     s16 t0;
     s16 t1;
@@ -274,7 +278,9 @@ next:
 
 
 
-u32 decode_mvsw(u16 flag) {
+u32 decode_mvsw(flag)
+u16 flag;
+{
     MVSW_BE mvsw;
     mvsw.swi = flag;
     if (flag & 0x1000) {
@@ -346,10 +352,10 @@ void K5_init_data(WORK* mwk, MVJ* mvj, u16* ixtbl) {
 void K5_init_data_copy(MVJ* mvj, K5Data* dad, s16 num) {
     s16 i;
     for (i = 0; i < num; i++) {
-        mvj[i].r[0].pos.h = dad[i].mvxy_lv[0];
-        mvj[i].r[1].pos.h = dad[i].mvxy_lv[1];
-        mvj[i].r[2].pos.h = dad[i].mvxy_lv[2];
-        mvj[i].r[3].pos.h = dad[i].mvxy_lv[3];
+        mvj[i].r[0].pos.h = dad[i].data[0];
+        mvj[i].r[1].pos.h = dad[i].data[1];
+        mvj[i].r[2].pos.h = dad[i].data[2];
+        mvj[i].r[3].pos.h = dad[i].data[3];
     }
 }
 
@@ -357,10 +363,10 @@ void K5_init_data_copy(MVJ* mvj, K5Data* dad, s16 num) {
 void K5_init_data_copy2(K5Data* dad, MVJ* mvj, s16 num) {
     s16 i;
     for (i = 0; i < num; i++) {
-        dad[i].mvxy_lv[0] = mvj[i].r[0].pos.h;
-        dad[i].mvxy_lv[1] = mvj[i].r[1].pos.h;
-        dad[i].mvxy_lv[2] = mvj[i].r[2].pos.h;
-        dad[i].mvxy_lv[3] = mvj[i].r[3].pos.h;
+        dad[i].data[0] = mvj[i].r[0].pos.h;
+        dad[i].data[1] = mvj[i].r[1].pos.h;
+        dad[i].data[2] = mvj[i].r[2].pos.h;
+        dad[i].data[3] = mvj[i].r[3].pos.h;
     }
 }
 

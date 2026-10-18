@@ -77,6 +77,15 @@
 
 
 
+s16 Appear_end;  /* 02028194 */
+s16 appear_work[2];  /* 02028196 */
+s8 Appear_flag[2];  /* 0202819A */
+s8 Appear_free[2];  /* 0202819C */
+s8 Appear_hv[2];  /* 0202819E */
+s8 Appear_car_stop[2];  /* 020281A0 */
+s16 app_counter[2];  /* 020281A2 */
+
+
 void appear_work_clear(void) {
     Appear_end = 0;
     Appear_flag[0] = 0;
@@ -111,8 +120,7 @@ s32 home_visitor_check(PLW* wk) {
     return hv_type;
 }
 
-void appear_data_set(PLW* wk, s16* data) {
-    APPEAR_DATA* dtbl = (APPEAR_DATA*)data;
+void appear_data_set(PLW* wk, APPEAR_DATA* dtbl) {
     if (wk->wu.id) {
         if (Game_setting.mode) {
             wk->wu.xyz[0].disp.pos = bg_w.bgw[1].pos_x_work - dtbl->whx;
@@ -153,7 +161,7 @@ void appear_data_init_set(PLW* wk) {
     } else {
         ap_work = appear_type_tbl[wk->player_number][plw[id_work].player_number][bg_w.stage];
     }
-    dtbl = (APPEAR_DATA*)&appear_data[ap_work];
+    dtbl = &appear_data[ap_work];
     appear_data_set(wk, dtbl);
 }
 
@@ -162,7 +170,7 @@ void appear_data_init_set(PLW* wk) {
 void appear_player(PLW* wk) {
     void (*appear_jmp_tbl[42])(
         PLW* wk) = { Appear_00000, Appear_01000, Appear_01000, Appear_03000, Appear_04000, Appear_05000, Appear_06000, Appear_07000, Appear_08000, Appear_09000, Appear_10000, Appear_11000, Appear_12000, Appear_13000, Appear_14000, Appear_15000, Appear_16000, Appear_17000, Appear_18000, Appear_19000, Appear_20000, Appear_21000, Appear_22000, Appear_23000, Appear_24000, Appear_25000, Appear_26000, Appear_06000, Appear_28000, Appear_29000, Appear_30000, Appear_31000, Appear_32000, Appear_33000, Appear_34000, Appear_01000, Appear_36000, Appear_37000, Appear_38000, Appear_39000, Appear_06000, Appear_41000 };
-    appear_jmp_tbl[(s16)wk->wu.routine_no[4]](wk);
+    appear_jmp_tbl[wk->wu.routine_no[4]](wk);
 }
 
 
@@ -897,7 +905,7 @@ void Appear_16000(PLW* wk) {
         wk->wu.routine_no[3]++;
         wk->wu.disp_flag = 1;
         bg_app_stop = 1;
-        if (appear16_pose_tbl[bg_w.bg_index]) {
+        if (smoke_check[bg_w.bg_index]) {
             set_char_move_init(&wk->wu, 9, 0xE);
         } else {
             set_char_move_init(&wk->wu, 9, 0xC);

@@ -10,7 +10,7 @@
  * break levels come from pbl_select, each new level scores (Additinal_Score_DM, pbs_table) and
  * all parts fully broken sets Bonus_Game_result (set_1st_Bonus_Game_result). The final collapse throws
  * K2 debris and puts the player in a demo jump (setup_demojump). Many helpers are shared with
- * EFFC3.C; disp_bs2_parts_debug prints the part vitalities when a debug switch is on.
+ * EFFC3.C; bs2_status_disp prints the part vitalities when a debug switch is on.
  */
 
 #include "structs.h"
@@ -481,7 +481,7 @@ void effC2_main_process_second(WORK_Other* ewk, PLW* twk) {
 
 void c2_last_char_and_mvxy(WORK_Other* ewk) {
     s16 rl;
-    rl = c2_last_dir_select(ewk->wu.target_adrs, ewk);
+    rl = c2_last_dir_select((PLW*)ewk->wu.target_adrs, &ewk->wu);
     set_char_move_init(&ewk->wu, 0, ewk->wu.dm_attlv + rl + 92);
     setup_move_data_easy(&ewk->wu, c2_last_bomb[ewk->wu.dm_attlv], 1, 0);
     if (rl) {
@@ -747,8 +747,7 @@ void setup_parts_break2(WORK* wk) {
 
 
 
-/* provisional name */
-void disp_bs2_parts_debug(WORK* wk) {
+void bs2_status_disp(WORK* wk) {
     s16 i;
     if (Version_Type != 7) {
         return;
@@ -868,7 +867,7 @@ s32 effect_C2_init(WORK* wk, u8 data) {
     ewk->wu.id = 0x7A;
     ewk->wu.type = data;
     ewk->my_master = (u32*)wk;
-    ewk->wu.target_adrs = (u32*)wk->target_adrs;
+    ewk->wu.target_adrs = wk->target_adrs;
     ewk->master_player = ((PLW*)wk)->player_number;
     ewk->master_id = wk->id;
     ewk->master_work_id = wk->work_id;

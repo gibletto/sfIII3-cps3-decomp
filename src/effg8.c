@@ -3,7 +3,7 @@
  *
  * Sixteen sparkles started by akebono_finish (EFFD3) once its picture sequence ends.
  * effect_G8_init creates them; effect_G8_move waits a random delay, grows each sparkle
- * from zoom 0 while it drifts with speeds from effg8_speed_tbl, and frees it when it leaves
+ * from zoom 0 while it drifts with speeds from effg8_sp_tbl, and frees it when it leaves
  * the box tested by effg8_range_check or when the finish screen (akebono_flag) ends.
  */
 
@@ -38,10 +38,10 @@ void effect_G8_move(WORK_Other* ewk) {
         ewk->wu.old_rno[1] = 112;
         ewk->wu.xyz[0].disp.pos = ewk->wu.old_rno[0];
         ewk->wu.xyz[1].disp.pos = ewk->wu.old_rno[1];
-        ewk->wu.mvxy.a[0].sp = effg8_speed_tbl[ewk->wu.old_rno[2]][0];
-        ewk->wu.mvxy.d[0].sp = effg8_speed_tbl[ewk->wu.old_rno[2]][1];
-        ewk->wu.mvxy.a[1].sp = effg8_speed_tbl[ewk->wu.old_rno[2]][2];
-        ewk->wu.mvxy.d[1].sp = effg8_speed_tbl[ewk->wu.old_rno[2]][3];
+        ewk->wu.mvxy.a[0].sp = effg8_sp_tbl[ewk->wu.old_rno[2]][0];
+        ewk->wu.mvxy.d[0].sp = effg8_sp_tbl[ewk->wu.old_rno[2]][1];
+        ewk->wu.mvxy.a[1].sp = effg8_sp_tbl[ewk->wu.old_rno[2]][2];
+        ewk->wu.mvxy.d[1].sp = effg8_sp_tbl[ewk->wu.old_rno[2]][3];
         break;
     case 1:
         ewk->wu.old_rno[3] -= 1;
@@ -65,7 +65,7 @@ void effect_G8_move(WORK_Other* ewk) {
         }
         ewk->wu.position_x = (ewk->wu.xyz[0].disp.pos & 0x3FF);
         ewk->wu.position_y = (ewk->wu.xyz[1].disp.pos & 0x3FF);
-        sort_push_request4(ewk);
+        sort_push_request4(&ewk->wu);
         break;
     default:
         all_cgps_put_back(ewk);

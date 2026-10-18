@@ -171,7 +171,10 @@ void add_sp_arts_gauge_hit_dm(PLW* wk) {
 
 
 /* provisional name */
-s32 cal_sa_gauge_waribiki(PLW* wk, s16 asag) {
+s32 cal_sa_gauge_waribiki(wk, asag)
+PLW* wk;
+s16 asag;
+{
     s16 num;
     if (wk->cb->total <= 1) {
         return asag;

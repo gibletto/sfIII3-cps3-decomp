@@ -27,7 +27,10 @@ s16 remake_score_index(s16 dmv);
 
 
 
-void effect_at_vs_player_dm(s16 ix2, s16 ix) {
+void effect_at_vs_player_dm(ix2, ix)
+s16 ix2;
+s16 ix;
+{
     WORK_Other* as = (WORK_Other*)q_hit_push[ix2];
     PLW* ds = (PLW*)q_hit_push[ix];
     PLW* ms;

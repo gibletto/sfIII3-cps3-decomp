@@ -70,7 +70,7 @@ void effect_C0_move(WORK_Other* ewk) {
         }
         ewk->wu.position_y = mwk->wu.position_y + *(s16*)(t + (u8)((s8)mwk->player_number * 6) + 2);
         ewk->wu.position_z = mwk->wu.position_z - 4;
-        sort_push_request(ewk);
+        sort_push_request(&ewk->wu);
         break;
     case 2:
         ewk->wu.routine_no[0] = 3;

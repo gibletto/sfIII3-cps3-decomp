@@ -58,6 +58,9 @@
 #include "color3rd.h"
 #include "cps3.h"
 
+s8 dbg_play12_w[4];  /* 02028290 */
+
+
 /* provisional name */
 void debug_play12(void) {
     void (*jmp_tbl[2])() = { debug_play12_init, debug_play12_move };

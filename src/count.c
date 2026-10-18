@@ -17,6 +17,13 @@
 
 
 
+ROUND_TIMER round_timer;  /* 02028678 */
+s16 flash_timer;  /* 02028680 */
+s8 flash_r_num;  /* 02028682 */
+s8 flash_col;  /* 02028683 */
+COUNT_WORK count_work;  /* 02028684 */
+
+
 void count_cont_init(pl)
 u8 pl;
 {
@@ -33,7 +40,7 @@ u8 pl;
         sc_ram_to_vram(2, 0, 0);
         sc_ram_to_vram(3, 0, 0);
     }
-    round_timer.timer = 0x630000;
+    round_timer.size.full = 0x630000;
     Timer_Freeze = 0;
     flash_r_num = 0;
     flash_col = 0;
@@ -136,7 +143,7 @@ void bcount_cont_init(u8 pl) {
     bcount_digit_trans(pl, 5, 0);
     bcount_mark_trans(pl);
     sc_ram_to_vram(29, 0, 0);
-    round_timer.timer = 0x320000;
+    round_timer.size.full = 0x320000;
     Time_Stop = 0;
 }
 

@@ -18,6 +18,41 @@
 
 
 
+const u16 * snd_attack_ptr;  /* 02078CE8 */
+const u16 * snd_decay_ptr;  /* 02078CEC */
+const u16 * snd_lfo_rate_ptr;  /* 02078CF0 */
+const u16 * snd_pitch_lfo_ptr;  /* 02078CF4 */
+const u16 * snd_vol_lfo_ptr;  /* 02078CF8 */
+SNDSAMPLE * snd_sample_tbl;  /* 02078CFC */
+u8 ** snd_bank_tbl;  /* 02078D00 */
+u32 snd_fade_level;  /* 02078D04 */
+u32 snd_fade_speed;  /* 02078D08 */
+SNDVOICE bgm_voice[16];  /* 02078D0C */
+SNDVOICE se_voice[16];  /* 0207944C */
+SNDRAMP se_pan_ramp[16];  /* 02079B8C */
+s16 voice_state_init_pair_work;  /* 02079C0C */
+u16 snd_wave_bias;  /* 02079C0E */
+SOUND_CTRL snd_ctrl;  /* 02079C10 */
+u32 bgm_tick_step;  /* 02079C14 */
+u32 se_tick_step[16];  /* 02079C18 */
+s8 sound_sample_submit_work4;  /* 02079C58 */
+u8 bgm_master_vol;  /* 02079C59 */
+u8 snd_master_vol;  /* 02079C5A */
+u8 snd_stereo;  /* 02079C5B */
+u8 gSeqStatus[16];  /* 02079C5C */
+u32 * snd_seq_data;  /* 02079C6C */
+SNDRAMP se_ramp_req;  /* 02079C70 */
+u16 snd_reg_save;  /* 02079C78 */
+u16 snd_seq_max;  /* 02079C7A */
+u8 bgm_status_save[16];  /* 02079C7C */
+u8 sound_sample_submit_work7;  /* 02079C8C */
+u8 sound_sample_submit_work7_tail[1];  /* after sound_sample_submit_work7; nothing refers to it by name or address */
+u8 bgm_master_vol_init;  /* 02079C8E */
+
+
+u32 bgm_tempo_add = 0;  /* 02007EE8 */
+
+
 /* provisional name */
 void bgm_tempo_set(s8 tempo) {
     bgm_tempo_add = tempo * 3;
@@ -63,7 +98,7 @@ void sound_init(u8* data, SNDSAMPLE* bank_a, u8** bank_b, u8 stereo, u8 volume, 
         while (n--) {
         }
     }
-    (void)((TEXT_CELL*)n)->code;
+    (void)&((TEXT_CELL*)n)->code;
     reg = (volatile u16*)SOUND_REG;
     for (n = 0x100; n != 0; reg++) {
         *reg = 0;
@@ -142,11 +177,13 @@ s32 sound_seq_start(u16 code, s16 ramp) {
     }
     seq = (u8*)((u32)snd_seq_data + ofs);
     p = seq;
-    (void)((WORK*)ofs)->id;
+    (void)&((WORK*)ofs)->id;
     hdr = *p++;
     if (!hdr) {
         bgm_stop();
-        if (0) {}
+        if (0) {
+            return;
+        }
         i = 0;
         mv = bgm_voice;
         vp = &bgm_voice[0];
@@ -155,17 +192,18 @@ s32 sound_seq_start(u16 code, s16 ramp) {
             off += *p++;
             if (off) {
                 track = seq + off;
-                (v = vp)->origin = track;
+                v = vp;
+                v->origin = track;
                 n = midi_vlq_decode_while(track, &ticks);
                 ticks <<= 8;
                 v->event_ticks = ticks;
                 v->cursor = &track[n];
                 v->status = 0x20;
                 bank_table = snd_bank_tbl;
-                (void)((WORK*)se_tick_step)->id;
+                (void)&((WORK*)se_tick_step)->id;
                 bank = *bank_table;
-                (void)((WORK*)mv)->id;
-                (void)((TEXT_CELL*)bank_table)->code;
+                (void)mv->status;
+                (void)&((TEXT_CELL*)bank_table)->code;
                 v->patch = (SNDPATCH*)(bank + *(u16*)bank);
                 v->sample = &snd_sample_tbl[v->patch->sample_index];
                 v->note_ticks = 0;
@@ -198,7 +236,7 @@ s32 sound_seq_start(u16 code, s16 ramp) {
                 v->volume = 0;
                 v->velocity = 0;
                 v->expression = 0x40;
-                v->fine_tune = 0;
+                v->volume_offset = 0;
                 v->transpose = 0;
                 v->coarse_pitch_bend = 0;
                 v->fine_pitch_control = 0x40;
@@ -213,7 +251,7 @@ s32 sound_seq_start(u16 code, s16 ramp) {
             } else {
                 mv->status = 0xC0;
             }
-            i++, vp++, mv++;
+            i++, vp++, mv = mv + 1;
             off = *p++ << 8;
             off += *p++;
             if (off) {
@@ -226,8 +264,7 @@ s32 sound_seq_start(u16 code, s16 ramp) {
                 v->status = 0x20;
                 bank_table = snd_bank_tbl;
                 bank = *bank_table;
-                (void)((WORK*)mv)->id;
-                (void)((TEXT_CELL*)bank_table)->code;
+                (void)&((TEXT_CELL*)bank_table)->code;
                 v->patch = (SNDPATCH*)(bank + *(u16*)bank);
                 v->sample = &snd_sample_tbl[v->patch->sample_index];
                 v->note_ticks = 0;
@@ -260,7 +297,7 @@ s32 sound_seq_start(u16 code, s16 ramp) {
                 v->volume = 0;
                 v->velocity = 0;
                 v->expression = 0x40;
-                v->fine_tune = 0;
+                v->volume_offset = 0;
                 v->transpose = 0;
                 v->coarse_pitch_bend = 0;
                 v->fine_pitch_control = 0x40;
@@ -275,24 +312,24 @@ s32 sound_seq_start(u16 code, s16 ramp) {
             } else {
                 mv->status = 0xC0;
             }
-            (void)((WORK*)mv)->id;
-            (void)((WORK*)bgm_voice)->id;
-            i++, vp++, mv++;
+            (void)&((WORK*)bgm_voice)->id;
+            i++, vp++, mv = mv + 1;
             off = *p++ << 8;
             off += *p++;
             if (off) {
                 track = seq + off;
-                (v = vp)->origin = track;
+                v = vp;
+                vp->origin = track;
                 n = midi_vlq_decode_while(track, &ticks);
                 ticks <<= 8;
                 v->event_ticks = ticks;
                 v->cursor = &track[n];
                 v->status = 0x20;
                 bank_table = snd_bank_tbl;
-                (void)((WORK*)se_tick_step)->id;
+                (void)&((WORK*)se_tick_step)->id;
                 bank = *bank_table;
-                (void)((WORK*)mv)->id;
-                (void)((TEXT_CELL*)bank_table)->code;
+                (void)mv->status;
+                (void)&((TEXT_CELL*)bank_table)->code;
                 v->patch = (SNDPATCH*)(bank + *(u16*)bank);
                 v->sample = &snd_sample_tbl[v->patch->sample_index];
                 v->note_ticks = 0;
@@ -325,7 +362,7 @@ s32 sound_seq_start(u16 code, s16 ramp) {
                 v->volume = 0;
                 v->velocity = 0;
                 v->expression = 0x40;
-                v->fine_tune = 0;
+                v->volume_offset = 0;
                 v->transpose = 0;
                 v->coarse_pitch_bend = 0;
                 v->fine_pitch_control = 0x40;
@@ -340,25 +377,25 @@ s32 sound_seq_start(u16 code, s16 ramp) {
             } else {
                 mv->status = 0xC0;
             }
-            (void)((WORK*)mv)->id;
-            (void)((WORK*)bgm_voice)->id;
-            i++, vp++, mv++;
+            (void)&((WORK*)bgm_voice)->id;
+            i++, vp++, mv = mv + 1;
             off = *p++ << 8;
             off += *p++;
             if (off) {
                 track = seq + off;
-                (v = vp)->origin = track;
+                v = vp;
+                vp->origin = track;
                 n = midi_vlq_decode_while(track, &ticks);
                 ticks <<= 8;
                 v->event_ticks = ticks;
                 v->cursor = &track[n];
                 v->status = 0x20;
                 bank_table = snd_bank_tbl;
-                (void)((WORK*)se_tick_step)->id;
+                (void)&((WORK*)se_tick_step)->id;
                 bank = *bank_table;
-                (void)((WORK*)mv)->id;
-                (void)((TEXT_CELL*)bank_table)->code;
-                (void)((WORK*)bank_table)->id;
+                (void)mv->status;
+                (void)&((TEXT_CELL*)bank_table)->code;
+                (void)&((WORK*)bank_table)->id;
                 v->patch = (SNDPATCH*)(bank + *(u16*)bank);
                 v->sample = &snd_sample_tbl[v->patch->sample_index];
                 v->note_ticks = 0;
@@ -391,7 +428,7 @@ s32 sound_seq_start(u16 code, s16 ramp) {
                 v->volume = 0;
                 v->velocity = 0;
                 v->expression = 0x40;
-                v->fine_tune = 0;
+                v->volume_offset = 0;
                 v->transpose = 0;
                 v->coarse_pitch_bend = 0;
                 v->fine_pitch_control = 0x40;
@@ -406,16 +443,17 @@ s32 sound_seq_start(u16 code, s16 ramp) {
             } else {
                 mv->status = 0xC0;
             }
-            (void)((WORK*)mv)->id;
-            (void)((WORK*)bgm_voice)->id;
-            i++, vp++, mv++;
+            (void)&((WORK*)bgm_voice)->id;
+            i++, vp++, mv = mv + 1;
         }
         if (!(sound_sample_submit_work7 & 8)) {
             snd_fade_level = 0x8000;
         }
         bgm_tempo_add = 0;
         bgm_tick_step = 0;
-        if (0) {}
+        if (0) {
+            sound_sample_submit_work7 |= 8;
+        }
         sound_sample_submit_work7 |= 2;
         return;
     }
@@ -433,7 +471,7 @@ s32 sound_seq_start(u16 code, s16 ramp) {
                     se_voice[i].status = 0;
                     bank_table = snd_bank_tbl;
                     bank = *bank_table;
-                    (void)((TEXT_CELL*)bank_table)->code;
+                    (void)&((TEXT_CELL*)bank_table)->code;
                     se_voice[i].patch = (SNDPATCH*)(bank + *(u16*)bank);
                     se_voice[i].sample = &snd_sample_tbl[se_voice[i].patch->sample_index];
                     se_voice[i].decoded_pitch = 0;
@@ -466,7 +504,7 @@ s32 sound_seq_start(u16 code, s16 ramp) {
                     se_voice[i].volume = 0;
                     bgm_voice[i].velocity = 0x7F;
                     se_voice[i].expression = 0x7F;
-                    se_voice[i].fine_tune = 0;
+                    se_voice[i].volume_offset = 0;
                     se_voice[i].transpose = 0;
                     se_voice[i].coarse_pitch_bend = 0;
                     se_voice[i].fine_pitch_control = 0x40;
@@ -492,18 +530,18 @@ s32 sound_seq_start(u16 code, s16 ramp) {
                 }
             }
         }
-        (void)((WORK*)se_tick_step)->id;
+        (void)&((WORK*)se_tick_step)->id;
         return;
     }
     if (ch = hdr & 15, (*p & 0x7F) < (((u8*)&SE_VOICE(ch))[111] & 0x7F) && !(SE_VOICE(ch).status & 0x80)) {
         return;
     }
     se_voice[ch].cursor = p;
-    (void)((WORK*)seq)->id;
+    (void)&((WORK*)seq)->id;
     bank_table = snd_bank_tbl;
-    (void)((TEXT_CELL*)bank_table)->code;
+    (void)&((TEXT_CELL*)bank_table)->code;
     se_voice[ch].patch = (SNDPATCH*)(*bank_table + *(u16*)*bank_table);
-    (void)((WORK*)hdr)->id;
+    (void)&((WORK*)hdr)->id;
     se_voice[ch].sample = &snd_sample_tbl[se_voice[ch].patch->sample_index];
     se_voice[ch].envelope_level = 0;
     se_voice[ch].program_index = 0;
@@ -516,7 +554,7 @@ s32 sound_seq_start(u16 code, s16 ramp) {
     se_voice[ch].volume = 0;
     se_voice[ch].velocity = 0x7F;
     se_voice[ch].expression = 0x7F;
-    se_voice[ch].fine_tune = 0;
+    se_voice[ch].volume_offset = 0;
     se_voice[ch].transpose = 0;
     se_voice[ch].coarse_pitch_bend = 0;
     se_voice[ch].fine_pitch_control = 0x40;
@@ -631,10 +669,7 @@ u16 cmd;
 
 
 /* provisional name */
-void sound_reg_level_set(level, flag)
-s16 level;
-s8 flag;
-{
+void sound_reg_level_set(s16 level, s8 flag) {
     voice_state_init_pair_work = level;
     sound_sample_submit_work4 = flag;
 }

@@ -59,6 +59,24 @@
 #include "end_sub_2.h"
 #include "cps3.h"
 
+s16 cd_ready_flag;  /* 02028284 */
+s16 cd_spin_timer;  /* 02028286 */
+s16 roll_rate2;  /* 02028288 */
+s16 roll_rate_t2;  /* 0202828A */
+s16 roll_stop;  /* 0202828C */
+s16 name_timer;  /* 0202828E */
+
+
+static s16 staff_name_ptr = 0;  /* 020069A4 */
+static s32 staffroll_end = 0;  /* 020069A8 */
+/* 020069AC */
+/* Stored after staffroll_end. Nothing in the program refers to it by name or address; if it is read,
+   it is through an index past the end of staffroll_end. */
+u32 staffroll_end_tail[1] = {
+    0,
+};
+
+
 s32 effect_H6_init(s16 timer, s8* str, s16 X, s16 Y, s16 Original_Color, s32 unused);
 
 extern s32 staff_r_no;

@@ -7,10 +7,6 @@
 
 #pragma section TBL
 
-extern void effl3_0000();
-extern void effl3_0001();
-extern void effl3_0002();
-
 const s8 effl2_dir_tbl[2][16] = {
     { 0, 0, 0, 1, 2, 2, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4 },
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3 },

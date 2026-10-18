@@ -29,6 +29,19 @@
 
 
 
+extern const s16 scr_obj_data18_0[];
+
+/* 02006C2C */
+const s16* scr_obj_data18[1][4] = {
+    { scr_obj_data18_0, scr_obj_data18_0, scr_obj_data18_0, scr_obj_data18_0 },
+};
+/* 02006C3C */
+void (*eff18_jp_tbl[2])(WORK_Other*) = {
+    eff18_00,
+    eff18_01,
+};
+
+
 void effect_17_move(WORK_Other* ewk) {
     WORK* oya = (WORK*)ewk->my_master;
     switch (oya->routine_no[0]) {
@@ -146,7 +159,7 @@ s32 effect_17_init(WORK* wk) {
 
 
 void effect_18_move(WORK_Other* ewk) {
-    if (obr_disp_off_check()) {
+    if (obr_no_disp_check()) {
         return;
     }
     if (compel_dead_check(ewk)) {
@@ -298,7 +311,7 @@ s32 effect_18_init(s16 disp_index, s16 cursor_id, s16 sync_bg, s16 master_player
         ewk->wu.routine_no[1] = *data_ptr++;
         ewk->wu.old_rno[0] = *data_ptr++;
         ewk->wu.char_table[0] = char_add[bg_w.bg_index];
-        suzi_offset_set(ewk);
+        suzi_offset_set(&ewk->wu);
     }
     return 0;
 }

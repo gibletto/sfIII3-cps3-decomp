@@ -33,7 +33,7 @@
 
 void effect_J6_move(WORK_Other* ewk) {
     WORK_Other* oya_ptr;
-    if (obr_disp_off_check()) {
+    if (obr_no_disp_check()) {
         return;
     }
     oya_ptr = (WORK_Other*)ewk->my_master;

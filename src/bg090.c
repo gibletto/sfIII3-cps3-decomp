@@ -272,7 +272,7 @@ void bg0701_init00(void) {
     bgw_ptr->suzi_adrs = (u16*)simmram_slot_addr(bgw_ptr->suzi_c_no);
     scrn_linescroll_set_now(0, bgw_ptr->suzi_adrs);
     memset(bgw_ptr->suzi_adrs, 0, 0x1000);
-    scroll_layer_mask_enable(16);
+    Bg_On_R(16);
     suzi_line_clear(0);
     bgw_ptr->zuubun = 0xE3;
     bgw_ptr->no_suzi_line = 0x200;

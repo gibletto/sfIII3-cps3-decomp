@@ -19,6 +19,10 @@
 #include "textsound.h"
 #include "cps3.h"
 
+u16 num_font_code;  /* 02078CE0 */
+u32 palette_base;  /* 02078CE4 */
+
+
 struct PLW_tag;void tilemap_chunk_copy_16b(s16 *dst, char *src, s32 chunks)
 {
     s32 i;
@@ -45,7 +49,7 @@ void palette_bank_set(s32 offset)
 }
 
 /* provisional name */
-void palette_write(s32 offset, u16 *src, s32 count)
+void palette_write(s32 offset, const u16 *src, s32 count)
 {
     u16 *dst;
     s32 i;
@@ -193,10 +197,9 @@ void tilemap_rect_fill(u16 x, u16 y, u16 w, u16 h, u16 attr, u16 code) {
     p = (u16*)((u32)((u16*)SS_RAM) + (x << 2) + (y << 8));
     cw = w;
     skip = 0x80 - cw * 2;
-    (void)((TEXT_CELL*)cw)->code;
     if (attr != 0xFFFF && code == 0xFFFF) {
         for (row = 0; row < h; row++) {
-            for (col = 0; col < cw; col++) {
+            for (col = 0; col < cw; col = col + 1) {
                 p[1] = (p[1] & 1) | attr;
                 p += 2;
                 if (p > ((u16*)(SS_RAM + 0x3FFF))) {
@@ -204,17 +207,16 @@ void tilemap_rect_fill(u16 x, u16 y, u16 w, u16 h, u16 attr, u16 code) {
                 }
             }
             p += skip;
-            (void)((TEXT_CELL*)0)->code;
+            (void)&((TEXT_CELL*)0)->code;
             if (p > ((u16*)(SS_RAM + 0x3FFF))) {
                 p = ((u16*)SS_RAM);
             }
         }
     } else if (attr == 0xFFFF && code != 0xFFFF) {
         for (row = 0; row < h; row++) {
-            for (col = 0; col < cw; col++) {
+            for (col = 0; col < cw; col = col + 1) {
                 p[0] = code;
                 p[1] = (p[1] & 0xFFFE) | ((code & 0x100) >> 8);
-                (void)((TEXT_CELL*)col)->code;
                 p += 2;
                 if (p > ((u16*)(SS_RAM + 0x3FFF))) {
                     p = ((u16*)SS_RAM);
@@ -229,7 +231,7 @@ void tilemap_rect_fill(u16 x, u16 y, u16 w, u16 h, u16 attr, u16 code) {
         row = 0;
         at = attr | ((code & 0x100) >> 8);
         for (; row < h; row++) {
-            for (col = 0; col < cw; col++) {
+            for (col = 0; col < cw; col = col + 1) {
                 p[0] = code;
                 p[1] = at;
                 p += 2;
@@ -277,7 +279,7 @@ void tilemap_print_hex_block(u16 x, u16 y, u16 attr, u32 value, u16 digits, u16 
         if (started == 0) {
             if (d == 0) {
                 if (i == 1) {
-                    p = tilemap_put_block_next(p, attr, code);
+                    p = (TEXT_CELL*)tilemap_put_block_next((u16*)p, attr, code);
                 } else {
                     switch (mode & 3) {
                     case 1:
@@ -288,16 +290,16 @@ void tilemap_print_hex_block(u16 x, u16 y, u16 attr, u32 value, u16 digits, u16 
                     case 3:
                         break;
                     default:
-                        p = tilemap_put_block_next(p, attr, code);
+                        p = (TEXT_CELL*)tilemap_put_block_next((u16*)p, attr, code);
                         break;
                     }
                 }
             } else {
                 started = 1;
-                p = tilemap_put_block_next(p, attr, code);
+                p = (TEXT_CELL*)tilemap_put_block_next((u16*)p, attr, code);
             }
         } else {
-            p = tilemap_put_block_next(p, attr, code);
+            p = (TEXT_CELL*)tilemap_put_block_next((u16*)p, attr, code);
         }
         if ((u32)p > (u32)((u16*)(SS_RAM + 0x3FFF))) {
             p = (TEXT_CELL*)((u16*)SS_RAM);
@@ -413,17 +415,16 @@ void tilemap_print_script_seq(u16 x, u16 y, u16 pal, const TMSCRIPT* scr) {
     u32 h;
     u32 row;
     u32 col;
-    (void)((TEXT_CELL*)SS_RAM)->code;
-    (void)((TEXT_CELL*)(SS_RAM + 0x3FFF))->code;
+    (void)&((TEXT_CELL*)SS_RAM)->code;
     ox = x;
     oy = y;
     if (scr->kind == 0) {
-        line = (TMLINE*)scr->data;
+        line = scr->data;
         dst = (u16*)((u8*)((u16*)SS_RAM) + (line->x << 2) + (line->y << 8));
         if (ox + oy != 0) {
             dst = (u16*)((u8*)dst + (ox * 2 + oy * 0x80) * 2);
         }
-        for (s = line->str; *s != 0; s++) {
+        for (s = line->str; *s != 0; s = s + 1) {
             if (*s == 10) {
                 line++;
                 dst = (u16*)((u8*)((u16*)SS_RAM) + (line->x << 2) + (line->y << 8));
@@ -444,8 +445,7 @@ void tilemap_print_script_seq(u16 x, u16 y, u16 pal, const TMSCRIPT* scr) {
             }
         }
     } else {
-        blk = (u16*)scr->data;
-        (void)((TEXT_CELL*)0x100)->code;
+        blk = scr->data;
         for (; *blk != 0;) {
             n = blk[0];
             attr = blk[3];
@@ -467,7 +467,7 @@ void tilemap_print_script_seq(u16 x, u16 y, u16 pal, const TMSCRIPT* scr) {
                             dst[1] = ((d & 0x100) >> 8) | pal;
                         }
                         dst = dst + 2;
-                        d++;
+                        d = d + 1;
                         if (dst > ((u16*)(SS_RAM + 0x3FFF))) {
                             dst = ((u16*)SS_RAM);
                         }
@@ -479,14 +479,13 @@ void tilemap_print_script_seq(u16 x, u16 y, u16 pal, const TMSCRIPT* scr) {
                 }
                 dst += w << 1;
                 dst -= h << 7;
-                blk++;
+                blk = blk + 1;
                 if (dst > ((u16*)(SS_RAM + 0x3FFF))) {
                     dst = ((u16*)SS_RAM);
-                    (void)((TEXT_CELL*)0)->code;
+                    (void)&((TEXT_CELL*)0)->code;
                 }
             }
         }
-        (void)((TEXT_CELL*)i)->code;
     }
 }
 
@@ -500,7 +499,7 @@ void tilemap_print_string(u16 x, u16 y, u16 attr, const TM_STRING* sc) {
     s32 oy;
     p = (u16*)(SS_RAM + (sc->x << 2) + (sc->y << 8));
     ox = x;
-    (void)((TEXT_CELL*)ox)->code;
+    (void)&((TEXT_CELL*)ox)->code;
     oy = y;
     if (ox + oy != 0) {
         p += ox * 2 + oy * 128;

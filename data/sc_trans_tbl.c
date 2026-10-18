@@ -68,26 +68,26 @@ extern const u16 sc_vram_29_code[];
 extern const u16 sc_vram_29_pos[];
 
 extern const u32 sc_celllist_data[1324];
-extern const void* const sc_celllist_tbl[];
+extern const CELL_ENTRY* const sc_celllist_tbl[];
 
-const void* const sc_celllist_tbl[17] = {
-    (void*)&sc_celllist_data[0],
-    (void*)&sc_celllist_data[0],
-    (void*)&sc_celllist_data[42],
-    (void*)&sc_celllist_data[168],
-    (void*)&sc_celllist_data[218],
-    (void*)&sc_celllist_data[238],
-    (void*)&sc_celllist_data[258],
-    (void*)&sc_celllist_data[1032],
-    (void*)&sc_celllist_data[1082],
-    (void*)&sc_celllist_data[1132],
-    (void*)&sc_celllist_data[1194],
-    (void*)&sc_celllist_data[452],
-    (void*)&sc_celllist_data[710],
-    (void*)&sc_celllist_data[1280],
-    (void*)&sc_celllist_data[1302],
-    (void*)&sc_celllist_data[84],
-    (void*)&sc_celllist_data[126],
+const CELL_ENTRY* const sc_celllist_tbl[17] = {
+    (const CELL_ENTRY*)&sc_celllist_data[0],
+    (const CELL_ENTRY*)&sc_celllist_data[0],
+    (const CELL_ENTRY*)&sc_celllist_data[42],
+    (const CELL_ENTRY*)&sc_celllist_data[168],
+    (const CELL_ENTRY*)&sc_celllist_data[218],
+    (const CELL_ENTRY*)&sc_celllist_data[238],
+    (const CELL_ENTRY*)&sc_celllist_data[258],
+    (const CELL_ENTRY*)&sc_celllist_data[1032],
+    (const CELL_ENTRY*)&sc_celllist_data[1082],
+    (const CELL_ENTRY*)&sc_celllist_data[1132],
+    (const CELL_ENTRY*)&sc_celllist_data[1194],
+    (const CELL_ENTRY*)&sc_celllist_data[452],
+    (const CELL_ENTRY*)&sc_celllist_data[710],
+    (const CELL_ENTRY*)&sc_celllist_data[1280],
+    (const CELL_ENTRY*)&sc_celllist_data[1302],
+    (const CELL_ENTRY*)&sc_celllist_data[84],
+    (const CELL_ENTRY*)&sc_celllist_data[126],
 };
 
 /* the screen parts sc_ram_vram_tbl copies to the SS layer: for each, a list of screen positions, one of
@@ -514,10 +514,10 @@ const PAL_BYTE_LIST sc_chr_list_tbl[1] = {
     { (void*)sc_vram_00_code, (void*)sc_cells_0 },
 };
 
-const void* const sc_chr_slot_tbl[5] = {
-    (void*)sc_cells_0,
-    (void*)sc_cells_5,
-    (void*)sc_cells_1,
-    (void*)sc_cells_6,
-    (void*)sc_cells_50,
+const u16* const sc_chr_slot_tbl[5] = {
+    sc_cells_0,
+    sc_cells_5,
+    sc_cells_1,
+    sc_cells_6,
+    sc_cells_50,
 };

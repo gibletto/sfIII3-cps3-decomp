@@ -13,7 +13,6 @@ extern const u8 wipe_clear_bitmap_2[];
 extern const u8 wipe_clear_bitmap_3[];
 extern const u8 wipe_clear_bitmap_4[];
 
-extern const u8 wipe_set_pattern_tbl[];
 extern const BitmapSrc wipe_clear_pattern_tbl[];
 extern const u8 wipe_column_map_0[];
 extern const u8 wipe_column_map_1[];

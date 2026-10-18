@@ -68,6 +68,13 @@
 
 
 
+s16 Cont_No;  /* 0201700C */
+s16 Cont_Sub_No;  /* 0201700E */
+s16 Cont_Sub2_No;  /* 02017010 */
+s16 Cont_Sub3_No;  /* 02017012 */
+s16 Cont_Timer;  /* 02017014 */
+
+
 void GameOver_2nd(void) {
     switch (GO_No[1]) {
     case 0:
@@ -142,7 +149,7 @@ void GameOver_2nd(void) {
     case 6:
         if (--G_Timer == 0) {
             GO_No[1]++;
-            G_Timer = Result_Disp_Timer[Player_id];
+            G_Timer = Result_Timer[Player_id];
         }
         break;
     case 7:

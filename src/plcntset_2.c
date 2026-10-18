@@ -98,7 +98,6 @@ run:
     for (i = 47; i > 0; i--) {
         zanzou_table[0][i] = zanzou_table[0][i - 1];
         zanzou_table[1][i] = zanzou_table[1][i - 1];
-        continue;
     }
     zanzou_table[0]->pos_x = plw[0].wu.position_x;
     zanzou_table[0]->pos_y = plw[0].wu.position_y;
@@ -119,8 +118,8 @@ run:
     zanzou_table[1]->cg_flp = plw[1].wu.cg_flip;
     zanzou_table[1]->kowaza = plw[1].wu.kind_of_waza;
     if (pl_eff_disp_stop == 0) {
-        sort_push_request((WORK_Other*)&plw[0]);
-        sort_push_request((WORK_Other*)&plw[1]);
+        sort_push_request((WORK*)&plw[0]);
+        sort_push_request((WORK*)&plw[1]);
     }
     if (Combo_Demo_Flag == 0) {
         spgauge_cont_main();
@@ -331,7 +330,7 @@ void plcnt_move(void) {
             Round_Result |= 0x200;
         }
         if (Winner_id != Loser_id) {
-            grade_store_vitality(Winner_id + 0);
+            grade_store_vitality(Winner_id);
         }
     }
     grade_check_tairyokusa();
@@ -488,7 +487,7 @@ void settle_type_30000(void) {
             plw[Loser_id].wu.routine_no[2] = 41;
             plw[0].wu.routine_no[3] = plw[1].wu.routine_no[3] = 0;
             plw[0].wu.cg_type = plw[1].wu.cg_type = 0;
-            grade_set_round_result(Winner_id + 0);
+            grade_set_round_result(Winner_id);
             complete_victory_pause();
             pcon_rno[2]++;
             if (plw[Loser_id].wu.operator == 0 && plw[Loser_id].player_number == PL_GILL) {
@@ -523,7 +522,7 @@ void settle_type_40000(void) {
                 plw[Loser_id].wu.routine_no[2] = 41;
                 plw[Loser_id].wu.routine_no[3] = 0;
                 plw[Winner_id].wu.cg_type = 0;
-                grade_set_round_result(Winner_id + 0);
+                grade_set_round_result(Winner_id);
                 plw[0].image_setup_flag = plw[1].image_setup_flag = 0;
                 plw[Winner_id].wu.dir_timer = 60;
                 if (plw[Loser_id].wu.operator == 0 && plw[Loser_id].player_number == PL_GILL) {
@@ -581,7 +580,7 @@ void settle_type_50000(void) {
             plw[Loser_id].wu.routine_no[2] = 41;
             plw[Loser_id].wu.routine_no[3] = 0;
             plw[Winner_id].do_not_move = 1;
-            grade_set_round_result(Winner_id + 0);
+            grade_set_round_result(Winner_id);
             bg_stop = 1;
         }
         break;
@@ -763,7 +762,7 @@ void check_damage_hosei_dageki(PLW* w1, PLW* w2) {
 
 
 s32 time_over_check(void) {
-    if ((will_die() != 0) && (round_timer.timer == 0)) {
+    if ((will_die() != 0) && (round_timer.size.full == 0)) {
         Winner_id = 0;
         Loser_id = 1;
         if (plw[0].wu.vital_new < plw[1].wu.vital_new) {

@@ -9,7 +9,7 @@ void reset_fight_status(void);
 void reset_round_and_screen(void);
 void erase_extra_plef_work(void);
 void setup_base_and_other_data(void);
-void set_base_data_metamor(PLW* wk);
+void set_base_data_metamorphose(PLW* wk);
 void clear_kizetsu_point(PLW* wk);
 void set_base_data(PLW* wk, s16 ix);
 void set_base_data_tiny(PLW* wk);

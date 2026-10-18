@@ -28,8 +28,81 @@
 
 
 
+extern const u16 rca_char_table_023[318];
+extern const u32 afc_char_table[];
+extern const u32 bns_char_table[];
+extern const u32 brz_char_table[];
+extern const u32 chn_char_table[];
+extern const u32 eng_char_table[];
+extern const u32 fnl_char_table[];
+extern const u32 frc_char_table[];
+extern const u32 grm_char_table[];
+extern const u32 hkg_char_table[];
+extern const u32 j10_char_table[];
+extern const u32 j11_char_table[];
+extern const u32 jp3_char_table[];
+extern const u32 orm_char_table[];
+extern const u32 rca_char_table[];
+extern const u32 usa_char_table[];
+
+/* 02006A80 */
+u32* char_add[23] = {
+    fnl_char_table,
+    usa_char_table,
+    j10_char_table,
+    hkg_char_table,
+    eng_char_table,
+    rca_char_table,
+    grm_char_table,
+    j11_char_table,
+    afc_char_table,
+    brz_char_table,
+    hkg_char_table,
+    usa_char_table,
+    brz_char_table,
+    orm_char_table,
+    (u32*)&rca_char_table_023[36],
+    (u32*)&rca_char_table_023[36],
+    chn_char_table,
+    jp3_char_table,
+    usa_char_table,
+    rca_char_table,
+    frc_char_table,
+    bns_char_table,
+    bns_char_table,
+};
+
+
+/* 02006ADC */
+const s16* scr_obj_data[23] = {
+    (const s16*)&scr_obj_num[23],
+    (const s16*)&scr_obj_num[24],
+    (const s16*)&scr_obj_num[23],
+    (const s16*)&scr_obj_num[23],
+    (const s16*)&scr_obj_num[23],
+    (const s16*)&scr_obj_num[48],
+    (const s16*)&scr_obj_num[112],
+    (const s16*)&scr_obj_num[120],
+    (const s16*)&scr_obj_num[152],
+    (const s16*)&scr_obj_num[200],
+    (const s16*)&scr_obj_num[40],
+    (const s16*)&scr_obj_num[24],
+    (const s16*)&scr_obj_num[208],
+    (const s16*)&scr_obj_num[216],
+    (const s16*)&scr_obj_num[224],
+    (const s16*)&scr_obj_num[224],
+    (const s16*)&scr_obj_num[248],
+    (const s16*)&scr_obj_num[264],
+    (const s16*)&scr_obj_num[23],
+    (const s16*)&scr_obj_num[80],
+    (const s16*)&scr_obj_num[280],
+    (const s16*)&scr_obj_num[312],
+    (const s16*)&scr_obj_num[320],
+};
+
+
 void effect_05_move(WORK_Other* ewk) {
-    if (obr_disp_off_check() == 0) {
+    if (obr_no_disp_check() == 0) {
         switch (ewk->wu.routine_no[0]) {
         case 0:
             ewk->wu.routine_no[0]++;
@@ -84,7 +157,7 @@ s32 effect_05_init(void) {
         ewk->wu.my_priority = ewk->wu.position_z = *data_ptr++;
         ewk->wu.char_index = *data_ptr++;
         ewk->wu.sync_suzi = *data_ptr++;
-        suzi_offset_set(ewk);
+        suzi_offset_set(&ewk->wu);
     }
     return 0;
 }

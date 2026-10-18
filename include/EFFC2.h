@@ -5,7 +5,7 @@
 
 s32 c2_last_dir_select(PLW* wk, WORK* efw);
 s32 bs2_sync_bomb(WORK* wk);
-void disp_bs2_parts_debug(WORK* wk);
+void bs2_status_disp(WORK* wk);
 void clear_bs2_floor(WORK_Other* wk);
 void init_bs2_floor(void);
 s32 effect_C2_init(WORK* wk, u8 data);

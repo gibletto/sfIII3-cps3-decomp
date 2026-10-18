@@ -34,6 +34,16 @@
 extern volatile s16 flip_crt_ofs_x;
 extern volatile s16 flip_crt_ofs_y;
 
+SCRLPOS scrn_pos[5];  /* 0206A104 */
+SCROLL_CTRL scrn_reg_w[4];  /* 0206A154 */
+SPRPTR scrn_map_ptr[4];  /* 0206A17C */
+u16 scrn_line_prm[4][2];  /* 0206A1BC */
+SCRN_MODE scrn_mode_prm[4];  /* 0206A1CC */
+u16 Screen_Switch;  /* 0206A1DC */
+u16 Screen_Switch_Buffer;  /* 0206A1DE */
+u8 Screen_Switch_Req;  /* 0206A1E0 */
+
+
 /* provisional name: unreferenced; toggles a scroll layer's flip bits and applies them */
 void scrn_flip_set(u16 n, u16 flip) {
     s32 r;
@@ -74,7 +84,7 @@ void scrn_flip_toggle(u16 n, u16 flip) {
 /* provisional name */
 void clear_scroll_layer_state_and_mask(void) {
     s32 i;
-    scroll_layer_mask_disable(0xFFF);
+    Bg_Off_R(0xFFF);
     for (i = 0; i < 4; i++) {
         scrn_reg_w[i].pos_x = 0;
         scrn_reg_w[i].pos_y = 0;
@@ -88,13 +98,10 @@ void clear_scroll_layer_state_and_mask(void) {
 
 
 
-/* provisional name */
-void scroll_layer_mask_enable(mask)
-u16 mask;
-{
+void Bg_On_R(u16 mask) {
     Screen_Switch |= mask;
     Screen_Switch_Buffer = Screen_Switch &= 0xFFF;
-    scroll_layer_commit();
+    Scrn_Renew();
 }
 
 
@@ -103,19 +110,18 @@ void Bg_On_W(u16 mask) {
     Screen_Switch |= mask;
     Screen_Switch &= 0xFFF;
     Screen_Switch_Req = 1;
-    scroll_layer_commit();
+    Scrn_Renew();
 }
 
 
 
-/* provisional name */
-void scroll_layer_mask_disable(mask)
+void Bg_Off_R(mask)
 u16 mask;
 {
     mask = ~mask;
     Screen_Switch &= mask;
     Screen_Switch_Buffer = Screen_Switch &= 0xFFF;
-    scroll_layer_commit();
+    Scrn_Renew();
 }
 
 
@@ -127,13 +133,12 @@ u16 mask;
     Screen_Switch &= mask;
     Screen_Switch &= 0xFFF;
     Screen_Switch_Req = 1;
-    scroll_layer_commit();
+    Scrn_Renew();
 }
 
 
 
-/* provisional name */
-void scroll_layer_commit(void) {
+void Scrn_Renew(void) {
     s32 j;
     s32 i;
     u16 bit;
@@ -201,10 +206,7 @@ u32 simmram_small_page_addr(void) {
 
 
 /* provisional name */
-void scrn_map_set_now(n, p)
-u16 n;
-u32 p;
-{
+void scrn_map_set_now(u16 n, u32 p) {
     scrn_map_ptr[n].ptr0 = (void*)p;
     scrn_map_ptr[n].ptr2 = (void*)p;
 }
@@ -212,10 +214,7 @@ u32 p;
 
 
 /* provisional name */
-void scrn_map_set(n, p)
-u16 n;
-u32 p;
-{
+void scrn_map_set(u16 n, u32 p) {
     scrn_map_ptr[n].ptr0 = (void*)p;
 }
 
@@ -240,11 +239,7 @@ void* p;
 
 
 /* provisional name */
-void scrn_attr_set(n, attr, bits)
-s16 n;
-u16 attr;
-u16 bits;
-{
+void scrn_attr_set(s16 n, u16 attr, u16 bits) {
     scrn_reg_w[n].attr = attr << 6;
     scrn_reg_w[n].attr |= bits;
 }
@@ -293,11 +288,7 @@ void Scrn_Y_Set_R(ix, y)
 
 
 
-void Scrn_Move_Set(n, x, y)
-s32 n;
-s16 x;
-s16 y;
-{
+void Scrn_Move_Set(s32 n, s16 x, s16 y) {
     scrn_pos[n].set_x.disp.pos = x;
     scrn_pos[n].set_y.disp.pos = y;
 }
@@ -311,7 +302,9 @@ void Scrn_X_Set_W(s32 ix, s16 x)
 }
 
 /* provisional name */
-void Scrn_Y_Set_W(s32 ix, s16 y)
+void Scrn_Y_Set_W(ix, y)
+s32 ix;
+s16 y;
 {
     scrn_pos[ix].set_y.disp.pos = y;
 }
@@ -359,7 +352,7 @@ void scroll_layers_finalize_frame(void) {
         reg++;
         if (Screen_Switch_Req) {
             Screen_Switch_Req = 0;
-            scroll_layer_commit();
+            Scrn_Renew();
         }
         w = scrn_reg_w[i].ctrl & ~0x3FF;
         w |= scrn_line_prm[i][1] & 0x3FF;

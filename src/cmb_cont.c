@@ -36,6 +36,26 @@
 
 
 
+s16 old_cmb_flag[2];  /* 02028838 */
+s8 cmb_stock[2];  /* 0202883C */
+s8 first_attack;  /* 0202883E */
+s8 rever_attack[2];  /* 0202883F */
+s8 paring_attack[2];  /* 02028841 */
+s8 bonus_pts[2];  /* 02028843 */
+s16 hit_num;  /* 02028846 */
+u8 sa_kind;  /* 02028848 */
+u8 end_flag[2];  /* 02028849 */
+s16 calc_hit[2][10];  /* 0202884C */
+s16 score_calc[2][12];  /* 02028874 */
+s8 cmb_all_stock;  /* 020288A4 */
+s8 sarts_finish_flag[2];  /* 020288A5 */
+s8 last_hit_time;  /* 020288A7 */
+s8 cmb_calc_now[2];  /* 020288A8 */
+u8 cst_read[2];  /* 020288AA */
+u8 cst_write[2];  /* 020288AC */
+CMST_WIN cmst_buff[2][4];  /* 020288B0 */
+
+
 void combo_cont_init(void) {
     old_cmb_flag[0] = 0;
     old_cmb_flag[1] = 0;
@@ -149,11 +169,12 @@ void combo_control(s8 PL) {
         first_attack = 3;
         return;
     }
-    combo_hit_count(PL);
+    check_and_set_combo(PL);
 }
 
-/* provisional name */
-void combo_hit_count(s8 PL) {
+void check_and_set_combo(PL)
+s8 PL;
+{
     s8 PLS;
     if (PL == 0) {
         PLS = 1;
@@ -177,7 +198,9 @@ void combo_hit_count(s8 PL) {
 
 
 
-void combo_hensuu_clear(s8 PL) {
+void combo_hensuu_clear(PL)
+s8 PL;
+{
     work_init_zero((s32*)plw[PL].cb, sizeof(ComboType));
     combo_rp_clear_check(PL);
     memset(calc_hit[PL], 0, sizeof(calc_hit[0]));
@@ -189,7 +212,9 @@ void combo_hensuu_clear(s8 PL) {
 
 
 
-void combo_rp_clear_check(s8 PL) {
+void combo_rp_clear_check(PL)
+s8 PL;
+{
     if (plw[PL].wu.routine_no[1] != 1 || plw[PL].wu.routine_no[2] != 17 || plw[PL].wu.routine_no[3] == 0 ||
         plw[PL].wu.routine_no[3] == 3) {
         work_init_zero((s32*)plw[PL].rp, sizeof(ComboType));
@@ -198,7 +223,9 @@ void combo_rp_clear_check(s8 PL) {
 
 
 
-void super_arts_finish_check(s8 PL) {
+void super_arts_finish_check(PL)
+s8 PL;
+{
     if (arts_finish_check2(PL)) {
         if ((plw[PL].cb->new_dm & 0x3F) <= 0x2F) {
             sa_kind = 2;
@@ -211,7 +238,9 @@ void super_arts_finish_check(s8 PL) {
 
 
 
-void super_arts_last_check(s8 PL) {
+void super_arts_last_check(PL)
+s8 PL;
+{
     if ((plw[PL].cb->new_dm & 0x3F) >= 0x20) {
         sarts_finish_flag[PL] = 1;
     } else {
@@ -222,7 +251,9 @@ void super_arts_last_check(s8 PL) {
 
 
 
-void first_attack_pts_check(s8 PL) {
+void first_attack_pts_check(PL)
+s8 PL;
+{
     if (plw[PL].wu.id == first_attack - 1) {
         first_attack = 3;
         bonus_pts[PL] += 2;
@@ -231,7 +262,9 @@ void first_attack_pts_check(s8 PL) {
 
 
 
-s32 reversal_check(s8 PL) {
+s32 reversal_check(PL)
+s8 PL;
+{
     s8 PLS;
     if (rever_attack[PL]) {
         return 0;
@@ -254,7 +287,9 @@ s32 reversal_check(s8 PL) {
 
 
 
-void reversal_continue_check(s8 PL) {
+void reversal_continue_check(PL)
+s8 PL;
+{
     if (plw[PL].wu.routine_no[1] != 4) {
         rever_attack[PL] = 0;
     } else {
@@ -263,14 +298,15 @@ void reversal_continue_check(s8 PL) {
 }
 
 
-/* provisional name */
-void bonus_pts_inc(s8 id) {
+void reversal_attack_pts_check(s8 id) {
     bonus_pts[id]++;
 }
 
 
 
-s32 paring_check(s8 PL) {
+s32 paring_check(PL)
+s8 PL;
+{
     s8 PLS;
     if (paring_bonus_r[PL]) {
         paring_bonus_r[PL] = 0;
@@ -289,7 +325,9 @@ s32 paring_check(s8 PL) {
 
 
 
-void hit_combo_check(s8 PL) {
+void hit_combo_check(PL)
+s8 PL;
+{
     s32* sa_ptr = (s32*)plw[PL].cb->kind_of[4][0];
     s8 lpx;
     for (lpx = 0; lpx < 20; lpx++) {
@@ -316,7 +354,9 @@ void hit_combo_check(s8 PL) {
 
 
 
-s32 arts_finish_check(s8 PL) {
+s32 arts_finish_check(PL)
+s8 PL;
+{
     if (Conclusion_Flag && Conclusion_Type == 0 && Loser_id == PL) {
         if (sarts_finish_flag[PL]) {
             return 1;
@@ -327,7 +367,9 @@ s32 arts_finish_check(s8 PL) {
 
 
 
-s32 arts_finish_check2(s8 PL) {
+s32 arts_finish_check2(PL)
+s8 PL;
+{
     if (Conclusion_Flag) {
         if (Conclusion_Type == 0) {
             if (Loser_id == PL) {
@@ -403,7 +445,10 @@ u32 pts;
 
 
 
-void combo_window_push(s8 PL, s8 KIND) {
+void combo_window_push(PL, KIND)
+s8 PL;
+s8 KIND;
+{
     u32 score;
     s8 PLS;
     if (KIND < 3) {
@@ -567,7 +612,11 @@ void combo_window_trans(s8 PL) {
                     }
                 }
                 mask = 3;
-                if (!(mask ^= end_flag[PL] & mask)) {
+                if (DEBUG_EDIT) {
+                    combo_window_all_clear();
+                    mask = check_combo_end(0);
+                }
+                if ((end_flag[PL] & mask) == mask) {
                     cmst_buff[PL][cst_read[PL]].routine_num++;
                     cmst_buff[PL][cst_read[PL]].timer[1] = cmb_window_time_tbl[cmst_buff[PL][cst_read[PL]].kind];
                     if (PL == 0) {

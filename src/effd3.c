@@ -65,12 +65,12 @@ void akebono_finish(WORK_Other* ewk) {
         ewk->wu.old_rno[0] = 13;
         ewk->wu.disp_flag = 0;
         for (i = 0; i < bg_w.scno; i++) {
-            scroll_layer_mask_disable(1 << i);
+            Bg_Off_R(1 << i);
         }
-        scroll_layer_mask_enable(8);
+        Bg_On_R(8);
         akebono_flag = 1;
         Sound_SE(117);
-        scroll_layer_mask_disable(0x80);
+        Bg_Off_R(0x80);
         scrn_map_set(3, ake_scrl_w[1].adrs);
         Scrn_Move_Set(3, ake_pos_tbl[0][0] - bg_w.pos_offset, ake_pos_tbl[0][1]);
         bg_w.bgw[3].position_x = ake_pos_tbl[0][0] - bg_w.pos_offset;

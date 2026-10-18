@@ -169,7 +169,7 @@ s32 effect_D4_init(WORK* wk, u8 data) {
     ewk->my_master = (u32*)wk;
     ewk->master_work_id = wk->work_id;
     ewk->master_id = wk->id;
-    ewk->wu.target_adrs = (u32*)wk->target_adrs;
+    ewk->wu.target_adrs = wk->target_adrs;
     ewk->wu.xyz[0].disp.pos = wk->position_x;
     ewk->wu.xyz[1].disp.pos = wk->position_y;
     ewk->wu.xyz[2].disp.pos = wk->position_z;

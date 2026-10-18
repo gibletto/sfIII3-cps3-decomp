@@ -7,11 +7,6 @@
 
 #pragma section TBL
 
-extern void end_100_0000();
-extern void end_100_0001();
-extern void end_100_0002();
-extern void end_100_0004();
-
 const PANEL end_100_panel[11] = {
     { 0, 1 }, { 64, 2 }, { 128, 3 }, { 4096, 4 }, { 4160, 5 }, { 4224, 6 }, { 4288, 7 }, { 8192, 8 },
     { 8256, 9 }, { 8320, 10 }, { 8384, 11 },

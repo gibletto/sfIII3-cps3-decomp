@@ -132,7 +132,9 @@ void sound_reg_level_set(s16 level, s8 flag);
    until the next frame. */
 /* provisional name */
 void game_frame_task(void) {
-    goto loop;
+    if (0) {
+        task_sleep(1);
+    }
 loop:
     bg0001();
     color_trans_dummy();
@@ -176,7 +178,7 @@ void match_state_0_fight(void) {
         Before_Select_Sub();
         if (Free_Play) {
             G_No2 = 4;
-            entry_to_in_game();
+            Exit_Title_Sub_Entry();
             return;
         } else {
             E_No0 = 1;
@@ -472,7 +474,7 @@ void Game01(void) {
                 E_No3 = 0;
                 Demo_Lever_Play = 0;
             } else {
-                Demo_Step_Flag = 1;
+                Demo_Time_Stop = 1;
                 plw[0].wu.operator = 0;
                 Operator_Status[0] = 0;
                 plw[1].wu.operator = 0;
@@ -672,7 +674,7 @@ void Game2_0(void) {
     Game_difficulty = 15;
     Game_timer = 0;
     Game_pause = 0;
-    Demo_Step_Flag = 0;
+    Demo_Time_Stop = 0;
     C_No0 = 0;
     C_No1 = 0;
     C_No2 = 0;
@@ -919,7 +921,7 @@ void Game09(void) {
         Game_difficulty = 15;
         Game_timer = 0;
         Game_pause = 0;
-        Demo_Step_Flag = 0;
+        Demo_Time_Stop = 0;
         C_No0 = 0;
         C_No1 = 0;
         C_No2 = 0;
@@ -1313,7 +1315,9 @@ s32 Check_Disp_Rank_Request(void) {
 
 
 
-void Request_Break_Sub(s16 PL_id) {
+void Request_Break_Sub(PL_id)
+s16 PL_id;
+{
     if (Request_Break[PL_id]) {
         if (Ck_Break_Into(0, 0, PL_id)) {
             plw[PL_id].wu.operator = 1;
@@ -1395,7 +1399,7 @@ void Game_Dummy(void) {
 
 
 void Time_Control(void) {
-    if (Allow_a_battle_f != 0 && Demo_Step_Flag == 0 && Bonus_Game_Flag == 0) {
+    if (Allow_a_battle_f != 0 && Demo_Time_Stop == 0 && Bonus_Game_Flag == 0) {
         count_cont_main();
         if (Control_Time >= Limit_Time) {
             Control_Time = Limit_Time;

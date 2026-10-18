@@ -28,6 +28,10 @@
 
 
 
+s16 RND_95;  /* 02068C10 */
+s16 END_OF_95;  /* 02068C12 */
+
+
 void effect_95_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
     case 0:
@@ -144,23 +148,23 @@ s32 effect_95_init(s16 kind) {
     ewk->wu.my_family = 2;
     ewk->wu.char_index = 85;
     ewk->wu.dmcal_m = Continue_Count[LOSER];
-    ewk->wu.xyz[1].disp.pos = ((BGW*)((u8*)bg_w.bgw + 0x90))->wxy[1].disp.pos + 0x98;
+    ewk->wu.xyz[1].disp.pos = bg_w.bgw[1].wxy[1].disp.pos + 0x98;
     ewk->wu.position_z = 15;
     switch (kind) {
     case 1:
-        ewk->wu.xyz[0].disp.pos = ((BGW*)((u8*)bg_w.bgw + 0x90))->wxy[0].disp.pos + 0x252;
+        ewk->wu.xyz[0].disp.pos = bg_w.bgw[1].wxy[0].disp.pos + 0x252;
         break;
     case 2:
-        ewk->wu.xyz[0].disp.pos = ((BGW*)((u8*)bg_w.bgw + 0x90))->wxy[0].disp.pos + 0x23A;
+        ewk->wu.xyz[0].disp.pos = bg_w.bgw[1].wxy[0].disp.pos + 0x23A;
         break;
     case 8:
         ewk->wu.old_rno[6] = 6;
-        ewk->wu.xyz[0].disp.pos = ((BGW*)((u8*)bg_w.bgw + 0x90))->wxy[0].disp.pos + 0x21A;
+        ewk->wu.xyz[0].disp.pos = bg_w.bgw[1].wxy[0].disp.pos + 0x21A;
         break;
     case 4:
         END_OF_95 = 10;
         ewk->wu.old_rno[5] = 6;
-        ewk->wu.xyz[0].disp.pos = ((BGW*)((u8*)bg_w.bgw + 0x90))->wxy[0].disp.pos + 0x202;
+        ewk->wu.xyz[0].disp.pos = bg_w.bgw[1].wxy[0].disp.pos + 0x202;
         break;
     default:
         break;

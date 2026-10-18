@@ -7,45 +7,6 @@
 
 #pragma section TBL
 
-extern void Appear_00000();
-extern void Appear_01000();
-extern void Appear_03000();
-extern void Appear_04000();
-extern void Appear_05000();
-extern void Appear_06000();
-extern void Appear_07000();
-extern void Appear_08000();
-extern void Appear_09000();
-extern void Appear_10000();
-extern void Appear_11000();
-extern void Appear_12000();
-extern void Appear_13000();
-extern void Appear_14000();
-extern void Appear_15000();
-extern void Appear_16000();
-extern void Appear_17000();
-extern void Appear_18000();
-extern void Appear_19000();
-extern void Appear_20000();
-extern void Appear_21000();
-extern void Appear_22000();
-extern void Appear_23000();
-extern void Appear_24000();
-extern void Appear_25000();
-extern void Appear_26000();
-extern void Appear_28000();
-extern void Appear_29000();
-extern void Appear_30000();
-extern void Appear_31000();
-extern void Appear_32000();
-extern void Appear_33000();
-extern void Appear_34000();
-extern void Appear_36000();
-extern void Appear_37000();
-extern void Appear_38000();
-extern void Appear_39000();
-extern void Appear_41000();
-
 const APPEAR_DATA appear_data[55] = {
     { -88, 0, -88, 0, 1, 0, 0 },
     { -88, 0, -88, 0, 1, 1, 0 },

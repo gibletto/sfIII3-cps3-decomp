@@ -15,6 +15,25 @@
 #include "sys_config_3.h"
 #include "cps3.h"
 
+s32 poly_dma_state;  /* 0207603C */
+s16 poly_reserve0;  /* 02076040 */
+s16 poly_reserve1;  /* 02076042 */
+POLY_LINE poly_line_buf[2][0x155];  /* 02076044 */
+u32 poly_line_cnt[2];  /* 0207803C */
+u32 poly_line_rd[2];  /* 02078044 */
+POLYCMD poly_quad_buf[2][32];  /* 0207804C */
+u32 poly_quad_cnt[2];  /* 0207844C */
+u32 poly_quad_rd[2];  /* 02078454 */
+u32 poly_order_pos[2];  /* 0207845C */
+u16 poly_order_kind[2][0x175];  /* 02078464 */
+s32 poly_wr_bank;  /* 02078A38 */
+s32 poly_rd_bank;  /* 02078A3C */
+
+
+u32 poly_buf_offset = 0;  /* 02007EE0 */
+s32 poly_cram_bank = 0;  /* 02007EE4 */
+
+
 /* provisional name */
 void poly_queue_init(s32 offset) {
     s32 unused[2];

@@ -75,9 +75,9 @@ void cal_damage_vitality(PLW* as, PLW* ds) {
     s16 power = Damage_Power_Data[xx];
     s32 d;
     if (as->player_number == PL_GOUKI2) {
-        yy = Damage_Rate_Data[1][Round_Level];
+        yy = Pow_Control_Data_1[1][Round_Level];
     } else {
-        yy = Damage_Rate_Data[0][Round_Level];
+        yy = Pow_Control_Data_1[0][Round_Level];
     }
     ds->wu.dm_vital = power * yy / 100;
     d = 8;
@@ -97,9 +97,9 @@ void cal_damage_vitality_eff(WORK_Other* as, PLW* ds) {
     s16 power = Damage_Power_Data[xx];
     s32 d;
     if (((PLW*)as)->player_number == PL_GOUKI2) {
-        yy = Damage_Rate_Data[1][Round_Level];
+        yy = Pow_Control_Data_1[1][Round_Level];
     } else {
-        yy = Damage_Rate_Data[0][Round_Level];
+        yy = Pow_Control_Data_1[0][Round_Level];
     }
     ds->wu.dm_vital = power * yy / 100;
     d = 8;
@@ -124,15 +124,15 @@ u16 ix;
         }
         id = wk->master_id;
     }
-    Score[(u8)id][2] += Score_Data[ix];
+    Score[id][2] += Score_Data[ix];
     if (plw[id].wu.operator) {
         if (Play_Type == 0) {
-            Score[(u8)id][0] += Score_Data[ix];
-            if (Score[(u8)id][0] >= 99999900) {
-                Score[(u8)id][0] = 99999900;
+            Score[id][0] += Score_Data[ix];
+            if (Score[id][0] >= 99999900) {
+                Score[id][0] = 99999900;
             }
         } else {
-            Score[(u8)id][1] += Score_Data[ix];
+            Score[id][1] += Score_Data[ix];
         }
     }
     if (plw[id].wu.operator != 0 && bg_w.stage != 22 && bg_w.stage != 21) {
@@ -143,7 +143,9 @@ u16 ix;
 
 
 /* provisional name */
-void Disp_Player_Score(s16 id) {
+void Disp_Player_Score(id)
+s16 id;
+{
     s16 digit[8];
     u32 score;
     s32 div;

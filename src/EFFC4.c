@@ -62,7 +62,7 @@ void effect_C4_move(WORK_Other* ewk) {
         }
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos;
-        sort_push_request(ewk);
+        sort_push_request(&ewk->wu);
         break;
     case 4:
         if (!EXE_flag && !Game_pause) {
@@ -75,7 +75,7 @@ void effect_C4_move(WORK_Other* ewk) {
         }
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos;
-        sort_push_request(ewk);
+        sort_push_request(&ewk->wu);
         break;
     case 5:
         ewk->wu.routine_no[0]++;

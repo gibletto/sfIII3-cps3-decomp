@@ -7,9 +7,6 @@
 
 #pragma section TBL
 
-extern void eff48_0000();
-extern void eff48_1000();
-
 const s32 eff47_sp_tbl[4][4] = {
     { 262144, -4096, 196608, -16384 },
     { -131072, 2048, 196608, -16384 },

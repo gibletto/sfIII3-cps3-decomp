@@ -13,6 +13,10 @@
 #include "extern.h"
 #include "SLOWF.h"
 
+s16 EXE_flag;  /* 0200EECC */
+s16 SLOW_flag;  /* 0200EECE */
+s16 SLOW_timer;  /* 0200EED0 */
+
 
 
 void init_slow_flag(void) {

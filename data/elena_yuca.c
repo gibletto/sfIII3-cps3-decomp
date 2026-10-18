@@ -35,98 +35,98 @@ extern const u16 elena_yuca_063_head[];
 extern const u16 elena_yuca_068_head[];
 
 /* yuca scripts: 91 entries */
-const u16* const elena_yuca[92] = {
-    elena_yuca_000,  /* 0 APPEAR JUNBI 1 */
-    elena_yuca_000,  /* 1 APPEAR JUNBI 2 */
-    elena_yuca_000,  /* 2 APPEAR JUNBI 3 */
-    elena_yuca_000,  /* 3 APPEAR JUNBI 4 */
-    elena_yuca_000,  /* 4 APPEAR JUNBI 5 */
-    elena_yuca_000,  /* 5 APPEAR JUNBI 6 */
-    elena_yuca_000,  /* 6 APPEAR JUNBI 7 */
-    elena_yuca_000,  /* 7 APPEAR JUNBI 8 */
-    elena_yuca_008,  /* 8 APPEAR 1 */
-    elena_yuca_008,  /* 9 APPEAR 2 */
-    elena_yuca_008,  /* 10 APPEAR 3 */
-    elena_yuca_008,  /* 11 APPEAR 4 */
-    elena_yuca_008,  /* 12 APPEAR 5 */
-    elena_yuca_008,  /* 13 APPEAR 6 */
-    elena_yuca_008,  /* 14 APPEAR 7 */
-    elena_yuca_008,  /* 15 APPEAR 8 */
-    elena_yuca_016,  /* 16 SP APPEAR 1 */
-    elena_yuca_016,  /* 17 SP APPEAR 2 */
-    elena_yuca_016,  /* 18 SP APPEAR 3 */
-    elena_yuca_016,  /* 19 SP APPEAR 4 */
-    elena_yuca_016,  /* 20 SP APPEAR 5 */
-    elena_yuca_016,  /* 21 SP APPEAR 6 */
-    elena_yuca_016,  /* 22 SP APPEAR 7 */
-    elena_yuca_016,  /* 23 SP APPEAR 8 */
-    elena_yuca_024,  /* 24 ZANNEN 1 */
-    elena_yuca_024,  /* 25 ZANNEN 2 */
-    elena_yuca_024,  /* 26 ZANNEN 3 */
-    elena_yuca_024,  /* 27 ZANNEN 4 */
-    elena_yuca_024,  /* 28 ZANNEN 5 */
-    elena_yuca_024,  /* 29 ZANNEN 6 */
-    elena_yuca_024,  /* 30 ZANNEN 7 */
-    elena_yuca_024,  /* 31 ZANNEN 8 */
-    elena_yuca_032,  /* 32 WIN 1 */
-    elena_yuca_033,  /* 33 WIN 2 */
-    elena_yuca_032,  /* 34 WIN 3 */
-    elena_yuca_033,  /* 35 WIN 4 */
-    elena_yuca_032,  /* 36 WIN 5 */
-    elena_yuca_037,  /* 37 WIN 6 */
-    elena_yuca_038,  /* 38 WIN 7 */
-    elena_yuca_039,  /* 39 WIN 8 */
-    elena_yuca_040,  /* 40 SP WIN 1 */
-    elena_yuca_040,  /* 41 SP WIN 2 */
-    elena_yuca_040,  /* 42 SP WIN 3 */
-    elena_yuca_040,  /* 43 SP WIN 4 */
-    elena_yuca_040,  /* 44 SP WIN 5 */
-    elena_yuca_040,  /* 45 SP WIN 6 */
-    elena_yuca_040,  /* 46 SP WIN 7 */
-    elena_yuca_040,  /* 47 SP WIN 8 */
-    elena_yuca_048,  /* 48 JUDGMENT WAIT */
-    elena_yuca_048,  /* 49 JUDGMENT WAIT */
-    elena_yuca_048,  /* 50 JUDGMENT WAIT */
-    elena_yuca_048,  /* 51 JUDGMENT WAIT */
-    elena_yuca_037,  /* 52 JUDGMENT WIN */
-    elena_yuca_037,  /* 53 JUDGMENT WIN */
-    elena_yuca_037,  /* 54 JUDGMENT WIN */
-    elena_yuca_037,  /* 55 JUDGMENT WIN */
-    elena_yuca_056,  /* 56 JUDGMENT LOSE */
-    elena_yuca_056,  /* 57 JUDGMENT LOSE */
-    elena_yuca_056,  /* 58 JUDGMENT LOSE */
-    elena_yuca_056,  /* 59 JUDGMENT LOSE */
-    elena_yuca_060,  /* 60 WAIT */
-    elena_yuca_061,  /* 61 AFRICA JUMP */
-    elena_yuca_062,  /* 62 AFRICA LAND */
-    elena_yuca_063,  /* 63 SEAN BALL HIT */
-    elena_yuca_063,  /* 64 no name */
-    elena_yuca_032,  /* 65 BONUS WIN 1 */
-    elena_yuca_037,  /* 66 BONUS WIN 2 */
-    elena_yuca_056,  /* 67 BONUS WIN 3 */
-    elena_yuca_068,  /* 68 APPEAR USE */
-    elena_yuca_068,  /* 69 APPEAR USE */
-    elena_yuca_068,  /* 70 APPEAR USE */
-    elena_yuca_068,  /* 71 APPEAR USE */
-    elena_yuca_068,  /* 72 APPEAR USE */
-    elena_yuca_068,  /* 73 APPEAR USE */
-    elena_yuca_068,  /* 74 APPEAR USE */
-    elena_yuca_068,  /* 75 APPEAR USE */
-    elena_yuca_068,  /* 76 APPEAR USE */
-    elena_yuca_068,  /* 77 APPEAR USE */
-    elena_yuca_068,  /* 78 APPEAR USE */
-    elena_yuca_068,  /* 79 APPEAR USE */
-    elena_yuca_068,  /* 80 APPEAR USE */
-    elena_yuca_068,  /* 81 APPEAR USE */
-    elena_yuca_068,  /* 82 APPEAR USE */
-    elena_yuca_068,  /* 83 APPEAR USE */
-    elena_yuca_068,  /* 84 APPEAR USE */
-    elena_yuca_068,  /* 85 APPEAR USE */
-    elena_yuca_068,  /* 86 APPEAR USE */
-    elena_yuca_068,  /* 87 APPEAR USE */
-    elena_yuca_068,  /* 88 APPEAR USE */
-    elena_yuca_068,  /* 89 APPEAR USE */
-    elena_yuca_068,  /* 90 APPEAR USE */
+const u32 elena_yuca[92] = {
+    (u32)elena_yuca_000,  /* 0 APPEAR JUNBI 1 */
+    (u32)elena_yuca_000,  /* 1 APPEAR JUNBI 2 */
+    (u32)elena_yuca_000,  /* 2 APPEAR JUNBI 3 */
+    (u32)elena_yuca_000,  /* 3 APPEAR JUNBI 4 */
+    (u32)elena_yuca_000,  /* 4 APPEAR JUNBI 5 */
+    (u32)elena_yuca_000,  /* 5 APPEAR JUNBI 6 */
+    (u32)elena_yuca_000,  /* 6 APPEAR JUNBI 7 */
+    (u32)elena_yuca_000,  /* 7 APPEAR JUNBI 8 */
+    (u32)elena_yuca_008,  /* 8 APPEAR 1 */
+    (u32)elena_yuca_008,  /* 9 APPEAR 2 */
+    (u32)elena_yuca_008,  /* 10 APPEAR 3 */
+    (u32)elena_yuca_008,  /* 11 APPEAR 4 */
+    (u32)elena_yuca_008,  /* 12 APPEAR 5 */
+    (u32)elena_yuca_008,  /* 13 APPEAR 6 */
+    (u32)elena_yuca_008,  /* 14 APPEAR 7 */
+    (u32)elena_yuca_008,  /* 15 APPEAR 8 */
+    (u32)elena_yuca_016,  /* 16 SP APPEAR 1 */
+    (u32)elena_yuca_016,  /* 17 SP APPEAR 2 */
+    (u32)elena_yuca_016,  /* 18 SP APPEAR 3 */
+    (u32)elena_yuca_016,  /* 19 SP APPEAR 4 */
+    (u32)elena_yuca_016,  /* 20 SP APPEAR 5 */
+    (u32)elena_yuca_016,  /* 21 SP APPEAR 6 */
+    (u32)elena_yuca_016,  /* 22 SP APPEAR 7 */
+    (u32)elena_yuca_016,  /* 23 SP APPEAR 8 */
+    (u32)elena_yuca_024,  /* 24 ZANNEN 1 */
+    (u32)elena_yuca_024,  /* 25 ZANNEN 2 */
+    (u32)elena_yuca_024,  /* 26 ZANNEN 3 */
+    (u32)elena_yuca_024,  /* 27 ZANNEN 4 */
+    (u32)elena_yuca_024,  /* 28 ZANNEN 5 */
+    (u32)elena_yuca_024,  /* 29 ZANNEN 6 */
+    (u32)elena_yuca_024,  /* 30 ZANNEN 7 */
+    (u32)elena_yuca_024,  /* 31 ZANNEN 8 */
+    (u32)elena_yuca_032,  /* 32 WIN 1 */
+    (u32)elena_yuca_033,  /* 33 WIN 2 */
+    (u32)elena_yuca_032,  /* 34 WIN 3 */
+    (u32)elena_yuca_033,  /* 35 WIN 4 */
+    (u32)elena_yuca_032,  /* 36 WIN 5 */
+    (u32)elena_yuca_037,  /* 37 WIN 6 */
+    (u32)elena_yuca_038,  /* 38 WIN 7 */
+    (u32)elena_yuca_039,  /* 39 WIN 8 */
+    (u32)elena_yuca_040,  /* 40 SP WIN 1 */
+    (u32)elena_yuca_040,  /* 41 SP WIN 2 */
+    (u32)elena_yuca_040,  /* 42 SP WIN 3 */
+    (u32)elena_yuca_040,  /* 43 SP WIN 4 */
+    (u32)elena_yuca_040,  /* 44 SP WIN 5 */
+    (u32)elena_yuca_040,  /* 45 SP WIN 6 */
+    (u32)elena_yuca_040,  /* 46 SP WIN 7 */
+    (u32)elena_yuca_040,  /* 47 SP WIN 8 */
+    (u32)elena_yuca_048,  /* 48 JUDGMENT WAIT */
+    (u32)elena_yuca_048,  /* 49 JUDGMENT WAIT */
+    (u32)elena_yuca_048,  /* 50 JUDGMENT WAIT */
+    (u32)elena_yuca_048,  /* 51 JUDGMENT WAIT */
+    (u32)elena_yuca_037,  /* 52 JUDGMENT WIN */
+    (u32)elena_yuca_037,  /* 53 JUDGMENT WIN */
+    (u32)elena_yuca_037,  /* 54 JUDGMENT WIN */
+    (u32)elena_yuca_037,  /* 55 JUDGMENT WIN */
+    (u32)elena_yuca_056,  /* 56 JUDGMENT LOSE */
+    (u32)elena_yuca_056,  /* 57 JUDGMENT LOSE */
+    (u32)elena_yuca_056,  /* 58 JUDGMENT LOSE */
+    (u32)elena_yuca_056,  /* 59 JUDGMENT LOSE */
+    (u32)elena_yuca_060,  /* 60 WAIT */
+    (u32)elena_yuca_061,  /* 61 AFRICA JUMP */
+    (u32)elena_yuca_062,  /* 62 AFRICA LAND */
+    (u32)elena_yuca_063,  /* 63 SEAN BALL HIT */
+    (u32)elena_yuca_063,  /* 64 no name */
+    (u32)elena_yuca_032,  /* 65 BONUS WIN 1 */
+    (u32)elena_yuca_037,  /* 66 BONUS WIN 2 */
+    (u32)elena_yuca_056,  /* 67 BONUS WIN 3 */
+    (u32)elena_yuca_068,  /* 68 APPEAR USE */
+    (u32)elena_yuca_068,  /* 69 APPEAR USE */
+    (u32)elena_yuca_068,  /* 70 APPEAR USE */
+    (u32)elena_yuca_068,  /* 71 APPEAR USE */
+    (u32)elena_yuca_068,  /* 72 APPEAR USE */
+    (u32)elena_yuca_068,  /* 73 APPEAR USE */
+    (u32)elena_yuca_068,  /* 74 APPEAR USE */
+    (u32)elena_yuca_068,  /* 75 APPEAR USE */
+    (u32)elena_yuca_068,  /* 76 APPEAR USE */
+    (u32)elena_yuca_068,  /* 77 APPEAR USE */
+    (u32)elena_yuca_068,  /* 78 APPEAR USE */
+    (u32)elena_yuca_068,  /* 79 APPEAR USE */
+    (u32)elena_yuca_068,  /* 80 APPEAR USE */
+    (u32)elena_yuca_068,  /* 81 APPEAR USE */
+    (u32)elena_yuca_068,  /* 82 APPEAR USE */
+    (u32)elena_yuca_068,  /* 83 APPEAR USE */
+    (u32)elena_yuca_068,  /* 84 APPEAR USE */
+    (u32)elena_yuca_068,  /* 85 APPEAR USE */
+    (u32)elena_yuca_068,  /* 86 APPEAR USE */
+    (u32)elena_yuca_068,  /* 87 APPEAR USE */
+    (u32)elena_yuca_068,  /* 88 APPEAR USE */
+    (u32)elena_yuca_068,  /* 89 APPEAR USE */
+    (u32)elena_yuca_068,  /* 90 APPEAR USE */
     0
 };
 

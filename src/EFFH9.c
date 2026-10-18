@@ -25,6 +25,27 @@
 
 
 
+/* 02007428 */
+s16* effH7_move_tbl[16] = {
+    (s16*)&effH7_bound_tbl[57],
+    (s16*)&effH7_bound_tbl[57],
+    (s16*)&effH7_bound_tbl[57],
+    (s16*)&effH7_bound_tbl[57],
+    (s16*)&effH7_bound_tbl[73],
+    (s16*)&effH7_bound_tbl[73],
+    (s16*)&effH7_bound_tbl[73],
+    (s16*)&effH7_bound_tbl[73],
+    (s16*)&effH7_bound_tbl[73],
+    (s16*)&effH7_bound_tbl[57],
+    (s16*)&effH7_bound_tbl[73],
+    (s16*)&effH7_bound_tbl[57],
+    (s16*)&effH7_bound_tbl[97],
+    (s16*)&effH7_bound_tbl[97],
+    (s16*)&effH7_bound_tbl[73],
+    (s16*)&effH7_bound_tbl[125],
+};
+
+
 void effect_H7_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
     case 0:
@@ -95,7 +116,7 @@ void effect_H7_move(WORK_Other* ewk) {
                 break;
             }
         }
-        sort_push_request(ewk);
+        sort_push_request(&ewk->wu);
         break;
     case 2:
         ewk->wu.routine_no[0] = 3;
@@ -213,7 +234,7 @@ void effect_H8_move(WORK_Other* ewk) {
                 break;
             }
         }
-        sort_push_request(ewk);
+        sort_push_request(&ewk->wu);
         break;
     case 2:
         ewk->wu.routine_no[0] = 3;

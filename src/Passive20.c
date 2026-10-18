@@ -17,7 +17,7 @@
 #include "ACTIVE00.h"
 void Passive20(PLW* wk)
 {
-    Passive20_Tbl[(s16)Pattern_Index[wk->wu.id]](wk);
+    Passive20_Tbl[Pattern_Index[wk->wu.id]](wk);
 }
 
 

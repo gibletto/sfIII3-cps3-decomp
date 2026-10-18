@@ -34,6 +34,74 @@
 
 
 
+COINCHUTE coin_chute1_w;  /* 0206AA6C */
+COINCHUTE coin_chute2_w;  /* 0206AA74 */
+COINCHUTE coin_chute3_w;  /* 0206AA7C */
+COINCHUTE coin_chute4_w;  /* 0206AA84 */
+u16 p1sw_0;  /* 0206AA8C */
+u16 p1sw_1;  /* 0206AA8E */
+u16 p2sw_0;  /* 0206AA90 */
+u16 p2sw_1;  /* 0206AA92 */
+u16 p3sw_0;  /* 0206AA94 */
+u16 p3sw_1;  /* 0206AA96 */
+u16 p4sw_0;  /* 0206AA98 */
+u16 p4sw_1;  /* 0206AA9A */
+u8 syssw_0;  /* 0206AA9C */
+u8 syssw_1;  /* 0206AA9D */
+u16 exsw_0;  /* 0206AA9E */
+u16 exsw_1;  /* 0206AAA0 */
+u16 exsw_2;  /* 0206AAA2 */
+u16 exsw_3;  /* 0206AAA4 */
+u16 exsw_4;  /* 0206AAA6 */
+u16 exsw_5;  /* 0206AAA8 */
+u16 exsw_6;  /* 0206AAAA */
+u16 exsw_7;  /* 0206AAAC */
+u16 card_sw_0;  /* 0206AAAE */
+u16 card_sw_1;  /* 0206AAB0 */
+u16 coin_sw_hist[4];  /* 0206AAB2 */
+u16 coin_sw_now[4];  /* 0206AABA */
+
+
+s8 credit_1p = 0;  /* 02007CE0 */
+s8 credit_2p = 0;  /* 02007CE1 */
+s8 credit_3p = 0;  /* 02007CE2 */
+s8 credit_4p = 0;  /* 02007CE3 */
+s8 coin_count_1p = 0;  /* 02007CE4 */
+s8 coin_count_2p = 0;  /* 02007CE5 */
+s8 coin_count_3p = 0;  /* 02007CE6 */
+s8 coin_count_4p = 0;  /* 02007CE7 */
+u8 coin_in_flag = 0;  /* 02007CE8 */
+u8 coin_out_latch = 0;  /* 02007CE9 */
+/* 02007CEC */
+COINCHUTE* coin_chute_tbl[4] = {
+    &coin_chute1_w,
+    &coin_chute2_w,
+    &coin_chute3_w,
+    &coin_chute4_w,
+};
+/* 02007CFC */
+void* coin_sw_tbl[4][2] = {
+    { &p1sw_0, &p1sw_1 },
+    { &p2sw_0, &p2sw_1 },
+    { &p3sw_0, &p3sw_1 },
+    { &p4sw_0, &p4sw_1 },
+};
+/* 02007D1C */
+s8* credit_ptr_tbl[4] = {
+    &credit_1p,
+    &credit_2p,
+    &credit_3p,
+    &credit_4p,
+};
+/* 02007D2C */
+s8* coin_count_ptr_tbl[4] = {
+    &coin_count_1p,
+    &coin_count_2p,
+    &coin_count_3p,
+    &coin_count_4p,
+};
+
+
 /* provisional name */
 void coin_work_init(void) {
     register s32 unused;

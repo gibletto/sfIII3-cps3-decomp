@@ -7,13 +7,6 @@
 
 #pragma section TBL
 
-extern void end_X_com01();
-extern void end_b00_0000();
-extern void end_b00_1000();
-extern void end_b00_3000();
-extern void end_b01_0000();
-extern void end_b01_3000();
-
 const PANEL end_b00_bg0_cell_tbl[8] = {
     { 0, 3 }, { 64, 4 }, { 128, 8 }, { 192, 9 }, { 4096, 12 }, { 4160, 13 }, { 4224, 14 }, { 4288, 15 },
 };

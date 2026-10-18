@@ -1245,7 +1245,7 @@ void Com_Caught(PLW* wk) {
             if (Demo_Flag == 0 && Weak_PL == wk->wu.id) {
                 Lv = 0;
             }
-            Timer_01[wk->wu.id] = Caught_Timer_Data[Lv][(Rnd = random_16_com() & 7)];
+            Timer_01[wk->wu.id] = Rapid_Exit_Data[Lv][(Rnd = random_16_com() & 7)];
             break;
         }
         Timer_00[wk->wu.id] = Decide_Exit_Catch(wk);
@@ -1456,7 +1456,7 @@ void Next_Be_Float(PLW* wk) {
     Clear_Com_Flag(wk);
     Lv = Setup_Lv04(0);
     Rnd = random_16_com();
-    CP_No[wk->wu.id][1] = Be_Float_Data[Lv][Rnd];
+    CP_No[wk->wu.id][1] = Float_Attack_Data[Lv][Rnd];
 }
 
 

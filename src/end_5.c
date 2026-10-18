@@ -43,6 +43,27 @@
 
 
 
+extern const u8 end_5_bg1_cell_0[];
+
+s8 end5_col_ix;  /* 02028264 */
+s8 wr5_index;  /* 02028265 */
+s16 end5_bg1_pos;  /* 02028266 */
+
+
+/* 02006970 */
+s8 end_5_bg1_cell[4] = {
+    13, 14, 15, 13,
+};
+/* 02006974 */
+/* Stored after end_5_bg1_cell. Nothing in the program refers to it by name or address; if it is read,
+   it is through an index past the end of end_5_bg1_cell. */
+u32 end_5_bg1_cell_tail[12] = {
+    (u32)end_1100_bg0_cell_tbl, (u32)((const u8*)end_5_bg1_cell_0), 0, 0x10000,
+    0x20000, 0x30000, 0x40000, 0x50000,
+    0x60000, 0x70000, 0x80000, 0x90000,
+};
+
+
 void end_05000(u16 pl_num) {
     switch (end_w.r_no_1) {
     case 0:
@@ -342,8 +363,7 @@ void end_5_bg1_move_sub(void) {
 
 
 
-/* provisional name */
-void end_5_bg1_back_sub(void) {
+void end_5_bg1_move_sub2(void) {
     bgw_ptr->xy[0].cal += 0x180000;
     bgw_ptr->abs_x = bgw_ptr->xy[0].disp.pos;
 }
@@ -387,7 +407,7 @@ void end_501_0007(void) {
         bgw_ptr->xy[1].disp.pos = 0x300;
         bgw_ptr->abs_x = bgw_ptr->xy[0].disp.pos;
         end5_col_ix = 0;
-        end5_pal_ix = 0;
+        wr5_index = 0;
         end5_bg1_pos = 0x200;
     case 1:
         if (Request_Fade(0x11, 0) == 0) {
@@ -428,10 +448,10 @@ void end_501_0009(void) {
     switch (bgw_ptr->r_no_1) {
     case 0:
         bgw_ptr->r_no_1++;
-        end5_pal_ix--;
+        wr5_index--;
         break;
     case 1:
-        end_5_bg1_back_sub();
+        end_5_bg1_move_sub2();
         end_5_bg1_cell_sub(1);
         if (end_etc_flag) {
             bgw_ptr->r_no_1++;
@@ -444,7 +464,7 @@ void end_501_0009(void) {
 
 
 void end_501_0010(void) {
-    end_5_bg1_back_sub();
+    end_5_bg1_move_sub2();
     end_5_bg1_cell_sub(1);
     switch (bgw_ptr->r_no_1) {
     case 0:
@@ -526,23 +546,23 @@ void end_5_bg1_cell_sub(s8 dir) {
             if (end5_col_ix > 11) {
                 end5_col_ix = 0;
             }
-            end5_pal_ix++;
-            if (end5_pal_ix > 3) {
-                end5_pal_ix = 0;
+            wr5_index++;
+            if (wr5_index > 3) {
+                wr5_index = 0;
             }
-            (&end_5_bg1_cell[0])[end5_pal_ix] = end_5_bg1_cell_tbl[end5_col_ix];
-            bg_cell_write(1, end_5_bg1_ofs_tbl[end5_pal_ix], end_5_bg1_cell_tbl[end5_col_ix], (u32)end_500_scrn_data, 0, 0x220);
+            (&end_5_bg1_cell[0])[wr5_index] = end_5_bg1_cell_tbl[end5_col_ix];
+            bg_cell_write(1, end_5_bg1_ofs_tbl[wr5_index], end_5_bg1_cell_tbl[end5_col_ix], (u32)end_500_scrn_data, 0, 0x220);
         } else {
             end5_col_ix--;
             if (end5_col_ix < 0) {
                 end5_col_ix = 11;
             }
-            end5_pal_ix--;
-            if (end5_pal_ix < 0) {
-                end5_pal_ix = 3;
+            wr5_index--;
+            if (wr5_index < 0) {
+                wr5_index = 3;
             }
-            (&end_5_bg1_cell[0])[end5_pal_ix] = end_5_bg1_cell_tbl[end5_col_ix];
-            bg_cell_write(1, end_5_bg1_ofs_tbl[end5_pal_ix], end_5_bg1_cell_tbl[end5_col_ix], (u32)end_500_scrn_data, 0, 0x220);
+            (&end_5_bg1_cell[0])[wr5_index] = end_5_bg1_cell_tbl[end5_col_ix];
+            bg_cell_write(1, end_5_bg1_ofs_tbl[wr5_index], end_5_bg1_cell_tbl[end5_col_ix], (u32)end_500_scrn_data, 0, 0x220);
         }
     }
 }

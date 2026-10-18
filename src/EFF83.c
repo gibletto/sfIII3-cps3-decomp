@@ -133,6 +133,6 @@ s32 effect_83_init(WORK* wk) {
     o->wu.char_table[0] = etc2_char_table;
     o->wu.char_index = 34;
     o->wu.sync_suzi = 0;
-    suzi_offset_set(o);
+    suzi_offset_set(&o->wu);
     return 0;
 }

@@ -32,6 +32,13 @@
 
 
 
+s16 win_mark_rno[2];  /* 02028704 */
+s16 win_mark_timer[2];  /* 02028708 */
+s16 win_mark_phase[2];  /* 0202870C */
+s16 win_mark_num[2];  /* 02028710 */
+s16 win_mark_pos[2];  /* 02028714 */
+
+
 /* provisional name */
 void win_mark_control(s16 pl) {
     if (Exec_Wipe) {
@@ -106,7 +113,9 @@ s16 pl;
 
 
 /* provisional name */
-void win_mark_write(s16 pl) {
+void win_mark_write(pl)
+s16 pl;
+{
     u16* cell = (u16*)((SS_RAM + 0x400) + win_mark_pos[pl] * 4);
     s16 n;
     s16 i;

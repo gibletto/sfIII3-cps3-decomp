@@ -7,7 +7,7 @@
  * frame and calls spgauge_control per player, which follows the player's gauge value, plays the
  * gauge sounds, and reacts to the gauge flash requests: super art activation, EX move use and
  * reaching full stock start the "SA"/"EX"/"MAX" lettering (samoji_control, sast_control) and the
- * gauge colour changes (sagauge_color_chenge, sa_gauge_color_set).
+ * gauge colour changes (sagauge_color_chenge, sast_color_chenge).
  * wipe_check restores the gauge after a screen wipe, and the *_trans routines write the gauge
  * cells, frame, stock digits and lettering.
  */
@@ -25,6 +25,36 @@
 #include "spgauge.h"
 #include "fighter.h"
 
+
+
+extern const u16 spgauge_postbl_0[];
+extern const u16 spgauge_postbl_1[];
+extern const u16 spgauge_puttbl_0[];
+extern const u16 spgauge_puttbl_1[];
+
+s8 Old_Stop_SG;  /* 0202868C */
+s8 Exec_Wipe_F;  /* 0202868D */
+s8 time_clear[2];  /* 0202868E */
+s16 spg_number;  /* 02028690 */
+s16 spg_work;  /* 02028692 */
+s16 spg_offset;  /* 02028694 */
+s8 time_num;  /* 02028696 */
+s8 time_timer;  /* 02028697 */
+s8 time_flag[2];  /* 02028698 */
+s16 col;  /* 0202869A */
+SPG_DAT spg_dat[2];  /* 0202869C */
+
+
+/* 020069C8 */
+const u16* spgauge_puttbl[2] = {
+    spgauge_puttbl_0,
+    spgauge_puttbl_1,
+};
+/* 020069D0 */
+const u16* spgauge_postbl[2] = {
+    spgauge_postbl_0,
+    spgauge_postbl_1,
+};
 
 
 void spgauge_cont_init(void) {
@@ -123,7 +153,7 @@ void spgauge_cont_init(void) {
     spg_offset = 0;
     time_num = 0;
     time_timer = 3;
-    spg_col = 0;
+    col = 0;
 }
 
 
@@ -228,7 +258,7 @@ void spgauge_cont_demo_init(void) {
     spg_offset = 0;
     time_num = 0;
     time_timer = 3;
-    spg_col = 1;
+    col = 1;
 }
 
 
@@ -396,7 +426,9 @@ void sa_time_moji_send(void) {
 
 
 
-void sast_control(s8 Stpl_Num) {
+void sast_control(Stpl_Num)
+s8 Stpl_Num;
+{
     switch (spg_dat[Stpl_Num].max_rno) {
     case 0:
         sa_moji_trans(Stpl_Num, 0, 1);
@@ -439,7 +471,9 @@ void sast_control(s8 Stpl_Num) {
 
 
 
-void samoji_control(s8 Stpl_Num) {
+void samoji_control(Stpl_Num)
+s8 Stpl_Num;
+{
     if (spg_dat[Stpl_Num].time) {
         switch (spg_dat[Stpl_Num].time_rno) {
         case 0:
@@ -479,7 +513,7 @@ void samoji_control(s8 Stpl_Num) {
                 }
                 sa_gauge_trans(Stpl_Num, 1);
                 sa_moji_trans(Stpl_Num, 1, 1);
-                sa_gauge_color_set(Stpl_Num);
+                sast_color_chenge(Stpl_Num);
                 spg_dat[Stpl_Num].time_rno = 2;
                 spg_dat[Stpl_Num].no_chgcol = 1;
                 goto case_2;
@@ -526,10 +560,10 @@ void samoji_control(s8 Stpl_Num) {
                 spg_dat[Stpl_Num].max_old = 0;
             }
         jump:
-            sa_gauge_color_set(Stpl_Num);
+            sast_color_chenge(Stpl_Num);
             spg_dat[Stpl_Num].spg_level = plw[Stpl_Num].sa->store;
-            sa_stock_trans(spg_dat[Stpl_Num].spg_level, spg_col, Stpl_Num);
-            sa_gauge_trans(Stpl_Num, spg_col);
+            sa_stock_trans(spg_dat[Stpl_Num].spg_level, col, Stpl_Num);
+            sa_gauge_trans(Stpl_Num, col);
             if (spg_dat[Stpl_Num].sa_mukou == 0) {
                 sa_waku_trans(Stpl_Num, Stpl_Num);
             }
@@ -553,7 +587,7 @@ void samoji_control(s8 Stpl_Num) {
                 spg_dat[Stpl_Num].current_spg = spg_dat[Stpl_Num].spg_dotlen;
                 sa_waku_trans(Stpl_Num, Stpl_Num);
                 spg_dat[Stpl_Num].spg_level = plw[Stpl_Num].sa->store;
-                sa_stock_trans(spg_dat[Stpl_Num].spg_level, spg_col, Stpl_Num);
+                sa_stock_trans(spg_dat[Stpl_Num].spg_level, col, Stpl_Num);
             }
             spg_dat[Stpl_Num].max_rno = 1;
         case 1:
@@ -579,10 +613,10 @@ void samoji_control(s8 Stpl_Num) {
                 sa_moji_trans(Stpl_Num, 0, 0);
                 spg_dat[Stpl_Num].max_old = 0;
             }
-            sa_gauge_color_set(Stpl_Num);
+            sast_color_chenge(Stpl_Num);
             spg_dat[Stpl_Num].spg_level = plw[Stpl_Num].sa->store;
-            sa_stock_trans(spg_dat[Stpl_Num].spg_level, spg_col, Stpl_Num);
-            sa_gauge_trans(Stpl_Num, spg_col);
+            sa_stock_trans(spg_dat[Stpl_Num].spg_level, col, Stpl_Num);
+            sa_gauge_trans(Stpl_Num, col);
             if (spg_dat[Stpl_Num].max_old == 0 && spg_dat[Stpl_Num].sa_mukou == 0) {
                 sa_waku_trans(Stpl_Num, Stpl_Num);
             }
@@ -601,10 +635,11 @@ void samoji_control(s8 Stpl_Num) {
 
 
 
-/* provisional name */
-void sa_gauge_color_set(s8 pl) {
+void sast_color_chenge(pl)
+s8 pl;
+{
     if (plw[pl].sa->gauge_type == 1 && plw[pl].sa->ok == -1) {
-        spg_col = 1;
+        col = 1;
         if (pl == 0) {
             spg_dat[0].spgcol_number = 28;
         } else {
@@ -613,14 +648,14 @@ void sa_gauge_color_set(s8 pl) {
         return;
     }
     if (plw[pl].sa->store) {
-        spg_col = 1;
+        col = 1;
         if (pl == 0) {
             spg_dat[0].spgcol_number = 36;
         } else {
             spg_dat[1].spgcol_number = 164;
         }
     } else {
-        spg_col = 0;
+        col = 0;
         if (pl == 0) {
             spg_dat[0].spgcol_number = 34;
         } else {
@@ -659,7 +694,9 @@ s8 step;
 
 
 
-void sagauge_color_chenge(s8 Stpl_Num) {
+void sagauge_color_chenge(Stpl_Num)
+s8 Stpl_Num;
+{
     if (spg_dat[Stpl_Num].no_chgcol) {
         return;
     }
@@ -765,7 +802,9 @@ void sa_waku_trans(s8 pl_kind, s8 pl) {
 
 
 
-void spgauge_sound_request(s8 Stpl_Num) {
+void spgauge_sound_request(Stpl_Num)
+s8 Stpl_Num;
+{
     if (plw[Stpl_Num].sa->store > spg_dat[Stpl_Num].spg_level) {
         Sound_SE(Stpl_Num + 107);
     }
@@ -831,7 +870,10 @@ void spgauge_wipe_write(s32 Stpl_Num) {
 
 
 
-void sa_gauge_trans(s8 Stpl_Num, s16 Spg_Col) {
+void sa_gauge_trans(Stpl_Num, Spg_Col)
+s8 Stpl_Num;
+s16 Spg_Col;
+{
     s8 lpy;
     sc_ram_to_vram(Stpl_Num + (Spg_Col * 2) + 6, 0, 0);
     if (Stpl_Num == 0) {

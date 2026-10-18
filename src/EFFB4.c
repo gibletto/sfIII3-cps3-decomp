@@ -88,6 +88,6 @@ s32 effect_B4_init(WORK_Other* oya) {
     ewk->wu.rl_flag = 0;
     ewk->wu.xyz[0].disp.pos = oya->wu.xyz[0].disp.pos;
     ewk->wu.xyz[1].disp.pos = oya->wu.xyz[1].disp.pos;
-    suzi_offset_set(ewk);
+    suzi_offset_set(&ewk->wu);
     return 0;
 }

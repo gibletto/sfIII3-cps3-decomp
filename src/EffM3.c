@@ -129,7 +129,10 @@ void effM3_trans(WORK* ewk) {
 
 
 
-s32 effect_M3_init(WORK_Other_CONN* wk, s16 num) {
+s32 effect_M3_init(wk, num)
+WORK_Other_CONN* wk;
+s16 num;
+{
     WORK_Other* ewk;
     s16 ix;
     if ((ix = pull_effect_work(4)) == -1) {

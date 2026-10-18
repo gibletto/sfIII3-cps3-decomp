@@ -5,7 +5,7 @@
 
 void end_500_0006(void);
 void end_5_bg1_move_sub(void);
-void end_5_bg1_back_sub(void);
+void end_5_bg1_move_sub2(void);
 void end_501_0010(void);
 void end_5_bg1_cell_sub(s8 dir);
 void end_501_0008(void);

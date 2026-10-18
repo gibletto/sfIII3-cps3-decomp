@@ -24,7 +24,7 @@
 
 
 
-s32 effect_D0_move(WORK_Other* ewk) {
+void effect_D0_move(WORK_Other* ewk) {
     void (*node)(WORK*);
     void (*bind)();
     void (*fin)(WORK_Other*);

@@ -7,20 +7,6 @@
 
 #pragma section TBL
 
-extern void debug_play07_init();
-extern void debug_play07_move();
-extern void debug_play08_init();
-extern void debug_play08_move();
-extern void debug_play09_init();
-extern void debug_play09_move();
-extern void debug_play10_init();
-extern void debug_play10_move();
-extern void debug_play11_init();
-extern void debug_play11_move();
-extern void debug_play12_init();
-extern void debug_play12_move();
-extern void debug_play13_init();
-extern void debug_play13_move();
 extern const STAFF_LINE staff_roll_tbl[];
 extern const char staff_STREET_FIGHTER_3rd_STRIKE[];
 extern const char staff_Fight_for_the_Future[];

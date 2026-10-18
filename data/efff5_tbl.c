@@ -7,19 +7,6 @@
 
 #pragma section TBL
 
-extern void efff5_0008();
-extern void efff5_0000();
-extern void efff5_0001();
-extern void efff5_0002();
-extern void efff5_0003();
-extern void efff5_0004();
-extern void efff5_0005();
-extern void efff5_0006();
-extern void efff5_0007();
-extern void efff5_0009();
-extern void efff5_0010();
-extern void efff5_0011();
-
 const s16 efff5_data_tbl[22][6] = {
     { 8, 512, 144, 71, 100, 0 },
     { 0, 512, 48, 50, 54, 1 },

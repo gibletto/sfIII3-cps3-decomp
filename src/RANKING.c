@@ -60,6 +60,10 @@
 
 
 
+RANK_DATA Ranking_Data[20];  /* 02016E4C */
+RANK_DATA Present_Data[2];  /* 02016FDC */
+
+
 /* provisional name */
 s32 Ranking_Main(void) {
     void (*jmp_tbl[2])() = { Ranking_01, Ranking_00 };

@@ -19,6 +19,27 @@
 #include "Game.h"
 #include "vbl_hook.h"
 
+TCB * current_task;  /* 02007EEC */
+s32 task_sys_w1;  /* 02007EF0 */
+s32 task_sys_w2;  /* 02007EF4 */
+s32 task_sys_w3;  /* 02007EF8 */
+s32 task_free_count;  /* 02007EFC */
+u32 system_timer;  /* 02007F00 */
+u32 task_tick_mask;  /* 02007F04 */
+s8 system_ctrl_flag;  /* 02007F08 */
+s8 task_tick_mode;  /* 02007F09 */
+s8 vsync_flag;  /* 02007F0A */
+u32 frame_pass_count;  /* 02007F0C */
+s8 task_ran_flag;  /* 02007F10 */
+u32 task_sched_context[3];  /* 02007F14 */
+SETTINGS game_config_work;  /* 02007F20 */
+EXC_REGS exception_regs;  /* 02007F30 */
+u32 exception_code;  /* 02007F8C */
+u8 boot_stack[4100];  /* the stack r15 starts on: vector 1 points at its end (task_stack); provisional name */
+u8 task_stack[18][1024];  /* 02008F94 */
+TCB task_tbl[8];  /* 0200D794 */
+static u8 task_spare[32];  /* nothing in the program refers to it */
+
 /* The vertical blank interrupt calls this once per frame when bit 1 of the
    frame flag byte is set; it does nothing in this build. */
 void vblank_user_hook(void) {
@@ -178,6 +199,27 @@ void task_sleep_tick(void) {
 #include "Entry.h"
 #include "cps3.h"
 
+
+
+/* 02000064 */
+/* stack sizes beside the interrupt stack pointers; nothing in the program reads them (provisional name) */
+u32 task_stack_size[3] = {
+    1024, 256, 256,
+};
+s32 task_stack_num = 8;  /* 02000070 */
+u32* isp_vblank = (u32*)&task_stack[9][0];  /* 02000074 */
+u32* isp_sprite_poly = (u32*)&task_stack[10][0];  /* 02000078 */
+u32* isp_irq_spare = (u32*)&task_stack[11][0];  /* 0200007C */
+/* 02000080 */
+/* stack pointers for two interrupts the game does not take (provisional name) */
+void* isp_unused[2] = {
+    (void*)&task_stack[12][0],
+    (void*)&task_stack[13][0],
+};
+u32* isp_exception = (u32*)&task_stack[14][0];  /* 02000088 */
+u32* isp_frt_compare = (u32*)&task_stack[15][0];  /* 0200008C */
+u32* isp_frt_overflow = (u32*)&task_stack[16][0];  /* 02000090 */
+u8 test_flag = 0;  /* 02000094 */
 
 
 /* provisional name */

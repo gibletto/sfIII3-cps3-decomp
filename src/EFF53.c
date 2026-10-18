@@ -22,7 +22,7 @@
 
 void effect_53_move(WORK_Other* ewk) {
     s32 k;
-    if (!obr_disp_off_check() && !EXE_flag && !Game_pause && EXE_obroll) {
+    if (!obr_no_disp_check() && !EXE_flag && !Game_pause && EXE_obroll) {
         switch (ewk->wu.routine_no[0]) {
         case 0:
             ewk->wu.old_rno[2]--;

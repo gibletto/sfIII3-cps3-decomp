@@ -93,7 +93,7 @@ s32 get_comm_if_lever(WORK* wk);
 s32 get_comm_if_shot_now_off(WORK* wk);
 void set_jugde_area(WORK* wk);
 void set_new_attnum(WORK* wk);
-void kezuri_pow_init(WORK* wk);
+void setup_metamor_kezuri(WORK* wk);
 void setup_comm_abbak(WORK* wk);
 void setup_comm_back(WORK* wk);
 void setup_comm_retmj(WORK* wk);

@@ -60,7 +60,7 @@ void effect_61_move(WORK_Other_CONN* ewk) {
                         ewk->wu.cg_number += 32;
                         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
                         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-                        sort_push_request4((WORK_Other*)ewk);
+                        sort_push_request4((WORK*)ewk);
                     }
                     break;
                 case 3:
@@ -72,7 +72,7 @@ void effect_61_move(WORK_Other_CONN* ewk) {
                     ewk->wu.cg_number = eff61_data_tbl[ewk->wu.old_rno[0]][3];
                     ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
                     ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-                    sort_push_request4((WORK_Other*)ewk);
+                    sort_push_request4((WORK*)ewk);
                     break;
                 case 4:
                     if (ewk->wu.dir_old > 8) {
@@ -175,7 +175,7 @@ s32 effect_62_init(WORK_Other* oya) {
         ewk->wu.mvxy.a[1].sp = eff62_speed_tbl[ewk->wu.dir_old];
         ewk->wu.mvxy.d[1].sp = 0;
         ewk->wu.sync_suzi = 0;
-        suzi_offset_set(ewk);
+        suzi_offset_set(&ewk->wu);
     }
     return 0;
 }

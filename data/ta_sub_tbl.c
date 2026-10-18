@@ -42,3 +42,7 @@ const s16 pl_hit_eff[25][4] = {
     { -11, 56, 33, 38 },
     { -11, 56, 33, 38 },
 };
+
+#pragma section
+
+s16 eff_hit_flag[11];  /* 02026B30 */

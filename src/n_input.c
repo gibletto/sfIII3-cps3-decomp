@@ -46,6 +46,43 @@
 
 
 
+s16 Name_00[2];  /* 020280B8 */
+NAME_WK name_wk[2];  /* 020280BC */
+NAME_WK * name_ptr;  /* 02028128 */
+SC_NAME_WK sc_name_wk[2][4];  /* 0202812C */
+SC_NAME_WK * nsc_ptr;  /* 0202817C */
+RANK_NAME_W rank_name_w[2];  /* 02028180 */
+s16 Name_Input_f;  /* 02028188 */
+s16 naming_cnt[2];  /* 0202818A */
+s16 n_disp_flag;  /* 0202818E */
+s16 name_limit_timer[2];  /* 02028190 */
+
+
+/* 02006820 */
+/* The name entry states of the plain name entry; the game only runs Name_Jmp_scs. */
+void (*Name_Jmp_Tbl[8])() = {
+    Name_Input_init,
+    Name_Input_comm,
+    Name_Input_wait,
+    Name_Input_comm,
+    Name_Input_wait,
+    Name_Input_comm,
+    Name_Input_end,
+    Name_Finish,
+};
+/* 02006840 */
+void (*Name_Jmp_scs[8])() = {
+    Name_Scs_Input_init,
+    Name_Scs_Input_comm,
+    Name_Input_wait,
+    Name_Scs_Input_comm,
+    Name_Input_wait,
+    Name_Scs_Input_comm,
+    Name_Scs_Input_end,
+    Name_Scs_Finish,
+};
+
+
 s32 Name_Input(s16 pl_id) {
     end_no_cut = 1;
     Name_Input_f = 0;

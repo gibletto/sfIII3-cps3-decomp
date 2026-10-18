@@ -26,6 +26,15 @@
 
 
 
+/* 02006C04 */
+const s16* scr_obj_data10[4] = {
+    (const s16*)&scr_obj_num10[4],
+    (const s16*)&scr_obj_num10[16],
+    (const s16*)&scr_obj_num10[25],
+    (const s16*)&scr_obj_num10[28],
+};
+
+
 void effect_10_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
     case 0:
@@ -47,7 +56,7 @@ void effect_10_move(WORK_Other* ewk) {
             break;
         }
         suzi_sync_pos_set(ewk);
-        sort_push_request(ewk);
+        sort_push_request(&ewk->wu);
         break;
     case 2:
         ewk->wu.routine_no[0]++;
@@ -93,7 +102,7 @@ void eff10_run_away(WORK_Other* ewk) {
         break;
     case 2:
         char_move(&ewk->wu);
-        add_x_sub(&ewk->wu);
+        add_x_sub(ewk);
         if (ewk->wu.direction) {
             if (bg_w.bgw[1].xy[0].disp.pos + 0x130 < ewk->wu.xyz[0].disp.pos) {
                 ewk->wu.routine_no[0]++;
@@ -165,7 +174,7 @@ s32 effect_10_init(WORK* wk, u8 type) {
         ewk->wu.xyz[1].disp.pos = *data++;
         ewk->wu.char_index = *data++;
         ewk->wu.sync_suzi = 0;
-        suzi_offset_set(ewk);
+        suzi_offset_set(&ewk->wu);
     }
     return 0;
 }

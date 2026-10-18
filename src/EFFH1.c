@@ -60,7 +60,7 @@ void eff_h1_move(WORK_Other* ewk) {
         break;
     case 1:
         char_move(&ewk->wu);
-        if (range_x_check(ewk) != 0) {
+        if (range_x_check(&ewk->wu) != 0) {
             if (ewk->wu.xyz[1].disp.pos > -8) {
                 disp_pos_trans_entry(ewk);
                 return;

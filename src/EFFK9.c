@@ -43,7 +43,7 @@ void effect_K9_move(WORK_Other* ewk) {
         }
         ewk->wu.position_x = bg_w.bgw[1].position_x + bg_w.pos_offset - 232;
         ewk->wu.position_y = bg_w.bgw[1].position_y + 208;
-        sort_push_request(ewk);
+        sort_push_request(&ewk->wu);
         return;
     hide:
         ewk->wu.disp_flag = 0;

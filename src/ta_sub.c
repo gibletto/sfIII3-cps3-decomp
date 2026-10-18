@@ -13,7 +13,7 @@
  * object's hit box using pl_hit_eff / eff_hit_data and count contacts in eff_hit_flag.
  * Small state checks used by stage objects: complete_victory_check, either_pl_hissatsu_check
  * (a player is doing a special move), compel_dead_check, pl_shot_on_check (a button is down),
- * range_abs_check, plus waza_slot_clear_all_p and win_lose_work_clear.
+ * range_abs_check, plus waza_compel_all_init2 and win_lose_work_clear.
  */
 
 #include "structs.h"
@@ -34,7 +34,7 @@
 #include "ta_sub2.h"
 #include "tate00.h"
 
-#pragma inline(obr_disp_off_check)
+#pragma inline(obr_no_disp_check)
 
 
 struct PLW_tag;/* provisional name */
@@ -75,7 +75,9 @@ void sync_fam_set2(s16 num_of_bg) {
 
 
 
-void sync_fam_set3(s16 bg_no) {
+void sync_fam_set3(bg_no)
+s16 bg_no;
+{
     s16 pos_work_x;
     s16 pos_work_y;
     s16 pos_x_w;
@@ -198,10 +200,10 @@ s32 range_y_check(WORK* wk) {
 
 /* provisional name */
 s32 range_xy_check(WORK_Other* ewk) {
-    if (!range_x_check(ewk)) {
+    if (!range_x_check(&ewk->wu)) {
         return 0;
     }
-    if (!range_y_check(ewk)) {
+    if (!range_y_check(&ewk->wu)) {
         return 0;
     }
     return 1;
@@ -214,7 +216,7 @@ s32 range_x_out_y_in_check(WORK_Other* ewk, s16 bg_no) {
     BGW* bgw;
     s16 pos_y_work;
     s16 work2;
-    if (range_x_check(ewk)) {
+    if (range_x_check(&ewk->wu)) {
         return 0;
     }
     bgw = (BGW*)((u8*)bg_w.bgw + (s16)(bg_no * sizeof(BGW)));
@@ -277,8 +279,7 @@ void add_y_sub2(WORK_Other* ewk) {
 
 
 
-/* provisional name */
-s32 obr_disp_off_check(void) {
+s32 obr_no_disp_check(void) {
     if (seraph_flag | akebono_flag | sa_pa_flag) {
         return 1;
     }
@@ -289,33 +290,33 @@ s32 obr_disp_off_check(void) {
 
 
 void disp_pos_trans_entry(WORK_Other* ewk) {
-    if (obr_disp_off_check()) {
+    if (obr_no_disp_check()) {
         return;
     }
     ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
     ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-    sort_push_request4(ewk);
+    sort_push_request4(&ewk->wu);
 }
 
 
 
 void disp_pos_trans_entry5(WORK_Other* ewk) {
-    if (obr_disp_off_check()) {
+    if (obr_no_disp_check()) {
         return;
     }
     ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
     ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-    sort_push_request4(ewk);
+    sort_push_request4(&ewk->wu);
 }
 
 
 
 void disp_pos_trans_entry_r(WORK_Other* ewk) {
-    if (obr_disp_off_check() == 0) {
+    if (obr_no_disp_check() == 0) {
         if (range_x_check((WORK*)ewk) != 0) {
             ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
             ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-            sort_push_request4(ewk);
+            sort_push_request4(&ewk->wu);
         }
     }
 }
@@ -324,11 +325,11 @@ void disp_pos_trans_entry_r(WORK_Other* ewk) {
 
 /* provisional name */
 void disp_pos_trans_entry_rxy(WORK_Other* ewk) {
-    if (obr_disp_off_check() == 0) {
+    if (obr_no_disp_check() == 0) {
         if (range_xy_check(ewk) != 0) {
             ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
             ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-            sort_push_request4(ewk);
+            sort_push_request4(&ewk->wu);
         }
     }
 }
@@ -336,11 +337,11 @@ void disp_pos_trans_entry_rxy(WORK_Other* ewk) {
 
 
 void disp_pos_trans_entry_r4(WORK_Other* ewk) {
-    if (obr_disp_off_check() == 0) {
+    if (obr_no_disp_check() == 0) {
         if (range_y_check((WORK*)ewk) != 0) {
             ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
             ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-            sort_push_request4(ewk);
+            sort_push_request4(&ewk->wu);
         }
     }
 }
@@ -349,17 +350,17 @@ void disp_pos_trans_entry_r4(WORK_Other* ewk) {
 
 /* provisional name */
 void disp_pos_trans_entry_rbg(WORK_Other* ewk, s16 bg_no) {
-    if (obr_disp_off_check() == 0) {
+    if (obr_no_disp_check() == 0) {
         if (range_x_out_y_in_check(ewk, bg_no) != 0) {
             ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
             ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-            sort_push_request4(ewk);
+            sort_push_request4(&ewk->wu);
         }
     }
 }
 
 void disp_pos_trans_entry_s(WORK_Other* ewk) {
-    if (obr_disp_off_check() == 0) {
+    if (obr_no_disp_check() == 0) {
         suzi_sync_pos_set(ewk);
         sort_push_request4(&ewk->wu);
     }
@@ -368,10 +369,10 @@ void disp_pos_trans_entry_s(WORK_Other* ewk) {
 
 
 void disp_pos_trans_entry_rs(WORK_Other* ewk) {
-    if (obr_disp_off_check() == 0) {
+    if (obr_no_disp_check() == 0) {
         if (range_x_check((WORK*)ewk) != 0) {
             suzi_sync_pos_set(ewk);
-            sort_push_request4(ewk);
+            sort_push_request4(&ewk->wu);
         }
     }
 }
@@ -388,7 +389,7 @@ void disp_pos_trans_entry_seraph(WORK_Other* ewk)
 
 
 void pl_eff_trans_entry(WORK_Other* ewk) {
-    if (obr_disp_off_check() == 0) {
+    if (obr_no_disp_check() == 0) {
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
         sort_push_request(&ewk->wu);
@@ -399,11 +400,11 @@ void pl_eff_trans_entry(WORK_Other* ewk) {
 
 /* provisional name */
 void pl_eff_trans_entry_r(WORK_Other* ewk) {
-    if (obr_disp_off_check() == 0) {
+    if (obr_no_disp_check() == 0) {
         if (range_x_check((WORK*)ewk) != 0) {
             ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
             ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-            sort_push_request(ewk);
+            sort_push_request(&ewk->wu);
         }
     }
 }
@@ -466,7 +467,7 @@ PLW* pl;
 s16 where_type;
 {
     s16* hd1 = pl->wu.h_bod->body_dm[where_type];
-    if (hit_check_subroutine_yu(&pl->wu, &ewk->wu, hd1, (s16*)eff_hit_data[ewk->wu.type])) {
+    if (hit_check_subroutine_yu(&pl->wu, &ewk->wu, hd1, eff_hit_data[ewk->wu.type])) {
         return 1;
     }
     return 0;

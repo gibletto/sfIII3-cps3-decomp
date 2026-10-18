@@ -556,7 +556,7 @@ s32 effect_68_init(void) {
         ewk->wu.routine_no[4] = *data_ptr++;
         ewk->wu.sync_suzi = 0;
         ewk->wu.char_table[0] = brz_char_table;
-        suzi_offset_set(ewk);
+        suzi_offset_set(&ewk->wu);
     }
     return 0;
 }

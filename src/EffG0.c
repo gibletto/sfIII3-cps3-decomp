@@ -183,9 +183,9 @@ s32 effect_G0_init(Order, Time, Score, Pos_Index)
     } else {
         ix = 0;
     }
-    ewk->wu.hit_quake = bg_w.bgw[1].wxy[0].disp.pos + EFFG0_Score_Pos_Data[ix][Pos_Index][0];
+    ewk->wu.hit_quake = bg_w.bgw[1].wxy[0].disp.pos + Compute_Score_Pos_Data_G0[ix][Pos_Index][0];
     ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake + 416;
-    ewk->wu.xyz[1].disp.pos = EFFG0_Score_Pos_Data[ix][Pos_Index][1];
+    ewk->wu.xyz[1].disp.pos = Compute_Score_Pos_Data_G0[ix][Pos_Index][1];
     ewk->wu.my_priority = ewk->wu.position_z = 5;
     ewk->wu.mvxy.a[0].sp = 0xFFFE8000;
     ewk->wu.mvxy.d[0].sp = 0xFFFD8000;

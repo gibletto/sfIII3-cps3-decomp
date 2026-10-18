@@ -38,6 +38,10 @@
 
 
 
+s16 rf_b2_flag;  /* 02068C24 */
+s16 b2_curr_no;  /* 02068C26 */
+
+
 void effect_B2_move(WORK_Other* ewk) {
     s16 work;
     b3_Break_Into_check(ewk);

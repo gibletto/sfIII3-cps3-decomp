@@ -45,7 +45,7 @@ void effect_H4_move(WORK_Other* ewk) {
         ewk->wu.mvxy.d[1].sp = 0;
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-        sort_push_request4(ewk);
+        sort_push_request4(&ewk->wu);
         break;
     case 1:
         add_x_sub(ewk);
@@ -59,7 +59,7 @@ void effect_H4_move(WORK_Other* ewk) {
         }
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-        sort_push_request4(ewk);
+        sort_push_request4(&ewk->wu);
         break;
     case 2:
         add_x_sub(ewk);
@@ -69,7 +69,7 @@ void effect_H4_move(WORK_Other* ewk) {
         }
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-        sort_push_request4(ewk);
+        sort_push_request4(&ewk->wu);
         break;
     default:
         all_cgps_put_back(ewk);

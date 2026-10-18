@@ -22,6 +22,9 @@
 
 
 
+WORK_Other * oya_p;  /* 02068C3C */
+
+
 void effect_B9_move(WORK_Other* ewk) {
     oya_p = (WORK_Other*)ewk->my_master;
     switch (oya_p->wu.routine_no[0]) {

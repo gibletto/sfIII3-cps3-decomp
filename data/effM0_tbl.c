@@ -9,8 +9,6 @@
 
 extern const s16 effM0_tbl_top_0[];
 
-extern const u8 effl7_data_tbl[];
-
 void (*const effM0_tbl_top[8])() = {
     (void (*)())0x03E003E0,
     (void (*)())0x03E003E0,

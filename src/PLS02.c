@@ -22,9 +22,6 @@
 
 struct PLW_tag;
 
-/* stored after parabora_own_table (after its remy entry) */
-extern const u32 parabora_own_table_tail[];
-#define parabora_ex_table ((s16 (*)[][24][4][4][6])&parabora_own_table_tail[1])
 
 
 
@@ -77,14 +74,13 @@ void setup_mvxy_data(wk, ix)
     read_adrs_store_mvxy(wk, &wk->move_xy_table[ix * 6]);
 }
 
-/* Unreferenced: blow-away movement taken from the table stored after parabora_own_table, by the
-   attacker's character and our weight. */
+/* Unreferenced: blow-away movement from parabora_ex_table, by the attacker's character and our weight. */
 void setup_butt_own_data_ex(WORK* wk, s16 ix) {
     s16* adrs;
     s16 pn;
     wk->mvxy.index = ix;
     pn = ((PLW*)wk->target_adrs)->player_number;
-    adrs = (*parabora_ex_table)[ix][pn][wk->weight_level][(s8)wk->dm_attlv];
+    adrs = parabora_ex_table[ix][pn][wk->weight_level][wk->dm_attlv];
     read_adrs_store_mvxy(wk, adrs);
 }
 
@@ -94,7 +90,7 @@ void setup_butt_own_data_ex2(WORK* wk, s16 ix) {
     u8 wl;
     wk->mvxy.index = ix;
     wl = ((WORK*)wk->target_adrs)->weight_level;
-    adrs = (*parabora_ex_table)[ix][((PLW*)wk)->player_number][wl][(s8)wk->dm_attlv];
+    adrs = parabora_ex_table[ix][((PLW*)wk)->player_number][wl][wk->dm_attlv];
     read_adrs_store_mvxy(wk, adrs);
 }
 
@@ -102,7 +98,7 @@ void setup_butt_own_data_ex2(WORK* wk, s16 ix) {
 
 void setup_butt_own_data(WORK* wk) {
     wk->mvxy.index = wk->dm_butt_type;
-    read_adrs_store_mvxy(wk, ((s16(*)[4][6])parabora_own_table[wk->dm_plnum])[wk->dm_butt_type][wk->weight_level]);
+    read_adrs_store_mvxy(wk, parabora_own_table[wk->dm_plnum][wk->dm_butt_type].data[wk->weight_level]);
 }
 
 
@@ -419,7 +415,10 @@ s16 get_sel_hosei_tbl_ix(s16 plnum) {
 
 
 
-s32 check_work_position_bonus(WORK* hm, s16 tx) {
+s32 check_work_position_bonus(hm, tx)
+WORK* hm;
+s16 tx;
+{
     s16 result = hm->xyz[0].disp.pos - tx;
     s16 num;
     if (result) {
@@ -436,7 +435,11 @@ s32 check_work_position_bonus(WORK* hm, s16 tx) {
 
 
 
-s32 set_field_hosei_flag(PLW* pl, s16 pos, s16 ix) {
+s32 set_field_hosei_flag(pl, pos, ix)
+PLW* pl;
+s16 pos;
+s16 ix;
+{
     s16 hami;
     if (ix != 0) {
         hami = pl->wu.xyz[0].disp.pos + satse[pl->player_number] - pos;

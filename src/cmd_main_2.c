@@ -60,6 +60,39 @@
 
 
 
+/* 02004FB4 */
+void (*chk_move_jp[28])() = {
+    check_init,
+    check_0,
+    check_1,
+    check_2,
+    check_3,
+    check_4,
+    check_5,
+    check_6,
+    check_7,
+    check_7,
+    check_9,
+    check_10,
+    check_11,
+    check_12,
+    check_13,
+    check_14,
+    check_15,
+    check_16,
+    check_16,
+    check_18,
+    check_19,
+    check_20,
+    check_21,
+    check_22,
+    check_23,
+    check_24,
+    check_25,
+    check_26,
+};
+
+
 void waza_check(PLW* pl) {
     cmd_pl = pl;
     cmd_id = cmd_pl->wu.id;
@@ -1259,7 +1292,7 @@ void check_22(void) {
         waza_ptr->free3 = 0;
     }
     for (i = 0; i < 8; i++) {
-        if (chk_pl->sw_lever == kaiten_lever_tbl[i]) {
+        if (chk_pl->sw_lever == chk22_tbl[i]) {
             waza_ptr->free3 |= 1 << i;
         }
     }
@@ -1585,7 +1618,7 @@ void pl_lvr_set(void) {
     wcp[cmd_id].lgp = lever_gacha_tbl[cmd_pl->cp->sw_now & 0xF] * 4;
     wcp[cmd_id].lgp += lever_gacha_tbl[cmd_pl->cp->sw_off & 0xF] * 2;
     wcp[cmd_id].lgp += lever_gacha_tbl[(cmd_pl->cp->sw_now / 16) & 7] * 2;
-    wcp[cmd_id].lgp += lever_gacha_tbl[(cmd_pl->cp->sw_now / 256) & 7] * 1;
+    wcp[cmd_id].lgp += lever_gacha_tbl[(cmd_pl->cp->sw_now / 256) & 7];
 }
 
 
@@ -1606,7 +1639,7 @@ void sw_pick_up(void) {
         sw_work *= 2;
     }
     for (i = 0; i < 4; i++) {
-        if (lvr_chk_tbl[i] & chk_pl->sw_new) {
+        if (lvr_chk_tbl[0][i] & chk_pl->sw_new) {
             *cnt_address1 += 1;
         } else {
             *cnt_address1 = 0;
@@ -1676,13 +1709,20 @@ void basic_waza_flag_clear(s16 pl_id) {
 
 
 
-void waza_flag_clear_only_1(s16 pl_id, s16 wznum) {
+void waza_flag_clear_only_1(pl_id, wznum)
+s16 pl_id;
+s16 wznum;
+{
     waza_compel_init(pl_id, wznum, pl_CMD[plw[pl_id].player_number]);
 }
 
 
 
-void waza_compel_init(s16 pl_id, s16 num, intptr_t* adrs) {
+void waza_compel_init(pl_id, num, adrs)
+s16 pl_id;
+s16 num;
+intptr_t* adrs;
+{
     WAZA_WORK* w_ptr;
     s16* ptr;
     ptr = (s16*)adrs[num];
@@ -1760,8 +1800,7 @@ void waza_compel_all_init(PLW* pl) {
 }
 
 
-/* provisional name */
-void waza_slot_clear_all_p(PLW* pl) {
+void waza_compel_all_init2(PLW* pl) {
     s16 j;
     for (j = 0; j < 56; j++) {
         if (wcp[pl->wu.id].waza_flag[j] != -1) {

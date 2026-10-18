@@ -29,6 +29,14 @@
 
 
 
+s16 card_out_req;  /* 0206AAC4 */
+u16 card_out_busy;  /* 0206AAC6 */
+u8 card_out_busy_tail[128];  /* after card_out_busy; nothing refers to it by name or address */
+
+
+s32 card_empty_flag = 0;  /* 02007D3C */
+
+
 /* provisional name */
 void dispenser_init(void) {
     card_out_req = 0;

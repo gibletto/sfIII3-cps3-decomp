@@ -45,7 +45,7 @@ void grade_max_combo_check();
 void grade_set_round_result(s16 ix);
 void backup_RO_PT(void);
 void grade_store_vitality();
-u32 rannyuu_Q_check();
+u32 rannyuu_Q_check(s16 pl);
 void grade_makeup_stage_parameter(s16 ix);
 void grade_check_work_round_init();
 void makeup_final_grade();

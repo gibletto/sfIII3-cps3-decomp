@@ -43,7 +43,7 @@ s32 Disp_More_Coins();
 s32 credit_display_render(s8 force);
 void entry_main(void);
 void entry_task(void);
-void entry_to_in_game(void);
+void Exit_Title_Sub_Entry(void);
 void Entry_03_2nd(void);
 void Entry_04_2nd(void);
 void Entry_01(void);

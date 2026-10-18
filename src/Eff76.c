@@ -150,7 +150,7 @@ void EFF76_SUDDENLY(WORK_Other* ewk) {
         if (Next_Step) {
             ewk->wu.my_family = 1;
             ewk->wu.xyz[0].disp.pos = bg_w.bgw[0].wxy[0].disp.pos;
-            ewk->wu.xyz[1].disp.pos = bg_w.bgw[0].wxy[1].disp.pos + EFF76_Pos_Data_B[ewk->wu.dir_old - 59][1];
+            ewk->wu.xyz[1].disp.pos = bg_w.bgw[0].wxy[1].disp.pos + Pos_Cont_Data_76[ewk->wu.dir_old - 59][1];
             ewk->wu.routine_no[0] = 0;
             Order[ewk->wu.dir_old] = 0;
         }
@@ -296,9 +296,9 @@ void Setup_Pos_76(WORK_Other* ewk) {
     case 0x3D:
     case 0x3E:
     case 0x3F:
-        ewk->wu.xyz[0].disp.pos = bg_w.bgw[1].wxy[0].disp.pos + EFF76_Pos_Data_B[ewk->wu.dir_old - 0x3B][0] + 458;
-        ewk->wu.xyz[1].disp.pos = bg_w.bgw[1].wxy[1].disp.pos + EFF76_Pos_Data_B[ewk->wu.dir_old - 0x3B][1];
-        ewk->wu.position_z = EFF76_Pos_Data_B[ewk->wu.dir_old - 0x3B][2];
+        ewk->wu.xyz[0].disp.pos = bg_w.bgw[1].wxy[0].disp.pos + Pos_Cont_Data_76[ewk->wu.dir_old - 0x3B][0] + 458;
+        ewk->wu.xyz[1].disp.pos = bg_w.bgw[1].wxy[1].disp.pos + Pos_Cont_Data_76[ewk->wu.dir_old - 0x3B][1];
+        ewk->wu.position_z = Pos_Cont_Data_76[ewk->wu.dir_old - 0x3B][2];
         break;
     case 0x43:
     case 0x44:
@@ -336,9 +336,9 @@ void Setup_Pos_76(WORK_Other* ewk) {
     case 0x48:
         ix = isAkumaName(My_char[Champion]);
         ewk->wu.xyz[0].disp.pos = bg_w.bgw[ewk->wu.my_family - 1].wxy[0].disp.pos +
-                                  Win_Name_Pos_Data[Champion][1][My_char[Champion] + ix][0];
+                                  Name_Cover_Pos_Data[Champion][1][My_char[Champion] + ix][0];
         ewk->wu.xyz[1].disp.pos = bg_w.bgw[ewk->wu.my_family - 1].wxy[1].disp.pos +
-                                  Win_Name_Pos_Data[Champion][1][My_char[Champion] + ix][1];
+                                  Name_Cover_Pos_Data[Champion][1][My_char[Champion] + ix][1];
         ewk->wu.position_z = 70;
         if (Champion == 0) {
             ewk->wu.xyz[0].disp.pos += 24;
@@ -349,9 +349,9 @@ void Setup_Pos_76(WORK_Other* ewk) {
     case 0x49:
         ix = isAkumaName(My_char[Champion]);
         ewk->wu.xyz[0].disp.pos = bg_w.bgw[ewk->wu.my_family - 1].wxy[0].disp.pos +
-                                  Win_Name_Pos_Data[Champion][1][My_char[Champion] + ix][0];
+                                  Name_Cover_Pos_Data[Champion][1][My_char[Champion] + ix][0];
         ewk->wu.xyz[1].disp.pos = bg_w.bgw[ewk->wu.my_family - 1].wxy[1].disp.pos +
-                                  Win_Name_Pos_Data[Champion][1][My_char[Champion] + ix][1] - 2;
+                                  Name_Cover_Pos_Data[Champion][1][My_char[Champion] + ix][1] - 2;
         ewk->wu.position_z = 69;
         if (Champion == 0) {
             ewk->wu.xyz[0].disp.pos += 23;

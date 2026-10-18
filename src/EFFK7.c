@@ -4,7 +4,7 @@
  * Effect K7 is created by Att_METAMORPHOSE (plpat19) and supervises the player while the
  * metamorphosis super art runs.
  * Type 0 (K7_move_type_0) turns the player into the opponent: at the marked animation frame it
- * takes the opponent's character number and charset, reloads base data (set_base_data_metamor)
+ * takes the opponent's character number and charset, reloads base data (set_base_data_metamorphose)
  * and the attack/defence ratings and borrows the opponent's colours; when the art expires or a
  * rebirth check fires it plays the return animation and restores the original character.
  * Type 1 (K7_move_type_1) blinks the player from K7_blink_tbl while the art is active and
@@ -184,7 +184,7 @@ void K7_move_type_0(WORK_Other* ewk, PLW* mwk) {
         ewk->wu.charset_id = mwk->wu.charset_id;
         mwk->player_number = ((PLW*)mwk->wu.target_adrs)->player_number;
         mwk->wu.charset_id = ((PLW*)mwk->wu.target_adrs)->wu.charset_id;
-        set_base_data_metamor(mwk);
+        set_base_data_metamorphose(mwk);
         mwk->att_plus = 10;
         mwk->def_plus = 6;
         if (mwk->wu.operator == 0) {
@@ -230,7 +230,7 @@ void K7_move_type_0(WORK_Other* ewk, PLW* mwk) {
         ewk->wu.routine_no[1] = 5;
         mwk->player_number = ewk->wu.direction;
         mwk->wu.charset_id = ewk->wu.charset_id;
-        set_base_data_metamor(mwk);
+        set_base_data_metamorphose(mwk);
         metamor_color_restore(mwk->wu.id);
         metamor_color_reset(mwk->wu.id);
         if (mwk->wu.operator == 0) {

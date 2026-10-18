@@ -30,6 +30,6 @@ const u16 combo_erase_len_tbl[11] = {
     0x22, 0x22, 0x24,
 };
 
-const s16 sa_color_data_tbl[3] = {
+const u16 sa_color_data_tbl[3] = {
     26, 24, 26,
 };

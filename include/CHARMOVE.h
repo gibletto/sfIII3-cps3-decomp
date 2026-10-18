@@ -3,9 +3,6 @@
 
 #include "structs.h"
 
-void char_move_cmj5(WORK* wk);
-void char_move_cmj6(WORK* wk);
-void char_move_cmj7(WORK* wk);
 void char_move_cmms(WORK* wk);
 void char_move_cmms2(WORK* wk);
 s32 comm_djmp(WORK* wk, CHAR_CMD* ctc);

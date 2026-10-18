@@ -114,6 +114,9 @@ extern s16 flip_crt_ofs_y;
 #define WINDOW_ROW(m) ((const s16*)((const u8*)screen_window_tbl + (u8)((m) * sizeof(screen_window_tbl[0]))))
 
 
+s8 Monitor_Flip_Old = 0;  /* 02000660 */
+
+
 /* provisional name */
 void screen_flip_offsets_set(void) {
     const s16* p;

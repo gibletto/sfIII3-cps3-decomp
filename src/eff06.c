@@ -26,8 +26,38 @@
 
 
 
+extern const s16 scr_obj_num[352];
+
+/* 02006B38 */
+const s16* scr_obj_data6[23] = {
+    (const s16*)&scr_obj_num6[23],
+    (const s16*)&scr_obj_num6[31],
+    (const s16*)&scr_obj_num6[111],
+    &scr_obj_num[23],
+    (const s16*)&scr_obj_num6[191],
+    (const s16*)&scr_obj_num6[215],
+    &scr_obj_num[23],
+    (const s16*)&scr_obj_num6[327],
+    (const s16*)&scr_obj_num6[343],
+    (const s16*)&scr_obj_num6[431],
+    (const s16*)&scr_obj_num6[143],
+    (const s16*)&scr_obj_num6[79],
+    (const s16*)&scr_obj_num6[455],
+    (const s16*)&scr_obj_num6[31],
+    (const s16*)&scr_obj_num6[479],
+    (const s16*)&scr_obj_num6[479],
+    (const s16*)&scr_obj_num6[489],
+    (const s16*)&scr_obj_num6[505],
+    (const s16*)&scr_obj_num6[215],
+    (const s16*)&scr_obj_num6[271],
+    (const s16*)&scr_obj_num6[537],
+    &scr_obj_num[23],
+    &scr_obj_num[23],
+};
+
+
 void effect_06_move(WORK_Other* ewk) {
-    if (obr_disp_off_check()) {
+    if (obr_no_disp_check()) {
         return;
     }
     switch (ewk->wu.routine_no[0]) {
@@ -83,7 +113,7 @@ s32 effect_06_init(void) {
         ewk->wu.my_priority = ewk->wu.position_z = *data_ptr++;
         ewk->wu.char_index = *data_ptr++;
         ewk->wu.sync_suzi = *data_ptr++;
-        suzi_offset_set(ewk);
+        suzi_offset_set(&ewk->wu);
     }
     return 0;
 }

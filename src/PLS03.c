@@ -23,8 +23,6 @@
 #include "ta_sub.h"
 #include "PLS03.h"
 
-#define GAUGE_COMMAND_WORK(wk, always) ((WORK*)((u8*)(wk) + ((always) && 0)))
-
 void hissatsu_setup_union(PLW* wk, s16 rno) {
     wk->wu.routine_no[1] = 4;
     wk->wu.routine_no[2] = rno;
@@ -44,9 +42,9 @@ s32 check_full_gauge_attack(PLW* wk, s8 always) {
     s16 j;
     u16 cusw;
     s16 exsw;
-    (void)GAUGE_COMMAND_WORK(wk, always)->be_flag;
-    (void)GAUGE_COMMAND_WORK(wk, always)->disp_flag;
-    (void)GAUGE_COMMAND_WORK(wk, always)->cg_type;
+    (void)(always && wk->wu.be_flag);
+    (void)(always && wk->wu.disp_flag);
+    (void)(always && wk->wu.cg_type);
     if (wk->sa->mp != 1) {
         return 0;
     }
@@ -98,7 +96,7 @@ s32 check_full_gauge_attack(PLW* wk, s8 always) {
                     wk->wu.cg_cancel = 0;
                     wk->sa->mp = -1;
                     hissatsu_setup_union(wk, wk->cp->waza_r[wk->sa->exsa_g_ix][j]);
-                    waza_slot_clear_all_p(wk);
+                    waza_compel_all_init2(wk);
                     return 1;
                 }
             }
@@ -149,7 +147,7 @@ s32 check_full_gauge_attack(PLW* wk, s8 always) {
                 wk->wu.cg_cancel = 0;
                 wk->sa->mp = -1;
                 hissatsu_setup_union(wk, wk->cp->waza_r[wk->sa->exsa_a_ix][j]);
-                waza_slot_clear_all_p(wk);
+                waza_compel_all_init2(wk);
                 return 1;
             }
         }
@@ -164,9 +162,9 @@ s32 check_full_gauge_attack2(PLW* wk, s8 always) {
     s16 j;
     u16 cusw;
     s16 exsw;
-    (void)GAUGE_COMMAND_WORK(wk, always)->be_flag;
-    (void)GAUGE_COMMAND_WORK(wk, always)->disp_flag;
-    (void)GAUGE_COMMAND_WORK(wk, always)->cg_type;
+    (void)(always && wk->wu.be_flag);
+    (void)(always && wk->wu.disp_flag);
+    (void)(always && wk->wu.cg_type);
     if (wk->sa->mp != 1) {
         return 0;
     }
@@ -218,7 +216,7 @@ s32 check_full_gauge_attack2(PLW* wk, s8 always) {
                     wk->wu.cg_cancel = 0;
                     wk->sa->mp = -1;
                     hissatsu_setup_union(wk, wk->cp->waza_r[wk->sa->exs2_g_ix][j]);
-                    waza_slot_clear_all_p(wk);
+                    waza_compel_all_init2(wk);
                     return 1;
                 }
             }
@@ -269,7 +267,7 @@ s32 check_full_gauge_attack2(PLW* wk, s8 always) {
                 wk->wu.cg_cancel = 0;
                 wk->sa->mp = -1;
                 hissatsu_setup_union(wk, wk->cp->waza_r[wk->sa->exs2_a_ix][j]);
-                waza_slot_clear_all_p(wk);
+                waza_compel_all_init2(wk);
                 return 1;
             }
         }
@@ -323,7 +321,7 @@ s32 check_super_arts_attack(PLW* wk) {
                         continue;
                     }
                     exsw = cmdshot_conv_tbl[wk->cp->exdt[wk->sa->nmsa_g_ix][j]];
-                    (void)((WORK*)(s32)exsw)->id;
+                    (void)&((WORK*)(s32)exsw)->id;
                     if ((u16)(exsw & cusw) != cmdshot_conv_tbl[wk->cp->exdt[wk->sa->nmsa_g_ix][j] & 0xF]) {
                         continue;
                     }
@@ -332,10 +330,10 @@ s32 check_super_arts_attack(PLW* wk) {
                     wk->wu.cg_cancel = 0;
                     wk->sa->ok = -1;
                     hissatsu_setup_union(wk, wk->cp->waza_r[wk->sa->nmsa_g_ix][j]);
-                    waza_slot_clear_all_p(wk);
+                    waza_compel_all_init2(wk);
                     return 1;
                 }
-                (void)((WORK*)(s32)cusw)->id;
+                (void)&((WORK*)(s32)cusw)->id;
             }
         }
         return 0;
@@ -377,11 +375,11 @@ s32 check_super_arts_attack(PLW* wk) {
                 wk->wu.cg_cancel = 0;
                 wk->sa->ok = -1;
                 hissatsu_setup_union(wk, wk->cp->waza_r[wk->sa->nmsa_a_ix][j]);
-                waza_slot_clear_all_p(wk);
+                waza_compel_all_init2(wk);
                 return 1;
             }
-            (void)((WORK*)(s32)cusw)->id;
-            (void)((WORK*)(s16)cusw)->id;
+            (void)&((WORK*)(s32)cusw)->id;
+            (void)&((WORK*)(s16)cusw)->id;
         }
     }
     return 0;
@@ -425,7 +423,7 @@ ground:
     wk->wu.cg_cancel = 0;
     wk->sa->ok = -1;
     hissatsu_setup_union(wk, wk->cp->waza_r[wk->sa->nmsa_g_ix][0]);
-    waza_slot_clear_all_p(wk);
+    waza_compel_all_init2(wk);
     return 1;
 air:
     if (wk->spmv_ng_flag & 0x80000000) {
@@ -450,7 +448,7 @@ air:
     wk->wu.cg_cancel = 0;
     wk->sa->ok = -1;
     hissatsu_setup_union(wk, wk->cp->waza_r[wk->sa->nmsa_a_ix][0]);
-    waza_slot_clear_all_p(wk);
+    waza_compel_all_init2(wk);
     return 1;
 }
 
@@ -499,48 +497,46 @@ ground:
                 return 0;
             }
         }
-        if ((wk->cp->btix[i] & 0xFF) == 0x80) {
-            continue;
-        } else if (!wk->cp->waza_flag[i]) {
-            continue;
-        } else {
-            cusw = conpane[wk->cp->btix[i] & 0xFF];
-            for (j = 3; j >= 0; j--) {
-                exsw = cusw & cmdshot_conv_tbl[wk->cp->exdt[i][j]];
-                if (exsw != cmdshot_conv_tbl[wk->cp->exdt[i][j] & 0xF]) {
-                    continue;
-                }
-                if (j == 3) {
-                    if (!(wk->cp->btix[i] & 0x600)) {
+        if ((wk->cp->btix[i] & 0xFF) != 0x80) {
+            if (wk->cp->waza_flag[i]) {
+                cusw = conpane[wk->cp->btix[i] & 0xFF];
+                for (j = 3; j >= 0; j--) {
+                    exsw = cusw & cmdshot_conv_tbl[wk->cp->exdt[i][j]];
+                    if (exsw != cmdshot_conv_tbl[wk->cp->exdt[i][j] & 0xF]) {
                         continue;
                     }
-                    if (wk->metamorphose) {
-                        if (wk->cp->btix[i] & 0x400) {
+                    if (j == 3) {
+                        if (!(wk->cp->btix[i] & 0x600)) {
                             continue;
                         }
-                    } else {
-                        if (wk->sa->mp == -1) {
-                            continue;
-                        }
-                        if (wk->sa->ok == -1) {
-                            continue;
-                        }
-                        if (wk->cp->btix[i] & 0x400) {
-                            if (wk->sa->ex != 1) {
+                        if (wk->metamorphose) {
+                            if (wk->cp->btix[i] & 0x400) {
                                 continue;
-                            } else {
-                                wk->sa->ex = -1;
+                            }
+                        } else {
+                            if (wk->sa->mp == -1) {
+                                continue;
+                            }
+                            if (wk->sa->ok == -1) {
+                                continue;
+                            }
+                            if (wk->cp->btix[i] & 0x400) {
+                                if (wk->sa->ex != 1) {
+                                    continue;
+                                } else {
+                                    wk->sa->ex = -1;
+                                }
                             }
                         }
                     }
+                    setup_comm_back(&wk->wu);
+                    wk->as = &asstbl_sa_ground[wk->player_number][i - 20][j].as;
+                    wk->wu.cg_cancel &= 0x40;
+                    hissatsu_setup_union(wk, wk->cp->waza_r[i][j]);
+                    waza_flag_clear_only_1(wk->wu.id, i);
+                    grade_add_command_waza(wk->wu.id);
+                    return 1;
                 }
-                setup_comm_back(&wk->wu);
-                wk->as = &asstbl_sa_ground[wk->player_number][i - 20][j].as;
-                wk->wu.cg_cancel &= 0x40;
-                hissatsu_setup_union(wk, wk->cp->waza_r[i][j]);
-                waza_flag_clear_only_1(wk->wu.id, i);
-                grade_add_command_waza(wk->wu.id);
-                return 1;
             }
         }
     }
@@ -572,9 +568,7 @@ air:
             }
         }
         if ((wk->cp->btix[i] & 0xFF) != 0x80) {
-            if (!wk->cp->waza_flag[i]) {
-                continue;
-            } else {
+            if (wk->cp->waza_flag[i]) {
                 cusw = conpane[wk->cp->btix[i] & 0xFF];
                 for (j = 3; j >= 0; j--) {
                     exsw = cusw & cmdshot_conv_tbl[wk->cp->exdt[i][j]];
@@ -614,7 +608,6 @@ air:
                     return 1;
                 }
             }
-            continue;
         } else if (wk->cp->waza_flag[i]) {
             setup_comm_back(&wk->wu);
             wk->as = &asstbl_sa_air[wk->player_number][i - 38][0].as;

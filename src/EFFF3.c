@@ -52,7 +52,7 @@ void effect_F3_move(WORK_Other* ewk) {
     }
     ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
     ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-    sort_push_request4(ewk);
+    sort_push_request4(&ewk->wu);
 }
 
 

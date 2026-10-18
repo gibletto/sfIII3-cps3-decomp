@@ -37,6 +37,39 @@
 #include "EFF09.h"
 
 
+/* 02006B94 */
+void (*eff09_tbl[28])(WORK_Other*) = {
+    eff09_0000,
+    eff09_1000,
+    eff09_2000,
+    eff09_3000,
+    eff09_4000,
+    eff09_5000,
+    eff09_6000,
+    eff09_7000,
+    eff09_8000,
+    eff09_9000,
+    eff09_10000,
+    eff09_11000,
+    eff09_12000,
+    eff09_13000,
+    eff09_14000,
+    eff09_15000,
+    eff09_16000,
+    eff09_17000,
+    eff09_18000,
+    eff09_19000,
+    eff09_20000,
+    eff09_21000,
+    eff09_22000,
+    eff09_23000,
+    eff09_24000,
+    eff09_25000,
+    eff09_26000,
+    eff09_27000,
+};
+
+
 void effect_09_move(WORK_Other* ewk) {
     if (compel_dead_check(ewk)) {
         ewk->wu.disp_flag = 0;
@@ -48,7 +81,7 @@ void effect_09_move(WORK_Other* ewk) {
 
 
 void eff09_0000(WORK_Other* ewk) {
-    if (obr_disp_off_check()) {
+    if (obr_no_disp_check()) {
         return;
     }
     switch (ewk->wu.routine_no[1]) {
@@ -81,7 +114,7 @@ void eff09_0000(WORK_Other* ewk) {
 
 
 void eff09_1000(WORK_Other* ewk) {
-    if (obr_disp_off_check()) {
+    if (obr_no_disp_check()) {
         return;
     }
     switch (ewk->wu.routine_no[1]) {
@@ -116,13 +149,13 @@ void eff09_1000(WORK_Other* ewk) {
                 ewk->wu.routine_no[1]++;
             }
         }
-        if (obr_disp_off_check()) {
+        if (obr_no_disp_check()) {
             break;
         }
         sort_push_request(&ewk->wu);
         break;
     case 2:
-        if (obr_disp_off_check()) {
+        if (obr_no_disp_check()) {
             break;
         }
         if (ewk->wu.old_rno[0] && !EXE_flag && !Game_pause && !EXE_obroll && eff_hit_check(ewk, 0)) {
@@ -132,7 +165,7 @@ void eff09_1000(WORK_Other* ewk) {
         sort_push_request(&ewk->wu);
         break;
     case 4:
-        if (obr_disp_off_check()) {
+        if (obr_no_disp_check()) {
             break;
         }
         sort_push_request(&ewk->wu);
@@ -181,7 +214,7 @@ void eff09_2000(WORK_Other* ewk) {
         }
         ewk->wu.old_rno[0] = ewk->wu.old_rno[1] = ewk->wu.old_rno[2] = ewk->wu.old_rno[3] = 0;
         suzi_sync_pos_set(ewk);
-        sort_push_request(ewk);
+        sort_push_request(&ewk->wu);
         break;
     case 1:
         if (!EXE_flag && !Game_pause) {
@@ -223,7 +256,7 @@ void eff09_2000(WORK_Other* ewk) {
             }
         }
         suzi_sync_pos_set(ewk);
-        sort_push_request(ewk);
+        sort_push_request(&ewk->wu);
         break;
     case 2:
         if (!EXE_flag && !Game_pause) {
@@ -236,7 +269,7 @@ void eff09_2000(WORK_Other* ewk) {
             }
         }
         suzi_sync_pos_set(ewk);
-        sort_push_request(ewk);
+        sort_push_request(&ewk->wu);
         break;
     case 3:
         ewk->wu.routine_no[1]++;
@@ -412,7 +445,7 @@ void eff09_4000(WORK_Other* ewk) {
 
 
 void eff09_5000(WORK_Other* ewk) {
-    if (obr_disp_off_check()) {
+    if (obr_no_disp_check()) {
         return;
     }
     switch (ewk->wu.routine_no[1]) {
@@ -826,7 +859,7 @@ void eff09_14000(WORK_Other* ewk) {
 
 void eff09_15000(WORK_Other* ewk) {
     WORK* oya_ptr;
-    if (obr_disp_off_check()) {
+    if (obr_no_disp_check()) {
         return;
     }
     oya_ptr = (WORK*)ewk->my_master;
@@ -897,7 +930,7 @@ void eff09_16000(WORK_Other* ewk) {
 
 void eff09_17000(WORK_Other* ewk) {
     WORK* oya_ptr;
-    if (obr_disp_off_check()) {
+    if (obr_no_disp_check()) {
         return;
     }
     oya_ptr = (WORK*)ewk->my_master;
@@ -943,7 +976,7 @@ void eff09_17000(WORK_Other* ewk) {
 
 void eff09_18000(WORK_Other* ewk) {
     WORK* oya_ptr;
-    if (obr_disp_off_check()) {
+    if (obr_no_disp_check()) {
         return;
     }
     oya_ptr = (WORK*)ewk->my_master;
@@ -999,7 +1032,7 @@ void eff09_18000(WORK_Other* ewk) {
 
 
 void eff09_19000(WORK_Other* ewk) {
-    if (obr_disp_off_check()) {
+    if (obr_no_disp_check()) {
         return;
     }
     switch (ewk->wu.routine_no[1]) {
@@ -1184,7 +1217,6 @@ void eff09_22000(WORK_Other* ewk) {
                 set_char_move_init(&ewk->wu, 0, 62);
             } else if (oya_ptr->cg_ix != ewk->wu.cg_ix) {
                 work = oya_ptr->cg_ix / oya_ptr->cgd_type;
-            set_pat:
                 set_char_move_init2(&ewk->wu, 0, 61, work + 1, 0);
                 ewk->wu.cg_ix = oya_ptr->cg_ix;
             }
@@ -1252,7 +1284,7 @@ void eff09_23000(WORK_Other* ewk) {
         if (!*exe && !Game_pause) {
             char_move(&ewk->wu);
             add_x_sub(ewk);
-            if (range_x_check3(ewk, 64) == 0) {
+            if (range_x_check3(&ewk->wu, 64) == 0) {
                 ewk->wu.routine_no[1]++;
             }
         }
@@ -1316,11 +1348,11 @@ void eff09_24000(WORK_Other* ewk) {
             char_move(&ewk->wu);
             add_x_sub(ewk);
             if (ewk->wu.type == 34) {
-                if (range_x_check3(ewk, 176) == 0) {
+                if (range_x_check3(&ewk->wu, 176) == 0) {
                     ewk->wu.routine_no[1]++;
                 }
             } else {
-                if (range_x_check3(ewk, 88) == 0) {
+                if (range_x_check3(&ewk->wu, 88) == 0) {
                     ewk->wu.routine_no[1]++;
                 }
             }
@@ -1363,7 +1395,7 @@ void eff09_25000(WORK_Other* ewk) {
             char_move(&ewk->wu);
             add_x_sub(ewk);
             add_y_sub(ewk);
-            if (range_x_check3(ewk, 16) == 0) {
+            if (range_x_check3(&ewk->wu, 16) == 0) {
                 ewk->wu.routine_no[1]++;
             } else if (ewk->wu.xyz[1].disp.pos < 0) {
                 ewk->wu.xyz[1].cal = 0;
@@ -1498,7 +1530,7 @@ void eff09_27000(WORK_Other* ewk) {
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             add_x_sub(ewk);
-            if (range_x_check3(ewk, 36) == 0) {
+            if (range_x_check3(&ewk->wu, 36) == 0) {
                 ewk->wu.routine_no[1]++;
                 ewk->wu.disp_flag = 0;
             }
@@ -1625,6 +1657,6 @@ s32 effect_09_init2(WORK* wk, u8 data) {
     ewk->wu.char_index = *data_ptr++;
     ewk->wu.hit_stop = *data_ptr++;
     ewk->wu.sync_suzi = *data_ptr++;
-    suzi_offset_set(ewk);
+    suzi_offset_set(&ewk->wu);
     return 0;
 }

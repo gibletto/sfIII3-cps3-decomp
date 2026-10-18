@@ -45,98 +45,98 @@ extern const u16 oro_yuca_063_head[];
 extern const u16 oro_yuca_068_head[];
 
 /* yuca scripts: 91 entries */
-const u16* const oro_yuca[92] = {
-    oro_yuca_000,  /* 0 APPEAR JUNBI 1 */
-    oro_yuca_000,  /* 1 APPEAR JUNBI 2 */
-    oro_yuca_000,  /* 2 APPEAR JUNBI 3 */
-    oro_yuca_000,  /* 3 APPEAR JUNBI 4 */
-    oro_yuca_000,  /* 4 APPEAR JUNBI 5 */
-    oro_yuca_000,  /* 5 APPEAR JUNBI 6 */
-    oro_yuca_000,  /* 6 APPEAR JUNBI 7 */
-    oro_yuca_000,  /* 7 APPEAR JUNBI 8 */
-    oro_yuca_008,  /* 8 APPEAR 1 */
-    oro_yuca_009,  /* 9 APPEAR 2 */
-    oro_yuca_008,  /* 10 APPEAR 3 */
-    oro_yuca_009,  /* 11 APPEAR 4 */
-    oro_yuca_008,  /* 12 APPEAR 5 */
-    oro_yuca_009,  /* 13 APPEAR 6 */
-    oro_yuca_008,  /* 14 APPEAR 7 */
-    oro_yuca_009,  /* 15 APPEAR 8 */
-    oro_yuca_016,  /* 16 SP APPEAR 1 */
-    oro_yuca_017,  /* 17 SP APPEAR 2 */
-    oro_yuca_018,  /* 18 SP APPEAR 3 */
-    oro_yuca_019,  /* 19 SP APPEAR 4 */
-    oro_yuca_020,  /* 20 SP APPEAR 5 */
-    oro_yuca_021,  /* 21 SP APPEAR 6 */
-    oro_yuca_021,  /* 22 SP APPEAR 7 */
-    oro_yuca_021,  /* 23 SP APPEAR 8 */
-    oro_yuca_024,  /* 24 ZANNEN 1 */
-    oro_yuca_024,  /* 25 ZANNEN 2 */
-    oro_yuca_024,  /* 26 ZANNEN 3 */
-    oro_yuca_024,  /* 27 ZANNEN 4 */
-    oro_yuca_024,  /* 28 ZANNEN 5 */
-    oro_yuca_024,  /* 29 ZANNEN 6 */
-    oro_yuca_024,  /* 30 ZANNEN 7 */
-    oro_yuca_024,  /* 31 ZANNEN 8 */
-    oro_yuca_032,  /* 32 WIN 1 */
-    oro_yuca_033,  /* 33 WIN 2 */
-    oro_yuca_034,  /* 34 WIN 3 */
-    oro_yuca_035,  /* 35 WIN 4 */
-    oro_yuca_036,  /* 36 WIN 5 */
-    oro_yuca_037,  /* 37 WIN 6 */
-    oro_yuca_034,  /* 38 WIN 7 */
-    oro_yuca_039,  /* 39 WIN 8 */
-    oro_yuca_040,  /* 40 SP WIN 1 */
-    oro_yuca_041,  /* 41 SP WIN 2 */
-    oro_yuca_042,  /* 42 SP WIN 3 */
-    oro_yuca_043,  /* 43 SP WIN 4 */
-    oro_yuca_043,  /* 44 SP WIN 5 */
-    oro_yuca_043,  /* 45 SP WIN 6 */
-    oro_yuca_043,  /* 46 SP WIN 7 */
-    oro_yuca_043,  /* 47 SP WIN 8 */
-    oro_yuca_048,  /* 48 JUDGMENT WAIT */
-    oro_yuca_048,  /* 49 JUDGMENT WAIT */
-    oro_yuca_048,  /* 50 JUDGMENT WAIT */
-    oro_yuca_048,  /* 51 JUDGMENT WAIT */
-    oro_yuca_033,  /* 52 JUDGMENT WIN */
-    oro_yuca_033,  /* 53 JUDGMENT WIN */
-    oro_yuca_034,  /* 54 JUDGMENT WIN */
-    oro_yuca_034,  /* 55 JUDGMENT WIN */
-    oro_yuca_024,  /* 56 JUDGMENT LOSE */
-    oro_yuca_024,  /* 57 JUDGMENT LOSE */
-    oro_yuca_024,  /* 58 JUDGMENT LOSE */
-    oro_yuca_024,  /* 59 JUDGMENT LOSE */
-    oro_yuca_060,  /* 60 WAIT */
-    oro_yuca_061,  /* 61 AFRICA JUMP */
-    oro_yuca_062,  /* 62 AFRICA LAND */
-    oro_yuca_063,  /* 63 SEAN BALL HIT */
-    oro_yuca_063,  /* 64 no name */
-    oro_yuca_034,  /* 65 BONUS WIN 1 */
-    oro_yuca_032,  /* 66 BONUS WIN 2 */
-    oro_yuca_033,  /* 67 BONUS WIN 3 */
-    oro_yuca_068,  /* 68 APPEAR USE */
-    oro_yuca_068,  /* 69 APPEAR USE */
-    oro_yuca_068,  /* 70 APPEAR USE */
-    oro_yuca_068,  /* 71 APPEAR USE */
-    oro_yuca_068,  /* 72 APPEAR USE */
-    oro_yuca_068,  /* 73 APPEAR USE */
-    oro_yuca_068,  /* 74 APPEAR USE */
-    oro_yuca_068,  /* 75 APPEAR USE */
-    oro_yuca_068,  /* 76 APPEAR USE */
-    oro_yuca_068,  /* 77 APPEAR USE */
-    oro_yuca_068,  /* 78 APPEAR USE */
-    oro_yuca_068,  /* 79 APPEAR USE */
-    oro_yuca_068,  /* 80 APPEAR USE */
-    oro_yuca_068,  /* 81 APPEAR USE */
-    oro_yuca_068,  /* 82 APPEAR USE */
-    oro_yuca_068,  /* 83 APPEAR USE */
-    oro_yuca_068,  /* 84 APPEAR USE */
-    oro_yuca_068,  /* 85 APPEAR USE */
-    oro_yuca_068,  /* 86 APPEAR USE */
-    oro_yuca_068,  /* 87 APPEAR USE */
-    oro_yuca_068,  /* 88 APPEAR USE */
-    oro_yuca_068,  /* 89 APPEAR USE */
-    oro_yuca_068,  /* 90 APPEAR USE */
+const u32 oro_yuca[92] = {
+    (u32)oro_yuca_000,  /* 0 APPEAR JUNBI 1 */
+    (u32)oro_yuca_000,  /* 1 APPEAR JUNBI 2 */
+    (u32)oro_yuca_000,  /* 2 APPEAR JUNBI 3 */
+    (u32)oro_yuca_000,  /* 3 APPEAR JUNBI 4 */
+    (u32)oro_yuca_000,  /* 4 APPEAR JUNBI 5 */
+    (u32)oro_yuca_000,  /* 5 APPEAR JUNBI 6 */
+    (u32)oro_yuca_000,  /* 6 APPEAR JUNBI 7 */
+    (u32)oro_yuca_000,  /* 7 APPEAR JUNBI 8 */
+    (u32)oro_yuca_008,  /* 8 APPEAR 1 */
+    (u32)oro_yuca_009,  /* 9 APPEAR 2 */
+    (u32)oro_yuca_008,  /* 10 APPEAR 3 */
+    (u32)oro_yuca_009,  /* 11 APPEAR 4 */
+    (u32)oro_yuca_008,  /* 12 APPEAR 5 */
+    (u32)oro_yuca_009,  /* 13 APPEAR 6 */
+    (u32)oro_yuca_008,  /* 14 APPEAR 7 */
+    (u32)oro_yuca_009,  /* 15 APPEAR 8 */
+    (u32)oro_yuca_016,  /* 16 SP APPEAR 1 */
+    (u32)oro_yuca_017,  /* 17 SP APPEAR 2 */
+    (u32)oro_yuca_018,  /* 18 SP APPEAR 3 */
+    (u32)oro_yuca_019,  /* 19 SP APPEAR 4 */
+    (u32)oro_yuca_020,  /* 20 SP APPEAR 5 */
+    (u32)oro_yuca_021,  /* 21 SP APPEAR 6 */
+    (u32)oro_yuca_021,  /* 22 SP APPEAR 7 */
+    (u32)oro_yuca_021,  /* 23 SP APPEAR 8 */
+    (u32)oro_yuca_024,  /* 24 ZANNEN 1 */
+    (u32)oro_yuca_024,  /* 25 ZANNEN 2 */
+    (u32)oro_yuca_024,  /* 26 ZANNEN 3 */
+    (u32)oro_yuca_024,  /* 27 ZANNEN 4 */
+    (u32)oro_yuca_024,  /* 28 ZANNEN 5 */
+    (u32)oro_yuca_024,  /* 29 ZANNEN 6 */
+    (u32)oro_yuca_024,  /* 30 ZANNEN 7 */
+    (u32)oro_yuca_024,  /* 31 ZANNEN 8 */
+    (u32)oro_yuca_032,  /* 32 WIN 1 */
+    (u32)oro_yuca_033,  /* 33 WIN 2 */
+    (u32)oro_yuca_034,  /* 34 WIN 3 */
+    (u32)oro_yuca_035,  /* 35 WIN 4 */
+    (u32)oro_yuca_036,  /* 36 WIN 5 */
+    (u32)oro_yuca_037,  /* 37 WIN 6 */
+    (u32)oro_yuca_034,  /* 38 WIN 7 */
+    (u32)oro_yuca_039,  /* 39 WIN 8 */
+    (u32)oro_yuca_040,  /* 40 SP WIN 1 */
+    (u32)oro_yuca_041,  /* 41 SP WIN 2 */
+    (u32)oro_yuca_042,  /* 42 SP WIN 3 */
+    (u32)oro_yuca_043,  /* 43 SP WIN 4 */
+    (u32)oro_yuca_043,  /* 44 SP WIN 5 */
+    (u32)oro_yuca_043,  /* 45 SP WIN 6 */
+    (u32)oro_yuca_043,  /* 46 SP WIN 7 */
+    (u32)oro_yuca_043,  /* 47 SP WIN 8 */
+    (u32)oro_yuca_048,  /* 48 JUDGMENT WAIT */
+    (u32)oro_yuca_048,  /* 49 JUDGMENT WAIT */
+    (u32)oro_yuca_048,  /* 50 JUDGMENT WAIT */
+    (u32)oro_yuca_048,  /* 51 JUDGMENT WAIT */
+    (u32)oro_yuca_033,  /* 52 JUDGMENT WIN */
+    (u32)oro_yuca_033,  /* 53 JUDGMENT WIN */
+    (u32)oro_yuca_034,  /* 54 JUDGMENT WIN */
+    (u32)oro_yuca_034,  /* 55 JUDGMENT WIN */
+    (u32)oro_yuca_024,  /* 56 JUDGMENT LOSE */
+    (u32)oro_yuca_024,  /* 57 JUDGMENT LOSE */
+    (u32)oro_yuca_024,  /* 58 JUDGMENT LOSE */
+    (u32)oro_yuca_024,  /* 59 JUDGMENT LOSE */
+    (u32)oro_yuca_060,  /* 60 WAIT */
+    (u32)oro_yuca_061,  /* 61 AFRICA JUMP */
+    (u32)oro_yuca_062,  /* 62 AFRICA LAND */
+    (u32)oro_yuca_063,  /* 63 SEAN BALL HIT */
+    (u32)oro_yuca_063,  /* 64 no name */
+    (u32)oro_yuca_034,  /* 65 BONUS WIN 1 */
+    (u32)oro_yuca_032,  /* 66 BONUS WIN 2 */
+    (u32)oro_yuca_033,  /* 67 BONUS WIN 3 */
+    (u32)oro_yuca_068,  /* 68 APPEAR USE */
+    (u32)oro_yuca_068,  /* 69 APPEAR USE */
+    (u32)oro_yuca_068,  /* 70 APPEAR USE */
+    (u32)oro_yuca_068,  /* 71 APPEAR USE */
+    (u32)oro_yuca_068,  /* 72 APPEAR USE */
+    (u32)oro_yuca_068,  /* 73 APPEAR USE */
+    (u32)oro_yuca_068,  /* 74 APPEAR USE */
+    (u32)oro_yuca_068,  /* 75 APPEAR USE */
+    (u32)oro_yuca_068,  /* 76 APPEAR USE */
+    (u32)oro_yuca_068,  /* 77 APPEAR USE */
+    (u32)oro_yuca_068,  /* 78 APPEAR USE */
+    (u32)oro_yuca_068,  /* 79 APPEAR USE */
+    (u32)oro_yuca_068,  /* 80 APPEAR USE */
+    (u32)oro_yuca_068,  /* 81 APPEAR USE */
+    (u32)oro_yuca_068,  /* 82 APPEAR USE */
+    (u32)oro_yuca_068,  /* 83 APPEAR USE */
+    (u32)oro_yuca_068,  /* 84 APPEAR USE */
+    (u32)oro_yuca_068,  /* 85 APPEAR USE */
+    (u32)oro_yuca_068,  /* 86 APPEAR USE */
+    (u32)oro_yuca_068,  /* 87 APPEAR USE */
+    (u32)oro_yuca_068,  /* 88 APPEAR USE */
+    (u32)oro_yuca_068,  /* 89 APPEAR USE */
+    (u32)oro_yuca_068,  /* 90 APPEAR USE */
     0
 };
 

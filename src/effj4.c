@@ -96,9 +96,9 @@ void effect_J4_move(WORK_Other* ewk) {
         ewk->wu.blink_timing = 0;
         ewk->wu.old_cgnum = 0;
         ewk->wu.cg_number = 1;
-        ewk->wu.xyz[0].disp.pos = effJ4_data_tbl[(u8)ewk->wu.type][0];
-        ewk->wu.xyz[1].disp.pos = effJ4_data_tbl[(u8)ewk->wu.type][1];
-        ewk->wu.cg_number = effJ4_data_tbl[(u8)ewk->wu.type][3];
+        ewk->wu.xyz[0].disp.pos = effJ4_data_tbl[ewk->wu.type][0];
+        ewk->wu.xyz[1].disp.pos = effJ4_data_tbl[ewk->wu.type][1];
+        ewk->wu.cg_number = effJ4_data_tbl[ewk->wu.type][3];
         if (ewk->wu.dir_timer == 9999) {
             ewk->wu.my_priority = 2;
             ewk->wu.dir_timer = 0x7FFF;
@@ -107,7 +107,7 @@ void effect_J4_move(WORK_Other* ewk) {
         }
         ewk->wu.my_mr_flag = 1;
         ewk->wu.my_mr.size.x = 127;
-        ewk->wu.my_mr.size.y = effJ4_data_tbl[(u8)ewk->wu.type][2];
+        ewk->wu.my_mr.size.y = effJ4_data_tbl[ewk->wu.type][2];
         break;
     case 1:
         ewk->wu.dir_timer--;
@@ -118,7 +118,7 @@ void effect_J4_move(WORK_Other* ewk) {
         }
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos + bg_w.bgw[1].position_x + bg_w.pos_offset;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos + bg_w.bgw[1].position_y;
-        sort_push_request(ewk);
+        sort_push_request(&ewk->wu);
         break;
     case 2:
     default:

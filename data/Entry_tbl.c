@@ -7,15 +7,6 @@
 
 #pragma section TBL
 
-extern void Entry_00();
-extern void Entry_02();
-extern void Entry_03();
-extern void Entry_04();
-extern void Entry_06();
-extern void Entry_07();
-extern void Entry_08();
-extern void Entry_10();
-extern void Entry_01();
 extern const char sh_str_monitor_entry[];
 extern const char sh_str_illegal_inst[];
 extern const char sh_str_regs_r9_r11[];
@@ -876,3 +867,25 @@ const char str_R12[4] = "R12";
 const char str_R13[4] = "R13";
 const char str_R14[4] = "R14";
 const char str_SP[4] = "SP";
+
+#pragma section
+
+/* 02000024 */
+const char* reg_name_tbl[16] = {
+    str_R0,
+    str_R1,
+    str_R2,
+    str_R3,
+    str_R4,
+    str_R5,
+    str_R6,
+    str_R7,
+    str_R8,
+    str_R9,
+    str_R10,
+    str_R11,
+    str_R12,
+    str_R13,
+    str_R14,
+    str_SP,
+};

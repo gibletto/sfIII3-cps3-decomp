@@ -30,7 +30,7 @@
 
 
 void effect_73_move(WORK_Other* ewk) {
-    if (obr_disp_off_check()) {
+    if (obr_no_disp_check()) {
         return;
     }
     switch (ewk->wu.routine_no[0]) {
@@ -134,7 +134,7 @@ s32 effect_73_init(WORK_Other* oya) {
             work2 = random_16_com();
             work2 &= 7;
             ewk->wu.old_rno[0] = eff73_vanish_tbl[work2];
-            suzi_offset_set(ewk);
+            suzi_offset_set(&ewk->wu);
         }
         return 0;
     }

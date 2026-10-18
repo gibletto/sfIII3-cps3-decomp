@@ -7,7 +7,7 @@
 
 #pragma section TBL
 
-extern void EFF98_DIE();
+extern void EFF98_KILL();
 extern void EFF98_SLIDE_IN();
 extern void EFF98_SLIDE_OUT();
 extern void EFF98_SUDDENLY();
@@ -18,5 +18,5 @@ void (*const EFF98_Jmp_Tbl[5])() = {
     EFF98_SLIDE_IN,
     EFF98_SLIDE_OUT,
     EFF98_SUDDENLY,
-    EFF98_DIE,
+    EFF98_KILL,
 };

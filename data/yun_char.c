@@ -565,65 +565,65 @@ extern const u16 yun_cbca_092_head[];
 extern const u16 yun_cbca_093_head[];
 
 /* normal scripts: 58 entries */
-const u16* const yun_nmca[59] = {
-    yun_nmca_000,  /* 0 KAMAE */
-    yun_nmca_001,  /* 1 HURIMUKI */
-    yun_nmca_002,  /* 2 FRONT WALK */
-    yun_nmca_003,  /* 3 BACK WALK */
-    yun_nmca_004,  /* 4 DASH HUMIKOMI */
-    yun_nmca_005,  /* 5 DASH TOBINOKI */
-    yun_nmca_006,  /* 6 KAGAMU */
-    yun_nmca_007,  /* 7 KAGAMI KAMAE */
-    yun_nmca_008,  /* 8 KAGAMI TURN */
-    yun_nmca_008,  /* 9 KAGAMI F WALK */
-    yun_nmca_008,  /* 10 KAGAMI B WALK */
-    yun_nmca_011,  /* 11 STAND UP */
-    yun_nmca_012,  /* 12 JUMP JUNBI */
-    yun_nmca_013,  /* 13 SP JUMP JUNBI */
-    yun_nmca_014,  /* 14 JUMP FRONT */
-    yun_nmca_015,  /* 15 JUMP VERTICAL */
-    yun_nmca_016,  /* 16 JUMP BACK */
-    yun_nmca_017,  /* 17 S JUMP FRONT */
-    yun_nmca_017,  /* 18 S JUMP V */
-    yun_nmca_017,  /* 19 S JUMP BACK */
-    yun_nmca_020,  /* 20 SP JUMP FRONT */
-    yun_nmca_021,  /* 21 SP JUMP V */
-    yun_nmca_022,  /* 22 SP JUMP BACK */
-    yun_nmca_023,  /* 23 WALK END */
-    yun_nmca_024,  /* 24 PARING HEAD */
-    yun_nmca_024,  /* 25 PARING UP */
-    yun_nmca_026,  /* 26 PARING DOWN */
-    yun_nmca_027,  /* 27 PARING AIR F */
-    yun_nmca_027,  /* 28 PARING AIR B */
-    yun_nmca_029,  /* 29 GUARD HEAD */
-    yun_nmca_030,  /* 30 GUARD UP */
-    yun_nmca_031,  /* 31 GUARD DOWN */
-    yun_nmca_031,  /* 32 GUARD AIR */
-    yun_nmca_033,  /* 33 no name */
-    yun_nmca_033,  /* 34 no name */
-    yun_nmca_033,  /* 35 no name */
-    yun_nmca_033,  /* 36 no name */
-    yun_nmca_033,  /* 37 no name */
-    yun_nmca_038,  /* 38 P BREAK ZUJOU */
-    yun_nmca_038,  /* 39 P BREAK UP */
-    yun_nmca_040,  /* 40 P BREAK DOWN */
-    yun_nmca_041,  /* 41 P BREAK AIR F */
-    yun_nmca_041,  /* 42 P BREAK AIR R */
-    yun_nmca_043,  /* 43 TUKAMIHAZUSI */
-    yun_nmca_044,  /* 44 TUKAMIHAZUSARE */
-    yun_nmca_045,  /* 45 TUKAMIHAZUSI */
-    yun_nmca_046,  /* 46 TUKAMIHAZUSARE */
-    yun_nmca_047,  /* 47 no name */
-    yun_nmca_048,  /* 48 no name */
-    yun_nmca_049,  /* 49 no name */
-    yun_nmca_050,  /* 50 no name */
-    yun_nmca_051,  /* 51 no name */
-    yun_nmca_052,  /* 52 no name */
-    yun_nmca_053,  /* 53 no name */
-    yun_nmca_054,  /* 54 no name */
-    yun_nmca_055,  /* 55 no name */
-    yun_nmca_056,  /* 56 no name */
-    yun_nmca_057,  /* 57 no name */
+const u32 yun_nmca[59] = {
+    (u32)yun_nmca_000,  /* 0 KAMAE */
+    (u32)yun_nmca_001,  /* 1 HURIMUKI */
+    (u32)yun_nmca_002,  /* 2 FRONT WALK */
+    (u32)yun_nmca_003,  /* 3 BACK WALK */
+    (u32)yun_nmca_004,  /* 4 DASH HUMIKOMI */
+    (u32)yun_nmca_005,  /* 5 DASH TOBINOKI */
+    (u32)yun_nmca_006,  /* 6 KAGAMU */
+    (u32)yun_nmca_007,  /* 7 KAGAMI KAMAE */
+    (u32)yun_nmca_008,  /* 8 KAGAMI TURN */
+    (u32)yun_nmca_008,  /* 9 KAGAMI F WALK */
+    (u32)yun_nmca_008,  /* 10 KAGAMI B WALK */
+    (u32)yun_nmca_011,  /* 11 STAND UP */
+    (u32)yun_nmca_012,  /* 12 JUMP JUNBI */
+    (u32)yun_nmca_013,  /* 13 SP JUMP JUNBI */
+    (u32)yun_nmca_014,  /* 14 JUMP FRONT */
+    (u32)yun_nmca_015,  /* 15 JUMP VERTICAL */
+    (u32)yun_nmca_016,  /* 16 JUMP BACK */
+    (u32)yun_nmca_017,  /* 17 S JUMP FRONT */
+    (u32)yun_nmca_017,  /* 18 S JUMP V */
+    (u32)yun_nmca_017,  /* 19 S JUMP BACK */
+    (u32)yun_nmca_020,  /* 20 SP JUMP FRONT */
+    (u32)yun_nmca_021,  /* 21 SP JUMP V */
+    (u32)yun_nmca_022,  /* 22 SP JUMP BACK */
+    (u32)yun_nmca_023,  /* 23 WALK END */
+    (u32)yun_nmca_024,  /* 24 PARING HEAD */
+    (u32)yun_nmca_024,  /* 25 PARING UP */
+    (u32)yun_nmca_026,  /* 26 PARING DOWN */
+    (u32)yun_nmca_027,  /* 27 PARING AIR F */
+    (u32)yun_nmca_027,  /* 28 PARING AIR B */
+    (u32)yun_nmca_029,  /* 29 GUARD HEAD */
+    (u32)yun_nmca_030,  /* 30 GUARD UP */
+    (u32)yun_nmca_031,  /* 31 GUARD DOWN */
+    (u32)yun_nmca_031,  /* 32 GUARD AIR */
+    (u32)yun_nmca_033,  /* 33 no name */
+    (u32)yun_nmca_033,  /* 34 no name */
+    (u32)yun_nmca_033,  /* 35 no name */
+    (u32)yun_nmca_033,  /* 36 no name */
+    (u32)yun_nmca_033,  /* 37 no name */
+    (u32)yun_nmca_038,  /* 38 P BREAK ZUJOU */
+    (u32)yun_nmca_038,  /* 39 P BREAK UP */
+    (u32)yun_nmca_040,  /* 40 P BREAK DOWN */
+    (u32)yun_nmca_041,  /* 41 P BREAK AIR F */
+    (u32)yun_nmca_041,  /* 42 P BREAK AIR R */
+    (u32)yun_nmca_043,  /* 43 TUKAMIHAZUSI */
+    (u32)yun_nmca_044,  /* 44 TUKAMIHAZUSARE */
+    (u32)yun_nmca_045,  /* 45 TUKAMIHAZUSI */
+    (u32)yun_nmca_046,  /* 46 TUKAMIHAZUSARE */
+    (u32)yun_nmca_047,  /* 47 no name */
+    (u32)yun_nmca_048,  /* 48 no name */
+    (u32)yun_nmca_049,  /* 49 no name */
+    (u32)yun_nmca_050,  /* 50 no name */
+    (u32)yun_nmca_051,  /* 51 no name */
+    (u32)yun_nmca_052,  /* 52 no name */
+    (u32)yun_nmca_053,  /* 53 no name */
+    (u32)yun_nmca_054,  /* 54 no name */
+    (u32)yun_nmca_055,  /* 55 no name */
+    (u32)yun_nmca_056,  /* 56 no name */
+    (u32)yun_nmca_057,  /* 57 no name */
     0
 };
 
@@ -1363,105 +1363,105 @@ const u16 yun_nmca_000[252] = {
 };
 
 /* damage scripts: 98 entries */
-const u16* const yun_dmca[99] = {
-    yun_dmca_000,  /* 0 GUARD HEAD */
-    yun_dmca_001,  /* 1 GUARD UP */
-    yun_dmca_002,  /* 2 GUARD DOWN */
-    yun_dmca_003,  /* 3 GUARD AIR */
-    yun_dmca_004,  /* 4 HUSHIN HEAD */
-    yun_dmca_004,  /* 5 HUSHIN UP */
-    yun_dmca_006,  /* 6 HUSHIN DOWN */
-    yun_dmca_006,  /* 7 HUSHIN AIR */
-    yun_dmca_008,  /* 8 FACE S */
-    yun_dmca_009,  /* 9 FACE M */
-    yun_dmca_010,  /* 10 FACE L */
-    yun_dmca_010,  /* 11 FACE SP */
-    yun_dmca_008,  /* 12 FOOK OKU S */
-    yun_dmca_009,  /* 13 FOOK OKU M */
-    yun_dmca_014,  /* 14 FOOK OKU L */
-    yun_dmca_014,  /* 15 FOOK OKU SP */
-    yun_dmca_008,  /* 16 FOOK TEMAE S */
-    yun_dmca_009,  /* 17 FOOK TEMAE M */
-    yun_dmca_018,  /* 18 FOOK TEMAE L */
-    yun_dmca_018,  /* 19 FOOK TEMAE SP */
-    yun_dmca_008,  /* 20 UPPER S */
-    yun_dmca_009,  /* 21 UPPER M */
-    yun_dmca_022,  /* 22 UPPER L */
-    yun_dmca_022,  /* 23 UPPER SP */
-    yun_dmca_024,  /* 24 NOUTEN S */
-    yun_dmca_025,  /* 25 NOUTEN M */
-    yun_dmca_026,  /* 26 NOUTEN L */
-    yun_dmca_026,  /* 27 NOUTEN SP */
-    yun_dmca_024,  /* 28 BODY BROW S */
-    yun_dmca_029,  /* 29 BODY BROW M */
-    yun_dmca_030,  /* 30 BODY BROW L */
-    yun_dmca_030,  /* 31 BODY BROW SP */
-    yun_dmca_024,  /* 32 BODY UPPER S */
-    yun_dmca_029,  /* 33 BODY UPPER M */
-    yun_dmca_034,  /* 34 BODY UPPER L */
-    yun_dmca_034,  /* 35 BODY UPPER SP */
-    yun_dmca_036,  /* 36 TATAKI S */
-    yun_dmca_036,  /* 37 TATAKI M */
-    yun_dmca_036,  /* 38 TATAKI L */
-    yun_dmca_036,  /* 39 TATAKI SP */
-    yun_dmca_036,  /* 40 TATAKI V. S */
-    yun_dmca_036,  /* 41 TATAKI V. M */
-    yun_dmca_036,  /* 42 TATAKI V. L */
-    yun_dmca_036,  /* 43 TATAKI V. SP */
-    yun_dmca_008,  /* 44 NOBASITA TE S */
-    yun_dmca_009,  /* 45 NOBASITA TE M */
-    yun_dmca_010,  /* 46 NOBASITA TE L */
-    yun_dmca_010,  /* 47 NOBASITA TE SP */
-    yun_dmca_048,  /* 48 KAGAMI S */
-    yun_dmca_049,  /* 49 KAGAMI M */
-    yun_dmca_050,  /* 50 KAGAMI L */
-    yun_dmca_050,  /* 51 KAGAMI SP */
-    yun_dmca_052,  /* 52 KGM TATAKI S */
-    yun_dmca_052,  /* 53 KGM TATAKI M */
-    yun_dmca_052,  /* 54 KGM TATAKI L */
-    yun_dmca_052,  /* 55 KGM TATAKI SP */
-    yun_dmca_052,  /* 56 KGM TTKI V.S */
-    yun_dmca_052,  /* 57 KGM TTKI V.M */
-    yun_dmca_052,  /* 58 KGM TTKI V.L */
-    yun_dmca_052,  /* 59 KGM TTKI V.SP */
-    yun_dmca_060,  /* 60 NEKOROBI S */
-    yun_dmca_060,  /* 61 NEKOROBI M */
-    yun_dmca_060,  /* 62 NEKOROBI L */
-    yun_dmca_060,  /* 63 NEKOROBI SP */
-    yun_dmca_064,  /* 64 OKIAGARI */
-    yun_dmca_065,  /* 65 OKIAGARI F */
-    yun_dmca_066,  /* 66 OKIAGARI B */
-    yun_dmca_067,  /* 67 LOSE NO STAND */
-    yun_dmca_068,  /* 68 LOSE SONABA */
-    yun_dmca_068,  /* 69 LOSE KAGAMI */
-    yun_dmca_070,  /* 70 PIYO */
-    yun_dmca_071,  /* 71 UKEMI MOVE F */
-    yun_dmca_072,  /* 72 UKEMI MOVE R */
-    yun_dmca_073,  /* 73 SHIMEOTASARE */
-    yun_dmca_074,  /* 74 TATI TOUKETU S */
-    yun_dmca_075,  /* 75 TATI TOUKETU M */
-    yun_dmca_076,  /* 76 TATI TOUKETU L */
-    yun_dmca_076,  /* 77 TATI TOUKETU P */
-    yun_dmca_078,  /* 78 KGM TOUKETU S */
-    yun_dmca_079,  /* 79 KGM TOUKETU M */
-    yun_dmca_080,  /* 80 KGM TOUKETU L */
-    yun_dmca_080,  /* 81 KGM TOUKETU P */
-    yun_dmca_082,  /* 82 TATI DENGEKI S */
-    yun_dmca_083,  /* 83 TATI DENGEKI M */
-    yun_dmca_084,  /* 84 TATI DENGEKI L */
-    yun_dmca_084,  /* 85 TATI DENGEKI P */
-    yun_dmca_082,  /* 86 KGM DENGEKI S */
-    yun_dmca_083,  /* 87 KGM DENGEKI M */
-    yun_dmca_084,  /* 88 KGM DENGEKI L */
-    yun_dmca_084,  /* 89 KGM DENGEKI P */
-    yun_dmca_090,  /* 90 OKIAGARI FRONT */
-    yun_dmca_091,  /* 91 OKIAGARI REAR */
-    yun_dmca_008,  /* 92 TATI MOE S */
-    yun_dmca_009,  /* 93 TATI MOE M */
-    yun_dmca_010,  /* 94 TATI MOE L */
-    yun_dmca_010,  /* 95 TATI MOE SP */
-    yun_dmca_096,  /* 96 no name */
-    yun_dmca_097,  /* 97 no name */
+const u32 yun_dmca[99] = {
+    (u32)yun_dmca_000,  /* 0 GUARD HEAD */
+    (u32)yun_dmca_001,  /* 1 GUARD UP */
+    (u32)yun_dmca_002,  /* 2 GUARD DOWN */
+    (u32)yun_dmca_003,  /* 3 GUARD AIR */
+    (u32)yun_dmca_004,  /* 4 HUSHIN HEAD */
+    (u32)yun_dmca_004,  /* 5 HUSHIN UP */
+    (u32)yun_dmca_006,  /* 6 HUSHIN DOWN */
+    (u32)yun_dmca_006,  /* 7 HUSHIN AIR */
+    (u32)yun_dmca_008,  /* 8 FACE S */
+    (u32)yun_dmca_009,  /* 9 FACE M */
+    (u32)yun_dmca_010,  /* 10 FACE L */
+    (u32)yun_dmca_010,  /* 11 FACE SP */
+    (u32)yun_dmca_008,  /* 12 FOOK OKU S */
+    (u32)yun_dmca_009,  /* 13 FOOK OKU M */
+    (u32)yun_dmca_014,  /* 14 FOOK OKU L */
+    (u32)yun_dmca_014,  /* 15 FOOK OKU SP */
+    (u32)yun_dmca_008,  /* 16 FOOK TEMAE S */
+    (u32)yun_dmca_009,  /* 17 FOOK TEMAE M */
+    (u32)yun_dmca_018,  /* 18 FOOK TEMAE L */
+    (u32)yun_dmca_018,  /* 19 FOOK TEMAE SP */
+    (u32)yun_dmca_008,  /* 20 UPPER S */
+    (u32)yun_dmca_009,  /* 21 UPPER M */
+    (u32)yun_dmca_022,  /* 22 UPPER L */
+    (u32)yun_dmca_022,  /* 23 UPPER SP */
+    (u32)yun_dmca_024,  /* 24 NOUTEN S */
+    (u32)yun_dmca_025,  /* 25 NOUTEN M */
+    (u32)yun_dmca_026,  /* 26 NOUTEN L */
+    (u32)yun_dmca_026,  /* 27 NOUTEN SP */
+    (u32)yun_dmca_024,  /* 28 BODY BROW S */
+    (u32)yun_dmca_029,  /* 29 BODY BROW M */
+    (u32)yun_dmca_030,  /* 30 BODY BROW L */
+    (u32)yun_dmca_030,  /* 31 BODY BROW SP */
+    (u32)yun_dmca_024,  /* 32 BODY UPPER S */
+    (u32)yun_dmca_029,  /* 33 BODY UPPER M */
+    (u32)yun_dmca_034,  /* 34 BODY UPPER L */
+    (u32)yun_dmca_034,  /* 35 BODY UPPER SP */
+    (u32)yun_dmca_036,  /* 36 TATAKI S */
+    (u32)yun_dmca_036,  /* 37 TATAKI M */
+    (u32)yun_dmca_036,  /* 38 TATAKI L */
+    (u32)yun_dmca_036,  /* 39 TATAKI SP */
+    (u32)yun_dmca_036,  /* 40 TATAKI V. S */
+    (u32)yun_dmca_036,  /* 41 TATAKI V. M */
+    (u32)yun_dmca_036,  /* 42 TATAKI V. L */
+    (u32)yun_dmca_036,  /* 43 TATAKI V. SP */
+    (u32)yun_dmca_008,  /* 44 NOBASITA TE S */
+    (u32)yun_dmca_009,  /* 45 NOBASITA TE M */
+    (u32)yun_dmca_010,  /* 46 NOBASITA TE L */
+    (u32)yun_dmca_010,  /* 47 NOBASITA TE SP */
+    (u32)yun_dmca_048,  /* 48 KAGAMI S */
+    (u32)yun_dmca_049,  /* 49 KAGAMI M */
+    (u32)yun_dmca_050,  /* 50 KAGAMI L */
+    (u32)yun_dmca_050,  /* 51 KAGAMI SP */
+    (u32)yun_dmca_052,  /* 52 KGM TATAKI S */
+    (u32)yun_dmca_052,  /* 53 KGM TATAKI M */
+    (u32)yun_dmca_052,  /* 54 KGM TATAKI L */
+    (u32)yun_dmca_052,  /* 55 KGM TATAKI SP */
+    (u32)yun_dmca_052,  /* 56 KGM TTKI V.S */
+    (u32)yun_dmca_052,  /* 57 KGM TTKI V.M */
+    (u32)yun_dmca_052,  /* 58 KGM TTKI V.L */
+    (u32)yun_dmca_052,  /* 59 KGM TTKI V.SP */
+    (u32)yun_dmca_060,  /* 60 NEKOROBI S */
+    (u32)yun_dmca_060,  /* 61 NEKOROBI M */
+    (u32)yun_dmca_060,  /* 62 NEKOROBI L */
+    (u32)yun_dmca_060,  /* 63 NEKOROBI SP */
+    (u32)yun_dmca_064,  /* 64 OKIAGARI */
+    (u32)yun_dmca_065,  /* 65 OKIAGARI F */
+    (u32)yun_dmca_066,  /* 66 OKIAGARI B */
+    (u32)yun_dmca_067,  /* 67 LOSE NO STAND */
+    (u32)yun_dmca_068,  /* 68 LOSE SONABA */
+    (u32)yun_dmca_068,  /* 69 LOSE KAGAMI */
+    (u32)yun_dmca_070,  /* 70 PIYO */
+    (u32)yun_dmca_071,  /* 71 UKEMI MOVE F */
+    (u32)yun_dmca_072,  /* 72 UKEMI MOVE R */
+    (u32)yun_dmca_073,  /* 73 SHIMEOTASARE */
+    (u32)yun_dmca_074,  /* 74 TATI TOUKETU S */
+    (u32)yun_dmca_075,  /* 75 TATI TOUKETU M */
+    (u32)yun_dmca_076,  /* 76 TATI TOUKETU L */
+    (u32)yun_dmca_076,  /* 77 TATI TOUKETU P */
+    (u32)yun_dmca_078,  /* 78 KGM TOUKETU S */
+    (u32)yun_dmca_079,  /* 79 KGM TOUKETU M */
+    (u32)yun_dmca_080,  /* 80 KGM TOUKETU L */
+    (u32)yun_dmca_080,  /* 81 KGM TOUKETU P */
+    (u32)yun_dmca_082,  /* 82 TATI DENGEKI S */
+    (u32)yun_dmca_083,  /* 83 TATI DENGEKI M */
+    (u32)yun_dmca_084,  /* 84 TATI DENGEKI L */
+    (u32)yun_dmca_084,  /* 85 TATI DENGEKI P */
+    (u32)yun_dmca_082,  /* 86 KGM DENGEKI S */
+    (u32)yun_dmca_083,  /* 87 KGM DENGEKI M */
+    (u32)yun_dmca_084,  /* 88 KGM DENGEKI L */
+    (u32)yun_dmca_084,  /* 89 KGM DENGEKI P */
+    (u32)yun_dmca_090,  /* 90 OKIAGARI FRONT */
+    (u32)yun_dmca_091,  /* 91 OKIAGARI REAR */
+    (u32)yun_dmca_008,  /* 92 TATI MOE S */
+    (u32)yun_dmca_009,  /* 93 TATI MOE M */
+    (u32)yun_dmca_010,  /* 94 TATI MOE L */
+    (u32)yun_dmca_010,  /* 95 TATI MOE SP */
+    (u32)yun_dmca_096,  /* 96 no name */
+    (u32)yun_dmca_097,  /* 97 no name */
     0
 };
 
@@ -2216,43 +2216,43 @@ const u16 yun_dmca_097[44] = {
 };
 
 /* knock-down scripts: 36 entries */
-const u16* const yun_btca[37] = {
-    yun_btca_000,  /* 0 AIR NORMAL */
-    yun_btca_001,  /* 1 ASIBARAI SIRI */
-    yun_btca_002,  /* 2 ASIB TUNNOMERI */
-    yun_btca_003,  /* 3 NOKEZORI */
-    yun_btca_004,  /* 4 KUNOJI */
-    yun_btca_005,  /* 5 KIRIMOMI */
-    yun_btca_006,  /* 6 UPPER */
-    yun_btca_007,  /* 7 BODY UPPER */
-    yun_btca_008,  /* 8 HARAYARARE */
-    yun_btca_009,  /* 9 TATAKI AIR */
-    yun_btca_010,  /* 10 TTKI V. AIR */
-    yun_btca_011,  /* 11 HUMI ASIB */
-    yun_btca_012,  /* 12 FACE */
-    yun_btca_013,  /* 13 ASIB SIRI LOSE */
-    yun_btca_014,  /* 14 ASIB TUN LOSE */
-    yun_btca_015,  /* 15 DENKI */
-    yun_btca_016,  /* 16 KUNOJI NOKE */
-    yun_btca_017,  /* 17 BODY UPPER SP */
-    yun_btca_018,  /* 18 HANEAGARI */
-    yun_btca_019,  /* 19 TOUKETSU A */
-    yun_btca_020,  /* 20 BODY SLAM */
-    yun_btca_021,  /* 21 IPPONZEOI */
-    yun_btca_022,  /* 22 TOMOE RYU */
-    yun_btca_023,  /* 23 MONKEY FLIP */
-    yun_btca_024,  /* 24 TOMOE ORO */
-    yun_btca_025,  /* 25 SNAKE FANG */
-    yun_btca_026,  /* 26 FLANKEN.S */
-    yun_btca_027,  /* 27 KISHINRIKI */
-    yun_btca_028,  /* 28 SPLASH.M */
-    yun_btca_029,  /* 29 HARAIGOSHI */
-    yun_btca_030,  /* 30 ALEX B.D */
-    yun_btca_031,  /* 31 GILL */
-    yun_btca_032,  /* 32 HANEKAERI HARA */
-    yun_btca_033,  /* 33 S HANEAGARI */
-    yun_btca_034,  /* 34 TATUMAKIZANKU */
-    yun_btca_035,  /* 35 no name */
+const u32 yun_btca[37] = {
+    (u32)yun_btca_000,  /* 0 AIR NORMAL */
+    (u32)yun_btca_001,  /* 1 ASIBARAI SIRI */
+    (u32)yun_btca_002,  /* 2 ASIB TUNNOMERI */
+    (u32)yun_btca_003,  /* 3 NOKEZORI */
+    (u32)yun_btca_004,  /* 4 KUNOJI */
+    (u32)yun_btca_005,  /* 5 KIRIMOMI */
+    (u32)yun_btca_006,  /* 6 UPPER */
+    (u32)yun_btca_007,  /* 7 BODY UPPER */
+    (u32)yun_btca_008,  /* 8 HARAYARARE */
+    (u32)yun_btca_009,  /* 9 TATAKI AIR */
+    (u32)yun_btca_010,  /* 10 TTKI V. AIR */
+    (u32)yun_btca_011,  /* 11 HUMI ASIB */
+    (u32)yun_btca_012,  /* 12 FACE */
+    (u32)yun_btca_013,  /* 13 ASIB SIRI LOSE */
+    (u32)yun_btca_014,  /* 14 ASIB TUN LOSE */
+    (u32)yun_btca_015,  /* 15 DENKI */
+    (u32)yun_btca_016,  /* 16 KUNOJI NOKE */
+    (u32)yun_btca_017,  /* 17 BODY UPPER SP */
+    (u32)yun_btca_018,  /* 18 HANEAGARI */
+    (u32)yun_btca_019,  /* 19 TOUKETSU A */
+    (u32)yun_btca_020,  /* 20 BODY SLAM */
+    (u32)yun_btca_021,  /* 21 IPPONZEOI */
+    (u32)yun_btca_022,  /* 22 TOMOE RYU */
+    (u32)yun_btca_023,  /* 23 MONKEY FLIP */
+    (u32)yun_btca_024,  /* 24 TOMOE ORO */
+    (u32)yun_btca_025,  /* 25 SNAKE FANG */
+    (u32)yun_btca_026,  /* 26 FLANKEN.S */
+    (u32)yun_btca_027,  /* 27 KISHINRIKI */
+    (u32)yun_btca_028,  /* 28 SPLASH.M */
+    (u32)yun_btca_029,  /* 29 HARAIGOSHI */
+    (u32)yun_btca_030,  /* 30 ALEX B.D */
+    (u32)yun_btca_031,  /* 31 GILL */
+    (u32)yun_btca_032,  /* 32 HANEKAERI HARA */
+    (u32)yun_btca_033,  /* 33 S HANEAGARI */
+    (u32)yun_btca_034,  /* 34 TATUMAKIZANKU */
+    (u32)yun_btca_035,  /* 35 no name */
     0
 };
 
@@ -2758,17 +2758,17 @@ const u16 yun_btca_035[52] = {
 };
 
 /* catch scripts: 10 entries */
-const u16* const yun_caca[11] = {
-    yun_caca_000,  /* 0 CATCH 1 */
-    yun_caca_001,  /* 1 CATCH 2 */
-    yun_caca_002,  /* 2 CATCH 3 */
-    yun_caca_003,  /* 3 CATCH 4 */
-    yun_caca_004,  /* 4 CATCH 5 */
-    yun_caca_005,  /* 5 CATCH 6 */
-    yun_caca_006,  /* 6 CATCH 7 */
-    yun_caca_007,  /* 7 CATCH 8 */
-    yun_caca_008,  /* 8 CATCH 9 */
-    yun_caca_009,  /* 9 CATCH 10 */
+const u32 yun_caca[11] = {
+    (u32)yun_caca_000,  /* 0 CATCH 1 */
+    (u32)yun_caca_001,  /* 1 CATCH 2 */
+    (u32)yun_caca_002,  /* 2 CATCH 3 */
+    (u32)yun_caca_003,  /* 3 CATCH 4 */
+    (u32)yun_caca_004,  /* 4 CATCH 5 */
+    (u32)yun_caca_005,  /* 5 CATCH 6 */
+    (u32)yun_caca_006,  /* 6 CATCH 7 */
+    (u32)yun_caca_007,  /* 7 CATCH 8 */
+    (u32)yun_caca_008,  /* 8 CATCH 9 */
+    (u32)yun_caca_009,  /* 9 CATCH 10 */
     0
 };
 
@@ -3083,75 +3083,75 @@ const u16 yun_caca_009[160] = {
 };
 
 /* caught scripts: 68 entries */
-const u16* const yun_cuca[69] = {
-    yun_cuca_000,  /* 0 ALEX ZUTUKI */
-    yun_cuca_001,  /* 1 ALEX BODY S */
-    yun_cuca_002,  /* 2 ALEX BACK D */
-    yun_cuca_003,  /* 3 ALEX POWER B */
-    yun_cuca_004,  /* 4 ALEX SLEEPER */
-    yun_cuca_005,  /* 5 RYU SEOINAGE */
-    yun_cuca_006,  /* 6 IBUKI */
-    yun_cuca_007,  /* 7 DADLEY L B */
-    yun_cuca_008,  /* 8 IBUKI KUBIORI */
-    yun_cuca_009,  /* 9 NECRO S T */
-    yun_cuca_010,  /* 10 RYU TOMOENAGE */
-    yun_cuca_011,  /* 11 YUN HIZAGERI */
-    yun_cuca_012,  /* 12 ORO KUBISIME */
-    yun_cuca_013,  /* 13 NECRO G S */
-    yun_cuca_014,  /* 14 DUDDLEY D S */
-    yun_cuca_015,  /* 15 YUN MONKEY F */
-    yun_cuca_016,  /* 16 ORO TOMOENAGE */
-    yun_cuca_017,  /* 17 ORO NIOURIKI */
-    yun_cuca_018,  /* 18 ORO GIGOKU G */
-    yun_cuca_019,  /* 19 YUN */
-    yun_cuca_020,  /* 20 NECRO SNAKE F */
-    yun_cuca_021,  /* 21 NECRO F S */
-    yun_cuca_022,  /* 22 IBUKI HARAIG */
-    yun_cuca_023,  /* 23 GILL SPLASH M */
-    yun_cuca_024,  /* 24 KEN HIZAGERI */
-    yun_cuca_025,  /* 25 ORO KISINRIKI */
-    yun_cuca_026,  /* 26 SEAN TACKLE */
-    yun_cuca_027,  /* 27 ALEX HYPER B */
-    yun_cuca_028,  /* 28 NECRO SLAM D */
-    yun_cuca_029,  /* 29 ELENA ASINAGE */
-    yun_cuca_030,  /* 30 GILL IMPACT C */
-    yun_cuca_031,  /* 31 ALEX S H B */
-    yun_cuca_032,  /* 32 ALEX F N D */
-    yun_cuca_033,  /* 33 no name */
-    yun_cuca_034,  /* 34 IBUKI */
-    yun_cuca_035,  /* 35 IBUKI YOROI D */
-    yun_cuca_036,  /* 36 no name */
-    yun_cuca_037,  /* 37 MAWARIKOMI M F */
-    yun_cuca_038,  /* 38 HUGO BODY S */
-    yun_cuca_039,  /* 39 HUGO N G T */
-    yun_cuca_040,  /* 40 HUGO M S P */
-    yun_cuca_041,  /* 41 HUGO S D B B */
-    yun_cuca_042,  /* 42 no name */
-    yun_cuca_043,  /* 43 no name */
-    yun_cuca_044,  /* 44 no name */
-    yun_cuca_045,  /* 45 no name */
-    yun_cuca_046,  /* 46 no name */
-    yun_cuca_047,  /* 47 no name */
-    yun_cuca_048,  /* 48 no name */
-    yun_cuca_049,  /* 49 no name */
-    yun_cuca_050,  /* 50 no name */
-    yun_cuca_051,  /* 51 no name */
-    yun_cuca_052,  /* 52 no name */
-    yun_cuca_053,  /* 53 no name */
-    yun_cuca_054,  /* 54 no name */
-    yun_cuca_055,  /* 55 no name */
-    yun_cuca_056,  /* 56 no name */
-    yun_cuca_057,  /* 57 no name */
-    yun_cuca_058,  /* 58 no name */
-    yun_cuca_059,  /* 59 no name */
-    yun_cuca_060,  /* 60 no name */
-    yun_cuca_061,  /* 61 no name */
-    yun_cuca_062,  /* 62 no name */
-    yun_cuca_063,  /* 63 no name */
-    yun_cuca_064,  /* 64 no name */
-    yun_cuca_065,  /* 65 no name */
-    yun_cuca_066,  /* 66 no name */
-    yun_cuca_067,  /* 67 no name */
+const u32 yun_cuca[69] = {
+    (u32)yun_cuca_000,  /* 0 ALEX ZUTUKI */
+    (u32)yun_cuca_001,  /* 1 ALEX BODY S */
+    (u32)yun_cuca_002,  /* 2 ALEX BACK D */
+    (u32)yun_cuca_003,  /* 3 ALEX POWER B */
+    (u32)yun_cuca_004,  /* 4 ALEX SLEEPER */
+    (u32)yun_cuca_005,  /* 5 RYU SEOINAGE */
+    (u32)yun_cuca_006,  /* 6 IBUKI */
+    (u32)yun_cuca_007,  /* 7 DADLEY L B */
+    (u32)yun_cuca_008,  /* 8 IBUKI KUBIORI */
+    (u32)yun_cuca_009,  /* 9 NECRO S T */
+    (u32)yun_cuca_010,  /* 10 RYU TOMOENAGE */
+    (u32)yun_cuca_011,  /* 11 YUN HIZAGERI */
+    (u32)yun_cuca_012,  /* 12 ORO KUBISIME */
+    (u32)yun_cuca_013,  /* 13 NECRO G S */
+    (u32)yun_cuca_014,  /* 14 DUDDLEY D S */
+    (u32)yun_cuca_015,  /* 15 YUN MONKEY F */
+    (u32)yun_cuca_016,  /* 16 ORO TOMOENAGE */
+    (u32)yun_cuca_017,  /* 17 ORO NIOURIKI */
+    (u32)yun_cuca_018,  /* 18 ORO GIGOKU G */
+    (u32)yun_cuca_019,  /* 19 YUN */
+    (u32)yun_cuca_020,  /* 20 NECRO SNAKE F */
+    (u32)yun_cuca_021,  /* 21 NECRO F S */
+    (u32)yun_cuca_022,  /* 22 IBUKI HARAIG */
+    (u32)yun_cuca_023,  /* 23 GILL SPLASH M */
+    (u32)yun_cuca_024,  /* 24 KEN HIZAGERI */
+    (u32)yun_cuca_025,  /* 25 ORO KISINRIKI */
+    (u32)yun_cuca_026,  /* 26 SEAN TACKLE */
+    (u32)yun_cuca_027,  /* 27 ALEX HYPER B */
+    (u32)yun_cuca_028,  /* 28 NECRO SLAM D */
+    (u32)yun_cuca_029,  /* 29 ELENA ASINAGE */
+    (u32)yun_cuca_030,  /* 30 GILL IMPACT C */
+    (u32)yun_cuca_031,  /* 31 ALEX S H B */
+    (u32)yun_cuca_032,  /* 32 ALEX F N D */
+    (u32)yun_cuca_033,  /* 33 no name */
+    (u32)yun_cuca_034,  /* 34 IBUKI */
+    (u32)yun_cuca_035,  /* 35 IBUKI YOROI D */
+    (u32)yun_cuca_036,  /* 36 no name */
+    (u32)yun_cuca_037,  /* 37 MAWARIKOMI M F */
+    (u32)yun_cuca_038,  /* 38 HUGO BODY S */
+    (u32)yun_cuca_039,  /* 39 HUGO N G T */
+    (u32)yun_cuca_040,  /* 40 HUGO M S P */
+    (u32)yun_cuca_041,  /* 41 HUGO S D B B */
+    (u32)yun_cuca_042,  /* 42 no name */
+    (u32)yun_cuca_043,  /* 43 no name */
+    (u32)yun_cuca_044,  /* 44 no name */
+    (u32)yun_cuca_045,  /* 45 no name */
+    (u32)yun_cuca_046,  /* 46 no name */
+    (u32)yun_cuca_047,  /* 47 no name */
+    (u32)yun_cuca_048,  /* 48 no name */
+    (u32)yun_cuca_049,  /* 49 no name */
+    (u32)yun_cuca_050,  /* 50 no name */
+    (u32)yun_cuca_051,  /* 51 no name */
+    (u32)yun_cuca_052,  /* 52 no name */
+    (u32)yun_cuca_053,  /* 53 no name */
+    (u32)yun_cuca_054,  /* 54 no name */
+    (u32)yun_cuca_055,  /* 55 no name */
+    (u32)yun_cuca_056,  /* 56 no name */
+    (u32)yun_cuca_057,  /* 57 no name */
+    (u32)yun_cuca_058,  /* 58 no name */
+    (u32)yun_cuca_059,  /* 59 no name */
+    (u32)yun_cuca_060,  /* 60 no name */
+    (u32)yun_cuca_061,  /* 61 no name */
+    (u32)yun_cuca_062,  /* 62 no name */
+    (u32)yun_cuca_063,  /* 63 no name */
+    (u32)yun_cuca_064,  /* 64 no name */
+    (u32)yun_cuca_065,  /* 65 no name */
+    (u32)yun_cuca_066,  /* 66 no name */
+    (u32)yun_cuca_067,  /* 67 no name */
     0
 };
 
@@ -4836,271 +4836,271 @@ const u16 yun_cuca_067[60] = {
 };
 
 /* attack scripts: 264 entries */
-const u16* const yun_atca[265] = {
-    yun_atca_000,  /* 0 S PUNCH A */
-    yun_atca_001,  /* 1 S PUNCH B */
-    yun_atca_001,  /* 2 S PUNCH C */
-    yun_atca_003,  /* 3 M PUNCH A */
-    yun_atca_004,  /* 4 M PUNCH B */
-    yun_atca_004,  /* 5 M PUNCH C */
-    yun_atca_006,  /* 6 L PUNCH A */
-    yun_atca_007,  /* 7 L PUNCH B */
-    yun_atca_008,  /* 8 L PUNCH C */
-    yun_atca_009,  /* 9 S KICK A */
-    yun_atca_009,  /* 10 S KICK B */
-    yun_atca_009,  /* 11 S KICK C */
-    yun_atca_012,  /* 12 M KICK A */
-    yun_atca_013,  /* 13 M KICK B */
-    yun_atca_014,  /* 14 M KICK C */
-    yun_atca_015,  /* 15 L KICK A */
-    yun_atca_015,  /* 16 L KICK B */
-    yun_atca_015,  /* 17 L KICK C */
-    yun_atca_018,  /* 18 KAGAMI P A */
-    yun_atca_018,  /* 19 KAGAMI P B */
-    yun_atca_018,  /* 20 KAGAMI P C */
-    yun_atca_021,  /* 21 KAGAMI P A */
-    yun_atca_021,  /* 22 KAGAMI P B */
-    yun_atca_021,  /* 23 KAGAMI P C */
-    yun_atca_024,  /* 24 KAGAMI P A */
-    yun_atca_024,  /* 25 KAGAMI P B */
-    yun_atca_024,  /* 26 KAGAMI P C */
-    yun_atca_027,  /* 27 KAGAMI K A */
-    yun_atca_027,  /* 28 KAGAMI K B */
-    yun_atca_027,  /* 29 KAGAMI K C */
-    yun_atca_030,  /* 30 KAGAMI K A */
-    yun_atca_030,  /* 31 KAGAMI K B */
-    yun_atca_030,  /* 32 KAGAMI K C */
-    yun_atca_033,  /* 33 KAGAMI K A */
-    yun_atca_033,  /* 34 KAGAMI K B */
-    yun_atca_033,  /* 35 KAGAMI K C */
-    yun_atca_036,  /* 36 V JUMP P S A */
-    yun_atca_036,  /* 37 V JUMP P S B */
-    yun_atca_038,  /* 38 V JUMP P M A */
-    yun_atca_038,  /* 39 V JUMP P M B */
-    yun_atca_040,  /* 40 V JUMP P L A */
-    yun_atca_040,  /* 41 V JUMP P L B */
-    yun_atca_042,  /* 42 V JUMP K S A */
-    yun_atca_042,  /* 43 V JUMP K S B */
-    yun_atca_044,  /* 44 V JUMP K M A */
-    yun_atca_044,  /* 45 V JUMP K M B */
-    yun_atca_046,  /* 46 V JUMP K L A */
-    yun_atca_046,  /* 47 V JUMP K L B */
-    yun_atca_048,  /* 48 F JUMP P S A */
-    yun_atca_048,  /* 49 F JUMP P S B */
-    yun_atca_050,  /* 50 F JUMP P M A */
-    yun_atca_050,  /* 51 F JUMP P M B */
-    yun_atca_052,  /* 52 F JUMP P L A */
-    yun_atca_052,  /* 53 F JUMP P L B */
-    yun_atca_054,  /* 54 F JUMP K S A */
-    yun_atca_055,  /* 55 F JUMP K S B */
-    yun_atca_056,  /* 56 F JUMP K M A */
-    yun_atca_057,  /* 57 F JUMP K M B */
-    yun_atca_058,  /* 58 F JUMP K L A */
-    yun_atca_059,  /* 59 F JUMP K L B */
-    yun_atca_060,  /* 60 B JUMP P S A */
-    yun_atca_060,  /* 61 B JUMP P S B */
-    yun_atca_062,  /* 62 B JUMP P M A */
-    yun_atca_062,  /* 63 B JUMP P M B */
-    yun_atca_064,  /* 64 B JUMP P L A */
-    yun_atca_064,  /* 65 B JUMP P L B */
-    yun_atca_066,  /* 66 B JUMP K S A */
-    yun_atca_066,  /* 67 B JUMP K S B */
-    yun_atca_068,  /* 68 B JUMP K M A */
-    yun_atca_068,  /* 69 B JUMP K M B */
-    yun_atca_070,  /* 70 B JUMP K L A */
-    yun_atca_070,  /* 71 B JUMP K L B */
-    yun_atca_072,  /* 72 SP V JP S P A */
-    yun_atca_072,  /* 73 SP V JP S P B */
-    yun_atca_074,  /* 74 SP V JP M P A */
-    yun_atca_074,  /* 75 SP V JP M P B */
-    yun_atca_076,  /* 76 SP V JP L P A */
-    yun_atca_076,  /* 77 SP V JP L P B */
-    yun_atca_078,  /* 78 SP V JP S K A */
-    yun_atca_078,  /* 79 SP V JP S K B */
-    yun_atca_080,  /* 80 SP V JP M K A */
-    yun_atca_080,  /* 81 SP V JP M K B */
-    yun_atca_082,  /* 82 SP V JP L K A */
-    yun_atca_082,  /* 83 SP V JP L K B */
-    yun_atca_084,  /* 84 SP F JP S P A */
-    yun_atca_084,  /* 85 SP F JP S P B */
-    yun_atca_086,  /* 86 SP F JP M P A */
-    yun_atca_086,  /* 87 SP F JP M P B */
-    yun_atca_088,  /* 88 SP F JP L P A */
-    yun_atca_088,  /* 89 SP F JP L P B */
-    yun_atca_090,  /* 90 SP F JP S K A */
-    yun_atca_091,  /* 91 SP F JP S K B */
-    yun_atca_092,  /* 92 SP F JP M K A */
-    yun_atca_093,  /* 93 SP F JP M K B */
-    yun_atca_094,  /* 94 SP F JP L K A */
-    yun_atca_095,  /* 95 SP F JP L K B */
-    yun_atca_096,  /* 96 SP B JP S P A */
-    yun_atca_096,  /* 97 SP B JP S P B */
-    yun_atca_098,  /* 98 SP B JP M P A */
-    yun_atca_098,  /* 99 SP B JP M P B */
-    yun_atca_100,  /* 100 SP B JP L P A */
-    yun_atca_100,  /* 101 SP B JP L P B */
-    yun_atca_102,  /* 102 SP B JP S K A */
-    yun_atca_102,  /* 103 SP B JP S K B */
-    yun_atca_104,  /* 104 SP B JP M K A */
-    yun_atca_104,  /* 105 SP B JP M K B */
-    yun_atca_106,  /* 106 SP B JP L K A */
-    yun_atca_106,  /* 107 SP B JP L K B */
-    yun_atca_108,  /* 108 S V JP S P A */
-    yun_atca_108,  /* 109 S V JP S P B */
-    yun_atca_110,  /* 110 S V JP M P A */
-    yun_atca_110,  /* 111 S V JP M P B */
-    yun_atca_112,  /* 112 S V JP L P A */
-    yun_atca_112,  /* 113 S V JP L P B */
-    yun_atca_114,  /* 114 S V JP S K A */
-    yun_atca_114,  /* 115 S V JP S K B */
-    yun_atca_116,  /* 116 S V JP M K A */
-    yun_atca_116,  /* 117 S V JP M K B */
-    yun_atca_118,  /* 118 S V JP L K A */
-    yun_atca_118,  /* 119 S V JP L K B */
-    yun_atca_108,  /* 120 S F JP S P A */
-    yun_atca_108,  /* 121 S F JP S P B */
-    yun_atca_110,  /* 122 S F JP M P A */
-    yun_atca_110,  /* 123 S F JP M P B */
-    yun_atca_112,  /* 124 S F JP L P A */
-    yun_atca_112,  /* 125 S F JP L P B */
-    yun_atca_114,  /* 126 S F JP S K A */
-    yun_atca_114,  /* 127 S F JP S K B */
-    yun_atca_116,  /* 128 S F JP M K A */
-    yun_atca_116,  /* 129 S F JP M K B */
-    yun_atca_118,  /* 130 S F JP L K A */
-    yun_atca_118,  /* 131 S F JP L K B */
-    yun_atca_108,  /* 132 S B JP S P A */
-    yun_atca_108,  /* 133 S B JP S P B */
-    yun_atca_110,  /* 134 S B JP M P A */
-    yun_atca_110,  /* 135 S B JP M P B */
-    yun_atca_112,  /* 136 S B JP L P A */
-    yun_atca_112,  /* 137 S B JP L P B */
-    yun_atca_114,  /* 138 S B JP S K A */
-    yun_atca_114,  /* 139 S B JP S K B */
-    yun_atca_116,  /* 140 S B JP M K A */
-    yun_atca_116,  /* 141 S B JP M K B */
-    yun_atca_118,  /* 142 S B JP L K A */
-    yun_atca_118,  /* 143 S B JP L K B */
-    yun_atca_144,  /* 144 TUKAMIKAKARI A */
-    yun_atca_145,  /* 145 TUKAMIKAKARI B */
-    yun_atca_146,  /* 146 TUKAMIKAKARI C */
-    yun_atca_144,  /* 147 TUKAMIKAKARI D */
-    yun_atca_144,  /* 148 TUKAMIKAKARI E */
-    yun_atca_144,  /* 149 TUKAMIKAKARI F */
-    yun_atca_144,  /* 150 TUKAMI AIR A */
-    yun_atca_144,  /* 151 TUKAMI AIR B */
-    yun_atca_144,  /* 152 TUKAMI AIR C */
-    yun_atca_144,  /* 153 TUKAMI AIR D */
-    yun_atca_144,  /* 154 TUKAMI AIR E */
-    yun_atca_144,  /* 155 TUKAMI AIR F */
-    yun_atca_156,  /* 156 follow-up of V JUMP P S A, F JUMP P S A */
-    yun_atca_156,  /* 157 no name */
-    yun_atca_158,  /* 158 follow-up of M PUNCH A, M PUNCH B */
-    yun_atca_159,  /* 159 follow-up of follow-up of M PUNCH A, M PUNCH B */
-    yun_atca_160,  /* 160 follow-up of S KICK A */
-    yun_atca_161,  /* 161 follow-up of follow-up of S KICK A */
-    yun_atca_162,  /* 162 follow-up of S PUNCH A, S PUNCH B */
-    yun_atca_163,  /* 163 follow-up of follow-up of S PUNCH A, S PUNCH B */
-    yun_atca_164,  /* 164 follow-up of KAGAMI P A */
-    yun_atca_159,  /* 165 no name */
-    yun_atca_159,  /* 166 no name */
-    yun_atca_159,  /* 167 no name */
-    yun_atca_159,  /* 168 no name */
-    yun_atca_159,  /* 169 no name */
-    yun_atca_159,  /* 170 no name */
-    yun_atca_159,  /* 171 no name */
-    yun_atca_159,  /* 172 no name */
-    yun_atca_159,  /* 173 no name */
-    yun_atca_159,  /* 174 no name */
-    yun_atca_159,  /* 175 no name */
-    yun_atca_159,  /* 176 no name */
-    yun_atca_159,  /* 177 no name */
-    yun_atca_159,  /* 178 no name */
-    yun_atca_159,  /* 179 no name */
-    yun_atca_159,  /* 180 no name */
-    yun_atca_159,  /* 181 no name */
-    yun_atca_159,  /* 182 no name */
-    yun_atca_159,  /* 183 no name */
-    yun_atca_159,  /* 184 no name */
-    yun_atca_159,  /* 185 no name */
-    yun_atca_159,  /* 186 no name */
-    yun_atca_159,  /* 187 no name */
-    yun_atca_159,  /* 188 no name */
-    yun_atca_159,  /* 189 no name */
-    yun_atca_159,  /* 190 no name */
-    yun_atca_159,  /* 191 no name */
-    yun_atca_159,  /* 192 no name */
-    yun_atca_159,  /* 193 no name */
-    yun_atca_159,  /* 194 no name */
-    yun_atca_159,  /* 195 no name */
-    yun_atca_159,  /* 196 no name */
-    yun_atca_159,  /* 197 no name */
-    yun_atca_159,  /* 198 no name */
-    yun_atca_159,  /* 199 no name */
-    yun_atca_200,  /* 200 follow-up of ZANNEN 2 */
-    yun_atca_201,  /* 201 follow-up of ZANNEN 3 */
-    yun_atca_201,  /* 202 no name */
-    yun_atca_203,  /* 203 follow-up of ZANNEN 4 */
-    yun_atca_204,  /* 204 no name */
-    yun_atca_204,  /* 205 follow-up of ZANNEN 5 */
-    yun_atca_206,  /* 206 follow-up of JUDGMENT WAIT */
-    yun_atca_207,  /* 207 follow-up of ZANNEN 6 */
-    yun_atca_208,  /* 208 follow-up of APPEAR USE */
-    yun_atca_209,  /* 209 follow-up of ZANNEN 7 */
-    yun_atca_209,  /* 210 no name */
-    yun_atca_209,  /* 211 no name */
-    yun_atca_212,  /* 212 follow-up of APPEAR USE */
-    yun_atca_213,  /* 213 follow-up of ZANNEN 8 */
-    yun_atca_214,  /* 214 follow-up of JUDGMENT WAIT */
-    yun_atca_215,  /* 215 no name */
-    yun_atca_215,  /* 216 follow-up of WIN 1 */
-    yun_atca_215,  /* 217 follow-up of JUDGMENT WAIT */
-    yun_atca_218,  /* 218 follow-up of WIN 2 */
-    yun_atca_218,  /* 219 no name */
-    yun_atca_218,  /* 220 no name */
-    yun_atca_221,  /* 221 follow-up of WIN 3 */
-    yun_atca_221,  /* 222 no name */
-    yun_atca_221,  /* 223 no name */
-    yun_atca_224,  /* 224 follow-up of WIN 4 */
-    yun_atca_224,  /* 225 no name */
-    yun_atca_224,  /* 226 no name */
-    yun_atca_227,  /* 227 follow-up of WIN 5 */
-    yun_atca_227,  /* 228 no name */
-    yun_atca_227,  /* 229 no name */
-    yun_atca_230,  /* 230 follow-up of WIN 6 */
-    yun_atca_230,  /* 231 no name */
-    yun_atca_230,  /* 232 no name */
-    yun_atca_233,  /* 233 follow-up of WIN 7 */
-    yun_atca_233,  /* 234 no name */
-    yun_atca_233,  /* 235 no name */
-    yun_atca_236,  /* 236 follow-up of JUDGMENT LOSE */
-    yun_atca_236,  /* 237 no name */
-    yun_atca_238,  /* 238 follow-up of JUDGMENT LOSE */
-    yun_atca_238,  /* 239 no name */
-    yun_atca_240,  /* 240 follow-up of JUDGMENT LOSE */
-    yun_atca_240,  /* 241 no name */
-    yun_atca_242,  /* 242 follow-up of WAIT */
-    yun_atca_242,  /* 243 no name */
-    yun_atca_244,  /* 244 follow-up of AFRICA JUMP */
-    yun_atca_244,  /* 245 no name */
-    yun_atca_246,  /* 246 follow-up of AFRICA LAND */
-    yun_atca_246,  /* 247 no name */
-    yun_atca_248,  /* 248 follow-up of SEAN BALL HIT */
-    yun_atca_248,  /* 249 no name */
-    yun_atca_250,  /* 250 follow-up of follow-up of F JUMP P M A */
-    yun_atca_250,  /* 251 no name */
-    yun_atca_252,  /* 252 follow-up of BONUS WIN 1 */
-    yun_atca_252,  /* 253 no name */
-    yun_atca_254,  /* 254 follow-up of BONUS WIN 2 */
-    yun_atca_255,  /* 255 follow-up of BONUS WIN 3 */
-    yun_atca_256,  /* 256 follow-up of APPEAR USE */
-    yun_atca_257,  /* 257 follow-up of APPEAR USE */
-    yun_atca_258,  /* 258 follow-up of APPEAR USE */
-    yun_atca_259,  /* 259 follow-up of APPEAR USE */
-    yun_atca_260,  /* 260 follow-up of APPEAR USE */
-    yun_atca_260,  /* 261 no name */
-    yun_atca_262,  /* 262 follow-up of KAGAMI K A */
-    yun_atca_263,  /* 263 follow-up of follow-up of SEAN BALL HIT */
+const u32 yun_atca[265] = {
+    (u32)yun_atca_000,  /* 0 S PUNCH A */
+    (u32)yun_atca_001,  /* 1 S PUNCH B */
+    (u32)yun_atca_001,  /* 2 S PUNCH C */
+    (u32)yun_atca_003,  /* 3 M PUNCH A */
+    (u32)yun_atca_004,  /* 4 M PUNCH B */
+    (u32)yun_atca_004,  /* 5 M PUNCH C */
+    (u32)yun_atca_006,  /* 6 L PUNCH A */
+    (u32)yun_atca_007,  /* 7 L PUNCH B */
+    (u32)yun_atca_008,  /* 8 L PUNCH C */
+    (u32)yun_atca_009,  /* 9 S KICK A */
+    (u32)yun_atca_009,  /* 10 S KICK B */
+    (u32)yun_atca_009,  /* 11 S KICK C */
+    (u32)yun_atca_012,  /* 12 M KICK A */
+    (u32)yun_atca_013,  /* 13 M KICK B */
+    (u32)yun_atca_014,  /* 14 M KICK C */
+    (u32)yun_atca_015,  /* 15 L KICK A */
+    (u32)yun_atca_015,  /* 16 L KICK B */
+    (u32)yun_atca_015,  /* 17 L KICK C */
+    (u32)yun_atca_018,  /* 18 KAGAMI P A */
+    (u32)yun_atca_018,  /* 19 KAGAMI P B */
+    (u32)yun_atca_018,  /* 20 KAGAMI P C */
+    (u32)yun_atca_021,  /* 21 KAGAMI P A */
+    (u32)yun_atca_021,  /* 22 KAGAMI P B */
+    (u32)yun_atca_021,  /* 23 KAGAMI P C */
+    (u32)yun_atca_024,  /* 24 KAGAMI P A */
+    (u32)yun_atca_024,  /* 25 KAGAMI P B */
+    (u32)yun_atca_024,  /* 26 KAGAMI P C */
+    (u32)yun_atca_027,  /* 27 KAGAMI K A */
+    (u32)yun_atca_027,  /* 28 KAGAMI K B */
+    (u32)yun_atca_027,  /* 29 KAGAMI K C */
+    (u32)yun_atca_030,  /* 30 KAGAMI K A */
+    (u32)yun_atca_030,  /* 31 KAGAMI K B */
+    (u32)yun_atca_030,  /* 32 KAGAMI K C */
+    (u32)yun_atca_033,  /* 33 KAGAMI K A */
+    (u32)yun_atca_033,  /* 34 KAGAMI K B */
+    (u32)yun_atca_033,  /* 35 KAGAMI K C */
+    (u32)yun_atca_036,  /* 36 V JUMP P S A */
+    (u32)yun_atca_036,  /* 37 V JUMP P S B */
+    (u32)yun_atca_038,  /* 38 V JUMP P M A */
+    (u32)yun_atca_038,  /* 39 V JUMP P M B */
+    (u32)yun_atca_040,  /* 40 V JUMP P L A */
+    (u32)yun_atca_040,  /* 41 V JUMP P L B */
+    (u32)yun_atca_042,  /* 42 V JUMP K S A */
+    (u32)yun_atca_042,  /* 43 V JUMP K S B */
+    (u32)yun_atca_044,  /* 44 V JUMP K M A */
+    (u32)yun_atca_044,  /* 45 V JUMP K M B */
+    (u32)yun_atca_046,  /* 46 V JUMP K L A */
+    (u32)yun_atca_046,  /* 47 V JUMP K L B */
+    (u32)yun_atca_048,  /* 48 F JUMP P S A */
+    (u32)yun_atca_048,  /* 49 F JUMP P S B */
+    (u32)yun_atca_050,  /* 50 F JUMP P M A */
+    (u32)yun_atca_050,  /* 51 F JUMP P M B */
+    (u32)yun_atca_052,  /* 52 F JUMP P L A */
+    (u32)yun_atca_052,  /* 53 F JUMP P L B */
+    (u32)yun_atca_054,  /* 54 F JUMP K S A */
+    (u32)yun_atca_055,  /* 55 F JUMP K S B */
+    (u32)yun_atca_056,  /* 56 F JUMP K M A */
+    (u32)yun_atca_057,  /* 57 F JUMP K M B */
+    (u32)yun_atca_058,  /* 58 F JUMP K L A */
+    (u32)yun_atca_059,  /* 59 F JUMP K L B */
+    (u32)yun_atca_060,  /* 60 B JUMP P S A */
+    (u32)yun_atca_060,  /* 61 B JUMP P S B */
+    (u32)yun_atca_062,  /* 62 B JUMP P M A */
+    (u32)yun_atca_062,  /* 63 B JUMP P M B */
+    (u32)yun_atca_064,  /* 64 B JUMP P L A */
+    (u32)yun_atca_064,  /* 65 B JUMP P L B */
+    (u32)yun_atca_066,  /* 66 B JUMP K S A */
+    (u32)yun_atca_066,  /* 67 B JUMP K S B */
+    (u32)yun_atca_068,  /* 68 B JUMP K M A */
+    (u32)yun_atca_068,  /* 69 B JUMP K M B */
+    (u32)yun_atca_070,  /* 70 B JUMP K L A */
+    (u32)yun_atca_070,  /* 71 B JUMP K L B */
+    (u32)yun_atca_072,  /* 72 SP V JP S P A */
+    (u32)yun_atca_072,  /* 73 SP V JP S P B */
+    (u32)yun_atca_074,  /* 74 SP V JP M P A */
+    (u32)yun_atca_074,  /* 75 SP V JP M P B */
+    (u32)yun_atca_076,  /* 76 SP V JP L P A */
+    (u32)yun_atca_076,  /* 77 SP V JP L P B */
+    (u32)yun_atca_078,  /* 78 SP V JP S K A */
+    (u32)yun_atca_078,  /* 79 SP V JP S K B */
+    (u32)yun_atca_080,  /* 80 SP V JP M K A */
+    (u32)yun_atca_080,  /* 81 SP V JP M K B */
+    (u32)yun_atca_082,  /* 82 SP V JP L K A */
+    (u32)yun_atca_082,  /* 83 SP V JP L K B */
+    (u32)yun_atca_084,  /* 84 SP F JP S P A */
+    (u32)yun_atca_084,  /* 85 SP F JP S P B */
+    (u32)yun_atca_086,  /* 86 SP F JP M P A */
+    (u32)yun_atca_086,  /* 87 SP F JP M P B */
+    (u32)yun_atca_088,  /* 88 SP F JP L P A */
+    (u32)yun_atca_088,  /* 89 SP F JP L P B */
+    (u32)yun_atca_090,  /* 90 SP F JP S K A */
+    (u32)yun_atca_091,  /* 91 SP F JP S K B */
+    (u32)yun_atca_092,  /* 92 SP F JP M K A */
+    (u32)yun_atca_093,  /* 93 SP F JP M K B */
+    (u32)yun_atca_094,  /* 94 SP F JP L K A */
+    (u32)yun_atca_095,  /* 95 SP F JP L K B */
+    (u32)yun_atca_096,  /* 96 SP B JP S P A */
+    (u32)yun_atca_096,  /* 97 SP B JP S P B */
+    (u32)yun_atca_098,  /* 98 SP B JP M P A */
+    (u32)yun_atca_098,  /* 99 SP B JP M P B */
+    (u32)yun_atca_100,  /* 100 SP B JP L P A */
+    (u32)yun_atca_100,  /* 101 SP B JP L P B */
+    (u32)yun_atca_102,  /* 102 SP B JP S K A */
+    (u32)yun_atca_102,  /* 103 SP B JP S K B */
+    (u32)yun_atca_104,  /* 104 SP B JP M K A */
+    (u32)yun_atca_104,  /* 105 SP B JP M K B */
+    (u32)yun_atca_106,  /* 106 SP B JP L K A */
+    (u32)yun_atca_106,  /* 107 SP B JP L K B */
+    (u32)yun_atca_108,  /* 108 S V JP S P A */
+    (u32)yun_atca_108,  /* 109 S V JP S P B */
+    (u32)yun_atca_110,  /* 110 S V JP M P A */
+    (u32)yun_atca_110,  /* 111 S V JP M P B */
+    (u32)yun_atca_112,  /* 112 S V JP L P A */
+    (u32)yun_atca_112,  /* 113 S V JP L P B */
+    (u32)yun_atca_114,  /* 114 S V JP S K A */
+    (u32)yun_atca_114,  /* 115 S V JP S K B */
+    (u32)yun_atca_116,  /* 116 S V JP M K A */
+    (u32)yun_atca_116,  /* 117 S V JP M K B */
+    (u32)yun_atca_118,  /* 118 S V JP L K A */
+    (u32)yun_atca_118,  /* 119 S V JP L K B */
+    (u32)yun_atca_108,  /* 120 S F JP S P A */
+    (u32)yun_atca_108,  /* 121 S F JP S P B */
+    (u32)yun_atca_110,  /* 122 S F JP M P A */
+    (u32)yun_atca_110,  /* 123 S F JP M P B */
+    (u32)yun_atca_112,  /* 124 S F JP L P A */
+    (u32)yun_atca_112,  /* 125 S F JP L P B */
+    (u32)yun_atca_114,  /* 126 S F JP S K A */
+    (u32)yun_atca_114,  /* 127 S F JP S K B */
+    (u32)yun_atca_116,  /* 128 S F JP M K A */
+    (u32)yun_atca_116,  /* 129 S F JP M K B */
+    (u32)yun_atca_118,  /* 130 S F JP L K A */
+    (u32)yun_atca_118,  /* 131 S F JP L K B */
+    (u32)yun_atca_108,  /* 132 S B JP S P A */
+    (u32)yun_atca_108,  /* 133 S B JP S P B */
+    (u32)yun_atca_110,  /* 134 S B JP M P A */
+    (u32)yun_atca_110,  /* 135 S B JP M P B */
+    (u32)yun_atca_112,  /* 136 S B JP L P A */
+    (u32)yun_atca_112,  /* 137 S B JP L P B */
+    (u32)yun_atca_114,  /* 138 S B JP S K A */
+    (u32)yun_atca_114,  /* 139 S B JP S K B */
+    (u32)yun_atca_116,  /* 140 S B JP M K A */
+    (u32)yun_atca_116,  /* 141 S B JP M K B */
+    (u32)yun_atca_118,  /* 142 S B JP L K A */
+    (u32)yun_atca_118,  /* 143 S B JP L K B */
+    (u32)yun_atca_144,  /* 144 TUKAMIKAKARI A */
+    (u32)yun_atca_145,  /* 145 TUKAMIKAKARI B */
+    (u32)yun_atca_146,  /* 146 TUKAMIKAKARI C */
+    (u32)yun_atca_144,  /* 147 TUKAMIKAKARI D */
+    (u32)yun_atca_144,  /* 148 TUKAMIKAKARI E */
+    (u32)yun_atca_144,  /* 149 TUKAMIKAKARI F */
+    (u32)yun_atca_144,  /* 150 TUKAMI AIR A */
+    (u32)yun_atca_144,  /* 151 TUKAMI AIR B */
+    (u32)yun_atca_144,  /* 152 TUKAMI AIR C */
+    (u32)yun_atca_144,  /* 153 TUKAMI AIR D */
+    (u32)yun_atca_144,  /* 154 TUKAMI AIR E */
+    (u32)yun_atca_144,  /* 155 TUKAMI AIR F */
+    (u32)yun_atca_156,  /* 156 follow-up of V JUMP P S A, F JUMP P S A */
+    (u32)yun_atca_156,  /* 157 no name */
+    (u32)yun_atca_158,  /* 158 follow-up of M PUNCH A, M PUNCH B */
+    (u32)yun_atca_159,  /* 159 follow-up of follow-up of M PUNCH A, M PUNCH B */
+    (u32)yun_atca_160,  /* 160 follow-up of S KICK A */
+    (u32)yun_atca_161,  /* 161 follow-up of follow-up of S KICK A */
+    (u32)yun_atca_162,  /* 162 follow-up of S PUNCH A, S PUNCH B */
+    (u32)yun_atca_163,  /* 163 follow-up of follow-up of S PUNCH A, S PUNCH B */
+    (u32)yun_atca_164,  /* 164 follow-up of KAGAMI P A */
+    (u32)yun_atca_159,  /* 165 no name */
+    (u32)yun_atca_159,  /* 166 no name */
+    (u32)yun_atca_159,  /* 167 no name */
+    (u32)yun_atca_159,  /* 168 no name */
+    (u32)yun_atca_159,  /* 169 no name */
+    (u32)yun_atca_159,  /* 170 no name */
+    (u32)yun_atca_159,  /* 171 no name */
+    (u32)yun_atca_159,  /* 172 no name */
+    (u32)yun_atca_159,  /* 173 no name */
+    (u32)yun_atca_159,  /* 174 no name */
+    (u32)yun_atca_159,  /* 175 no name */
+    (u32)yun_atca_159,  /* 176 no name */
+    (u32)yun_atca_159,  /* 177 no name */
+    (u32)yun_atca_159,  /* 178 no name */
+    (u32)yun_atca_159,  /* 179 no name */
+    (u32)yun_atca_159,  /* 180 no name */
+    (u32)yun_atca_159,  /* 181 no name */
+    (u32)yun_atca_159,  /* 182 no name */
+    (u32)yun_atca_159,  /* 183 no name */
+    (u32)yun_atca_159,  /* 184 no name */
+    (u32)yun_atca_159,  /* 185 no name */
+    (u32)yun_atca_159,  /* 186 no name */
+    (u32)yun_atca_159,  /* 187 no name */
+    (u32)yun_atca_159,  /* 188 no name */
+    (u32)yun_atca_159,  /* 189 no name */
+    (u32)yun_atca_159,  /* 190 no name */
+    (u32)yun_atca_159,  /* 191 no name */
+    (u32)yun_atca_159,  /* 192 no name */
+    (u32)yun_atca_159,  /* 193 no name */
+    (u32)yun_atca_159,  /* 194 no name */
+    (u32)yun_atca_159,  /* 195 no name */
+    (u32)yun_atca_159,  /* 196 no name */
+    (u32)yun_atca_159,  /* 197 no name */
+    (u32)yun_atca_159,  /* 198 no name */
+    (u32)yun_atca_159,  /* 199 no name */
+    (u32)yun_atca_200,  /* 200 follow-up of ZANNEN 2 */
+    (u32)yun_atca_201,  /* 201 follow-up of ZANNEN 3 */
+    (u32)yun_atca_201,  /* 202 no name */
+    (u32)yun_atca_203,  /* 203 follow-up of ZANNEN 4 */
+    (u32)yun_atca_204,  /* 204 no name */
+    (u32)yun_atca_204,  /* 205 follow-up of ZANNEN 5 */
+    (u32)yun_atca_206,  /* 206 follow-up of JUDGMENT WAIT */
+    (u32)yun_atca_207,  /* 207 follow-up of ZANNEN 6 */
+    (u32)yun_atca_208,  /* 208 follow-up of APPEAR USE */
+    (u32)yun_atca_209,  /* 209 follow-up of ZANNEN 7 */
+    (u32)yun_atca_209,  /* 210 no name */
+    (u32)yun_atca_209,  /* 211 no name */
+    (u32)yun_atca_212,  /* 212 follow-up of APPEAR USE */
+    (u32)yun_atca_213,  /* 213 follow-up of ZANNEN 8 */
+    (u32)yun_atca_214,  /* 214 follow-up of JUDGMENT WAIT */
+    (u32)yun_atca_215,  /* 215 no name */
+    (u32)yun_atca_215,  /* 216 follow-up of WIN 1 */
+    (u32)yun_atca_215,  /* 217 follow-up of JUDGMENT WAIT */
+    (u32)yun_atca_218,  /* 218 follow-up of WIN 2 */
+    (u32)yun_atca_218,  /* 219 no name */
+    (u32)yun_atca_218,  /* 220 no name */
+    (u32)yun_atca_221,  /* 221 follow-up of WIN 3 */
+    (u32)yun_atca_221,  /* 222 no name */
+    (u32)yun_atca_221,  /* 223 no name */
+    (u32)yun_atca_224,  /* 224 follow-up of WIN 4 */
+    (u32)yun_atca_224,  /* 225 no name */
+    (u32)yun_atca_224,  /* 226 no name */
+    (u32)yun_atca_227,  /* 227 follow-up of WIN 5 */
+    (u32)yun_atca_227,  /* 228 no name */
+    (u32)yun_atca_227,  /* 229 no name */
+    (u32)yun_atca_230,  /* 230 follow-up of WIN 6 */
+    (u32)yun_atca_230,  /* 231 no name */
+    (u32)yun_atca_230,  /* 232 no name */
+    (u32)yun_atca_233,  /* 233 follow-up of WIN 7 */
+    (u32)yun_atca_233,  /* 234 no name */
+    (u32)yun_atca_233,  /* 235 no name */
+    (u32)yun_atca_236,  /* 236 follow-up of JUDGMENT LOSE */
+    (u32)yun_atca_236,  /* 237 no name */
+    (u32)yun_atca_238,  /* 238 follow-up of JUDGMENT LOSE */
+    (u32)yun_atca_238,  /* 239 no name */
+    (u32)yun_atca_240,  /* 240 follow-up of JUDGMENT LOSE */
+    (u32)yun_atca_240,  /* 241 no name */
+    (u32)yun_atca_242,  /* 242 follow-up of WAIT */
+    (u32)yun_atca_242,  /* 243 no name */
+    (u32)yun_atca_244,  /* 244 follow-up of AFRICA JUMP */
+    (u32)yun_atca_244,  /* 245 no name */
+    (u32)yun_atca_246,  /* 246 follow-up of AFRICA LAND */
+    (u32)yun_atca_246,  /* 247 no name */
+    (u32)yun_atca_248,  /* 248 follow-up of SEAN BALL HIT */
+    (u32)yun_atca_248,  /* 249 no name */
+    (u32)yun_atca_250,  /* 250 follow-up of follow-up of F JUMP P M A */
+    (u32)yun_atca_250,  /* 251 no name */
+    (u32)yun_atca_252,  /* 252 follow-up of BONUS WIN 1 */
+    (u32)yun_atca_252,  /* 253 no name */
+    (u32)yun_atca_254,  /* 254 follow-up of BONUS WIN 2 */
+    (u32)yun_atca_255,  /* 255 follow-up of BONUS WIN 3 */
+    (u32)yun_atca_256,  /* 256 follow-up of APPEAR USE */
+    (u32)yun_atca_257,  /* 257 follow-up of APPEAR USE */
+    (u32)yun_atca_258,  /* 258 follow-up of APPEAR USE */
+    (u32)yun_atca_259,  /* 259 follow-up of APPEAR USE */
+    (u32)yun_atca_260,  /* 260 follow-up of APPEAR USE */
+    (u32)yun_atca_260,  /* 261 no name */
+    (u32)yun_atca_262,  /* 262 follow-up of KAGAMI K A */
+    (u32)yun_atca_263,  /* 263 follow-up of follow-up of SEAN BALL HIT */
     0
 };
 
@@ -9087,111 +9087,111 @@ const CatchTable yun_rival_catch_tbl[1992] = {
 };
 
 /* extra scripts: 104 entries */
-const u16* const yun_exca[105] = {
-    yun_exca_000,  /* 0 follow-up of AIR NORMAL */
-    yun_exca_001,  /* 1 follow-up of GUARD AIR */
-    yun_exca_001,  /* 2 no name */
-    yun_exca_003,  /* 3 follow-up of ASIBARAI SIRI */
-    yun_exca_004,  /* 4 no name */
-    yun_exca_005,  /* 5 follow-up of TATAKI S, KGM TATAKI S +24 */
-    yun_exca_006,  /* 6 follow-up of ASIB SIRI LOSE, ASIB TUN LOSE +1 */
-    yun_exca_006,  /* 7 follow-up of KUNOJI, UPPER +6 */
-    yun_exca_006,  /* 8 follow-up of TTKI V. AIR */
-    yun_exca_009,  /* 9 follow-up of KIRIMOMI, SPLASH.M +3 */
-    yun_exca_010,  /* 10 follow-up of GUARD AIR */
-    yun_exca_010,  /* 11 no name */
-    yun_exca_012,  /* 12 follow-up of ATTACK 5 S */
-    yun_exca_013,  /* 13 no name */
-    yun_exca_014,  /* 14 no name */
-    yun_exca_015,  /* 15 no name */
-    yun_exca_016,  /* 16 no name */
-    yun_exca_017,  /* 17 no name */
-    yun_exca_018,  /* 18 no name */
-    yun_exca_019,  /* 19 no name */
-    yun_exca_020,  /* 20 no name */
-    yun_exca_021,  /* 21 no name */
-    yun_exca_022,  /* 22 no name */
-    yun_exca_022,  /* 23 no name */
-    yun_exca_024,  /* 24 follow-up of ATTACK 5 S */
-    yun_exca_025,  /* 25 follow-up of ALEX BACK D, MAWARIKOMI M F */
-    yun_exca_026,  /* 26 no name */
-    yun_exca_027,  /* 27 follow-up of HANASARE, APPEAR JUNBI 2 */
-    yun_exca_028,  /* 28 follow-up of SP APPEAR 2 */
-    yun_exca_029,  /* 29 follow-up of APPEAR JUNBI 5 */
-    yun_exca_030,  /* 30 no name */
-    yun_exca_031,  /* 31 follow-up of APPEAR JUNBI 3 */
-    yun_exca_032,  /* 32 follow-up of APPEAR 8 */
-    yun_exca_033,  /* 33 follow-up of APPEAR JUNBI 6 */
-    yun_exca_034,  /* 34 no name */
-    yun_exca_035,  /* 35 follow-up of APPEAR JUNBI 4 */
-    yun_exca_036,  /* 36 no name */
-    yun_exca_037,  /* 37 follow-up of APPEAR JUNBI 7 */
-    yun_exca_038,  /* 38 no name */
-    yun_exca_039,  /* 39 follow-up of HANASARE, APPEAR JUNBI 2 */
-    yun_exca_040,  /* 40 follow-up of SP APPEAR 2 */
-    yun_exca_041,  /* 41 follow-up of APPEAR JUNBI 5 */
-    yun_exca_042,  /* 42 no name */
-    yun_exca_043,  /* 43 follow-up of APPEAR JUNBI 3 */
-    yun_exca_044,  /* 44 follow-up of APPEAR 8 */
-    yun_exca_045,  /* 45 follow-up of APPEAR JUNBI 6 */
-    yun_exca_046,  /* 46 no name */
-    yun_exca_047,  /* 47 follow-up of APPEAR JUNBI 4 */
-    yun_exca_048,  /* 48 no name */
-    yun_exca_049,  /* 49 follow-up of APPEAR JUNBI 7 */
-    yun_exca_050,  /* 50 no name */
-    yun_exca_051,  /* 51 follow-up of APPEAR 4 */
-    yun_exca_052,  /* 52 follow-up of APPEAR 4 */
-    yun_exca_053,  /* 53 follow-up of APPEAR 5 */
-    yun_exca_054,  /* 54 follow-up of APPEAR 5 */
-    yun_exca_022,  /* 55 no name */
-    yun_exca_056,  /* 56 no name */
-    yun_exca_022,  /* 57 no name */
-    yun_exca_058,  /* 58 no name */
-    yun_exca_022,  /* 59 no name */
-    yun_exca_022,  /* 60 no name */
-    yun_exca_061,  /* 61 follow-up of SP APPEAR 1 */
-    yun_exca_062,  /* 62 follow-up of SP APPEAR 1 */
-    yun_exca_063,  /* 63 follow-up of SP APPEAR 3, JUDGMENT WIN */
-    yun_exca_064,  /* 64 follow-up of SP APPEAR 3, JUDGMENT WIN */
-    yun_exca_065,  /* 65 follow-up of SP APPEAR 4 */
-    yun_exca_066,  /* 66 follow-up of SP APPEAR 4 */
-    yun_exca_022,  /* 67 no name */
-    yun_exca_022,  /* 68 no name */
-    yun_exca_022,  /* 69 no name */
-    yun_exca_022,  /* 70 follow-up of SP APPEAR 5 */
-    yun_exca_022,  /* 71 follow-up of SP APPEAR 5 */
-    yun_exca_022,  /* 72 no name */
-    yun_exca_073,  /* 73 follow-up of ZANNEN 1 */
-    yun_exca_074,  /* 74 follow-up of ZANNEN 1 */
-    yun_exca_075,  /* 75 follow-up of SP WIN 5 */
-    yun_exca_076,  /* 76 follow-up of SP WIN 5 */
-    yun_exca_077,  /* 77 follow-up of HUMI ASIB */
-    yun_exca_078,  /* 78 follow-up of GILL IMPACT C */
-    yun_exca_079,  /* 79 follow-up of GILL IMPACT C */
-    yun_exca_080,  /* 80 follow-up of APPEAR 6 */
-    yun_exca_081,  /* 81 follow-up of APPEAR 6 */
-    yun_exca_082,  /* 82 HANASARE */
-    yun_exca_083,  /* 83 HANASARE */
-    yun_exca_084,  /* 84 HANASARE */
-    yun_exca_085,  /* 85 HANASARE */
-    yun_exca_086,  /* 86 HANASARE */
-    yun_exca_087,  /* 87 HANASARE */
-    yun_exca_088,  /* 88 HANASARE */
-    yun_exca_089,  /* 89 HANASARE */
-    yun_exca_090,  /* 90 HANASARE */
-    yun_exca_091,  /* 91 HANASARE */
-    yun_exca_090,  /* 92 HANASARE */
-    yun_exca_091,  /* 93 HANASARE */
-    yun_exca_094,  /* 94 HANASARE */
-    yun_exca_095,  /* 95 HANASARE */
-    yun_exca_096,  /* 96 HANASARE */
-    yun_exca_097,  /* 97 HANASARE */
-    yun_exca_098,  /* 98 HANASARE */
-    yun_exca_099,  /* 99 HANASARE */
-    yun_exca_100,  /* 100 HANASARE */
-    yun_exca_101,  /* 101 HANASARE */
-    yun_exca_102,  /* 102 HANASARE */
-    yun_exca_103,  /* 103 HANASARE */
+const u32 yun_exca[105] = {
+    (u32)yun_exca_000,  /* 0 follow-up of AIR NORMAL */
+    (u32)yun_exca_001,  /* 1 follow-up of GUARD AIR */
+    (u32)yun_exca_001,  /* 2 no name */
+    (u32)yun_exca_003,  /* 3 follow-up of ASIBARAI SIRI */
+    (u32)yun_exca_004,  /* 4 no name */
+    (u32)yun_exca_005,  /* 5 follow-up of TATAKI S, KGM TATAKI S +24 */
+    (u32)yun_exca_006,  /* 6 follow-up of ASIB SIRI LOSE, ASIB TUN LOSE +1 */
+    (u32)yun_exca_006,  /* 7 follow-up of KUNOJI, UPPER +6 */
+    (u32)yun_exca_006,  /* 8 follow-up of TTKI V. AIR */
+    (u32)yun_exca_009,  /* 9 follow-up of KIRIMOMI, SPLASH.M +3 */
+    (u32)yun_exca_010,  /* 10 follow-up of GUARD AIR */
+    (u32)yun_exca_010,  /* 11 no name */
+    (u32)yun_exca_012,  /* 12 follow-up of ATTACK 5 S */
+    (u32)yun_exca_013,  /* 13 no name */
+    (u32)yun_exca_014,  /* 14 no name */
+    (u32)yun_exca_015,  /* 15 no name */
+    (u32)yun_exca_016,  /* 16 no name */
+    (u32)yun_exca_017,  /* 17 no name */
+    (u32)yun_exca_018,  /* 18 no name */
+    (u32)yun_exca_019,  /* 19 no name */
+    (u32)yun_exca_020,  /* 20 no name */
+    (u32)yun_exca_021,  /* 21 no name */
+    (u32)yun_exca_022,  /* 22 no name */
+    (u32)yun_exca_022,  /* 23 no name */
+    (u32)yun_exca_024,  /* 24 follow-up of ATTACK 5 S */
+    (u32)yun_exca_025,  /* 25 follow-up of ALEX BACK D, MAWARIKOMI M F */
+    (u32)yun_exca_026,  /* 26 no name */
+    (u32)yun_exca_027,  /* 27 follow-up of HANASARE, APPEAR JUNBI 2 */
+    (u32)yun_exca_028,  /* 28 follow-up of SP APPEAR 2 */
+    (u32)yun_exca_029,  /* 29 follow-up of APPEAR JUNBI 5 */
+    (u32)yun_exca_030,  /* 30 no name */
+    (u32)yun_exca_031,  /* 31 follow-up of APPEAR JUNBI 3 */
+    (u32)yun_exca_032,  /* 32 follow-up of APPEAR 8 */
+    (u32)yun_exca_033,  /* 33 follow-up of APPEAR JUNBI 6 */
+    (u32)yun_exca_034,  /* 34 no name */
+    (u32)yun_exca_035,  /* 35 follow-up of APPEAR JUNBI 4 */
+    (u32)yun_exca_036,  /* 36 no name */
+    (u32)yun_exca_037,  /* 37 follow-up of APPEAR JUNBI 7 */
+    (u32)yun_exca_038,  /* 38 no name */
+    (u32)yun_exca_039,  /* 39 follow-up of HANASARE, APPEAR JUNBI 2 */
+    (u32)yun_exca_040,  /* 40 follow-up of SP APPEAR 2 */
+    (u32)yun_exca_041,  /* 41 follow-up of APPEAR JUNBI 5 */
+    (u32)yun_exca_042,  /* 42 no name */
+    (u32)yun_exca_043,  /* 43 follow-up of APPEAR JUNBI 3 */
+    (u32)yun_exca_044,  /* 44 follow-up of APPEAR 8 */
+    (u32)yun_exca_045,  /* 45 follow-up of APPEAR JUNBI 6 */
+    (u32)yun_exca_046,  /* 46 no name */
+    (u32)yun_exca_047,  /* 47 follow-up of APPEAR JUNBI 4 */
+    (u32)yun_exca_048,  /* 48 no name */
+    (u32)yun_exca_049,  /* 49 follow-up of APPEAR JUNBI 7 */
+    (u32)yun_exca_050,  /* 50 no name */
+    (u32)yun_exca_051,  /* 51 follow-up of APPEAR 4 */
+    (u32)yun_exca_052,  /* 52 follow-up of APPEAR 4 */
+    (u32)yun_exca_053,  /* 53 follow-up of APPEAR 5 */
+    (u32)yun_exca_054,  /* 54 follow-up of APPEAR 5 */
+    (u32)yun_exca_022,  /* 55 no name */
+    (u32)yun_exca_056,  /* 56 no name */
+    (u32)yun_exca_022,  /* 57 no name */
+    (u32)yun_exca_058,  /* 58 no name */
+    (u32)yun_exca_022,  /* 59 no name */
+    (u32)yun_exca_022,  /* 60 no name */
+    (u32)yun_exca_061,  /* 61 follow-up of SP APPEAR 1 */
+    (u32)yun_exca_062,  /* 62 follow-up of SP APPEAR 1 */
+    (u32)yun_exca_063,  /* 63 follow-up of SP APPEAR 3, JUDGMENT WIN */
+    (u32)yun_exca_064,  /* 64 follow-up of SP APPEAR 3, JUDGMENT WIN */
+    (u32)yun_exca_065,  /* 65 follow-up of SP APPEAR 4 */
+    (u32)yun_exca_066,  /* 66 follow-up of SP APPEAR 4 */
+    (u32)yun_exca_022,  /* 67 no name */
+    (u32)yun_exca_022,  /* 68 no name */
+    (u32)yun_exca_022,  /* 69 no name */
+    (u32)yun_exca_022,  /* 70 follow-up of SP APPEAR 5 */
+    (u32)yun_exca_022,  /* 71 follow-up of SP APPEAR 5 */
+    (u32)yun_exca_022,  /* 72 no name */
+    (u32)yun_exca_073,  /* 73 follow-up of ZANNEN 1 */
+    (u32)yun_exca_074,  /* 74 follow-up of ZANNEN 1 */
+    (u32)yun_exca_075,  /* 75 follow-up of SP WIN 5 */
+    (u32)yun_exca_076,  /* 76 follow-up of SP WIN 5 */
+    (u32)yun_exca_077,  /* 77 follow-up of HUMI ASIB */
+    (u32)yun_exca_078,  /* 78 follow-up of GILL IMPACT C */
+    (u32)yun_exca_079,  /* 79 follow-up of GILL IMPACT C */
+    (u32)yun_exca_080,  /* 80 follow-up of APPEAR 6 */
+    (u32)yun_exca_081,  /* 81 follow-up of APPEAR 6 */
+    (u32)yun_exca_082,  /* 82 HANASARE */
+    (u32)yun_exca_083,  /* 83 HANASARE */
+    (u32)yun_exca_084,  /* 84 HANASARE */
+    (u32)yun_exca_085,  /* 85 HANASARE */
+    (u32)yun_exca_086,  /* 86 HANASARE */
+    (u32)yun_exca_087,  /* 87 HANASARE */
+    (u32)yun_exca_088,  /* 88 HANASARE */
+    (u32)yun_exca_089,  /* 89 HANASARE */
+    (u32)yun_exca_090,  /* 90 HANASARE */
+    (u32)yun_exca_091,  /* 91 HANASARE */
+    (u32)yun_exca_090,  /* 92 HANASARE */
+    (u32)yun_exca_091,  /* 93 HANASARE */
+    (u32)yun_exca_094,  /* 94 HANASARE */
+    (u32)yun_exca_095,  /* 95 HANASARE */
+    (u32)yun_exca_096,  /* 96 HANASARE */
+    (u32)yun_exca_097,  /* 97 HANASARE */
+    (u32)yun_exca_098,  /* 98 HANASARE */
+    (u32)yun_exca_099,  /* 99 HANASARE */
+    (u32)yun_exca_100,  /* 100 HANASARE */
+    (u32)yun_exca_101,  /* 101 HANASARE */
+    (u32)yun_exca_102,  /* 102 HANASARE */
+    (u32)yun_exca_103,  /* 103 HANASARE */
     0
 };
 
@@ -10385,106 +10385,106 @@ const u16 yun_exca_103[148] = {
 };
 
 /* super art scripts: 99 entries */
-const u16* const yun_saca[100] = {
-    yun_saca_000,  /* 0 UP P GUARD P S */
-    yun_saca_001,  /* 1 UP P GUARD P M */
-    yun_saca_002,  /* 2 UP P GUARD P L */
-    yun_saca_002,  /* 3 UP P GUARD K S */
-    yun_saca_002,  /* 4 UP P GUARD K M */
-    yun_saca_002,  /* 5 UP P GUARD K L */
-    yun_saca_000,  /* 6 D P GUARD P S */
-    yun_saca_001,  /* 7 D P GUARD P M */
-    yun_saca_002,  /* 8 D P GUARD P L */
-    yun_saca_002,  /* 9 D P GUARD K S */
-    yun_saca_002,  /* 10 D P GUARD K M */
-    yun_saca_002,  /* 11 D P GUARD K L */
-    yun_saca_002,  /* 12 FUSHIN P S */
-    yun_saca_002,  /* 13 FUSHIN P M */
-    yun_saca_002,  /* 14 FUSHIN P L */
-    yun_saca_002,  /* 15 FUSHIN K S */
-    yun_saca_002,  /* 16 FUSHIN K M */
-    yun_saca_002,  /* 17 FUSHIN K L */
-    yun_saca_002,  /* 18 OKIAGARI P S */
-    yun_saca_002,  /* 19 OKIAGARI P M */
-    yun_saca_002,  /* 20 OKIAGARI P L */
-    yun_saca_002,  /* 21 OKIAGARI K S */
-    yun_saca_002,  /* 22 OKIAGARI K M */
-    yun_saca_002,  /* 23 OKIAGARI K L */
-    yun_saca_024,  /* 24 ATTACK 1 S: not started by a command */
-    yun_saca_024,  /* 25 ATTACK 1 M: not started by a command */
-    yun_saca_024,  /* 26 ATTACK 1 L: not started by a command */
-    yun_saca_024,  /* 27 ATTACK 1 SP: not started by a command */
-    yun_saca_028,  /* 28 ATTACK 2 S: 214+P light/medium/heavy (plain script) */
-    yun_saca_028,  /* 29 ATTACK 2 M: 214+P light/medium/heavy (plain script) */
-    yun_saca_028,  /* 30 ATTACK 2 L: 214+P light/medium/heavy (plain script) */
-    yun_saca_031,  /* 31 ATTACK 2 SP: EX 214+PP (plain script) */
-    yun_saca_032,  /* 32 ATTACK 3 S: 623+K light (routine Att_SHOURYUUKEN) */
-    yun_saca_033,  /* 33 ATTACK 3 M: 623+K medium (routine Att_SHOURYUUKEN) */
-    yun_saca_034,  /* 34 ATTACK 3 L: 623+K heavy (routine Att_SHOURYUUKEN) */
-    yun_saca_035,  /* 35 ATTACK 3 SP: EX 623+KK (routine Att_SHOURYUUKEN) */
-    yun_saca_036,  /* 36 ATTACK 4 S: 236+P light (routine Att_SENPUUKYAKU) */
-    yun_saca_037,  /* 37 ATTACK 4 M: 236+P medium (routine Att_SENPUUKYAKU) */
-    yun_saca_038,  /* 38 ATTACK 4 L: 236+P heavy (routine Att_SENPUUKYAKU) */
-    yun_saca_039,  /* 39 ATTACK 4 SP: EX 236+PP (routine Att_SENPUUKYAKU) */
-    yun_saca_040,  /* 40 ATTACK 5 S: not started by a command */
-    yun_saca_040,  /* 41 ATTACK 5 M: not started by a command */
-    yun_saca_040,  /* 42 ATTACK 5 L: not started by a command */
-    yun_saca_040,  /* 43 ATTACK 5 SP: not started by a command */
-    yun_saca_044,  /* 44 ATTACK 6 S: SA I 23623+P (routine Att_SLIDE_and_JUMP) */
-    yun_saca_044,  /* 45 ATTACK 6 M: SA I 23623+P (routine Att_SLIDE_and_JUMP) */
-    yun_saca_044,  /* 46 ATTACK 6 L: SA I 23623+P (routine Att_SLIDE_and_JUMP) */
-    yun_saca_044,  /* 47 ATTACK 6 SP: SA I 23623+P (routine Att_SLIDE_and_JUMP) */
-    yun_saca_048,  /* 48 ATTACK 7 S: SA II 23623+P (routine Att_SLIDE_and_JUMP) */
-    yun_saca_048,  /* 49 ATTACK 7 M: SA II 23623+P (routine Att_SLIDE_and_JUMP) */
-    yun_saca_048,  /* 50 ATTACK 7 L: SA II 23623+P (routine Att_SLIDE_and_JUMP) */
-    yun_saca_048,  /* 51 ATTACK 7 SP: SA II 23623+P (routine Att_SLIDE_and_JUMP) */
-    yun_saca_052,  /* 52 ATTACK 8 S: after SA II 23623+P (routine Att_SLIDE_and_JUMP) */
-    yun_saca_052,  /* 53 ATTACK 8 M: after SA II 23623+P (routine Att_SLIDE_and_JUMP) */
-    yun_saca_052,  /* 54 ATTACK 8 L: after SA II 23623+P (routine Att_SLIDE_and_JUMP) */
-    yun_saca_052,  /* 55 ATTACK 8 SP: after SA II 23623+P (routine Att_SLIDE_and_JUMP) */
-    yun_saca_056,  /* 56 ATTACK 9 S: 6(123)4+K (plain script) */
-    yun_saca_056,  /* 57 ATTACK 9 M: 6(123)4+K (plain script) */
-    yun_saca_056,  /* 58 ATTACK 9 L: 6(123)4+K (plain script) */
-    yun_saca_056,  /* 59 ATTACK 9 SP: 6(123)4+K (plain script) */
-    yun_saca_060,  /* 60 ATTACK 10 S: not started by a command */
-    yun_saca_061,  /* 61 ATTACK 10 M: SA III 23623+P (plain script) */
-    yun_saca_061,  /* 62 ATTACK 10 L: SA III 23623+P (plain script) */
-    yun_saca_061,  /* 63 ATTACK 10 SP: SA III 23623+P (plain script) */
-    yun_saca_061,  /* 64 ATTACK 11 S: SA III 23623+P (plain script) */
-    yun_saca_065,  /* 65 ATTACK 11 M: not started by a command */
-    yun_saca_066,  /* 66 ATTACK 11 L: not started by a command */
-    yun_saca_066,  /* 67 ATTACK 11 SP: not started by a command */
-    yun_saca_066,  /* 68 ATTACK 12 S: not started by a command */
-    yun_saca_069,  /* 69 ATTACK 12 M: not started by a command */
-    yun_saca_070,  /* 70 ATTACK 12 L: not started by a command */
-    yun_saca_070,  /* 71 ATTACK 12 SP: not started by a command */
-    yun_saca_070,  /* 72 ATTACK 13 S: not started by a command */
-    yun_saca_070,  /* 73 ATTACK 13 M: not started by a command */
-    yun_saca_074,  /* 74 ATTACK 13 L: not started by a command */
-    yun_saca_075,  /* 75 ATTACK 13 SP: not started by a command */
-    yun_saca_076,  /* 76 not started by a command */
-    yun_saca_076,  /* 77 not started by a command */
-    yun_saca_076,  /* 78 not started by a command */
-    yun_saca_076,  /* 79 not started by a command */
-    yun_saca_080,  /* 80 not started by a command */
-    yun_saca_080,  /* 81 not started by a command */
-    yun_saca_080,  /* 82 not started by a command */
-    yun_saca_083,  /* 83 not started by a command */
-    yun_saca_083,  /* 84 not started by a command */
-    yun_saca_083,  /* 85 not started by a command */
-    yun_saca_083,  /* 86 not started by a command */
-    yun_saca_087,  /* 87 623+P light (routine Att_SLIDE_and_JUMP) */
-    yun_saca_088,  /* 88 623+P medium (routine Att_SLIDE_and_JUMP) */
-    yun_saca_089,  /* 89 623+P heavy (routine Att_SLIDE_and_JUMP) */
-    yun_saca_090,  /* 90 EX 623+PP (routine Att_SLIDE_and_JUMP) */
-    yun_saca_091,  /* 91 not started by a command */
-    yun_saca_092,  /* 92 not started by a command */
-    yun_saca_091,  /* 93 not started by a command */
-    yun_saca_094,  /* 94 not started by a command */
-    yun_saca_095,  /* 95 not started by a command */
-    yun_saca_096,  /* 96 after SA I 23623+P (routine Att_SLIDE_and_JUMP) */
-    yun_saca_097,  /* 97 not started by a command */
-    yun_saca_098,  /* 98 not started by a command */
+const u32 yun_saca[100] = {
+    (u32)yun_saca_000,  /* 0 UP P GUARD P S */
+    (u32)yun_saca_001,  /* 1 UP P GUARD P M */
+    (u32)yun_saca_002,  /* 2 UP P GUARD P L */
+    (u32)yun_saca_002,  /* 3 UP P GUARD K S */
+    (u32)yun_saca_002,  /* 4 UP P GUARD K M */
+    (u32)yun_saca_002,  /* 5 UP P GUARD K L */
+    (u32)yun_saca_000,  /* 6 D P GUARD P S */
+    (u32)yun_saca_001,  /* 7 D P GUARD P M */
+    (u32)yun_saca_002,  /* 8 D P GUARD P L */
+    (u32)yun_saca_002,  /* 9 D P GUARD K S */
+    (u32)yun_saca_002,  /* 10 D P GUARD K M */
+    (u32)yun_saca_002,  /* 11 D P GUARD K L */
+    (u32)yun_saca_002,  /* 12 FUSHIN P S */
+    (u32)yun_saca_002,  /* 13 FUSHIN P M */
+    (u32)yun_saca_002,  /* 14 FUSHIN P L */
+    (u32)yun_saca_002,  /* 15 FUSHIN K S */
+    (u32)yun_saca_002,  /* 16 FUSHIN K M */
+    (u32)yun_saca_002,  /* 17 FUSHIN K L */
+    (u32)yun_saca_002,  /* 18 OKIAGARI P S */
+    (u32)yun_saca_002,  /* 19 OKIAGARI P M */
+    (u32)yun_saca_002,  /* 20 OKIAGARI P L */
+    (u32)yun_saca_002,  /* 21 OKIAGARI K S */
+    (u32)yun_saca_002,  /* 22 OKIAGARI K M */
+    (u32)yun_saca_002,  /* 23 OKIAGARI K L */
+    (u32)yun_saca_024,  /* 24 ATTACK 1 S: not started by a command */
+    (u32)yun_saca_024,  /* 25 ATTACK 1 M: not started by a command */
+    (u32)yun_saca_024,  /* 26 ATTACK 1 L: not started by a command */
+    (u32)yun_saca_024,  /* 27 ATTACK 1 SP: not started by a command */
+    (u32)yun_saca_028,  /* 28 ATTACK 2 S: 214+P light/medium/heavy (plain script) */
+    (u32)yun_saca_028,  /* 29 ATTACK 2 M: 214+P light/medium/heavy (plain script) */
+    (u32)yun_saca_028,  /* 30 ATTACK 2 L: 214+P light/medium/heavy (plain script) */
+    (u32)yun_saca_031,  /* 31 ATTACK 2 SP: EX 214+PP (plain script) */
+    (u32)yun_saca_032,  /* 32 ATTACK 3 S: 623+K light (routine Att_SHOURYUUKEN) */
+    (u32)yun_saca_033,  /* 33 ATTACK 3 M: 623+K medium (routine Att_SHOURYUUKEN) */
+    (u32)yun_saca_034,  /* 34 ATTACK 3 L: 623+K heavy (routine Att_SHOURYUUKEN) */
+    (u32)yun_saca_035,  /* 35 ATTACK 3 SP: EX 623+KK (routine Att_SHOURYUUKEN) */
+    (u32)yun_saca_036,  /* 36 ATTACK 4 S: 236+P light (routine Att_SENPUUKYAKU) */
+    (u32)yun_saca_037,  /* 37 ATTACK 4 M: 236+P medium (routine Att_SENPUUKYAKU) */
+    (u32)yun_saca_038,  /* 38 ATTACK 4 L: 236+P heavy (routine Att_SENPUUKYAKU) */
+    (u32)yun_saca_039,  /* 39 ATTACK 4 SP: EX 236+PP (routine Att_SENPUUKYAKU) */
+    (u32)yun_saca_040,  /* 40 ATTACK 5 S: not started by a command */
+    (u32)yun_saca_040,  /* 41 ATTACK 5 M: not started by a command */
+    (u32)yun_saca_040,  /* 42 ATTACK 5 L: not started by a command */
+    (u32)yun_saca_040,  /* 43 ATTACK 5 SP: not started by a command */
+    (u32)yun_saca_044,  /* 44 ATTACK 6 S: SA I 23623+P (routine Att_SLIDE_and_JUMP) */
+    (u32)yun_saca_044,  /* 45 ATTACK 6 M: SA I 23623+P (routine Att_SLIDE_and_JUMP) */
+    (u32)yun_saca_044,  /* 46 ATTACK 6 L: SA I 23623+P (routine Att_SLIDE_and_JUMP) */
+    (u32)yun_saca_044,  /* 47 ATTACK 6 SP: SA I 23623+P (routine Att_SLIDE_and_JUMP) */
+    (u32)yun_saca_048,  /* 48 ATTACK 7 S: SA II 23623+P (routine Att_SLIDE_and_JUMP) */
+    (u32)yun_saca_048,  /* 49 ATTACK 7 M: SA II 23623+P (routine Att_SLIDE_and_JUMP) */
+    (u32)yun_saca_048,  /* 50 ATTACK 7 L: SA II 23623+P (routine Att_SLIDE_and_JUMP) */
+    (u32)yun_saca_048,  /* 51 ATTACK 7 SP: SA II 23623+P (routine Att_SLIDE_and_JUMP) */
+    (u32)yun_saca_052,  /* 52 ATTACK 8 S: after SA II 23623+P (routine Att_SLIDE_and_JUMP) */
+    (u32)yun_saca_052,  /* 53 ATTACK 8 M: after SA II 23623+P (routine Att_SLIDE_and_JUMP) */
+    (u32)yun_saca_052,  /* 54 ATTACK 8 L: after SA II 23623+P (routine Att_SLIDE_and_JUMP) */
+    (u32)yun_saca_052,  /* 55 ATTACK 8 SP: after SA II 23623+P (routine Att_SLIDE_and_JUMP) */
+    (u32)yun_saca_056,  /* 56 ATTACK 9 S: 6(123)4+K (plain script) */
+    (u32)yun_saca_056,  /* 57 ATTACK 9 M: 6(123)4+K (plain script) */
+    (u32)yun_saca_056,  /* 58 ATTACK 9 L: 6(123)4+K (plain script) */
+    (u32)yun_saca_056,  /* 59 ATTACK 9 SP: 6(123)4+K (plain script) */
+    (u32)yun_saca_060,  /* 60 ATTACK 10 S: not started by a command */
+    (u32)yun_saca_061,  /* 61 ATTACK 10 M: SA III 23623+P (plain script) */
+    (u32)yun_saca_061,  /* 62 ATTACK 10 L: SA III 23623+P (plain script) */
+    (u32)yun_saca_061,  /* 63 ATTACK 10 SP: SA III 23623+P (plain script) */
+    (u32)yun_saca_061,  /* 64 ATTACK 11 S: SA III 23623+P (plain script) */
+    (u32)yun_saca_065,  /* 65 ATTACK 11 M: not started by a command */
+    (u32)yun_saca_066,  /* 66 ATTACK 11 L: not started by a command */
+    (u32)yun_saca_066,  /* 67 ATTACK 11 SP: not started by a command */
+    (u32)yun_saca_066,  /* 68 ATTACK 12 S: not started by a command */
+    (u32)yun_saca_069,  /* 69 ATTACK 12 M: not started by a command */
+    (u32)yun_saca_070,  /* 70 ATTACK 12 L: not started by a command */
+    (u32)yun_saca_070,  /* 71 ATTACK 12 SP: not started by a command */
+    (u32)yun_saca_070,  /* 72 ATTACK 13 S: not started by a command */
+    (u32)yun_saca_070,  /* 73 ATTACK 13 M: not started by a command */
+    (u32)yun_saca_074,  /* 74 ATTACK 13 L: not started by a command */
+    (u32)yun_saca_075,  /* 75 ATTACK 13 SP: not started by a command */
+    (u32)yun_saca_076,  /* 76 not started by a command */
+    (u32)yun_saca_076,  /* 77 not started by a command */
+    (u32)yun_saca_076,  /* 78 not started by a command */
+    (u32)yun_saca_076,  /* 79 not started by a command */
+    (u32)yun_saca_080,  /* 80 not started by a command */
+    (u32)yun_saca_080,  /* 81 not started by a command */
+    (u32)yun_saca_080,  /* 82 not started by a command */
+    (u32)yun_saca_083,  /* 83 not started by a command */
+    (u32)yun_saca_083,  /* 84 not started by a command */
+    (u32)yun_saca_083,  /* 85 not started by a command */
+    (u32)yun_saca_083,  /* 86 not started by a command */
+    (u32)yun_saca_087,  /* 87 623+P light (routine Att_SLIDE_and_JUMP) */
+    (u32)yun_saca_088,  /* 88 623+P medium (routine Att_SLIDE_and_JUMP) */
+    (u32)yun_saca_089,  /* 89 623+P heavy (routine Att_SLIDE_and_JUMP) */
+    (u32)yun_saca_090,  /* 90 EX 623+PP (routine Att_SLIDE_and_JUMP) */
+    (u32)yun_saca_091,  /* 91 not started by a command */
+    (u32)yun_saca_092,  /* 92 not started by a command */
+    (u32)yun_saca_091,  /* 93 not started by a command */
+    (u32)yun_saca_094,  /* 94 not started by a command */
+    (u32)yun_saca_095,  /* 95 not started by a command */
+    (u32)yun_saca_096,  /* 96 after SA I 23623+P (routine Att_SLIDE_and_JUMP) */
+    (u32)yun_saca_097,  /* 97 not started by a command */
+    (u32)yun_saca_098,  /* 98 not started by a command */
     0
 };
 

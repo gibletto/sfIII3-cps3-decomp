@@ -172,7 +172,7 @@ void tama_display(WORK_Other* ewk) {
     set_quake((PLW*)ewk);
     ewk->wu.position_x = ewk->wu.xyz[0].disp.pos + ewk->wu.next_x;
     ewk->wu.position_y = ewk->wu.xyz[1].disp.pos;
-    sort_push_request(ewk);
+    sort_push_request(&ewk->wu);
 }
 
 
@@ -1590,7 +1590,10 @@ void kotp_16000(WORK_Other* ewk, TAMA* twk) {
 }
 
 
-s32 effect_13_init(WORK* wk, u8 data) {
+s32 effect_13_init(wk, data)
+WORK* wk;
+u8 data;
+{
     WORK_Other* ewk;
     s16 ix;
     if ((ix = pull_effect_work(3)) == -1) {

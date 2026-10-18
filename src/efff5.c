@@ -45,7 +45,7 @@ void efff5_0000(WORK_Other* ewk) {
         } else {
             ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
             ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-            sort_push_request4(ewk);
+            sort_push_request4(&ewk->wu);
         }
         break;
     default:
@@ -90,7 +90,7 @@ void efff5_0002(WORK_Other* ewk) {
         }
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-        sort_push_request4(ewk);
+        sort_push_request4(&ewk->wu);
         break;
     }
 }
@@ -108,7 +108,7 @@ void efff5_0003(WORK_Other* ewk) {
         char_move(&ewk->wu);
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-        sort_push_request4(ewk);
+        sort_push_request4(&ewk->wu);
         break;
     default:
         all_cgps_put_back(ewk);
@@ -132,7 +132,7 @@ void efff5_0004(WORK_Other* ewk) {
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
         break;
     case 1:
-        sort_push_request4(ewk);
+        sort_push_request4(&ewk->wu);
         break;
     default:
         all_cgps_put_back(ewk);
@@ -161,7 +161,7 @@ void efff5_0005(WORK_Other* ewk) {
         } else {
             ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
             ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-            sort_push_request4(ewk);
+            sort_push_request4(&ewk->wu);
         }
         break;
     default:
@@ -181,7 +181,7 @@ void efff5_0006(WORK_Other* ewk) {
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-        sort_push_request4(ewk);
+        sort_push_request4(&ewk->wu);
         break;
     case 1:
         break;
@@ -225,7 +225,7 @@ void efff5_0008(WORK_Other* ewk) {
     case 1:
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-        sort_push_request4(ewk);
+        sort_push_request4(&ewk->wu);
         break;
     default:
         all_cgps_put_back(ewk);
@@ -265,12 +265,12 @@ void efff5_0009(WORK_Other* ewk) {
         }
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-        sort_push_request4(ewk);
+        sort_push_request4(&ewk->wu);
         break;
     case 3:
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-        sort_push_request4(ewk);
+        sort_push_request4(&ewk->wu);
         break;
     default:
         all_cgps_put_back(ewk);
@@ -310,12 +310,12 @@ void efff5_0010(WORK_Other* ewk) {
         }
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-        sort_push_request4(ewk);
+        sort_push_request4(&ewk->wu);
         break;
     case 3:
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-        sort_push_request4(ewk);
+        sort_push_request4(&ewk->wu);
         break;
     default:
         all_cgps_put_back(ewk);
@@ -355,12 +355,12 @@ void efff5_0011(WORK_Other* ewk) {
         }
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-        sort_push_request4(ewk);
+        sort_push_request4(&ewk->wu);
         break;
     case 3:
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-        sort_push_request4(ewk);
+        sort_push_request4(&ewk->wu);
         break;
     default:
         all_cgps_put_back(ewk);

@@ -29,6 +29,52 @@
 #include "bg_sub_5.h"
 #include "bg_sub_2.h"
 
+AKE_SCRL ake_scrl_w[5];  /* 02026B48 */
+BG bg_w;  /* 02026BAC */
+s16 scr_cg_c_no;  /* 02026FF0 */
+s16 ake_cg_c_no;  /* 02026FF2 */
+
+
+/* 020064F8 */
+void (*scr_x_mv_jp[35])() = {
+    scr_10_20,
+    scr_10_21,
+    scr_10_22,
+    scr_x_dummy,
+    scr_x_dummy,
+    scr_x_dummy,
+    scr_x_dummy,
+    scr_x_dummy,
+    scr_x_dummy,
+    scr_x_dummy,
+    scr_x_dummy,
+    scr_x_dummy,
+    scr_x_dummy,
+    scr_x_dummy,
+    scr_x_dummy,
+    scr_x_dummy,
+    scr_11_20,
+    scr_11_21,
+    scr_11_22,
+    scr_x_dummy,
+    scr_x_dummy,
+    scr_x_dummy,
+    scr_x_dummy,
+    scr_x_dummy,
+    scr_x_dummy,
+    scr_x_dummy,
+    scr_x_dummy,
+    scr_x_dummy,
+    scr_x_dummy,
+    scr_x_dummy,
+    scr_x_dummy,
+    scr_x_dummy,
+    scr_12_20,
+    scr_12_21,
+    scr_12_22,
+};
+
+
 #pragma inline(remake_x_mvstep)
 
 
@@ -375,7 +421,11 @@ void Bg_mv_tw(s32 value_x, s32 value_y) {
 
 
 /* provisional name */
-void Bg_mv_tw_appoint(s16 bg_num, s32 dx, s32 dy) {
+void Bg_mv_tw_appoint(bg_num, dx, dy)
+s16 bg_num;
+s32 dx;
+s32 dy;
+{
     bg_w.bgw[bg_num].xy[0].cal += dx;
     bg_w.bgw[bg_num].xy[1].cal += dy;
     bg_w.bgw[bg_num].wxy[0].cal += dx;
@@ -570,11 +620,11 @@ void bg_base_x_move_sub(void) {
     s32 hi;
     s32 lo;
     origin = ideal_w.iw[0].disp.pos - bg_w.pos_offset;
-    (void)((WORK*)origin)->be_flag;
+    (void)&((WORK*)origin)->be_flag;
     bg_pos = origin;
     players = (u32)plw;
-    (void)((WORK*)players)->be_flag;
-    (void)((WORK*)players)->disp_flag;
+    (void)&((WORK*)players)->be_flag;
+    (void)&((WORK*)players)->disp_flag;
     current = (PLW*)players;
     (void)current->wu.be_flag;
     pl = current;
@@ -592,8 +642,7 @@ void bg_base_x_move_sub(void) {
     } else {
         work1 = pl->wu.scr_mv_x + satse[pl->player_number];
     }
-    work1 -= bg_pos;
-    (void)((WORK*)work1)->be_flag;
+    work1 = work1 - bg_pos;
     if (Game_setting.mode) {
         if (work0 < 0) {
             work0 = 0;
@@ -619,14 +668,10 @@ void bg_base_x_move_sub(void) {
         }
         hi = *((s32)work0 + (st_tbl = pos_area_tbl));
     }
-    (void)((WORK*)st_tbl)->be_flag;
-    (void)((WORK*)st_tbl)->disp_flag;
-    (void)((WORK*)st_tbl)->blink_timing;
     lo = st_tbl[work1];
-    (void)((WORK*)hi)->be_flag;
-    (void)((WORK*)hi)->disp_flag;
-    (void)((WORK*)hi)->blink_timing;
-    (void)((WORK*)lo)->be_flag;
+    (void)&((WORK*)hi)->disp_flag;
+    (void)&((WORK*)hi)->blink_timing;
+    (void)&((WORK*)lo)->be_flag;
     scr_x_mv_jp[((s8)hi << 4) + (s8)lo]();
 }
 

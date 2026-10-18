@@ -7,7 +7,7 @@
  * effect_C9_move places her at app_pos_hosei relative to the screen centre with a shadow from
  * judge_gals_kage_tbl (character set 7 drops in using efy_data, with dust and a landing sound),
  * then when Event_Judge_Gals is raised plays her judging patterns and spawns the effect 37 flag
- * for the player she votes for (EJG_Index). setup_EJG_index fills EJG_Index: all votes go to the
+ * for the player she votes for (EJG_index). setup_EJG_index fills EJG_index: all votes go to the
  * winner when the judge grades differ by more than 5, otherwise from sel_ejg_ix_table.
  */
 
@@ -30,6 +30,21 @@
 #include "bg_sub_5.h"
 #include "EFFC9.h"
 
+
+
+extern const u16 ef13_char_table_225[180];
+
+/* 0200704C */
+u32* ag_char_table[8] = {
+    (u32*)&ef13_char_table_225[108],
+    (u32*)&ef13_char_table_225[116],
+    (u32*)&ef13_char_table_225[124],
+    (u32*)&ef13_char_table_225[132],
+    (u32*)&ef13_char_table_225[140],
+    (u32*)&ef13_char_table_225[148],
+    (u32*)&ef13_char_table_225[156],
+    (u32*)&ef13_char_table_225[164],
+};
 
 
 void effect_C9_move(WORK_Other* ewk) {
@@ -115,7 +130,7 @@ void effect_C9_move(WORK_Other* ewk) {
                     if (ewk->wu.cg_type == 0xFF) {
                         ewk->wu.routine_no[1] += 1;
                         set_char_move_init(&ewk->wu, 0, 2);
-                        effect_37_init(&ewk->wu, ewk->wu.charset_id, EJG_Index[ewk->wu.type]);
+                        effect_37_init(&ewk->wu, ewk->wu.charset_id, EJG_index[ewk->wu.type]);
                     }
                     break;
                 case 2:
@@ -200,19 +215,19 @@ void setup_EJG_index(void) {
     }
     if (gra > 5) {
         if (Winner_id) {
-            EJG_Index[0] = 1;
-            EJG_Index[1] = 1;
-            EJG_Index[2] = 1;
-            EJG_Index[3] = 0xFF;
+            EJG_index[0] = 1;
+            EJG_index[1] = 1;
+            EJG_index[2] = 1;
+            EJG_index[3] = 0xFF;
         } else {
-            EJG_Index[0] = 0;
-            EJG_Index[1] = 0;
-            EJG_Index[2] = 0;
-            EJG_Index[3] = 0xFF;
+            EJG_index[0] = 0;
+            EJG_index[1] = 0;
+            EJG_index[2] = 0;
+            EJG_index[3] = 0xFF;
         }
     } else {
         for (i = 0; i < 4; i++) {
-            (&EJG_Index[0])[i] = sel_ejg_ix_table[Winner_id][Game_timer & 1][i];
+            (&EJG_index[0])[i] = sel_ejg_ix_table[Winner_id][Game_timer & 1][i];
         }
     }
 }

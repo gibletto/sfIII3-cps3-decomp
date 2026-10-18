@@ -20,6 +20,60 @@
 
 
 
+extern const u16 metamor_color_bank_00[];
+extern const u16 metamor_color_bank_01[];
+extern const u16 metamor_color_bank_02[];
+extern const u16 metamor_color_bank_03[];
+extern const u16 metamor_color_bank_04[];
+extern const u16 metamor_color_bank_05[];
+extern const u16 metamor_color_bank_06[];
+extern const u16 metamor_color_bank_07[];
+extern const u16 metamor_color_bank_08[];
+extern const u16 metamor_color_bank_09[];
+extern const u16 metamor_color_bank_10[];
+extern const u16 metamor_color_bank_11[];
+extern const u16 metamor_color_bank_12[];
+extern const u16 metamor_color_bank_13[];
+extern const u16 metamor_color_bank_14[];
+extern const u16 metamor_color_bank_15[];
+extern const u16 metamor_color_bank_16[];
+extern const u16 metamor_color_bank_17[];
+extern const u16 metamor_color_bank_18[];
+extern const u16 metamor_color_bank_19[];
+
+u16 metamor_original[64];  /* 02069F80 */
+u16 metamor_original2[64];  /* 0206A000 */
+
+
+/* 02007C30 */
+u16* metamor_color_ptr_tbl[24] = {
+    (u16*)metamor_color_bank_00,
+    (u16*)metamor_color_bank_01,
+    (u16*)metamor_color_bank_02,
+    (u16*)metamor_color_bank_03,
+    (u16*)metamor_color_bank_04,
+    (u16*)metamor_color_bank_05,
+    (u16*)metamor_color_bank_06,
+    (u16*)metamor_color_bank_07,
+    (u16*)metamor_color_bank_08,
+    (u16*)metamor_color_bank_09,
+    (u16*)metamor_color_bank_10,
+    (u16*)metamor_color_bank_11,
+    (u16*)metamor_color_bank_12,
+    (u16*)metamor_color_bank_13,
+    (u16*)metamor_color_bank_14,
+    (u16*)metamor_color_bank_14,
+    (u16*)metamor_color_bank_15,
+    (u16*)metamor_color_bank_16,
+    (u16*)metamor_color_bank_17,
+    (u16*)metamor_color_bank_18,
+    (u16*)metamor_color_bank_19,
+    (u16*)metamor_color_bank_00,
+    (u16*)metamor_color_bank_00,
+    (u16*)metamor_color_bank_00,
+};
+
+
 void metamor_color_trans(s16 pl, s16 ix) {
     u16* dst = (u16*)COLOR_RAM + (pl == 1) * 0x400;
     u16* dst2 = dst + 0x200;
@@ -29,7 +83,7 @@ void metamor_color_trans(s16 pl, s16 ix) {
     s16 i;
     if (ix) {
         src = metamor_color_ptr_tbl[ix];
-        (void)((WORK*)&metamor_color_ptr_tbl[ix])->be_flag;
+        (void)&((WORK*)&metamor_color_ptr_tbl[ix])->be_flag;
         src += Player_Color[pl] * 64;
         for (i = 0; i < 64; i++) {
             *dst++ = *src;
@@ -54,10 +108,10 @@ void metamor_color_copy(s16 page) {
     u16* src2;
     s16 i;
     dst = (u16*)((page == 1) * 0x800 + COLOR_RAM);
-    dst = (u16*)((u8*)dst + 0x80);
+    dst = dst + 0x40;
     dst2 = dst + 0x200;
     src = (u16*)((page == 0) * 0x800 + COLOR_RAM);
-    src = (u16*)((u8*)src + 0x80);
+    src = src + 0x40;
     src2 = src + 0x200;
     for (i = 0; i < 0x180; i++) {
         *dst++ = *src++;

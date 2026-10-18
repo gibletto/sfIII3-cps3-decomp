@@ -7,8 +7,6 @@
 
 #pragma section TBL
 
-extern const u8 necro_body_box[];
-
 const s16 ji_grd_init_data[16] = {
     10, 9, 8, 7, 6, 5, 4, 3,
     2, 1, 1, 1, 1, 1, 1, 1,
@@ -148,7 +146,7 @@ const s16 grade_t_straight[11][2] = {
     { 9, 180 }, { 10, 190 }, { 11, 200 },
 };
 
-const s16 grade_t_kimarite[4] = {
+const s16 grade_t_round_result[4] = {
     0, 50, 100, 160,
 };
 
@@ -182,17 +180,11 @@ const s16 grade_t_f_bss_ball[4][2] = {
     { 0, 0 }, { 1, 100 }, { 2, 80 }, { 3, 160 },
 };
 
-const s16 grade_t_table[22][2] = {
+const s16 grade_t_table[33][2] = {
     { 0, 20 }, { 75, 20 }, { 150, 20 }, { 225, 40 }, { 300, 40 }, { 375, 40 }, { 450, 60 }, { 525, 60 },
     { 600, 60 }, { 675, 80 }, { 750, 80 }, { 825, 80 }, { 900, 100 }, { 975, 100 }, { 1050, 100 }, { 1125, 150 },
-    { 1200, 200 }, { 1275, 300 }, { 1350, 400 }, { 1425, 600 }, { 1500, 800 }, { 1550, 1000 },
-};
-
-/* Stored after grade_t_table. Nothing in the program refers to it by name or address; if it is read,
-   it is through an index past the end of grade_t_table. */
-const u32 grade_t_table_tail[11] = {
-    0x6400514, 0x6720640, 0x6A407D0, 0x6D60BB8,
-    0x7080FA0, 0x73A1388, 0x76C1770, 0x7941F40,
-    0x7BC2710, 0x7E44E20, 0,
+    { 1200, 200 }, { 1275, 300 }, { 1350, 400 }, { 1425, 600 }, { 1500, 800 }, { 1550, 1000 }, { 1600, 1300 }, { 1650, 1600 },
+    { 1700, 2000 }, { 1750, 3000 }, { 1800, 4000 }, { 1850, 5000 }, { 1900, 6000 }, { 1940, 8000 }, { 1980, 10000 }, { 2020, 20000 },
+    { 0, 0 },
 };
 

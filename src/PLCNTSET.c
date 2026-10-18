@@ -56,6 +56,25 @@
 #include "sc_sub_2.h"
 #include "EFFM7.h"
 
+s16 pcon_rno[4];  /* 02068C5C */
+s16 appear_type;  /* 02068C64 */
+u8 round_slow_flag;  /* 02068C66 */
+u8 pcon_dp_flag;  /* 02068C67 */
+u8 pl_eff_disp_stop;  /* 02068C68 */
+u8 pl_eff_disp_stop_tail[1];  /* after pl_eff_disp_stop; nothing refers to it by name or address */
+u8 win_sp_flag;  /* 02068C6A */
+char dead_voice_flag;  /* 02068C6B */
+PLW plw[2];  /* 02068C6C */
+SA_WORK super_arts[2];  /* 0206959C */
+PiyoriType piyori_type[2];  /* 020695F4 */
+ComboType combo_type[2];  /* 0206961C */
+ComboType remake_power[2];  /* 0206976C */
+ZanzouTableEntry zanzou_table[2][48];  /* 020698BC */
+u8 zanzou_table_tail[64];  /* after zanzou_table; nothing refers to it by name or address */
+RAMBOD rambod[2];  /* 02069EFC */
+RAMHAN ramhan[2];  /* 02069F3C */
+
+
 #pragma inline(move_P1_move_P2, move_P2_move_P1)
 
 
@@ -113,7 +132,7 @@ void effm8_move_app(WORK_Other* ewk) {
 void don_run_sub_m8(WORK_Other* ewk) {
     char_move(&ewk->wu);
     add_x_sub(ewk);
-    if (!range_x_check3(ewk, 56)) {
+    if (!range_x_check3(&ewk->wu, 56)) {
         ewk->wu.routine_no[1]++;
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 0;

@@ -32,17 +32,6 @@ extern const u8 gcfg_screen_scr_jp_0[];
 extern const u8 gcfg_screen_scr_jp_1[];
 extern const u32 gcfg_title_scr_jp_0[];
 
-extern void game_config_1p_round_item_jp();
-extern void game_config_2p_round_item_jp();
-extern void game_config_bonus_item_jp();
-extern void game_config_damage_item_jp();
-extern void game_config_event_item_jp();
-extern void game_config_exit_item_jp();
-extern void game_config_init_jp();
-extern void game_config_level_item_jp();
-extern void game_config_move_jp();
-extern void game_config_timer_item_jp();
-
 const u8 Arts_Rnd_Data[8] = {
     0, 0, 0, 1, 1, 1, 2, 2,
 };

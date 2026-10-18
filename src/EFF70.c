@@ -101,7 +101,7 @@ s32 effect_70_init(s16 id) {
         return -1;
     }
     ewk = (WORK_Other*)frw[ix];
-    Setup_Eff70(ewk);
+    Setup_Eff70(&ewk->wu);
     ewk->wu.xyz[0].disp.pos = Face_Pos_Data[id][0] + 512;
     ewk->wu.xyz[1].disp.pos = Face_Pos_Data[id][1] + 0;
     ewk->wu.xyz[2].disp.pos = 62;

@@ -27,6 +27,44 @@
 
 
 
+extern const char str_ONBOARD[];
+extern const char str_SIMM1[];
+extern const char str_SIMM2[];
+extern const char str_SIMM3[];
+extern const char str_SIMM4[];
+extern const char str_SIMM5[];
+extern const char str_SIMM6[];
+extern const char str_SIMM7[];
+
+u32 scsi_sense_key;  /* 0206A1F0 */
+u32 scsi_sense_asc;  /* 0206A1F4 */
+s8 scsi_sense_buf[22];  /* 0206A1F8 */
+SCSI_INQUIRY scsi_inquiry_data;  /* 0206A20E */
+SCSI_CAPACITY scsi_capacity;  /* 0206A234 */
+s8 scsi_toc_buf[40];  /* 0206A23C */
+s8 cd_sector_buf[2048];  /* 0206A264 */
+s32 scsi_error;  /* 0206AA64 */
+s16 scsi_cdb_len;  /* 0206AA68 */
+
+
+/* 02007CB0 */
+s8* simm_name_tbl[8] = {
+    (s8*)str_ONBOARD,
+    (s8*)str_SIMM1,
+    (s8*)str_SIMM2,
+    (s8*)str_SIMM3,
+    (s8*)str_SIMM4,
+    (s8*)str_SIMM5,
+    (s8*)str_SIMM6,
+    (s8*)str_SIMM7,
+};
+u8 no_cd_flag = 0;  /* 02007CD0 */
+s16 memtest_error = 0;  /* 02007CD2 */
+s16 memtest_wait = 0;  /* 02007CD4 */
+s16 memtest_cursor = 0;  /* 02007CD6 */
+s16 memtest_no = 0;  /* 02007CD8 */
+
+
 /* provisional name */
 u32 memtest_pattern_word(volatile u16* addr, u32 size) {
     register u16 got;
@@ -461,7 +499,7 @@ s32 cd_check_disc_id(void) {
     last = (blen >> 8) - 1;
     while (1) {
         scsi_send_cdb_bytes(10, cdb_read_toc);
-        rc = scsi_send_cdb_and_read(12, scsi_toc_buf);
+        rc = scsi_send_cdb_and_read(12, (u8*)scsi_toc_buf);
         if ((rc = scsi_decode_sense_key(rc)) == -1) {
             return -1;
         }

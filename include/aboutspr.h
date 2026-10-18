@@ -6,9 +6,9 @@
 void Shell14_0012(PLW* wk);
 void init_char_gfx_tables(void);
 void setup_kage_cells(void);
-s32 setup_hit_mark_cells(void);
-s32 setup_GILL_exsa_obj(void);
-s32 setup_bonus_car_parts(void);
+void setup_hit_mark_cells(void);
+void setup_GILL_exsa_obj(void);
+void setup_bonus_car_parts(void);
 s32 get_cg_slot_addr();
 s32 purge_char_gfx();
 s32 check_cg_data();

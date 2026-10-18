@@ -25,6 +25,21 @@
 
 
 
+/* 02006CC8 */
+const s16* scr_obj_data44[10] = {
+    (const s16*)&scr_obj_num44[10],
+    (const s16*)&scr_obj_num44[26],
+    (const s16*)&scr_obj_num44[34],
+    (const s16*)&scr_obj_num44[50],
+    (const s16*)&scr_obj_num44[106],
+    (const s16*)&scr_obj_num44[114],
+    (const s16*)&scr_obj_num44[138],
+    (const s16*)&scr_obj_num44[154],
+    (const s16*)&scr_obj_num44[194],
+    (const s16*)&scr_obj_num44[226],
+};
+
+
 /* provisional name */
 void effect_43_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
@@ -46,7 +61,7 @@ void effect_43_move(WORK_Other* ewk) {
     }
     ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
     ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-    sort_push_request4(ewk);
+    sort_push_request4(&ewk->wu);
 }
 
 
@@ -78,7 +93,7 @@ s32 effect_43_init(s16 Time, s16 Target_BG) {
 
 
 void effect_44_move(WORK_Other* ewk) {
-    if (obr_disp_off_check()) {
+    if (obr_no_disp_check()) {
         return;
     }
     switch (ewk->wu.routine_no[0]) {
@@ -138,7 +153,7 @@ s32 effect_44_init(s16 type) {
         ewk->wu.char_index = *data_ptr++;
         ewk->wu.sync_suzi = *data_ptr++;
         ewk->wu.char_table[0] = char_add[bg_w.bg_index];
-        suzi_offset_set(ewk);
+        suzi_offset_set(&ewk->wu);
     }
     return 0;
 }

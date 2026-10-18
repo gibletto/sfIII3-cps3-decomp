@@ -56,6 +56,53 @@
 #include "CMD_MAIN.h"
 #include "cps3.h"
 
+extern const char str_NORMAL_2[];
+extern const char str_WIDE[];
+extern const char str_1_ROUND[];
+extern const char str_3_ROUNDS[];
+extern const char str_5_ROUNDS[];
+extern const char str_7_ROUNDS[];
+extern const char str_OFF[];
+extern const char str_1_MATCH[];
+extern const char str_OFF_2[];
+extern const char str_ON[];
+
+s8 Config_Item_en;  /* 02017054 */
+s8 Config_Exit_en;  /* 02017055 */
+s8 Config_Move_en;  /* 02017056 */
+s8 Config_Keep_Bits_en;  /* 02017057 */
+s8 Config_Old_en;  /* 02017058 */
+s8 Config_New_en;  /* 02017059 */
+s8 Config_Org_en;  /* 0201705A */
+s16 Config_Attr_en;  /* 0201705C */
+s16 Config_Rep_Timer_en[4];  /* 0201705E */
+s8 Config_Rep_Count_en[4];  /* 02017066 */
+
+
+/* 020008AC */
+TM_STRING gcfg_screen_str_en[2] = {
+    { 2, 0, 2, (void*)str_NORMAL_2 },
+    { 2, 0, 2, (void*)str_WIDE },
+};
+/* 020008C4 */
+TM_STRING gcfg_round_str_en[4] = {
+    { 2, 0, 2, (void*)str_1_ROUND },
+    { 2, 0, 2, (void*)str_3_ROUNDS },
+    { 2, 0, 2, (void*)str_5_ROUNDS },
+    { 2, 0, 2, (void*)str_7_ROUNDS },
+};
+/* 020008F4 */
+TM_STRING gcfg_event_str_en[2] = {
+    { 2, 0, 2, (void*)str_OFF },
+    { 2, 0, 2, (void*)str_1_MATCH },
+};
+/* 0200090C */
+TM_STRING gcfg_bonus_str_en[2] = {
+    { 2, 0, 2, (void*)str_OFF_2 },
+    { 2, 0, 2, (void*)str_ON },
+};
+
+
 /* provisional name */
 s32 game_config_menu_en(void) {
     void (*tbl[2])(void) = { game_config_init_en, game_config_move_en };
@@ -80,7 +127,7 @@ void game_config_init_en(void) {
     palette_write(0, sys_palette, 0x80);
     tilemap_chunk_copy_16b((s16*)(SS_RAM + 0x8000), (char*)sys_font_cg, 0x8C);
     tilemap_fill_all(0, 32);
-    tilemap_print_string(0, 0, 0xFFFF, (TM_STRING*)config_title_str_tbl);
+    tilemap_print_string(0, 0, 0xFFFF, config_title_str_tbl);
     n = Config_Item_en = 6;
     Config_New_en = game_config_work.bonus & 1;
     Config_Old_en = Game_setting.bonus & 1;

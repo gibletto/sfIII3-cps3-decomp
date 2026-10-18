@@ -34,7 +34,7 @@
 
 
 void effect_J8_move(WORK_Other* ewk) {
-    if (obr_disp_off_check()) {
+    if (obr_no_disp_check()) {
         return;
     }
     switch (ewk->wu.routine_no[0]) {
@@ -496,7 +496,7 @@ s32 effect_J8_init(void) {
         ewk->wu.char_index = 4;
         ewk->wu.sync_suzi = 0;
         ewk->wu.char_table[0] = char_add[bg_w.bg_index];
-        suzi_offset_set(ewk);
+        suzi_offset_set(&ewk->wu);
     }
     return 0;
 }

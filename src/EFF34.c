@@ -137,6 +137,6 @@ s32 effect_34_init(WORK* wk, s32 _p1) {
     } else {
         ewk->wu.old_rno[1] = bg_w.bgw[1].wxy[0].disp.pos + (bg_w.pos_offset + 32);
     }
-    suzi_offset_set(ewk);
+    suzi_offset_set(&ewk->wu);
     return 0;
 }

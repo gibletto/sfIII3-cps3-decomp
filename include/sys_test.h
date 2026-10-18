@@ -13,10 +13,9 @@ void Scrn_Y_Set_W();
 void Scrn_Move_Add(s32 n, s32 dx, s32 dy);
 void clear_scroll_layer_state_and_mask(void);
 void scrn_linescroll_set_now(u16 n, void* p);
-void scroll_layer_commit(void);
+void Scrn_Renew(void);
 void scrn_line_set(u16 n, s16 v);
 void scroll_layers_finalize_frame(void);
-void Irl_Family(void);
 void scrn_flip_set(u16 n, u16 flip);
 void scrn_flip_toggle(u16 n, u16 flip);
 void Bg_Off_W();
@@ -37,11 +36,9 @@ void scrn_linescroll_set();
 void switch_work_clear(char level);
 void dispenser_init(void);
 void scrn_line_set_now();
-void scroll_layer_mask_disable();
-void scroll_layer_mask_enable(u16 mask);
+void Bg_Off_R();
+void Bg_On_R(u16 mask);
 void switch_read_six_button(void);
 void coin_sw_shift(void);
-void dispenser_sw_read(void);
-void dispenser_control(void);
 
 #endif

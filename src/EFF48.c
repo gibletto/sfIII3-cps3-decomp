@@ -23,6 +23,56 @@
 
 
 
+extern const s16 eff48_data_tbl00[];
+extern const s16 eff48_data_tbl01[];
+extern const s16 eff48_data_tbl02[];
+extern const s16 eff48_data_tbl03[];
+extern const s16 eff48_data_tbl04[];
+extern const s16 eff48_data_tbl05[];
+extern const s16 eff48_data_tbl06[];
+extern const s16 eff48_data_tbl07[];
+extern const s16 eff48_data_tbl08[];
+extern const s16 eff48_data_tbl09[];
+extern const s16 eff48_data_tbl10[];
+extern const s16 eff48_data_tbl11[];
+extern const s16 eff48_data_tbl12[];
+extern const s16 eff48_data_tbl13[];
+extern const s16 eff48_data_tbl14[];
+extern const s16 eff48_data_tbl15[];
+extern const s16 eff48_data_tbl16[];
+extern const s16 eff48_data_tbl17[];
+extern const s16 eff48_data_tbl18[];
+extern const s16 eff48_data_tbl19[];
+extern const s16 eff48_data_tbl20[];
+extern const s16 eff48_data_tbl21[];
+
+/* 02006CF0 */
+ConstShortArray eff48_adrs_tbl[22] = {
+    (void*)eff48_data_tbl00,
+    (void*)eff48_data_tbl01,
+    (void*)eff48_data_tbl02,
+    (void*)eff48_data_tbl03,
+    (void*)eff48_data_tbl04,
+    (void*)eff48_data_tbl05,
+    (void*)eff48_data_tbl06,
+    (void*)eff48_data_tbl07,
+    (void*)eff48_data_tbl08,
+    (void*)eff48_data_tbl09,
+    (void*)eff48_data_tbl10,
+    (void*)eff48_data_tbl11,
+    (void*)eff48_data_tbl12,
+    (void*)eff48_data_tbl13,
+    (void*)eff48_data_tbl14,
+    (void*)eff48_data_tbl15,
+    (void*)eff48_data_tbl16,
+    (void*)eff48_data_tbl17,
+    (void*)eff48_data_tbl18,
+    (void*)eff48_data_tbl19,
+    (void*)eff48_data_tbl20,
+    (void*)eff48_data_tbl21,
+};
+
+
 void effect_48_move(WORK_Other* ewk) {
     void (*eff48_jp[3])(WORK_Other*) = { eff48_0000, eff48_1000, eff48_0000 };
     eff48_jp[ewk->wu.routine_no[0]](ewk);

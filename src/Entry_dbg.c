@@ -63,6 +63,13 @@
 
 
 extern void (*const vector_table[])();
+/* 02000098 */
+/* the date and time the program was built (__DATE__, __TIME__); nothing in the program reads them
+   (provisional names) */
+char build_date[] = "May 12 1999";
+char build_time[] = "06:29:04";
+
+
 void vector_restart();
 
 
@@ -153,7 +160,7 @@ void disasm_sh_opcode(u16 code, char* str) {
     char* mark;
     char* mark2;
     char* tail;
-    (void)((WORK*)strcpy)->id;
+    (void)&((WORK*)strcpy)->id;
     *str = 0;
     hi = code & 0xFF00;
     if (hi == 0) {
@@ -164,12 +171,12 @@ void disasm_sh_opcode(u16 code, char* str) {
             }
         }
     }
-    (void)((WORK*)0xF0FF)->id;
-    (void)((WORK*)strcat)->be_flag;
-    (void)((WORK*)buf)->id;
+    (void)&((WORK*)0xF0FF)->id;
+    (void)&((WORK*)strcat)->be_flag;
+    (void)&((WORK*)buf)->id;
     kind = code & 0xF000;
     names = reg_name_tbl;
-    (void)((WORK*)names)->be_flag;
+    (void)&((WORK*)names)->be_flag;
     if (kind == 0x4000) {
     ldm:;
         p = sh_op_ldm_tbl;
@@ -193,7 +200,7 @@ void disasm_sh_opcode(u16 code, char* str) {
     }
     if (kind == 0 || kind == 0x4000) {
         for (p = sh_op_n_tbl, masked = code & 0xF0FF, side = &names[(s32)(code & 0xF00) >> 8];
-             (void)((WORK*)masked)->id, p->name != 0;
+             (void)&((WORK*)masked)->id, p->name != 0;
              p++) {
             if (masked == p->code) {
                 strcpy(buf, p->name);
@@ -283,8 +290,8 @@ void disasm_sh_opcode(u16 code, char* str) {
     }
     if (*str == 0) {
         strcpy(str, sh_str_undef);
-        (void)((WORK*)kind)->id;
-        (void)((WORK*)hi)->id;
+        (void)&((WORK*)kind)->id;
+        (void)&((WORK*)hi)->id;
     }
 }
 

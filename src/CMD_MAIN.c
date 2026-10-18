@@ -57,6 +57,1173 @@
 #include "CMD_MAIN.h"
 #include "cps3.h"
 
+extern const u16 rca_char_table_023[318];
+extern const u16 ef13_char_table_225[180];
+extern const char str_1DATA_SH5[];
+extern const char str_A[];
+extern const char str_ADD_ARTS[];
+extern const char str_AFRICA[];
+extern const char str_AFRICA_2[];
+extern const char str_AFRICA_JUMP[];
+extern const char str_AFRICA_LAND[];
+extern const char str_AIR_NORMAL[];
+extern const char str_ALEX[];
+extern const char str_ALEX_BACK_D[];
+extern const char str_ALEX_BODY_S[];
+extern const char str_ALEX_B_D[];
+extern const char str_ALEX_F_N_D[];
+extern const char str_ALEX_HYPER_B[];
+extern const char str_ALEX_POWER_B[];
+extern const char str_ALEX_SLEEPER[];
+extern const char str_ALEX_S_H_B[];
+extern const char str_ALEX_ZUTUKI[];
+extern const char str_ALL_CHARACTER[];
+extern const char str_ALL[];
+extern const char str_APPEAR_1[];
+extern const char str_APPEAR_2[];
+extern const char str_APPEAR_3[];
+extern const char str_APPEAR_4[];
+extern const char str_APPEAR_5[];
+extern const char str_APPEAR_6[];
+extern const char str_APPEAR_7[];
+extern const char str_APPEAR_8[];
+extern const char str_APPEAR_JUNBI_1[];
+extern const char str_APPEAR_JUNBI_2[];
+extern const char str_APPEAR_JUNBI_3[];
+extern const char str_APPEAR_JUNBI_4[];
+extern const char str_APPEAR_JUNBI_5[];
+extern const char str_APPEAR_JUNBI_6[];
+extern const char str_APPEAR_JUNBI_7[];
+extern const char str_APPEAR_JUNBI_8[];
+extern const char str_APPEAR_USE[];
+extern const char str_ASIBARAI_SIRI[];
+extern const char str_ASIB_SIRI_LOSE[];
+extern const char str_ASIB_TUNNOMERI[];
+extern const char str_ASIB_TUN_LOSE[];
+extern const char str_AT[];
+extern const char str_ATTACK[];
+extern const char str_ATTACK_10_L[];
+extern const char str_ATTACK_10_M[];
+extern const char str_ATTACK_10_S[];
+extern const char str_ATTACK_10_SP[];
+extern const char str_ATTACK_11_L[];
+extern const char str_ATTACK_11_M[];
+extern const char str_ATTACK_11_S[];
+extern const char str_ATTACK_11_SP[];
+extern const char str_ATTACK_12_L[];
+extern const char str_ATTACK_12_M[];
+extern const char str_ATTACK_12_S[];
+extern const char str_ATTACK_12_SP[];
+extern const char str_ATTACK_13_L[];
+extern const char str_ATTACK_13_M[];
+extern const char str_ATTACK_13_S[];
+extern const char str_ATTACK_13_SP[];
+extern const char str_ATTACK_1_L[];
+extern const char str_ATTACK_1_M[];
+extern const char str_ATTACK_1_S[];
+extern const char str_ATTACK_1_SP[];
+extern const char str_ATTACK_2_L[];
+extern const char str_ATTACK_2_M[];
+extern const char str_ATTACK_2_S[];
+extern const char str_ATTACK_2_SP[];
+extern const char str_ATTACK_3_L[];
+extern const char str_ATTACK_3_M[];
+extern const char str_ATTACK_3_S[];
+extern const char str_ATTACK_3_SP[];
+extern const char str_ATTACK_4_L[];
+extern const char str_ATTACK_4_M[];
+extern const char str_ATTACK_4_S[];
+extern const char str_ATTACK_4_SP[];
+extern const char str_ATTACK_5_L[];
+extern const char str_ATTACK_5_M[];
+extern const char str_ATTACK_5_S[];
+extern const char str_ATTACK_5_SP[];
+extern const char str_ATTACK_6_L[];
+extern const char str_ATTACK_6_M[];
+extern const char str_ATTACK_6_S[];
+extern const char str_ATTACK_6_SP[];
+extern const char str_ATTACK_7_L[];
+extern const char str_ATTACK_7_M[];
+extern const char str_ATTACK_7_S[];
+extern const char str_ATTACK_7_SP[];
+extern const char str_ATTACK_8_L[];
+extern const char str_ATTACK_8_M[];
+extern const char str_ATTACK_8_S[];
+extern const char str_ATTACK_8_SP[];
+extern const char str_ATTACK_9_L[];
+extern const char str_ATTACK_9_M[];
+extern const char str_ATTACK_9_S[];
+extern const char str_ATTACK_9_SP[];
+extern const char str_ATT_000[];
+extern const char str_ATT_IX[];
+extern const char str_ATT[];
+extern const char str_ATT_2[];
+extern const char str_AT_LEVEL[];
+extern const char str_B[];
+extern const char str_BACK[];
+extern const char str_BACK_WALK[];
+extern const char str_BASE[];
+extern const char str_BEFORE[];
+extern const char str_BG_SELECT[];
+extern const char str_BHA_000[];
+extern const char str_BIKEI[];
+extern const char str_BLANK[];
+extern const char str_BODY_BROW_L[];
+extern const char str_BODY_BROW_M[];
+extern const char str_BODY_BROW_S[];
+extern const char str_BODY_BROW_SP[];
+extern const char str_BODY_SLAM[];
+extern const char str_BODY_UPPER[];
+extern const char str_BODY_UPPER_L[];
+extern const char str_BODY_UPPER_M[];
+extern const char str_BODY_UPPER_S[];
+extern const char str_BODY_UPPER_SP[];
+extern const char str_BODY_UPPER_SP_2[];
+extern const char str_BOD_000[];
+extern const char str_BONUS[];
+extern const char str_BONUS_1[];
+extern const char str_BONUS_2[];
+extern const char str_BONUS_CHAR[];
+extern const char str_BONUS_WIN_1[];
+extern const char str_BONUS_WIN_2[];
+extern const char str_BONUS_WIN_3[];
+extern const char str_BRAZIL[];
+extern const char str_BRAZIL_1[];
+extern const char str_BRAZIL_1_2[];
+extern const char str_BRAZIL_2[];
+extern const char str_BREAST[];
+extern const char str_BT[];
+extern const char str_BUTTOBI[];
+extern const char str_BUTT_PAT[];
+extern const char str_BUTT_TYPE[];
+extern const char str_B_JUMP_K_L_A[];
+extern const char str_B_JUMP_K_L_B[];
+extern const char str_B_JUMP_K_M_A[];
+extern const char str_B_JUMP_K_M_B[];
+extern const char str_B_JUMP_K_S_A[];
+extern const char str_B_JUMP_K_S_B[];
+extern const char str_B_JUMP_P_L_A[];
+extern const char str_B_JUMP_P_L_B[];
+extern const char str_B_JUMP_P_M_A[];
+extern const char str_B_JUMP_P_M_B[];
+extern const char str_B_JUMP_P_S_A[];
+extern const char str_B_JUMP_P_S_B[];
+extern const char str_C[];
+extern const char str_CA[];
+extern const char str_CANCEL_SH6[];
+extern const char str_CATCH[];
+extern const char str_CATCH_1[];
+extern const char str_CATCH_10[];
+extern const char str_CATCH_11[];
+extern const char str_CATCH_12[];
+extern const char str_CATCH_13[];
+extern const char str_CATCH_14[];
+extern const char str_CATCH_15[];
+extern const char str_CATCH_16[];
+extern const char str_CATCH_17[];
+extern const char str_CATCH_18[];
+extern const char str_CATCH_19[];
+extern const char str_CATCH_2[];
+extern const char str_CATCH_20[];
+extern const char str_CATCH_21[];
+extern const char str_CATCH_22[];
+extern const char str_CATCH_23[];
+extern const char str_CATCH_24[];
+extern const char str_CATCH_25[];
+extern const char str_CATCH_26[];
+extern const char str_CATCH_27[];
+extern const char str_CATCH_28[];
+extern const char str_CATCH_29[];
+extern const char str_CATCH_3[];
+extern const char str_CATCH_30[];
+extern const char str_CATCH_31[];
+extern const char str_CATCH_32[];
+extern const char str_CATCH_33[];
+extern const char str_CATCH_34[];
+extern const char str_CATCH_35[];
+extern const char str_CATCH_36[];
+extern const char str_CATCH_37[];
+extern const char str_CATCH_38[];
+extern const char str_CATCH_39[];
+extern const char str_CATCH_4[];
+extern const char str_CATCH_40[];
+extern const char str_CATCH_5[];
+extern const char str_CATCH_6[];
+extern const char str_CATCH_7[];
+extern const char str_CATCH_8[];
+extern const char str_CATCH_9[];
+extern const char str_CATCH_n[];
+extern const char str_CAT_000[];
+extern const char str_CAUGHT[];
+extern const char str_CAUGHT_n[];
+extern const char str_CAU_000[];
+extern const char str_CB[];
+extern const char str_CGD1[];
+extern const char str_CGD2[];
+extern const char str_CGD3[];
+extern const char str_CGD_TYPE[];
+extern const char str_CG_ADD_XY[];
+extern const char str_CG_ATT_IX[];
+extern const char str_CG_CANCEL[];
+extern const char str_CG_CTR[];
+extern const char str_CG_EFFECT[];
+extern const char str_CG_EFTYPE[];
+extern const char str_CG_EXTDAT[];
+extern const char str_CG_FLIP[];
+extern const char str_CG_HIT_IX[];
+extern const char str_CG_NIX[];
+extern const char str_CG_NUMBER[];
+extern const char str_CG_OLC_IX[];
+extern const char str_CG_RIVAL[];
+extern const char str_CG_SE[];
+extern const char str_CG_STATUS[];
+extern const char str_CG_TYPE[];
+extern const char str_CHAINA[];
+extern const char str_CHAINA_2[];
+extern const char str_CHUN_LI[];
+extern const char str_CMCF[];
+extern const char str_CMCR[];
+extern const char str_CMJ2[];
+extern const char str_CMJ3[];
+extern const char str_CMJ4[];
+extern const char str_CMJA[];
+extern const char str_CML2[];
+extern const char str_CMLP[];
+extern const char str_CMMD[];
+extern const char str_CMMS[];
+extern const char str_CMOA[];
+extern const char str_CMSW[];
+extern const char str_CMYD[];
+extern const char str_CODE_H[];
+extern const char str_CR_1P[];
+extern const char str_CU[];
+extern const char str_CURRENT[];
+extern const char str_CURRENT_n[];
+extern const char str_D[];
+extern const char str_DADLEY_L_B[];
+extern const char str_DAMAGE[];
+extern const char str_DASH_HUMIKOMI[];
+extern const char str_DASH_TOBINOKI[];
+extern const char str_DATA_NOTHING[];
+extern const char str_DELETE_ALL_SH4[];
+extern const char str_DENKI[];
+extern const char str_DIP[];
+extern const char str_DIR_ATT[];
+extern const char str_DIR[];
+extern const char str_DM[];
+extern const char str_DUDDLEY_D_S[];
+extern const char str_DUDLEY[];
+extern const char str_D_P_GUARD_K_L[];
+extern const char str_D_P_GUARD_K_M[];
+extern const char str_D_P_GUARD_K_S[];
+extern const char str_D_P_GUARD_P_L[];
+extern const char str_D_P_GUARD_P_M[];
+extern const char str_D_P_GUARD_P_S[];
+extern const char str_EDIT_INT[];
+extern const char str_EDIT_NUM[];
+extern const char str_EFF01_CHAR[];
+extern const char str_EFF13_CHAR[];
+extern const char str_EFFECT[];
+extern const char str_ELENA[];
+extern const char str_ELENA_ASINAGE[];
+extern const char str_ENDING[];
+extern const char str_ENGLAND[];
+extern const char str_ENGLAND_2[];
+extern const char str_ETC[];
+extern const char str_ETC_1[];
+extern const char str_ETC_2[];
+extern const char str_ETC_3[];
+extern const char str_EX[];
+extern const char str_EXIT_1P_2P_START[];
+extern const char str_EXIT_OK[];
+extern const char str_EXTRA[];
+extern const char str_FACE[];
+extern const char str_FACE_L[];
+extern const char str_FACE_M[];
+extern const char str_FACE_S[];
+extern const char str_FACE_SP[];
+extern const char str_FLANKEN_S[];
+extern const char str_FLASH[];
+extern const char str_FLIP_ED[];
+extern const char str_FLIP[];
+extern const char str_FOOK_OKU_L[];
+extern const char str_FOOK_OKU_M[];
+extern const char str_FOOK_OKU_S[];
+extern const char str_FOOK_OKU_SP[];
+extern const char str_FOOK_TEMAE_L[];
+extern const char str_FOOK_TEMAE_M[];
+extern const char str_FOOK_TEMAE_S[];
+extern const char str_FOOK_TEMAE_SP[];
+extern const char str_FRANCE[];
+extern const char str_FRANCE_2[];
+extern const char str_FRONT_WALK[];
+extern const char str_FUSHIN_K_L[];
+extern const char str_FUSHIN_K_M[];
+extern const char str_FUSHIN_K_S[];
+extern const char str_FUSHIN_P_L[];
+extern const char str_FUSHIN_P_M[];
+extern const char str_FUSHIN_P_S[];
+extern const char str_F_JUMP_K_L_A[];
+extern const char str_F_JUMP_K_L_B[];
+extern const char str_F_JUMP_K_M_A[];
+extern const char str_F_JUMP_K_M_B[];
+extern const char str_F_JUMP_K_S_A[];
+extern const char str_F_JUMP_K_S_B[];
+extern const char str_F_JUMP_P_L_A[];
+extern const char str_F_JUMP_P_L_B[];
+extern const char str_F_JUMP_P_M_A[];
+extern const char str_F_JUMP_P_M_B[];
+extern const char str_F_JUMP_P_S_A[];
+extern const char str_F_JUMP_P_S_B[];
+extern const char str_GERMANY[];
+extern const char str_GERMANY_2[];
+extern const char str_GILL[];
+extern const char str_GILL_2[];
+extern const char str_GILL_3[];
+extern const char str_GILL_IMPACT_C[];
+extern const char str_GILL_SPLASH_M[];
+extern const char str_GILL_STAGE[];
+extern const char str_GOUKI_1[];
+extern const char str_GOUKI_2[];
+extern const char str_GROUP[];
+extern const char str_GUARD_AIR[];
+extern const char str_GUARD_AIR_2[];
+extern const char str_GUARD_DOWN[];
+extern const char str_GUARD_DOWN_2[];
+extern const char str_GUARD_HEAD[];
+extern const char str_GUARD_HEAD_2[];
+extern const char str_GUARD_UP[];
+extern const char str_GUARD_UP_2[];
+extern const char str_GUARD[];
+extern const char str_G[];
+extern const char str_H[];
+extern const char str_HANASARE[];
+extern const char str_HAND[];
+extern const char str_HANEAGARI[];
+extern const char str_HANEKAERI_HARA[];
+extern const char str_HAN_000[];
+extern const char str_HARAIGOSHI[];
+extern const char str_HARAYARARE[];
+extern const char str_HEAD[];
+extern const char str_HISS[];
+extern const char str_HIT_RANGE[];
+extern const char str_HIT[];
+extern const char str_HONGKONG[];
+extern const char str_HONGKONG_0[];
+extern const char str_HONGKONG_1[];
+extern const char str_HOSEI[];
+extern const char str_HOS_000[];
+extern const char str_HS_ME[];
+extern const char str_HS_YOU[];
+extern const char str_HUGO[];
+extern const char str_HUGO_BODY_S[];
+extern const char str_HUGO_M_S_P[];
+extern const char str_HUGO_N_G_T[];
+extern const char str_HUGO_S_D_B_B[];
+extern const char str_HUMI_ASIB[];
+extern const char str_HURIMUKI[];
+extern const char str_HUSHIN_AIR[];
+extern const char str_HUSHIN_DOWN[];
+extern const char str_HUSHIN_HEAD[];
+extern const char str_HUSHIN_UP[];
+extern const char str_H_n[];
+extern const char str_IBUKI[];
+extern const char str_IBUKI_2[];
+extern const char str_IBUKI_HARAIG[];
+extern const char str_IBUKI_KUBIORI[];
+extern const char str_IBUKI_YOROI_D[];
+extern const char str_IMPACT[];
+extern const char str_INE[];
+extern const char str_INTERRUT[];
+extern const char str_INT_END[];
+extern const char str_IPPONZEOI[];
+extern const char str_IX_000[];
+extern const char str_IX_1[];
+extern const char str_IX_2[];
+extern const char str_IX_3[];
+extern const char str_IX_4[];
+extern const char str_JAPAN2[];
+extern const char str_JAPAN_0[];
+extern const char str_JAPAN_1[];
+extern const char str_JAPAN_10[];
+extern const char str_JAPAN_11[];
+extern const char str_JAPAN_20[];
+extern const char str_JAPAN_21[];
+extern const char str_JAPAN_3[];
+extern const char str_JAPAN_30[];
+extern const char str_JUDGEMENT_GAL[];
+extern const char str_JUDGMENT_LOSE[];
+extern const char str_JUDGMENT_WAIT[];
+extern const char str_JUDGMENT_WIN[];
+extern const char str_JUMP_BACK[];
+extern const char str_JUMP_FRONT[];
+extern const char str_JUMP_JUNBI[];
+extern const char str_JUMP_VERTICAL[];
+extern const char str_KAGAMI_B_WALK[];
+extern const char str_KAGAMI_F_WALK[];
+extern const char str_KAGAMI_KAMAE[];
+extern const char str_KAGAMI_K_A[];
+extern const char str_KAGAMI_K_B[];
+extern const char str_KAGAMI_K_C[];
+extern const char str_KAGAMI_L[];
+extern const char str_KAGAMI_M[];
+extern const char str_KAGAMI_P_A[];
+extern const char str_KAGAMI_P_B[];
+extern const char str_KAGAMI_P_C[];
+extern const char str_KAGAMI_S[];
+extern const char str_KAGAMI_SP[];
+extern const char str_KAGAMI_TURN[];
+extern const char str_KAGAMU[];
+extern const char str_KAMAE[];
+extern const char str_KARATE[];
+extern const char str_KEN[];
+extern const char str_KEN_HIZAGERI[];
+extern const char str_KGM_DENGEKI_L[];
+extern const char str_KGM_DENGEKI_M[];
+extern const char str_KGM_DENGEKI_P[];
+extern const char str_KGM_DENGEKI_S[];
+extern const char str_KGM_TATAKI_L[];
+extern const char str_KGM_TATAKI_M[];
+extern const char str_KGM_TATAKI_S[];
+extern const char str_KGM_TATAKI_SP[];
+extern const char str_KGM_TOUKETU_L[];
+extern const char str_KGM_TOUKETU_M[];
+extern const char str_KGM_TOUKETU_P[];
+extern const char str_KGM_TOUKETU_S[];
+extern const char str_KGM_TTKI_V_L[];
+extern const char str_KGM_TTKI_V_M[];
+extern const char str_KGM_TTKI_V_S[];
+extern const char str_KGM_TTKI_V_SP[];
+extern const char str_KIND_WAZA[];
+extern const char str_KIRIMOMI[];
+extern const char str_KISHINRIKI[];
+extern const char str_KOC_IX_PT_Nix[];
+extern const char str_KOC_IX_PT_Nix_n[];
+extern const char str_KUNOJI[];
+extern const char str_KUNOJI_NOKE[];
+extern const char str_LEG[];
+extern const char str_LOSE_KAGAMI[];
+extern const char str_LOSE_NO_STAND[];
+extern const char str_LOSE_SONABA[];
+extern const char str_L_KICK_A[];
+extern const char str_L_KICK_B[];
+extern const char str_L_KICK_C[];
+extern const char str_L_PUNCH_A[];
+extern const char str_L_PUNCH_B[];
+extern const char str_L_PUNCH_C[];
+extern const char str_M[];
+extern const char str_MAWARIKOMI_M_F[];
+extern const char str_MF[];
+extern const char str_MKH_IX[];
+extern const char str_MLD[];
+extern const char str_MLF[];
+extern const char str_MLN[];
+extern const char str_MLR[];
+extern const char str_MLU[];
+extern const char str_MONKEY_FLIP[];
+extern const char str_MOTION[];
+extern const char str_M_2[];
+extern const char str_M_B[];
+extern const char str_M_KICK_A[];
+extern const char str_M_KICK_B[];
+extern const char str_M_KICK_C[];
+extern const char str_M_PUNCH_A[];
+extern const char str_M_PUNCH_B[];
+extern const char str_M_PUNCH_C[];
+extern const char str_NAKAI[];
+extern const char str_NECRO[];
+extern const char str_NECRO_F_S[];
+extern const char str_NECRO_G_S[];
+extern const char str_NECRO_SLAM_D[];
+extern const char str_NECRO_SNAKE_F[];
+extern const char str_NECRO_S_T[];
+extern const char str_NEKOROBI_L[];
+extern const char str_NEKOROBI_M[];
+extern const char str_NEKOROBI_S[];
+extern const char str_NEKOROBI_SP[];
+extern const char str_NG_TYPE[];
+extern const char str_NM[];
+extern const char str_NOBASITA_TE_L[];
+extern const char str_NOBASITA_TE_M[];
+extern const char str_NOBASITA_TE_S[];
+extern const char str_NOBASITA_TE_SP[];
+extern const char str_NOKEZORI[];
+extern const char str_NORMAL[];
+extern const char str_NOUTEN_L[];
+extern const char str_NOUTEN_M[];
+extern const char str_NOUTEN_S[];
+extern const char str_NOUTEN_SP[];
+extern const char str_NO_1P_SHOT6[];
+extern const char str_NO_EDIT[];
+extern const char str_NUM_END[];
+extern const char str_N_Y[];
+extern const char str_N_Y_0[];
+extern const char str_N_Y_1[];
+extern const char str_No_12[];
+extern const char str_OBJECT_EDIT_2[];
+extern const char str_OBJECT_EDIT[];
+extern const char str_OBJECT_LOOK[];
+extern const char str_OBJECT_TEST[];
+extern const char str_OHYA[];
+extern const char str_OKIAGARI[];
+extern const char str_OKIAGARI_B[];
+extern const char str_OKIAGARI_F[];
+extern const char str_OKIAGARI_FRONT[];
+extern const char str_OKIAGARI_K_L[];
+extern const char str_OKIAGARI_K_M[];
+extern const char str_OKIAGARI_K_S[];
+extern const char str_OKIAGARI_P_L[];
+extern const char str_OKIAGARI_P_M[];
+extern const char str_OKIAGARI_P_S[];
+extern const char str_OKIAGARI_REAR[];
+extern const char str_OLC_IX[];
+extern const char str_ORO[];
+extern const char str_OROMEKA[];
+extern const char str_ORO_GIGOKU_G[];
+extern const char str_ORO_KISINRIKI[];
+extern const char str_ORO_KUBISIME[];
+extern const char str_ORO_NIOURIKI[];
+extern const char str_ORO_TOMOENAGE[];
+extern const char str_ORUMEKA[];
+extern const char str_PA[];
+extern const char str_PARING_AIR_B[];
+extern const char str_PARING_AIR_F[];
+extern const char str_PARING_DOWN[];
+extern const char str_PARING_HEAD[];
+extern const char str_PARING_UP[];
+extern const char str_PARTS_FL[];
+extern const char str_PARTS_X_H[];
+extern const char str_PARTS_Y_H[];
+extern const char str_PARTS[];
+extern const char str_PATTERN[];
+extern const char str_PAT_ST[];
+extern const char str_PB[];
+extern const char str_PIYO[];
+extern const char str_PIYO_n[];
+extern const char str_PLAYER[];
+extern const char str_PLEF[];
+extern const char str_POS_X_H[];
+extern const char str_POS_Y_H[];
+extern const char str_POW[];
+extern const char str_PRESS_ANY_SHOT[];
+extern const char str_P_BREAK_AIR_F[];
+extern const char str_P_BREAK_AIR_R[];
+extern const char str_P_BREAK_DOWN[];
+extern const char str_P_BREAK_UP[];
+extern const char str_P_BREAK_ZUJOU[];
+extern const char str_Pa[];
+extern const char str_Q[];
+extern const char str_R[];
+extern const char str_RAOH[];
+extern const char str_REACTION[];
+extern const char str_REL_X_H[];
+extern const char str_REL_Y_H[];
+extern const char str_REVISE_X_H[];
+extern const char str_REVISE_Y_H[];
+extern const char str_RUCCIA[];
+extern const char str_RUSSIA_0[];
+extern const char str_RUSSIA_1[];
+extern const char str_RUSSIA_2[];
+extern const char str_RYU[];
+extern const char str_RYU_SEOINAGE[];
+extern const char str_RYU_TOMOENAGE[];
+extern const char str_R_n[];
+extern const char str_S[];
+extern const char str_S1[];
+extern const char str_S2[];
+extern const char str_S3[];
+extern const char str_S4[];
+extern const char str_S5[];
+extern const char str_S6[];
+extern const char str_SA[];
+extern const char str_SEAN[];
+extern const char str_SEAN_BALL_HIT[];
+extern const char str_SEAN_TACKLE[];
+extern const char str_SELECT[];
+extern const char str_SELECT_UP_DOWN[];
+extern const char str_SHIMEOTASARE[];
+extern const char str_SIZE_X_H[];
+extern const char str_SIZE_Y_H[];
+extern const char str_SNAKE_FANG[];
+extern const char str_SPLASH_M[];
+extern const char str_SP_APPEAR_1[];
+extern const char str_SP_APPEAR_2[];
+extern const char str_SP_APPEAR_3[];
+extern const char str_SP_APPEAR_4[];
+extern const char str_SP_APPEAR_5[];
+extern const char str_SP_APPEAR_6[];
+extern const char str_SP_APPEAR_7[];
+extern const char str_SP_APPEAR_8[];
+extern const char str_SP_AT[];
+extern const char str_SP_B_JP_L_K_A[];
+extern const char str_SP_B_JP_L_K_B[];
+extern const char str_SP_B_JP_L_P_A[];
+extern const char str_SP_B_JP_L_P_B[];
+extern const char str_SP_B_JP_M_K_A[];
+extern const char str_SP_B_JP_M_K_B[];
+extern const char str_SP_B_JP_M_P_A[];
+extern const char str_SP_B_JP_M_P_B[];
+extern const char str_SP_B_JP_S_K_A[];
+extern const char str_SP_B_JP_S_K_B[];
+extern const char str_SP_B_JP_S_P_A[];
+extern const char str_SP_B_JP_S_P_B[];
+extern const char str_SP_F_JP_L_K_A[];
+extern const char str_SP_F_JP_L_K_B[];
+extern const char str_SP_F_JP_L_P_A[];
+extern const char str_SP_F_JP_L_P_B[];
+extern const char str_SP_F_JP_M_K_A[];
+extern const char str_SP_F_JP_M_K_B[];
+extern const char str_SP_F_JP_M_P_A[];
+extern const char str_SP_F_JP_M_P_B[];
+extern const char str_SP_F_JP_S_K_A[];
+extern const char str_SP_F_JP_S_K_B[];
+extern const char str_SP_F_JP_S_P_A[];
+extern const char str_SP_F_JP_S_P_B[];
+extern const char str_SP_JUMP_BACK[];
+extern const char str_SP_JUMP_FRONT[];
+extern const char str_SP_JUMP_JUNBI[];
+extern const char str_SP_JUMP_V[];
+extern const char str_SP_TECH[];
+extern const char str_SP_V_JP_L_K_A[];
+extern const char str_SP_V_JP_L_K_B[];
+extern const char str_SP_V_JP_L_P_A[];
+extern const char str_SP_V_JP_L_P_B[];
+extern const char str_SP_V_JP_M_K_A[];
+extern const char str_SP_V_JP_M_K_B[];
+extern const char str_SP_V_JP_M_P_A[];
+extern const char str_SP_V_JP_M_P_B[];
+extern const char str_SP_V_JP_S_K_A[];
+extern const char str_SP_V_JP_S_K_B[];
+extern const char str_SP_V_JP_S_P_A[];
+extern const char str_SP_V_JP_S_P_B[];
+extern const char str_SP_WIN_1[];
+extern const char str_SP_WIN_2[];
+extern const char str_SP_WIN_3[];
+extern const char str_SP_WIN_4[];
+extern const char str_SP_WIN_5[];
+extern const char str_SP_WIN_6[];
+extern const char str_SP_WIN_7[];
+extern const char str_SP_WIN_8[];
+extern const char str_STAND_UP[];
+extern const char str_S_B_JP_L_K_A[];
+extern const char str_S_B_JP_L_K_B[];
+extern const char str_S_B_JP_L_P_A[];
+extern const char str_S_B_JP_L_P_B[];
+extern const char str_S_B_JP_M_K_A[];
+extern const char str_S_B_JP_M_K_B[];
+extern const char str_S_B_JP_M_P_A[];
+extern const char str_S_B_JP_M_P_B[];
+extern const char str_S_B_JP_S_K_A[];
+extern const char str_S_B_JP_S_K_B[];
+extern const char str_S_B_JP_S_P_A[];
+extern const char str_S_B_JP_S_P_B[];
+extern const char str_S_F_JP_L_K_A[];
+extern const char str_S_F_JP_L_K_B[];
+extern const char str_S_F_JP_L_P_A[];
+extern const char str_S_F_JP_L_P_B[];
+extern const char str_S_F_JP_M_K_A[];
+extern const char str_S_F_JP_M_K_B[];
+extern const char str_S_F_JP_M_P_A[];
+extern const char str_S_F_JP_M_P_B[];
+extern const char str_S_F_JP_S_K_A[];
+extern const char str_S_F_JP_S_K_B[];
+extern const char str_S_F_JP_S_P_A[];
+extern const char str_S_F_JP_S_P_B[];
+extern const char str_S_HANEAGARI[];
+extern const char str_S_JUMP_BACK[];
+extern const char str_S_JUMP_FRONT[];
+extern const char str_S_JUMP_V[];
+extern const char str_S_KICK_A[];
+extern const char str_S_KICK_B[];
+extern const char str_S_KICK_C[];
+extern const char str_S_PUNCH_A[];
+extern const char str_S_PUNCH_B[];
+extern const char str_S_PUNCH_C[];
+extern const char str_S_V_JP_L_K_A[];
+extern const char str_S_V_JP_L_K_B[];
+extern const char str_S_V_JP_L_P_A[];
+extern const char str_S_V_JP_L_P_B[];
+extern const char str_S_V_JP_M_K_A[];
+extern const char str_S_V_JP_M_K_B[];
+extern const char str_S_V_JP_M_P_A[];
+extern const char str_S_V_JP_M_P_B[];
+extern const char str_S_V_JP_S_K_A[];
+extern const char str_S_V_JP_S_K_B[];
+extern const char str_S_V_JP_S_P_A[];
+extern const char str_S_V_JP_S_P_B[];
+extern const char str_TATAKI_AIR[];
+extern const char str_TATAKI_L[];
+extern const char str_TATAKI_M[];
+extern const char str_TATAKI_S[];
+extern const char str_TATAKI_SP[];
+extern const char str_TATAKI_V_L[];
+extern const char str_TATAKI_V_M[];
+extern const char str_TATAKI_V_S[];
+extern const char str_TATAKI_V_SP[];
+extern const char str_TATI_DENGEKI_L[];
+extern const char str_TATI_DENGEKI_M[];
+extern const char str_TATI_DENGEKI_P[];
+extern const char str_TATI_DENGEKI_S[];
+extern const char str_TATI_MOE_L[];
+extern const char str_TATI_MOE_M[];
+extern const char str_TATI_MOE_S[];
+extern const char str_TATI_MOE_SP[];
+extern const char str_TATI_TOUKETU_L[];
+extern const char str_TATI_TOUKETU_M[];
+extern const char str_TATI_TOUKETU_P[];
+extern const char str_TATI_TOUKETU_S[];
+extern const char str_TATUMAKIZANKU[];
+extern const char str_TOMOE_ORO[];
+extern const char str_TOMOE_RYU[];
+extern const char str_TOUKETSU_A[];
+extern const char str_TRUNK[];
+extern const char str_TTKI_V_AIR[];
+extern const char str_TUKAMIHAZUSARE[];
+extern const char str_TUKAMIHAZUSI[];
+extern const char str_TUKAMIKAKARI_A[];
+extern const char str_TUKAMIKAKARI_B[];
+extern const char str_TUKAMIKAKARI_C[];
+extern const char str_TUKAMIKAKARI_D[];
+extern const char str_TUKAMIKAKARI_E[];
+extern const char str_TUKAMIKAKARI_F[];
+extern const char str_TUKAMI_AIR_A[];
+extern const char str_TUKAMI_AIR_B[];
+extern const char str_TUKAMI_AIR_C[];
+extern const char str_TUKAMI_AIR_D[];
+extern const char str_TUKAMI_AIR_E[];
+extern const char str_TUKAMI_AIR_F[];
+extern const char str_UKEMI_MOVE_F[];
+extern const char str_UKEMI_MOVE_R[];
+extern const char str_UNION[];
+extern const char str_UPPER[];
+extern const char str_UPPER_L[];
+extern const char str_UPPER_M[];
+extern const char str_UPPER_S[];
+extern const char str_UPPER_SP[];
+extern const char str_UP_P_GUARD_K_L[];
+extern const char str_UP_P_GUARD_K_M[];
+extern const char str_UP_P_GUARD_K_S[];
+extern const char str_UP_P_GUARD_P_L[];
+extern const char str_UP_P_GUARD_P_M[];
+extern const char str_UP_P_GUARD_P_S[];
+extern const char str_URIEN[];
+extern const char str_USEMJ[];
+extern const char str_VS_ID[];
+extern const char str_V_JUMP_K_L_A[];
+extern const char str_V_JUMP_K_L_B[];
+extern const char str_V_JUMP_K_M_A[];
+extern const char str_V_JUMP_K_M_B[];
+extern const char str_V_JUMP_K_S_A[];
+extern const char str_V_JUMP_K_S_B[];
+extern const char str_V_JUMP_P_L_A[];
+extern const char str_V_JUMP_P_L_B[];
+extern const char str_V_JUMP_P_M_A[];
+extern const char str_V_JUMP_P_M_B[];
+extern const char str_V_JUMP_P_S_A[];
+extern const char str_V_JUMP_P_S_B[];
+extern const char str_WAIT[];
+extern const char str_WALK_END[];
+extern const char str_WCA[];
+extern const char str_WCA_IX[];
+extern const char str_WIN_1[];
+extern const char str_WIN_2[];
+extern const char str_WIN_3[];
+extern const char str_WIN_4[];
+extern const char str_WIN_5[];
+extern const char str_WIN_6[];
+extern const char str_WIN_7[];
+extern const char str_WIN_8[];
+extern const char str_WORK_EMPTY[];
+extern const char str_YANG[];
+extern const char str_YES_2P_SHOT6[];
+extern const char str_YOKE_PAT[];
+extern const char str_YOKE_TYPE[];
+extern const char str_YOKOYAMA[];
+extern const char str_YOSHIZUMI[];
+extern const char str_YUN[];
+extern const char str_YUN_2[];
+extern const char str_YUN_HIZAGERI[];
+extern const char str_YUN_MONKEY_F[];
+extern const char str_YU[];
+extern const char str_ZANNEN_1[];
+extern const char str_ZANNEN_2[];
+extern const char str_ZANNEN_3[];
+extern const char str_ZANNEN_4[];
+extern const char str_ZANNEN_5[];
+extern const char str_ZANNEN_6[];
+extern const char str_ZANNEN_7[];
+extern const char str_ZANNEN_8[];
+extern const char str_ZOKUSEI[];
+extern const char str_ZU_FLAG[];
+extern const char str_a[];
+extern const char str_a_2[];
+extern const char str_c[];
+extern const char str_c_2[];
+extern const char str_d[];
+extern const char str_d_2[];
+extern const char str_empty[];
+extern const char str_empty_10[];
+extern const char str_empty_2[];
+extern const char str_empty_3[];
+extern const char str_empty_4[];
+extern const char str_empty_5[];
+extern const char str_empty_6[];
+extern const char str_empty_7[];
+extern const char str_empty_8[];
+extern const char str_empty_9[];
+extern const char str_h[];
+extern const char str_h_2[];
+extern const char str_hsA[];
+extern const char str_hsC[];
+extern const char str_huA[];
+extern const char str_m[];
+extern const char str_m_2[];
+extern const char str_n[];
+extern const char str_n_2[];
+extern const char str_n_3[];
+extern const char str_n_4[];
+extern const char str_nmA[];
+extern const char str_nmC[];
+extern const char str_paA[];
+extern const char str_r[];
+extern const char str_r_2[];
+extern const char str_s[];
+extern const char str_s_2[];
+extern const char str_saA[];
+extern const char str_saC[];
+extern const char str_sl_00[];
+extern const char str_sl_10[];
+extern const char str_sl_12[];
+extern const char str_sl_20[];
+extern const char str_sl_22[];
+extern const char str_sl_30[];
+extern const char str_sl_32[];
+extern const char str_sl_40[];
+extern const char str_sl_42[];
+extern const char str_sl_44[];
+extern const char str_sl_50[];
+extern const char str_sl_52[];
+extern const char str_sl_54[];
+extern const char str_sl_60[];
+extern const char str_sl_62[];
+extern const char str_sl_64[];
+extern const char str_sl_70[];
+extern const char str_sl_80[];
+extern const char str_sl_82[];
+extern const char str_sl_90[];
+extern const u32 afc_char_table[];
+extern const u32 ag_face_panel_table[];
+extern const u32 alex_atca[];
+extern const u32 alex_btca[];
+extern const u32 alex_caca[];
+extern const u32 alex_cuca[];
+extern const u32 alex_dmca[];
+extern const u32 alex_exca[];
+extern const u32 alex_nmca[];
+extern const u32 alex_saca[];
+extern const u32 alex_yuca[];
+extern const u32 bns_char_table[];
+extern const u32 bonus_char_table[];
+extern const u32 brz_char_table[];
+extern const u32 chn_char_table[];
+extern const u32 chun_atca[];
+extern const u32 chun_btca[];
+extern const u32 chun_caca[];
+extern const u32 chun_cuca[];
+extern const u32 chun_dmca[];
+extern const u32 chun_exca[];
+extern const u32 chun_nmca[];
+extern const u32 chun_saca[];
+extern const u32 chun_yuca[];
+extern const u32 dudley_atca[];
+extern const u32 dudley_btca[];
+extern const u32 dudley_caca[];
+extern const u32 dudley_cuca[];
+extern const u32 dudley_dmca[];
+extern const u32 dudley_exca[];
+extern const u32 dudley_nmca[];
+extern const u32 dudley_saca[];
+extern const u32 dudley_yuca[];
+extern const u32 ef01_char_table[];
+extern const u32 ef13_char_table[];
+extern const u32 elena_atca[];
+extern const u32 elena_btca[];
+extern const u32 elena_caca[];
+extern const u32 elena_cuca[];
+extern const u32 elena_dmca[];
+extern const u32 elena_exca[];
+extern const u32 elena_nmca[];
+extern const u32 elena_saca[];
+extern const u32 elena_yuca[];
+extern const u32 end_char_table[];
+extern const u32 eng_char_table[];
+extern const u32 etc2_char_table[];
+extern const u32 etc3_char_table[];
+extern const u32 etc_char_table[];
+extern const u32 fnl_char_table[];
+extern const u32 frc_char_table[];
+extern const u32 gill_atca[];
+extern const u32 gill_btca[];
+extern const u32 gill_caca[];
+extern const u32 gill_cuca[];
+extern const u32 gill_dmca[];
+extern const u32 gill_exca[];
+extern const u32 gill_nmca[];
+extern const u32 gill_saca[];
+extern const u32 gill_yuca[];
+extern const u32 gouki1_atca[];
+extern const u32 gouki1_btca[];
+extern const u32 gouki1_caca[];
+extern const u32 gouki1_cuca[];
+extern const u32 gouki1_dmca[];
+extern const u32 gouki1_exca[];
+extern const u32 gouki1_nmca[];
+extern const u32 gouki1_saca[];
+extern const u32 gouki1_yuca[];
+extern const u32 gouki2_atca[];
+extern const u32 gouki2_btca[];
+extern const u32 gouki2_caca[];
+extern const u32 gouki2_cuca[];
+extern const u32 gouki2_dmca[];
+extern const u32 gouki2_exca[];
+extern const u32 gouki2_nmca[];
+extern const u32 gouki2_saca[];
+extern const u32 gouki2_yuca[];
+extern const u32 grm_char_table[];
+extern const u32 hkg_char_table[];
+extern const u32 hugo_atca[];
+extern const u32 hugo_btca[];
+extern const u32 hugo_caca[];
+extern const u32 hugo_cuca[];
+extern const u32 hugo_dmca[];
+extern const u32 hugo_exca[];
+extern const u32 hugo_nmca[];
+extern const u32 hugo_saca[];
+extern const u32 hugo_yuca[];
+extern const u32 ibuki_atca[];
+extern const u32 ibuki_btca[];
+extern const u32 ibuki_caca[];
+extern const u32 ibuki_cuca[];
+extern const u32 ibuki_dmca[];
+extern const u32 ibuki_exca[];
+extern const u32 ibuki_nmca[];
+extern const u32 ibuki_saca[];
+extern const u32 ibuki_yuca[];
+extern const u32 j10_char_table[];
+extern const u32 j11_char_table[];
+extern const u32 jp3_char_table[];
+extern const u32 ken_atca[];
+extern const u32 ken_btca[];
+extern const u32 ken_caca[];
+extern const u32 ken_cuca[];
+extern const u32 ken_dmca[];
+extern const u32 ken_exca[];
+extern const u32 ken_nmca[];
+extern const u32 ken_saca[];
+extern const u32 ken_yuca[];
+extern const u32 makoto_atca[];
+extern const u32 makoto_btca[];
+extern const u32 makoto_caca[];
+extern const u32 makoto_cuca[];
+extern const u32 makoto_dmca[];
+extern const u32 makoto_exca[];
+extern const u32 makoto_nmca[];
+extern const u32 makoto_saca[];
+extern const u32 makoto_yuca[];
+extern const u32 necro_atca[];
+extern const u32 necro_btca[];
+extern const u32 necro_caca[];
+extern const u32 necro_cuca[];
+extern const u32 necro_dmca[];
+extern const u32 necro_exca[];
+extern const u32 necro_nmca[];
+extern const u32 necro_saca[];
+extern const u32 necro_yuca[];
+extern const u32 no12_atca[];
+extern const u32 no12_btca[];
+extern const u32 no12_caca[];
+extern const u32 no12_cuca[];
+extern const u32 no12_dmca[];
+extern const u32 no12_exca[];
+extern const u32 no12_nmca[];
+extern const u32 no12_saca[];
+extern const u32 no12_yuca[];
+extern const u32 op_char_table[];
+extern const u32 orm_char_table[];
+extern const u32 oro_atca[];
+extern const u32 oro_btca[];
+extern const u32 oro_caca[];
+extern const u32 oro_cuca[];
+extern const u32 oro_dmca[];
+extern const u32 oro_exca[];
+extern const u32 oro_nmca[];
+extern const u32 oro_saca[];
+extern const u32 oro_yuca[];
+extern const u32 plef_char_table[];
+extern const u32 q_atca[];
+extern const u32 q_btca[];
+extern const u32 q_caca[];
+extern const u32 q_cuca[];
+extern const u32 q_dmca[];
+extern const u32 q_exca[];
+extern const u32 q_nmca[];
+extern const u32 q_saca[];
+extern const u32 q_yuca[];
+extern const u32 rca_char_table[];
+extern const u32 remy_atca[];
+extern const u32 remy_btca[];
+extern const u32 remy_caca[];
+extern const u32 remy_cuca[];
+extern const u32 remy_dmca[];
+extern const u32 remy_exca[];
+extern const u32 remy_nmca[];
+extern const u32 remy_saca[];
+extern const u32 remy_yuca[];
+extern const u32 ryu_atca[];
+extern const u32 ryu_btca[];
+extern const u32 ryu_caca[];
+extern const u32 ryu_cuca[];
+extern const u32 ryu_dmca[];
+extern const u32 ryu_exca[];
+extern const u32 ryu_nmca[];
+extern const u32 ryu_saca[];
+extern const u32 ryu_yuca[];
+extern const u32 sean_atca[];
+extern const u32 sean_btca[];
+extern const u32 sean_caca[];
+extern const u32 sean_cuca[];
+extern const u32 sean_dmca[];
+extern const u32 sean_exca[];
+extern const u32 sean_nmca[];
+extern const u32 sean_saca[];
+extern const u32 sean_yuca[];
+extern const u32 sel_pl_char_table[];
+extern const u32 urien_atca[];
+extern const u32 urien_btca[];
+extern const u32 urien_caca[];
+extern const u32 urien_cuca[];
+extern const u32 urien_dmca[];
+extern const u32 urien_exca[];
+extern const u32 urien_nmca[];
+extern const u32 urien_saca[];
+extern const u32 urien_yuca[];
+extern const u32 usa_char_table[];
+extern const u32 yang_atca[];
+extern const u32 yang_btca[];
+extern const u32 yang_caca[];
+extern const u32 yang_cuca[];
+extern const u32 yang_dmca[];
+extern const u32 yang_exca[];
+extern const u32 yang_nmca[];
+extern const u32 yang_saca[];
+extern const u32 yang_yuca[];
+extern const u32 yun_atca[];
+extern const u32 yun_btca[];
+extern const u32 yun_caca[];
+extern const u32 yun_cuca[];
+extern const u32 yun_dmca[];
+extern const u32 yun_exca[];
+extern const u32 yun_nmca[];
+extern const u32 yun_saca[];
+extern const u32 yun_yuca[];
+
+
+
+s8 Debug_R_No;  /* 0201706C */
+s8 Debug_Select_No;  /* 0201706D */
+s8 Debug_Menu_No;  /* 0201706E */
+s8 Debug_Tool_No;  /* 0201706F */
+s16 Debug_Rep_Timer[21];  /* 02017070 */
+s8 Debug_Rep_Count[21];  /* 0201709A */
+s16 Debug_RGB[4];  /* 020170B0 */
+s8 Debug_RL_Flag[2];  /* 020170B8 */
+s8 Debug_CG_Flip[2];  /* 020170BA */
+s8 Debug_Flip_Work[2];  /* 020170BC */
+s8 Debug_Flip_Mask[2];  /* 020170BE */
+s8 Debug_Play_Flag;  /* 020170C0 */
+s8 Debug_Snap_Disp;  /* 020170C1 */
+s8 Debug_Dec_Disp;  /* 020170C2 */
+s16 Debug_Rec_Frame;  /* 020170C4 */
+s16 Debug_Rec_Count;  /* 020170C6 */
+s8 Debug_PL_id;  /* 020170C8 */
+s8 Debug_Command;  /* 020170C9 */
+s8 Debug_Edit_Sub;  /* 020170CA */
+s8 Debug_Hit_Sub;  /* 020170CB */
+s8 Debug_Box_Edit;  /* 020170CC */
+s8 dbg_copy_done;  /* 020170CD */
+s8 dbg_snap_req;  /* 020170CE */
+s8 dbg_hud_mode;  /* 020170CF */
+s8 dbg_rec_menu;  /* 020170D0 */
+s8 dbg_save_mode;  /* 020170D1 */
+s8 dbg_look_mode;  /* 020170D2 */
+s8 dbg_kakusyuku_mode;  /* 020170D3 */
+s8 dbg_rec_exist;  /* 020170D4 */
+s8 dbg_cmd_panel;  /* 020170D5 */
+s8 dbg_col_ix[2];  /* 020170D6 */
+s8 dbg_stage_sel;  /* 020170D8 */
+s8 dbg_stage_sub;  /* 020170D9 */
+s16 dbg_judge_eff_ix;  /* 020170DA */
+s16 dbg_zoom_x;  /* 020170DC */
+s16 dbg_zoom_y;  /* 020170DE */
+s16 dbg_old_cgd_type;  /* 020170E0 */
+s16 dbg_hud_x;  /* 020170E2 */
+s16 dbg_copy_pat;  /* 020170E4 */
+s16 dbg_copy_char;  /* 020170E6 */
+u8 dbg_copy_char_tail[2];  /* after dbg_copy_char; nothing refers to it by name or address */
+u16 dbg_p1sw_0;  /* 020170EA */
+u16 dbg_p1sw_1;  /* 020170EC */
+u16 dbg_p2sw_0;  /* 020170EE */
+u16 dbg_p2sw_1;  /* 020170F0 */
+s16 dbg_dipsw_0;  /* 020170F2 */
+s16 dbg_dipsw_1;  /* 020170F4 */
+s16 * dbg_edit_box;  /* 020170F8 */
+s16 dbg_col_char;  /* 020170FC */
+PLW * dbg_pl;  /* 02017100 */
+DBG_SLOT * dbg_slot;  /* 02017104 */
+s16 dbg_slot_w[2][9];  /* 02017108 */
+SNAPSHOT* dbg_snap_ptr;  /* 0201712C */
+SNAPSHOT dbg_snap_w[2][128];  /* 02017130 */
+WORK_Other * dbg_ghost_ewk[2][3];  /* 02018B30 */
+s16 dbg_col_no;  /* 02018B48 */
+s16 dbg_bgcol_ix;  /* 02018B4A */
+PATTERN_BUF dbg_look_buf;  /* 02018B4C */
+u8 dbg_look_buf_tail[20];  /* after dbg_look_buf; nothing refers to it by name or address */
+PATTERN_BUF dbg_copy_buf;  /* 020194EC */
+u8 dbg_copy_buf_tail[20];  /* after dbg_copy_buf; nothing refers to it by name or address */
+PATTERN_BUF dbg_edit_buf;  /* 02019E8C */
+u8 dbg_edit_buf_tail[20];  /* after dbg_edit_buf; nothing refers to it by name or address */
+WORK_Other_JUDGE * dbg_judge_ewk;  /* 0201A82C */
+u8 dbg_look_judge[1584];  /* 0201A830 */
+HITA_BOX dbg_look_body[99];  /* 0201AE60 */
+HITA_BOX dbg_look_hand[198];  /* 0201BAC0 */
+u8 dbg_look_catch[792];  /* 0201D380 */
+u8 dbg_look_caught[792];  /* 0201D698 */
+HITA_BOX dbg_look_attack[198];  /* 0201D9B0 */
+u8 dbg_look_hosei[792];  /* 0201F270 */
+u8 dbg_edit_judge[1584];  /* 0201F588 */
+u8 dbg_edit_body[3168];  /* 0201FBB8 */
+u8 dbg_edit_hand[6336];  /* 02020818 */
+u8 dbg_edit_catch[792];  /* 020220D8 */
+u8 dbg_edit_caught[792];  /* 020223F0 */
+u8 dbg_edit_attack[6336];  /* 02022708 */
+u8 dbg_edit_hosei[792];  /* 02023FC8 */
+u8 dbg_copy_judge[16];  /* 020242E0 */
+u8 dbg_copy_body[32];  /* 020242F0 */
+u8 dbg_copy_hand[64];  /* 02024310 */
+u8 dbg_copy_catch[8];  /* 02024350 */
+u8 dbg_copy_caught[8];  /* 02024358 */
+u8 dbg_copy_attack[64];  /* 02024360 */
+u8 dbg_copy_hosei[8];  /* 020243A0 */
+WORK_Other * dbg_hita_ewk[7];  /* 020243A8 */
+u8 dbg_hita_ewk_tail[4];  /* after dbg_hita_ewk; nothing refers to it by name or address */
+s16 dbg_hita_num;  /* 020243C8 */
+s16 dbg_hita_grid_sw;  /* 020243CA */
+s16 dbg_parts_olc_ix[4];  /* 020243CC */
+s8 dbg_parts_sel;  /* 020243D4 */
+PLW dbg_parts_plw[4];  /* 020243D8 */
+u8 ixbfw_cut;  /* 02025638 */
+
+
 void bg_cell_write(s16 bg, s32 ofs, s32 cell, u32 src, u32 u5, s16 attr);
 
 #pragma inline(debug_menu_select_dispatch)
@@ -181,16 +1348,16 @@ void debug_menu_player_setup(void) {
     load_any_color(0);
     load_player_color(plw[0].player_number, 0, 0);
     load_player_color(plw[1].player_number, 1, 0);
-    effect_00_init(&plw[0]);
-    effect_00_init(&plw[1]);
-    effect_01_init(&plw[0], 0);
-    effect_01_init(&plw[0], 1);
-    effect_01_init(&plw[0], 2);
-    effect_01_init(&plw[0], 3);
-    effect_01_init(&plw[1], 0);
-    effect_01_init(&plw[1], 1);
-    effect_01_init(&plw[1], 2);
-    effect_01_init(&plw[1], 3);
+    effect_00_init(&plw[0].wu);
+    effect_00_init(&plw[1].wu);
+    effect_01_init(&plw[0].wu, 0);
+    effect_01_init(&plw[0].wu, 1);
+    effect_01_init(&plw[0].wu, 2);
+    effect_01_init(&plw[0].wu, 3);
+    effect_01_init(&plw[1].wu, 0);
+    effect_01_init(&plw[1].wu, 1);
+    effect_01_init(&plw[1].wu, 2);
+    effect_01_init(&plw[1].wu, 3);
     for (i = 0; i < 2; i++) {
         for (j = 0; j < 3; j++) {
             if ((ix = pull_effect_work(7)) == -1) {
@@ -1147,9 +2314,9 @@ void debug_hit_judgment_init(void) {
     Debug_Tool_No++;
     tilemap_fill_all(0, 32);
     tilemap_print_string_attr(15, 1, 14, hit_judgment_msg);
-    tilemap_print_string(0, 0, 0xFFFF, (TM_STRING*)dbg_obj_info_str);
-    tilemap_print_string(0, 0, 0xFFFF, (TM_STRING*)dbg_hit_size_str);
-    tilemap_print_string(dbg_hud_x, 0, 0xFFFF, (TM_STRING*)dbg_hit_part_str);
+    tilemap_print_string(0, 0, 0xFFFF, dbg_obj_info_str);
+    tilemap_print_string(0, 0, 0xFFFF, dbg_hit_size_str);
+    tilemap_print_string(dbg_hud_x, 0, 0xFFFF, dbg_hit_part_str);
     for (i = 0; i < 21; i++) {
         Debug_Rep_Timer[i] = 0;
         Debug_Rep_Count[i] = 0;
@@ -1167,11 +2334,11 @@ void debug_hit_judgment_init(void) {
     debug_motion_list_count();
     plw[1].wu.rl_flag = 1;
     dbg_look_buf.judge = dbg_look_judge;
-    dbg_look_buf.body_adrs = dbg_look_buf.h_bod = dbg_look_body;
-    dbg_look_buf.hand_adrs = dbg_look_buf.h_han = dbg_look_hand;
+    dbg_look_buf.body_adrs = dbg_look_buf.h_bod = (u8*)dbg_look_body;
+    dbg_look_buf.hand_adrs = dbg_look_buf.h_han = (u8*)dbg_look_hand;
     dbg_look_buf.catch_adrs = dbg_look_buf.h_cat = dbg_look_catch;
     dbg_look_buf.caught_adrs = dbg_look_buf.h_cau = dbg_look_caught;
-    dbg_look_buf.attack_adrs = dbg_look_buf.h_att = dbg_look_attack;
+    dbg_look_buf.attack_adrs = dbg_look_buf.h_att = (u8*)dbg_look_attack;
     dbg_look_buf.hosei_adrs = dbg_look_buf.h_hos = dbg_look_hosei;
     dbg_copy_buf.judge = dbg_copy_judge;
     dbg_copy_buf.body_adrs = dbg_copy_buf.h_bod = dbg_copy_body;
@@ -1356,7 +2523,7 @@ void debug_hit_a_judgement_build_table(void) {
     ewk = dbg_hita_ewk;
     work_base = (u32)ewk;
     wk = &((WORK_Other**)work_base)[0]->wu;
-    (void)((WORK*)zero)->id;
+    (void)&((WORK*)zero)->id;
     plw[0].wu.before = wk->before;
     plw[0].wu.myself = wk->myself;
     plw[0].wu.behind = wk->behind;
@@ -1364,15 +2531,13 @@ void debug_hit_a_judgement_build_table(void) {
     plw[0].wu.dead_f = wk->dead_f;
     plw[0].wu.timing = wk->timing;
     src = (u32*)&plw[0];
-    (void)((WORK*)src)->id;
-    (void)((WORK*)src)->rl_flag;
-    (void)((WORK*)src)->disp_flag;
+    (void)&((WORK*)src)->disp_flag;
     dst = (u32*)((WORK_Other**)work_base)[0];
 copy:;
     for (i = 0; i < 512; i++) {
         *dst++ = *src++;
     }
-    (void)((WORK*)0x180)->id;
+    (void)&((WORK*)0x180)->id;
     player = &plw[0].wu;
     player->xyz[0].disp.pos += 0x180;
     player->position_x += 0x180;
@@ -1382,14 +2547,12 @@ copy:;
     wk->dmg_adrs = (u32*)player->hit_ix_table;
     slot = ewk[1];
     slot->wu.routine_no[4] = 4;
-    pat = (HITA_PAT*)((u8*)(slot) + 0x34);
+    pat = (HITA_PAT*)slot->wu.old_rno;
     wk->set_char_ad = (u32*)pat;
-    (void)((WORK*)pat)->id;
-    (void)((WORK*)pat)->be_flag;
     wk->cg_ix = 0;
     wk->cgd_type = 4;
     wk->dmcal_m = dbg_slot->rec_count;
-    for (i = 0; i < wk->dmcal_m; i++) {
+    for (i = 0; i < wk->dmcal_m; i = i + 1) {
         pat[i].frames = dbg_look_buf.rec[i + 1].u.frames;
         pat[i].param = dbg_look_buf.rec[i + 1].param;
     }
@@ -1399,7 +2562,6 @@ copy:;
     pat[i].param = 1;
     wk->cg_ctr = pat[0].frames;
     body = (HITA_BOX*)ewk[3]->wu.old_rno;
-    (void)body->w[0];
     wk->body_adrs = (BODY_BOX*)body;
     hand = (HITA_BOX*)((u8*)(ewk[4]) + 0x34);
     wk->hand_adrs = (HAND_BOX*)hand;
@@ -1407,19 +2569,14 @@ copy:;
     wk->caught_adrs = (CAUGHT_BOX*)hand;
     wk->hosei_adrs = (HOSEI_BOX*)hand;
     att = (HITA_BOX*)((u8*)(ewk[5]) + 0x34);
-    (void)att->w[0];
     wk->attack_adrs = (ATTACK_BOX*)att;
     slot = ewk[6];
-    keys = (HITA_KEY*)((u8*)slot + 0x34);
-    (void)((WORK*)keys)->id;
-    (void)((WORK*)keys)->rl_flag;
-    (void)((WORK*)keys)->disp_flag;
+    keys = (HITA_KEY*)slot->wu.old_rno;
     n = 0;
     for (i = 1; i <= wk->dmcal_m; i++) {
         for (j = n; j >= 0; j--) {
             if (debug_memcmp_u32((u32*)&body[j], (u32*)&dbg_look_body[i], 8)) {
                 keys[i].ix[0] = j;
-                (void)keys[i].key;
                 break;
             }
         }
@@ -1446,8 +2603,8 @@ copy:;
     }
     wk->vital_new = n;
     n = 0;
-    for (i = 1; i <= wk->dmcal_m; i++) {
-        for (j = n; j >= 0; j--) {
+    for (i = 1; i <= wk->dmcal_m; i = i + 1) {
+        for (j = n; j >= 0; j = j - 1) {
             if (debug_memcmp_u32((u32*)&att[j], (u32*)&dbg_look_attack[i], 8)) {
                 keys[i].ix[2] = j;
                 break;
@@ -1462,8 +2619,8 @@ copy:;
     wk->vital_old = n;
     n = 0;
     slot = ewk[2];
-    ixkey = (u32*)((u8*)slot + 0x34);
-    for (i = 1; i <= wk->dmcal_m; i++) {
+    ixkey = (u32*)slot->wu.old_rno;
+    for (i = 1; i <= wk->dmcal_m; i = i + 1) {
         for (j = n; j >= 0; j--) {
             if (keys[i].key == ixkey[j * 4]) {
                 pat[i - 1].bits = j;
@@ -1471,7 +2628,7 @@ copy:;
             }
         }
         if (j == -1) {
-            n = n + 1;
+            n++;
             ((HITA_KEY*)&ixkey[n * 4])->key = keys[i].key;
             pat[i - 1].bits = n;
         }
@@ -1496,7 +2653,7 @@ copy:;
     wk->old_cgnum = 0;
     wk->spr.gfx_ofs = 0;
     wk->spr.gfx_cells = 0;
-    for (i = 0; i < 4; i++) {
+    for (i = 0; i < 4; i = i + 1) {
         wk->spr.gfx_blk10[i] = 0;
         wk->spr.gfx_blk40[i] = 0;
         wk->spr.gfx_blk_ex[i] = 0;
@@ -1513,9 +2670,8 @@ copy:;
     wk->dir_timer = 0;
     wk->dir_step = 0;
     dbg_hita_grid_sw = 0;
-    (void)wk->id;
     (void)wk->rl_flag;
-    (void)((WORK*)one)->id;
+    (void)&((WORK*)one)->id;
 }
 
 
@@ -1532,7 +2688,7 @@ s32 debug_memcmp_u32(u32* a, u32* b, s16 n) {
 }
 
 /* provisional name */
-u32 debug_hit_a_judgement_alloc_slot(u32 *slot)
+u32 debug_hit_a_judgement_alloc_slot(WORK_Other **slot)
 {
     s16 ix;
     u8 *ewk;
@@ -1542,7 +2698,7 @@ u32 debug_hit_a_judgement_alloc_slot(u32 *slot)
     }
     ewk = (u8 *)&frw[ix];
     *(u8 *)&frw[ix] = 1;
-    *slot = (u32)ewk;
+    *slot = (WORK_Other *)ewk;
     return 0;
 }
 
@@ -1556,7 +2712,7 @@ void debug_hit_a_judgement_cleanup(void) {
         if (i == 0) {
             all_cgps_put_back(dbg_hita_ewk[i]);
         }
-        push_effect_work(dbg_hita_ewk[i]);
+        push_effect_work(&dbg_hita_ewk[i]->wu);
     }
 }
 
@@ -1622,8 +2778,8 @@ void debug_hit_a_judgement_run(void) {
     debug_draw_cg_group_offset(wk->cg_number, group, 8, 25, 4);
     if (sw1 & 0x200) {
         Debug_Tool_No = 4;
-        tilemap_print_string(0, 0, 0xFFFF, (TM_STRING*)dbg_blank4_str);
-        tilemap_print_string(0, 0, 0xFFFF, (TM_STRING*)dbg_exit_ok_str);
+        tilemap_print_string(0, 0, 0xFFFF, dbg_blank4_str);
+        tilemap_print_string(0, 0, 0xFFFF, dbg_exit_ok_str);
     }
     debug_rgb_editor_navigate(2);
     debug_rgb_editor_print(0);
@@ -1733,7 +2889,7 @@ s32 debug_hit_a_judgement_edit_grid(WORK* wk) {
     } else if ((step = debug_hit_a_judgement_edit_step()) != 0) {
         switch (judge_column_tbl[wk->dir_step].rest[0]) {
         case 0:
-            step += pat[ix].frames;
+            step = step + pat[ix].frames;
             if (step < 1) {
                 step = 1;
             }
@@ -1743,7 +2899,7 @@ s32 debug_hit_a_judgement_edit_grid(WORK* wk) {
             pat[ix].frames = step;
             break;
         case 1:
-            step += pat[ix].bits >> 13;
+            step = step + (pat[ix].bits >> 13);
             if (step < zero) {
                 step = zero;
             }
@@ -1753,7 +2909,7 @@ s32 debug_hit_a_judgement_edit_grid(WORK* wk) {
             pat[ix].bits = step << 13;
             break;
         case 2:
-            step += h->body;
+            step = step + h->body;
             if (step < zero) {
                 step = zero;
             }
@@ -1763,7 +2919,7 @@ s32 debug_hit_a_judgement_edit_grid(WORK* wk) {
             h->body = step;
             break;
         case 3:
-            step += h->hand;
+            step = step + h->hand;
             if (step < zero) {
                 step = zero;
             }
@@ -1787,7 +2943,7 @@ s32 debug_hit_a_judgement_edit_grid(WORK* wk) {
             }
             break;
         case 6:
-            step += h->attack;
+            step = step + h->attack;
             if (step < zero) {
                 step = zero;
             }
@@ -1799,9 +2955,6 @@ s32 debug_hit_a_judgement_edit_grid(WORK* wk) {
         }
         return 1;
     } else {
-        (void)((WORK*)pat)->id;
-        (void)((WORK*)pat)->be_flag;
-        (void)pat[ix].frames;
         sw = ~dbg_p1sw_1 & dbg_p1sw_0;
         if (sw & 0x80) {
             goto add;
@@ -1897,9 +3050,11 @@ s32 debug_hit_a_judgement_column_nav(WORK* wk) {
     }
     dir = debug_held_pad_repeat(dbg_p2sw_0, dbg_p2sw_1, 1, 4) + debug_held_pad_repeat(dbg_p2sw_0, dbg_p2sw_1, 2, 5) * 2 + debug_held_pad_repeat(dbg_p2sw_0, dbg_p2sw_1, 4, 6) * 4 + debug_held_pad_repeat(dbg_p2sw_0, dbg_p2sw_1, 8, 7) * 8;
     col = &judge_column_tbl;
-    (void)((WORK*)col)->id;
     ret = 0;
-    (void)((WORK*)1)->id;
+    if (DEBUG_EDIT) {
+        ret = 1;
+        wk->dir_step = (*col)[wk->dir_step].rest[4];
+    }
     switch (dir) {
     case 1:
         if (wk->dir_step < 2) {
@@ -1931,8 +3086,9 @@ s32 debug_hit_a_judgement_column_nav(WORK* wk) {
                 break;
             }
             for (target = (page + 1) << 13, i = 0; i < wk->dmcal_m; i++) {
-                goto scan;
-            scan:
+                if (DEBUG_EDIT) {
+                    return 0;
+                }
                 if (tbl[i * 4 + 2] == target) {
                     break;
                 }
@@ -1967,7 +3123,7 @@ void debug_hit_a_judgement_print_footer(void) {
 
 /* provisional name */
 void debug_hit_a_draw_cursor(s16 col, s16 flags) {
-    tilemap_print_string_attr(judge_column_tbl[(s8)col].x, judge_column_tbl[(s8)col].y, 4, dbg_sign_str[(flags & 0x20) == 0]);
+    tilemap_print_string_attr(judge_column_tbl[col].x, judge_column_tbl[col].y, 4, dbg_sign_str[(flags & 0x20) == 0]);
 }
 
 
@@ -1975,11 +3131,11 @@ void debug_hit_a_draw_cursor(s16 col, s16 flags) {
 /* provisional name */
 void debug_hit_a_print_counts(WORK* wk) {
     tilemap_print_string_attr(10, 1, 10, debug_zero2_msg);
-    tilemap_print_hex(10, 1, 10, Convert_BCD(wk->dmcal_d, 2), 2, 2);
+    tilemap_print_hex(10, 1, 10, remake_2_10(wk->dmcal_d, 2), 2, 2);
     tilemap_print_string_attr(10, 3, 10, debug_zero2_msg);
-    tilemap_print_hex(10, 3, 10, Convert_BCD(wk->dmcal_m, 2), 2, 2);
+    tilemap_print_hex(10, 3, 10, remake_2_10(wk->dmcal_m, 2), 2, 2);
     tilemap_print_string_attr(13, 3, 10, debug_zero2_msg);
-    tilemap_print_hex(13, 3, 10, Convert_BCD(wk->cg_ix / wk->cgd_type + 1, 2), 2, 2);
+    tilemap_print_hex(13, 3, 10, remake_2_10(wk->cg_ix / wk->cgd_type + 1, 2), 2, 2);
 }
 
 
@@ -1998,10 +3154,11 @@ void debug_hit_a_print_pattern_rows(WORK* wk, GRID_REC* recs) {
     (void)grid_row_frame_msg;
     (void)hit_grid5_pos_tbl;
     (void)debug_blank3_msg;
-    (void)tilemap_print_hex;
 rows:;
-    if (0) {}
-    for (i = 0; i < 9; ix++, i++) {
+    if (DEBUG_DISP) {
+        attr = 14;
+    }
+    for (i = 0; i < 9; ix = ix + 1, i++) {
         if (ix < 0 || ix >= wk->dmcal_m) {
             tilemap_print_string_attr(2, hit_grid5_pos_tbl[i].y, 0, grid_empty_row_msg);
         } else {
@@ -2012,14 +3169,14 @@ rows:;
             tilemap_print_string_attr(2, hit_grid5_pos_tbl[i].y, 0, grid_row_frame_msg);
             v = recs[ix].frames;
             tilemap_print_string_attr(hit_grid5_pos_tbl[i].x, hit_grid5_pos_tbl[i].y, attr, debug_blank3_msg);
-            tilemap_print_hex(hit_grid5_pos_tbl[i].x, hit_grid5_pos_tbl[i].y, attr, Convert_BCD(v, 3), 3, 2);
+            tilemap_print_hex(hit_grid5_pos_tbl[i].x, hit_grid5_pos_tbl[i].y, attr, remake_2_10(v, 3), 3, 2);
             v = recs[ix].bits >> 13;
             tilemap_print_string_attr(hit_grid5_pos_tbl[i].hit->x,
                                       (hit = hit_grid5_pos_tbl[i].hit)->y, attr, debug_zero2_msg);
-            tilemap_print_hex(hit->x, hit->y, attr, Convert_BCD(v, 2), 2, 2);
+            tilemap_print_hex(hit->x, hit->y, attr, remake_2_10(v, 2), 2, 2);
         }
     }
-    (void)((WORK*)14)->id;
+    (void)&((WORK*)14)->id;
 }
 
 
@@ -2044,15 +3201,15 @@ void debug_hit_a_print_hit_ix_rows(WORK* wk, GRID9_REC* recs) {
             tilemap_print_string_attr(31, hit_grid9_pos_tbl[i].y, 0, dbg_hit_row_blank_str);
             tilemap_print_string_attr(38, hit_grid9_pos_tbl[i].y, attr, dbg_hit_row_mb_str);
             tilemap_print_string_attr(32, hit_grid9_pos_tbl[i].y + 0xFFFF, attr, debug_zero2_msg);
-            tilemap_print_hex(32, hit_grid9_pos_tbl[i].y + 0xFFFF, attr, Convert_BCD(ix, 2), 2, 2);
+            tilemap_print_hex(32, hit_grid9_pos_tbl[i].y + 0xFFFF, attr, remake_2_10(ix, 2), 2, 2);
             tilemap_print_string_attr(32, hit_grid9_pos_tbl[i].y, attr, dbg_space2_str);
-            tilemap_print_hex(32, hit_grid9_pos_tbl[i].y, attr, Convert_BCD(recs[ix].w0, 2), 2, 2);
+            tilemap_print_hex(32, hit_grid9_pos_tbl[i].y, attr, remake_2_10(recs[ix].w0, 2), 2, 2);
             tilemap_print_string_attr(35, hit_grid9_pos_tbl[i].y, attr, dbg_space2_str);
-            tilemap_print_hex(35, hit_grid9_pos_tbl[i].y, attr, Convert_BCD(recs[ix].w4, 2), 2, 2);
+            tilemap_print_hex(35, hit_grid9_pos_tbl[i].y, attr, remake_2_10(recs[ix].w4, 2), 2, 2);
             tilemap_print_string_attr(39, hit_grid9_pos_tbl[i].y, attr, hit_kind_tbl[recs[ix].kind6].name);
             tilemap_print_string_attr(42, hit_grid9_pos_tbl[i].y, attr, hit_kind_tbl[recs[ix].kind7].name);
             tilemap_print_string_attr(45, hit_grid9_pos_tbl[i].y, attr, dbg_space2_str);
-            tilemap_print_hex(45, hit_grid9_pos_tbl[i].y, attr, Convert_BCD(recs[ix].w12, 2), 2, 2);
+            tilemap_print_hex(45, hit_grid9_pos_tbl[i].y, attr, remake_2_10(recs[ix].w12, 2), 2, 2);
         }
     }
 }
@@ -2103,7 +3260,7 @@ void debug_hit_a_exit_confirm(void) {
     s16 sw1 = ~dbg_p1sw_1 & dbg_p1sw_0 & 0x3F0;
     s16 sw2 = ~dbg_p2sw_1 & dbg_p2sw_0 & 0x3F0;
     if (dbg_hita_num < 7) {
-        tilemap_print_string(0, 0, 0xFFFF, (TM_STRING*)dbg_work_empty_str);
+        tilemap_print_string(0, 0, 0xFFFF, dbg_work_empty_str);
         if (sw1 + sw2) {
             if (dbg_hita_num) {
                 debug_hit_a_judgement_cleanup();
@@ -2123,7 +3280,7 @@ void debug_hit_a_exit_confirm(void) {
         }
         if (sw1 & 0x200) {
             Debug_Tool_No = 3;
-            tilemap_print_string(0, 0, 0xFFFF, (TM_STRING*)dbg_blank4_str);
+            tilemap_print_string(0, 0, 0xFFFF, dbg_blank4_str);
         }
         debug_char_disp(&dbg_hita_ewk[0]->wu);
     }
@@ -2224,9 +3381,9 @@ void debug_bg_color_preset_next(void) {
         dbg_bgcol_ix++;
         dbg_bgcol_ix &= 7;
     }
-    Debug_RGB[0] = dbg_rgb_preset_tbl[(s8)dbg_bgcol_ix][0];
-    Debug_RGB[1] = dbg_rgb_preset_tbl[(s8)dbg_bgcol_ix][1];
-    Debug_RGB[2] = dbg_rgb_preset_tbl[(s8)dbg_bgcol_ix][2];
+    Debug_RGB[0] = dbg_rgb_preset_tbl[dbg_bgcol_ix][0];
+    Debug_RGB[1] = dbg_rgb_preset_tbl[dbg_bgcol_ix][1];
+    Debug_RGB[2] = dbg_rgb_preset_tbl[dbg_bgcol_ix][2];
 }
 
 
@@ -2485,7 +3642,7 @@ void debug_char_preview_run(void) {
     u16 cells;
     s16 pal;
     u16 shown;
-    CharGfxSetHead* set;
+    CharGfxSet* set;
     debug_position_by_pad();
     kind = debug_cg_bank_kind(dbg_pl->wu.cg_number);
     if (debug_lever_repeat(dbg_p1sw_0, dbg_p1sw_1, 1, 0)) {
@@ -2874,20 +4031,22 @@ void debug_parts_flip_apply(void) {
 
 /* provisional name */
 /* The first loop writes slot 0 eight times. */
-void debug_char_slot_init(s16 id) {
+void debug_char_slot_init(id)
+s16 id;
+{
     PLW* save_wk;
     s16* save_sp;
     PLW* wk;
     s16* sp;
     s16 i;
-    s16* p = (s16*)((s8*)dbg_slot_w + (s8)(id * 18));
+    s16* p = dbg_slot_w[id];
 
     for (i = 0; i < 8; i++) {
         p[0] = 1;
     }
-    sp = (s16*)((s8*)dbg_slot_w + (s8)(id * 18));
+    sp = dbg_slot_w[id];
     sp[8] = 0;
-    wk = (PLW*)((s8*)plw + (s16)(id * sizeof(PLW)));
+    wk = &plw[id];
     wk->player_number = 0;
     wk->wu.charset_id = debug_charset_tbl[0];
     wk->zuru_timer = 0;
@@ -3340,7 +4499,7 @@ void debug_hit_box_edit(void) {
         body = dbg_copy_buf.h_bod;
         hand = dbg_copy_buf.h_han;
         attack = dbg_copy_buf.h_att;
-        (void)((WORK*)attack)->id;
+        (void)&((WORK*)attack)->id;
         switch (dbg_judge_ewk->curr_ja) {
         case 0:
             box = (s16*)body;
@@ -3395,7 +4554,9 @@ void debug_hit_box_edit(void) {
         body = dbg_look_buf.h_bod;
         hand = dbg_look_buf.h_han;
         attack = dbg_look_buf.h_att;
-        (void)((WORK*)body)->id;
+        if (DEBUG_EDIT) {
+            dbg_judge_ewk->look_up_flag ^= 1;
+        }
         switch (dbg_judge_ewk->curr_ja) {
         case 0:
             box = (s16*)body;
@@ -3484,7 +4645,7 @@ void debug_hit_box_edit(void) {
         body = dbg_edit_buf.h_bod;
         hand = dbg_edit_buf.h_han;
         attack = dbg_edit_buf.h_att;
-        (void)((WORK*)attack)->id;
+        (void)&((WORK*)attack)->id;
         switch (dbg_judge_ewk->curr_ja) {
         case 0:
             box = (s16*)body;
@@ -4355,7 +5516,11 @@ void debug_parts_input(void) {
             dbg_parts_plw[dbg_parts_sel].wu.dir_step++;
         }
     }
-    (void)((WORK*)dbg_p2sw_0)->id;
+    if (DEBUG_EDIT) {
+        if (dbg_p2sw_0 & 0x20) {
+            plw[0].wu.xyz[1].disp.pos = 0;
+        }
+    }
 }
 
 
@@ -4402,7 +5567,12 @@ s32 debug_lever_repeat(sw, old, mask, ix)
 
 
 /* provisional name */
-s32 debug_lever_repeat_fast(u16 sw, u16 old, u16 mask, s16 ix) {
+s32 debug_lever_repeat_fast(sw, old, mask, ix)
+u16 sw;
+u16 old;
+u16 mask;
+s16 ix;
+{
     if (sw & mask) {
         if (sw & 0x10) {
             return 1;
@@ -4571,7 +5741,7 @@ void debug_slot_char_load(void) {
             dbg_pl->wu.my_col_code = 0x4080;
             break;
         }
-        (void)((WORK*)-0xd7)->id;
+        (void)&((WORK*)-0xd7)->id;
         dbg_pl->player_number = 0x99;
         dbg_pl->wu.operator = 1;
         n = dbg_slot->sel[0] - 0xd8;
@@ -4773,12 +5943,12 @@ void debug_parts_disp(void) {
 
 /* provisional name */
 void debug_pattern_edit_init_counts(void) {
-    u32* pat;
+    u32** pat;
     ((DBG_SLOT*)&dbg_slot_w[0])->sel[0] = 1;
     ((DBG_SLOT*)&dbg_slot_w[1])->sel[0] = 1;
     ((DBG_SLOT*)&dbg_slot_w[0])->sel0_max = 0;
     ((DBG_SLOT*)&dbg_slot_w[1])->sel0_max = 0;
-    for (pat = dbg_pl_char_tbl; *pat; pat++) {
+    for (pat = dbg_pl_char_tbl[0]; *pat; pat++) {
         ((DBG_SLOT*)&dbg_slot_w[0])->sel0_max++;
         ((DBG_SLOT*)&dbg_slot_w[1])->sel0_max++;
     }
@@ -5209,8 +6379,10 @@ void debug_draw_object_info(void) {
     tilemap_print_hex(10, 4, 2, num, 3, 0);
     num = debug_hex4_to_bcd(dbg_slot->sel0_max);
     tilemap_print_hex(14, 4, 2, num, 3, 0);
-    (void)((WORK*)tilemap_print_hex)->id;
-    (void)((WORK*)0)->id;
+    if (DEBUG_DISP) {
+        num = debug_hex4_to_bcd(dbg_slot->rec_count);
+        tilemap_print_hex(18, 4, 2, num, 3, 0);
+    }
     num = debug_hex4_to_bcd(dbg_slot->sel[1]);
     tilemap_print_hex(10, 6, 2, num, 3, 0);
     num = debug_hex4_to_bcd(dbg_slot->sel1_max);
@@ -5445,7 +6617,9 @@ void debug_draw_hit_edit_info(void)
     } else {
         tilemap_print_string_attr(dbg_hud_x + 40, 8, 14, dbg_free_str);
     }
-    (void)((WORK*)&dbg_copy_str)->id;
+    if (DEBUG_DISP) {
+        tilemap_print_string_attr(dbg_hud_x + 40, 9, 6, dbg_copy_str);
+    }
     if (dbg_copy_done) {
         if (dbg_copy_pat == dbg_slot->sel[2] && dbg_pl->wu.char_index == dbg_copy_char) {
             tilemap_print_string_attr(dbg_hud_x + 40, 9, 6, dbg_copy_str);
@@ -5474,16 +6648,16 @@ void debug_draw_hit_edit_info(void)
     }
 
     /* hit-index row of the current pattern */
-    num = Convert_BCD((u16)dbg_edit_buf.rec[dbg_slot->sel[2]].box, 3);
+    num = remake_2_10((u16)dbg_edit_buf.rec[dbg_slot->sel[2]].box, 3);
     tilemap_print_hex(4, 20, 2, num, 3, 0);
     hit = &dbg_pl->wu.hit_ix_table[(u16)dbg_edit_buf.rec[dbg_slot->sel[2]].box];
-    tilemap_print_hex(12, 20, 2, Convert_BCD(hit->boix, 3), 3, 0);
-    tilemap_print_hex(12, 21, 2, Convert_BCD(hit->bhix, 3), 3, 0);
-    tilemap_print_hex(12, 22, 2, Convert_BCD(hit->haix, 3), 3, 0);
-    tilemap_print_hex(12, 23, 2, Convert_BCD(hit->caix, 3), 3, 0);
-    tilemap_print_hex(12, 24, 2, Convert_BCD(hit->cuix, 3), 3, 0);
-    tilemap_print_hex(12, 25, 2, Convert_BCD(hit->atix, 3), 3, 0);
-    tilemap_print_hex(12, 26, 2, Convert_BCD(hit->hoix, 3), 3, 0);
+    tilemap_print_hex(12, 20, 2, remake_2_10(hit->boix, 3), 3, 0);
+    tilemap_print_hex(12, 21, 2, remake_2_10(hit->bhix, 3), 3, 0);
+    tilemap_print_hex(12, 22, 2, remake_2_10(hit->haix, 3), 3, 0);
+    tilemap_print_hex(12, 23, 2, remake_2_10(hit->caix, 3), 3, 0);
+    tilemap_print_hex(12, 24, 2, remake_2_10(hit->cuix, 3), 3, 0);
+    tilemap_print_hex(12, 25, 2, remake_2_10(hit->atix, 3), 3, 0);
+    tilemap_print_hex(12, 26, 2, remake_2_10(hit->hoix, 3), 3, 0);
     tilemap_print_string_attr(2, 24, 2, hit_kind_tbl[hit->mf.half.bx].name);
     tilemap_print_string_attr(5, 24, 2, hit_kind_tbl[hit->mf.half.mv].name);
 
@@ -5977,8 +7151,8 @@ void debug_bg_stage_load(void)
         bg_cell_write(0, 0x3080, 0, (u32)russia2_scrn_data, 0, 0x340);
         bg_cell_write(0, 0x30C0, 1, (u32)russia2_scrn_data, 0, 0x340);
         bg_zoom_x_pos = 192;
-        scroll_layer_mask_enable(1);
-        scroll_layer_mask_disable(16);
+        Bg_On_R(1);
+        Bg_Off_R(16);
         scrn_attr_set(0, 0, 24);
         scrn_reg_w[0].ctrl &= 0xFE7F;
         bg_w.bgw[0].speed_x = 0x10000;
@@ -6191,7 +7365,9 @@ void debug_draw_cg_data(void) {
         } else {
             tilemap_print_string_attr(dbg_hud_x + 37, 12, 10, dbg_no_extdat_str);
         }
-        (void)((WORK*)4)->id;
+        if (DEBUG_DISP) {
+            bcd = debug_hex4_to_bcd(plw[0].wu.cg_type);
+        }
         bit = 1;
         i = 0;
         off = dbg_cancel_off_str;
@@ -6512,8 +7688,8 @@ void debug_bg_alloc_init(void) {
     debug_bg_tile_put(0, 0x3040, 3, (s32)ake_scrn_data);
     debug_bg_tile_put(0, 0x3080, 3, (s32)ake_scrn_data);
     debug_bg_tile_put(0, 0x30C0, 3, (s32)ake_scrn_data);
-    scroll_layer_mask_enable(1);
-    scroll_layer_mask_disable(16);
+    Bg_On_R(1);
+    Bg_Off_R(16);
     scrn_attr_set(0, 0, 31);
     scrn_reg_w[0].ctrl &= 0xFE7F;
 }
@@ -6545,8 +7721,8 @@ void debug_bg_alloc_scene_init(void) {
     bg_cell_write(0, 0x3040, 0, (u32)debug_scene_scrn_data, 0, 0x280);
     bg_cell_write(0, 0x3080, 0, (u32)debug_scene_scrn_data, 0, 0x280);
     bg_cell_write(0, 0x30C0, 0, (u32)debug_scene_scrn_data, 0, 0x280);
-    scroll_layer_mask_enable(1);
-    scroll_layer_mask_disable(16);
+    Bg_On_R(1);
+    Bg_Off_R(16);
     scrn_attr_set(0, 0, 31);
     scrn_reg_w[0].ctrl &= 0xFE7F;
 }
@@ -6559,3 +7735,1598 @@ void screen_work_clear_all(void)
     scrn_pos_clear();
     Zoomf_Init();
 }
+
+/* 02000924 */
+const char* dbg_sign_str[2] = {
+    (const char*)&dbg_wca_str[4],
+    (const char*)&dbg_wca_str[8],
+};
+/* 0200092C */
+s16 dbg_rgb_preset_tbl[8][3] = {
+    { 0, 0, 0 }, { 127, 0, 0 }, { 127, 127, 127 }, { 127, 127, 0 }, { 127, 0, 127 }, { 0, 127, 0 }, { 0, 0, 127 }, { 112, 112, 112 },
+};
+/* 0200095C */
+TM_STRING dbg_menu_str[15] = {
+    { 0xD, 2, 2, (void*)str_OBJECT_TEST },
+    { 0xA, 4, 2, (void*)str_BG_SELECT },
+    { 0xA, 5, 2, (void*)str_OBJECT_LOOK },
+    { 0xA, 6, 2, (void*)str_OBJECT_EDIT },
+    { 0xA, 7, 2, (void*)str_OBJECT_EDIT_2 },
+    { 0xA, 8, 2, (void*)str_HIT },
+    { 0xA, 9, 2, (void*)str_ALL_CHARACTER },
+    { 0xA, 0xA, 2, (void*)str_PARTS },
+    { 0xA, 0xB, 2, (void*)str_YOKOYAMA },
+    { 0xA, 0xC, 2, (void*)str_NAKAI },
+    { 0xA, 0xD, 2, (void*)str_YOSHIZUMI },
+    { 0xA, 0xE, 2, (void*)str_YU },
+    { 0xA, 0xF, 2, (void*)str_RAOH },
+    { 0xA, 0x10, 2, (void*)str_INE },
+    { 0xA, 0x11, 2, (void*)str_OHYA },
+};
+/* 02000A10 */
+TM_STRING dbg_select_exit_str[2] = {
+    { 0x11, 3, 2, (void*)str_SELECT_UP_DOWN },
+    { 0x11, 4, 2, (void*)str_EXIT_1P_2P_START },
+};
+/* 02000A28 */
+TM_STRING dbg_obj_info_str[10] = {
+    { 1, 3, 2, (void*)str_PLAYER },
+    { 1, 4, 2, (void*)str_ALL },
+    { 1, 6, 2, (void*)str_MOTION },
+    { 1, 8, 2, (void*)str_PATTERN },
+    { 1, 9, 2, (void*)str_INTERRUT },
+    { 1, 0xA, 2, (void*)str_CODE_H },
+    { 1, 0xB, 2, (void*)str_FLIP },
+    { 1, 0xC, 2, (void*)str_FLIP_ED },
+    { 1, 0xD, 2, (void*)str_POS_X_H },
+    { 1, 0xE, 2, (void*)str_POS_Y_H },
+};
+/* 02000AA0 */
+TM_STRING dbg_obj_rel_str[3] = {
+    { 1, 0xF, 2, (void*)str_REL_X_H },
+    { 1, 0x10, 2, (void*)str_REL_Y_H },
+    { 1, 0x11, 2, (void*)str_CURRENT },
+};
+/* 02000AC4 */
+TM_STRING dbg_all_char_str[7] = {
+    { 0xF, 1, 2, (void*)str_ALL_CHARACTER },
+    { 1, 5, 2, (void*)str_H_n },
+    { 1, 7, 2, (void*)str_H_n },
+    { 4, 0xB, 2, (void*)str_GROUP },
+    { 4, 0xC, 2, (void*)str_R_n },
+    { 4, 0xD, 2, (void*)str_G },
+    { 4, 0xE, 2, (void*)str_B },
+};
+/* 02000B18 */
+TM_STRING dbg_edit_num_str[4] = {
+    { 1, 0x12, 2, (void*)str_EDIT_NUM },
+    { 1, 0x13, 2, (void*)str_NUM_END },
+    { 1, 0x14, 2, (void*)str_EDIT_INT },
+    { 1, 0x15, 2, (void*)str_INT_END },
+};
+/* 02000B48 */
+TM_STRING dbg_parts_info_str[17] = {
+    { 1, 3, 2, (void*)str_PLAYER },
+    { 1, 4, 2, (void*)str_ALL },
+    { 1, 6, 2, (void*)str_MOTION },
+    { 1, 8, 2, (void*)str_PATTERN },
+    { 1, 9, 2, (void*)str_INTERRUT },
+    { 1, 0xA, 2, (void*)str_CODE_H },
+    { 1, 0xB, 2, (void*)str_FLIP },
+    { 1, 0xC, 2, (void*)str_FLIP_ED },
+    { 1, 0xD, 2, (void*)str_CURRENT_n },
+    { 1, 0xE, 2, (void*)str_PARTS_X_H },
+    { 1, 0xF, 2, (void*)str_PARTS_Y_H },
+    { 1, 0x10, 2, (void*)str_PARTS_FL },
+    { 1, 0x11, 2, (void*)str_OLC_IX },
+    { 1, 0x12, 2, (void*)str_IX_1 },
+    { 1, 0x13, 2, (void*)str_IX_2 },
+    { 1, 0x14, 2, (void*)str_IX_3 },
+    { 1, 0x15, 2, (void*)str_IX_4 },
+};
+/* 02000C14 */
+TM_STRING dbg_rec_menu_str[3] = {
+    { 0x1B, 3, 6, (void*)str_DELETE_ALL_SH4 },
+    { 0x1B, 4, 6, (void*)str_1DATA_SH5 },
+    { 0x1B, 5, 6, (void*)str_CANCEL_SH6 },
+};
+/* 02000C38 */
+TM_STRING dbg_rec_clear_str[3] = {
+    { 0x1B, 3, 6, (void*)str_n },
+    { 0x1B, 4, 6, (void*)str_n },
+    { 0x1B, 5, 6, (void*)str_empty },
+};
+/* 02000C5C */
+TM_STRING dbg_rec_nodata_str[2] = {
+    { 0x1B, 3, 6, (void*)str_NO_EDIT },
+    { 0x1B, 4, 6, (void*)str_DATA_NOTHING },
+};
+/* 02000C74 */
+TM_STRING dbg_hit_size_str[18] = {
+    { 1, 0xF, 2, (void*)str_REVISE_X_H },
+    { 1, 0x10, 2, (void*)str_SIZE_X_H },
+    { 1, 0x11, 2, (void*)str_REVISE_Y_H },
+    { 1, 0x12, 2, (void*)str_SIZE_Y_H },
+    { 1, 0x14, 2, (void*)str_IX_000 },
+    { 1, 0x15, 2, (void*)str_CR_1P },
+    { 1, 0x17, 2, (void*)str_MF },
+    { 1, 0x18, 2, (void*)str_M_B },
+    { 8, 0x14, 2, (void*)str_BOD_000 },
+    { 8, 0x15, 2, (void*)str_BHA_000 },
+    { 8, 0x16, 2, (void*)str_HAN_000 },
+    { 8, 0x17, 2, (void*)str_CAT_000 },
+    { 8, 0x18, 2, (void*)str_CAU_000 },
+    { 8, 0x19, 2, (void*)str_ATT_000 },
+    { 8, 0x1A, 2, (void*)str_HOS_000 },
+    { 0xF, 0x19, 2, (void*)str_KOC_IX_PT_Nix_n },
+    { 0xF, 0x1A, 2, (void*)str_KOC_IX_PT_Nix_n },
+    { 0xF, 0x1B, 2, (void*)str_KOC_IX_PT_Nix },
+};
+/* 02000D4C */
+TM_STRING dbg_hit_part_str[15] = {
+    { 0x28, 0xC, 2, (void*)str_HEAD },
+    { 0x28, 0xD, 2, (void*)str_BREAST },
+    { 0x28, 0xE, 2, (void*)str_TRUNK },
+    { 0x28, 0xF, 2, (void*)str_LEG },
+    { 0x28, 0x10, 2, (void*)str_HAND },
+    { 0x28, 0x11, 2, (void*)str_HAND },
+    { 0x28, 0x12, 2, (void*)str_HAND },
+    { 0x28, 0x13, 2, (void*)str_HAND },
+    { 0x28, 0x14, 2, (void*)str_CATCH_n },
+    { 0x28, 0x15, 2, (void*)str_CAUGHT_n },
+    { 0x28, 0x16, 2, (void*)str_ATT },
+    { 0x28, 0x17, 2, (void*)str_ATT },
+    { 0x28, 0x18, 2, (void*)str_ATT_2 },
+    { 0x28, 0x19, 2, (void*)str_ATT_2 },
+    { 0x28, 0x1A, 2, (void*)str_HOSEI },
+};
+/* 02000E00 */
+TM_STRING dbg_work_empty_str[2] = {
+    { 0xF, 5, 8, (void*)str_WORK_EMPTY },
+    { 0xF, 7, 8, (void*)str_PRESS_ANY_SHOT },
+};
+/* 02000E18 */
+TM_STRING dbg_blank4_str[4] = {
+    { 0xB, 5, 2, (void*)str_n_2 },
+    { 0xB, 6, 2, (void*)str_n_2 },
+    { 0xB, 7, 2, (void*)str_n_2 },
+    { 0xB, 8, 2, (void*)str_empty_2 },
+};
+/* 02000E48 */
+TM_STRING dbg_exit_ok_str[3] = {
+    { 0xE, 5, 2, (void*)str_EXIT_OK },
+    { 0xB, 7, 2, (void*)str_YES_2P_SHOT6 },
+    { 0xB, 8, 2, (void*)str_NO_1P_SHOT6 },
+};
+/* 02000E6C */
+TM_STRING dbg_cg_head_str[6] = {
+    { 0x1B, 3, 2, (void*)str_CG_CTR },
+    { 0x1B, 4, 2, (void*)str_CG_TYPE },
+    { 0x1B, 5, 2, (void*)str_CG_SE },
+    { 0x1B, 6, 2, (void*)str_CG_FLIP },
+    { 0x1B, 7, 2, (void*)str_CG_OLC_IX },
+    { 0x1B, 8, 2, (void*)str_CG_NUMBER },
+};
+/* 02000EB4 */
+TM_STRING dbg_cg_att_str[6] = {
+    { 0x1B, 0xA, 2, (void*)str_CG_ATT_IX },
+    { 0x1B, 0xB, 2, (void*)str_CG_HIT_IX },
+    { 0x1B, 0xC, 2, (void*)str_CG_EXTDAT },
+    { 0x1B, 0xD, 2, (void*)str_CG_CANCEL },
+    { 0x1B, 0xE, 2, (void*)str_CG_EFFECT },
+    { 0x1B, 0xF, 2, (void*)str_CG_EFTYPE },
+};
+/* 02000EFC */
+TM_STRING dbg_cg_rival_str[4] = {
+    { 0x1B, 0x10, 2, (void*)str_CG_RIVAL },
+    { 0x1B, 0x11, 2, (void*)str_CG_ADD_XY },
+    { 0x1B, 0x12, 2, (void*)str_CG_NIX },
+    { 0x1B, 0x13, 2, (void*)str_CG_STATUS },
+};
+/* 02000F2C */
+TM_STRING dbg_cgd_info_str[8] = {
+    { 0x1B, 2, 2, (void*)str_CGD_TYPE },
+    { 0x1B, 3, 2, (void*)str_PAT_ST },
+    { 0x1B, 4, 2, (void*)str_KIND_WAZA },
+    { 0x1B, 5, 2, (void*)str_HIT_RANGE },
+    { 0x1B, 6, 2, (void*)str_YOKE_TYPE },
+    { 0x1B, 7, 2, (void*)str_YOKE_PAT },
+    { 0x1B, 8, 2, (void*)str_SP_TECH },
+    { 0x1B, 9, 2, (void*)str_WCA_IX },
+};
+/* 02000F8C */
+TM_STRING dbg_att_data_str[21] = {
+    { 0x1B, 2, 2, (void*)str_ATT_IX },
+    { 0x1B, 3, 2, (void*)str_REACTION },
+    { 0x1B, 4, 2, (void*)str_MKH_IX },
+    { 0x1B, 5, 2, (void*)str_DIP },
+    { 0x1B, 6, 2, (void*)str_HISS },
+    { 0x1B, 7, 2, (void*)str_DIR },
+    { 0x1B, 8, 2, (void*)str_GUARD },
+    { 0x1B, 9, 2, (void*)str_POW },
+    { 0x1B, 0xA, 2, (void*)str_IMPACT },
+    { 0x1B, 0xB, 2, (void*)str_PIYO_n },
+    { 0x1B, 0xC, 2, (void*)str_NG_TYPE },
+    { 0x1B, 0xD, 2, (void*)str_HS_ME },
+    { 0x1B, 0xE, 2, (void*)str_HS_YOU },
+    { 0x1B, 0xF, 2, (void*)str_ZU_FLAG },
+    { 0x1B, 0x10, 2, (void*)str_ZOKUSEI },
+    { 0x1B, 0x11, 2, (void*)str_AT_LEVEL },
+    { 0x1B, 0x12, 2, (void*)str_ADD_ARTS },
+    { 0x1B, 0x13, 2, (void*)str_BUTT_TYPE },
+    { 0x1B, 0x14, 2, (void*)str_BUTT_PAT },
+    { 0x1B, 0x15, 2, (void*)str_DIR_ATT },
+    { 0x1B, 0x16, 2, (void*)str_VS_ID },
+};
+/* 02001088 */
+TM_STRING dbg_hud_clr_str[26] = {
+    { 0x1B, 2, 2, (void*)str_n_3 },
+    { 0x1B, 3, 2, (void*)str_n_3 },
+    { 0x1B, 4, 2, (void*)str_n_3 },
+    { 0x1B, 5, 2, (void*)str_n_3 },
+    { 0x1B, 6, 2, (void*)str_n_3 },
+    { 0x1B, 7, 2, (void*)str_n_3 },
+    { 0x1B, 8, 2, (void*)str_n_3 },
+    { 0x1B, 9, 2, (void*)str_n_3 },
+    { 0x1B, 0xA, 2, (void*)str_n_3 },
+    { 0x1B, 0xB, 2, (void*)str_n_3 },
+    { 0x1B, 0xC, 2, (void*)str_n_3 },
+    { 0x1B, 0xD, 2, (void*)str_n_3 },
+    { 0x1B, 0xE, 2, (void*)str_n_3 },
+    { 0x1B, 0xF, 2, (void*)str_n_3 },
+    { 0x1B, 0x10, 2, (void*)str_n_3 },
+    { 0x1B, 0x11, 2, (void*)str_n_3 },
+    { 0x1B, 0x12, 2, (void*)str_n_3 },
+    { 0x1B, 0x13, 2, (void*)str_n_3 },
+    { 0x1B, 0x14, 2, (void*)str_n_3 },
+    { 0x1B, 0x15, 2, (void*)str_n_3 },
+    { 0x1B, 0x16, 2, (void*)str_n_3 },
+    { 0x1B, 0x17, 2, (void*)str_n_3 },
+    { 0x1B, 0x18, 2, (void*)str_n_3 },
+    { 0x1B, 0x19, 2, (void*)str_n_3 },
+    { 0x1B, 0x1A, 2, (void*)str_n_3 },
+    { 0x1B, 0x1B, 2, (void*)str_empty_3 },
+};
+/* 020011C0 */
+TM_STRING dbg_hud_clr_mid_str[6] = {
+    { 0x1B, 0xE, 2, (void*)str_n_3 },
+    { 0x1B, 0xF, 2, (void*)str_n_3 },
+    { 0x1B, 0x10, 2, (void*)str_n_3 },
+    { 0x1B, 0x11, 2, (void*)str_n_3 },
+    { 0x1B, 0x12, 2, (void*)str_n_3 },
+    { 0x1B, 0x13, 2, (void*)str_n_3 },
+};
+/* 02001208 */
+TM_STRING dbg_hud_clr_low_str[9] = {
+    { 0x1B, 0x14, 2, (void*)str_n_3 },
+    { 0x1B, 0x15, 2, (void*)str_n_3 },
+    { 0x1B, 0x16, 2, (void*)str_n_3 },
+    { 0x1B, 0x17, 2, (void*)str_n_3 },
+    { 0x1B, 0x18, 2, (void*)str_n_3 },
+    { 0x1B, 0x19, 2, (void*)str_n_3 },
+    { 0x1B, 0x1A, 2, (void*)str_n_3 },
+    { 0x1B, 0x1B, 2, (void*)str_empty_3 },
+    { 0x1B, 0x1C, 2, (void*)str_empty_3 },
+};
+/* 02001274 */
+TM_STRING dbg_hud_clr_bottom_str[3] = {
+    { 5, 0x19, 2, (void*)str_n_4 },
+    { 5, 0x1A, 2, (void*)str_n_4 },
+    { 5, 0x1B, 2, (void*)str_empty_4 },
+};
+/* 02001298 */
+TM_STRING dbg_cm_label_str[13] = {
+    { 0x1B, 2, 2, (void*)str_CMOA },
+    { 0x1B, 3, 2, (void*)str_CMSW },
+    { 0x1B, 4, 2, (void*)str_CMLP },
+    { 0x1B, 5, 2, (void*)str_CML2 },
+    { 0x1B, 6, 2, (void*)str_CMJA },
+    { 0x1B, 7, 2, (void*)str_CMJ2 },
+    { 0x1B, 8, 2, (void*)str_CMJ3 },
+    { 0x1B, 9, 2, (void*)str_CMJ4 },
+    { 0x1B, 0xA, 2, (void*)str_CMMS },
+    { 0x1B, 0xB, 2, (void*)str_CMMD },
+    { 0x1B, 0xC, 2, (void*)str_CMYD },
+    { 0x1B, 0xD, 2, (void*)str_CMCF },
+    { 0x1B, 0xE, 2, (void*)str_CMCR },
+};
+/* 02001334 */
+TM_STRING dbg_cgd_type_str[5] = {
+    { 0x25, 1, 0xA, (void*)str_WCA },
+    { 0x25, 2, 0xA, (void*)str_CGD1 },
+    { 0x25, 2, 0xA, (void*)str_CGD2 },
+    { 0x25, 2, 0xA, (void*)str_CGD3 },
+    { 0x25, 2, 0xA, (void*)str_empty_5 },
+};
+/* 02001370 */
+TM_STRING dbg_pat_status_str[23] = {
+    { 0x25, 3, 0xA, (void*)str_sl_00 },
+    { 0x25, 3, 0xA, (void*)str_sl_10 },
+    { 0x25, 3, 0xA, (void*)str_sl_12 },
+    { 0x25, 3, 0xA, (void*)str_sl_20 },
+    { 0x25, 3, 0xA, (void*)str_sl_22 },
+    { 0x25, 3, 0xA, (void*)str_sl_30 },
+    { 0x25, 3, 0xA, (void*)str_sl_32 },
+    { 0x25, 3, 0xA, (void*)str_sl_40 },
+    { 0x25, 3, 0xA, (void*)str_sl_42 },
+    { 0x25, 3, 0xA, (void*)str_sl_44 },
+    { 0x25, 3, 0xA, (void*)str_sl_50 },
+    { 0x25, 3, 0xA, (void*)str_sl_52 },
+    { 0x25, 3, 0xA, (void*)str_sl_54 },
+    { 0x25, 3, 0xA, (void*)str_sl_60 },
+    { 0x25, 3, 0xA, (void*)str_sl_62 },
+    { 0x25, 3, 0xA, (void*)str_sl_64 },
+    { 0x25, 3, 0xA, (void*)str_sl_70 },
+    { 0x25, 3, 0xA, (void*)str_sl_80 },
+    { 0x25, 3, 0xA, (void*)str_sl_82 },
+    { 0x25, 3, 0xA, (void*)str_sl_90 },
+    { 0x25, 3, 0xA, (void*)str_empty_6 },
+    { 0x25, 3, 0xA, (void*)str_empty_6 },
+    { 0x25, 3, 0xA, (void*)str_empty_6 },
+};
+/* 02001484 */
+TM_STRING dbg_extdat_str[3] = {
+    { 0x25, 0xC, 0xA, (void*)str_Pa },
+    { 0x25, 0xC, 0xA, (void*)str_PA },
+    { 0x25, 0xC, 0xA, (void*)str_PB },
+};
+/* 020014A8 */
+TM_STRING dbg_eftype_names[9] = {
+    { 0x25, 0xF, 0xA, (void*)str_MLN },
+    { 0x25, 0xF, 0xA, (void*)str_MLU },
+    { 0x25, 0xF, 0xA, (void*)str_MLD },
+    { 0x25, 0xF, 0xA, (void*)str_MLF },
+    { 0x25, 0xF, 0xA, (void*)str_MLF },
+    { 0x25, 0xF, 0xA, (void*)str_MLR },
+    { 0x25, 0xF, 0xA, (void*)str_MLR },
+    { 0x25, 0xF, 0xA, (void*)str_MLR },
+    { 0x25, 0xF, 0xA, (void*)str_M },
+};
+/* 02001514 */
+TM_STRING dbg_eftype_s_str[6] = {
+    { 0x28, 0xF, 0xA, (void*)str_S1 },
+    { 0x28, 0xF, 0xA, (void*)str_S2 },
+    { 0x28, 0xF, 0xA, (void*)str_S3 },
+    { 0x28, 0xF, 0xA, (void*)str_S4 },
+    { 0x28, 0xF, 0xA, (void*)str_S5 },
+    { 0x28, 0xF, 0xA, (void*)str_S6 },
+};
+/* 0200155C */
+TM_STRING dbg_eftype_usemj_str[8] = {
+    { 0x2A, 0xF, 0xA, (void*)str_empty_7 },
+    { 0x2A, 0xF, 0xA, (void*)str_USEMJ },
+    { 0x25, 0x18, 0xA, (void*)str_BASE },
+    { 0x25, 0x18, 0xA, (void*)str_BEFORE },
+    { 0x25, 0x18, 0xA, (void*)str_BACK },
+    { 0x25, 0x18, 0xA, (void*)str_empty_7 },
+    { 0x25, 0x18, 0xA, (void*)str_empty_7 },
+    { 0x25, 0x18, 0xA, (void*)str_empty_7 },
+};
+/* 020015BC */
+TM_STRING dbg_cancel_on_str[8] = {
+    { 0x2C, 0xD, 0xA, (void*)str_H },
+    { 0x2B, 0xD, 0xA, (void*)str_D },
+    { 0x2A, 0xD, 0xA, (void*)str_A },
+    { 0x29, 0xD, 0xA, (void*)str_M_2 },
+    { 0x28, 0xD, 0xA, (void*)str_R },
+    { 0x27, 0xD, 0xA, (void*)str_C },
+    { 0x26, 0xD, 0xA, (void*)str_S },
+    { 0x25, 0xD, 0xA, (void*)str_S },
+};
+/* 0200161C */
+TM_STRING dbg_cancel_off_str[24] = {
+    { 0x2C, 0xD, 0xA, (void*)str_h },
+    { 0x2B, 0xD, 0xA, (void*)str_d },
+    { 0x2A, 0xD, 0xA, (void*)str_a },
+    { 0x29, 0xD, 0xA, (void*)str_m },
+    { 0x28, 0xD, 0xA, (void*)str_r },
+    { 0x27, 0xD, 0xA, (void*)str_c },
+    { 0x26, 0xD, 0xA, (void*)str_s },
+    { 0x25, 0xD, 0xA, (void*)str_s },
+    { 0x25, 0x11, 0xA, (void*)str_H },
+    { 0x26, 0x11, 0xA, (void*)str_D },
+    { 0x27, 0x11, 0xA, (void*)str_A },
+    { 0x28, 0x11, 0xA, (void*)str_M_2 },
+    { 0x29, 0x11, 0xA, (void*)str_R },
+    { 0x2A, 0x11, 0xA, (void*)str_C },
+    { 0x2B, 0x11, 0xA, (void*)str_S },
+    { 0x2C, 0x11, 0xA, (void*)str_S },
+    { 0x25, 0x11, 0xA, (void*)str_h_2 },
+    { 0x26, 0x11, 0xA, (void*)str_d_2 },
+    { 0x27, 0x11, 0xA, (void*)str_a_2 },
+    { 0x28, 0x11, 0xA, (void*)str_m_2 },
+    { 0x29, 0x11, 0xA, (void*)str_r_2 },
+    { 0x2A, 0x11, 0xA, (void*)str_c_2 },
+    { 0x2B, 0x11, 0xA, (void*)str_s_2 },
+    { 0x2C, 0x11, 0xA, (void*)str_s_2 },
+};
+/* 0200173C */
+TM_STRING dbg_koc_cmlp_str[11] = {
+    { 0xC, 0x19, 0xA, (void*)str_NM },
+    { 0xC, 0x19, 0xA, (void*)str_DM },
+    { 0xC, 0x19, 0xA, (void*)str_CA },
+    { 0xC, 0x19, 0xA, (void*)str_CU },
+    { 0xC, 0x19, 0xA, (void*)str_AT },
+    { 0xC, 0x19, 0xA, (void*)str_BT },
+    { 0xC, 0x19, 0xA, (void*)str_EX },
+    { 0xC, 0x19, 0xA, (void*)str_SA },
+    { 0x20, 0x19, 0xA, (void*)str_CB },
+    { 0x20, 0x19, 0xA, (void*)str_empty_8 },
+    { 0x20, 0x19, 0xA, (void*)str_empty_8 },
+};
+/* 020017C0 */
+TM_STRING dbg_koc_cml2_str[11] = {
+    { 0xC, 0x1A, 0xA, (void*)str_NM },
+    { 0xC, 0x1A, 0xA, (void*)str_DM },
+    { 0xC, 0x1A, 0xA, (void*)str_CA },
+    { 0xC, 0x1A, 0xA, (void*)str_CU },
+    { 0xC, 0x1A, 0xA, (void*)str_AT },
+    { 0xC, 0x1A, 0xA, (void*)str_BT },
+    { 0xC, 0x1A, 0xA, (void*)str_EX },
+    { 0xC, 0x1A, 0xA, (void*)str_SA },
+    { 0x20, 0x1A, 0xA, (void*)str_CB },
+    { 0x20, 0x1A, 0xA, (void*)str_empty_8 },
+    { 0x20, 0x1A, 0xA, (void*)str_empty_8 },
+};
+/* 02001844 */
+TM_STRING dbg_koc_cmsw_str[11] = {
+    { 0x20, 0x19, 0xA, (void*)str_NM },
+    { 0x20, 0x19, 0xA, (void*)str_DM },
+    { 0x20, 0x19, 0xA, (void*)str_CA },
+    { 0x20, 0x19, 0xA, (void*)str_CU },
+    { 0x20, 0x19, 0xA, (void*)str_AT },
+    { 0x20, 0x19, 0xA, (void*)str_SA },
+    { 0x20, 0x19, 0xA, (void*)str_BT },
+    { 0x20, 0x19, 0xA, (void*)str_EX },
+    { 0x20, 0x19, 0xA, (void*)str_CB },
+    { 0x20, 0x19, 0xA, (void*)str_empty_8 },
+    { 0x20, 0x19, 0xA, (void*)str_empty_8 },
+};
+/* 020018C8 */
+TM_STRING dbg_koc_cmja_str[11] = {
+    { 0x20, 0x1A, 0xA, (void*)str_NM },
+    { 0x20, 0x1A, 0xA, (void*)str_DM },
+    { 0x20, 0x1A, 0xA, (void*)str_CA },
+    { 0x20, 0x1A, 0xA, (void*)str_CU },
+    { 0x20, 0x1A, 0xA, (void*)str_AT },
+    { 0x20, 0x1A, 0xA, (void*)str_SA },
+    { 0x20, 0x1A, 0xA, (void*)str_BT },
+    { 0x20, 0x1A, 0xA, (void*)str_EX },
+    { 0x20, 0x1A, 0xA, (void*)str_CB },
+    { 0x20, 0x1A, 0xA, (void*)str_empty_8 },
+    { 0x20, 0x1A, 0xA, (void*)str_empty_8 },
+};
+/* 0200194C */
+TM_STRING dbg_koc_cmoa_str[9] = {
+    { 0x20, 0x1B, 0xA, (void*)str_NM },
+    { 0x20, 0x1B, 0xA, (void*)str_DM },
+    { 0x20, 0x1B, 0xA, (void*)str_CA },
+    { 0x20, 0x1B, 0xA, (void*)str_CU },
+    { 0x20, 0x1B, 0xA, (void*)str_AT },
+    { 0x20, 0x1B, 0xA, (void*)str_SA },
+    { 0x20, 0x1B, 0xA, (void*)str_BT },
+    { 0x20, 0x1B, 0xA, (void*)str_EX },
+    { 0x20, 0x1B, 0xA, (void*)str_CB },
+};
+/* 020019B8: provisional name */
+TM_STRING dbg_koc_str[9] = {
+    { 0x20, 2, 2, (void*)str_NM },
+    { 0x20, 2, 2, (void*)str_DM },
+    { 0x20, 2, 2, (void*)str_CA },
+    { 0x20, 2, 2, (void*)str_CU },
+    { 0x20, 2, 2, (void*)str_AT },
+    { 0x20, 2, 2, (void*)str_SA },
+    { 0x20, 2, 2, (void*)str_BT },
+    { 0x20, 2, 2, (void*)str_EX },
+    { 0x20, 2, 2, (void*)str_CB },
+};
+/* 02001A24 */
+TM_STRING dbg_waza_kind_str[8] = {
+    { 0x25, 4, 0xA, (void*)str_nmA },
+    { 0x25, 4, 0xA, (void*)str_hsA },
+    { 0x25, 4, 0xA, (void*)str_nmC },
+    { 0x25, 4, 0xA, (void*)str_hsC },
+    { 0x25, 4, 0xA, (void*)str_saA },
+    { 0x25, 4, 0xA, (void*)str_saC },
+    { 0x25, 4, 0xA, (void*)str_paA },
+    { 0x25, 4, 0xA, (void*)str_huA },
+};
+/* 02001A84 */
+TM_STRING dbg_bg_name_str[25] = {
+    { 2, 3, 2, (void*)str_BLANK },
+    { 2, 3, 2, (void*)str_FLASH },
+    { 2, 3, 2, (void*)str_GILL },
+    { 2, 3, 2, (void*)str_N_Y_0 },
+    { 2, 3, 2, (void*)str_JAPAN_0 },
+    { 2, 3, 2, (void*)str_HONGKONG_0 },
+    { 2, 3, 2, (void*)str_ENGLAND },
+    { 2, 3, 2, (void*)str_RUSSIA_0 },
+    { 2, 3, 2, (void*)str_GERMANY },
+    { 2, 3, 2, (void*)str_JAPAN_1 },
+    { 2, 3, 2, (void*)str_AFRICA },
+    { 2, 3, 2, (void*)str_BRAZIL },
+    { 2, 3, 2, (void*)str_HONGKONG_1 },
+    { 2, 3, 2, (void*)str_N_Y_1 },
+    { 2, 3, 2, (void*)str_BRAZIL_1 },
+    { 2, 3, 2, (void*)str_OROMEKA },
+    { 2, 3, 2, (void*)str_JAPAN_20 },
+    { 2, 3, 2, (void*)str_JAPAN_21 },
+    { 2, 3, 2, (void*)str_CHAINA },
+    { 2, 3, 2, (void*)str_JAPAN_30 },
+    { 2, 3, 2, (void*)str_RUSSIA_1 },
+    { 2, 3, 2, (void*)str_RUSSIA_2 },
+    { 2, 3, 2, (void*)str_FRANCE },
+    { 2, 3, 2, (void*)str_BONUS_1 },
+    { 2, 3, 2, (void*)str_BONUS_2 },
+};
+/* 02001BB0 */
+TM_STRING dbg_char_name_str[25] = {
+    { 0xB, 3, 2, (void*)str_GILL_2 },
+    { 0xB, 3, 2, (void*)str_ALEX },
+    { 0xB, 3, 2, (void*)str_RYU },
+    { 0xB, 3, 2, (void*)str_YUN },
+    { 0xB, 3, 2, (void*)str_DUDLEY },
+    { 0xB, 3, 2, (void*)str_NECRO },
+    { 0xB, 3, 2, (void*)str_HUGO },
+    { 0xB, 3, 2, (void*)str_IBUKI },
+    { 0xB, 3, 2, (void*)str_ELENA },
+    { 0xB, 3, 2, (void*)str_ORO },
+    { 0xB, 3, 2, (void*)str_YANG },
+    { 0xB, 3, 2, (void*)str_KEN },
+    { 0xB, 3, 2, (void*)str_SEAN },
+    { 0xB, 3, 2, (void*)str_URIEN },
+    { 0xB, 3, 2, (void*)str_GOUKI_1 },
+    { 0xB, 3, 2, (void*)str_GOUKI_2 },
+    { 0xB, 3, 2, (void*)str_CHUN_LI },
+    { 0xB, 3, 2, (void*)str_KARATE },
+    { 0xB, 3, 2, (void*)str_Q },
+    { 0xB, 3, 2, (void*)str_No_12 },
+    { 0xB, 3, 2, (void*)str_BIKEI },
+    { 0xB, 3, 2, (void*)str_empty_9 },
+    { 0xB, 3, 2, (void*)str_empty_9 },
+    { 0xB, 3, 2, (void*)str_empty_9 },
+    { 0xB, 3, 2, (void*)str_ETC },
+};
+/* 02001CDC */
+TM_STRING dbg_act_kind_str[994] = {
+    { 3, 5, 4, (void*)str_NORMAL },
+    { 3, 5, 4, (void*)str_DAMAGE },
+    { 3, 5, 4, (void*)str_CATCH },
+    { 3, 5, 4, (void*)str_CAUGHT },
+    { 3, 5, 4, (void*)str_ATTACK },
+    { 3, 5, 4, (void*)str_SP_AT },
+    { 3, 5, 4, (void*)str_BUTTOBI },
+    { 3, 5, 4, (void*)str_UNION },
+    { 3, 5, 4, (void*)str_ETC },
+    { 3, 5, 4, (void*)str_ETC },
+    { 3, 5, 4, (void*)str_EFFECT },
+    { 3, 5, 4, (void*)str_empty_9 },
+    { 3, 7, 4, (void*)str_KAMAE },
+    { 3, 7, 4, (void*)str_HURIMUKI },
+    { 3, 7, 4, (void*)str_FRONT_WALK },
+    { 3, 7, 4, (void*)str_BACK_WALK },
+    { 3, 7, 4, (void*)str_DASH_HUMIKOMI },
+    { 3, 7, 4, (void*)str_DASH_TOBINOKI },
+    { 3, 7, 4, (void*)str_KAGAMU },
+    { 3, 7, 4, (void*)str_KAGAMI_KAMAE },
+    { 3, 7, 4, (void*)str_KAGAMI_TURN },
+    { 3, 7, 4, (void*)str_KAGAMI_F_WALK },
+    { 3, 7, 4, (void*)str_KAGAMI_B_WALK },
+    { 3, 7, 4, (void*)str_STAND_UP },
+    { 3, 7, 4, (void*)str_JUMP_JUNBI },
+    { 3, 7, 4, (void*)str_SP_JUMP_JUNBI },
+    { 3, 7, 4, (void*)str_JUMP_FRONT },
+    { 3, 7, 4, (void*)str_JUMP_VERTICAL },
+    { 3, 7, 4, (void*)str_JUMP_BACK },
+    { 3, 7, 4, (void*)str_S_JUMP_FRONT },
+    { 3, 7, 4, (void*)str_S_JUMP_V },
+    { 3, 7, 4, (void*)str_S_JUMP_BACK },
+    { 3, 7, 4, (void*)str_SP_JUMP_FRONT },
+    { 3, 7, 4, (void*)str_SP_JUMP_V },
+    { 3, 7, 4, (void*)str_SP_JUMP_BACK },
+    { 3, 7, 4, (void*)str_WALK_END },
+    { 3, 7, 4, (void*)str_PARING_HEAD },
+    { 3, 7, 4, (void*)str_PARING_UP },
+    { 3, 7, 4, (void*)str_PARING_DOWN },
+    { 3, 7, 4, (void*)str_PARING_AIR_F },
+    { 3, 7, 4, (void*)str_PARING_AIR_B },
+    { 3, 7, 4, (void*)str_GUARD_HEAD },
+    { 3, 7, 4, (void*)str_GUARD_UP },
+    { 3, 7, 4, (void*)str_GUARD_DOWN },
+    { 3, 7, 4, (void*)str_GUARD_AIR },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_P_BREAK_ZUJOU },
+    { 3, 7, 4, (void*)str_P_BREAK_UP },
+    { 3, 7, 4, (void*)str_P_BREAK_DOWN },
+    { 3, 7, 4, (void*)str_P_BREAK_AIR_F },
+    { 3, 7, 4, (void*)str_P_BREAK_AIR_R },
+    { 3, 7, 4, (void*)str_TUKAMIHAZUSI },
+    { 3, 7, 4, (void*)str_TUKAMIHAZUSARE },
+    { 3, 7, 4, (void*)str_TUKAMIHAZUSI },
+    { 3, 7, 4, (void*)str_TUKAMIHAZUSARE },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_GUARD_HEAD_2 },
+    { 3, 7, 4, (void*)str_GUARD_UP_2 },
+    { 3, 7, 4, (void*)str_GUARD_DOWN_2 },
+    { 3, 7, 4, (void*)str_GUARD_AIR_2 },
+    { 3, 7, 4, (void*)str_HUSHIN_HEAD },
+    { 3, 7, 4, (void*)str_HUSHIN_UP },
+    { 3, 7, 4, (void*)str_HUSHIN_DOWN },
+    { 3, 7, 4, (void*)str_HUSHIN_AIR },
+    { 3, 7, 4, (void*)str_FACE_S },
+    { 3, 7, 4, (void*)str_FACE_M },
+    { 3, 7, 4, (void*)str_FACE_L },
+    { 3, 7, 4, (void*)str_FACE_SP },
+    { 3, 7, 4, (void*)str_FOOK_OKU_S },
+    { 3, 7, 4, (void*)str_FOOK_OKU_M },
+    { 3, 7, 4, (void*)str_FOOK_OKU_L },
+    { 3, 7, 4, (void*)str_FOOK_OKU_SP },
+    { 3, 7, 4, (void*)str_FOOK_TEMAE_S },
+    { 3, 7, 4, (void*)str_FOOK_TEMAE_M },
+    { 3, 7, 4, (void*)str_FOOK_TEMAE_L },
+    { 3, 7, 4, (void*)str_FOOK_TEMAE_SP },
+    { 3, 7, 4, (void*)str_UPPER_S },
+    { 3, 7, 4, (void*)str_UPPER_M },
+    { 3, 7, 4, (void*)str_UPPER_L },
+    { 3, 7, 4, (void*)str_UPPER_SP },
+    { 3, 7, 4, (void*)str_NOUTEN_S },
+    { 3, 7, 4, (void*)str_NOUTEN_M },
+    { 3, 7, 4, (void*)str_NOUTEN_L },
+    { 3, 7, 4, (void*)str_NOUTEN_SP },
+    { 3, 7, 4, (void*)str_BODY_BROW_S },
+    { 3, 7, 4, (void*)str_BODY_BROW_M },
+    { 3, 7, 4, (void*)str_BODY_BROW_L },
+    { 3, 7, 4, (void*)str_BODY_BROW_SP },
+    { 3, 7, 4, (void*)str_BODY_UPPER_S },
+    { 3, 7, 4, (void*)str_BODY_UPPER_M },
+    { 3, 7, 4, (void*)str_BODY_UPPER_L },
+    { 3, 7, 4, (void*)str_BODY_UPPER_SP },
+    { 3, 7, 4, (void*)str_TATAKI_S },
+    { 3, 7, 4, (void*)str_TATAKI_M },
+    { 3, 7, 4, (void*)str_TATAKI_L },
+    { 3, 7, 4, (void*)str_TATAKI_SP },
+    { 3, 7, 4, (void*)str_TATAKI_V_S },
+    { 3, 7, 4, (void*)str_TATAKI_V_M },
+    { 3, 7, 4, (void*)str_TATAKI_V_L },
+    { 3, 7, 4, (void*)str_TATAKI_V_SP },
+    { 3, 7, 4, (void*)str_NOBASITA_TE_S },
+    { 3, 7, 4, (void*)str_NOBASITA_TE_M },
+    { 3, 7, 4, (void*)str_NOBASITA_TE_L },
+    { 3, 7, 4, (void*)str_NOBASITA_TE_SP },
+    { 3, 7, 4, (void*)str_KAGAMI_S },
+    { 3, 7, 4, (void*)str_KAGAMI_M },
+    { 3, 7, 4, (void*)str_KAGAMI_L },
+    { 3, 7, 4, (void*)str_KAGAMI_SP },
+    { 3, 7, 4, (void*)str_KGM_TATAKI_S },
+    { 3, 7, 4, (void*)str_KGM_TATAKI_M },
+    { 3, 7, 4, (void*)str_KGM_TATAKI_L },
+    { 3, 7, 4, (void*)str_KGM_TATAKI_SP },
+    { 3, 7, 4, (void*)str_KGM_TTKI_V_S },
+    { 3, 7, 4, (void*)str_KGM_TTKI_V_M },
+    { 3, 7, 4, (void*)str_KGM_TTKI_V_L },
+    { 3, 7, 4, (void*)str_KGM_TTKI_V_SP },
+    { 3, 7, 4, (void*)str_NEKOROBI_S },
+    { 3, 7, 4, (void*)str_NEKOROBI_M },
+    { 3, 7, 4, (void*)str_NEKOROBI_L },
+    { 3, 7, 4, (void*)str_NEKOROBI_SP },
+    { 3, 7, 4, (void*)str_OKIAGARI },
+    { 3, 7, 4, (void*)str_OKIAGARI_F },
+    { 3, 7, 4, (void*)str_OKIAGARI_B },
+    { 3, 7, 4, (void*)str_LOSE_NO_STAND },
+    { 3, 7, 4, (void*)str_LOSE_SONABA },
+    { 3, 7, 4, (void*)str_LOSE_KAGAMI },
+    { 3, 7, 4, (void*)str_PIYO },
+    { 3, 7, 4, (void*)str_UKEMI_MOVE_F },
+    { 3, 7, 4, (void*)str_UKEMI_MOVE_R },
+    { 3, 7, 4, (void*)str_SHIMEOTASARE },
+    { 3, 7, 4, (void*)str_TATI_TOUKETU_S },
+    { 3, 7, 4, (void*)str_TATI_TOUKETU_M },
+    { 3, 7, 4, (void*)str_TATI_TOUKETU_L },
+    { 3, 7, 4, (void*)str_TATI_TOUKETU_P },
+    { 3, 7, 4, (void*)str_KGM_TOUKETU_S },
+    { 3, 7, 4, (void*)str_KGM_TOUKETU_M },
+    { 3, 7, 4, (void*)str_KGM_TOUKETU_L },
+    { 3, 7, 4, (void*)str_KGM_TOUKETU_P },
+    { 3, 7, 4, (void*)str_TATI_DENGEKI_S },
+    { 3, 7, 4, (void*)str_TATI_DENGEKI_M },
+    { 3, 7, 4, (void*)str_TATI_DENGEKI_L },
+    { 3, 7, 4, (void*)str_TATI_DENGEKI_P },
+    { 3, 7, 4, (void*)str_KGM_DENGEKI_S },
+    { 3, 7, 4, (void*)str_KGM_DENGEKI_M },
+    { 3, 7, 4, (void*)str_KGM_DENGEKI_L },
+    { 3, 7, 4, (void*)str_KGM_DENGEKI_P },
+    { 3, 7, 4, (void*)str_OKIAGARI_FRONT },
+    { 3, 7, 4, (void*)str_OKIAGARI_REAR },
+    { 3, 7, 4, (void*)str_TATI_MOE_S },
+    { 3, 7, 4, (void*)str_TATI_MOE_M },
+    { 3, 7, 4, (void*)str_TATI_MOE_L },
+    { 3, 7, 4, (void*)str_TATI_MOE_SP },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_AIR_NORMAL },
+    { 3, 7, 4, (void*)str_ASIBARAI_SIRI },
+    { 3, 7, 4, (void*)str_ASIB_TUNNOMERI },
+    { 3, 7, 4, (void*)str_NOKEZORI },
+    { 3, 7, 4, (void*)str_KUNOJI },
+    { 3, 7, 4, (void*)str_KIRIMOMI },
+    { 3, 7, 4, (void*)str_UPPER },
+    { 3, 7, 4, (void*)str_BODY_UPPER },
+    { 3, 7, 4, (void*)str_HARAYARARE },
+    { 3, 7, 4, (void*)str_TATAKI_AIR },
+    { 3, 7, 4, (void*)str_TTKI_V_AIR },
+    { 3, 7, 4, (void*)str_HUMI_ASIB },
+    { 3, 7, 4, (void*)str_FACE },
+    { 3, 7, 4, (void*)str_ASIB_SIRI_LOSE },
+    { 3, 7, 4, (void*)str_ASIB_TUN_LOSE },
+    { 3, 7, 4, (void*)str_DENKI },
+    { 3, 7, 4, (void*)str_KUNOJI_NOKE },
+    { 3, 7, 4, (void*)str_BODY_UPPER_SP_2 },
+    { 3, 7, 4, (void*)str_HANEAGARI },
+    { 3, 7, 4, (void*)str_TOUKETSU_A },
+    { 3, 7, 4, (void*)str_BODY_SLAM },
+    { 3, 7, 4, (void*)str_IPPONZEOI },
+    { 3, 7, 4, (void*)str_TOMOE_RYU },
+    { 3, 7, 4, (void*)str_MONKEY_FLIP },
+    { 3, 7, 4, (void*)str_TOMOE_ORO },
+    { 3, 7, 4, (void*)str_SNAKE_FANG },
+    { 3, 7, 4, (void*)str_FLANKEN_S },
+    { 3, 7, 4, (void*)str_KISHINRIKI },
+    { 3, 7, 4, (void*)str_SPLASH_M },
+    { 3, 7, 4, (void*)str_HARAIGOSHI },
+    { 3, 7, 4, (void*)str_ALEX_B_D },
+    { 3, 7, 4, (void*)str_GILL_3 },
+    { 3, 7, 4, (void*)str_HANEKAERI_HARA },
+    { 3, 7, 4, (void*)str_S_HANEAGARI },
+    { 3, 7, 4, (void*)str_TATUMAKIZANKU },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_CATCH_1 },
+    { 3, 7, 4, (void*)str_CATCH_2 },
+    { 3, 7, 4, (void*)str_CATCH_3 },
+    { 3, 7, 4, (void*)str_CATCH_4 },
+    { 3, 7, 4, (void*)str_CATCH_5 },
+    { 3, 7, 4, (void*)str_CATCH_6 },
+    { 3, 7, 4, (void*)str_CATCH_7 },
+    { 3, 7, 4, (void*)str_CATCH_8 },
+    { 3, 7, 4, (void*)str_CATCH_9 },
+    { 3, 7, 4, (void*)str_CATCH_10 },
+    { 3, 7, 4, (void*)str_CATCH_11 },
+    { 3, 7, 4, (void*)str_CATCH_12 },
+    { 3, 7, 4, (void*)str_CATCH_13 },
+    { 3, 7, 4, (void*)str_CATCH_14 },
+    { 3, 7, 4, (void*)str_CATCH_15 },
+    { 3, 7, 4, (void*)str_CATCH_16 },
+    { 3, 7, 4, (void*)str_CATCH_17 },
+    { 3, 7, 4, (void*)str_CATCH_18 },
+    { 3, 7, 4, (void*)str_CATCH_19 },
+    { 3, 7, 4, (void*)str_CATCH_20 },
+    { 3, 7, 4, (void*)str_CATCH_21 },
+    { 3, 7, 4, (void*)str_CATCH_22 },
+    { 3, 7, 4, (void*)str_CATCH_23 },
+    { 3, 7, 4, (void*)str_CATCH_24 },
+    { 3, 7, 4, (void*)str_CATCH_25 },
+    { 3, 7, 4, (void*)str_CATCH_26 },
+    { 3, 7, 4, (void*)str_CATCH_27 },
+    { 3, 7, 4, (void*)str_CATCH_28 },
+    { 3, 7, 4, (void*)str_CATCH_29 },
+    { 3, 7, 4, (void*)str_CATCH_30 },
+    { 3, 7, 4, (void*)str_CATCH_31 },
+    { 3, 7, 4, (void*)str_CATCH_32 },
+    { 3, 7, 4, (void*)str_CATCH_33 },
+    { 3, 7, 4, (void*)str_CATCH_34 },
+    { 3, 7, 4, (void*)str_CATCH_35 },
+    { 3, 7, 4, (void*)str_CATCH_36 },
+    { 3, 7, 4, (void*)str_CATCH_37 },
+    { 3, 7, 4, (void*)str_CATCH_38 },
+    { 3, 7, 4, (void*)str_CATCH_39 },
+    { 3, 7, 4, (void*)str_CATCH_40 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_ALEX_ZUTUKI },
+    { 3, 7, 4, (void*)str_ALEX_BODY_S },
+    { 3, 7, 4, (void*)str_ALEX_BACK_D },
+    { 3, 7, 4, (void*)str_ALEX_POWER_B },
+    { 3, 7, 4, (void*)str_ALEX_SLEEPER },
+    { 3, 7, 4, (void*)str_RYU_SEOINAGE },
+    { 3, 7, 4, (void*)str_IBUKI_2 },
+    { 3, 7, 4, (void*)str_DADLEY_L_B },
+    { 3, 7, 4, (void*)str_IBUKI_KUBIORI },
+    { 3, 7, 4, (void*)str_NECRO_S_T },
+    { 3, 7, 4, (void*)str_RYU_TOMOENAGE },
+    { 3, 7, 4, (void*)str_YUN_HIZAGERI },
+    { 3, 7, 4, (void*)str_ORO_KUBISIME },
+    { 3, 7, 4, (void*)str_NECRO_G_S },
+    { 3, 7, 4, (void*)str_DUDDLEY_D_S },
+    { 3, 7, 4, (void*)str_YUN_MONKEY_F },
+    { 3, 7, 4, (void*)str_ORO_TOMOENAGE },
+    { 3, 7, 4, (void*)str_ORO_NIOURIKI },
+    { 3, 7, 4, (void*)str_ORO_GIGOKU_G },
+    { 3, 7, 4, (void*)str_YUN_2 },
+    { 3, 7, 4, (void*)str_NECRO_SNAKE_F },
+    { 3, 7, 4, (void*)str_NECRO_F_S },
+    { 3, 7, 4, (void*)str_IBUKI_HARAIG },
+    { 3, 7, 4, (void*)str_GILL_SPLASH_M },
+    { 3, 7, 4, (void*)str_KEN_HIZAGERI },
+    { 3, 7, 4, (void*)str_ORO_KISINRIKI },
+    { 3, 7, 4, (void*)str_SEAN_TACKLE },
+    { 3, 7, 4, (void*)str_ALEX_HYPER_B },
+    { 3, 7, 4, (void*)str_NECRO_SLAM_D },
+    { 3, 7, 4, (void*)str_ELENA_ASINAGE },
+    { 3, 7, 4, (void*)str_GILL_IMPACT_C },
+    { 3, 7, 4, (void*)str_ALEX_S_H_B },
+    { 3, 7, 4, (void*)str_ALEX_F_N_D },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_IBUKI_2 },
+    { 3, 7, 4, (void*)str_IBUKI_YOROI_D },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_MAWARIKOMI_M_F },
+    { 3, 7, 4, (void*)str_HUGO_BODY_S },
+    { 3, 7, 4, (void*)str_HUGO_N_G_T },
+    { 3, 7, 4, (void*)str_HUGO_M_S_P },
+    { 3, 7, 4, (void*)str_HUGO_S_D_B_B },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_S_PUNCH_A },
+    { 3, 7, 4, (void*)str_S_PUNCH_B },
+    { 3, 7, 4, (void*)str_S_PUNCH_C },
+    { 3, 7, 4, (void*)str_M_PUNCH_A },
+    { 3, 7, 4, (void*)str_M_PUNCH_B },
+    { 3, 7, 4, (void*)str_M_PUNCH_C },
+    { 3, 7, 4, (void*)str_L_PUNCH_A },
+    { 3, 7, 4, (void*)str_L_PUNCH_B },
+    { 3, 7, 4, (void*)str_L_PUNCH_C },
+    { 3, 7, 4, (void*)str_S_KICK_A },
+    { 3, 7, 4, (void*)str_S_KICK_B },
+    { 3, 7, 4, (void*)str_S_KICK_C },
+    { 3, 7, 4, (void*)str_M_KICK_A },
+    { 3, 7, 4, (void*)str_M_KICK_B },
+    { 3, 7, 4, (void*)str_M_KICK_C },
+    { 3, 7, 4, (void*)str_L_KICK_A },
+    { 3, 7, 4, (void*)str_L_KICK_B },
+    { 3, 7, 4, (void*)str_L_KICK_C },
+    { 3, 7, 4, (void*)str_KAGAMI_P_A },
+    { 3, 7, 4, (void*)str_KAGAMI_P_B },
+    { 3, 7, 4, (void*)str_KAGAMI_P_C },
+    { 3, 7, 4, (void*)str_KAGAMI_P_A },
+    { 3, 7, 4, (void*)str_KAGAMI_P_B },
+    { 3, 7, 4, (void*)str_KAGAMI_P_C },
+    { 3, 7, 4, (void*)str_KAGAMI_P_A },
+    { 3, 7, 4, (void*)str_KAGAMI_P_B },
+    { 3, 7, 4, (void*)str_KAGAMI_P_C },
+    { 3, 7, 4, (void*)str_KAGAMI_K_A },
+    { 3, 7, 4, (void*)str_KAGAMI_K_B },
+    { 3, 7, 4, (void*)str_KAGAMI_K_C },
+    { 3, 7, 4, (void*)str_KAGAMI_K_A },
+    { 3, 7, 4, (void*)str_KAGAMI_K_B },
+    { 3, 7, 4, (void*)str_KAGAMI_K_C },
+    { 3, 7, 4, (void*)str_KAGAMI_K_A },
+    { 3, 7, 4, (void*)str_KAGAMI_K_B },
+    { 3, 7, 4, (void*)str_KAGAMI_K_C },
+    { 3, 7, 4, (void*)str_V_JUMP_P_S_A },
+    { 3, 7, 4, (void*)str_V_JUMP_P_S_B },
+    { 3, 7, 4, (void*)str_V_JUMP_P_M_A },
+    { 3, 7, 4, (void*)str_V_JUMP_P_M_B },
+    { 3, 7, 4, (void*)str_V_JUMP_P_L_A },
+    { 3, 7, 4, (void*)str_V_JUMP_P_L_B },
+    { 3, 7, 4, (void*)str_V_JUMP_K_S_A },
+    { 3, 7, 4, (void*)str_V_JUMP_K_S_B },
+    { 3, 7, 4, (void*)str_V_JUMP_K_M_A },
+    { 3, 7, 4, (void*)str_V_JUMP_K_M_B },
+    { 3, 7, 4, (void*)str_V_JUMP_K_L_A },
+    { 3, 7, 4, (void*)str_V_JUMP_K_L_B },
+    { 3, 7, 4, (void*)str_F_JUMP_P_S_A },
+    { 3, 7, 4, (void*)str_F_JUMP_P_S_B },
+    { 3, 7, 4, (void*)str_F_JUMP_P_M_A },
+    { 3, 7, 4, (void*)str_F_JUMP_P_M_B },
+    { 3, 7, 4, (void*)str_F_JUMP_P_L_A },
+    { 3, 7, 4, (void*)str_F_JUMP_P_L_B },
+    { 3, 7, 4, (void*)str_F_JUMP_K_S_A },
+    { 3, 7, 4, (void*)str_F_JUMP_K_S_B },
+    { 3, 7, 4, (void*)str_F_JUMP_K_M_A },
+    { 3, 7, 4, (void*)str_F_JUMP_K_M_B },
+    { 3, 7, 4, (void*)str_F_JUMP_K_L_A },
+    { 3, 7, 4, (void*)str_F_JUMP_K_L_B },
+    { 3, 7, 4, (void*)str_B_JUMP_P_S_A },
+    { 3, 7, 4, (void*)str_B_JUMP_P_S_B },
+    { 3, 7, 4, (void*)str_B_JUMP_P_M_A },
+    { 3, 7, 4, (void*)str_B_JUMP_P_M_B },
+    { 3, 7, 4, (void*)str_B_JUMP_P_L_A },
+    { 3, 7, 4, (void*)str_B_JUMP_P_L_B },
+    { 3, 7, 4, (void*)str_B_JUMP_K_S_A },
+    { 3, 7, 4, (void*)str_B_JUMP_K_S_B },
+    { 3, 7, 4, (void*)str_B_JUMP_K_M_A },
+    { 3, 7, 4, (void*)str_B_JUMP_K_M_B },
+    { 3, 7, 4, (void*)str_B_JUMP_K_L_A },
+    { 3, 7, 4, (void*)str_B_JUMP_K_L_B },
+    { 3, 7, 4, (void*)str_SP_V_JP_S_P_A },
+    { 3, 7, 4, (void*)str_SP_V_JP_S_P_B },
+    { 3, 7, 4, (void*)str_SP_V_JP_M_P_A },
+    { 3, 7, 4, (void*)str_SP_V_JP_M_P_B },
+    { 3, 7, 4, (void*)str_SP_V_JP_L_P_A },
+    { 3, 7, 4, (void*)str_SP_V_JP_L_P_B },
+    { 3, 7, 4, (void*)str_SP_V_JP_S_K_A },
+    { 3, 7, 4, (void*)str_SP_V_JP_S_K_B },
+    { 3, 7, 4, (void*)str_SP_V_JP_M_K_A },
+    { 3, 7, 4, (void*)str_SP_V_JP_M_K_B },
+    { 3, 7, 4, (void*)str_SP_V_JP_L_K_A },
+    { 3, 7, 4, (void*)str_SP_V_JP_L_K_B },
+    { 3, 7, 4, (void*)str_SP_F_JP_S_P_A },
+    { 3, 7, 4, (void*)str_SP_F_JP_S_P_B },
+    { 3, 7, 4, (void*)str_SP_F_JP_M_P_A },
+    { 3, 7, 4, (void*)str_SP_F_JP_M_P_B },
+    { 3, 7, 4, (void*)str_SP_F_JP_L_P_A },
+    { 3, 7, 4, (void*)str_SP_F_JP_L_P_B },
+    { 3, 7, 4, (void*)str_SP_F_JP_S_K_A },
+    { 3, 7, 4, (void*)str_SP_F_JP_S_K_B },
+    { 3, 7, 4, (void*)str_SP_F_JP_M_K_A },
+    { 3, 7, 4, (void*)str_SP_F_JP_M_K_B },
+    { 3, 7, 4, (void*)str_SP_F_JP_L_K_A },
+    { 3, 7, 4, (void*)str_SP_F_JP_L_K_B },
+    { 3, 7, 4, (void*)str_SP_B_JP_S_P_A },
+    { 3, 7, 4, (void*)str_SP_B_JP_S_P_B },
+    { 3, 7, 4, (void*)str_SP_B_JP_M_P_A },
+    { 3, 7, 4, (void*)str_SP_B_JP_M_P_B },
+    { 3, 7, 4, (void*)str_SP_B_JP_L_P_A },
+    { 3, 7, 4, (void*)str_SP_B_JP_L_P_B },
+    { 3, 7, 4, (void*)str_SP_B_JP_S_K_A },
+    { 3, 7, 4, (void*)str_SP_B_JP_S_K_B },
+    { 3, 7, 4, (void*)str_SP_B_JP_M_K_A },
+    { 3, 7, 4, (void*)str_SP_B_JP_M_K_B },
+    { 3, 7, 4, (void*)str_SP_B_JP_L_K_A },
+    { 3, 7, 4, (void*)str_SP_B_JP_L_K_B },
+    { 3, 7, 4, (void*)str_S_V_JP_S_P_A },
+    { 3, 7, 4, (void*)str_S_V_JP_S_P_B },
+    { 3, 7, 4, (void*)str_S_V_JP_M_P_A },
+    { 3, 7, 4, (void*)str_S_V_JP_M_P_B },
+    { 3, 7, 4, (void*)str_S_V_JP_L_P_A },
+    { 3, 7, 4, (void*)str_S_V_JP_L_P_B },
+    { 3, 7, 4, (void*)str_S_V_JP_S_K_A },
+    { 3, 7, 4, (void*)str_S_V_JP_S_K_B },
+    { 3, 7, 4, (void*)str_S_V_JP_M_K_A },
+    { 3, 7, 4, (void*)str_S_V_JP_M_K_B },
+    { 3, 7, 4, (void*)str_S_V_JP_L_K_A },
+    { 3, 7, 4, (void*)str_S_V_JP_L_K_B },
+    { 3, 7, 4, (void*)str_S_F_JP_S_P_A },
+    { 3, 7, 4, (void*)str_S_F_JP_S_P_B },
+    { 3, 7, 4, (void*)str_S_F_JP_M_P_A },
+    { 3, 7, 4, (void*)str_S_F_JP_M_P_B },
+    { 3, 7, 4, (void*)str_S_F_JP_L_P_A },
+    { 3, 7, 4, (void*)str_S_F_JP_L_P_B },
+    { 3, 7, 4, (void*)str_S_F_JP_S_K_A },
+    { 3, 7, 4, (void*)str_S_F_JP_S_K_B },
+    { 3, 7, 4, (void*)str_S_F_JP_M_K_A },
+    { 3, 7, 4, (void*)str_S_F_JP_M_K_B },
+    { 3, 7, 4, (void*)str_S_F_JP_L_K_A },
+    { 3, 7, 4, (void*)str_S_F_JP_L_K_B },
+    { 3, 7, 4, (void*)str_S_B_JP_S_P_A },
+    { 3, 7, 4, (void*)str_S_B_JP_S_P_B },
+    { 3, 7, 4, (void*)str_S_B_JP_M_P_A },
+    { 3, 7, 4, (void*)str_S_B_JP_M_P_B },
+    { 3, 7, 4, (void*)str_S_B_JP_L_P_A },
+    { 3, 7, 4, (void*)str_S_B_JP_L_P_B },
+    { 3, 7, 4, (void*)str_S_B_JP_S_K_A },
+    { 3, 7, 4, (void*)str_S_B_JP_S_K_B },
+    { 3, 7, 4, (void*)str_S_B_JP_M_K_A },
+    { 3, 7, 4, (void*)str_S_B_JP_M_K_B },
+    { 3, 7, 4, (void*)str_S_B_JP_L_K_A },
+    { 3, 7, 4, (void*)str_S_B_JP_L_K_B },
+    { 3, 7, 4, (void*)str_TUKAMIKAKARI_A },
+    { 3, 7, 4, (void*)str_TUKAMIKAKARI_B },
+    { 3, 7, 4, (void*)str_TUKAMIKAKARI_C },
+    { 3, 7, 4, (void*)str_TUKAMIKAKARI_D },
+    { 3, 7, 4, (void*)str_TUKAMIKAKARI_E },
+    { 3, 7, 4, (void*)str_TUKAMIKAKARI_F },
+    { 3, 7, 4, (void*)str_TUKAMI_AIR_A },
+    { 3, 7, 4, (void*)str_TUKAMI_AIR_B },
+    { 3, 7, 4, (void*)str_TUKAMI_AIR_C },
+    { 3, 7, 4, (void*)str_TUKAMI_AIR_D },
+    { 3, 7, 4, (void*)str_TUKAMI_AIR_E },
+    { 3, 7, 4, (void*)str_TUKAMI_AIR_F },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_UP_P_GUARD_P_S },
+    { 3, 7, 4, (void*)str_UP_P_GUARD_P_M },
+    { 3, 7, 4, (void*)str_UP_P_GUARD_P_L },
+    { 3, 7, 4, (void*)str_UP_P_GUARD_K_S },
+    { 3, 7, 4, (void*)str_UP_P_GUARD_K_M },
+    { 3, 7, 4, (void*)str_UP_P_GUARD_K_L },
+    { 3, 7, 4, (void*)str_D_P_GUARD_P_S },
+    { 3, 7, 4, (void*)str_D_P_GUARD_P_M },
+    { 3, 7, 4, (void*)str_D_P_GUARD_P_L },
+    { 3, 7, 4, (void*)str_D_P_GUARD_K_S },
+    { 3, 7, 4, (void*)str_D_P_GUARD_K_M },
+    { 3, 7, 4, (void*)str_D_P_GUARD_K_L },
+    { 3, 7, 4, (void*)str_FUSHIN_P_S },
+    { 3, 7, 4, (void*)str_FUSHIN_P_M },
+    { 3, 7, 4, (void*)str_FUSHIN_P_L },
+    { 3, 7, 4, (void*)str_FUSHIN_K_S },
+    { 3, 7, 4, (void*)str_FUSHIN_K_M },
+    { 3, 7, 4, (void*)str_FUSHIN_K_L },
+    { 3, 7, 4, (void*)str_OKIAGARI_P_S },
+    { 3, 7, 4, (void*)str_OKIAGARI_P_M },
+    { 3, 7, 4, (void*)str_OKIAGARI_P_L },
+    { 3, 7, 4, (void*)str_OKIAGARI_K_S },
+    { 3, 7, 4, (void*)str_OKIAGARI_K_M },
+    { 3, 7, 4, (void*)str_OKIAGARI_K_L },
+    { 3, 7, 4, (void*)str_ATTACK_1_S },
+    { 3, 7, 4, (void*)str_ATTACK_1_M },
+    { 3, 7, 4, (void*)str_ATTACK_1_L },
+    { 3, 7, 4, (void*)str_ATTACK_1_SP },
+    { 3, 7, 4, (void*)str_ATTACK_2_S },
+    { 3, 7, 4, (void*)str_ATTACK_2_M },
+    { 3, 7, 4, (void*)str_ATTACK_2_L },
+    { 3, 7, 4, (void*)str_ATTACK_2_SP },
+    { 3, 7, 4, (void*)str_ATTACK_3_S },
+    { 3, 7, 4, (void*)str_ATTACK_3_M },
+    { 3, 7, 4, (void*)str_ATTACK_3_L },
+    { 3, 7, 4, (void*)str_ATTACK_3_SP },
+    { 3, 7, 4, (void*)str_ATTACK_4_S },
+    { 3, 7, 4, (void*)str_ATTACK_4_M },
+    { 3, 7, 4, (void*)str_ATTACK_4_L },
+    { 3, 7, 4, (void*)str_ATTACK_4_SP },
+    { 3, 7, 4, (void*)str_ATTACK_5_S },
+    { 3, 7, 4, (void*)str_ATTACK_5_M },
+    { 3, 7, 4, (void*)str_ATTACK_5_L },
+    { 3, 7, 4, (void*)str_ATTACK_5_SP },
+    { 3, 7, 4, (void*)str_ATTACK_6_S },
+    { 3, 7, 4, (void*)str_ATTACK_6_M },
+    { 3, 7, 4, (void*)str_ATTACK_6_L },
+    { 3, 7, 4, (void*)str_ATTACK_6_SP },
+    { 3, 7, 4, (void*)str_ATTACK_7_S },
+    { 3, 7, 4, (void*)str_ATTACK_7_M },
+    { 3, 7, 4, (void*)str_ATTACK_7_L },
+    { 3, 7, 4, (void*)str_ATTACK_7_SP },
+    { 3, 7, 4, (void*)str_ATTACK_8_S },
+    { 3, 7, 4, (void*)str_ATTACK_8_M },
+    { 3, 7, 4, (void*)str_ATTACK_8_L },
+    { 3, 7, 4, (void*)str_ATTACK_8_SP },
+    { 3, 7, 4, (void*)str_ATTACK_9_S },
+    { 3, 7, 4, (void*)str_ATTACK_9_M },
+    { 3, 7, 4, (void*)str_ATTACK_9_L },
+    { 3, 7, 4, (void*)str_ATTACK_9_SP },
+    { 3, 7, 4, (void*)str_ATTACK_10_S },
+    { 3, 7, 4, (void*)str_ATTACK_10_M },
+    { 3, 7, 4, (void*)str_ATTACK_10_L },
+    { 3, 7, 4, (void*)str_ATTACK_10_SP },
+    { 3, 7, 4, (void*)str_ATTACK_11_S },
+    { 3, 7, 4, (void*)str_ATTACK_11_M },
+    { 3, 7, 4, (void*)str_ATTACK_11_L },
+    { 3, 7, 4, (void*)str_ATTACK_11_SP },
+    { 3, 7, 4, (void*)str_ATTACK_12_S },
+    { 3, 7, 4, (void*)str_ATTACK_12_M },
+    { 3, 7, 4, (void*)str_ATTACK_12_L },
+    { 3, 7, 4, (void*)str_ATTACK_12_SP },
+    { 3, 7, 4, (void*)str_ATTACK_13_S },
+    { 3, 7, 4, (void*)str_ATTACK_13_M },
+    { 3, 7, 4, (void*)str_ATTACK_13_L },
+    { 3, 7, 4, (void*)str_ATTACK_13_SP },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_HANASARE },
+    { 3, 7, 4, (void*)str_HANASARE },
+    { 3, 7, 4, (void*)str_HANASARE },
+    { 3, 7, 4, (void*)str_HANASARE },
+    { 3, 7, 4, (void*)str_HANASARE },
+    { 3, 7, 4, (void*)str_HANASARE },
+    { 3, 7, 4, (void*)str_HANASARE },
+    { 3, 7, 4, (void*)str_HANASARE },
+    { 3, 7, 4, (void*)str_HANASARE },
+    { 3, 7, 4, (void*)str_HANASARE },
+    { 3, 7, 4, (void*)str_HANASARE },
+    { 3, 7, 4, (void*)str_HANASARE },
+    { 3, 7, 4, (void*)str_HANASARE },
+    { 3, 7, 4, (void*)str_HANASARE },
+    { 3, 7, 4, (void*)str_HANASARE },
+    { 3, 7, 4, (void*)str_HANASARE },
+    { 3, 7, 4, (void*)str_HANASARE },
+    { 3, 7, 4, (void*)str_HANASARE },
+    { 3, 7, 4, (void*)str_HANASARE },
+    { 3, 7, 4, (void*)str_HANASARE },
+    { 3, 7, 4, (void*)str_HANASARE },
+    { 3, 7, 4, (void*)str_HANASARE },
+    { 3, 7, 4, (void*)str_HANASARE },
+    { 3, 7, 4, (void*)str_HANASARE },
+    { 3, 7, 4, (void*)str_HANASARE },
+    { 3, 7, 4, (void*)str_HANASARE },
+    { 3, 7, 4, (void*)str_HANASARE },
+    { 3, 7, 4, (void*)str_HANASARE },
+    { 3, 7, 4, (void*)str_HANASARE },
+    { 3, 7, 4, (void*)str_HANASARE },
+    { 3, 7, 4, (void*)str_HANASARE },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_EFF01_CHAR },
+    { 3, 7, 4, (void*)str_EFF13_CHAR },
+    { 3, 7, 4, (void*)str_BONUS_CHAR },
+    { 3, 7, 4, (void*)str_JUDGEMENT_GAL },
+    { 3, 7, 4, (void*)str_JUDGEMENT_GAL },
+    { 3, 7, 4, (void*)str_JUDGEMENT_GAL },
+    { 3, 7, 4, (void*)str_JUDGEMENT_GAL },
+    { 3, 7, 4, (void*)str_JUDGEMENT_GAL },
+    { 3, 7, 4, (void*)str_JUDGEMENT_GAL },
+    { 3, 7, 4, (void*)str_JUDGEMENT_GAL },
+    { 3, 7, 4, (void*)str_JUDGEMENT_GAL },
+    { 3, 7, 4, (void*)str_EXTRA },
+    { 3, 7, 4, (void*)str_PLEF },
+    { 3, 7, 4, (void*)str_SELECT },
+    { 3, 7, 4, (void*)str_ETC_1 },
+    { 3, 7, 4, (void*)str_ETC_2 },
+    { 3, 7, 4, (void*)str_ETC_3 },
+    { 3, 7, 4, (void*)str_RUCCIA },
+    { 3, 7, 4, (void*)str_AFRICA_2 },
+    { 3, 7, 4, (void*)str_N_Y },
+    { 3, 7, 4, (void*)str_HONGKONG },
+    { 3, 7, 4, (void*)str_JAPAN2 },
+    { 3, 7, 4, (void*)str_GERMANY_2 },
+    { 3, 7, 4, (void*)str_BRAZIL_2 },
+    { 3, 7, 4, (void*)str_ORUMEKA },
+    { 3, 7, 4, (void*)str_ENGLAND_2 },
+    { 3, 7, 4, (void*)str_JAPAN_3 },
+    { 3, 7, 4, (void*)str_GILL_STAGE },
+    { 3, 7, 4, (void*)str_JAPAN_11 },
+    { 3, 7, 4, (void*)str_BONUS },
+    { 3, 7, 4, (void*)str_FRANCE_2 },
+    { 3, 7, 4, (void*)str_CHAINA_2 },
+    { 3, 7, 4, (void*)str_BRAZIL_1_2 },
+    { 3, 7, 4, (void*)str_JAPAN_10 },
+    { 3, 7, 4, (void*)str_ENDING },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_APPEAR_JUNBI_1 },
+    { 3, 7, 4, (void*)str_APPEAR_JUNBI_2 },
+    { 3, 7, 4, (void*)str_APPEAR_JUNBI_3 },
+    { 3, 7, 4, (void*)str_APPEAR_JUNBI_4 },
+    { 3, 7, 4, (void*)str_APPEAR_JUNBI_5 },
+    { 3, 7, 4, (void*)str_APPEAR_JUNBI_6 },
+    { 3, 7, 4, (void*)str_APPEAR_JUNBI_7 },
+    { 3, 7, 4, (void*)str_APPEAR_JUNBI_8 },
+    { 3, 7, 4, (void*)str_APPEAR_1 },
+    { 3, 7, 4, (void*)str_APPEAR_2 },
+    { 3, 7, 4, (void*)str_APPEAR_3 },
+    { 3, 7, 4, (void*)str_APPEAR_4 },
+    { 3, 7, 4, (void*)str_APPEAR_5 },
+    { 3, 7, 4, (void*)str_APPEAR_6 },
+    { 3, 7, 4, (void*)str_APPEAR_7 },
+    { 3, 7, 4, (void*)str_APPEAR_8 },
+    { 3, 7, 4, (void*)str_SP_APPEAR_1 },
+    { 3, 7, 4, (void*)str_SP_APPEAR_2 },
+    { 3, 7, 4, (void*)str_SP_APPEAR_3 },
+    { 3, 7, 4, (void*)str_SP_APPEAR_4 },
+    { 3, 7, 4, (void*)str_SP_APPEAR_5 },
+    { 3, 7, 4, (void*)str_SP_APPEAR_6 },
+    { 3, 7, 4, (void*)str_SP_APPEAR_7 },
+    { 3, 7, 4, (void*)str_SP_APPEAR_8 },
+    { 3, 7, 4, (void*)str_ZANNEN_1 },
+    { 3, 7, 4, (void*)str_ZANNEN_2 },
+    { 3, 7, 4, (void*)str_ZANNEN_3 },
+    { 3, 7, 4, (void*)str_ZANNEN_4 },
+    { 3, 7, 4, (void*)str_ZANNEN_5 },
+    { 3, 7, 4, (void*)str_ZANNEN_6 },
+    { 3, 7, 4, (void*)str_ZANNEN_7 },
+    { 3, 7, 4, (void*)str_ZANNEN_8 },
+    { 3, 7, 4, (void*)str_WIN_1 },
+    { 3, 7, 4, (void*)str_WIN_2 },
+    { 3, 7, 4, (void*)str_WIN_3 },
+    { 3, 7, 4, (void*)str_WIN_4 },
+    { 3, 7, 4, (void*)str_WIN_5 },
+    { 3, 7, 4, (void*)str_WIN_6 },
+    { 3, 7, 4, (void*)str_WIN_7 },
+    { 3, 7, 4, (void*)str_WIN_8 },
+    { 3, 7, 4, (void*)str_SP_WIN_1 },
+    { 3, 7, 4, (void*)str_SP_WIN_2 },
+    { 3, 7, 4, (void*)str_SP_WIN_3 },
+    { 3, 7, 4, (void*)str_SP_WIN_4 },
+    { 3, 7, 4, (void*)str_SP_WIN_5 },
+    { 3, 7, 4, (void*)str_SP_WIN_6 },
+    { 3, 7, 4, (void*)str_SP_WIN_7 },
+    { 3, 7, 4, (void*)str_SP_WIN_8 },
+    { 3, 7, 4, (void*)str_JUDGMENT_WAIT },
+    { 3, 7, 4, (void*)str_JUDGMENT_WAIT },
+    { 3, 7, 4, (void*)str_JUDGMENT_WAIT },
+    { 3, 7, 4, (void*)str_JUDGMENT_WAIT },
+    { 3, 7, 4, (void*)str_JUDGMENT_WIN },
+    { 3, 7, 4, (void*)str_JUDGMENT_WIN },
+    { 3, 7, 4, (void*)str_JUDGMENT_WIN },
+    { 3, 7, 4, (void*)str_JUDGMENT_WIN },
+    { 3, 7, 4, (void*)str_JUDGMENT_LOSE },
+    { 3, 7, 4, (void*)str_JUDGMENT_LOSE },
+    { 3, 7, 4, (void*)str_JUDGMENT_LOSE },
+    { 3, 7, 4, (void*)str_JUDGMENT_LOSE },
+    { 3, 7, 4, (void*)str_WAIT },
+    { 3, 7, 4, (void*)str_AFRICA_JUMP },
+    { 3, 7, 4, (void*)str_AFRICA_LAND },
+    { 3, 7, 4, (void*)str_SEAN_BALL_HIT },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_BONUS_WIN_1 },
+    { 3, 7, 4, (void*)str_BONUS_WIN_2 },
+    { 3, 7, 4, (void*)str_BONUS_WIN_3 },
+    { 3, 7, 4, (void*)str_APPEAR_USE },
+    { 3, 7, 4, (void*)str_APPEAR_USE },
+    { 3, 7, 4, (void*)str_APPEAR_USE },
+    { 3, 7, 4, (void*)str_APPEAR_USE },
+    { 3, 7, 4, (void*)str_APPEAR_USE },
+    { 3, 7, 4, (void*)str_APPEAR_USE },
+    { 3, 7, 4, (void*)str_APPEAR_USE },
+    { 3, 7, 4, (void*)str_APPEAR_USE },
+    { 3, 7, 4, (void*)str_APPEAR_USE },
+    { 3, 7, 4, (void*)str_APPEAR_USE },
+    { 3, 7, 4, (void*)str_APPEAR_USE },
+    { 3, 7, 4, (void*)str_APPEAR_USE },
+    { 3, 7, 4, (void*)str_APPEAR_USE },
+    { 3, 7, 4, (void*)str_APPEAR_USE },
+    { 3, 7, 4, (void*)str_APPEAR_USE },
+    { 3, 7, 4, (void*)str_APPEAR_USE },
+    { 3, 7, 4, (void*)str_APPEAR_USE },
+    { 3, 7, 4, (void*)str_APPEAR_USE },
+    { 3, 7, 4, (void*)str_APPEAR_USE },
+    { 3, 7, 4, (void*)str_APPEAR_USE },
+    { 3, 7, 4, (void*)str_APPEAR_USE },
+    { 3, 7, 4, (void*)str_APPEAR_USE },
+    { 3, 7, 4, (void*)str_APPEAR_USE },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 7, 4, (void*)str_empty_10 },
+};
+/* 02004B74 */
+const TM_STRING* dbg_act_name_tbl[11] = {
+    (const TM_STRING*)&dbg_act_kind_str[12],
+    (const TM_STRING*)&dbg_act_kind_str[77],
+    (const TM_STRING*)&dbg_act_kind_str[231],
+    (const TM_STRING*)&dbg_act_kind_str[279],
+    (const TM_STRING*)&dbg_act_kind_str[329],
+    (const TM_STRING*)&dbg_act_kind_str[610],
+    (const TM_STRING*)&dbg_act_kind_str[181],
+    (const TM_STRING*)&dbg_act_kind_str[722],
+    (const TM_STRING*)&dbg_act_kind_str[895],
+    (const TM_STRING*)&dbg_act_kind_str[895],
+    (const TM_STRING*)&dbg_act_kind_str[853],
+};
+/* 02004BA0 */
+u32* dbg_pl_char_tbl[29][9] = {
+    { gill_nmca, gill_dmca, gill_caca, gill_cuca, gill_atca, gill_saca, gill_btca, gill_exca, gill_yuca },
+    { alex_nmca, alex_dmca, alex_caca, alex_cuca, alex_atca, alex_saca, alex_btca, alex_exca, alex_yuca },
+    { ryu_nmca, ryu_dmca, ryu_caca, ryu_cuca, ryu_atca, ryu_saca, ryu_btca, ryu_exca, ryu_yuca },
+    { yun_nmca, yun_dmca, yun_caca, yun_cuca, yun_atca, yun_saca, yun_btca, yun_exca, yun_yuca },
+    { dudley_nmca, dudley_dmca, dudley_caca, dudley_cuca, dudley_atca, dudley_saca, dudley_btca, dudley_exca, dudley_yuca },
+    { necro_nmca, necro_dmca, necro_caca, necro_cuca, necro_atca, necro_saca, necro_btca, necro_exca, necro_yuca },
+    { hugo_nmca, hugo_dmca, hugo_caca, hugo_cuca, hugo_atca, hugo_saca, hugo_btca, hugo_exca, hugo_yuca },
+    { ibuki_nmca, ibuki_dmca, ibuki_caca, ibuki_cuca, ibuki_atca, ibuki_saca, ibuki_btca, ibuki_exca, ibuki_yuca },
+    { elena_nmca, elena_dmca, elena_caca, elena_cuca, elena_atca, elena_saca, elena_btca, elena_exca, elena_yuca },
+    { oro_nmca, oro_dmca, oro_caca, oro_cuca, oro_atca, oro_saca, oro_btca, oro_exca, oro_yuca },
+    { yang_nmca, yang_dmca, yang_caca, yang_cuca, yang_atca, yang_saca, yang_btca, yang_exca, yang_yuca },
+    { ken_nmca, ken_dmca, ken_caca, ken_cuca, ken_atca, ken_saca, ken_btca, ken_exca, ken_yuca },
+    { sean_nmca, sean_dmca, sean_caca, sean_cuca, sean_atca, sean_saca, sean_btca, sean_exca, sean_yuca },
+    { urien_nmca, urien_dmca, urien_caca, urien_cuca, urien_atca, urien_saca, urien_btca, urien_exca, urien_yuca },
+    { gouki1_nmca, gouki1_dmca, gouki1_caca, gouki1_cuca, gouki1_atca, gouki1_saca, gouki1_btca, gouki1_exca, gouki1_yuca },
+    { gouki2_nmca, gouki2_dmca, gouki2_caca, gouki2_cuca, gouki2_atca, gouki2_saca, gouki2_btca, gouki2_exca, gouki2_yuca },
+    { chun_nmca, chun_dmca, chun_caca, chun_cuca, chun_atca, chun_saca, chun_btca, chun_exca, chun_yuca },
+    { makoto_nmca, makoto_dmca, makoto_caca, makoto_cuca, makoto_atca, makoto_saca, makoto_btca, makoto_exca, makoto_yuca },
+    { q_nmca, q_dmca, q_caca, q_cuca, q_atca, q_saca, q_btca, q_exca, q_yuca },
+    { no12_nmca, no12_dmca, no12_caca, no12_cuca, no12_atca, no12_saca, no12_btca, no12_exca, no12_yuca },
+    { remy_nmca, remy_dmca, remy_caca, remy_cuca, remy_atca, remy_saca, remy_btca, remy_exca, remy_yuca },
+    { gill_nmca, gill_dmca, gill_caca, gill_cuca, gill_atca, gill_saca, gill_btca, gill_exca, gill_yuca },
+    { gill_nmca, gill_dmca, gill_caca, gill_cuca, gill_atca, gill_saca, gill_btca, gill_exca, gill_yuca },
+    { gill_nmca, gill_dmca, gill_caca, gill_cuca, gill_atca, gill_saca, gill_btca, gill_exca, gill_yuca },
+    { ef01_char_table, ef13_char_table, bonus_char_table, (u32*)&ef13_char_table_225[108], (u32*)&ef13_char_table_225[116], (u32*)&ef13_char_table_225[124], (u32*)&ef13_char_table_225[132], (u32*)&ef13_char_table_225[140], (u32*)&ef13_char_table_225[148] },
+    { (u32*)&ef13_char_table_225[156], (u32*)&ef13_char_table_225[164], ag_face_panel_table, plef_char_table, sel_pl_char_table, etc_char_table, etc2_char_table, etc3_char_table, rca_char_table },
+    { afc_char_table, usa_char_table, hkg_char_table, (u32*)&rca_char_table_023[36], grm_char_table, brz_char_table, orm_char_table, eng_char_table, jp3_char_table },
+    { fnl_char_table, j11_char_table, bns_char_table, frc_char_table, chn_char_table, brz_char_table, j10_char_table, end_char_table, op_char_table },
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+};

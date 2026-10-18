@@ -7,9 +7,6 @@
 
 #pragma section TBL
 
-extern void end_1900_0();
-extern void end_1900_common();
-
 const PANEL end_1900_bg0_cell_tbl[10] = {
     { 0, 1 }, { 64, 2 }, { 128, 3 }, { 192, 0 }, { 4096, 4 }, { 4160, 5 }, { 4224, 6 }, { 4288, 7 },
     { 8192, 8 }, { 8256, 9 },

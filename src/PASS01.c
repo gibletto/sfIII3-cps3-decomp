@@ -19,7 +19,7 @@
 
 
 void Passive01(PLW* wk) {
-    Passive01_Tbl[(s16)Pattern_Index[wk->wu.id]](wk);
+    Passive01_Tbl[Pattern_Index[wk->wu.id]](wk);
 }
 
 

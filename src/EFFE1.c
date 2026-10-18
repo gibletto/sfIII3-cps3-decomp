@@ -4,7 +4,7 @@
  * effect_E1_init creates one of two etc_char_table sprites (patterns 0x59 and 0x5A) at the screen
  * centre (0x200, 0x90) on BG1, with zoom size 63 and priorities 0x45 / 0x44. end_main.c starts
  * both, together with two F5 effects, when it draws the opening Capcom logo
- * (opening_capcom_logo_draw). effect_E1_move starts the pattern once and then simply draws the
+ * (opening_title_01). effect_E1_move starts the pattern once and then simply draws the
  * sprite every frame.
  */
 
@@ -32,7 +32,7 @@ void effect_E1_move(WORK_Other* ewk) {
     }
     ewk->wu.position_x = (u16)ewk->wu.xyz[0].disp.pos & 0x3FF;
     ewk->wu.position_y = (u16)ewk->wu.xyz[1].disp.pos & 0x3FF;
-    sort_push_request4(ewk);
+    sort_push_request4(&ewk->wu);
 }
 
 

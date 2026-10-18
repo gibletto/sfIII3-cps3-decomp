@@ -27,6 +27,215 @@
 #include "sys_config_2.h"
 #include "cps3.h"
 
+extern const TM_STRING chute_mode_str_tbl_0[];
+extern const TM_STRING chute_mode_str_tbl_1[];
+extern const TM_STRING chute_mode_str_tbl_10[];
+extern const TM_STRING chute_mode_str_tbl_11[];
+extern const TM_STRING chute_mode_str_tbl_2[];
+extern const TM_STRING chute_mode_str_tbl_3[];
+extern const TM_STRING chute_mode_str_tbl_4[];
+extern const TM_STRING chute_mode_str_tbl_5[];
+extern const TM_STRING chute_mode_str_tbl_6[];
+extern const TM_STRING chute_mode_str_tbl_7[];
+extern const TM_STRING chute_mode_str_tbl_8[];
+extern const TM_STRING chute_mode_str_tbl_9[];
+extern const TM_STRING coin_setting_str_tbl_0[];
+extern const TM_STRING coin_setting_str_tbl_1[];
+extern const TM_STRING coin_setting_str_tbl_10[];
+extern const TM_STRING coin_setting_str_tbl_11[];
+extern const TM_STRING coin_setting_str_tbl_12[];
+extern const TM_STRING coin_setting_str_tbl_13[];
+extern const TM_STRING coin_setting_str_tbl_14[];
+extern const TM_STRING coin_setting_str_tbl_15[];
+extern const TM_STRING coin_setting_str_tbl_16[];
+extern const TM_STRING coin_setting_str_tbl_17[];
+extern const TM_STRING coin_setting_str_tbl_18[];
+extern const TM_STRING coin_setting_str_tbl_2[];
+extern const TM_STRING coin_setting_str_tbl_3[];
+extern const TM_STRING coin_setting_str_tbl_4[];
+extern const TM_STRING coin_setting_str_tbl_5[];
+extern const TM_STRING coin_setting_str_tbl_6[];
+extern const TM_STRING coin_setting_str_tbl_7[];
+extern const TM_STRING coin_setting_str_tbl_8[];
+extern const TM_STRING coin_setting_str_tbl_9[];
+extern const TM_STRING monitor_str_tbl_1[];
+extern const TM_STRING on_off_str_tbl_0[];
+extern const TM_STRING on_off_str_tbl_1[];
+extern const TM_STRING sound_mode_str_tbl_0[];
+extern const TM_STRING sound_mode_str_tbl_1[];
+extern const TM_STRING sound_mode_str_tbl_2[];
+extern const TM_STRING sound_mode_str_tbl_3[];
+extern const TM_STRING sound_mode_str_tbl_4[];
+extern const TM_STRING sound_mode_str_tbl_5[];
+
+s8 cfg_top_cursor;  /* 0206AC74 */
+s8 cfg_coin;  /* 0206AC75 */
+s8 cfg_continue;  /* 0206AC76 */
+s8 cfg_chute;  /* 0206AC77 */
+s8 cfg_sound_mode;  /* 0206AC78 */
+s8 cfg_demo_sound;  /* 0206AC79 */
+s8 cfg_flip_old;  /* 0206AC7A */
+s8 cfg_free_play;  /* 0206AC7B */
+s8 cfg_coin_special;  /* 0206AC7C */
+s8 cfg_cont_forced;  /* 0206AC7D */
+s8 cfg_changed;  /* 0206AC7E */
+s8 cfg_voice;  /* 0206AC7F */
+s8 cfg_dispenser;  /* 0206AC80 */
+s8 cfg_win_point;  /* 0206AC81 */
+s8 cfg_win_point_vs;  /* 0206AC82 */
+s8 cfg_extra;  /* 0206AC83 */
+u8 cfg_extra_tail[1];  /* after cfg_extra; nothing refers to it by name or address */
+s8 cfg_cursor;  /* 0206AC85 */
+s8 cfg_cursor_old;  /* 0206AC86 */
+s8 cfg_coin_step;  /* 0206AC87 */
+s8 cfg_coin_sel;  /* 0206AC88 */
+s8 cfg_reserve;  /* 0206AC89 */
+s32 cfg_item_max;  /* 0206AC8C */
+
+
+s8 event_off_flag = 1;  /* 02007D50 */
+/* 02007D54 */
+const TM_STRING* coin_setting_str_tbl[19] = {
+    coin_setting_str_tbl_0,
+    coin_setting_str_tbl_1,
+    coin_setting_str_tbl_2,
+    coin_setting_str_tbl_3,
+    coin_setting_str_tbl_4,
+    coin_setting_str_tbl_5,
+    coin_setting_str_tbl_6,
+    coin_setting_str_tbl_7,
+    coin_setting_str_tbl_8,
+    coin_setting_str_tbl_9,
+    coin_setting_str_tbl_10,
+    coin_setting_str_tbl_11,
+    coin_setting_str_tbl_12,
+    coin_setting_str_tbl_13,
+    coin_setting_str_tbl_14,
+    coin_setting_str_tbl_15,
+    coin_setting_str_tbl_16,
+    coin_setting_str_tbl_17,
+    coin_setting_str_tbl_18,
+};
+/* 02007DA0 */
+const TM_STRING* chute_mode_str_tbl[12] = {
+    chute_mode_str_tbl_0,
+    chute_mode_str_tbl_1,
+    chute_mode_str_tbl_2,
+    chute_mode_str_tbl_3,
+    chute_mode_str_tbl_4,
+    chute_mode_str_tbl_5,
+    chute_mode_str_tbl_6,
+    chute_mode_str_tbl_7,
+    chute_mode_str_tbl_8,
+    chute_mode_str_tbl_9,
+    chute_mode_str_tbl_10,
+    chute_mode_str_tbl_11,
+};
+/* 02007DD0 */
+const TM_STRING* on_off_str_tbl[2] = {
+    on_off_str_tbl_0,
+    on_off_str_tbl_1,
+};
+/* 02007DD8 */
+const TM_STRING* sound_mode_str_tbl[7] = {
+    sound_mode_str_tbl_0,
+    sound_mode_str_tbl_1,
+    sound_mode_str_tbl_2,
+    sound_mode_str_tbl_3,
+    sound_mode_str_tbl_4,
+    sound_mode_str_tbl_5,
+    on_off_str_tbl_0,
+};
+/* 02007DF4 */
+const TM_STRING* monitor_str_tbl[2] = {
+    sound_mode_str_tbl_5,
+    monitor_str_tbl_1,
+};
+/* 02007DFC */
+void (*config_menu_tbl[2])(void) = {
+    config_menu_init,
+    config_menu_dispatch,
+};
+/* 02007E04 */
+void (*config_page_tbl[3])(void) = {
+    config_top_page,
+    sysconfig_page,
+    gameconfig_page,
+};
+/* 02007E10 */
+void (*config_top_step_tbl[2])(void) = {
+    config_top_draw,
+    config_top_select,
+};
+/* 02007E18 */
+void (*config_top_item_tbl[4])(void) = {
+    config_top_system,
+    config_top_game,
+    config_top_default,
+    config_top_save_exit,
+};
+/* 02007E28 */
+void (*sysconfig_step_tbl[2])(void) = {
+    sysconfig_draw,
+    sysconfig_select,
+};
+/* 02007E30 */
+void (*sysconfig_item_tbl[7])(void) = {
+    sysconfig_coin,
+    sysconfig_chute_mode,
+    sysconfig_continue,
+    sysconfig_monitor,
+    sysconfig_demo_sound,
+    sysconfig_sound_mode,
+    sysconfig_exit,
+};
+/* 02007E4C */
+void (*sysconfig_item_tbl_b[7])(void) = {
+    sysconfig_coin,
+    sysconfig_chute_mode,
+    sysconfig_continue,
+    sysconfig_monitor,
+    sysconfig_demo_sound,
+    sysconfig_sound_mode,
+    sysconfig_exit,
+};
+/* 02007E68 */
+void (*sysconfig_item_card_tbl[9])(void) = {
+    sysconfig_coin,
+    sysconfig_chute_mode,
+    sysconfig_continue,
+    sysconfig_monitor,
+    sysconfig_demo_sound,
+    sysconfig_sound_mode,
+    sysconfig_dispenser,
+    sysconfig_win_point,
+    sysconfig_exit,
+};
+/* 02007E8C */
+void (*sysconfig_item_tbl_c[7])(void) = {
+    sysconfig_coin,
+    sysconfig_chute_mode,
+    sysconfig_continue,
+    sysconfig_monitor,
+    sysconfig_demo_sound,
+    sysconfig_sound_mode,
+    sysconfig_exit,
+};
+/* 02007EA8 */
+void (*sysconfig_item_card_tbl2[10])(void) = {
+    sysconfig_coin,
+    sysconfig_chute_mode,
+    sysconfig_continue,
+    sysconfig_monitor,
+    sysconfig_demo_sound,
+    sysconfig_sound_mode,
+    sysconfig_dispenser,
+    sysconfig_win_point,
+    sysconfig_win_point_human,
+    sysconfig_exit,
+};
+
+
 void tilemap_put_block(u16 x, u16 y, u16 attr, u16 code);
 
 
@@ -240,10 +449,10 @@ void config_top_default(void) {
         }
     }
     if (Area_Type) {
-        tilemap_print_string(0, 0, 0xFFFF, (TM_STRING*)config_reset_guide_scr);
+        tilemap_print_string(0, 0, 0xFFFF, config_reset_guide_scr);
     } else {
-        tilemap_print_script_seq(0, 0, 0xFFFF, (TMSCRIPT*)cfg_top_guide_jp);
-        tilemap_print_script_seq(0, 0, 0xFFFF, (TMSCRIPT*)cfg_top_reset_guide_jp);
+        tilemap_print_script_seq(0, 0, 0xFFFF, cfg_top_guide_jp);
+        tilemap_print_script_seq(0, 0, 0xFFFF, cfg_top_reset_guide_jp);
     }
 }
 
@@ -282,10 +491,10 @@ void config_top_save_exit(void) {
         coin_chute1_w.credits = coin_rate_tbl[Coin_Mode][1];
         coin_chute2_w.per_credit = coin_rate_tbl[Coin_Mode][0];
         coin_chute2_w.credits = coin_rate_tbl[Coin_Mode][1];
-        coin3_coin_rate = coin_rate_tbl[Coin_Mode][0];
-        coin3_credit_rate = coin_rate_tbl[Coin_Mode][1];
-        coin4_coin_rate = coin_rate_tbl[Coin_Mode][0];
-        coin4_credit_rate = coin_rate_tbl[Coin_Mode][1];
+        coin_chute3_w.per_credit = coin_rate_tbl[Coin_Mode][0];
+        coin_chute3_w.credits = coin_rate_tbl[Coin_Mode][1];
+        coin_chute4_w.per_credit = coin_rate_tbl[Coin_Mode][0];
+        coin_chute4_w.credits = coin_rate_tbl[Coin_Mode][1];
         if (Coin_Mode != 17) {
             Two_Coin_Start = 0;
         } else {

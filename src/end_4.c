@@ -44,6 +44,40 @@
 
 
 
+extern const PANEL end_400_panel_tbl_0[];
+extern const PANEL end_400_panel_tbl_1[];
+
+/* 0200692C */
+const PANEL* end_400_panel_tbl[2] = {
+    end_400_panel_tbl_0,
+    end_400_panel_tbl_1,
+};
+/* 02006934 */
+void (*end_400_jp[5])() = {
+    end_400_0000,
+    end_400_1000,
+    end_X_com01,
+    end_X_com01,
+    end_X_com01,
+};
+/* 02006948 */
+void (*end_401_jp[5])() = {
+    end_401_0000,
+    end_401_1000,
+    end_401_2000,
+    end_401_3000,
+    end_401_4000,
+};
+/* 0200695C */
+void (*end_402_jp[5])() = {
+    end_402_0000,
+    end_402_1000,
+    end_X_com01,
+    end_X_com01,
+    end_X_com01,
+};
+
+
 void end_04000(u16 pl_num) {
     switch (end_w.r_no_1) {
     case 0:

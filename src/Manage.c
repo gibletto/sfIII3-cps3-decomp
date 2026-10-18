@@ -77,6 +77,55 @@
 
 
 
+extern const s8 str_199X_CAPCOM[];
+extern const s8 str_EYE_CATCH_Part1[];
+extern const s8 str_EYE_CATCH_Part2[];
+extern const s8 str_FBI[];
+extern const s8 str_INSERT_COIN_2[];
+extern const s8 str_PLAY_DEMO[];
+extern const s8 str_PUSH_1_OR_2_START_BUTTON[];
+extern const s8 str_Q_SOUND[];
+extern const s8 str_RANKING[];
+extern const s8 str_SELECT_PLAYER[];
+extern const s8 str_SELECT_PLAYER_2[];
+extern const s8 str_STREET_FIGHTER_III_2[];
+extern const s8 str_blank_3[];
+
+u8 Debug_w[4];  /* 02017004 */
+s8 MANAGE_X;  /* 02017008 */
+
+
+/* 020006CC */
+/* The attract sequence titles and the coin / start prompts at two screen positions; nothing in the
+   program reads them (provisional name). */
+TM_STRING attract_menu_str[24] = {
+    { 0x13, 8, 0xE, str_Q_SOUND },
+    { 0x10, 8, 0xE, str_EYE_CATCH_Part1 },
+    { 0x10, 8, 0xE, str_EYE_CATCH_Part2 },
+    { 0xE, 8, 0xE, str_STREET_FIGHTER_III_2 },
+    { 0x12, 19, 0xE, str_199X_CAPCOM },
+    { 0x10, 8, 0xE, str_PLAY_DEMO },
+    { 0x10, 8, 0xE, str_RANKING },
+    { 0x10, 8, 0xE, str_FBI },
+    { 0x1B, 8, 0xE, str_Q_SOUND },
+    { 0x18, 8, 0xE, str_EYE_CATCH_Part1 },
+    { 0x18, 8, 0xE, str_EYE_CATCH_Part2 },
+    { 0x16, 8, 0xE, str_STREET_FIGHTER_III_2 },
+    { 0x18, 19, 0xE, str_199X_CAPCOM },
+    { 0x18, 8, 0xE, str_PLAY_DEMO },
+    { 0x18, 8, 0xE, str_RANKING },
+    { 0x18, 8, 0xE, str_FBI },
+    { 0x10, 8, 0xE, str_SELECT_PLAYER },
+    { 0x18, 8, 0xE, str_SELECT_PLAYER_2 },
+    { 0x12, 13, 0xE, str_INSERT_COIN_2 },
+    { 0x12, 13, 0xE, str_blank_3 },
+    { 0xB, 12, 0xE, str_PUSH_1_OR_2_START_BUTTON },
+    { 0x1A, 13, 0xE, str_INSERT_COIN_2 },
+    { 0x1A, 13, 0xE, str_blank_3 },
+    { 0x13, 12, 0xE, str_PUSH_1_OR_2_START_BUTTON },
+};
+
+
 /* provisional name */
 void FBI_Warning(void) {
     void (*jmp_tbl[2])() = { FBI_Warning_1st, FBI_Warning_2nd };

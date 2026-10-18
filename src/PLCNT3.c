@@ -55,7 +55,6 @@ run:
     for (i = 47; i > 0; i--) {
         zanzou_table[0][i] = zanzou_table[0][i - 1];
         zanzou_table[1][i] = zanzou_table[1][i - 1];
-        continue;
     }
     zanzou_table[0]->pos_x = plw[0].wu.position_x;
     zanzou_table[0]->pos_y = plw[0].wu.position_y;
@@ -76,8 +75,8 @@ run:
     zanzou_table[1]->cg_flp = plw[1].wu.cg_flip;
     zanzou_table[1]->kowaza = plw[1].wu.kind_of_waza;
     if (pl_eff_disp_stop == 0) {
-        sort_push_request((WORK_Other*)&plw[0]);
-        sort_push_request((WORK_Other*)&plw[1]);
+        sort_push_request((WORK*)&plw[0]);
+        sort_push_request((WORK*)&plw[1]);
     }
     if (pcon_rno[0] == 2 && pcon_rno[1] == 0 && pcon_rno[2] == 2) {
         return 1;

@@ -144,7 +144,7 @@ void animal_0000(WORK_Other* ewk) {
     case 2:
         add_x_sub(ewk);
         char_move(&ewk->wu);
-        if (!range_x_check3(ewk, 48)) {
+        if (!range_x_check3(&ewk->wu, 48)) {
             ewk->wu.routine_no[1]++;
         }
         break;
@@ -178,7 +178,7 @@ void animal_0001(WORK_Other* ewk) {
     case 2:
         add_x_sub(ewk);
         char_move(&ewk->wu);
-        if (!range_x_check3(ewk, 32)) {
+        if (!range_x_check3(&ewk->wu, 32)) {
             ewk->wu.routine_no[0] = 99;
             ewk->wu.routine_no[1]++;
         }
@@ -209,7 +209,7 @@ void animal_0002(WORK_Other* ewk) {
     case 2:
         add_x_sub(ewk);
         char_move(&ewk->wu);
-        if (!range_x_check3(ewk, 32)) {
+        if (!range_x_check3(&ewk->wu, 32)) {
             ewk->wu.routine_no[0] = 99;
             ewk->wu.routine_no[1]++;
         }
@@ -250,7 +250,7 @@ void animal_0004(WORK_Other* ewk) {
     case 3:
         char_move(&ewk->wu);
         add_x_sub(ewk);
-        if (!range_x_check3(ewk, 32)) {
+        if (!range_x_check3(&ewk->wu, 32)) {
             ewk->wu.routine_no[0] = 99;
             ewk->wu.routine_no[1]++;
         }
@@ -298,7 +298,7 @@ void animal_0005(WORK_Other* ewk) {
     case 4:
         add_x_sub(ewk);
         char_move(&ewk->wu);
-        if (!range_x_check3(ewk, 32)) {
+        if (!range_x_check3(&ewk->wu, 32)) {
             ewk->wu.routine_no[0] = 99;
             ewk->wu.routine_no[1]++;
         }

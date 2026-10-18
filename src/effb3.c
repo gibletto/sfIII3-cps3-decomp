@@ -36,14 +36,17 @@ void set_char_move_init2();
 
 
 
+WORK_Other * oya_adrs;  /* 02068C28 */
+
+
 void effect_B3_move(WORK_Other* ewk) {
-    effb3_oya = (WORK_Other*)ewk->my_master;
-    if (ewk->wu.old_rno[1] != effb3_oya->wu.routine_no[0]) {
+    oya_adrs = (WORK_Other*)ewk->my_master;
+    if (ewk->wu.old_rno[1] != oya_adrs->wu.routine_no[0]) {
         ewk->wu.routine_no[1] = 0;
         ewk->wu.routine_no[2] = 0;
     }
-    ewk->wu.old_rno[1] = effb3_oya->wu.routine_no[0];
-    switch (effb3_oya->wu.routine_no[0]) {
+    ewk->wu.old_rno[1] = oya_adrs->wu.routine_no[0];
+    switch (oya_adrs->wu.routine_no[0]) {
     case 1:
         round_move_init(ewk);
         break;
@@ -53,8 +56,8 @@ void effect_B3_move(WORK_Other* ewk) {
     case 3:
     case 5:
     case 6:
-        ewk->wu.my_mr.size.x = effb3_oya->wu.my_mr.size.x;
-        ewk->wu.my_mr.size.y = effb3_oya->wu.my_mr.size.y;
+        ewk->wu.my_mr.size.x = oya_adrs->wu.my_mr.size.x;
+        ewk->wu.my_mr.size.y = oya_adrs->wu.my_mr.size.y;
         disp_pos_trans_entry5(ewk);
         break;
     case 4:
@@ -88,8 +91,8 @@ void round_move_init(WORK_Other* ewk) {
         ewk->wu.my_mr_flag = 1;
         set_char_move_init2(&ewk->wu, 0, 2, 1, 0);
     case 1:
-        ewk->wu.my_mr.size.x = effb3_oya->wu.my_mr.size.x;
-        ewk->wu.my_mr.size.y = effb3_oya->wu.my_mr.size.y;
+        ewk->wu.my_mr.size.x = oya_adrs->wu.my_mr.size.x;
+        ewk->wu.my_mr.size.y = oya_adrs->wu.my_mr.size.y;
         disp_pos_trans_entry5(ewk);
         break;
     }
@@ -108,14 +111,14 @@ void round_move(WORK_Other* ewk) {
             ewk->wu.xyz[1].disp.pos = 144;
             set_char_move_init2(&ewk->wu, 0, 2, 4, 0);
         } else {
-            Sound_SE(effb3_oya->wu.dir_old);
+            Sound_SE(oya_adrs->wu.dir_old);
             ewk->wu.xyz[0].disp.pos = bg_w.bgw[ewk->wu.my_family - 1].position_x + bg_w.pos_offset;
             ewk->wu.xyz[0].disp.pos -= 32;
             set_char_move_init2(&ewk->wu, 0, 2, 2, 0);
         }
     case 1:
-        ewk->wu.my_mr.size.x = effb3_oya->wu.my_mr.size.x;
-        ewk->wu.my_mr.size.y = effb3_oya->wu.my_mr.size.y;
+        ewk->wu.my_mr.size.x = oya_adrs->wu.my_mr.size.x;
+        ewk->wu.my_mr.size.y = oya_adrs->wu.my_mr.size.y;
         disp_pos_trans_entry5(ewk);
         break;
     }
@@ -135,8 +138,8 @@ void fight_move(WORK_Other* ewk) {
         disp_pos_trans_entry5(ewk);
         break;
     case 1:
-        ewk->wu.my_mr.size.x = effb3_oya->wu.my_mr.size.x;
-        ewk->wu.my_mr.size.y = effb3_oya->wu.my_mr.size.y;
+        ewk->wu.my_mr.size.x = oya_adrs->wu.my_mr.size.x;
+        ewk->wu.my_mr.size.y = oya_adrs->wu.my_mr.size.y;
         disp_pos_trans_entry5(ewk);
         break;
     }
@@ -145,7 +148,7 @@ void fight_move(WORK_Other* ewk) {
 
 
 void fight_col_move(WORK_Other* ewk) {
-    ewk->wu.extra_col = effb3_oya->wu.extra_col;
+    ewk->wu.extra_col = oya_adrs->wu.extra_col;
     disp_pos_trans_entry5(ewk);
 }
 

@@ -18,7 +18,7 @@
 
 
 void Shell07(PLW* wk) {
-    Shell07_Tbl[(s16)Pattern_Index[wk->wu.id]](wk);
+    Shell07_Tbl[Pattern_Index[wk->wu.id]](wk);
 }
 
 

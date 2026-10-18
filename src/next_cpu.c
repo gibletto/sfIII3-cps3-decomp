@@ -78,6 +78,10 @@
 
 
 
+u8 SEL_CPU_X;  /* 02017038 */
+s16 Start_X;  /* 0201703A */
+
+
 /* provisional name */
 s32 Next_CPU(void) {
     void (*Next_CPU_Tbl[10])() = { Next_CPU_1st, Next_CPU_2nd, Next_CPU_3rd, Next_CPU_4th, Next_CPU_5th, Next_CPU_6th, Next_Bonus_1st, Next_Bonus_2nd, Next_Bonus_3rd, Next_Bonus_End };
@@ -201,7 +205,7 @@ void Next_CPU_3rd(void) {
     }
 }
 
-s32 Next_CPU_4th(void) {
+void Next_CPU_4th(void) {
     switch (SC_No[1]) {
     case 0:
         if (Request_Fade(65, 0)) {
@@ -755,7 +759,7 @@ void Next_Bonus_1st(void) {
     effect_58_init(16, 5, 2);
 }
 
-u32 Next_Bonus_2nd(void) {
+void Next_Bonus_2nd(void) {
     switch (SC_No[1]) {
     case 0:
         Check_Auto_Cut();
@@ -1004,7 +1008,7 @@ u16 sw;
         Time_Stop = 2;
         if (VS_Index[PL_id] < 8) {
             Sound_SE(ID + 98);
-            Sound_SE(EM_Select_SE_Data[random_16_com()]);
+            Sound_SE(Voice_EM_Random_Data[random_16_com()]);
         }
         Last_Selected_EM[PL_id] = Temporary_EM[PL_id];
     }
@@ -1060,7 +1064,10 @@ void Setup_Com_Color(void) {
 
 
 
-void Setup_PL_Color(s16 PL_id, u16 sw) {
+void Setup_PL_Color(PL_id, sw)
+s16 PL_id;
+u16 sw;
+{
     s8 id_0;
     s8 id_1;
     if (plw[PL_id ^ 1].wu.operator == 0) {
@@ -1155,7 +1162,10 @@ void Setup_Regular_OBJ(s16 PL_id) {
 
 
 
-void Regular_OBJ_Sub(s16 PL_id, s16 Dir) {
+void Regular_OBJ_Sub(PL_id, Dir)
+s16 PL_id;
+s16 Dir;
+{
     s16 ix = Dir - 1;
     s16 x;
     effect_A9_init(33, EM_List[PL_id][ix], ix + 4, 0);

@@ -25,6 +25,19 @@
 
 
 
+extern const BBBSTable bbbs_level_00[];
+extern const BBBSTable bbbs_level_01[];
+extern const BBBSTable bbbs_level_02[];
+extern const BBBSTable bbbs_level_03[];
+extern const BBBSTable bbbs_level_04[];
+extern const BBBSTable bbbs_level_05[];
+extern const BBBSTable bbbs_level_06[];
+extern const BBBSTable bbbs_level_07[];
+extern const BBBSTable bbbs_level_08[];
+extern const BBBSTable bbbs_level_09[];
+
+
+
 void bbbs_com_execute(PLW* wk) {
     switch (Bonus_Stage_RNO[0]) {
     case 0:
@@ -148,7 +161,9 @@ void makeup_bonus_game_level(s16 ix) {
 
 
 
-s32 set_bonus_game_difficulty(s16 emid) {
+s32 set_bonus_game_difficulty(emid)
+s16 emid;
+{
     s16 s;
 
     s = judge_final[emid][0].vs_cpu_grade[11];
@@ -219,3 +234,9 @@ u16 swdat;
     }
     return 0;
 }
+
+/* 02007C08 */
+const BBBSTable* bbbs_table[2][5] = {
+    { bbbs_level_00, bbbs_level_01, bbbs_level_02, bbbs_level_03, bbbs_level_04 },
+    { bbbs_level_05, bbbs_level_06, bbbs_level_07, bbbs_level_08, bbbs_level_09 },
+};

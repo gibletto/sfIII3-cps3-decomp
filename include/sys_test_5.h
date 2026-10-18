@@ -3,6 +3,5 @@
 
 #include "structs.h"
 
-void coin_lockout_update(void);
 
 #endif

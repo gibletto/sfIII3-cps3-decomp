@@ -13,6 +13,5 @@ void Initialize_EM_Candidate(s16 PL_id);
 void All_Clear_Suicide(void);
 void clear_chainex_check();
 s32 stage_index_get(void);
-s32 stage_intro_value_get(void);
 
 #endif

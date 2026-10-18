@@ -480,37 +480,37 @@ extern const u16 effD4_char_table_000_head[];
 extern const u16 effD4_char_table_001_head[];
 
 /* plef_char_table scripts: 175 entries */
-const u16* const plef_char_table[176] = {
-    plef_char_table_000, plef_char_table_001, plef_char_table_002, plef_char_table_003, plef_char_table_004, plef_char_table_005,
-    plef_char_table_006, plef_char_table_007, plef_char_table_008, plef_char_table_009, plef_char_table_010, plef_char_table_011,
-    plef_char_table_012, plef_char_table_013, plef_char_table_014, plef_char_table_015, plef_char_table_016, plef_char_table_017,
-    plef_char_table_018, plef_char_table_019, plef_char_table_020, plef_char_table_021, plef_char_table_022, plef_char_table_023,
-    plef_char_table_024, plef_char_table_025, plef_char_table_026, plef_char_table_027, plef_char_table_028, plef_char_table_029,
-    plef_char_table_030, plef_char_table_031, plef_char_table_032, plef_char_table_033, plef_char_table_034, plef_char_table_035,
-    plef_char_table_036, plef_char_table_037, plef_char_table_038, plef_char_table_039, plef_char_table_040, plef_char_table_041,
-    plef_char_table_042, plef_char_table_043, plef_char_table_044, plef_char_table_045, plef_char_table_046, plef_char_table_047,
-    plef_char_table_048, plef_char_table_049, plef_char_table_050, plef_char_table_051, plef_char_table_052, plef_char_table_053,
-    plef_char_table_054, plef_char_table_055, plef_char_table_056, plef_char_table_057, plef_char_table_058, plef_char_table_059,
-    plef_char_table_060, plef_char_table_061, plef_char_table_062, plef_char_table_063, plef_char_table_064, plef_char_table_065,
-    plef_char_table_066, plef_char_table_067, plef_char_table_068, plef_char_table_069, plef_char_table_070, plef_char_table_071,
-    plef_char_table_072, plef_char_table_073, plef_char_table_074, plef_char_table_075, plef_char_table_076, plef_char_table_077,
-    plef_char_table_078, plef_char_table_079, plef_char_table_080, plef_char_table_081, plef_char_table_082, plef_char_table_083,
-    plef_char_table_084, plef_char_table_085, plef_char_table_086, plef_char_table_087, plef_char_table_080, plef_char_table_080,
-    plef_char_table_090, plef_char_table_091, plef_char_table_092, plef_char_table_093, plef_char_table_094, plef_char_table_095,
-    plef_char_table_096, plef_char_table_097, plef_char_table_098, plef_char_table_099, plef_char_table_100, plef_char_table_101,
-    plef_char_table_102, plef_char_table_103, plef_char_table_104, plef_char_table_105, plef_char_table_106, plef_char_table_107,
-    plef_char_table_108, plef_char_table_109, plef_char_table_110, plef_char_table_111, plef_char_table_112, plef_char_table_113,
-    plef_char_table_114, plef_char_table_115, plef_char_table_116, plef_char_table_117, plef_char_table_118, plef_char_table_119,
-    plef_char_table_120, plef_char_table_121, plef_char_table_122, plef_char_table_123, plef_char_table_124, plef_char_table_125,
-    plef_char_table_126, plef_char_table_127, plef_char_table_128, plef_char_table_129, plef_char_table_130, plef_char_table_131,
-    plef_char_table_132, plef_char_table_133, plef_char_table_134, plef_char_table_135, plef_char_table_136, plef_char_table_137,
-    plef_char_table_138, plef_char_table_139, plef_char_table_140, plef_char_table_141, plef_char_table_142, plef_char_table_143,
-    plef_char_table_144, plef_char_table_145, plef_char_table_146, plef_char_table_147, plef_char_table_148, plef_char_table_149,
-    plef_char_table_150, plef_char_table_151, plef_char_table_152, plef_char_table_153, plef_char_table_153, plef_char_table_155,
-    plef_char_table_156, plef_char_table_157, plef_char_table_158, plef_char_table_159, plef_char_table_160, plef_char_table_161,
-    plef_char_table_161, plef_char_table_163, plef_char_table_164, plef_char_table_165, plef_char_table_166, plef_char_table_167,
-    plef_char_table_168, plef_char_table_169, plef_char_table_170, plef_char_table_171, plef_char_table_172, plef_char_table_173,
-    plef_char_table_174,
+const u32 plef_char_table[176] = {
+    (u32)plef_char_table_000, (u32)plef_char_table_001, (u32)plef_char_table_002, (u32)plef_char_table_003, (u32)plef_char_table_004, (u32)plef_char_table_005,
+    (u32)plef_char_table_006, (u32)plef_char_table_007, (u32)plef_char_table_008, (u32)plef_char_table_009, (u32)plef_char_table_010, (u32)plef_char_table_011,
+    (u32)plef_char_table_012, (u32)plef_char_table_013, (u32)plef_char_table_014, (u32)plef_char_table_015, (u32)plef_char_table_016, (u32)plef_char_table_017,
+    (u32)plef_char_table_018, (u32)plef_char_table_019, (u32)plef_char_table_020, (u32)plef_char_table_021, (u32)plef_char_table_022, (u32)plef_char_table_023,
+    (u32)plef_char_table_024, (u32)plef_char_table_025, (u32)plef_char_table_026, (u32)plef_char_table_027, (u32)plef_char_table_028, (u32)plef_char_table_029,
+    (u32)plef_char_table_030, (u32)plef_char_table_031, (u32)plef_char_table_032, (u32)plef_char_table_033, (u32)plef_char_table_034, (u32)plef_char_table_035,
+    (u32)plef_char_table_036, (u32)plef_char_table_037, (u32)plef_char_table_038, (u32)plef_char_table_039, (u32)plef_char_table_040, (u32)plef_char_table_041,
+    (u32)plef_char_table_042, (u32)plef_char_table_043, (u32)plef_char_table_044, (u32)plef_char_table_045, (u32)plef_char_table_046, (u32)plef_char_table_047,
+    (u32)plef_char_table_048, (u32)plef_char_table_049, (u32)plef_char_table_050, (u32)plef_char_table_051, (u32)plef_char_table_052, (u32)plef_char_table_053,
+    (u32)plef_char_table_054, (u32)plef_char_table_055, (u32)plef_char_table_056, (u32)plef_char_table_057, (u32)plef_char_table_058, (u32)plef_char_table_059,
+    (u32)plef_char_table_060, (u32)plef_char_table_061, (u32)plef_char_table_062, (u32)plef_char_table_063, (u32)plef_char_table_064, (u32)plef_char_table_065,
+    (u32)plef_char_table_066, (u32)plef_char_table_067, (u32)plef_char_table_068, (u32)plef_char_table_069, (u32)plef_char_table_070, (u32)plef_char_table_071,
+    (u32)plef_char_table_072, (u32)plef_char_table_073, (u32)plef_char_table_074, (u32)plef_char_table_075, (u32)plef_char_table_076, (u32)plef_char_table_077,
+    (u32)plef_char_table_078, (u32)plef_char_table_079, (u32)plef_char_table_080, (u32)plef_char_table_081, (u32)plef_char_table_082, (u32)plef_char_table_083,
+    (u32)plef_char_table_084, (u32)plef_char_table_085, (u32)plef_char_table_086, (u32)plef_char_table_087, (u32)plef_char_table_080, (u32)plef_char_table_080,
+    (u32)plef_char_table_090, (u32)plef_char_table_091, (u32)plef_char_table_092, (u32)plef_char_table_093, (u32)plef_char_table_094, (u32)plef_char_table_095,
+    (u32)plef_char_table_096, (u32)plef_char_table_097, (u32)plef_char_table_098, (u32)plef_char_table_099, (u32)plef_char_table_100, (u32)plef_char_table_101,
+    (u32)plef_char_table_102, (u32)plef_char_table_103, (u32)plef_char_table_104, (u32)plef_char_table_105, (u32)plef_char_table_106, (u32)plef_char_table_107,
+    (u32)plef_char_table_108, (u32)plef_char_table_109, (u32)plef_char_table_110, (u32)plef_char_table_111, (u32)plef_char_table_112, (u32)plef_char_table_113,
+    (u32)plef_char_table_114, (u32)plef_char_table_115, (u32)plef_char_table_116, (u32)plef_char_table_117, (u32)plef_char_table_118, (u32)plef_char_table_119,
+    (u32)plef_char_table_120, (u32)plef_char_table_121, (u32)plef_char_table_122, (u32)plef_char_table_123, (u32)plef_char_table_124, (u32)plef_char_table_125,
+    (u32)plef_char_table_126, (u32)plef_char_table_127, (u32)plef_char_table_128, (u32)plef_char_table_129, (u32)plef_char_table_130, (u32)plef_char_table_131,
+    (u32)plef_char_table_132, (u32)plef_char_table_133, (u32)plef_char_table_134, (u32)plef_char_table_135, (u32)plef_char_table_136, (u32)plef_char_table_137,
+    (u32)plef_char_table_138, (u32)plef_char_table_139, (u32)plef_char_table_140, (u32)plef_char_table_141, (u32)plef_char_table_142, (u32)plef_char_table_143,
+    (u32)plef_char_table_144, (u32)plef_char_table_145, (u32)plef_char_table_146, (u32)plef_char_table_147, (u32)plef_char_table_148, (u32)plef_char_table_149,
+    (u32)plef_char_table_150, (u32)plef_char_table_151, (u32)plef_char_table_152, (u32)plef_char_table_153, (u32)plef_char_table_153, (u32)plef_char_table_155,
+    (u32)plef_char_table_156, (u32)plef_char_table_157, (u32)plef_char_table_158, (u32)plef_char_table_159, (u32)plef_char_table_160, (u32)plef_char_table_161,
+    (u32)plef_char_table_161, (u32)plef_char_table_163, (u32)plef_char_table_164, (u32)plef_char_table_165, (u32)plef_char_table_166, (u32)plef_char_table_167,
+    (u32)plef_char_table_168, (u32)plef_char_table_169, (u32)plef_char_table_170, (u32)plef_char_table_171, (u32)plef_char_table_172, (u32)plef_char_table_173,
+    (u32)plef_char_table_174,
     0
 };
 
@@ -3632,20 +3632,20 @@ const u16 plef_char_table_174[52] = {
 };
 
 /* ef01_char_table scripts: 78 entries */
-const u16* const ef01_char_table[79] = {
-    ef01_char_table_000, ef01_char_table_001, ef01_char_table_002, ef01_char_table_003, ef01_char_table_004, ef01_char_table_005,
-    ef01_char_table_006, ef01_char_table_006, ef01_char_table_008, ef01_char_table_009, ef01_char_table_010, ef01_char_table_011,
-    ef01_char_table_012, ef01_char_table_013, ef01_char_table_014, ef01_char_table_015, ef01_char_table_016, ef01_char_table_017,
-    ef01_char_table_018, ef01_char_table_019, ef01_char_table_020, ef01_char_table_021, ef01_char_table_022, ef01_char_table_023,
-    ef01_char_table_024, ef01_char_table_025, ef01_char_table_026, ef01_char_table_027, ef01_char_table_028, ef01_char_table_029,
-    ef01_char_table_029, ef01_char_table_031, ef01_char_table_032, ef01_char_table_033, ef01_char_table_034, ef01_char_table_035,
-    ef01_char_table_036, ef01_char_table_036, ef01_char_table_038, ef01_char_table_038, ef01_char_table_038, ef01_char_table_038,
-    ef01_char_table_038, ef01_char_table_038, ef01_char_table_038, ef01_char_table_038, ef01_char_table_038, ef01_char_table_047,
-    ef01_char_table_048, ef01_char_table_049, ef01_char_table_050, ef01_char_table_051, ef01_char_table_052, ef01_char_table_053,
-    ef01_char_table_054, ef01_char_table_055, ef01_char_table_056, ef01_char_table_057, ef01_char_table_058, ef01_char_table_059,
-    ef01_char_table_060, ef01_char_table_061, ef01_char_table_062, ef01_char_table_063, ef01_char_table_064, ef01_char_table_065,
-    ef01_char_table_066, ef01_char_table_067, ef01_char_table_068, ef01_char_table_069, ef01_char_table_070, ef01_char_table_071,
-    ef01_char_table_072, ef01_char_table_073, ef01_char_table_074, ef01_char_table_075, ef01_char_table_076, ef01_char_table_077,
+const u32 ef01_char_table[79] = {
+    (u32)ef01_char_table_000, (u32)ef01_char_table_001, (u32)ef01_char_table_002, (u32)ef01_char_table_003, (u32)ef01_char_table_004, (u32)ef01_char_table_005,
+    (u32)ef01_char_table_006, (u32)ef01_char_table_006, (u32)ef01_char_table_008, (u32)ef01_char_table_009, (u32)ef01_char_table_010, (u32)ef01_char_table_011,
+    (u32)ef01_char_table_012, (u32)ef01_char_table_013, (u32)ef01_char_table_014, (u32)ef01_char_table_015, (u32)ef01_char_table_016, (u32)ef01_char_table_017,
+    (u32)ef01_char_table_018, (u32)ef01_char_table_019, (u32)ef01_char_table_020, (u32)ef01_char_table_021, (u32)ef01_char_table_022, (u32)ef01_char_table_023,
+    (u32)ef01_char_table_024, (u32)ef01_char_table_025, (u32)ef01_char_table_026, (u32)ef01_char_table_027, (u32)ef01_char_table_028, (u32)ef01_char_table_029,
+    (u32)ef01_char_table_029, (u32)ef01_char_table_031, (u32)ef01_char_table_032, (u32)ef01_char_table_033, (u32)ef01_char_table_034, (u32)ef01_char_table_035,
+    (u32)ef01_char_table_036, (u32)ef01_char_table_036, (u32)ef01_char_table_038, (u32)ef01_char_table_038, (u32)ef01_char_table_038, (u32)ef01_char_table_038,
+    (u32)ef01_char_table_038, (u32)ef01_char_table_038, (u32)ef01_char_table_038, (u32)ef01_char_table_038, (u32)ef01_char_table_038, (u32)ef01_char_table_047,
+    (u32)ef01_char_table_048, (u32)ef01_char_table_049, (u32)ef01_char_table_050, (u32)ef01_char_table_051, (u32)ef01_char_table_052, (u32)ef01_char_table_053,
+    (u32)ef01_char_table_054, (u32)ef01_char_table_055, (u32)ef01_char_table_056, (u32)ef01_char_table_057, (u32)ef01_char_table_058, (u32)ef01_char_table_059,
+    (u32)ef01_char_table_060, (u32)ef01_char_table_061, (u32)ef01_char_table_062, (u32)ef01_char_table_063, (u32)ef01_char_table_064, (u32)ef01_char_table_065,
+    (u32)ef01_char_table_066, (u32)ef01_char_table_067, (u32)ef01_char_table_068, (u32)ef01_char_table_069, (u32)ef01_char_table_070, (u32)ef01_char_table_071,
+    (u32)ef01_char_table_072, (u32)ef01_char_table_073, (u32)ef01_char_table_074, (u32)ef01_char_table_075, (u32)ef01_char_table_076, (u32)ef01_char_table_077,
     0
 };
 
@@ -4758,45 +4758,45 @@ const u16 ef01_char_table_077[16] = {
 };
 
 /* ef13_char_table scripts: 226 entries */
-const u16* const ef13_char_table[227] = {
-    ef13_char_table_000, ef13_char_table_001, ef13_char_table_002, ef13_char_table_003, ef13_char_table_004, ef13_char_table_005,
-    ef13_char_table_006, ef13_char_table_007, ef13_char_table_008, ef13_char_table_008, ef13_char_table_010, ef13_char_table_011,
-    ef13_char_table_011, ef13_char_table_013, ef13_char_table_014, ef13_char_table_015, ef13_char_table_016, ef13_char_table_017,
-    ef13_char_table_018, ef13_char_table_019, ef13_char_table_020, ef13_char_table_021, ef13_char_table_022, ef13_char_table_023,
-    ef13_char_table_024, ef13_char_table_025, ef13_char_table_026, ef13_char_table_027, ef13_char_table_028, ef13_char_table_029,
-    ef13_char_table_030, ef13_char_table_031, ef13_char_table_032, ef13_char_table_033, ef13_char_table_034, ef13_char_table_035,
-    ef13_char_table_036, ef13_char_table_037, ef13_char_table_038, ef13_char_table_039, ef13_char_table_040, ef13_char_table_041,
-    ef13_char_table_042, ef13_char_table_043, ef13_char_table_044, ef13_char_table_045, ef13_char_table_046, ef13_char_table_047,
-    ef13_char_table_048, ef13_char_table_049, ef13_char_table_050, ef13_char_table_051, ef13_char_table_052, ef13_char_table_053,
-    ef13_char_table_053, ef13_char_table_053, ef13_char_table_056, ef13_char_table_057, ef13_char_table_058, ef13_char_table_059,
-    ef13_char_table_060, ef13_char_table_061, ef13_char_table_062, ef13_char_table_063, ef13_char_table_064, ef13_char_table_065,
-    ef13_char_table_066, ef13_char_table_067, ef13_char_table_068, ef13_char_table_069, ef13_char_table_070, ef13_char_table_071,
-    ef13_char_table_072, ef13_char_table_073, ef13_char_table_074, ef13_char_table_075, ef13_char_table_076, ef13_char_table_077,
-    ef13_char_table_078, ef13_char_table_079, ef13_char_table_080, ef13_char_table_081, ef13_char_table_082, ef13_char_table_083,
-    ef13_char_table_084, ef13_char_table_085, ef13_char_table_086, ef13_char_table_087, ef13_char_table_088, ef13_char_table_089,
-    ef13_char_table_090, ef13_char_table_091, ef13_char_table_092, ef13_char_table_093, ef13_char_table_094, ef13_char_table_095,
-    ef13_char_table_096, ef13_char_table_097, ef13_char_table_098, ef13_char_table_099, ef13_char_table_100, ef13_char_table_101,
-    ef13_char_table_102, ef13_char_table_103, ef13_char_table_104, ef13_char_table_105, ef13_char_table_106, ef13_char_table_107,
-    ef13_char_table_108, ef13_char_table_109, ef13_char_table_110, ef13_char_table_111, ef13_char_table_112, ef13_char_table_113,
-    ef13_char_table_114, ef13_char_table_115, ef13_char_table_116, ef13_char_table_117, ef13_char_table_118, ef13_char_table_119,
-    ef13_char_table_120, ef13_char_table_121, ef13_char_table_122, ef13_char_table_123, ef13_char_table_124, ef13_char_table_125,
-    ef13_char_table_126, ef13_char_table_127, ef13_char_table_128, ef13_char_table_129, ef13_char_table_130, ef13_char_table_131,
-    ef13_char_table_132, ef13_char_table_133, ef13_char_table_134, ef13_char_table_135, ef13_char_table_136, ef13_char_table_137,
-    ef13_char_table_138, ef13_char_table_139, ef13_char_table_140, ef13_char_table_141, ef13_char_table_142, ef13_char_table_143,
-    ef13_char_table_144, ef13_char_table_145, ef13_char_table_146, ef13_char_table_147, ef13_char_table_148, ef13_char_table_149,
-    ef13_char_table_150, ef13_char_table_151, ef13_char_table_152, ef13_char_table_153, ef13_char_table_154, ef13_char_table_155,
-    ef13_char_table_156, ef13_char_table_157, ef13_char_table_158, ef13_char_table_159, ef13_char_table_160, ef13_char_table_161,
-    ef13_char_table_162, ef13_char_table_163, ef13_char_table_164, ef13_char_table_165, ef13_char_table_166, ef13_char_table_167,
-    ef13_char_table_168, ef13_char_table_169, ef13_char_table_170, ef13_char_table_171, ef13_char_table_172, ef13_char_table_173,
-    ef13_char_table_174, ef13_char_table_175, ef13_char_table_176, ef13_char_table_177, ef13_char_table_178, ef13_char_table_179,
-    ef13_char_table_180, ef13_char_table_181, ef13_char_table_182, ef13_char_table_183, ef13_char_table_184, ef13_char_table_180,
-    ef13_char_table_181, ef13_char_table_182, ef13_char_table_183, ef13_char_table_189, ef13_char_table_190, ef13_char_table_191,
-    ef13_char_table_192, ef13_char_table_193, ef13_char_table_194, ef13_char_table_195, ef13_char_table_196, ef13_char_table_197,
-    ef13_char_table_198, ef13_char_table_199, ef13_char_table_200, ef13_char_table_201, ef13_char_table_202, ef13_char_table_203,
-    ef13_char_table_204, ef13_char_table_205, ef13_char_table_206, ef13_char_table_207, ef13_char_table_208, ef13_char_table_209,
-    ef13_char_table_210, ef13_char_table_211, ef13_char_table_212, ef13_char_table_213, ef13_char_table_214, ef13_char_table_215,
-    ef13_char_table_216, ef13_char_table_217, ef13_char_table_218, ef13_char_table_219, ef13_char_table_220, ef13_char_table_221,
-    ef13_char_table_222, ef13_char_table_223, ef13_char_table_224, ef13_char_table_225,
+const u32 ef13_char_table[227] = {
+    (u32)ef13_char_table_000, (u32)ef13_char_table_001, (u32)ef13_char_table_002, (u32)ef13_char_table_003, (u32)ef13_char_table_004, (u32)ef13_char_table_005,
+    (u32)ef13_char_table_006, (u32)ef13_char_table_007, (u32)ef13_char_table_008, (u32)ef13_char_table_008, (u32)ef13_char_table_010, (u32)ef13_char_table_011,
+    (u32)ef13_char_table_011, (u32)ef13_char_table_013, (u32)ef13_char_table_014, (u32)ef13_char_table_015, (u32)ef13_char_table_016, (u32)ef13_char_table_017,
+    (u32)ef13_char_table_018, (u32)ef13_char_table_019, (u32)ef13_char_table_020, (u32)ef13_char_table_021, (u32)ef13_char_table_022, (u32)ef13_char_table_023,
+    (u32)ef13_char_table_024, (u32)ef13_char_table_025, (u32)ef13_char_table_026, (u32)ef13_char_table_027, (u32)ef13_char_table_028, (u32)ef13_char_table_029,
+    (u32)ef13_char_table_030, (u32)ef13_char_table_031, (u32)ef13_char_table_032, (u32)ef13_char_table_033, (u32)ef13_char_table_034, (u32)ef13_char_table_035,
+    (u32)ef13_char_table_036, (u32)ef13_char_table_037, (u32)ef13_char_table_038, (u32)ef13_char_table_039, (u32)ef13_char_table_040, (u32)ef13_char_table_041,
+    (u32)ef13_char_table_042, (u32)ef13_char_table_043, (u32)ef13_char_table_044, (u32)ef13_char_table_045, (u32)ef13_char_table_046, (u32)ef13_char_table_047,
+    (u32)ef13_char_table_048, (u32)ef13_char_table_049, (u32)ef13_char_table_050, (u32)ef13_char_table_051, (u32)ef13_char_table_052, (u32)ef13_char_table_053,
+    (u32)ef13_char_table_053, (u32)ef13_char_table_053, (u32)ef13_char_table_056, (u32)ef13_char_table_057, (u32)ef13_char_table_058, (u32)ef13_char_table_059,
+    (u32)ef13_char_table_060, (u32)ef13_char_table_061, (u32)ef13_char_table_062, (u32)ef13_char_table_063, (u32)ef13_char_table_064, (u32)ef13_char_table_065,
+    (u32)ef13_char_table_066, (u32)ef13_char_table_067, (u32)ef13_char_table_068, (u32)ef13_char_table_069, (u32)ef13_char_table_070, (u32)ef13_char_table_071,
+    (u32)ef13_char_table_072, (u32)ef13_char_table_073, (u32)ef13_char_table_074, (u32)ef13_char_table_075, (u32)ef13_char_table_076, (u32)ef13_char_table_077,
+    (u32)ef13_char_table_078, (u32)ef13_char_table_079, (u32)ef13_char_table_080, (u32)ef13_char_table_081, (u32)ef13_char_table_082, (u32)ef13_char_table_083,
+    (u32)ef13_char_table_084, (u32)ef13_char_table_085, (u32)ef13_char_table_086, (u32)ef13_char_table_087, (u32)ef13_char_table_088, (u32)ef13_char_table_089,
+    (u32)ef13_char_table_090, (u32)ef13_char_table_091, (u32)ef13_char_table_092, (u32)ef13_char_table_093, (u32)ef13_char_table_094, (u32)ef13_char_table_095,
+    (u32)ef13_char_table_096, (u32)ef13_char_table_097, (u32)ef13_char_table_098, (u32)ef13_char_table_099, (u32)ef13_char_table_100, (u32)ef13_char_table_101,
+    (u32)ef13_char_table_102, (u32)ef13_char_table_103, (u32)ef13_char_table_104, (u32)ef13_char_table_105, (u32)ef13_char_table_106, (u32)ef13_char_table_107,
+    (u32)ef13_char_table_108, (u32)ef13_char_table_109, (u32)ef13_char_table_110, (u32)ef13_char_table_111, (u32)ef13_char_table_112, (u32)ef13_char_table_113,
+    (u32)ef13_char_table_114, (u32)ef13_char_table_115, (u32)ef13_char_table_116, (u32)ef13_char_table_117, (u32)ef13_char_table_118, (u32)ef13_char_table_119,
+    (u32)ef13_char_table_120, (u32)ef13_char_table_121, (u32)ef13_char_table_122, (u32)ef13_char_table_123, (u32)ef13_char_table_124, (u32)ef13_char_table_125,
+    (u32)ef13_char_table_126, (u32)ef13_char_table_127, (u32)ef13_char_table_128, (u32)ef13_char_table_129, (u32)ef13_char_table_130, (u32)ef13_char_table_131,
+    (u32)ef13_char_table_132, (u32)ef13_char_table_133, (u32)ef13_char_table_134, (u32)ef13_char_table_135, (u32)ef13_char_table_136, (u32)ef13_char_table_137,
+    (u32)ef13_char_table_138, (u32)ef13_char_table_139, (u32)ef13_char_table_140, (u32)ef13_char_table_141, (u32)ef13_char_table_142, (u32)ef13_char_table_143,
+    (u32)ef13_char_table_144, (u32)ef13_char_table_145, (u32)ef13_char_table_146, (u32)ef13_char_table_147, (u32)ef13_char_table_148, (u32)ef13_char_table_149,
+    (u32)ef13_char_table_150, (u32)ef13_char_table_151, (u32)ef13_char_table_152, (u32)ef13_char_table_153, (u32)ef13_char_table_154, (u32)ef13_char_table_155,
+    (u32)ef13_char_table_156, (u32)ef13_char_table_157, (u32)ef13_char_table_158, (u32)ef13_char_table_159, (u32)ef13_char_table_160, (u32)ef13_char_table_161,
+    (u32)ef13_char_table_162, (u32)ef13_char_table_163, (u32)ef13_char_table_164, (u32)ef13_char_table_165, (u32)ef13_char_table_166, (u32)ef13_char_table_167,
+    (u32)ef13_char_table_168, (u32)ef13_char_table_169, (u32)ef13_char_table_170, (u32)ef13_char_table_171, (u32)ef13_char_table_172, (u32)ef13_char_table_173,
+    (u32)ef13_char_table_174, (u32)ef13_char_table_175, (u32)ef13_char_table_176, (u32)ef13_char_table_177, (u32)ef13_char_table_178, (u32)ef13_char_table_179,
+    (u32)ef13_char_table_180, (u32)ef13_char_table_181, (u32)ef13_char_table_182, (u32)ef13_char_table_183, (u32)ef13_char_table_184, (u32)ef13_char_table_180,
+    (u32)ef13_char_table_181, (u32)ef13_char_table_182, (u32)ef13_char_table_183, (u32)ef13_char_table_189, (u32)ef13_char_table_190, (u32)ef13_char_table_191,
+    (u32)ef13_char_table_192, (u32)ef13_char_table_193, (u32)ef13_char_table_194, (u32)ef13_char_table_195, (u32)ef13_char_table_196, (u32)ef13_char_table_197,
+    (u32)ef13_char_table_198, (u32)ef13_char_table_199, (u32)ef13_char_table_200, (u32)ef13_char_table_201, (u32)ef13_char_table_202, (u32)ef13_char_table_203,
+    (u32)ef13_char_table_204, (u32)ef13_char_table_205, (u32)ef13_char_table_206, (u32)ef13_char_table_207, (u32)ef13_char_table_208, (u32)ef13_char_table_209,
+    (u32)ef13_char_table_210, (u32)ef13_char_table_211, (u32)ef13_char_table_212, (u32)ef13_char_table_213, (u32)ef13_char_table_214, (u32)ef13_char_table_215,
+    (u32)ef13_char_table_216, (u32)ef13_char_table_217, (u32)ef13_char_table_218, (u32)ef13_char_table_219, (u32)ef13_char_table_220, (u32)ef13_char_table_221,
+    (u32)ef13_char_table_222, (u32)ef13_char_table_223, (u32)ef13_char_table_224, (u32)ef13_char_table_225,
     0
 };
 
@@ -8412,8 +8412,8 @@ const u16 ef13_char_table_225[180] = {
 };
 
 /* ag_face_panel_table scripts: 1 entries */
-const u16* const ag_face_panel_table[2] = {
-    ag_face_panel_table_000,
+const u32 ag_face_panel_table[2] = {
+    (u32)ag_face_panel_table_000,
     0
 };
 
@@ -8670,8 +8670,8 @@ const u16 ag_face_panel_table_000[100] = {
 };
 
 /* effD4_char_table scripts: 2 entries */
-const u16* const effD4_char_table[3] = {
-    effD4_char_table_000, effD4_char_table_001,
+const u32 effD4_char_table[3] = {
+    (u32)effD4_char_table_000, (u32)effD4_char_table_001,
     0
 };
 

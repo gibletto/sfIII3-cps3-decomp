@@ -67,8 +67,8 @@ void voice_process_primary(SNDVOICE* voice, s8 is_bgm, u8 voice_index) {
     automation = &se_pan_ramp[voice_index];
     bgm_ticks = &bgm_tick_step;
     event_mask = 0x80;
-    (void)((WORK*)1)->id;
-    (void)((WORK*)0)->id;
+    (void)&((WORK*)1)->id;
+    (void)&((WORK*)0)->id;
 next_event:
     argument = voice->cursor;
     event = *argument++;
@@ -82,7 +82,6 @@ control_event:;
             if (is_bgm) {
                 *bgm_ticks = *argument++ << 8;
                 *bgm_ticks += *argument++;
-                (void)((WORK*)bgm_ticks)->id;
             } else {
                 *sfx_ticks = *argument++ << 8;
                 *sfx_ticks += *argument++;
@@ -101,7 +100,7 @@ control_event:;
             event = *argument++;
             loop_index = *argument++;
             loop_index *= 1;
-            (*(u8(*)[])&gSeqStatus[0])[event] = loop_index;
+            gSeqStatus[event] = loop_index;
             break;
         case 0xC4:
             voice->program_index = *argument++ & 0x7f;
@@ -138,7 +137,6 @@ control_event:;
             break;
         case 0xCB:
             if (voice->loop_latch) {
-voice_hold:;
                 voice->status |= 0x40;
                 return;
             }
@@ -215,13 +213,12 @@ voice_hold:;
             voice->transpose += (s8)*argument++;
             break;
         case 0xDE:
-            voice->fine_tune = (s8)*argument++;
+            voice->volume_offset = (s8)*argument++;
             break;
         case 0xDF:
-            voice->fine_tune += (s8)*argument++;
+            voice->volume_offset += (s8)*argument++;
             break;
         case 0xE0:
-voice_tie_update:;
             if (*argument++) {
                 voice->status |= 0x01;
             } else {
@@ -270,12 +267,10 @@ voice_tie_update:;
         note = *argument & 0x7f;
         voice->control_70 = note;
         bank = snd_bank_tbl;
-        bank += voice->instrument_bank;
-        (void)((WORK*)bank)->id;
+        bank = bank + voice->instrument_bank;
         if (*bank != 0) {
             entry = (u16*)*bank;
-            entry += voice->program_index;
-            (void)((WORK*)entry)->id;
+            entry = entry + voice->program_index;
             if (*entry) {
                 patch = (SNDPATCH*)(*entry + *bank);
                 for (;;) {
@@ -347,7 +342,7 @@ voice_tie_update:;
     }
     consumed = midi_vlq_decode_while(argument, &ticks);
     ticks <<= 8;
-    voice->event_ticks += ticks;
+    voice->event_ticks = voice->event_ticks + ticks;
     argument += consumed;
     voice->cursor = argument;
     if (ticks <= 0) {

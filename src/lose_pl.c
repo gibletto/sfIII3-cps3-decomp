@@ -45,6 +45,10 @@
 #include "Com_Pl.h"
 #include "lose_pl.h"
 
+s16 lose_rno[3];  /* 020281B8 */
+s16 lose_free[2];  /* 020281BE */
+
+
 void lose_player(PLW* wk) {
     void (*lose_jp_tbl[4])(PLW*) = { Lose_00000, Lose_10000, Lose_20000, Lose_30000 };
     if (My_char[wk->wu.id] != wk->player_number) {

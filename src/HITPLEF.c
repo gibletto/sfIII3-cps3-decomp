@@ -20,7 +20,10 @@
 #include "HITPLEF.h"
 
 
-void player_at_vs_effect_dm(s16 ix2, s16 ix) {
+void player_at_vs_effect_dm(ix2, ix)
+s16 ix2;
+s16 ix;
+{
     PLW* as = (PLW*)q_hit_push[ix2];
     WORK_Other* ds = (WORK_Other*)q_hit_push[ix];
     ds->wu.dm_rl = as->wu.rl_flag;

@@ -23,6 +23,15 @@
 #include "effect_2.h"
 #include "EFFECT.h"
 
+u32 frw[128][512];  /* 02028990 */
+u8 frw_tail[4];  /* after frw; nothing refers to it by name or address */
+s16 frwque[128];  /* 02068994 */
+s16 frwctr;  /* 02068A94 */
+s16 head_ix[8];  /* 02068A96 */
+s16 tail_ix[8];  /* 02068AA6 */
+s16 exec_tm[8];  /* 02068AB6 */
+
+
 void move_effect_work(s16 index) {
     s16 curr_ix;
     s16 next_ix;
@@ -203,7 +212,11 @@ s32 effect_work_pull_link(s16 index, s16 before, s16 aix) {
 }
 
 
-s32 search_effect_index(s16 index, s16 flag, s16 tid) {
+s32 search_effect_index(index, flag, tid)
+s16 index;
+s16 flag;
+s16 tid;
+{
     WORK* c_addr;
     s16 aix;
     if (flag) {
@@ -362,7 +375,11 @@ ok:
 }
 
 
-s32 get_my_shell_ix(WORK* wk, s16 ix, WORK** tmw) {
+s32 get_my_shell_ix(wk, ix, tmw)
+WORK* wk;
+s16 ix;
+WORK** tmw;
+{
     if (wk->shell_ix[ix] == -1) {
         return 0;
     }
@@ -374,7 +391,12 @@ s32 get_my_shell_ix(WORK* wk, s16 ix, WORK** tmw) {
 }
 
 
-s32 get_vs_shell_adrs(WORK* wk, s16 id, s16 ix, WORK_Other** tmw) {
+s32 get_vs_shell_adrs(wk, id, ix, tmw)
+WORK* wk;
+s16 id;
+s16 ix;
+WORK_Other** tmw;
+{
     if (wk->shell_ix[ix] == -1) {
         return 0;
     }
@@ -407,7 +429,10 @@ void setup_shell_hit_stop(WORK* wk, s16 tm, s16 fl) {
 }
 
 
-s32 shell_live_check(PLW* wk, s16 wix) {
+s32 shell_live_check(wk, wix)
+PLW* wk;
+s16 wix;
+{
     WORK_Other* tmw;
     s16 i;
     if (wk->player_number != 0xE) {

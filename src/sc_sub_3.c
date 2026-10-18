@@ -19,6 +19,39 @@
 #include "sc_sub_2.h"
 #include "cps3.h"
 
+extern const u16 stngauge_postbl_0[];
+extern const u16 stngauge_postbl_0_2[];
+extern const u16 stngauge_postbl_1[];
+extern const u16 stngauge_postbl_1_2[];
+extern const u16 stngauge_puttbl_0[];
+extern const u16 stngauge_puttbl_1[];
+
+s16 stn_number;  /* 02028800 */
+s16 stn_work;  /* 02028802 */
+s16 stn_offset;  /* 02028804 */
+STN_DAT sdat[2];  /* 02028808 */
+
+
+/* 02006A68 */
+const u16* stngauge_puttbl[2] = {
+    stngauge_puttbl_0,
+    stngauge_puttbl_1,
+};
+/* 02006A70 */
+const u16* stngauge_postbl[2] = {
+    stngauge_postbl_0,
+    stngauge_postbl_1,
+};
+/* 02006A78 */
+/* provisional name */
+/* The second pair of stun-gauge position tables, stored after stngauge_postbl. Nothing in the program
+   refers to it. */
+const u16* stngauge_postbl_2[2] = {
+    stngauge_postbl_0_2,
+    stngauge_postbl_1_2,
+};
+
+
 void stun_mark_put(s8 pl);
 
 

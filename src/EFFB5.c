@@ -43,7 +43,7 @@ void effect_B5_move(WORK_Other* ewk) {
             naming_set(np->id, ewk->wu.type, np->code[ewk->wu.old_rno[2]]);
             ewk->wu.routine_no[0]++;
         } else {
-            current_name_move(ewk, (NAME_WK*)np);
+            current_name_move(ewk, np);
         }
         break;
     case 2:
@@ -108,7 +108,7 @@ void current_name_move(WORK_Other* ewk, NAME_WK* np)
         ewk->wu.hit_stop++;
         ewk->wu.old_rno[4] = 0;
         ewk->wu.old_rno[0] = 0;
-        set_char_move_init2(ewk, 0, 6, np->code[ewk->wu.old_rno[2]] + 1, 0);
+        set_char_move_init2(&ewk->wu, 0, 6, np->code[ewk->wu.old_rno[2]] + 1, 0);
         ewk->wu.old_rno[3] = np->code[np->index];
         break;
     case 1:
@@ -123,9 +123,9 @@ void current_name_move(WORK_Other* ewk, NAME_WK* np)
                     ewk->wu.old_rno[4] = 0;
                 }
                 if (ewk->wu.old_rno[4] != 2) {
-                    set_char_move_init2(ewk, 0, 6, np->code[np->index] + 1, 0);
+                    set_char_move_init2(&ewk->wu, 0, 6, np->code[np->index] + 1, 0);
                 } else {
-                    set_char_move_init2(ewk, 0, 6, 48, 0);
+                    set_char_move_init2(&ewk->wu, 0, 6, 48, 0);
                 }
             }
         }

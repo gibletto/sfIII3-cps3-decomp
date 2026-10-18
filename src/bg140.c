@@ -36,6 +36,9 @@
 #include "ta_sub.h"
 #include "bg140.h"
 
+s16 bg1403_wait;  /* 020280B4 */
+
+
 #pragma inline(bg1400, bg1401)
 
 

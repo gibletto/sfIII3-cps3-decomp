@@ -25,6 +25,148 @@
 #include "EFFECT.h"
 #include "effect_2.h"
 
+extern const EFFA6_MESSAGE effA6_mes_en_0[];
+extern const EFFA6_MESSAGE effA6_mes_en_10[];
+extern const EFFA6_MESSAGE effA6_mes_en_11[];
+extern const EFFA6_MESSAGE effA6_mes_en_12[];
+extern const EFFA6_MESSAGE effA6_mes_en_13[];
+extern const EFFA6_MESSAGE effA6_mes_en_16[];
+extern const EFFA6_MESSAGE effA6_mes_en_17[];
+extern const EFFA6_MESSAGE effA6_mes_en_19[];
+extern const EFFA6_MESSAGE effA6_mes_en_2[];
+extern const EFFA6_MESSAGE effA6_mes_en_20[];
+extern const EFFA6_MESSAGE effA6_mes_en_3[];
+extern const EFFA6_MESSAGE effA6_mes_en_4[];
+extern const EFFA6_MESSAGE effA6_mes_en_5[];
+extern const EFFA6_MESSAGE effA6_mes_en_6[];
+extern const EFFA6_MESSAGE effA6_mes_en_7[];
+extern const EFFA6_MESSAGE effA6_mes_en_8[];
+extern const EFFA6_MESSAGE effA6_mes_en_9[];
+extern const EFFA6_MESSAGE effA6_mes_jp_0[];
+extern const EFFA6_MESSAGE effA6_mes_jp_10[];
+extern const EFFA6_MESSAGE effA6_mes_jp_11[];
+extern const EFFA6_MESSAGE effA6_mes_jp_12[];
+extern const EFFA6_MESSAGE effA6_mes_jp_13[];
+extern const EFFA6_MESSAGE effA6_mes_jp_16[];
+extern const EFFA6_MESSAGE effA6_mes_jp_17[];
+extern const EFFA6_MESSAGE effA6_mes_jp_19[];
+extern const EFFA6_MESSAGE effA6_mes_jp_2[];
+extern const EFFA6_MESSAGE effA6_mes_jp_20[];
+extern const EFFA6_MESSAGE effA6_mes_jp_3[];
+extern const EFFA6_MESSAGE effA6_mes_jp_4[];
+extern const EFFA6_MESSAGE effA6_mes_jp_5[];
+extern const EFFA6_MESSAGE effA6_mes_jp_6[];
+extern const EFFA6_MESSAGE effA6_mes_jp_7[];
+extern const EFFA6_MESSAGE effA6_mes_jp_8[];
+extern const EFFA6_MESSAGE effA6_mes_jp_9[];
+
+s16 effa6_pos_x_1p;  /* 02068C14 */
+s16 effa6_pos_y_1p;  /* 02068C16 */
+s16 effa6_pos_z_1p;  /* 02068C18 */
+s16 effa6_pos_x_2p;  /* 02068C1A */
+s16 effa6_pos_y_2p;  /* 02068C1C */
+s16 effa6_pos_z_2p;  /* the 2P z position beside x_1p..y_2p; nothing in the program uses it (provisional name) */
+s16 mmes_already;  /* 02068C20 */
+
+
+/* 02006DAC */
+const EFFA6_MESSAGE* effA6_mes_jp[21] = {
+    effA6_mes_jp_0,
+    effA6_mes_jp_0,
+    effA6_mes_jp_2,
+    effA6_mes_jp_3,
+    effA6_mes_jp_4,
+    effA6_mes_jp_5,
+    effA6_mes_jp_6,
+    effA6_mes_jp_7,
+    effA6_mes_jp_8,
+    effA6_mes_jp_9,
+    effA6_mes_jp_10,
+    effA6_mes_jp_11,
+    effA6_mes_jp_12,
+    effA6_mes_jp_13,
+    effA6_mes_jp_13,
+    effA6_mes_jp_13,
+    effA6_mes_jp_16,
+    effA6_mes_jp_17,
+    effA6_mes_jp_17,
+    effA6_mes_jp_19,
+    effA6_mes_jp_20,
+};
+/* 02006E00 */
+const EFFA6_MESSAGE* effA6_mes_en[21] = {
+    effA6_mes_en_0,
+    effA6_mes_en_0,
+    effA6_mes_en_2,
+    effA6_mes_en_3,
+    effA6_mes_en_4,
+    effA6_mes_en_5,
+    effA6_mes_en_6,
+    effA6_mes_en_7,
+    effA6_mes_en_8,
+    effA6_mes_en_9,
+    effA6_mes_en_10,
+    effA6_mes_en_11,
+    effA6_mes_en_12,
+    effA6_mes_en_13,
+    effA6_mes_en_13,
+    effA6_mes_en_13,
+    effA6_mes_en_16,
+    effA6_mes_en_17,
+    effA6_mes_en_17,
+    effA6_mes_en_19,
+    effA6_mes_en_20,
+};
+/* 02006E54 */
+const EFFA6_MESSAGE* effA6_mes_es[21] = {
+    effA6_mes_jp_0,
+    effA6_mes_jp_0,
+    effA6_mes_jp_2,
+    effA6_mes_jp_3,
+    effA6_mes_jp_4,
+    effA6_mes_jp_5,
+    effA6_mes_jp_6,
+    effA6_mes_jp_7,
+    effA6_mes_jp_8,
+    effA6_mes_jp_9,
+    effA6_mes_jp_10,
+    effA6_mes_jp_11,
+    effA6_mes_jp_12,
+    effA6_mes_jp_13,
+    effA6_mes_jp_13,
+    effA6_mes_jp_13,
+    effA6_mes_jp_16,
+    effA6_mes_jp_17,
+    effA6_mes_jp_17,
+    effA6_mes_jp_19,
+    effA6_mes_jp_20,
+};
+/* 02006EA8 */
+const EFFA6_MESSAGE* effA6_mes_pt[21] = {
+    effA6_mes_jp_0,
+    effA6_mes_jp_0,
+    effA6_mes_jp_2,
+    effA6_mes_jp_3,
+    effA6_mes_jp_4,
+    effA6_mes_jp_5,
+    effA6_mes_jp_6,
+    effA6_mes_jp_7,
+    effA6_mes_jp_8,
+    effA6_mes_jp_9,
+    effA6_mes_jp_10,
+    effA6_mes_jp_11,
+    effA6_mes_jp_12,
+    effA6_mes_jp_13,
+    effA6_mes_jp_13,
+    effA6_mes_jp_13,
+    effA6_mes_jp_16,
+    effA6_mes_jp_17,
+    effA6_mes_jp_17,
+    effA6_mes_jp_19,
+    effA6_mes_jp_20,
+};
+
+
 #pragma inline(effA5_start_pressed)
 
 /* provisional name */
@@ -59,7 +201,7 @@ s32 effA5_start_pressed(void) {
 
 
 
-#define DIALOGUE_THIRD_SKIP_TIME ((void)((WORK*)630)->id, 630)
+#define DIALOGUE_THIRD_SKIP_TIME 630
 
 void effect_A6_move(WORK_Other_CONN* ewk) {
     WORK_Other* mwk;
@@ -108,7 +250,9 @@ void effect_A6_move(WORK_Other_CONN* ewk) {
                     break;
                 }
                 conn_data = mes->conn;
-                (void)effA6_mes_jp[ewk->master_player][mmes_already].conn;
+                if (0) {
+                    conn_data = effA6_mes_jp[ewk->master_player][mmes_already].conn;
+                }
                 chr_data = mes->chr;
                 switch (Country) {
                 case 1:
@@ -162,7 +306,7 @@ void effect_A6_move(WORK_Other_CONN* ewk) {
                     chr_data = effA6_mes_en[ewk->master_player][mmes_already].chr;
                     break;
                 }
-                for (i = 0; i < chr_data[0]; i++) {
+                for (i = 0; i < chr_data[0]; i = i + 1) {
                     load_char_gfx(chr_data[i + 1], 1);
                 }
                 ewk->num_of_conn = chr_data[i + 1];
@@ -260,7 +404,7 @@ s32 effect_A6_init(WORK_Other* mwk) {
     }
     ewk = (WORK_Other_CONN*)frw[ix];
     ewk->wu.routine_no[0] = 0;
-    effA6_work_set(ewk);
+    wwwk_set(&ewk->wu);
     ewk->master_player = My_char[Player_id];
     ewk->my_master = (u32*)mwk;
     ewk->wu.dir_old = mwk->wu.dir_old;
@@ -287,12 +431,11 @@ s32 effect_A6_init(WORK_Other* mwk) {
 }
 
 /*
- * effA6_work_set fills the fixed fields of an effect A6 dialogue work (id 106, palette 0x160,
+ * wwwk_set fills the fixed fields of an effect A6 dialogue work (id 106, palette 0x160,
  * family 1, priority 35) for effect_A6_init.
  */
 
-/* provisional name */
-void effA6_work_set(WORK* wk) {
+void wwwk_set(WORK* wk) {
     wk->be_flag = 1;
     wk->id = 106;
     wk->work_id = 16;

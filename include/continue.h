@@ -6,7 +6,7 @@
 s32 Check_Count_Cut();
 void Continue_1st(void);
 void Continue_2nd(void);
-s32 Continue_3rd(void);
+void Continue_3rd(void);
 void Continue_4th(void);
 void Continue_5th(void);
 void Setup_Continue_OBJ(void);

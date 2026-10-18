@@ -27,6 +27,9 @@
 #include "Com_Sub.h"
 #include "fighter.h"
 
+s8 PASSIVE_X;  /* 0200DCF8 */
+static u8 pass_spare[1728];  /* nothing in the program refers to it */
+
 
 
 /* provisional name */

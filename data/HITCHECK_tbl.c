@@ -188,7 +188,7 @@ const u8 trdm_damage_tbl[83] = {
     0, 0, 0,
 };
 
-const u8 check_aiuchi_pat_table1[83] = {
+const u8 ttk_damage_req_tbl[83] = {
     0, 0, 0, 0, 0, 0, 0, 1,
     1, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0,

@@ -29,9 +29,24 @@
 
 
 
+/* 02006C74 */
+void (*eff26_jp_tbl[6])(WORK_Other*) = {
+    eff26_00,
+    eff26_01,
+    eff26_02,
+    eff26_03,
+    eff26_04,
+    eff26_05,
+};
+/* 02006C8C */
+const s16* scr_obj_data26[1] = {
+    (const s16*)&eff26_num[1],
+};
+
+
 void effect_26_move(WORK_Other* ewk) {
     WORK_Other* oya;
-    if (obr_disp_off_check()) {
+    if (obr_no_disp_check()) {
         return;
     }
     if (compel_dead_check(ewk)) {
