@@ -1418,25 +1418,33 @@ const_s16_arr* player_cmd[24] = {
     pl_cmd_list[0],
     pl_cmd_list[0],
 };
-/* Stored after player_cmd. Nothing in the program refers to it by name or address; if it is read,
-   it is through an index past the end of player_cmd. */
-u32 player_cmd_tail[64] = {
-    0x0001000C, 0x000E0000, (u32)((const u8*)player_cmd_0), 0x0001000D,
-    0x000E0000, (u32)((const u8*)player_cmd_1), 0x0001000E, 0x000E0000,
-    (u32)((const u8*)player_cmd_2), 0x0001000F, 0x000E0000, (u32)((const u8*)player_cmd_3),
-    0x00010010, 0x000E0000, (u32)((const u8*)player_cmd_4), 0x000C0011,
-    0x000E0000, (u32)((const u8*)player_cmd_5), 0x0017000C, 0x000E0000,
-    (u32)((const u8*)player_cmd_0), 0x0017000D, 0x000E0000, (u32)((const u8*)player_cmd_1),
-    0x0017000E, 0x000E0000, (u32)((const u8*)player_cmd_2), 0x0017000F,
-    0x000E0000, (u32)((const u8*)player_cmd_3), 0x00170010, 0x000E0000,
-    (u32)((const u8*)player_cmd_4), 0x00220011, 0x000E0000, (u32)((const u8*)player_cmd_11),
-    0x000B0003, 0x001A0003, 0x000B0007, 0x001A0007,
-    0x000F0003, 0x001E0003, 0x000F0007, 0x001E0007,
-    0x000D0003, 0x001C0003, 0x000D0007, 0x001C0007,
-    0x000B0005, 0x001A0005, 0x000F0005, 0x001E0005,
-    0x000B0009, 0x001A0009, 0x000D0009, 0x001C0009,
-    0x000F0009, 0x001E0009, 0x000B000A, 0x001A000A,
-    0x000D000A, 0x001C000A, 0x000F000A, 0x001E000A,
+/* provisional name */
+/* Text lines of the key-assignment display, stored after player_cmd. Nothing in the program refers to
+   them. */
+TMLINE player_cmd_lines[12] = {
+    { 1, 12, 14, 0, (u8*)player_cmd_0 },
+    { 1, 13, 14, 0, (u8*)player_cmd_1 },
+    { 1, 14, 14, 0, (u8*)player_cmd_2 },
+    { 1, 15, 14, 0, (u8*)player_cmd_3 },
+    { 1, 16, 14, 0, (u8*)player_cmd_4 },
+    { 12, 17, 14, 0, (u8*)player_cmd_5 },
+    { 23, 12, 14, 0, (u8*)player_cmd_0 },
+    { 23, 13, 14, 0, (u8*)player_cmd_1 },
+    { 23, 14, 14, 0, (u8*)player_cmd_2 },
+    { 23, 15, 14, 0, (u8*)player_cmd_3 },
+    { 23, 16, 14, 0, (u8*)player_cmd_4 },
+    { 34, 17, 14, 0, (u8*)player_cmd_11 },
+};
+/* provisional name */
+/* Stored after player_cmd_lines: (x, y) cell positions. Nothing in the program refers to it. */
+u16 player_cmd_cells[28][2] = {
+    { 11, 3 }, { 26, 3 }, { 11, 7 }, { 26, 7 },
+    { 15, 3 }, { 30, 3 }, { 15, 7 }, { 30, 7 },
+    { 13, 3 }, { 28, 3 }, { 13, 7 }, { 28, 7 },
+    { 11, 5 }, { 26, 5 }, { 15, 5 }, { 30, 5 },
+    { 11, 9 }, { 26, 9 }, { 13, 9 }, { 28, 9 },
+    { 15, 9 }, { 30, 9 }, { 11, 10 }, { 26, 10 },
+    { 13, 10 }, { 28, 10 }, { 15, 10 }, { 30, 10 },
 };
 /* 02006444 */
 s16 lvr_chk_tbl[2][4] = {
@@ -1444,13 +1452,15 @@ s16 lvr_chk_tbl[2][4] = {
     { 1, 2, 4, 8 },
 };
 /* 02006454 */
-/* Stored after lvr_chk_tbl. Nothing in the program refers to it by name or address. */
-u32 lvr_chk_tbl_tail[18] = {
-    0x60013, 0x60000,
-    (u32)((const u8*)lvr_chk_tbl_0), 0x60013, 0x60000, (u32)((const u8*)lvr_chk_tbl_1),
-    0x60013, 0x60000, (u32)((const u8*)lvr_chk_tbl_2), 0x1D0013,
-    0x60000, (u32)((const u8*)lvr_chk_tbl_0), 0x1D0013, 0x60000,
-    (u32)((const u8*)lvr_chk_tbl_1), 0x1D0013, 0x60000, (u32)((const u8*)lvr_chk_tbl_2),
+/* provisional name */
+/* Text lines of the lever-check display, stored after lvr_chk_tbl. Nothing in the program refers to them. */
+TMLINE lvr_chk_lines[6] = {
+    { 6, 19, 6, 0, (u8*)lvr_chk_tbl_0 },
+    { 6, 19, 6, 0, (u8*)lvr_chk_tbl_1 },
+    { 6, 19, 6, 0, (u8*)lvr_chk_tbl_2 },
+    { 29, 19, 6, 0, (u8*)lvr_chk_tbl_0 },
+    { 29, 19, 6, 0, (u8*)lvr_chk_tbl_1 },
+    { 29, 19, 6, 0, (u8*)lvr_chk_tbl_2 },
 };
 
 T_PL_LVR t_pl_lvr[2];  /* 0202563C */

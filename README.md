@@ -56,7 +56,8 @@ and loads it over the ROM files.
 
 ## Compiler
 
-The rebuilt SHC 5.0 Release 26 carries forty-four rules, none of them tied to a particular function. They reproduce observed code-generation
+The rebuilt SHC 5.0 Release 26 carries forty-four rules. None of them tests for a function's name or address, but
+several have been seen in only one routine so far and rest on that single example. They reproduce observed code-generation
 differences and include general optimizations verified across the ROM; these tests do not establish the historical
 compiler's implementation:
 
@@ -195,7 +196,7 @@ setting in that source (forty-two settings for the forty-four rules: the switch 
 `MDL_ARG_CONST`, `MDL_CAST_CSE`, `MDL_ARG_CAST`, `MDL_GCSE`, `ASM_MULWAIT`, `GEN_CHAIN_SCRATCH_R0`, `GEN_NARROW_CONST`, `GEN_OR_INDEX_EARLY`, `PEP_AUTOINC`, `MDL_IV`, `GEN_POOL_MOVLOC`, `MDL_LOOP_INV`, `GEN_RELOAD`, `GEN_EVICT_ORDER`, `MDL_CAST_MUL`, `MDL_MUL_CONST`, `PEP_RET_R0`, `GEN_MEM_INDEX`, `GEN_R0VAR`, `MDL_IMM_REG`, `MDL_MASK_AND`, `MDL_IV_BASE`, `MDL_IV_TEMP`, `GEN_JUMP_TEMP`, `MDL_TEST_REPLACE`, `MDL_MUL_ONE`, `MDL_TEMP_EXPR`, `PEP_CASE_WORD`, `PEP_RET_MAC`, `GEN_NARROW_NORMALIZE`, `GEN_RIGHT_FIRST_DROP`, `GEN_STORE_INDEX`, `GEN_COND_PREF` and `ASM_SPECREG` to 0 gives Release 26's behaviour back. The
 original files are in `bin/original`.
 
-With the changes, all 10,066 C routines compile to the arcade's exact bytes (with the original Release 26, 3,783
+With the changes, all 10,066 C routines compile to the arcade's exact bytes (with the original Release 26, 3,782
 compile to its instructions and 1,883 to its exact bytes), and the linked `build/prog.bin` has the arcade program's
 SHA-1. Because the program is identical to the arcade's, Fightcade replays and FBNeo savestates play on the built
 ROM unchanged.

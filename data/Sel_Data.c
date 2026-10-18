@@ -174,9 +174,9 @@ const s16 EFF76_Face_Pos_Data[21][2] = {
     { 96, 16 }, { 88, 16 }, { 88, 16 }, { 80, 16 }, { 96, 16 },
 };
 
-/* Stored after EFF76_Face_Pos_Data: another row per character. Nothing in the program refers to it by
-   name or address. */
-const s16 EFF76_Face_Pos_Data_tail[21][2] = {
+/* provisional name */
+/* Stored after EFF76_Face_Pos_Data: another (x, y) per character. Nothing in the program refers to it. */
+const s16 EFF76_Face_Pos_Data_2[21][2] = {
     80, 16,
     80, 16,
     80, 16,
