@@ -55,12 +55,18 @@ s8 end_5_bg1_cell[4] = {
     13, 14, 15, 13,
 };
 /* 02006974 */
-/* Stored after end_5_bg1_cell. Nothing in the program refers to it by name or address; if it is read,
-   it is through an index past the end of end_5_bg1_cell. */
-u32 end_5_bg1_cell_tail[12] = {
-    (u32)end_1100_bg0_cell_tbl, (u32)((const u8*)end_5_bg1_cell_0), 0, 0x10000,
-    0x20000, 0x30000, 0x40000, 0x50000,
-    0x60000, 0x70000, 0x80000, 0x90000,
+/* provisional name */
+/* The panel table and cell list of the ending 5 background, stored after end_5_bg1_cell. Nothing in the
+   program refers to it. */
+const void* end_5_bg1_refs[2] = {
+    end_1100_bg0_cell_tbl,
+    end_5_bg1_cell_0,
+};
+/* provisional name */
+/* Stored after end_5_bg1_refs: steps 0 to 9. Nothing in the program refers to it. */
+s16 end_5_bg1_steps[10][2] = {
+    { 0, 0 }, { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 },
+    { 5, 0 }, { 6, 0 }, { 7, 0 }, { 8, 0 }, { 9, 0 },
 };
 
 

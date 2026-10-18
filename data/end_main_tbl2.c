@@ -32,9 +32,10 @@ const s16 op_bg0_0015_tbl[6] = {
     45, 46, 45, 46, 47, 41,
 };
 
-/* Stored after op_bg0_0015_tbl. Nothing in the program refers to it by name or address; if it is read,
-   it is through an index past the end of op_bg0_0015_tbl. */
-const s16 op_bg0_0015_tbl_tail[24] = {
+/* provisional name */
+/* A per-player number like end_scno_tbl (player 15 shares 14, players 21-23 and 0 give 5), stored after
+   op_bg0_0015_tbl. Nothing in the program refers to it. */
+const s16 end_stage_no_tbl[24] = {
     5, 1, 2, 3, 4, 5, 6, 7,
     8, 9, 10, 11, 12, 13, 14, 14,
     16, 17, 18, 19, 20, 5, 5, 5,

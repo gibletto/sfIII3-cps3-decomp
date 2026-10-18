@@ -200,11 +200,8 @@ s32 sound_seq_start(u16 code, s16 ramp) {
                 v->cursor = &track[n];
                 v->status = 0x20;
                 bank_table = snd_bank_tbl;
-                (void)&((WORK*)se_tick_step)->id;
-                bank = *bank_table;
                 (void)mv->status;
-                (void)&((TEXT_CELL*)bank_table)->code;
-                v->patch = (SNDPATCH*)(bank + *(u16*)bank);
+                v->patch = (SNDPATCH*)(*bank_table + *(u16*)*bank_table);
                 v->sample = &snd_sample_tbl[v->patch->sample_index];
                 v->note_ticks = 0;
                 v->decoded_pitch = 0;
@@ -263,9 +260,7 @@ s32 sound_seq_start(u16 code, s16 ramp) {
                 v->cursor = &track[n];
                 v->status = 0x20;
                 bank_table = snd_bank_tbl;
-                bank = *bank_table;
-                (void)&((TEXT_CELL*)bank_table)->code;
-                v->patch = (SNDPATCH*)(bank + *(u16*)bank);
+                v->patch = (SNDPATCH*)(*bank_table + *(u16*)*bank_table);
                 v->sample = &snd_sample_tbl[v->patch->sample_index];
                 v->note_ticks = 0;
                 v->decoded_pitch = 0;
@@ -312,7 +307,6 @@ s32 sound_seq_start(u16 code, s16 ramp) {
             } else {
                 mv->status = 0xC0;
             }
-            (void)&((WORK*)bgm_voice)->id;
             i++, vp++, mv = mv + 1;
             off = *p++ << 8;
             off += *p++;
@@ -326,11 +320,7 @@ s32 sound_seq_start(u16 code, s16 ramp) {
                 v->cursor = &track[n];
                 v->status = 0x20;
                 bank_table = snd_bank_tbl;
-                (void)&((WORK*)se_tick_step)->id;
-                bank = *bank_table;
-                (void)mv->status;
-                (void)&((TEXT_CELL*)bank_table)->code;
-                v->patch = (SNDPATCH*)(bank + *(u16*)bank);
+                v->patch = (SNDPATCH*)(*bank_table + *(u16*)*bank_table);
                 v->sample = &snd_sample_tbl[v->patch->sample_index];
                 v->note_ticks = 0;
                 v->decoded_pitch = 0;
@@ -377,7 +367,6 @@ s32 sound_seq_start(u16 code, s16 ramp) {
             } else {
                 mv->status = 0xC0;
             }
-            (void)&((WORK*)bgm_voice)->id;
             i++, vp++, mv = mv + 1;
             off = *p++ << 8;
             off += *p++;
@@ -391,12 +380,7 @@ s32 sound_seq_start(u16 code, s16 ramp) {
                 v->cursor = &track[n];
                 v->status = 0x20;
                 bank_table = snd_bank_tbl;
-                (void)&((WORK*)se_tick_step)->id;
-                bank = *bank_table;
-                (void)mv->status;
-                (void)&((TEXT_CELL*)bank_table)->code;
-                (void)&((WORK*)bank_table)->id;
-                v->patch = (SNDPATCH*)(bank + *(u16*)bank);
+                v->patch = (SNDPATCH*)(*bank_table + *(u16*)*bank_table);
                 v->sample = &snd_sample_tbl[v->patch->sample_index];
                 v->note_ticks = 0;
                 v->decoded_pitch = 0;
@@ -443,7 +427,6 @@ s32 sound_seq_start(u16 code, s16 ramp) {
             } else {
                 mv->status = 0xC0;
             }
-            (void)&((WORK*)bgm_voice)->id;
             i++, vp++, mv = mv + 1;
         }
         if (!(sound_sample_submit_work7 & 8)) {
@@ -460,7 +443,7 @@ s32 sound_seq_start(u16 code, s16 ramp) {
     if (!(hdr & 0x80)) {
         for (i = 0; i < 16; i++) {
             off = *p++ << 8;
-            off += *p++;
+            off = off + *p++;
             if (off) {
                 if (((hdr >= se_voice[i].priority_flags) & 0x7F) || (se_voice[i].status & 0x80)) {
                     track = seq + off;
@@ -533,13 +516,12 @@ s32 sound_seq_start(u16 code, s16 ramp) {
         (void)&((WORK*)se_tick_step)->id;
         return;
     }
-    if (ch = hdr & 15, (*p & 0x7F) < (((u8*)&SE_VOICE(ch))[111] & 0x7F) && !(SE_VOICE(ch).status & 0x80)) {
+    if (ch = hdr & 15, (*p & 0x7F) < (se_voice[ch].priority_flags & 0x7F) && !(se_voice[ch].status & 0x80)) {
         return;
     }
     se_voice[ch].cursor = p;
     (void)&((WORK*)seq)->id;
     bank_table = snd_bank_tbl;
-    (void)&((TEXT_CELL*)bank_table)->code;
     se_voice[ch].patch = (SNDPATCH*)(*bank_table + *(u16*)*bank_table);
     (void)&((WORK*)hdr)->id;
     se_voice[ch].sample = &snd_sample_tbl[se_voice[ch].patch->sample_index];
