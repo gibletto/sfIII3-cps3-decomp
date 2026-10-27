@@ -21,6 +21,16 @@
 #include "effect_2.h"
 #include "efff5.h"
 
+/* routine_no[1]: states of the picture routines */
+#define R1_INIT         0       /* start the animation */
+#define R1_MOVE         1       /* the type's main state */
+#define R1_KILL         2       /* (default) put the work back */
+
+/* routine_no[1], efff5_0009 */
+#define R1_WAIT         1       /* wait four frames */
+#define R1_GLIDE        2       /* glide to its place over ten frames */
+#define R1_STAY         3       /* stay at its place */
+
 
 void effect_F5_move(WORK_Other* ewk) {
     void (*efff5_jp[12])(WORK_Other*) = { efff5_0000, efff5_0001, efff5_0002, efff5_0003, efff5_0004, efff5_0005, efff5_0006, efff5_0007, efff5_0008, efff5_0009, efff5_0010, efff5_0011 };
@@ -31,12 +41,12 @@ void effect_F5_move(WORK_Other* ewk) {
 
 void efff5_0000(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R1_MOVE:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
             ewk->wu.routine_no[1]++;
@@ -59,12 +69,12 @@ void efff5_0000(WORK_Other* ewk) {
 
 void efff5_0001(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R1_MOVE:
         char_move(&ewk->wu);
         break;
     default:
@@ -78,12 +88,12 @@ void efff5_0001(WORK_Other* ewk) {
 
 void efff5_0002(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R1_MOVE:
         ewk->wu.xyz[1].disp.pos += 2;
         if (ewk->wu.xyz[1].disp.pos > 96) {
             ewk->wu.xyz[1].disp.pos = 0;
@@ -99,12 +109,12 @@ void efff5_0002(WORK_Other* ewk) {
 
 void efff5_0003(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R1_MOVE:
         char_move(&ewk->wu);
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
@@ -121,7 +131,7 @@ void efff5_0003(WORK_Other* ewk) {
 
 void efff5_0004(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         if (Country == 1) {
@@ -131,7 +141,7 @@ void efff5_0004(WORK_Other* ewk) {
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
         break;
-    case 1:
+    case R1_MOVE:
         sort_push_request4(&ewk->wu);
         break;
     default:
@@ -145,12 +155,12 @@ void efff5_0004(WORK_Other* ewk) {
 
 void efff5_0005(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R1_MOVE:
         char_move(&ewk->wu);
         char_move(&ewk->wu);
         char_move(&ewk->wu);
@@ -175,7 +185,7 @@ void efff5_0005(WORK_Other* ewk) {
 
 void efff5_0006(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
@@ -183,7 +193,7 @@ void efff5_0006(WORK_Other* ewk) {
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
         sort_push_request4(&ewk->wu);
         break;
-    case 1:
+    case R1_MOVE:
         break;
     default:
         all_cgps_put_back(ewk);
@@ -196,14 +206,14 @@ void efff5_0006(WORK_Other* ewk) {
 
 void efff5_0007(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
         break;
-    case 1:
+    case R1_MOVE:
         break;
     default:
         all_cgps_put_back(ewk);
@@ -217,12 +227,12 @@ void efff5_0007(WORK_Other* ewk) {
 /* provisional name */
 void efff5_0008(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R1_MOVE:
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
         sort_push_request4(&ewk->wu);
@@ -238,13 +248,13 @@ void efff5_0008(WORK_Other* ewk) {
 
 void efff5_0009(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         ewk->wu.old_rno[1] = 4;
         break;
-    case 1:
+    case R1_WAIT:
         ewk->wu.old_rno[1]--;
         if (ewk->wu.old_rno[1] > 0) {
             return;
@@ -253,7 +263,7 @@ void efff5_0009(WORK_Other* ewk) {
         ewk->wu.old_rno[1] = 10;
         cal_all_speed_data(&ewk->wu, ewk->wu.old_rno[1], 512, 72, 1, 1);
         break;
-    case 2:
+    case R1_GLIDE:
         ewk->wu.old_rno[1]--;
         if (ewk->wu.old_rno[1] <= 0) {
             ewk->wu.routine_no[1]++;
@@ -267,7 +277,7 @@ void efff5_0009(WORK_Other* ewk) {
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
         sort_push_request4(&ewk->wu);
         break;
-    case 3:
+    case R1_STAY:
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
         sort_push_request4(&ewk->wu);
@@ -283,13 +293,13 @@ void efff5_0009(WORK_Other* ewk) {
 
 void efff5_0010(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         ewk->wu.old_rno[1] = 4;
         break;
-    case 1:
+    case R1_WAIT:
         ewk->wu.old_rno[1]--;
         if (ewk->wu.old_rno[1] > 0) {
             return;
@@ -298,7 +308,7 @@ void efff5_0010(WORK_Other* ewk) {
         ewk->wu.old_rno[1] = 10;
         cal_all_speed_data(&ewk->wu, ewk->wu.old_rno[1], 608, 168, 1, 1);
         break;
-    case 2:
+    case R1_GLIDE:
         ewk->wu.old_rno[1]--;
         if (ewk->wu.old_rno[1] <= 0) {
             ewk->wu.routine_no[1]++;
@@ -312,7 +322,7 @@ void efff5_0010(WORK_Other* ewk) {
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
         sort_push_request4(&ewk->wu);
         break;
-    case 3:
+    case R1_STAY:
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
         sort_push_request4(&ewk->wu);
@@ -328,13 +338,13 @@ void efff5_0010(WORK_Other* ewk) {
 
 void efff5_0011(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         ewk->wu.old_rno[1] = 4;
         break;
-    case 1:
+    case R1_WAIT:
         ewk->wu.old_rno[1]--;
         if (ewk->wu.old_rno[1] > 0) {
             return;
@@ -343,7 +353,7 @@ void efff5_0011(WORK_Other* ewk) {
         ewk->wu.old_rno[1] = 10;
         cal_all_speed_data(&ewk->wu, ewk->wu.old_rno[1], 608, 120, 1, 1);
         break;
-    case 2:
+    case R1_GLIDE:
         ewk->wu.old_rno[1]--;
         if (ewk->wu.old_rno[1] <= 0) {
             ewk->wu.routine_no[1]++;
@@ -357,7 +367,7 @@ void efff5_0011(WORK_Other* ewk) {
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
         sort_push_request4(&ewk->wu);
         break;
-    case 3:
+    case R1_STAY:
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
         sort_push_request4(&ewk->wu);

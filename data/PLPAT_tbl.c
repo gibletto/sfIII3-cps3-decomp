@@ -1,5 +1,11 @@
 /*
- * PLPAT_TBL.C  game tables
+ * PLPAT_TBL.C  player attack dispatch tables
+ *
+ * plpat_lv_00 is the common attack routines Attack_00000 - Attack_15000, indexed by attack
+ * routine number. plxx_extra_attack_table starts with each character's extra attack dispatcher
+ * (pl00_extra_attack - pl20_extra_attack, by player number); the words after them are packed
+ * jump-attack recovery frame counts, reached through cjdr_karaburi_table and its companions
+ * for get_cjdR. Read by PLPAT.C.
  */
 
 #include "types.h"

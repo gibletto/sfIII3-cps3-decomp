@@ -22,6 +22,26 @@
 #include "effect_2.h"
 #include "Eff52.h"
 
+/* routine_no[0]: order being run, index of EFF52_Jmp_Tbl */
+#define R0_WAIT         0       /* wait for an order */
+#define R0_SLIDE_IN     1       /* slide in from the side */
+#define R0_SLIDE_OUT    2       /* slide out to the side */
+#define R0_SUDDENLY     3       /* appear at once */
+#define R0_KILL         4       /* hide and put the work back */
+
+/* routine_no[1], EFF52_KILL */
+#define R1_START        0       /* first step of each order */
+#define R1_KILL         1       /* (default) put the work back */
+
+/* routine_no[6], EFF52_SUDDENLY */
+#define R6_START        0       /* first step of each order */
+#define R6_ANIM         1       /* animate up to its frame */
+#define R6_HOLD         2       /* hold until the select has started */
+
+/* routine_no[6], EFF52_SLIDE_OUT */
+#define R6_LEAVE        1       /* slide off the screen */
+#define R6_KILL         2       /* (default) put the work back */
+
 
 
 void effect_52_move(WORK_Other* ewk) {
@@ -35,15 +55,15 @@ void effect_52_move(WORK_Other* ewk) {
 
 void EFF52_WAIT(WORK_Other* ewk) {
     if ((ewk->wu.routine_no[0] = Order[ewk->wu.dir_old])) {
-        ewk->wu.routine_no[1] = 0;
-        ewk->wu.routine_no[6] = 0;
+        ewk->wu.routine_no[1] = R1_START;
+        ewk->wu.routine_no[6] = R6_START;
     }
 }
 
 void EFF52_SUDDENLY(WORK_Other* ewk) {
     s16 x;
     switch (ewk->wu.routine_no[6]) {
-    case 0:
+    case R6_START:
         if (--Order_Timer[ewk->wu.dir_old] == 0) {
             ewk->wu.routine_no[6]++;
             ewk->wu.disp_flag = 1;
@@ -51,18 +71,18 @@ void EFF52_SUDDENLY(WORK_Other* ewk) {
             set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
         }
         break;
-    case 1:
+    case R6_ANIM:
         char_move(&ewk->wu);
         x = ewk->wu.cg_ix / ewk->wu.cgd_type;
         if (x < ewk->wu.direction) {
             break;
         }
         ewk->wu.routine_no[6]++;
-    case 2:
+    case R6_HOLD:
         if (Select_Start[ewk->master_id] == 0) {
             Order[ewk->wu.dir_old] = 4;
-            ewk->wu.routine_no[0] = 4;
-            ewk->wu.routine_no[1] = 0;
+            ewk->wu.routine_no[0] = R0_KILL;
+            ewk->wu.routine_no[1] = R1_START;
             Order_Timer[ewk->wu.dir_old] = 1;
         }
         break;
@@ -73,12 +93,12 @@ void EFF52_SUDDENLY(WORK_Other* ewk) {
 
 void EFF52_SLIDE_IN(WORK_Other* ewk) {
     if (Order[ewk->wu.dir_old] == 4) {
-        ewk->wu.routine_no[0] = 4;
-        ewk->wu.routine_no[1] = 0;
+        ewk->wu.routine_no[0] = R0_KILL;
+        ewk->wu.routine_no[1] = R1_START;
         return;
     }
     switch (ewk->wu.routine_no[6]) {
-    case 0:
+    case R6_START:
         if (--Order_Timer[ewk->wu.dir_old] == 0) {
             ewk->wu.routine_no[6]++;
             ewk->wu.disp_flag = 1;
@@ -90,15 +110,15 @@ void EFF52_SLIDE_IN(WORK_Other* ewk) {
         ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;
         if (0 < ewk->wu.mvxy.a[0].sp) {
             if (ewk->wu.hit_quake <= ewk->wu.xyz[0].disp.pos) {
-                ewk->wu.routine_no[0] = 0;
+                ewk->wu.routine_no[0] = R0_WAIT;
                 Order[ewk->wu.dir_old] = 0;
-                ewk->wu.routine_no[6] = 0;
+                ewk->wu.routine_no[6] = R6_START;
                 ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake;
             }
         } else if (ewk->wu.hit_quake >= ewk->wu.xyz[0].disp.pos) {
-            ewk->wu.routine_no[0] = 0;
+            ewk->wu.routine_no[0] = R0_WAIT;
             Order[ewk->wu.dir_old] = 0;
-            ewk->wu.routine_no[6] = 0;
+            ewk->wu.routine_no[6] = R6_START;
             ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake;
         }
         break;
@@ -109,7 +129,7 @@ void EFF52_SLIDE_IN(WORK_Other* ewk) {
 
 void EFF52_SLIDE_OUT(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[6]) {
-    case 0:
+    case R6_START:
         if (ewk->wu.disp_flag == 0) {
             ewk->wu.routine_no[1] = 99;
         } else if (--Order_Timer[ewk->wu.dir_old]) {
@@ -125,7 +145,7 @@ void EFF52_SLIDE_OUT(WORK_Other* ewk) {
             ewk->wu.mvxy.d[0].sp = 0;
         }
         break;
-    case 1:
+    case R6_LEAVE:
         ewk->wu.xyz[0].cal += ewk->wu.mvxy.a[0].sp;
         ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;
         if (Ck_Range_Out_S(ewk, 2, 128)) {
@@ -144,7 +164,7 @@ void EFF52_SLIDE_OUT(WORK_Other* ewk) {
 
 void EFF52_KILL(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_START:
         if (--Order_Timer[ewk->wu.dir_old] == 0) {
             ewk->wu.routine_no[1]++;
             ewk->wu.disp_flag = 0;

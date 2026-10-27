@@ -1,5 +1,10 @@
 /*
- * EFF74_TBL.C  game tables
+ * EFF74_TBL.C  bg130 background cell animation tables
+ *
+ * eff74_cell_tbl lists the animation cells loaded into the spare character blocks.
+ * eff74_anim_tbl gives, for each of the four random patterns, its frame and cell lists
+ * (eff74_anim_tbl_0 .. eff74_anim_tbl_7) and their length. Read by EFF74.C, the bg130
+ * background cell animation with random patterns.
  */
 
 #include "types.h"

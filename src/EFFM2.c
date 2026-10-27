@@ -25,16 +25,31 @@
 #include "aboutspr.h"
 #include "EFFM2.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* pick the animation */
+#define R0_MOVE         1       /* run the cat's routine */
+#define R0_END          99      /* hidden for a frame */
+
+/* effm2_move beside the player: routine_no[1] */
+#define R1_INIT         0       /* appear beside the player */
+#define R1_ANIM         1       /* play the animation */
+#define R1_RUN          2       /* run until off the screen */
+
+/* effm2_move2 come up to the player: routine_no[1] */
+#define R1_ENTER        1       /* walk or run up to the player */
+#define R1_STOP         2       /* stop animation */
+#define R1_POSE         3       /* closing animation */
+
 
 
 void effect_M2_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.old_rno[0] = random_16_com();
         ewk->wu.old_rno[0] &= 3;
         break;
-    case 1:
+    case R0_MOVE:
         if (!EXE_flag && !Game_pause) {
             if (ewk->wu.type) {
                 effm2_move2(ewk);
@@ -44,7 +59,7 @@ void effect_M2_move(WORK_Other* ewk) {
         }
         pl_eff_trans_entry(ewk);
         break;
-    case 99:
+    case R0_END:
         ewk->wu.routine_no[0]++;
         break;
     default:
@@ -59,7 +74,7 @@ void effect_M2_move(WORK_Other* ewk) {
 void effm2_move(WORK_Other* ewk) {
     WORK* oya_ptr = (WORK*)ewk->my_master;
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.dead_f = 1;
@@ -77,7 +92,7 @@ void effm2_move(WORK_Other* ewk) {
         ewk->wu.my_priority = ewk->wu.position_z = 67;
         set_char_move_init(&ewk->wu, 0, effm2_char_tbl[ewk->wu.old_rno[0]]);
         break;
-    case 1:
+    case R1_ANIM:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
             ewk->wu.routine_no[1]++;
@@ -87,11 +102,11 @@ void effm2_move(WORK_Other* ewk) {
             cat_run_set2(ewk);
         }
         break;
-    case 2:
+    case R1_RUN:
         char_move(&ewk->wu);
         add_x_sub(ewk);
         if (!range_x_check3(&ewk->wu, 64)) {
-            ewk->wu.routine_no[0] = 99;
+            ewk->wu.routine_no[0] = R0_END;
             ewk->wu.routine_no[1]++;
         }
         break;
@@ -104,7 +119,7 @@ void effm2_move2(WORK_Other* ewk) {
     WORK* oya_ptr = (WORK*)ewk->my_master;
     s16 dis_w;
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.dead_f = 1;
@@ -131,7 +146,7 @@ void effm2_move2(WORK_Other* ewk) {
         ewk->wu.xyz[1].disp.pos = 7;
         ewk->wu.my_priority = ewk->wu.position_z = 70;
         break;
-    case 1:
+    case R1_ENTER:
         char_move(&ewk->wu);
         add_x_sub(ewk);
         dis_w = oya_ptr->xyz[0].disp.pos - ewk->wu.xyz[0].disp.pos;
@@ -143,14 +158,14 @@ void effm2_move2(WORK_Other* ewk) {
             set_char_move_init(&ewk->wu, 0, 51);
         }
         break;
-    case 2:
+    case R1_STOP:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
             ewk->wu.routine_no[1]++;
             set_char_move_init(&ewk->wu, 0, 28);
         }
         break;
-    case 3:
+    case R1_POSE:
         char_move(&ewk->wu);
         break;
     }

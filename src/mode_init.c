@@ -309,7 +309,7 @@ void mode_init_task(void) {
     }
     task_sleep(6);
     for (wait = 166; --wait > 0; ) {
-        if ((p1sw_0 | p2sw_0) & 0x3F0) {
+        if ((p1sw_0 | p2sw_0) & BUTTON_SHOTS) {
             wait = 0;
         }
         task_sleep(1);
@@ -322,7 +322,7 @@ void mode_init_task(void) {
     tilemap_print_string(DE_X[3], 0, 0xFFFF, warning_mes[Country - 1]);
     task_sleep(16);
     for (wait = 100; --wait > 0; ) {
-        if ((p1sw_0 | p2sw_0) & 0x3F0) {
+        if ((p1sw_0 | p2sw_0) & BUTTON_SHOTS) {
             wait = 0;
         }
         task_sleep(1);

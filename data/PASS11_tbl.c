@@ -1,5 +1,8 @@
 /*
- * PASS11_TBL.C  game tables
+ * PASS11_TBL.C  CPU passive pattern table for Ken
+ *
+ * Passive11_Tbl is the 255 passive (defensive) pattern routines of character 11 (Ken),
+ * indexed by Pattern_Index. Read by PASS11.C.
  */
 
 #include "types.h"

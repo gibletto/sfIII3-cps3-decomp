@@ -1,5 +1,9 @@
 /*
- * PASS19_TBL.C  game tables
+ * PASS19_TBL.C  Twelve's and Remy's passive pattern tables
+ *
+ * Passive19_Tbl lists the 204 passive pattern routines of character 19 (Twelve), read by
+ * PASS19.C, and Passive20_Tbl the 176 of character 20 (Remy), read by PASSIVE20.C; both are
+ * indexed by Pattern_Index.
  */
 
 #include "types.h"

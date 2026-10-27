@@ -28,11 +28,21 @@
 #include "bg_sub_5.h"
 #include "EFFM1.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* show with a shadow */
+#define R0_MOVE         1       /* run the figure's routine */
+#define R0_END          99      /* hidden for a frame */
+
+/* routine_no[1] */
+#define R1_WAIT         0       /* animate until the player's signal */
+#define R1_ACT          1       /* play the act, then signal the player */
+#define R1_LEAVE        2       /* turn round and leave */
+
 
 
 void effect_M1_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.kage_flag = 1;
@@ -42,13 +52,13 @@ void effect_M1_move(WORK_Other* ewk) {
         ewk->wu.kage_char = 16;
         set_char_move_init(&ewk->wu, 0, 12);
         break;
-    case 1:
+    case R0_MOVE:
         if (!EXE_flag && !Game_pause) {
             effm1_move(ewk);
         }
         pl_eff_trans_entry(ewk);
         break;
-    case 99:
+    case R0_END:
         ewk->wu.routine_no[0]++;
         break;
     default:
@@ -63,7 +73,7 @@ void effect_M1_move(WORK_Other* ewk) {
 void effm1_move(WORK_Other* ewk) {
     WORK* oya_ptr = (WORK*)ewk->my_master;
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_WAIT:
         if (oya_ptr->cmwk[0]) {
             ewk->wu.routine_no[1]++;
             set_char_move_init(&ewk->wu, 0, 13);
@@ -71,7 +81,7 @@ void effm1_move(WORK_Other* ewk) {
             char_move(&ewk->wu);
         }
         break;
-    case 1:
+    case R1_ACT:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
             oya_ptr->cmwk[0] = 2;
@@ -82,11 +92,11 @@ void effm1_move(WORK_Other* ewk) {
             cal_initial_speed(&ewk->wu, ewk->wu.old_rno[0], ewk->wu.old_rno[1], ewk->wu.xyz[1].disp.pos);
         }
         break;
-    case 2:
+    case R1_LEAVE:
         ewk->wu.old_rno[0]--;
         if (ewk->wu.old_rno[0] < 0) {
             ewk->wu.routine_no[1]++;
-            ewk->wu.routine_no[0] = 99;
+            ewk->wu.routine_no[0] = R0_END;
             ewk->wu.disp_flag = 0;
             break;
         }

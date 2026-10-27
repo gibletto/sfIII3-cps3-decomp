@@ -24,34 +24,73 @@
 #include "aboutspr.h"
 #include "eff36.h"
 
+/* routine_no[0] */
+#define R0_MOVE         0       /* run the behaviour in its time span */
+#define R0_KILL         99      /* (default) put the work back */
+
+/* routine_no[1]: behaviour, from eff36_data_tbl */
+#define R1_ZOOM         0       /* slow zoom-in */
+#define R1_STILL        1       /* still picture */
+#define R1_ANIM         2       /* animated picture */
+#define R1_DRIFT        3       /* picture drifting left */
+#define R1_CUE          4       /* pieces switched by the music */
+#define R1_ONCE         5       /* one-shot animation */
+#define R1_STEP_ZOOM    6       /* stepped zoom-in */
+
+/* routine_no[2], eff36_move00 */
+#define R2_INIT         0       /* show and start the picture */
+#define R2_ZOOM         1       /* zoom in to full size */
+
+/* routine_no[2], eff36_move01 */
+#define R2_SHOW         1       /* stay on screen */
+
+/* routine_no[2], eff36_move02 */
+#define R2_ANIM         1       /* animate */
+
+/* routine_no[2], eff36_move03 */
+#define R2_DRIFT        1       /* drift left, then retire */
+
+/* routine_no[2], eff36_move04 */
+#define R2_CUE1         1       /* flash, wait for the first music cue */
+#define R2_CUE2         2       /* flash, wait for the second cue */
+#define R2_CUE3         3       /* flash, wait for the third cue */
+#define R2_LAST         4       /* show the last piece */
+
+/* routine_no[2], eff36_move05 */
+#define R2_ONCE         1       /* play once, then retire */
+
+/* routine_no[2], eff36_move06 */
+#define R2_GROW         1       /* grow a step every two frames */
+#define R2_FULL         2       /* hold at full size */
+
 
 
 void effect_36_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_MOVE:
         if (ewk->wu.old_rno[1] <= op_w.index) {
             ewk->wu.routine_no[0]++;
         } else if (ewk->wu.old_rno[2] <= op_w.index) {
             switch (ewk->wu.routine_no[1]) {
-            case 0:
+            case R1_ZOOM:
                 eff36_move00(ewk);
                 break;
-            case 1:
+            case R1_STILL:
                 eff36_move01(ewk);
                 break;
-            case 2:
+            case R1_ANIM:
                 eff36_move02(ewk);
                 break;
-            case 3:
+            case R1_DRIFT:
                 eff36_move03(ewk);
                 break;
-            case 4:
+            case R1_CUE:
                 eff36_move04(ewk);
                 break;
-            case 5:
+            case R1_ONCE:
                 eff36_move05(ewk);
                 break;
-            case 6:
+            case R1_STEP_ZOOM:
                 eff36_move06(ewk);
                 break;
             }
@@ -69,7 +108,7 @@ void effect_36_move(WORK_Other* ewk) {
 /* provisional name */
 void eff36_move00(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_INIT:
         ewk->wu.routine_no[2] += 1;
         ewk->wu.disp_flag = 1;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.old_rno[0], ewk->wu.char_index, 0);
@@ -77,7 +116,7 @@ void eff36_move00(WORK_Other* ewk) {
         ewk->wu.my_mr.size.x = 63;
         ewk->wu.my_mr.size.y = 63;
         break;
-    case 1:
+    case R2_ZOOM:
         ewk->wu.my_mr.size.x += 1;
         ewk->wu.my_mr.size.y += 1;
         if (ewk->wu.my_mr.size.x >= 88) {
@@ -95,12 +134,12 @@ void eff36_move00(WORK_Other* ewk) {
 /* provisional name */
 void eff36_move01(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_INIT:
         ewk->wu.routine_no[2] += 1;
         ewk->wu.disp_flag = 1;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.old_rno[0], ewk->wu.char_index, 0);
         break;
-    case 1:
+    case R2_SHOW:
         disp_pos_trans_entry(ewk);
         break;
     }
@@ -111,12 +150,12 @@ void eff36_move01(WORK_Other* ewk) {
 /* provisional name */
 void eff36_move02(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_INIT:
         ewk->wu.routine_no[2] += 1;
         ewk->wu.disp_flag = 1;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.old_rno[0], ewk->wu.char_index, 0);
         break;
-    case 1:
+    case R2_ANIM:
         char_move(&ewk->wu);
         disp_pos_trans_entry(ewk);
         break;
@@ -128,16 +167,16 @@ void eff36_move02(WORK_Other* ewk) {
 /* provisional name */
 void eff36_move03(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_INIT:
         ewk->wu.routine_no[2] += 1;
         ewk->wu.disp_flag = 1;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.old_rno[0], ewk->wu.char_index, 0);
         break;
-    case 1:
+    case R2_DRIFT:
         char_move(&ewk->wu);
         ewk->wu.xyz[0].cal -= 0x10000;
         if (ewk->wu.xyz[0].disp.pos < 288) {
-            ewk->wu.routine_no[0] = 99;
+            ewk->wu.routine_no[0] = R0_KILL;
         }
         disp_pos_trans_entry(ewk);
         break;
@@ -149,13 +188,13 @@ void eff36_move03(WORK_Other* ewk) {
 /* provisional name */
 void eff36_move04(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_INIT:
         ewk->wu.routine_no[2] += 1;
         ewk->wu.disp_flag = 1;
         ewk->wu.old_rno[6] = 4;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.old_rno[0], ewk->wu.char_index, 0);
         break;
-    case 1:
+    case R2_CUE1:
         if (ewk->wu.old_rno[6] <= 0) {
             ewk->wu.disp_flag = 0;
         } else {
@@ -169,7 +208,7 @@ void eff36_move04(WORK_Other* ewk) {
         }
         disp_pos_trans_entry(ewk);
         break;
-    case 2:
+    case R2_CUE2:
         if (ewk->wu.old_rno[6] <= 0) {
             ewk->wu.disp_flag = 0;
         } else {
@@ -183,7 +222,7 @@ void eff36_move04(WORK_Other* ewk) {
         }
         disp_pos_trans_entry(ewk);
         break;
-    case 3:
+    case R2_CUE3:
         if (ewk->wu.old_rno[6] <= 0) {
             ewk->wu.disp_flag = 0;
         } else {
@@ -197,7 +236,7 @@ void eff36_move04(WORK_Other* ewk) {
         }
         disp_pos_trans_entry(ewk);
         break;
-    case 4:
+    case R2_LAST:
         disp_pos_trans_entry(ewk);
         break;
     }
@@ -208,12 +247,12 @@ void eff36_move04(WORK_Other* ewk) {
 /* provisional name */
 void eff36_move05(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_INIT:
         ewk->wu.routine_no[2] += 1;
         ewk->wu.disp_flag = 1;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.old_rno[0], ewk->wu.char_index, 0);
         break;
-    case 1:
+    case R2_ONCE:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 255) {
             ewk->wu.routine_no[0] += 1;
@@ -229,7 +268,7 @@ void eff36_move05(WORK_Other* ewk) {
 /* provisional name */
 void eff36_move06(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_INIT:
         ewk->wu.routine_no[2] += 1;
         ewk->wu.disp_flag = 1;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.old_rno[0], ewk->wu.char_index, 0);
@@ -239,7 +278,7 @@ void eff36_move06(WORK_Other* ewk) {
         disp_pos_trans_entry5(ewk);
         ewk->wu.old_rno[6] = 2;
         break;
-    case 1:
+    case R2_GROW:
         ewk->wu.old_rno[6] -= 1;
         if (ewk->wu.old_rno[6] <= 0) {
             ewk->wu.old_rno[6] = 2;
@@ -251,7 +290,7 @@ void eff36_move06(WORK_Other* ewk) {
                 ewk->wu.my_mr.size.y = 127;
             }
         }
-    case 2:
+    case R2_FULL:
         disp_pos_trans_entry5(ewk);
         break;
     }

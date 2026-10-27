@@ -1,5 +1,5 @@
 /*
- * EFF54.C  Effect 54: parts of the blinking stage object
+ * EFF54.C  Effects 54 and 55: parts of the blinking stage object, a sliding stage object
  *
  * effect_54_init creates two parts for an effect 53 parent from a position table.
  * effect_54_move animates them and copies the parent's display flag, so they blink with it.
@@ -58,16 +58,26 @@
 #include "EFF58.h"
 #include "sc_logo.h"
 
+/* routine_no[0], effect_54_move */
+#define R0_INIT         0       /* start the animation */
+#define R0_MOVE         1       /* blink with the parent */
+
+/* routine_no[0], effect_55_move */
+#define R0_SLIDE        1       /* slide out to y 128 */
+#define R0_HOLD         2       /* hold for a while */
+#define R0_RETURN       3       /* slide back to y 96 */
+#define R0_WAIT         4       /* wait, then go again */
+
 
 
 void effect_54_move(WORK_Other* ewk) {
     WORK_Other* oya = (WORK_Other*)ewk->my_master;
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R0_MOVE:
         ewk->wu.disp_flag = oya->wu.disp_flag;
         disp_pos_trans_entry_rs(ewk);
         break;
@@ -115,12 +125,12 @@ void effect_55_move(WORK_Other* ewk) {
         return;
     }
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, 3);
         break;
-    case 1:
+    case R0_SLIDE:
         if (!EXE_flag && !Game_pause) {
             ewk->wu.xyz[1].cal += 0x3000;
             if (ewk->wu.xyz[1].disp.pos >= 128) {
@@ -130,7 +140,7 @@ void effect_55_move(WORK_Other* ewk) {
         }
         disp_pos_trans_entry(ewk);
         break;
-    case 2:
+    case R0_HOLD:
         if (!EXE_flag && !Game_pause) {
             ewk->wu.old_rno[0]--;
             if (ewk->wu.old_rno[0] < 0) {
@@ -139,7 +149,7 @@ void effect_55_move(WORK_Other* ewk) {
         }
         disp_pos_trans_entry(ewk);
         break;
-    case 3:
+    case R0_RETURN:
         if (!EXE_flag && !Game_pause) {
             ewk->wu.xyz[1].cal -= 0x4000;
             if (ewk->wu.xyz[1].disp.pos <= 96) {
@@ -149,11 +159,11 @@ void effect_55_move(WORK_Other* ewk) {
         }
         disp_pos_trans_entry(ewk);
         break;
-    case 4:
+    case R0_WAIT:
         if (!EXE_flag && !Game_pause) {
             ewk->wu.old_rno[0]--;
             if (ewk->wu.old_rno[0] < 0) {
-                ewk->wu.routine_no[0] = 1;
+                ewk->wu.routine_no[0] = R0_SLIDE;
             }
         }
         disp_pos_trans_entry(ewk);

@@ -31,6 +31,28 @@
 #include "bg_sub_5.h"
 #include "EFFJ8.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* start the animation */
+#define R0_MOVE         1       /* fly through the flight plan */
+#define R0_KILL         2       /* (default) put the work back */
+
+/* routine_no[2], random flights (dragonfly_l_move, dragonfly_r_move) */
+#define R2_INIT         0       /* set up the flight */
+#define R2_LINE         1       /* pick a flight line and speed */
+#define R2_FLY          2       /* fly until slowed down */
+#define R2_BRAKE        3       /* brake to a stop */
+#define R2_HOVER        4       /* hover for a while */
+
+/* routine_no[2], fixed passes (dragonfly_move_0000, dragonfly_move_0004) */
+#define R2_WAIT         1       /* hover for a random time */
+#define R2_CROSS        2       /* fly across the screen */
+
+/* routine_no[2], hover and fly off (dragonfly_move_0001, dragonfly_move_0005) */
+#define R2_TAKE_OFF     2       /* pick a flight line and speed */
+#define R2_FLY_OFF      3       /* fly until slowed down */
+#define R2_SLOW         4       /* brake to a stop */
+#define R2_REST         5       /* hover, then pick a new line */
+
 
 
 void effect_J8_move(WORK_Other* ewk) {
@@ -38,12 +60,12 @@ void effect_J8_move(WORK_Other* ewk) {
         return;
     }
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R0_MOVE:
         if (compel_dead_check(ewk)) {
             ewk->wu.routine_no[0]++;
             ewk->wu.disp_flag = 0;
@@ -136,23 +158,23 @@ s16 dragonfly_l_move_4(WORK_Other* ewk) {
 
 void dragonfly_l_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_INIT:
         ewk->wu.routine_no[2]++;
         dragonfly_l_move_0(ewk);
-    case 1:
+    case R2_LINE:
         ewk->wu.routine_no[2]++;
         dragonfly_l_move_1(ewk);
         break;
-    case 2:
+    case R2_FLY:
         ewk->wu.routine_no[2] += dragonfly_l_move_2(ewk);
         break;
-    case 3:
+    case R2_BRAKE:
         ewk->wu.routine_no[2] += dragonfly_l_move_3(ewk);
         break;
-    case 4:
+    case R2_HOVER:
         char_move(&ewk->wu);
         if (dragonfly_l_move_4(ewk)) {
-            ewk->wu.routine_no[2] = 1;
+            ewk->wu.routine_no[2] = R2_LINE;
         }
         break;
     default:
@@ -233,23 +255,23 @@ s16 dragonfly_r_move_4(WORK_Other* ewk) {
 
 void dragonfly_r_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_INIT:
         ewk->wu.routine_no[2]++;
         dragonfly_r_move_0(ewk);
-    case 1:
+    case R2_LINE:
         ewk->wu.routine_no[2]++;
         dragonfly_r_move_1(ewk);
         break;
-    case 2:
+    case R2_FLY:
         ewk->wu.routine_no[2] += dragonfly_r_move_2(ewk);
         break;
-    case 3:
+    case R2_BRAKE:
         ewk->wu.routine_no[2] += dragonfly_r_move_3(ewk);
         break;
-    case 4:
+    case R2_HOVER:
         char_move(&ewk->wu);
         if (dragonfly_r_move_4(ewk)) {
-            ewk->wu.routine_no[2] = 1;
+            ewk->wu.routine_no[2] = R2_LINE;
         }
         break;
     default:
@@ -267,7 +289,7 @@ void dragonfly_r_move(WORK_Other* ewk) {
 void dragonfly_move_0000(WORK_Other* ewk) {
     char_move(&ewk->wu);
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_INIT:
         ewk->wu.routine_no[2]++;
         ewk->wu.rl_flag = 1;
         ewk->wu.xyz[0].disp.pos = bg_w.bgw[1].r_limit2 + bg_w.pos_offset + 32;
@@ -276,7 +298,7 @@ void dragonfly_move_0000(WORK_Other* ewk) {
         ewk->wu.xyz[1].disp.low = 0;
         dragonfly_stop_timer(ewk);
         break;
-    case 1:
+    case R2_WAIT:
         ewk->wu.dir_timer--;
         if (ewk->wu.dir_timer <= 0) {
             ewk->wu.routine_no[2]++;
@@ -287,7 +309,7 @@ void dragonfly_move_0000(WORK_Other* ewk) {
             ewk->wu.mvxy.d[1].sp = 0;
         }
         break;
-    case 2:
+    case R2_CROSS:
         ewk->wu.dir_timer--;
         if (ewk->wu.dir_timer <= 0) {
             dragonfly_move_next(ewk);
@@ -307,32 +329,32 @@ void dragonfly_move_0000(WORK_Other* ewk) {
 
 void dragonfly_move_0001(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_INIT:
         char_move(&ewk->wu);
         ewk->wu.routine_no[2]++;
         ewk->wu.rl_flag = 1;
         dragonfly_stop_timer(ewk);
         break;
-    case 1:
+    case R2_WAIT:
         char_move(&ewk->wu);
         ewk->wu.dir_timer--;
         if (ewk->wu.dir_timer <= 0) {
             ewk->wu.routine_no[2]++;
         }
         break;
-    case 2:
+    case R2_TAKE_OFF:
         ewk->wu.routine_no[2]++;
         dragonfly_l_move_1(ewk);
-    case 3:
+    case R2_FLY_OFF:
         ewk->wu.routine_no[2] += dragonfly_l_move_2(ewk);
         break;
-    case 4:
+    case R2_SLOW:
         ewk->wu.routine_no[2] += dragonfly_l_move_3(ewk);
         break;
-    case 5:
+    case R2_REST:
         char_move(&ewk->wu);
         if (dragonfly_l_move_4(ewk)) {
-            ewk->wu.routine_no[2] = 2;
+            ewk->wu.routine_no[2] = R2_TAKE_OFF;
         }
         break;
     default:
@@ -350,12 +372,12 @@ void dragonfly_move_0001(WORK_Other* ewk) {
 void dragonfly_move_0004(WORK_Other* ewk) {
     char_move(&ewk->wu);
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_INIT:
         ewk->wu.routine_no[2]++;
         ewk->wu.rl_flag = 0;
         dragonfly_stop_timer(ewk);
         break;
-    case 1:
+    case R2_WAIT:
         ewk->wu.dir_timer--;
         if (ewk->wu.dir_timer <= 0) {
             ewk->wu.routine_no[2]++;
@@ -366,7 +388,7 @@ void dragonfly_move_0004(WORK_Other* ewk) {
             ewk->wu.mvxy.d[1].sp = 0;
         }
         break;
-    case 2:
+    case R2_CROSS:
         ewk->wu.dir_timer--;
         if (ewk->wu.dir_timer <= 0) {
             dragonfly_move_next(ewk);
@@ -387,31 +409,31 @@ void dragonfly_move_0004(WORK_Other* ewk) {
 void dragonfly_move_0005(WORK_Other* ewk) {
     char_move(&ewk->wu);
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_INIT:
         ewk->wu.routine_no[2]++;
         ewk->wu.rl_flag = 0;
         dragonfly_stop_timer(ewk);
         break;
-    case 1:
+    case R2_WAIT:
         ewk->wu.dir_timer--;
         if (ewk->wu.dir_timer <= 0) {
             ewk->wu.routine_no[2]++;
         }
         break;
-    case 2:
+    case R2_TAKE_OFF:
         ewk->wu.routine_no[2]++;
         dragonfly_r_move_1(ewk);
         break;
-    case 3:
+    case R2_FLY_OFF:
         ewk->wu.routine_no[2] += dragonfly_r_move_2(ewk);
         break;
-    case 4:
+    case R2_SLOW:
         ewk->wu.routine_no[2] += dragonfly_r_move_3(ewk);
         break;
-    case 5:
+    case R2_REST:
         char_move(&ewk->wu);
         if (dragonfly_r_move_4(ewk)) {
-            ewk->wu.routine_no[2] = 2;
+            ewk->wu.routine_no[2] = R2_TAKE_OFF;
         }
         break;
     default:
@@ -455,7 +477,7 @@ void dragonfly_line_set(WORK_Other* ewk, s16 dir_type) {
 void dragonfly_move_next(WORK_Other* ewk) {
     ewk->wu.routine_no[1]++;
     ewk->wu.routine_no[1] &= 7;
-    ewk->wu.routine_no[2] = 0;
+    ewk->wu.routine_no[2] = R2_INIT;
     ewk->wu.routine_no[3] = 0;
 }
 

@@ -29,12 +29,16 @@
 #include "sys_config_3.h"
 #include "effj5.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* set up the two pages */
+#define R0_MOVE         1       /* flip pages on the frame timings */
+
 
 
 void effect_J5_move(WORK_Other* ewk) {
     s16 work;
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.cg_ix = 0;
         ewk->wu.char_index = 0;
@@ -43,7 +47,7 @@ void effect_J5_move(WORK_Other* ewk) {
         scrn_map_set_now(0, (u32)bg_w.bgw[0].bg_address);
         Scrn_Y_Set_R(0, effJ5_frame_tbl[ewk->wu.cg_ix].y);
         break;
-    case 1:
+    case R0_MOVE:
         if (!EXE_flag && !Game_pause) {
             ewk->wu.cg_ctr--;
             if (ewk->wu.cg_ctr <= 0) {

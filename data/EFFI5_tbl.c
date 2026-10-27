@@ -1,5 +1,8 @@
 /*
- * EFFI5_TBL.C  game tables
+ * EFFI5_TBL.C  fade-in palette steps for effect I5
+ *
+ * effI5_fade_tbl is the 16 palette steps the ending object fades in through before its own
+ * palette is restored. Read by EFFI5.C.
  */
 
 #include "types.h"

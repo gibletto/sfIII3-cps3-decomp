@@ -1,5 +1,10 @@
 /*
- * EFFD4_TBL.C  game tables
+ * EFFD4_TBL.C  attack suction pull tables
+ *
+ * sel_suikomi_tbl gives the facing, pull direction and duration of each kind of pull.
+ * swallow_areas_x and swallow_areas_y give the pull speed number by x and y distance from the
+ * master, and swallow_speeds the speed of each number. Read by EFFD4.C, the suction pull of an
+ * attack.
  */
 
 #include "types.h"

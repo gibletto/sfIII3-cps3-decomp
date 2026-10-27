@@ -1,5 +1,9 @@
 /*
- * END_19_TBL.C  game tables
+ * END_19_TBL.C  Twelve's ending tables (ending 19)
+ *
+ * end_1900_bg0_cell_tbl lists the BG0 cells (map offset, cell number) written at the start of
+ * the ending, timer_19_tbl the length in frames of each scene and end_19_pos the BG x and y of
+ * each scene. Read by END_19.C.
  */
 
 #include "types.h"

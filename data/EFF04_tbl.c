@@ -1,5 +1,8 @@
 /*
- * EFF04_TBL.C  game tables
+ * EFF04_TBL.C  nine-piece zoom display colours
+ *
+ * eff04_col_tbl is the cycle of extra colours stepped through while the nine zoom pieces are
+ * in place. Read by EFF04.C, the nine-piece zoom display controller.
  */
 
 #include "types.h"

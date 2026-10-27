@@ -1,5 +1,8 @@
 /*
- * EFF39_TBL.C  game tables
+ * EFF39_TBL.C  state routines of effect 39
+ *
+ * EFF39_Jmp_Tbl is the six state routines (wait, slide in, slide out, appear at once, move,
+ * kill) of the character name object on the select screens. Read by EFF39.C.
  */
 
 #include "types.h"

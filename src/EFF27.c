@@ -24,6 +24,39 @@
 #include "bg_sub_5.h"
 #include "EFF27.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* show and note the parent's state */
+#define R0_MOVE         1       /* run the piece's motion routine */
+#define R0_HIDE         2       /* hidden for a frame */
+#define R0_END          3       /* one more frame */
+#define R0_KILL         99      /* (default) put the work back */
+
+/* routine_no[1], eff27_00: fly and lie */
+#define R1_FLY          0       /* fly until it reaches the floor */
+#define R1_LIE          1       /* lie on the floor */
+
+/* routine_no[1], eff27_03: fly, hop and rest */
+#define R1_HOP          1       /* second hop down to the floor */
+#define R1_REST         2       /* until the parent moves on */
+
+/* routine_no[1], eff27_04: fly, land and rest */
+#define R1_LAND         1       /* landing animation to its end */
+
+/* routine_no[1], eff27_06: animate in place */
+#define R1_ANIM         0       /* animate to the end of the script */
+#define R1_HOLD         1       /* hold the last frame */
+
+/* routine_no[1], eff27_07: fly, hop and stay */
+#define R1_FINISH       2       /* animate to the end of the script */
+#define R1_STAY         3       /* stay on the last frame */
+
+/* routine_no[1], eff27_08: fly and scatter */
+#define R1_SCATTER      1       /* throw out more pieces */
+#define R1_LEAVE        2       /* take the piece away */
+
+/* routine_no[1], eff27_09: two animations */
+#define R1_NEXT         1       /* move into place, next animation */
+
 
 
 extern const s16 scr_obj_data27_0[];
@@ -56,16 +89,16 @@ void effect_27_move(WORK_Other* ewk) {
         return;
     }
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.routine_no[1] = 0;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         oya = (WORK_Other*)ewk->my_master;
         ewk->wu.old_rno[3] = oya->wu.routine_no[1];
-    case 1:
+    case R0_MOVE:
         if (compel_dead_check(ewk)) {
-            ewk->wu.routine_no[0] = 99;
+            ewk->wu.routine_no[0] = R0_KILL;
             ewk->wu.disp_flag = 0;
             break;
         }
@@ -74,11 +107,11 @@ void effect_27_move(WORK_Other* ewk) {
         }
         disp_pos_trans_entry_rs(ewk);
         break;
-    case 2:
+    case R0_HIDE:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 0;
         break;
-    case 3:
+    case R0_END:
         ewk->wu.routine_no[0]++;
         break;
     default:
@@ -92,7 +125,7 @@ void effect_27_move(WORK_Other* ewk) {
 
 void eff27_00(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_FLY:
         if (ewk->wu.hit_stop) {
             char_move(&ewk->wu);
         }
@@ -102,7 +135,7 @@ void eff27_00(WORK_Other* ewk) {
             ewk->wu.routine_no[1]++;
         }
         break;
-    case 1:
+    case R1_LIE:
         if (!ewk->wu.old_rno[0]) {
             dead_check27(ewk);
         }
@@ -120,7 +153,7 @@ void eff27_02(WORK_Other* ewk) {
     add_y_sub(ewk);
     ewk->wu.old_rno[1]--;
     if (ewk->wu.old_rno[1] < 0) {
-        ewk->wu.routine_no[0] = 2;
+        ewk->wu.routine_no[0] = R0_HIDE;
     }
 }
 
@@ -128,7 +161,7 @@ void eff27_02(WORK_Other* ewk) {
 
 void eff27_03(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_FLY:
         if (ewk->wu.cg_type != 2) {
             char_move(&ewk->wu);
         }
@@ -140,7 +173,7 @@ void eff27_03(WORK_Other* ewk) {
             set_second_hop(ewk);
         }
         break;
-    case 1:
+    case R1_HOP:
         if (ewk->wu.cg_type != 2) {
             char_move(&ewk->wu);
         }
@@ -150,7 +183,7 @@ void eff27_03(WORK_Other* ewk) {
             ewk->wu.routine_no[1]++;
         }
         break;
-    case 2:
+    case R1_REST:
         if (ewk->wu.cg_type != 1) {
             char_move(&ewk->wu);
         }
@@ -163,7 +196,7 @@ void eff27_03(WORK_Other* ewk) {
 
 void eff27_04(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_FLY:
         if (ewk->wu.cg_type != 2) {
             char_move(&ewk->wu);
         }
@@ -174,13 +207,13 @@ void eff27_04(WORK_Other* ewk) {
             ewk->wu.routine_no[1]++;
         }
         break;
-    case 1:
+    case R1_LAND:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 1) {
             ewk->wu.routine_no[1]++;
         }
         break;
-    case 2:
+    case R1_REST:
         dead_check27(ewk);
         break;
     }
@@ -190,7 +223,7 @@ void eff27_04(WORK_Other* ewk) {
 
 void eff27_05(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_FLY:
         if (ewk->wu.cg_type != 2) {
             char_move(&ewk->wu);
         }
@@ -201,14 +234,14 @@ void eff27_05(WORK_Other* ewk) {
             ewk->wu.routine_no[1]++;
         }
         break;
-    case 1:
+    case R1_LAND:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 1) {
             ewk->wu.routine_no[1]++;
             set_second_hop(ewk);
         }
         break;
-    case 2:
+    case R1_REST:
         eff27_03(ewk);
         break;
     }
@@ -218,7 +251,7 @@ void eff27_05(WORK_Other* ewk) {
 
 void eff27_06(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_ANIM:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type != 1) {
             break;
@@ -227,9 +260,9 @@ void eff27_06(WORK_Other* ewk) {
             ewk->wu.routine_no[1]++;
             break;
         }
-        ewk->wu.routine_no[0] = 2;
+        ewk->wu.routine_no[0] = R0_HIDE;
         break;
-    case 1:
+    case R1_HOLD:
         break;
     }
 }
@@ -238,7 +271,7 @@ void eff27_06(WORK_Other* ewk) {
 
 void eff27_07(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_FLY:
         if (ewk->wu.cg_type != 2) {
             char_move(&ewk->wu);
         }
@@ -250,7 +283,7 @@ void eff27_07(WORK_Other* ewk) {
             set_second_hop(ewk);
         }
         break;
-    case 1:
+    case R1_HOP:
         if (ewk->wu.cg_type != 2) {
             char_move(&ewk->wu);
         }
@@ -260,14 +293,14 @@ void eff27_07(WORK_Other* ewk) {
             ewk->wu.routine_no[1]++;
         }
         break;
-    case 2:
+    case R1_FINISH:
         if (ewk->wu.cg_type != 1) {
             char_move(&ewk->wu);
             break;
         }
         ewk->wu.routine_no[1]++;
         break;
-    case 3:
+    case R1_STAY:
         break;
     }
 }
@@ -276,15 +309,15 @@ void eff27_07(WORK_Other* ewk) {
 
 void eff27_08(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_FLY:
         eff27_03(ewk);
         break;
-    case 1:
+    case R1_SCATTER:
         effect_27_init(ewk, 4);
         ewk->wu.routine_no[1]++;
         break;
-    case 2:
-        ewk->wu.routine_no[0] = 2;
+    case R1_LEAVE:
+        ewk->wu.routine_no[0] = R0_HIDE;
         break;
     }
 }
@@ -293,7 +326,7 @@ void eff27_08(WORK_Other* ewk) {
 
 void eff27_09(WORK* wk) {
     switch (wk->routine_no[1]) {
-    case 0:
+    case R1_ANIM:
         char_move(wk);
         if (wk->cg_type == 1) {
             wk->routine_no[1]++;
@@ -304,7 +337,7 @@ void eff27_09(WORK* wk) {
             }
         }
         break;
-    case 1:
+    case R1_NEXT:
         char_move(wk);
         break;
     }
@@ -334,7 +367,7 @@ void set_second_hop(WORK_Other* ewk) {
 void dead_check27(WORK_Other* ewk) {
     WORK_Other* oya = (WORK_Other*)ewk->my_master;
     if (ewk->wu.old_rno[3] != oya->wu.routine_no[1]) {
-        ewk->wu.routine_no[0] = 2;
+        ewk->wu.routine_no[0] = R0_HIDE;
     }
 }
 

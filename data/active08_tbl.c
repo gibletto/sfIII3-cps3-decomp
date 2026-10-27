@@ -1,5 +1,8 @@
 /*
- * ACTIVE08_TBL.C  game tables
+ * ACTIVE08_TBL.C  CPU active pattern table for player 08 (Elena)
+ *
+ * Pattern08_Tbl lists the Pattern08_nnnn scripts the computer-controlled Elena runs in active
+ * (attacking) mode, indexed by Pattern_Index. Read by ACTIVE08.C (Computer08).
  */
 
 #include "types.h"

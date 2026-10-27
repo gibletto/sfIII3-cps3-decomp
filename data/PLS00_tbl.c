@@ -1,5 +1,10 @@
 /*
- * PLS00_TBL.C  game tables
+ * PLS00_TBL.C  player input check dispatch tables
+ *
+ * process_ndcca lists the input check for each routine class (normal, damage, catch, caught,
+ * attack); plpnm_xxxxx lists the per-state checks nm_00000 onward for the normal routines and
+ * plpdm_xxxxx those for the damage routines. lvdir_conv swaps the left and right lever bits
+ * when a jumping player turns round. Read by PLS00.C.
  */
 
 #include "types.h"

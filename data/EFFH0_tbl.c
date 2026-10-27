@@ -1,5 +1,9 @@
 /*
- * EFFH0_TBL.C  game tables
+ * EFFH0_TBL.C  bonus-stage level display sprites
+ *
+ * bbbs_nando_small is the two-sprite connected display (level digit and label) for each facing
+ * of the player, as CONN { x, y, colour, character } entries. Read by EFFH0.C, created by
+ * BBBSCOM.C.
  */
 
 #include "types.h"

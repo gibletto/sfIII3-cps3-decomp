@@ -69,6 +69,46 @@
 #include "sc_sub_2.h"
 #include "EFFM7.h"
 
+/* pcon_rno[2] in settle_type_00000 */
+#define KO_INIT         0       /* start the winner's timer */
+#define KO_DOWN         1       /* until the loser is down */
+#define KO_FOOTWORK     2       /* until the winner is steady: the win and lose poses (or a special settle) */
+#define KO_POSE         3       /* until the win pose is done */
+
+/* pcon_rno[2] in settle_type_10000 */
+#define DK_DOWN         0       /* until both are down */
+#define DK_PAUSE        1       /* the pause */
+
+/* pcon_rno[2] in settle_type_20000 */
+#define TO_INIT         0       /* stop both players */
+#define TO_FOOTWORK     1       /* until both are steady */
+#define TO_DECIDE       2       /* the pause: a draw stops here, else the win and lose poses */
+#define TO_POSE         3       /* until a win pose is done */
+#define TO_DRAW         4       /* a draw: nothing more */
+
+/* pcon_rno[2] in settle_type_30000 */
+#define JG_IDLE         0       /* nothing yet */
+#define JG_WAIT         1       /* until the judges are done, then the poses */
+#define JG_POSE         2       /* until both poses are done */
+
+/* pcon_rno[2] in settle_type_40000 */
+#define GK_INIT         0       /* stop the winner */
+#define GK_DOWN         1       /* until the loser is down */
+#define GK_FOOTWORK     2       /* until the winner is steady: the win and lose poses */
+#define GK_WAIT         3       /* wait dir_timer, then the pause (or the special settle) */
+#define GK_POSE         4       /* until the win pose is done */
+#define GK_SPECIAL      10      /* the pause before the special settle */
+#define GK_SPECIAL_WAIT 11      /* until the special settle starts */
+
+/* pcon_rno[2] in settle_type_50000 */
+#define SP5_INIT        0       /* the pause */
+#define SP5_WAIT        1       /* until the special settle starts the lose pose */
+#define SP5_LOSE        2       /* until the lose pose moves on */
+
+/* pcon_rno[2] in settle_type_60000 */
+#define SP6_INIT        0       /* start the lose pose */
+#define SP6_LOSE        1       /* until it moves on */
+
 void Player_control(void) {
     s16 i;
     pl_eff_disp_stop = 0;
@@ -137,20 +177,20 @@ void plcnt_init(void) {
 
 void init_app_10000(void) {
     switch (pcon_rno[1]) {
-    case 0:
+    case APP_SETUP:
         pli_0000();
-        pcon_rno[1] = 2;
+        pcon_rno[1] = APP_PARRY;
         pcon_dp_flag = 0;
         round_slow_flag = 0;
         dead_voice_flag = 0;
         another_bg[0] = another_bg[1] = 0;
         plw[0].scr_pos_set_flag = plw[1].scr_pos_set_flag = 1;
         break;
-    case 1:
+    case APP_WAIT_READY:
         pli_1000();
         break;
-    case 2:
-        pcon_rno[1] = 3;
+    case APP_PARRY:
+        pcon_rno[1] = APP_GFX;
         if (plw[0].wu.operator) {
             paring_ctr_vs[0][0] = paring_ctr_ori[0];
         } else {
@@ -162,8 +202,8 @@ void init_app_10000(void) {
             paring_ctr_vs[0][1] = 0;
         }
         break;
-    case 3:
-        pcon_rno[1] = 1;
+    case APP_GFX:
+        pcon_rno[1] = APP_WAIT_READY;
         pli_3000();
         break;
     }
@@ -174,7 +214,7 @@ void init_app_10000(void) {
 void init_app_20000(void) {
     s16 i;
     switch (pcon_rno[1]) {
-    case 0:
+    case APP_SETUP:
         pcon_rno[1]++;
         round_slow_flag = 0;
         dead_voice_flag = 0;
@@ -189,7 +229,7 @@ void init_app_20000(void) {
         plw[0].do_not_move = plw[1].do_not_move = 0;
         plw[0].scr_pos_set_flag = plw[1].scr_pos_set_flag = 1;
         break;
-    case 1:
+    case APP_WAIT_READY:
         pli_1000();
         break;
     }
@@ -200,23 +240,23 @@ void init_app_20000(void) {
 void init_app_30000(void) {
     s16 i;
     switch (pcon_rno[1]) {
-    case 0:
+    case APP_SETUP:
         pcon_rno[1]++;
         round_slow_flag = 0;
         dead_voice_flag = 0;
         for (i = 1; i < 8; i++) {
             plw[0].wu.routine_no[i] = plw[1].wu.routine_no[i] = 0;
         }
-        plw[0].wu.routine_no[0] = plw[1].wu.routine_no[0] = 1;
+        plw[0].wu.routine_no[0] = plw[1].wu.routine_no[0] = PLAYER_MV_PLACE;
         another_bg[0] = another_bg[1] = 0;
         plw[0].do_not_move = plw[1].do_not_move = 0;
         break;
-    case 1:
-        if (plw[0].wu.routine_no[0] != 3 || plw[1].wu.routine_no[0] != 3) {
+    case APP_WAIT_READY:
+        if (plw[0].wu.routine_no[0] != PLAYER_MV_READY || plw[1].wu.routine_no[0] != PLAYER_MV_READY) {
             return;
         }
-        pcon_rno[0] = 2;
-        pcon_rno[1] = 3;
+        pcon_rno[0] = PCON_DIE;
+        pcon_rno[1] = SETTLE_JUDGE;
         pcon_rno[2] = 1;
         setup_EJG_index();
         effect_C9_init(&plw[0], 0);
@@ -253,12 +293,12 @@ void pli_0000(void) {
 
 
 void pli_1000(void) {
-    if ((plw[0].wu.routine_no[0] == 3) && (plw[1].wu.routine_no[0] == 3)) {
+    if ((plw[0].wu.routine_no[0] == PLAYER_MV_READY) && (plw[1].wu.routine_no[0] == PLAYER_MV_READY)) {
         if (Allow_a_battle_f) {
-            pcon_rno[0] = 1;
+            pcon_rno[0] = PCON_MOVE;
             pcon_rno[1] = 0;
-            plw[0].wu.routine_no[0] = 4;
-            plw[1].wu.routine_no[0] = 4;
+            plw[0].wu.routine_no[0] = PLAYER_MV_FIGHT;
+            plw[1].wu.routine_no[0] = PLAYER_MV_FIGHT;
             ca_check_flag = 1;
         }
     }
@@ -283,7 +323,7 @@ void pli_3000(void) {
     if (plw[0].player_number == PL_URIEN || plw[1].player_number == PL_URIEN) {
         effect_M4_init(7);
     }
-    if (plw[0].player_number == 0 || plw[1].player_number == 0) {
+    if (plw[0].player_number == PL_GILL || plw[1].player_number == PL_GILL) {
         effect_M4_init(0);
     }
     effect_M4_init(3);
@@ -318,7 +358,7 @@ void plcnt_move(void) {
         }
     }
     settle_check();
-    if (pcon_rno[0] == 2) {
+    if (pcon_rno[0] == PCON_DIE) {
         if (Round_Result & 0x980) {
             if ((Round_Result & 0x800) && gouki_wins) {
                 effect_D3_init(1);
@@ -327,7 +367,7 @@ void plcnt_move(void) {
             }
         }
         if ((plw[0].kezurijini_flag == 1) || (plw[1].kezurijini_flag == 1)) {
-            Round_Result |= 0x200;
+            Round_Result |= RESULT_CHIP;
         }
         if (Winner_id != Loser_id) {
             grade_store_vitality(Winner_id);
@@ -342,7 +382,7 @@ void plcnt_die(void) {
     plw[0].wu.dm_vital = plw[1].wu.dm_vital = 0;
     settle_process[pcon_rno[1]]();
     move_player_work();
-    if (pcon_rno[1] == 3) {
+    if (pcon_rno[1] == SETTLE_JUDGE) {
         plw[0].scr_pos_set_flag = plw[1].scr_pos_set_flag = 0;
     }
 }
@@ -351,10 +391,10 @@ void plcnt_die(void) {
 
 void settle_type_00000(void) {
     switch (pcon_rno[2]) {
-    case 0:
+    case KO_INIT:
         plw[Winner_id].wu.dir_timer = 60;
         pcon_rno[2]++;
-    case 1:
+    case KO_DOWN:
         if (nekorobi_check(Loser_id)) {
             pcon_rno[2]++;
             plw[Winner_id].wkey_flag = 1;
@@ -365,20 +405,20 @@ void settle_type_00000(void) {
             plw[Winner_id].wkey_flag = 1;
             break;
         }
-    case 2:
+    case KO_FOOTWORK:
         if (footwork_check(Winner_id)) {
             grade_set_round_result(Winner_id);
             if (Special_Settle) {
-                pcon_rno[1] = 5;
+                pcon_rno[1] = SETTLE_SPECIAL;
                 pcon_rno[2] = 0;
                 break;
             }
             pcon_rno[2]++;
-            plw[Winner_id].wu.routine_no[2] = 40;
-            plw[Winner_id].wu.routine_no[3] = 0;
-            plw[Loser_id].wu.routine_no[1] = 0;
-            plw[Loser_id].wu.routine_no[2] = 41;
-            plw[Loser_id].wu.routine_no[3] = 0;
+            plw[Winner_id].wu.routine_no[2] = NORMAL_WIN;
+            plw[Winner_id].wu.routine_no[3] = RN3_START;
+            plw[Loser_id].wu.routine_no[1] = PLAYER_NORMAL;
+            plw[Loser_id].wu.routine_no[2] = NORMAL_LOSE;
+            plw[Loser_id].wu.routine_no[3] = RN3_START;
             plw[0].wu.cg_type = plw[1].wu.cg_type = 0;
             plw[0].image_setup_flag = plw[1].image_setup_flag = 0;
             complete_victory_pause();
@@ -387,8 +427,8 @@ void settle_type_00000(void) {
             }
         }
         break;
-    case 3:
-        if (plw[Winner_id].wu.routine_no[3] == 9) {
+    case KO_POSE:
+        if (plw[Winner_id].wu.routine_no[3] == RN3_DONE) {
             pcon_rno[2]++;
         }
         break;
@@ -399,22 +439,22 @@ void settle_type_00000(void) {
 
 void settle_type_10000(void) {
     switch (pcon_rno[2]) {
-    case 0:
+    case DK_DOWN:
         if (nekorobi_check(0) && nekorobi_check(1)) {
             pcon_rno[2]++;
         }
         break;
-    case 1:
+    case DK_PAUSE:
         complete_victory_pause();
         pcon_rno[2]++;
         plw[0].image_setup_flag = plw[1].image_setup_flag = 0;
         if (bg_w.stage == 8 && bg_w.area == 0) {
-            plw[0].wu.routine_no[1] = 0;
-            plw[0].wu.routine_no[2] = 41;
-            plw[0].wu.routine_no[3] = 0;
-            plw[1].wu.routine_no[1] = 0;
-            plw[1].wu.routine_no[2] = 41;
-            plw[1].wu.routine_no[3] = 0;
+            plw[0].wu.routine_no[1] = PLAYER_NORMAL;
+            plw[0].wu.routine_no[2] = NORMAL_LOSE;
+            plw[0].wu.routine_no[3] = RN3_START;
+            plw[1].wu.routine_no[1] = PLAYER_NORMAL;
+            plw[1].wu.routine_no[2] = NORMAL_LOSE;
+            plw[1].wu.routine_no[3] = RN3_START;
             plw[0].wu.cg_type = plw[1].wu.cg_type = 0;
         }
         if (plw[0].wu.operator == 0 && plw[0].player_number == PL_GILL) {
@@ -431,11 +471,11 @@ void settle_type_10000(void) {
 
 void settle_type_20000(void) {
     switch (pcon_rno[2]) {
-    case 0:
+    case TO_INIT:
         plw[0].wkey_flag = plw[1].wkey_flag = 1;
         plw[0].image_setup_flag = plw[1].image_setup_flag = 0;
         pcon_rno[2]++;
-    case 1:
+    case TO_FOOTWORK:
         if (footwork_check(0)) {
             if (footwork_check(1)) {
                 pcon_rno[2]++;
@@ -448,24 +488,24 @@ void settle_type_20000(void) {
             }
         }
         break;
-    case 2:
+    case TO_DECIDE:
         complete_victory_pause();
         if (plw[0].wu.vital_new == plw[1].wu.vital_new) {
-            pcon_rno[2] = 4;
+            pcon_rno[2] = TO_DRAW;
         } else {
             grade_set_round_result(Winner_id);
-            plw[Winner_id].wu.routine_no[2] = 40;
-            plw[Loser_id].wu.routine_no[2] = 41;
-            plw[0].wu.routine_no[3] = plw[1].wu.routine_no[3] = 0;
+            plw[Winner_id].wu.routine_no[2] = NORMAL_WIN;
+            plw[Loser_id].wu.routine_no[2] = NORMAL_LOSE;
+            plw[0].wu.routine_no[3] = plw[1].wu.routine_no[3] = RN3_START;
             plw[0].wu.cg_type = plw[1].wu.cg_type = 0;
             pcon_rno[2]++;
         }
         break;
-    case 3:
-        if (plw[0].wu.routine_no[3] != 9) {
+    case TO_POSE:
+        if (plw[0].wu.routine_no[3] != RN3_DONE) {
             break;
         }
-        if (plw[1].wu.routine_no[3] == 9) {
+        if (plw[1].wu.routine_no[3] == RN3_DONE) {
             pcon_rno[2]++;
         }
         break;
@@ -476,16 +516,16 @@ void settle_type_20000(void) {
 
 void settle_type_30000(void) {
     switch (pcon_rno[2]) {
-    case 0:
+    case JG_IDLE:
         break;
-    case 1:
+    case JG_WAIT:
         if (Event_Judge_Gals != -1) {
             break;
         }
         if (Complete_Judgement) {
-            plw[Winner_id].wu.routine_no[2] = 40;
-            plw[Loser_id].wu.routine_no[2] = 41;
-            plw[0].wu.routine_no[3] = plw[1].wu.routine_no[3] = 0;
+            plw[Winner_id].wu.routine_no[2] = NORMAL_WIN;
+            plw[Loser_id].wu.routine_no[2] = NORMAL_LOSE;
+            plw[0].wu.routine_no[3] = plw[1].wu.routine_no[3] = RN3_START;
             plw[0].wu.cg_type = plw[1].wu.cg_type = 0;
             grade_set_round_result(Winner_id);
             complete_victory_pause();
@@ -495,8 +535,8 @@ void settle_type_30000(void) {
             }
         }
         break;
-    case 2:
-        if ((plw[0].wu.routine_no[3] == 9) && (plw[1].wu.routine_no[3] == 9)) {
+    case JG_POSE:
+        if ((plw[0].wu.routine_no[3] == RN3_DONE) && (plw[1].wu.routine_no[3] == RN3_DONE)) {
             pcon_rno[2]++;
         }
         break;
@@ -507,20 +547,20 @@ void settle_type_30000(void) {
 
 void settle_type_40000(void) {
     switch (pcon_rno[2]) {
-    case 0:
+    case GK_INIT:
         plw[Winner_id].wkey_flag = 1;
         pcon_rno[2]++;
-    case 1:
+    case GK_DOWN:
         if (nekorobi_check(Loser_id) != 0) {
             pcon_rno[2]++;
-        case 2:
+        case GK_FOOTWORK:
             if (footwork_check(Winner_id)) {
                 pcon_rno[2]++;
-                plw[Winner_id].wu.routine_no[2] = 40;
-                plw[Winner_id].wu.routine_no[3] = 0;
-                plw[Loser_id].wu.routine_no[1] = 0;
-                plw[Loser_id].wu.routine_no[2] = 41;
-                plw[Loser_id].wu.routine_no[3] = 0;
+                plw[Winner_id].wu.routine_no[2] = NORMAL_WIN;
+                plw[Winner_id].wu.routine_no[3] = RN3_START;
+                plw[Loser_id].wu.routine_no[1] = PLAYER_NORMAL;
+                plw[Loser_id].wu.routine_no[2] = NORMAL_LOSE;
+                plw[Loser_id].wu.routine_no[3] = RN3_START;
                 plw[Winner_id].wu.cg_type = 0;
                 grade_set_round_result(Winner_id);
                 plw[0].image_setup_flag = plw[1].image_setup_flag = 0;
@@ -533,10 +573,10 @@ void settle_type_40000(void) {
             }
         }
         break;
-    case 3:
+    case GK_WAIT:
         if (--plw[Winner_id].wu.dir_timer <= 0) {
             if (Special_Settle) {
-                pcon_rno[2] = 10;
+                pcon_rno[2] = GK_SPECIAL;
                 break;
             } else {
                 complete_victory_pause();
@@ -545,18 +585,18 @@ void settle_type_40000(void) {
             }
         }
         break;
-    case 4:
-        if (plw[Winner_id].wu.routine_no[3] == 9) {
+    case GK_POSE:
+        if (plw[Winner_id].wu.routine_no[3] == RN3_DONE) {
             pcon_rno[2]++;
         }
         break;
-    case 10:
+    case GK_SPECIAL:
         complete_victory_pause();
         pcon_rno[2]++;
         break;
-    case 11:
+    case GK_SPECIAL_WAIT:
         if (Special_Settle & 0x80) {
-            pcon_rno[1] = 6;
+            pcon_rno[1] = SETTLE_SPECIAL2;
             pcon_rno[2] = 0;
         }
         break;
@@ -568,23 +608,23 @@ void settle_type_40000(void) {
 /* provisional name */
 void settle_type_50000(void) {
     switch (pcon_rno[2]) {
-    case 0:
+    case SP5_INIT:
         setup_normal_process_flags(&plw[Loser_id]);
         complete_victory_pause();
         pcon_rno[2]++;
         break;
-    case 1:
+    case SP5_WAIT:
         if (Special_Settle & 0x80) {
             pcon_rno[2]++;
-            plw[Loser_id].wu.routine_no[1] = 0;
-            plw[Loser_id].wu.routine_no[2] = 41;
-            plw[Loser_id].wu.routine_no[3] = 0;
+            plw[Loser_id].wu.routine_no[1] = PLAYER_NORMAL;
+            plw[Loser_id].wu.routine_no[2] = NORMAL_LOSE;
+            plw[Loser_id].wu.routine_no[3] = RN3_START;
             plw[Winner_id].do_not_move = 1;
             grade_set_round_result(Winner_id);
             bg_stop = 1;
         }
         break;
-    case 2:
+    case SP5_LOSE:
         if (plw[Loser_id].wu.routine_no[3] >= 2) {
             pcon_rno[2]++;
             Next_Step = 1;
@@ -598,15 +638,15 @@ void settle_type_50000(void) {
 /* provisional name */
 void settle_type_60000(void) {
     switch (pcon_rno[2]) {
-    case 0:
+    case SP6_INIT:
         pcon_rno[2]++;
-        plw[Loser_id].wu.routine_no[1] = 0;
-        plw[Loser_id].wu.routine_no[2] = 41;
-        plw[Loser_id].wu.routine_no[3] = 0;
+        plw[Loser_id].wu.routine_no[1] = PLAYER_NORMAL;
+        plw[Loser_id].wu.routine_no[2] = NORMAL_LOSE;
+        plw[Loser_id].wu.routine_no[3] = RN3_START;
         plw[Winner_id].do_not_move = 1;
         grade_set_round_result(Winner_id);
         break;
-    case 1:
+    case SP6_LOSE:
         if (plw[Loser_id].wu.routine_no[3] >= 2) {
             pcon_rno[2]++;
             Next_Step = 1;
@@ -643,7 +683,7 @@ void move_player_work(void) {
             move_P2_move_P1();
             break;
         default:
-            switch ((plw[0].wu.routine_no[1] == 4) + ((plw[1].wu.routine_no[1] == 4) * 2)) {
+            switch ((plw[0].wu.routine_no[1] == PLAYER_ATTACK) + ((plw[1].wu.routine_no[1] == PLAYER_ATTACK) * 2)) {
             case 1:
                 move_P1_move_P2();
                 break;
@@ -771,13 +811,13 @@ s32 time_over_check(void) {
         }
         setup_gouki_wins();
         Conclusion_Flag = 1;
-        Conclusion_Type = 2;
-        setup_settle_rno(2);
+        Conclusion_Type = CONCLUSION_TIME_OVER;
+        setup_settle_rno(SETTLE_TIME_OVER);
         if (Demo_Flag) {
             request_center_message(2);
         }
         plw[0].wu.dm_vital = plw[1].wu.dm_vital = 0;
-        Round_Result |= 1;
+        Round_Result |= RESULT_TIME;
         return 1;
     }
     return 0;
@@ -801,7 +841,7 @@ s32 will_die(void) {
 void setup_settle_rno(kos)
 s16 kos;
 {
-    pcon_rno[0] = 2;
+    pcon_rno[0] = PCON_DIE;
     pcon_rno[1] = kos;
     pcon_rno[2] = 0;
     ca_check_flag = 0;
@@ -829,11 +869,11 @@ retry:
         if ((Round_Result & 0x800) && gouki_wins) {
             Shin_Gouki_BGM = 1;
             Control_Music_Fade(150);
-            setup_settle_rno(4);
+            setup_settle_rno(SETTLE_GOUKI);
         } else {
-            setup_settle_rno(0);
+            setup_settle_rno(SETTLE_KO);
             Conclusion_Flag = 1;
-            Conclusion_Type = 0;
+            Conclusion_Type = CONCLUSION_KO;
             if (Demo_Flag) {
                 request_center_message(0);
             }
@@ -844,8 +884,8 @@ retry:
             goto retry;
         }
         Conclusion_Flag = 1;
-        Conclusion_Type = 1;
-        setup_settle_rno(1);
+        Conclusion_Type = CONCLUSION_DOUBLE_KO;
+        setup_settle_rno(SETTLE_DOUBLE_KO);
         if (Demo_Flag) {
             request_center_message(1);
         }
@@ -870,7 +910,7 @@ s32 check_sa_resurrection(PLW* wk) {
 
 
 s32 check_sa_type_rebirth(PLW* wk) {
-    if (wk->sa->gauge_type != 3) {
+    if (wk->sa->gauge_type != SA_GAUGE_REBIRTH) {
         return 0;
     }
     if (wk->sa->ok != 1) {
@@ -882,7 +922,7 @@ s32 check_sa_type_rebirth(PLW* wk) {
 s32 nekorobi_check(char pl) {
     s16 result;
     result = 0;
-    if (plw[pl].wu.routine_no[1] == 1) {
+    if (plw[pl].wu.routine_no[1] == PLAYER_DAMAGE) {
         if (plw[pl].wu.routine_no[2] == 0) {
             if (plw[pl].wu.routine_no[3] > 2) {
                 result = 1;
@@ -896,7 +936,7 @@ s32 footwork_check(char pl)
 {
     s16 result;
     result = 0;
-    if (plw[pl].wu.routine_no[1] == 0) {
+    if (plw[pl].wu.routine_no[1] == PLAYER_NORMAL) {
         if (plw[pl].wu.routine_no[2] == 1) {
             result = 1;
         }

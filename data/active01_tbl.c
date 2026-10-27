@@ -1,5 +1,8 @@
 /*
- * ACTIVE01_TBL.C  game tables
+ * ACTIVE01_TBL.C  CPU active pattern table for player 01 (Alex)
+ *
+ * Pattern01_Tbl lists the Pattern01_nnnn scripts the computer-controlled Alex runs in active
+ * (attacking) mode, indexed by Pattern_Index. Read by ACTIVE01.C (Computer01).
  */
 
 #include "types.h"

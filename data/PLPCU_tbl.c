@@ -1,5 +1,10 @@
 /*
- * PLPCU_TBL.C  game tables
+ * PLPCU_TBL.C  thrown player routine tables
+ *
+ * plpcu_lv_00 is the list of caught routines Caught_00000 - Caught_03000, indexed by caught
+ * routine number; setup_cu_dm_init_data lists the scdmd_ routines that set up the damage state
+ * a thrown player is released into, indexed by routine number minus 12. plpcu_lv_00_tail
+ * follows plpcu_lv_00 and is not referred to. Read by PLPCU.C, the player caught process.
  */
 
 #include "types.h"

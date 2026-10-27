@@ -19,17 +19,23 @@
 #include "effect_2.h"
 #include "effect_L9_move.h"
 
+/* routine_no[1] */
+#define R1_INIT         0       /* start the animation */
+#define R1_MOVE         1       /* animate with BG 1 until the screen closes */
+#define R1_END          2       /* hidden for a frame */
+#define R1_KILL         3       /* (default) put the work back */
+
 
 
 void effect_L9_move(WORK_Other* ewk) {
     WORK_Other* oya = (WORK_Other*)ewk->my_master;
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1] += 1;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R1_MOVE:
         char_move(&ewk->wu);
         if (oya->wu.routine_no[0] >= 3) {
             ewk->wu.routine_no[1] += 1;
@@ -41,7 +47,7 @@ void effect_L9_move(WORK_Other* ewk) {
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
         sort_push_request4(&ewk->wu);
         break;
-    case 2:
+    case R1_END:
         ewk->wu.routine_no[1] += 1;
         break;
     default:

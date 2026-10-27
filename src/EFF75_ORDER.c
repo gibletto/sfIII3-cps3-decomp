@@ -19,6 +19,12 @@
 #include "charmove_2.h"
 #include "EFF75_ORDER.h"
 
+/* routine_no[0]: the order being carried out */
+#define R0_WAIT         0       /* wait for an order */
+
+/* routine_no[1]: within an order */
+#define R1_DELAY        0       /* count the order timer down */
+
 
 void effect_75_move(WORK_Other* ewk) {
     EFF75_Jmp_Tbl[ewk->wu.routine_no[0]](ewk);
@@ -30,7 +36,7 @@ void effect_75_move(WORK_Other* ewk) {
 
 void EFF75_WAIT(WORK_Other_CONN* ewk) {
     if ((ewk->wu.routine_no[0] = Order[ewk->wu.dir_old])) {
-        ewk->wu.routine_no[1] = 0;
+        ewk->wu.routine_no[1] = R1_DELAY;
     }
 }
 
@@ -44,7 +50,7 @@ void EFF75_CHAR_CHANGE(WORK_Other* ewk) {
     if (--Order_Timer[ewk->wu.dir_old] != 0) {
         return;
     }
-    ewk->wu.routine_no[0] = 0;
+    ewk->wu.routine_no[0] = R0_WAIT;
     Order[ewk->wu.dir_old] = 0;
     ewk->wu.dir_step = Order_Dir[ewk->wu.dir_old];
     set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
@@ -54,7 +60,7 @@ void EFF75_CHAR_CHANGE(WORK_Other* ewk) {
 
 void EFF75_SUDDENLY(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_DELAY:
         if (--Order_Timer[ewk->wu.dir_old]) {
             break;
         }
@@ -67,7 +73,7 @@ void EFF75_SUDDENLY(WORK_Other* ewk) {
         set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
         break;
     default:
-        ewk->wu.routine_no[0] = 0;
+        ewk->wu.routine_no[0] = R0_WAIT;
         Order[ewk->wu.dir_old] = 0;
         break;
     }
@@ -77,7 +83,7 @@ void EFF75_SUDDENLY(WORK_Other* ewk) {
 
 void EFF75_DIE(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_DELAY:
         if (--Order_Timer[ewk->wu.dir_old] == 0) {
             ewk->wu.routine_no[1]++;
             ewk->wu.disp_flag = 0;

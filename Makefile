@@ -9,9 +9,7 @@ CFLAGS = -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -inc
 OPT = -optimize=1 -speed
 
 # modules compiled with other settings
-NOINLINE = Entry entry_2 Entry_dbg SYS_sub sel_pl next_cpu game_config_jp game_config_en CMD_MAIN cmd_main_2 \
-	ta_sub end_main end_4 sc_trans VITAL count sc_sub sc_sub_2 sc_sub_3 EFF15 EFF25 EffD8 effe6 PLCNTSET \
-	plcntset_2 PLSGAUGE textsound textsound_2 textsound_3
+NOINLINE = entry_2 sel_pl CMD_MAIN EffD8
 OPT0 = family sys_test sys_test_2 iotest_out soundtest colortest sys_test_2a sys_test_2b sys_test_2c \
 	sys_test_3 sys_test_4 sys_test_5 coin_sw coin_sw_2 eeprom sys_config sys_config_2 sys_config_3 \
 	spr_pool spr_pool_2 simmram_slot poly_que spr_list cram_bank
@@ -21,8 +19,10 @@ CONSTTBL = entry_2 Com_Pl SYS_sub Game_Main demo00 demo02_code RANKING Manage ma
 	end_1 end_2 end_3 end_5 end_6 end_7 end_8 end_9 end_10 end_11 end_12 end_13 end_14 end_16 end_17 \
 	end_18 end_19 end_20 end_sub_3 end_sub_4 end_sub_5 end_sub_6 end_sub_7 end_sub_7b end_sub_7c \
 	color3rd eff35 EFF48 EFF85 EFF86 eff94 effe6 efff5 efff7 effh5 EFFJ8 effL3 effM0 textsound_2
+AGGRESSIVE = Entry
 
 $(NOINLINE:%=obj/%.obj): OPT += -noinline
+$(AGGRESSIVE:%=obj/%.obj): OPT += -aggressive=1
 $(OPT0:%=obj/%.obj): OPT = -optimize=0 -nospeed
 $(CONSTTBL:%=obj/%.obj): CFLAGS += -section=const=CTBL
 

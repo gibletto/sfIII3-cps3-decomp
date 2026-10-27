@@ -1,5 +1,8 @@
 /*
- * SHELL05_TBL.C  game tables
+ * SHELL05_TBL.C  CPU anti-projectile pattern table 05 (Necro)
+ *
+ * Shell05_Tbl lists the Shell05_nnnn pattern scripts the computer-controlled Necro runs when
+ * the opponent fires a projectile, indexed by Pattern_Index. Read by SHELL05.C.
  */
 
 #include "types.h"

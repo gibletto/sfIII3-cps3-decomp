@@ -1,5 +1,9 @@
 /*
- * END_3_TBL.C  game tables
+ * END_3_TBL.C  Yun's ending tables (ending 3)
+ *
+ * end_300_bg0_cell_tbl lists the BG0 cells (map offset, cell number) written at the start of
+ * the ending, timer_3_tbl the length in frames of each of its six scenes and end_3_pos the BG
+ * x and y of each scene. Read by END_3.C.
  */
 
 #include "types.h"

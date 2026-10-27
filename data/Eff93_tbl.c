@@ -1,5 +1,9 @@
 /*
- * EFF93_TBL.C  game tables
+ * EFF93_TBL.C  stage background object counts for effects 87 and 88
+ *
+ * eff87_loop_tbl and eff88_loop_tbl give the number of background objects to spawn by type and
+ * compel flag; scr_obj_data87_0 is the empty object list that the effect 87 record table
+ * points to. Read by EFF87.C and EFF88.C.
  */
 
 #include "types.h"

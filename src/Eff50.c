@@ -18,26 +18,33 @@
 #include "effect_2.h"
 #include "Eff50.h"
 
+/* routine_no[0] */
+#define R0_WAIT         0       /* wait for the art select to open */
+#define R0_MOVE         1       /* animate with the plates */
+#define R0_SHIFT        2       /* shifted while its plate moves */
+#define R0_HIDE         3       /* count down, then hide */
+#define R0_KILL         4       /* (default) put the work back */
+
 
 
 void effect_50_move(WORK_Other* ewk) {
     WORK_Other* pwk;
     if (Sel_Arts_Complete[ewk->master_id] < 0) {
-        ewk->wu.routine_no[0] = 3;
+        ewk->wu.routine_no[0] = R0_HIDE;
         ewk->wu.dir_timer = 1;
         return;
     }
     pwk = (WORK_Other*)Synchro_Address[ewk->master_id][(ewk->wu.direction - 1) ^ 1];
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_WAIT:
         if (Select_Arts[ewk->master_id] == 0) {
             ewk->wu.routine_no[0]++;
             ewk->wu.disp_flag = 1;
         }
         break;
-    case 1:
+    case R0_MOVE:
         if (Sel_Arts_Complete[ewk->master_id]) {
-            ewk->wu.routine_no[0] = 3;
+            ewk->wu.routine_no[0] = R0_HIDE;
             ewk->wu.dir_timer = 5;
         } else if (Moving_Plate[ewk->master_id] == ewk->wu.direction && ewk->wu.dm_vital == 0) {
             ewk->wu.routine_no[0]++;
@@ -50,9 +57,9 @@ void effect_50_move(WORK_Other* ewk) {
             char_move(&ewk->wu);
         }
         break;
-    case 2:
+    case R0_SHIFT:
         if (ewk->wu.cg_type != 0 && !Moving_Plate[ewk->master_id]) {
-            ewk->wu.routine_no[0] = 1;
+            ewk->wu.routine_no[0] = R0_MOVE;
             ewk->wu.char_index--;
             set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
             ewk->wu.cg_ix = pwk->wu.cg_ix - ewk->wu.cgd_type;
@@ -66,7 +73,7 @@ void effect_50_move(WORK_Other* ewk) {
         }
         char_move(&ewk->wu);
         break;
-    case 3:
+    case R0_HIDE:
         if (--ewk->wu.dir_timer == 0) {
             ewk->wu.disp_flag = 0;
             ewk->wu.routine_no[0]++;
@@ -116,8 +123,8 @@ s32 effect_50_init(s16 PL_id, s16 Direction, s16 dm_vital) {
     if (dm_vital == 0) {
         Synchro_Address[ewk->master_id][ewk->wu.direction - 1] = (u32*)ewk;
     }
-    ewk->wu.xyz[0].disp.pos = Plate_Pos_Data_79[Play_Type][ewk->master_id][0][0];
-    ewk->wu.xyz[1].disp.pos = Plate_Pos_Data_79[Play_Type][ewk->master_id][0][1];
+    ewk->wu.xyz[0].disp.pos = Plate_Pos_Data_79[Play_Type][ewk->master_id][0][SEL_POS_X];
+    ewk->wu.xyz[1].disp.pos = Plate_Pos_Data_79[Play_Type][ewk->master_id][0][SEL_POS_Y];
     if (dm_vital == 1) {
         ewk->wu.char_index = 31;
         ewk->wu.dir_step = Direction - 1;
@@ -125,8 +132,8 @@ s32 effect_50_init(s16 PL_id, s16 Direction, s16 dm_vital) {
         ewk->wu.char_index = ((Direction - 1) * 2) + 27;
         ewk->wu.dir_step = 0;
     }
-    ewk->wu.dmcal_m = EFF50_Correct_Data[Direction - 1][dm_vital][0];
-    ewk->wu.dmcal_d = EFF50_Correct_Data[Direction - 1][dm_vital][1];
+    ewk->wu.dmcal_m = EFF50_Correct_Data[Direction - 1][dm_vital][SEL_POS_X];
+    ewk->wu.dmcal_d = EFF50_Correct_Data[Direction - 1][dm_vital][SEL_POS_Y];
     ewk->wu.position_z = 30;
     set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
     return 0;

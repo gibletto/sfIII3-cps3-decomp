@@ -1,5 +1,9 @@
 /*
- * OPENING.C  game tables
+ * OPENING.C  opening demo sound steps and work
+ *
+ * op_change_sound_tbl is the music sequence positions at which the opening demo moves to its
+ * next scene; read by END_MAIN.C. The file also defines the opening demo work (op_w,
+ * op_end_flag, opw_ptr, op_bg_mvxy and the others).
  */
 
 #include "types.h"

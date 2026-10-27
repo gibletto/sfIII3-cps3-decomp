@@ -1,5 +1,9 @@
 /*
- * SC_DATA3.C  game tables
+ * SC_DATA3.C  palette fade table
+ *
+ * fade_data_tbl has one row per fade number: the number of layers faded, then for each layer
+ * an entry of fade_adrs_tbl and a row of fade_param_tbl (both in SPGAUGE_TBL.C). Read by
+ * fade_cont_init in SC_SUB_2.C.
  */
 
 #include "types.h"

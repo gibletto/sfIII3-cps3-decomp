@@ -1,5 +1,8 @@
 /*
- * PASS08_TBL.C  game tables
+ * PASS08_TBL.C  CPU passive pattern table for Elena
+ *
+ * Passive08_Tbl is the 214 passive (defensive) pattern routines of character 8 (Elena),
+ * indexed by Pattern_Index. Read by PASS08.C.
  */
 
 #include "types.h"

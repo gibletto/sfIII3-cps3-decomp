@@ -46,7 +46,7 @@ void Player_move_bonus(PLW* wk, u16 lv_data) {
             wk->cp->sw_lvbt = lv_data;
         }
     } else {
-        if (Bonus_Game_Flag == 22) {
+        if (Bonus_Game_Flag == BONUS_PARRY) {
             bbbs_com_execute(wk);
         } else {
             bbbs_com_execute2(wk);
@@ -131,7 +131,7 @@ void player_mvbs_0000(PLW* wk) {
     wk->wu.extra_col = 0;
     wk->sa_stop_flag = 0;
     clear_tk_flags(wk);
-    wk->wu.routine_no[0] = 1;
+    wk->wu.routine_no[0] = PLAYER_MV_PLACE;
     if (wk->player_number == PL_ELENA) {
         effect_G1_init(wk);
     }
@@ -144,32 +144,32 @@ void player_mvbs_0000(PLW* wk) {
 
 void player_mvbs_1000(PLW* wk) {
     switch (appear_type) {
-    case 0:
+    case APPEAR_STAND:
         plmv_b_1010(wk);
         plmv_b_1020(wk, 96);
         Appear_end++;
         break;
-    case 3:
+    case APPEAR_JUDGE:
         plmv_b_1010(wk);
         plmv_b_1020(wk, 128);
         break;
-    case 1:
-    case 2:
-        wk->wu.routine_no[0] = 2;
-        if (Bonus_Game_Flag != 21 || wk->wu.operator) {
-            wk->wu.routine_no[1] = 0;
-            wk->wu.routine_no[2] = 0;
-            wk->wu.routine_no[3] = 0;
+    case APPEAR_ENTRY:
+    case APPEAR_ROUND:
+        wk->wu.routine_no[0] = PLAYER_MV_APPEAR;
+        if (Bonus_Game_Flag != BONUS_CAR || wk->wu.operator) {
+            wk->wu.routine_no[1] = PLAYER_NORMAL;
+            wk->wu.routine_no[2] = NORMAL_APPEAR;
+            wk->wu.routine_no[3] = RN3_START;
             wk->wu.disp_flag = 1;
         }
         appear_data_init_set(wk);
         break;
     }
     if (!wk->wu.operator) {
-        if (Bonus_Game_Flag == 21) {
-            wk->wu.routine_no[1] = 0;
+        if (Bonus_Game_Flag == BONUS_CAR) {
+            wk->wu.routine_no[1] = PLAYER_NORMAL;
             wk->wu.routine_no[2] = 51;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[3] = RN3_START;
             wk->wu.xyz[0].disp.pos = 468;
             wk->wu.xyz[1].disp.pos = 0;
         }
@@ -180,11 +180,11 @@ void player_mvbs_1000(PLW* wk) {
 
 
 void plmv_b_1010(PLW* wk) {
-    wk->wu.routine_no[0] = 3;
-    if (Bonus_Game_Flag != 0x15 || wk->wu.operator) {
-        wk->wu.routine_no[1] = 0;
-        wk->wu.routine_no[2] = 1;
-        wk->wu.routine_no[3] = 0;
+    wk->wu.routine_no[0] = PLAYER_MV_READY;
+    if (Bonus_Game_Flag != BONUS_CAR || wk->wu.operator) {
+        wk->wu.routine_no[1] = PLAYER_NORMAL;
+        wk->wu.routine_no[2] = NORMAL_STAND;
+        wk->wu.routine_no[3] = RN3_START;
         wk->wu.disp_flag = 1;
     }
 }
@@ -206,14 +206,14 @@ void plmv_b_1020(PLW* wk, s16 step) {
 
 
 void player_mvbs_2000(PLW* wk) {
-    if (Bonus_Game_Flag != 21 || wk->wu.operator) {
-        if (wk->wu.routine_no[2] == 1) {
-            wk->wu.routine_no[0] = 3;
+    if (Bonus_Game_Flag != BONUS_CAR || wk->wu.operator) {
+        if (wk->wu.routine_no[2] == NORMAL_STAND) {
+            wk->wu.routine_no[0] = PLAYER_MV_READY;
             wk->wu.disp_flag = 1;
             wk->wu.cg_type = 0;
         }
     } else {
-        wk->wu.routine_no[0] = 3;
+        wk->wu.routine_no[0] = PLAYER_MV_READY;
         wk->wu.cg_type = 0;
     }
     Player_normal(wk);

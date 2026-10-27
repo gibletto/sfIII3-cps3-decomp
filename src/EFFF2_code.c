@@ -1,7 +1,7 @@
 /*
  * EFFF2_CODE.C  Effect F2: ending falling objects
  *
- * Effect F2 (effect_F2_init, from end_12.c) creates ten ending objects from efff2_data_tbl.
+ * Effect F2 (effect_F2_init, from end_12.c) creates ten ending objects from efff2_data_tbl1.
  * Each waits a random time (efff2_timer_tbl), plays its pattern until frame type 9, then falls
  * with the speeds in efff2_sp_tbl1 and starts again from its home position; all are freed when
  * the ending scene moves on.
@@ -20,15 +20,22 @@
 #include "aboutspr.h"
 #include "EFFF2_code.h"
 
+/* routine_no[1] */
+#define R1_INIT         0       /* start the pattern and pick a wait */
+#define R1_WAIT         1       /* count the wait down */
+#define R1_ANIM         2       /* play the pattern to frame type 9 */
+#define R1_FALL         3       /* fall, then start again at home */
+#define R1_KILL         99      /* (default) put the work back */
+
 
 
 void effect_F2_move(WORK_Other* ewk) {
     s16 work;
     if (ewk->wu.old_rno[6] < end_w.r_no_2) {
-        ewk->wu.routine_no[1] = 99;
+        ewk->wu.routine_no[1] = R1_KILL;
     }
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.old_rno[4], ewk->wu.char_index, 0);
@@ -36,13 +43,13 @@ void effect_F2_move(WORK_Other* ewk) {
         work &= 0xF;
         ewk->wu.old_rno[5] = efff2_timer_tbl[work];
         break;
-    case 1:
+    case R1_WAIT:
         ewk->wu.old_rno[5]--;
         if (ewk->wu.old_rno[5] <= 0) {
             ewk->wu.routine_no[1]++;
         }
         break;
-    case 2:
+    case R1_ANIM:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 9) {
             ewk->wu.routine_no[1]++;
@@ -54,11 +61,11 @@ void effect_F2_move(WORK_Other* ewk) {
         }
         disp_pos_trans_entry(ewk);
         break;
-    case 3:
+    case R1_FALL:
         add_x_sub(ewk);
         add_y_sub(ewk);
         if (ewk->wu.xyz[1].disp.pos < 256) {
-            ewk->wu.routine_no[1] = 0;
+            ewk->wu.routine_no[1] = R1_INIT;
             ewk->wu.xyz[0].disp.pos = efff2_data_tbl1[ewk->wu.type][1];
             ewk->wu.xyz[1].disp.pos = efff2_data_tbl1[ewk->wu.type][2];
             ewk->wu.old_rno[4] = 19;

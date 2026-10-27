@@ -29,15 +29,24 @@
 #include "sys_config_2.h"
 #include "sys_config_3.h"
 #include "effj4.h"
+
+/* effect J3 routine_no[0] */
+#define R0_INIT         0       /* set up and show */
+#define R0_PLAY         1       /* play the animation once */
+#define R0_KILL         2       /* (default) put the work back */
+
+/* effect J4 routine_no[0] */
+#define R0_MOVE         1       /* scroll with the background */
+
 void effect_J3_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         disp_pos_trans_entry(ewk);
         break;
-    case 1:
+    case R0_PLAY:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
             ewk->wu.routine_no[0]++;
@@ -90,7 +99,7 @@ s32 effect_J3_init(WORK* wk, u8 type) {
 
 void effect_J4_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.blink_timing = 0;
@@ -109,7 +118,7 @@ void effect_J4_move(WORK_Other* ewk) {
         ewk->wu.my_mr.size.x = 127;
         ewk->wu.my_mr.size.y = effJ4_data_tbl[ewk->wu.type][2];
         break;
-    case 1:
+    case R0_MOVE:
         ewk->wu.dir_timer--;
         if (ewk->wu.dead_f != 0 || ewk->wu.dir_timer <= 0) {
             ewk->wu.disp_flag = 0;
@@ -120,7 +129,7 @@ void effect_J4_move(WORK_Other* ewk) {
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos + bg_w.bgw[1].position_y;
         sort_push_request(&ewk->wu);
         break;
-    case 2:
+    case R0_KILL:
     default:
         all_cgps_put_back(ewk);
         push_effect_work(&ewk->wu);

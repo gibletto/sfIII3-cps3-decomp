@@ -1,5 +1,8 @@
 /*
- * PASS16_TBL.C  game tables
+ * PASS16_TBL.C  Chun-Li's passive pattern table
+ *
+ * Passive16_Tbl lists the 164 passive pattern routines of character 16 (Chun-Li), indexed by
+ * Pattern_Index. Read by PASS16.C.
  */
 
 #include "types.h"

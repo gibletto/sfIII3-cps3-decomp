@@ -1,5 +1,13 @@
 /*
- * BG000_TBL.C  game tables
+ * BG000_TBL.C  stage background set-up tables
+ *
+ * Per stage background (bg_index), and for the special screens drawn by bg_etc_write (the etc_
+ * tables, by screen type): the scroll graphics number (bg_scno_tbl), graphics source and size
+ * (bg_gfx_tbl), layer scroll speeds (bg_speed_tbl), layer priorities (bg_prio_tbl), cell
+ * attributes, cell counts and cell sources (bg_attr_tbl, bg_cell_cnt_tbl, bg_cg_src_tbl), the
+ * cell set per stage (bg_cell_set_tbl) and the layer scroll limits (bg_limit_tbl). Also the
+ * sprite list data bg_scr_record_data and ake_scr_record_data (finish screen). Read by
+ * BG000.C; bg_gfx_tbl and bg_scr_record_data also by the debug fight setups in CMD_MAIN.C.
  */
 
 #include "types.h"
@@ -10,8 +18,8 @@ extern const u16 op_char_table_012[21512];
 
 extern const u32 debug_scene_scrn_data[17408];
 extern const u8 eff08_scrn_data[];
-extern const u8 eff23_scrn_data[];
-extern const u8 eff45_scrn_data[];
+extern const u32 eff23_scrn_data[12544];
+extern const u32 eff45_scrn_data[7424];
 extern const u32 eff74_scrn_data[13056];
 extern const u32 effJ5_scrn_data[38656];
 extern const u32 end_2000_scrn_data[2048];

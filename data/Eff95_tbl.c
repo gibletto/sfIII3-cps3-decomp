@@ -1,5 +1,8 @@
 /*
- * EFF95_TBL.C  game tables
+ * EFF95_TBL.C  continue screen character poses
+ *
+ * eff95_data_tbl gives, for each continue count, four poses the character picks from at
+ * random. Read by EFF95.C.
  */
 
 #include "types.h"

@@ -1,5 +1,9 @@
 /*
- * END_MAIN_TBL.C  game tables
+ * END_MAIN_TBL.C  opening demo BG tables
+ *
+ * op_quake_y_tbl0 is the 16-step vertical shake applied to an opening BG0 scene, and
+ * op_scr_record_data_0 .. op_scr_record_data_3 are the scroll layout records of the four
+ * opening BG layers, passed to sprite_list_setup. Read by END_MAIN.C.
  */
 
 #include "types.h"

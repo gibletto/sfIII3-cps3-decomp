@@ -1,5 +1,9 @@
 /*
- * EFF73_TBL.C  game tables
+ * EFF73_TBL.C  scattering creature tables
+ *
+ * eff73_sp_tbl gives the starting speeds of the four creatures, eff73_vanish_tbl their random
+ * vanish times and eff73_survive_tbl the random choice of the one that flies on. Read by
+ * EFF73.C.
  */
 
 #include "types.h"

@@ -1,5 +1,9 @@
 /*
- * EFF76_TBL.C  game tables
+ * EFF76_TBL.C  state routines of effect 76
+ *
+ * EFF76_Jmp_Tbl is the state routines of the screen objects of the select, versus, win and
+ * ranking screens (wait, wait for break-in, slide in, appear at once, before, shift, die).
+ * Read by EFF76.C.
  */
 
 #include "types.h"

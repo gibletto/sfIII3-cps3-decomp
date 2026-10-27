@@ -1,5 +1,8 @@
 /*
- * ACTIVE03_TBL.C  game tables
+ * ACTIVE03_TBL.C  CPU active pattern table for player 03 (Yun)
+ *
+ * Pattern03_Tbl lists the Pattern03_nnnn scripts the computer-controlled Yun runs in active
+ * (attacking) mode, indexed by Pattern_Index. Read by ACTIVE03.C (Computer03).
  */
 
 #include "types.h"

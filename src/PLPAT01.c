@@ -25,10 +25,18 @@
 #include "PLS02.h"
 #include "PLPAT01.h"
 
+/* routine_no[3], Att_PL01_DDT */
+#define DDT_CUE         1       /* run the animation to cue 20 */
+#define DDT_AIR         2       /* in the air until it lands */
+#define DDT_LAND        3       /* the landing */
+
+/* routine_no[3], Att_PL01_TOKUSHUKOUDOU */
+#define TOKUSHUKOUDOU_ACTION 1  /* the personal action, filling the super art gauge */
+
 
 
 void pl01_extra_attack(PLW* wk) {
-    pl01_exatt_table[wk->wu.routine_no[2] - 16](wk);
+    pl01_exatt_table[wk->wu.routine_no[2] - ATTACK_SPECIAL](wk);
 }
 
 
@@ -36,7 +44,7 @@ void pl01_extra_attack(PLW* wk) {
 void Att_PL01_DDT(PLW* wk) {
     PLW* twk = (PLW*)wk->wu.target_adrs;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         hoken_muriyari_chakuchi(wk);
         wk->wu.rl_flag = wk->wu.rl_waza;
@@ -44,24 +52,24 @@ void Att_PL01_DDT(PLW* wk) {
         wk->wu.mvxy.index = wk->as->data_ix;
         set_char_move_init(&wk->wu, 5, wk->as->char_ix);
         break;
-    case 1:
+    case DDT_CUE:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 20) {
             wk->wu.cg_type = 0;
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
-            wk->wu.routine_no[3] = 2;
+            wk->wu.routine_no[3] = DDT_AIR;
             cal_initial_speed_y(&wk->wu, wk->as->r_no, pl01_ddt_dat[twk->player_number][0]);
         }
         break;
-    case 2:
+    case DDT_AIR:
         jumping_union_process(&wk->wu, 3);
-        if (wk->wu.routine_no[3] != 3 && wk->wu.cg_ja.caix) {
+        if (wk->wu.routine_no[3] != DDT_LAND && wk->wu.cg_ja.caix) {
             wk->wu.cg_ja.caix = pl01_ddt_dat[twk->player_number][1];
             wk->wu.h_cat = wk->wu.cg_ja.caix + wk->wu.catch_adrs;
         }
         break;
-    case 3:
+    case DDT_LAND:
         char_move(&wk->wu);
         break;
     }
@@ -72,13 +80,13 @@ void Att_PL01_DDT(PLW* wk) {
 void Att_PL01_TOKUSHUKOUDOU(PLW* wk) {
     wk->scr_pos_set_flag = 0;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.rl_flag = wk->wu.rl_waza;
         hoken_muriyari_chakuchi(wk);
         set_char_move_init(&wk->wu, 5, wk->as->char_ix);
         break;
-    case 1:
+    case TOKUSHUKOUDOU_ACTION:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 40) {
             wk->wu.cg_type = 0;

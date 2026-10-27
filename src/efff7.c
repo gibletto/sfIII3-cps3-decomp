@@ -30,13 +30,17 @@
 #include "textsound_3.h"
 #include "efff7.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* show the chosen object */
+#define R0_MOVE         1       /* edit it with player 2's controls */
+
 
 
 void effect_F7_move(WORK_Other* ewk) {
     s16 work;
     s16 mr;
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.my_mr_flag = 1;
         ewk->wu.disp_flag = 1;
@@ -44,30 +48,30 @@ void effect_F7_move(WORK_Other* ewk) {
         ewk->wu.my_mr.size.y = ewk->wu.old_rno[1];
         set_char_move_init2(&ewk->wu, 0, 3, ewk->wu.old_rno[0] + 1, 0);
         break;
-    case 1:
+    case R0_MOVE:
         work = p2sw_0 & ~p2sw_1;
         switch (work) {
-        case 0x10:
-            ewk->wu.routine_no[0] = 0;
+        case BUTTON_LP:
+            ewk->wu.routine_no[0] = R0_INIT;
             ewk->wu.old_rno[0]++;
             if (ewk->wu.old_rno[0] >= 26) {
                 ewk->wu.old_rno[0] = 0;
             }
             break;
-        case 0x20:
-            ewk->wu.routine_no[0] = 0;
+        case BUTTON_MP:
+            ewk->wu.routine_no[0] = R0_INIT;
             ewk->wu.old_rno[0]--;
             if (ewk->wu.old_rno[0] < 0) {
                 ewk->wu.old_rno[0] = 25;
             }
             break;
-        case 0x40:
+        case BUTTON_HP:
             ewk->wu.old_rno[1]++;
             if (ewk->wu.old_rno[1] > 127) {
                 ewk->wu.old_rno[1] = 127;
             }
             break;
-        case 0x100:
+        case BUTTON_MK:
             ewk->wu.old_rno[2] ^= 1;
             if (ewk->wu.old_rno[2]) {
                 ewk->wu.my_priority = ewk->wu.position_z = 10;
@@ -75,23 +79,23 @@ void effect_F7_move(WORK_Other* ewk) {
                 ewk->wu.my_priority = ewk->wu.position_z = 100;
             }
             break;
-        case 0x200:
+        case BUTTON_HK:
             ewk->wu.old_rno[1]--;
             if (ewk->wu.old_rno[1] < 0) {
                 ewk->wu.old_rno[1] = 0;
             }
             break;
         }
-        if (p2sw_0 & 8) {
+        if (p2sw_0 & LEVER_RIGHT) {
             ewk->wu.xyz[0].disp.pos++;
         }
-        if (p2sw_0 & 4) {
+        if (p2sw_0 & LEVER_LEFT) {
             ewk->wu.xyz[0].disp.pos--;
         }
-        if (p2sw_0 & 1) {
+        if (p2sw_0 & LEVER_UP) {
             ewk->wu.xyz[1].disp.pos++;
         }
-        if (p2sw_0 & 2) {
+        if (p2sw_0 & LEVER_DOWN) {
             ewk->wu.xyz[1].disp.pos--;
         }
         work = debug_hex4_to_bcd(ewk->wu.old_rno[0]);

@@ -1,5 +1,8 @@
 /*
- * PASS13_TBL.C  game tables
+ * PASS13_TBL.C  Urien's passive pattern table
+ *
+ * Passive13_Tbl lists the 164 passive pattern routines of character 13 (Urien), indexed by
+ * Pattern_Index. Read by PASS13.C.
  */
 
 #include "types.h"

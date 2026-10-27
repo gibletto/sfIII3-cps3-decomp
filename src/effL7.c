@@ -28,22 +28,36 @@
 #include "bg_sub_5.h"
 #include "effL7.h"
 
+/* routine_no[0] */
+#define R0_MOVE         0       /* run the companion's routine */
+#define R0_END          1       /* clear the player's flag */
+#define R0_KILL         99      /* (default) put the work back */
+
+/* routine_no[1] */
+#define R1_INIT         0       /* show with a shadow and aim at the player */
+#define R1_ENTER        1       /* move in beside the player */
+#define R1_STOP         2       /* stop animation */
+#define R1_PERFORM      3       /* chosen act until it turns round */
+#define R1_TURN         4       /* finish the act facing away */
+#define R1_RUN          5       /* run off the screen */
+#define R1_END          6       /* end the main routine */
+
 
 
 void effect_L7_move(WORK_Other* ewk) {
     WORK* oya_ptr = (WORK*)ewk->my_master;
     if (Suicide[0]) {
-        ewk->wu.routine_no[0] = 99;
+        ewk->wu.routine_no[0] = R0_KILL;
         poison_flag[oya_ptr->id] = 0;
     }
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_MOVE:
         if ((!EXE_flag) && (!Game_pause)) {
             effl7_move(ewk);
         }
         pl_eff_trans_entry(ewk);
         break;
-    case 1:
+    case R0_END:
         ewk->wu.routine_no[0] += 1;
         poison_flag[oya_ptr->id] = 0;
         break;
@@ -57,9 +71,8 @@ void effect_L7_move(WORK_Other* ewk) {
 
 
 void effl7_move(WORK_Other* ewk) {
-    WORK* oya_ptr = (WORK*)ewk->my_master;
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1] += 1;
         ewk->wu.disp_flag = 1;
         ewk->wu.kage_flag = 1;
@@ -71,7 +84,7 @@ void effl7_move(WORK_Other* ewk) {
         ewk->wu.old_rno[0] = 80;
         cal_initial_speed(&ewk->wu, ewk->wu.old_rno[0], ewk->wu.old_rno[1], ewk->wu.xyz[1].disp.pos);
         break;
-    case 1:
+    case R1_ENTER:
         char_move(&ewk->wu);
         add_x_sub(ewk);
         add_y_sub(ewk);
@@ -83,21 +96,21 @@ void effl7_move(WORK_Other* ewk) {
         return;
     default:
         break;
-    case 2:
+    case R1_STOP:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
             ewk->wu.routine_no[1] += 1;
             set_char_move_init(&ewk->wu, 1, ewk->wu.old_rno[2]);
         }
         break;
-    case 3:
+    case R1_PERFORM:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 9) {
             ewk->wu.routine_no[1] += 1;
             ewk->wu.rl_flag ^= 1;
         }
         break;
-    case 4:
+    case R1_TURN:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
             ewk->wu.routine_no[1] += 1;
@@ -110,7 +123,7 @@ void effl7_move(WORK_Other* ewk) {
             ewk->wu.mvxy.a[1].sp = 0;
         }
         break;
-    case 5:
+    case R1_RUN:
         char_move(&ewk->wu);
         add_x_sub(ewk);
         if (range_x_check3((WORK*)ewk, 64) == 0) {
@@ -119,7 +132,7 @@ void effl7_move(WORK_Other* ewk) {
             ewk->wu.kage_flag = 0;
         }
         break;
-    case 6:
+    case R1_END:
         ewk->wu.routine_no[1] += 1;
         ewk->wu.routine_no[0] += 1;
         break;
@@ -139,10 +152,10 @@ s32 effect_L7_init(WORK* wk) {
         return;
     }
     if (wk->id) {
-        if (!(p2sw_0 & 0x1000)) {
+        if (!(p2sw_0 & BUTTON_START)) {
             return;
         }
-    } else if (!(p1sw_0 & 0x1000)) {
+    } else if (!(p1sw_0 & BUTTON_START)) {
         return;
     }
     if ((ix = pull_effect_work(4)) == -1) {

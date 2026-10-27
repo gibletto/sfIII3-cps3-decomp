@@ -1,16 +1,10 @@
 /*
- * EFFM7.C  Effects M7, M8 (win-pose extras) and fight player control
+ * EFFM7.C  Effect M7: entrance extras
  *
- * Effect M7 (id 227): effect_M7_init (from win_pl) creates six objects around the losing opponent
- * from a position table; effm7_move places each relative to the opponent, waits, animates,
- * jumps up and flies off horizontally until off screen.
- * Effect M8 (id 228): running animals, either a random group of five from off screen or a single
- * one running in from the side (effect_M8_move, effm8_move_win, don_run_sub_m8).
- * Player_control is the per-frame player control of a fight, called from Game2_1 (Game_Main) and
- * end_sub: it runs the player_main_process phase, body touch and push-back resolution, quake and
- * hit requests, stores the 48-entry afterimage (zanzou) history, draws both players and runs the
- * super-art and stun gauges. plcnt_init is player-control routine 0: it runs the init routine
- * for the current appear_type from appear_initalize and moves both player works.
+ * effect_M7_init (from the entrance Appear_41000 in appear.c) creates six objects beside the
+ * opponent from effm7_data_tbl, with a shadow, using the player's character table;
+ * effm7_move places each relative to the opponent, waits, animates, jumps up and flies off
+ * horizontally until off screen.
  */
 
 #include "structs.h"
@@ -39,11 +33,23 @@
 #include "sc_sub_2.h"
 #include "EFFM7.h"
 
+/* routine_no[0] */
+#define R0_MOVE         0       /* run the extra's routine */
+#define R0_KILL         99      /* (default) put the work back */
+
+/* routine_no[1] */
+#define R1_INIT         0       /* place beside the opponent */
+#define R1_WAIT         1       /* wait to start */
+#define R1_ANIM         2       /* animate for a while */
+#define R1_TAKEOFF      3       /* take-off animation */
+#define R1_JUMP         4       /* jump up */
+#define R1_FLY          5       /* fly off the screen */
+
 
 
 void effect_M7_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_MOVE:
         if (!EXE_flag && !Game_pause) {
             effm7_move(ewk);
         }
@@ -61,7 +67,7 @@ void effect_M7_move(WORK_Other* ewk) {
 void effm7_move(WORK_Other* ewk) {
     s16 ix;
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         ix = ewk->master_id ^ 1;
@@ -73,14 +79,14 @@ void effm7_move(WORK_Other* ewk) {
         }
         set_char_move_init(&ewk->wu, 0, 0);
         break;
-    case 1:
+    case R1_WAIT:
         ewk->wu.old_rno[1]--;
         ewk->wu.old_rno[0]--;
         if (ewk->wu.old_rno[0] < 0) {
             ewk->wu.routine_no[1]++;
         }
         break;
-    case 2:
+    case R1_ANIM:
         char_move(&ewk->wu);
         ewk->wu.old_rno[1]--;
         if (ewk->wu.old_rno[1] < 0) {
@@ -88,7 +94,7 @@ void effm7_move(WORK_Other* ewk) {
             set_char_move_init(&ewk->wu, 1, 108);
         }
         break;
-    case 3:
+    case R1_TAKEOFF:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 1) {
             ewk->wu.routine_no[1]++;
@@ -98,7 +104,7 @@ void effm7_move(WORK_Other* ewk) {
             ewk->wu.mvxy.d[1].sp = -0x6000;
         }
         break;
-    case 4:
+    case R1_JUMP:
         add_y_sub(ewk);
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 2) {
@@ -113,11 +119,11 @@ void effm7_move(WORK_Other* ewk) {
             ewk->wu.mvxy.d[1].sp = 0x4000;
         }
         break;
-    case 5:
+    case R1_FLY:
         add_x_sub(ewk);
         add_y_sub(ewk);
         if (range_x_check3(&ewk->wu, 208) == 0) {
-            ewk->wu.routine_no[0] = 99;
+            ewk->wu.routine_no[0] = R0_KILL;
             ewk->wu.disp_flag = 0;
             ewk->wu.routine_no[1]++;
         }

@@ -1,5 +1,8 @@
 /*
- * PASS18_TBL.C  game tables
+ * PASS18_TBL.C  Q's passive pattern table
+ *
+ * Passive18_Tbl lists the 182 passive pattern routines of character 18 (Q), indexed by
+ * Pattern_Index. Read by PASS18.C.
  */
 
 #include "types.h"

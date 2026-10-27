@@ -22,16 +22,25 @@
 #include "PLS01.h"
 #include "PLPAT06.h"
 
+/* routine_no[3], Att_PL06_HASHIRI_NAGE */
+#define HASHIRI_NAGE_MOVE 1     /* move and run the animation */
+#define HASHIRI_NAGE_AIR 2      /* in the air until it lands */
+#define HASHIRI_NAGE_LAND 3     /* the landing */
+#define HASHIRI_NAGE_MOVE2 4    /* move and run the animation */
+
+/* routine_no[3], Att_PL06_TOKUSHUKOUDOU */
+#define TOKUSHUKOUDOU_ACTION 1  /* the personal action, filling the super art gauge */
+
 
 void pl06_extra_attack(PLW* wk) {
-    pl06_exatt_table[wk->wu.routine_no[2] - 16](wk);
+    pl06_exatt_table[wk->wu.routine_no[2] - ATTACK_SPECIAL](wk);
 }
 
 
 
 void Att_PL06_HASHIRI_NAGE(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.rl_flag = wk->wu.rl_waza;
         hoken_muriyari_chakuchi(wk);
@@ -39,7 +48,7 @@ void Att_PL06_HASHIRI_NAGE(PLW* wk) {
         reset_mvxy_data(&wk->wu);
         wk->wu.mvxy.index = wk->as->r_no;
         break;
-    case 1:
+    case HASHIRI_NAGE_MOVE:
         char_move(&wk->wu);
         switch ((u8)wk->wu.cg_type) {
         case 20:
@@ -51,7 +60,7 @@ void Att_PL06_HASHIRI_NAGE(PLW* wk) {
             wk->wu.mvxy.index = wk->as->data_ix;
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
-            wk->wu.routine_no[3] = 2;
+            wk->wu.routine_no[3] = HASHIRI_NAGE_AIR;
             wk->wu.cg_type = 0;
             break;
         case 40:
@@ -59,13 +68,13 @@ void Att_PL06_HASHIRI_NAGE(PLW* wk) {
             wk->wu.cg_type = 0;
             break;
         case 60:
-            wk->wu.routine_no[3] = 4;
+            wk->wu.routine_no[3] = HASHIRI_NAGE_MOVE2;
             wk->wu.cg_type = 0;
             break;
         case 70:
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
-            wk->wu.routine_no[3] = 4;
+            wk->wu.routine_no[3] = HASHIRI_NAGE_MOVE2;
             wk->wu.cg_type = 0;
             break;
         default:
@@ -74,9 +83,9 @@ void Att_PL06_HASHIRI_NAGE(PLW* wk) {
         add_mvxy_speed(&wk->wu);
         cal_mvxy_speed(&wk->wu);
         break;
-    case 2:
+    case HASHIRI_NAGE_AIR:
         jumping_union_process(&wk->wu, 3);
-        if (wk->wu.routine_no[3] == 3) {
+        if (wk->wu.routine_no[3] == HASHIRI_NAGE_LAND) {
             break;
         }
         if ((u8)wk->wu.cg_type == 30) {
@@ -85,10 +94,10 @@ void Att_PL06_HASHIRI_NAGE(PLW* wk) {
             wk->wu.cg_type = 0;
         }
         break;
-    case 3:
+    case HASHIRI_NAGE_LAND:
         char_move(&wk->wu);
         break;
-    case 4:
+    case HASHIRI_NAGE_MOVE2:
         char_move(&wk->wu);
         switch ((u8)wk->wu.cg_type) {
         case 20:
@@ -100,7 +109,7 @@ void Att_PL06_HASHIRI_NAGE(PLW* wk) {
             wk->wu.mvxy.index = wk->as->data_ix;
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
-            wk->wu.routine_no[3] = 2;
+            wk->wu.routine_no[3] = HASHIRI_NAGE_AIR;
             wk->wu.cg_type = 0;
             break;
         case 40:
@@ -108,22 +117,22 @@ void Att_PL06_HASHIRI_NAGE(PLW* wk) {
             wk->wu.cg_type = 0;
             break;
         case 50:
-            wk->wu.routine_no[3] = 1;
+            wk->wu.routine_no[3] = HASHIRI_NAGE_MOVE;
             wk->wu.cg_type = 0;
             break;
         case 71:
             reset_mvxy_data(&wk->wu);
             wk->wu.cg_type = 0;
-            wk->wu.routine_no[3] = 1;
+            wk->wu.routine_no[3] = HASHIRI_NAGE_MOVE;
             break;
         default:
             break;
         }
         add_mvxy_speed(&wk->wu);
         cal_mvxy_speed(&wk->wu);
-        if (wk->wu.routine_no[3] != 1 && (wk->hos_fi_flag | wk->hos_em_flag) != 0) {
+        if (wk->wu.routine_no[3] != HASHIRI_NAGE_MOVE && (wk->hos_fi_flag | wk->hos_em_flag) != 0) {
             char_move_cmj4(&wk->wu);
-            wk->wu.routine_no[3] = 1;
+            wk->wu.routine_no[3] = HASHIRI_NAGE_MOVE;
         }
         break;
     }
@@ -134,13 +143,13 @@ void Att_PL06_HASHIRI_NAGE(PLW* wk) {
 void Att_PL06_TOKUSHUKOUDOU(PLW* wk) {
     wk->scr_pos_set_flag = 0;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.rl_flag = wk->wu.rl_waza;
         hoken_muriyari_chakuchi(wk);
         set_char_move_init((WORK*)wk, 5, wk->as->char_ix);
         break;
-    case 1:
+    case TOKUSHUKOUDOU_ACTION:
         char_move((WORK*)wk);
         if (wk->wu.cg_type == 40) {
             wk->wu.cg_type = 0;

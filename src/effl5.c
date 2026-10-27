@@ -27,6 +27,13 @@
 #include "bg_sub_5.h"
 #include "effl5.h"
 
+/* routine_no[1] */
+#define R1_INIT         0       /* show at double size */
+#define R1_WAIT         1       /* short pause, then the stamp sound */
+#define R1_SHRINK       2       /* shrink to normal size */
+#define R1_HOLD         3       /* hold, then tell the stage */
+#define R1_DONE         4       /* stay stamped */
+
 
 
 void effect_L5_move(WORK_Other* ewk) {
@@ -58,7 +65,7 @@ void effect_L5_move(WORK_Other* ewk) {
 void hukuromoji_move(WORK_Other* ewk) {
     WORK_Other* oya_ptr = (WORK_Other*)ewk->my_master;
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1] += 1;
         ewk->wu.disp_flag = 1;
         ewk->wu.my_mr_flag = 1;
@@ -67,7 +74,7 @@ void hukuromoji_move(WORK_Other* ewk) {
         set_char_move_init2(&ewk->wu, 0, 2, 6, 0);
         ewk->wu.hit_stop = 2;
         break;
-    case 1:
+    case R1_WAIT:
         ewk->wu.hit_stop -= 1;
         if (ewk->wu.hit_stop < 0) {
             ewk->wu.routine_no[1] += 1;
@@ -75,7 +82,7 @@ void hukuromoji_move(WORK_Other* ewk) {
             return;
         }
         break;
-    case 2:
+    case R1_SHRINK:
         ewk->wu.my_mr.size.x -= 6;
         ewk->wu.my_mr.size.y -= 6;
         if (ewk->wu.my_mr.size.x <= 63) {
@@ -87,14 +94,14 @@ void hukuromoji_move(WORK_Other* ewk) {
             return;
         }
         break;
-    case 3:
+    case R1_HOLD:
         ewk->wu.hit_stop -= 1;
         if (ewk->wu.hit_stop <= 0) {
             ewk->wu.routine_no[1] += 1;
             rf_b2_flag = 1;
         }
         break;
-    case 4:
+    case R1_DONE:
         break;
     }
 }

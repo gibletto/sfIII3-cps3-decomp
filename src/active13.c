@@ -1197,10 +1197,7 @@ void Pattern13_0077(PLW* wk) {
 void Pattern13_0078(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        {
-            s16 menu = 49;
-            Com_Random_Select(wk, 2, menu, menu, menu, 75, 4);
-        }
+        Com_Random_Select(wk, 2, 49, 49, 49, 75, 4);
         break;
     default:
         End_Pattern(wk);

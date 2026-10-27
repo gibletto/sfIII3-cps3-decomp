@@ -1,5 +1,8 @@
 /*
- * EFF07_TBL.C  game tables
+ * EFF07_TBL.C  bg000 background object placement
+ *
+ * eff07_data_tbl gives the animation number and x, y position of each of the two background
+ * objects. Read by EFF07.C, the bg000 stage background objects.
  */
 
 #include "types.h"

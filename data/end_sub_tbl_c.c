@@ -1,5 +1,8 @@
 /*
- * END_SUB_TBL_C.C  game tables
+ * END_SUB_TBL_C.C  text layer cell lists
+ *
+ * sc_celllist_data holds the cell lists (x, y, attribute, character code, ended by x = 100)
+ * that sc_celllist_tbl in SC_TRANS_TBL.C points into; SC_TRANS.C puts them on the text layer.
  */
 
 #include "types.h"

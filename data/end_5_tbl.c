@@ -1,5 +1,9 @@
 /*
- * END_5_TBL.C  game tables
+ * END_5_TBL.C  Necro's ending tables (ending 5)
+ *
+ * end_500_bg0_cell_tbl and end_500_bg1_cell_tbl list the BG0 and BG1 cells (map offset, cell
+ * number) written by end_500_cell_set, timer_5_tbl the length in frames of each of its 13
+ * scenes and end_5_pos the BG x and y of the scenes. Read by END_5.C.
  */
 
 #include "types.h"

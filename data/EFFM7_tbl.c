@@ -1,5 +1,8 @@
 /*
- * EFFM7_TBL.C  game tables
+ * EFFM7_TBL.C  entrance extras placement
+ *
+ * effm7_data_tbl gives seven words per object for the six objects of effect M7, placed
+ * relative to the opponent. Read by EFFM7.C.
  */
 
 #include "types.h"

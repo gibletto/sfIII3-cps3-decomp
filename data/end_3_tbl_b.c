@@ -1,5 +1,9 @@
 /*
- * END_3_TBL_B.C  game tables
+ * END_3_TBL_B.C  Dudley's ending cell tables (ending 4)
+ *
+ * end_400_panel_tbl_0 and end_400_panel_tbl_1 are two sets of twelve BG cells (map offset,
+ * cell number), picked through end_400_panel_tbl in END_4.C; the scene timings are in
+ * END_4_TBL.C.
  */
 
 #include "types.h"

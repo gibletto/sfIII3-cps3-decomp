@@ -3,7 +3,7 @@
  *
  * effect_K0_move counts Select_Timer down in BCD every 60 frames while Time_Stop is clear, and
  * sets Time_Over one second after the timer reaches zero. It is a simpler twin of the effect A5
- * select timer in EFFA3.C.
+ * select timer in EFFA5.C.
  * effect_A5_init creates a bare effect work with id 200.
  */
 
@@ -20,6 +20,12 @@
 #include "meta_col_bcd.h"
 #include "EFFK0.h"
 
+/* routine_no[0] */
+#define R0_WAIT         0       /* wait for the clock to start */
+#define R0_COUNT        1       /* count the timer down */
+#define R0_ZERO         2       /* one second at zero, then time over */
+#define R0_STOP         3       /* stay until removed */
+
 
 
 void effect_K0_move(WORK_Other* ewk) {
@@ -27,12 +33,12 @@ void effect_K0_move(WORK_Other* ewk) {
         return;
     }
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_WAIT:
         if (Time_Stop == 0) {
             ewk->wu.routine_no[0]++;
         }
         break;
-    case 1:
+    case R0_COUNT:
         if (--Unit_Of_Timer == 0) {
             Unit_Of_Timer = 60;
             bcdext = 0;
@@ -41,13 +47,13 @@ void effect_K0_move(WORK_Other* ewk) {
             }
         }
         break;
-    case 2:
+    case R0_ZERO:
         if (--Unit_Of_Timer == 0) {
             Time_Over = 1;
             ewk->wu.routine_no[0]++;
         }
         break;
-    case 3:
+    case R0_STOP:
         break;
     default:
         push_effect_work(&ewk->wu);

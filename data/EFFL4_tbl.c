@@ -1,5 +1,7 @@
 /*
- * EFFL4_TBL.C  game tables
+ * EFFL4_TBL.C  stage piece placement for effect L4
+ *
+ * effl4_data_tbl gives the six stage pieces { x, y, priority, pattern }. Read by EFFL4.C.
  */
 
 #include "types.h"

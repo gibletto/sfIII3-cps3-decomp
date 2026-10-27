@@ -27,6 +27,12 @@
 #include "sc_trans.h"
 #include "effa5.h"
 
+/* routine_no[0] */
+#define R0_WAIT         0       /* wait while the timer is stopped */
+#define R0_COUNT        1       /* count the timer down */
+#define R0_ZERO         2       /* at zero: time over after 30 frames */
+#define R0_OVER         3       /* time over until the timer is reset */
+
 
 
 void effect_A5_move(WORK_Other* ewk) {
@@ -34,12 +40,12 @@ void effect_A5_move(WORK_Other* ewk) {
         return;
     }
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_WAIT:
         if (Time_Stop == 0) {
             ewk->wu.routine_no[0]++;
         }
         break;
-    case 1:
+    case R0_COUNT:
         if (!Check_Sleep_A5(ewk)) {
             return;
         }
@@ -53,25 +59,25 @@ void effect_A5_move(WORK_Other* ewk) {
             ewk->wu.dir_timer = 30;
         }
         break;
-    case 2:
+    case R0_ZERO:
         if (!Check_Sleep_A5(ewk)) {
             break;
         }
         if (Select_Timer) {
-            ewk->wu.routine_no[0] = 1;
+            ewk->wu.routine_no[0] = R0_COUNT;
             Unit_Of_Timer = 50;
         } else if (--ewk->wu.dir_timer == 0) {
             Time_Over = 1;
             ewk->wu.routine_no[0]++;
         }
         break;
-    case 3:
+    case R0_OVER:
         if (!Check_Sleep_A5(ewk)) {
             return;
         }
         Time_Over = 1;
         if (Select_Timer) {
-            ewk->wu.routine_no[0] = 1;
+            ewk->wu.routine_no[0] = R0_COUNT;
             Unit_Of_Timer = 50;
         }
         break;
@@ -84,7 +90,7 @@ void effect_A5_move(WORK_Other* ewk) {
 
 s32 Check_Sleep_A5(WORK_Other* ewk) {
     if (Time_Stop == 2) {
-        ewk->wu.routine_no[0] = 0;
+        ewk->wu.routine_no[0] = R0_WAIT;
     }
     return 1;
 }

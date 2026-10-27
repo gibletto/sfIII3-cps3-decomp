@@ -1,5 +1,9 @@
 /*
- * EFF48_TBL.C  game tables
+ * EFF48_TBL.C  opening demo object placement
+ *
+ * eff48_num_tbl gives the number of objects in each of the 22 scenes, and eff48_data_tbl00 ..
+ * eff48_data_tbl21 the rows of each scene: routine, settings, position, priority, timing and
+ * animation number, reached through eff48_adrs_tbl. Read by EFF48.C, the opening demo objects.
  */
 
 #include "types.h"

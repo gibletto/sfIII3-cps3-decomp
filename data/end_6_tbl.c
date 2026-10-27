@@ -1,5 +1,9 @@
 /*
- * END_6_TBL.C  game tables
+ * END_6_TBL.C  Hugo's ending tables (ending 6)
+ *
+ * end_600_bg0_cell_tbl and end_600_bg1_cell_tbl list the BG0 and BG1 cells (map offset, cell
+ * number) written at the start of the ending, timer_6_tbl the length in frames of each of its
+ * six scenes and end_6_pos the BG x and y of each scene. Read by END_6.C.
  */
 
 #include "types.h"

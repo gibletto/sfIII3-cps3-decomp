@@ -1,5 +1,12 @@
 /*
- * EFFK2_TBL.C  game tables
+ * EFFK2_TBL.C  bonus-stage car debris tables for effect K2
+ *
+ * hahen_data gives, per car part and break level, a HAHEN { piece count, bomb, piece list }
+ * entry; the piece lists p_PP_lv_LL (part PP, level LL; p_00_lv_F0 .. F4 for ill_hahen_data,
+ * the final collapse) hold a DADD record per piece: movement type, pattern, offsets, depth,
+ * flight number and landing height. k2_kidou is the flight speeds by flight number and
+ * effK2_main_process the nine piece movement routines. Read by EFFK2.C. hahen_dummy is the
+ * empty list of unused slots; hahen_area_tbl is not read by the program.
  */
 
 #include "types.h"

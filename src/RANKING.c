@@ -58,6 +58,10 @@
 #include "textsound_3.h"
 #include "RANKING.h"
 
+/* D_No2 in Ranking_01_5th */
+#define RK5_WAIT        0       /* wait D_Timer, then wipe */
+#define RK5_WIPE        1       /* until the wipe is done */
+
 
 
 RANK_DATA Ranking_Data[20];  /* 02016E4C */
@@ -368,7 +372,7 @@ void Ranking_01_4th(void) {
 
 void Ranking_01_5th(void) {
     switch (D_No2) {
-    case 0:
+    case RK5_WAIT:
         if (--D_Timer) {
             break;
         }
@@ -386,7 +390,7 @@ void Ranking_01_5th(void) {
         sc_vram_to_ram();
         Switch_Screen_Init(3, 3);
         break;
-    case 1:
+    case RK5_WIPE:
         if (Switch_Screen() != 0) {
             D_No2++;
             Cover_Timer = 24;
@@ -463,9 +467,7 @@ void Setup_Name(s16 y) {
     Name_Sub(0, y);
     Name_Sub(1, y);
     Name_Sub(2, y);
-    if (Rank_Type == 0) {
-        Rank_Pos_X;
-    } else {
+    if (Rank_Type != 0) {
         Rank_Pos_X += 16;
     }
     Rank_X += 3;

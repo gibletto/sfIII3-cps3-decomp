@@ -1,5 +1,8 @@
 /*
- * EFFJ2.C  game tables
+ * EFFJ2.C  bonus-stage level plate sprites
+ *
+ * bbbs_nando_large is the two-part connected sprite of the level plate, as CONN { x, y,
+ * colour, character } entries. Read by EFFJ2_CODE.C.
  */
 
 #include "types.h"

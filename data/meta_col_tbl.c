@@ -1,5 +1,11 @@
 /*
- * META_COL_TBL.C  game tables
+ * META_COL_TBL.C  metamorphosis colours and BCD weights
+ *
+ * metamor_color_bank_00 .. metamor_color_bank_19 are the colour banks of a player who takes
+ * on another character's look, one bank per character with seven colours of 64 entries (bank
+ * 00 two pages per colour); META_COL.C reaches them through metamor_color_ptr_tbl. bcd_weight
+ * and bcd_weight_end are the BCD values of the powers of two used by hex_to_bcd in
+ * META_COL_BCD.C.
  */
 
 #include "types.h"

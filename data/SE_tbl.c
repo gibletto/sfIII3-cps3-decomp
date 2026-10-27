@@ -1,5 +1,12 @@
 /*
- * SE_TBL.C  game tables
+ * SE_TBL.C  screen wipe and sound tables
+ *
+ * wipe_clear_pattern_tbl lists, per wipe kind, the bitmaps a wipe clears
+ * (wipe_clear_bitmap_0 - 4 in SLOWF_TBL.C), and wipe_column_tbl with wipe_column_map_0 - 3 the
+ * column order of each wipe step; these are read by SE.C and SE_2.C. stage_bgm_tbl is the BGM
+ * code per stage, init_fade_voice_tbl the voice channels stopped at sound start-up,
+ * SE_Shock_Data the hit sound codes Se_Shock checks for, and Finish_SE_Data the finishing
+ * sound replacements; these are read by SE_3.C.
  */
 
 #include "types.h"

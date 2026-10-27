@@ -1,5 +1,8 @@
 /*
- * BG000_TBL2.C  game tables
+ * BG000_TBL2.C  special screen layer positions
+ *
+ * etc_bg_pos_tbl gives the starting x, y of each layer of the special screens drawn by
+ * bg_etc_write, by screen type. Read by BG000.C.
  */
 
 #include "types.h"

@@ -20,6 +20,12 @@
 #include "charmove_2.h"
 #include "Eff80.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* show */
+#define R0_MOVE         1       /* follow the plate while on screen */
+#define R0_END          2       /* hidden for a frame */
+#define R0_KILL         99      /* (default) put the work back */
+
 
 
 void effect_80_move(WORK_Other* ewk) {
@@ -30,20 +36,20 @@ void effect_80_move(WORK_Other* ewk) {
         return;
     }
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
         break;
-    case 1:
+    case R0_MOVE:
         if (Ck_Range_Out_S(ewk, 2, 96)) {
             ewk->wu.disp_flag = 0;
             ewk->wu.routine_no[0]++;
             return;
         }
         break;
-    case 2:
-        ewk->wu.routine_no[0] = 99;
+    case R0_END:
+        ewk->wu.routine_no[0] = R0_KILL;
         return;
     default:
         all_cgps_put_back(&ewk->wu);

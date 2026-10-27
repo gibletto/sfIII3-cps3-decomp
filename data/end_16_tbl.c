@@ -1,5 +1,9 @@
 /*
- * END_16_TBL.C  game tables
+ * END_16_TBL.C  Chun-Li's ending tables (ending 16)
+ *
+ * end_1600_bg0_cell_tbl holds the BG0 cells (map offset, cell number pairs, stored as bytes)
+ * written at the start of the ending, timer_16_tbl the length in frames of each scene and
+ * end_16_pos the BG x and y of each scene. Read by END_16.C.
  */
 
 #include "types.h"

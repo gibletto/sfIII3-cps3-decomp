@@ -1,5 +1,8 @@
 /*
- * PLPAT16_TBL.C  game tables
+ * PLPAT16_TBL.C  Chun-Li's special attack table
+ *
+ * pl16_exatt_table lists the routines of attack numbers 16 and up of character 16 (Chun-Li).
+ * Read by pl16_extra_attack in PLPAT16.C.
  */
 
 #include "types.h"

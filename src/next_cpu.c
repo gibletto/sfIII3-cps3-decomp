@@ -75,6 +75,51 @@
 #include "textsound_2.h"
 #include "textsound_3.h"
 #include "next_cpu.h"
+#include "fighter.h"
+
+/* SC_No[1] in Next_CPU_3rd */
+#define NC3_SELECT      0       /* choose the next opponent */
+#define NC3_WAIT        1       /* wait S_Timer, then the VS screen */
+#define NC3_SPEECH_CHECK 2      /* at S_Timer 70: to the speech or on */
+#define NC3_SHOW        3       /* wait S_Timer, then the VS screen */
+
+/* SC_No[1] in Next_CPU_4th, After_Bonus_6th and Next_Bonus_3rd */
+#define VS_FADE         0       /* request the fade to the VS screen */
+#define VS_SETUP        1       /* after Exit_Timer, set up the VS screen */
+#define VS_FADE_WAIT    2       /* until the fade is done (then show it for S_Timer) */
+
+/* SC_No[1] in Next_CPU_5th */
+#define NC5_WIPE        0       /* save the screen and wipe */
+#define NC5_WIPE_WAIT   1       /* until the wipe is done */
+#define NC5_SETUP       2       /* set up the speech screen */
+#define NC5_COVER       3       /* after Cover_Timer, wipe in */
+#define NC5_REVIVAL     4       /* finish the wipe */
+#define NC5_SPEECH      5       /* until the speech ends (Next_Step 0x80) */
+#define NC5_FADE        6       /* request the fade to the VS screen */
+#define NC5_FADE_WAIT   7       /* until the fade is done (then show it) */
+
+/* SC_No[1] in Select_CPU_2nd */
+#define SC2_INIT        0       /* set up */
+#define SC2_WAIT        1       /* until Next_Step */
+
+/* SC_No[1] in Select_CPU_3rd */
+#define SC3_SELECT      0       /* choose the opponent */
+#define SC3_WAIT        1       /* wait S_Timer */
+#define SC3_BOSS_WAIT   2       /* a boss: until S_Timer 50 */
+#define SC3_BOSS_SHOW   3       /* wait S_Timer */
+#define SC3_SETUP       4       /* set up the opponent's portrait, and a boss's speech */
+#define SC3_SPEECH      5       /* until the speech ends */
+#define SC3_SCROLL      6       /* until the scroll is done (Next_Step 1) */
+#define SC3_DONE_WAIT   7       /* wait S_Timer, then on */
+
+/* SC_No[1] in Next_Bonus_2nd */
+#define NB2_WAIT        0       /* until Next_Step */
+#define NB2_SHOW        1       /* wait S_Timer, then on */
+
+/* SC_No[1] in Next_Q_3rd */
+#define Q3_WAIT         0       /* wait S_Timer */
+#define Q3_FADE         1       /* request the fade to the VS screen */
+#define Q3_FADE_WAIT    2       /* until the fade is done (then show it) */
 
 
 
@@ -159,7 +204,7 @@ void Next_CPU_2nd(void) {
 
 void Next_CPU_3rd(void) {
     switch (SC_No[1]) {
-    case 0:
+    case NC3_SELECT:
         if (Player_id) {
             Sel_CPU_Sub(1, ~p2sw_1 & p2sw_0, p2sw_0);
         } else {
@@ -174,26 +219,26 @@ void Next_CPU_3rd(void) {
             S_Timer = 50;
             break;
         }
-        SC_No[1] = 2;
+        SC_No[1] = NC3_SPEECH_CHECK;
         S_Timer = 100;
         break;
-    case 1:
+    case NC3_WAIT:
         if (--S_Timer == 0) {
             SC_No[0]++;
             SC_No[1] = 0;
         }
         break;
-    case 2:
+    case NC3_SPEECH_CHECK:
         if (--S_Timer <= 70) {
             if (!Check_EM_Speech()) {
                 SC_No[1]++;
             } else {
-                SC_No[0] = 4;
+                SC_No[0] = SC0_VS_SPEECH;
                 SC_No[1] = 0;
             }
         }
         break;
-    case 3:
+    case NC3_SHOW:
         if (Scene_Cut) {
             S_Timer = 1;
         }
@@ -207,7 +252,7 @@ void Next_CPU_3rd(void) {
 
 void Next_CPU_4th(void) {
     switch (SC_No[1]) {
-    case 0:
+    case VS_FADE:
         if (Request_Fade(65, 0)) {
             SC_No[1]++;
             Forbid_Break = 0;
@@ -221,7 +266,7 @@ void Next_CPU_4th(void) {
             effect_58_init(15, 5, 0);
         }
         break;
-    case 1:
+    case VS_SETUP:
         Check_Fade_Complete_SP();
         if (--Exit_Timer == 0) {
             SC_No[1]++;
@@ -230,7 +275,7 @@ void Next_CPU_4th(void) {
             Setup_Virtual_BG(3, bg_w.bgw[3].wxy[0].disp.pos, bg_w.bgw[3].wxy[1].disp.pos);
         }
         break;
-    case 2:
+    case VS_FADE_WAIT:
         S_Timer--;
         if (Check_Fade_Complete_SP()) {
             SC_No[1]++;
@@ -244,7 +289,7 @@ void Next_CPU_4th(void) {
             S_Timer = 1;
         }
         if (--S_Timer == 0) {
-            SC_No[0] = 5;
+            SC_No[0] = SC0_DONE;
             SEL_CPU_X = 1;
         }
         break;
@@ -255,18 +300,18 @@ void Next_CPU_4th(void) {
 
 void Next_CPU_5th(void) {
     switch (SC_No[1]) {
-    case 0:
+    case NC5_WIPE:
         SC_No[1]++;
         sc_vram_to_ram();
         Switch_Screen_Init(0, 1);
         break;
-    case 1:
+    case NC5_WIPE_WAIT:
         if (Switch_Screen() != 0) {
             SC_No[1]++;
             Cover_Timer = 9;
         }
         break;
-    case 2:
+    case NC5_SETUP:
         SC_No[1]++;
         bg_w.bgw[0].wxy[1].disp.pos = 512;
         bg_w.bgw[1].wxy[1].disp.pos = 512;
@@ -286,24 +331,24 @@ void Next_CPU_5th(void) {
         Order_Dir[68] = 4;
         effect_76_init(68);
         break;
-    case 3:
+    case NC5_COVER:
         if (--Cover_Timer == 0) {
             SC_No[1]++;
             Switch_Screen_Init(0, 1);
         }
         break;
-    case 4:
+    case NC5_REVIVAL:
         if (Switch_Screen_Revival() != 0) {
             SC_No[1]++;
             Forbid_Break = 0;
         }
         break;
-    case 5:
+    case NC5_SPEECH:
         if (Next_Step & 0x80) {
             SC_No[1]++;
         }
         break;
-    case 6:
+    case NC5_FADE:
         if (Request_Fade(65, 0)) {
             SC_No[1]++;
             Forbid_Break = 0;
@@ -313,7 +358,7 @@ void Next_CPU_5th(void) {
             S_Timer = 0xB2;
         }
         break;
-    case 7:
+    case NC5_FADE_WAIT:
         S_Timer--;
         if (Check_Fade_Complete_SP()) {
             SC_No[1]++;
@@ -328,7 +373,7 @@ void Next_CPU_5th(void) {
             S_Timer = 1;
         }
         if (--S_Timer == 0) {
-            SC_No[0] = 5;
+            SC_No[0] = SC0_DONE;
             SEL_CPU_X = 1;
         }
         break;
@@ -483,7 +528,7 @@ void After_Bonus_4th(void) {
 /* provisional name */
 void After_Bonus_6th(void) {
     switch (SC_No[1]) {
-    case 0:
+    case VS_FADE:
         if (Request_Fade(65, 0)) {
             SC_No[1]++;
             Forbid_Break = 0;
@@ -497,7 +542,7 @@ void After_Bonus_6th(void) {
             effect_58_init(15, 5, 0);
         }
         break;
-    case 1:
+    case VS_SETUP:
         if (--Exit_Timer == 0) {
             SC_No[1]++;
             Setup_Virtual_BG(0, bg_w.bgw[0].wxy[0].disp.pos, bg_w.bgw[0].wxy[1].disp.pos);
@@ -505,7 +550,7 @@ void After_Bonus_6th(void) {
             Setup_Virtual_BG(3, bg_w.bgw[3].wxy[0].disp.pos, bg_w.bgw[3].wxy[1].disp.pos);
         }
         break;
-    case 2:
+    case VS_FADE_WAIT:
         S_Timer--;
         if (Check_Fade_Complete_SP()) {
             SC_No[1]++;
@@ -583,7 +628,7 @@ void Select_CPU_1st(void) {
 void Select_CPU_2nd(void) {
     u16 xx;
     switch (SC_No[1]) {
-    case 0:
+    case SC2_INIT:
         SC_No[1]++;
         Order[Aborigine + 13] = 5;
         Order_Timer[Aborigine + 13] = 1;
@@ -598,7 +643,7 @@ void Select_CPU_2nd(void) {
         Cut_Scroll = 2;
         Next_Step = 0;
         effect_58_init(12, 1, 3);
-    case 1:
+    case SC2_WAIT:
         Check_Auto_Cut();
         if (Next_Step) {
             SC_No[0]++;
@@ -611,11 +656,10 @@ void Select_CPU_2nd(void) {
 
 void Select_CPU_3rd(void)
 {
-    s32 sw_on;
     s8 pid;
 
     switch (SC_No[1]) {
-    case 0:
+    case SC3_SELECT:
         pid = Player_id;
         if (Demo_Flag == 0) {
             if (pid != 0) {
@@ -637,25 +681,25 @@ void Select_CPU_3rd(void)
             if (VS_Index[Player_id] < 8) {
                 S_Timer = 50;
             } else {
-                SC_No[1] = 2;
+                SC_No[1] = SC3_BOSS_WAIT;
                 S_Timer = 100;
             }
         }
         break;
 
-    case 1:
+    case SC3_WAIT:
         if (--S_Timer == 0) {
-            SC_No[1] = 4;
+            SC_No[1] = SC3_SETUP;
         }
         break;
 
-    case 2:
+    case SC3_BOSS_WAIT:
         if (--S_Timer <= 50) {
             SC_No[1]++;
         }
         break;
 
-    case 3:
+    case SC3_BOSS_SHOW:
         if (Scene_Cut) {
             S_Timer = 1;
         }
@@ -664,14 +708,14 @@ void Select_CPU_3rd(void)
         }
         break;
 
-    case 4:
-        SC_No[1] = 6;
+    case SC3_SETUP:
+        SC_No[1] = SC3_SCROLL;
         Order[Player_id + 11] = 4;
         Order_Timer[Player_id + 11] = 5;
         effect_38_init(COM_id, COM_id + 11, My_char[COM_id], 1, 2);
         Order[COM_id + 11] = 1;
         Order_Timer[COM_id + 11] = 1;
-        if (EM_id != 0) {
+        if (EM_id != PL_GILL) {
             effect_98_init(COM_id, COM_id + 40, Super_Arts[COM_id], 2);
             Order[COM_id + 40] = 1;
             Order_Timer[COM_id + 40] = 1;
@@ -683,7 +727,7 @@ void Select_CPU_3rd(void)
         Target_BG_X[3] = bg_w.bgw[3].wxy[0].disp.pos + 480;
         Offset_BG_X[3] = 0;
         if (VS_Index[Player_id] >= 8 && Check_EM_Speech() != 0) {
-            SC_No[1] = 5;
+            SC_No[1] = SC3_SPEECH;
             load_any_color(134);
             load_any_color(124);
             Order[67] = 1;
@@ -702,22 +746,22 @@ void Select_CPU_3rd(void)
         effect_58_init(12, 1, 3);
         break;
 
-    case 5:
+    case SC3_SPEECH:
         if (Next_Step & 0x80) {
-            SC_No[1] = 7;
+            SC_No[1] = SC3_DONE_WAIT;
             S_Timer = 20;
             Introduce_Boss[Player_id][VS_Index[Player_id] - 8] = 1;
         }
         break;
 
-    case 6:
+    case SC3_SCROLL:
         if (Next_Step & 1) {
             SC_No[1]++;
             S_Timer = 20;
         }
         break;
 
-    case 7:
+    case SC3_DONE_WAIT:
         if (Scene_Cut) {
             S_Timer = 1;
         }
@@ -761,7 +805,7 @@ void Next_Bonus_1st(void) {
 
 void Next_Bonus_2nd(void) {
     switch (SC_No[1]) {
-    case 0:
+    case NB2_WAIT:
         Check_Auto_Cut();
         if (Next_Step) {
             SC_No[1]++;
@@ -769,7 +813,7 @@ void Next_Bonus_2nd(void) {
             effect_58_init(6, 5, 0xA0);
         }
         break;
-    case 1:
+    case NB2_SHOW:
         if (Scene_Cut) {
             S_Timer = 1;
         }
@@ -783,7 +827,7 @@ void Next_Bonus_2nd(void) {
 
 void Next_Bonus_3rd(void) {
     switch (SC_No[1]) {
-    case 0:
+    case VS_FADE:
         if (Request_Fade(0x41, 0)) {
             SC_No[1]++;
             Forbid_Break = 0;
@@ -798,7 +842,7 @@ void Next_Bonus_3rd(void) {
             effect_58_init(15, 5, 0);
         }
         break;
-    case 1:
+    case VS_SETUP:
         if (--Exit_Timer == 0) {
             SC_No[1]++;
             Setup_Virtual_BG(0, bg_w.bgw[0].wxy[0].disp.pos, bg_w.bgw[0].wxy[1].disp.pos);
@@ -806,7 +850,7 @@ void Next_Bonus_3rd(void) {
             Setup_Virtual_BG(3, bg_w.bgw[3].wxy[0].disp.pos, bg_w.bgw[3].wxy[1].disp.pos);
         }
         break;
-    case 2:
+    case VS_FADE_WAIT:
         S_Timer--;
         if (Check_Fade_Complete_SP()) {
             SC_No[1]++;
@@ -866,7 +910,7 @@ void Next_Q_1st(void) {
     base_y_pos = 40;
     Setup_ID();
     bg_etc_write(6);
-    EM_id = 18;
+    EM_id = PL_Q;
     Setup_Virtual_BG(0, 0x200, 0);
     Setup_Virtual_BG(2, 0x300, 0);
     Setup_Virtual_BG(1, 0x200, 0);
@@ -918,12 +962,12 @@ void Next_Q_2nd(void) {
 
 void Next_Q_3rd(void) {
     switch (SC_No[1]) {
-    case 0:
+    case Q3_WAIT:
         if (--S_Timer == 0) {
             SC_No[1]++;
         }
         break;
-    case 1:
+    case Q3_FADE:
         if (Request_Fade(65, 0)) {
             SC_No[1]++;
             Forbid_Break = 0;
@@ -934,7 +978,7 @@ void Next_Q_3rd(void) {
             return;
         }
         break;
-    case 2:
+    case Q3_FADE_WAIT:
         S_Timer--;
         if (Check_Fade_Complete_SP()) {
             SC_No[1]++;
@@ -1026,7 +1070,7 @@ void Setup_Next_Fighter(void) {
     paring_counter[COM_id] = 0;
     paring_bonus_r[COM_id] = 0;
     My_char[COM_id] = EM_id;
-    if (EM_id == 18) {
+    if (EM_id == PL_Q) {
         Battle_Country = Q_Country;
         bg_w.stage = Q_Country;
     } else {
@@ -1042,7 +1086,7 @@ void Setup_Next_Fighter(void) {
 
 
 s32 Setup_Com_Arts(void) {
-    if (EM_id == 0) {
+    if (EM_id == PL_GILL) {
         return 1;
     }
     if (Stock_Com_Arts[Player_id] == -1) {
@@ -1310,12 +1354,12 @@ s32 Check_Auto_Cut(void) {
 
 s32 Auto_Cut_Sub(void) {
     if (plw[0].wu.operator) {
-        if (~p1sw_1 & p1sw_0 & 0x3F0) {
+        if (~p1sw_1 & p1sw_0 & BUTTON_SHOTS) {
             return 1;
         }
     }
     if (plw[1].wu.operator) {
-        if (~p2sw_1 & p2sw_0 & 0x3F0) {
+        if (~p2sw_1 & p2sw_0 & BUTTON_SHOTS) {
             return 1;
         }
     }

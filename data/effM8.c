@@ -1,5 +1,9 @@
 /*
- * EFFM8.C  game tables
+ * EFFM8.C  effect M8 tables
+ *
+ * effm8_random_tbl is a 16-entry yes/no table indexed by a random number that decides whether
+ * effect_M8_init starts its running figures at all; effm8_timer_tbl holds the start delays of
+ * the four figures that follow the first. Read by PLCNTSET.C.
  */
 
 #include "types.h"

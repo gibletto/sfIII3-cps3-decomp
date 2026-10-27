@@ -1,5 +1,10 @@
 /*
- * VITAL_TBL.C  game tables
+ * VITAL_TBL.C  vitality bar and round timer tables
+ *
+ * vital_cell_tbl and vital_cell_1p_tbl are the text-layer cells of the vitality bars (the end
+ * of vital_cell_1p_tbl is also reached through vital_npos_tbl); read by VITAL.C.
+ * hoji_counter_tbl is the round timer tick length for each game-speed setting, read by
+ * COUNT.C.
  */
 
 #include "types.h"

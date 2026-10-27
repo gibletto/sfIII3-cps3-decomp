@@ -1,5 +1,8 @@
 /*
- * SHELL12_TBL.C  game tables
+ * SHELL12_TBL.C  CPU anti-projectile pattern table 12 (Sean)
+ *
+ * Shell12_Tbl lists the Shell12_nnnn pattern scripts the computer-controlled Sean runs when
+ * the opponent fires a projectile, indexed by Pattern_Index. Read by SHELL12.C.
  */
 
 #include "types.h"

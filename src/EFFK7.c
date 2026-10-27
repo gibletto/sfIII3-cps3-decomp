@@ -38,25 +38,44 @@
 #include "CHARMOVE.h"
 #include "charmove_2.h"
 #include "EFFK7.h"
+
+/* routine_no[0] */
+#define R0_INIT         0       /* keep the player's colours */
+#define R0_MOVE         1       /* run the blink or change type */
+#define R0_KILL         2       /* restore the player and put back */
+
+/* routine_no[1], type 1: blink */
+#define R1_WAIT         0       /* wait for the change frame */
+#define R1_BLINK        1       /* blink while the gauge lasts */
+#define R1_LAST         2       /* last blinks, then end */
+
+/* routine_no[1], type 0: change into the opponent */
+#define R1_COLOUR       1       /* wait, then take the opponent's colours */
+#define R1_ACTIVE       2       /* until the art runs out */
+#define R1_REBIRTH      3       /* wait to start the return */
+#define R1_RETURN       4       /* restore the original character */
+#define R1_END          5       /* finish */
+#define R1_DEAD         9       /* player down: stop */
+
 void effect_K7_move(WORK_Other* ewk) {
     PLW* mwk = (PLW*)ewk->my_master;
 
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         if (ewk->wu.type) {
-            ewk->wu.routine_no[0] = 1;
+            ewk->wu.routine_no[0] = R0_MOVE;
             break;
         }
-        ewk->wu.routine_no[0] = 1;
+        ewk->wu.routine_no[0] = R0_MOVE;
         metamor_color_store(mwk->wu.id);
         return;
-    case 1:
+    case R0_MOVE:
         if (ewk->wu.dead_f == 1) {
-            ewk->wu.routine_no[0] = 2;
+            ewk->wu.routine_no[0] = R0_KILL;
             break;
         }
         if (mwk->metamor_index != ewk->wu.myself) {
-            ewk->wu.routine_no[0] = 2;
+            ewk->wu.routine_no[0] = R0_KILL;
             break;
         }
         if (EXE_flag != 0) {
@@ -71,7 +90,7 @@ void effect_K7_move(WORK_Other* ewk) {
         }
         K7_move_type_0(ewk, mwk);
         return;
-    case 2:
+    case R0_KILL:
         mwk->metamorphose = 0;
         mwk->metamor_over = 0;
         mwk->att_plus = 8;
@@ -92,26 +111,26 @@ void K7_move_type_1(WORK_Other* ewk, PLW* mwk) {
     const s16(*blink)[4];
     const s16(*last)[4];
     if (mwk->sa->ok != -1 || mwk->dead_flag != 0) {
-        ewk->wu.routine_no[0] = 2;
+        ewk->wu.routine_no[0] = R0_KILL;
         return;
     }
     last = K7_last_tbl;
     blink = K7_blink_tbl;
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_WAIT:
         if (mwk->wu.cg_type != 20) {
             break;
         }
-        ewk->wu.routine_no[1] = 1;
+        ewk->wu.routine_no[1] = R1_BLINK;
         ewk->wu.dir_step = 0;
         ewk->wu.dir_old = blink[ewk->wu.dir_step][3];
         ewk->wu.dir_timer = blink[ewk->wu.dir_step][0];
         mwk->wu.disp_flag = blink[ewk->wu.dir_step][1];
         mwk->wu.my_col_mode = blink[ewk->wu.dir_step][2];
-    case 1:
+    case R1_BLINK:
         if (ewk->wu.dir_step > 2) {
             if ((mwk->sa->gauge.i - 0x10000) / (mwk->sa->dtm * mwk->sa->dtm_mul) <= 45) {
-                ewk->wu.routine_no[1] = 2;
+                ewk->wu.routine_no[1] = R1_LAST;
                 ewk->wu.dir_step = 0;
                 ewk->wu.dir_old = last[ewk->wu.dir_step][3];
                 ewk->wu.dir_timer = last[ewk->wu.dir_step][0];
@@ -139,13 +158,13 @@ void K7_move_type_1(WORK_Other* ewk, PLW* mwk) {
             K7_col_mode_flip(&mwk->wu);
         }
         break;
-    case 2:
+    case R1_LAST:
         if (--ewk->wu.dir_timer < 0) {
             do {
                 ewk->wu.dir_step++;
             } while (blink[ewk->wu.dir_step][0] == 0);
             if (last[ewk->wu.dir_step][0] == -1) {
-                ewk->wu.routine_no[0] = 2;
+                ewk->wu.routine_no[0] = R0_KILL;
                 break;
             }
             ewk->wu.dir_old = last[ewk->wu.dir_step][3];
@@ -175,11 +194,11 @@ void K7_col_mode_flip(WORK* wk) {
 
 void K7_move_type_0(WORK_Other* ewk, PLW* mwk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_WAIT:
         if (mwk->wu.cg_type != 20) {
             break;
         }
-        ewk->wu.routine_no[1] = 1;
+        ewk->wu.routine_no[1] = R1_COLOUR;
         ewk->wu.direction = mwk->player_number;
         ewk->wu.charset_id = mwk->wu.charset_id;
         mwk->player_number = ((PLW*)mwk->wu.target_adrs)->player_number;
@@ -191,31 +210,31 @@ void K7_move_type_0(WORK_Other* ewk, PLW* mwk) {
             Next_Be_Free(mwk);
         }
         break;
-    case 1:
+    case R1_COLOUR:
         if (mwk->wu.cg_type != 30) {
             break;
         }
-        ewk->wu.routine_no[1] = 2;
+        ewk->wu.routine_no[1] = R1_ACTIVE;
         metamor_color_trans(mwk->wu.id, mwk->player_number);
         metamor_color_copy(mwk->wu.id);
         mwk->metamorphose = 1;
-    case 2:
+    case R1_ACTIVE:
         if (mwk->dead_flag != 0) {
-            ewk->wu.routine_no[1] = 9;
+            ewk->wu.routine_no[1] = R1_DEAD;
             break;
         }
         if (mwk->sa->ok == -1) {
             break;
         }
-        ewk->wu.routine_no[1] = 3;
+        ewk->wu.routine_no[1] = R1_REBIRTH;
         mwk->metamor_over = 1;
-    case 3:
+    case R1_REBIRTH:
         if (K7_mt0_rebirth_check(mwk) == 0) {
             break;
         }
-        ewk->wu.routine_no[1] = 4;
-        mwk->wu.routine_no[1] = 4;
-        mwk->wu.routine_no[2] = 33;
+        ewk->wu.routine_no[1] = R1_RETURN;
+        mwk->wu.routine_no[1] = PLAYER_ATTACK;
+        mwk->wu.routine_no[2] = ATTACK_METAMOR_REBIRTH;
         mwk->wu.routine_no[3] = 0;
         mwk->metamor_over = 0;
         mwk->wu.cg_type = 0;
@@ -223,11 +242,11 @@ void K7_move_type_0(WORK_Other* ewk, PLW* mwk) {
         mwk->wu.cg_ja = mwk->wu.hit_ix_table[mwk->wu.cg_hit_ix];
         set_jugde_area(&mwk->wu);
         break;
-    case 4:
+    case R1_RETURN:
         if (mwk->wu.cg_type != 30) {
             break;
         }
-        ewk->wu.routine_no[1] = 5;
+        ewk->wu.routine_no[1] = R1_END;
         mwk->player_number = ewk->wu.direction;
         mwk->wu.charset_id = ewk->wu.charset_id;
         set_base_data_metamorphose(mwk);
@@ -237,8 +256,8 @@ void K7_move_type_0(WORK_Other* ewk, PLW* mwk) {
             Next_Be_Free(mwk);
         }
         break;
-    case 5:
-        ewk->wu.routine_no[0] = 2;
+    case R1_END:
+        ewk->wu.routine_no[0] = R0_KILL;
         break;
     }
 }
@@ -249,7 +268,7 @@ s32 K7_mt0_rebirth_check(PLW* mwk) {
     s16 num = 0;
 
     switch (mwk->wu.routine_no[1]) {
-    case 0:
+    case PLAYER_NORMAL:
         if (pcon_dp_flag) {
             if (mwk->wu.routine_no[2] == 1 && mwk->wu.routine_no[3] != 0) {
                 num = 1;

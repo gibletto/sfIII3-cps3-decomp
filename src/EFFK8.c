@@ -20,12 +20,18 @@
 #include "effect_2.h"
 #include "EFFK8.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* start the scaled pattern */
+#define R0_MOVE         1       /* show while the player's move lasts */
+#define R0_KILL         2       /* put the work back */
+#define R0_DEAD         3       /* (default) killed: put the work back */
+
 
 
 void effect_K8_move(WORK_Other* ewk) {
     WORK* mwk = (WORK*)ewk->my_master;
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.my_priority = ewk->wu.position_z = 67;
@@ -33,15 +39,15 @@ void effect_K8_move(WORK_Other* ewk) {
         ewk->wu.my_mr.size.x = 127;
         ewk->wu.my_mr.size.y = 127;
         set_char_move_init(&ewk->wu, 0, 0x8F);
-    case 1:
+    case R0_MOVE:
         if (ewk->wu.dead_f != 0) {
             ewk->wu.disp_flag = 0;
-            ewk->wu.routine_no[0] = 3;
+            ewk->wu.routine_no[0] = R0_DEAD;
             break;
         }
         if (ewk->wu.dir_old != mwk->now_koc || ewk->wu.dir_step != mwk->char_index) {
             ewk->wu.disp_flag = 0;
-            ewk->wu.routine_no[0] = 2;
+            ewk->wu.routine_no[0] = R0_KILL;
             break;
         }
         char_move(&ewk->wu);
@@ -49,7 +55,7 @@ void effect_K8_move(WORK_Other* ewk) {
         ewk->wu.position_y = bg_w.bgw[1].position_y + 200;
         disp_seraph_cells(&ewk->wu);
         break;
-    case 2:
+    case R0_KILL:
     default:
         push_effect_work(&ewk->wu);
         break;

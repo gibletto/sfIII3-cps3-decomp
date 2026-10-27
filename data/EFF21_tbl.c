@@ -1,5 +1,10 @@
 /*
- * EFF21_TBL.C  game tables
+ * EFF21_TBL.C  bg050 background-synchronised object tables
+ *
+ * eff21_num gives the number of objects of each sync index and eff21_data_adrs_0 their family,
+ * colour, position, priority, animation and speed number, reached through eff21_data_adrs.
+ * eff21_sp_tbl holds the speed pairs. Read by EFF21.C, the bg050 background-synchronised
+ * objects.
  */
 
 #include "types.h"

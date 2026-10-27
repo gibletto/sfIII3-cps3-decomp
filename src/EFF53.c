@@ -18,13 +18,17 @@
 #include "aboutspr.h"
 #include "EFF53.h"
 
+/* routine_no[0] */
+#define R0_WAIT         0       /* hidden, count the vanish time down */
+#define R0_BLINK        1       /* blink on and off six times */
+
 
 
 void effect_53_move(WORK_Other* ewk) {
     s32 k;
     if (!obr_no_disp_check() && !EXE_flag && !Game_pause && EXE_obroll) {
         switch (ewk->wu.routine_no[0]) {
-        case 0:
+        case R0_WAIT:
             ewk->wu.old_rno[2]--;
             if (ewk->wu.old_rno[2] <= 0) {
                 ewk->wu.routine_no[0]++;
@@ -33,7 +37,7 @@ void effect_53_move(WORK_Other* ewk) {
                 ewk->wu.disp_flag = 1;
             }
             break;
-        case 1:
+        case R0_BLINK:
             ewk->wu.old_rno[0]--;
             if (ewk->wu.old_rno[0] <= 0) {
                 ewk->wu.disp_flag ^= 1;
@@ -41,7 +45,7 @@ void effect_53_move(WORK_Other* ewk) {
                 if (!ewk->wu.disp_flag) {
                     ewk->wu.old_rno[1]++;
                     if (ewk->wu.old_rno[1] >= 6) {
-                        ewk->wu.routine_no[0] = 0;
+                        ewk->wu.routine_no[0] = R0_WAIT;
                         k = random_16_com();
                         ewk->wu.old_rno[2] = eff53_vanish_time[(s16)(k & 7)];
                         ewk->wu.disp_flag = 0;

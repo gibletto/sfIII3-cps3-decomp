@@ -1,5 +1,13 @@
 /*
- * PLPAT09_TBL.C  game tables
+ * PLPAT09_TBL.C  Oro's special attack tables
+ *
+ * pl09_exatt_table is the list of Oro's special attack routines, indexed by attack routine
+ * number minus 16. For the rock-summon move, tenguiwa_stage_data picks per stage a row of
+ * tenguiwa_stand_by (eight rock object types chosen from at random), and tenguiwa_pos_hosei
+ * and tenguiwa_pos_hosei2 give each rock's start position, scroll speed and direction.
+ * homing_hos (per opponent character) and homing_kop hold the target-relative jump data
+ * stepped by mvxy_table_reader; pl09_tk_table is the stun timer cut rate per personal-action
+ * repeat count. Read by PLPAT09.C.
  */
 
 #include "types.h"

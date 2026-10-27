@@ -1,5 +1,9 @@
 /*
- * EFF47_TBL.C  game tables
+ * EFF47_TBL.C  scattering piece tables
+ *
+ * eff47_data_tbl gives the offset from the character and the life time of each of the four
+ * pieces, and eff47_sp_tbl their speeds and accelerations. Read by EFF47.C, the four
+ * scattering pieces.
  */
 
 #include "types.h"

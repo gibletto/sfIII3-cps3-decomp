@@ -24,14 +24,45 @@
 #include "aboutspr.h"
 #include "effL3.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* first frame */
+#define R0_MOVE         1       /* run the extra's routine */
+#define R0_KILL         99      /* (default) put the work back */
+
+/* routine_no[1]: which routine the extra runs */
+#define R1_LEAVE        2       /* leave the stage */
+
+/* effl3_0000 walk in: routine_no[2] */
+#define R2_INIT         0       /* start the entrance */
+#define R2_WALK         1       /* walk in to the target point */
+#define R2_ARRIVE       2       /* arrival animation */
+#define R2_WAIT         3       /* wait for the cue to leave */
+
+/* effl3_0001 jump in: routine_no[2] */
+#define R2_JUMP         1       /* jump in on the arc */
+#define R2_FALL         2       /* drop to the ground */
+
+/* effl3_0002 leave: routine_no[3] */
+#define R3_INIT         0       /* pick the wait and the way out */
+#define R3_LEAVE        1       /* leap off or vanish */
+
+/* effl3_tobi leap off: routine_no[4] */
+#define R4_WAIT         0       /* wait a random time */
+#define R4_TAKEOFF      1       /* take-off animation */
+#define R4_JUMP         2       /* jump up */
+#define R4_FLY          3       /* fly off the screen */
+
+/* effl3_kie vanish: routine_no[4] */
+#define R4_VANISH       1       /* vanish animation */
+
 
 
 void effect_L3_move(WORK_Other* ewk) {
     void (*effl3_jp[3])(WORK_Other*) = { effl3_0000, effl3_0001, effl3_0002 };
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
-    case 1:
+    case R0_MOVE:
         if (!EXE_flag && !Game_pause) {
             effl3_jp[ewk->wu.routine_no[1]](ewk);
         }
@@ -48,7 +79,7 @@ void effect_L3_move(WORK_Other* ewk) {
 
 void effl3_0000(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_INIT:
         ewk->wu.routine_no[2]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, 2);
@@ -57,7 +88,7 @@ void effl3_0000(WORK_Other* ewk) {
         } else {
             ewk->wu.mvxy.a[0].sp = -0x28000;
         }
-    case 1:
+    case R2_WALK:
         char_move(&ewk->wu);
         add_x_sub(ewk);
         if (ewk->wu.rl_flag) {
@@ -72,16 +103,16 @@ void effl3_0000(WORK_Other* ewk) {
             }
         }
         break;
-    case 2:
+    case R2_ARRIVE:
         char_move(&ewk->wu);
         if ((u8)ewk->wu.cg_type == 0xFF) {
             ewk->wu.routine_no[2]++;
             set_char_move_init(&ewk->wu, 0, 0);
         }
         break;
-    case 3:
+    case R2_WAIT:
         if (Appear_Q) {
-            ewk->wu.routine_no[1] = 2;
+            ewk->wu.routine_no[1] = R1_LEAVE;
         }
         char_move(&ewk->wu);
         break;
@@ -92,14 +123,14 @@ void effl3_0000(WORK_Other* ewk) {
 
 void effl3_0001(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_INIT:
         ewk->wu.routine_no[2]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 1, 49);
         ewk->wu.old_rno[2] = 60;
         cal_all_speed_data(&ewk->wu, ewk->wu.old_rno[2], ewk->wu.old_rno[0], ewk->wu.xyz[1].disp.pos - 32, 2, 2);
         break;
-    case 1:
+    case R2_JUMP:
         char_move(&ewk->wu);
         ewk->wu.old_rno[2]--;
         if (ewk->wu.old_rno[2] < 0) {
@@ -112,7 +143,7 @@ void effl3_0001(WORK_Other* ewk) {
         add_x_sub(ewk);
         add_y_sub(ewk);
         break;
-    case 2:
+    case R2_FALL:
         char_move(&ewk->wu);
         add_y_sub(ewk);
         if (ewk->wu.xyz[1].disp.pos < ewk->wu.old_rno[1]) {
@@ -120,9 +151,9 @@ void effl3_0001(WORK_Other* ewk) {
             set_char_move_init(&ewk->wu, 0, 0);
         }
         break;
-    case 3:
+    case R2_WAIT:
         if (Appear_Q) {
-            ewk->wu.routine_no[1] = 2;
+            ewk->wu.routine_no[1] = R1_LEAVE;
         }
         char_move(&ewk->wu);
         break;
@@ -134,14 +165,14 @@ void effl3_0001(WORK_Other* ewk) {
 void effl3_0002(WORK_Other* ewk) {
     s16 work;
     switch (ewk->wu.routine_no[3]) {
-    case 0:
+    case R3_INIT:
         ewk->wu.routine_no[3]++;
         ewk->wu.disp_flag = 1;
         work = random_16_com();
         ewk->wu.old_rno[4] = effl3_wait_timer[work];
         ewk->wu.old_rno[3] = ewk->wu.type & 1;
         break;
-    case 1:
+    case R3_LEAVE:
         if (ewk->wu.old_rno[3]) {
             effl3_tobi(ewk);
             break;
@@ -156,7 +187,7 @@ void effl3_0002(WORK_Other* ewk) {
 /* provisional name */
 void effl3_tobi(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[4]) {
-    case 0:
+    case R4_WAIT:
         ewk->wu.old_rno[4]--;
         if (ewk->wu.old_rno[4] < 0) {
             ewk->wu.routine_no[4]++;
@@ -164,7 +195,7 @@ void effl3_tobi(WORK_Other* ewk) {
             return;
         }
         break;
-    case 1:
+    case R4_TAKEOFF:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 1) {
             ewk->wu.routine_no[4]++;
@@ -174,7 +205,7 @@ void effl3_tobi(WORK_Other* ewk) {
             ewk->wu.mvxy.d[1].sp = -0x6000;
         }
         break;
-    case 2:
+    case R4_JUMP:
         add_y_sub(ewk);
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 2) {
@@ -189,11 +220,11 @@ void effl3_tobi(WORK_Other* ewk) {
             ewk->wu.mvxy.d[1].sp = 0x4000;
         }
         break;
-    case 3:
+    case R4_FLY:
         add_x_sub(ewk);
         add_y_sub(ewk);
         if (!range_x_check3(&ewk->wu, 208)) {
-            ewk->wu.routine_no[0] = 99;
+            ewk->wu.routine_no[0] = R0_KILL;
         }
         break;
     case 4:
@@ -206,17 +237,17 @@ void effl3_tobi(WORK_Other* ewk) {
 /* provisional name */
 void effl3_kie(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[4]) {
-    case 0:
+    case R4_WAIT:
         ewk->wu.old_rno[4]--;
         if (ewk->wu.old_rno[4] < 0) {
             ewk->wu.routine_no[4]++;
             set_char_move_init(&ewk->wu, 1, 94);
         }
         break;
-    case 1:
+    case R4_VANISH:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
-            ewk->wu.routine_no[0] = 99;
+            ewk->wu.routine_no[0] = R0_KILL;
         }
         break;
     }

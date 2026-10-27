@@ -1,5 +1,9 @@
 /*
- * EFFA6_TBL.C  game tables
+ * EFFA6_TBL.C  VS screen dialogue scripts
+ *
+ * effA6_pl2_data_tbl holds a dialogue script for each character: pairs of message number and
+ * display time, ended by a time of -1. Read by EFFA6.C, the pre-fight dialogue text on the VS
+ * screen. effA6_pl2_data_tbl_tail follows it and is not referred to by name.
  */
 
 #include "types.h"

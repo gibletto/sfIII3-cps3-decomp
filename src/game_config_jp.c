@@ -158,7 +158,6 @@ TMSCRIPT gcfg_title_scr_jp[1] = {
 void game_config_init_jp(void) {
     s8 n;
     char *wk;
-    register int n2;
     char *wk1;
     Config_No_2++;
     Config_Exit_jp = 0;
@@ -232,8 +231,8 @@ void game_config_move_jp(void) {
 
 /* provisional name */
 void game_config_force_wide(void) {
-    u16 sw1 = p1sw_0 & 0x3F0;
-    u16 sw2 = p2sw_0 & 0x3F0;
+    u16 sw1 = p1sw_0 & BUTTON_SHOTS;
+    u16 sw2 = p2sw_0 & BUTTON_SHOTS;
     if (sw1 == 0x3F0 && sw2 == 0x3F0) {
         set_screen_mode(7);
         game_config_work.mode = 1;
@@ -251,10 +250,10 @@ void game_config_screen_item_jp(void) {
     } else if (((s8)game_config_lever_repeat_jp(8, 3))) {
         Config_Move_jp = 1;
     } else {
-        if ((p1sw_0 & ~p1sw_1) & 0x10) {
+        if ((p1sw_0 & ~p1sw_1) & BUTTON_LP) {
             Config_Move_jp = -1;
         }
-        if ((p1sw_0 & ~p1sw_1) & 0x20) {
+        if ((p1sw_0 & ~p1sw_1) & BUTTON_MP) {
             Config_Move_jp = 1;
         }
     }
@@ -288,10 +287,10 @@ void game_config_level_item_jp(void) {
     } else if (game_config_lever_repeat_jp(8, 3)) {
         Config_Move_jp = 1;
     } else {
-        if ((p1sw_0 & ~p1sw_1) & 0x10) {
+        if ((p1sw_0 & ~p1sw_1) & BUTTON_LP) {
             Config_Move_jp = -1;
         }
-        if ((p1sw_0 & ~p1sw_1) & 0x20) {
+        if ((p1sw_0 & ~p1sw_1) & BUTTON_MP) {
             Config_Move_jp = 1;
         }
     }
@@ -317,10 +316,10 @@ void game_config_damage_item_jp(void) {
         if (game_config_lever_repeat_jp(8, 3)) {
             Config_Move_jp = 1;
         }
-        if ((p1sw_0 & ~p1sw_1) & 0x10) {
+        if ((p1sw_0 & ~p1sw_1) & BUTTON_LP) {
             Config_Move_jp = -1;
         }
-        if ((p1sw_0 & ~p1sw_1) & 0x20) {
+        if ((p1sw_0 & ~p1sw_1) & BUTTON_MP) {
             Config_Move_jp = 1;
         }
     }
@@ -344,10 +343,10 @@ void game_config_timer_item_jp(void) {
     } else if (game_config_lever_repeat_jp(8, 3)) {
         Config_Move_jp = 1;
     } else {
-        if ((p1sw_0 & ~p1sw_1) & 0x10) {
+        if ((p1sw_0 & ~p1sw_1) & BUTTON_LP) {
             Config_Move_jp = -1;
         }
-        if ((p1sw_0 & ~p1sw_1) & 0x20) {
+        if ((p1sw_0 & ~p1sw_1) & BUTTON_MP) {
             Config_Move_jp = 1;
         }
     }
@@ -371,10 +370,10 @@ void game_config_1p_round_item_jp(void) {
     } else if (((s8)game_config_lever_repeat_jp(8, 3))) {
         Config_Move_jp = 1;
     } else {
-        if ((p1sw_0 & ~p1sw_1) & 0x10) {
+        if ((p1sw_0 & ~p1sw_1) & BUTTON_LP) {
             Config_Move_jp = -1;
         }
-        if ((p1sw_0 & ~p1sw_1) & 0x20) {
+        if ((p1sw_0 & ~p1sw_1) & BUTTON_MP) {
             Config_Move_jp = 1;
         }
     }
@@ -400,10 +399,10 @@ void game_config_2p_round_item_jp(void) {
     } else if (((s8)game_config_lever_repeat_jp(8, 3))) {
         Config_Move_jp = 1;
     } else {
-        if ((p1sw_0 & ~p1sw_1) & 0x10) {
+        if ((p1sw_0 & ~p1sw_1) & BUTTON_LP) {
             Config_Move_jp = -1;
         }
-        if ((p1sw_0 & ~p1sw_1) & 0x20) {
+        if ((p1sw_0 & ~p1sw_1) & BUTTON_MP) {
             Config_Move_jp = 1;
         }
     }
@@ -435,10 +434,10 @@ void game_config_event_item_jp(void) {
     } else if (((s8)game_config_lever_repeat_jp(8, 3))) {
         Config_Move_jp = 1;
     } else {
-        if ((p1sw_0 & ~p1sw_1) & 0x10) {
+        if ((p1sw_0 & ~p1sw_1) & BUTTON_LP) {
             Config_Move_jp = -1;
         }
-        if ((p1sw_0 & ~p1sw_1) & 0x20) {
+        if ((p1sw_0 & ~p1sw_1) & BUTTON_MP) {
             Config_Move_jp = 1;
         }
     }
@@ -461,10 +460,10 @@ void game_config_bonus_item_jp(void) {
     } else if (((s8)game_config_lever_repeat_jp(8, 3))) {
         Config_Move_jp = 1;
     } else {
-        if ((p1sw_0 & ~p1sw_1) & 0x10) {
+        if ((p1sw_0 & ~p1sw_1) & BUTTON_LP) {
             Config_Move_jp = -1;
         }
-        if ((p1sw_0 & ~p1sw_1) & 0x20) {
+        if ((p1sw_0 & ~p1sw_1) & BUTTON_MP) {
             Config_Move_jp = 1;
         }
     }
@@ -482,7 +481,7 @@ void game_config_bonus_item_jp(void) {
 
 /* provisional name */
 void game_config_exit_item_jp(void) {
-    if ((~p1sw_1 & p1sw_0) & 0x10) {
+    if ((~p1sw_1 & p1sw_0) & BUTTON_LP) {
         Config_Exit_jp = 1;
     }
 }

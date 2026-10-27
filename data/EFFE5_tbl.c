@@ -1,5 +1,10 @@
 /*
- * EFFE5_TBL.C  game tables
+ * EFFE5_TBL.C  after-image tables
+ *
+ * after_image_data holds the after-image parameter sets (nine words each) that the E5
+ * controller loads for a move; illusion_setup_table gives { who, parameter set } pairs for
+ * setup_after_images (0 this player, 1 the opponent, other both); after_image_color is the {
+ * 1P, 2P } colour of each image step. Read by EFFE5.C, EFFE7.C and EFFE8.C.
  */
 
 #include "types.h"

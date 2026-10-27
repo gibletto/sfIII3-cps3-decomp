@@ -1,5 +1,10 @@
 /*
- * EFF03_TBL.C  game tables
+ * EFF03_TBL.C  player-attached move effect settings
+ *
+ * plef_data has one entry per effect 03 type: display flag, facing, offset from the master,
+ * priority, colour, shadow number and whether the effect follows its master. plef_kage_data
+ * gives the offset, priority and pattern of each shadow number. Read by EFF03.C, the
+ * player-attached move effects.
  */
 
 #include "types.h"

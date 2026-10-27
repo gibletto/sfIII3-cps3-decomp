@@ -29,11 +29,30 @@
 #include "EFFK4.h"
 #include "EFFC3.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* load the part data */
+#define R0_MOVE         1       /* take hits with the car */
+#define R0_BREAK        2       /* the car has broken up */
+#define R0_KILL         3       /* (default) put the work back */
+
+/* routine_no[1], effect_C3_move: after the car breaks up */
+#define R1_BREAK_WAIT   0       /* shown until the car drops */
+#define R1_BREAK_END    1       /* go to the release */
+#define R1_BREAK_SYNC   10      /* follow the car's frames */
+
+/* routine_no[1], effC3_main_process */
+#define R1_NORMAL       0       /* no hit to handle */
+#define R1_DAMAGE       1       /* pass a hit on to the car */
+
+/* routine_no[2] */
+#define R2_SEND         0       /* pass the damage to the car */
+#define R2_BREAK        1       /* check the break level, throw debris */
+
 
 
 void effect_C3_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.charset_id = 0x17;
@@ -43,11 +62,11 @@ void effect_C3_move(WORK_Other* ewk) {
         set_display_car_parts(ewk);
         clear_attack_num(&ewk->wu);
         break;
-    case 1:
+    case R0_MOVE:
         if (ewk->wu.dead_f == 1) {
             ewk->wu.disp_flag = 0;
-            ewk->wu.routine_no[0] = 2;
-            ewk->wu.routine_no[1] = 1;
+            ewk->wu.routine_no[0] = R0_BREAK;
+            ewk->wu.routine_no[1] = R1_BREAK_END;
             break;
         }
         ewk->wu.dir_old = bs2_sync_bomb(&ewk->wu);
@@ -59,9 +78,9 @@ void effect_C3_move(WORK_Other* ewk) {
         }
         bs2_display_C3(&ewk->wu);
         break;
-    case 2:
+    case R0_BREAK:
         switch (ewk->wu.routine_no[1]) {
-        case 0:
+        case R1_BREAK_WAIT:
             if (check_effc2_p2_rno(&ewk->wu) == 0) {
                 bs2_display_C3(&ewk->wu);
                 break;
@@ -69,16 +88,16 @@ void effect_C3_move(WORK_Other* ewk) {
             ewk->wu.disp_flag = 0;
             clear_parts_hit_data(&ewk->wu);
             if (ewk->wu.type != 3) {
-                ewk->wu.routine_no[1] = 1;
+                ewk->wu.routine_no[1] = R1_BREAK_END;
             } else {
-                ewk->wu.routine_no[1] = 10;
+                ewk->wu.routine_no[1] = R1_BREAK_SYNC;
             }
             break;
-        case 1:
-            ewk->wu.routine_no[0] = 3;
+        case R1_BREAK_END:
+            ewk->wu.routine_no[0] = R0_KILL;
             ewk->wu.routine_no[1] = 0;
             break;
-        case 10:
+        case R1_BREAK_SYNC:
             switch (get_efffC3_nsc(&ewk->wu, (WORK*)ewk->wu.my_effadrs)) {
             case 0:
                 ewk->wu.disp_flag = 0;
@@ -88,7 +107,7 @@ void effect_C3_move(WORK_Other* ewk) {
                 break;
             default:
                 ewk->wu.disp_flag = 0;
-                ewk->wu.routine_no[1] = 1;
+                ewk->wu.routine_no[1] = R1_BREAK_END;
                 break;
             }
             sort_push_request(&ewk->wu);
@@ -142,9 +161,9 @@ void clear_parts_hit_data(WORK* wk) {
 
 void effC3_main_process(WORK_Other* ewk) {
     if (ewk->wu.dir_old) {
-        ewk->wu.routine_no[0] = 2;
+        ewk->wu.routine_no[0] = R0_BREAK;
         ewk->wu.routine_no[1] = 0;
-        ewk->wu.routine_no[2] = 0;
+        ewk->wu.routine_no[2] = R2_SEND;
         bs2_get_parts_break(&ewk->wu);
         set_char_move_init2(&ewk->wu, 0, ewk->wu.dir_step + 7, ewk->wu.scr_mv_x, 0);
         if (ewk->wu.vital_old < 7) {
@@ -153,15 +172,15 @@ void effC3_main_process(WORK_Other* ewk) {
         return;
     }
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_NORMAL:
         break;
-    case 1:
+    case R1_DAMAGE:
         switch (ewk->wu.routine_no[2]) {
-        case 0:
+        case R2_SEND:
             c3_new_damage(&ewk->wu);
-            ewk->wu.routine_no[2] = 1;
+            ewk->wu.routine_no[2] = R2_BREAK;
             break;
-        case 1:
+        case R2_BREAK:
             if (check_parts_break_level(&ewk->wu)) {
                 setup_effK2(&ewk->wu);
             }
@@ -169,7 +188,7 @@ void effC3_main_process(WORK_Other* ewk) {
                 setup_effK4(&ewk->wu);
             }
             ewk->wu.routine_no[1] = 0;
-            ewk->wu.routine_no[2] = 0;
+            ewk->wu.routine_no[2] = R2_SEND;
             break;
         }
         break;

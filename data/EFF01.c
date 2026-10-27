@@ -1,5 +1,9 @@
 /*
- * EFF01.C  game tables
+ * EFF01.C  overlay parts colours
+ *
+ * parts_colmd_table and parts_colcd_table give the colour mode and colour code of an overlay
+ * part, picked by the indexes in the character's overlap table. Read by EFF01_CODE.C, the
+ * overlay parts effect.
  */
 
 #include "types.h"

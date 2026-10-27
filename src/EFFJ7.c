@@ -3,7 +3,7 @@
  *
  * effect_J7_init (from PLCNTDAT.c) creates the effect only for character 0 (Gill) played as
  * himself, and records the player's colour choice. effect_J7_move starts when gill_ccch_go is
- * set or the player reaches his start state, and steps two colour tables from pl00_cctbl (one
+ * set or the player reaches its start state, and steps two colour tables from pl00_cctbl (one
  * for each side of the body) through the player's two 48-word palette blocks in palette RAM,
  * swapping them to match the player's facing; get_new_color_data loads each step's colours,
  * timer and end code. When the player's vitality falls below zero it returns to the first step
@@ -19,6 +19,20 @@
 #include "EFFJ7.h"
 #include "cps3.h"
 #include "fighter.h"
+
+/* routine_no[0] */
+#define R0_WAIT         0       /* wait for the player to start */
+#define R0_MOVE         1       /* step the colours */
+#define R0_DOWN         2       /* no vitality left: reset the colours */
+#define R0_KILL         3       /* (default) put the work back */
+
+/* Gill's attack routine 21 (pl00_exatt_table: Att_RESURRECTION) */
+#define GILL_RESURRECTION 21
+
+/* routine_no[1] */
+#define R1_RESET        0       /* back to the first colour step */
+#define R1_WAIT         1       /* wait for Gill's Resurrection */
+#define R1_HOLD         2       /* hold until that attack ends */
 
 
 extern const ColorCode pl00_cctbl_0[];
@@ -42,9 +56,9 @@ void effect_J7_move(WORK_Other* ewk) {
     mwk = (PLW*)ewk->my_master;
     ewk->wu.rl_flag = mwk->wu.rl_flag;
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_WAIT:
         if (mwk->gill_ccch_go == 0) {
-            if (mwk->wu.routine_no[1] != 0) {
+            if (mwk->wu.routine_no[1] != PLAYER_NORMAL) {
                 return;
             }
             if (mwk->wu.routine_no[2] != 1) {
@@ -61,14 +75,14 @@ void effect_J7_move(WORK_Other* ewk) {
         ewk->wu.dir_old = 1;
         check_new_color_data(&ewk->wu);
         return;
-    case 1:
+    case R0_MOVE:
         if (ewk->wu.dead_f == 1) {
-            ewk->wu.routine_no[0] = 3;
+            ewk->wu.routine_no[0] = R0_KILL;
             break;
         }
         if (mwk->wu.vital_new < 0) {
-            ewk->wu.routine_no[0] = 2;
-            ewk->wu.routine_no[1] = 0;
+            ewk->wu.routine_no[0] = R0_DOWN;
+            ewk->wu.routine_no[1] = R1_RESET;
             break;
         }
         if (EXE_flag != 0 || Game_pause != 0) {
@@ -76,9 +90,9 @@ void effect_J7_move(WORK_Other* ewk) {
         }
         check_new_color_data(&ewk->wu);
         return;
-    case 2:
+    case R0_DOWN:
         switch (ewk->wu.routine_no[1]) {
-        case 0:
+        case R1_RESET:
             ewk->wu.routine_no[1]++;
             ewk->wu.dir_timer = 0;
             ewk->wu.dir_step = 0;
@@ -91,17 +105,17 @@ void effect_J7_move(WORK_Other* ewk) {
                 get_new_color_data(&ewk->wu, (ColorCode*)ewk->wu.hit_adrs, ewk->wu.step_xy_table);
             }
             return;
-        case 1:
-            if (mwk->wu.routine_no[1] == 4 && mwk->wu.routine_no[2] == 21) {
+        case R1_WAIT:
+            if (mwk->wu.routine_no[1] == PLAYER_ATTACK && mwk->wu.routine_no[2] == GILL_RESURRECTION) {
                 ewk->wu.routine_no[1]++;
             }
             break;
-        case 2:
-            if (mwk->wu.routine_no[1] == 4 && mwk->wu.routine_no[2] == 21) {
+        case R1_HOLD:
+            if (mwk->wu.routine_no[1] == PLAYER_ATTACK && mwk->wu.routine_no[2] == GILL_RESURRECTION) {
                 break;
             }
-            ewk->wu.routine_no[0] = 1;
-            ewk->wu.routine_no[1] = 0;
+            ewk->wu.routine_no[0] = R0_MOVE;
+            ewk->wu.routine_no[1] = R1_RESET;
             break;
         }
         break;

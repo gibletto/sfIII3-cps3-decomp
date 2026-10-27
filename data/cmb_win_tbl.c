@@ -1,5 +1,9 @@
 /*
- * CMB_WIN_TBL.C  game tables
+ * CMB_WIN_TBL.C  combo display and super art colour tables
+ *
+ * combo_mpos_tbl, combo_mclr_pos_tbl, combo_hitpos_tbl, combo_erase_pos_tbl and
+ * combo_erase_len_tbl are the text-layer positions and erase lengths of the combo hit message;
+ * sa_color_data_tbl gives the colour of the super art gauge cells. Read by SC_TRANS.C.
  */
 
 #include "types.h"

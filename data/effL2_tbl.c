@@ -1,5 +1,8 @@
 /*
- * EFFL2_TBL.C  game tables
+ * EFFL2_TBL.C  onlooker facing table
+ *
+ * effl2_dir_tbl gives the onlooker's facing by the followed fighter's x position, one row per
+ * side. Read by EFFL2.C.
  */
 
 #include "types.h"

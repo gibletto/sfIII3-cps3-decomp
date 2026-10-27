@@ -18,18 +18,23 @@
 #include "aboutspr.h"
 #include "EFF63.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* start the first animation */
+#define R0_WAIT         1       /* wait 60 frames, start the next idle */
+#define R0_ANIM         2       /* play it to the end */
+
 
 
 void effect_63_move(WORK_Other_CONN* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         ewk->wu.old_rno[0] = 60;
         ewk->wu.old_rno[1] = 0;
         break;
-    case 1:
+    case R0_WAIT:
         ewk->wu.old_rno[0]--;
         if (ewk->wu.old_rno[0] <= 0) {
             ewk->wu.routine_no[0]++;
@@ -45,10 +50,10 @@ void effect_63_move(WORK_Other_CONN* ewk) {
         }
         disp_pos_trans_entry((WORK_Other*)ewk);
         break;
-    case 2:
+    case R0_ANIM:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
-            ewk->wu.routine_no[0] = 1;
+            ewk->wu.routine_no[0] = R0_WAIT;
             ewk->wu.old_rno[0] = 60;
         }
         disp_pos_trans_entry((WORK_Other*)ewk);

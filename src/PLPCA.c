@@ -32,6 +32,40 @@
 #include "Grade.h"
 #include "PLPCA.h"
 
+/* routine_no[3], Catch_01000 */
+#define C01_THROW       1       /* run the throw, acting on its cues */
+
+/* routine_no[3], Catch_02000 */
+#define C02_THROW       1       /* run the throw, acting on its cues */
+
+/* routine_no[3], Catch_03000 */
+#define C03_THROW       1       /* run the throw, acting on its cues */
+
+/* routine_no[3], Catch_04000 */
+#define C04_THROW       1       /* run the throw, acting on its cues */
+#define C04_THROW2      2       /* run the throw, acting on its cues */
+#define C04_THROW3      3       /* run the throw, acting on its cues */
+#define C04_THROW4      4       /* run the throw, acting on its cues */
+
+/* routine_no[3], Catch_05000 */
+#define C05_MOVE        1       /* move and run the animation */
+#define C05_MOVE2       2       /* move and run the animation */
+#define C05_THROW       3       /* run the throw, acting on its cues */
+
+/* routine_no[3], Catch_06000 */
+#define C06_THROW       1       /* run the throw, acting on its cues */
+
+/* routine_no[3], Catch_07000 */
+#define C07_THROW       1       /* run the throw, acting on its cues */
+#define C07_THROW2      2       /* run the throw, acting on its cues */
+#define C07_AIR         3       /* in the air until it lands */
+#define C07_THROW3      4       /* run the throw, acting on its cues */
+#define C07_AIR2        5       /* in the air until it lands */
+#define C07_LAND        6       /* the landing */
+
+/* routine_no[3], Catch_08000 */
+#define C08_THROW       1       /* run the throw, acting on its cues */
+
 
 
 void Player_catch(PLW* wk) {
@@ -90,14 +124,14 @@ void check_nagenuke(PLW* wk, PLW* tk) {
         return;
     }
 ok:
-    if (wk->cat_break_ok_timer && wk->wu.routine_no[1] == 2 && check_nagenuke_cmd(tk)) {
+    if (wk->cat_break_ok_timer && wk->wu.routine_no[1] == PLAYER_CATCH && check_nagenuke_cmd(tk)) {
         if (wk->wu.xyz[1].disp.pos > 8) {
             wk->wu.routine_no[2] = 50;
         } else {
             wk->wu.routine_no[2] = 48;
         }
-        wk->wu.routine_no[1] = 0;
-        wk->wu.routine_no[3] = 0;
+        wk->wu.routine_no[1] = PLAYER_NORMAL;
+        wk->wu.routine_no[3] = RN3_START;
         wk->wu.hit_stop = 0;
         wk->wu.dm_stop = 0;
         if (tk->wu.xyz[1].disp.pos > 8) {
@@ -105,7 +139,7 @@ ok:
         } else {
             tk->wu.routine_no[2] = 47;
         }
-        tk->wu.routine_no[1] = 0;
+        tk->wu.routine_no[1] = PLAYER_NORMAL;
         tk->wu.routine_no[3] = 0;
         tk->wu.hit_stop = 1;
         tk->wu.dm_stop = 0;
@@ -119,11 +153,11 @@ void Catch_00000(PLW* wk) {}
 
 void Catch_01000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         set_char_move_init_ca(wk, 2, wk->wu.char_index);
         break;
-    case 1:
+    case C01_THROW:
         char_move(&wk->wu);
         catch_cg_type_check(wk);
         break;
@@ -134,11 +168,11 @@ void Catch_01000(PLW* wk) {
 
 void Catch_02000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         set_char_move_init_ca(wk, 2, wk->wu.char_index + ((WORK*)wk->wu.hit_adrs)->weight_level);
         break;
-    case 1:
+    case C02_THROW:
         char_move((WORK*)wk);
         catch_cg_type_check(wk);
         break;
@@ -149,11 +183,11 @@ void Catch_02000(PLW* wk) {
 
 void Catch_03000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         set_char_move_init_ca(wk, 2, wk->wu.char_index);
         break;
-    case 1:
+    case C03_THROW:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 7) {
             setup_mvxy_data(&wk->wu, wk->as->data_ix);
@@ -167,36 +201,36 @@ void Catch_03000(PLW* wk) {
 
 void Catch_04000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         set_char_move_init_ca(wk, 2, wk->wu.char_index);
         reset_mvxy_data(&wk->wu);
         wk->wu.mvxy.index = wk->as->data_ix;
         break;
-    case 1:
+    case C04_THROW:
         char_move(&wk->wu);
         if ((u8)wk->wu.cg_type == 20) {
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
-            wk->wu.routine_no[3] = 2;
+            wk->wu.routine_no[3] = C04_THROW2;
             wk->wu.cg_type = 0;
         }
         catch_cg_type_check(wk);
         break;
-    case 2:
+    case C04_THROW2:
         jumping_union_process(&wk->wu, 1);
         if ((u8)wk->wu.cg_type == 30) {
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
-            wk->wu.routine_no[3] = 3;
+            wk->wu.routine_no[3] = C04_THROW3;
             wk->wu.cg_type = 0;
         }
         catch_cg_type_check(wk);
         break;
-    case 3:
+    case C04_THROW3:
         jumping_union_process(&wk->wu, 4);
         catch_cg_type_check(wk);
         break;
-    case 4:
+    case C04_THROW4:
         char_move(&wk->wu);
         catch_cg_type_check(wk);
         return;
@@ -206,50 +240,49 @@ void Catch_04000(PLW* wk) {
 
 
 void Catch_05000(PLW* wk) {
-    s8 zero = 0;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         set_char_move_init_ca(wk, 2, wk->wu.char_index);
         break;
-    case 1:
+    case C05_MOVE:
         char_move(&wk->wu);
         switch ((u8)wk->wu.cg_type) {
         case 1:
-            wk->wu.routine_no[3] = 2;
-            wk->wu.cg_type = zero;
+            wk->wu.routine_no[3] = C05_MOVE2;
+            wk->wu.cg_type = 0;
             break;
         case 0x14:
             add_to_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
-            wk->wu.cg_type = zero;
+            wk->wu.cg_type = 0;
             break;
         case 0x16:
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
-            wk->wu.cg_type = zero;
+            wk->wu.cg_type = 0;
             goto next1;
         }
     next1:
         catch_cg_type_check(wk);
         break;
-    case 2:
+    case C05_MOVE2:
         jumping_union_process(&wk->wu, 1);
         switch ((u8)wk->wu.cg_type) {
         case 1:
-            wk->wu.routine_no[3] = 1;
-            wk->wu.cg_type = zero;
+            wk->wu.routine_no[3] = C05_MOVE;
+            wk->wu.cg_type = 0;
             goto next2;
         case 0x14:
             add_to_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
-            wk->wu.cg_type = zero;
+            wk->wu.cg_type = 0;
             break;
         }
     next2:
         catch_cg_type_check(wk);
         break;
-    case 3:
+    case C05_THROW:
         char_move(&wk->wu);
         catch_cg_type_check(wk);
         return;
@@ -260,11 +293,11 @@ void Catch_05000(PLW* wk) {
 
 void Catch_06000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         set_char_move_init_ca(wk, 2, wk->wu.char_index);
         break;
-    case 1:
+    case C06_THROW:
         char_move((WORK*)wk);
         if (wk->wu.cg_type == 20) {
             nise_combo_work(wk, (PLW*)wk->wu.target_adrs, 14);
@@ -279,25 +312,25 @@ void Catch_06000(PLW* wk) {
 
 void Catch_07000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         set_char_move_init_ca(wk, 2, wk->wu.char_index);
         reset_mvxy_data(&wk->wu);
         wk->wu.mvxy.index = wk->as->data_ix;
         wk->wu.dir_timer = 10;
         break;
-    case 1:
+    case C07_THROW:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 30) {
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
-            wk->wu.routine_no[3] = 2;
+            wk->wu.routine_no[3] = C07_THROW2;
             wk->wu.cg_type = 0;
             cat07_running_check(&wk->wu);
         }
         catch_cg_type_check(wk);
         break;
-    case 2:
+    case C07_THROW2:
         add_mvxy_speed(&wk->wu);
         cal_mvxy_speed(&wk->wu);
         char_move(&wk->wu);
@@ -306,24 +339,24 @@ void Catch_07000(PLW* wk) {
         }
         catch_cg_type_check(wk);
         break;
-    case 3:
+    case C07_AIR:
         jumping_union_process(&wk->wu, 6);
         if (--wk->wu.dir_timer <= 0) {
-            wk->wu.routine_no[3] = 4;
+            wk->wu.routine_no[3] = C07_THROW3;
         }
         break;
-    case 4:
+    case C07_THROW3:
         jumping_union_process(&wk->wu, 6);
         if (((PLW*)wk->wu.target_adrs)->micchaku_flag) {
             char_move_z(&wk->wu);
-            wk->wu.routine_no[3] = 5;
+            wk->wu.routine_no[3] = C07_AIR2;
         }
         catch_cg_type_check(wk);
         break;
-    case 5:
+    case C07_AIR2:
         jumping_union_process(&wk->wu, 6);
         break;
-    case 6:
+    case C07_LAND:
         char_move(&wk->wu);
         break;
     }
@@ -346,17 +379,17 @@ s32 cat07_running_check(WORK* wk) {
 
 void Catch_08000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         set_char_move_init_ca(wk, 2, wk->wu.char_index);
         break;
-    case 1:
+    case C08_THROW:
         char_move(&wk->wu);
         catch_cg_type_check(wk);
         if (wk->wu.cg_type == 50) {
-            wk->wu.routine_no[1] = 4;
+            wk->wu.routine_no[1] = PLAYER_ATTACK;
             wk->wu.routine_no[2] = 23;
-            wk->wu.routine_no[3] = 1;
+            wk->wu.routine_no[3] = C08_THROW;
         }
         break;
     }

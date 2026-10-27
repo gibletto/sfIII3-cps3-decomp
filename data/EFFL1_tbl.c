@@ -1,5 +1,12 @@
 /*
- * EFFL1_TBL.C  game tables
+ * EFFL1_TBL.C  grade judgement and result plate tables
+ *
+ * effL1_item_init is the init routine of each of the 20 item types and effL1_base_data their
+ * base data { priority, BG family, winner colour flag, display flag, delay }; bunkai_table_l1
+ * is the powers of ten used to split numbers into digits. The gj_* tables are the CONN sprite
+ * layouts of the items: score, wins, grade letters (gj_grade, 32 grades), point bars, the
+ * final-judge stage, mark, score and total plates (gj_f_*), and the loser plate with its face
+ * per character (gj_loser_face). Read by EFFL1.C.
  */
 
 #include "types.h"
@@ -233,13 +240,13 @@ const CONN gj_loser[2] = {
 };
 
 const s16 gj_loser_face[24] = {
-    -24281, -24280, -24279, -24278, -24277, -24276, -24275, -24274,
-    -24273, -24272, -24271, -24270, -24269, -24268, -24267, -24267,
-    -24266, -24265, -24264, -24263,
-    -24262,
-    -24281,
-    -24281,
-    -24281,
+    0xA127, 0xA128, 0xA129, 0xA12A, 0xA12B, 0xA12C, 0xA12D, 0xA12E,
+    0xA12F, 0xA130, 0xA131, 0xA132, 0xA133, 0xA134, 0xA135, 0xA135,
+    0xA136, 0xA137, 0xA138, 0xA139,
+    0xA13A,
+    0xA127,
+    0xA127,
+    0xA127,
 };
 
 const CONN gj_bar2[6] = {

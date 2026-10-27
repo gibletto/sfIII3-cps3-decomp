@@ -19,12 +19,19 @@
 #include "PLS02.h"
 #include "EFF02.h"
 #include "fighter.h"
+
+/* routine_no[0] */
+#define R0_INIT         0       /* pick the mark, sound and colour */
+#define R0_MOVE         1       /* animate until the script ends */
+#define R0_END          2       /* hidden for a frame */
+#define R0_KILL         3       /* (default) put the work back */
+
 void effect_02_move(WORK_Other* ewk) {
     const HMDT* tad;
     const EXPLEM* edt;
     s32 index;
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.char_table[0] = ef01_char_table;
         tad = &hmdt[ewk->wu.kohm];
@@ -92,8 +99,8 @@ void effect_02_move(WORK_Other* ewk) {
             ewk->wu.xyz[0].disp.pos += random_16_com() - 7;
             ewk->wu.xyz[1].disp.pos += (random_16_com() & 7) - 3;
         }
-        ewk->wu.scr_mv_x = gqdt[tad->quake][0];
-        ewk->wu.scr_mv_y = gqdt[tad->quake][1];
+        ewk->wu.scr_mv_x = gqdt[tad->quake][GQ_DELAY];
+        ewk->wu.scr_mv_y = gqdt[tad->quake][GQ_INDEX];
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos;
         ewk->wu.position_z = ewk->wu.xyz[2].disp.pos;
@@ -116,7 +123,7 @@ void effect_02_move(WORK_Other* ewk) {
         }
         sort_push_request8(&ewk->wu);
         break;
-    case 1:
+    case R0_MOVE:
         if (ewk->wu.dead_f == 1) {
             ewk->wu.disp_flag = 0;
             ewk->wu.routine_no[0]++;
@@ -138,8 +145,8 @@ void effect_02_move(WORK_Other* ewk) {
         }
         sort_push_request8(&ewk->wu);
         break;
-    case 2:
-        ewk->wu.routine_no[0] = 3;
+    case R0_END:
+        ewk->wu.routine_no[0] = R0_KILL;
         break;
     default:
         all_cgps_put_back(&ewk->wu);

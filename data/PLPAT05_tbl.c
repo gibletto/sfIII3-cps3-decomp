@@ -1,5 +1,10 @@
 /*
- * PLPAT05_TBL.C  game tables
+ * PLPAT05_TBL.C  Necro's special attack table
+ *
+ * pl05_exatt_table is the list of Necro's special attack routines (Att_HADOUKEN,
+ * Att_SENPUUKYAKU, the personal action, the metamorphosis wait and rebirth, ...), indexed by
+ * attack routine number minus 16. Read by PLPAT05.C, which dispatches through it from
+ * pl05_extra_attack.
  */
 
 #include "types.h"

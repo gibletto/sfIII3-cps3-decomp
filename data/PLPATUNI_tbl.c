@@ -1,5 +1,10 @@
 /*
- * PLPATUNI_TBL.C  game tables
+ * PLPATUNI_TBL.C  shared special move position tables
+ *
+ * metareb_pos is the x/y offset, per character, applied when a metamorphosed player is
+ * restored (Att_METAMOR_REBIRTH). ahj_empos_hos gives, per leaping move and per opponent
+ * character, the target-relative x/y point the jump aims at, and ahj_kop the control row for
+ * each leaping move; both are stepped by att_ahj_table_reader. Read by PLPATUNI.C.
  */
 
 #include "types.h"
@@ -9,9 +14,30 @@
 
 
 const s16 metareb_pos[24][2] = {
-    { 1, 9 }, { 14, 19 }, { 5, 31 }, { 8, 24 }, { 9, 28 }, { 4, 22 }, { 6, -10 }, { 6, 35 },
-    { 15, 24 }, { 6, 26 }, { 8, 24 }, { 5, 31 }, { 4, 32 }, { 1, 9 }, { 5, 30 }, { 0, 0 },
-    { 1, 23 }, { 6, 22 }, { 13, 25 }, { -4, 22 }, { 0, 17 }, { 0, 0 }, { 0, 0 }, { 0, 0 },
+    { 1, 9 },  /* Gill */
+    { 14, 19 },  /* Alex */
+    { 5, 31 },  /* Ryu */
+    { 8, 24 },  /* Yun */
+    { 9, 28 },  /* Dudley */
+    { 4, 22 },  /* Necro */
+    { 6, -10 },  /* Hugo */
+    { 6, 35 },  /* Ibuki */
+    { 15, 24 },  /* Elena */
+    { 6, 26 },  /* Oro */
+    { 8, 24 },  /* Yang */
+    { 5, 31 },  /* Ken */
+    { 4, 32 },  /* Sean */
+    { 1, 9 },  /* Urien */
+    { 5, 30 },  /* Gouki */
+    { 0, 0 },  /* Shin Gouki */
+    { 1, 23 },  /* Chun-Li */
+    { 6, 22 },  /* Makoto */
+    { 13, 25 },  /* Q */
+    { -4, 22 },  /* Twelve */
+    { 0, 17 },  /* Remy */
+    { 0, 0 },  /* 21 */
+    { 0, 0 },  /* 22 */
+    { 0, 0 },  /* 23 */
 };
 
 const s16 ahj_empos_hos[6][24][2] = {

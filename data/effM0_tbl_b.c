@@ -1,5 +1,8 @@
 /*
- * EFFM0_TBL_B.C  game tables
+ * EFFM0_TBL_B.C  stage animal running times
+ *
+ * animal_0005_tbl is the random running time of an animal using behaviour animal_0005 before
+ * it stops, stands and runs off. Read by EFFM0.C.
  */
 
 #include "types.h"

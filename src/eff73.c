@@ -27,6 +27,13 @@
 #include "bg_sub_5.h"
 #include "eff73.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* show */
+#define R0_FLY          1       /* fly until the timer runs out */
+#define R0_FALL         2       /* survivor: come down to y 64 */
+#define R0_HOP          3       /* hop up once more, then go */
+#define R0_KILL         99      /* (default) put the work back */
+
 
 
 void effect_73_move(WORK_Other* ewk) {
@@ -34,12 +41,12 @@ void effect_73_move(WORK_Other* ewk) {
         return;
     }
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, 2);
         break;
-    case 1:
+    case R0_FLY:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             add_x_sub(ewk);
@@ -49,14 +56,14 @@ void effect_73_move(WORK_Other* ewk) {
                 if (ewk->wu.old_rno[1]) {
                     ewk->wu.routine_no[0]++;
                 } else {
-                    ewk->wu.routine_no[0] = 99;
+                    ewk->wu.routine_no[0] = R0_KILL;
                     ewk->wu.disp_flag = 0;
                 }
             }
         }
         disp_pos_trans_entry_r(ewk);
         break;
-    case 2:
+    case R0_FALL:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             add_x_sub(ewk);
@@ -71,13 +78,13 @@ void effect_73_move(WORK_Other* ewk) {
         }
         disp_pos_trans_entry_r(ewk);
         break;
-    case 3:
+    case R0_HOP:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             add_x_sub(ewk);
             add_y_sub(ewk);
             if (ewk->wu.xyz[1].disp.pos < 56) {
-                ewk->wu.routine_no[0] = 99;
+                ewk->wu.routine_no[0] = R0_KILL;
                 ewk->wu.disp_flag = 0;
             }
         }

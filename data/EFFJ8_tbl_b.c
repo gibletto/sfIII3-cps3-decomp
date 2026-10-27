@@ -1,5 +1,8 @@
 /*
- * EFFJ8_TBL_B.C  game tables
+ * EFFJ8_TBL_B.C  dragonfly flight speeds
+ *
+ * effj8_sp_tbl is the eight random flight lines, four speed values each, that a dragonfly
+ * picks when it enters the screen. Read by EFFJ8.C, the dragonflies of the stage background.
  */
 
 #include "types.h"

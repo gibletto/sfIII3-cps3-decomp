@@ -1,5 +1,9 @@
 /*
- * END_11_TBL.C  game tables
+ * END_11_TBL.C  Ken's ending tables (ending 11)
+ *
+ * end_b00_bg0_cell_tbl and end_b00_bg1_cell_tbl list the BG0 and BG1 cells (map offset, cell
+ * number) written at the start of the ending, timer_b_tbl the length in frames of each of its
+ * seven scenes and end_b_pos the BG x and y of each scene. Read by END_11.C.
  */
 
 #include "types.h"

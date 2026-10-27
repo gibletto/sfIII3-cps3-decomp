@@ -1,5 +1,9 @@
 /*
- * EFF36_TBL.C  game tables
+ * EFF36_TBL.C  opening demo object data
+ *
+ * eff36_data_tbl holds one row per opening demo object: colour, behaviour, position, priority,
+ * animation and the start and end indices on the opening timeline. eff36_04_tbl gives the
+ * sound sequence status at which each step of behaviour 4 switches its piece. Read by EFF36.C.
  */
 
 #include "types.h"

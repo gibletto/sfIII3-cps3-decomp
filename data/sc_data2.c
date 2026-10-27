@@ -1,5 +1,9 @@
 /*
- * SC_DATA2.C  game tables
+ * SC_DATA2.C  round timer flash and super art gauge cell tables
+ *
+ * flash_timer_tbl and flash_color_tbl are the rate and colour cycle of the flashing round
+ * timer (COUNT.C). spgauge_puttbl_0/1 are the cell codes of each fill step of the super art
+ * gauge and spgauge_postbl_0/1 its cell columns, for the 1P and 2P sides (SPGAUGE.C).
  */
 
 #include "types.h"

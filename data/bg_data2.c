@@ -1,5 +1,11 @@
 /*
- * BG_DATA2.C  game tables
+ * BG_DATA2.C  screen quake and stage colour tables
+ *
+ * quake_x_tbl and quake_y_tbl are the screen shake offsets stepped by the quake index; they
+ * are read by BG000.C and TA_SUB.C (quake_y_tbl also by END_11.C). bg_palette_no_tbl and
+ * bg_color2_tbl give each background's palette numbers, read by BG000.C, GAME_MAIN.C and
+ * MANAGE_2.C; bg_attr_add_tbl (cell attribute addition per background) and etc_bg_color_tbl
+ * (special screen palettes) are read by BG000.C.
  */
 
 #include "types.h"

@@ -1,5 +1,9 @@
 /*
- * PLPAT01_TBL.C  game tables
+ * PLPAT01_TBL.C  Alex special attack tables
+ *
+ * pl01_exatt_table is the special attack routines of character 1 (Alex) by attack routine
+ * number; pl01_ddt_dat gives, by victim character, the DDT jump height and catch box. Read by
+ * PLPAT01.C.
  */
 
 #include "types.h"
@@ -23,13 +27,30 @@ extern void Att_SHOURYUUKEN();
 extern void Att_SLIDE_and_JUMP();
 
 const s16 pl01_ddt_dat[24][2] = {
-    { 46, 11 }, { 32, 12 }, { 28, 13 }, { 16, 14 }, { 36, 15 }, { 16, 16 }, { 60, 17 }, { 20, 18 },
-    { 24, 19 }, { 12, 20 }, { 16, 14 }, { 28, 13 }, { 28, 13 }, { 46, 11 }, { 28, 13 }, { 28, 0 },
-    { 24, 21 }, { 18, 22 }, { 52, 23 }, { 18, 16 },
-    { 38, 24 },
-    { 16, 0 },
-    { 16, 0 },
-    { 16, 0 },
+    { 46, 11 },  /* Gill */
+    { 32, 12 },  /* Alex */
+    { 28, 13 },  /* Ryu */
+    { 16, 14 },  /* Yun */
+    { 36, 15 },  /* Dudley */
+    { 16, 16 },  /* Necro */
+    { 60, 17 },  /* Hugo */
+    { 20, 18 },  /* Ibuki */
+    { 24, 19 },  /* Elena */
+    { 12, 20 },  /* Oro */
+    { 16, 14 },  /* Yang */
+    { 28, 13 },  /* Ken */
+    { 28, 13 },  /* Sean */
+    { 46, 11 },  /* Urien */
+    { 28, 13 },  /* Gouki */
+    { 28, 0 },  /* Shin Gouki */
+    { 24, 21 },  /* Chun-Li */
+    { 18, 22 },  /* Makoto */
+    { 52, 23 },  /* Q */
+    { 18, 16 },  /* Twelve */
+    { 38, 24 },  /* Remy */
+    { 16, 0 },  /* 21 */
+    { 16, 0 },  /* 22 */
+    { 16, 0 },  /* 23 */
 };
 
 void (*const pl01_exatt_table[18])() = {

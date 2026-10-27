@@ -18,21 +18,26 @@
 #include "effect_2.h"
 #include "EFFL0.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* hide the player */
+#define R0_MOVE         1       /* count down, show again near the end */
+#define R0_KILL         2       /* put the work back */
+
 
 
 void effect_L0_move(WORK_Other* ewk) {
     PLW* mwk = (PLW*)ewk->my_master;
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         mwk->wu.disp_flag = 0;
-    case 1:
+    case R0_MOVE:
         if (ewk->wu.dead_f == 0 && Suicide[0] == 0) {
             if (mwk->sa_stop_flag != 1) {
                 ewk->wu.dir_timer--;
             }
-            if (ewk->wu.dead_f != 0 || ewk->wu.dir_timer <= 0 || mwk->wu.routine_no[1] == 1 ||
-                mwk->wu.routine_no[1] == 2 || mwk->wu.routine_no[1] == 3 ||
+            if (ewk->wu.dead_f != 0 || ewk->wu.dir_timer <= 0 || mwk->wu.routine_no[1] == PLAYER_DAMAGE ||
+                mwk->wu.routine_no[1] == PLAYER_CATCH || mwk->wu.routine_no[1] == PLAYER_CAUGHT ||
                 (mwk->wu.now_koc == 5 && ((mwk->wu.kind_of_waza & 0x20) || mwk->wu.char_index == 0x40))) {
                 goto show;
             }
@@ -53,7 +58,7 @@ void effect_L0_move(WORK_Other* ewk) {
         ewk->wu.routine_no[0]++;
         break;
     default:
-    case 2:
+    case R0_KILL:
         push_effect_work(&ewk->wu);
         break;
     }

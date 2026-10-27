@@ -17,13 +17,22 @@
 #include "aboutspr.h"
 #include "EFF04.h"
 
+/* routine_no[0] */
+#define R0_WAIT         0       /* wait, then create the pieces */
+#define R0_OPEN         1       /* until the pieces are in place */
+#define R0_COLOUR       2       /* step the extra colour */
+#define R0_HOLD         3       /* hold for a while */
+#define R0_CLOSE        4       /* until the pieces have closed */
+#define R0_END          5       /* one more frame */
+#define R0_KILL         6       /* (default) put the work back */
+
 
 
 void effect_04_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_WAIT:
         if (Break_Into) {
-            ewk->wu.routine_no[0] = 5;
+            ewk->wu.routine_no[0] = R0_END;
             break;
         }
         ewk->wu.old_rno[5]--;
@@ -32,9 +41,9 @@ void effect_04_move(WORK_Other* ewk) {
         }
         ewk->wu.routine_no[0]++;
         effect_17_init(&ewk->wu);
-    case 1:
+    case R0_OPEN:
         if (Break_Into) {
-            ewk->wu.routine_no[0] = 5;
+            ewk->wu.routine_no[0] = R0_END;
             break;
         }
         if (ewk->wu.old_rno[2]) {
@@ -45,9 +54,9 @@ void effect_04_move(WORK_Other* ewk) {
             ewk->wu.old_rno[2] = 0;
         }
         break;
-    case 2:
+    case R0_COLOUR:
         if (Break_Into) {
-            ewk->wu.routine_no[0] = 5;
+            ewk->wu.routine_no[0] = R0_END;
             break;
         }
         ewk->wu.old_rno[1]--;
@@ -64,9 +73,9 @@ void effect_04_move(WORK_Other* ewk) {
         ewk->wu.routine_no[0]++;
         ewk->wu.old_rno[1] = 8;
         break;
-    case 3:
+    case R0_HOLD:
         if (Break_Into) {
-            ewk->wu.routine_no[0] = 5;
+            ewk->wu.routine_no[0] = R0_END;
             break;
         }
         ewk->wu.old_rno[1]--;
@@ -75,16 +84,16 @@ void effect_04_move(WORK_Other* ewk) {
             ewk->wu.old_rno[2] = 0;
         }
         break;
-    case 4:
+    case R0_CLOSE:
         if (Break_Into) {
-            ewk->wu.routine_no[0] = 5;
+            ewk->wu.routine_no[0] = R0_END;
             break;
         }
         if (ewk->wu.old_rno[2]) {
             ewk->wu.routine_no[0]++;
         }
         break;
-    case 5:
+    case R0_END:
         ewk->wu.routine_no[0]++;
         break;
     default:

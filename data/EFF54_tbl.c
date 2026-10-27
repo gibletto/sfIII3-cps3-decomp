@@ -1,5 +1,8 @@
 /*
- * EFF54_TBL.C  game tables
+ * EFF54_TBL.C  blinking object part placement
+ *
+ * eff29_data_tbl gives the position, priority and animation of each of the two parts of the
+ * blinking stage object. Read by EFF54.C, the parts of the blinking stage object.
  */
 
 #include "types.h"

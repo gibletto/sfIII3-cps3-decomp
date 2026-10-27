@@ -1,5 +1,5 @@
 /*
- * EFFI0.C  Effect H9 (balls-left counter) and effect I0: small stone debris (move)
+ * EFFI0.C  Effect H9 (balls-left counter) and effect I0: small stone debris
  *
  * Effect H9 is the bonus stage's remaining-ball counter: effect_H9_init (BBBSCOM.c) builds three
  * connected sprites from bbbs_ball by facing, and effect_H9_move counts the two-digit number up
@@ -7,7 +7,10 @@
  * Each I0 work is one piece of stone kicked up from the floor. effect_I0_move picks one of eight
  * stone patterns (char_of_koishi) at random, flies the piece up under gravity, and when it falls
  * back to its landing height plays the landing part of its pattern and frees itself when the
- * pattern ends. The spawning routines, effect_I0_init and effI0_piece_set, are in EFFI3.C.
+ * pattern ends.
+ * effect_I0_init scatters num_of_koishi[] stone pieces around a work: a random layout from
+ * koishi_app_area picks each piece's offset (koishi_area_hosei) and speeds (koishi_speed_x /
+ * _y), and effI0_piece_set creates the I0 work with gravity and a landing height.
  */
 
 #include "structs.h"
@@ -33,13 +36,32 @@
 #include "EFF03.h"
 #include "EFFH9.h"
 
+/* effect H9 routine_no[0] */
+#define R0_COUNT        0       /* count up to the balls left */
+#define R0_SHOW         1       /* show the balls left */
+#define R0_END          2       /* hidden for a frame */
+#define R0_KILL         3       /* (default) put the work back */
+
+/* effect H9 routine_no[1] */
+#define R1_INIT         0       /* set up and show zero */
+#define R1_STEP         1       /* step the count every three frames */
+
+/* effect I0 routine_no[0] */
+#define R0_INIT         0       /* pick a stone pattern and show */
+#define R0_MOVE         1       /* fly and land */
+
+/* effect I0 routine_no[1] */
+#define R1_RISE         0       /* fly up until it stops rising */
+#define R1_FALL         1       /* fall to the landing height */
+#define R1_LAND         2       /* (default) play the landing pattern */
+
 
 
 void effect_H9_move(WORK_Other_CONN* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_COUNT:
         switch (ewk->wu.routine_no[1]) {
-        case 0:
+        case R1_INIT:
             ewk->wu.routine_no[1]++;
             ewk->wu.disp_flag = 1;
             ewk->wu.old_cgnum = 0;
@@ -48,7 +70,7 @@ void effect_H9_move(WORK_Other_CONN* ewk) {
             ewk->wu.dir_timer = 0;
             nokori_ball_effH9(ewk, ewk->wu.direction);
             break;
-        case 1:
+        case R1_STEP:
             if (--ewk->wu.dir_timer > 0) {
                 break;
             }
@@ -58,24 +80,24 @@ void effect_H9_move(WORK_Other_CONN* ewk) {
             if (ewk->wu.direction < Bonus_Game_Work) {
                 break;
             }
-            ewk->wu.routine_no[0] = 1;
-            ewk->wu.routine_no[1] = 0;
+            ewk->wu.routine_no[0] = R0_SHOW;
+            ewk->wu.routine_no[1] = R1_INIT;
             break;
         }
         effH9_trans(&ewk->wu);
         break;
-    case 1:
+    case R0_SHOW:
         if (ewk->wu.dead_f == 1) {
             ewk->wu.disp_flag = 0;
             ewk->wu.type = 0;
-            ewk->wu.routine_no[0] = 2;
+            ewk->wu.routine_no[0] = R0_END;
             break;
         }
         nokori_ball_effH9(ewk, Bonus_Game_Work);
         effH9_trans(&ewk->wu);
         break;
-    case 2:
-        ewk->wu.routine_no[0] = 3;
+    case R0_END:
+        ewk->wu.routine_no[0] = R0_KILL;
         break;
     default:
         all_cgps_put_back(&ewk->wu);
@@ -137,13 +159,13 @@ s32 effect_H9_init(PLW* wk) {
 
 void effect_I0_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.my_col_mode = 0x4200;
         ewk->wu.my_col_code = 0x2020;
         set_char_move_init(&ewk->wu, 0, char_of_koishi[random_16_com() & 7]);
-    case 1:
+    case R0_MOVE:
         if (ewk->wu.dead_f == 1) {
             ewk->wu.disp_flag = 0;
             ewk->wu.routine_no[0]++;
@@ -151,7 +173,7 @@ void effect_I0_move(WORK_Other* ewk) {
         }
         if (EXE_flag == 0 && Game_pause == 0) {
             switch (ewk->wu.routine_no[1]) {
-            case 0:
+            case R1_RISE:
                 add_mvxy_speed(&ewk->wu);
                 cal_mvxy_speed(&ewk->wu);
                 if (ewk->wu.mvxy.a[1].sp <= 0) {
@@ -159,7 +181,7 @@ void effect_I0_move(WORK_Other* ewk) {
                 }
                 char_move(&ewk->wu);
                 break;
-            case 1:
+            case R1_FALL:
                 add_mvxy_speed(&ewk->wu);
                 cal_mvxy_speed(&ewk->wu);
                 if (ewk->wu.xyz[1].disp.pos <= ewk->wu.next_y) {
@@ -180,8 +202,8 @@ void effect_I0_move(WORK_Other* ewk) {
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos;
         sort_push_request(&ewk->wu);
         break;
-    case 2:
-        ewk->wu.routine_no[0] = 3;
+    case R0_END:
+        ewk->wu.routine_no[0] = R0_KILL;
         break;
     default:
         all_cgps_put_back(&ewk->wu);

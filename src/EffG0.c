@@ -17,18 +17,33 @@
 #include "aboutspr.h"
 #include "EffG0.h"
 
+/* routine_no[0] */
+#define R0_WAIT         0       /* wait hidden, then show */
+#define R0_MOVE         1       /* slide in, flash when ordered */
+#define R0_END          2       /* hidden for a frame */
+#define R0_KILL         3       /* (default) put the work back */
+
+/* routine_no[1], in R0_MOVE */
+#define R1_SLIDE        0       /* slide in to its place */
+#define R1_FLASH        1       /* flash when ordered */
+
+/* routine_no[2] */
+#define R2_INIT         0       /* set four flashes */
+#define R2_PLAIN        1       /* plain digits, then light them */
+#define R2_LIT          2       /* lit digits, then put them back */
+
 
 
 void effect_G0_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_WAIT:
         switch (ewk->wu.routine_no[1]) {
         case 0:
             if (--ewk->wu.dir_timer) {
                 break;
             }
-            ewk->wu.routine_no[0] = 1;
-            ewk->wu.routine_no[1] = 0;
+            ewk->wu.routine_no[0] = R0_MOVE;
+            ewk->wu.routine_no[1] = R1_SLIDE;
             ewk->wu.disp_flag = 1;
             ewk->wu.old_cgnum = 0;
         default:
@@ -36,10 +51,10 @@ void effect_G0_move(WORK_Other* ewk) {
             break;
         }
         break;
-    case 1:
+    case R0_MOVE:
         Check_Die_G0((WORK_Other_CONN*)ewk);
         switch (ewk->wu.routine_no[1]) {
-        case 0:
+        case R1_SLIDE:
             ewk->wu.xyz[0].cal += ewk->wu.mvxy.a[0].sp;
             ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;
             if (ewk->wu.hit_quake >= ewk->wu.xyz[0].disp.pos) {
@@ -48,7 +63,7 @@ void effect_G0_move(WORK_Other* ewk) {
                 Order_Dir[ewk->wu.dir_old] = 0;
             }
             break;
-        case 1:
+        case R1_FLASH:
             switch (Order[ewk->wu.dir_old]) {
             case 0:
                 break;
@@ -60,8 +75,8 @@ void effect_G0_move(WORK_Other* ewk) {
         }
         effG0_trans(&ewk->wu);
         break;
-    case 2:
-        ewk->wu.routine_no[0] = 3;
+    case R0_END:
+        ewk->wu.routine_no[0] = R0_KILL;
         break;
     default:
         all_cgps_put_back(&ewk->wu);
@@ -76,7 +91,7 @@ void Check_Die_G0(WORK_Other_CONN* ewk) {
     if (Suicide[2]) {
         ewk->wu.disp_flag = 0;
         ewk->wu.type = 0;
-        ewk->wu.routine_no[0] = 2;
+        ewk->wu.routine_no[0] = R0_END;
     }
 }
 
@@ -97,20 +112,20 @@ void effG0_trans(WORK* ewk) {
 void Flash_G0(WORK_Other_CONN* ewk) {
     s16 ix;
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_INIT:
         ewk->wu.routine_no[2]++;
         ewk->wu.vital_new = 4;
         ewk->wu.dir_timer = 1;
-    case 1:
+    case R2_PLAIN:
         if (--ewk->wu.dir_timer == 0) {
-            ewk->wu.routine_no[2] = 2;
+            ewk->wu.routine_no[2] = R2_LIT;
             ewk->wu.dir_timer = 3;
             for (ix = 0; ix < ewk->num_of_conn; ix++) {
                 ewk->conn[ix].chr += 10;
             }
         }
         break;
-    case 2:
+    case R2_LIT:
         if (--ewk->wu.dir_timer != 0) {
             break;
         }
@@ -119,11 +134,11 @@ void Flash_G0(WORK_Other_CONN* ewk) {
         }
         if (--ewk->wu.vital_new == 0) {
             Order[ewk->wu.dir_old] = 0;
-            ewk->wu.routine_no[1] = 0;
-            ewk->wu.routine_no[2] = 0;
+            ewk->wu.routine_no[1] = R1_SLIDE;
+            ewk->wu.routine_no[2] = R2_INIT;
             break;
         }
-        ewk->wu.routine_no[2] = 1;
+        ewk->wu.routine_no[2] = R2_PLAIN;
         ewk->wu.dir_timer = 3;
         break;
     }

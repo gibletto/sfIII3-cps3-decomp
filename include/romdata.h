@@ -223,10 +223,17 @@ extern const u16 Voice_SE_Data[];
 extern const u16 Bonus_Voice_Data[];
 extern const u16 Bonus_SE_Voice_Data[];
 extern const s32 rate_256_table[256][2];
+/* rate_256_table[direction] columns */
+#define RATE_X          0       /* x step per 256 of speed */
+#define RATE_Y          1       /* y step per 256 of speed */
 extern const u8 dir_sel_table[128][128];
 extern const s8 Capcom_Rights_msg[];
 extern const s8 Capcom_Rights_msg2[];
 extern const s8 Capcom_USA_Rights_msg[];
+/* EFF89_Init_Data / EFF91_Init_Data columns; a row per type */
+#define STEP_INIT_START 0       /* first entry in the step data */
+#define STEP_INIT_LOOP  1       /* non-zero: start the steps again */
+#define STEP_INIT_STEPS 2       /* steps in one pass */
 extern const s16 EFF89_Init_Data[][3];
 extern const s16 EFF91_Init_Data[][3];
 extern const s16 EFF91_Step_Data[];
@@ -273,6 +280,10 @@ extern const s16 EFFA3_Area_Data[][2][4];
 extern const s16 Damage_Power_Data[];
 extern const s8 Pow_Control_Data_1[][8];
 extern const s8 Face_Cursor_Data[3][7];
+/* columns of the select and result screen position tables */
+#define SEL_POS_X       0       /* x */
+#define SEL_POS_Y       1       /* y */
+#define SEL_POS_Z       2       /* priority, where there is a third column */
 extern const s16 Face_Pos_Data[24][2];
 extern const s16 Name_Pos_Data[2][2][24][2];
 extern const s16 Name_Cover_Pos_Data[2][2][24][2];
@@ -1107,6 +1118,9 @@ extern const TM_STRING rewrite_not_ready_str[1];
 extern const u8 jp_menu_font_cg[];
 extern const u8 coin_counter_bit_tbl[4];
 extern const u8 coin_rate_tbl[][2];
+/* coin_rate_tbl[Coin_Mode] columns */
+#define COIN_RATE_COINS 0       /* coins for ... */
+#define COIN_RATE_CREDITS 1     /* ... this many credits */
 extern const s8 cursor_blank_str[];
 extern const s8 cursor_mark_str[];
 extern const TM_STRING config_top_guide_scr[2];
@@ -1171,6 +1185,9 @@ extern const s16 eff78_data_tbl[][2];
 extern const u16 exdm_ix_data[][24][5];
 extern const EXPLEM explem[];
 extern const EXPLEM explem2[][24];
+/* gqdt columns; a row per quake number (hmdt quake) */
+#define GQ_DELAY        0       /* frames before the screen quake starts */
+#define GQ_INDEX        1       /* quake_y_index set then */
 extern const s16 gqdt[][2];
 extern const u8 guard_kind[12];
 extern const s16 hcct[];

@@ -1,5 +1,8 @@
 /*
- * EFF98_TBL.C  game tables
+ * EFF98_TBL.C  super-art plate states
+ *
+ * EFF98_Jmp_Tbl is the jump table of the plate's order states: wait, slide in, slide out,
+ * appear and kill. Read by EFF98.C, the super-art plate on the player select screens.
  */
 
 #include "types.h"

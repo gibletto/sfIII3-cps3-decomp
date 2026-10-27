@@ -57,6 +57,7 @@
 #include "end_sub.h"
 #include "end_sub_3.h"
 #include "cps3.h"
+#include "fighter.h"
 
 #pragma inline(card_pl_work_clear)
 
@@ -75,11 +76,11 @@ void debug_play07_init(void) {
     tilemap_fill_all(0, 0x20);
     G_No2++;
     System_all_clear_Wait();
-    Play_Type = 1;
+    Play_Type = PLAY_VS_PLAYER;
     Operator_Status[0] = 1;
     Operator_Status[1] = 1;
-    My_char[0] = 2;
-    My_char[1] = 2;
+    My_char[0] = PL_RYU;
+    My_char[1] = PL_RYU;
     vital_cont_init();
     combo_cont_init();
     count_cont_init(0);
@@ -95,7 +96,7 @@ void debug_play07_init(void) {
     init_slow_flag();
     effect_work_quick_init();
     clear_hit_queue();
-    appear_type = 0;
+    appear_type = APPEAR_STAND;
     pcon_rno[0] = pcon_rno[1] = pcon_rno[2] = pcon_rno[3] = 0;
     ca_check_flag = 1;
     bg_work_clear();

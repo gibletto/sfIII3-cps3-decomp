@@ -1,5 +1,9 @@
 /*
- * END_10_TBL.C  game tables
+ * END_10_TBL.C  Yang's ending tables (ending 10)
+ *
+ * end_1000_bg0_cell_tbl lists the BG0 cells (map offset, cell number) written at the start
+ * of the ending, timer_10_tbl the length in frames of each of its six scenes and end_10_pos
+ * the BG x and y of each scene. Read by END_10.C.
  */
 
 #include "types.h"

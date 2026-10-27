@@ -1,8 +1,6 @@
 /*
- * EFFB8.C  Effect B7 init and effect B8: the winner's message banner
+ * EFFB8.C  Effect B8: the winner's message banner
  *
- * effect_B7_init creates the two rank-in number works (B7) for a player's name entry, left and
- * right of centre, showing np->rank_in (called from n_input.c).
  * Effect B8 is the win message shown after a match. effect_B8_init (called from Win.c) takes
  * the winner and a delay and chooses the message: sometimes a line for the defeated character,
  * otherwise one of eight general lines picked by b8_sel_1_by_8 without repeating the last two.
@@ -21,6 +19,13 @@
 #include "effect_2.h"
 #include "PLS02.h"
 #include "EFFB8.h"
+
+/* routine_no[0] */
+#define R0_INIT         0       /* wait, then load the line */
+#define R0_SLIDE        1       /* slide in from the right */
+#define R0_HOLD         2       /* hold until told to go */
+#define R0_END          3       /* one more frame */
+#define R0_KILL         4       /* (default) free the graphics and the work */
 
 extern const EFFB8_MESSAGE effB8_mes_en_0[];
 extern const EFFB8_MESSAGE effB8_mes_en_1[];
@@ -180,7 +185,7 @@ void effect_B8_move(WORK_Other_CONN* ewk) {
     s16 num;
     s16 i;
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         mes_timer--;
         if (mes_timer > 0) {
             return;
@@ -280,16 +285,16 @@ void effect_B8_move(WORK_Other_CONN* ewk) {
         ewk->wu.mvxy.a[0].sp = -0x100000;
         ewk->wu.mvxy.d[0].sp = 0;
         break;
-    case 1:
+    case R0_SLIDE:
         if (Suicide[2] == 1) {
             ewk->wu.disp_flag = 0;
-            ewk->wu.routine_no[0] = 3;
+            ewk->wu.routine_no[0] = R0_END;
             break;
         }
         ewk->wu.xyz[0].cal += ewk->wu.mvxy.a[0].sp;
         ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;
         if (ewk->wu.hit_quake >= ewk->wu.xyz[0].disp.pos) {
-            ewk->wu.routine_no[0] = 2;
+            ewk->wu.routine_no[0] = R0_HOLD;
             ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake;
         }
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;
@@ -297,7 +302,7 @@ void effect_B8_move(WORK_Other_CONN* ewk) {
         ewk->wu.cg_number &= 0x7FFF;
         sort_push_request3(&ewk->wu);
         break;
-    case 2:
+    case R0_HOLD:
         if (Suicide[2] == 1) {
             ewk->wu.disp_flag = 0;
             ewk->wu.routine_no[0]++;
@@ -342,7 +347,7 @@ void effect_B8_move(WORK_Other_CONN* ewk) {
         ewk->wu.cg_number &= 0x7FFF;
         sort_push_request3(&ewk->wu);
         break;
-    case 3:
+    case R0_END:
         ewk->wu.routine_no[0]++;
         break;
     default:
@@ -409,7 +414,7 @@ s32 effect_B8_init(s8 WIN_PL_NO, s16 timer)
         return -1;
     }
     ewk = (WORK_Other_CONN *)frw[work_index];
-    ewk->wu.routine_no[0] = 0;
+    ewk->wu.routine_no[0] = R0_INIT;
     wk_set(ewk);
     mes_timer = timer;
     ewk->my_master = (u32 *)wk;
@@ -511,7 +516,7 @@ s32 effB8_mes_change_init(s16 pl, s16 mes_no) {
         return -1;
     }
     ewk = (WORK_Other_CONN*)frw[ix];
-    ewk->wu.routine_no[0] = 0;
+    ewk->wu.routine_no[0] = R0_INIT;
     wk_set(ewk);
     ewk->master_player = pl;
     mes_already = mes_no;

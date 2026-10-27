@@ -1,5 +1,10 @@
 /*
- * SYS_CONFIG_TBL_B.C  game tables
+ * SYS_CONFIG_TBL_B.C  test mode configuration menu screens
+ *
+ * The config_ and sysconfig_ tables place the texts of the configuration menu: the top menu
+ * and its guides, the system configuration page with its exit, card dispenser and win point
+ * lines, the modify and return guides and the saving message; the str_ strings are their
+ * text. Read by SYS_CONFIG_2.C.
  */
 
 #include "types.h"

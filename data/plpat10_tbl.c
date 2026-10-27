@@ -1,5 +1,8 @@
 /*
- * PLPAT10_TBL.C  game tables
+ * PLPAT10_TBL.C  Yang's special attack table
+ *
+ * pl10_exatt_table lists the routines of attack numbers 16 and up of character 10 (Yang).
+ * Read by pl10_extra_attack in PLPAT10.C.
  */
 
 #include "types.h"

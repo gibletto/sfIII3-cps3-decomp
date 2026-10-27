@@ -1,5 +1,8 @@
 /*
- * WIN_PL_TBL.C  game tables
+ * WIN_PL_TBL.C  round winner type table
+ *
+ * win_type_tbl selects, by character, which winner routine (Win_00000 .. Win_15000) plays at
+ * the end of a won round. Read by WIN_PL.C.
  */
 
 #include "types.h"

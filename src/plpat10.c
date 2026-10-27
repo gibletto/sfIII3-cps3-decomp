@@ -24,10 +24,20 @@
 #include "plpat10.h"
 #include "PLS02.h"
 
+/* routine_no[3], Att_PL10_TOKUSHUKOUDOU */
+#define TOKUSHUKOUDOU_ACTION 1  /* the personal action, filling the super art gauge */
+
+/* routine_no[3], Att_PL10_MACH_SLIDE */
+#define MACH_SLIDE_SET_MOVE 1   /* set up its movement */
+
+/* routine_no[3], Att_PL10_MACH_SLIDE2 */
+#define MACH_SLIDE2_MOVE 1      /* move and run the animation to cue 30 */
+#define MACH_SLIDE2_MOVE2 3     /* move and run the animation to cue 21 */
+
 
 
 void pl10_extra_attack(PLW* wk) {
-    pl10_exatt_table[wk->wu.routine_no[2] - 16](wk);
+    pl10_exatt_table[wk->wu.routine_no[2] - ATTACK_SPECIAL](wk);
 }
 
 
@@ -35,13 +45,13 @@ void pl10_extra_attack(PLW* wk) {
 void Att_PL10_TOKUSHUKOUDOU(PLW* wk) {
     wk->scr_pos_set_flag = 0;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.rl_flag = wk->wu.rl_waza;
         hoken_muriyari_chakuchi(wk);
         set_char_move_init(&wk->wu, 5, wk->as->char_ix);
         break;
-    case 1:
+    case TOKUSHUKOUDOU_ACTION:
         char_move(&wk->wu);
         switch (wk->wu.cg_type) {
         case 40:
@@ -71,7 +81,7 @@ void Att_PL10_TOKUSHUKOUDOU(PLW* wk) {
 /* provisional name */
 void Att_PL10_MACH_SLIDE(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         hoken_muriyari_chakuchi(wk);
         wk->wu.rl_flag = wk->wu.rl_waza;
@@ -80,7 +90,7 @@ void Att_PL10_MACH_SLIDE(PLW* wk) {
         wk->wu.mvxy.index = wk->as->r_no;
         set_char_move_init(&wk->wu, 5, wk->as->char_ix);
         break;
-    case 1:
+    case MACH_SLIDE_SET_MOVE:
         char_move(&wk->wu);
         switch (wk->wu.cg_type) {
         case 30:
@@ -126,8 +136,8 @@ void Att_PL10_MACH_SLIDE(PLW* wk) {
 
 void Att_PL10_MACH_SLIDE2(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
-        wk->wu.routine_no[3]++;
+    case RN3_START:
+        wk->wu.routine_no[3] += 1;
         hoken_muriyari_chakuchi(wk);
         wk->wu.rl_flag = wk->wu.rl_waza;
         wk->rl_save = wk->wu.rl_flag;
@@ -135,20 +145,20 @@ void Att_PL10_MACH_SLIDE2(PLW* wk) {
         wk->wu.mvxy.index = wk->as->r_no;
         set_char_move_init((WORK*)wk, 5, wk->as->char_ix);
         break;
-    case 1:
+    case MACH_SLIDE2_MOVE:
         char_move((WORK*)wk);
         if (wk->wu.cg_type == 30) {
             setup_mvxy_data((WORK*)wk, wk->wu.mvxy.index);
             wk->wu.mvxy.a[1].sp = wk->wu.mvxy.d[1].sp = wk->wu.mvxy.kop[1] = 0;
             wk->wu.mvxy.index++;
-            wk->wu.routine_no[3] = 3;
+            wk->wu.routine_no[3] = MACH_SLIDE2_MOVE2;
             wk->wu.cg_type = 0;
         }
-        if (wk->wu.routine_no[3] != 1) {
+        if (wk->wu.routine_no[3] != MACH_SLIDE2_MOVE) {
             add_mvxy_speed((WORK*)wk);
         }
         break;
-    case 3:
+    case MACH_SLIDE2_MOVE2:
         char_move((WORK*)wk);
         cal_mvxy_speed((WORK*)wk);
         if (wk->rl_save) {
@@ -165,13 +175,12 @@ void Att_PL10_MACH_SLIDE2(PLW* wk) {
             goto slide_continue;
         }
         switch (0) {
-        default:;
         }
 slide_continue:;
         if (wk->wu.cg_type == 21) {
             reset_mvxy_data((WORK*)wk);
             wk->wu.cg_type = 0;
-            wk->wu.routine_no[3] = 1;
+            wk->wu.routine_no[3] = MACH_SLIDE2_MOVE;
         }
         if (wk->wu.cg_type == 30) {
             setup_mvxy_data((WORK*)wk, wk->wu.mvxy.index);

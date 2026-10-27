@@ -1,5 +1,9 @@
 /*
- * EFFF2.C  game tables
+ * EFFF2.C  ending falling objects of effect F2
+ *
+ * efff2_data_tbl1 gives the ten objects { family, home x, home y, priority }, efff2_sp_tbl1
+ * their falling speeds { x, y }, and efff2_timer_tbl the random waits before each falls. Read
+ * by EFFF2_CODE.C.
  */
 
 #include "types.h"

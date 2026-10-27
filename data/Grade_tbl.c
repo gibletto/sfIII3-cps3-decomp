@@ -1,5 +1,11 @@
 /*
- * GRADE_TBL.C  game tables
+ * GRADE_TBL.C  grade judgement point tables
+ *
+ * The grade_t_* tables turn each judged item into points, mostly as { value, points } steps:
+ * hit rate, defence rate, stuns, max combo, remaining vitality, normal, rapid and guard
+ * blocking, leap attacks, throws, quick stands, reversals, super art stock, win streaks and
+ * the final-stage items. grade_t_table gives the points needed for each grade and its final
+ * bonus score; ji_grd_init_data the guard miss counters by CPU level. Read by GRADE.C.
  */
 
 #include "types.h"

@@ -1,5 +1,9 @@
 /*
- * PLPAT19_TBL.C  game tables
+ * PLPAT19_TBL.C  Twelve's special attack tables
+ *
+ * pl19_exatt_table lists the routines of attack numbers 16 and up of character 19 (Twelve);
+ * dra_em_tall gives, by opponent character, the x offset and height of the target point of
+ * the EX D.R.A. dive. Read by PLPAT19.C.
  */
 
 #include "types.h"
@@ -22,10 +26,27 @@ extern void Att_SLIDE_and_JUMP();
 extern void Att_pl19_TOKUSHUKOUDOU();
 
 const s16 dra_em_tall[24][2] = {
-    { 24, 16 }, { 28, 16 }, { 16, 16 }, { 16, 16 }, { 20, 16 }, { 20, 16 }, { 18, 16 }, { 18, 16 },
-    { 28, 16 }, { 25, 16 }, { 16, 16 }, { 16, 16 }, { 16, 16 }, { 24, 16 }, { 16, 16 }, { 16, 16 },
-    { 16, 16 }, { 16, 16 }, { 24, 16 }, { 20, 16 },
-    { 20, 16 },
+    { 24, 16 },  /* Gill */
+    { 28, 16 },  /* Alex */
+    { 16, 16 },  /* Ryu */
+    { 16, 16 },  /* Yun */
+    { 20, 16 },  /* Dudley */
+    { 20, 16 },  /* Necro */
+    { 18, 16 },  /* Hugo */
+    { 18, 16 },  /* Ibuki */
+    { 28, 16 },  /* Elena */
+    { 25, 16 },  /* Oro */
+    { 16, 16 },  /* Yang */
+    { 16, 16 },  /* Ken */
+    { 16, 16 },  /* Sean */
+    { 24, 16 },  /* Urien */
+    { 16, 16 },  /* Gouki */
+    { 16, 16 },  /* Shin Gouki */
+    { 16, 16 },  /* Chun-Li */
+    { 16, 16 },  /* Makoto */
+    { 24, 16 },  /* Q */
+    { 20, 16 },  /* Twelve */
+    { 20, 16 },  /* Remy */
 };
 
 void (*const pl19_exatt_table[18])() = {

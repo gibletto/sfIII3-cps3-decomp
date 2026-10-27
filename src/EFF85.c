@@ -23,6 +23,17 @@
 #include "aboutspr.h"
 #include "EFF85.h"
 
+/* routine_no[1]: step of the flight sequence */
+#define R1_NEST         0       /* perch at the nest */
+#define R1_FLEE         8       /* fly off when the screen quakes */
+
+/* routine_no[2]: within a step */
+#define R2_INIT         0       /* start the step */
+#define R2_RUN          1       /* run the step */
+
+/* routine_no[2], eff85_9000 */
+#define R2_GONE         2       /* wait for bg 1 to pass 720 */
+
 
 
 void effect_85_move(WORK_Other* ewk) {
@@ -34,8 +45,8 @@ void effect_85_move(WORK_Other* ewk) {
 
 void eff85_0000(WORK_Other* ewk) {
     ewk->wu.routine_no[0]++;
-    ewk->wu.routine_no[1] = 0;
-    ewk->wu.routine_no[2] = 0;
+    ewk->wu.routine_no[1] = R1_NEST;
+    ewk->wu.routine_no[2] = R2_INIT;
     ewk->wu.rl_flag = 0;
     ewk->wu.old_rno[0] = 0;
 }
@@ -54,7 +65,7 @@ void eff85_0100(WORK_Other* ewk) {
 
 void eff85_1000(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_INIT:
         ewk->wu.routine_no[2]++;
         ewk->wu.disp_flag = 1;
         if (ewk->wu.old_rno[0]) {
@@ -67,12 +78,12 @@ void eff85_1000(WORK_Other* ewk) {
         ewk->wu.xyz[0].cal = 0x1EB0000;
         ewk->wu.xyz[1].cal = 0x2C0000;
         break;
-    case 1:
+    case R2_RUN:
         if (swallow_sprize_check(ewk)) {
             char_move(&ewk->wu);
             if (ewk->wu.cg_type == 0xFF) {
                 ewk->wu.routine_no[1]++;
-                ewk->wu.routine_no[2] = 0;
+                ewk->wu.routine_no[2] = R2_INIT;
             }
         }
         break;
@@ -83,15 +94,15 @@ void eff85_1000(WORK_Other* ewk) {
 
 void eff85_common(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_INIT:
         ewk->wu.routine_no[2]++;
         set_char_move_init(&ewk->wu, 0, eff85_char_index_tbl[ewk->wu.routine_no[1]]);
         break;
-    case 1:
+    case R2_RUN:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
             ewk->wu.routine_no[1]++;
-            ewk->wu.routine_no[2] = 0;
+            ewk->wu.routine_no[2] = R2_INIT;
         }
         break;
     }
@@ -101,7 +112,7 @@ void eff85_common(WORK_Other* ewk) {
 
 void eff85_3000(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_INIT:
         ewk->wu.routine_no[2]++;
         set_char_move_init(&ewk->wu, 0, 31);
         ewk->wu.dir_timer = 34;
@@ -109,12 +120,12 @@ void eff85_3000(WORK_Other* ewk) {
         ewk->wu.mvxy.d[1].sp = -0x2000;
         cal_initial_speed(&ewk->wu, ewk->wu.dir_timer, 400, 81);
         break;
-    case 1:
+    case R2_RUN:
         char_move(&ewk->wu);
         ewk->wu.dir_timer--;
         if (ewk->wu.dir_timer <= 0) {
             ewk->wu.routine_no[1]++;
-            ewk->wu.routine_no[2] = 0;
+            ewk->wu.routine_no[2] = R2_INIT;
             ewk->wu.xyz[0].cal = 0x1900000;
             ewk->wu.xyz[1].cal = 0x510000;
             break;
@@ -129,16 +140,16 @@ void eff85_3000(WORK_Other* ewk) {
 
 void eff85_5000(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_INIT:
         ewk->wu.routine_no[2]++;
         set_char_move_init(&ewk->wu, 0, eff85_char_index_tbl[ewk->wu.routine_no[1]]);
         break;
-    case 1:
+    case R2_RUN:
         if (swallow_sprize_check(ewk)) {
             char_move(&ewk->wu);
             if (ewk->wu.cg_type == 0xFF) {
                 ewk->wu.routine_no[1]++;
-                ewk->wu.routine_no[2] = 0;
+                ewk->wu.routine_no[2] = R2_INIT;
             }
         }
         break;
@@ -149,18 +160,18 @@ void eff85_5000(WORK_Other* ewk) {
 
 void eff85_7000(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_INIT:
         ewk->wu.routine_no[2]++;
         set_char_move_init(&ewk->wu, 0, 34);
         ewk->wu.dir_timer = 110;
         cal_all_speed_data(&ewk->wu, ewk->wu.dir_timer, 491, 44, 2, 0);
         break;
-    case 1:
+    case R2_RUN:
         char_move(&ewk->wu);
         ewk->wu.dir_timer--;
         if (ewk->wu.dir_timer < 0) {
             ewk->wu.routine_no[1]++;
-            ewk->wu.routine_no[2] = 0;
+            ewk->wu.routine_no[2] = R2_INIT;
             ewk->wu.xyz[0].cal = 0x1EB0000;
             ewk->wu.xyz[1].cal = 0x2C0000;
             break;
@@ -175,15 +186,15 @@ void eff85_7000(WORK_Other* ewk) {
 
 void eff85_8000(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_INIT:
         ewk->wu.routine_no[2]++;
         set_char_move_init(&ewk->wu, 0, 35);
         break;
-    case 1:
+    case R2_RUN:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
-            ewk->wu.routine_no[1] = 0;
-            ewk->wu.routine_no[2] = 0;
+            ewk->wu.routine_no[1] = R1_NEST;
+            ewk->wu.routine_no[2] = R2_INIT;
         }
         break;
     }
@@ -193,7 +204,7 @@ void eff85_8000(WORK_Other* ewk) {
 
 void eff85_9000(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_INIT:
         ewk->wu.routine_no[2]++;
         if (ewk->wu.cg_flip == 0) {
             ewk->wu.mvxy.a[0].sp = -0x50000;
@@ -209,7 +220,7 @@ void eff85_9000(WORK_Other* ewk) {
             set_char_move_init(&ewk->wu, 0, 46);
         }
         break;
-    case 1:
+    case R2_RUN:
         char_move(&ewk->wu);
         add_x_sub(ewk);
         add_y_sub(ewk);
@@ -220,10 +231,10 @@ void eff85_9000(WORK_Other* ewk) {
         ewk->wu.routine_no[2]++;
         ewk->wu.disp_flag = 0;
         break;
-    case 2:
+    case R2_GONE:
         if (bg_w.bgw[1].wxy[0].disp.pos > 720) {
-            ewk->wu.routine_no[1] = 0;
-            ewk->wu.routine_no[2] = 0;
+            ewk->wu.routine_no[1] = R1_NEST;
+            ewk->wu.routine_no[2] = R2_INIT;
         }
         break;
     }
@@ -233,8 +244,8 @@ void eff85_9000(WORK_Other* ewk) {
 
 s32 swallow_sprize_check(WORK_Other* ewk) {
     if (bg_w.quake_y_index > 3) {
-        ewk->wu.routine_no[1] = 8;
-        ewk->wu.routine_no[2] = 0;
+        ewk->wu.routine_no[1] = R1_FLEE;
+        ewk->wu.routine_no[2] = R2_INIT;
         return 0;
     }
     return 1;

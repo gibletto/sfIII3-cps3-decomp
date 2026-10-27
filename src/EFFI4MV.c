@@ -25,6 +25,25 @@
 #include "aboutspr.h"
 #include "EFFI4MV.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* start the pattern */
+#define R0_MOVE         1       /* react to hits and draw */
+#define R0_STAY         2       /* knocked down: stay in place */
+
+/* routine_no[1] */
+#define R1_WAIT         0       /* wait for a hit */
+#define R1_REACT        1       /* play the reaction */
+#define R1_DONE         99      /* reaction over */
+
+/* routine_no[2] */
+#define R2_DOWN_TO_UP   0       /* down-to-up reaction */
+#define R2_UP_TO_DOWN   1       /* up-to-down reaction */
+
+/* routine_no[3] */
+#define R3_RISE         0       /* rise; a second hit knocks it down */
+#define R3_KNOCK        1       /* wait for the cue of the knock-down */
+#define R3_DOWN         2       /* play the knock-down to its end */
+
 
 void effi4_down_to_up(WORK_Other* ewk);
 
@@ -37,20 +56,20 @@ void effect_I4_move(WORK_Other* ewk) {
         return;
     }
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         if (eff_hit_flag[1]) {
-            ewk->wu.routine_no[0] = 2;
+            ewk->wu.routine_no[0] = R0_STAY;
             break;
         }
         break;
-    case 1:
+    case R0_MOVE:
         if (!EXE_flag && !Game_pause && !EXE_obroll) {
             effect_i4_hit_sub(ewk);
         }
-    case 2:
+    case R0_STAY:
         disp_pos_trans_entry_r(ewk);
         break;
     default:
@@ -64,22 +83,22 @@ void effect_I4_move(WORK_Other* ewk) {
 
 void effect_i4_hit_sub(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_WAIT:
         if (eff_hit_check2(ewk, 0, 2)) {
             set_char_move_init(&ewk->wu, 0, 25);
             ewk->wu.routine_no[1]++;
-            ewk->wu.routine_no[2] = 1;
-            ewk->wu.routine_no[3] = 0;
+            ewk->wu.routine_no[2] = R2_UP_TO_DOWN;
+            ewk->wu.routine_no[3] = R3_RISE;
             break;
         }
         if (eff_hit_check2(ewk, 0, 0)) {
             set_char_move_init(&ewk->wu, 0, 24);
             ewk->wu.routine_no[1]++;
-            ewk->wu.routine_no[2] = 0;
-            ewk->wu.routine_no[3] = 0;
+            ewk->wu.routine_no[2] = R2_DOWN_TO_UP;
+            ewk->wu.routine_no[3] = R3_RISE;
         }
         break;
-    case 1:
+    case R1_REACT:
         if (ewk->wu.routine_no[2]) {
             effi4_up_to_down(ewk);
             break;
@@ -94,7 +113,7 @@ void effect_i4_hit_sub(WORK_Other* ewk) {
 /* provisional name */
 void effi4_down_to_up(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[3]) {
-    case 0:
+    case R3_RISE:
         char_move(&ewk->wu);
         if (!ewk->wu.cg_type) {
             break;
@@ -106,22 +125,22 @@ void effi4_down_to_up(WORK_Other* ewk) {
         }
         if (ewk->wu.cg_type == 0xFF) {
             eff_hit_flag[1] = 0;
-            ewk->wu.routine_no[1] = 0;
+            ewk->wu.routine_no[1] = R1_WAIT;
             ewk->wu.type = 1;
         }
         break;
-    case 1:
+    case R3_KNOCK:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type) {
             ewk->wu.routine_no[3]++;
             set_char_move_init(&ewk->wu, 0, 26);
         }
         break;
-    case 2:
+    case R3_DOWN:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
-            ewk->wu.routine_no[1] = 99;
-            ewk->wu.routine_no[0] = 2;
+            ewk->wu.routine_no[1] = R1_DONE;
+            ewk->wu.routine_no[0] = R0_STAY;
         }
         break;
     }
@@ -133,8 +152,8 @@ void effi4_down_to_up(WORK_Other* ewk) {
 void effi4_up_to_down(WORK_Other* ewk) {
     char_move(&ewk->wu);
     if (ewk->wu.cg_type == 0xFF) {
-        ewk->wu.routine_no[1] = 99;
-        ewk->wu.routine_no[0] = 2;
+        ewk->wu.routine_no[1] = R1_DONE;
+        ewk->wu.routine_no[0] = R0_STAY;
     }
 }
 
@@ -162,7 +181,7 @@ s32 effect_I4_init(void) {
     ewk->wu.xyz[1].disp.pos = 192;
     ewk->wu.my_priority = ewk->wu.position_z = 72;
     ewk->wu.char_index = 5;
-    ewk->wu.routine_no[1] = 0;
+    ewk->wu.routine_no[1] = R1_WAIT;
     effect_J6_init(ewk);
     return 0;
 }

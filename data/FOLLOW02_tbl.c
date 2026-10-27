@@ -1,5 +1,12 @@
 /*
- * FOLLOW02_TBL.C  game tables
+ * FOLLOW02_TBL.C  CPU pattern tables for character 20 and the follow-up menus
+ *
+ * Pattern20_Tbl is the 68 active pattern routines of character 20, read by ACTIVE20.C;
+ * Pattern20_Tbl_data_0 lists patterns 0068 .. 0078, stored after it.
+ * Follow_Menu_1st_Unit_Data_0 / _2 give the follow-up menu choice by CPU step and a random
+ * draw, and Follow_Menu_2nd_Unit_Data_0 / _2 the pattern by menu choice and area; read by
+ * COM_SUB.C through its per-character lists. Follow01_Tbl and Follow02_Tbl are the four
+ * follow-up routines of FOLLOW01.C and FOLLOW02.C.
  */
 
 #include "types.h"

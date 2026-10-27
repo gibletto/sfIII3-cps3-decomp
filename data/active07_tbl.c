@@ -1,5 +1,8 @@
 /*
- * ACTIVE07_TBL.C  game tables
+ * ACTIVE07_TBL.C  CPU active pattern table for player 07 (Ibuki)
+ *
+ * Pattern07_Tbl lists the Pattern07_nnnn scripts the computer-controlled Ibuki runs in active
+ * (attacking) mode, indexed by Pattern_Index. Read by ACTIVE07.C (Computer07).
  */
 
 #include "types.h"

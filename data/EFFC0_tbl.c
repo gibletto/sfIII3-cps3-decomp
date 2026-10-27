@@ -1,5 +1,9 @@
 /*
- * EFFC0_TBL.C  game tables
+ * EFFC0_TBL.C  damage state 25 effect tables
+ *
+ * plhos_data gives, for each character, the offset from the player and the pattern of the
+ * effect, and hok_table_ef the extra animation steps per frame by how hard the player mashes.
+ * Read by EFFC0.C, the animation attached to a player in damage state 25.
  */
 
 #include "types.h"

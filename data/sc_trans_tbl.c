@@ -1,5 +1,10 @@
 /*
- * SC_TRANS_TBL.C  game tables
+ * SC_TRANS_TBL.C  text layer cell and transfer lists
+ *
+ * sc_celllist_tbl points at the 17 cell lists in END_SUB_TBL_C.C. The sc_vram_NN_pos, _code
+ * and _attr lists are the screen parts that sc_ram_vram_tbl (SC_DATA.C) copies to the text
+ * layer, and sc_cells_* are the character slot lists used by sc_chr_list_tbl and
+ * sc_chr_slot_tbl. Read by SC_TRANS.C.
  */
 
 #include "types.h"

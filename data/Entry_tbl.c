@@ -1,5 +1,11 @@
 /*
- * ENTRY_TBL.C  game tables
+ * ENTRY_TBL.C  debug monitor and disassembler strings and opcode tables
+ *
+ * monitor_msg_tbl holds the text records of the exception monitor (exception names, title and
+ * register lines); dbg_dump_title and dbg_disasm_title are the memory dump and disassembly
+ * headers. The sh_op_*_tbl lists give { opcode, mnemonic } pairs for each SH-2 operand form,
+ * ending with 0xFFFF; sh_mn_* are the mnemonic strings, sh_str_* the monitor messages, and
+ * str_R0 .. str_SP the register names reached through reg_name_tbl. Read by ENTRY_DBG.C.
  */
 
 #include "types.h"

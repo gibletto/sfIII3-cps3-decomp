@@ -326,7 +326,7 @@ s32 add_super_arts_gauge(wk, ix, asag, mf)
                 wk->gauge.s.h -= wk->gauge_len;
             } else {
                 wk->store = wk->store_max;
-                if (wk->gauge_type == 1) {
+                if (wk->gauge_type == SA_GAUGE_TIMER) {
                     wk->gauge.s.h = wk->gauge_len;
                 } else {
                     wk->gauge.i = 0;
@@ -364,9 +364,9 @@ void setup_saishin_lvdir(PLW* ds) {
             ds->saishin_lvdir = convert_saishin_lvdir[0][ds->sa_stop_lvdir & 0xC];
         }
     } else if (ds->wu.rl_flag) {
-        ds->saishin_lvdir = convert_saishin_lvdir[1][ds->cp->sw_lvbt & 0xC];
+        ds->saishin_lvdir = convert_saishin_lvdir[1][ds->cp->sw_lvbt & LEVER_LR];
     } else {
-        ds->saishin_lvdir = convert_saishin_lvdir[0][ds->cp->sw_lvbt & 0xC];
+        ds->saishin_lvdir = convert_saishin_lvdir[0][ds->cp->sw_lvbt & LEVER_LR];
     }
 }
 
@@ -375,11 +375,11 @@ void setup_saishin_lvdir(PLW* ds) {
 void setup_lvdir_after_autodir(PLW* wk) {
     const u8* p = convert_saishin_lvdir[0];
     if (wk->wu.rl_flag) {
-        p += wk->cp->sw_lvbt & 0xC;
+        p += wk->cp->sw_lvbt & LEVER_LR;
         p += 16;
         wk->cp->lever_dir = *p;
     } else {
-        p += wk->cp->sw_lvbt & 0xC;
+        p += wk->cp->sw_lvbt & LEVER_LR;
         wk->cp->lever_dir = *p;
     }
 }
@@ -409,7 +409,7 @@ void dead_voice_request2(PLW* wk) {
     }
     secd1 = dead_voice_table[wk->player_number][0];
     secd2 = dead_voice_table[wk->player_number][1];
-    if ((wk->wu.routine_no[1] == 1) && atsagct[wk->wu.routine_no[2]] & 0x10) {
+    if ((wk->wu.routine_no[1] == PLAYER_DAMAGE) && atsagct[wk->wu.routine_no[2]] & 0x10) {
         sound_effect_request[secd2](wk, secd2 + ks);
     } else {
         sound_effect_request[secd1](wk, secd1 + ks);

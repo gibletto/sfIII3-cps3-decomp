@@ -1,5 +1,10 @@
 /*
- * PLMAIN_TBL.C  game tables
+ * PLMAIN_TBL.C  player move routine tables
+ *
+ * plmain_lv_00 is the five routine_no[0] steps (player_mv_0000 .. 4000) of the player move;
+ * plmain_lv_02 the routine_no[1] states (normal, damage, catch, caught, attack), also used by
+ * the bonus stage; sag_jmp_tbl the super art gauge process by gauge type (stock, timed,
+ * rebirth). Read by PLMAIN.C and PLMAIN2.C.
  */
 
 #include "types.h"

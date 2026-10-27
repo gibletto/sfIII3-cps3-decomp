@@ -20,6 +20,12 @@
 #include "effect_2.h"
 #include "EFFC0.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* start the pattern */
+#define R0_MOVE         1       /* stay on the player while held */
+#define R0_END          2       /* one more frame */
+#define R0_KILL         3       /* (default) put the work back */
+
 
 
 void effect_C0_move(WORK_Other* ewk) {
@@ -29,13 +35,13 @@ void effect_C0_move(WORK_Other* ewk) {
     s16 hok;
 
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.my_col_mode = 0x4200;
         ewk->wu.my_col_code = 0x2020;
         set_char_move_init(&ewk->wu, 0, *(s16*)(t + (u8)((s8)mwk->player_number * 6) + 4));
-    case 1:
+    case R0_MOVE:
         if (ewk->wu.dead_f == 1 || Suicide[0] != 0) {
             ewk->wu.disp_flag = 0;
             ewk->wu.routine_no[0]++;
@@ -43,7 +49,7 @@ void effect_C0_move(WORK_Other* ewk) {
         }
         {
             s16* r = mwk->wu.routine_no;
-            if (r[1] != 1 || r[2] != 25) {
+            if (r[1] != PLAYER_DAMAGE || r[2] != 25) {
                 ewk->wu.disp_flag = 0;
                 ewk->wu.routine_no[0]++;
                 break;
@@ -72,8 +78,8 @@ void effect_C0_move(WORK_Other* ewk) {
         ewk->wu.position_z = mwk->wu.position_z - 4;
         sort_push_request(&ewk->wu);
         break;
-    case 2:
-        ewk->wu.routine_no[0] = 3;
+    case R0_END:
+        ewk->wu.routine_no[0] = R0_KILL;
         break;
     default:
         all_cgps_put_back(&ewk->wu);

@@ -34,23 +34,59 @@
 #include "PLS01.h"
 #include "plpat19.h"
 
+/* routine_no[3], Att_METAMORPHOSE */
+#define METAMORPHOSE_CUE 1      /* run the animation to cue 20 */
+#define METAMORPHOSE_RUN 9      /* run the animation */
+
+/* routine_no[3], Att_SA__D_R_A */
+#define SA_D_R_A_CUE    1       /* run the animation to cue 20 */
+#define SA_D_R_A_AIR    2       /* in the air until it lands */
+#define SA_D_R_A_AIR2   3       /* in the air until it lands */
+#define SA_D_R_A_AIR3   4       /* in the air until it lands */
+#define SA_D_R_A_LAND   5       /* the landing */
+
+/* routine_no[3], Att_EX__D_R_A */
+#define EX_D_R_A_MOVE   1       /* move and run the animation to cue 20 */
+#define EX_D_R_A_AIR    2       /* in the air until it lands */
+#define EX_D_R_A_END    3       /* run the animation to its end */
+
+/* routine_no[3], Att_KUUCHUUHISSATU */
+#define KUUCHUUHISSATU_AIR 1    /* in the air until it lands */
+#define KUUCHUUHISSATU_END 2    /* run the animation to its end */
+
+/* routine_no[3], Att_AIRDASH */
+#define AIRDASH_MOVE    1       /* move and run the animation */
+#define AIRDASH_AIR     3       /* in the air until it lands */
+#define AIRDASH_LAND    4       /* the landing */
+#define AIRDASH_END     5       /* run the animation to its end */
+#define AIRDASH_STOP    6       /* stop moving */
+
+/* routine_no[3], Att_pl19_TOKUSHUKOUDOU */
+#define TOKUSHUKOUDOU_ACTION 1  /* the personal action, filling the super art gauge */
+#define TOKUSHUKOUDOU_RUN 2     /* run the animation */
+
+/* routine_no[3], Att_AIR_A_X_E */
+#define AIR_A_X_E_CUE   1       /* run the animation to cue 1 */
+#define AIR_A_X_E_MOVE  2       /* move and run the animation */
+#define AIR_A_X_E_RUN   3       /* run the animation */
+
 
 void pl19_extra_attack(PLW* wk) {
-    pl19_exatt_table[wk->wu.routine_no[2] - 16](wk);
+    pl19_exatt_table[wk->wu.routine_no[2] - ATTACK_SPECIAL](wk);
 }
 
 
 
 void Att_METAMORPHOSE(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.rl_flag = wk->wu.rl_waza;
         hoken_muriyari_chakuchi(wk);
         reset_mvxy_data(&wk->wu);
         wk->metamorphose = 0;
         wk->metamor_over = 0;
-        if (Bonus_Game_Flag == 0x15) {
+        if (Bonus_Game_Flag == BONUS_CAR) {
             goto alt;
         }
         if (effect_K7_init(wk) != -1) {
@@ -59,16 +95,16 @@ void Att_METAMORPHOSE(PLW* wk) {
         }
     alt:
         set_char_move_init(&wk->wu, 5, wk->as->char_ix + 2);
-        wk->wu.routine_no[3] = 9;
+        wk->wu.routine_no[3] = METAMORPHOSE_RUN;
         break;
-    case 1:
+    case METAMORPHOSE_CUE:
         char_move(&wk->wu);
         if ((u8)wk->wu.cg_type == 20) {
-            wk->wu.routine_no[2] = 32;
-            wk->wu.routine_no[3] = 1;
+            wk->wu.routine_no[2] = ATTACK_METAMOR_WAIT;
+            wk->wu.routine_no[3] = METAMORPHOSE_CUE;
         }
         break;
-    case 9:
+    case METAMORPHOSE_RUN:
         char_move(&wk->wu);
         break;
     }
@@ -79,12 +115,12 @@ void Att_METAMORPHOSE(PLW* wk) {
 void Att_SA__D_R_A(PLW* wk) {
     PLW* emwk;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         set_char_move_init(&wk->wu, 5, wk->as->char_ix);
         wk->wu.mvxy.index = wk->as->r_no;
         break;
-    case 1:
+    case SA_D_R_A_CUE:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 20) {
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
@@ -92,14 +128,14 @@ void Att_SA__D_R_A(PLW* wk) {
             wk->wu.routine_no[3]++;
         }
         break;
-    case 2:
+    case SA_D_R_A_AIR:
         jumping_union_process(&wk->wu, 3);
-        if ((wk->wu.routine_no[3] != 3) && (wk->wu.cg_type == 20)) {
+        if ((wk->wu.routine_no[3] != SA_D_R_A_AIR2) && (wk->wu.cg_type == 20)) {
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
             wk->wu.cg_type = 0;
         }
-        if (wk->wu.routine_no[3] == 3) {
+        if (wk->wu.routine_no[3] == SA_D_R_A_AIR2) {
             if (wk->wu.mvxy.kop[0] == 2) {
                 wk->wu.mvxy.kop[0] = 1;
             }
@@ -107,7 +143,7 @@ void Att_SA__D_R_A(PLW* wk) {
             wk->wu.mvxy.a[1].sp = 0;
         }
         break;
-    case 3:
+    case SA_D_R_A_AIR2:
         char_move(&wk->wu);
         add_mvxy_speed(&wk->wu);
         cal_mvxy_speed(&wk->wu);
@@ -118,7 +154,7 @@ void Att_SA__D_R_A(PLW* wk) {
         }
         if (wk->wu.cg_type == 21) {
             reset_mvxy_data(&wk->wu);
-            wk->wu.routine_no[3] = 5;
+            wk->wu.routine_no[3] = SA_D_R_A_LAND;
             wk->wu.cg_type = 0;
         }
         if (wk->wu.cg_type == 30) {
@@ -134,19 +170,19 @@ void Att_SA__D_R_A(PLW* wk) {
             }
         }
         if ((wk->wu.cg_type == 64) || (wk->wu.cg_type == 0xFF)) {
-            wk->wu.routine_no[3] = 5;
+            wk->wu.routine_no[3] = SA_D_R_A_LAND;
             wk->wu.mvxy.d[0].sp = 0;
             wk->wu.mvxy.a[0].sp = 0;
         }
         break;
-    case 4:
+    case SA_D_R_A_AIR3:
         jumping_union_process(&wk->wu, 5);
-        if ((wk->wu.routine_no[3] != 5) && (wk->wu.cg_type == 20)) {
+        if ((wk->wu.routine_no[3] != SA_D_R_A_LAND) && (wk->wu.cg_type == 20)) {
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
             wk->wu.cg_type = 0;
         }
-        if (wk->wu.routine_no[3] == 5) {
+        if (wk->wu.routine_no[3] == SA_D_R_A_LAND) {
             if (wk->wu.mvxy.kop[0] == 2) {
                 wk->wu.mvxy.kop[0] = 1;
             }
@@ -154,7 +190,7 @@ void Att_SA__D_R_A(PLW* wk) {
             wk->wu.mvxy.a[1].sp = 0;
         }
         break;
-    case 5:
+    case SA_D_R_A_LAND:
         char_move(&wk->wu);
         break;
     default:
@@ -169,7 +205,7 @@ void Att_EX__D_R_A(PLW* wk) {
     s16 ex;
     s16 ey;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.rl_flag = wk->wu.rl_waza;
         set_char_move_init(&wk->wu, 5, wk->as->char_ix);
@@ -188,7 +224,7 @@ void Att_EX__D_R_A(PLW* wk) {
             wk->wu.mvxy.d[0].sp = -wk->wu.mvxy.d[0].sp;
         }
         break;
-    case 1:
+    case EX_D_R_A_MOVE:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 20) {
             wk->wu.routine_no[3]++;
@@ -197,14 +233,14 @@ void Att_EX__D_R_A(PLW* wk) {
             wk->wu.mvxy.kop[1] = 2;
         }
         break;
-    case 2:
+    case EX_D_R_A_AIR:
         jumping_union_process(&wk->wu, 3);
-        if ((wk->wu.routine_no[3] != 3) && (wk->wu.cg_type == 20)) {
+        if ((wk->wu.routine_no[3] != EX_D_R_A_END) && (wk->wu.cg_type == 20)) {
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
             wk->wu.cg_type = 0;
         }
-        if (wk->wu.routine_no[3] == 3) {
+        if (wk->wu.routine_no[3] == EX_D_R_A_END) {
             if (wk->wu.mvxy.kop[0] == 2) {
                 wk->wu.mvxy.kop[0] = 1;
             }
@@ -212,7 +248,7 @@ void Att_EX__D_R_A(PLW* wk) {
             wk->wu.mvxy.a[1].sp = 0;
         }
         break;
-    case 3:
+    case EX_D_R_A_END:
         char_move(&wk->wu);
         add_mvxy_speed(&wk->wu);
         cal_mvxy_speed(&wk->wu);
@@ -237,18 +273,18 @@ void Att_EX__D_R_A(PLW* wk) {
 
 void Att_KUUCHUUHISSATU(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         set_char_move_init(&wk->wu, 5, wk->as->char_ix);
         setup_mvxy_data(&wk->wu, wk->as->r_no);
-    case 1:
+    case KUUCHUUHISSATU_AIR:
         jumping_union_process(&wk->wu, 2);
-        if ((wk->wu.routine_no[3] != 2) && (wk->wu.cg_type == 20)) {
+        if ((wk->wu.routine_no[3] != KUUCHUUHISSATU_END) && (wk->wu.cg_type == 20)) {
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
             wk->wu.cg_type = 0;
         }
-        if (wk->wu.routine_no[3] == 2) {
+        if (wk->wu.routine_no[3] == KUUCHUUHISSATU_END) {
             if (wk->wu.mvxy.kop[0] == 2) {
                 wk->wu.mvxy.kop[0] = 1;
             }
@@ -256,7 +292,7 @@ void Att_KUUCHUUHISSATU(PLW* wk) {
             wk->wu.mvxy.a[1].sp = 0;
         }
         break;
-    case 2:
+    case KUUCHUUHISSATU_END:
         char_move(&wk->wu);
         add_mvxy_speed(&wk->wu);
         cal_mvxy_speed(&wk->wu);
@@ -286,20 +322,20 @@ void Att_KUUCHUUHISSATU(PLW* wk) {
 
 void Att_AIRDASH(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.rl_flag = wk->wu.rl_waza;
         set_char_move_init(&wk->wu, 5, wk->as->char_ix);
         reset_mvxy_data(&wk->wu);
         wk->wu.mvxy.index = wk->as->r_no;
         break;
-    case 1:
+    case AIRDASH_MOVE:
         char_move(&wk->wu);
         if (kabe_check3(wk) != 0) {
             wk->wu.rl_flag = (wk->wu.rl_flag + 1) & 1;
             wk->wu.xyz[0].disp.pos = wk->wu.rl_flag ? bg_w.bgw[1].l_limit2 - 192 : bg_w.bgw[1].r_limit2 + 192;
             set_char_move_init(&wk->wu, 5, 65);
-            wk->wu.routine_no[3] = 5;
+            wk->wu.routine_no[3] = AIRDASH_END;
             wk->wu.cg_type = 0;
             effect_I3_init(&wk->wu, 4);
             break;
@@ -319,11 +355,11 @@ void Att_AIRDASH(PLW* wk) {
             break;
         case 30:
             setup_mvxy_data(&wk->wu, wk->as->data_ix);
-            wk->wu.routine_no[3] = 3;
+            wk->wu.routine_no[3] = AIRDASH_AIR;
             wk->wu.cg_type = 0;
         }
         return;
-    case 3:
+    case AIRDASH_AIR:
         jumping_union_process(&wk->wu, 4);
         if (!kabe_check3(wk)) {
             break;
@@ -331,22 +367,22 @@ void Att_AIRDASH(PLW* wk) {
         wk->wu.rl_flag = wk->wu.rl_flag + 1 & 1;
         wk->wu.xyz[0].disp.pos = wk->wu.rl_flag ? bg_w.bgw[1].l_limit2 - 192 : bg_w.bgw[1].r_limit2 + 192;
         set_char_move_init(&wk->wu, 5, 65);
-        wk->wu.routine_no[3] = 5;
+        wk->wu.routine_no[3] = AIRDASH_END;
         wk->wu.cg_type = 0;
         effect_I3_init(&wk->wu, 4);
         break;
-    case 4:
+    case AIRDASH_LAND:
         char_move(&wk->wu);
         return;
-    case 5:
+    case AIRDASH_END:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
             wk->wu.cg_type = 0;
             wk->wu.routine_no[3]++;
         }
         break;
-    case 6:
-        wk->wu.routine_no[3] = 1;
+    case AIRDASH_STOP:
+        wk->wu.routine_no[3] = AIRDASH_MOVE;
         char_move_cmj4(&wk->wu);
         reset_mvxy_data(&wk->wu);
         wk->wu.mvxy.index = wk->as->r_no;
@@ -359,7 +395,7 @@ void Att_AIRDASH(PLW* wk) {
 /* provisional name */
 s32 kabe_check2(PLW* wk) {
     s16 tar_pos;
-    if (get_lever_dir(wk) != 1) {
+    if (get_lever_dir(wk) != LVDIR_FORWARD) {
         return 0;
     }
     if (wk->wu.xyz[1].disp.pos <= 32) {
@@ -385,7 +421,7 @@ s32 kabe_check2(PLW* wk) {
 
 
 s32 kabe_check3(PLW* wk) {
-    if (get_lever_dir(wk) != 1) {
+    if (get_lever_dir(wk) != LVDIR_FORWARD) {
         return 0;
     }
     if (wk->wu.xyz[1].disp.pos <= 32) {
@@ -398,21 +434,21 @@ s32 kabe_check3(PLW* wk) {
 
 void Att_pl19_TOKUSHUKOUDOU(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.rl_flag = wk->wu.rl_waza;
         hoken_muriyari_chakuchi(wk);
         if (wk->sa->ok == -1) {
-            wk->wu.routine_no[3] = 2;
+            wk->wu.routine_no[3] = TOKUSHUKOUDOU_RUN;
             set_char_move_init((WORK*)wk, 5, 62);
         } else if (wk->wu.disp_flag != 1 || wk->wu.my_col_mode != 0x4200) {
-            wk->wu.routine_no[3] = 2;
+            wk->wu.routine_no[3] = TOKUSHUKOUDOU_RUN;
             set_char_move_init((WORK*)wk, 5, 64);
         } else {
             set_char_move_init((WORK*)wk, 5, 63);
         }
         break;
-    case 1:
+    case TOKUSHUKOUDOU_ACTION:
         char_move((WORK*)wk);
         switch ((u8)wk->wu.cg_type) {
         case 40:
@@ -425,7 +461,7 @@ void Att_pl19_TOKUSHUKOUDOU(PLW* wk) {
             return;
         }
         return;
-    case 2:
+    case TOKUSHUKOUDOU_RUN:
         char_move((WORK*)wk);
         break;
     }
@@ -435,12 +471,12 @@ void Att_pl19_TOKUSHUKOUDOU(PLW* wk) {
 
 void Att_AIR_A_X_E(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         set_char_move_init(&wk->wu, 5, wk->as->char_ix);
         wk->wu.mvxy.index = wk->as->r_no;
         break;
-    case 1:
+    case AIR_A_X_E_CUE:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 1) {
             wk->wu.routine_no[3]++;
@@ -451,9 +487,9 @@ void Att_AIR_A_X_E(PLW* wk) {
             wk->wu.mvxy.index++;
         }
         break;
-    case 2:
+    case AIR_A_X_E_MOVE:
         jumping_union_process(&wk->wu, 3);
-        if (wk->wu.routine_no[3] == 3) {
+        if (wk->wu.routine_no[3] == AIR_A_X_E_RUN) {
             break;
         }
         if (wk->wu.cg_type == 20) {
@@ -466,7 +502,7 @@ void Att_AIR_A_X_E(PLW* wk) {
             wk->wu.cg_type = 0;
         }
         break;
-    case 3:
+    case AIR_A_X_E_RUN:
         char_move(&wk->wu);
         break;
     }

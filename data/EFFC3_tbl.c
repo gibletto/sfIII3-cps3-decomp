@@ -1,5 +1,9 @@
 /*
- * EFFC3_TBL.C  game tables
+ * EFFC3_TBL.C  bonus-stage car part cells
+ *
+ * car_parts gives, for each of the seven parts, each break level and each frame, the cell and
+ * hit data number of the part; effC3_nsc gives the frames part 3 follows after the collapse.
+ * Read by EFFC3.C, the breakable parts of the bonus-stage car.
  */
 
 #include "types.h"

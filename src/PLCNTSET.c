@@ -158,6 +158,9 @@ void effm8_move_win(WORK_Other* ewk) {
 }
 
 
+#pragma inline(effm8_flag_disp)
+static void effm8_flag_disp(s8 be_flag, s8 disp_flag) {}
+
 s32 effect_M8_init(WORK* oya, u8 data) {
     s16 work;
     s16 ix;
@@ -209,7 +212,6 @@ s32 effect_M8_init(WORK* oya, u8 data) {
         ewk->wu.kage_hy = 0;
         ewk->wu.kage_prio = 71;
         ewk->wu.kage_char = 8;
-        ewk->wu.be_flag;
         ewk->wu.old_rno[0] = 0;
         timer = effm8_timer_tbl;
         for (i = 0; i < 4; i++) {
@@ -250,8 +252,7 @@ s32 effect_M8_init(WORK* oya, u8 data) {
             ewk2->wu.kage_hy = 0;
             ewk2->wu.kage_prio = 71;
             ewk2->wu.kage_char = 8;
-            ewk2->wu.be_flag;
-            ewk2->wu.disp_flag;
+            effm8_flag_disp(ewk2->wu.be_flag, ewk2->wu.disp_flag);
             ewk2->wu.old_rno[0] = *timer;
             timer = timer + 1;
         }
@@ -282,7 +283,7 @@ s32 effect_M8_init(WORK* oya, u8 data) {
         }
         ewk3->wu.xyz[1].cal = oya->xyz[1].cal;
         ewk3->wu.position_z = oya->my_priority;
-        ewk3->wu.position_z++;
+        ewk3->wu.position_z = ewk3->wu.position_z + 1;
         ewk3->wu.my_priority = ewk3->wu.position_z;
         ewk3->wu.rl_flag = oya->rl_flag ^ 1;
         *ewk3->wu.char_table = etc2_char_table;

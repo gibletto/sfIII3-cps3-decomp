@@ -30,6 +30,29 @@
 #include "EFF41.h"
 #include "EFF42.h"
 
+/* routine_no[0]: order being run, index of EFF39_Jmp_Tbl */
+#define R0_WAIT         0       /* wait for an order */
+#define R0_SLIDE_IN     1       /* slide in from the side */
+#define R0_SLIDE_OUT    2       /* slide out to the side */
+#define R0_SUDDENLY     3       /* appear at once */
+#define R0_MOVE         4       /* follow the cursor */
+#define R0_KILL         5       /* hide and put the work back */
+
+/* routine_no[1], EFF39_KILL */
+#define R1_START        0       /* first step of each order */
+#define R1_KILL         1       /* (default) put the work back */
+
+/* routine_no[1], EFF39_MOVE */
+#define R1_FOLLOW       1       /* follow the cursor until chosen */
+#define R1_STAND        2       /* stay put */
+
+/* routine_no[6], EFF39_SLIDE_IN */
+#define R6_START        0       /* first step of each order */
+
+/* routine_no[6], EFF39_SLIDE_OUT */
+#define R6_LEAVE        1       /* slide off the screen */
+#define R6_KILL         2       /* (default) put the work back */
+
 void set_char_move_init2();
 
 
@@ -45,8 +68,8 @@ void effect_39_move(WORK_Other* ewk) {
 
 void EFF39_WAIT(WORK_Other* ewk) {
     if ((ewk->wu.routine_no[0] = Order[ewk->wu.dir_old])) {
-        ewk->wu.routine_no[1] = 0;
-        ewk->wu.routine_no[6] = 0;
+        ewk->wu.routine_no[1] = R1_START;
+        ewk->wu.routine_no[6] = R6_START;
     }
 }
 
@@ -58,12 +81,12 @@ void EFF39_SUDDENLY(WORK_Other* ewk) {
     }
     ewk->wu.disp_flag = 1;
     Order[ewk->wu.dir_old] = 0;
-    ewk->wu.routine_no[0] = 0;
-    ewk->wu.routine_no[6] = 0;
+    ewk->wu.routine_no[0] = R0_WAIT;
+    ewk->wu.routine_no[6] = R6_START;
     ewk->wu.xyz[0].disp.pos =
-        bg_w.bgw[ewk->wu.my_family - 1].wxy[0].disp.pos + Name_Pos_Data[ewk->master_id][1][ewk->wu.dir_step][0];
+        bg_w.bgw[ewk->wu.my_family - 1].wxy[0].disp.pos + Name_Pos_Data[ewk->master_id][1][ewk->wu.dir_step][SEL_POS_X];
     ewk->wu.xyz[1].disp.pos =
-        bg_w.bgw[ewk->wu.my_family - 1].wxy[1].disp.pos + Name_Pos_Data[ewk->master_id][1][ewk->wu.dir_step][1];
+        bg_w.bgw[ewk->wu.my_family - 1].wxy[1].disp.pos + Name_Pos_Data[ewk->master_id][1][ewk->wu.dir_step][SEL_POS_Y];
     set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
 }
 
@@ -71,12 +94,12 @@ void EFF39_SUDDENLY(WORK_Other* ewk) {
 
 void EFF39_SLIDE_IN(WORK_Other* ewk) {
     if (Order[ewk->wu.dir_old] == 5) {
-        ewk->wu.routine_no[0] = 5;
-        ewk->wu.routine_no[1] = 0;
+        ewk->wu.routine_no[0] = R0_KILL;
+        ewk->wu.routine_no[1] = R1_START;
         return;
     }
     switch (ewk->wu.routine_no[6]) {
-    case 0:
+    case R6_START:
         if (--Order_Timer[ewk->wu.dir_old] == 0) {
             ewk->wu.routine_no[6]++;
             ewk->wu.disp_flag = 1;
@@ -104,9 +127,9 @@ void EFF39_SLIDE_IN(WORK_Other* ewk) {
         ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;
         if (0 < ewk->wu.mvxy.a[0].sp) {
             if (ewk->wu.hit_quake <= ewk->wu.xyz[0].disp.pos) {
-                ewk->wu.routine_no[0] = 4;
+                ewk->wu.routine_no[0] = R0_MOVE;
                 Order[ewk->wu.dir_old] = 4;
-                ewk->wu.routine_no[6] = 0;
+                ewk->wu.routine_no[6] = R6_START;
                 ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake;
                 if (--Select_Start[ewk->master_id] < 0) {
                     Select_Start[ewk->master_id] = 0;
@@ -115,9 +138,9 @@ void EFF39_SLIDE_IN(WORK_Other* ewk) {
             break;
         }
         if (ewk->wu.hit_quake >= ewk->wu.xyz[0].disp.pos) {
-            ewk->wu.routine_no[0] = 4;
+            ewk->wu.routine_no[0] = R0_MOVE;
             Order[ewk->wu.dir_old] = 4;
-            ewk->wu.routine_no[6] = 0;
+            ewk->wu.routine_no[6] = R6_START;
             ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake;
             if (--Select_Start[ewk->master_id] < 0) {
                 Select_Start[ewk->master_id] = 0;
@@ -131,7 +154,7 @@ void EFF39_SLIDE_IN(WORK_Other* ewk) {
 
 void EFF39_SLIDE_OUT(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[6]) {
-    case 0:
+    case R6_START:
         if (ewk->wu.disp_flag == 0) {
             ewk->wu.routine_no[1] = 99;
         } else {
@@ -148,7 +171,7 @@ void EFF39_SLIDE_OUT(WORK_Other* ewk) {
             ewk->wu.mvxy.d[0].sp = 0;
         }
         break;
-    case 1:
+    case R6_LEAVE:
         ewk->wu.xyz[0].cal += ewk->wu.mvxy.a[0].sp;
         ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;
         if (Ck_Range_Out_S(ewk, ewk->wu.my_family - 1, 48)) {
@@ -167,7 +190,7 @@ void EFF39_SLIDE_OUT(WORK_Other* ewk) {
 
 void EFF39_KILL(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_START:
         if (--Order_Timer[ewk->wu.dir_old] == 0) {
             ewk->wu.routine_no[1] += 1;
             ewk->wu.disp_flag = 0;
@@ -185,17 +208,17 @@ void EFF39_KILL(WORK_Other* ewk) {
 void EFF39_MOVE(WORK_Other* ewk) {
     if (Order[ewk->wu.dir_old] != 4) {
         ewk->wu.routine_no[0] = Order[ewk->wu.dir_old];
-        ewk->wu.routine_no[1] = 0;
-        ewk->wu.routine_no[6] = 0;
+        ewk->wu.routine_no[1] = R1_START;
+        ewk->wu.routine_no[6] = R6_START;
     } else {
         switch (ewk->wu.routine_no[1]) {
-        case 0:
+        case R1_START:
             if (Sel_PL_Complete[ewk->master_id] || plw[ewk->master_id].wu.operator == 0) {
-                ewk->wu.routine_no[1] = 2;
+                ewk->wu.routine_no[1] = R1_STAND;
             } else {
                 ewk->wu.routine_no[1]++;
             }
-        case 1:
+        case R1_FOLLOW:
             if (ewk->wu.dir_step != ID_of_Face[Cursor_Y[ewk->master_id]][Cursor_X[ewk->master_id]]) {
                 ewk->wu.dir_step = ID_of_Face[Cursor_Y[ewk->master_id]][Cursor_X[ewk->master_id]];
                 ewk->wu.dir_step += chkNameAkuma(ewk->wu.dir_step);
@@ -209,7 +232,7 @@ void EFF39_MOVE(WORK_Other* ewk) {
                 ewk->wu.routine_no[1]++;
             }
             break;
-        case 2:
+        case R1_STAND:
             break;
         }
     }

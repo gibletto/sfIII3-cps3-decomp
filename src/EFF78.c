@@ -19,16 +19,36 @@
 #include "aboutspr.h"
 #include "EFF78.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* show */
+#define R0_IDLE         1       /* idle until the screen quakes */
+#define R0_FUSS         2       /* fly off and come back */
+
+/* routine_no[1] */
+#define R1_INIT         0       /* pick the take-off by direction */
+#define R1_TAKEOFF      1       /* take off, then fly away */
+#define R1_AWAY         2       /* fly away for 28 frames */
+#define R1_HOVER        3       /* four more frames */
+#define R1_TURN         4       /* turn, then head for the perch */
+#define R1_BACK         5       /* fly back to the pattern's signal */
+#define R1_ARRIVE       6       /* reach the perch */
+#define R1_LAND         7       /* land, then idle again */
+
+/* crow_char_tbl columns */
+#define CROW_CHAR       0       /* take-off pattern, flight follows */
+#define CROW_DX         1       /* x distance of the flight */
+#define CROW_DY         2       /* y distance of the flight */
+
 
 
 void effect_78_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R0_IDLE:
         if (!EXE_flag && !Game_pause && !EXE_obroll) {
             if (crow_fuss_check(ewk)) {
                 char_move(&ewk->wu);
@@ -36,7 +56,7 @@ void effect_78_move(WORK_Other* ewk) {
         }
         disp_pos_trans_entry(ewk);
         break;
-    case 2:
+    case R0_FUSS:
         if (!EXE_flag && !Game_pause && !EXE_obroll) {
             crow_fuss_move(ewk);
         }
@@ -55,7 +75,7 @@ s32 crow_fuss_check(WORK_Other* ewk) {
     s16 work;
     if (bg_w.quake_y_index > 3) {
         ewk->wu.routine_no[0]++;
-        ewk->wu.routine_no[1] = 0;
+        ewk->wu.routine_no[1] = R1_INIT;
         ewk->wu.direction = 0;
         work = plw[0].wu.xyz[0].disp.pos + plw[1].wu.xyz[0].disp.pos;
         work >>= 1;
@@ -74,23 +94,23 @@ s32 crow_fuss_check(WORK_Other* ewk) {
 
 void crow_fuss_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
-        ewk->wu.old_rno[0] = crow_char_tbl[ewk->wu.direction][0];
+        ewk->wu.old_rno[0] = crow_char_tbl[ewk->wu.direction][CROW_CHAR];
         set_char_move_init(&ewk->wu, 0, ewk->wu.old_rno[0]);
         break;
-    case 1:
+    case R1_TAKEOFF:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
             ewk->wu.routine_no[1]++;
             set_char_move_init(&ewk->wu, 0, ewk->wu.old_rno[0] + 1);
             ewk->wu.dir_timer = 28;
-            ewk->wu.old_rno[1] = ewk->wu.xyz[0].disp.pos + crow_char_tbl[ewk->wu.direction][1];
-            ewk->wu.old_rno[2] = ewk->wu.xyz[1].disp.pos + crow_char_tbl[ewk->wu.direction][2];
+            ewk->wu.old_rno[1] = ewk->wu.xyz[0].disp.pos + crow_char_tbl[ewk->wu.direction][CROW_DX];
+            ewk->wu.old_rno[2] = ewk->wu.xyz[1].disp.pos + crow_char_tbl[ewk->wu.direction][CROW_DY];
             cal_all_speed_data(&ewk->wu, ewk->wu.dir_timer, ewk->wu.old_rno[1], ewk->wu.old_rno[2], 2, 2);
         }
         break;
-    case 2:
+    case R1_AWAY:
         char_move(&ewk->wu);
         ewk->wu.dir_timer--;
         if (ewk->wu.dir_timer <= 0) {
@@ -100,19 +120,16 @@ void crow_fuss_move(WORK_Other* ewk) {
         } else {
             add_x_sub(ewk);
             add_y_sub(ewk);
-            if (0) {
-                ewk->wu.dir_timer = 4;
-            }
         }
         break;
-    case 3:
+    case R1_HOVER:
         char_move(&ewk->wu);
         ewk->wu.dir_timer--;
         if (ewk->wu.dir_timer <= 0) {
             ewk->wu.routine_no[1]++;
         }
         break;
-    case 4:
+    case R1_TURN:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
             ewk->wu.routine_no[1]++;
@@ -123,7 +140,7 @@ void crow_fuss_move(WORK_Other* ewk) {
             cal_all_speed_data(&ewk->wu, ewk->wu.dir_timer, ewk->wu.old_rno[1], ewk->wu.old_rno[2] + 4, 0, 0);
         }
         break;
-    case 5:
+    case R1_BACK:
         ewk->wu.dir_timer--;
         add_x_sub(ewk);
         add_y_sub(ewk);
@@ -132,7 +149,7 @@ void crow_fuss_move(WORK_Other* ewk) {
             ewk->wu.routine_no[1]++;
         }
         break;
-    case 6:
+    case R1_ARRIVE:
         ewk->wu.dir_timer--;
         if (ewk->wu.dir_timer <= 0) {
             ewk->wu.routine_no[1]++;
@@ -147,10 +164,10 @@ void crow_fuss_move(WORK_Other* ewk) {
             }
         }
         break;
-    case 7:
+    case R1_LAND:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
-            ewk->wu.routine_no[0] = 1;
+            ewk->wu.routine_no[0] = R0_IDLE;
             set_char_move_init(&ewk->wu, 0, 4);
         }
         break;

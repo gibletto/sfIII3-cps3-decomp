@@ -1,5 +1,8 @@
 /*
- * EFF17_TBL.C  game tables
+ * EFF17_TBL.C  zoom-in piece placement
+ *
+ * eff17_data_tbl gives the position, priority and timing of each of the nine effect 17 pieces.
+ * Read by EFF18.C, which holds effects 17 and 18.
  */
 
 #include "types.h"

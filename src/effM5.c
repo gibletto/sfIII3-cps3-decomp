@@ -1,7 +1,7 @@
 /*
- * EFFM5.C  Entrance vehicle and helpers (effects M3, M4, M5)
+ * EFFM5.C  Entrance vehicle and helpers (effects M4, M5)
  *
- * effect_M5 is the vehicle a fighter arrives in during his entrance (Appear_06000): it
+ * effect_M5 is the vehicle a fighter arrives in during the entrance (Appear_06000): it
  * drives in from the screen edge with a computed speed and engine sound, stops
  * (Appear_car_stop), plays its stop animation while raising demo_car_flag, then drives off
  * and frees itself. effect_M5_init also starts its companion part effect_M6.
@@ -42,6 +42,19 @@
 #include "bg_sub_5.h"
 #include "effM5.h"
 
+/* effect M4 palette script: routine_no[0] */
+#define R0_INIT         0       /* first-frame set-up */
+#define R0_MOVE         1       /* step the palette script */
+#define R0_KILL         2       /* put the work back */
+
+/* effect M5 vehicle: routine_no[0] */
+#define R0_DRIVE_IN     1       /* drive in to the stop point */
+#define R0_STOP         2       /* stop animation */
+#define R0_WAIT         3       /* wait before driving off */
+#define R0_DRIVE_OFF    4       /* drive off */
+#define R0_HIDE         5       /* hide and clear the car flag */
+#define R0_END          6       /* hidden for a frame */
+
 
 
 extern const s16 effM4_dir_tbl_0[][2];
@@ -68,14 +81,14 @@ const s16 (*effM4_dir_tbl[8])[2] = {
 
 void effect_M4_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.dir_step = 0;
         ewk->wu.dir_timer = effM4_dir_tbl[ewk->wu.type][ewk->wu.dir_step][0];
         ewk->wu.direction = effM4_dir_tbl[ewk->wu.type][ewk->wu.dir_step][1];
-        ewk->wu.routine_no[0] = 1;
-    case 1:
+        ewk->wu.routine_no[0] = R0_MOVE;
+    case R0_MOVE:
         if (ewk->wu.dead_f == 1) {
-            ewk->wu.routine_no[0] = 2;
+            ewk->wu.routine_no[0] = R0_KILL;
             break;
         }
         if (--ewk->wu.dir_timer >= 0) {
@@ -86,10 +99,10 @@ void effect_M4_move(WORK_Other* ewk) {
         ewk->wu.dir_timer = effM4_dir_tbl[ewk->wu.type][ewk->wu.dir_step][0];
         ewk->wu.direction = effM4_dir_tbl[ewk->wu.type][ewk->wu.dir_step][1];
         if (ewk->wu.dir_timer == -1) {
-            ewk->wu.routine_no[0] = 2;
+            ewk->wu.routine_no[0] = R0_KILL;
         }
         break;
-    case 2:
+    case R0_KILL:
     default:
         push_effect_work(&ewk->wu);
         break;
@@ -116,7 +129,7 @@ u32 effect_M4_init(s16 type)
 
 void effect_M5_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         if (!EXE_flag && !Game_pause) {
             ewk->wu.routine_no[0]++;
             ewk->wu.disp_flag = 1;
@@ -124,7 +137,7 @@ void effect_M5_move(WORK_Other* ewk) {
             Sound_SE(ewk->master_id * 0x300 + 0x134);
         }
         break;
-    case 1:
+    case R0_DRIVE_IN:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             ewk->wu.old_rno[0]--;
@@ -142,7 +155,7 @@ void effect_M5_move(WORK_Other* ewk) {
         suzi_sync_pos_set(ewk);
         sort_push_request(&ewk->wu);
         break;
-    case 2:
+    case R0_STOP:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             if (ewk->wu.cg_type == 1) {
@@ -155,7 +168,7 @@ void effect_M5_move(WORK_Other* ewk) {
         suzi_sync_pos_set(ewk);
         sort_push_request(&ewk->wu);
         break;
-    case 3:
+    case R0_WAIT:
         if (!EXE_flag && !Game_pause) {
             ewk->wu.old_rno[0]--;
             if (ewk->wu.old_rno[0] < 0) {
@@ -173,7 +186,7 @@ void effect_M5_move(WORK_Other* ewk) {
         suzi_sync_pos_set(ewk);
         sort_push_request(&ewk->wu);
         break;
-    case 4:
+    case R0_DRIVE_OFF:
         if (!EXE_flag && !Game_pause) {
             ewk->wu.old_rno[0]--;
             if (ewk->wu.old_rno[0] < 0) {
@@ -185,12 +198,12 @@ void effect_M5_move(WORK_Other* ewk) {
         suzi_sync_pos_set(ewk);
         sort_push_request(&ewk->wu);
         break;
-    case 5:
+    case R0_HIDE:
         ewk->wu.routine_no[0]++;
         demo_car_flag[ewk->master_id] = 0;
         ewk->wu.disp_flag = 0;
         break;
-    case 6:
+    case R0_END:
         ewk->wu.routine_no[0]++;
         break;
     default:

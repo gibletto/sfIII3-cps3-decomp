@@ -1,5 +1,8 @@
 /*
- * PLPAT12_TBL.C  game tables
+ * PLPAT12_TBL.C  Sean's special attack table
+ *
+ * pl12_exatt_table is the list of Sean's special attack routines, indexed by attack routine
+ * number minus 16. Read by PLPAT12.C, which dispatches through it from pl12_extra_attack.
  */
 
 #include "types.h"

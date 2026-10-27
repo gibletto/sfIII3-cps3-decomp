@@ -1,5 +1,8 @@
 /*
- * PLPAT11_TBL.C  game tables
+ * PLPAT11_TBL.C  Ken's special attack table
+ *
+ * pl11_exatt_table is the list of Ken's special attack routines, indexed by attack routine
+ * number minus 16. Read by PLPAT11.C, which dispatches through it from pl11_extra_attack.
  */
 
 #include "types.h"

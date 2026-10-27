@@ -1,5 +1,8 @@
 /*
- * LOSE_PL_TBL.C  game tables
+ * LOSE_PL_TBL.C  round loser type table
+ *
+ * lose_type_tbl selects, by character, which loser routine (Lose_00000 .. Lose_30000) plays
+ * at the end of a lost round. Read by LOSE_PL.C.
  */
 
 #include "types.h"

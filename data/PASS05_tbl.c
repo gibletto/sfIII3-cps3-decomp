@@ -1,5 +1,8 @@
 /*
- * PASS05_TBL.C  game tables
+ * PASS05_TBL.C  CPU passive pattern table for Necro
+ *
+ * Passive05_Tbl is the 102 passive (defensive) pattern routines of character 5 (Necro),
+ * indexed by Pattern_Index. Read by PASS05.C.
  */
 
 #include "types.h"

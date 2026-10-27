@@ -25,6 +25,7 @@
 #include "effect_2.h"
 #include "Grade.h"
 #include "fighter.h"
+#include "cmd_data.h"
 
 GradeData judge_item[2][2];  /* 02010C4C */
 GradeFinalData judge_final[2][2];  /* 02010D7C */
@@ -58,7 +59,7 @@ void grade_check_work_stage_init(s16 ix) {
     judge_item[ix][Play_Type].ex_point_total = 0;
     judge_item[ix][Play_Type].round = 0;
     judge_item[ix][Play_Type].win_round = 0;
-    if (Play_Type == 1) {
+    if (Play_Type == PLAY_VS_PLAYER) {
         judge_item[ix][Play_Type].renshou = Win_Record[ix];
         judge_item[ix][Play_Type].em_renshou = Win_Record[(ix + 1) & 1];
     } else {
@@ -357,7 +358,7 @@ void grade_makeup_stage_parameter(s16 ix) {
         judge_item[ix][Play_Type].no_lose = Straight_Counter[ix];
     }
     if (ix == WINNER) {
-        if (Play_Type == 0) {
+        if (Play_Type == PLAY_VS_CPU) {
             for (i = 0; i < 10; i++) {
                 if (judge_item[ix][Play_Type].no_lose < grade_t_straight[i + 1][0]) {
                     break;
@@ -383,7 +384,7 @@ void grade_makeup_stage_parameter(s16 ix) {
     point = judge_item[ix][Play_Type].offence_total + judge_item[ix][Play_Type].defence_total +
             judge_item[ix][Play_Type].tech_pts_total + judge_item[ix][Play_Type].ex_point_total;
     grade = get_grade_ix(point);
-    if (Play_Type == 0) {
+    if (Play_Type == PLAY_VS_CPU) {
         switch (bg_w.stage) {
         case 21:
         case 22:
@@ -1088,7 +1089,7 @@ char gddir;
     if (ds->wu.xyz[1].disp.pos > 1) {
         goto miss;
     }
-    if ((as->work_id == 1 && as->jump_att_flag && (ds->cp->sw_new & 0xF)) || (ds->cp->sw_new & 1)) {
+    if ((as->work_id == 1 && as->jump_att_flag && (ds->cp->sw_new & CMD_LV_MASK)) || (ds->cp->sw_new & CMD_LV_UP)) {
         goto miss;
     }
     if (!(ds->saishin_lvdir & gddir)) {

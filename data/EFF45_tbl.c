@@ -1,5 +1,9 @@
 /*
- * EFF45_TBL.C  game tables
+ * EFF45_TBL.C  bg050 background cell animation tables
+ *
+ * eff45_cell_tbl lists the cells written into the two character blocks, and eff45_anm_tbl the
+ * four animation frames: block, y scroll and time. Read by EFF45.C, the bg050 background cell
+ * animation.
  */
 
 #include "types.h"

@@ -1,5 +1,9 @@
 /*
- * EFFD5_TBL.C  game tables
+ * EFFD5_TBL.C  thrown rose tables
+ *
+ * range_time_table and range_isp_table give the flight time and initial height speed of the
+ * rose by distance to the opponent, and dm_sp_sel_tbl the petal set and petal acceleration by
+ * the strength of the attack that hits it. Read by EFFD5.C, the thrown rose.
  */
 
 #include "types.h"
@@ -8,6 +12,7 @@
 #pragma section TBL
 
 
+/* One row per attack strength (dm_kind_of_waza): petal set (num_of_hana) and petal acceleration. */
 const s16 dm_sp_sel_tbl[4][2] = {
     { 0, 14 }, { 1, 16 }, { 2, 18 }, { 3, 20 },
 };

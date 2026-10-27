@@ -1,5 +1,8 @@
 /*
- * EFF71_TBL.C  game tables
+ * EFF71_TBL.C  bg040 occasional animation timing
+ *
+ * eff71_time_tbl holds the random waits between the occasional animations. Read by EFF71.C,
+ * the timer for an occasional bg040 stage animation.
  */
 
 #include "types.h"

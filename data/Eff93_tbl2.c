@@ -1,5 +1,9 @@
 /*
- * EFF93_TBL2.C  game tables
+ * EFF93_TBL2.C  win mark colours and face-select BG slide routines
+ *
+ * win_mark_col_tbl is the colour of each kind of win mark, read by EFF92_CODE.C; Eff93_Jmp_Tbl
+ * is the four slide routines (left, right, left out, right out) of the face-select BG, read by
+ * EFF93.C.
  */
 
 #include "types.h"

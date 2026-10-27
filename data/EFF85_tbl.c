@@ -1,5 +1,8 @@
 /*
- * EFF85_TBL.C  game tables
+ * EFF85_TBL.C  swallow animation numbers
+ *
+ * eff85_char_index_tbl gives the animation number of each step of the swallow's sequence. Read
+ * by EFF85.C, the swallow on the stage background.
  */
 
 #include "types.h"

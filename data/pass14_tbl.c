@@ -1,5 +1,8 @@
 /*
- * PASS14_TBL.C  game tables
+ * PASS14_TBL.C  Gouki's passive pattern table
+ *
+ * Passive14_Tbl lists the 253 passive pattern routines of character 14 (Gouki), indexed by
+ * Pattern_Index. Read by PASS14.C.
  */
 
 #include "types.h"

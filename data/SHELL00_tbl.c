@@ -1,5 +1,8 @@
 /*
- * SHELL00_TBL.C  game tables
+ * SHELL00_TBL.C  CPU anti-projectile pattern table 00 (Gill)
+ *
+ * Shell00_Tbl lists the Shell00_nnnn pattern scripts the computer-controlled Gill runs when
+ * the opponent fires a projectile, indexed by Pattern_Index. Read by SHELL00.C.
  */
 
 #include "types.h"

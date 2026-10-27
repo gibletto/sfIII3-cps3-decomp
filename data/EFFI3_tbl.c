@@ -1,5 +1,9 @@
 /*
- * EFFI3_TBL.C  game tables
+ * EFFI3_TBL.C  palette cycle and background stop tables
+ *
+ * effI2_col_tbl and effI2_timer_tbl are the ten palette numbers and step times that effect I2
+ * cycles through; read by EFFI3.C. i3_data has an I3_Data { flags, time source, time } entry
+ * per background stop type, giving the duration and end conditions; read by EFFI3_2.C.
  */
 
 #include "types.h"

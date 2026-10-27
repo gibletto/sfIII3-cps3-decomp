@@ -1,5 +1,7 @@
 /*
- * EFFM2_TBL.C  game tables
+ * EFFM2_TBL.C  cat animations of the win pose
+ *
+ * effm2_char_tbl is the four animations effect M2 picks from at random. Read by EFFM2.C.
  */
 
 #include "types.h"

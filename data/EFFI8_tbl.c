@@ -1,5 +1,10 @@
 /*
- * EFFI8_TBL.C  game tables
+ * EFFI8_TBL.C  ball tables of the blocking bonus stage
+ *
+ * effI8_hit_box is the pair of boxes checked when the thrower catches a ball; bbbs_emtall is
+ * the height, per character, that a thrown ball is aimed at; cbm_table is the water bitmap of
+ * bonus stage 22 that decides where a landing ball splashes, and cbm_table_tail two zero words
+ * stored after it. Read by EFFI8.C.
  */
 
 #include "types.h"

@@ -1,5 +1,8 @@
 /*
- * DEMO_TBL_B.C  game tables
+ * DEMO_TBL_B.C  demonstration play characters
+ *
+ * Demo_PL_Play_Data gives the two characters of each demonstration fight. Read by
+ * DEMO02_CODE.C, the attract-mode demonstration play.
  */
 
 #include "types.h"

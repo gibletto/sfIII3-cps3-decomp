@@ -52,7 +52,6 @@ void Passive20_0001(PLW* wk) {
 
 
 void Passive20_0002(PLW* wk) {
-    s16 none = -1;
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
         Wait_Get_Up(wk, 3, -1);
@@ -61,10 +60,10 @@ void Passive20_0002(PLW* wk) {
         Pierce_On(wk);
         break;
     case 2:
-        Command_Attack(wk, 8, 0, 11, none);
+        Command_Attack(wk, 8, 0, 11, -1);
         break;
     case 3:
-        EM_Term(wk, 0x7FFF, none, 1, 1, none);
+        EM_Term(wk, 0x7FFF, -1, 1, 1, -1);
         break;
     default:
         End_Pattern(wk);
@@ -1649,16 +1648,15 @@ void Passive20_0097(PLW* wk) {
 
 
 void Passive20_0098(PLW* wk) {
-    s16 none = -1;
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
         Approach_Walk(wk, 55, 2);
         break;
     case 1:
-        EM_Term(wk, none, 0x8040, 6, 1, none);
+        EM_Term(wk, -1, 0x8040, 6, 1, -1);
         break;
     case 2:
-        Command_Attack(wk, 8, 29, 10, none);
+        Command_Attack(wk, 8, 29, 10, -1);
         break;
     case 3:
         Com_Random_Select(wk, 6, 66, 70, 74, 74, 1);

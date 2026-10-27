@@ -1,5 +1,8 @@
 /*
- * EFF42_TBL.C  game tables
+ * EFF42_TBL.C  order-driven select object states
+ *
+ * EFF42_Jmp_Tbl is the jump table of the object's order states: appear, slide in, slide out,
+ * kill and move. Read by EFF42.C, the order-driven select object.
  */
 
 #include "types.h"

@@ -1,5 +1,9 @@
 /*
- * APPEAR_TBL.C  game tables
+ * APPEAR_TBL.C  fighter entrance data
+ *
+ * appear_data is the list of entrance types: each row holds the start position (with a
+ * separate x for the wide mode), facing, the Appear_ routine number and the character index.
+ * Read by APPEAR.C, which picks a row through appear_type_tbl.
  */
 
 #include "types.h"

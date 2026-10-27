@@ -1,5 +1,9 @@
 /*
- * EFF37_TBL.C  game tables
+ * EFF37_TBL.C  face panel position offsets
+ *
+ * panel_pos_hosei gives the offset of the face panel from the judge it belongs to, for each
+ * judge character set and display frame type of the judge. Read by EFF37.C, the face panel
+ * shown with a character.
  */
 
 #include "types.h"

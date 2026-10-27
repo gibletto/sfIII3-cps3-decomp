@@ -36,6 +36,10 @@
 #include "ta_sub.h"
 #include "bg130.h"
 
+/* bgw r_no_0 of a layer that follows the camera */
+#define SYNC_INIT       0       /* set up the layer */
+#define SYNC_MOVE       1       /* follow the camera (bg_x_move_check, bg_y_move_check) */
+
 #pragma inline(bg1300, bg1301)
 
 
@@ -90,7 +94,7 @@ void bg1300_init00(void) {
 
 void bg1302(void) {
     switch (bgw_ptr->r_no_0) {
-    case 0:
+    case SYNC_INIT:
         bgw_ptr->r_no_0++;
         bgw_ptr->old_pos_x = bgw_ptr->xy[0].disp.pos = bgw_ptr->pos_x_work = 0x200;
         bgw_ptr->hos_xy[0].cal = bgw_ptr->wxy[0].cal = bgw_ptr->xy[0].cal;
@@ -102,7 +106,7 @@ void bg1302(void) {
         bgw_ptr->speed_y = 0xE000;
         sync_fam_set3(2);
         break;
-    case 1:
+    case SYNC_MOVE:
         bg_x_move_check();
         bg_y_move_check();
         sync_fam_set3(2);

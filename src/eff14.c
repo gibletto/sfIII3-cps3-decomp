@@ -19,6 +19,11 @@
 #include "ta_sub.h"
 #include "eff14.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* load the script for this id */
+#define R0_MOVE         1       /* step the script, follow the page */
+#define R0_KILL         2       /* put the work back */
+
 E14_WORK eff14_work[8];  /* 02068AC8 */
 
 
@@ -54,7 +59,7 @@ void effect_14_move(WORK_Other* ewk) {
     u32 scr;
     s8 put;
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         data = eff14_data_tbl[ewk->wu.type];
         scr = *data;
         data++;
@@ -83,7 +88,7 @@ void effect_14_move(WORK_Other* ewk) {
         eff14_work[ewk->wu.rl_flag].script += 2;
         ewk->wu.routine_no[0]++;
         break;
-    case 1:
+    case R0_MOVE:
         if (ewk->wu.dead_f == 1) {
             ewk->wu.routine_no[0]++;
             break;
@@ -118,7 +123,7 @@ void effect_14_move(WORK_Other* ewk) {
             effect_14_write(ewk);
         }
         break;
-    case 2:
+    case R0_KILL:
     default:
         push_effect_work(&ewk->wu);
         break;
@@ -126,6 +131,8 @@ void effect_14_move(WORK_Other* ewk) {
 }
 
 
+
+static void eff14_flag_disp(s8 be_flag) {}
 
 /* provisional name */
 static void effect_14_write(WORK_Other* ewk) {
@@ -147,7 +154,7 @@ static void effect_14_write(WORK_Other* ewk) {
     dst = (u16*)eff14_work[ewk->wu.rl_flag].dst;
     col = eff14_work[ewk->wu.rl_flag].col;
     row = eff14_work[ewk->wu.rl_flag].row;
-    (void)ewk->wu.be_flag;
+    eff14_flag_disp(ewk->wu.be_flag);
     i = 0;
     goto test;
 loop:
@@ -168,7 +175,7 @@ loop:
             pattern++;
         }
     }
-    (void)ewk->wu.be_flag;
+    eff14_flag_disp(ewk->wu.be_flag);
     row = (u32)(dst = (u16*)(row + 0x100));
     (void)&((E14_WORK*)row)->rows;
     i++;
@@ -176,5 +183,5 @@ test:
     if (i < rows) {
         goto loop;
     }
-    (void)ewk->wu.be_flag;
+    eff14_flag_disp(ewk->wu.be_flag);
 }

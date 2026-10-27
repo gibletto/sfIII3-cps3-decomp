@@ -1,5 +1,8 @@
 /*
- * EFF33_TBL.C  game tables
+ * EFF33_TBL.C  appearance companion result animations
+ *
+ * WinLoseID gives, by master and winner, whether the companion plays its win or lose
+ * animation. Read by EFF33.C, the appearance companion that reacts to the result.
  */
 
 #include "types.h"

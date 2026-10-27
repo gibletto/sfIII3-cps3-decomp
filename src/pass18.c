@@ -54,7 +54,6 @@ void Passive18_0001(PLW* wk) {
 
 
 void Passive18_0002(PLW* wk) {
-    s16 none = -1;
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
         Wait_Get_Up(wk, 3, -1);
@@ -63,10 +62,10 @@ void Passive18_0002(PLW* wk) {
         Pierce_On(wk);
         break;
     case 2:
-        Command_Attack(wk, 8, 0, 11, none);
+        Command_Attack(wk, 8, 0, 11, -1);
         break;
     case 3:
-        EM_Term(wk, 0x7FFF, none, 1, 1, none);
+        EM_Term(wk, 0x7FFF, -1, 1, 1, -1);
         break;
     default:
         End_Pattern(wk);

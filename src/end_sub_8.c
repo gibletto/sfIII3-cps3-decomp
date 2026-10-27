@@ -87,11 +87,10 @@ u16 slot;
 
 /* provisional name */
 void load_side_color(u8 side, u16 ix) {
-    s16 zero = 0;
     if (side) {
-        polygon2d_submit_quad(side_color_2p_tbl[ix].src, 0xF000, side_color_2p_tbl[ix].size, zero, zero, zero);
+        polygon2d_submit_quad(side_color_2p_tbl[ix].src, 0xF000, side_color_2p_tbl[ix].size, 0, 0, 0);
     } else {
-        polygon2d_submit_quad(side_color_1p_tbl[ix].src, 0xE000, side_color_1p_tbl[ix].size, zero, zero, zero);
+        polygon2d_submit_quad(side_color_1p_tbl[ix].src, 0xE000, side_color_1p_tbl[ix].size, 0, 0, 0);
     }
 }
 

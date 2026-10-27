@@ -1,5 +1,10 @@
 /*
- * END_17_TBL.C  game tables
+ * END_17_TBL.C  Makoto's ending tables (ending 17)
+ *
+ * end_1100_bg0_cell_tbl lists the 16 BG0 cells (map offset, cell number) written at the start
+ * of the ending, timer_11_tbl the length in frames of each of its seven scenes and end_11_pos
+ * the BG x and y of each scene; read by END_17.C. end_5_bg1_cell_0 is a cell list reached
+ * only through end_5_bg1_refs in END_5.C, which nothing reads.
  */
 
 #include "types.h"

@@ -1,15 +1,9 @@
 /*
- * EFFI3.C  Effect I0 spawner, effect I2 (palette cycle), effect I3 (BG stop) and empty I1
+ * EFFI3.C  Effect I2 (palette cycle) and empty I1
  *
- * effect_I0_init scatters num_of_koishi[] stone pieces around a work: a random layout from
- * koishi_app_area picks each piece's offset (koishi_area_hosei) and speeds (koishi_speed_x /
- * _y), and effI0_piece_set creates the I0 work with gravity and a landing height.
  * Effect I2 cycles a palette: every time its timer from effI2_timer_tbl runs out it moves to the
  * next of ten steps and loads the palette in effI2_col_tbl. It is freed on Suicide[0].
- * Effect I3 (effect_I3_init, called from player move code) sets bg_stop to hold the background
- * scroll while an action plays; its i3_data entry gives the duration (fixed, the owner's hit
- * stop or frame type) and whether it also ends when the owner's pattern changes.
- * effect_I1_move is an empty routine.
+ * effect_I1_move and effect_I1_dummy are empty routines.
  */
 
 #include "structs.h"
@@ -30,6 +24,11 @@
 #include "PLS02.h"
 #include "aboutspr.h"
 #include "EFFI3.h"
+
+/* routine_no[0] */
+#define R0_INIT         0       /* start the cycle */
+#define R0_MOVE         1       /* step the colours until told to end */
+#define R0_KILL         2       /* put the work back */
 
 
 
@@ -63,9 +62,9 @@ s32 effect_I2_init(void) {
 
 void effect_I2_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
-    case 1:
+    case R0_MOVE:
         if (Suicide[0]) {
             all_cgps_put_back(ewk);
             push_effect_work((WORK*)ewk);
@@ -82,7 +81,7 @@ void effect_I2_move(WORK_Other* ewk) {
             return;
         }
         break;
-    case 2:
+    case R0_KILL:
     default:
         push_effect_work((WORK*)ewk);
         return;

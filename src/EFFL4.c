@@ -27,18 +27,22 @@
 #include "bg_sub_5.h"
 #include "EFFL4.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* show and start the animation */
+#define R0_MOVE         1       /* animate and blink with the pattern */
+
 
 
 void effect_L4_move(WORK_Other* ewk) {
     s16 v;
 
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R0_MOVE:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             v = (s8)ewk->wu.cg_type;

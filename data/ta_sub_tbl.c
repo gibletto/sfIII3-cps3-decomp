@@ -1,5 +1,8 @@
 /*
- * TA_SUB_TBL.C  game tables
+ * TA_SUB_TBL.C  stage object hit box tables
+ *
+ * eff_hit_data gives the hit box of each stage object type and pl_hit_eff each character's
+ * box against them (offset and size). Read by eff_hit_check and its helpers in TA_SUB.C.
  */
 
 #include "types.h"

@@ -1,5 +1,9 @@
 /*
- * ACTIVE09_TBL.C  game tables
+ * ACTIVE09_TBL.C  CPU active pattern tables for players 09 - 15
+ *
+ * Pattern09_Tbl - Pattern15_Tbl list the pattern scripts the computer-controlled Oro, Yang,
+ * Ken, Sean, Urien, Gouki and Shin Gouki run in active (attacking) mode, each indexed by
+ * Pattern_Index. Each is read by its own module, ACTIVE09.C - ACTIVE15.C.
  */
 
 #include "types.h"

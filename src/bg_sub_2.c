@@ -612,37 +612,21 @@ void bg_base_x_move_sub(void) {
     s16 work0;
     s16 work1;
     s16 bg_pos;
-    s16 origin;
-    PLW* pl;
-    u32 players;
-    PLW* current;
-    const s8* st_tbl;
-    s32 hi;
-    s32 lo;
-    origin = ideal_w.iw[0].disp.pos - bg_w.pos_offset;
-    (void)&((WORK*)origin)->be_flag;
-    bg_pos = origin;
-    players = (u32)plw;
-    (void)&((WORK*)players)->be_flag;
-    (void)&((WORK*)players)->disp_flag;
-    current = (PLW*)players;
-    (void)current->wu.be_flag;
-    pl = current;
-    if (pl->wu.scr_mv_x < ideal_w.iw[0].disp.pos) {
-        work0 = pl->wu.scr_mv_x - satse[pl->player_number];
+    s8 st0;
+    s8 st1;
+    bg_pos = ideal_w.iw[0].disp.pos - bg_w.pos_offset;
+    if (plw[0].wu.scr_mv_x < ideal_w.iw[0].disp.pos) {
+        work0 = plw[0].wu.scr_mv_x - satse[plw[0].player_number];
     } else {
-        work0 = pl->wu.scr_mv_x + satse[pl->player_number];
+        work0 = plw[0].wu.scr_mv_x + satse[plw[0].player_number];
     }
     work0 -= bg_pos;
-    current = (PLW*)(players + sizeof(PLW));
-    (void)current->wu.be_flag;
-    pl = current;
-    if (pl->wu.scr_mv_x < ideal_w.iw[0].disp.pos) {
-        work1 = pl->wu.scr_mv_x - satse[pl->player_number];
+    if (plw[1].wu.scr_mv_x < ideal_w.iw[0].disp.pos) {
+        work1 = plw[1].wu.scr_mv_x - satse[plw[1].player_number];
     } else {
-        work1 = pl->wu.scr_mv_x + satse[pl->player_number];
+        work1 = plw[1].wu.scr_mv_x + satse[plw[1].player_number];
     }
-    work1 = work1 - bg_pos;
+    work1 -= bg_pos;
     if (Game_setting.mode) {
         if (work0 < 0) {
             work0 = 0;
@@ -654,7 +638,8 @@ void bg_base_x_move_sub(void) {
         } else if (work1 > 0x1EF) {
             work1 = 0x1EF;
         }
-        hi = *((s32)work0 + (st_tbl = pos_area_wide_tbl));
+        st0 = pos_area_wide_tbl[work0];
+        st1 = pos_area_wide_tbl[work1];
     } else {
         if (work0 < 0) {
             work0 = 0;
@@ -666,13 +651,10 @@ void bg_base_x_move_sub(void) {
         } else if (work1 > 0x17F) {
             work1 = 0x17F;
         }
-        hi = *((s32)work0 + (st_tbl = pos_area_tbl));
+        st0 = pos_area_tbl[work0];
+        st1 = pos_area_tbl[work1];
     }
-    lo = st_tbl[work1];
-    (void)&((WORK*)hi)->disp_flag;
-    (void)&((WORK*)hi)->blink_timing;
-    (void)&((WORK*)lo)->be_flag;
-    scr_x_mv_jp[((s8)hi << 4) + (s8)lo]();
+    scr_x_mv_jp[(st0 << 4) + st1]();
 }
 
 static s32 remake_x_mvstep(s16 x) {

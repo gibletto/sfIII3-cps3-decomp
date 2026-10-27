@@ -1,5 +1,13 @@
 /*
- * EFFC2_TBL.C  game tables
+ * EFFC2_TBL.C  car-breaking bonus stage car tables
+ *
+ * bs2_data_table gives the timer, animation, vitality, colour and priorities of the car and
+ * each of its parts. pbl_select holds the vitality percentages at which each part reaches its
+ * next break level and pbs_table the score of each break; dm_copy_to_master and ix_exchange
+ * link the parts to the car's break levels, sel_dm_quake gives the hit quake by attack
+ * strength, shizumi_guai and shindou_guai the sink and shake offsets of the parts, and
+ * c2_last_bomb the speeds of the final collapse. Read by EFFC2.C, the car in the car-breaking
+ * bonus stage.
  */
 
 #include "types.h"

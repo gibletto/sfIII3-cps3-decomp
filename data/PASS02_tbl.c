@@ -1,5 +1,8 @@
 /*
- * PASS02_TBL.C  game tables
+ * PASS02_TBL.C  CPU passive pattern table for Ryu
+ *
+ * Passive02_Tbl is the 133 passive (defensive) pattern routines of character 2 (Ryu),
+ * indexed by Pattern_Index. Read by PASS02.C.
  */
 
 #include "types.h"

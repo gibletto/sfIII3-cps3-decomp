@@ -1,5 +1,8 @@
 /*
- * ACTIVE02_TBL.C  game tables
+ * ACTIVE02_TBL.C  CPU active pattern table for player 02 (Ryu)
+ *
+ * Pattern02_Tbl lists the Pattern02_nnnn scripts the computer-controlled Ryu runs in active
+ * (attacking) mode, indexed by Pattern_Index. Read by ACTIVE02.C (Computer02).
  */
 
 #include "types.h"

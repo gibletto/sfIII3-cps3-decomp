@@ -24,9 +24,28 @@
 #include "PLS01.h"
 #include "PLPAT00.h"
 
+/* routine_no[3], Att_MOONSALT_KNEE_DROP */
+#define MOONSALT_KNEE__MOVE 1   /* move and run the animation to cue 20 */
+#define MOONSALT_KNEE__AIR 2    /* in the air until it lands */
+#define MOONSALT_KNEE__LAND 3   /* the landing */
+
+/* routine_no[3], Att_RESURRECTION */
+#define RESURRECTION_CUE 1      /* run the animation to its next cue */
+#define RESURRECTION_AIR 2      /* in the air until it lands */
+
+/* routine_no[3], Att_PL00_TOKUSHUKOUDOU */
+#define TOKUSHUKOUDOU_ACTION 1  /* the personal action, filling the super art gauge */
+
+/* routine_no[3], Att_JYOUKA */
+#define JYOUKA_CUE      1       /* run the animation to cue 20 */
+#define JYOUKA_MOVE     2       /* move and run the animation to cue 30 */
+#define JYOUKA_MOVE2    3       /* move and run the animation to cue 20 */
+#define JYOUKA_AIR      4       /* in the air until it lands */
+#define JYOUKA_LAND     5       /* the landing */
+
 
 void pl00_extra_attack(PLW* wk) {
-    pl00_exatt_table[wk->wu.routine_no[2] - 16](wk);
+    pl00_exatt_table[wk->wu.routine_no[2] - ATTACK_SPECIAL](wk);
 }
 
 
@@ -36,7 +55,7 @@ void Att_MOONSALT_KNEE_DROP(PLW* wk) {
     s16 ex;
     s16 ey;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.rl_flag = wk->wu.rl_waza;
         set_char_move_init(&wk->wu, 5, wk->as->char_ix);
@@ -55,7 +74,7 @@ void Att_MOONSALT_KNEE_DROP(PLW* wk) {
             wk->wu.mvxy.d[0].sp = -wk->wu.mvxy.d[0].sp;
         }
         break;
-    case 1:
+    case MOONSALT_KNEE__MOVE:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 20) {
             wk->wu.routine_no[3]++;
@@ -63,10 +82,10 @@ void Att_MOONSALT_KNEE_DROP(PLW* wk) {
             add_mvxy_speed(&wk->wu);
         }
         break;
-    case 2:
+    case MOONSALT_KNEE__AIR:
         jumping_union_process(&wk->wu, 3);
         break;
-    case 3:
+    case MOONSALT_KNEE__LAND:
         char_move(&wk->wu);
         break;
     }
@@ -77,14 +96,14 @@ void Att_MOONSALT_KNEE_DROP(PLW* wk) {
 void Att_RESURRECTION(PLW* wk) {
     wk->scr_pos_set_flag = 0;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.direction = 0;
         reset_mvxy_data((WORK*)wk);
         set_char_move_init((WORK*)wk, 5, wk->as->char_ix);
         round_slow_flag = 0;
         break;
-    case 1:
+    case RESURRECTION_CUE:
         char_move((WORK*)wk);
         if (wk->wu.cg_type) {
             wk->wu.direction = get_life_add_point(wk->wu.cg_type, wk->wu.direction);
@@ -104,7 +123,7 @@ void Att_RESURRECTION(PLW* wk) {
         }
         char_move_cmja((WORK*)wk);
         break;
-    case 2:
+    case RESURRECTION_AIR:
         jumping_union_process((WORK*)wk, 3);
         break;
     default:
@@ -132,13 +151,13 @@ s32 get_life_add_point(num, ori_add)
 void Att_PL00_TOKUSHUKOUDOU(PLW* wk) {
     wk->scr_pos_set_flag = 0;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.rl_flag = wk->wu.rl_waza;
         hoken_muriyari_chakuchi(wk);
         set_char_move_init((WORK*)wk, 5, wk->as->char_ix);
         break;
-    case 1:
+    case TOKUSHUKOUDOU_ACTION:
         char_move((WORK*)wk);
         if (wk->wu.cg_type == 40) {
             wk->wu.cg_type = 0;
@@ -173,7 +192,7 @@ void Att_JYOUKA(PLW* wk) {
     s16 x1;
     s16 y1;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.rl_flag = wk->wu.rl_waza;
         set_char_move_init((WORK*)wk, 5, wk->as->char_ix);
@@ -186,14 +205,14 @@ void Att_JYOUKA(PLW* wk) {
         }
         effect_I3_init((WORK*)wk, 3);
         break;
-    case 1:
+    case JYOUKA_CUE:
         char_move((WORK*)wk);
         if (wk->wu.cg_type == 20) {
             wk->wu.routine_no[3]++;
             wk->wu.cg_type = 0;
         }
         break;
-    case 2:
+    case JYOUKA_MOVE:
         char_move((WORK*)wk);
         add_mvxy_speed((WORK*)wk);
         cal_mvxy_speed((WORK*)wk);
@@ -203,7 +222,7 @@ void Att_JYOUKA(PLW* wk) {
             reset_mvxy_data((WORK*)wk);
         }
         break;
-    case 3:
+    case JYOUKA_MOVE2:
         char_move((WORK*)wk);
         if (wk->wu.cg_type == 20) {
             wk->wu.routine_no[3]++;
@@ -212,10 +231,10 @@ void Att_JYOUKA(PLW* wk) {
             add_mvxy_speed((WORK*)wk);
         }
         break;
-    case 4:
+    case JYOUKA_AIR:
         jumping_union_process((WORK*)wk, 5);
         break;
-    case 5:
+    case JYOUKA_LAND:
         char_move((WORK*)wk);
         break;
     }

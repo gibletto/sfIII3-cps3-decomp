@@ -1311,13 +1311,12 @@ void Pattern18_0078(PLW* wk) {
 
 
 void Pattern18_0079(PLW* wk) {
-    s16 none = -1;
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
         Pierce_On(wk);
         break;
     case 1:
-        Hi_Jump_Attack_Term(wk, none, 64, 8, (0x200), 0, 0x8060, none, (0x100));
+        Hi_Jump_Attack_Term(wk, -1, 64, 8, (0x200), 0, 0x8060, -1, (0x100));
         break;
     case 2:
         Lever_On(wk, 1, -1);
@@ -1326,7 +1325,7 @@ void Pattern18_0079(PLW* wk) {
         Lever_Attack(wk, 8, 1, (0x202));
         break;
     case 4:
-        Command_Attack(wk, 8, 28, 8, none);
+        Command_Attack(wk, 8, 28, 8, -1);
         break;
     default:
         End_Pattern(wk);

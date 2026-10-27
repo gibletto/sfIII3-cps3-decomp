@@ -1,5 +1,15 @@
 /*
- * PLS02_TBL.C  game tables
+ * PLS02_TBL.C  player movement, gauge and CPU random tables
+ *
+ * random_tbl_32_com, random_tbl_16_com and their _ex companions are the CPU random number
+ * tables; satse is each character's body half-width for the screen-edge checks (also read by
+ * BG_SUB_2.C for the scroll limits), sel_hosei_tbl_ix each character's correction box index
+ * for the car bonus stage, and dir16_rl_conv mirrors a 16-way direction; these are read by
+ * PLS02.C. The super art gauge rates by game level (asagh_zuru, asagh_zuru2) and by character
+ * (apagt_table, ukemi_apagt_table, nagenuke_apagt_table), konjyou_tbl (per-character damage
+ * scaling), the hit routine choice by direction (dir16_hddm, dir16_trdm, dir32_skydm,
+ * dir32_grddm), dead_voice_table (KO voices per character) and gauge_rank_table are read by
+ * PLSGAUGE.C; jump_pat_status_data, the jump posture by lever direction, by PLS03ATT.C.
  */
 
 #include "types.h"
@@ -88,30 +98,30 @@ const s16 dir16_trdm[16] = {
 };
 
 const s16 konjyou_tbl[24][6] = {
-    { 26, 28, 30, 32, 32, 32 },
-    { 26, 28, 30, 32, 32, 32 },
-    { 26, 28, 30, 32, 32, 32 },
-    { 26, 28, 30, 32, 32, 32 },
-    { 26, 28, 30, 32, 32, 32 },
-    { 26, 28, 30, 32, 32, 32 },
-    { 26, 28, 30, 32, 32, 32 },
-    { 26, 28, 30, 32, 32, 32 },
-    { 26, 28, 30, 32, 32, 32 },
-    { 26, 28, 30, 32, 32, 32 },
-    { 26, 28, 30, 32, 32, 32 },
-    { 26, 28, 30, 32, 32, 32 },
-    { 26, 28, 30, 32, 32, 32 },
-    { 26, 28, 30, 32, 32, 32 },
-    { 26, 28, 30, 32, 32, 32 },
-    { 26, 28, 30, 32, 32, 32 },
-    { 26, 28, 30, 32, 32, 32 },
-    { 26, 28, 30, 32, 32, 32 },
-    { 26, 28, 30, 32, 32, 32 },
-    { 26, 28, 30, 32, 32, 32 },
-    { 26, 28, 30, 32, 32, 32 },
-    { 26, 28, 30, 32, 32, 32 },
-    { 26, 28, 30, 32, 32, 32 },
-    { 26, 28, 30, 32, 32, 32 },
+    { 26, 28, 30, 32, 32, 32 },  /* Gill */
+    { 26, 28, 30, 32, 32, 32 },  /* Alex */
+    { 26, 28, 30, 32, 32, 32 },  /* Ryu */
+    { 26, 28, 30, 32, 32, 32 },  /* Yun */
+    { 26, 28, 30, 32, 32, 32 },  /* Dudley */
+    { 26, 28, 30, 32, 32, 32 },  /* Necro */
+    { 26, 28, 30, 32, 32, 32 },  /* Hugo */
+    { 26, 28, 30, 32, 32, 32 },  /* Ibuki */
+    { 26, 28, 30, 32, 32, 32 },  /* Elena */
+    { 26, 28, 30, 32, 32, 32 },  /* Oro */
+    { 26, 28, 30, 32, 32, 32 },  /* Yang */
+    { 26, 28, 30, 32, 32, 32 },  /* Ken */
+    { 26, 28, 30, 32, 32, 32 },  /* Sean */
+    { 26, 28, 30, 32, 32, 32 },  /* Urien */
+    { 26, 28, 30, 32, 32, 32 },  /* Gouki */
+    { 26, 28, 30, 32, 32, 32 },  /* Shin Gouki */
+    { 26, 28, 30, 32, 32, 32 },  /* Chun-Li */
+    { 26, 28, 30, 32, 32, 32 },  /* Makoto */
+    { 26, 28, 30, 32, 32, 32 },  /* Q */
+    { 26, 28, 30, 32, 32, 32 },  /* Twelve */
+    { 26, 28, 30, 32, 32, 32 },  /* Remy */
+    { 26, 28, 30, 32, 32, 32 },  /* 21 */
+    { 26, 28, 30, 32, 32, 32 },  /* 22 */
+    { 26, 28, 30, 32, 32, 32 },  /* 23 */
 };
 
 const s16 apagt_table[24] = {
@@ -152,30 +162,30 @@ const u8 convert_saishin_lvdir[2][16] = {
 };
 
 const s16 dead_voice_table[24][2] = {
-    { 864, 865 },
-    { 928, 929 },
-    { 512, 513 },
-    { 608, 609 },
-    { 896, 897 },
-    { 800, 801 },
-    { 832, 833 },
-    { 352, 353 },
-    { 672, 673 },
-    { 576, 577 },
-    { 640, 641 },
-    { 384, 385 },
-    { 480, 481 },
-    { 736, 737 },
-    { 704, 705 },
-    { 704, 705 },
-    { 416, 417 },
-    { 448, 449 },
-    { 768, 769 },
-    { 960, 961 },
-    { 544, 545 },
-    { 864, 865 },
-    { 864, 865 },
-    { 864, 865 },
+    { 864, 865 },  /* Gill */
+    { 928, 929 },  /* Alex */
+    { 512, 513 },  /* Ryu */
+    { 608, 609 },  /* Yun */
+    { 896, 897 },  /* Dudley */
+    { 800, 801 },  /* Necro */
+    { 832, 833 },  /* Hugo */
+    { 352, 353 },  /* Ibuki */
+    { 672, 673 },  /* Elena */
+    { 576, 577 },  /* Oro */
+    { 640, 641 },  /* Yang */
+    { 384, 385 },  /* Ken */
+    { 480, 481 },  /* Sean */
+    { 736, 737 },  /* Urien */
+    { 704, 705 },  /* Gouki */
+    { 704, 705 },  /* Shin Gouki */
+    { 416, 417 },  /* Chun-Li */
+    { 448, 449 },  /* Makoto */
+    { 768, 769 },  /* Q */
+    { 960, 961 },  /* Twelve */
+    { 544, 545 },  /* Remy */
+    { 864, 865 },  /* 21 */
+    { 864, 865 },  /* 22 */
+    { 864, 865 },  /* 23 */
 };
 
 const s16 gauge_rank_table[6][2] = {

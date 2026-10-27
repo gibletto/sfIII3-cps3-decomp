@@ -1,5 +1,8 @@
 /*
- * ACTIVE04_TBL.C  game tables
+ * ACTIVE04_TBL.C  CPU active pattern table for player 04 (Dudley)
+ *
+ * Pattern04_Tbl lists the Pattern04_nnnn scripts the computer-controlled Dudley runs in active
+ * (attacking) mode, indexed by Pattern_Index. Read by ACTIVE04.C (Computer04).
  */
 
 #include "types.h"

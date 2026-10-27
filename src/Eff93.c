@@ -33,6 +33,10 @@
 #include "Eff93.h"
 #include "cps3.h"
 
+/* routine_no[1]: step within each slide */
+#define R1_WAIT         0       /* count the delay down */
+#define R1_SLIDE        1       /* (default) slide BG1 to its place */
+
 
 
 void effect_93_move(WORK_Other* ewk) {
@@ -43,7 +47,7 @@ void effect_93_move(WORK_Other* ewk) {
 
 void Eff93_SLIDE_L(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_WAIT:
         if (--ewk->wu.dir_timer == 0) {
             ewk->wu.routine_no[1]++;
             ewk->wu.hit_quake = 0x25C;
@@ -85,7 +89,7 @@ void Eff93_SLIDE_R(WORK_Other* ewk) {
     s16 arrived_x;
     s16 arrived_y;
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_WAIT:
         if (--ewk->wu.dir_timer == 0) {
             ewk->wu.routine_no[1] += 1;
             bg_mvxy.a[0].sp = -0x90000;
@@ -128,7 +132,7 @@ void Eff93_SLIDE_R(WORK_Other* ewk) {
 
 void Eff93_SLIDE_L_OUT(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_WAIT:
         if (--ewk->wu.dir_timer == 0) {
             ewk->wu.routine_no[1] += 1;
             bg_mvxy.a[0].sp = 0x80000;
@@ -153,7 +157,7 @@ void Eff93_SLIDE_L_OUT(WORK_Other* ewk) {
 
 void Eff93_SLIDE_R_OUT(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_WAIT:
         if (--ewk->wu.dir_timer == 0) {
             ewk->wu.routine_no[1] += 1;
             bg_mvxy.a[0].sp = -0x80000;

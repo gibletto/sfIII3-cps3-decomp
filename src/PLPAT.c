@@ -24,6 +24,66 @@
 #include "PLS00.h"
 #include "PLSGAUGE.h"
 #include "PLPAT.h"
+
+/* ja_nmj_rno: the air attack check in check_ja_nmj_dummy_RTNM */
+#define NMJ_IDLE        0       /* on the ground, or until an attack or catch box is out */
+#define NMJ_ACTIVE      1       /* a box is out: until it is gone or the attack misses */
+#define NMJ_COUNT       2       /* count down ja_nmj_cnt; a new hit goes back to NMJ_ACTIVE */
+#define NMJ_DONE        3       /* (default) the count ran out: end the animation once the boxes are gone */
+
+/* routine_no[3], Attack_00000 */
+#define A00_CUE         1       /* run the animation to cue 20 */
+
+/* routine_no[3], Attack_01000 */
+#define A01_MOVE        1       /* move and run the animation to cue 1 */
+#define A01_AIR         2       /* in the air until it lands */
+#define A01_LAND        3       /* the landing */
+
+/* routine_no[3], Attack_02000 */
+#define A02_MOVE        1       /* move and run the animation to cue 1 */
+#define A02_MOVE2       2       /* move and run the animation */
+#define A02_CUE         3       /* run the animation to cue 1 */
+
+/* routine_no[3], Attack_03000 */
+#define A03_MOVE        1       /* move and run the animation */
+#define A03_AIR         2       /* in the air until it lands */
+#define A03_LAND        3       /* the landing */
+
+/* routine_no[3], Attack_04000 */
+#define A04_CUE         1       /* run the animation to cue 20 */
+
+/* routine_no[3], Attack_05000 */
+#define A05_MOVE        1       /* move and run the animation to cue 1 */
+#define A05_AIR         2       /* in the air until it lands */
+#define A05_LAND        3       /* the landing */
+
+/* routine_no[3], Attack_07000 */
+#define A07_CUE         1       /* run the animation to cue 20 */
+
+/* routine_no[3], Attack_08000 */
+#define A08_CUE         1       /* run the animation to cue 1 */
+#define A08_MOVE        2       /* move and run the animation */
+#define A08_RUN         3       /* run the animation */
+
+/* routine_no[3], Attack_09000 */
+#define A09_MOVE        1       /* move and run the animation to cue 1 */
+#define A09_AIR         2       /* in the air until it lands */
+#define A09_LAND        3       /* the landing */
+
+/* routine_no[3], Attack_10000 */
+#define A10_RUN         1       /* run the animation */
+#define A10_AIR         2       /* in the air until it lands */
+#define A10_WAIT        3       /* count down dir_timer */
+#define A10_AIR2        4       /* in the air until it lands */
+#define A10_LAND        5       /* the landing */
+
+/* routine_no[3], Attack_14000 */
+#define A14_RUN         1       /* run the animation */
+
+/* routine_no[3], Attack_15000 */
+#define A15_AIR         1       /* in the air until it lands */
+#define A15_AIR2        2       /* in the air until it lands */
+#define A15_LAND        3       /* the landing */
 /* 02007A88 */
 const u8* cjdr_karaburi_table[24] = {
     (const u8*)&plxx_extra_attack_table[30],
@@ -154,7 +214,7 @@ void Player_attack(PLW* wk) {
     wk->hazusenai_flag = 0;
     wk->cat_break_reserve = 0;
     check_em_tk_power_off(wk, (PLW*)wk->wu.target_adrs);
-    if (wk->wu.routine_no[3] == 0) {
+    if (wk->wu.routine_no[3] == RN3_START) {
         wk->caution_flag = 1;
         wk->dm_vital_backup = 0;
         wk->dm_vital_use = 0;
@@ -184,7 +244,7 @@ void Player_attack(PLW* wk) {
 void Attack_00000(PLW* wk) {
     wk->scr_pos_set_flag = 0;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         hoken_muriyari_chakuchi(wk);
         wk->wu.rl_flag = wk->wu.rl_waza;
@@ -192,7 +252,7 @@ void Attack_00000(PLW* wk) {
         get_cancel_timer(wk);
         set_char_move_init(&wk->wu, 4, wk->as->char_ix);
         break;
-    case 1:
+    case A00_CUE:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 20) {
             wk->wu.routine_no[2] = 4;
@@ -207,7 +267,7 @@ void Attack_00000(PLW* wk) {
 
 void Attack_01000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         hoken_muriyari_chakuchi(wk);
         wk->wu.rl_flag = wk->wu.rl_waza;
@@ -216,18 +276,18 @@ void Attack_01000(PLW* wk) {
         set_char_move_init(&wk->wu, 4, wk->as->char_ix);
         setup_mvxy_data(&wk->wu, wk->as->data_ix);
         break;
-    case 1:
+    case A01_MOVE:
         char_move(&wk->wu);
         if ((u8)wk->wu.cg_type == 1) {
             add_mvxy_speed(&wk->wu);
-            wk->wu.routine_no[3] = 2;
+            wk->wu.routine_no[3] = A01_AIR;
             wk->wu.cg_type = 0;
         }
         break;
-    case 2:
+    case A01_AIR:
         jumping_union_process(&wk->wu, 3);
         break;
-    case 3:
+    case A01_LAND:
         char_move(&wk->wu);
         break;
     }
@@ -237,7 +297,7 @@ void Attack_01000(PLW* wk) {
 
 void Attack_02000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         hoken_muriyari_chakuchi(wk);
         wk->wu.rl_flag = wk->wu.rl_waza;
@@ -246,18 +306,18 @@ void Attack_02000(PLW* wk) {
         set_char_move_init(&wk->wu, 4, wk->as->char_ix);
         setup_mvxy_data(&wk->wu, wk->as->data_ix);
         break;
-    case 1:
+    case A02_MOVE:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 1) {
             add_mvxy_speed(&wk->wu);
-            wk->wu.routine_no[3] = 2;
+            wk->wu.routine_no[3] = A02_MOVE2;
             wk->wu.cg_type = 0;
         }
         break;
-    case 2:
+    case A02_MOVE2:
         cal_mvxy_speed(&wk->wu);
         add_mvxy_speed(&wk->wu);
-    case 3:
+    case A02_CUE:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 1) {
             reset_mvxy_data(&wk->wu);
@@ -271,10 +331,10 @@ void Attack_02000(PLW* wk) {
 
 void Attack_03000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         get_cancel_timer(wk);
-        if ((Bonus_Game_Flag == 21 && wk->bs2_on_car) || (wk->wu.xyz[1].disp.pos <= 0)) {
+        if ((Bonus_Game_Flag == BONUS_CAR && wk->bs2_on_car) || (wk->wu.xyz[1].disp.pos <= 0)) {
             hoken_muriyari_chakuchi(wk);
             wk->wu.rl_flag = wk->wu.rl_waza;
             setup_lvdir_after_autodir(wk);
@@ -282,7 +342,7 @@ void Attack_03000(PLW* wk) {
         }
         set_char_move_init(&wk->wu, 4, wk->as->char_ix);
         break;
-    case 1:
+    case A03_MOVE:
         if (wk->wu.mvxy.a[1].sp > 0) {
             if (wk->wu.xyz[1].disp.pos < 16) {
                 add_mvxy_speed(&wk->wu);
@@ -291,21 +351,21 @@ void Attack_03000(PLW* wk) {
             }
         }
         wk->wu.routine_no[3]++;
-    case 2:
+    case A03_AIR:
         jumping_union_process(&wk->wu, 3);
-        if (wk->wu.routine_no[3] == 3) {
+        if (wk->wu.routine_no[3] == A03_LAND) {
             break;
         }
         check_ja_nmj_dummy_RTNM(wk);
         if ((u8)wk->wu.cg_type == 0x40) {
             if (!(wk->spmv_ng_flag & 0x100000) && ja_nmj_rno_change(&wk->wu)) {
-                wk->wu.routine_no[1] = 0;
-                wk->wu.routine_no[3] = 1;
+                wk->wu.routine_no[1] = PLAYER_NORMAL;
+                wk->wu.routine_no[3] = A03_MOVE;
             }
             wk->wu.cg_type = 0;
         }
         break;
-    case 3:
+    case A03_LAND:
         char_move(&wk->wu);
         break;
     }
@@ -361,17 +421,17 @@ out:
 
 void check_ja_nmj_dummy_RTNM(PLW* wk) {
     if (wk->wu.xyz[1].disp.pos < 1) {
-        wk->ja_nmj_rno = 0;
+        wk->ja_nmj_rno = NMJ_IDLE;
         return;
     }
     switch (wk->ja_nmj_rno) {
-    case 0:
+    case NMJ_IDLE:
         if ((wk->wu.cg_ja.atix == 0) && (wk->wu.cg_ja.caix == 0)) {
             break;
         }
-        wk->ja_nmj_rno = 1;
+        wk->ja_nmj_rno = NMJ_ACTIVE;
         break;
-    case 1:
+    case NMJ_ACTIVE:
         if ((wk->wu.cg_ja.atix == 0) && (wk->wu.cg_ja.caix == 0)) {
             goto cancel;
         }
@@ -380,28 +440,28 @@ void check_ja_nmj_dummy_RTNM(PLW* wk) {
         }
     cancel:
         wk->ja_nmj_cnt = get_cjdR(wk);
-        wk->ja_nmj_rno = 2;
+        wk->ja_nmj_rno = NMJ_COUNT;
         break;
-    case 2:
+    case NMJ_COUNT:
         if ((wk->wu.cg_ja.atix == 0) && (wk->wu.cg_ja.caix == 0)) {
             goto count;
         }
         if (wk->wu.att_hit_ok) {
-            wk->ja_nmj_rno = 1;
+            wk->ja_nmj_rno = NMJ_ACTIVE;
             break;
         }
     count:
         if (--wk->ja_nmj_cnt) {
             break;
         }
-        wk->ja_nmj_rno = 3;
+        wk->ja_nmj_rno = NMJ_DONE;
         break;
     default:
         if ((wk->wu.cg_ja.atix == 0) && (wk->wu.cg_ja.caix == 0)) {
             goto idle;
         }
         if (wk->wu.att_hit_ok) {
-            wk->ja_nmj_rno = 1;
+            wk->ja_nmj_rno = NMJ_ACTIVE;
         }
         break;
     idle:
@@ -444,7 +504,7 @@ case3:
 
 void Attack_04000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         hoken_muriyari_chakuchi(wk);
         wk->wu.rl_flag = wk->wu.rl_waza;
@@ -452,7 +512,7 @@ void Attack_04000(PLW* wk) {
         get_cancel_timer(wk);
         set_char_move_init(&wk->wu, 4, wk->as->char_ix);
         break;
-    case 1:
+    case A04_CUE:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 20) {
             wk->wu.routine_no[2] = 1;
@@ -467,31 +527,31 @@ void Attack_04000(PLW* wk) {
 
 void Attack_05000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.rl_flag = wk->wu.rl_waza;
         set_char_move_init(&wk->wu, 5, wk->as->char_ix);
         if (wk->wu.xyz[1].disp.pos > 0) {
-            wk->wu.routine_no[3] = 2;
+            wk->wu.routine_no[3] = A05_AIR;
             char_move_wca(&wk->wu);
         } else {
             hoken_muriyari_chakuchi(wk);
-            wk->wu.routine_no[3] = 1;
+            wk->wu.routine_no[3] = A05_MOVE;
         }
         wk->cancel_timer = 0;
         break;
-    case 1:
+    case A05_MOVE:
         char_move(&wk->wu);
         if ((u8)wk->wu.cg_type == 1) {
             add_mvxy_speed(&wk->wu);
-            wk->wu.routine_no[3] = 2;
+            wk->wu.routine_no[3] = A05_AIR;
             wk->wu.cg_type = 0;
             effect_G6_init(&wk->wu, wk->wu.weight_level);
         }
         break;
-    case 2:
+    case A05_AIR:
         jumping_union_process(&wk->wu, 3);
         break;
-    case 3:
+    case A05_LAND:
         char_move(&wk->wu);
         break;
     }
@@ -508,7 +568,7 @@ void Attack_06000(PLW* wk) {
 
 void Attack_07000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         hoken_muriyari_chakuchi(wk);
         get_cancel_timer(wk);
@@ -518,7 +578,7 @@ void Attack_07000(PLW* wk) {
             wk->wu.rl_flag = wk->wu.rl_waza;
         }
         break;
-    case 1:
+    case A07_CUE:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 20) {
             wk->wu.cg_type = 0;
@@ -533,7 +593,7 @@ void Attack_07000(PLW* wk) {
 void Attack_08000(PLW* wk) {
     s16 ixx;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         if (wk->wu.xyz[1].disp.pos <= 0) {
             wk->wu.rl_flag = wk->wu.rl_waza;
@@ -548,7 +608,7 @@ void Attack_08000(PLW* wk) {
         set_char_move_init(&wk->wu, 4, wk->as->char_ix);
         wk->wu.mvxy.index = wk->as->data_ix;
         break;
-    case 1:
+    case A08_CUE:
         char_move(&wk->wu);
         if ((u8)wk->wu.cg_type == 1) {
             wk->wu.routine_no[3]++;
@@ -559,15 +619,15 @@ void Attack_08000(PLW* wk) {
             wk->wu.mvxy.index++;
         }
         break;
-    case 2:
+    case A08_MOVE:
         jumping_union_process(&wk->wu, 3);
-        if ((wk->wu.routine_no[3] != 3) && ((u8)wk->wu.cg_type == 20)) {
+        if ((wk->wu.routine_no[3] != A08_RUN) && ((u8)wk->wu.cg_type == 20)) {
             add_to_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.cg_type = 0;
             wk->wu.mvxy.index++;
         }
         break;
-    case 3:
+    case A08_RUN:
         char_move(&wk->wu);
         break;
     }
@@ -577,7 +637,7 @@ void Attack_08000(PLW* wk) {
 
 void Attack_09000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         hoken_muriyari_chakuchi(wk);
         get_cancel_timer(wk);
@@ -588,7 +648,7 @@ void Attack_09000(PLW* wk) {
             wk->wu.rl_flag = wk->wu.rl_waza;
         }
         break;
-    case 1:
+    case A09_MOVE:
         char_move(&wk->wu);
         if ((u8)wk->wu.cg_type == 20) {
             wk->wu.cg_type = 0;
@@ -596,14 +656,14 @@ void Attack_09000(PLW* wk) {
         }
         if ((u8)wk->wu.cg_type == 1) {
             add_mvxy_speed(&wk->wu);
-            wk->wu.routine_no[3] = 2;
+            wk->wu.routine_no[3] = A09_AIR;
             wk->wu.cg_type = 0;
         }
         break;
-    case 2:
+    case A09_AIR:
         jumping_union_process(&wk->wu, 3);
         break;
-    case 3:
+    case A09_LAND:
         char_move(&wk->wu);
         break;
     }
@@ -613,7 +673,7 @@ void Attack_09000(PLW* wk) {
 
 void Attack_10000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         hoken_muriyari_chakuchi(wk);
         wk->wu.rl_flag = wk->wu.rl_waza;
@@ -622,19 +682,19 @@ void Attack_10000(PLW* wk) {
         wk->cancel_timer = 0;
         wk->wu.dir_timer = 3;
         if (wk->wu.cg_type == 20) {
-            wk->wu.routine_no[3] = 2;
+            wk->wu.routine_no[3] = A10_AIR;
         }
         grade_add_leap_attack(wk->wu.id);
         break;
-    case 1:
+    case A10_RUN:
         char_move(&wk->wu);
         if (wk->wu.cg_type != 20) {
             break;
         }
         wk->wu.routine_no[3]++;
-    case 2:
+    case A10_AIR:
         jumping_union_process(&wk->wu, 4);
-        if (wk->wu.routine_no[3] == 4) {
+        if (wk->wu.routine_no[3] == A10_AIR2) {
             break;
         }
         if (!wk->wu.hf.hit.player) {
@@ -642,31 +702,31 @@ void Attack_10000(PLW* wk) {
         }
         if (wk->wu.hf.hit.player & 3) {
             wk->wu.mvxy.a[0].sp /= 4;
-            wk->wu.routine_no[3] = 4;
+            wk->wu.routine_no[3] = A10_AIR2;
             break;
         }
         if (wk->wu.hf.hit.player & 0x30) {
             wk->wu.mvxy.a[0].sp /= 4;
             wk->wu.mvxy.a[1].sp = 0;
-            wk->wu.routine_no[3] = 3;
+            wk->wu.routine_no[3] = A10_WAIT;
             break;
         }
         if (wk->wu.hf.hit.player & 0xC0) {
             wk->wu.mvxy.a[0].sp /= 2;
             wk->wu.mvxy.a[0].sp = -wk->wu.mvxy.a[0].sp;
             wk->wu.mvxy.a[1].sp = 0;
-            wk->wu.routine_no[3] = 4;
+            wk->wu.routine_no[3] = A10_AIR2;
         }
         break;
-    case 3:
+    case A10_WAIT:
         if (--wk->wu.dir_timer > 0) {
             break;
         }
-        wk->wu.routine_no[3] = 4;
-    case 4:
+        wk->wu.routine_no[3] = A10_AIR2;
+    case A10_AIR2:
         jumping_union_process(&wk->wu, 5);
         break;
-    case 5:
+    case A10_LAND:
         char_move(&wk->wu);
         break;
     }
@@ -677,7 +737,7 @@ void Attack_10000(PLW* wk) {
 void Attack_14000(PLW* wk) {
     wk->scr_pos_set_flag = 0;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         hoken_muriyari_chakuchi(wk);
         wk->wu.rl_flag = wk->wu.rl_waza;
@@ -685,7 +745,7 @@ void Attack_14000(PLW* wk) {
         setup_lvdir_after_autodir(wk);
         set_char_move_init(&wk->wu, 4, wk->as->char_ix);
         break;
-    case 1:
+    case A14_RUN:
         char_move(&wk->wu);
         if (wk->cat_break_ok_timer) {
             wk->cat_break_reserve = 1;
@@ -698,7 +758,7 @@ void Attack_14000(PLW* wk) {
 
 void Attack_15000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         if (wk->wu.xyz[1].disp.pos <= 0) {
             wk->wu.rl_flag = wk->wu.rl_waza;
@@ -709,7 +769,7 @@ void Attack_15000(PLW* wk) {
         wk->cat_break_ok_timer = 6;
         set_char_move_init((WORK*)wk, 4, wk->as->char_ix);
         break;
-    case 1:
+    case A15_AIR:
         if (wk->cat_break_ok_timer) {
             wk->cat_break_reserve = 1;
         }
@@ -719,13 +779,13 @@ void Attack_15000(PLW* wk) {
             break;
         }
         wk->wu.routine_no[3]++;
-    case 2:
+    case A15_AIR2:
         jumping_union_process((WORK*)wk, 3);
-        if ((wk->wu.routine_no[3] != 3) && wk->cat_break_ok_timer) {
+        if ((wk->wu.routine_no[3] != A15_LAND) && wk->cat_break_ok_timer) {
             wk->cat_break_reserve = 1;
         }
         break;
-    case 3:
+    case A15_LAND:
         char_move((WORK*)wk);
         break;
     }
@@ -746,7 +806,7 @@ void get_cancel_timer(PLW* wk) {
 
 
 void hoken_muriyari_chakuchi(PLW* wk) {
-    if ((Bonus_Game_Flag == 21) && wk->bs2_on_car) {
+    if ((Bonus_Game_Flag == BONUS_CAR) && wk->bs2_on_car) {
         wk->wu.xyz[1].disp.pos = bs2_floor[2];
     } else {
         wk->wu.xyz[1].disp.pos = 0;

@@ -1,5 +1,8 @@
 /*
- * EFFJ8_TBL.C  game tables
+ * EFFJ8_TBL.C  dragonfly heights and hover times
+ *
+ * effj8_y_tbl is the eight random heights a dragonfly enters at, and effj8_timer_tbl the eight
+ * random hovering times. Read by EFFJ8.C, the dragonflies of the stage background.
  */
 
 #include "types.h"

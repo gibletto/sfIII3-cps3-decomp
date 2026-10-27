@@ -1,5 +1,8 @@
 /*
- * BG_SUB_TBL.C  game tables
+ * BG_SUB_TBL.C  background test stage list
+ *
+ * bg_test_stage_tbl is the stage and area of each entry the debug background test steps
+ * through. Read by TATE00.C.
  */
 
 #include "types.h"

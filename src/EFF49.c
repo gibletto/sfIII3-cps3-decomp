@@ -22,16 +22,22 @@
 #include "charmove_2.h"
 #include "EFF49.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* show the digit */
+#define R0_COUNT        1       /* change the digit with the count */
+#define R0_OUT          2       /* stay until scrolled off */
+#define R0_KILL         3       /* (default) put the work back */
+
 
 
 void effect_49_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
         break;
-    case 1:
+    case R0_COUNT:
         if (ewk->wu.dmcal_m != Continue_Count[LOSER]) {
             ewk->wu.dmcal_m = Continue_Count[LOSER];
             if (Continue_Count[LOSER] < 0) {
@@ -43,7 +49,7 @@ void effect_49_move(WORK_Other* ewk) {
             }
         }
         break;
-    case 2:
+    case R0_OUT:
         if (Ck_Range_Out_S(ewk, 1, 64)) {
             ewk->wu.routine_no[0]++;
             ewk->wu.disp_flag = 0;

@@ -19,15 +19,20 @@
 #include "charmove_2.h"
 #include "effe9.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* start the animation */
+#define R0_MOVE         1       /* show until the opening ends */
+#define R0_STAY         2       /* hold the final place */
+
 
 
 void effect_E9_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init2(&ewk->wu, 0, 0, ewk->wu.char_index + 1, 0);
-    case 1:
+    case R0_MOVE:
         if (end_w.r_no_0 >= 6) {
             ewk->wu.routine_no[0]++;
             if (ewk->wu.type) {
@@ -39,7 +44,7 @@ void effect_E9_move(WORK_Other* ewk) {
             ewk->wu.routine_no[0]++;
             ewk->wu.disp_flag = 0;
         }
-    case 2:
+    case R0_STAY:
         disp_pos_trans_entry(ewk);
         break;
     default:

@@ -1,5 +1,7 @@
 /*
- * EFFJ9_TBL.C  game tables
+ * EFFJ9_TBL.C  shake offsets of the object beside the bonus-stage car
+ *
+ * c2quake_table gives the x shake offset for each frame of the car's shake. Read by EFFJ9.C.
  */
 
 #include "types.h"

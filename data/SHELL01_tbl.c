@@ -1,5 +1,8 @@
 /*
- * SHELL01_TBL.C  game tables
+ * SHELL01_TBL.C  CPU anti-projectile pattern table 01 (Alex)
+ *
+ * Shell01_Tbl lists the Shell01_nnnn pattern scripts the computer-controlled Alex runs when
+ * the opponent fires a projectile, indexed by Pattern_Index. Read by SHELL01.C.
  */
 
 #include "types.h"

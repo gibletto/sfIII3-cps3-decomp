@@ -23,6 +23,10 @@
 #include "bg_sub_5.h"
 #include "EFF29.h"
 
+/* routine_no[0] */
+#define R0_WAIT         0       /* hidden, count the vanish time down */
+#define R0_PLAY         1       /* play the animation once, then hide */
+
 
 
 void effect_29_move(WORK_Other* ewk) {
@@ -31,7 +35,7 @@ void effect_29_move(WORK_Other* ewk) {
         return;
     }
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_WAIT:
         if (!EXE_flag && !Game_pause && !EXE_obroll) {
             ewk->wu.old_rno[0]--;
             if (ewk->wu.old_rno[0] <= 0) {
@@ -42,11 +46,11 @@ void effect_29_move(WORK_Other* ewk) {
             }
         }
         break;
-    case 1:
+    case R0_PLAY:
         if (!EXE_flag && !Game_pause && !EXE_obroll) {
             char_move(&ewk->wu);
             if (ewk->wu.cg_type) {
-                ewk->wu.routine_no[0] = 0;
+                ewk->wu.routine_no[0] = R0_WAIT;
                 ewk->wu.disp_flag = 0;
                 work = random_16_com();
                 work &= 7;

@@ -1,5 +1,8 @@
 /*
- * PASS00_TBL.C  game tables
+ * PASS00_TBL.C  Gill's passive pattern table
+ *
+ * Passive00_Tbl lists the 158 passive pattern routines of character 0 (Gill), indexed by
+ * Pattern_Index. Read by PASS00.C.
  */
 
 #include "types.h"

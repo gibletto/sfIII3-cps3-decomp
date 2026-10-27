@@ -24,16 +24,26 @@
 #include "bg_sub_5.h"
 #include "EFF46.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* show and start the animation */
+#define R0_MOVE         1       /* idle, react and fly off */
+#define R0_KILL         2       /* (default) put the work back */
+
+/* routine_no[1] */
+#define R1_IDLE         0       /* idle until the character comes close */
+#define R1_REACT        1       /* play the reaction */
+#define R1_FLY          2       /* fly away until off screen */
+
 
 
 void effect_46_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R0_MOVE:
         if (!EXE_flag && !Game_pause && !EXE_obroll) {
             eff46_move(ewk);
         }
@@ -52,7 +62,7 @@ void effect_46_move(WORK_Other* ewk) {
 void eff46_move(WORK_Other* ewk) {
     s16 work2;
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_IDLE:
         char_move(&ewk->wu);
         if (eff46_appear_check(ewk)) {
         } else {
@@ -66,13 +76,13 @@ void eff46_move(WORK_Other* ewk) {
             set_char_move_init(&ewk->wu, 0, 45);
         }
         break;
-    case 1:
+    case R1_REACT:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type) {
             ewk->wu.routine_no[1]++;
         }
         break;
-    case 2:
+    case R1_FLY:
         char_move(&ewk->wu);
         add_x_sub(ewk);
         if (ewk->wu.xyz[1].disp.pos >= ewk->wu.old_rno[0]) {
@@ -84,7 +94,7 @@ void eff46_move(WORK_Other* ewk) {
         }
         break;
     default:
-        ewk->wu.routine_no[0] = 2;
+        ewk->wu.routine_no[0] = R0_KILL;
         break;
     }
 }

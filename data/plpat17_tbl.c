@@ -1,5 +1,8 @@
 /*
- * PLPAT17_TBL.C  game tables
+ * PLPAT17_TBL.C  Makoto's special attack table
+ *
+ * pl17_exatt_table lists the routines of attack numbers 16 and up of character 17 (Makoto).
+ * Read by pl17_extra_attack in PLPAT17.C.
  */
 
 #include "types.h"

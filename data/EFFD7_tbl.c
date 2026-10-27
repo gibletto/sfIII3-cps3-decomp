@@ -1,5 +1,8 @@
 /*
- * EFFD7_TBL.C  game tables
+ * EFFD7_TBL.C  thrown ball catch boxes
+ *
+ * effD7_hit_box holds the ball's box and the player's catch box tested when the player catches
+ * the ball. Read by EFFD7.C, the ball thrown by a player.
  */
 
 #include "types.h"

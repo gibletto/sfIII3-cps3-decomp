@@ -64,6 +64,85 @@
 #include "win_pl.h"
 #include "fighter.h"
 
+/* win_rno[0] in Win_10000: Q's win */
+#define QW_NORMAL       0       /* the plain pose (not the last round) */
+#define QW_KEEP         1       /* walk up to the loser and stay (q_keeping_action) */
+#define QW_LEAVE        2       /* walk up, then walk off (q_leave_after_action) */
+#define QW_KEEP_67      3       /* QW_KEEP by a loser in animation 67; q_em_dir makes it QW_KEEP */
+#define QW_LEAVE_67     4       /* QW_LEAVE by a loser in animation 67; q_em_dir makes it QW_LEAVE */
+
+/* routine_no[3], Win_01000 */
+#define W01_POSE        1       /* run the pose win_rno[0] chose */
+
+/* wk->wu.routine_no[3] in a win or lose pose */
+#define POSE_RUN        1       /* the pose runs until its script sets RN3_DONE */
+
+/* win_rno[0] in Win_01000: Oro's win */
+#define OW_NORMAL       0       /* the plain pose */
+#define OW_FLY_UP       1       /* jijii_fly_up */
+#define OW_JUMP         2       /* jijii_jump */
+#define OW_FULL         3       /* jijii_full */
+
+/* win_rno[1] in jijii_fly_up */
+#define JF_START        0       /* until the take-off frame */
+#define JF_RISE         1       /* rise off the top of the screen */
+#define JF_END          2       /* the last pose */
+
+/* win_rno[1] in jijii_jump */
+#define JJ_START        0       /* until the jump frame */
+#define JJ_JUMP         1       /* jump off the side of the screen */
+#define JJ_SETUP        2       /* set up the return */
+#define JJ_WAIT         3       /* wait win_free, then come in from the far side */
+#define JJ_RETURN       4       /* walk back in */
+
+/* win_rno[1] in jijii_full */
+#define JFU_START       0       /* until the cue (cmwk[0] 1) */
+#define JFU_RISE        1       /* rise to height 42 */
+#define JFU_END         2       /* the last pose */
+
+/* win_rno[1] in Win_05000 */
+#define W5_FALL         0       /* fall to the ground */
+#define W5_LAND         1       /* landed */
+
+/* win_rno[1] in Win_09000 */
+#define W9_START        0       /* until the cue (cmwk[0]) */
+#define W9_POSE         1       /* the second pose */
+
+/* win_rno[1] in the q_*_action routines */
+#define Q_FACE          0       /* face the opponent, turning first if needed */
+#define Q_TURN          1       /* until the turn is done */
+#define Q_WALK_START    2       /* start walking */
+#define Q_WALK          3       /* walk up to the opponent */
+#define Q_STAND         4       /* stand there (q_leave_after_action: then turn away) */
+#define Q_LEAVE         5       /* q_leave_after_action: walk off */
+
+/* win_rno[0] in Win_11000: Twelve's win */
+#define TW_NORMAL       0       /* the plain pose */
+#define TW_AWAY         1       /* twelve_win_away */
+#define TW_BACKJUMP     2       /* twelve_win_backjump */
+
+/* win_rno[1] in twelve_win_away */
+#define TA_START        0       /* until the take-off frame */
+#define TA_RISE         1       /* rise */
+#define TA_FLY          2       /* fly off the side of the screen */
+#define TA_GONE         3       /* gone */
+
+/* win_rno[1] in twelve_win_backjump */
+#define TB_START        0       /* until the jump frame */
+#define TB_JUMP         1       /* the back jump, until it lands */
+#define TB_LAND         2       /* until the next cue */
+#define TB_RISE         3       /* rise off the top of the screen */
+#define TB_GONE         4       /* gone */
+
+/* win_rno[1] in urien_dash */
+#define UD_START        0       /* dash, or straight to the pose when close enough (urien_dash_chk) */
+#define UD_RISE         1       /* until the dash starts */
+#define UD_DASH         2       /* the dash, until it lands */
+#define UD_LAND         3       /* dash again or stop */
+#define UD_STOP         4       /* until the stop is done */
+#define UD_POSE_INIT    5       /* set up the win pose */
+#define UD_POSE         6       /* the win pose */
+
 s16 poison_flag[2];  /* 020281A8 */
 s16 win_rno[2];  /* 020281AC */
 s16 a_rno;  /* 020281B0 */
@@ -84,7 +163,7 @@ void win_player(PLW* wk) {
         meta_win_pause(wk);
     } else if (Bonus_Game_Flag) {
         bonus_game_win_pause(wk);
-    } else if (pcon_rno[0] == 2 && pcon_rno[1] == 3) {
+    } else if (pcon_rno[0] == PCON_DIE && pcon_rno[1] == SETTLE_JUDGE) {
         Judge_normal_winner(wk);
     } else {
         win_jp_tbl[win_type_tbl[wk->player_number]](wk);
@@ -104,7 +183,7 @@ void Win_01000(PLW* wk) {
     s16 work;
     bg_app_stop = 1;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         win_rno[0] = win_rno[1] = 0;
         wk->wu.routine_no[3]++;
         work = win_select(wk, 7);
@@ -112,38 +191,38 @@ void Win_01000(PLW* wk) {
             if (Round_Result & 0x800) {
                 wk->wu.cmwk[0] = 0;
                 set_char_move_init(&wk->wu, 9, 42);
-                win_rno[0] = 3;
+                win_rno[0] = OW_FULL;
                 break;
             }
             if (bg_w.stage == 9) {
                 set_char_move_init(&wk->wu, 9, 41);
-                win_rno[0] = 1;
+                win_rno[0] = OW_FLY_UP;
                 break;
             }
             set_char_move_init(&wk->wu, 9, win_10000_tbl[1][work]);
             if (work == 4) {
-                win_rno[0] = 2;
+                win_rno[0] = OW_JUMP;
             }
         } else {
             set_char_move_init(&wk->wu, 9, win_10000_tbl[0][work]);
             if (work == 4) {
-                win_rno[0] = 2;
+                win_rno[0] = OW_JUMP;
             }
         }
         break;
-    case 1:
-    case 9:
+    case W01_POSE:
+    case RN3_DONE:
         switch (win_rno[0]) {
-        case 0:
+        case OW_NORMAL:
             char_move(&wk->wu);
             break;
-        case 1:
+        case OW_FLY_UP:
             jijii_fly_up(wk);
             break;
-        case 2:
+        case OW_JUMP:
             jijii_jump(wk);
             break;
-        case 3:
+        case OW_FULL:
             jijii_full(wk);
             break;
         }
@@ -157,7 +236,7 @@ void Win_01000(PLW* wk) {
 void jijii_fly_up(PLW* wk) {
     bg_app_stop = 1;
     switch (win_rno[1]) {
-    case 0:
+    case JF_START:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 1) {
             win_rno[1]++;
@@ -166,7 +245,7 @@ void jijii_fly_up(PLW* wk) {
             wk->wu.mvxy.d[1].sp = -0x600;
         }
         break;
-    case 1:
+    case JF_RISE:
         if (wk->wu.cg_type != 2) {
             char_move(&wk->wu);
         }
@@ -178,7 +257,7 @@ void jijii_fly_up(PLW* wk) {
             wk->wu.xyz[1].disp.pos = 200;
         }
         break;
-    case 2:
+    case JF_END:
         char_move(&wk->wu);
         break;
     }
@@ -193,7 +272,7 @@ void jijii_jump(PLW* wk) {
     wk->wu.position_z = plw[id_w].wu.position_z - 1;
     wk->wu.my_priority = wk->wu.position_z;
     switch (win_rno[1]) {
-    case 0:
+    case JJ_START:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 9) {
             win_rno[1]++;
@@ -208,7 +287,7 @@ void jijii_jump(PLW* wk) {
             wk->wu.mvxy.d[1].sp = -0x600;
         }
         break;
-    case 1:
+    case JJ_JUMP:
         if (wk->wu.cg_type != 99) {
             char_move(&wk->wu);
         }
@@ -226,12 +305,12 @@ void jijii_jump(PLW* wk) {
             effect_work_kill(3, 13);
         }
         break;
-    case 2:
+    case JJ_SETUP:
         win_rno[1]++;
         set_char_move_init2(&wk->wu, 9, 36, 7, 0);
         win_free[wk->wu.id] = 48;
         break;
-    case 3:
+    case JJ_WAIT:
         win_free[wk->wu.id]--;
         if (win_free[wk->wu.id] > 0) {
             break;
@@ -246,7 +325,7 @@ void jijii_jump(PLW* wk) {
         }
         wk->wu.mvxy.d[0].sp = 0;
         wk->wu.xyz[1].cal = 0;
-    case 4:
+    case JJ_RETURN:
         add_x_sub((WORK_Other*)wk);
         char_move(&wk->wu);
         break;
@@ -258,13 +337,13 @@ void jijii_jump(PLW* wk) {
 void jijii_full(PLW* wk) {
     bg_app_stop = 1;
     switch (win_rno[1]) {
-    case 0:
+    case JFU_START:
         char_move(&wk->wu);
         if (wk->wu.cmwk[0] == 1) {
             win_rno[1]++;
         }
         break;
-    case 1:
+    case JFU_RISE:
         char_move(&wk->wu);
         wk->wu.xyz[1].cal += 0x10000;
         if (wk->wu.xyz[1].disp.pos >= 42) {
@@ -273,7 +352,7 @@ void jijii_full(PLW* wk) {
             set_char_move_init(&wk->wu, 9, 43);
         }
         break;
-    case 2:
+    case JFU_END:
         char_move(&wk->wu);
         break;
     }
@@ -285,7 +364,7 @@ void Win_02000(PLW* wk) {
     s16 work;
     bg_app_stop = 1;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         if (set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
             set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
         }
@@ -320,7 +399,7 @@ void Win_03000(PLW* wk) {
         set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
     }
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         win_rno[0] = win_rno[1] = 0;
         work = win_select(wk, 15);
@@ -362,7 +441,7 @@ void Win_04000(PLW* wk) {
         set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
     }
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         win_rno[0] = win_rno[1] = 0;
         work = win_select(wk, 3);
@@ -388,7 +467,7 @@ void Win_04000(PLW* wk) {
         }
         break;
     default:
-    case 1:
+    case POSE_RUN:
         char_move(&wk->wu);
         break;
     }
@@ -403,13 +482,13 @@ void Normal_normal_Winner(PLW* wk) {
         set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
     }
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         work = win_select(wk, 7);
         set_char_move_init(&wk->wu, 9, work + 32);
         break;
-    case 1:
-    case 9:
+    case POSE_RUN:
+    case RN3_DONE:
         char_move(&wk->wu);
         break;
     }
@@ -424,14 +503,14 @@ void Judge_normal_winner(PLW* wk) {
         set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
     }
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         win_rno[0] = win_rno[1] = 0;
         wk->wu.routine_no[3]++;
         work = win_select(wk, 3);
         set_char_move_init(&wk->wu, 9, work + 52);
         break;
-    case 1:
-    case 9:
+    case POSE_RUN:
+    case RN3_DONE:
         char_move(&wk->wu);
         break;
     }
@@ -446,7 +525,7 @@ void Win_05000(PLW* wk) {
         set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
     }
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         win_rno[0] = win_rno[1] = 0;
         wk->wu.routine_no[3]++;
         if (Round_num >= (Battle_Round[Play_Type] * 2) ||
@@ -473,7 +552,7 @@ void Win_05000(PLW* wk) {
             break;
         }
         switch (win_rno[1]) {
-        case 0:
+        case W5_FALL:
             char_move(&wk->wu);
             add_x_sub((WORK_Other*)wk);
             add_y_sub((WORK_Other*)wk);
@@ -483,7 +562,7 @@ void Win_05000(PLW* wk) {
                 char_move_z(&wk->wu);
             }
             break;
-        case 1:
+        case W5_LAND:
             char_move(&wk->wu);
             break;
         }
@@ -496,7 +575,7 @@ void Win_06000(PLW* wk) {
     s16 work;
     bg_app_stop = 1;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         if (set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
             set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
         }
@@ -526,7 +605,7 @@ void Win_07000(PLW* wk) {
         set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
     }
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         win_rno[0] = win_rno[1] = 0;
         wk->wu.routine_no[3]++;
         if (Round_num >= (Battle_Round[Play_Type] * 2) ||
@@ -591,7 +670,7 @@ void Win_08000(PLW* wk) {
     s16 work;
     bg_app_stop = 1;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         if (set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
             set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
         }
@@ -623,7 +702,7 @@ void Win_09000(PLW* wk) {
         set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
     }
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         win_rno[0] = win_rno[1] = 0;
         wk->wu.routine_no[3]++;
         work = win_select(wk, 7);
@@ -662,14 +741,14 @@ void Win_09000(PLW* wk) {
     default:
         if (win_rno[0]) {
             switch (win_rno[1]) {
-            case 0:
+            case W9_START:
                 char_move(&wk->wu);
                 if (wk->wu.cmwk[0]) {
                     win_rno[1]++;
                     set_char_move_init(&wk->wu, 9, 39);
                 }
                 break;
-            case 1:
+            case W9_POSE:
                 char_move(&wk->wu);
                 break;
             }
@@ -690,7 +769,7 @@ void Win_10000(PLW* wk) {
     id_w = wk->wu.id ^ 1;
     wk->wu.position_z = wk->wu.next_z = plw[id_w].wu.position_z + 1;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         if (set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
             set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
         }
@@ -705,26 +784,26 @@ void Win_10000(PLW* wk) {
             }
             if (work2 > 224) {
                 if (work & 1) {
-                    win_rno[0] = 1;
+                    win_rno[0] = QW_KEEP;
                 } else {
-                    win_rno[0] = 2;
+                    win_rno[0] = QW_LEAVE;
                 }
             } else if (work > 1) {
                 if (work & 1) {
                     if (plw[id_w].wu.char_index != 67) {
-                        win_rno[0] = 1;
+                        win_rno[0] = QW_KEEP;
                     } else {
-                        win_rno[0] = 3;
+                        win_rno[0] = QW_KEEP_67;
                     }
                 } else if (plw[id_w].wu.char_index != 67) {
-                    win_rno[0] = 2;
+                    win_rno[0] = QW_LEAVE;
                 } else {
-                    win_rno[0] = 4;
+                    win_rno[0] = QW_LEAVE_67;
                 }
             } else if (work & 1) {
-                win_rno[0] = 1;
+                win_rno[0] = QW_KEEP;
             } else {
-                win_rno[0] = 2;
+                win_rno[0] = QW_LEAVE;
             }
         } else {
             set_char_move_init(&wk->wu, 9, work + 32);
@@ -732,15 +811,15 @@ void Win_10000(PLW* wk) {
         break;
     default:
         switch (win_rno[0]) {
-        case 0:
+        case QW_NORMAL:
             Normal_normal_Winner(wk);
             break;
-        case 1:
-        case 3:
+        case QW_KEEP:
+        case QW_KEEP_67:
             q_keeping_action(wk);
             break;
-        case 2:
-        case 4:
+        case QW_LEAVE:
+        case QW_LEAVE_67:
             q_leave_after_action(wk);
             break;
         }
@@ -783,15 +862,15 @@ s32 q_em_dir(PLW* wk) {
     }
     pos_w = wk->wu.xyz[0].disp.pos;
     if (q_em_distance_chk(wk)) {
-        if (win_rno[0] == 3) {
-            win_rno[0] = 1;
+        if (win_rno[0] == QW_KEEP_67) {
+            win_rno[0] = QW_KEEP;
             set_char_move_init(&wk->wu, 9, 36);
-        } else if (win_rno[0] == 4) {
-            win_rno[0] = 2;
+        } else if (win_rno[0] == QW_LEAVE_67) {
+            win_rno[0] = QW_LEAVE;
             set_char_move_init(&wk->wu, 9, 36);
         }
         wk->wu.direction = wk->wu.rl_flag;
-        win_rno[1] = 4;
+        win_rno[1] = Q_STAND;
         wk->wu.xyz[0].disp.pos = pos_w;
         return 0;
     }
@@ -803,24 +882,24 @@ s32 q_em_dir(PLW* wk) {
 
 void q_keeping_action(PLW* wk) {
     switch (win_rno[1]) {
-    case 0:
+    case Q_FACE:
         if (q_em_dir(wk) != 0) {
             if (wk->wu.direction == wk->wu.rl_flag) {
-                win_rno[1] = 2;
+                win_rno[1] = Q_WALK_START;
             } else {
-                win_rno[1] = 1;
+                win_rno[1] = Q_TURN;
                 set_char_move_init(&wk->wu, 9, 40);
                 wk->wu.rl_flag ^= 1;
             }
         }
         break;
-    case 1:
+    case Q_TURN:
         char_move(&wk->wu);
         if ((u8)wk->wu.cg_type == 0xFF) {
             win_rno[1]++;
         }
         break;
-    case 2:
+    case Q_WALK_START:
         (win_rno[1])++;
         set_char_move_init(&wk->wu, 9, 41);
         wk->wu.mvxy.d[0].sp = 0;
@@ -830,7 +909,7 @@ void q_keeping_action(PLW* wk) {
             wk->wu.mvxy.a[0].sp = -0x1C000;
         }
         break;
-    case 3:
+    case Q_WALK:
         char_move(&wk->wu);
         add_x_sub((WORK_Other*)wk);
         if (q_em_distance_chk(wk)) {
@@ -838,7 +917,7 @@ void q_keeping_action(PLW* wk) {
             set_char_move_init(&wk->wu, 9, win_rno[0] == 1 ? 36 : 37);
         }
         break;
-    case 4:
+    case Q_STAND:
         char_move(&wk->wu);
         break;
     }
@@ -849,24 +928,24 @@ void q_keeping_action(PLW* wk) {
 void q_leave_after_action(PLW* wk) {
     s16 work;
     switch (win_rno[1]) {
-    case 0:
+    case Q_FACE:
         if (q_em_dir(wk)) {
             if (wk->wu.direction == wk->wu.rl_flag) {
-                win_rno[1] = 2;
+                win_rno[1] = Q_WALK_START;
                 break;
             }
-            win_rno[1] = 1;
+            win_rno[1] = Q_TURN;
             set_char_move_init(&wk->wu, 9, 40);
             wk->wu.rl_flag ^= 1;
         }
         break;
-    case 1:
+    case Q_TURN:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
             win_rno[1]++;
         }
         break;
-    case 2:
+    case Q_WALK_START:
         win_rno[1]++;
         set_char_move_init(&wk->wu, 9, 41);
         wk->wu.mvxy.d[0].sp = 0;
@@ -876,7 +955,7 @@ void q_leave_after_action(PLW* wk) {
         }
         wk->wu.mvxy.a[0].sp = -0x1C000;
         break;
-    case 3:
+    case Q_WALK:
         char_move(&wk->wu);
         add_x_sub((WORK_Other*)wk);
         if (q_em_distance_chk(wk)) {
@@ -888,7 +967,7 @@ void q_leave_after_action(PLW* wk) {
             }
         }
         break;
-    case 4:
+    case Q_STAND:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
             win_rno[1]++;
@@ -901,7 +980,7 @@ void q_leave_after_action(PLW* wk) {
             wk->wu.mvxy.a[0].sp = -0x1C000;
         }
         break;
-    case 5:
+    case Q_LEAVE:
         char_move(&wk->wu);
         add_x_sub((WORK_Other*)wk);
         if (wk->wu.rl_flag) {
@@ -926,23 +1005,23 @@ void q_leave_after_action(PLW* wk) {
 /* provisional name */
 void q_walk_past_action(PLW* wk) {
     switch (win_rno[1]) {
-    case 0:
+    case Q_FACE:
         q_em_dir(wk);
         if (wk->wu.direction == wk->wu.rl_flag) {
-            win_rno[1] = 2;
+            win_rno[1] = Q_WALK_START;
             break;
         }
-        win_rno[1] = 1;
+        win_rno[1] = Q_TURN;
         set_char_move_init(&wk->wu, 9, 40);
         wk->wu.rl_flag ^= 1;
         break;
-    case 1:
+    case Q_TURN:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
             win_rno[1]++;
         }
         break;
-    case 2:
+    case Q_WALK_START:
         win_rno[1]++;
         set_char_move_init(&wk->wu, 9, 41);
         wk->wu.mvxy.d[0].sp = 0;
@@ -952,7 +1031,7 @@ void q_walk_past_action(PLW* wk) {
         }
         wk->wu.mvxy.a[0].sp = -0x1C000;
         break;
-    case 3:
+    case Q_WALK:
         char_move(&wk->wu);
         add_x_sub((WORK_Other*)wk);
         if (q_em_distance_chk(wk)) {
@@ -960,7 +1039,7 @@ void q_walk_past_action(PLW* wk) {
             set_char_move_init(&wk->wu, 9, 37);
         }
         break;
-    case 4:
+    case Q_STAND:
         char_move(&wk->wu);
         break;
     }
@@ -972,7 +1051,7 @@ void Win_11000(PLW* wk) {
     s16 work;
     bg_app_stop = 1;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         if (set_field_hosei_flag(&plw[wk->wu.id], (bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset), 1)) {
             set_field_hosei_flag(&plw[wk->wu.id], (bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset), 0);
         }
@@ -982,20 +1061,20 @@ void Win_11000(PLW* wk) {
         if (Round_num >= (Battle_Round[Play_Type] * 2) ||
             PL_Wins[wk->wu.id] >= Battle_Round[Play_Type] + 1) {
             if (Perfect_Flag) {
-                win_rno[0] = 1;
+                win_rno[0] = TW_AWAY;
                 set_char_move_init(&wk->wu, 9, 38);
                 effect_L3_init(wk);
             } else {
                 set_char_move_init(&wk->wu, 9, work + 36);
                 switch (work) {
                 case 0:
-                    win_rno[0] = 2;
+                    win_rno[0] = TW_BACKJUMP;
                     break;
                 case 1:
                     break;
                 default:
                     effect_L3_init(wk);
-                    win_rno[0] = 1;
+                    win_rno[0] = TW_AWAY;
                     break;
                 }
             }
@@ -1006,13 +1085,13 @@ void Win_11000(PLW* wk) {
         break;
     default:
         switch (win_rno[0]) {
-        case 0:
+        case TW_NORMAL:
             Normal_normal_Winner(wk);
             break;
-        case 1:
+        case TW_AWAY:
             twelve_win_away(wk);
             break;
-        case 2:
+        case TW_BACKJUMP:
             twelve_win_backjump(wk);
             break;
         }
@@ -1022,7 +1101,7 @@ void Win_11000(PLW* wk) {
 
 void twelve_win_away(PLW* wk) {
     switch (win_rno[1]) {
-    case 0:
+    case TA_START:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 1) {
             win_rno[1]++;
@@ -1032,7 +1111,7 @@ void twelve_win_away(PLW* wk) {
             wk->wu.mvxy.d[1].sp = -0x6000;
         }
         break;
-    case 1:
+    case TA_RISE:
         add_y_sub((WORK_Other*)wk);
         char_move(&wk->wu);
         if (wk->wu.cg_type != 2) {
@@ -1048,21 +1127,21 @@ void twelve_win_away(PLW* wk) {
         wk->wu.mvxy.a[1].sp = -0x8000;
         wk->wu.mvxy.d[1].sp = 0x4000;
         break;
-    case 2:
+    case TA_FLY:
         add_x_sub((WORK_Other*)wk);
         add_y_sub((WORK_Other*)wk);
         if (!range_x_check3((WORK*)wk, 208)) {
             win_rno[1]++;
         }
         break;
-    case 3:
+    case TA_GONE:
         break;
     }
 }
 
 void twelve_win_backjump(PLW* wk) {
     switch (win_rno[1]) {
-    case 0:
+    case TB_START:
         if (set_field_hosei_flag(&plw[wk->wu.id], (bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset), 1)) {
             set_field_hosei_flag(&plw[wk->wu.id], (bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset), 0);
         }
@@ -1078,7 +1157,7 @@ void twelve_win_backjump(PLW* wk) {
             }
         }
         break;
-    case 1:
+    case TB_JUMP:
         if (set_field_hosei_flag(&plw[wk->wu.id], (bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset), 1)) {
             set_field_hosei_flag(&plw[wk->wu.id], (bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset), 0);
         }
@@ -1091,20 +1170,20 @@ void twelve_win_backjump(PLW* wk) {
             wk->wu.xyz[1].cal = 0;
         }
         break;
-    case 2:
+    case TB_LAND:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 9) {
             win_rno[1]++;
         }
         break;
-    case 3:
+    case TB_RISE:
         char_move(&wk->wu);
         wk->wu.xyz[1].cal += 0x20000;
         if (wk->wu.xyz[1].disp.pos > 256) {
             win_rno[1]++;
         }
         break;
-    case 4:
+    case TB_GONE:
         break;
     }
 }
@@ -1115,7 +1194,7 @@ void Win_12000(PLW* wk) {
     s16 work;
     bg_app_stop = 1;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         if (set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
             set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
         }
@@ -1140,7 +1219,7 @@ void Win_13000(PLW* wk) {
     s16 work;
     bg_app_stop = 1;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         if (set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
             set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
         }
@@ -1149,12 +1228,12 @@ void Win_13000(PLW* wk) {
         if (Round_num >= (Battle_Round[Play_Type] * 2) ||
             PL_Wins[wk->wu.id] >= Battle_Round[Play_Type] + 1) {
             if (wk->wu.id) {
-                if (p2sw_0 & 0x1000) {
+                if (p2sw_0 & BUTTON_START) {
                     set_char_move_init(&wk->wu, 9, 40);
                     break;
                 }
             } else {
-                if (p1sw_0 & 0x1000) {
+                if (p1sw_0 & BUTTON_START) {
                     set_char_move_init(&wk->wu, 9, 40);
                     break;
                 }
@@ -1181,7 +1260,7 @@ void Win_14000(PLW* wk) {
         set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
     }
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         win_rno[0] = win_rno[1] = 0;
         wk->wu.routine_no[3]++;
         if (Round_num >= (Battle_Round[Play_Type] * 2) ||
@@ -1229,16 +1308,16 @@ s32 urien_dash_chk(PLW* wk) {
 
 void urien_dash(PLW* wk) {
     switch (win_rno[1]) {
-    case 0:
+    case UD_START:
         win_rno[1]++;
         if (urien_dash_chk(wk)) {
-            win_rno[1] = 5;
+            win_rno[1] = UD_POSE_INIT;
         } else {
             wk->wu.rl_flag = wk->wu.rl_waza;
             set_char_move_init(&wk->wu, 0, 4);
             setup_mvxy_data(&wk->wu, 2);
         }
-    case 1:
+    case UD_RISE:
         if (wk->wu.cg_type == 1) {
             win_rno[1]++;
             add_mvxy_speed(&wk->wu);
@@ -1246,7 +1325,7 @@ void urien_dash(PLW* wk) {
         }
         char_move(&wk->wu);
         break;
-    case 2:
+    case UD_DASH:
         add_mvxy_speed(&wk->wu);
         cal_mvxy_speed(&wk->wu);
         char_move(&wk->wu);
@@ -1259,7 +1338,7 @@ void urien_dash(PLW* wk) {
         wk->wu.mvxy.a[1].sp = 0;
         char_move_cmja(&wk->wu);
         break;
-    case 3:
+    case UD_LAND:
         char_move(&wk->wu);
         if (wk->wu.cg_type != 64) {
             break;
@@ -1270,17 +1349,17 @@ void urien_dash(PLW* wk) {
             win_rno[1] = 0;
         }
         break;
-    case 4:
+    case UD_STOP:
         char_move(&wk->wu);
         if (wk->wu.cg_type != 0xFF) {
             break;
         }
         win_rno[1]++;
-    case 5:
+    case UD_POSE_INIT:
         win_rno[1]++;
         set_char_move_init(&wk->wu, 9, 36);
         break;
-    case 6:
+    case UD_POSE:
         char_move(&wk->wu);
         break;
     }
@@ -1292,7 +1371,7 @@ void Win_15000(PLW* wk) {
     s16 work;
     bg_app_stop = 1;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         if (set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
             set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
         }
@@ -1342,10 +1421,10 @@ PLW *wk;
     }
 
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         win_rno[0] = win_rno[1] = 0;
-        if (Bonus_Game_Flag == 21) {
+        if (Bonus_Game_Flag == BONUS_CAR) {
             if (wk->wu.operator) {
                 if (Time_Over) {
                     set_char_move_init(&wk->wu, 9, 67);
@@ -1384,8 +1463,8 @@ PLW *wk;
         }
         break;
 
-    case 1:
-    case 9:
+    case POSE_RUN:
+    case RN3_DONE:
         char_move(&wk->wu);
         break;
     }
@@ -1399,12 +1478,12 @@ void meta_win_pause(PLW* wk) {
         set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
     }
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         set_char_move_init(&wk->wu, 9, meta_win_tbl[wk->player_number]);
         break;
-    case 1:
-    case 9:
+    case POSE_RUN:
+    case RN3_DONE:
         char_move(&wk->wu);
         break;
     }

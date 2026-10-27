@@ -1,5 +1,11 @@
 /*
- * SC_TRANS_TBL2.C  game tables
+ * SC_TRANS_TBL2.C  text layer HUD and picture tables
+ *
+ * sc_celllist_scr_tbl gives each cell list its screen column base, tone_down_tbl the
+ * tone-down character transfers, picture_chr_tbl / picture_set_tbl / picture_attr_tbl the
+ * text layer pictures, nwdata_tbl the winner name plates by character, vmark_tbl the win mark
+ * positions, smark_pos_tbl and smark_kind_tbl the stun mark position and size by character,
+ * and combo_mtbl the combo message frames. Read by SC_TRANS.C.
  */
 
 #include "types.h"
@@ -84,9 +90,30 @@ const s16 vmark_tbl[48] = {
 };
 
 const s16 smark_pos_tbl[24][2] = {
-    { 14, 29 }, { 14, 29 }, { 15, 29 }, { 15, 29 }, { 14, 29 }, { 15, 29 }, { 14, 29 }, { 15, 29 },
-    { 15, 29 }, { 14, 29 }, { 15, 29 }, { 15, 29 }, { 15, 29 }, { 15, 29 }, { 15, 28 }, { 15, 28 },
-    { 15, 29 }, { 15, 29 }, { 14, 29 }, { 15, 29 }, { 15, 28 }, { 15, 29 }, { 15, 29 }, { 15, 29 },
+    { 14, 29 },  /* Gill */
+    { 14, 29 },  /* Alex */
+    { 15, 29 },  /* Ryu */
+    { 15, 29 },  /* Yun */
+    { 14, 29 },  /* Dudley */
+    { 15, 29 },  /* Necro */
+    { 14, 29 },  /* Hugo */
+    { 15, 29 },  /* Ibuki */
+    { 15, 29 },  /* Elena */
+    { 14, 29 },  /* Oro */
+    { 15, 29 },  /* Yang */
+    { 15, 29 },  /* Ken */
+    { 15, 29 },  /* Sean */
+    { 15, 29 },  /* Urien */
+    { 15, 28 },  /* Gouki */
+    { 15, 28 },  /* Shin Gouki */
+    { 15, 29 },  /* Chun-Li */
+    { 15, 29 },  /* Makoto */
+    { 14, 29 },  /* Q */
+    { 15, 29 },  /* Twelve */
+    { 15, 28 },  /* Remy */
+    { 15, 29 },  /* 21 */
+    { 15, 29 },  /* 22 */
+    { 15, 29 },  /* 23 */
 };
 
 const u16 smark_kind_tbl[24] = {

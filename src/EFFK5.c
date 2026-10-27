@@ -21,6 +21,17 @@
 #include "effect_2.h"
 #include "EFFK5.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* get the joint work and load the boxes */
+#define R0_MOVE         1       /* move the boxes and hand them over */
+#define R0_KILL         2       /* put back the joint work and this one */
+#define R0_ABORT        3       /* (default) no joint work: put this one back */
+
+/* routine_no[1] */
+#define R1_SCAN         0       /* count the frames to the next box set */
+#define R1_SLIDE        1       /* move the joints each frame */
+#define R1_HOLD         2       /* keep the boxes as they are */
+
 void get_okuri_time(WORK* ewk, WORK* mwk, MVJ* mvj);
 
 
@@ -28,10 +39,10 @@ void effect_K5_move(WORK_Other* ewk) {
     WORK* mwk = (WORK*)ewk->my_master;
     MVJ* mvj;
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0] += 1;
         if (get_cal_work(&ewk->wu) == -1) {
-            ewk->wu.routine_no[0] = 3;
+            ewk->wu.routine_no[0] = R0_ABORT;
             break;
         }
         mvj = (MVJ*)(((WORK*)ewk->wu.target_adrs)->routine_no);
@@ -40,15 +51,15 @@ void effect_K5_move(WORK_Other* ewk) {
         get_table_adrs_K5(mwk);
         K5_init_data(mwk, mvj, (u16*)(&mwk->cg_ja));
         break;
-    case 1:
+    case R0_MOVE:
         if (ewk->wu.dead_f == 1) {
             ewk->wu.disp_flag = 0;
-            ewk->wu.routine_no[0] = 2;
+            ewk->wu.routine_no[0] = R0_KILL;
             break;
         }
         if (((PLW*)mwk)->waku_ram_index != ewk->wu.myself) {
             ewk->wu.disp_flag = 0;
-            ewk->wu.routine_no[0] = 2;
+            ewk->wu.routine_no[0] = R0_KILL;
             break;
         }
         get_master_table_address(&ewk->wu, mwk);
@@ -58,7 +69,7 @@ void effect_K5_move(WORK_Other* ewk) {
             if (mwk->K5_init_flag || (ewk->wu.old_rno[1] != mwk->cg_hit_ix)) {
                 mwk->K5_init_flag = 0;
                 ewk->wu.old_rno[1] = mwk->cg_hit_ix;
-                ewk->wu.routine_no[1] = 0;
+                ewk->wu.routine_no[1] = R1_SCAN;
                 K5_init_data(mwk, mvj, (u16*)(&mwk->cg_ja));
             }
             K5_main_process(&ewk->wu, mwk, mvj);
@@ -68,7 +79,7 @@ void effect_K5_move(WORK_Other* ewk) {
         mwk->h_bod = (BODY_BOX*)&rambod[mwk->id];
         mwk->h_han = (HAND_BOX*)&ramhan[mwk->id];
         break;
-    case 2:
+    case R0_KILL:
         push_effect_work((WORK*)ewk->wu.target_adrs);
     default:
         push_effect_work(&ewk->wu);
@@ -82,10 +93,10 @@ void effect_K5_move(WORK_Other* ewk) {
 void K5_main_process(WORK* ewk, WORK* mwk, MVJ* mvj) {
     s16 i;
     switch (ewk->routine_no[1]) {
-    case 0:
+    case R1_SCAN:
         get_okuri_time(ewk, mwk, mvj);
         break;
-    case 1:
+    case R1_SLIDE:
         for (i = 0; i < 8; i++) {
             if (mvj[i].rno) {
                 k5_add_sub(&mvj[i]);
@@ -130,7 +141,7 @@ loop:
         }
         if (ewk->old_rno[0] >= 2) {
             K5_decode_new_hit_index(ewk, mvj, now_mf);
-            ewk->routine_no[1] = 1;
+            ewk->routine_no[1] = R1_SLIDE;
             return;
         }
         goto end;
@@ -167,7 +178,7 @@ loop:
     }
 end:
     ewk->old_rno[0] = 1;
-    ewk->routine_no[1] = 2;
+    ewk->routine_no[1] = R1_HOLD;
 }
 
 
@@ -402,7 +413,7 @@ void k5_add_sub(MVJ* mvj) {
 s32 effect_K5_init(PLW* wk) {
     WORK_Other* ewk;
     s16 ix;
-    if (Bonus_Game_Flag == 21) {
+    if (Bonus_Game_Flag == BONUS_CAR) {
         return -1;
     }
     if ((ix = pull_effect_work(0)) == -1) {

@@ -1,5 +1,10 @@
 /*
- * END_13_TBL_B.C  game tables
+ * END_13_TBL_B.C  Gouki's ending cell tables (ending 14)
+ *
+ * The initial cells (map offset, cell number) of the Gouki and Shin Gouki ending:
+ * end_e00_bg0_cell_tbl for BG0, end_e00_ake_cell_tbl for the overlay layer (written with
+ * end_ake_cell_put) and end_e00_bg2_cell_tbl for BG2. Read by end_e00_cell_set in END_14.C;
+ * the scene timings are in END_14_TBL.C.
  */
 
 #include "types.h"

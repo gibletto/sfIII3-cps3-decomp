@@ -19,13 +19,19 @@
 #include "charmove_2.h"
 #include "EFF37.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* pick the panel for the player */
+#define R0_MOVE         1       /* follow the master's animation */
+#define R0_END          2       /* hidden for a frame */
+#define R0_KILL         3       /* (default) put the work back */
+
 
 
 void effect_37_move(WORK_Other* ewk) {
     WORK* mwk = (WORK*)ewk->my_master;
     s16 ix;
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 0;
         ewk->wu.my_col_mode = 0x4200;
@@ -37,10 +43,10 @@ void effect_37_move(WORK_Other* ewk) {
             break;
         }
         break;
-    case 1:
+    case R0_MOVE:
         if (ewk->wu.dead_f == 1) {
             ewk->wu.disp_flag = 0;
-            ewk->wu.routine_no[0] = 2;
+            ewk->wu.routine_no[0] = R0_END;
             break;
         }
         if (mwk->cg_type) {
@@ -61,8 +67,8 @@ void effect_37_move(WORK_Other* ewk) {
         }
         sort_push_request(&ewk->wu);
         break;
-    case 2:
-        ewk->wu.routine_no[0] = 3;
+    case R0_END:
+        ewk->wu.routine_no[0] = R0_KILL;
         break;
     default:
         all_cgps_put_back(&ewk->wu);

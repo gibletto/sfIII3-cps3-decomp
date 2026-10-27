@@ -1,5 +1,12 @@
 /*
- * END_SUB_TBL_B.C  game tables
+ * END_SUB_TBL_B.C  colour load tables
+ *
+ * Palette transfer lists (source, colour RAM address, size): player_color_tbl by character,
+ * side and colour number, metamor_color_tbl the metamorphosis colours by player and colour,
+ * any_color_tbl the general colour loads by number and bg_color_tbl the stage colours; read
+ * by COLOR3RD.C. char_eff_color_tbl, side_color_1p_tbl, side_color_2p_tbl and opt_color_tbl
+ * are per-character effect, side and option palettes, read by END_SUB_8.C, which also uses
+ * player_color_tbl for its fading load.
  */
 
 #include "types.h"

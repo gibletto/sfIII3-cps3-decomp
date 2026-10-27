@@ -34,6 +34,14 @@ void set_char_move_init2();
 #include "bg_sub_5.h"
 #include "effb3.h"
 
+/* routine_no[1]: step within the parent's state */
+#define R1_INIT         0       /* start the pattern */
+#define R1_FOLLOW       1       /* take the parent's zoom */
+
+/* routine_no[1], fight_vanish */
+#define R1_VANISH       1       /* play the vanish pattern */
+#define R1_DONE         2       /* tell the parent it is done */
+
 
 
 WORK_Other * oya_adrs;  /* 02068C28 */
@@ -42,7 +50,7 @@ WORK_Other * oya_adrs;  /* 02068C28 */
 void effect_B3_move(WORK_Other* ewk) {
     oya_adrs = (WORK_Other*)ewk->my_master;
     if (ewk->wu.old_rno[1] != oya_adrs->wu.routine_no[0]) {
-        ewk->wu.routine_no[1] = 0;
+        ewk->wu.routine_no[1] = R1_INIT;
         ewk->wu.routine_no[2] = 0;
     }
     ewk->wu.old_rno[1] = oya_adrs->wu.routine_no[0];
@@ -85,12 +93,12 @@ void effect_B3_move(WORK_Other* ewk) {
 
 void round_move_init(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1] += 1;
         ewk->wu.disp_flag = 1;
         ewk->wu.my_mr_flag = 1;
         set_char_move_init2(&ewk->wu, 0, 2, 1, 0);
-    case 1:
+    case R1_FOLLOW:
         ewk->wu.my_mr.size.x = oya_adrs->wu.my_mr.size.x;
         ewk->wu.my_mr.size.y = oya_adrs->wu.my_mr.size.y;
         disp_pos_trans_entry5(ewk);
@@ -102,7 +110,7 @@ void round_move_init(WORK_Other* ewk) {
 
 void round_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1] += 1;
         if (ewk->wu.hit_quake) {
             Sound_SE(138);
@@ -116,7 +124,7 @@ void round_move(WORK_Other* ewk) {
             ewk->wu.xyz[0].disp.pos -= 32;
             set_char_move_init2(&ewk->wu, 0, 2, 2, 0);
         }
-    case 1:
+    case R1_FOLLOW:
         ewk->wu.my_mr.size.x = oya_adrs->wu.my_mr.size.x;
         ewk->wu.my_mr.size.y = oya_adrs->wu.my_mr.size.y;
         disp_pos_trans_entry5(ewk);
@@ -128,7 +136,7 @@ void round_move(WORK_Other* ewk) {
 
 void fight_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1] += 1;
         set_char_move_init2(&ewk->wu, 0, 2, 5, 0);
         ewk->wu.my_mr.size.x = 63;
@@ -137,7 +145,7 @@ void fight_move(WORK_Other* ewk) {
         ewk->wu.xyz[1].disp.pos = 144;
         disp_pos_trans_entry5(ewk);
         break;
-    case 1:
+    case R1_FOLLOW:
         ewk->wu.my_mr.size.x = oya_adrs->wu.my_mr.size.x;
         ewk->wu.my_mr.size.y = oya_adrs->wu.my_mr.size.y;
         disp_pos_trans_entry5(ewk);
@@ -156,21 +164,21 @@ void fight_col_move(WORK_Other* ewk) {
 
 void fight_vanish(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1] += 1;
         set_char_move_init2(&ewk->wu, 0, 4, 1, 0);
         disp_pos_trans_entry5(ewk);
         ewk->wu.my_col_code = 0x1E0;
         ewk->wu.extra_col = 0;
         break;
-    case 1:
+    case R1_VANISH:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
             ewk->wu.routine_no[1] += 1;
         }
         disp_pos_trans_entry5(ewk);
         break;
-    case 2:
+    case R1_DONE:
         rf_b2_flag = 1;
         disp_pos_trans_entry5(ewk);
         break;

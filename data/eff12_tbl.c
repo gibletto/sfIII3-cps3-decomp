@@ -1,5 +1,8 @@
 /*
- * EFF12_TBL.C  game tables
+ * EFF12_TBL.C  animated stage prop list, set 12
+ *
+ * scr_obj_num12 holds the prop counts and the prop rows (family, colour, position, priority,
+ * animation) that scr_obj_data12 points into, one list per prop type. Read by EFF12.C.
  */
 
 #include "types.h"

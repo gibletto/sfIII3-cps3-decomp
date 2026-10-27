@@ -1,5 +1,12 @@
 /*
- * EFF13_TBL.C  game tables
+ * EFF13_TBL.C  projectile (shell) tables
+ *
+ * tama_data has one TAMA record per shell number: life time, attack and defence settings,
+ * colours, shadow, start offset, speeds and the kind of shell process. kind_of_tama_process is
+ * the jump table of those processes (kotp_00000 .. kotp_16000), tcct gives the shell colours,
+ * kage_tbl the shadow settings, kotp_07_dm_vital the damage a kotp_07000 shell takes from each
+ * attack strength, and homing_empos_hos, enemy_pos_hos and X_F_L_A_T_pos_hos the target and
+ * start offsets against each opponent character. Read by EFF13.C, the projectiles.
  */
 
 #include "types.h"

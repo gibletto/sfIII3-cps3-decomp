@@ -82,8 +82,7 @@ void load_any_color(ix)
 u8 ix;
 {
     const XFER* p = &any_color_tbl[ix];
-    s32 zero = 0;
-    polygon2d_submit_quad(p->src, p->dst, p->size, zero, zero, zero);
+    polygon2d_submit_quad(p->src, p->dst, p->size, 0, 0, 0);
 }
 
 
@@ -93,8 +92,7 @@ void load_bg_color(ix)
 u8 ix;
 {
     const XFER* p = &bg_color_tbl[ix];
-    s32 zero = 0;
-    polygon2d_submit_quad(p->src, p->dst, p->size, zero, zero, zero);
+    polygon2d_submit_quad(p->src, p->dst, p->size, 0, 0, 0);
 }
 
 /* provisional name */
@@ -178,9 +176,8 @@ void load_player_color(a, b, c)
 
 
 typedef const u32 METAMOR_PL[7][14][3];
-void metamor_color_restore(u16 wkid) {
-    s16 zero = 0;
+void metamor_color_restore(register u16 wkid) {
     const u32* p = (*(METAMOR_PL*)&metamor_color_tbl[wkid])[Player_Color[wkid]][0];
-    col_trans_result = polygon2d_submit_quad(p[0], p[1], p[2], zero, zero, zero);
-    col_trans_result = polygon2d_submit_quad(p[0], p[1] + 0x400, p[2], zero, zero, zero);
+    col_trans_result = polygon2d_submit_quad(p[0], p[1], p[2], 0, 0, 0);
+    col_trans_result = polygon2d_submit_quad(p[0], p[1] + 0x400, p[2], 0, 0, 0);
 }

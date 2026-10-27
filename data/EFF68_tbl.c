@@ -1,5 +1,8 @@
 /*
- * EFF68_TBL.C  game tables
+ * EFF68_TBL.C  bg090 waypoint flying objects
+ *
+ * eff68_data_tbl gives, for each of the three objects, its points to fly through, the timing
+ * and the animation numbers of each leg. Read by EFF68.C, which holds effects 67 and 68.
  */
 
 #include "types.h"

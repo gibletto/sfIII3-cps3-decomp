@@ -1,5 +1,8 @@
 /*
- * ACTIVE18_TBL.C  game tables
+ * ACTIVE18_TBL.C  CPU active pattern table for player 18 (Q)
+ *
+ * Pattern18_Tbl lists the Pattern18_nnnn scripts the computer-controlled Q runs in active
+ * (attacking) mode, indexed by Pattern_Index. Read by ACTIVE18.C (Computer18).
  */
 
 #include "types.h"

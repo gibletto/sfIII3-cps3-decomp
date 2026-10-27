@@ -1,5 +1,8 @@
 /*
- * ACTIVE06_TBL.C  game tables
+ * ACTIVE06_TBL.C  CPU active pattern table for player 06 (Hugo)
+ *
+ * Pattern06_Tbl lists the Pattern06_nnnn scripts the computer-controlled Hugo runs in active
+ * (attacking) mode, indexed by Pattern_Index. Read by ACTIVE06.C (Computer06).
  */
 
 #include "types.h"

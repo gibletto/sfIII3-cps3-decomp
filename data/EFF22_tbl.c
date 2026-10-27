@@ -1,5 +1,8 @@
 /*
- * EFF22_TBL.C  game tables
+ * EFF22_TBL.C  bg050 falling snow tables
+ *
+ * snow_pos_tbl gives the start position of each of the twelve flakes and snow_sp the four sets
+ * of drift speeds and accelerations. Read by EFF22.C, the falling snow.
  */
 
 #include "types.h"

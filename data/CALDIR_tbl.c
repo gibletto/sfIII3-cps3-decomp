@@ -1,5 +1,11 @@
 /*
- * CALDIR_TBL.C  game tables
+ * CALDIR_TBL.C  direction and trajectory tables
+ *
+ * rate_256_table holds the x and y rates of each of the 256 directions, used to turn a
+ * direction and speed into movement. dir_sel_table[dx][dy] gives the direction within a
+ * quadrant for a distance pair scaled to 0-127, used by caldir_pos_256. dir_sel_table_tail
+ * follows it and is not referred to by name. Read by CALDIR.C, the direction calculation
+ * library; rate_256_table is also read by EFF13.C (projectiles) and END_20.C (ending 20).
  */
 
 #include "types.h"
@@ -8,6 +14,7 @@
 #pragma section TBL
 
 
+/* one row per direction (0 - 255, 0 is straight up): { x rate, y rate } */
 const s32 rate_256_table[256][2] = {
     { 0, 50972 },
     { 1605, 50956 },

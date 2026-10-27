@@ -1,5 +1,10 @@
 /*
- * EFFD3_TBL.C  game tables
+ * EFFD3_TBL.C  screen wipe and finish screen tables (effects D2, D3)
+ *
+ * EFFD3_Jmp_Tbl holds the two routines of a screen wipe panel, effD2_wipe_close and
+ * effD2_wipe_open, called by EFFD2.C. ake_timer_tbl and ake_pos_tbl give, for each of the 13
+ * pictures of the akebono finish screen, the frames it is shown and its BG3 x and y; read by
+ * akebono_finish in EFFD3.C.
  */
 
 #include "types.h"

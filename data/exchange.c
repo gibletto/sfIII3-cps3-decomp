@@ -1,5 +1,10 @@
 /*
- * EXCHANGE.C  game tables
+ * EXCHANGE.C  combo damage scaling tables
+ *
+ * exchange_pow points, for each attack kind, at a row of exchange_pow_data_*: the damage scale
+ * (out of 32) for each hit of a combo; exchange_pow_pl03_sa3 replaces it for Yun and Yang
+ * while their third super art is active. exchange_koa points at the exchange_koa_data_* rows,
+ * the weights each kind of hit adds to the combo count. Read by HITCHECK.C.
  */
 
 #include "types.h"

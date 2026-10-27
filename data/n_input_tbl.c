@@ -1,5 +1,10 @@
 /*
- * N_INPUT_TBL.C  game tables
+ * N_INPUT_TBL.C  ranking name entry tables
+ *
+ * slang_tbl lists the 17 three-letter names refused at entry, name_code_tbl converts a
+ * position in the entry character set to the letter code stored in the ranking,
+ * rank_stage_tbl gives the starting rank status for each of the four ranking lists, and
+ * thank_you_str / for_playing_str are the closing message. Read by N_INPUT.C.
  */
 
 #include "types.h"

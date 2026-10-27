@@ -1,5 +1,9 @@
 /*
- * EFFK4_TBL.C  game tables
+ * EFFK4_TBL.C  debris tables for effect K4
+ *
+ * By damage level: effK4_isp_table four launch speeds { x, y }, effK4_isp_x_hosei /
+ * effK4_isp_y_hosei eight random speed spreads, effK4_life_time the lifetime, and
+ * effK4_char_sel_table sixteen random piece patterns. Read by EFFK4.C.
  */
 
 #include "types.h"

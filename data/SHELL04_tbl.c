@@ -1,5 +1,8 @@
 /*
- * SHELL04_TBL.C  game tables
+ * SHELL04_TBL.C  CPU anti-projectile pattern table 04 (Dudley)
+ *
+ * Shell04_Tbl lists the Shell04_nnnn pattern scripts the computer-controlled Dudley runs when
+ * the opponent fires a projectile, indexed by Pattern_Index. Read by SHELL04.C.
  */
 
 #include "types.h"

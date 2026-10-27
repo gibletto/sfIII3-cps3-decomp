@@ -1,5 +1,14 @@
 /*
- * END_MAIN_TBL2.C  game tables
+ * END_MAIN_TBL2.C  opening and ending control tables
+ *
+ * op_bg0_0015_tbl is the six-step pattern list passed to oh_opening_demo by an opening BG0
+ * scene. The rest are indexed by the ending's character number: end_bg_index_tbl picks the
+ * ending's entry in end_bg_gfx_tbl (scroll graphics source, size and preparation data),
+ * end_scno_tbl gives its number of BG layers, end_color_tbl its colour load, staff_fade_tbl
+ * the fade that closes the ending scenes and end_fade_tbl the fade from its closing picture
+ * into the staff roll. end_cg_src_tbl holds the screen data of each character's closing
+ * picture, followed by the four scroll layout records reached through end_map_tbl. All read
+ * by END_MAIN.C; end_stage_no_tbl is not read.
  */
 
 #include "types.h"

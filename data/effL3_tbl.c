@@ -1,5 +1,9 @@
 /*
- * EFFL3_TBL.C  game tables
+ * EFFL3_TBL.C  perfect-win extra figure data
+ *
+ * effl3_data_tbl holds, for each of the six extra figures that join a perfect win, its start
+ * offset, depth, facing, shadow, target point and routine; effl3_wait_timer is their random
+ * wait before leaving. Read by EFFL3.C.
  */
 
 #include "types.h"

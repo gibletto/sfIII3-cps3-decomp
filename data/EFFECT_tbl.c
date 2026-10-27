@@ -1,5 +1,11 @@
 /*
- * EFFECT_TBL.C  game tables
+ * EFFECT_TBL.C  effect routine jump tables
+ *
+ * effmovejptbl is the move routine of every effect, indexed by effect id (00 .. M8), called by
+ * EFFECT.C each frame. effinitjptbl is the list of effect starters and setters called from
+ * character move data by CHARMOVE.C (comm_exec and the cg effect field); effinitjp_quake_y
+ * holds the 19 entries that follow it, from setup_bg_quake_y on, whose first entry EFFM3.C
+ * also calls directly.
  */
 
 #include "types.h"

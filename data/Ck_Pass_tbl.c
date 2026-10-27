@@ -1,5 +1,10 @@
 /*
- * CK_PASS_TBL.C  game tables
+ * CK_PASS_TBL.C  the computer player's reaction dispatch tables
+ *
+ * Each table has one routine per opponent character number. Passive_jmp_tbl picks the reaction
+ * selector (GILL_vs, HUGO_vs or KEN_vs); Passive_A_tbl .. Passive_D_tbl and Passive_AS_tbl ..
+ * Passive_DS_tbl pick the VS_<name>_ check for screen areas A to D, without and with an attack
+ * in progress. Read by CK_PASS.C, the passive reaction checks.
  */
 
 #include "types.h"

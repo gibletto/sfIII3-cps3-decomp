@@ -1,5 +1,8 @@
 /*
- * EFFK6_TBL.C  game tables
+ * EFFK6_TBL.C  state routines of effect K6
+ *
+ * EFFK6_Jmp_Tbl is the six state routines (wait, slide in, slide out, appear at once, move,
+ * kill) of the player name plates on the win and next-CPU screens. Read by EFFK6.C.
  */
 
 #include "types.h"

@@ -149,10 +149,10 @@ void dbg_disasm_rows(u16* tbl) {
 
 
 /* provisional name */
-void disasm_sh_opcode(u16 code, char* str) {
+void disasm_sh_opcode(u16 code, char* out) {
+    char* str = out;
     char buf[128];
     const MoveName* p;
-    u32 hi;
     u32 masked;
     const char** side;
     const char** names;
@@ -160,10 +160,8 @@ void disasm_sh_opcode(u16 code, char* str) {
     char* mark;
     char* mark2;
     char* tail;
-    (void)&((WORK*)strcpy)->id;
     *str = 0;
-    hi = code & 0xFF00;
-    if (hi == 0) {
+    if ((code & 0xFF00) == 0) {
         for (p = sh_op_none_tbl; p->name != 0; p++) {
             if (code == p->code) {
                 strcpy(str, p->name);
@@ -176,13 +174,11 @@ void disasm_sh_opcode(u16 code, char* str) {
     (void)&((WORK*)buf)->id;
     kind = code & 0xF000;
     names = reg_name_tbl;
-    (void)&((WORK*)names)->be_flag;
     if (kind == 0x4000) {
     ldm:;
         p = sh_op_ldm_tbl;
         masked = code & 0xF0FF;
-        while (0) {
-        }
+        if (0) goto ldm;
         side = &names[(s32)(code & 0xF00) >> 8];
         for (; p->name != 0; p++) {
             if (0) {
@@ -234,7 +230,7 @@ void disasm_sh_opcode(u16 code, char* str) {
     }
     if (kind == 0x8000) {
         for (p = sh_op_disp_m_tbl; p->name != 0; p++) {
-            if (hi == p->code) {
+            if ((code & 0xFF00) == p->code) {
                 strcpy(str, p->name);
                 return;
             }
@@ -242,7 +238,7 @@ void disasm_sh_opcode(u16 code, char* str) {
     }
     if (kind == 0x8000) {
         for (p = sh_op_disp_n_tbl; p->name != 0; p++) {
-            if (hi == p->code) {
+            if ((code & 0xFF00) == p->code) {
                 strcpy(str, p->name);
                 return;
             }
@@ -250,7 +246,7 @@ void disasm_sh_opcode(u16 code, char* str) {
     }
     if (kind == 0x8000 || kind == 0xC000) {
         for (p = sh_op_d8_tbl; p->name != 0; p++) {
-            if (hi == p->code) {
+            if ((code & 0xFF00) == p->code) {
                 strcpy(str, p->name);
                 return;
             }
@@ -258,7 +254,7 @@ void disasm_sh_opcode(u16 code, char* str) {
     }
     if (kind == 0x8000 || kind == 0xC000) {
         for (p = sh_op_imm_tbl; p->name != 0; p++) {
-            if (hi == p->code) {
+            if ((code & 0xFF00) == p->code) {
                 strcpy(str, p->name);
                 return;
             }
@@ -291,7 +287,6 @@ void disasm_sh_opcode(u16 code, char* str) {
     if (*str == 0) {
         strcpy(str, sh_str_undef);
         (void)&((WORK*)kind)->id;
-        (void)&((WORK*)hi)->id;
     }
 }
 

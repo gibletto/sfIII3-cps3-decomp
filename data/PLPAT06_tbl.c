@@ -1,5 +1,8 @@
 /*
- * PLPAT06_TBL.C  game tables
+ * PLPAT06_TBL.C  Hugo's special attack table
+ *
+ * pl06_exatt_table is the list of Hugo's special attack routines, indexed by attack routine
+ * number minus 16. Read by PLPAT06.C, which dispatches through it from pl06_extra_attack.
  */
 
 #include "types.h"

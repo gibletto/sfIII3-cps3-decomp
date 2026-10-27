@@ -1,5 +1,8 @@
 /*
- * ACTIVE00_TBL.C  game tables
+ * ACTIVE00_TBL.C  the computer player's active patterns for Gill
+ *
+ * Pattern00_Tbl lists the 68 active pattern routines Pattern00_0000 .. Pattern00_0067 of
+ * character 0 (Gill). Computer00 in ACTIVE00.C runs the one chosen by Pattern_Index.
  */
 
 #include "types.h"

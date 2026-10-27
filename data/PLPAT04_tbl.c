@@ -1,5 +1,8 @@
 /*
- * PLPAT04_TBL.C  game tables
+ * PLPAT04_TBL.C  Dudley special attack table
+ *
+ * pl04_exatt_table is the special attack routines of character 4 (Dudley) by attack routine
+ * number. Read by PLPAT04.C.
  */
 
 #include "types.h"

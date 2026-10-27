@@ -1,5 +1,8 @@
 /*
- * PLPAT20_TBL.C  game tables
+ * PLPAT20_TBL.C  Remy's special attack table
+ *
+ * pl20_exatt_table lists the routines of attack numbers 16 and up of character 20 (Remy).
+ * Read by pl20_extra_attack in PLPAT20.C.
  */
 
 #include "types.h"

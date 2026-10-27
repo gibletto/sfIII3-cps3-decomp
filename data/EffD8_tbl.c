@@ -1,5 +1,7 @@
 /*
- * EFFD8_TBL.C  game tables
+ * EFFD8_TBL.C  face cursor depth
+ *
+ * D8_Priority_Data is the depth of the face cursor for each cursor type. Read by EFFD8.C.
  */
 
 #include "types.h"

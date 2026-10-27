@@ -516,7 +516,7 @@ PLW* em;
 s16 Option;
 s16 Height;
 {
-    if (em->wu.routine_no[1] == 1) {
+    if (em->wu.routine_no[1] == PLAYER_DAMAGE) {
         return 0;
     }
     if (em->wu.sp_tech_id == 33) {
@@ -551,7 +551,7 @@ s16 Height;
 
 /* provisional name */
 s32 Check_Jump_Counter(PLW* wk, PLW* em, s16 Option, s16 Height) {
-    if (em->wu.routine_no[1] == 1) {
+    if (em->wu.routine_no[1] == PLAYER_DAMAGE) {
         return 0;
     }
     if (em->wu.sp_tech_id == 33) {
@@ -591,10 +591,10 @@ s32 Check_Rolling(PLW* wk, WORK* em) {
 
 
 s32 Check_Personal_Action(PLW* wk, WORK* em) {
-    if (em->routine_no[1] != 4) {
+    if (em->routine_no[1] != PLAYER_ATTACK) {
         return 0;
     }
-    if (em->routine_no[2] != 30) {
+    if (em->routine_no[2] != ATTACK_PERSONAL) {
         return 0;
     }
     VS_Tech[wk->wu.id] = 4105;
@@ -620,7 +620,7 @@ s32 Check_Specific_Term(PLW* wk, WORK* em, s16 VS_Technique, u8 Status_00, u8 St
 
 
 s32 Check_Dash(PLW* wk, WORK* em, s16 VS_Technique) {
-    if ((em->routine_no[1] == 0) && (em->routine_no[2] == 5) && (em->routine_no[3] != 0)) {
+    if ((em->routine_no[1] == PLAYER_NORMAL) && (em->routine_no[2] == NORMAL_DASH) && (em->routine_no[3] != 0)) {
         VS_Tech[wk->wu.id] = VS_Technique;
         return PASSIVE_X = 1;
     }
@@ -641,7 +641,7 @@ s32 Check_Limited_Attack(PLW* wk, WORK* em, s16 VS_Technique, u8 PL_Status, s8 S
         return 0;
     }
     xx = (em->cg_ix / em->cgd_type);
-    if ((((PLW*)em)->player_number == 0x12) && (VS_Technique == 7)) {
+    if ((((PLW*)em)->player_number == PL_Q) && (VS_Technique == 7)) {
         Limit_Number += 1;
     }
     if ((((PLW*)em)->player_number == PL_YANG) && (VS_Technique == 7)) {
@@ -688,7 +688,7 @@ s32 Check_Stand(PLW* wk, WORK* em, s16 VS_Technique) {
     if (Attack_Flag[wk->wu.id]) {
         return 0;
     }
-    if (em->routine_no[1] != 0) {
+    if (em->routine_no[1] != PLAYER_NORMAL) {
         return 0;
     }
     if ((Standing_Timer[wk->wu.id] += 1) < Standing_Master_Timer[wk->wu.id]) {
@@ -736,7 +736,7 @@ s32 Check_VS_Squat(PLW* wk, WORK* em, s16 VS_Technique, u8 Status_00, u8 Status_
     if (Attack_Flag[wk->wu.id]) {
         return Squat_Timer[wk->wu.id] = 0;
     }
-    if (em->routine_no[1] != 0) {
+    if (em->routine_no[1] != PLAYER_NORMAL) {
         return Squat_Timer[wk->wu.id] = 0;
     }
     if (em->xyz[1].disp.pos) {
@@ -796,7 +796,7 @@ s32 Check_Catch(PLW* wk, WORK* em, s16 VS_Technique) {
     if (Demo_Flag == 0) {
         return 0;
     }
-    if (em->routine_no[1] != 0) {
+    if (em->routine_no[1] != PLAYER_NORMAL) {
         return 0;
     }
     if (em->xyz[1].disp.pos) {
@@ -868,7 +868,7 @@ s32 Check_Lie(PLW* wk) {
 s32 Check_Faint(PLW* wk, PLW* enemy, s16 VS_Technique) {
     Counter_Attack[wk->wu.id] = 1;
     VS_Tech[wk->wu.id] = VS_Technique;
-    if ((enemy->wu.routine_no[1] == 1) && (enemy->wu.routine_no[2] == 25)) {
+    if ((enemy->wu.routine_no[1] == PLAYER_DAMAGE) && (enemy->wu.routine_no[2] == DAMAGE_STUN)) {
         return 1;
     }
     return Counter_Attack[wk->wu.id] = 0;
@@ -877,7 +877,7 @@ s32 Check_Faint(PLW* wk, PLW* enemy, s16 VS_Technique) {
 
 
 s32 Check_Blow_Off(PLW* wk, WORK* em, s16 VS_Technique) {
-    if (em->routine_no[1] != 1) {
+    if (em->routine_no[1] != PLAYER_DAMAGE) {
         return 0;
     }
     if (PL_Blow_Off_Data[em->routine_no[2]] == 0) {
@@ -894,7 +894,7 @@ s32 Check_Blow_Off(PLW* wk, WORK* em, s16 VS_Technique) {
 
 s32 Check_After_Attack(PLW* wk, WORK* em, s16 VS_Technique) {
     u8 xx;
-    if (CP_No[wk->wu.id][0] == 7) {
+    if (CP_No[wk->wu.id][0] == COM_GUARD) {
         return 0;
     }
     if (Last_Attack_Counter[wk->wu.id] == Attack_Counter[wk->wu.id]) {
@@ -903,7 +903,7 @@ s32 Check_After_Attack(PLW* wk, WORK* em, s16 VS_Technique) {
     if (em->xyz[1].disp.pos) {
         return 0;
     }
-    if (em->routine_no[1] != 4) {
+    if (em->routine_no[1] != PLAYER_ATTACK) {
         return 0;
     }
     Last_Attack_Counter[wk->wu.id] = Attack_Counter[wk->wu.id];

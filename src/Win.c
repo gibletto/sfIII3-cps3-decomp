@@ -73,14 +73,14 @@
 
 /* provisional name */
 s32 Check_Short_Ending(void) {
-    if (Play_Type == 1) {
+    if (Play_Type == PLAY_VS_PLAYER) {
         return 0;
     }
     if (Version_Type == 3) {
         if (VS_Index[WINNER] >= 6) {
-            G_No1 = 8;
-            G_No2 = 4;
-            E_No0 = 10;
+            G_No1 = G1_ENDING;
+            G_No2 = G2_END_SHORT;
+            E_No0 = E0_ENDING;
             GO_No[0] = 0;
             GO_No[1] = 0;
             End_PL = My_char[WINNER];
@@ -95,7 +95,7 @@ s32 Check_Short_Ending(void) {
             Final_Result_id = WINNER;
             WGJ_Target = WINNER;
             WGJ_Win = Win_Record[WINNER];
-            WGJ_Score = Continue_Coin[WINNER] + Score[WINNER][0];
+            WGJ_Score = Continue_Coin[WINNER] + Score[WINNER][SCORE_CPU];
             return 1;
         }
     }

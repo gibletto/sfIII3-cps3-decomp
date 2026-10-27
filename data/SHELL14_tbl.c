@@ -1,5 +1,8 @@
 /*
- * SHELL14_TBL.C  game tables
+ * SHELL14_TBL.C  CPU anti-projectile pattern table 14
+ *
+ * Shell14_Tbl lists the Shell14_nnnn pattern scripts run against a projectile by the
+ * computer-controlled players 14 and 15, indexed by Pattern_Index. Read by SHELL14.C.
  */
 
 #include "types.h"

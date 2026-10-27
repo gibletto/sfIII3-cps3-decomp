@@ -31,6 +31,27 @@
 #include "end_main.h"
 #include "effh6_code.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* show the line */
+#define R0_MOVE         1       /* roll the line */
+#define R0_HIDE         2       /* hide the line */
+#define R0_END          3       /* one more frame */
+
+/* routine_no[1], how a text line comes and goes */
+#define R1_RIGHT        0       /* in from the right, hold, back out */
+#define R1_RISE         1       /* rise into place, hold, rise away */
+#define R1_LEFT         2       /* in from the left, hold, back out */
+#define R1_HOLD         3       /* show until the timer runs out */
+#define R1_RISE_LONG    4       /* rise, hold longer, rise away */
+#define R1_STILL        5       /* show until the roll ends */
+#define R1_SCROLL_UP    6       /* scroll up off the top */
+#define R1_SCROLL_DOWN  7       /* scroll down to the bottom */
+
+/* routine_no[2], steps of R1_RIGHT, R1_RISE, R1_LEFT, R1_RISE_LONG */
+#define R2_IN           0       /* move into place */
+#define R2_HOLD         1       /* hold until the timer runs out */
+#define R2_OUT          2       /* move off the screen */
+
 
 
 s16 roll_rate;  /* 02068C54 */
@@ -57,7 +78,7 @@ s32 end_cut_check(void) {
 
 void effect_H6_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         roll_rate = 1;
@@ -70,7 +91,7 @@ void effect_H6_move(WORK_Other* ewk) {
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
         break;
-    case 1:
+    case R0_MOVE:
         if (ewk->wu.dir_step) {
             switch (ewk->wu.dir_step) {
             case 1:
@@ -84,15 +105,15 @@ void effect_H6_move(WORK_Other* ewk) {
                 break;
             }
             if (Suicide[4]) {
-                ewk->wu.routine_no[0] = 2;
+                ewk->wu.routine_no[0] = R0_HIDE;
             }
             sort_push_request4(&ewk->wu);
             break;
         }
         switch (ewk->wu.routine_no[1]) {
-        case 0:
+        case R1_RIGHT:
             switch (ewk->wu.routine_no[2]) {
-            case 0:
+            case R2_IN:
                 ewk->wu.dir_timer = ewk->wu.dir_timer - roll_rate_t;
                 ewk->wu.xyz[0].disp.pos = ewk->wu.xyz[0].disp.pos - roll_rate;
                 ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
@@ -103,13 +124,13 @@ void effect_H6_move(WORK_Other* ewk) {
                     ewk->wu.dir_timer = ewk->wu.dir_timer - 48;
                 }
                 break;
-            case 1:
+            case R2_HOLD:
                 ewk->wu.dir_timer = ewk->wu.dir_timer - roll_rate_t;
                 if (ewk->wu.dir_timer <= 0) {
                     ewk->wu.routine_no[2]++;
                 }
                 break;
-            case 2:
+            case R2_OUT:
                 ewk->wu.xyz[0].disp.pos = ewk->wu.xyz[0].disp.pos + roll_rate;
                 ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
                 if (512 <= ewk->wu.xyz[0].disp.pos) {
@@ -118,9 +139,9 @@ void effect_H6_move(WORK_Other* ewk) {
                 break;
             }
             break;
-        case 1:
+        case R1_RISE:
             switch (ewk->wu.routine_no[2]) {
-            case 0:
+            case R2_IN:
                 ewk->wu.dir_timer = ewk->wu.dir_timer - roll_rate_t;
                 ewk->wu.xyz[1].disp.pos = ewk->wu.xyz[1].disp.pos + roll_rate;
                 ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
@@ -131,13 +152,13 @@ void effect_H6_move(WORK_Other* ewk) {
                     ewk->wu.dir_timer = ewk->wu.dir_timer - 30;
                 }
                 break;
-            case 1:
+            case R2_HOLD:
                 ewk->wu.dir_timer = ewk->wu.dir_timer - roll_rate_t;
                 if (ewk->wu.dir_timer <= 0) {
                     ewk->wu.routine_no[2]++;
                 }
                 break;
-            case 2:
+            case R2_OUT:
                 ewk->wu.xyz[1].disp.pos = ewk->wu.xyz[1].disp.pos + roll_rate;
                 ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
                 if (256 <= ewk->wu.xyz[1].disp.pos) {
@@ -146,9 +167,9 @@ void effect_H6_move(WORK_Other* ewk) {
                 break;
             }
             break;
-        case 2:
+        case R1_LEFT:
             switch (ewk->wu.routine_no[2]) {
-            case 0:
+            case R2_IN:
                 ewk->wu.dir_timer = ewk->wu.dir_timer - roll_rate_t;
                 ewk->wu.xyz[0].disp.pos = ewk->wu.xyz[0].disp.pos + roll_rate;
                 ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
@@ -159,13 +180,13 @@ void effect_H6_move(WORK_Other* ewk) {
                     ewk->wu.dir_timer = ewk->wu.dir_timer - 48;
                 }
                 break;
-            case 1:
+            case R2_HOLD:
                 ewk->wu.dir_timer = ewk->wu.dir_timer - roll_rate_t;
                 if (ewk->wu.dir_timer <= 0) {
                     ewk->wu.routine_no[2]++;
                 }
                 break;
-            case 2:
+            case R2_OUT:
                 ewk->wu.xyz[0].disp.pos = ewk->wu.xyz[0].disp.pos - roll_rate;
                 ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
                 if (ewk->wu.xyz[0].disp.pos <= -128) {
@@ -174,15 +195,15 @@ void effect_H6_move(WORK_Other* ewk) {
                 break;
             }
             break;
-        case 3:
+        case R1_HOLD:
             ewk->wu.dir_timer = ewk->wu.dir_timer - roll_rate_t;
             if (ewk->wu.dir_timer <= 0) {
                 ewk->wu.routine_no[0]++;
             }
             break;
-        case 4:
+        case R1_RISE_LONG:
             switch (ewk->wu.routine_no[2]) {
-            case 0:
+            case R2_IN:
                 ewk->wu.dir_timer = ewk->wu.dir_timer - roll_rate_t;
                 ewk->wu.xyz[1].disp.pos = ewk->wu.xyz[1].disp.pos + roll_rate;
                 ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
@@ -193,13 +214,13 @@ void effect_H6_move(WORK_Other* ewk) {
                     ewk->wu.dir_timer = ewk->wu.dir_timer - 60;
                 }
                 break;
-            case 1:
+            case R2_HOLD:
                 ewk->wu.dir_timer = ewk->wu.dir_timer - roll_rate_t;
                 if (ewk->wu.dir_timer <= 0) {
                     ewk->wu.routine_no[2]++;
                 }
                 break;
-            case 2:
+            case R2_OUT:
                 ewk->wu.xyz[1].disp.pos = ewk->wu.xyz[1].disp.pos + roll_rate;
                 ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
                 if (256 <= ewk->wu.xyz[1].disp.pos) {
@@ -208,16 +229,16 @@ void effect_H6_move(WORK_Other* ewk) {
                 break;
             }
             break;
-        case 5:
+        case R1_STILL:
             break;
-        case 6:
+        case R1_SCROLL_UP:
             ewk->wu.xyz[1].disp.pos = ewk->wu.xyz[1].disp.pos + roll_rate;
             ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
             if (256 <= ewk->wu.xyz[1].disp.pos) {
                 ewk->wu.routine_no[0]++;
             }
             break;
-        case 7:
+        case R1_SCROLL_DOWN:
             ewk->wu.xyz[1].disp.pos = ewk->wu.xyz[1].disp.pos - roll_rate;
             ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
             if (ewk->wu.xyz[1].disp.pos <= 0) {
@@ -225,15 +246,15 @@ void effect_H6_move(WORK_Other* ewk) {
             }
         }
         if (Suicide[4]) {
-            ewk->wu.routine_no[0] = 2;
+            ewk->wu.routine_no[0] = R0_HIDE;
         }
         sort_push_request3(&ewk->wu);
         break;
-    case 2:
+    case R0_HIDE:
         ewk->wu.disp_flag = 0;
         ewk->wu.routine_no[0]++;
         break;
-    case 3:
+    case R0_END:
         ewk->wu.routine_no[0]++;
         break;
     default:
@@ -305,50 +326,50 @@ s32 effect_H6_init(s16 timer, s8* str, s16 X, s16 Y, s16 Original_Color, s32 unu
             ewk->wu.xyz[1].disp.pos = Y;
             break;
         case 1:
-            ewk->wu.routine_no[1] = 1;
+            ewk->wu.routine_no[1] = R1_RISE;
             ewk->wu.routine_no[6] = Y;
             ewk->wu.xyz[0].disp.pos = X;
             ewk->wu.xyz[1].disp.pos = 0;
             break;
         case 2:
             Original_Color = 0;
-            ewk->wu.routine_no[1] = 2;
+            ewk->wu.routine_no[1] = R1_LEFT;
             ewk->wu.routine_no[5] = X;
             ewk->wu.xyz[0].disp.pos = -64;
             ewk->wu.xyz[1].disp.pos = Y;
             break;
         case 3:
-            ewk->wu.routine_no[1] = 3;
+            ewk->wu.routine_no[1] = R1_HOLD;
             ewk->wu.xyz[0].disp.pos = X;
             ewk->wu.xyz[1].disp.pos = Y;
             break;
         case 4:
             Original_Color = 1;
-            ewk->wu.routine_no[1] = 4;
+            ewk->wu.routine_no[1] = R1_RISE_LONG;
             ewk->wu.routine_no[6] = Y;
             ewk->wu.xyz[0].disp.pos = X;
             ewk->wu.xyz[1].disp.pos = 0;
             break;
         case 5:
             Original_Color = 1;
-            ewk->wu.routine_no[1] = 5;
+            ewk->wu.routine_no[1] = R1_STILL;
             ewk->wu.xyz[0].disp.pos = X;
             ewk->wu.xyz[1].disp.pos = Y;
             break;
         case 6:
-            ewk->wu.routine_no[1] = 6;
+            ewk->wu.routine_no[1] = R1_SCROLL_UP;
             ewk->wu.routine_no[6] = Y;
             ewk->wu.xyz[0].disp.pos = X;
             ewk->wu.xyz[1].disp.pos = -32;
             break;
         case 7:
-            ewk->wu.routine_no[1] = 7;
+            ewk->wu.routine_no[1] = R1_SCROLL_DOWN;
             ewk->wu.routine_no[6] = Y;
             ewk->wu.xyz[0].disp.pos = X;
             ewk->wu.xyz[1].disp.pos = 256;
             break;
         case 8:
-            ewk->wu.routine_no[1] = 6;
+            ewk->wu.routine_no[1] = R1_SCROLL_UP;
             ewk->wu.routine_no[6] = Y;
             ewk->wu.xyz[0].disp.pos = X;
             ewk->wu.xyz[1].disp.pos = -32;

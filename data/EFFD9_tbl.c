@@ -1,5 +1,10 @@
 /*
- * EFFD9_TBL.C  game tables
+ * EFFD9_TBL.C  palette change tables for effect D9
+ *
+ * color_table_index has nine entries { end-condition flags, timer, 1P table, 2P table }; the
+ * entry number is given when effect D9 is started. The coltbl_* tables (and slices of
+ * coltbl_000_2P) are the colour steps, { frames, colour } pairs ending with 0, that the effect
+ * cycles through the player's extra colour. Read by EFFD9.C, the palette change controller.
  */
 
 #include "types.h"

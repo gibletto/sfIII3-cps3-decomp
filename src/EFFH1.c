@@ -5,8 +5,8 @@
  * position, priority, pattern and first delay come from effh1_data_tbl. effect_H1_move runs
  * eff_h1_move while the ending scene is unchanged: after its delay the object appears relative
  * to BG1 and plays its pattern while it stays in range; objects 0-4 then restart from their home
- * position after a random wait from effh1_wait_timer, the others stop. All free themselves when
- * the ending scene (end_w.r_no_2) moves on.
+ * position after a random wait from effh1_wait_timer, the others stop. Once the ending scene
+ * (end_w.r_no_2) moves on they are no longer moved or drawn.
  */
 
 #include "structs.h"
@@ -22,20 +22,29 @@
 #include "aboutspr.h"
 #include "EFFH1.h"
 
+/* routine_no[0] */
+#define R0_MOVE         0       /* run the object while the scene lasts */
+#define R0_END          1       /* one more frame */
+
+/* routine_no[1] */
+#define R1_WAIT         0       /* count the delay down, then appear */
+#define R1_MOVE         1       /* animate while in range */
+#define R1_STOP         99      /* the scene has moved on */
+
 void eff_h1_move(WORK_Other* ewk);
 
 
 
 void effect_H1_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_MOVE:
         if (ewk->wu.old_rno[6] < end_w.r_no_2) {
-            ewk->wu.routine_no[1] = 99;
+            ewk->wu.routine_no[1] = R1_STOP;
             break;
         }
         eff_h1_move(ewk);
         break;
-    case 1:
+    case R0_END:
         ewk->wu.routine_no[0]++;
         break;
     default:
@@ -49,7 +58,7 @@ void effect_H1_move(WORK_Other* ewk) {
 
 void eff_h1_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_WAIT:
         ewk->wu.old_rno[0]--;
         if (ewk->wu.old_rno[0] <= 0) {
             ewk->wu.routine_no[1]++;
@@ -58,7 +67,7 @@ void eff_h1_move(WORK_Other* ewk) {
             ewk->wu.xyz[0].disp.pos += bg_w.bgw[1].xy[0].disp.pos;
         }
         break;
-    case 1:
+    case R1_MOVE:
         char_move(&ewk->wu);
         if (range_x_check(&ewk->wu) != 0) {
             if (ewk->wu.xyz[1].disp.pos > -8) {
@@ -69,7 +78,7 @@ void eff_h1_move(WORK_Other* ewk) {
         if ((u8)ewk->wu.type > 4) {
             ewk->wu.routine_no[0]++;
         } else {
-            ewk->wu.routine_no[1] = 0;
+            ewk->wu.routine_no[1] = R1_WAIT;
             ewk->wu.disp_flag = 0;
             {
                 u16 work = random_16_com();

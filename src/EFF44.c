@@ -23,6 +23,15 @@
 #include "bg_sub_5.h"
 #include "EFF44.h"
 
+/* routine_no[0], effect_43_move */
+#define R0_WAIT         0       /* count the delay down, then show */
+#define R0_ANIM         1       /* animate */
+
+/* routine_no[0], effect_44_move */
+#define R0_INIT         0       /* show and start the animation */
+#define R0_MOVE         1       /* animate until retired */
+#define R0_KILL         2       /* (default) put the work back */
+
 
 
 /* 02006CC8 */
@@ -43,7 +52,7 @@ const s16* scr_obj_data44[10] = {
 /* provisional name */
 void effect_43_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_WAIT:
         if (--ewk->wu.dir_timer != 0) {
             return;
         }
@@ -51,7 +60,7 @@ void effect_43_move(WORK_Other* ewk) {
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R0_ANIM:
         char_move(&ewk->wu);
         break;
     default:
@@ -97,12 +106,12 @@ void effect_44_move(WORK_Other* ewk) {
         return;
     }
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R0_MOVE:
         if (compel_dead_check(ewk)) {
             ewk->wu.routine_no[0]++;
             ewk->wu.disp_flag = 0;

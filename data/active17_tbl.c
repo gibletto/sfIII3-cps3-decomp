@@ -1,5 +1,8 @@
 /*
- * ACTIVE17_TBL.C  game tables
+ * ACTIVE17_TBL.C  CPU active pattern table for player 17 (Makoto)
+ *
+ * Pattern17_Tbl lists the Pattern17_nnnn scripts the computer-controlled Makoto runs in active
+ * (attacking) mode, indexed by Pattern_Index. Read by ACTIVE17.C (Computer17).
  */
 
 #include "types.h"

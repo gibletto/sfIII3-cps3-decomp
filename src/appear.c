@@ -74,6 +74,160 @@
 #include "appear.h"
 #include "fighter.h"
 
+/* routine_no[3], Appear_01000 */
+#define AP01_WAIT       1       /* until Appear_flag */
+#define AP01_NEXT       2       /* start the next animation */
+#define AP01_END        3       /* run the animation to its end */
+
+/* routine_no[3], Appear_03000 */
+#define AP03_END        1       /* run the animation to its end */
+
+/* routine_no[3], Appear_04000 */
+#define AP04_CUE        1       /* run the animation to cue 9 */
+#define AP04_NEXT       2       /* start the next animation */
+#define AP04_END        3       /* run the animation to its end */
+
+/* routine_no[3], Appear_05000 */
+#define AP05_WAIT       1       /* count down appear_work */
+#define AP05_NEXT       2       /* start the next animation */
+#define AP05_CUE        3       /* run the animation to cue 9 */
+#define AP05_END        4       /* run the animation to its end */
+
+/* routine_no[3], Appear_06000 */
+#define AP06_WAIT       1       /* until demo_car_flag */
+#define AP06_NEXT       2       /* start the next animation */
+#define AP06_NEXT2      3       /* start the next animation */
+#define AP06_END        4       /* run the animation to its end */
+
+/* routine_no[3], Appear_07000 */
+#define AP07_WAIT       1       /* until Appear_flag != 0 */
+#define AP07_CUE        2       /* run the animation to cue 9 */
+#define AP07_AIR        3       /* in the air until it lands (falls through) */
+#define AP07_AIR2       4       /* in the air until it lands */
+#define AP07_END        5       /* run the animation to its end */
+
+/* routine_no[3], Appear_08000 */
+#define AP08_END        1       /* run the animation to its end */
+
+/* routine_no[3], Appear_09000 */
+#define AP09_END        1       /* run the animation to its end */
+#define AP09_NEXT       2       /* start the next animation */
+#define AP09_NEXT2      3       /* start the next animation */
+#define AP09_END2       4       /* run the animation to its end */
+
+/* routine_no[3], Appear_10000 */
+#define AP10_NEXT       1       /* start the next animation */
+#define AP10_END        2       /* run the animation to its end */
+
+/* routine_no[3], Appear_11000 */
+#define AP11_WAIT       1       /* count down app_counter */
+
+/* routine_no[3], Appear_12000 */
+#define AP12_NEXT       1       /* start the next animation */
+#define AP12_END        2       /* run the animation to its end */
+
+/* routine_no[3], Appear_13000 */
+#define AP13_WAIT       1       /* until bg_land_flag */
+#define AP13_NEXT       2       /* start the next animation */
+#define AP13_END        3       /* run the animation to its end */
+
+/* routine_no[3], Appear_14000 */
+#define AP14_END        1       /* run the animation to its end */
+
+/* routine_no[3], Appear_15000 */
+#define AP15_END        1       /* run the animation to its end, with sounds at cues 2 and 3 */
+
+/* routine_no[3], Appear_16000 */
+#define AP16_END        1       /* run the animation to its end */
+
+/* routine_no[3], Appear_17000 */
+#define AP17_WAIT       1       /* until bg_app */
+#define AP17_CUE        2       /* run the animation to cue 2 */
+#define AP17_END        3       /* run the animation to its end */
+
+/* routine_no[3], Appear_18000 */
+#define AP18_CUE        1       /* run the animation to cue 9 */
+#define AP18_WAIT       2       /* count down appear_work */
+#define AP18_END        3       /* run the animation to its end */
+
+/* routine_no[3], Appear_19000 */
+#define AP19_NEXT       1       /* start the next animation */
+#define AP19_NEXT2      2       /* start the next animation */
+#define AP19_END        3       /* run the animation to its end */
+
+/* routine_no[3], Appear_20000 */
+#define AP20_END        1       /* run the animation to its end */
+
+/* routine_no[3], Appear_21000 */
+#define AP21_END        1       /* run the animation to its end */
+
+/* routine_no[3], Appear_22000 */
+#define AP22_NEXT       1       /* start the next animation */
+#define AP22_END        2       /* run the animation to its end */
+
+/* routine_no[3], Appear_23000 */
+#define AP23_NEXT       1       /* start the next animation */
+#define AP23_END        2       /* run the animation to its end */
+
+/* routine_no[3], Appear_26000 */
+#define AP26_WAIT       1       /* count down appear_work */
+#define AP26_AIR        2       /* in the air until it lands */
+#define AP26_RUN        3       /* run the animation */
+#define AP26_NEXT       4       /* start the next animation */
+#define AP26_CUE        5       /* run the animation to cue 9 */
+#define AP26_END        6       /* run the animation to its end */
+
+/* routine_no[3], Appear_28000 */
+#define AP28_WAIT       1       /* until Appear_car_stop[id_w] */
+#define AP28_CUE        2       /* run the animation to cue 9 */
+#define AP28_WAIT2      3       /* until plw[id_w].wu.routine_no[3] >= 3 */
+#define AP28_NEXT       4       /* start the next animation */
+#define AP28_END        5       /* run the animation to its end */
+
+/* routine_no[3], Appear_29000 */
+#define AP29_WAIT       1       /* wait for cmwk[1], then start the entry cmwk[2] chose */
+#define AP29_MOVE       2       /* move and run the animation */
+#define AP29_END        3       /* run the animation to its end */
+#define AP29_NEXT       4       /* start the next animation */
+#define AP29_END2       5       /* run the animation to its end */
+
+/* routine_no[3], Appear_30000 */
+#define AP30_END        1       /* run the animation to its end */
+
+/* routine_no[3], Appear_31000 */
+#define AP31_END        1       /* run the animation to its end */
+
+/* routine_no[3], Appear_32000 */
+#define AP32_END        1       /* run the animation to its end */
+
+/* routine_no[3], Appear_33000 */
+#define AP33_NEXT       1       /* start the next animation */
+#define AP33_END        2       /* run the animation to its end */
+
+/* routine_no[3], Appear_36000 */
+#define AP36_NEXT       1       /* start the next animation */
+#define AP36_WAIT       2       /* count down app_counter */
+#define AP36_NEXT2      3       /* start the next animation */
+#define AP36_END        4       /* run the animation to its end */
+
+/* routine_no[3], Appear_37000 */
+#define AP37_END        1       /* run the animation to its end */
+#define AP37_NEXT       2       /* start the next animation */
+#define AP37_NEXT2      3       /* start the next animation */
+#define AP37_CUE        4       /* run the animation to cue 9 */
+#define AP37_NEXT3      5       /* start the next animation */
+#define AP37_WAIT       6       /* count down app_counter */
+
+/* routine_no[3], Appear_38000 */
+#define AP38_END        1       /* run the animation to its end */
+
+/* routine_no[3], Appear_39000 */
+#define AP39_MOVE       1       /* move and run the animation */
+#define AP39_DONE       2       /* the entry is over: stand */
+
+/* routine_no[3], Appear_41000 */
+#define AP41_WAIT       1       /* count down app_counter */
+
 
 
 
@@ -177,8 +331,8 @@ void appear_player(PLW* wk) {
 
 void Appear_00000(PLW* wk) {
     Appear_end++;
-    wk->wu.routine_no[2] = 1;
-    wk->wu.routine_no[3] = 0;
+    wk->wu.routine_no[2] = NORMAL_STAND;
+    wk->wu.routine_no[3] = RN3_START;
 }
 
 
@@ -188,7 +342,7 @@ void Appear_01000(PLW* wk) {
     s16 id_w;
     id_w = wk->wu.id ^ 1;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.disp_flag = 1;
         bg_app_stop = 1;
@@ -208,16 +362,16 @@ void Appear_01000(PLW* wk) {
             break;
         }
         break;
-    case 1:
+    case AP01_WAIT:
         if (Appear_flag[wk->wu.id]) {
             wk->wu.routine_no[3]++;
             char_move(&wk->wu);
         } else {
-            wk->wu.routine_no[3] = 3;
+            wk->wu.routine_no[3] = AP01_END;
             set_char_move_init(&wk->wu, 9, wk->wu.char_index + 8);
         }
         break;
-    case 2:
+    case AP01_NEXT:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 9) {
             if (Appear_flag[wk->wu.id] == 0) {
@@ -226,11 +380,11 @@ void Appear_01000(PLW* wk) {
             }
         }
         break;
-    case 3:
+    case AP01_END:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = RN3_START;
             Appear_end++;
         }
         break;
@@ -241,17 +395,17 @@ void Appear_01000(PLW* wk) {
 
 void Appear_03000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.disp_flag = 1;
         set_char_move_init(&wk->wu, 9, wk->wu.char_index);
         bg_app_stop = 1;
         break;
-    case 1:
+    case AP03_END:
         char_move(&wk->wu);
         if ((u8)wk->wu.cg_type == 0xFF) {
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = RN3_START;
             Appear_end++;
         }
         break;
@@ -276,7 +430,7 @@ s32 yun_yang_appear_check(PLW* wk) {
         } else {
             Appear_flag[1] = 0;
         }
-        appear_data_set(wk, ((void*)&(*(APPEAR_DATA*)&(appear_data[2]))));
+        appear_data_set(wk, &appear_data[2]);
         wk->wu.routine_no[4] = 1;
         Appear_01000(wk);
         return 1;
@@ -286,7 +440,7 @@ s32 yun_yang_appear_check(PLW* wk) {
         } else {
             Appear_flag[1] = 0;
         }
-        appear_data_set(wk, ((void*)&(*(APPEAR_DATA*)&(appear_data[24]))));
+        appear_data_set(wk, &appear_data[24]);
         wk->wu.routine_no[4] = 20;
         Appear_20000(wk);
         return 1;
@@ -298,13 +452,13 @@ s32 yun_yang_appear_check(PLW* wk) {
 
 void Appear_04000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         bg_app_stop = 1;
         wk->wu.disp_flag = 1;
         set_char_move_init(&wk->wu, 9, 0x10);
         break;
-    case 1:
+    case AP04_CUE:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 9) {
             wk->wu.routine_no[3]++;
@@ -316,7 +470,7 @@ void Appear_04000(PLW* wk) {
             }
         }
         break;
-    case 2:
+    case AP04_NEXT:
         char_move(&wk->wu);
         app_counter[wk->wu.id]--;
         if (app_counter[wk->wu.id] <= 0) {
@@ -334,11 +488,11 @@ void Appear_04000(PLW* wk) {
         add_x_sub((WORK_Other*)wk);
         add_y_sub((WORK_Other*)wk);
         break;
-    case 3:
+    case AP04_END:
         char_move(&wk->wu);
         if ((wk->wu.cg_type) == 0xFF) {
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = RN3_START;
             Appear_end++;
         }
         break;
@@ -363,7 +517,7 @@ s32 yang_yun_appear_check(PLW* wk) {
         } else {
             Appear_flag[1] = 0;
         }
-        appear_data_set(wk, ((void*)&(*(APPEAR_DATA*)&(appear_data[2]))));
+        appear_data_set(wk, &appear_data[2]);
         wk->wu.routine_no[4] = 1;
         Appear_01000(wk);
         return 1;
@@ -373,7 +527,7 @@ s32 yang_yun_appear_check(PLW* wk) {
         } else {
             Appear_flag[1] = 0;
         }
-        appear_data_set(wk, ((void*)&(*(APPEAR_DATA*)&(appear_data[24]))));
+        appear_data_set(wk, &appear_data[24]);
         wk->wu.routine_no[4] = 20;
         Appear_20000(wk);
         return 1;
@@ -385,14 +539,14 @@ s32 yang_yun_appear_check(PLW* wk) {
 
 void Appear_05000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.disp_flag = 1;
         set_char_move_init(&wk->wu, 9, 0x17);
         bg_app_stop = 1;
         appear_work[wk->wu.id] = 0x1C;
         break;
-    case 1:
+    case AP05_WAIT:
         appear_work[wk->wu.id]--;
         if (appear_work[wk->wu.id] < 0) {
             wk->wu.routine_no[3]++;
@@ -404,7 +558,7 @@ void Appear_05000(PLW* wk) {
             }
         }
         break;
-    case 2:
+    case AP05_NEXT:
         char_move(&wk->wu);
         appear_work[wk->wu.id]--;
         if (appear_work[wk->wu.id] <= 0) {
@@ -419,7 +573,7 @@ void Appear_05000(PLW* wk) {
         }
         add_x_sub((WORK_Other*)&wk->wu);
         break;
-    case 3:
+    case AP05_CUE:
         char_move(&wk->wu);
         if ((wk->wu.cg_type) == 9) {
             wk->wu.routine_no[3]++;
@@ -427,11 +581,11 @@ void Appear_05000(PLW* wk) {
             return;
         }
         break;
-    case 4:
+    case AP05_END:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = RN3_START;
             Appear_end++;
         }
         break;
@@ -441,9 +595,8 @@ void Appear_05000(PLW* wk) {
 
 
 void Appear_06000(PLW* wk) {
-    s16 work;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         switch (wk->wu.routine_no[4]) {
         case 6:
@@ -459,7 +612,7 @@ void Appear_06000(PLW* wk) {
         wk->wu.disp_flag = 0;
         bg_app_stop = 1;
         break;
-    case 1:
+    case AP06_WAIT:
         if (demo_car_flag[wk->wu.id]) {
             wk->wu.routine_no[3]++;
             wk->wu.disp_flag = 1;
@@ -480,7 +633,7 @@ void Appear_06000(PLW* wk) {
             }
         }
         break;
-    case 2:
+    case AP06_NEXT:
         char_move(&wk->wu);
         appear_work[wk->wu.id]--;
         if (appear_work[wk->wu.id] <= 0) {
@@ -493,7 +646,7 @@ void Appear_06000(PLW* wk) {
             add_y_sub((WORK_Other*)&wk->wu);
         }
         break;
-    case 3:
+    case AP06_NEXT2:
         char_move(&wk->wu);
         if (wk->wu.cg_type) {
             wk->wu.routine_no[3]++;
@@ -501,16 +654,16 @@ void Appear_06000(PLW* wk) {
                 wk->wu.rl_flag ^= 1;
                 set_char_move_init(&wk->wu, 0, 1);
             } else {
-                wk->wu.routine_no[2] = 1;
-                wk->wu.routine_no[3] = 0;
+                wk->wu.routine_no[2] = NORMAL_STAND;
+                wk->wu.routine_no[3] = RN3_START;
             }
         }
         break;
-    case 4:
+    case AP06_END:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = RN3_START;
         }
         break;
     }
@@ -522,13 +675,13 @@ void Appear_06000(PLW* wk) {
 
 void Appear_07000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.disp_flag = 1;
         bg_app_stop = 1;
         if (plw[wk->wu.id ^ 1].player_number == PL_SEAN && bg_w.stage == 12 && bg_w.area == 0) {
             wk->wu.routine_no[4] = 1;
             set_char_move_init(&wk->wu, 9, 17);
-            wk->wu.routine_no[3] = 3;
+            wk->wu.routine_no[3] = AP07_AIR;
         } else {
             set_char_move_init(&wk->wu, 9, 8);
             effect_C8_init(wk);
@@ -536,23 +689,23 @@ void Appear_07000(PLW* wk) {
                 wk->wu.routine_no[3]++;
                 break;
             }
-            wk->wu.routine_no[3] = 2;
+            wk->wu.routine_no[3] = AP07_CUE;
         }
         break;
-    case 1:
+    case AP07_WAIT:
         if (Appear_flag[wk->wu.id] != 0) {
             break;
         }
         wk->wu.routine_no[3] += 1;
-    case 2:
+    case AP07_CUE:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 9) {
             wk->wu.routine_no[3]++;
             wk->wu.cg_type = 0;
         }
         break;
-    case 3:
-    case 4:
+    case AP07_AIR:
+    case AP07_AIR2:
         switch (wk->wu.cg_type) {
         case 1:
             wk->wu.mvxy.a[1].sp = 0x30000;
@@ -580,11 +733,11 @@ void Appear_07000(PLW* wk) {
             break;
         }
         break;
-    case 5:
+    case AP07_END:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = RN3_START;
             Appear_end++;
         }
     }
@@ -596,7 +749,7 @@ void Appear_07000(PLW* wk) {
 
 void Appear_08000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.disp_flag = 1;
         if (sean_appear_check(wk, wk->wu.id)) {
@@ -608,11 +761,11 @@ void Appear_08000(PLW* wk) {
         appear_data_set(wk, (APPEAR_DATA*)appear_data);
         wk->wu.routine_no[4] = 2;
         break;
-    case 1:
+    case AP08_END:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = RN3_START;
             Appear_end++;
         }
     }
@@ -631,13 +784,13 @@ s32 sean_appear_check(PLW* wk, s16 id) {
 
 void Appear_09000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.disp_flag = 1;
         set_char_move_init(&wk->wu, 9, 0x10);
         bg_app_stop = 1;
         break;
-    case 1:
+    case AP09_END:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
             wk->wu.routine_no[3]++;
@@ -646,7 +799,7 @@ void Appear_09000(PLW* wk) {
             return;
         }
         break;
-    case 2:
+    case AP09_NEXT:
         app_counter[wk->wu.id]--;
         if (app_counter[wk->wu.id] < 0) {
             wk->wu.routine_no[3]++;
@@ -656,7 +809,7 @@ void Appear_09000(PLW* wk) {
             return;
         }
         break;
-    case 3:
+    case AP09_NEXT2:
         char_move(&wk->wu);
         add_y_sub((WORK_Other*)&wk->wu);
         if (wk->wu.xyz[1].disp.pos <= 0) {
@@ -667,11 +820,11 @@ void Appear_09000(PLW* wk) {
             return;
         }
         break;
-    case 4:
+    case AP09_END2:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = RN3_START;
         }
         break;
     }
@@ -681,7 +834,7 @@ void Appear_09000(PLW* wk) {
 
 void Appear_10000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.disp_flag = 1;
         set_char_move_init(&wk->wu, 9, 0x13);
@@ -693,7 +846,7 @@ void Appear_10000(PLW* wk) {
             wk->wu.mvxy.a[0].sp = 0x18000;
         }
         break;
-    case 1:
+    case AP10_NEXT:
         char_move(&wk->wu);
         add_x_sub((WORK_Other*)&wk->wu);
         if (wk->wu.id) {
@@ -709,11 +862,11 @@ void Appear_10000(PLW* wk) {
         set_char_move_init(&wk->wu, 9, 0x14);
         Appear_end++;
         break;
-    case 2:
+    case AP10_END:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = RN3_START;
         }
         break;
     }
@@ -723,18 +876,18 @@ void Appear_10000(PLW* wk) {
 
 void Appear_11000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         bg_app_stop = 1;
         app_counter[wk->wu.id] = 0x50;
         set_char_move_init(&wk->wu, 0, 0);
         break;
-    case 1:
+    case AP11_WAIT:
         char_move(&wk->wu);
         app_counter[wk->wu.id]--;
         if (app_counter[wk->wu.id] < 0) {
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 1;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = AP11_WAIT;
             Appear_end++;
             if (Demo_Sound != 0 || Demo_Flag != 0) {
                 sound_request_pan(0x2A9, 0x40, 0x40, 0, 2);
@@ -748,7 +901,7 @@ void Appear_11000(PLW* wk) {
 void Appear_12000(PLW* wk) {
     s16 work;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.disp_flag = 1;
         bg_app_stop = 1;
@@ -764,7 +917,7 @@ void Appear_12000(PLW* wk) {
             cal_initial_speed(&wk->wu, app_counter[wk->wu.id], bg_w.bgw[1].pos_x_work - work, 0);
         }
         break;
-    case 1:
+    case AP12_NEXT:
         char_move(&wk->wu);
         app_counter[wk->wu.id]--;
         if (app_counter[wk->wu.id] <= 0) {
@@ -777,12 +930,12 @@ void Appear_12000(PLW* wk) {
         add_x_sub((WORK_Other*)&wk->wu);
         add_y_sub((WORK_Other*)&wk->wu);
         break;
-    case 2:
+    case AP12_END:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
             wk->wu.cg_type = 0;
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = RN3_START;
         }
     }
 }
@@ -791,7 +944,7 @@ void Appear_12000(PLW* wk) {
 
 void Appear_13000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.disp_flag = 1;
         bg_app_stop = 1;
@@ -800,12 +953,12 @@ void Appear_13000(PLW* wk) {
         wk->wu.mvxy.d[1].sp = -0x3000;
         wk->wu.kage_flag = 0;
         break;
-    case 1:
+    case AP13_WAIT:
         if (bg_land_flag) {
             wk->wu.kage_flag = 1;
             wk->wu.routine_no[3]++;
         }
-    case 2:
+    case AP13_NEXT:
         char_move(&wk->wu);
         add_y_sub((WORK_Other*)&wk->wu);
         if (wk->wu.xyz[1].disp.pos < 0) {
@@ -816,11 +969,11 @@ void Appear_13000(PLW* wk) {
             return;
         }
         break;
-    case 3:
+    case AP13_END:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = RN3_START;
         }
         break;
     }
@@ -832,18 +985,18 @@ void Appear_14000(PLW* wk) {
     s16 work;
     s16 id_w = wk->wu.id ^ 1;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3] += 1;
         wk->wu.disp_flag = 1;
         if (sean_appear_check(wk, id_w)) {
             set_char_move_init(&wk->wu, 9, 0x3C);
             return;
         }
-        wk->wu.routine_no[2] = 1;
-        wk->wu.routine_no[3] = 0;
+        wk->wu.routine_no[2] = NORMAL_STAND;
+        wk->wu.routine_no[3] = RN3_START;
         Appear_end++;
         break;
-    case 1:
+    case AP14_END:
         switch (Appear_free[id_w]) {
         case 0:
             char_move(&wk->wu);
@@ -851,15 +1004,15 @@ void Appear_14000(PLW* wk) {
         case 1:
             work = wk->wu.cg_ix / wk->wu.cgd_type;
             set_char_move_init2(&wk->wu, 0, 0, work + 1, 0);
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 1;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = AP14_END;
             Appear_end += 1;
             break;
         case 2:
             char_move(&wk->wu);
             if (wk->wu.cg_type == 0xFF) {
-                wk->wu.routine_no[2] = 1;
-                wk->wu.routine_no[3] = 0;
+                wk->wu.routine_no[2] = NORMAL_STAND;
+                wk->wu.routine_no[3] = RN3_START;
                 Appear_end += 1;
             }
         }
@@ -870,14 +1023,14 @@ void Appear_14000(PLW* wk) {
 
 void Appear_15000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         bg_app_stop = 1;
         wk->wu.disp_flag = 1;
         set_char_move_init(&wk->wu, 9, 8);
         effect_97_init(wk);
         break;
-    case 1:
+    case AP15_END:
         char_move(&wk->wu);
         switch (wk->wu.cg_type) {
         case 0x2:
@@ -889,8 +1042,8 @@ void Appear_15000(PLW* wk) {
             Sound_SE(0x10B);
             break;
         case 0xFF:
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = RN3_START;
             Appear_end++;
             break;
         }
@@ -901,7 +1054,7 @@ void Appear_15000(PLW* wk) {
 
 void Appear_16000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.disp_flag = 1;
         bg_app_stop = 1;
@@ -911,11 +1064,11 @@ void Appear_16000(PLW* wk) {
             set_char_move_init(&wk->wu, 9, 0xC);
         }
         break;
-    case 1:
+    case AP16_END:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = RN3_START;
             Appear_end++;
         }
     }
@@ -948,7 +1101,7 @@ s16 gill_appear_check(void) {
 
 void Appear_17000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.disp_flag = 1;
         if (gill_appear_check()) {
@@ -962,13 +1115,13 @@ void Appear_17000(PLW* wk) {
         sound_request(49);
         set_char_move_init(&wk->wu, 9, 8);
         break;
-    case 1:
+    case AP17_WAIT:
         if (bg_app) {
             break;
         }
         wk->wu.routine_no[3]++;
         break;
-    case 2:
+    case AP17_CUE:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 2) {
             wk->wu.routine_no[3]++;
@@ -976,11 +1129,11 @@ void Appear_17000(PLW* wk) {
             return;
         }
         break;
-    case 3:
+    case AP17_END:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = RN3_START;
             Appear_end++;
             bgm_fade_out(0x8C);
         }
@@ -993,7 +1146,7 @@ void Appear_17000(PLW* wk) {
 void Appear_18000(PLW* wk) {
     s16 work;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.disp_flag = 1;
         if (plw[0].player_number == PL_ELENA && plw[1].player_number == PL_ELENA) {
@@ -1020,7 +1173,7 @@ void Appear_18000(PLW* wk) {
         }
         bg_app_stop = 1;
         break;
-    case 1:
+    case AP18_CUE:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 9) {
             if (!Appear_free[wk->wu.id]) {
@@ -1037,7 +1190,7 @@ void Appear_18000(PLW* wk) {
             wk->wu.routine_no[3]++;
         }
         break;
-    case 2:
+    case AP18_WAIT:
         char_move(&wk->wu);
         appear_work[wk->wu.id]--;
         if (appear_work[wk->wu.id] <= 0) {
@@ -1048,11 +1201,11 @@ void Appear_18000(PLW* wk) {
         add_x_sub((WORK_Other*)&wk->wu);
         add_y_sub((WORK_Other*)&wk->wu);
         break;
-    case 3:
+    case AP18_END:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = RN3_START;
             Appear_end++;
         }
         break;
@@ -1064,7 +1217,7 @@ void Appear_18000(PLW* wk) {
 
 void Appear_19000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         bg_app_stop = 1;
         wk->wu.disp_flag = 1;
@@ -1078,7 +1231,7 @@ void Appear_19000(PLW* wk) {
         wk->wu.my_mr.size.y = 0x35;
         appear_work[wk->wu.id] = 0x82;
         break;
-    case 1:
+    case AP19_NEXT:
         appear_work[wk->wu.id]--;
         wk->wu.next_z = 0x56;
         if (appear_work[wk->wu.id] < 0) {
@@ -1102,7 +1255,7 @@ void Appear_19000(PLW* wk) {
             effect_15_init(&wk->wu, 2);
         }
         break;
-    case 2:
+    case AP19_NEXT2:
         appear_work[wk->wu.id]--;
         if (appear_work[wk->wu.id] <= 0) {
             wk->wu.routine_no[3]++;
@@ -1118,11 +1271,11 @@ void Appear_19000(PLW* wk) {
             add_y_sub((WORK_Other*)&wk->wu);
         }
         break;
-    case 3:
+    case AP19_END:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = RN3_START;
             Appear_end++;
         }
         break;
@@ -1133,17 +1286,17 @@ void Appear_19000(PLW* wk) {
 
 void Appear_20000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.disp_flag = 1;
         set_char_move_init(&wk->wu, 9, 0x15);
         bg_app_stop = 1;
         break;
-    case 1:
+    case AP20_END:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = RN3_START;
             Appear_end++;
         }
     }
@@ -1154,7 +1307,7 @@ void Appear_20000(PLW* wk) {
 void Appear_21000(PLW* wk) {
     s16 work;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3] += 1;
         wk->wu.disp_flag = 1;
         work = random_16_com();
@@ -1167,11 +1320,11 @@ void Appear_21000(PLW* wk) {
         }
         bg_app_stop = 1;
         break;
-    case 1:
+    case AP21_END:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = RN3_START;
             Appear_end += 1;
         }
     }
@@ -1181,23 +1334,23 @@ void Appear_21000(PLW* wk) {
 
 void Appear_22000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.disp_flag = 1;
         wk->wu.cmwk[1] = 0;
         set_char_move_init(&wk->wu, 9, 0);
         bg_app_stop = 1;
         break;
-    case 1:
+    case AP22_NEXT:
         char_move(&wk->wu);
         wk->wu.routine_no[3]++;
         set_char_move_init(&wk->wu, 9, 8);
         break;
-    case 2:
+    case AP22_END:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = RN3_START;
             Appear_end++;
         }
     }
@@ -1208,7 +1361,7 @@ void Appear_22000(PLW* wk) {
 void Appear_23000(PLW* wk) {
     s16 work;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3] += 1;
         wk->wu.disp_flag = 1;
         work = random_16_com();
@@ -1217,7 +1370,7 @@ void Appear_23000(PLW* wk) {
         set_char_move_init(&wk->wu, 9, work + 4);
         bg_app_stop = 1;
         break;
-    case 1:
+    case AP23_NEXT:
         char_move(&wk->wu);
         if ((wk->wu.cmwk[1]) && wk->wu.cg_type == 9) {
             wk->wu.routine_no[3] += 1;
@@ -1226,11 +1379,11 @@ void Appear_23000(PLW* wk) {
         } else {
             return;
         }
-    case 2:
+    case AP23_END:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = RN3_START;
             Appear_end += 1;
         }
         break;
@@ -1253,8 +1406,8 @@ void Appear_24000(PLW* wk) {
             wk->wu.xyz[0].disp.pos = bg_w.bgw[1].pos_x_work - 144;
         }
     }
-    wk->wu.routine_no[2] = 1;
-    wk->wu.routine_no[3] = 0;
+    wk->wu.routine_no[2] = NORMAL_STAND;
+    wk->wu.routine_no[3] = RN3_START;
 }
 
 
@@ -1263,15 +1416,15 @@ void Appear_25000(PLW* wk) {
     if (!wk->wu.operator) {
         wk->wu.xyz[0].disp.pos = bg_w.bgw[1].pos_x_work;
     }
-    wk->wu.routine_no[2] = 1;
-    wk->wu.routine_no[3] = 0;
+    wk->wu.routine_no[2] = NORMAL_STAND;
+    wk->wu.routine_no[3] = RN3_START;
 }
 
 
 
 void Appear_26000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         bg_app_stop = 1;
         wk->wu.routine_no[3]++;
         wk->wu.disp_flag = 1;
@@ -1279,7 +1432,7 @@ void Appear_26000(PLW* wk) {
         appear_work[wk->wu.id] = 0x14;
         Appear_free[wk->wu.id] = 0;
         break;
-    case 1:
+    case AP26_WAIT:
         appear_work[wk->wu.id]--;
         if (appear_work[wk->wu.id] <= 0) {
             wk->wu.routine_no[3]++;
@@ -1291,7 +1444,7 @@ void Appear_26000(PLW* wk) {
             }
         }
         break;
-    case 2:
+    case AP26_AIR:
         char_move(&wk->wu);
         appear_work[wk->wu.id]--;
         add_x_sub((WORK_Other*)wk);
@@ -1305,14 +1458,14 @@ void Appear_26000(PLW* wk) {
             Sound_SE(0x109);
         }
         break;
-    case 3:
+    case AP26_RUN:
         char_move(&wk->wu);
         if (wk->wu.hit_quake <= 0) {
             wk->wu.routine_no[3]++;
             Appear_free[wk->wu.id] = 1;
         }
         break;
-    case 4:
+    case AP26_NEXT:
         char_move(&wk->wu);
         appear_work[wk->wu.id]--;
         if (appear_work[wk->wu.id] <= 0) {
@@ -1324,18 +1477,18 @@ void Appear_26000(PLW* wk) {
             add_y_sub((WORK_Other*)wk);
         }
         break;
-    case 5:
+    case AP26_CUE:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 9) {
             wk->wu.rl_flag ^= 1;
             wk->wu.routine_no[3]++;
         }
         break;
-    case 6:
+    case AP26_END:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = RN3_START;
             Appear_end++;
         }
         break;
@@ -1347,43 +1500,43 @@ void Appear_26000(PLW* wk) {
 void Appear_28000(PLW* wk) {
     s16 id_w = wk->wu.id ^ 1;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.disp_flag = 1;
         Appear_car_stop[id_w] = 0;
         set_char_move_init(&wk->wu, 9, 17);
         bg_app_stop = 1;
         break;
-    case 1:
+    case AP28_WAIT:
         if (Appear_car_stop[id_w]) {
             wk->wu.routine_no[3]++;
             set_char_move_init2(&wk->wu, 9, 17, 2, 0);
         }
         break;
-    case 2:
+    case AP28_CUE:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 9) {
             wk->wu.routine_no[3]++;
         }
         break;
-    case 3:
+    case AP28_WAIT2:
         if (plw[id_w].wu.routine_no[3] >= 3) {
             wk->wu.routine_no[3]++;
             appear_work[wk->wu.id] = 20;
         }
         break;
-    case 4:
+    case AP28_NEXT:
         appear_work[wk->wu.id]--;
         if (appear_work[wk->wu.id] <= 0) {
             wk->wu.routine_no[3]++;
             set_char_move_init2(&wk->wu, 9, 17, 15, 0);
         }
         break;
-    case 5:
+    case AP28_END:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = RN3_START;
             Appear_end++;
         }
         break;
@@ -1396,7 +1549,7 @@ void Appear_29000(PLW* wk) {
     s16 work;
     s32 mv;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         bg_app_stop = 1;
         wk->wu.disp_flag = 1;
@@ -1414,12 +1567,12 @@ void Appear_29000(PLW* wk) {
         }
         animal_decide(wk);
         break;
-    case 1:
+    case AP29_WAIT:
         if (wk->wu.cmwk[1]) {
             switch (wk->wu.cmwk[2]) {
             case 0:
             case 1:
-                wk->wu.routine_no[3] = 2;
+                wk->wu.routine_no[3] = AP29_MOVE;
                 if (wk->wu.id) {
                     wk->wu.mvxy.a[0].sp = 0xffff0000;
                 } else {
@@ -1429,10 +1582,9 @@ void Appear_29000(PLW* wk) {
                 mv = 8;
                 goto set_move;
             case 2:
-                wk->wu.routine_no[3] = 3;
                 mv = 10;
+                wk->wu.routine_no[3] = AP29_END;
                 if (wk->wu.id) {
-                    while (0);
                     wk->wu.xyz[0].disp.pos = bg_w.bgw[1].pos_x_work + 0xd8;
                 } else {
                     wk->wu.xyz[0].disp.pos = bg_w.bgw[1].pos_x_work + -0xd8;
@@ -1441,7 +1593,7 @@ void Appear_29000(PLW* wk) {
                 set_char_move_init(&wk->wu, 9, mv);
                 break;
             case 3:
-                wk->wu.routine_no[3] = 4;
+                wk->wu.routine_no[3] = AP29_NEXT;
                 set_char_move_init(&wk->wu, 9, 0xb);
                 wk->wu.mvxy.d[0].sp = 0;
                 wk->wu.mvxy.d[1].sp = 0xffff8000;
@@ -1456,7 +1608,7 @@ void Appear_29000(PLW* wk) {
             }
         }
         break;
-    case 2:
+    case AP29_MOVE:
         char_move(&wk->wu);
         add_x_sub((WORK_Other*)&wk->wu);
         if (wk->wu.id) {
@@ -1466,19 +1618,19 @@ void Appear_29000(PLW* wk) {
         } else if (wk->wu.xyz[0].disp.pos < (bg_w.bgw[1].pos_x_work - 0x58)) {
             break;
         }
-        wk->wu.routine_no[2] = 1;
-        wk->wu.routine_no[3] = 0;
+        wk->wu.routine_no[2] = NORMAL_STAND;
+        wk->wu.routine_no[3] = RN3_START;
         Appear_end++;
         break;
-    case 3:
+    case AP29_END:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = RN3_START;
             Appear_end++;
         }
         break;
-    case 4:
+    case AP29_NEXT:
         app_counter[wk->wu.id] -= 1;
         if (app_counter[wk->wu.id] <= 0) {
             wk->wu.routine_no[3]++;
@@ -1489,11 +1641,11 @@ void Appear_29000(PLW* wk) {
             add_y_sub((WORK_Other*)&wk->wu);
         }
         break;
-    case 5:
+    case AP29_END2:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = RN3_START;
             Appear_end++;
         }
         break;
@@ -1534,7 +1686,7 @@ void don_appear_check(PLW* wk) {
 void Appear_30000(PLW* wk) {
     s16 work;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.disp_flag = 1;
         bg_app_stop = 1;
@@ -1543,11 +1695,11 @@ void Appear_30000(PLW* wk) {
         appear_data_set(wk, (APPEAR_DATA*)appear_data + 24);
         set_char_move_init(&wk->wu, 9, 0xE);
         break;
-    case 1:
+    case AP30_END:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = RN3_START;
             Appear_end += 1;
         }
     }
@@ -1556,7 +1708,7 @@ void Appear_30000(PLW* wk) {
 
 void Appear_31000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.disp_flag = 1;
         if (Appear_flag[wk->wu.id]) {
@@ -1567,11 +1719,11 @@ void Appear_31000(PLW* wk) {
         }
         bg_app_stop = 1;
         break;
-    case 1:
+    case AP31_END:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = RN3_START;
             Appear_end++;
         }
         break;
@@ -1583,7 +1735,7 @@ void Appear_31000(PLW* wk) {
 void Appear_32000(PLW* wk) {
     s16 work;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3] += 1;
         wk->wu.disp_flag = 1;
         work = random_16_com();
@@ -1591,11 +1743,11 @@ void Appear_32000(PLW* wk) {
         set_char_move_init(&wk->wu, 9, work + 8);
         bg_app_stop = 1;
         break;
-    case 1:
+    case AP32_END:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = RN3_START;
             Appear_end += 1;
         }
     }
@@ -1605,7 +1757,7 @@ void Appear_32000(PLW* wk) {
 
 void Appear_33000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         set_char_move_init(&wk->wu, 9, 0xC);
         wk->wu.mvxy.d[0].sp = 0;
@@ -1620,7 +1772,7 @@ void Appear_33000(PLW* wk) {
         bg_app_stop = 1;
         don_appear_check(wk);
         break;
-    case 1:
+    case AP33_NEXT:
         app_counter[wk->wu.id]--;
         if (app_counter[wk->wu.id] <= 0) {
             wk->wu.routine_no[3]++;
@@ -1631,11 +1783,11 @@ void Appear_33000(PLW* wk) {
         add_x_sub((WORK_Other*)wk);
         add_y_sub((WORK_Other*)wk);
         break;
-    case 2:
+    case AP33_END:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = RN3_START;
             Appear_end++;
         }
     }
@@ -1646,7 +1798,7 @@ void Appear_33000(PLW* wk) {
 void Appear_34000(PLW* wk) {
     s16 work;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3] += 1;
         wk->wu.disp_flag = 1;
         work = random_16_com();
@@ -1676,13 +1828,13 @@ void Appear_34000(PLW* wk) {
 void Appear_36000(PLW* wk) {
     s16 id_w = wk->wu.id ^ 1;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.disp_flag = 1;
         set_char_move_init(&wk->wu, 9, 0x10);
         bg_app_stop = 1;
         break;
-    case 1:
+    case AP36_NEXT:
         char_move(&wk->wu);
         if (plw[id_w].wu.cmwk[0] == 3) {
             wk->wu.routine_no[3]++;
@@ -1691,7 +1843,7 @@ void Appear_36000(PLW* wk) {
             wk->wu.next_z = plw[id_w].wu.my_priority;
         }
         break;
-    case 2:
+    case AP36_WAIT:
         char_move(&wk->wu);
         app_counter[wk->wu.id]--;
         if (app_counter[wk->wu.id] <= 0) {
@@ -1705,7 +1857,7 @@ void Appear_36000(PLW* wk) {
         }
         wk->wu.next_z = plw[id_w].wu.my_priority;
         break;
-    case 3:
+    case AP36_NEXT2:
         char_move(&wk->wu);
         app_counter[wk->wu.id]--;
         if (app_counter[wk->wu.id] <= 0) {
@@ -1716,11 +1868,11 @@ void Appear_36000(PLW* wk) {
             add_x_sub((WORK_Other*)wk);
         }
         break;
-    case 4:
+    case AP36_END:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = RN3_START;
             Appear_end++;
         }
         break;
@@ -1732,7 +1884,7 @@ void Appear_36000(PLW* wk) {
 void Appear_37000(PLW* wk) {
     s16 id_w = wk->wu.id ^ 1;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.disp_flag = 1;
         set_char_move_init(&wk->wu, 9, 0x11);
@@ -1740,28 +1892,28 @@ void Appear_37000(PLW* wk) {
         wk->wu.cmwk[0] = 0;
         effect_M1_init(&wk->wu);
         break;
-    case 1:
+    case AP37_END:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
             wk->wu.routine_no[3]++;
             wk->wu.cmwk[0] = 1;
         }
         break;
-    case 2:
+    case AP37_NEXT:
         char_move(&wk->wu);
         if (wk->wu.cmwk[0] == 2) {
             wk->wu.routine_no[3]++;
             set_char_move_init(&wk->wu, 9, 0x12);
         }
         break;
-    case 3:
+    case AP37_NEXT2:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
             wk->wu.routine_no[3]++;
             set_char_move_init(&wk->wu, 9, 0x13);
         }
         break;
-    case 4:
+    case AP37_CUE:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 9) {
             wk->wu.routine_no[3]++;
@@ -1769,7 +1921,7 @@ void Appear_37000(PLW* wk) {
             wk->wu.next_z = plw[id_w].wu.my_priority;
         }
         break;
-    case 5:
+    case AP37_NEXT3:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
             wk->wu.routine_no[3]++;
@@ -1785,12 +1937,12 @@ void Appear_37000(PLW* wk) {
             wk->wu.next_z = plw[id_w].wu.my_priority;
         }
         break;
-    case 6:
+    case AP37_WAIT:
         char_move(&wk->wu);
         app_counter[wk->wu.id]--;
         if (app_counter[wk->wu.id] <= 0) {
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = RN3_START;
             Appear_end++;
         } else {
             add_x_sub((WORK_Other*)&wk->wu);
@@ -1803,7 +1955,7 @@ void Appear_37000(PLW* wk) {
 
 void Appear_38000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         bg_app_stop = 1;
         wk->wu.disp_flag = 1;
@@ -1813,11 +1965,11 @@ void Appear_38000(PLW* wk) {
             set_char_move_init(&wk->wu, 9, 0x13);
         }
         break;
-    case 1:
+    case AP38_END:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = RN3_START;
             Appear_end++;
         }
     }
@@ -1827,7 +1979,7 @@ void Appear_38000(PLW* wk) {
 
 void Appear_39000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.disp_flag = 1;
         if (gill_appear_check()) {
@@ -1845,7 +1997,7 @@ void Appear_39000(PLW* wk) {
         add_mvxy_speed(&wk->wu);
         wk->wu.mvxy.a[0].sp *= 2;
         break;
-    case 1:
+    case AP39_MOVE:
         cal_mvxy_speed(&wk->wu);
         add_mvxy_speed(&wk->wu);
         char_move(&wk->wu);
@@ -1863,9 +2015,9 @@ void Appear_39000(PLW* wk) {
             }
         }
         break;
-    case 2:
-        wk->wu.routine_no[2] = 1;
-        wk->wu.routine_no[3] = 0;
+    case AP39_DONE:
+        wk->wu.routine_no[2] = NORMAL_STAND;
+        wk->wu.routine_no[3] = RN3_START;
         Appear_end += 1;
         break;
     }
@@ -1874,7 +2026,7 @@ void Appear_39000(PLW* wk) {
 
 void Appear_41000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.disp_flag = 1;
         bg_app_stop = 1;
@@ -1882,12 +2034,12 @@ void Appear_41000(PLW* wk) {
         app_counter[wk->wu.id] = 0x78;
         effect_M7_init(wk);
         break;
-    case 1:
+    case AP41_WAIT:
         char_move(&wk->wu);
         app_counter[wk->wu.id]--;
         if (app_counter[wk->wu.id] < 0) {
-            wk->wu.routine_no[2] = 1;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[2] = NORMAL_STAND;
+            wk->wu.routine_no[3] = RN3_START;
             Appear_end++;
         }
         break;

@@ -42,6 +42,16 @@
 #include "effd3.h"
 #include "effd2.h"
 
+/* routine_no[1], effD2_wipe_close (R1_DELAY in both) */
+#define R1_DELAY        0       /* wait the delay, then show */
+#define R1_CLOSE        1       /* slide in to the stop point */
+#define R1_CLOSED       2       /* count the panel off */
+
+/* routine_no[1], effD2_wipe_open */
+#define R1_CLEAR        1       /* pause, then clear the screen */
+#define R1_OPEN         2       /* slide out and count off */
+#define R1_KILL         3       /* (default) put the work back */
+
 
 
 void effect_D2_move(WORK_Other* ewk) {
@@ -56,13 +66,13 @@ void effect_D2_move(WORK_Other* ewk) {
 /* provisional name */
 void effD2_wipe_close(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_DELAY:
         if (--ewk->wu.dir_timer == 0) {
             ewk->wu.routine_no[1]++;
             ewk->wu.disp_flag = 1;
             set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
         }
-    case 1:
+    case R1_CLOSE:
         ewk->wu.xyz[0].cal += ewk->wu.mvxy.a[0].sp;
         ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;
         if (ewk->wu.mvxy.a[0].sp > 0) {
@@ -75,7 +85,7 @@ void effD2_wipe_close(WORK_Other* ewk) {
             ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake;
         }
         break;
-    case 2:
+    case R1_CLOSED:
         if (ewk->wu.vital_new == 4) {
             tilemap_fill_all(62, 0xAF);
         }
@@ -95,7 +105,7 @@ void effD2_wipe_close(WORK_Other* ewk) {
 /* provisional name */
 void effD2_wipe_open(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_DELAY:
         if (--ewk->wu.dir_timer) {
             return;
         }
@@ -104,14 +114,14 @@ void effD2_wipe_open(WORK_Other* ewk) {
         ewk->wu.dir_timer = 3;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
         break;
-    case 1:
+    case R1_CLEAR:
         if (--ewk->wu.dir_timer) {
             return;
         }
         ewk->wu.routine_no[1]++;
         tilemap_fill_all(0, 32);
         break;
-    case 2:
+    case R1_OPEN:
         ewk->wu.xyz[0].cal += ewk->wu.mvxy.a[0].sp;
         ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;
         if (ewk->wu.mvxy.a[0].sp > 0) {

@@ -21,6 +21,20 @@
 #include "charmove_2.h"
 #include "EFF48.h"
 
+/* routine_no[0]: behaviour, index of eff48_jp */
+#define R0_STILL        0       /* still picture */
+#define R0_DROP         1       /* picture dropped into place */
+#define R0_TINTED       2       /* still picture with its own colour */
+
+/* routine_no[1], eff48_0000 */
+#define R1_INIT         0       /* show the picture */
+#define R1_SHOW         1       /* show until the scene moves on */
+#define R1_KILL         0x63    /* (default) put the work back */
+
+/* routine_no[1], eff48_1000 */
+#define R1_DROP         1       /* drop into place */
+#define R1_STAY         2       /* stay in place */
+
 
 
 extern const s16 eff48_data_tbl00[];
@@ -82,17 +96,17 @@ void effect_48_move(WORK_Other* ewk) {
 
 void eff48_0000(WORK_Other* ewk) {
     if (ewk->wu.old_rno[1] <= op_obj_disp) {
-        ewk->wu.routine_no[1] = 0x63;
+        ewk->wu.routine_no[1] = R1_KILL;
     }
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1] += 1;
-        if (ewk->wu.routine_no[0] == 2) {
+        if (ewk->wu.routine_no[0] == R0_TINTED) {
             ewk->wu.my_col_code += ewk->wu.old_rno[2];
         }
         ewk->wu.disp_flag = 1;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.old_rno[0], ewk->wu.char_index, 0);
-    case 1:
+    case R1_SHOW:
         if (op_obj_disp) {
             ewk->wu.routine_no[1] += 1;
         } else {
@@ -110,17 +124,17 @@ void eff48_0000(WORK_Other* ewk) {
 
 void eff48_1000(WORK_Other* ewk) {
     if (ewk->wu.old_rno[1] <= op_obj_disp) {
-        ewk->wu.routine_no[1] = 0x63;
+        ewk->wu.routine_no[1] = R1_KILL;
     }
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1] += 1;
         op_scrn_end = 0;
         ewk->wu.disp_flag = 1;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.old_rno[0], ewk->wu.char_index, 0);
         ewk->wu.old_rno[3] = 10;
         cal_all_speed_data(&ewk->wu, ewk->wu.old_rno[3], ewk->wu.xyz[0].disp.pos, ewk->wu.old_rno[2], 2, 2);
-    case 1:
+    case R1_DROP:
         ewk->wu.old_rno[3] -= 1;
         if (ewk->wu.old_rno[3] < 0) {
             ewk->wu.routine_no[1] += 1;
@@ -143,7 +157,7 @@ void eff48_1000(WORK_Other* ewk) {
         } else {
             add_y_sub(ewk);
         }
-    case 2:
+    case R1_STAY:
         disp_pos_trans_entry(ewk);
         break;
     default:

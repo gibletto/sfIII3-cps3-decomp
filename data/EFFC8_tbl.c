@@ -1,5 +1,8 @@
 /*
- * EFFC8_TBL.C  game tables
+ * EFFC8_TBL.C  entrance prop throw speeds
+ *
+ * effc8_data_tbl gives the speeds and accelerations with which the prop is thrown clear at the
+ * end of the entrance. Read by EFFC8.C, the entrance prop that follows the player's animation.
  */
 
 #include "types.h"

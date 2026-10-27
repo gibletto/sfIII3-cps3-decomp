@@ -23,11 +23,17 @@
 #include "effect_2.h"
 #include "EFFK4.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* place and launch the piece */
+#define R0_MOVE         1       /* fly, blink and run out */
+#define R0_END          2       /* hidden for a frame */
+#define R0_KILL         3       /* (default) put the work back */
+
 
 
 void effect_K4_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.blink_timing = ewk->master_id;
@@ -35,10 +41,10 @@ void effect_K4_move(WORK_Other* ewk) {
         get_init_speed_and_timer_effK4(&ewk->wu);
         ewk->wu.position_z = 24;
         set_char_move_init(&ewk->wu, 0, effK4_char_sel_table[ewk->wu.dm_attlv][random_16_com()]);
-    case 1:
+    case R0_MOVE:
         if (ewk->wu.dead_f == 1 || Suicide[0] != 0) {
             ewk->wu.disp_flag = 0;
-            ewk->wu.routine_no[0] = 2;
+            ewk->wu.routine_no[0] = R0_END;
             break;
         }
         if (EXE_flag == 0 && Game_pause == 0) {
@@ -52,15 +58,15 @@ void effect_K4_move(WORK_Other* ewk) {
             }
             if (--ewk->wu.kage_prio < 0) {
                 ewk->wu.disp_flag = 0;
-                ewk->wu.routine_no[0] = 2;
+                ewk->wu.routine_no[0] = R0_END;
             }
         }
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos;
         sort_push_request(&ewk->wu);
         break;
-    case 2:
-        ewk->wu.routine_no[0] = 3;
+    case R0_END:
+        ewk->wu.routine_no[0] = R0_KILL;
         break;
     default:
         all_cgps_put_back(&ewk->wu);

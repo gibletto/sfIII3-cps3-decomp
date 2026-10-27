@@ -1,5 +1,11 @@
 /*
- * EFFJ6_TBL.C  game tables
+ * EFFJ6_TBL.C  background piece, animated BG0 and Gill palette tables
+ *
+ * effJ4_data_tbl lists the background pieces of effect J4 and effJ4_piece_range the range of
+ * pieces each set places; read by EFFJ4.C. effJ5_cell_tbl and effJ5_frame_tbl are the cell
+ * grid and page flip timings of the animated BG0, read by EFFJ5.C. pl00_cctbl_0 and
+ * pl00_cctbl_1 are the colour step tables for the two sides of Gill's body, pointing at the
+ * pl00_cctbl_0_n and pl00_cctbl_1_n colour data; read by EFFJ7.C.
  */
 
 #include "types.h"
@@ -37,23 +43,23 @@ extern const u32 pl00_cctbl_1_9[];
 extern const EFFJ5_FRAME effJ5_frame_tbl[];
 
 const s16 effJ4_data_tbl[17][4] = {
-    { -256, 224, 127, -28595 },
-    { -128, 96, 127, -28594 },
-    { 0, 224, 127, -28595 },
-    { 128, 96, 127, -28594 },
-    { -256, 96, 127, -28595 },
-    { -128, -32, 127, -28594 },
-    { 0, 96, 127, -28595 },
-    { 128, -32, 127, -28594 },
-    { -193, 224, 127, -28595 },
-    { -65, 96, 127, -28594 },
-    { 63, 224, 127, -28595 },
-    { -193, 96, 127, -28595 },
-    { -65, -32, 127, -28594 },
-    { 63, 96, 127, -28595 },
-    { -193, 136, 63, -28595 },
-    { -65, 73, 63, -28594 },
-    { 63, 136, 63, -28595 },
+    { -256, 224, 127, 0x904D },
+    { -128, 96, 127, 0x904E },
+    { 0, 224, 127, 0x904D },
+    { 128, 96, 127, 0x904E },
+    { -256, 96, 127, 0x904D },
+    { -128, -32, 127, 0x904E },
+    { 0, 96, 127, 0x904D },
+    { 128, -32, 127, 0x904E },
+    { -193, 224, 127, 0x904D },
+    { -65, 96, 127, 0x904E },
+    { 63, 224, 127, 0x904D },
+    { -193, 96, 127, 0x904D },
+    { -65, -32, 127, 0x904E },
+    { 63, 96, 127, 0x904D },
+    { -193, 136, 63, 0x904D },
+    { -65, 73, 63, 0x904E },
+    { 63, 136, 63, 0x904D },
 };
 
 const s16 effJ4_piece_range[2][2] = {

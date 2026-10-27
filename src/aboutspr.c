@@ -733,6 +733,8 @@ s32 char_cell_unflip_xy(WORK* wk) {
 
 
 
+static void judge_area_disp(s8 be_flag) {}
+
 s32 set_judge_area_sprite(WORK_Other* owk) {
     WORK_Other_JUDGE* wk = (WORK_Other_JUDGE*)owk;
     GFX_CELL* base;
@@ -747,7 +749,7 @@ s32 set_judge_area_sprite(WORK_Other* owk) {
     s16 k;
     s32 n;
     s32 t;
-    (void)&((WORK*)owk)->id;
+    judge_area_disp(owk->wu.be_flag);
     if (wk->wu.spr.gfx_cells == 0) {
         return 0;
     }
@@ -1027,7 +1029,6 @@ s32 sort_push_request(WORK* wk) {
 
 s32 sort_push_request2(WORK_Other* wk) {
     SPRITE_ENTRY* spr;
-    u32 flip_mask;
     s16 i;
     CHAR_SPRITE* cell;
 
@@ -1058,7 +1059,6 @@ s32 sort_push_request2(WORK_Other* wk) {
 
 s32 sort_push_request3(WORK* wk) {
     SPRITE_ENTRY* spr;
-    u32 flip_mask;
     s16 i;
     CHAR_SPRITE* cell;
 
@@ -1094,7 +1094,6 @@ s32 sort_push_request3(WORK* wk) {
 
 s32 sort_push_request4(WORK* wk) {
     SPRITE_ENTRY* spr;
-    u32 flip_mask;
     if (wk->disp_flag == 0 || wk->cg_number == 0) {
         return 1;
     }

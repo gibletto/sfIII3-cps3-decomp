@@ -1,5 +1,10 @@
 /*
- * EFF44_TBL.C  game tables
+ * EFF44_TBL.C  animated stage object placement
+ *
+ * scr_obj_num44 starts with the number of effect 44 objects for each type, followed by the
+ * rows of each type (settings, position, priority, animation), reached through scr_obj_data44.
+ * Read by EFF44.C, which holds the select-screen object (effect 43) and the animated stage
+ * objects.
  */
 
 #include "types.h"

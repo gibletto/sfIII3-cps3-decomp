@@ -20,15 +20,20 @@
 #include "aboutspr.h"
 #include "EFFB0.h"
 
+/* routine_no[0] */
+#define R0_WAIT         0       /* wait a random time, then show */
+#define R0_MOVE         1       /* play the pattern, then hide and rest */
+#define R0_KILL         99      /* (default) put the work back */
+
 
 
 void effect_B0_move(WORK_Other* ewk) {
     s16 work;
     if (ewk->wu.old_rno[6] < end_w.r_no_2) {
-        ewk->wu.routine_no[0] = 99;
+        ewk->wu.routine_no[0] = R0_KILL;
     }
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_WAIT:
         ewk->wu.old_rno[5]--;
         if (ewk->wu.old_rno[5] <= 0) {
             ewk->wu.routine_no[0]++;
@@ -36,10 +41,10 @@ void effect_B0_move(WORK_Other* ewk) {
             set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         }
         break;
-    case 1:
+    case R0_MOVE:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type) {
-            ewk->wu.routine_no[0] = 0;
+            ewk->wu.routine_no[0] = R0_WAIT;
             ewk->wu.disp_flag = 0;
             work = random_16_com();
             work &= 7;

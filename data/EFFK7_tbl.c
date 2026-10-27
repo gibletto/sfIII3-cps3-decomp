@@ -1,5 +1,9 @@
 /*
- * EFFK7_TBL.C  game tables
+ * EFFK7_TBL.C  blink sequences of the metamorphosis super art
+ *
+ * K7_blink_tbl and K7_last_tbl are blink steps { frames, display flag, colour mode, colour
+ * flip }, where a -1 entry jumps back: the first while the art is active, the second when the
+ * gauge is nearly spent. Read by EFFK7.C.
  */
 
 #include "types.h"

@@ -1,5 +1,8 @@
 /*
- * PASS04_TBL.C  game tables
+ * PASS04_TBL.C  CPU passive pattern table for Dudley
+ *
+ * Passive04_Tbl is the 142 passive (defensive) pattern routines of character 4 (Dudley),
+ * indexed by Pattern_Index. Read by PASS04.C.
  */
 
 #include "types.h"

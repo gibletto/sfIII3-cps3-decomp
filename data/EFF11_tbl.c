@@ -1,5 +1,11 @@
 /*
- * EFF11_TBL.C  game tables
+ * EFF11_TBL.C  bg000 quake-reacting object tables
+ *
+ * eff11_data_tbl gives the colour, position, priority, animation and jump type of each of the
+ * four objects. eff11_quake_index_tbl turns the background quake index into a jump level, and
+ * eff11_quake_speed_y_tbl, eff11_quake_speed_y_tbl2 and eff11_quake_speed_x_tbl give the jump
+ * and bounce speeds by jump type and level. Read by EFF11.C, the bg000 stage objects that jump
+ * when the screen quakes.
  */
 
 #include "types.h"

@@ -1,5 +1,9 @@
 /*
- * EFFB6_TBL.C  game tables
+ * EFFB6_TBL.C  another-BG overlay part tables
+ *
+ * effB6_num_tbl gives the number of parts of each type, and effB6_pos_tbl_0 and
+ * effB6_pos_tbl_1 the position, slide offsets and cell of each part of the two types. Read by
+ * EFFB6.C, the another-BG overlay parts.
  */
 
 #include "types.h"

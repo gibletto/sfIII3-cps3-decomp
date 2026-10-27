@@ -36,6 +36,63 @@
 #include "bg_sub_5.h"
 #include "EFF09.h"
 
+/* routine_no[1]: states used by several routines */
+#define R1_INIT         0       /* set up and show */
+#define R1_ANIM         1       /* animate */
+#define R1_ARRIVE       1       /* travel to its mark */
+#define R1_FLY          1       /* fly */
+#define R1_WAIT         1       /* wait for the master's cue */
+#define R1_STAY         2       /* animate where it stopped */
+#define R1_BLINK        2       /* blink out */
+#define R1_END          2       /* hidden for a frame */
+#define R1_FINISH       2       /* play to the end, then hide */
+#define R1_PLAY         2       /* animate up to a cue */
+#define R1_LAST         3       /* hidden for a frame */
+#define R1_SLIDE        3       /* slide until out of range */
+#define R1_KILL         99      /* (default) put the work back */
+
+/* routine_no[1], eff09_1000 */
+#define R1_WAIT_HIT     2       /* stand until a player touches it */
+#define R1_HIT_ANIM     3       /* animate after the touch */
+#define R1_HOLD         4       /* stand still */
+
+/* routine_no[1], eff09_2000 */
+#define R1_BALL         1       /* fly, lever-steered, hit-checked */
+#define R1_BOUND        2       /* bounce away until off screen */
+
+/* routine_no[1], eff09_11000 */
+#define R1_PASS         2       /* walk on past the master */
+#define R1_STOP         3       /* stand still */
+
+/* routine_no[1], eff09_13000 */
+#define R1_HELD         1       /* held until the master lets go */
+#define R1_THROWN       2       /* fly until off screen */
+
+/* routine_no[1], eff09_19000 */
+#define R1_HOP1         1       /* first arc */
+#define R1_HOP2         2       /* second arc */
+#define R1_HOP3         3       /* last arc, then hide */
+
+/* routine_no[1], eff09_20000 */
+#define R1_RUN          1       /* run off the screen edge */
+
+/* routine_no[1], eff09_22000 */
+#define R1_FOLLOW       1       /* copy the master's frames */
+
+/* routine_no[1], eff09_25000 */
+#define R1_BOUNCE       1       /* bounce along until out of range */
+
+/* routine_no[1], eff09_26000 */
+#define R1_IDLE         3       /* animate until the master's signal */
+#define R1_CARRY        4       /* ride at the master's height */
+
+/* routine_no[1], eff09_27000 */
+#define R1_SKID         2       /* skid until out of range, then hide */
+
+/* eff09_data2 columns read by number */
+#define EFF09_OFS_X     2       /* x offset from the owner, mirrored by rl_flag */
+#define EFF09_OFS_Y     3       /* y offset from the owner */
+
 
 /* 02006B94 */
 void (*eff09_tbl[28])(WORK_Other*) = {
@@ -73,7 +130,7 @@ void (*eff09_tbl[28])(WORK_Other*) = {
 void effect_09_move(WORK_Other* ewk) {
     if (compel_dead_check(ewk)) {
         ewk->wu.disp_flag = 0;
-        ewk->wu.routine_no[1] = 99;
+        ewk->wu.routine_no[1] = R1_KILL;
     }
     eff09_tbl[ewk->wu.routine_no[0]](ewk);
 }
@@ -85,13 +142,13 @@ void eff09_0000(WORK_Other* ewk) {
         return;
     }
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.dead_f = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R1_ANIM:
         if (!EXE_flag && !Game_pause && ewk->wu.hit_stop) {
             char_move(&ewk->wu);
             if (ewk->wu.cg_type) {
@@ -101,7 +158,7 @@ void eff09_0000(WORK_Other* ewk) {
         }
         disp_pos_trans_entry_rs(ewk);
         break;
-    case 2:
+    case R1_END:
         ewk->wu.routine_no[1]++;
         break;
     default:
@@ -118,7 +175,7 @@ void eff09_1000(WORK_Other* ewk) {
         return;
     }
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.my_priority = ewk->wu.position_z = 67;
@@ -141,8 +198,8 @@ void eff09_1000(WORK_Other* ewk) {
         }
         sort_push_request(&ewk->wu);
         break;
-    case 1:
-    case 3:
+    case R1_ANIM:
+    case R1_HIT_ANIM:
         if (!EXE_flag && !Game_pause && !EXE_obroll) {
             char_move(&ewk->wu);
             if (ewk->wu.cg_type) {
@@ -154,7 +211,7 @@ void eff09_1000(WORK_Other* ewk) {
         }
         sort_push_request(&ewk->wu);
         break;
-    case 2:
+    case R1_WAIT_HIT:
         if (obr_no_disp_check()) {
             break;
         }
@@ -164,7 +221,7 @@ void eff09_1000(WORK_Other* ewk) {
         }
         sort_push_request(&ewk->wu);
         break;
-    case 4:
+    case R1_HOLD:
         if (obr_no_disp_check()) {
             break;
         }
@@ -186,7 +243,7 @@ void eff09_2000(WORK_Other* ewk) {
     const s16* pl_hit_ptr;
     PLW* hit_pl;
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
@@ -196,7 +253,7 @@ void eff09_2000(WORK_Other* ewk) {
         } else {
             sw_work = p1sw_0;
         }
-        if (sw_work & 0x1000) {
+        if (sw_work & BUTTON_START) {
             work = 0;
         } else {
             work = random_16_com();
@@ -216,13 +273,13 @@ void eff09_2000(WORK_Other* ewk) {
         suzi_sync_pos_set(ewk);
         sort_push_request(&ewk->wu);
         break;
-    case 1:
+    case R1_BALL:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             add_x_sub(ewk);
             add_y_sub(ewk);
             if (ewk->wu.xyz[0].disp.pos > 784 || ewk->wu.xyz[0].disp.pos < 240) {
-                ewk->wu.routine_no[1] = 99;
+                ewk->wu.routine_no[1] = R1_KILL;
                 Appear_free[ewk->master_id] = 1;
                 ewk->wu.disp_flag = 0;
             }
@@ -258,7 +315,7 @@ void eff09_2000(WORK_Other* ewk) {
         suzi_sync_pos_set(ewk);
         sort_push_request(&ewk->wu);
         break;
-    case 2:
+    case R1_BOUND:
         if (!EXE_flag && !Game_pause) {
             if (ewk->wu.xyz[0].disp.pos > 784 || ewk->wu.xyz[0].disp.pos < 240 || ewk->wu.xyz[1].disp.pos < -56) {
                 ewk->wu.routine_no[1]++;
@@ -271,7 +328,7 @@ void eff09_2000(WORK_Other* ewk) {
         suzi_sync_pos_set(ewk);
         sort_push_request(&ewk->wu);
         break;
-    case 3:
+    case R1_LAST:
         ewk->wu.routine_no[1]++;
         break;
     default:
@@ -290,19 +347,19 @@ u16 sw_work;
     if (!plw[ewk->master_id].wu.operator) {
         return;
     }
-    if (sw_work & 1) {
+    if (sw_work & LEVER_UP) {
         ewk->wu.old_rno[0]++;
         if (ewk->wu.old_rno[0] < 8) {
             ewk->wu.mvxy.d[1].sp += eff09_add_tbl0[ewk->wu.dir_step][0];
         }
     }
-    if (sw_work & 2) {
+    if (sw_work & LEVER_DOWN) {
         ewk->wu.old_rno[1]++;
         if (ewk->wu.old_rno[1] < 8) {
             ewk->wu.mvxy.d[1].sp += eff09_add_tbl0[ewk->wu.dir_step][1];
         }
     }
-    if (sw_work & 4) {
+    if (sw_work & LEVER_LEFT) {
         ewk->wu.old_rno[2]++;
         if (ewk->wu.rl_flag) {
             if (ewk->wu.old_rno[2] < 4) {
@@ -312,7 +369,7 @@ u16 sw_work;
             ewk->wu.mvxy.d[0].sp += eff09_add_tbl2[ewk->wu.dir_step][0];
         }
     }
-    if (sw_work & 8) {
+    if (sw_work & LEVER_RIGHT) {
         ewk->wu.old_rno[3]++;
         if (ewk->wu.rl_flag) {
             if (ewk->wu.old_rno[3] < 8) {
@@ -342,9 +399,9 @@ void ball_bound_set(WORK_Other* ewk) {
 
 void eff09_3000(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         if (Exec_Wipe) {
-            ewk->wu.routine_no[1] = 99;
+            ewk->wu.routine_no[1] = R1_KILL;
             break;
         }
         Sound_SE((Winner_id * 0x300) + 0x136);
@@ -354,7 +411,7 @@ void eff09_3000(WORK_Other* ewk) {
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         cal_all_speed_data(&ewk->wu, ewk->wu.old_rno[0], ewk->wu.xyz[0].disp.pos, 40, 1, 2);
         break;
-    case 1:
+    case R1_ARRIVE:
         if (!EXE_flag && !Game_pause) {
             ewk->wu.old_rno[0]--;
             if (ewk->wu.old_rno[0] <= 0) {
@@ -367,7 +424,7 @@ void eff09_3000(WORK_Other* ewk) {
         suzi_sync_pos_set(ewk);
         sort_push_request(&ewk->wu);
         break;
-    case 2:
+    case R1_STAY:
         if (Exec_Wipe) {
             Sound_SE((Winner_id * 0x300) + 0x130);
         }
@@ -391,7 +448,7 @@ void eff09_4000(WORK_Other* ewk) {
     s16 work2;
     WORK* oya_ptr;
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.kage_flag = 1;
@@ -415,7 +472,7 @@ void eff09_4000(WORK_Other* ewk) {
         ewk->wu.old_rno[0] = 202;
         cal_all_speed_data(&ewk->wu, ewk->wu.old_rno[0], work2, 0, 0, 2);
         break;
-    case 1:
+    case R1_ARRIVE:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             add_x_sub(ewk);
@@ -428,7 +485,7 @@ void eff09_4000(WORK_Other* ewk) {
         suzi_sync_pos_set(ewk);
         sort_push_request(&ewk->wu);
         break;
-    case 2:
+    case R1_STAY:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
         }
@@ -449,12 +506,12 @@ void eff09_5000(WORK_Other* ewk) {
         return;
     }
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R1_ANIM:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
         }
@@ -472,12 +529,12 @@ void eff09_5000(WORK_Other* ewk) {
 
 void eff09_6000(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R1_ANIM:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 9) {
             ewk->wu.routine_no[1]++;
@@ -487,7 +544,7 @@ void eff09_6000(WORK_Other* ewk) {
         suzi_sync_pos_set(ewk);
         sort_push_request(&ewk->wu);
         break;
-    case 2:
+    case R1_BLINK:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
             ewk->wu.routine_no[1]++;
@@ -497,7 +554,7 @@ void eff09_6000(WORK_Other* ewk) {
             sort_push_request(&ewk->wu);
         }
         break;
-    case 3:
+    case R1_LAST:
         ewk->wu.routine_no[1]++;
         break;
     default:
@@ -510,7 +567,7 @@ void eff09_6000(WORK_Other* ewk) {
 
 void eff09_7000(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
@@ -527,7 +584,7 @@ void eff09_7000(WORK_Other* ewk) {
             ewk->wu.mvxy.d[1].sp = -0x6000;
         }
         break;
-    case 1:
+    case R1_FLY:
         ewk->wu.old_rno[0]--;
         if (ewk->wu.old_rno[0] < 0) {
             ewk->wu.routine_no[1]++;
@@ -539,7 +596,7 @@ void eff09_7000(WORK_Other* ewk) {
         suzi_sync_pos_set(ewk);
         sort_push_request(&ewk->wu);
         break;
-    case 2:
+    case R1_END:
         ewk->wu.routine_no[1]++;
         break;
     default:
@@ -553,13 +610,13 @@ void eff09_7000(WORK_Other* ewk) {
 
 void eff09_8000(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.dead_f = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R1_ANIM:
         if (ewk->wu.hit_stop) {
             char_move(&ewk->wu);
             if (ewk->wu.cg_type == 0xFF) {
@@ -569,7 +626,7 @@ void eff09_8000(WORK_Other* ewk) {
         }
         disp_pos_trans_entry_s(ewk);
         break;
-    case 2:
+    case R1_END:
         ewk->wu.routine_no[1]++;
         break;
     default:
@@ -583,7 +640,7 @@ void eff09_8000(WORK_Other* ewk) {
 
 void eff09_9000(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         if (ewk->wu.rl_flag) {
@@ -595,13 +652,13 @@ void eff09_9000(WORK_Other* ewk) {
         ewk->wu.xyz[1].disp.pos += base_y_pos;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R1_ANIM:
         if (!EXE_flag && !Game_pause && ewk->wu.hit_stop) {
             char_move(&ewk->wu);
         }
         disp_pos_trans_entry_rs(ewk);
         break;
-    case 2:
+    case R1_END:
         ewk->wu.routine_no[1]++;
         break;
     default:
@@ -615,7 +672,7 @@ void eff09_9000(WORK_Other* ewk) {
 
 void eff09_10000(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.dead_f = 1;
@@ -628,7 +685,7 @@ void eff09_10000(WORK_Other* ewk) {
         ewk->wu.xyz[1].disp.pos += base_y_pos;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R1_ANIM:
         if (!EXE_flag && !Game_pause && ewk->wu.hit_stop) {
             char_move(&ewk->wu);
             if (ewk->wu.cg_type) {
@@ -638,7 +695,7 @@ void eff09_10000(WORK_Other* ewk) {
         }
         disp_pos_trans_entry_rs(ewk);
         break;
-    case 2:
+    case R1_END:
         ewk->wu.routine_no[1]++;
         break;
     default:
@@ -655,7 +712,7 @@ void eff09_11000(WORK_Other* ewk) {
     s16 work2;
     WORK* oya_ptr = (WORK*)ewk->my_master;
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.kage_flag = 1;
@@ -678,7 +735,7 @@ void eff09_11000(WORK_Other* ewk) {
         ewk->wu.old_rno[0] = 220;
         cal_all_speed_data(&ewk->wu, ewk->wu.old_rno[0], work2, 0, 0, 2);
         break;
-    case 1:
+    case R1_ARRIVE:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             add_x_sub(ewk);
@@ -691,7 +748,7 @@ void eff09_11000(WORK_Other* ewk) {
         suzi_sync_pos_set(ewk);
         sort_push_request(&ewk->wu);
         break;
-    case 2:
+    case R1_PASS:
         add_x_sub(ewk);
         if (oya_ptr->rl_flag) {
             if (oya_ptr->xyz[0].disp.pos > ewk->wu.xyz[0].disp.pos) {
@@ -700,7 +757,7 @@ void eff09_11000(WORK_Other* ewk) {
         } else if (oya_ptr->xyz[0].disp.pos < ewk->wu.xyz[0].disp.pos) {
             ewk->wu.routine_no[1]++;
         }
-    case 3:
+    case R1_STOP:
         suzi_sync_pos_set(ewk);
         sort_push_request(&ewk->wu);
         break;
@@ -714,9 +771,8 @@ void eff09_11000(WORK_Other* ewk) {
 
 
 void eff09_12000(WORK_Other* ewk) {
-    WORK* oya_ptr = (WORK*)ewk->my_master;
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.dead_f = 1;
@@ -732,7 +788,7 @@ void eff09_12000(WORK_Other* ewk) {
         suzi_sync_pos_set(ewk);
         sort_push_request(&ewk->wu);
         break;
-    case 1:
+    case R1_FLY:
         char_move(&ewk->wu);
         add_x_sub(ewk);
         add_y_sub(ewk);
@@ -745,7 +801,7 @@ void eff09_12000(WORK_Other* ewk) {
         suzi_sync_pos_set(ewk);
         sort_push_request(&ewk->wu);
         break;
-    case 2:
+    case R1_BLINK:
         ewk->wu.old_rno[1]--;
         if (ewk->wu.old_rno[1] < 0) {
             ewk->wu.routine_no[1]++;
@@ -757,7 +813,7 @@ void eff09_12000(WORK_Other* ewk) {
             sort_push_request(&ewk->wu);
         }
         break;
-    case 3:
+    case R1_LAST:
         ewk->wu.routine_no[1]++;
         break;
     default:
@@ -772,13 +828,13 @@ void eff09_12000(WORK_Other* ewk) {
 void eff09_13000(WORK_Other* ewk) {
     WORK* oya_ptr = (WORK*)ewk->my_master;
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.dead_f = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R1_HELD:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             if (oya_ptr->cg_type == 99) {
@@ -793,7 +849,7 @@ void eff09_13000(WORK_Other* ewk) {
         suzi_sync_pos_set(ewk);
         sort_push_request(&ewk->wu);
         break;
-    case 2:
+    case R1_THROWN:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             add_x_sub(ewk);
@@ -807,7 +863,7 @@ void eff09_13000(WORK_Other* ewk) {
         suzi_sync_pos_set(ewk);
         sort_push_request(&ewk->wu);
         break;
-    case 3:
+    case R1_LAST:
         ewk->wu.routine_no[1]++;
         break;
     default:
@@ -822,20 +878,20 @@ void eff09_13000(WORK_Other* ewk) {
 void eff09_14000(WORK_Other* ewk) {
     WORK* oya_ptr = (WORK*)ewk->my_master;
     if (ewk->wu.rl_flag) {
-        ewk->wu.xyz[0].disp.pos = oya_ptr->xyz[0].disp.pos - eff09_data2[ewk->wu.type][2];
+        ewk->wu.xyz[0].disp.pos = oya_ptr->xyz[0].disp.pos - eff09_data2[ewk->wu.type][EFF09_OFS_X];
     } else {
-        ewk->wu.xyz[0].disp.pos = oya_ptr->xyz[0].disp.pos + eff09_data2[ewk->wu.type][2];
+        ewk->wu.xyz[0].disp.pos = oya_ptr->xyz[0].disp.pos + eff09_data2[ewk->wu.type][EFF09_OFS_X];
     }
-    ewk->wu.xyz[1].disp.pos = oya_ptr->xyz[1].disp.pos + eff09_data2[ewk->wu.type][3];
+    ewk->wu.xyz[1].disp.pos = oya_ptr->xyz[1].disp.pos + eff09_data2[ewk->wu.type][EFF09_OFS_Y];
     ewk->wu.xyz[1].disp.pos += base_y_pos;
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.dead_f = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R1_ANIM:
         if (!EXE_flag && !Game_pause && ewk->wu.hit_stop) {
             char_move(&ewk->wu);
             if (ewk->wu.cg_type) {
@@ -845,7 +901,7 @@ void eff09_14000(WORK_Other* ewk) {
         }
         disp_pos_trans_entry_rs(ewk);
         break;
-    case 2:
+    case R1_END:
         ewk->wu.routine_no[1]++;
         break;
     default:
@@ -864,7 +920,7 @@ void eff09_15000(WORK_Other* ewk) {
     }
     oya_ptr = (WORK*)ewk->my_master;
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.dead_f = 1;
@@ -872,7 +928,7 @@ void eff09_15000(WORK_Other* ewk) {
         ewk->wu.xyz[1].disp.pos += base_y_pos;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R1_ANIM:
         if (!EXE_flag && !Game_pause && ewk->wu.hit_stop) {
             char_move(&ewk->wu);
             if (oya_ptr->cg_type == 9) {
@@ -882,7 +938,7 @@ void eff09_15000(WORK_Other* ewk) {
         }
         disp_pos_trans_entry_rs(ewk);
         break;
-    case 2:
+    case R1_END:
         ewk->wu.routine_no[1]++;
         break;
     default:
@@ -896,7 +952,7 @@ void eff09_15000(WORK_Other* ewk) {
 
 void eff09_16000(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.dead_f = 1;
@@ -905,7 +961,7 @@ void eff09_16000(WORK_Other* ewk) {
         ewk->wu.rl_flag = 0;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R1_ANIM:
         if (!EXE_flag && !Game_pause && ewk->wu.hit_stop) {
             char_move(&ewk->wu);
             if (ewk->wu.cg_type) {
@@ -916,7 +972,7 @@ void eff09_16000(WORK_Other* ewk) {
         suzi_sync_pos_set(ewk);
         sort_push_request4(&ewk->wu);
         break;
-    case 2:
+    case R1_END:
         ewk->wu.routine_no[1]++;
         break;
     default:
@@ -935,7 +991,7 @@ void eff09_17000(WORK_Other* ewk) {
     }
     oya_ptr = (WORK*)ewk->my_master;
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.dead_f = 1;
@@ -943,26 +999,26 @@ void eff09_17000(WORK_Other* ewk) {
         ewk->wu.xyz[1].disp.pos += base_y_pos;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R1_ANIM:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             if (oya_ptr->cg_type == 9) {
                 ewk->wu.routine_no[1]++;
                 ewk->wu.disp_flag = 0;
-            } else if (oya_ptr->routine_no[1] != 4 || oya_ptr->routine_no[2] != 30) {
+            } else if (oya_ptr->routine_no[1] != PLAYER_ATTACK || oya_ptr->routine_no[2] != ATTACK_PERSONAL) {
                 ewk->wu.routine_no[1]++;
                 ewk->wu.disp_flag = 0;
             }
         }
         ewk->wu.xyz[0].disp.pos = oya_ptr->xyz[0].disp.pos;
         if (oya_ptr->rl_flag) {
-            ewk->wu.xyz[0].disp.pos -= eff09_data2[21][2];
+            ewk->wu.xyz[0].disp.pos -= eff09_data2[21][EFF09_OFS_X];
         } else {
-            ewk->wu.xyz[0].disp.pos += eff09_data2[21][2];
+            ewk->wu.xyz[0].disp.pos += eff09_data2[21][EFF09_OFS_X];
         }
         disp_pos_trans_entry_rs(ewk);
         break;
-    case 2:
+    case R1_END:
         ewk->wu.routine_no[1]++;
         break;
     default:
@@ -981,7 +1037,7 @@ void eff09_18000(WORK_Other* ewk) {
     }
     oya_ptr = (WORK*)ewk->my_master;
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.dead_f = 1;
@@ -1005,7 +1061,7 @@ void eff09_18000(WORK_Other* ewk) {
         ewk->wu.old_rno[1] = oya_ptr->xyz[1].disp.pos + 106 + base_y_pos;
         cal_all_speed_data(&ewk->wu, ewk->wu.old_rno[0], oya_ptr->xyz[0].disp.pos, ewk->wu.old_rno[1], 0, 0);
         break;
-    case 1:
+    case R1_ARRIVE:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             ewk->wu.old_rno[0]--;
@@ -1018,7 +1074,7 @@ void eff09_18000(WORK_Other* ewk) {
         }
         disp_pos_trans_entry_rs(ewk);
         break;
-    case 2:
+    case R1_END:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 0;
         break;
@@ -1036,7 +1092,7 @@ void eff09_19000(WORK_Other* ewk) {
         return;
     }
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.disp_flag = 1;
         ewk->wu.dead_f = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
@@ -1047,8 +1103,8 @@ void eff09_19000(WORK_Other* ewk) {
         ewk->wu.routine_no[1]++;
         disp_pos_trans_entry(ewk);
         break;
-    case 1:
-    case 2:
+    case R1_HOP1:
+    case R1_HOP2:
         if (!EXE_flag && !Game_pause) {
             add_x_sub(ewk);
             add_y_sub(ewk);
@@ -1063,7 +1119,7 @@ void eff09_19000(WORK_Other* ewk) {
         }
         disp_pos_trans_entry(ewk);
         break;
-    case 3:
+    case R1_HOP3:
         if (!EXE_flag && !Game_pause) {
             add_x_sub(ewk);
             add_y_sub(ewk);
@@ -1088,7 +1144,7 @@ void eff09_20000(WORK_Other* ewk) {
     s16 pos_work;
     oya_ptr = (WORK*)ewk->my_master;
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.dead_f = 1;
@@ -1100,7 +1156,7 @@ void eff09_20000(WORK_Other* ewk) {
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         disp_pos_trans_entry(ewk);
         break;
-    case 1:
+    case R1_RUN:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             if (oya_ptr->id) {
@@ -1134,10 +1190,10 @@ void eff09_21000(WORK_Other* ewk) {
     s16 arrive_x;
     s16 arrive_y;
     if (Suicide[0]) {
-        ewk->wu.routine_no[1] = 99;
+        ewk->wu.routine_no[1] = R1_KILL;
     }
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.dead_f = 1;
@@ -1163,7 +1219,7 @@ void eff09_21000(WORK_Other* ewk) {
         }
         cal_all_speed_data(&ewk->wu, ewk->wu.old_rno[0], arrive_x, arrive_y, 2, 2);
         break;
-    case 1:
+    case R1_ARRIVE:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             ewk->wu.old_rno[0]--;
@@ -1177,7 +1233,7 @@ void eff09_21000(WORK_Other* ewk) {
         }
         disp_pos_trans_entry(ewk);
         break;
-    case 2:
+    case R1_FINISH:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             if (ewk->wu.cg_type) {
@@ -1188,7 +1244,7 @@ void eff09_21000(WORK_Other* ewk) {
         }
         disp_pos_trans_entry(ewk);
         break;
-    case 3:
+    case R1_LAST:
         ewk->wu.routine_no[1]++;
         break;
     default:
@@ -1204,13 +1260,13 @@ void eff09_22000(WORK_Other* ewk) {
     WORK* oya_ptr = (WORK*)ewk->my_master;
     s16 work;
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.dead_f = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R1_FOLLOW:
         if (!EXE_flag && !Game_pause) {
             if (oya_ptr->cg_type == 99) {
                 ewk->wu.routine_no[1]++;
@@ -1223,7 +1279,7 @@ void eff09_22000(WORK_Other* ewk) {
         }
         pl_eff_trans_entry(ewk);
         break;
-    case 2:
+    case R1_FINISH:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             if (ewk->wu.cg_type == 0xFF) {
@@ -1245,7 +1301,7 @@ void eff09_23000(WORK_Other* ewk) {
     WORK* oya_ptr = (WORK*)ewk->my_master;
     s16* exe = &EXE_flag;
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.dead_f = 1;
@@ -1256,7 +1312,7 @@ void eff09_23000(WORK_Other* ewk) {
         ewk->wu.kage_char = 11;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R1_WAIT:
         if (!*exe && !Game_pause) {
             if (oya_ptr->cg_type == 1) {
                 ewk->wu.routine_no[1]++;
@@ -1264,7 +1320,7 @@ void eff09_23000(WORK_Other* ewk) {
         }
         pl_eff_trans_entry(ewk);
         break;
-    case 2:
+    case R1_PLAY:
         if (!*exe && !Game_pause) {
             char_move(&ewk->wu);
             if (ewk->wu.cg_type == 0xFF) {
@@ -1280,7 +1336,7 @@ void eff09_23000(WORK_Other* ewk) {
         }
         pl_eff_trans_entry(ewk);
         break;
-    case 3:
+    case R1_SLIDE:
         if (!*exe && !Game_pause) {
             char_move(&ewk->wu);
             add_x_sub(ewk);
@@ -1303,7 +1359,7 @@ void eff09_24000(WORK_Other* ewk) {
     WORK* oya_ptr = (WORK*)ewk->my_master;
 
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.dead_f = 1;
@@ -1312,18 +1368,18 @@ void eff09_24000(WORK_Other* ewk) {
         }
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         return;
-    case 1:
+    case R1_WAIT:
         if (!EXE_flag && !Game_pause) {
             if (oya_ptr->cg_type == 1) {
                 ewk->wu.routine_no[1]++;
                 if (ewk->wu.type == 38) {
-                    ewk->wu.routine_no[1] = 99;
+                    ewk->wu.routine_no[1] = R1_KILL;
                 }
             }
         }
         pl_eff_trans_entry(ewk);
         break;
-    case 2:
+    case R1_PLAY:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             if (ewk->wu.cg_type == 9) {
@@ -1343,7 +1399,7 @@ void eff09_24000(WORK_Other* ewk) {
         }
         pl_eff_trans_entry(ewk);
         break;
-    case 3:
+    case R1_SLIDE:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             add_x_sub(ewk);
@@ -1369,9 +1425,8 @@ void eff09_24000(WORK_Other* ewk) {
 
 
 void eff09_25000(WORK_Other* ewk) {
-    WORK* oya_ptr = (WORK*)ewk->my_master;
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.dead_f = 1;
@@ -1390,7 +1445,7 @@ void eff09_25000(WORK_Other* ewk) {
         }
         pl_eff_trans_entry(ewk);
         break;
-    case 1:
+    case R1_BOUNCE:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             add_x_sub(ewk);
@@ -1418,7 +1473,7 @@ void eff09_26000(WORK_Other* ewk) {
     WORK* oya_ptr;
     oya_ptr = (WORK*)ewk->my_master;
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.dead_f = 1;
@@ -1426,7 +1481,7 @@ void eff09_26000(WORK_Other* ewk) {
         ewk->wu.old_rno[0] = 0;
         ewk->wu.xyz[1].disp.pos += base_y_pos;
         break;
-    case 1:
+    case R1_ANIM:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             if (ewk->wu.cg_type == 9) {
@@ -1437,7 +1492,7 @@ void eff09_26000(WORK_Other* ewk) {
         jijii_win_tama_sub(ewk);
         disp_pos_trans_entry(ewk);
         break;
-    case 2:
+    case R1_PLAY:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             if (ewk->wu.cg_type == 0xFF) {
@@ -1448,7 +1503,7 @@ void eff09_26000(WORK_Other* ewk) {
         jijii_win_tama_sub(ewk);
         disp_pos_trans_entry(ewk);
         break;
-    case 3:
+    case R1_IDLE:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             if (oya_ptr->cmwk[0] == 2) {
@@ -1458,7 +1513,7 @@ void eff09_26000(WORK_Other* ewk) {
         jijii_win_tama_sub(ewk);
         disp_pos_trans_entry(ewk);
         break;
-    case 4:
+    case R1_CARRY:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
         }
@@ -1491,7 +1546,7 @@ void jijii_win_tama_sub(WORK_Other* ewk) {
 
 void eff09_27000(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.dead_f = 1;
@@ -1509,7 +1564,7 @@ void eff09_27000(WORK_Other* ewk) {
         }
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R1_FLY:
         if (!EXE_flag && !Game_pause) {
             add_x_sub(ewk);
             add_y_sub(ewk);
@@ -1526,7 +1581,7 @@ void eff09_27000(WORK_Other* ewk) {
         }
         pl_eff_trans_entry(ewk);
         break;
-    case 2:
+    case R1_SKID:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             add_x_sub(ewk);

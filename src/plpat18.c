@@ -21,9 +21,15 @@
 #include "PLPAT.h"
 #include "plpat18.h"
 
+/* routine_no[3], Att_PL18_NINGENBAKUDAN */
+#define NINGENBAKUDAN_CUE 1     /* run the animation to cue 50 */
+
+/* routine_no[3], Att_PL18_TOKUSHUKOUDOU */
+#define TOKUSHUKOUDOU_ACTION 1  /* the personal action, filling the super art gauge */
+
 
 void pl18_extra_attack(PLW* wk) {
-    pl18_exatt_table[wk->wu.routine_no[2] - 16](wk);
+    pl18_exatt_table[wk->wu.routine_no[2] - ATTACK_SPECIAL](wk);
 }
 
 
@@ -31,21 +37,21 @@ void pl18_extra_attack(PLW* wk) {
 void Att_PL18_NINGENBAKUDAN(PLW* wk) {
     wk->scr_pos_set_flag = 0;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.rl_flag = wk->wu.rl_waza;
         hoken_muriyari_chakuchi(wk);
         set_char_move_init(&wk->wu, 5, wk->as->char_ix);
         break;
-    case 1:
+    case NINGENBAKUDAN_CUE:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 50) {
-            wk->wu.routine_no[1] = 1;
+            wk->wu.routine_no[1] = PLAYER_DAMAGE;
             wk->wu.routine_no[2] = 91;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[3] = RN3_START;
             wk->wu.dm_vital = 0;
             wk->sa->gauge.i = wk->sa->dtm * wk->sa->dtm_mul;
-            if (Bonus_Game_Flag == 21) {
+            if (Bonus_Game_Flag == BONUS_CAR) {
                 wk->wu.dm_rl = (wk->wu.rl_flag + 1) & 1;
             } else {
                 wk->wu.dm_rl = ((PLW*)wk->wu.target_adrs)->wu.rl_flag;
@@ -83,13 +89,13 @@ void Att_PL18_NINGENBAKUDAN(PLW* wk) {
 void Att_PL18_TOKUSHUKOUDOU(PLW* wk) {
     wk->scr_pos_set_flag = 0;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.rl_flag = wk->wu.rl_waza;
         hoken_muriyari_chakuchi(wk);
         set_char_move_init((WORK*)wk, 5, wk->as->char_ix);
         break;
-    case 1:
+    case TOKUSHUKOUDOU_ACTION:
         char_move((WORK*)wk);
         if (wk->wu.cg_type == 40) {
             wk->wu.cg_type = 0;

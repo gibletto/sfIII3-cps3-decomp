@@ -1,5 +1,8 @@
 /*
- * EEPROM_TBL.C  game tables
+ * EEPROM_TBL.C  EEPROM error message
+ *
+ * eeprom_error_str is the "EEPROM  ERROR" line printed by EEPROM.C when the EEPROM check
+ * fails.
  */
 
 #include "types.h"

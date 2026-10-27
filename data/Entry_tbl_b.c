@@ -1,5 +1,10 @@
 /*
- * ENTRY_TBL_B.C  game tables
+ * ENTRY_TBL_B.C  player entry and credit messages
+ *
+ * The fixed-width messages of the entry / credit task: FREE PLAY, INSERT COIN(S), CONTINUE and
+ * its count, GAME OVER, JOIN IN, PRESS START, PLEASE WAIT, the INSERT MORE COIN(S) prompts and
+ * the CREDIT and COINS displays; a control character in a string stands for a player number or
+ * coin count. Read by ENTRY_2.C; msg_continue is also read by COIN_CONT.C.
  */
 
 #include "types.h"
@@ -19,7 +24,9 @@ const s8 msg_continue_cnt[20] = "     CONTINUE_\t    ";
 
 const u8 msg_game_over[20] = "     GAME OVER     ";
 
-const u8 msg_insert_2coins[24] = {
+/* Messages whose digits are the font's glyph numbers 0-9 (not ASCII) are written as numbers; the comment
+   after each name is the text it shows. */
+const u8 msg_insert_2coins[24] = {  /* "   INSERT 2 COINS   " */
     32, 32, 32, 73, 78, 83, 69, 82,
     84, 32, 2, 32, 67, 79, 73, 78,
     83, 32, 32, 32, 0, 0, 0, 0,

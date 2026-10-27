@@ -1,5 +1,10 @@
 /*
- * EFFB1_TBL.C  game tables
+ * EFFB1_TBL.C  blocking bonus stage result marks
+ *
+ * bbbs_blocking gives the position and character of each of the 20 marks for each layout, and
+ * bbbs_clear the cleared state of a mark, read by EFFB1_INIT.C. effB1_wait_table and
+ * effB1_wait_tbl_2 are the frame times of the mark's appear and exchange animations, read by
+ * EFFB1.C, the bonus-stage result marks.
  */
 
 #include "types.h"

@@ -1,5 +1,9 @@
 /*
- * EFF75_TBL.C  game tables
+ * EFF75_TBL.C  order-driven select object states
+ *
+ * EFF75_Jmp_Tbl is the jump table of the object's order states: wait, slide in, change
+ * animation, appear and die. Read by EFF75_ORDER.C, the effect 75 move routine and order
+ * states.
  */
 
 #include "types.h"

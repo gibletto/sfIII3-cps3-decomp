@@ -1,5 +1,8 @@
 /*
- * EFF77_TBL.C  game tables
+ * EFF77_TBL.C  temporary full-screen background settings
+ *
+ * eff77_data_tbl gives, for each type, the time the background is held and the x, y scroll
+ * position of BG layer 3. Read by EFF77.C, the temporary full-screen background.
  */
 
 #include "types.h"

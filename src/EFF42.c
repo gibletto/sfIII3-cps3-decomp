@@ -19,6 +19,22 @@
 #include "charmove_2.h"
 #include "EFF42.h"
 
+/* routine_no[0] */
+#define R0_DELAY        0       /* count the delay down, start the timer */
+#define R0_COUNT        1       /* show the digit of the select timer */
+
+/* routine_no[1], EFF42_KILL */
+#define R1_START        0       /* first step of each order */
+#define R1_KILL         1       /* (default) put the work back */
+
+/* routine_no[6], EFF42_SUDDENLY */
+#define R6_START        0       /* first step of each order */
+#define R6_ENTER        1       /* wait until scrolled on, then show */
+
+/* routine_no[6], EFF42_SLIDE_OUT */
+#define R6_LEAVE        1       /* slide off the screen */
+#define R6_KILL         2       /* (default) put the work back */
+
 
 
 void effect_42_move(WORK_Other* ewk) {
@@ -32,27 +48,27 @@ void effect_42_move(WORK_Other* ewk) {
 
 void EFF42_SUDDENLY(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[6]) {
-    case 0:
+    case R6_START:
         if (--Order_Timer[ewk->wu.dir_old] != 0) {
             break;
         }
         if (ewk->wu.my_family == 4) {
             ewk->wu.routine_no[6]++;
-            ewk->wu.xyz[0].disp.pos = Target_BG_X[3] + Offset_BG_X[3] + Pos_Data_69[ewk->wu.dir_old][0];
-            ewk->wu.xyz[1].disp.pos = bg_w.bgw[3].wxy[1].disp.pos + Pos_Data_69[ewk->wu.dir_old][1];
+            ewk->wu.xyz[0].disp.pos = Target_BG_X[3] + Offset_BG_X[3] + Pos_Data_69[ewk->wu.dir_old][SEL_POS_X];
+            ewk->wu.xyz[1].disp.pos = bg_w.bgw[3].wxy[1].disp.pos + Pos_Data_69[ewk->wu.dir_old][SEL_POS_Y];
         } else {
             ewk->wu.disp_flag = 1;
             Order[ewk->wu.dir_old] = 3;
-            ewk->wu.routine_no[6] = 0;
-            ewk->wu.xyz[0].disp.pos = Pos_Data_69[ewk->wu.dir_old][0] + 512;
-            ewk->wu.xyz[1].disp.pos = Pos_Data_69[ewk->wu.dir_old][1] + 0;
+            ewk->wu.routine_no[6] = R6_START;
+            ewk->wu.xyz[0].disp.pos = Pos_Data_69[ewk->wu.dir_old][SEL_POS_X] + 512;
+            ewk->wu.xyz[1].disp.pos = Pos_Data_69[ewk->wu.dir_old][SEL_POS_Y] + 0;
         }
         set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
         break;
-    case 1:
+    case R6_ENTER:
         if (!Ck_Range_Out_S(ewk, ewk->wu.my_family - 1, 32)) {
             ewk->wu.disp_flag = 1;
-            ewk->wu.routine_no[6] = 0;
+            ewk->wu.routine_no[6] = R6_START;
             Order[ewk->wu.dir_old] = 3;
         }
         break;
@@ -64,18 +80,18 @@ void EFF42_SUDDENLY(WORK_Other* ewk) {
 void EFF42_SLIDE_IN(WORK_Other* ewk) {
     if (Order[ewk->wu.dir_old] != 1) {
         ewk->wu.routine_no[0] = Order[ewk->wu.dir_old];
-        ewk->wu.routine_no[1] = 0;
+        ewk->wu.routine_no[1] = R1_START;
         return;
     }
     switch (ewk->wu.routine_no[6]) {
-    case 0:
+    case R6_START:
         if (--Order_Timer[ewk->wu.dir_old] != 0) {
             return;
         }
         ewk->wu.routine_no[6]++;
         ewk->wu.disp_flag = 1;
-        ewk->wu.hit_quake = Pos_Data_69[ewk->wu.dir_old][0] + 512;
-        ewk->wu.xyz[1].disp.pos = Pos_Data_69[ewk->wu.dir_old][1] + 0;
+        ewk->wu.hit_quake = Pos_Data_69[ewk->wu.dir_old][SEL_POS_X] + 512;
+        ewk->wu.xyz[1].disp.pos = Pos_Data_69[ewk->wu.dir_old][SEL_POS_Y] + 0;
         if (Order_Dir[ewk->wu.dir_old] == 4) {
             ewk->wu.xyz[0].disp.pos = 800;
             ewk->wu.mvxy.a[0].sp = -0x100000;
@@ -93,12 +109,12 @@ void EFF42_SLIDE_IN(WORK_Other* ewk) {
         if (0 < ewk->wu.mvxy.a[0].sp) {
             if (ewk->wu.hit_quake <= ewk->wu.xyz[0].disp.pos) {
                 Order[ewk->wu.dir_old] = 3;
-                ewk->wu.routine_no[6] = 0;
+                ewk->wu.routine_no[6] = R6_START;
                 ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake;
             }
         } else if (ewk->wu.hit_quake >= ewk->wu.xyz[0].disp.pos) {
             Order[ewk->wu.dir_old] = 3;
-            ewk->wu.routine_no[6] = 0;
+            ewk->wu.routine_no[6] = R6_START;
             ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake;
         }
         break;
@@ -109,7 +125,7 @@ void EFF42_SLIDE_IN(WORK_Other* ewk) {
 
 void EFF42_SLIDE_OUT(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[6]) {
-    case 0:
+    case R6_START:
         if (--Order_Timer[ewk->wu.dir_old] != 0) {
             return;
         }
@@ -122,7 +138,7 @@ void EFF42_SLIDE_OUT(WORK_Other* ewk) {
             ewk->wu.mvxy.d[0].sp = 0x8000;
         }
         break;
-    case 1:
+    case R6_LEAVE:
         ewk->wu.xyz[0].cal += ewk->wu.mvxy.a[0].sp;
         ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;
         if (Ck_Range_Out_S(ewk, 2, 16)) {
@@ -141,7 +157,7 @@ void EFF42_SLIDE_OUT(WORK_Other* ewk) {
 
 void EFF42_KILL(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_START:
         if (--Order_Timer[ewk->wu.dir_old] == 0) {
             ewk->wu.routine_no[1] += 1;
             ewk->wu.disp_flag = 0;
@@ -157,13 +173,13 @@ void EFF42_KILL(WORK_Other* ewk) {
 
 void EFF42_MOVE(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_DELAY:
         if (--ewk->wu.dir_timer == 0) {
             ewk->wu.routine_no[0]++;
             Time_Stop = 0;
         }
         break;
-    case 1:
+    case R0_COUNT:
         if (ewk->wu.rl_waza != Select_Timer) {
             ewk->wu.rl_waza = Select_Timer;
             Setup_Char_Index(ewk);

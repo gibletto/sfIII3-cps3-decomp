@@ -1,5 +1,10 @@
 /*
- * EFF19_TBL.C  game tables
+ * EFF19_TBL.C  bg130 quake-reacting object tables
+ *
+ * eff19_data_tbl gives the x, y position of each of the seven objects. effect_19_s_tbl,
+ * effect_19_m_tbl and effect_19_l_tbl decide at random whether an object reacts to a small,
+ * middle or large quake, and eff19_wait_tbl gives the random wait before it does. Read by
+ * EFF19.C, the bg130 stage object reacting to quakes.
  */
 
 #include "types.h"

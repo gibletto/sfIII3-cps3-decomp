@@ -1,5 +1,10 @@
 /*
- * EFFF6_TBL.C  game tables
+ * EFFF6_TBL.C  opening demo moving sprite tables (effect F6)
+ *
+ * efff6_data_tbl00 gives each of the 61 sprite types its colour, position, priority,
+ * animation and the opening timeline values between which it is active; efff6_etc_data adds
+ * its direction, target point, zoom and speeds; efff6_move01_tbl is the short colour ramp of
+ * efff6_move01. Read by EFFF6.C.
  */
 
 #include "types.h"

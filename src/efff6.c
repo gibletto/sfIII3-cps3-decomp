@@ -21,11 +21,27 @@
 #include "charmove_2.h"
 #include "efff6.h"
 
+/* routine_no[0] */
+#define R0_MOVE         0       /* run while within its time span */
+#define R0_KILL         1       /* (default) put the work back */
+
+/* routine_no[2], efff6_move */
+#define R2_INIT         0       /* start the animation */
+#define R2_MOVE         1       /* slide to its target */
+
+/* routine_no[2], efff6_move01 */
+#define R2_COLOUR       1       /* step the colour ramp while sliding */
+#define R2_SLIDE        2       /* just slide to its target */
+
+/* routine_no[3] */
+#define R3_MOVE         0       /* move until the target is reached */
+#define R3_STOP         1       /* stopped at the target */
+
 
 
 void effect_F6_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_MOVE:
         if (ewk->wu.old_rno[1] <= op_w.index) {
             ewk->wu.routine_no[0] += 1;
         } else if (ewk->wu.old_rno[2] <= op_w.index) {
@@ -47,7 +63,7 @@ void effect_F6_move(WORK_Other* ewk) {
 
 void efff6_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_INIT:
         ewk->wu.routine_no[2] += 1;
         ewk->wu.disp_flag = 1;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.old_rno[0], ewk->wu.char_index, 0);
@@ -56,7 +72,7 @@ void efff6_move(WORK_Other* ewk) {
         } else {
             ewk->wu.my_mr_flag = 1;
         }
-    case 1:
+    case R2_MOVE:
         efff6_move_common(ewk);
         disp_pos_trans_entry5(ewk);
         break;
@@ -68,7 +84,7 @@ void efff6_move(WORK_Other* ewk) {
 void efff6_move_common(WORK_Other* ewk) {
     s16 work;
     switch (ewk->wu.routine_no[3]) {
-    case 0:
+    case R3_MOVE:
         switch (ewk->wu.direction) {
         case 0x20:
             add_x_sub(ewk);
@@ -174,7 +190,7 @@ void efff6_move_common(WORK_Other* ewk) {
             break;
         }
         break;
-    case 1:
+    case R3_STOP:
         break;
     }
 }
@@ -183,7 +199,7 @@ void efff6_move_common(WORK_Other* ewk) {
 
 void efff6_move01(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_INIT:
         ewk->wu.routine_no[2] += 1;
         ewk->wu.disp_flag = 1;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.old_rno[0], ewk->wu.char_index, 0);
@@ -194,7 +210,7 @@ void efff6_move01(WORK_Other* ewk) {
         }
         ewk->wu.old_rno[5] = 1;
         ewk->wu.old_rno[6] = 0;
-    case 1:
+    case R2_COLOUR:
         ewk->wu.old_rno[5] -= 1;
         if (ewk->wu.old_rno[5] <= 0) {
             ewk->wu.old_rno[5] = 2;
@@ -205,7 +221,7 @@ void efff6_move01(WORK_Other* ewk) {
                 ewk->wu.extra_col_2 = efff6_move01_tbl[ewk->wu.old_rno[6]];
             }
         }
-    case 2:
+    case R2_SLIDE:
         efff6_move_common(ewk);
         disp_pos_trans_entry5(ewk);
         break;

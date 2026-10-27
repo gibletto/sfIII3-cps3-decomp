@@ -1,5 +1,8 @@
 /*
- * OPENING2.C  game tables
+ * OPENING2.C  opening BG shake offsets
+ *
+ * op_bg0_0005_tbl is the 16 x and y shake offsets of opening BG0 step 0005. Read by
+ * END_MAIN.C.
  */
 
 #include "types.h"

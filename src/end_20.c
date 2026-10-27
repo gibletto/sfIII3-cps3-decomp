@@ -49,7 +49,7 @@
 
 void end_20000(u16 pl_num) {
     switch (end_w.r_no_1) {
-    case 0:
+    case END1_INIT:
         end_w.r_no_1++;
         end_w.r_no_2 = 0;
         common_end_init00(pl_num);
@@ -63,7 +63,7 @@ void end_20000(u16 pl_num) {
         end_2000_cell_set();
         bgm_request(0x2C);
         break;
-    case 1:
+    case END1_SCENES:
         end_w.timer--;
         if (end_w.timer < 0) {
             end_w.r_no_2++;
@@ -84,7 +84,7 @@ void end_20000(u16 pl_num) {
         }
         end_2000_move();
         end_2001_move();
-    case 2:
+    case END1_DONE:
         end_scn_pos_set2();
         end_bg_pos_hosei2();
         end_fam_set2();
@@ -310,7 +310,7 @@ void end_2001_0003(void)
         line = (s16 *)bg_w.bgw[1].suzi_adrs;
         for (i = 0; i < 512; i++) {
             ix = (ls_cnt1 + i * 4) & 0xFF;
-            work.cal = (rate_256_table[ix][0] * ls_rate1) >> 4;
+            work.cal = (rate_256_table[ix][RATE_X] * ls_rate1) >> 4;
             *line = work.disp.pos;
             line += 2;
         }

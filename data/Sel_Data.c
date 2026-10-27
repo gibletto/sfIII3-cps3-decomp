@@ -1,5 +1,16 @@
 /*
- * SEL_DATA.C  game tables
+ * SEL_DATA.C  select, versus, win and result screen position tables
+ *
+ * Positions and step data for the objects of the select and between-match screens: face and
+ * cursor places (Face_Cursor_Data in SEL_PL.C, Face_Pos_Data in EFF70.C and EFFD8.C), name
+ * objects (Name_Pos_Data in EFF39.C, Pos_Data_52 and Pattern_Data_52 in EFF52.C,
+ * Name_Cover_Pos_Data in EFF76.C and EFFK6.C), super art plates (Plate_Pos_Data_79,
+ * Plate_Finish_Data_79 and EFF50_Correct_Data in EFF79.C, EFF50.C and EFF98.C),
+ * EFF38_Correct_Data (EFF38.C), Pos_Data_69 (EFF69.C, EFF42.C), Plate_Pos_Data_E0 (EFFE0.C),
+ * Position_Data_A9 (EFFA9.C), Compute_Score_Pos_Data_G0 (EFFG0.C) and the EFF76 position,
+ * score, face and width tables (EFF76.C). Voice_Random_Data is read by SEL_PL.C,
+ * Voice_EM_Random_Data and EM_Select_Voice_Data (next-opponent voices) by NEXT_CPU.C.
+ * sel_digit_tbl is not read.
  */
 
 #include "types.h"
@@ -18,6 +29,7 @@ const s8 Face_Cursor_Data[3][7] = {
     { 11, 6, 8, 4, 9, 2, -1 },
 };
 
+/* x, y of each face on the character select screen (512 is added to x). */
 const s16 Face_Pos_Data[24][2] = {
     { 0, -24 }, { 27, 61 }, { 157, 179 }, { 127, 195 }, { 133, 129 }, { 63, 136 }, { 109, 79 }, { 51, 111 },
     { 121, 104 }, { 145, 154 }, { 56, 45 }, { 97, 54 }, { 39, 86 }, { 75, 161 }, { 87, 186 }, { 0, -24 },
@@ -28,6 +40,7 @@ const s16 Face_Pos_Data[24][2] = {
     { 0, 0 },
 };
 
+/* Indexed by player, play type and character: x, y of the effect 39 name object from its BG. */
 const s16 Name_Pos_Data[2][2][24][2] = {
     { { { -72, 208 }, { -64, 208 }, { -72, 208 }, { -72, 208 }, { -48, 208 }, { -48, 208 }, { -64, 208 }, { -64, 208 }, { -48, 208 }, { -72, 208 }, { -56, 208 }, { -64, 208 }, { -64, 208 }, { -48, 208 }, { -48, 208 }, { -48, 208 }, { -48, 208 }, { -40, 208 }, { -88, 208 }, { -48, 208 }, { -56, 208 }, { -64, 208 }, { -72, 208 }, { -64, 208 } }, { { -164, 24 }, { -148, 24 }, { -156, 24 }, { -156, 24 }, { -124, 24 }, { -132, 24 }, { -140, 24 }, { -140, 24 }, { -132, 24 }, { -156, 24 }, { -140, 24 }, { -148, 24 }, { -140, 24 }, { -132, 24 }, { -132, 24 }, { -124, 24 }, { -124, 24 }, { -132, 24 }, { -164, 24 }, { -124, 24 }, { -140, 24 }, { -148, 24 }, { -76, 24 }, { -148, 24 } } },
     { { { -72, 208 }, { -64, 208 }, { -72, 208 }, { -72, 208 }, { -48, 208 }, { -48, 208 }, { -64, 208 }, { -64, 208 }, { -48, 208 }, { -72, 208 }, { -56, 208 }, { -64, 208 }, { -64, 208 }, { -48, 208 }, { -48, 208 }, { -48, 208 }, { -48, 208 }, { -40, 208 }, { -88, 208 }, { -48, 208 }, { -56, 208 }, { -64, 208 }, { -72, 208 }, { -64, 208 } }, { { 144, 216 }, { 136, 216 }, { 140, 216 }, { 140, 216 }, { 120, 216 }, { 120, 216 }, { 136, 216 }, { 136, 216 }, { 128, 216 }, { 144, 216 }, { 136, 216 }, { 144, 216 }, { 136, 216 }, { 128, 216 }, { 128, 216 }, { 120, 216 }, { 120, 216 }, { 116, 216 }, { 160, 216 }, { 120, 216 }, { 128, 216 }, { 144, 216 }, { 72, 216 }, { 144, 216 } } },
@@ -49,15 +62,21 @@ const s16 Pattern_Data_52[21][2] = {
     { 1, 82 }, { 0, 82 }, { 13, 70 }, { 1, 82 }, { 7, 76 },
 };
 
+/* Indexed by play type, player and plate: x, y of a super art plate from its BG. */
 const s16 Plate_Pos_Data_79[2][2][3][2] = {
     { { { 88, 136 }, { 100, 125 }, { 112, 114 } }, { { -104, 152 }, { -92, 141 }, { -80, 130 } } },
     { { { -130, 80 }, { -127, 78 }, { -124, 76 } }, { { 124, 152 }, { 127, 150 }, { 130, 148 } } },
 };
 
+/* Indexed by player: x, y where the chosen super art plate comes to rest. */
 const s16 Plate_Finish_Data_79[2][2] = {
     { 384, 76 }, { 646, 152 },
 };
 
+/*
+ * One row per effect A9 object: x from BG3, y from BG3, priority, and the margin for the
+ * range check (vital_new).
+ */
 const s16 Position_Data_A9[27][4] = {
     { 456, 112, 25, 208 },
     { 456, 112, 25, 208 },
@@ -92,6 +111,7 @@ const s16 Plate_Pos_Data_E0[1][2] = {
     { 504, 148 },
 };
 
+/* One row per effect 69 / 42 object (dir_old): x, y of its place. */
 const s16 Pos_Data_69[11][2] = {
     { 84, 20 }, { 92, 44 }, { 92, 44 }, { 152, 22 }, { 8, 20 }, { 160, 22 }, { 176, 22 }, { 16, 20 },
     { 32, 20 }, { 150, 32 }, { 166, 32 },
@@ -107,11 +127,13 @@ const u8 Voice_EM_Random_Data[16] = {
     150, 151, 147, 148, 149, 150, 151, 147,
 };
 
+/* Indexed by player, play type and step (dir_step): x, y added to EFF38_Base_XY. */
 const s16 EFF38_Correct_Data[2][2][23][2] = {
     { { { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { -64, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { -32, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 } }, { { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { -64, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 32, 32 }, { 32, 0 } } },
     { { { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 72, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 64 }, { 0, 0 } }, { { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 72, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { -32, 56 }, { -32, 0 } } },
 };
 
+/* Indexed by direction and step (dm_vital): x, y offset of effect 50 from its plate. */
 const s16 EFF50_Correct_Data[2][2][2] = {
     { { 0, 36 }, { 5, 35 } },
     { { 0, -23 }, { 3, -24 } },
@@ -121,6 +143,7 @@ const u16 EM_Select_Voice_Data[4] = {
     0xA2, 0xA3, 0xA4, 0xA2,
 };
 
+/* One row per effect 76 order from 0x2B: x, y from its BG, priority. */
 const s16 EFF76_Pos_Data_A[26][3] = {
     { -472, 54, 68 },
     { -527, 85, 64 },
@@ -160,6 +183,7 @@ const s16 Compute_Score_Pos_Data_G0[2][4][3] = {
     { { 136, 136, 6 }, { 136, 120, 6 }, { 136, 104, 6 }, { 136, 88, 6 } },
 };
 
+/* One row per effect 76 order from 0x3B: x, y from its BG, priority. */
 const s16 Pos_Cont_Data_76[5][3] = {
     { 32, 152, 18 },
     { 88, 67, 18 },
@@ -168,10 +192,29 @@ const s16 Pos_Cont_Data_76[5][3] = {
     { 176, 152, 17 },
 };
 
+/* One row per character: x, y of the face from BG0. */
 const s16 EFF76_Face_Pos_Data[21][2] = {
-    { 32, 16 }, { 80, 16 }, { 88, 16 }, { 80, 16 }, { 80, 16 }, { 152, 16 }, { 80, 16 }, { 80, 16 },
-    { 80, 16 }, { 80, 16 }, { 80, 16 }, { 80, 16 }, { 80, 16 }, { 80, 16 }, { 80, 16 }, { 80, 16 },
-    { 96, 16 }, { 88, 16 }, { 88, 16 }, { 80, 16 }, { 96, 16 },
+    { 32, 16 },  /* Gill */
+    { 80, 16 },  /* Alex */
+    { 88, 16 },  /* Ryu */
+    { 80, 16 },  /* Yun */
+    { 80, 16 },  /* Dudley */
+    { 152, 16 },  /* Necro */
+    { 80, 16 },  /* Hugo */
+    { 80, 16 },  /* Ibuki */
+    { 80, 16 },  /* Elena */
+    { 80, 16 },  /* Oro */
+    { 80, 16 },  /* Yang */
+    { 80, 16 },  /* Ken */
+    { 80, 16 },  /* Sean */
+    { 80, 16 },  /* Urien */
+    { 80, 16 },  /* Gouki */
+    { 80, 16 },  /* Shin Gouki */
+    { 96, 16 },  /* Chun-Li */
+    { 88, 16 },  /* Makoto */
+    { 88, 16 },  /* Q */
+    { 80, 16 },  /* Twelve */
+    { 96, 16 },  /* Remy */
 };
 
 /* provisional name */

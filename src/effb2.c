@@ -36,6 +36,27 @@
 #include "effb3.h"
 #include "EFFB4.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* set up, pick the call voice */
+#define R0_ROUND        1       /* short wait, then start the line */
+#define R0_ROUND_OPEN   2       /* open the round display */
+#define R0_ROUND_HOLD   3       /* hold the round display */
+#define R0_FIGHT        4       /* short wait, then start the stamp */
+#define R0_FIGHT_OPEN   5       /* open FIGHT */
+#define R0_STAMP        6       /* wait for the stamp to land */
+#define R0_FLASH        7       /* flash FIGHT's colours */
+#define R0_FIGHT_OUT    8       /* wait for FIGHT to vanish */
+#define R0_GO           9       /* let the round start */
+#define R0_END          10      /* one more frame */
+#define R0_BREAK        99      /* broken into: one frame */
+#define R0_BREAK_END    100     /* one more frame */
+
+/* routine_no[1]: FIGHT colour flash */
+#define R1_INIT         0       /* start the colour flash */
+#define R1_FLASH        1       /* step through the flash colours */
+#define R1_HOLD         2       /* hold, then report done */
+#define R1_DRAW         3       /* draw only */
+
 
 
 s16 rf_b2_flag;  /* 02068C24 */
@@ -46,7 +67,7 @@ void effect_B2_move(WORK_Other* ewk) {
     s16 work;
     b3_Break_Into_check(ewk);
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0] += 1;
         ewk->wu.old_rno[0] = ewk->wu.old_rno[1] = ewk->wu.old_rno[2] = 0;
         rf_b2_flag = 0;
@@ -58,7 +79,7 @@ void effect_B2_move(WORK_Other* ewk) {
         ewk->wu.my_mr.size.x = 63;
         ewk->wu.my_mr.size.y = 63;
         break;
-    case 1:
+    case R0_ROUND:
         ewk->wu.hit_stop -= 1;
         if (ewk->wu.hit_stop < 0) {
             ewk->wu.routine_no[0] += 1;
@@ -66,7 +87,7 @@ void effect_B2_move(WORK_Other* ewk) {
             effect_I6_init(ewk);
         }
         break;
-    case 2:
+    case R0_ROUND_OPEN:
         ewk->wu.my_mr.size.y += 10;
         if (ewk->wu.my_mr.size.y >= 63) {
             ewk->wu.routine_no[0] += 1;
@@ -75,7 +96,7 @@ void effect_B2_move(WORK_Other* ewk) {
             rf_b2_flag = 0;
         }
         break;
-    case 3:
+    case R0_ROUND_HOLD:
         ewk->wu.hit_stop -= 1;
         if (ewk->wu.hit_stop < 0) {
             ewk->wu.routine_no[0] += 1;
@@ -84,7 +105,7 @@ void effect_B2_move(WORK_Other* ewk) {
             ewk->wu.hit_stop = 10;
         }
         break;
-    case 4:
+    case R0_FIGHT:
         ewk->wu.my_mr.size.x = 63;
         ewk->wu.my_mr.size.y = 0;
         ewk->wu.hit_stop -= 1;
@@ -94,42 +115,42 @@ void effect_B2_move(WORK_Other* ewk) {
             effect_L5_init(ewk);
         }
         break;
-    case 5:
+    case R0_FIGHT_OPEN:
         ewk->wu.my_mr.size.y += 6;
         if (ewk->wu.my_mr.size.y >= 63) {
             ewk->wu.routine_no[0] += 1;
             ewk->wu.my_mr.size.y = 63;
         }
         break;
-    case 6:
+    case R0_STAMP:
         if (rf_b2_flag) {
             ewk->wu.routine_no[0] += 1;
             rf_b2_flag = 0;
         }
         break;
-    case 7:
+    case R0_FLASH:
         if (fight_col_chg_sub(ewk) != 0) {
             ewk->wu.routine_no[0] += 1;
             rf_b2_flag = 0;
-            ewk->wu.routine_no[1] = 0;
+            ewk->wu.routine_no[1] = R1_INIT;
         }
         break;
-    case 8:
+    case R0_FIGHT_OUT:
         if (rf_b2_flag) {
             ewk->wu.routine_no[0] += 1;
         }
         break;
-    case 9:
+    case R0_GO:
         Next_Step = 1;
         ewk->wu.routine_no[0] += 1;
         break;
-    case 10:
+    case R0_END:
         ewk->wu.routine_no[0] += 1;
         break;
-    case 99:
+    case R0_BREAK:
         ewk->wu.routine_no[0] += 1;
         break;
-    case 100:
+    case R0_BREAK_END:
         ewk->wu.routine_no[0] += 1;
         break;
     default:
@@ -143,7 +164,7 @@ void effect_B2_move(WORK_Other* ewk) {
 
 s32 b3_Break_Into_check(WORK_Other* ewk) {
     if (Break_Into) {
-        ewk->wu.routine_no[0] = 99;
+        ewk->wu.routine_no[0] = R0_BREAK;
         return 1;
     }
     return 0;
@@ -153,12 +174,12 @@ s32 b3_Break_Into_check(WORK_Other* ewk) {
 
 s32 fight_col_chg_sub(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1] += 1;
         ewk->wu.vital_new = 0;
         ewk->wu.hit_stop = 1;
         break;
-    case 1:
+    case R1_FLASH:
         ewk->wu.hit_stop -= 1;
         if (ewk->wu.hit_stop <= 0) {
             ewk->wu.hit_stop = 1;
@@ -173,13 +194,13 @@ s32 fight_col_chg_sub(WORK_Other* ewk) {
             }
         }
         break;
-    case 2:
+    case R1_HOLD:
         ewk->wu.hit_stop -= 1;
         if (ewk->wu.hit_stop <= 0) {
             ewk->wu.routine_no[1] += 1;
             return 1;
         }
-    case 3:
+    case R1_DRAW:
         disp_pos_trans_entry5(ewk);
         break;
     }

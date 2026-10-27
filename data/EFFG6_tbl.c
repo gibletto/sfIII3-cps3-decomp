@@ -1,5 +1,9 @@
 /*
- * EFFG6_TBL.C  game tables
+ * EFFG6_TBL.C  trail particle emitter data for effect G6
+ *
+ * effg6_data has a row per emitter type started from player code: end flags, life, x and y
+ * offset, particle x and y speed, emit mask and display flag, and particle pattern (the
+ * columns are described beside the table). Read by EFFG6.C, which spawns G9 particles from it.
  */
 
 #include "types.h"
@@ -8,6 +12,12 @@
 #pragma section TBL
 
 
+/*
+ * One row per trail emitter (effect_G6_init's data): end flags (1 the work's height
+ * changed, 2 hidden, 4 hit again, 8 state changed, 0x10 life over, 0x20 stopped), life,
+ * x offset (mirrored by rl_flag), y offset, particle x and y speed, emit mask (low byte:
+ * emit on frames whose count masks to 0) and display flag (high byte), particle pattern.
+ */
 const s16 effg6_data[230][8] = {
     { 46, 0, 0, 0, -32, 32, 515, 31 },
     { 46, 0, 0, 0, -64, 40, 515, 31 },

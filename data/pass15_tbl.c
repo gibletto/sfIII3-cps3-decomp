@@ -1,5 +1,8 @@
 /*
- * PASS15_TBL.C  game tables
+ * PASS15_TBL.C  Shin Gouki's passive pattern table
+ *
+ * Passive15_Tbl lists the 249 passive pattern routines of character 15 (Shin Gouki), indexed
+ * by Pattern_Index. Read by PASS15.C.
  */
 
 #include "types.h"

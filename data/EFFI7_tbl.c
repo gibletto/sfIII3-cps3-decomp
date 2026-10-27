@@ -1,5 +1,9 @@
 /*
- * EFFI7_TBL.C  game tables
+ * EFFI7_TBL.C  attack sign placement
+ *
+ * ex_sign_data has 69 entries { x offset, y offset, pattern, follow flag } for the sign shown
+ * beside a player during an attack; the entry number is given when effect I7 is started. Read
+ * by EFFI7.C.
  */
 
 #include "types.h"

@@ -66,6 +66,14 @@
 #include "gameover.h"
 #include "fighter.h"
 
+/* GO_No[0] in Short_Ending_Scene */
+#define SHORT_WIPE      0       /* save the screen and wipe */
+#define SHORT_SETUP     1       /* set up the short ending screen */
+#define SHORT_COVER     2       /* after Cover_Timer, wipe in */
+#define SHORT_REVIVAL   3       /* finish the wipe */
+#define SHORT_SHOW      4       /* show it for G_Timer */
+#define SHORT_DONE      5       /* finished */
+
 
 
 s16 Cont_No;  /* 0201700C */
@@ -77,9 +85,9 @@ s16 Cont_Timer;  /* 02017014 */
 
 void GameOver_2nd(void) {
     switch (GO_No[1]) {
-    case 0:
+    case GO2_START:
         GO_No[1]++;
-    case 1:
+    case GO2_FADE:
         if (Version_Type == 3 && Break_Com[Player_id][0]) {
             if (Request_Fade(108, 0) == 0) {
                 break;
@@ -95,12 +103,12 @@ void GameOver_2nd(void) {
         Forbid_Break = 0;
         load_char_gfx(0xA0F8, 1);
         return;
-    case 2:
+    case GO2_FADE_WAIT:
         if (Check_Fade_Complete_SP() == 0) {
             break;
         }
         if (Game_setting.set5) {
-            GO_No[0] = 2;
+            GO_No[0] = GO_DONE;
             break;
         }
         GO_No[1]++;
@@ -113,11 +121,11 @@ void GameOver_2nd(void) {
             Order[65] = 3;
             Order_Timer[65] = 1;
         } else {
-            GO_No[1] = 8;
+            GO_No[1] = GO2_BREAK_COM;
             G_Timer = 5;
         }
         break;
-    case 3:
+    case GO2_RESULT_FADE:
         if (--Cover_Timer == 0) {
             if (Request_Fade(98, 0)) {
                 GO_No[1]++;
@@ -127,12 +135,12 @@ void GameOver_2nd(void) {
             }
         }
         break;
-    case 4:
+    case GO2_RESULT_IN:
         if (Check_Fade_Complete_SP()) {
             Forbid_Break = 0;
             bgm_request(47);
             Ignore_Entry[LOSER] = 0;
-            if (E_Number[0][0] != 2 && E_Number[1][0] != 2) {
+            if (E_Number[0][0] != ENTRY_NAME && E_Number[1][0] != ENTRY_NAME) {
                 GO_No[1] += 2;
                 G_Timer = 60;
                 break;
@@ -140,19 +148,19 @@ void GameOver_2nd(void) {
             GO_No[1]++;
         }
         break;
-    case 5:
-        if (E_Number[0][0] != 2 && E_Number[1][0] != 2) {
+    case GO2_NAME_WAIT:
+        if (E_Number[0][0] != ENTRY_NAME && E_Number[1][0] != ENTRY_NAME) {
             GO_No[1]++;
             G_Timer = 60;
         }
         break;
-    case 6:
+    case GO2_PAUSE:
         if (--G_Timer == 0) {
             GO_No[1]++;
             G_Timer = Result_Timer[Player_id];
         }
         break;
-    case 7:
+    case GO2_RESULT:
         if (Scene_Cut) {
             G_Timer = 1;
         }
@@ -162,14 +170,14 @@ void GameOver_2nd(void) {
             WIN_X = 1;
         }
         break;
-    case 8:
+    case GO2_BREAK_COM:
         if (--G_Timer == 0) {
             Request_Fade(109, 0);
             Check_Fade_Complete_SP();
             Check_Fade_Complete_SP();
             Check_Fade_Complete_SP();
             Check_Fade_Complete_SP();
-            GO_No[1] = 3;
+            GO_No[1] = GO2_RESULT_FADE;
             Forbid_Break = 0;
             Setup_Result_OBJ();
             effect_76_init(65);
@@ -221,12 +229,12 @@ s32 Short_Ending_Scene(void) {
     Bg_Family_Set_appoint(1);
     Bg_Family_Set_appoint(3);
     switch (GO_No[0]) {
-    case 0:
+    case SHORT_WIPE:
         GO_No[0]++;
         sc_vram_to_ram();
         Switch_Screen_Init(0, 1);
         break;
-    case 1:
+    case SHORT_SETUP:
         if (Switch_Screen() != 0) {
             GO_No[0]++;
             Cover_Timer = 24;
@@ -237,26 +245,26 @@ s32 Short_Ending_Scene(void) {
             Setup_Virtual_BG(0, 0x200, 0);
         }
         break;
-    case 2:
+    case SHORT_COVER:
         if (--Cover_Timer == 0) {
             GO_No[0]++;
             Clear_Flash_No();
             Switch_Screen_Init(0, 1);
         }
         break;
-    case 3:
+    case SHORT_REVIVAL:
         if (Switch_Screen_Revival() != 0) {
             GO_No[0]++;
             G_Timer = 150;
             Ignore_Entry[LOSER] = 0;
         }
         break;
-    case 4:
+    case SHORT_SHOW:
         if (--G_Timer == 0) {
             GO_No[0]++;
         }
         break;
-    case 5:
+    case SHORT_DONE:
         return 1;
     }
     return 0;

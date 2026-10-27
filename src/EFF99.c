@@ -1,8 +1,6 @@
 /*
- * EFF99.C  Effect 98 die state and init, effect 99
+ * EFF99.C  Effect 99
  *
- * EFF98_KILL counts down the order timer, hides the super-art plate and frees it.
- * effect_98_init (called from next_cpu.c) creates the plate for a player, order slot and BG.
  * Effect 99 shows a select-screen sprite (sel_pl_char_table) after a delay, drawn relative to
  * BG1, and frees it when Disp_PERFECT is cleared.
  */
@@ -30,21 +28,26 @@
 #include "effect_2.h"
 #include "EFF99.h"
 
+/* routine_no[0] */
+#define R0_WAIT         0       /* count the delay down, then show */
+#define R0_MOVE         1       /* show until Disp_PERFECT clears */
+#define R0_KILL         99      /* (default) put the work back */
+
 
 
 void effect_99_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_WAIT:
         if (--ewk->wu.dir_timer != 0) {
             return;
         }
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         break;
-    case 1:
+    case R0_MOVE:
         if (Disp_PERFECT == 0) {
             ewk->wu.disp_flag = 0;
-            ewk->wu.routine_no[0] = 99;
+            ewk->wu.routine_no[0] = R0_KILL;
             return;
         }
         break;

@@ -1,5 +1,8 @@
 /*
- * EFFM0_TBL.C  game tables
+ * EFFM0_TBL.C  player 17 super art palette data
+ *
+ * effM0_tbl_top holds the colour data of the super art palette effect; its step entries from
+ * index 4 on point at effM0_tbl_top_0. EFFL8.C reaches it through effL8_data_tbl.
  */
 
 #include "types.h"

@@ -1,5 +1,10 @@
 /*
- * PLPAT13_TBL.C  game tables
+ * PLPAT13_TBL.C  Urien's special attack tables
+ *
+ * pl13_exatt_table is the list of Urien's special attack routines, indexed by attack routine
+ * number minus 16. mnd_em_tall2 gives, per opponent character, the x/y offset the knee-drop
+ * special aims at; glap_table2 is the vitality refill rate per cg_type of the resurrection
+ * move. Read by PLPAT13.C.
  */
 
 #include "types.h"
@@ -19,9 +24,27 @@ extern void Att_SENPUUKYAKU();
 extern void Att_SLIDE_and_JUMP();
 
 const s16 mnd_em_tall2[21][2] = {
-    { 28, 56 }, { 24, 44 }, { 24, 40 }, { 20, 32 }, { 24, 48 }, { 24, 40 }, { 28, 60 }, { 16, 44 },
-    { 32, 32 }, { 28, 24 }, { 20, 32 }, { 24, 40 }, { 24, 40 }, { 28, 56 }, { 24, 40 }, { 24, 40 },
-    { 24, 40 }, { 24, 40 }, { 24, 40 }, { 24, 40 }, { 24, 40 },
+    { 28, 56 },  /* Gill */
+    { 24, 44 },  /* Alex */
+    { 24, 40 },  /* Ryu */
+    { 20, 32 },  /* Yun */
+    { 24, 48 },  /* Dudley */
+    { 24, 40 },  /* Necro */
+    { 28, 60 },  /* Hugo */
+    { 16, 44 },  /* Ibuki */
+    { 32, 32 },  /* Elena */
+    { 28, 24 },  /* Oro */
+    { 20, 32 },  /* Yang */
+    { 24, 40 },  /* Ken */
+    { 24, 40 },  /* Sean */
+    { 28, 56 },  /* Urien */
+    { 24, 40 },  /* Gouki */
+    { 24, 40 },  /* Shin Gouki */
+    { 24, 40 },  /* Chun-Li */
+    { 24, 40 },  /* Makoto */
+    { 24, 40 },  /* Q */
+    { 24, 40 },  /* Twelve */
+    { 24, 40 },  /* Remy */
 };
 
 const s16 glap_table2[6] = {

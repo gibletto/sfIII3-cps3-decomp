@@ -1,5 +1,10 @@
 /*
- * EFF38_TBL.C  game tables
+ * EFF38_TBL.C  order-driven select object tables
+ *
+ * EFF38_Base_XY gives the base x, y of the object by player and play type, to which
+ * EFF38_Correct_Data (SEL_DATA.C) is added. EFF38_Jmp_Tbl is the jump table of its order
+ * states (wait, appear, slide in and out, kill, shift, move). Read by EFF38.C, the
+ * order-driven select and VS screen object.
  */
 
 #include "types.h"
@@ -15,6 +20,7 @@ extern void EFF38_SLIDE_OUT();
 extern void EFF38_SUDDENLY();
 extern void EFF38_WAIT();
 
+/* Indexed by player and play type: base x, y of effect 38, to which EFF38_Correct_Data is added. */
 const s16 EFF38_Base_XY[2][2][2] = {
     { { -64, 16 }, { -128, 32 } },
     { { 64, 16 }, { 128, -32 } },

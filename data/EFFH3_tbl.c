@@ -1,5 +1,7 @@
 /*
- * EFFH3_TBL.C  game tables
+ * EFFH3_TBL.C  ending picture placement
+ *
+ * effH3_data_tbl gives the five still pictures { x, y, pattern }. Read by EFFH3.C.
  */
 
 #include "types.h"

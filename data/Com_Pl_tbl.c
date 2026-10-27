@@ -1,5 +1,16 @@
 /*
- * COM_PL_TBL.C  game tables
+ * COM_PL_TBL.C  region, boot screen, default settings and screen mode tables
+ *
+ * region_type_tbl, region_cc_type_tbl and region_param_tbl turn the region into the area type
+ * and its parameters; boot_title_str, boot_region_str and boot_no_cd_str lay out the boot
+ * screen, and the str_* strings are the boot, version and region warning text.
+ * sys_cfg_default_* are the default system settings by cabinet type and region and
+ * game_cfg_default_tbl_row* the default game settings by region, reached through the lists in
+ * MODE_INIT.C. All read by MODE_INIT.C, except parental_advisory_msg (DEMO00.C, the
+ * attract-mode logos), test_cursor_x_tbl and test_cursor_y_tbl (TEST_MODE.C, the test-mode
+ * cursor) and the screen_* window, origin, display register and flip offset tables of each
+ * screen mode (SCRN_CTRL.C). boot_version_str and screen_flip_ofs_tbl_tail are not referred to
+ * by name.
  */
 
 #include "types.h"

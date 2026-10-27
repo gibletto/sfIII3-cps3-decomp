@@ -48,6 +48,41 @@
 #include "EFF13_KOTP.h"
 #include "fighter.h"
 
+/* routine_no[0], effect_13_move */
+#define R0_INIT         0       /* set up from the tama data */
+#define R0_MOVE         1       /* run the kind-of-tama process */
+#define R0_END          2       /* leave the owner's shell list */
+#define R0_KILL         3       /* (default) put the work back */
+
+/* routine_no[1], kotp_* shell processes */
+#define R1_MOVE         0       /* move and animate */
+#define R1_HIT          1       /* react to a hit */
+#define R1_VANISH       2       /* play the end pattern, then finish */
+
+/* routine_no[2], sub-state of R1_VANISH */
+#define R2_DRIFT        0       /* end pattern, still moving */
+#define R2_STAY         1       /* end pattern, standing still */
+
+/* routine_no[1], kotp_02000 tengu stones */
+#define R1_LEAVE        2       /* fly off the screen, then finish */
+
+/* routine_no[2], kotp_02000 tengu stones */
+#define R2_START        0       /* set off toward the home point */
+#define R2_APPROACH     1       /* move to the home point */
+#define R2_HOME         2       /* hover by the master */
+#define R2_ATTACK       3       /* fly at the target */
+#define R2_RETURN       4       /* head home after an attack */
+#define R2_REBOUND      5       /* bounced off by a hit */
+
+/* routine_no[3], start-up of kotp_05000 and kotp_06000 */
+#define R3_INIT         0       /* first frame set-up */
+#define R3_STRAIGHT     1       /* fly straight for a few frames */
+#define R3_HOMING       2       /* turn toward the opponent */
+
+/* routine_no[1], kotp_11000 falling shell */
+#define R1_FALL         0       /* fall to the floor */
+#define R1_LAND         2       /* play the landing pattern, then finish */
+
 
 
 void effect_13_move(WORK_Other* ewk) {
@@ -55,7 +90,7 @@ void effect_13_move(WORK_Other* ewk) {
     PLW* mwk;
     PLW* emwk;
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.charset_id = 11;
         set_char_base_data(&ewk->wu);
@@ -137,7 +172,7 @@ void effect_13_move(WORK_Other* ewk) {
         }
         tama_display(ewk);
         break;
-    case 1:
+    case R0_MOVE:
         if (ewk->wu.dead_f == 1 || Suicide[0] != 0) {
             ewk->wu.disp_flag = 0;
             ewk->wu.routine_no[0]++;
@@ -156,9 +191,9 @@ void effect_13_move(WORK_Other* ewk) {
         }
         hit_push_request(&ewk->wu);
         break;
-    case 2:
+    case R0_END:
         erase_my_shell_ix((WORK*)ewk->my_master, ewk->wu.myself);
-        ewk->wu.routine_no[0] = 3;
+        ewk->wu.routine_no[0] = R0_KILL;
         break;
     default:
         all_cgps_put_back(ewk);
@@ -265,10 +300,10 @@ void set_tengu_init_pos(WORK_Other* ewk, WORK* twk) {
 
 void kotp_00000(WORK_Other* ewk, TAMA* twk) {
     if (ewk->wu.hf.hit_flag) {
-        ewk->wu.routine_no[1] = 1;
+        ewk->wu.routine_no[1] = R1_HIT;
     }
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_MOVE:
         if (ewk->wu.hit_stop) {
             if (ewk->wu.hit_stop == 1) {
                 ewk->wu.hit_stop = 0;
@@ -284,8 +319,8 @@ void kotp_00000(WORK_Other* ewk, TAMA* twk) {
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
             set_char_move_init(&ewk->wu, 0, twk->ernm);
-            ewk->wu.routine_no[1] = 2;
-            ewk->wu.routine_no[2] = 0;
+            ewk->wu.routine_no[1] = R1_VANISH;
+            ewk->wu.routine_no[2] = R2_DRIFT;
             break;
         }
         if ((ewk->wu.xyz[1].disp.pos + ewk->wu.cg_jphos) <= 0) {
@@ -294,8 +329,8 @@ void kotp_00000(WORK_Other* ewk, TAMA* twk) {
             ewk->wu.mvxy.d[0].sp = 0;
             ewk->wu.mvxy.d[1].sp = 0;
             set_char_move_init(&ewk->wu, 0, twk->erex);
-            ewk->wu.routine_no[1] = 2;
-            ewk->wu.routine_no[2] = 1;
+            ewk->wu.routine_no[1] = R1_VANISH;
+            ewk->wu.routine_no[2] = R2_STAY;
             ewk->wu.xyz[1].disp.pos = -ewk->wu.cg_jphos;
             break;
         }
@@ -303,11 +338,11 @@ void kotp_00000(WORK_Other* ewk, TAMA* twk) {
             ewk->wu.mvxy.a[0].sp /= 4;
             ewk->wu.mvxy.a[1].sp /= 4;
             set_char_move_init(&ewk->wu, 0, twk->ernm);
-            ewk->wu.routine_no[1] = 2;
-            ewk->wu.routine_no[2] = 0;
+            ewk->wu.routine_no[1] = R1_VANISH;
+            ewk->wu.routine_no[2] = R2_DRIFT;
         }
         break;
-    case 1:
+    case R1_HIT:
         ewk->wu.vital_new -= ewk->wu.dm_vital;
         ewk->wu.dm_vital = 0;
         if (ewk->wu.vital_new < 0x100) {
@@ -320,12 +355,12 @@ void kotp_00000(WORK_Other* ewk, TAMA* twk) {
             } else {
                 set_char_move_init(&ewk->wu, 0, twk->erex);
             }
-            ewk->wu.routine_no[1] = 2;
-            ewk->wu.routine_no[2] = 1;
+            ewk->wu.routine_no[1] = R1_VANISH;
+            ewk->wu.routine_no[2] = R2_STAY;
             ewk->wu.kage_flag = 0;
             ewk->wu.hit_stop = 0;
         } else {
-            ewk->wu.routine_no[1] = 0;
+            ewk->wu.routine_no[1] = R1_MOVE;
             if (ewk->wu.hf.hit.player) {
                 if (ewk->wu.hf.hit.player & 0xF0) {
                     effect_96_init(&ewk->wu, twk->erdf, ewk->wu.disp_flag, ewk->wu.hit_stop);
@@ -344,16 +379,16 @@ void kotp_00000(WORK_Other* ewk, TAMA* twk) {
         ewk->wu.hf.hit_flag = 0;
         ewk->wu.hit_quake = 0;
         break;
-    case 2:
+    case R1_VANISH:
         switch (ewk->wu.routine_no[2]) {
-        case 0:
+        case R2_DRIFT:
             add_mvxy_speed(&ewk->wu);
             cal_mvxy_speed(&ewk->wu);
-        case 1:
+        case R2_STAY:
             char_move(&ewk->wu);
             if (ewk->wu.cg_type == 0xFF) {
                 ewk->wu.disp_flag = 0;
-                ewk->wu.routine_no[0] = 2;
+                ewk->wu.routine_no[0] = R0_END;
             }
             break;
         }
@@ -364,10 +399,10 @@ void kotp_00000(WORK_Other* ewk, TAMA* twk) {
 
 void kotp_01000(WORK_Other* ewk, TAMA* twk) {
     if (ewk->wu.hf.hit_flag) {
-        ewk->wu.routine_no[1] = 1;
+        ewk->wu.routine_no[1] = R1_HIT;
     }
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_MOVE:
         if (ewk->wu.hit_stop) {
             ewk->wu.hit_stop--;
             break;
@@ -375,16 +410,16 @@ void kotp_01000(WORK_Other* ewk, TAMA* twk) {
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
             set_char_move_init(&ewk->wu, 0, twk->ernm);
-            ewk->wu.routine_no[1] = 2;
+            ewk->wu.routine_no[1] = R1_VANISH;
             ewk->wu.routine_no[2] = 0;
             break;
         }
         if (screen_range_check(&ewk->wu)) {
-            ewk->wu.routine_no[0] = 2;
+            ewk->wu.routine_no[0] = R0_END;
             ewk->wu.disp_flag = 0;
         }
         break;
-    case 1:
+    case R1_HIT:
         if (ewk->wu.hf.hit.player) {
             if (ewk->wu.hf.hit.player & 0xF0) {
                 set_char_move_init(&ewk->wu, 0, twk->erdf);
@@ -394,15 +429,15 @@ void kotp_01000(WORK_Other* ewk, TAMA* twk) {
         } else {
             set_char_move_init(&ewk->wu, 0, twk->erex);
         }
-        ewk->wu.routine_no[1] = 2;
+        ewk->wu.routine_no[1] = R1_VANISH;
         ewk->wu.routine_no[2] = 0;
         ewk->wu.hf.hit_flag = 0;
         ewk->wu.hit_quake = 0;
         break;
-    case 2:
+    case R1_VANISH:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
-            ewk->wu.routine_no[0] = 2;
+            ewk->wu.routine_no[0] = R0_END;
             ewk->wu.disp_flag = 0;
         }
         break;
@@ -413,18 +448,18 @@ void kotp_01000(WORK_Other* ewk, TAMA* twk) {
 void kotp_02000(WORK_Other* ewk, TAMA* twk) {
     PLW* mwk = (PLW*)ewk->my_master;
     if (ewk->wu.hf.hit_flag) {
-        ewk->wu.routine_no[1] = 1;
+        ewk->wu.routine_no[1] = R1_HIT;
     }
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_MOVE:
         if (ewk->wu.hit_stop) {
             ewk->wu.hit_stop--;
             break;
         }
         char_move(&ewk->wu);
         switch (ewk->wu.routine_no[2]) {
-        case 0:
-            ewk->wu.routine_no[2] = 1;
+        case R2_START:
+            ewk->wu.routine_no[2] = R2_APPROACH;
             ewk->wu.disp_flag = 1;
             ewk->wu.dir_timer = twk->data00;
             ewk->wu.mvxy.d[0].sp = 0;
@@ -434,21 +469,21 @@ void kotp_02000(WORK_Other* ewk, TAMA* twk) {
                               mwk->wu.xyz[0].disp.pos + ewk->wu.old_pos[0],
                               mwk->wu.xyz[1].disp.pos + ewk->wu.old_pos[1]);
             break;
-        case 1:
+        case R2_APPROACH:
             add_mvxy_speed_no_use_rl(&ewk->wu);
             cal_mvxy_speed(&ewk->wu);
             if (check_tengu_attack(&ewk->wu, &mwk->wu, twk)) {
                 break;
             }
             if (--ewk->wu.dir_timer < 0) {
-                ewk->wu.routine_no[2] = 2;
+                ewk->wu.routine_no[2] = R2_HOME;
             }
             break;
-        case 2:
+        case R2_HOME:
             ewk->wu.position_z = mwk->wu.position_z + ewk->wu.old_pos[2];
             if (mwk->sa->ok != -1 || ewk->wu.dir_old != mwk->sa->id_arts) {
-                ewk->wu.routine_no[1] = 2;
-                ewk->wu.routine_no[2] = 0;
+                ewk->wu.routine_no[1] = R1_LEAVE;
+                ewk->wu.routine_no[2] = R2_START;
                 ewk->wu.cg_hit_ix = 0;
                 make_speed_xy_back(&ewk->wu, &mwk->wu, twk);
                 break;
@@ -458,33 +493,33 @@ void kotp_02000(WORK_Other* ewk, TAMA* twk) {
             }
             set_tengu_my_home(&ewk->wu, &mwk->wu);
             if (ewk->wu.dir_step > 8) {
-                ewk->wu.routine_no[2] = 1;
+                ewk->wu.routine_no[2] = R2_APPROACH;
                 ewk->wu.dir_timer = 8;
                 cal_all_speed_data(&ewk->wu, ewk->wu.dir_timer, ewk->wu.dmcal_m, ewk->wu.dmcal_d, 2, 2);
             }
             break;
-        case 3:
+        case R2_ATTACK:
             add_mvxy_speed_no_use_rl(&ewk->wu);
             cal_mvxy_speed(&ewk->wu);
             if (--ewk->wu.dir_timer < 0) {
-                ewk->wu.routine_no[2] = 4;
+                ewk->wu.routine_no[2] = R2_RETURN;
                 ewk->wu.att_hit_ok = 0;
                 ewk->wu.dir_timer = twk->hos_x;
                 set_tengu_my_home(&ewk->wu, &mwk->wu);
                 cal_all_speed_data(&ewk->wu, ewk->wu.dir_timer, ewk->wu.dmcal_m, ewk->wu.dmcal_d, 2, 2);
             }
             break;
-        case 4:
+        case R2_RETURN:
             add_mvxy_speed_no_use_rl(&ewk->wu);
             cal_mvxy_speed(&ewk->wu);
             ewk->wu.cg_hit_ix = 0;
             if (--ewk->wu.dir_timer < 0) {
-                ewk->wu.routine_no[2] = 2;
+                ewk->wu.routine_no[2] = R2_HOME;
             }
             break;
-        case 5:
+        case R2_REBOUND:
             set_tengu_my_home(&ewk->wu, &mwk->wu);
-            ewk->wu.routine_no[2] = 4;
+            ewk->wu.routine_no[2] = R2_RETURN;
             ewk->wu.cg_hit_ix = 0;
             ewk->wu.dir_timer = twk->hos_y;
             ewk->wu.mvxy.d[0].sp = 0;
@@ -492,18 +527,18 @@ void kotp_02000(WORK_Other* ewk, TAMA* twk) {
             cal_initial_speed(&ewk->wu, ewk->wu.dir_timer, ewk->wu.dmcal_m, ewk->wu.dmcal_d);
         }
         break;
-    case 1:
-        ewk->wu.routine_no[1] = 0;
-        ewk->wu.routine_no[2] = 5;
+    case R1_HIT:
+        ewk->wu.routine_no[1] = R1_MOVE;
+        ewk->wu.routine_no[2] = R2_REBOUND;
         ewk->wu.hf.hit_flag = 0;
         ewk->wu.cg_hit_ix = 0;
         set_hit_stop_hit_quake(&ewk->wu);
         break;
-    case 2:
+    case R1_LEAVE:
         add_mvxy_speed_no_use_rl(&ewk->wu);
         cal_mvxy_speed(&ewk->wu);
         if (--ewk->wu.dir_timer < 0) {
-            ewk->wu.routine_no[0] = 2;
+            ewk->wu.routine_no[0] = R0_END;
             ewk->wu.disp_flag = 0;
         }
         ewk->wu.cg_hit_ix = 0;
@@ -528,7 +563,7 @@ s32 check_tengu_attack(WORK* ewk, WORK* mwk, TAMA* twk) {
     if (mwk->cg_ja.atix == 0) {
         return 0;
     }
-    ewk->routine_no[2] = 3;
+    ewk->routine_no[2] = R2_ATTACK;
     ewk->att_hit_ok = 1;
     ewk->rl_flag = mwk->rl_flag;
     ewk->dir_timer = twk->life_time;
@@ -569,10 +604,10 @@ void make_speed_xy_back(WORK* ewk, WORK* mwk, TAMA* twk) {
 
 void kotp_03000(WORK_Other* ewk, TAMA* twk) {
     if (ewk->wu.hf.hit_flag) {
-        ewk->wu.routine_no[1] = 1;
+        ewk->wu.routine_no[1] = R1_HIT;
     }
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_MOVE:
         if (ewk->wu.hit_stop) {
             ewk->wu.hit_stop--;
             break;
@@ -586,8 +621,8 @@ void kotp_03000(WORK_Other* ewk, TAMA* twk) {
             ewk->wu.mvxy.d[0].sp = 0;
             ewk->wu.mvxy.d[1].sp = 0;
             set_char_move_init(&ewk->wu, 0, twk->ernm);
-            ewk->wu.routine_no[1] = 2;
-            ewk->wu.routine_no[2] = 1;
+            ewk->wu.routine_no[1] = R1_VANISH;
+            ewk->wu.routine_no[2] = R2_STAY;
             ewk->wu.xyz[1].disp.pos = -ewk->wu.cg_jphos;
             break;
         }
@@ -595,9 +630,9 @@ void kotp_03000(WORK_Other* ewk, TAMA* twk) {
             break;
         }
         ewk->wu.disp_flag = 0;
-        ewk->wu.routine_no[0] = 2;
+        ewk->wu.routine_no[0] = R0_END;
         break;
-    case 1:
+    case R1_HIT:
         ewk->wu.vital_new -= ewk->wu.dm_vital;
         ewk->wu.hit_stop = 0;
         ewk->wu.hit_quake = 0;
@@ -607,8 +642,8 @@ void kotp_03000(WORK_Other* ewk, TAMA* twk) {
                     set_char_move_init(&ewk->wu, 0, twk->erdf);
                 } else {
                     set_char_move_init(&ewk->wu, 0, twk->erht);
-                    ewk->wu.routine_no[1] = 2;
-                    ewk->wu.routine_no[2] = 1;
+                    ewk->wu.routine_no[1] = R1_VANISH;
+                    ewk->wu.routine_no[2] = R2_STAY;
                     ewk->wu.mvxy.a[0].sp = 0;
                     ewk->wu.mvxy.a[1].sp = 0;
                     ewk->wu.mvxy.d[0].sp = 0;
@@ -620,8 +655,8 @@ void kotp_03000(WORK_Other* ewk, TAMA* twk) {
             } else {
                 set_char_move_init(&ewk->wu, 0, twk->erex);
             }
-            ewk->wu.routine_no[1] = 2;
-            ewk->wu.routine_no[2] = 0;
+            ewk->wu.routine_no[1] = R1_VANISH;
+            ewk->wu.routine_no[2] = R2_DRIFT;
             ewk->wu.disp_flag = 2;
             ewk->wu.mvxy.a[0].sp = -ewk->wu.mvxy.a[0].sp;
             ewk->wu.mvxy.a[0].sp /= 3;
@@ -631,19 +666,19 @@ void kotp_03000(WORK_Other* ewk, TAMA* twk) {
             ewk->wu.kage_flag = 0;
             break;
         }
-        ewk->wu.routine_no[1] = 0;
+        ewk->wu.routine_no[1] = R1_MOVE;
         ewk->wu.hf.hit_flag = 0;
         break;
-    case 2:
+    case R1_VANISH:
         switch (ewk->wu.routine_no[2]) {
-        case 0:
+        case R2_DRIFT:
             add_mvxy_speed(&ewk->wu);
             cal_mvxy_speed(&ewk->wu);
-        case 1:
+        case R2_STAY:
             char_move(&ewk->wu);
             if (ewk->wu.cg_type == 0xFF) {
                 ewk->wu.disp_flag = 0;
-                ewk->wu.routine_no[0] = 2;
+                ewk->wu.routine_no[0] = R0_END;
             }
             break;
         }
@@ -655,17 +690,17 @@ void kotp_04000(WORK_Other* ewk)
 {
 
     ewk->wu.disp_flag = 0;
-    ewk->wu.routine_no[0] = 2;
+    ewk->wu.routine_no[0] = R0_END;
 }
 
 
 void kotp_05000(WORK_Other* ewk, TAMA* twk) {
     if (ewk->wu.hf.hit_flag) {
-        ewk->wu.routine_no[1] = 1;
+        ewk->wu.routine_no[1] = R1_HIT;
     }
     switch (ewk->wu.routine_no[1]) {
-    case 0:
-        if (ewk->wu.routine_no[3] == 0) {
+    case R1_MOVE:
+        if (ewk->wu.routine_no[3] == R3_INIT) {
             ewk->wu.routine_no[3]++;
             ewk->wu.xyz[1].disp.pos = ((s16)get_height_position()) + 256;
         }
@@ -682,8 +717,8 @@ void kotp_05000(WORK_Other* ewk, TAMA* twk) {
             ewk->wu.mvxy.d[0].sp = 0;
             ewk->wu.mvxy.d[1].sp = 0;
             set_char_move_init(&ewk->wu, 0, twk->erex);
-            ewk->wu.routine_no[1] = 2;
-            ewk->wu.routine_no[2] = 1;
+            ewk->wu.routine_no[1] = R1_VANISH;
+            ewk->wu.routine_no[2] = R2_STAY;
             ewk->wu.xyz[1].disp.pos = -ewk->wu.cg_jphos;
             break;
         }
@@ -693,10 +728,10 @@ void kotp_05000(WORK_Other* ewk, TAMA* twk) {
         ewk->wu.mvxy.a[0].sp /= 4;
         ewk->wu.mvxy.a[1].sp /= 4;
         set_char_move_init(&ewk->wu, 0, twk->ernm);
-        ewk->wu.routine_no[1] = 2;
-        ewk->wu.routine_no[2] = 0;
+        ewk->wu.routine_no[1] = R1_VANISH;
+        ewk->wu.routine_no[2] = R2_DRIFT;
         return;
-    case 1:
+    case R1_HIT:
         ewk->wu.vital_new -= ewk->wu.dm_vital;
         ewk->wu.dm_vital = 0;
         if (ewk->wu.vital_new < 256) {
@@ -709,12 +744,12 @@ void kotp_05000(WORK_Other* ewk, TAMA* twk) {
             } else {
                 set_char_move_init(&ewk->wu, 0, twk->erex);
             }
-            ewk->wu.routine_no[1] = 2;
-            ewk->wu.routine_no[2] = 1;
+            ewk->wu.routine_no[1] = R1_VANISH;
+            ewk->wu.routine_no[2] = R2_STAY;
             ewk->wu.kage_flag = 0;
             ewk->wu.hit_stop = 0;
         } else {
-            ewk->wu.routine_no[1] = 0;
+            ewk->wu.routine_no[1] = R1_MOVE;
             if (ewk->wu.hf.hit.player) {
                 if (ewk->wu.hf.hit.player & 0xF0) {
                     effect_96_init(&ewk->wu, twk->erdf, ewk->wu.disp_flag, ewk->wu.hit_stop);
@@ -728,16 +763,16 @@ void kotp_05000(WORK_Other* ewk, TAMA* twk) {
         ewk->wu.hf.hit_flag = 0;
         ewk->wu.hit_quake = 0;
         return;
-    case 2:
+    case R1_VANISH:
         switch (ewk->wu.routine_no[2]) {
-        case 0:
+        case R2_DRIFT:
             add_mvxy_speed(&ewk->wu);
             cal_mvxy_speed(&ewk->wu);
-        case 1:
+        case R2_STAY:
             char_move(&ewk->wu);
             if (ewk->wu.cg_type == 0xFF) {
                 ewk->wu.disp_flag = 0;
-                ewk->wu.routine_no[0] = 2;
+                ewk->wu.routine_no[0] = R0_END;
             }
             break;
         }
@@ -762,25 +797,25 @@ void kotp_06000(WORK_Other* ewk, TAMA* twk) {
     target_y = tp + 2;
 
     if (ewk->wu.hf.hit_flag) {
-        ewk->wu.routine_no[1] = 1;
+        ewk->wu.routine_no[1] = R1_HIT;
     }
 
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_MOVE:
         if (ewk->wu.hit_stop) {
             ewk->wu.hit_stop--;
             break;
         }
 
         switch (ewk->wu.routine_no[3]) {
-        case 0:
+        case R3_INIT:
             ewk->wu.routine_no[3]++;
             ewk->wu.kow = 6;
             ewk->wu.direction = ewk->wu.rl_flag ? twk->data01 : 256 - twk->data01 & 0xFF;
             effect_I9_init(ewk, 2, 3, 0x77);
             break;
 
-        case 1:
+        case R3_STRAIGHT:
             if (ewk->wu.kow--) {
                 break;
             }
@@ -789,7 +824,7 @@ void kotp_06000(WORK_Other* ewk, TAMA* twk) {
             ewk->wu.kow = 0x70;
             /* fallthrough */
 
-        case 2:
+        case R3_HOMING:
             *target_x = homing_empos_hos[0][ewk->master_player][0];
             *target_x = mwk->wu.rl_flag ? emwk->wu.xyz[0].disp.pos - *target_x : emwk->wu.xyz[0].disp.pos + *target_x;
             *target_y = emwk->wu.xyz[1].disp.pos + homing_empos_hos[0][ewk->master_player][1];
@@ -821,21 +856,21 @@ void kotp_06000(WORK_Other* ewk, TAMA* twk) {
             ewk->wu.mvxy.d[0].sp = 0;
             ewk->wu.mvxy.d[1].sp = 0;
             set_char_move_init(&ewk->wu, 0, twk->erex);
-            ewk->wu.routine_no[1] = 2;
-            ewk->wu.routine_no[2] = 1;
+            ewk->wu.routine_no[1] = R1_VANISH;
+            ewk->wu.routine_no[2] = R2_STAY;
             ewk->wu.xyz[1].disp.pos = -ewk->wu.cg_jphos;
             return;
         } else if (--ewk->wu.dir_timer < 0 || screen_range_check(&ewk->wu) != 0) {
             ewk->wu.mvxy.a[0].sp /= 4;
             ewk->wu.mvxy.a[1].sp /= 4;
             set_char_move_init(&ewk->wu, 0, twk->ernm);
-            ewk->wu.routine_no[1] = 2;
-            ewk->wu.routine_no[2] = 0;
+            ewk->wu.routine_no[1] = R1_VANISH;
+            ewk->wu.routine_no[2] = R2_DRIFT;
         }
 
         break;
 
-    case 1:
+    case R1_HIT:
         ewk->wu.vital_new -= ewk->wu.dm_vital;
         ewk->wu.dm_vital = 0;
 
@@ -850,12 +885,12 @@ void kotp_06000(WORK_Other* ewk, TAMA* twk) {
                 set_char_move_init(&ewk->wu, 0, twk->erex);
             }
 
-            ewk->wu.routine_no[1] = 2;
-            ewk->wu.routine_no[2] = 1;
+            ewk->wu.routine_no[1] = R1_VANISH;
+            ewk->wu.routine_no[2] = R2_STAY;
             ewk->wu.kage_flag = 0;
             ewk->wu.hit_stop = 0;
         } else {
-            ewk->wu.routine_no[1] = 0;
+            ewk->wu.routine_no[1] = R1_MOVE;
 
             if (ewk->wu.hf.hit.player) {
                 if (ewk->wu.hf.hit.player & 0xF0) {
@@ -872,19 +907,19 @@ void kotp_06000(WORK_Other* ewk, TAMA* twk) {
         ewk->wu.hit_quake = 0;
         break;
 
-    case 2:
+    case R1_VANISH:
         switch (ewk->wu.routine_no[2]) {
-        case 0:
+        case R2_DRIFT:
             add_mvxy_speed(&ewk->wu);
             cal_mvxy_speed(&ewk->wu);
             /* fallthrough */
 
-        case 1:
+        case R2_STAY:
             char_move(&ewk->wu);
 
             if (ewk->wu.cg_type == 0xFF) {
                 ewk->wu.disp_flag = 0;
-                ewk->wu.routine_no[0] = 2;
+                ewk->wu.routine_no[0] = R0_END;
             }
 
             break;
@@ -902,10 +937,10 @@ void kotp_07000(WORK_Other* ewk, TAMA* twk) {
     PLW* emwk;
     s16 tama_x;
     if (ewk->wu.hf.hit_flag) {
-        ewk->wu.routine_no[1] = 1;
+        ewk->wu.routine_no[1] = R1_HIT;
     }
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_MOVE:
         if (ewk->wu.hit_stop) {
             ewk->wu.hit_stop--;
             break;
@@ -933,11 +968,11 @@ void kotp_07000(WORK_Other* ewk, TAMA* twk) {
         }
         if (--ewk->wu.dir_timer < 0) {
             set_char_move_init(&ewk->wu, 0, twk->ernm);
-            ewk->wu.routine_no[1] = 2;
-            ewk->wu.routine_no[2] = 0;
+            ewk->wu.routine_no[1] = R1_VANISH;
+            ewk->wu.routine_no[2] = R2_DRIFT;
         }
         break;
-    case 1:
+    case R1_HIT:
         if (ewk->wu.hf.hit_flag == 0) {
             awk = (WORK*)ewk->wu.dmg_adrs;
             if (awk->work_id == 1) {
@@ -962,12 +997,12 @@ void kotp_07000(WORK_Other* ewk, TAMA* twk) {
             } else {
                 set_char_move_init(&ewk->wu, 0, twk->erex);
             }
-            ewk->wu.routine_no[1] = 2;
-            ewk->wu.routine_no[2] = 1;
+            ewk->wu.routine_no[1] = R1_VANISH;
+            ewk->wu.routine_no[2] = R2_STAY;
             ewk->wu.kage_flag = 0;
             ewk->wu.hit_stop = 0;
         } else {
-            ewk->wu.routine_no[1] = 0;
+            ewk->wu.routine_no[1] = R1_MOVE;
             if (ewk->wu.hf.hit.player) {
                 if (ewk->wu.hf.hit.player & 0xF0) {
                     effect_96_init(&ewk->wu, twk->erdf, ewk->wu.disp_flag, ewk->wu.hit_stop);
@@ -986,16 +1021,16 @@ void kotp_07000(WORK_Other* ewk, TAMA* twk) {
         ewk->wu.hf.hit_flag = 0;
         ewk->wu.hit_quake = 0;
         break;
-    case 2:
+    case R1_VANISH:
         switch (ewk->wu.routine_no[2]) {
-        case 0:
+        case R2_DRIFT:
             add_mvxy_speed(&ewk->wu);
             cal_mvxy_speed(&ewk->wu);
-        case 1:
+        case R2_STAY:
             char_move(&ewk->wu);
             if (ewk->wu.cg_type == 0xFF) {
                 ewk->wu.disp_flag = 0;
-                ewk->wu.routine_no[0] = 2;
+                ewk->wu.routine_no[0] = R0_END;
             }
             break;
         }
@@ -1006,10 +1041,10 @@ void kotp_07000(WORK_Other* ewk, TAMA* twk) {
 
 void kotp_08000(WORK_Other* ewk, TAMA* twk) {
     if (ewk->wu.hf.hit_flag) {
-        ewk->wu.routine_no[1] = 1;
+        ewk->wu.routine_no[1] = R1_HIT;
     }
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_MOVE:
         if (ewk->wu.hit_stop) {
             ewk->wu.hit_stop--;
             break;
@@ -1023,8 +1058,8 @@ void kotp_08000(WORK_Other* ewk, TAMA* twk) {
             ewk->wu.mvxy.d[0].sp = 0;
             ewk->wu.mvxy.d[1].sp = 0;
             set_char_move_init(&ewk->wu, 0, twk->erex);
-            ewk->wu.routine_no[1] = 2;
-            ewk->wu.routine_no[2] = 1;
+            ewk->wu.routine_no[1] = R1_VANISH;
+            ewk->wu.routine_no[2] = R2_STAY;
             ewk->wu.xyz[1].disp.pos = -ewk->wu.cg_jphos;
             break;
         }
@@ -1034,10 +1069,10 @@ void kotp_08000(WORK_Other* ewk, TAMA* twk) {
         ewk->wu.mvxy.a[0].sp /= 4;
         ewk->wu.mvxy.a[1].sp /= 4;
         set_char_move_init(&ewk->wu, 0, twk->ernm);
-        ewk->wu.routine_no[1] = 2;
-        ewk->wu.routine_no[2] = 0;
+        ewk->wu.routine_no[1] = R1_VANISH;
+        ewk->wu.routine_no[2] = R2_DRIFT;
         return;
-    case 1:
+    case R1_HIT:
         ewk->wu.vital_new -= ewk->wu.dm_vital;
         ewk->wu.dm_vital = 0;
         if (ewk->wu.vital_new < 256) {
@@ -1050,12 +1085,12 @@ void kotp_08000(WORK_Other* ewk, TAMA* twk) {
             } else {
                 set_char_move_init(&ewk->wu, 0, twk->erex);
             }
-            ewk->wu.routine_no[1] = 2;
-            ewk->wu.routine_no[2] = 1;
+            ewk->wu.routine_no[1] = R1_VANISH;
+            ewk->wu.routine_no[2] = R2_STAY;
             ewk->wu.kage_flag = 0;
             ewk->wu.hit_stop = 0;
         } else {
-            ewk->wu.routine_no[1] = 0;
+            ewk->wu.routine_no[1] = R1_MOVE;
             if (ewk->wu.hf.hit.player) {
                 if (ewk->wu.hf.hit.player & 0xF0) {
                     effect_96_init(&ewk->wu, twk->erdf, ewk->wu.disp_flag, ewk->wu.hit_stop);
@@ -1066,8 +1101,8 @@ void kotp_08000(WORK_Other* ewk, TAMA* twk) {
                 effect_96_init(&ewk->wu, twk->erex, ewk->wu.disp_flag, ewk->wu.hit_stop);
             } else {
                 set_char_move_init(&ewk->wu, 0, twk->erex);
-                ewk->wu.routine_no[1] = 2;
-                ewk->wu.routine_no[2] = 1;
+                ewk->wu.routine_no[1] = R1_VANISH;
+                ewk->wu.routine_no[2] = R2_STAY;
                 ewk->wu.kage_flag = 0;
                 ewk->wu.hit_stop = 0;
             }
@@ -1080,16 +1115,16 @@ void kotp_08000(WORK_Other* ewk, TAMA* twk) {
         ewk->wu.hf.hit_flag = 0;
         ewk->wu.hit_quake = 0;
         return;
-    case 2:
+    case R1_VANISH:
         switch (ewk->wu.routine_no[2]) {
-        case 0:
+        case R2_DRIFT:
             add_mvxy_speed(&ewk->wu);
             cal_mvxy_speed(&ewk->wu);
-        case 1:
+        case R2_STAY:
             char_move(&ewk->wu);
             if (ewk->wu.cg_type == 0xFF) {
                 ewk->wu.disp_flag = 0;
-                ewk->wu.routine_no[0] = 2;
+                ewk->wu.routine_no[0] = R0_END;
             }
             break;
         }
@@ -1100,10 +1135,10 @@ void kotp_08000(WORK_Other* ewk, TAMA* twk) {
 
 void kotp_09000(WORK_Other* ewk, TAMA* twk) {
     if (ewk->wu.hf.hit_flag) {
-        ewk->wu.routine_no[1] = 1;
+        ewk->wu.routine_no[1] = R1_HIT;
     }
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_MOVE:
         if (ewk->wu.hit_stop) {
             ewk->wu.hit_stop--;
             break;
@@ -1113,8 +1148,8 @@ void kotp_09000(WORK_Other* ewk, TAMA* twk) {
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
             set_char_move_init(&ewk->wu, 0, twk->ernm);
-            ewk->wu.routine_no[1] = 2;
-            ewk->wu.routine_no[2] = 0;
+            ewk->wu.routine_no[1] = R1_VANISH;
+            ewk->wu.routine_no[2] = R2_DRIFT;
             break;
         }
         if ((ewk->wu.xyz[1].disp.pos + ewk->wu.cg_jphos) <= 0) {
@@ -1123,8 +1158,8 @@ void kotp_09000(WORK_Other* ewk, TAMA* twk) {
             ewk->wu.mvxy.d[0].sp = 0;
             ewk->wu.mvxy.d[1].sp = 0;
             set_char_move_init(&ewk->wu, 0, twk->erex);
-            ewk->wu.routine_no[1] = 2;
-            ewk->wu.routine_no[2] = 1;
+            ewk->wu.routine_no[1] = R1_VANISH;
+            ewk->wu.routine_no[2] = R2_STAY;
             ewk->wu.xyz[1].disp.pos = -ewk->wu.cg_jphos;
             break;
         }
@@ -1132,11 +1167,11 @@ void kotp_09000(WORK_Other* ewk, TAMA* twk) {
             ewk->wu.mvxy.a[0].sp /= 4;
             ewk->wu.mvxy.a[1].sp /= 4;
             set_char_move_init(&ewk->wu, 0, twk->ernm);
-            ewk->wu.routine_no[1] = 2;
-            ewk->wu.routine_no[2] = 0;
+            ewk->wu.routine_no[1] = R1_VANISH;
+            ewk->wu.routine_no[2] = R2_DRIFT;
         }
         break;
-    case 1:
+    case R1_HIT:
         ewk->wu.vital_new -= ewk->wu.dm_vital;
         ewk->wu.dm_vital = 0;
         if (ewk->wu.vital_new < 256) {
@@ -1149,20 +1184,20 @@ void kotp_09000(WORK_Other* ewk, TAMA* twk) {
             } else {
                 set_char_move_init(&ewk->wu, 0, twk->erex);
             }
-            ewk->wu.routine_no[1] = 2;
-            ewk->wu.routine_no[2] = 1;
+            ewk->wu.routine_no[1] = R1_VANISH;
+            ewk->wu.routine_no[2] = R2_STAY;
             ewk->wu.kage_flag = 0;
             ewk->wu.hit_stop = 0;
         } else {
-            ewk->wu.routine_no[1] = 0;
+            ewk->wu.routine_no[1] = R1_MOVE;
             if (ewk->wu.hf.hit.player) {
                 if (ewk->wu.hf.hit.player & 0xF0) {
                     set_char_move_init(&ewk->wu, 0, twk->erdf);
                 } else {
                     set_char_move_init(&ewk->wu, 0, twk->erht);
                 }
-                ewk->wu.routine_no[1] = 2;
-                ewk->wu.routine_no[2] = 1;
+                ewk->wu.routine_no[1] = R1_VANISH;
+                ewk->wu.routine_no[2] = R2_STAY;
                 ewk->wu.kage_flag = 0;
                 ewk->wu.hit_stop = 0;
             } else {
@@ -1177,16 +1212,16 @@ void kotp_09000(WORK_Other* ewk, TAMA* twk) {
         ewk->wu.hf.hit_flag = 0;
         ewk->wu.hit_quake = 0;
         break;
-    case 2:
+    case R1_VANISH:
         switch (ewk->wu.routine_no[2]) {
-        case 0:
+        case R2_DRIFT:
             add_mvxy_speed(&ewk->wu);
             cal_mvxy_speed(&ewk->wu);
-        case 1:
+        case R2_STAY:
             char_move(&ewk->wu);
             if (ewk->wu.cg_type == 0xFF) {
                 ewk->wu.disp_flag = 0;
-                ewk->wu.routine_no[0] = 2;
+                ewk->wu.routine_no[0] = R0_END;
             }
             break;
         }
@@ -1198,7 +1233,7 @@ void kotp_09000(WORK_Other* ewk, TAMA* twk) {
 void kotp_10000(WORK_Other* ewk) {
     char_move(&ewk->wu);
     if (ewk->wu.cg_type == 0xFF) {
-        ewk->wu.routine_no[0] = 2;
+        ewk->wu.routine_no[0] = R0_END;
     }
 }
 
@@ -1206,7 +1241,7 @@ void kotp_10000(WORK_Other* ewk) {
 void kotp_11000(WORK_Other* ewk, TAMA* twk) {
     PLW* mwk = (PLW*)ewk->my_master;
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_FALL:
     case 1:
         if (mwk->sa_stop_flag == 1) {
             break;
@@ -1218,10 +1253,10 @@ void kotp_11000(WORK_Other* ewk, TAMA* twk) {
             ewk->wu.mvxy.a[1].sp = ewk->wu.mvxy.d[1].sp = ewk->wu.mvxy.kop[1] = 0;
             set_char_move_init(&ewk->wu, 0, twk->erex);
             ewk->wu.xyz[1].disp.pos = 0;
-            ewk->wu.routine_no[1] = 2;
+            ewk->wu.routine_no[1] = R1_LAND;
         }
         break;
-    case 2:
+    case R1_LAND:
         if (mwk->sa_stop_flag == 1) {
             break;
         }
@@ -1230,7 +1265,7 @@ void kotp_11000(WORK_Other* ewk, TAMA* twk) {
         cal_mvxy_speed(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
             ewk->wu.disp_flag = 0;
-            ewk->wu.routine_no[0] = 2;
+            ewk->wu.routine_no[0] = R0_END;
         }
         break;
     }
@@ -1244,10 +1279,10 @@ void kotp_11000(WORK_Other* ewk, TAMA* twk) {
 
 void kotp_12000(WORK_Other* ewk, TAMA* twk) {
     if (ewk->wu.hf.hit_flag) {
-        ewk->wu.routine_no[1] = 1;
+        ewk->wu.routine_no[1] = R1_HIT;
     }
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_MOVE:
         if (ewk->wu.hit_stop) {
             if (ewk->wu.hit_stop == 1) {
                 ewk->wu.hit_stop = 0;
@@ -1268,8 +1303,8 @@ void kotp_12000(WORK_Other* ewk, TAMA* twk) {
         }
         if (ewk->wu.cg_type == 0xFF) {
             set_char_move_init(&ewk->wu, 0, twk->ernm);
-            ewk->wu.routine_no[1] = 2;
-            ewk->wu.routine_no[2] = 0;
+            ewk->wu.routine_no[1] = R1_VANISH;
+            ewk->wu.routine_no[2] = R2_DRIFT;
             break;
         }
         if ((ewk->wu.xyz[1].disp.pos + ewk->wu.cg_jphos) <= 0) {
@@ -1278,8 +1313,8 @@ void kotp_12000(WORK_Other* ewk, TAMA* twk) {
             ewk->wu.mvxy.d[0].sp = 0;
             ewk->wu.mvxy.d[1].sp = 0;
             set_char_move_init(&ewk->wu, 0, twk->erex);
-            ewk->wu.routine_no[1] = 2;
-            ewk->wu.routine_no[2] = 1;
+            ewk->wu.routine_no[1] = R1_VANISH;
+            ewk->wu.routine_no[2] = R2_STAY;
             ewk->wu.xyz[1].disp.pos = -ewk->wu.cg_jphos;
             break;
         }
@@ -1287,11 +1322,11 @@ void kotp_12000(WORK_Other* ewk, TAMA* twk) {
             ewk->wu.mvxy.a[0].sp /= 4;
             ewk->wu.mvxy.a[1].sp /= 4;
             set_char_move_init(&ewk->wu, 0, twk->ernm);
-            ewk->wu.routine_no[1] = 2;
-            ewk->wu.routine_no[2] = 0;
+            ewk->wu.routine_no[1] = R1_VANISH;
+            ewk->wu.routine_no[2] = R2_DRIFT;
         }
         break;
-    case 1:
+    case R1_HIT:
         ewk->wu.vital_new -= ewk->wu.dm_vital;
         ewk->wu.dm_vital = 0;
         if (ewk->wu.vital_new < 256) {
@@ -1304,12 +1339,12 @@ void kotp_12000(WORK_Other* ewk, TAMA* twk) {
             } else {
                 set_char_move_init(&ewk->wu, 0, twk->erex);
             }
-            ewk->wu.routine_no[1] = 2;
-            ewk->wu.routine_no[2] = 1;
+            ewk->wu.routine_no[1] = R1_VANISH;
+            ewk->wu.routine_no[2] = R2_STAY;
             ewk->wu.kage_flag = 0;
             ewk->wu.hit_stop = 0;
         } else {
-            ewk->wu.routine_no[1] = 0;
+            ewk->wu.routine_no[1] = R1_MOVE;
             if (ewk->wu.hf.hit.player) {
                 if (ewk->wu.hf.hit.player & 0xF0) {
                     effect_96_init(&ewk->wu, twk->erdf, ewk->wu.disp_flag, ewk->wu.hit_stop);
@@ -1328,16 +1363,16 @@ void kotp_12000(WORK_Other* ewk, TAMA* twk) {
         ewk->wu.hf.hit_flag = 0;
         ewk->wu.hit_quake = 0;
         break;
-    case 2:
+    case R1_VANISH:
         switch (ewk->wu.routine_no[2]) {
-        case 0:
+        case R2_DRIFT:
             add_mvxy_speed(&ewk->wu);
             cal_mvxy_speed(&ewk->wu);
-        case 1:
+        case R2_STAY:
             char_move(&ewk->wu);
             if (ewk->wu.cg_type == 0xFF) {
                 ewk->wu.disp_flag = 0;
-                ewk->wu.routine_no[0] = 2;
+                ewk->wu.routine_no[0] = R0_END;
             }
             break;
         }
@@ -1351,16 +1386,16 @@ void kotp_13000(WORK_Other* ewk, TAMA* twk) {
     PLW* emwk;
     s16 ipos_x;
     if (ewk->wu.hf.hit_flag) {
-        ewk->wu.routine_no[1] = 1;
+        ewk->wu.routine_no[1] = R1_HIT;
     }
     mwk = (PLW*)ewk->my_master;
-    if (mwk->wu.routine_no[1] != 4) {
-        ewk->wu.routine_no[0] = 2;
+    if (mwk->wu.routine_no[1] != PLAYER_ATTACK) {
+        ewk->wu.routine_no[0] = R0_END;
         ewk->wu.disp_flag = 0;
         return;
     }
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_MOVE:
         if (ewk->wu.hit_stop) {
             ewk->wu.hit_stop--;
             break;
@@ -1379,36 +1414,36 @@ void kotp_13000(WORK_Other* ewk, TAMA* twk) {
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
             set_char_move_init(&ewk->wu, 0, twk->ernm);
-            ewk->wu.routine_no[1] = 2;
+            ewk->wu.routine_no[1] = R1_VANISH;
             ewk->wu.routine_no[2] = 0;
             break;
         }
         if (screen_range_check(&ewk->wu)) {
-            ewk->wu.routine_no[0] = 2;
+            ewk->wu.routine_no[0] = R0_END;
             ewk->wu.disp_flag = 0;
             return;
         }
         break;
-    case 1:
+    case R1_HIT:
         ewk->wu.vital_new -= ewk->wu.dm_vital;
         ewk->wu.dm_vital = 0;
         if (ewk->wu.vital_new < 256) {
-            ewk->wu.routine_no[1] = 2;
+            ewk->wu.routine_no[1] = R1_VANISH;
             ewk->wu.routine_no[2] = 1;
             ewk->wu.kage_flag = 0;
             ewk->wu.hit_stop = 0;
             ewk->wu.att_hit_ok = 0;
         } else {
-            ewk->wu.routine_no[1] = 0;
+            ewk->wu.routine_no[1] = R1_MOVE;
         }
         ewk->wu.hf.hit_flag = 0;
         ewk->wu.hit_quake = 0;
         break;
-    case 2:
+    case R1_VANISH:
         char_move(&ewk->wu);
         ewk->wu.att_hit_ok = 0;
         if (ewk->wu.cg_type == 0xFF) {
-            ewk->wu.routine_no[0] = 2;
+            ewk->wu.routine_no[0] = R0_END;
             ewk->wu.disp_flag = 0;
         }
         break;
@@ -1423,17 +1458,17 @@ void kotp_14000(WORK_Other* ewk) {
     }
     if (ewk->wu.cg_type == 0xFF) {
         ewk->wu.disp_flag = 0;
-        ewk->wu.routine_no[0] = 2;
+        ewk->wu.routine_no[0] = R0_END;
     }
 }
 
 
 void kotp_15000(WORK_Other* ewk, TAMA* twk) {
     if (ewk->wu.hf.hit_flag) {
-        ewk->wu.routine_no[1] = 1;
+        ewk->wu.routine_no[1] = R1_HIT;
     }
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_MOVE:
         if (ewk->wu.hit_stop) {
             ewk->wu.hit_stop--;
             break;
@@ -1443,8 +1478,8 @@ void kotp_15000(WORK_Other* ewk, TAMA* twk) {
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
             set_char_move_init(&ewk->wu, 0, twk->ernm);
-            ewk->wu.routine_no[1] = 2;
-            ewk->wu.routine_no[2] = 0;
+            ewk->wu.routine_no[1] = R1_VANISH;
+            ewk->wu.routine_no[2] = R2_DRIFT;
             break;
         }
         if (--ewk->wu.dir_timer < 0 || tama15_screen_check(&ewk->wu)) {
@@ -1453,34 +1488,34 @@ void kotp_15000(WORK_Other* ewk, TAMA* twk) {
             ewk->wu.mvxy.d[0].sp = 0;
             ewk->wu.mvxy.d[1].sp = 0;
             set_char_move_init(&ewk->wu, 0, twk->ernm);
-            ewk->wu.routine_no[1] = 2;
-            ewk->wu.routine_no[2] = 0;
+            ewk->wu.routine_no[1] = R1_VANISH;
+            ewk->wu.routine_no[2] = R2_DRIFT;
         }
         break;
-    case 1:
+    case R1_HIT:
         ewk->wu.vital_new -= ewk->wu.dm_vital;
         ewk->wu.dm_vital = 0;
         if (ewk->wu.vital_new < 256) {
-            ewk->wu.routine_no[1] = 2;
-            ewk->wu.routine_no[2] = 1;
+            ewk->wu.routine_no[1] = R1_VANISH;
+            ewk->wu.routine_no[2] = R2_STAY;
             ewk->wu.kage_flag = 0;
             ewk->wu.hit_stop = 0;
         } else {
-            ewk->wu.routine_no[1] = 0;
+            ewk->wu.routine_no[1] = R1_MOVE;
         }
         ewk->wu.hf.hit_flag = 0;
         ewk->wu.hit_quake = 0;
         break;
-    case 2:
+    case R1_VANISH:
         switch (ewk->wu.routine_no[2]) {
-        case 0:
+        case R2_DRIFT:
             add_mvxy_speed(&ewk->wu);
             cal_mvxy_speed(&ewk->wu);
-        case 1:
+        case R2_STAY:
             char_move(&ewk->wu);
             if (ewk->wu.cg_type == 0xFF) {
                 ewk->wu.disp_flag = 0;
-                ewk->wu.routine_no[0] = 2;
+                ewk->wu.routine_no[0] = R0_END;
             }
             break;
         }
@@ -1491,10 +1526,10 @@ void kotp_15000(WORK_Other* ewk, TAMA* twk) {
 
 void kotp_16000(WORK_Other* ewk, TAMA* twk) {
     if (ewk->wu.hf.hit_flag) {
-        ewk->wu.routine_no[1] = 1;
+        ewk->wu.routine_no[1] = R1_HIT;
     }
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_MOVE:
         if (ewk->wu.hit_stop) {
             if (ewk->wu.hit_stop == 1) {
                 ewk->wu.hit_stop = 0;
@@ -1514,8 +1549,8 @@ void kotp_16000(WORK_Other* ewk, TAMA* twk) {
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
             set_char_move_init(&ewk->wu, 0, twk->ernm);
-            ewk->wu.routine_no[1] = 2;
-            ewk->wu.routine_no[2] = 0;
+            ewk->wu.routine_no[1] = R1_VANISH;
+            ewk->wu.routine_no[2] = R2_DRIFT;
             break;
         }
         if ((ewk->wu.xyz[1].disp.pos + ewk->wu.cg_jphos) <= 0) {
@@ -1524,18 +1559,18 @@ void kotp_16000(WORK_Other* ewk, TAMA* twk) {
             ewk->wu.mvxy.d[0].sp = 0;
             ewk->wu.mvxy.d[1].sp = 0;
             set_char_move_init(&ewk->wu, 0, twk->erex);
-            ewk->wu.routine_no[1] = 2;
-            ewk->wu.routine_no[2] = 1;
+            ewk->wu.routine_no[1] = R1_VANISH;
+            ewk->wu.routine_no[2] = R2_STAY;
             ewk->wu.xyz[1].disp.pos = -ewk->wu.cg_jphos;
             break;
         }
         if (--ewk->wu.dir_timer < 0 || screen_range_check(&ewk->wu)) {
             set_char_move_init(&ewk->wu, 0, twk->ernm);
-            ewk->wu.routine_no[1] = 2;
-            ewk->wu.routine_no[2] = 0;
+            ewk->wu.routine_no[1] = R1_VANISH;
+            ewk->wu.routine_no[2] = R2_DRIFT;
         }
         break;
-    case 1:
+    case R1_HIT:
         ewk->wu.vital_new -= ewk->wu.dm_vital;
         ewk->wu.dm_vital = 0;
         if (ewk->wu.vital_new < 256) {
@@ -1548,12 +1583,12 @@ void kotp_16000(WORK_Other* ewk, TAMA* twk) {
             } else {
                 set_char_move_init(&ewk->wu, 0, twk->erex);
             }
-            ewk->wu.routine_no[1] = 2;
-            ewk->wu.routine_no[2] = 1;
+            ewk->wu.routine_no[1] = R1_VANISH;
+            ewk->wu.routine_no[2] = R2_STAY;
             ewk->wu.kage_flag = 0;
             ewk->wu.hit_stop = 0;
         } else {
-            ewk->wu.routine_no[1] = 0;
+            ewk->wu.routine_no[1] = R1_MOVE;
             if (ewk->wu.hf.hit.player) {
                 if (ewk->wu.hf.hit.player & 0xF0) {
                     effect_96_init(&ewk->wu, twk->erdf, ewk->wu.disp_flag, ewk->wu.hit_stop);
@@ -1572,16 +1607,16 @@ void kotp_16000(WORK_Other* ewk, TAMA* twk) {
         ewk->wu.hf.hit_flag = 0;
         ewk->wu.hit_quake = 0;
         break;
-    case 2:
+    case R1_VANISH:
         switch (ewk->wu.routine_no[2]) {
-        case 0:
+        case R2_DRIFT:
             add_mvxy_speed(&ewk->wu);
             cal_mvxy_speed(&ewk->wu);
-        case 1:
+        case R2_STAY:
             char_move(&ewk->wu);
             if (ewk->wu.cg_type == 0xFF) {
                 ewk->wu.disp_flag = 0;
-                ewk->wu.routine_no[0] = 2;
+                ewk->wu.routine_no[0] = R0_END;
             }
             break;
         }

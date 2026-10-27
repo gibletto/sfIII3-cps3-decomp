@@ -24,6 +24,10 @@
 #include "bg_sub_5.h"
 #include "EFF21.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* start the animation */
+#define R0_MOVE         1       /* animate in step with the BG2 scroll */
+
 
 
 extern const s16 eff21_data_adrs_0[];
@@ -36,12 +40,12 @@ const s16* eff21_data_adrs[1] = {
 
 void effect_21_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R0_MOVE:
         if (!EXE_flag && !Game_pause && !EXE_obroll) {
             char_move(&ewk->wu);
         }

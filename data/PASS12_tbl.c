@@ -1,5 +1,8 @@
 /*
- * PASS12_TBL.C  game tables
+ * PASS12_TBL.C  CPU passive pattern table for Sean
+ *
+ * Passive12_Tbl is the 231 passive (defensive) pattern routines of character 12 (Sean),
+ * indexed by Pattern_Index. Read by PASS12.C.
  */
 
 #include "types.h"

@@ -43,6 +43,108 @@
 #include "PLPDM.h"
 #include "fighter.h"
 
+/* routine_no[3], Damage_00000 */
+#define D00_END         1       /* run the animation to its end */
+#define D00_HOLD        2       /* nothing more: the move holds here */
+
+/* routine_no[3], Damage_01000 */
+#define D01_MOVE        1       /* move and run the animation to cue 1 */
+#define D01_MOVE2       2       /* move and run the animation to cue 1 */
+#define D01_AIR         3       /* in the air until it lands */
+#define D01_LAND        4       /* the landing */
+
+/* routine_no[3], Damage_04000 */
+#define D04_SLIDE       1       /* slide back, raising dust */
+#define D04_SLIDE2      2       /* slide back */
+
+/* routine_no[3], Damage_07000 */
+#define D07_RUN         1       /* run the animation */
+#define D07_AIR         2       /* in the air */
+#define D07_LANDED      3       /* landed: set the slide to stop over 3/4 of the pause */
+#define D07_SLIDE       4       /* slide until the pause runs out */
+#define D07_END         5       /* run the rest of the animation */
+
+/* routine_no[3], Damage_08000 */
+#define D08_RUN         1       /* run the animation */
+#define D08_AIR         2       /* in the air */
+#define D08_LAND        3       /* the landing */
+
+/* routine_no[3], Damage_12000 */
+#define D12_SLIDE       1       /* slide back, raising dust */
+#define D12_SLIDE2      2       /* slide back */
+
+/* routine_no[3], Damage_14000 */
+#define D14_NEXT        1       /* start the next animation */
+#define D14_FLIGHT      2       /* the first flight */
+#define D14_LANDED      3       /* land from the blow */
+
+/* routine_no[3], Damage_16000 */
+#define D16_NEXT        1       /* start the next animation */
+#define D16_FLIGHT      2       /* the first flight */
+#define D16_LANDED      3       /* land from the blow */
+
+/* routine_no[3], Damage_17000 */
+#define D17_NEXT        1       /* start the next animation */
+#define D17_AIR         2       /* in the air */
+#define D17_LAND        3       /* the landing */
+
+/* routine_no[3], Damage_18000 */
+#define D18_NEXT        1       /* start the next animation */
+#define D18_AIR         2       /* in the air */
+#define D18_LANDED      3       /* land from the blow */
+
+/* routine_no[3], Damage_19000 */
+#define D19_NEXT        1       /* start the next animation */
+#define D19_AIR         2       /* in the air */
+#define D19_LANDED      3       /* land from the blow */
+
+/* routine_no[3], Damage_20000 */
+#define D20_NEXT        1       /* start the next animation */
+#define D20_AIR         2       /* in the air */
+#define D20_LANDED      3       /* land from the blow */
+
+/* routine_no[3], Damage_21000 */
+#define D21_NEXT        1       /* start the next animation */
+#define D21_FLIGHT      2       /* the first flight */
+#define D21_LANDED      3       /* land from the blow */
+
+/* routine_no[3], Damage_23000 */
+#define D23_NEXT        1       /* start the next animation */
+#define D23_AIR         2       /* in the air */
+#define D23_LANDED      3       /* land from the blow */
+
+/* routine_no[3], Damage_24000 */
+#define D24_SLIDE       1       /* slide back */
+#define D24_SLIDE2      2       /* slide back */
+
+/* routine_no[3], Damage_25000 */
+#define D25_RUN         1       /* run the animation */
+
+/* routine_no[3], Damage_26000 */
+#define D26_NEXT        1       /* start the next animation */
+#define D26_AIR         2       /* in the air */
+#define D26_LANDED      3       /* land from the blow */
+
+/* routine_no[3], Damage_27000 */
+#define D27_NEXT        1       /* start the next animation */
+
+/* routine_no[3], Damage_28000 */
+#define D28_AIR         1       /* in the air */
+#define D28_LANDED      2       /* land from the blow */
+
+/* routine_no[3], Damage_29000 */
+#define D29_NEXT        1       /* start the next animation */
+
+/* routine_no[3], Damage_30000 */
+#define D30_NEXT        1       /* start the next animation */
+#define D30_AIR         2       /* in the air */
+#define D30_LANDED      3       /* land from the blow */
+
+/* routine_no[3], Damage_31000 */
+#define D31_NEXT        1       /* start the next animation */
+#define D31_AIR         2       /* in the air */
+#define D31_WAIT        3       /* count down dir_timer */
+
 extern const s16 hissatsu_dageki_00[];
 extern const s16 hissatsu_dageki_01[];
 extern const s16 hissatsu_dageki_02[];
@@ -111,7 +213,7 @@ void Player_damage(PLW* wk) {
     wk->cmd_request = 0;
     wk->hsjp_ok = 0;
     wk->high_jump_flag = 0;
-    if (wk->wu.routine_no[3] == 0) {
+    if (wk->wu.routine_no[3] == RN3_START) {
         get_damage_reaction_data(wk);
         if (wk->wu.dm_koa & 0x980) {
             wk->ukemi_ok_timer = 0;
@@ -135,18 +237,18 @@ void Player_damage(PLW* wk) {
 void Damage_00000(PLW* wk) {
     wk->wu.next_z = 30;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->zuru_timer = 0;
         wk->zuru_ix_counter = 0;
         set_char_move_init(&wk->wu, 1, wk->as->char_ix);
         break;
-    case 1:
+    case D00_END:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 0xFF) {
             wk->wu.routine_no[3]++;
         }
-    case 2:
+    case D00_HOLD:
         break;
     }
 }
@@ -155,32 +257,32 @@ void Damage_00000(PLW* wk) {
 
 void Damage_01000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
-        wk->wu.routine_no[3] = 1;
+    case RN3_START:
+        wk->wu.routine_no[3] = D01_MOVE;
         wk->zuru_timer = 0;
         wk->zuru_ix_counter = 0;
         reset_mvxy_data(&wk->wu);
         set_char_move_init(&wk->wu, 1, wk->as->char_ix);
         break;
-    case 1:
+    case D01_MOVE:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 1) {
             add_mvxy_speed(&wk->wu);
             cal_mvxy_speed(&wk->wu);
         }
         break;
-    case 2:
+    case D01_MOVE2:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 1) {
-            wk->wu.routine_no[3] = 3;
+            wk->wu.routine_no[3] = D01_AIR;
             wk->wu.cg_type = 0;
             add_mvxy_speed(&wk->wu);
         }
         break;
-    case 3:
+    case D01_AIR:
         jumping_union_process(&wk->wu, 4);
         break;
-    case 4:
+    case D01_LAND:
         char_move(&wk->wu);
         break;
     }
@@ -192,12 +294,11 @@ void Damage_01000(PLW* wk) {
 
 
 void Damage_04000(PLW* wk) {
-    s32 z = 0;
-    wk->guard_flag = z;
+    wk->guard_flag = 0;
     wk->guard_chuu = guard_kind[wk->wu.routine_no[2] - 4];
     set_dm_hos_flag_grd(wk);
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.rl_flag = (wk->wu.dm_rl + 1) & 1;
         if ((wk->wu.dm_quake /= 2) < 4) {
@@ -205,17 +306,17 @@ void Damage_04000(PLW* wk) {
         }
         set_char_move_init(&wk->wu, 1, wk->as->char_ix);
         wk->dm_step_tbl = dm_step_data[select_grd_dsd[wk->wu.dm_impact][get_weight_point(&wk->wu)]];
-        wk->zuru_timer = z;
-        wk->zuru_ix_counter = z;
+        wk->zuru_timer = 0;
+        wk->zuru_ix_counter = 0;
         break;
-    case 1:
+    case D04_SLIDE:
         wk->wu.routine_no[3]++;
         setup_smoke_type(wk);
         wk->wu.cmwk[14] = guard_pause_table[0][wk->wu.dm_attlv];
         char_move_wca(&wk->wu);
         add_dm_step_tbl(wk);
         break;
-    case 2:
+    case D04_SLIDE2:
         add_dm_step_tbl(wk);
         if (--wk->wu.cmwk[14] <= 0) {
             wk->wu.routine_no[3]++;
@@ -234,7 +335,7 @@ void Damage_07000(PLW* wk) {
     wk->guard_flag = 0;
     wk->guard_chuu = guard_kind[wk->wu.routine_no[2] - 4];
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.rl_flag = (wk->wu.dm_rl + 1) & 1;
         if ((wk->wu.dm_quake /= 2) < 4) {
@@ -246,19 +347,19 @@ void Damage_07000(PLW* wk) {
         wk->zuru_timer = 0;
         wk->zuru_ix_counter = 0;
         break;
-    case 1:
+    case D07_RUN:
         wk->wu.routine_no[3]++;
         char_move_wca(&wk->wu);
         break;
-    case 2:
+    case D07_AIR:
         jumping_union_process(&wk->wu, 3);
         set_dm_hos_flag_sky(wk);
         wk->wu.cmwk[14]--;
-        if (wk->wu.routine_no[3] != 3) {
+        if (wk->wu.routine_no[3] != D07_LANDED) {
             if (wk->wu.cmwk[14] <= 0) {
-                wk->wu.routine_no[1] = 0;
+                wk->wu.routine_no[1] = PLAYER_NORMAL;
                 wk->wu.routine_no[2] = 38;
-                wk->wu.routine_no[3] = 1;
+                wk->wu.routine_no[3] = D07_RUN;
                 wk->wu.cg_type = 0;
                 wk->wu.cg_next_ix = 0;
                 char_move_wca(&wk->wu);
@@ -267,7 +368,7 @@ void Damage_07000(PLW* wk) {
             wk->wu.cmwk[14] = 1;
         }
         break;
-    case 3:
+    case D07_LANDED:
         wk->wu.routine_no[3]++;
         wk->wu.dead_f = wk->wu.cmwk[14] * 3 / 4;
         if (wk->wu.dead_f <= 0) {
@@ -277,7 +378,7 @@ void Damage_07000(PLW* wk) {
         wk->wu.mvxy.d[0].sp = -wk->wu.mvxy.d[0].sp;
         wk->wu.mvxy.a[1].sp = wk->wu.mvxy.d[1].sp = wk->wu.mvxy.kop[1] = 0;
         wk->wu.dead_f = 0;
-    case 4:
+    case D07_SLIDE:
         cal_mvxy_speed(&wk->wu);
         add_mvxy_speed(&wk->wu);
         set_dm_hos_flag_sky(wk);
@@ -287,7 +388,7 @@ void Damage_07000(PLW* wk) {
             char_move_wca(&wk->wu);
             break;
         }
-    case 5:
+    case D07_END:
         char_move(&wk->wu);
         break;
     }
@@ -301,7 +402,7 @@ void Damage_07000(PLW* wk) {
 void Damage_08000(PLW* wk) {
     wk->guard_flag = 1;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.rl_flag = (wk->wu.dm_rl + 1) & 1;
         set_char_move_init(&wk->wu, 1, wk->as->char_ix);
@@ -309,17 +410,17 @@ void Damage_08000(PLW* wk) {
         wk->zuru_timer = 0;
         wk->zuru_ix_counter = 0;
         break;
-    case 1:
+    case D08_RUN:
         char_move(&wk->wu);
         if (wk->wu.cg_type != 1) {
             break;
         }
         wk->wu.routine_no[3]++;
-    case 2:
+    case D08_AIR:
         jumping_union_process(&wk->wu, 3);
         set_dm_hos_flag_sky(wk);
         break;
-    case 3:
+    case D08_LAND:
         char_move(&wk->wu);
         break;
     }
@@ -333,7 +434,7 @@ void Damage_08000(PLW* wk) {
 void Damage_12000(PLW* wk) {
     set_dm_hos_flag_grd(wk);
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.rl_flag = (wk->wu.dm_rl + 1) & 1;
         wk->dm_ix = wk->as->char_ix + wk->wu.dm_attlv;
@@ -348,7 +449,7 @@ void Damage_12000(PLW* wk) {
             }
         }
         break;
-    case 1:
+    case D12_SLIDE:
         wk->wu.routine_no[3]++;
         setup_smoke_type(wk);
         if (wk->wu.pat_status == 32) {
@@ -362,7 +463,7 @@ void Damage_12000(PLW* wk) {
         char_move_wca((WORK*)wk);
         add_dm_step_tbl(wk);
         break;
-    case 2:
+    case D12_SLIDE2:
         add_dm_step_tbl(wk);
         if (--wk->wu.cmwk[14] <= 0) {
             wk->wu.routine_no[3]++;
@@ -382,7 +483,7 @@ void Damage_12000(PLW* wk) {
 
 void Damage_14000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.dm_rl = ((WORK*)wk->wu.dmg_adrs)->rl_flag;
         wk->wu.rl_flag = (wk->wu.dm_rl + 1) & 1;
@@ -393,14 +494,14 @@ void Damage_14000(PLW* wk) {
         wk->zuru_timer = 0;
         wk->zuru_ix_counter = 0;
         break;
-    case 1:
+    case D14_NEXT:
         wk->wu.routine_no[3]++;
         char_move_wca_init(&wk->wu);
-    case 2:
+    case D14_FLIGHT:
         wk->dm_hos_flag = 1;
         first_TtktV_union(wk, 3, 4);
         break;
-    case 3:
+    case D14_LANDED:
         char_move(&wk->wu);
         buttobi_chakuchi_cg_type_check(wk);
         break;
@@ -411,7 +512,7 @@ void Damage_14000(PLW* wk) {
 
 void Damage_16000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.rl_flag = (wk->wu.dm_rl + 1) & 1;
         set_char_move_init(&wk->wu, 6, wk->as->char_ix);
@@ -420,14 +521,14 @@ void Damage_16000(PLW* wk) {
         cal_initial_speed_y(&wk->wu, buttobi_time_table[wk->as->char_ix][wk->wu.dm_attlv], 0);
         get_sky_dm_timer(wk);
         break;
-    case 1:
+    case D16_NEXT:
         wk->wu.routine_no[3]++;
         char_move_wca_init(&wk->wu);
-    case 2:
+    case D16_FLIGHT:
         wk->dm_hos_flag = 1;
         first_flight_union(wk, 3, 3);
         break;
-    case 3:
+    case D16_LANDED:
         char_move(&wk->wu);
         buttobi_chakuchi_cg_type_check(wk);
         break;
@@ -441,7 +542,7 @@ void Damage_16000(PLW* wk) {
 
 void Damage_17000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.rl_flag = (wk->wu.dm_rl + 1) & 1;
         set_char_move_init(&wk->wu, 6, wk->as->char_ix);
@@ -450,17 +551,17 @@ void Damage_17000(PLW* wk) {
         cal_initial_speed_y(&wk->wu, buttobi_time_table[wk->as->char_ix][wk->wu.dm_attlv], wk->wu.xyz[1].disp.pos);
         get_sky_dm_timer(wk);
         break;
-    case 1:
+    case D17_NEXT:
         wk->wu.routine_no[3]++;
         char_move_wca_init(&wk->wu);
         wk->wu.cmwk[14] = (*(const s16(*)[4])&(damage_pause_table[3]))[wk->wu.dm_attlv];
-    case 2:
+    case D17_AIR:
         jumping_union_process(&wk->wu, 3);
         set_dm_hos_flag_sky(wk);
         if (wk->wu.cg_ja.boix == 0) {
             wk->guard_flag = 0;
         }
-        if (wk->wu.routine_no[3] == 3) {
+        if (wk->wu.routine_no[3] == D17_LAND) {
             wk->guard_flag = 0;
             wk->tsukamarenai_flag = 7;
             combo_rp_clear_check((s8)wk->wu.id);
@@ -474,16 +575,16 @@ void Damage_17000(PLW* wk) {
         if (dm17_to_nm23_flag) {
             if (wk->wu.cmwk[14] <= 0) {
                 if (wk->wu.mvxy.a[1].real.h < -2) {
-                    wk->wu.routine_no[1] = 0;
+                    wk->wu.routine_no[1] = PLAYER_NORMAL;
                     wk->wu.routine_no[2] = 23;
-                    wk->wu.routine_no[3] = 1;
+                    wk->wu.routine_no[3] = D17_NEXT;
                     exset_char_move_init(&wk->wu, wk->wu.now_koc, dm17_to_nm23_change[wk->player_number]);
                 }
             }
         }
         wk->tsukamarenai_flag = 7;
         break;
-    case 3:
+    case D17_LAND:
         char_move(&wk->wu);
         wk->guard_flag = 0;
         break;
@@ -494,7 +595,7 @@ void Damage_17000(PLW* wk) {
 
 void Damage_18000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.rl_flag = (wk->wu.dm_rl + 1) & 1;
         set_char_move_init((WORK*)wk, 6, wk->as->char_ix);
@@ -509,17 +610,17 @@ void Damage_18000(PLW* wk) {
             }
         }
         break;
-    case 1:
+    case D18_NEXT:
         if (setup_kuuchuu_nmdm(wk)) {
             return;
         }
         wk->wu.routine_no[3]++;
         char_move_wca_init((WORK*)wk);
-    case 2:
+    case D18_AIR:
         set_dm_hos_flag_sky(wk);
         first_flight_union(wk, 3, 3);
         break;
-    case 3:
+    case D18_LANDED:
         char_move((WORK*)wk);
         buttobi_chakuchi_cg_type_check(wk);
         break;
@@ -530,7 +631,7 @@ void Damage_18000(PLW* wk) {
 
 void Damage_19000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.dm_rl = ((WORK*)wk->wu.dmg_adrs)->rl_flag;
         wk->wu.rl_flag = (wk->wu.dm_rl + 1) & 1;
@@ -541,17 +642,17 @@ void Damage_19000(PLW* wk) {
         cal_initial_speed_y(&wk->wu, buttobi_time_table[wk->as->char_ix][wk->wu.dm_attlv], 0);
         get_sky_dm_timer(wk);
         break;
-    case 1:
+    case D19_NEXT:
         if (setup_kuuchuu_nmdm(wk)) {
             return;
         }
         wk->wu.routine_no[3]++;
         char_move_wca_init(&wk->wu);
-    case 2:
+    case D19_AIR:
         set_dm_hos_flag_sky(wk);
         first_flight_union(wk, 3, 3);
         break;
-    case 3:
+    case D19_LANDED:
         char_move(&wk->wu);
         buttobi_chakuchi_cg_type_check(wk);
         break;
@@ -562,7 +663,7 @@ void Damage_19000(PLW* wk) {
 
 void Damage_20000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.dm_rl = ((WORK*)wk->wu.dmg_adrs)->rl_flag;
         wk->wu.rl_flag = (wk->wu.dm_rl + 1) & 1;
@@ -572,14 +673,14 @@ void Damage_20000(PLW* wk) {
         check_dmpat_to_dmpat(wk);
         get_sky_dm_timer(wk);
         break;
-    case 1:
+    case D20_NEXT:
         wk->wu.routine_no[3]++;
         char_move_wca_init(&wk->wu);
-    case 2:
+    case D20_AIR:
         set_dm_hos_flag_sky(wk);
         first_flight_union(wk, 3, 4);
         break;
-    case 3:
+    case D20_LANDED:
         char_move(&wk->wu);
         buttobi_chakuchi_cg_type_check(wk);
         break;
@@ -590,7 +691,7 @@ void Damage_20000(PLW* wk) {
 
 void Damage_21000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.dm_rl = ((WORK*)wk->wu.dmg_adrs)->rl_flag;
         wk->wu.rl_flag = (wk->wu.dm_rl + 1) & 1;
@@ -601,14 +702,14 @@ void Damage_21000(PLW* wk) {
         wk->zuru_timer = 0;
         wk->zuru_ix_counter = 0;
         break;
-    case 1:
+    case D21_NEXT:
         wk->wu.routine_no[3]++;
         char_move_wca_init(&wk->wu);
-    case 2:
+    case D21_FLIGHT:
         wk->dm_hos_flag = 1;
         first_TtktV_union(wk, 3, 2);
         break;
-    case 3:
+    case D21_LANDED:
         char_move(&wk->wu);
         buttobi_chakuchi_cg_type_check(wk);
         break;
@@ -619,7 +720,7 @@ void Damage_21000(PLW* wk) {
 
 void Damage_23000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.dm_rl = ((WORK*)wk->wu.dmg_adrs)->rl_flag;
         wk->wu.rl_flag = (wk->wu.dm_rl + 1) & 1;
@@ -629,14 +730,14 @@ void Damage_23000(PLW* wk) {
         check_dmpat_to_dmpat(wk);
         get_sky_dm_timer(wk);
         break;
-    case 1:
+    case D23_NEXT:
         wk->wu.routine_no[3]++;
         char_move_wca_init(&wk->wu);
-    case 2:
+    case D23_AIR:
         set_dm_hos_flag_sky(wk);
         first_flight_union(wk, 3, 2);
         break;
-    case 3:
+    case D23_LANDED:
         char_move(&wk->wu);
         buttobi_chakuchi_cg_type_check(wk);
         break;
@@ -648,7 +749,7 @@ void Damage_23000(PLW* wk) {
 void Damage_24000(PLW* wk) {
     s32 char_ix;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.rl_flag = (wk->wu.dm_rl + 1) & 1;
         wk->dm_step_tbl = dm_step_data[select_hit_dsd[wk->wu.dm_impact][get_weight_point(&wk->wu)]];
@@ -665,13 +766,13 @@ void Damage_24000(PLW* wk) {
     call:
         set_char_move_init(&wk->wu, 1, char_ix);
         break;
-    case 1:
+    case D24_SLIDE:
         wk->wu.routine_no[3]++;
         wk->wu.cmwk[14] = damage_pause_table[0][wk->wu.dm_attlv];
         char_move_wca(&wk->wu);
         add_dm_step_tbl(wk);
         break;
-    case 2:
+    case D24_SLIDE2:
         add_dm_step_tbl(wk);
         if (--wk->wu.cmwk[14] <= 0) {
             wk->wu.routine_no[3]++;
@@ -682,7 +783,7 @@ void Damage_24000(PLW* wk) {
         char_move(&wk->wu);
         if (wk->wu.cg_type == 1) {
             wk->wu.routine_no[2] = 0;
-            wk->wu.routine_no[3] = 1;
+            wk->wu.routine_no[3] = D24_SLIDE;
         }
         break;
     }
@@ -694,7 +795,7 @@ void Damage_25000(PLW* wk) {
     s16 i;
     s16 hok;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         set_char_move_init((WORK*)wk, 1, wk->as->char_ix);
         wk->py->flag = 0;
@@ -705,7 +806,7 @@ void Damage_25000(PLW* wk) {
         check_em_tk_power_off(wk, (PLW*)wk->wu.target_adrs);
         grade_add_em_stun((wk->wu.id + 1) & 1);
         break;
-    case 1:
+    case D25_RUN:
         if ((pcon_dp_flag != 0) && (wk->py->time > 48)) {
             wk->py->time = 48;
         }
@@ -726,7 +827,7 @@ void Damage_25000(PLW* wk) {
 
 void Damage_26000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         set_char_move_init(&wk->wu, 6, wk->as->char_ix);
         buttobi_add_y_check(wk);
@@ -746,17 +847,17 @@ void Damage_26000(PLW* wk) {
         }
         get_sky_dm_timer(wk);
         break;
-    case 1:
+    case D26_NEXT:
         wk->wu.routine_no[3]++;
         char_move_wca_init(&wk->wu);
-    case 2:
+    case D26_AIR:
         set_dm_hos_flag_sky(wk);
         first_flight_union(wk, 3, 3);
-        if (wk->wu.routine_no[3] == 3 && wk->player_number == PL_ELENA) {
+        if (wk->wu.routine_no[3] == D26_LANDED && wk->player_number == PL_ELENA) {
             wk->wu.rl_flag = (wk->wu.rl_flag + 1) & 1;
         }
         break;
-    case 3:
+    case D26_LANDED:
         char_move(&wk->wu);
         buttobi_chakuchi_cg_type_check(wk);
         break;
@@ -767,7 +868,7 @@ void Damage_26000(PLW* wk) {
 
 void Damage_27000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->dm_ix = wk->as->char_ix + wk->wu.dm_attlv;
         set_char_move_init(&wk->wu, 1, wk->dm_ix);
@@ -776,7 +877,7 @@ void Damage_27000(PLW* wk) {
         wk->zuru_timer = 0;
         wk->zuru_ix_counter = 0;
         break;
-    case 1:
+    case D27_NEXT:
         wk->wu.routine_no[3]++;
         char_move_wca_init(&wk->wu);
     default:
@@ -790,7 +891,7 @@ void Damage_27000(PLW* wk) {
 
 void Damage_28000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         set_char_move_init(&wk->wu, 6, wk->as->char_ix);
         buttobi_add_y_check(wk);
@@ -798,11 +899,11 @@ void Damage_28000(PLW* wk) {
         cal_initial_speed_y(&wk->wu, buttobi_time_table[wk->as->char_ix][wk->wu.dm_attlv], wk->wu.xyz[1].disp.pos);
         get_sky_dm_timer(wk);
         break;
-    case 1:
+    case D28_AIR:
         set_dm_hos_flag_sky(wk);
         first_flight_union(wk, 2, 3);
         break;
-    case 2:
+    case D28_LANDED:
         char_move(&wk->wu);
         buttobi_chakuchi_cg_type_check(wk);
         break;
@@ -815,7 +916,7 @@ void Damage_29000(PLW* wk) {
     PLW* twk = (PLW*)wk->wu.target_adrs;
     const s16* datadrs;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.dm_rl = twk->wu.rl_flag;
         if (wk->dm_point > 2) {
             wk->wu.routine_no[2] = wk->as->data_ix;
@@ -841,7 +942,7 @@ void Damage_29000(PLW* wk) {
         wk->wu.cg_ja = wk->wu.hit_ix_table[wk->wu.cg_hit_ix];
         set_jugde_area(&wk->wu);
         break;
-    case 1:
+    case D29_NEXT:
         wk->wu.routine_no[2] = wk->as->data_ix;
         wk->wu.routine_no[3]++;
         if (wk->wu.routine_no[2] == 18) {
@@ -866,7 +967,7 @@ void Damage_29000(PLW* wk) {
 
 void Damage_30000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.dm_rl = ((WORK*)wk->wu.dmg_adrs)->rl_flag;
         wk->wu.rl_flag = (wk->wu.dm_rl + 1) & 1;
@@ -876,20 +977,20 @@ void Damage_30000(PLW* wk) {
         setup_butt_own_data(&wk->wu);
         cal_initial_speed_y(&wk->wu, buttobi_time_table[wk->as->char_ix][wk->wu.dm_attlv], 0);
         return;
-    case 1:
+    case D30_NEXT:
         if (setup_kuuchuu_nmdm(wk)) {
             return;
         }
         wk->wu.routine_no[3]++;
         char_move_wca_init(&wk->wu);
-    case 2:
+    case D30_AIR:
         set_dm_hos_flag_sky(wk);
         first_flight_union(wk, 3, 3);
-        if (wk->wu.routine_no[3] == 3 || !wk->hos_fi_flag) {
+        if (wk->wu.routine_no[3] == D30_LANDED || !wk->hos_fi_flag) {
             return;
         }
         wk->wu.routine_no[2] = 18;
-        wk->wu.routine_no[3] = 1;
+        wk->wu.routine_no[3] = D30_NEXT;
         set_char_move_init(&wk->wu, 6, wk->as->data_ix);
         wk->wu.dm_butt_type++;
         setup_butt_own_data(&wk->wu);
@@ -907,7 +1008,7 @@ void Damage_30000(PLW* wk) {
         effect_I3_init(&wk->wu, 1);
         subtract_cu_vital(wk);
         break;
-    case 3:
+    case D30_LANDED:
         char_move(&wk->wu);
         buttobi_chakuchi_cg_type_check(wk);
         return;
@@ -918,7 +1019,7 @@ void Damage_30000(PLW* wk) {
 
 void Damage_31000(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.dm_rl = ((WORK*)wk->wu.dmg_adrs)->rl_flag;
         wk->wu.rl_flag = (wk->wu.dm_rl + 1) & 1;
@@ -929,13 +1030,13 @@ void Damage_31000(PLW* wk) {
         setup_butt_own_data(&wk->wu);
         get_sky_dm_timer(wk);
         break;
-    case 1:
+    case D31_NEXT:
         wk->wu.routine_no[3]++;
         char_move_wca_init(&wk->wu);
-    case 2:
+    case D31_AIR:
         set_dm_hos_flag_sky(wk);
         first_flight_union(wk, 3, 3);
-        if (wk->wu.routine_no[3] != 3) {
+        if (wk->wu.routine_no[3] != D31_WAIT) {
             return;
         }
         wk->wu.dir_timer = 10;
@@ -943,7 +1044,7 @@ void Damage_31000(PLW* wk) {
         wk->wu.cg_ja = wk->wu.hit_ix_table[1];
         set_jugde_area(&wk->wu);
         break;
-    case 3:
+    case D31_WAIT:
         if (wk->wu.dir_timer & 1) {
             char_move(&wk->wu);
         }
@@ -957,7 +1058,7 @@ void Damage_31000(PLW* wk) {
         wk->wu.cg_wca_ix++;
         char_move_wca(&wk->wu);
         wk->wu.routine_no[2] = 18;
-        wk->wu.routine_no[3] = 2;
+        wk->wu.routine_no[3] = D31_AIR;
         setup_butt_own_data(&wk->wu);
         cal_initial_speed_y(&wk->wu, buttobi_time_table[wk->as->char_ix][wk->wu.dm_attlv], wk->wu.xyz[1].disp.pos);
         get_sky_dm_timer(wk);
@@ -1059,7 +1160,7 @@ void buttobi_chakuchi_cg_type_check(PLW* wk) {
         if (wk->ukemi_success && (wk->dead_flag == 0) && (wk->py->flag == 0) && (wk->wu.vital_new > 0) &&
             (pcon_dp_flag == 0)) {
             wk->wu.routine_no[2] = oki_select_table2[(wk->wu.rl_flag * 2) + wk->wu.rl_waza];
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[3] = RN3_START;
             add_sp_arts_gauge_ukemi(wk);
             grade_add_quick_stand(wk->wu.id);
         }
@@ -1350,7 +1451,7 @@ s32 setup_kuzureochi(PLW* wk) {
     if (wk->wu.vital_new >= 0) {
         return 0;
     }
-    wk->wu.routine_no[1] = 1;
+    wk->wu.routine_no[1] = PLAYER_DAMAGE;
     wk->wu.routine_no[2] = 0;
     wk->wu.routine_no[3] = 1;
     wk->zuru_timer = 0;

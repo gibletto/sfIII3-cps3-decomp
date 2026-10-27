@@ -1,5 +1,8 @@
 /*
- * EFFB0_TBL.C  game tables
+ * EFFB0_TBL.C  ending scene twinkle tables
+ *
+ * effb0_data_tbl gives the eight positions the twinkles appear at and effb0_timer_tbl the
+ * random waits between them. Read by EFFB0.C, the ending scene twinkles.
  */
 
 #include "types.h"

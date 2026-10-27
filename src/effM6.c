@@ -35,17 +35,23 @@
 #include "sc_sub_2.h"
 #include "EFFM7.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* show and start the running pattern */
+#define R0_MOVE         1       /* follow the vehicle until it stops */
+#define R0_CLOSE        2       /* closing pattern, then hide */
+#define R0_END          3       /* hidden for a frame */
+
 
 
 void effect_M6_move(WORK_Other* ewk) {
     WORK_Other* oya = (WORK_Other*)ewk->my_master;
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, 0x69);
         break;
-    case 1:
+    case R0_MOVE:
         if (!EXE_flag && !Game_pause) {
             if (oya->wu.routine_no[0] >= 2) {
                 ewk->wu.routine_no[0]++;
@@ -58,7 +64,7 @@ void effect_M6_move(WORK_Other* ewk) {
         suzi_sync_pos_set(ewk);
         sort_push_request(&ewk->wu);
         break;
-    case 2:
+    case R0_CLOSE:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             if (ewk->wu.cg_type == 1) {
@@ -70,7 +76,7 @@ void effect_M6_move(WORK_Other* ewk) {
         suzi_sync_pos_set(ewk);
         sort_push_request(&ewk->wu);
         break;
-    case 3:
+    case R0_END:
         ewk->wu.routine_no[0]++;
         break;
     default:

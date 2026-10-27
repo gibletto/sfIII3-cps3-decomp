@@ -1,5 +1,9 @@
 /*
- * EFFD0_TBL.C  game tables
+ * EFFD0_TBL.C  bouncing thrown object arcs
+ *
+ * effd0_data_tbl gives the speeds and accelerations of each arc of the thrown object and
+ * effd0_conter the time of each arc. Read by EFFD0.C, the thrown object that bounces along the
+ * floor.
  */
 
 #include "types.h"

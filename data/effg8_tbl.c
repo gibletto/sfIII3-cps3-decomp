@@ -1,5 +1,8 @@
 /*
- * EFFG8_TBL.C  game tables
+ * EFFG8_TBL.C  finish-screen sparkle table (effect G8)
+ *
+ * effg8_sp_tbl has 28 rows of x speed, x acceleration, y speed and y acceleration, one picked
+ * for each sparkle when it starts. Read by EFFG8.C.
  */
 
 #include "types.h"

@@ -18,13 +18,21 @@
 #include "effect_2.h"
 #include "EFF70.h"
 
+/* routine_no[0] */
+#define R0_WAIT         0       /* wait dir_timer, then appear */
+#define R0_ANIM         1       /* play the face animation */
+#define R0_STAY         2       /* until both players have chosen */
+#define R0_PAUSE        3       /* wait dir_timer before shrinking */
+#define R0_SHRINK       4       /* shrink away */
+#define R0_KILL         99      /* (default) put the work back */
+
 void effect_70_move(WORK_Other* ewk) {
     if (Suicide[0] == 1) {
-        ewk->wu.routine_no[0] = 99;
+        ewk->wu.routine_no[0] = R0_KILL;
         ewk->wu.disp_flag = 0;
     } else {
         switch (ewk->wu.routine_no[0]) {
-        case 0:
+        case R0_WAIT:
             if (--ewk->wu.dir_timer == 0) {
                 ewk->wu.routine_no[0]++;
                 ewk->wu.disp_flag = 1;
@@ -36,19 +44,17 @@ void effect_70_move(WORK_Other* ewk) {
                 sort_push_request4(&ewk->wu);
             }
             break;
-        case 1:
+        case R0_ANIM:
             char_move(&ewk->wu);
             if (ewk->wu.cg_type) {
-                s32 kind;
                 Complete_Face--;
                 ewk->wu.routine_no[0]++;
                 ewk->wu.char_index = 0;
-                kind = 0;
-                set_char_move_init2(&ewk->wu, kind, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
+                set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
             }
             sort_push_request4(&ewk->wu);
             /* fallthrough */
-        case 2:
+        case R0_STAY:
             if (Play_Type == 1) {
                 s16* complete;
                 s32 mask;
@@ -61,7 +67,7 @@ void effect_70_move(WORK_Other* ewk) {
             }
             sort_push_request4(&ewk->wu);
             break;
-        case 3:
+        case R0_PAUSE:
             if (--ewk->wu.dir_timer == 0) {
                 ewk->wu.routine_no[0]++;
                 ewk->wu.my_mr_flag = 1;
@@ -71,7 +77,7 @@ void effect_70_move(WORK_Other* ewk) {
             }
             sort_push_request4(&ewk->wu);
             break;
-        case 4:
+        case R0_SHRINK:
             if ((ewk->wu.my_mr.size.x -= *(s16*)((u8*)ewk + 124)) <= 0) {
                 ewk->wu.my_mr.size.x = 0;
             }
@@ -102,8 +108,8 @@ s32 effect_70_init(s16 id) {
     }
     ewk = (WORK_Other*)frw[ix];
     Setup_Eff70(&ewk->wu);
-    ewk->wu.xyz[0].disp.pos = Face_Pos_Data[id][0] + 512;
-    ewk->wu.xyz[1].disp.pos = Face_Pos_Data[id][1] + 0;
+    ewk->wu.xyz[0].disp.pos = Face_Pos_Data[id][SEL_POS_X] + 512;
+    ewk->wu.xyz[1].disp.pos = Face_Pos_Data[id][SEL_POS_Y] + 0;
     ewk->wu.xyz[2].disp.pos = 62;
     ewk->wu.dir_step = id;
     ewk->wu.dir_timer = 10;

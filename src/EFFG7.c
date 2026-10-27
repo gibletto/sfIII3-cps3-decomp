@@ -18,20 +18,25 @@
 #include "aboutspr.h"
 #include "EFFG7.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* start pattern 51 */
+#define R0_MOVE         1       /* play it once */
+#define R0_KILL         99      /* (default) put the work back */
+
 
 
 void effect_G7_move(WORK_Other* ewk) {
     if (ewk->wu.old_rno[0] < end_w.r_no_2) {
-        ewk->wu.routine_no[0] = 99;
+        ewk->wu.routine_no[0] = R0_KILL;
     }
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init2(&ewk->wu, 0, 51, 1, 0);
         disp_pos_trans_entry(ewk);
         break;
-    case 1:
+    case R0_MOVE:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
             ewk->wu.routine_no[0]++;

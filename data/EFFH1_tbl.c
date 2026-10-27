@@ -1,5 +1,8 @@
 /*
- * EFFH1_TBL.C  game tables
+ * EFFH1_TBL.C  ending falling objects of effect H1
+ *
+ * effh1_data_tbl gives the eight objects { start x, start y, priority, pattern, first delay };
+ * effh1_wait_timer is the random wait before objects 0-4 fall again. Read by EFFH1.C.
  */
 
 #include "types.h"

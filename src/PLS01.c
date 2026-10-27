@@ -26,6 +26,7 @@
 #include "HITCHECK.h"
 #include "Grade.h"
 #include "PLS01.h"
+#include "cmd_data.h"
 
 
 
@@ -49,7 +50,7 @@ void check_my_tk_power_off(PLW* wk) {
             wk->tk_kizetsu = 0;
         }
     } else if (wk->wu.old_rno[1] == 3) {
-        if (wk->wu.routine_no[1] == 0 && wk->wu.routine_no[2] < 0x33 && wk->wu.routine_no[2] > 0x2E) {
+        if (wk->wu.routine_no[1] == PLAYER_NORMAL && wk->wu.routine_no[2] < 0x33 && wk->wu.routine_no[2] > 0x2E) {
         }
     }
 }
@@ -94,14 +95,14 @@ void set_rl_waza(PLW* wk) {
     s16 v;
     s16 d;
     WORK_Other* p;
-    if (Bonus_Game_Flag != 0x15) {
+    if (Bonus_Game_Flag != BONUS_CAR) {
         goto other;
     }
     if (wk->wu.operator) {
         if (wk->wu.xyz[0].disp.pos < bs2_hosei[0] || wk->wu.xyz[0].disp.pos > bs2_hosei[1]) {
             goto other;
         }
-        if ((v = wk->cp->sw_lvbt & 0xF) && !(v & 3)) {
+        if ((v = wk->cp->sw_lvbt & LEVER_ALL) && !(v & 3)) {
             wk->wu.rl_waza = (v & 8) != 0;
             return;
         }
@@ -126,7 +127,7 @@ other:
 
 s32 check_rl_on_car(PLW* wk) {
     s16 rnum;
-    if (Bonus_Game_Flag != 21) {
+    if (Bonus_Game_Flag != BONUS_CAR) {
         return 0;
     }
     if (wk->wu.operator == 0) {
@@ -199,13 +200,13 @@ s32 check_air_jump(PLW* wk) {
     if (wk->wu.position_y < 48) {
         return 0;
     }
-    if (!(wk->cp->sw_now & 1)) {
+    if (!(wk->cp->sw_now & CMD_LV_UP)) {
         return 0;
     }
-    wk->wu.routine_no[1] = 0;
+    wk->wu.routine_no[1] = PLAYER_NORMAL;
     wk->wu.routine_no[2] = 53;
-    wk->wu.routine_no[3] = 0;
-    wk->jpdir = 0;
+    wk->wu.routine_no[3] = RN3_START;
+    wk->jpdir = LVDIR_NEUTRAL;
     grade_add_command_waza(wk->wu.id);
     return 1;
 }
@@ -229,10 +230,10 @@ s32 check_sankaku_tobi(PLW* wk) {
     if (!(wk->micchaku_flag & wk->cp->sw_lvbt >> 2)) {
         return 0;
     }
-    wk->wu.routine_no[1] = 0;
+    wk->wu.routine_no[1] = PLAYER_NORMAL;
     wk->wu.routine_no[2] = 52;
-    wk->wu.routine_no[3] = 0;
-    wk->jpdir = 0;
+    wk->wu.routine_no[3] = RN3_START;
+    wk->jpdir = LVDIR_NEUTRAL;
     grade_add_command_waza(wk->wu.id);
     return 1;
 }
@@ -296,7 +297,7 @@ s32 check_F_R_dash(PLW* wk) {
     s16* q;
     s16 num;
     s16 rnum;
-    if (Bonus_Game_Flag == 21 && wk->bs2_on_car) {
+    if (Bonus_Game_Flag == BONUS_CAR && wk->bs2_on_car) {
         goto ok;
     }
     if (wk->wu.xyz[1].disp.pos > 0) {
@@ -313,22 +314,22 @@ loop:
         if (wk->spmv_ng_flag & 4) {
             break;
         }
-        wk->wu.routine_no[1] = 0;
+        wk->wu.routine_no[1] = PLAYER_NORMAL;
         wk->wu.routine_no[2] = 5;
-        wk->wu.routine_no[3] = 0;
+        wk->wu.routine_no[3] = RN3_START;
         rnum = 1;
         break;
     case 2:
         if (wk->spmv_ng_flag & 8) {
             break;
         }
-        wk->wu.routine_no[1] = 0;
+        wk->wu.routine_no[1] = PLAYER_NORMAL;
         wk->wu.routine_no[2] = 6;
-        wk->wu.routine_no[3] = 0;
+        wk->wu.routine_no[3] = RN3_START;
         rnum = 1;
         break;
     case 3:
-        if (wk->cp->lever_dir < 2) {
+        if (wk->cp->lever_dir < LVDIR_BACK) {
             num = 1;
         } else {
             num = 2;
@@ -351,17 +352,17 @@ s32 check_360_jump(PLW* wk) {
     if (wk->cp->waza_flag[13] == 0) {
         return 0;
     }
-    wk->wu.routine_no[1] = 0;
+    wk->wu.routine_no[1] = PLAYER_NORMAL;
     wk->wu.routine_no[2] = 19;
-    wk->wu.routine_no[3] = 0;
-    wk->jpdir = 0;
+    wk->wu.routine_no[3] = RN3_START;
+    wk->jpdir = LVDIR_NEUTRAL;
     return 1;
 }
 
 
 
 s32 check_jump_ready(PLW* wk) {
-    if (!(wk->cp->sw_new & 1)) {
+    if (!(wk->cp->sw_new & CMD_LV_UP)) {
         return 0;
     }
     if (wk->cp->waza_flag[2] == 0) {
@@ -370,9 +371,9 @@ s32 check_jump_ready(PLW* wk) {
         wk->wu.routine_no[2] = 17;
         grade_add_command_waza(wk->wu.id);
     }
-    wk->wu.routine_no[1] = 0;
-    wk->wu.routine_no[3] = 0;
-    wk->jpdir = 0;
+    wk->wu.routine_no[1] = PLAYER_NORMAL;
+    wk->wu.routine_no[3] = RN3_START;
+    wk->jpdir = LVDIR_NEUTRAL;
     return 1;
 }
 
@@ -382,7 +383,7 @@ s32 check_hijump_only(PLW* wk) {
     if (wk->spmv_ng_flag & 0x20000) {
         return 0;
     }
-    if (!(wk->cp->sw_new & 1)) {
+    if (!(wk->cp->sw_new & CMD_LV_UP)) {
         return 0;
     }
     if (wk->cp->waza_flag[2] == 0) {
@@ -391,10 +392,10 @@ s32 check_hijump_only(PLW* wk) {
     if (wk->wu.xyz[1].disp.pos > 0) {
         return 0;
     }
-    wk->wu.routine_no[1] = 0;
+    wk->wu.routine_no[1] = PLAYER_NORMAL;
     wk->wu.routine_no[2] = 17;
-    wk->wu.routine_no[3] = 0;
-    wk->jpdir = 0;
+    wk->wu.routine_no[3] = RN3_START;
+    wk->jpdir = LVDIR_NEUTRAL;
     grade_add_command_waza(wk->wu.id);
     return 1;
 }
@@ -402,12 +403,12 @@ s32 check_hijump_only(PLW* wk) {
 
 
 s32 check_bend_myself(PLW* wk) {
-    if (!(wk->cp->sw_new & 2)) {
+    if (!(wk->cp->sw_new & CMD_LV_DOWN)) {
         return 0;
     }
-    wk->wu.routine_no[1] = 0;
+    wk->wu.routine_no[1] = PLAYER_NORMAL;
     wk->wu.routine_no[2] = 8;
-    wk->wu.routine_no[3] = 0;
+    wk->wu.routine_no[3] = RN3_START;
     return 1;
 }
 
@@ -416,17 +417,17 @@ s32 check_bend_myself(PLW* wk) {
 s32 check_F_R_walk(PLW* wk) {
     s16 r = 0;
     switch (wk->cp->lever_dir) {
-    case 1:
-        wk->wu.routine_no[1] = 0;
+    case LVDIR_FORWARD:
+        wk->wu.routine_no[1] = PLAYER_NORMAL;
         wk->wu.routine_no[2] = 3;
-        wk->wu.routine_no[3] = 0;
+        wk->wu.routine_no[3] = RN3_START;
         r = 1;
         break;
-    case 2:
-        wk->wu.routine_no[1] = 0;
+    case LVDIR_BACK:
+        wk->wu.routine_no[1] = PLAYER_NORMAL;
         wk->wu.routine_no[2] = 4;
         r = 1;
-        wk->wu.routine_no[3] = 0;
+        wk->wu.routine_no[3] = RN3_START;
         break;
     }
     return r;
@@ -438,19 +439,19 @@ s32 check_F_R_walk(PLW* wk) {
 s32 check_F_R_step(PLW* wk) {
     s16 rnum = 0;
     switch (wk->cp->lever_dir) {
-    case 1:
+    case LVDIR_FORWARD:
         if (!(wk->spmv_ng_flag & 1)) {
-            wk->wu.routine_no[1] = 0;
+            wk->wu.routine_no[1] = PLAYER_NORMAL;
             wk->wu.routine_no[2] = 11;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[3] = RN3_START;
             rnum = 1;
         }
         break;
-    case 2:
+    case LVDIR_BACK:
         if (!(wk->spmv_ng_flag & 2)) {
-            wk->wu.routine_no[1] = 0;
+            wk->wu.routine_no[1] = PLAYER_NORMAL;
             wk->wu.routine_no[2] = 12;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[3] = RN3_START;
             rnum = 1;
         }
         break;
@@ -471,20 +472,20 @@ s32 check_turn_to_back(PLW* wk) {
     if (wk->hurimukenai_flag) {
         return 0;
     }
-    if (Bonus_Game_Flag == 21) {
+    if (Bonus_Game_Flag == BONUS_CAR) {
         if (check_hurimuki_bs2(&wk->wu)) {
             return 0;
         }
     } else if (check_hurimuki(&wk->wu)) {
         return 0;
     }
-    if (wk->cp->sw_lvbt & 2) {
+    if (wk->cp->sw_lvbt & LEVER_DOWN) {
         wk->wu.routine_no[2] = 10;
     } else {
         wk->wu.routine_no[2] = 2;
     }
-    wk->wu.routine_no[1] = 0;
-    wk->wu.routine_no[3] = 0;
+    wk->wu.routine_no[1] = PLAYER_NORMAL;
+    wk->wu.routine_no[3] = RN3_START;
     wk->wu.cg_type = 0;
     wk->hurimukenai_flag = 1;
     return 1;
@@ -509,12 +510,12 @@ s32 check_hurimuki(WORK* wk) {
 s32 check_walking_lv_dir(PLW* wk) {
     s16 rnum = 0;
     switch (wk->cp->lever_dir) {
-    case 1:
+    case LVDIR_FORWARD:
         if (wk->wu.routine_no[2] != 3) {
             rnum = 1;
         }
         break;
-    case 2:
+    case LVDIR_BACK:
         if (wk->wu.routine_no[2] != 4) {
             rnum = 1;
         }
@@ -529,8 +530,8 @@ s32 check_walking_lv_dir(PLW* wk) {
         } else {
             wk->wu.routine_no[2] = 9;
         }
-        wk->wu.routine_no[1] = 0;
-        wk->wu.routine_no[3] = 0;
+        wk->wu.routine_no[1] = PLAYER_NORMAL;
+        wk->wu.routine_no[3] = RN3_START;
     }
     return rnum;
 }
@@ -541,12 +542,12 @@ s32 check_walking_lv_dir(PLW* wk) {
 s32 check_walking_lv_dir2(PLW* wk) {
     s16 rnum = 0;
     switch (wk->cp->lever_dir) {
-    case 1:
+    case LVDIR_FORWARD:
         if (wk->wu.routine_no[2] != 11) {
             rnum = 1;
         }
         break;
-    case 2:
+    case LVDIR_BACK:
         if (wk->wu.routine_no[2] != 12) {
             rnum = 1;
         }
@@ -561,8 +562,8 @@ s32 check_walking_lv_dir2(PLW* wk) {
         } else {
             wk->wu.routine_no[2] = 9;
         }
-        wk->wu.routine_no[1] = 0;
-        wk->wu.routine_no[3] = 0;
+        wk->wu.routine_no[1] = PLAYER_NORMAL;
+        wk->wu.routine_no[3] = RN3_START;
     }
     return rnum;
 }
@@ -570,12 +571,12 @@ s32 check_walking_lv_dir2(PLW* wk) {
 
 
 s32 check_stand_up(PLW* wk) {
-    if (wk->cp->sw_new & 2) {
+    if (wk->cp->sw_new & CMD_LV_DOWN) {
         return 0;
     }
-    wk->wu.routine_no[1] = 0;
+    wk->wu.routine_no[1] = PLAYER_NORMAL;
     wk->wu.routine_no[2] = 7;
-    wk->wu.routine_no[3] = 0;
+    wk->wu.routine_no[3] = RN3_START;
     return 1;
 }
 
@@ -585,15 +586,15 @@ s32 check_defense_lever(PLW* wk) {
     if (!check_em_catt(wk)) {
         return 0;
     }
-    if (wk->cp->sw_new & 2) {
+    if (wk->cp->sw_new & CMD_LV_DOWN) {
         wk->wu.routine_no[2] = 29;
     } else if (check_attbox_dir(wk)) {
         wk->wu.routine_no[2] = 28;
     } else {
         wk->wu.routine_no[2] = 27;
     }
-    wk->wu.routine_no[1] = 0;
-    wk->wu.routine_no[3] = 0;
+    wk->wu.routine_no[1] = PLAYER_NORMAL;
+    wk->wu.routine_no[3] = RN3_START;
     return 1;
 }
 
@@ -609,7 +610,7 @@ s32 check_em_catt(PLW* wk) {
     if ((rlf = (wk->wu.rl_flag + em->wu.rl_flag) & 1) == 0) {
         return 0;
     }
-    if (wk->cp->lever_dir != 2 || wk->cp->sw_new & 1) {
+    if (wk->cp->lever_dir != LVDIR_BACK || wk->cp->sw_new & CMD_LV_UP) {
         return 0;
     }
     xd = wk->wu.xyz[0].disp.pos - em->wu.xyz[0].disp.pos;
@@ -653,7 +654,7 @@ s32 check_defense_kind(PLW* wk) {
     u16 rnum = 0;
     switch (wk->wu.routine_no[2]) {
     case 27:
-        if (wk->cp->sw_new & 2) {
+        if (wk->cp->sw_new & CMD_LV_DOWN) {
             rnum = 3;
         } else if (chcgp_hos[wk->player_number]) {
             if (check_attbox_dir(wk)) {
@@ -662,7 +663,7 @@ s32 check_defense_kind(PLW* wk) {
         }
         break;
     case 28:
-        if (wk->cp->sw_new & 2) {
+        if (wk->cp->sw_new & CMD_LV_DOWN) {
             rnum = 3;
         } else if (chcgp_hos[wk->player_number]) {
             if (check_attbox_dir(wk) == 0) {
@@ -671,7 +672,7 @@ s32 check_defense_kind(PLW* wk) {
         }
         break;
     case 29:
-        if (!(wk->cp->sw_new & 2)) {
+        if (!(wk->cp->sw_new & CMD_LV_DOWN)) {
             if (check_attbox_dir(wk)) {
                 rnum = 2;
             } else {
@@ -701,7 +702,7 @@ s16 num;
     add_mvxy_speed(wk);
     cal_mvxy_speed(wk);
     char_move(wk);
-    if ((Bonus_Game_Flag == 21) && (wk->operator != 0)) {
+    if ((Bonus_Game_Flag == BONUS_CAR) && (wk->operator != 0)) {
         if (saishin_bs2_area_car((PLW*)wk) != 0) {
             goto ground;
         }
@@ -757,10 +758,10 @@ s32 check_ashimoto(PLW* wk) {
     if (check_floor(wk) == 0) {
         return 0;
     }
-    wk->wu.routine_no[1] = 0;
+    wk->wu.routine_no[1] = PLAYER_NORMAL;
     wk->wu.routine_no[2] = 54;
-    wk->wu.routine_no[3] = 0;
-    wk->jpdir = 0;
+    wk->wu.routine_no[3] = RN3_START;
+    wk->jpdir = LVDIR_NEUTRAL;
     return 1;
 }
 
@@ -786,8 +787,8 @@ s32 check_ashimoto_ex(PLW* wk) {
     if (check_floor_2(wk) == 0) {
         return 0;
     }
-    wk->wu.routine_no[1] = 0;
+    wk->wu.routine_no[1] = PLAYER_NORMAL;
     wk->wu.routine_no[2] = 55;
-    wk->wu.routine_no[3] = 0;
+    wk->wu.routine_no[3] = RN3_START;
     return 1;
 }

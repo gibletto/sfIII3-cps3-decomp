@@ -83,6 +83,43 @@
 #include "sel_pl.h"
 #include "fighter.h"
 
+/* Deley_Shot_No[pl]: the button delay in Deley_Shot_Sub */
+#define DELAY_NONE      0       /* until a button is pressed */
+#define DELAY_GATHER    1       /* gather buttons for Deley_Shot_Timer frames */
+
+/* Auto_No[pl]: the cursor auto-repeat */
+#define AUTO_IDLE       0       /* until the lever is held */
+#define AUTO_REPEAT     1       /* repeat the cursor move while it stays held */
+
+/* Face_No[1]: the face panel move (Move_Face_BG) */
+#define FACE_MOVE_IDLE  0       /* until a move is requested */
+#define FACE_MOVING     1       /* (default) until the move is done */
+
+/* Select_Status[0]: who is playing; Select_Status[1]: who has chosen a super art (bits) */
+#define SEL_1P          1       /* player 1 */
+#define SEL_2P          2       /* player 2 */
+#define SEL_BOTH        3       /* both players */
+
+/* SP_No[pl][0]: a player's select routine (Sel_PL_Jmp_Tbl) */
+#define SP_INIT         0       /* Sel_PL_1st: set up the cursor */
+#define SP_WAIT         1       /* Sel_PL_2nd: until the select starts */
+#define SP_CHAR         2       /* Sel_PL_3rd: choose a character */
+#define SP_ARTS_WAIT    3       /* Sel_PL_4th: until the super art select opens */
+#define SP_ARTS         4       /* Sel_PL_5th: choose a super art */
+#define SP_DONE         5       /* Sel_PL_6th: done */
+
+/* Face_No[0]: the face panel routine (Face_Tbl) */
+#define FACE_DONE       3       /* Face_4th: the face panel is done */
+
+/* Exit_No: the routine after both have chosen (Exit_Tbl) */
+#define EXIT_WAIT       0       /* Exit_1st: until the super arts are chosen */
+#define EXIT_PAUSE      1       /* Exit_2nd: a pause (a versus select skips to EXIT_VS) */
+#define EXIT_CPU        2       /* Exit_3rd: choose the CPU opponent */
+#define EXIT_VS         3       /* Exit_4th: fade to the VS screen */
+#define EXIT_FADE       4       /* Exit_5th: until the fade is done */
+#define EXIT_VS_WAIT    5       /* Exit_6th: show the VS screen for Exit_Timer */
+#define EXIT_DONE       6       /* Exit_7th: set the stage and finish */
+
 u8 SEL_PL_X;  /* 0201701C */
 s16 Play_Type_1st;  /* 0201701E */
 u16 * Demo_Ptr[2];  /* 02017020 */
@@ -157,7 +194,7 @@ void Sel_PL_Cont_1st(void) {
     Select_Timer = 48;
     Unit_Of_Timer = 50;
     Setup_Face_ID();
-    if (Play_Type == 1) {
+    if (Play_Type == PLAY_VS_PLAYER) {
         Play_Type_1st = 99;
     } else {
         Play_Type_1st = Aborigine;
@@ -187,7 +224,7 @@ void Sel_PL_Cont_1st(void) {
 void Sel_PL_Cont_2nd(void) {
     if (--Cover_Timer == 0) {
         S_No++;
-        if (G_No1 == 1) {
+        if (G_No1 == G1_SELECT) {
             Request_E_No = 1;
         }
         Clear_Flash_No();
@@ -203,9 +240,9 @@ void Sel_PL_Cont_3rd(void) {
     if (Switch_Screen_Revival()) {
         S_No++;
         Forbid_Break = 0;
-        if (G_No1 == 1 || !Demo_Flag) {
+        if (G_No1 == G1_SELECT || !Demo_Flag) {
             bgm_request(2);
-            if (E_Number[0][0] != 2 && E_Number[1][0] != 2) {
+            if (E_Number[0][0] != ENTRY_NAME && E_Number[1][0] != ENTRY_NAME) {
                 Ranking_00_6th(0);
             }
         }
@@ -245,7 +282,7 @@ void Setup_FACE_BG(void) {
 
 
 s16 Setup_Face_X(void) {
-    if (Play_Type == 1) {
+    if (Play_Type == PLAY_VS_PLAYER) {
         return 604;
     }
     if (Aborigine == 0) {
@@ -257,7 +294,7 @@ s16 Setup_Face_X(void) {
 
 
 s16 Setup_Face_Y(void) {
-    if (Play_Type == 1) {
+    if (Play_Type == PLAY_VS_PLAYER) {
         return 0;
     }
     if (Aborigine == 0) {
@@ -330,7 +367,7 @@ void Sel_PL_1st(void) {
         Free_Ptr[0] = Voice_Random_Data[1][Rnd];
     }
     if (Sel_PL_Complete[ID]) {
-        SP_No[ID][0] = 3;
+        SP_No[ID][0] = SP_ARTS_WAIT;
         Select_Start[ID] = 3;
         Select_Arts[ID] = 3;
         Stop_Cursor[ID] = 1;
@@ -389,10 +426,10 @@ void Sel_PL_3rd(void) {
         Initialize_EM_Candidate(ID);
         Best_Grade[ID] = -1;
         Result_Timer[ID] = 120;
-        Request_Disp_Rank[ID][0] = -1;
-        Request_Disp_Rank[ID][1] = -1;
-        Request_Disp_Rank[ID][2] = -1;
-        Request_Disp_Rank[ID][3] = -1;
+        Request_Disp_Rank[ID][RANK_SCORE] = -1;
+        Request_Disp_Rank[ID][RANK_WINS] = -1;
+        Request_Disp_Rank[ID][RANK_CPU_GRADE] = -1;
+        Request_Disp_Rank[ID][RANK_GRADE] = -1;
     } else {
         Check_Same_CPU(ID);
     }
@@ -411,7 +448,7 @@ s32 Deley_Shot_Sub(s16 PL_id) {
     lever = Disposal_Of_Diagonal(sw);
     sw = sw & 0x3F0;
     switch (Deley_Shot_No[PL_id]) {
-    case 0:
+    case DELAY_NONE:
         if (sw & 0x3F0) {
             if (sw == 0x150) {
                 return lever | 0x150;
@@ -420,11 +457,11 @@ s32 Deley_Shot_Sub(s16 PL_id) {
                 return sw | lever;
             }
             Color7[PL_id] = sw;
-            Deley_Shot_No[PL_id] = 1;
+            Deley_Shot_No[PL_id] = DELAY_GATHER;
             Deley_Shot_Timer[PL_id] = 3;
         }
         break;
-    case 1:
+    case DELAY_GATHER:
         Color7[PL_id] |= sw;
         if ((Deley_Shot_Timer[PL_id] -= 1) == 0) {
             return lever | Color7[PL_id];
@@ -683,36 +720,36 @@ s16 PL_id;
     }
     sw = Disposal_Of_Diagonal(sw);
     switch (Auto_No[PL_id]) {
-    case 0:
+    case AUTO_IDLE:
         if (sw & 8) {
-            Auto_No[PL_id] = 1;
+            Auto_No[PL_id] = AUTO_REPEAT;
             Auto_Cursor[PL_id] = 8;
             Auto_Timer[PL_id] = Repeat_Time_Data[0];
             Auto_Index[PL_id] = 1;
             break;
         } else if (sw & 4) {
-            Auto_No[PL_id] = 1;
+            Auto_No[PL_id] = AUTO_REPEAT;
             Auto_Cursor[PL_id] = 4;
             Auto_Timer[PL_id] = Repeat_Time_Data[0];
             Auto_Index[PL_id] = 1;
             break;
         } else if (sw & 1) {
-            Auto_No[PL_id] = 1;
+            Auto_No[PL_id] = AUTO_REPEAT;
             Auto_Cursor[PL_id] = 1;
             Auto_Timer[PL_id] = Repeat_Time_Data[0];
             Auto_Index[PL_id] = 1;
             break;
         } else if (sw & 2) {
-            Auto_No[PL_id] = 1;
+            Auto_No[PL_id] = AUTO_REPEAT;
             Auto_Cursor[PL_id] = 2;
             Auto_Timer[PL_id] = Repeat_Time_Data[0];
             Auto_Index[PL_id] = 1;
             break;
         }
         break;
-    case 1:
+    case AUTO_REPEAT:
         if (sw != Auto_Cursor[PL_id]) {
-            Auto_No[PL_id] = 0;
+            Auto_No[PL_id] = AUTO_IDLE;
             break;
         }
         if (Auto_Timer[PL_id] -= 1) {
@@ -752,23 +789,23 @@ s32 Auto_Repeat_Sub_Wife(s16 pl) {
         sw = p2sw_0;
     }
     switch (Auto_No[pl]) {
-    case 0:
+    case AUTO_IDLE:
         if (sw & 1) {
-            Auto_No[pl] = 1;
+            Auto_No[pl] = AUTO_REPEAT;
             Auto_Cursor[pl] = 1;
             Auto_Timer[pl] = Auto_Repeat_Wife_Data[0];
             Auto_Index[pl] = 1;
             break;
         }
         if (sw & 2) {
-            Auto_No[pl] = 1;
+            Auto_No[pl] = AUTO_REPEAT;
             Auto_Cursor[pl] = 2;
             Auto_Timer[pl] = Auto_Repeat_Wife_Data[0];
             Auto_Index[pl] = 1;
             break;
         }
         break;
-    case 1:
+    case AUTO_REPEAT:
         if (sw &= Auto_Cursor[pl]) {
             if (--Auto_Timer[pl] == 0) {
                 Auto_Timer[pl] = Auto_Repeat_Wife_Data[Auto_Index[pl]++];
@@ -783,7 +820,7 @@ s32 Auto_Repeat_Sub_Wife(s16 pl) {
                 }
             }
         } else {
-            Auto_No[pl] = 0;
+            Auto_No[pl] = AUTO_IDLE;
         }
         break;
     }
@@ -1034,8 +1071,8 @@ void sel_pl_face_control(void) {
 
 
 void Face_1st(void) {
-    if (Select_Status[0] == 3) {
-        Face_No[0] = 3;
+    if (Select_Status[0] == SEL_BOTH) {
+        Face_No[0] = FACE_DONE;
     } else {
         Face_No[0] = 1;
     }
@@ -1045,8 +1082,8 @@ void Face_1st(void) {
 
 
 void Face_2nd(void) {
-    if (Select_Status[0] == 3 && Face_MV_Request == 0) {
-        Face_No[0] = 3;
+    if (Select_Status[0] == SEL_BOTH && Face_MV_Request == 0) {
+        Face_No[0] = FACE_DONE;
         Face_MV_Time = 1;
         if (Aborigine == 1) {
             Face_MV_Request = 2;
@@ -1075,7 +1112,7 @@ void Face_2nd(void) {
 
 
 void Face_3rd(void) {
-    if (Select_Status[0] == 3 && Face_MV_Request == 0) {
+    if (Select_Status[0] == SEL_BOTH && Face_MV_Request == 0) {
         Face_No[0]++;
         Face_MV_Time = 1;
         if (Aborigine == 1) {
@@ -1098,7 +1135,7 @@ void Face_4th(void) {}
 
 void Move_Face_BG(void) {
     switch (Face_No[1]) {
-    case 0:
+    case FACE_MOVE_IDLE:
         if (Face_MV_Request) {
             Face_No[1]++;
             Face_Move = Face_MV_Request;
@@ -1107,7 +1144,7 @@ void Move_Face_BG(void) {
         break;
     default:
         if (!(Face_MV_Request = ((u8)Face_Move))) {
-            Face_No[1] = 0;
+            Face_No[1] = FACE_MOVE_IDLE;
         }
         break;
     }
@@ -1207,30 +1244,30 @@ void PL_Sel_5th(void) {}
 
 void Setup_Select_Status(void) {
     if (plw[0].wu.operator) {
-        Select_Status[0] = 1;
+        Select_Status[0] = SEL_1P;
     } else {
         Select_Status[0] = 0;
     }
     if (plw[1].wu.operator) {
-        Select_Status[0] |= 2;
+        Select_Status[0] |= SEL_2P;
     }
     if (Sel_Arts_Complete[0] != -1 && plw[0].wu.operator != 0) {
-        Select_Status[1] = 1;
+        Select_Status[1] = SEL_1P;
     } else {
         Select_Status[1] = 0;
     }
     if (Sel_Arts_Complete[1] != -1 && plw[1].wu.operator != 0) {
-        Select_Status[1] |= 2;
+        Select_Status[1] |= SEL_2P;
     }
 }
 
 
 
 u8 Setup_Aborigine(void) {
-    if (Select_Status[0] == 3) {
+    if (Select_Status[0] == SEL_BOTH) {
         return Aborigine = 153;
     }
-    if (Select_Status[0] == 1) {
+    if (Select_Status[0] == SEL_1P) {
         return Aborigine = 0;
     }
     return Aborigine = 1;
@@ -1405,7 +1442,7 @@ void Exit_1st(void) {
     Order_Timer[8] = 1;
     Exit_No++;
     if (Demo_Flag) {
-        E_No0 = 3;
+        E_No0 = E0_SELECTED;
         E_No1 = 0;
         E_No2 = 0;
         E_No3 = 0;
@@ -1418,8 +1455,8 @@ void Exit_2nd(void) {
     s16 xx;
     Sel_Exit_Flag = 0;
     S_Sub_No = 0;
-    if (Select_Status[0] == 3) {
-        Exit_No = 3;
+    if (Select_Status[0] == SEL_BOTH) {
+        Exit_No = EXIT_VS;
         Battle_Country = Setup_Battle_Country();
         bg_w.stage = Battle_Country;
         bg_w.area = 0;
@@ -1545,7 +1582,7 @@ s16 PL_id;
 {
     u8 xx;
     u8 zz;
-    if (Play_Type == 1) {
+    if (Play_Type == PLAY_VS_PLAYER) {
         return;
     }
     if (Stage_Continue[PL_id] == 0) {
@@ -1585,7 +1622,7 @@ s32 Check_Boss(s16 PL_id) {
 
 /* provisional name */
 void Setup_Play_Type_1st(void) {
-    if (Play_Type == 1) {
+    if (Play_Type == PLAY_VS_PLAYER) {
         Play_Type_1st = 99;
     } else {
         Play_Type_1st = Aborigine;

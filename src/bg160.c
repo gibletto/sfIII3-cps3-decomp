@@ -35,6 +35,10 @@
 #include "ta_sub.h"
 #include "bg160.h"
 
+/* bgw r_no_0 of a layer that follows the camera */
+#define SYNC_INIT       0       /* set up the layer */
+#define SYNC_MOVE       1       /* follow the camera (bg_x_move_check, bg_y_move_check) */
+
 #pragma inline(bg1601, bg1602)
 
 
@@ -93,7 +97,7 @@ void bg1602_init00(void) {
 
 void bg1602_sync_common(void) {
     switch (bgw_ptr->r_no_0) {
-    case 0:
+    case SYNC_INIT:
         bgw_ptr->r_no_0++;
         bgw_ptr->fam_no = 2;
         bgw_ptr->old_pos_x = bgw_ptr->xy[0].disp.pos = bgw_ptr->pos_x_work = 0x200;
@@ -106,7 +110,7 @@ void bg1602_sync_common(void) {
         bgw_ptr->speed_y = 0x10000;
         sync_fam_set3(bgw_ptr->fam_no);
         break;
-    case 1:
+    case SYNC_MOVE:
         bg_x_move_check();
         bg_y_move_check();
         sync_fam_set3(bgw_ptr->fam_no);

@@ -1,5 +1,12 @@
 /*
- * EFF02_TBL.C  game tables
+ * EFF02_TBL.C  hit mark tables
+ *
+ * hmdt has one entry per hit mark number: hit sound, mark, colour, direction, position offset,
+ * screen quake and status flags. hcct gives the mark colours, gqdt the delay and quake index
+ * of each quake number, explem and explem2 the position offsets of marks placed from the
+ * attacker or the target, and hit_mark_dir_table the pattern of each direction. Read by
+ * EFF02.C and EFFA7.C, the hit marks. hit_mark_hosei_table gives the hit mark position of each
+ * attack's mark index, read by HITCHECK.C, the hit detection.
  */
 
 #include "types.h"
@@ -166,6 +173,10 @@ const s16 hcct[5] = {
     8192, 8224, 8224, 8224, 8251,
 };
 
+/*
+ * One row per quake number of a hit (hmdt quake): frames before the screen quake starts,
+ * and the quake_y_index set then.
+ */
 const s16 gqdt[19][2] = {
     { 0, 0 }, { 6, 6 }, { 6, 8 }, { 6, 10 }, { 6, 12 }, { 6, 18 }, { 6, 6 }, { 6, 4 },
     { 6, 2 }, { 6, 4 }, { 6, 6 }, { 6, 4 }, { 6, 8 }, { 6, 6 }, { 6, 8 }, { 6, 10 },

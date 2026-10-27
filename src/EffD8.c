@@ -19,26 +19,34 @@
 #include "effect_2.h"
 #include "EffD8.h"
 
+/* routine_no[0] */
+#define R0_WAIT         0       /* wait for the face screen */
+#define R0_DELAY        1       /* count 10 frames, then appear */
+#define R0_SELECT       2       /* follow the cursor */
+#define R0_DECIDE       3       /* play the decided pattern */
+#define R0_END          4       /* hidden for a frame */
+#define R0_KILL         5       /* (default) put the work back */
+
 
 
 void effect_D8_move(WORK_Other* ewk) {
     s16 offset_x;
     ewk->wu.hit_quake += 1;
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_WAIT:
         if (Complete_Face == 0) {
             ewk->wu.routine_no[0] += 1;
             ewk->wu.dir_timer = 10;
         }
         break;
-    case 1:
+    case R0_DELAY:
         if (--ewk->wu.dir_timer == 0) {
             ewk->wu.routine_no[0] += 1;
             ewk->wu.disp_flag = 1;
             set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         }
         break;
-    case 2:
+    case R0_SELECT:
         if ((ewk->wu.vital_new != Cursor_X[ewk->master_id]) || (ewk->wu.vital_old != Cursor_Y[ewk->master_id])) {
             ewk->wu.vital_new = Cursor_X[ewk->master_id];
             ewk->wu.vital_old = Cursor_Y[ewk->master_id];
@@ -59,7 +67,7 @@ void effect_D8_move(WORK_Other* ewk) {
             char_move(&ewk->wu);
         }
         break;
-    case 3:
+    case R0_DECIDE:
         if (--ewk->wu.dir_timer) {
             char_move(&ewk->wu);
         } else {
@@ -73,7 +81,7 @@ void effect_D8_move(WORK_Other* ewk) {
             set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         }
         break;
-    case 4:
+    case R0_END:
         ewk->wu.routine_no[0] += 1;
         ewk->wu.disp_flag = 0;
         break;
@@ -134,8 +142,8 @@ WORK_Other* ewk;
 s16 offset_x;
 {
     s16 xx = ID_of_Face[Cursor_Y[ewk->master_id]][Cursor_X[ewk->master_id]];
-    ewk->wu.xyz[0].disp.pos = Face_Pos_Data[xx][0] + 512;
-    ewk->wu.xyz[1].disp.pos = Face_Pos_Data[xx][1] + 0;
+    ewk->wu.xyz[0].disp.pos = Face_Pos_Data[xx][SEL_POS_X] + 512;
+    ewk->wu.xyz[1].disp.pos = Face_Pos_Data[xx][SEL_POS_Y] + 0;
 }
 
 

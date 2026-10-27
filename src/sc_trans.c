@@ -372,6 +372,9 @@ s32 ToneDown(s8 tone) {
 }
 
 
+#pragma inline(sc_slot_disp)
+static void sc_slot_disp(const u16* slot) {}
+
 /* provisional name */
 void sc_chr_list_trans(s8 ix) {
     const PAL_BYTE_LIST* entry;
@@ -380,7 +383,7 @@ void sc_chr_list_trans(s8 ix) {
     u16 n;
     u16 i;
     entry = &sc_chr_list_tbl[ix];
-    (void)entry->slot;
+    sc_slot_disp(entry->slot);
     slot = entry->slot;
     src = entry->src;
     n = *slot++;
@@ -676,10 +679,9 @@ void sc_fill_rect(u32 x, u32 y, u16 w, u16 h, u16 code, u16 attr)
     u16 col;
     u16 at;
 
-    row = 0;
     line = (u16 *)(SS_RAM + (u16)x * 4 + ((u16)y << 8));
+    row = 0;
     at = ((code & 0x100) >> 8) | attr;
-    (void)&((WORK*)x)->be_flag;
     for (; row < h; row++) {
         for (col = 0; col < w; col++) {
             line[col * 2] = code;
@@ -687,9 +689,6 @@ void sc_fill_rect(u32 x, u32 y, u16 w, u16 h, u16 code, u16 attr)
         }
         line += 0x80;
     }
-    (void)plw[(row + 0x100) && 0].wu.id;
-    (void)&((WORK*)line)->id;
-    (void)&((WORK*)code)->id;
 }
 
 void Sa_frame_Clear(void)
@@ -869,10 +868,9 @@ void win_mark_put(s16 pl, u16 n, s16 attr) {
 void win_mark_ram_clear(void) {
     u16 i;
     u8* dst;
-    s32 blank = 0xBDC0;
     for (i = 0, dst = &sc_chr_ram[0x200]; i < 8; i++) {
         u32 src;
-        src = (u32)sc_chr_data, sc_trans_src = (u8*)(src + blank);
+        src = (u32)sc_chr_data, sc_trans_src = (u8*)(src + 0xBDC0);
         sc_bak_ptr = dst;
         sc_chr_to_ram(64);
         dst += 64;
@@ -897,7 +895,7 @@ void win_mark_find_put(s16 x, s16 y, s16 pl) {
 s32 win_mark_find(s16 pl) {
     s16 i;
     for (i = 0; i < Battle_Round[Play_Type] + 1; i++) {
-        if (win_type[pl][i] == 3) {
+        if (win_type[pl][i] == WIN_MARK_PERFECT) {
             return i;
         }
     }
@@ -965,7 +963,7 @@ s8 pl;
 
 void player_grade_char_set(pl) s8 pl; {
     u16 grade;
-    if (Play_Type == 0) {
+    if (Play_Type == PLAY_VS_CPU) {
         return;
     }
     grade = grade_get_my_grade(pl);
@@ -989,7 +987,7 @@ void player_face(void) {
     polygon2d_submit_quad(0x03363B00 + My_char[1] * 0xE0 + Player_Color[1] * 32, 0x3FE00, 32, 0, 0, 0);
     sc_ram_to_vram(0, 0, 0);
     sc_ram_to_vram(1, 0, 0);
-    if (Play_Type == 0) {
+    if (Play_Type == PLAY_VS_CPU) {
         return;
     }
     pl = Champion;
@@ -1224,11 +1222,11 @@ void debug_scrfont_view(void) {
     s32 i;
     long j;
     s32 code = 0;
-    if ((p1sw_0 & 0x3F0) == 0xA0) {
-        if ((~p1sw_1 & p1sw_0 & 15) == 1) {
+    if ((p1sw_0 & BUTTON_SHOTS) == (BUTTON_MP | BUTTON_LK)) {
+        if ((~p1sw_1 & p1sw_0 & LEVER_ALL) == LEVER_UP) {
             scrfont_view_attr = scrfont_view_attr + 2;
         }
-        if ((~p1sw_1 & p1sw_0 & 15) == 2) {
+        if ((~p1sw_1 & p1sw_0 & LEVER_ALL) == LEVER_DOWN) {
             scrfont_view_attr -= 2;
         }
         scrfont_view_attr = scrfont_view_attr & 62;

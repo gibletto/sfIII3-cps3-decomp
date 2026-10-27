@@ -1,5 +1,8 @@
 /*
- * EFF84_TBL.C  game tables
+ * EFF84_TBL.C  centre-screen message display times
+ *
+ * Time_Data gives how long each kind of centre-screen message stays up. Read by EFF84.C, the
+ * centre-screen message controller.
  */
 
 #include "types.h"

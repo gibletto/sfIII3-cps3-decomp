@@ -1,5 +1,15 @@
 /*
- * HITCHECK_TBL.C  game tables
+ * HITCHECK_TBL.C  hit judgement and damage index tables
+ *
+ * The 83-entry tables are indexed by damage index (from 32): attr_flame_tbl, attr_thunder_tbl
+ * and attr_freeze_tbl give the fire, electric and ice version of a damage; sky_*, kagami* and
+ * grd_hand_damage_tbl the airborne, kagami and guard-hand versions; hddm_damage_tbl and
+ * trdm_damage_tbl flag head and trunk damage, and ttk_damage_req_tbl the ttk damage request.
+ * Also: Dsas_dir_table (attack directions that change a running defender's reaction),
+ * sel_sp_ch_tbl (normal or special, by move kind), sel_hs_add_tbl (hit stop additions),
+ * rsix_r_table (damage to score index), blocking_term_tbl (parry input windows by attack
+ * attribute), parisucc_pts (parry counter values by play type) and dm_oiuchi_catch (damage
+ * states that a pursuit can catch). Read by HITCHECK.C.
  */
 
 #include "types.h"

@@ -1,5 +1,10 @@
 /*
- * SE_TBL2.C  game tables
+ * SE_TBL2.C  voice replacement tables
+ *
+ * Voice_SE_Data maps sound codes from 0x140 up to the alternate voice set's codes;
+ * Bonus_Voice_Data and Bonus_SE_Voice_Data map sound codes 0x100 - 0x75F to their replacements
+ * during the car bonus stage, one table for each voice type. Read by SE_3.C (Check_Voice_SE,
+ * Check_Bonus_SE).
  */
 
 #include "types.h"

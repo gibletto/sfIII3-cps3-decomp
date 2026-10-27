@@ -1,5 +1,11 @@
 /*
- * SPGAUGE_TBL.C  game tables
+ * SPGAUGE_TBL.C  super art gauge colours and palette fade lists
+ *
+ * sa_time_data_tbl holds the six frames of the gauge's time lettering for each side,
+ * sa_color_data2_tbl the gauge colours and sagauge_colchg_tbl the flash colours of the gauge;
+ * read by SPGAUGE.C. fade_adrs_tbl_0 .. fade_adrs_tbl_35 are the palette lists of the fades
+ * and fade_param_tbl their fade parameters, chosen through fade_data_tbl (SC_DATA3.C); read
+ * by SC_SUB_2.C.
  */
 
 #include "types.h"

@@ -1,5 +1,8 @@
 /*
- * ACTIVE16_TBL.C  game tables
+ * ACTIVE16_TBL.C  CPU active pattern table for player 16 (Chun-Li)
+ *
+ * Pattern16_Tbl lists the Pattern16_nnnn scripts the computer-controlled Chun-Li runs in
+ * active (attacking) mode, indexed by Pattern_Index. Read by ACTIVE16.C (Computer16).
  */
 
 #include "types.h"

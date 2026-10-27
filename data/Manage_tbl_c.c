@@ -1,5 +1,10 @@
 /*
- * MANAGE_TBL_C.C  game tables
+ * MANAGE_TBL_C.C  round and match management tables
+ *
+ * Ball_Perfect_PTS is the bonus for the two perfect results of the ball bonus stage by
+ * Bonus_Stage_Level; Break_Into_Level_Data the super art finishes needed by round count for a
+ * CPU break-in; Game_Manage_7_2_sub0_table, Wins_msg, Win_Record_Erase_msg and Loser_Erase_msg
+ * are the WIN / WINS texts and the blanks that erase them. Read by MANAGE_2.C.
  */
 
 #include "types.h"

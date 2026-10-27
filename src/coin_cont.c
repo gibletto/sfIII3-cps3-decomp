@@ -28,14 +28,14 @@ void Disp_Personal_Count();
 void coin_in_sound_request(void) {
     if (coin_chute1_w.dropped | coin_chute2_w.dropped) {
         if (Demo_Flag == 1) {
-            sound_request(E_No0 == 1 ? 115 : 106);
+            sound_request(E_No0 == E0_TITLE ? 115 : 106);
         }
     }
 }
 
 /* provisional name */
 void Redisp_Continue_Count(s16 pl_id) {
-    if (E_Number[pl_id][0] == 1) {
+    if (E_Number[pl_id][0] == ENTRY_CONTINUE) {
         tilemap_print_string_attr(DE_X[Entry_Mes_Wide[pl_id]] + Entry_Mes_X[pl_id], Text_Page_Y, 0x12, msg_continue);
         Disp_Personal_Count(pl_id, Continue_Count[pl_id]);
     }

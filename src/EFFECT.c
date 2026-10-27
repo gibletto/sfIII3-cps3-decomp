@@ -22,6 +22,7 @@
 #include "aboutspr.h"
 #include "effect_2.h"
 #include "EFFECT.h"
+#include "fighter.h"
 
 u32 frw[128][512];  /* 02028990 */
 u8 frw_tail[4];  /* after frw; nothing refers to it by name or address */
@@ -223,21 +224,19 @@ s16 tid;
         aix = tail_ix[index];
         while (aix != -1) {
             c_addr = (WORK*)frw[aix];
-            if (c_addr->id != tid) {
-                aix = c_addr->before;
-            } else {
+            if (c_addr->id == tid) {
                 break;
             }
+            aix = c_addr->before;
         }
     } else {
         aix = head_ix[index];
         while (aix != -1) {
             c_addr = (WORK*)frw[aix];
-            if (c_addr->id != tid) {
-                aix = c_addr->behind;
-            } else {
+            if (c_addr->id == tid) {
                 break;
             }
+            aix = c_addr->behind;
         }
     }
     return aix;
@@ -435,7 +434,7 @@ s16 wix;
 {
     WORK_Other* tmw;
     s16 i;
-    if (wk->player_number != 0xE) {
+    if (wk->player_number != PL_GOUKI1) {
         for (i = 0; i < 8; i++) {
             if (wk->wu.shell_ix[i] == -1) {
                 break;

@@ -95,6 +95,21 @@
 #include "EFFC1.h"
 #include "PLS02.h"
 
+/* end_w.r_no_0 in normal_ending */
+#define END_INIT        0       /* clear the system and start the character's ending */
+#define END_COVER       1       /* after Cover_Timer, set up the screen and wipe in */
+#define END_REVIVAL     2       /* finish the wipe */
+#define END_PLAY        3       /* the ending, until it ends or is cut */
+#define END_TO_STAFF    4       /* fade out to the staff roll */
+#define END_STAFF_SETUP 5       /* after the fade, set up the staff roll screen */
+#define END_FRAME       6       /* draw the frame */
+#define END_FADE_IN     7       /* fade the staff roll in */
+#define END_FADE_WAIT   8       /* until the fade is done */
+#define END_STAFF       9       /* the staff roll */
+#define END_MUSIC       10      /* fade the music, longer when the name entry was cut short */
+#define END_WAIT        11      /* wait end_w.timer */
+#define END_DONE        12      /* finished */
+
 extern s32 staff_r_no;
 
 /* 02006860 */
@@ -2696,7 +2711,7 @@ void normal_ending(pl_num)
 s16 pl_num;
 {
     switch (end_w.r_no_0) {
-    case 0:
+    case END_INIT:
         end_w.r_no_0 += 1;
         System_all_clear_Wait();
         load_any_color(0x8D);
@@ -2705,7 +2720,7 @@ s16 pl_num;
         end_main_jp[pl_num](pl_num);
         card_win_check(1);
         break;
-    case 1:
+    case END_COVER:
         if (Cover_Timer -= 1) {
             break;
         }
@@ -2721,14 +2736,14 @@ s16 pl_num;
         load_char_gfx(0x9DC8, 1);
         load_char_gfx(0xA0F8, 1);
         break;
-    case 2:
+    case END_REVIVAL:
         if (Switch_Screen_Revival()) {
             end_w.r_no_0 += 1;
             Ignore_Entry[LOSER] = 0;
             Forbid_Break = -1;
         }
         break;
-    case 3:
+    case END_PLAY:
         end_main_move(pl_num);
         card_msg_disp();
         if (end_w.end_flag) {
@@ -2743,7 +2758,7 @@ s16 pl_num;
         }
         Forbid_Break = -1;
         break;
-    case 4:
+    case END_TO_STAFF:
         if (end_no_cut == 0) {
             fadeout_to_staff_roll();
         } else {
@@ -2751,7 +2766,7 @@ s16 pl_num;
         }
         Forbid_Break = -1;
         break;
-    case 5:
+    case END_STAFF_SETUP:
         if (end_fade_complete()) {
             end_w.r_no_0 += 1;
             end_w.r_no_2 += 1;
@@ -2777,30 +2792,30 @@ s16 pl_num;
         }
         Forbid_Break = -1;
         break;
-    case 6:
+    case END_FRAME:
         end_w.r_no_0 += 1;
         end_waku_write(-1);
         break;
-    case 7:
+    case END_FADE_IN:
         end_w.r_no_0 += 1;
         Request_Fade(end_fade_tbl[end_w.type], 0);
         end_no_cut = 1;
         Forbid_Break = -1;
         break;
-    case 8:
+    case END_FADE_WAIT:
         if (end_fade_complete()) {
             end_w.r_no_0 += 1;
             end_no_cut = 0;
         }
         Forbid_Break = -1;
         break;
-    case 9:
+    case END_STAFF:
         Forbid_Break = 0;
         if (staff_roll_main(end_staff_flag)) {
             end_w.r_no_0 += 1;
         }
         break;
-    case 10:
+    case END_MUSIC:
         end_w.r_no_0 += 1;
         if (name_wk[WINNER].timer > 0) {
             name_wk[WINNER].timer = 0;
@@ -2812,7 +2827,7 @@ s16 pl_num;
         end_w.timer = 60;
         bgm_fade_out(0x222);
         break;
-    case 11:
+    case END_WAIT:
         end_w.timer--;
         if (end_w.timer < 0) {
             end_w.r_no_0 += 1;
@@ -2820,7 +2835,7 @@ s16 pl_num;
         }
         Forbid_Break = 0;
         break;
-    case 12:
+    case END_DONE:
         Forbid_Break = 0;
         ending_all_end = 1;
         break;

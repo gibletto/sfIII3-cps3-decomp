@@ -24,17 +24,35 @@
 #include "aboutspr.h"
 #include "eff94.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* show the idle pattern */
+#define R0_MOVE         1       /* run the prop's behaviour */
+#define R0_KILL         99      /* (default) put the work back */
+
+/* routine_no[2], shaking props (eff94_0000, eff94_4000) */
+#define R2_WAIT         0       /* wait for a strong quake */
+#define R2_SHAKE        1       /* start the reaction pattern */
+#define R2_PLAY         2       /* play it, then idle again */
+
+/* routine_no[2], toppling prop (eff94_1000) */
+#define R2_ROCK         1       /* rock; topple when far enough right */
+#define R2_FALL         2       /* fall to the floor */
+#define R2_LAND         3       /* land, then hide and go */
+
+/* routine_no[2], falling prop (index into eff94_2000_jp) */
+#define R2_REST         4       /* short pause before waiting again */
+
 
 
 void effect_94_move(WORK_Other* ewk) {
     void (*const eff94_move_jp[5])(WORK_Other*) = { eff94_0000, eff94_1000, eff94_2000, eff94_3000, eff94_4000 };
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.old_rno[0]);
         break;
-    case 1:
+    case R0_MOVE:
         if (!EXE_flag && !Game_pause && !EXE_obroll) {
             eff94_move_jp[ewk->wu.routine_no[1]](ewk);
         }
@@ -55,19 +73,19 @@ void effect_94_move(WORK_Other* ewk) {
 
 void eff94_0000(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_WAIT:
         if (bg_w.quake_y_index > 3) {
             ewk->wu.routine_no[2]++;
         }
         break;
-    case 1:
+    case R2_SHAKE:
         ewk->wu.routine_no[2]++;
         set_char_move_init(&ewk->wu, 0, ewk->wu.old_rno[2]);
         break;
-    case 2:
+    case R2_PLAY:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
-            ewk->wu.routine_no[2] = 0;
+            ewk->wu.routine_no[2] = R2_WAIT;
             set_char_move_init(&ewk->wu, 0, ewk->wu.old_rno[0]);
         }
         break;
@@ -78,13 +96,13 @@ void eff94_0000(WORK_Other* ewk) {
 
 void eff94_1000(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_WAIT:
         if (bg_w.quake_y_index > 3) {
             ewk->wu.routine_no[2]++;
             set_char_move_init(&ewk->wu, 0, ewk->wu.old_rno[2]);
         }
         break;
-    case 1:
+    case R2_ROCK:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
             if (ewk->wu.xyz[0].disp.pos >= 452) {
@@ -96,11 +114,11 @@ void eff94_1000(WORK_Other* ewk) {
                 ewk->wu.mvxy.d[1].sp = -0x6000;
                 break;
             }
-            ewk->wu.routine_no[2] = 0;
+            ewk->wu.routine_no[2] = R2_WAIT;
             set_char_move_init(&ewk->wu, 0, ewk->wu.old_rno[0]);
         }
         break;
-    case 2:
+    case R2_FALL:
         char_move(&ewk->wu);
         add_x_sub(ewk);
         add_y_sub(ewk);
@@ -111,7 +129,7 @@ void eff94_1000(WORK_Other* ewk) {
             ewk->wu.old_rno[1] = 0;
         }
         break;
-    case 3:
+    case R2_LAND:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
             ewk->wu.routine_no[2]++;
@@ -158,7 +176,7 @@ void eff94_2000_1(WORK_Other* ewk) {
     ewk->wu.disp_flag = 1;
     work = random_16_com();
     if (eff94_2000_1_tbl[work]) {
-        ewk->wu.routine_no[2] = 4;
+        ewk->wu.routine_no[2] = R2_REST;
         ewk->wu.dir_timer = 8;
         return;
     }
@@ -202,7 +220,7 @@ void eff94_2000_3(WORK_Other* ewk) {
 void eff94_2000_4(WORK_Other* ewk) {
     ewk->wu.dir_timer--;
     if (ewk->wu.dir_timer <= 0) {
-        ewk->wu.routine_no[2] = 0;
+        ewk->wu.routine_no[2] = R2_WAIT;
     }
 }
 
@@ -238,30 +256,30 @@ void eff94_3000_0(WORK_Other* ewk) {
 
 
 void eff94_3000_4(WORK_Other* ewk) {
-    ewk->wu.routine_no[0] = 99;
+    ewk->wu.routine_no[0] = R0_KILL;
 }
 
 
 
 void eff94_4000(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_WAIT:
         if (bg_w.quake_y_index > 3) {
             ewk->wu.routine_no[2]++;
         }
         break;
-    case 1:
+    case R2_SHAKE:
         ewk->wu.routine_no[2]++;
         set_char_move_init(&ewk->wu, 0, ewk->wu.old_rno[2]);
         break;
-    case 2:
+    case R2_PLAY:
         char_move(&ewk->wu);
         if ((u8)ewk->wu.cg_type == 9) {
             if (bg_w.quake_y_index > 3) {
-                ewk->wu.routine_no[2] = 1;
+                ewk->wu.routine_no[2] = R2_SHAKE;
             }
         } else if ((u8)ewk->wu.cg_type == 0xFF) {
-            ewk->wu.routine_no[2] = 0;
+            ewk->wu.routine_no[2] = R2_WAIT;
             set_char_move_init(&ewk->wu, 0, ewk->wu.old_rno[0]);
         }
         break;

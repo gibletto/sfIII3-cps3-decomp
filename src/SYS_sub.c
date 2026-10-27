@@ -378,9 +378,9 @@ void challenger_banner_clear(void) {
 
 void Setup_Play_Type(void) {
     if (Operator_Status[0] & 0x7F && Operator_Status[1] & 0x7F) {
-        Play_Type = 1;
+        Play_Type = PLAY_VS_PLAYER;
     } else {
-        Play_Type = 0;
+        Play_Type = PLAY_VS_CPU;
     }
 }
 
@@ -399,7 +399,7 @@ s16 PL_id;
     }
     Present_Data[PL_id].player = Stock_My_char[PL_id];
     Present_Data[PL_id].player_color = Stock_Player_Color[PL_id];
-    Present_Data[PL_id].score = Continue_Coin[PL_id] + Score[PL_id][0];
+    Present_Data[PL_id].score = Continue_Coin[PL_id] + Score[PL_id][SCORE_CPU];
     Present_Data[PL_id].wins = Stock_Win_Record[PL_id];
     Present_Data[PL_id].cpu_grade = judge_final[PL_id][0].vs_cpu_grade[12];
     Present_Data[PL_id].grade = Best_Grade[PL_id];
@@ -408,27 +408,27 @@ s16 PL_id;
     } else {
         Present_Data[PL_id].all_clear = 0;
     }
-    Rank_In[PL_id][0] = Check_Sort_Score(PL_id);
-    if (Rank_In[PL_id][0] >= 0 && Rank_In[PL_id ^ 1][0] >= 0) {
+    Rank_In[PL_id][RANK_SCORE] = Check_Sort_Score(PL_id);
+    if (Rank_In[PL_id][RANK_SCORE] >= 0 && Rank_In[PL_id ^ 1][RANK_SCORE] >= 0) {
         Check_Partners_Rank(0, PL_id);
     }
-    Rank_In[PL_id][1] = Check_Sort_Wins(PL_id);
-    if (Rank_In[PL_id][1] >= 0 && Rank_In[PL_id ^ 1][1] >= 0) {
+    Rank_In[PL_id][RANK_WINS] = Check_Sort_Wins(PL_id);
+    if (Rank_In[PL_id][RANK_WINS] >= 0 && Rank_In[PL_id ^ 1][RANK_WINS] >= 0) {
         Check_Partners_Rank(1, PL_id);
     }
-    Rank_In[PL_id][2] = Check_Sort_CPU_Grade(PL_id);
-    if (Rank_In[PL_id][2]) {
-        Rank_In[PL_id][2] = -1;
+    Rank_In[PL_id][RANK_CPU_GRADE] = Check_Sort_CPU_Grade(PL_id);
+    if (Rank_In[PL_id][RANK_CPU_GRADE]) {
+        Rank_In[PL_id][RANK_CPU_GRADE] = -1;
     } else {
-        Rank_In[PL_id ^ 1][2] = -1;
+        Rank_In[PL_id ^ 1][RANK_CPU_GRADE] = -1;
     }
-    Rank_In[PL_id][3] = Check_Sort_Grade(PL_id);
-    if (Rank_In[PL_id][3]) {
-        Rank_In[PL_id][3] = -1;
+    Rank_In[PL_id][RANK_GRADE] = Check_Sort_Grade(PL_id);
+    if (Rank_In[PL_id][RANK_GRADE]) {
+        Rank_In[PL_id][RANK_GRADE] = -1;
     } else {
-        Rank_In[PL_id ^ 1][3] = -1;
+        Rank_In[PL_id ^ 1][RANK_GRADE] = -1;
     }
-    if (Rank_In[PL_id][0] >= 0 || Rank_In[PL_id][1] >= 0 || Rank_In[PL_id][2] >= 0 || Rank_In[PL_id][3] >= 0) {
+    if (Rank_In[PL_id][RANK_SCORE] >= 0 || Rank_In[PL_id][RANK_WINS] >= 0 || Rank_In[PL_id][RANK_CPU_GRADE] >= 0 || Rank_In[PL_id][RANK_GRADE] >= 0) {
         return 1;
     }
     return 0;
@@ -572,7 +572,7 @@ u8 *set_result_target_loser(void)
         Final_Result_id = LOSER;
         WGJ_Target = LOSER;
         WGJ_Win = Win_Record[LOSER];
-        WGJ_Score = Continue_Coin[LOSER] + Score[LOSER][0];
+        WGJ_Score = Continue_Coin[LOSER] + Score[LOSER][SCORE_CPU];
     }
 }
 
@@ -609,13 +609,13 @@ s32 Button_Cut_Hold(s16* timer, s16 first, s16 repeat) {
             return 0;
         }
         if (side) {
-            if (p2sw_0 & 0x3F0) {
+            if (p2sw_0 & BUTTON_SHOTS) {
                 Reserve_Cut = 0;
                 return 1;
             }
             return 0;
         }
-        if (p1sw_0 & 0x3F0) {
+        if (p1sw_0 & BUTTON_SHOTS) {
             Reserve_Cut = 0;
             return 1;
         }
@@ -650,7 +650,7 @@ s32 Button_Cut_EX(s16* Timer, s16 Limit_Time) {
 /* provisional name */
 int cut_button_side(void)
 {
-    if (Play_Type == 1) {
+    if (Play_Type == PLAY_VS_PLAYER) {
         return Winner_id;
     }
     if (Round_Operator[0]) {
@@ -729,10 +729,10 @@ void Disp_Win_Type(void) {
 void commit_name_entry_row_both_players(pos_y)
     s16 pos_y;
 {
-    if (E_Number[0][0] == 2 && name_wk[0].dmm) {
+    if (E_Number[0][0] == ENTRY_NAME && name_wk[0].dmm) {
         name_entry_commit_row(0, pos_y);
     }
-    if (E_Number[1][0] == 2 && name_wk[1].dmm) {
+    if (E_Number[1][0] == ENTRY_NAME && name_wk[1].dmm) {
         name_entry_commit_row(1, pos_y);
     }
 }
@@ -803,12 +803,12 @@ s32 Cut_Cut_Cut(void) {
 
 s32 Cut_Cut_Sub(s16 cut) {
     if (plw[0].wu.operator) {
-        if (p1sw_0 & 0x3F0) {
+        if (p1sw_0 & BUTTON_SHOTS) {
             return cut;
         }
     }
     if (plw[1].wu.operator) {
-        if (p2sw_0 & 0x3F0) {
+        if (p2sw_0 & BUTTON_SHOTS) {
             return cut;
         }
     }
@@ -819,12 +819,12 @@ s32 Cut_Cut_Sub(s16 cut) {
 
 s8 Cut_Cut_Loser(void) {
     if (Round_Operator[0]) {
-        if (p1sw_0 & 0x3F0) {
+        if (p1sw_0 & BUTTON_SHOTS) {
             return 1;
         }
     }
     if (Round_Operator[1]) {
-        if (p2sw_0 & 0x3F0) {
+        if (p2sw_0 & BUTTON_SHOTS) {
             return 1;
         }
     }

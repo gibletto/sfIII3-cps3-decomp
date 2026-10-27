@@ -1,5 +1,18 @@
 /*
- * CHR_DATA.C  game tables
+ * CHR_DATA.C  text layer character graphics, messages and test menu screens
+ *
+ * sc_chr_data is the fix-layer font and character graphics, with the blank characters
+ * (sc_blank_chr), the export name plates of Gouki and Shin Gouki (sc_name_export_chr), the
+ * ending window frame (end_waku_chr), Gill's super art numbers (gill_sa_number_chr) and the
+ * bonus count marks (bcount_mark_chr); these are read by SC_TRANS.C, and wipe_mask_chr, the
+ * screen wipe mask, by SE_2.C. config_jp_chr_0, config_jp_chr_1 and jp_menu_cg_2 - 5 are the
+ * graphics of the Japanese configuration pages, read by GAME_CONFIG_JP.C and SYS_CONFIG_2.C
+ * (sysconfig_jp_cg is reached through config_jp_chr_0). The effF9_mes_, effB8_mes_ and
+ * effA6_mes_ tables are the Japanese and English message scripts of the ending window
+ * (EFFF9.C), the winner's message banner (EFFB8.C) and the pre-fight dialogue (EFFA6.C), with
+ * their numbered sub-tables reached through them. test_menu_str_, test_menu_scr_jp_0 and the
+ * sys_cfg_ and cfg_top_ tables are the test menu and system configuration screen scripts, read
+ * by TEST_MENU_SCR.C.
  */
 
 #include "types.h"

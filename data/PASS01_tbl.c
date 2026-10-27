@@ -1,5 +1,8 @@
 /*
- * PASS01_TBL.C  game tables
+ * PASS01_TBL.C  CPU passive pattern table for Alex
+ *
+ * Passive01_Tbl is the 176 passive (defensive) pattern routines of character 1 (Alex),
+ * indexed by Pattern_Index. Read by PASS01.C.
  */
 
 #include "types.h"

@@ -1,5 +1,9 @@
 /*
- * PLPAT02_TBL.C  game tables
+ * PLPAT02_TBL.C  Ryu special attack tables
+ *
+ * pl02_exatt_table is the special attack routines of character 2 (Ryu) by attack routine
+ * number; lgix_table turns the Denjin Hadouken charge count into the animation frames skipped.
+ * Read by PLPAT02.C.
  */
 
 #include "types.h"

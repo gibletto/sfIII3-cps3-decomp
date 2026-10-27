@@ -1,5 +1,9 @@
 /*
- * SC_DATA.C  game tables
+ * SC_DATA.C  text layer RAM-to-VRAM transfer table
+ *
+ * sc_ram_vram_tbl has 30 entries, each pointing at a position list, a character code list
+ * and an attribute list in SC_TRANS_TBL.C; sc_ram_to_vram and its variant in SC_TRANS.C use
+ * it to put prepared screen parts on the text layer.
  */
 
 #include "types.h"

@@ -339,7 +339,7 @@ s16 code;
 s32 Check_Bonus_SE(Code)
 s16 Code;
 {
-    if (Bonus_Game_Flag == 0 || Bonus_Type != 21) {
+    if (Bonus_Game_Flag == 0 || Bonus_Type != BONUS_CAR) {
         return Code;
     }
     if (Code < 0x100) {

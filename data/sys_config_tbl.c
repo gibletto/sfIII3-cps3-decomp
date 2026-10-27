@@ -1,5 +1,11 @@
 /*
- * SYS_CONFIG_TBL.C  game tables
+ * SYS_CONFIG_TBL.C  test mode system configuration values
+ *
+ * coin_rate_tbl gives the coins and credits of each coin setting (SYS_CONFIG.C and
+ * SYS_CONFIG_2.C). The coin_setting_, chute_mode_, on_off_, sound_mode_ and monitor_ string
+ * tables place the value texts of the system configuration page (coin and chute settings,
+ * on/off, sound output, language, monitor), which are the str_ strings; cursor_mark_str and
+ * cursor_blank_str draw the menu cursor. Read by SYS_CONFIG_2.C.
  */
 
 #include "types.h"
@@ -89,6 +95,7 @@ extern const char str_1coin_8credits[];
 extern const char str_1coin_9credits[];
 extern const char str_2coins_1credit[];
 
+/* one row per coin setting (Coin_Mode): { coins, credits } */
 const u8 coin_rate_tbl[20][2] = {
     { 1, 1 }, { 1, 2 }, { 1, 3 }, { 1, 4 }, { 1, 5 }, { 1, 6 }, { 1, 7 }, { 1, 8 },
     { 1, 9 }, { 2, 1 }, { 3, 1 }, { 4, 1 }, { 5, 1 }, { 6, 1 }, { 7, 1 }, { 8, 1 },
@@ -381,9 +388,7 @@ const char str_cfg_portuguese[16] = "PORTUGUESE  ";
 const char str_cfg_normal[8] = "NORMAL";
 
 /* provisional name */
-const char str_cfg_flip[8] = {
-    70, 76, 73, 80, 32, 32, 0, 0,
-};
+const char str_cfg_flip[8] = "FLIP  ";
 
 /* Stored after str_cfg_flip. Nothing in the program refers to it by name or address. */
 const s8 str_cfg_flip_tail[64] = {

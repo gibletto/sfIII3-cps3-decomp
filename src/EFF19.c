@@ -24,6 +24,17 @@
 #include "bg_sub_5.h"
 #include "EFF19.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* start the idle animation */
+#define R0_MOVE         1       /* react to the quake */
+
+/* routine_no[1] */
+#define R1_IDLE         0       /* wait for a quake, pick a reaction */
+#define R1_WAIT         1       /* count the wait down */
+#define R1_FALL         2       /* fall to height 66 */
+#define R1_ANIM         3       /* play the animation, then vanish */
+#define R1_HIDE         4       /* hidden while a player is in range */
+
 
 
 void effect_19_move(WORK_Other* ewk) {
@@ -31,12 +42,12 @@ void effect_19_move(WORK_Other* ewk) {
         return;
     }
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, 6);
         break;
-    case 1:
+    case R0_MOVE:
         if (!EXE_flag && !Game_pause && !EXE_obroll) {
             eff19_quake_sub(ewk);
         }
@@ -55,7 +66,7 @@ void eff19_quake_sub(WORK_Other* ewk)
     s8 sel;
 
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_IDLE:
         if (bg_w.quake_y_index > 2) {
             rnd = random_16_com();
             if (bg_w.quake_y_index < 8) {
@@ -80,11 +91,11 @@ void eff19_quake_sub(WORK_Other* ewk)
             }
         }
         break;
-    case 1:
+    case R1_WAIT:
         if (ewk->wu.routine_no[2]) {
             ewk->wu.old_rno[0]--;
             if (ewk->wu.old_rno[0] < 0) {
-                ewk->wu.routine_no[1] = 0;
+                ewk->wu.routine_no[1] = R1_IDLE;
                 set_char_move_init(&ewk->wu, 0, 6);
             }
         } else {
@@ -94,22 +105,22 @@ void eff19_quake_sub(WORK_Other* ewk)
             }
         }
         break;
-    case 2:
+    case R1_FALL:
         add_y_sub(ewk);
         if (ewk->wu.xyz[1].disp.pos < 66) {
             ewk->wu.routine_no[1]++;
         }
         break;
-    case 3:
+    case R1_ANIM:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type) {
             ewk->wu.routine_no[1]++;
             ewk->wu.disp_flag = 0;
         }
         break;
-    case 4:
+    case R1_HIDE:
         if (range_x_check(&ewk->wu) == 0) {
-            ewk->wu.routine_no[1] = 0;
+            ewk->wu.routine_no[1] = R1_IDLE;
             ewk->wu.disp_flag = 1;
             ewk->wu.xyz[1].disp.pos = eff19_data_tbl[ewk->wu.type * 2 + 1];
             set_char_move_init(&ewk->wu, 0, 6);

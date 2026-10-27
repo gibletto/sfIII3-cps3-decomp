@@ -1,5 +1,9 @@
 /*
- * PLPAT08_TBL.C  game tables
+ * PLPAT08_TBL.C  Elena's special attack tables
+ *
+ * pl08_exatt_table is the list of Elena's special attack routines, indexed by attack routine
+ * number minus 16. pl08_hcs_tbl marks, for each of the three punch and three kick button bits,
+ * whether pressing it cuts the healing super art's pose short. Read by PLPAT08.C.
  */
 
 #include "types.h"

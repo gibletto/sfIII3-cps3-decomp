@@ -25,17 +25,28 @@
 #include "bg_sub_5.h"
 #include "EFF24.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* start the animation */
+#define R0_MOVE         1       /* shake with the quakes */
+
+/* routine_no[1] */
+#define R1_REST         0       /* wait for a quake */
+#define R1_JUMP         1       /* jump until back on the ground */
+#define R1_HOP          2       /* hop back to the home spot */
+#define R1_RUN          3       /* the dog runs to a new spot */
+#define R1_STOP         4       /* end the run there */
+
 
 
 void effect_24_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.old_rno[0] = 0;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R0_MOVE:
         if (!EXE_flag && !Game_pause && !EXE_obroll) {
             eff24_quake_sub(ewk);
         }
@@ -55,13 +66,13 @@ void effect_24_move(WORK_Other* ewk) {
 
 void eff24_quake_sub(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_REST:
         if (bg_w.quake_y_index > 0) {
             ewk->wu.routine_no[1]++;
             eff24_sp_data_set(ewk);
         }
         break;
-    case 1:
+    case R1_JUMP:
         add_x_sub(ewk);
         add_y_sub(ewk);
         if (ewk->wu.xyz[1].disp.pos < ewk->wu.old_rno[2]) {
@@ -71,7 +82,7 @@ void eff24_quake_sub(WORK_Other* ewk) {
             eff24_sp_data_set(ewk);
         }
         break;
-    case 2:
+    case R1_HOP:
         add_x_sub(ewk);
         add_y_sub(ewk);
         ewk->wu.old_rno[5]--;
@@ -93,12 +104,12 @@ void eff24_quake_sub(WORK_Other* ewk) {
                 ewk->wu.old_rno[6] ^= 1;
                 break;
             }
-            ewk->wu.routine_no[1] = 0;
+            ewk->wu.routine_no[1] = R1_REST;
             ewk->wu.old_rno[1] = 0;
             ewk->wu.old_rno[0] = 0;
             break;
         }
-    case 3:
+    case R1_RUN:
         char_move(&ewk->wu);
         add_x_sub(ewk);
         ewk->wu.old_rno[5]--;
@@ -106,11 +117,11 @@ void eff24_quake_sub(WORK_Other* ewk) {
             break;
         }
         ewk->wu.routine_no[1]++;
-    case 4:
+    case R1_STOP:
         char_move(&ewk->wu);
         add_x_sub(ewk);
         if (ewk->wu.cg_type) {
-            ewk->wu.routine_no[1] = 0;
+            ewk->wu.routine_no[1] = R1_REST;
             ewk->wu.old_rno[1] = 0;
             ewk->wu.old_rno[0] = 0;
             ewk->wu.old_rno[4] = ewk->wu.xyz[0].disp.pos;

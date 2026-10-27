@@ -26,6 +26,12 @@
 #include "aboutspr.h"
 #include "EFFL1.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* set up the plate for its type */
+#define R0_MOVE         1       /* show the plate until retired */
+#define R0_END          2       /* hidden for a frame */
+#define R0_KILL         3       /* (default) put the work back */
+
 
 
 static void grade_data_disp(void) {}
@@ -35,7 +41,7 @@ static void grade_data_disp(void) {}
 void effect_L1_move(WORK_Other_CONN* ewk) {
     s16 i;
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = effL1_base_data[ewk->wu.type][3];
         ewk->wu.dir_timer = effL1_base_data[ewk->wu.type][4];
@@ -51,9 +57,9 @@ void effect_L1_move(WORK_Other_CONN* ewk) {
         effL1_item_init[ewk->wu.type](ewk);
         effL1_trans(&ewk->wu);
         break;
-    case 1:
+    case R0_MOVE:
         if (ewk->wu.dead_f == 1 || Suicide[2] != 0) {
-            ewk->wu.routine_no[0] = 2;
+            ewk->wu.routine_no[0] = R0_END;
             ewk->wu.type = 0;
             ewk->wu.disp_flag = 0;
             break;
@@ -77,8 +83,8 @@ void effect_L1_move(WORK_Other_CONN* ewk) {
         }
         effL1_trans(&ewk->wu);
         break;
-    case 2:
-        ewk->wu.routine_no[0] = 3;
+    case R0_END:
+        ewk->wu.routine_no[0] = R0_KILL;
         break;
     default:
         all_cgps_put_back(&ewk->wu);

@@ -19,6 +19,14 @@
 #include "aboutspr.h"
 #include "EFF86.h"
 
+/* routine_no[0] */
+#define R0_MOVE         0       /* run the type's routine and draw */
+#define R0_KILL         1       /* (default) put the work back */
+
+/* routine_no[2] */
+#define R2_INIT         0       /* place between the players and show */
+#define R2_MOVE         1       /* play the pattern once */
+
 
 extern const s16 eff86_data_tbl00[];
 
@@ -31,7 +39,7 @@ const s16* eff86_adrs_tbl[1] = {
 void effect_86_move(WORK_Other* ewk) {
     void (*eff86_jp_tbl[1])(WORK_Other*) = { eff86_0000 };
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_MOVE:
         if (!EXE_flag && !Game_pause && !EXE_obroll) {
             eff86_jp_tbl[ewk->wu.routine_no[1]](ewk);
         }
@@ -49,7 +57,7 @@ void effect_86_move(WORK_Other* ewk) {
 void eff86_0000(WORK_Other* ewk) {
     s16 work;
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_INIT:
         ewk->wu.routine_no[2]++;
         ewk->wu.disp_flag = 1;
         work = plw[0].wu.position_x + plw[1].wu.position_x;
@@ -60,7 +68,7 @@ void eff86_0000(WORK_Other* ewk) {
         ewk->wu.xyz[1].disp.pos = work + 92;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R2_MOVE:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
             ewk->wu.disp_flag = 0;

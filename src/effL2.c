@@ -21,17 +21,22 @@
 #include "effL2.h"
 #include "fighter.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* show, facing the fighter */
+#define R0_MOVE         1       /* face the fighter until the round is won */
+#define R0_REACT        2       /* win or lose reaction until the wipe */
+
 
 
 void effect_L2_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         effl2_dir_check(ewk);
         set_char_move_init2(&ewk->wu, 0, 0, 1, 0);
         break;
-    case 1:
+    case R0_MOVE:
         if (Allow_a_battle_f == 0 && Conclusion_Flag == 1 && C_No0 >= 2) {
             if (!(Complete_Victory == 0) && Conclusion_Flag) {
                 ewk->wu.routine_no[0]++;
@@ -49,12 +54,12 @@ void effect_L2_move(WORK_Other* ewk) {
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos;
         sort_push_request(&ewk->wu);
         break;
-    case 2:
+    case R0_REACT:
         if (Exec_Wipe) {
             ewk->wu.old_rno[0] = 1;
         }
         if (ewk->wu.old_rno[0] && !Exec_Wipe) {
-            ewk->wu.routine_no[0] = 0;
+            ewk->wu.routine_no[0] = R0_INIT;
         }
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos;
@@ -71,14 +76,12 @@ void effect_L2_move(WORK_Other* ewk) {
 
 void effl2_dir_check(WORK_Other* ewk) {
     s16 work;
-    s32 z;
 
     work = plw[ewk->master_id].wu.xyz[0].disp.pos >> 6;
     work &= 15;
     if (effl2_dir_tbl[ewk->master_id][work] != ewk->wu.direction) {
         ewk->wu.direction = effl2_dir_tbl[ewk->master_id][work];
-        z = 0;
-        set_char_move_init2(&ewk->wu, z, z, ewk->wu.direction + 1, z);
+        set_char_move_init2(&ewk->wu, 0, 0, ewk->wu.direction + 1, 0);
     }
 }
 

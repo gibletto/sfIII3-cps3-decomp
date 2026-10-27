@@ -1,5 +1,8 @@
 /*
- * EFF63_TBL.C  game tables
+ * EFF63_TBL.C  idle animated object placement
+ *
+ * eff78_init_tbl gives the position and settings of the two effect 63 objects created by
+ * effect_78_init. Read by EFF63.C, the pair of idle animated objects.
  */
 
 #include "types.h"

@@ -1,5 +1,9 @@
 /*
- * EFFK3_TBL.C  game tables
+ * EFFK3_TBL.C  shard tables for effect K3
+ *
+ * By attack strength: numof_effK3 is the number of shards spawned when a car part breaks,
+ * effK3_isp_table four launch speeds { x, y }, effK3_isp_x_hosei / effK3_isp_y_hosei eight
+ * random speed spreads, and effK3_life_time the shard lifetime. Read by EFFK3.C.
  */
 
 #include "types.h"

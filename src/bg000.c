@@ -62,6 +62,23 @@
 #include "bg000.h"
 #include "fighter.h"
 
+/* bgw r_no_0 of a layer that follows the camera */
+#define SYNC_INIT       0       /* set up the layer */
+#define SYNC_MOVE       1       /* follow the camera (bg_x_move_check, bg_y_move_check) */
+
+/* bg_w.bgw[1].r_no_1 in capcom_logo_anim */
+#define LOGO_INIT       0       /* set up, start the logo music */
+#define LOGO_COLOR      1       /* colour steps until they finish */
+#define LOGO_FADE       2       /* request the fade */
+#define LOGO_FADE_WAIT  3       /* colour steps until the fade is done */
+#define LOGO_OUT        4       /* the last colour steps, then report the end */
+#define LOGO_END        5       /* finished */
+
+/* bgw r_no_0 of a layer with an entrance demo: its bg*_jmp routine */
+#define R0_INIT         0       /* set up the layer */
+#define R0_DEMO         1       /* the entrance demo */
+#define R0_MOVE         2       /* follow the fight */
+
 extern const s16 bg_scr_record_data[92];
 
 
@@ -964,7 +981,7 @@ void bg_pos_hosei2(void)
 
 
 s16 get_center_position(void) {
-    if (Bonus_Game_Flag == 0x16) {
+    if (Bonus_Game_Flag == BONUS_PARRY) {
         return 0x200;
     }
     return bg_w.bgw[1].wxy[0].disp.pos;
@@ -1540,7 +1557,7 @@ s16 capcom_logo_color_step(void) {
 s16 capcom_logo_anim(void) {
     s32 ret = 0;
     switch (bg_w.bgw[1].r_no_1) {
-    case 0:
+    case LOGO_INIT:
         bg_w.bgw[1].r_no_1++;
         bg_w.bgw[1].l_limit = 2;
         bg_w.bgw[1].r_limit = 64;
@@ -1549,24 +1566,24 @@ s16 capcom_logo_anim(void) {
             bgm_request(48);
         }
         break;
-    case 1:
+    case LOGO_COLOR:
         if (capcom_logo_color_step()) {
-            bg_w.bgw[1].r_no_1 = 2;
+            bg_w.bgw[1].r_no_1 = LOGO_FADE;
         }
         break;
-    case 2:
+    case LOGO_FADE:
         if (Request_Fade(35, 0)) {
             bg_w.bgw[1].r_no_1++;
             Bg_On_W(1);
         }
         break;
-    case 3:
+    case LOGO_FADE_WAIT:
         capcom_logo_color_step();
         if (Check_Fade_Complete()) {
             bg_w.bgw[1].r_no_1++;
         }
         break;
-    case 4:
+    case LOGO_OUT:
         switch (capcom_logo_color_step()) {
         case 1:
         case 2:
@@ -1577,7 +1594,7 @@ s16 capcom_logo_anim(void) {
             break;
         }
         break;
-    case 5:
+    case LOGO_END:
         break;
     }
     return ret;
@@ -1683,9 +1700,8 @@ void bg_initialize(void) {
         scrn_map_set(i, (u32)bg_w.bgw[i].bg_address);
         ptr = (const s16*)bg_map_tbl[bg_w.bg_index][i];
         sprite_list_setup(i, 1, ptr);
-        (void)bg_w.bgw[i].bg_adrs_c_no;
     }
-    if (0) {
+    if (DEBUG_DISP) {
         scrn_map_set(0, simmram_big_page_alloc_40(1));
         bg_scr_write();
     }
@@ -1710,8 +1726,8 @@ void bg_initialize(void) {
     bg_w.quake_y_index = 0;
     bg_w.frame_deff = 64;
     bg_ofs_work[0] = bg_ofs_work[1] = bg_ofs_work[2] = 0;
-    if (0) {
-        scrn_reg_w[0].ctrl &= 0xFE7F;
+    if (DEBUG_DISP) {
+        scrn_reg_w[0].ctrl = scrn_reg_w[0].ctrl & 0xFE7F;
     }
     for (i = 0; i < bg_w.scno; i++) {
         Bg_On_R(1 << i);
@@ -1913,9 +1929,9 @@ void bg0001_init00(void) {
     effect_44_init(7);
     effect_60_init(2);
     if (bg_w.area) {
-        bgw_ptr->r_no_0 = 2;
+        bgw_ptr->r_no_0 = R0_MOVE;
     } else if (gill_appear_check()) {
-        bgw_ptr->r_no_0 = 2;
+        bgw_ptr->r_no_0 = R0_MOVE;
     } else {
         if (plw[0].player_number == PL_GILL) {
             bgw_ptr->u_line = 0;
@@ -1944,7 +1960,7 @@ void bg0000_init00(void) {
     bgw_ptr->hos_xy[0].cal = bgw_ptr->wxy[0].cal = bgw_ptr->xy[0].cal;
     bgw_ptr->zuubun = 0;
     if (gill_appear_check()) {
-        bgw_ptr->r_no_0 = 2;
+        bgw_ptr->r_no_0 = R0_MOVE;
         bg_app = 0;
     } else {
         bg_app = 1;
@@ -1998,7 +2014,7 @@ void bg0000_demo(void) {
         break;
     case 3:
         bg_app = 0;
-        bgw_ptr->r_no_0 = 2;
+        bgw_ptr->r_no_0 = R0_MOVE;
         break;
     }
 }
@@ -2065,7 +2081,7 @@ void bg0102_init00(void) {
 
 void bg0103(void) {
     switch (bgw_ptr->r_no_0) {
-    case 0:
+    case SYNC_INIT:
         bgw_ptr->r_no_0++;
         bgw_ptr->old_pos_x = bgw_ptr->xy[0].disp.pos = bgw_ptr->pos_x_work = 0x200;
         bgw_ptr->hos_xy[0].cal = bgw_ptr->wxy[0].cal = bgw_ptr->xy[0].cal;
@@ -2077,7 +2093,7 @@ void bg0103(void) {
         bgw_ptr->speed_y = 0xE000;
         sync_fam_set3(2);
         break;
-    case 1:
+    case SYNC_MOVE:
         bg_x_move_check();
         bg_y_move_check();
         sync_fam_set3(2);

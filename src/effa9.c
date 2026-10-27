@@ -26,25 +26,36 @@
 #include "PLS02.h"
 #include "effa9.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* start the pattern */
+#define R0_WAIT         1       /* wait until on the screen, then show */
+#define R0_MOVE         2       /* show until off the screen */
+#define R0_PLAY         3       /* animate for 20 frames */
+#define R0_HOLD         4       /* hold until off the screen */
+#define R0_KILL         99      /* (default) put the work back */
+
+/* Position_Data_A9 column after x, y and priority */
+#define A9_POS_RANGE    3       /* margin for Ck_Range_Out_S */
+
 
 
 void effect_A9_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
         break;
-    case 1:
+    case R0_WAIT:
         if (Ck_Range_Out_S(ewk, ewk->wu.my_family - 1, ewk->wu.vital_new)) {
             return;
         }
         ewk->wu.disp_flag = 1;
         ewk->wu.routine_no[0]++;
         break;
-    case 2:
+    case R0_MOVE:
         if (Ck_Range_Out_S(ewk, ewk->wu.my_family - 1, ewk->wu.vital_new) || Suicide[3] != 0) {
             ewk->wu.disp_flag = 0;
-            ewk->wu.routine_no[0] = 99;
+            ewk->wu.routine_no[0] = R0_KILL;
             return;
         }
         if (ewk->wu.char_index == 55) {
@@ -59,20 +70,20 @@ void effect_A9_move(WORK_Other* ewk) {
             char_move(&ewk->wu);
         }
         break;
-    case 3:
+    case R0_PLAY:
         char_move(&ewk->wu);
         if (--ewk->wu.dir_timer == 0) {
             if (ewk->wu.cg_type == 1) {
                 ewk->wu.dir_timer = 1;
             } else {
-                ewk->wu.routine_no[0] = 4;
+                ewk->wu.routine_no[0] = R0_HOLD;
             }
         }
         break;
-    case 4:
+    case R0_HOLD:
         if (Ck_Range_Out_S(ewk, ewk->wu.my_family - 1, ewk->wu.vital_new) || Suicide[3] != 0) {
             ewk->wu.disp_flag = 0;
-            ewk->wu.routine_no[0] = 99;
+            ewk->wu.routine_no[0] = R0_KILL;
             return;
         }
         break;
@@ -105,10 +116,10 @@ s32 effect_A9_init(s16 Char_Index, s16 Option, s16 Pos_Index, s16 Option2) {
     ewk->wu.my_family = 4;
     *ewk->wu.char_table = sel_pl_char_table;
     ewk->wu.char_index = Char_Index;
-    ewk->wu.xyz[0].disp.pos = Offset_BG_X[3] + bg_w.bgw[3].wxy[0].disp.pos + Position_Data_A9[Pos_Index][0];
-    ewk->wu.xyz[1].disp.pos = bg_w.bgw[3].wxy[1].disp.pos + Position_Data_A9[Pos_Index][1];
-    ewk->wu.xyz[2].disp.pos = Position_Data_A9[Pos_Index][2];
-    ewk->wu.vital_new = Position_Data_A9[Pos_Index][3];
+    ewk->wu.xyz[0].disp.pos = Offset_BG_X[3] + bg_w.bgw[3].wxy[0].disp.pos + Position_Data_A9[Pos_Index][SEL_POS_X];
+    ewk->wu.xyz[1].disp.pos = bg_w.bgw[3].wxy[1].disp.pos + Position_Data_A9[Pos_Index][SEL_POS_Y];
+    ewk->wu.xyz[2].disp.pos = Position_Data_A9[Pos_Index][SEL_POS_Z];
+    ewk->wu.vital_new = Position_Data_A9[Pos_Index][A9_POS_RANGE];
     Setup_A9(ewk, Char_Index, Option, Option2);
     return 0;
 }

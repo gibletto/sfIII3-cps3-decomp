@@ -44,12 +44,23 @@
 #include "bg_sub_5.h"
 #include "effM5.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* set up the zoom */
+#define R0_MOVE         1       /* zoom the letter in */
+#define R0_END          2       /* hidden for a frame */
+#define R0_KILL         3       /* (default) put the work back */
+
+/* routine_no[1] */
+#define R1_WAIT         0       /* wait for the next-step cue */
+#define R1_DELAY        1       /* count the delay, then show */
+#define R1_ZOOM         2       /* shrink to normal size */
+
 
 
 void effect_M3_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
-        ewk->wu.routine_no[0] = 1;
+    case R0_INIT:
+        ewk->wu.routine_no[0] = R0_MOVE;
         ewk->wu.disp_flag = 0;
         ewk->wu.my_col_mode = 0x4200;
         ewk->wu.my_col_code = 64;
@@ -60,15 +71,15 @@ void effect_M3_move(WORK_Other* ewk) {
         ewk->wu.dir_timer = M3_bahn_data[2];
         ewk->wu.old_cgnum = 0;
         break;
-    case 1:
+    case R0_MOVE:
         if (ewk->wu.dead_f == 1 || Suicide[2] != 0) {
             ewk->wu.disp_flag = 0;
             ewk->wu.type = 0;
-            ewk->wu.routine_no[0] = 2;
+            ewk->wu.routine_no[0] = R0_END;
             break;
         }
         switch (ewk->wu.routine_no[1]) {
-        case 0:
+        case R1_WAIT:
             if (!(Next_Step & 1)) {
                 break;
             }
@@ -79,13 +90,13 @@ void effect_M3_move(WORK_Other* ewk) {
             ewk->wu.mvxy.d[0].real.l = M3_bahn_data[4] * 16;
             ewk->wu.mvxy.kop[0] = 1;
             ewk->wu.my_mr_flag = 1;
-        case 1:
+        case R1_DELAY:
             if (--ewk->wu.dir_timer >= 0) {
                 break;
             }
             ewk->wu.routine_no[1]++;
             ewk->wu.disp_flag = 1;
-        case 2:
+        case R1_ZOOM:
             cal_mvxy_speed(&ewk->wu);
             ewk->wu.mvxy.d[0].sp = (ewk->wu.mvxy.d[0].sp * ewk->wu.dmcal_m) / ewk->wu.dmcal_d;
             if (*(s16*)&ewk->wu.mvxy.a[0]) {
@@ -100,15 +111,15 @@ void effect_M3_move(WORK_Other* ewk) {
         default:
             ewk->wu.disp_flag = 0;
             ewk->wu.type = 0;
-            ewk->wu.routine_no[0] = 2;
+            ewk->wu.routine_no[0] = R0_END;
             break;
         }
         ewk->wu.my_mts = *(s16*)&ewk->wu.mvxy.a[0] + 63;
         ewk->wu.my_mr.size.x = ewk->wu.my_mr.size.y = ewk->wu.my_mts;
         effM3_trans(&ewk->wu);
         break;
-    case 2:
-        ewk->wu.routine_no[0] = 3;
+    case R0_END:
+        ewk->wu.routine_no[0] = R0_KILL;
         break;
     default:
         all_cgps_put_back(ewk);

@@ -1,5 +1,8 @@
 /*
- * EFFE9_TBL.C  game tables
+ * EFFE9_TBL.C  opening frame bar table (effect E9)
+ *
+ * effE9_data rows hold the x, y, animation number and priority of the frame bar sprites of
+ * the opening demo. Read by effect_E9_init in EFFE9.C.
  */
 
 #include "types.h"

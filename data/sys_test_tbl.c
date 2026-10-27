@@ -1,5 +1,14 @@
 /*
- * SYS_TEST_TBL.C  game tables
+ * SYS_TEST_TBL.C  test mode screens, fonts and system palette
+ *
+ * The screens and strings of the test mode pages: input test (switch positions and bits,
+ * SYS_TEST_2.C), output test (IOTEST_OUT.C), sound test (SOUNDTEST.C), colour test
+ * (COLORTEST.C), crosshatch (SYS_TEST_2A.C), game data (SYS_TEST_2B.C), memory test with its
+ * SIMM checksum offsets and the CD-ROM command blocks (SYS_TEST_3.C) and the rewrite menu
+ * (SYS_TEST_4.C). scroll_enable_bit_tbl maps screen switches to scroll enable bits
+ * (SYS_TEST.C) and coin_counter_bit_tbl the coin counter bits (COIN_SW.C). sys_font_cg and
+ * jp_menu_font_cg are the text layer fonts and sys_palette the system palette, loaded by
+ * MODE_INIT.C, TEST_MODE.C, the configuration pages, END_SUB_2.C and CMD_MAIN.C.
  */
 
 #include "types.h"

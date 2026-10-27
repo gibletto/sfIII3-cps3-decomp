@@ -1,5 +1,9 @@
 /*
- * EFF16_TBL.C  game tables
+ * EFF16_TBL.C  bonus stage score display tables
+ *
+ * bunkai_table holds the powers of ten used to split the score into digits, bunkai_numobj the
+ * character of each digit, and bbbs_score the screen position and character of each digit of
+ * the score display of each type. Read by EFF16.C, the bonus-stage score display.
  */
 
 #include "types.h"

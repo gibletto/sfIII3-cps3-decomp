@@ -1,5 +1,8 @@
 /*
- * EFF94_TBL_B.C  game tables
+ * EFF94_TBL_B.C  falling piece positions
+ *
+ * eff94_3000_tbl gives the x, y and facing of the extra falling pieces (eff94_3000) a strong
+ * quake throws down. Read by EFF94.C.
  */
 
 #include "types.h"

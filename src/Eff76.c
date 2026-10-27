@@ -29,6 +29,24 @@
 #include "charmove_2.h"
 #include "Eff76.h"
 
+/* routine_no[0]: the order being carried out */
+#define R0_WAIT         0       /* wait for an order */
+#define R0_DIE          4       /* count down, hide and free */
+
+/* routine_no[1]: within an order */
+#define R1_DELAY        0       /* count the order timer down */
+
+/* routine_no[1], EFF76_SUDDENLY */
+#define R1_APPEAR       1       /* show once in the bg range */
+#define R1_TO_BG1       2       /* on the next step, move to bg 1 */
+#define R1_TO_BG4       3       /* on the next step, move to bg 4 */
+
+/* routine_no[1], EFF76_DIE */
+#define R1_KILL         1       /* (default) put the work back */
+
+/* routine_no[1], EFF76_SHIFT */
+#define R1_SHIFT        1       /* slide 160 dots to the left */
+
 #pragma inline(isAkumaName)
 
 
@@ -45,19 +63,19 @@ void effect_76_move(WORK_Other* ewk) {
 void EFF76_WAIT(WORK_Other* ewk) {
     if (Check_Range_Out(ewk)) {
         Order[ewk->wu.dir_old] = 4;
-        ewk->wu.routine_no[0] = 4;
-        ewk->wu.routine_no[1] = 0;
+        ewk->wu.routine_no[0] = R0_DIE;
+        ewk->wu.routine_no[1] = R1_DELAY;
         Order_Timer[ewk->wu.dir_old] = 1;
         return;
     }
     if (Suicide[ewk->wu.direction] != 0) {
         Order[ewk->wu.dir_old] = 4;
-        ewk->wu.routine_no[0] = 4;
-        ewk->wu.routine_no[1] = 1;
+        ewk->wu.routine_no[0] = R0_DIE;
+        ewk->wu.routine_no[1] = R1_KILL;
         Order_Timer[ewk->wu.dir_old] = 1;
         ewk->wu.disp_flag = 0;
     } else if ((ewk->wu.routine_no[0] = Order[ewk->wu.dir_old])) {
-        ewk->wu.routine_no[1] = 0;
+        ewk->wu.routine_no[1] = R1_DELAY;
     }
 }
 
@@ -66,12 +84,12 @@ void EFF76_WAIT(WORK_Other* ewk) {
 void EFF76_WAIT_BREAK_INTO(WORK_Other* ewk) {
     if (Suicide[ewk->wu.direction] != 0) {
         Order[ewk->wu.dir_old] = 4;
-        ewk->wu.routine_no[0] = 4;
-        ewk->wu.routine_no[1] = 1;
+        ewk->wu.routine_no[0] = R0_DIE;
+        ewk->wu.routine_no[1] = R1_KILL;
         Order_Timer[ewk->wu.dir_old] = 1;
         ewk->wu.disp_flag = 0;
     } else if ((ewk->wu.routine_no[0] = Order[ewk->wu.dir_old])) {
-        ewk->wu.routine_no[1] = 0;
+        ewk->wu.routine_no[1] = R1_DELAY;
     }
 }
 
@@ -80,11 +98,11 @@ void EFF76_WAIT_BREAK_INTO(WORK_Other* ewk) {
 void EFF76_SLIDE_IN(WORK_Other* ewk) {
     if (Order[ewk->wu.dir_old] != 1) {
         ewk->wu.routine_no[0] = Order[ewk->wu.dir_old];
-        ewk->wu.routine_no[1] = 0;
+        ewk->wu.routine_no[1] = R1_DELAY;
         return;
     }
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_DELAY:
         if (--Order_Timer[ewk->wu.dir_old]) {
             break;
         }
@@ -100,14 +118,14 @@ void EFF76_SLIDE_IN(WORK_Other* ewk) {
                 if (Order[ewk->wu.dir_old] == ewk->wu.routine_no[0]) {
                     Order[ewk->wu.dir_old] = 0;
                 }
-                ewk->wu.routine_no[0] = 0;
+                ewk->wu.routine_no[0] = R0_WAIT;
                 ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake;
             }
         } else if (ewk->wu.hit_quake >= ewk->wu.xyz[0].disp.pos) {
             if (Order[ewk->wu.dir_old] == ewk->wu.routine_no[0]) {
                 Order[ewk->wu.dir_old] = 0;
             }
-            ewk->wu.routine_no[0] = 0;
+            ewk->wu.routine_no[0] = R0_WAIT;
             ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake;
         }
         break;
@@ -122,45 +140,45 @@ void EFF76_SLIDE_OUT(WORK_Other* ewk) {}
 
 void EFF76_SUDDENLY(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_DELAY:
         if (--Order_Timer[ewk->wu.dir_old] == 0) {
             ewk->wu.routine_no[1]++;
             ewk->wu.disp_flag = 0;
         }
-    case 1:
+    case R1_APPEAR:
         if (Ck_Range_Out_S(ewk, ewk->wu.my_family - 1, ewk->wu.dm_vital)) {
             break;
         }
         ewk->wu.disp_flag = 1;
         switch (ewk->wu.dir_old) {
         case 0x3D:
-            ewk->wu.routine_no[1] = 2;
+            ewk->wu.routine_no[1] = R1_TO_BG1;
             break;
         case 0x42:
-            ewk->wu.routine_no[1] = 3;
+            ewk->wu.routine_no[1] = R1_TO_BG4;
             break;
         default:
-            ewk->wu.routine_no[0] = 0;
+            ewk->wu.routine_no[0] = R0_WAIT;
             Order[ewk->wu.dir_old] = 0;
             break;
         }
         set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
         break;
-    case 2:
+    case R1_TO_BG1:
         if (Next_Step) {
             ewk->wu.my_family = 1;
             ewk->wu.xyz[0].disp.pos = bg_w.bgw[0].wxy[0].disp.pos;
-            ewk->wu.xyz[1].disp.pos = bg_w.bgw[0].wxy[1].disp.pos + Pos_Cont_Data_76[ewk->wu.dir_old - 59][1];
-            ewk->wu.routine_no[0] = 0;
+            ewk->wu.xyz[1].disp.pos = bg_w.bgw[0].wxy[1].disp.pos + Pos_Cont_Data_76[ewk->wu.dir_old - 59][SEL_POS_Y];
+            ewk->wu.routine_no[0] = R0_WAIT;
             Order[ewk->wu.dir_old] = 0;
         }
         break;
-    case 3:
+    case R1_TO_BG4:
         if (Next_Step) {
             ewk->wu.my_family = 4;
             ewk->wu.xyz[0].disp.pos = bg_w.bgw[3].wxy[0].disp.pos - 16;
-            ewk->wu.xyz[1].disp.pos = bg_w.bgw[3].wxy[1].disp.pos + EFF76_Pos_Data_A[ewk->wu.dir_old - 43][1];
-            ewk->wu.routine_no[0] = 0;
+            ewk->wu.xyz[1].disp.pos = bg_w.bgw[3].wxy[1].disp.pos + EFF76_Pos_Data_A[ewk->wu.dir_old - 43][SEL_POS_Y];
+            ewk->wu.routine_no[0] = R0_WAIT;
             Order[ewk->wu.dir_old] = 0;
         }
         break;
@@ -176,8 +194,8 @@ void EFF76_BEFORE(WORK_Other* ewk) {
     ewk->wu.routine_no[1]++;
     ewk->wu.disp_flag = 1;
     ewk->wu.position_z = 2;
-    ewk->wu.routine_no[0] = 0;
-    ewk->wu.routine_no[1] = 0;
+    ewk->wu.routine_no[0] = R0_WAIT;
+    ewk->wu.routine_no[1] = R1_DELAY;
     Order[ewk->wu.dir_old] = 0;
     set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
 }
@@ -186,7 +204,7 @@ void EFF76_BEFORE(WORK_Other* ewk) {
 
 void EFF76_DIE(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_DELAY:
         if (--Order_Timer[ewk->wu.dir_old] == 0) {
             ewk->wu.routine_no[1]++;
             ewk->wu.disp_flag = 0;
@@ -204,7 +222,7 @@ void EFF76_DIE(WORK_Other* ewk) {
 void EFF76_SHIFT(WORK_Other* ewk) {
     s16 cut;
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_DELAY:
         if (--Order_Timer[ewk->wu.dir_old] == 0) {
             ewk->wu.routine_no[1]++;
             ewk->wu.hit_quake = ewk->wu.xyz[0].disp.pos - 160;
@@ -212,12 +230,12 @@ void EFF76_SHIFT(WORK_Other* ewk) {
             ewk->wu.mvxy.d[0].sp = -0x4000;
         }
         break;
-    case 1:
+    case R1_SHIFT:
         cut = Cut_Cut_Sub(3);
         ewk->wu.xyz[0].cal += ewk->wu.mvxy.a[0].sp * cut;
         ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;
         if (ewk->wu.hit_quake >= ewk->wu.xyz[0].disp.pos) {
-            ewk->wu.routine_no[0] = 0;
+            ewk->wu.routine_no[0] = R0_WAIT;
             Order[ewk->wu.dir_old] = 0;
             ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake;
         }
@@ -281,14 +299,14 @@ void Setup_Pos_76(WORK_Other* ewk) {
     case 0x40:
     case 0x42:
         ewk->wu.xyz[0].disp.pos =
-            bg_w.bgw[ewk->wu.my_family - 1].wxy[0].disp.pos + EFF76_Pos_Data_A[ewk->wu.dir_old - 0x2B][0];
+            bg_w.bgw[ewk->wu.my_family - 1].wxy[0].disp.pos + EFF76_Pos_Data_A[ewk->wu.dir_old - 0x2B][SEL_POS_X];
         ewk->wu.xyz[1].disp.pos =
-            bg_w.bgw[ewk->wu.my_family - 1].wxy[1].disp.pos + EFF76_Pos_Data_A[ewk->wu.dir_old - 0x2B][1];
-        ewk->wu.position_z = EFF76_Pos_Data_A[ewk->wu.dir_old - 0x2B][2];
+            bg_w.bgw[ewk->wu.my_family - 1].wxy[1].disp.pos + EFF76_Pos_Data_A[ewk->wu.dir_old - 0x2B][SEL_POS_Y];
+        ewk->wu.position_z = EFF76_Pos_Data_A[ewk->wu.dir_old - 0x2B][SEL_POS_Z];
         break;
     case 0x41:
-        ewk->wu.xyz[0].disp.pos = bg_w.bgw[0].wxy[0].disp.pos + EFF76_Face_Pos_Data[My_char[Final_Result_id]][0];
-        ewk->wu.xyz[1].disp.pos = bg_w.bgw[0].wxy[1].disp.pos + EFF76_Face_Pos_Data[My_char[Final_Result_id]][1];
+        ewk->wu.xyz[0].disp.pos = bg_w.bgw[0].wxy[0].disp.pos + EFF76_Face_Pos_Data[My_char[Final_Result_id]][SEL_POS_X];
+        ewk->wu.xyz[1].disp.pos = bg_w.bgw[0].wxy[1].disp.pos + EFF76_Face_Pos_Data[My_char[Final_Result_id]][SEL_POS_Y];
         ewk->wu.position_z = 72;
         break;
     case 0x3B:
@@ -296,17 +314,17 @@ void Setup_Pos_76(WORK_Other* ewk) {
     case 0x3D:
     case 0x3E:
     case 0x3F:
-        ewk->wu.xyz[0].disp.pos = bg_w.bgw[1].wxy[0].disp.pos + Pos_Cont_Data_76[ewk->wu.dir_old - 0x3B][0] + 458;
-        ewk->wu.xyz[1].disp.pos = bg_w.bgw[1].wxy[1].disp.pos + Pos_Cont_Data_76[ewk->wu.dir_old - 0x3B][1];
-        ewk->wu.position_z = Pos_Cont_Data_76[ewk->wu.dir_old - 0x3B][2];
+        ewk->wu.xyz[0].disp.pos = bg_w.bgw[1].wxy[0].disp.pos + Pos_Cont_Data_76[ewk->wu.dir_old - 0x3B][SEL_POS_X] + 458;
+        ewk->wu.xyz[1].disp.pos = bg_w.bgw[1].wxy[1].disp.pos + Pos_Cont_Data_76[ewk->wu.dir_old - 0x3B][SEL_POS_Y];
+        ewk->wu.position_z = Pos_Cont_Data_76[ewk->wu.dir_old - 0x3B][SEL_POS_Z];
         break;
     case 0x43:
     case 0x44:
         ewk->wu.xyz[0].disp.pos =
-            bg_w.bgw[ewk->wu.my_family - 1].wxy[0].disp.pos + EFF76_Pos_Data_A[ewk->wu.dir_old - 0x2B][0];
+            bg_w.bgw[ewk->wu.my_family - 1].wxy[0].disp.pos + EFF76_Pos_Data_A[ewk->wu.dir_old - 0x2B][SEL_POS_X];
         ewk->wu.xyz[1].disp.pos =
-            bg_w.bgw[ewk->wu.my_family - 1].wxy[1].disp.pos + EFF76_Pos_Data_A[ewk->wu.dir_old - 0x2B][1];
-        ewk->wu.position_z = EFF76_Pos_Data_A[ewk->wu.dir_old - 0x2B][2];
+            bg_w.bgw[ewk->wu.my_family - 1].wxy[1].disp.pos + EFF76_Pos_Data_A[ewk->wu.dir_old - 0x2B][SEL_POS_Y];
+        ewk->wu.position_z = EFF76_Pos_Data_A[ewk->wu.dir_old - 0x2B][SEL_POS_Z];
         if (Order_Dir[ewk->wu.dir_old] == 4) {
             ewk->wu.hit_quake = bg_w.bgw[ewk->wu.my_family - 1].wxy[0].disp.pos + 64;
             ewk->wu.mvxy.a[0].sp = -0x100000;
@@ -319,10 +337,10 @@ void Setup_Pos_76(WORK_Other* ewk) {
         break;
     case 0x2D:
         ewk->wu.xyz[0].disp.pos =
-            bg_w.bgw[ewk->wu.my_family - 1].wxy[0].disp.pos + EFF76_Pos_Data_A[ewk->wu.dir_old - 0x2B][0];
+            bg_w.bgw[ewk->wu.my_family - 1].wxy[0].disp.pos + EFF76_Pos_Data_A[ewk->wu.dir_old - 0x2B][SEL_POS_X];
         ewk->wu.xyz[1].disp.pos =
-            bg_w.bgw[ewk->wu.my_family - 1].wxy[1].disp.pos + EFF76_Pos_Data_A[ewk->wu.dir_old - 0x2B][1];
-        ewk->wu.position_z = EFF76_Pos_Data_A[ewk->wu.dir_old - 0x2B][2];
+            bg_w.bgw[ewk->wu.my_family - 1].wxy[1].disp.pos + EFF76_Pos_Data_A[ewk->wu.dir_old - 0x2B][SEL_POS_Y];
+        ewk->wu.position_z = EFF76_Pos_Data_A[ewk->wu.dir_old - 0x2B][SEL_POS_Z];
         if (Order_Dir[ewk->wu.dir_old] == 4) {
             ewk->wu.hit_quake = bg_w.bgw[ewk->wu.my_family - 1].wxy[0].disp.pos + 32;
             ewk->wu.mvxy.a[0].sp = -0x100000;
@@ -366,17 +384,17 @@ void Setup_Pos_76(WORK_Other* ewk) {
         } else {
             my_char = Ranking_Data[Order_Dir[ewk->wu.dir_old]].player;
         }
-        ewk->wu.xyz[0].disp.pos = bg_w.bgw[0].wxy[0].disp.pos + EFF76_Face_Pos_Data[my_char][0] - 48;
-        ewk->wu.hit_quake = bg_w.bgw[0].wxy[0].disp.pos + EFF76_Face_Pos_Data[my_char][0];
-        ewk->wu.xyz[1].disp.pos = bg_w.bgw[0].wxy[1].disp.pos + EFF76_Face_Pos_Data[my_char][1];
+        ewk->wu.xyz[0].disp.pos = bg_w.bgw[0].wxy[0].disp.pos + EFF76_Face_Pos_Data[my_char][SEL_POS_X] - 48;
+        ewk->wu.hit_quake = bg_w.bgw[0].wxy[0].disp.pos + EFF76_Face_Pos_Data[my_char][SEL_POS_X];
+        ewk->wu.xyz[1].disp.pos = bg_w.bgw[0].wxy[1].disp.pos + EFF76_Face_Pos_Data[my_char][SEL_POS_Y];
         if (ewk->wu.dir_old == 0x37) {
             ewk->wu.position_z = 72;
             ewk->wu.mvxy.a[0].sp = 0x10000;
             ewk->wu.mvxy.d[0].sp = 0;
         } else {
-            ewk->wu.xyz[1].disp.pos = bg_w.bgw[0].wxy[1].disp.pos + EFF76_Face_Pos_Data[my_char][1] - 32;
+            ewk->wu.xyz[1].disp.pos = bg_w.bgw[0].wxy[1].disp.pos + EFF76_Face_Pos_Data[my_char][SEL_POS_Y] - 32;
             if (Order[ewk->wu.dir_old] == 1) {
-                ewk->wu.xyz[0].disp.pos = bg_w.bgw[0].wxy[0].disp.pos + EFF76_Face_Pos_Data[my_char][0] + 384;
+                ewk->wu.xyz[0].disp.pos = bg_w.bgw[0].wxy[0].disp.pos + EFF76_Face_Pos_Data[my_char][SEL_POS_X] + 384;
             }
             ewk->wu.position_z = 79;
             ewk->wu.mvxy.a[0].sp = -0xA0000;

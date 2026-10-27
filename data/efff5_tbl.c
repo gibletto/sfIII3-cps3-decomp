@@ -1,5 +1,8 @@
 /*
- * EFFF5_TBL.C  game tables
+ * EFFF5_TBL.C  opening demo picture object table (effect F5)
+ *
+ * efff5_data_tbl has one row per object type: move routine, x, y, priority, animation number
+ * and a flag word, copied into the object by effect_F5_init. Read by EFFF5.C.
  */
 
 #include "types.h"

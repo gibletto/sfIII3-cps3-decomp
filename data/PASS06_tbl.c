@@ -1,5 +1,8 @@
 /*
- * PASS06_TBL.C  game tables
+ * PASS06_TBL.C  CPU passive pattern table for Hugo
+ *
+ * Passive06_Tbl is the 147 passive (defensive) pattern routines of character 6 (Hugo),
+ * indexed by Pattern_Index. Read by PASS06.C.
  */
 
 #include "types.h"

@@ -67,6 +67,11 @@
 #include "continue.h"
 #include "fighter.h"
 
+/* Cont_Sub_No in Continue_1st */
+#define CONT1_INIT      0       /* set up the continue screen */
+#define CONT1_WAIT      1       /* until Next_Step */
+#define CONT1_PAUSE     2       /* wait Cont_Timer, then the count */
+
 
 
 s16 CONTINUE_X;  /* 02017018 */
@@ -93,7 +98,7 @@ s32 Continue_Scene(void) {
 
 void Continue_1st(void) {
     switch (Cont_Sub_No) {
-    case 0:
+    case CONT1_INIT:
         Cont_Sub_No++;
         Target_BG_X[3] = bg_w.bgw[3].wxy[0].disp.pos + 458;
         Target_BG_X[1] = bg_w.bgw[1].wxy[0].disp.pos + 458;
@@ -113,13 +118,13 @@ void Continue_1st(void) {
         Suicide[2] = 1;
         effect_58_init(16, 5, 2);
         break;
-    case 1:
+    case CONT1_WAIT:
         if (Next_Step) {
             Cont_Sub_No++;
             Cont_Timer = 20;
         }
         break;
-    case 2:
+    case CONT1_PAUSE:
         if (((s8)Scene_Cut)) {
             Cont_Timer = 1;
         }
@@ -193,18 +198,18 @@ void Setup_Continue_OBJ(void) {
 s32 Check_Exit_Continue(void) {
     s16* p;
     s8 id;
-    if (E_Number[0][0] == 2 || E_Number[1][0] == 2) {
+    if (E_Number[0][0] == ENTRY_NAME || E_Number[1][0] == ENTRY_NAME) {
         return 0;
     }
     id = LOSER;
     p = E_Number[id ^ 1];
-    if (p[0] == 0) {
+    if (p[0] == ENTRY_NONE) {
         return 60;
     }
-    if (p[0] != 3 && p[0] != 0) {
+    if (p[0] != ENTRY_NAME_WAIT && p[0] != ENTRY_NONE) {
         return 0;
     }
-    if (E_Number[id][0] != 3 && E_Number[id][0] != 0) {
+    if (E_Number[id][0] != ENTRY_NAME_WAIT && E_Number[id][0] != ENTRY_NONE) {
         return 0;
     }
     return 1;
@@ -253,7 +258,7 @@ s16 PL_id;
     Introduce_Boss[PL_id][0] = 0;
     Introduce_Boss[PL_id][1] = 0;
     Introduce_Break_Into[PL_id] = 0;
-    Score[PL_id][0] = 0;
+    Score[PL_id][SCORE_CPU] = 0;
     Stock_Score[PL_id] = 0;
     Stage_Stock_Score[PL_id] = 0;
     Continue_Coin[PL_id] = 0;
@@ -279,7 +284,7 @@ s16 PL_id;
     Straight_Flag[PL_id] = 0;
     SC_Personal_Time[PL_id] = 481;
     card_pl_work_clear(PL_id);
-    E_Number[PL_id][0] = 0;
+    E_Number[PL_id][0] = ENTRY_NONE;
     E_Number[PL_id][1] = 0;
     E_Number[PL_id][2] = 0;
     E_Number[PL_id][3] = 0;

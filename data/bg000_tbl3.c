@@ -1,5 +1,10 @@
 /*
- * BG000_TBL3.C  game tables
+ * BG000_TBL3.C  finish screen cells and scroll area tables
+ *
+ * ake_cell1_data and ake_cell2_data are the cell panels written for the finish screen
+ * (akebono) by BG000.C. pos_area_tbl and pos_area_wide_tbl map a player's screen x to an area
+ * code, for the normal and wide modes; the two players' codes pick the background scroll
+ * routine in bg_base_x_move_sub of BG_SUB_2.C.
  */
 
 #include "types.h"

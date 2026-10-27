@@ -1,5 +1,9 @@
 /*
- * PLCNT2_TBL.C  game tables
+ * PLCNT2_TBL.C  player control tables for the bonus stage
+ *
+ * player_bonus_process is the three phases of bonus-stage player control (init, move, die);
+ * bsmr_range_table gives the screen range offsets of each player by stage type, used to set
+ * their screen facing. Read by PLCNT2.C.
  */
 
 #include "types.h"

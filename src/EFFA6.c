@@ -1,7 +1,5 @@
-#include "EFFA6.h"
-
 /*
- * EFFA6.C  Effect A6: pre-fight dialogue text on the VS screen (move)
+ * EFFA6.C  Effect A6: pre-fight dialogue text on the VS screen
  *
  * Effect A6 is the dialogue line shown beside a character portrait on the VS screen; it is the
  * child of an effect 76 plate (orders 0x43 / 0x44) created by next_cpu.c. effect_A6_move reads a
@@ -16,6 +14,8 @@
  * position to use from the plate side and Player_id.
  */
 
+#include "EFFA6.h"
+
 #include "structs.h"
 #include "work.h"
 #include "romdata.h"
@@ -24,6 +24,17 @@
 #include "aboutspr.h"
 #include "EFFECT.h"
 #include "effect_2.h"
+
+/* routine_no[0] */
+#define R0_MOVE         0       /* run the dialogue script */
+#define R0_HIDE         1       /* hide the line */
+#define R0_END          2       /* one more frame */
+#define R0_KILL         3       /* (default) put the work back */
+
+/* routine_no[1]: slide of the current line */
+#define R1_INIT         0       /* place the line at its start */
+#define R1_SLIDE        1       /* slide in 10 dots a frame */
+#define R1_STAY         2       /* in place */
 
 extern const EFFA6_MESSAGE effA6_mes_en_0[];
 extern const EFFA6_MESSAGE effA6_mes_en_10[];
@@ -210,7 +221,7 @@ void effect_A6_move(WORK_Other_CONN* ewk) {
     const u16* chr_data;
     s16 i;
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_MOVE:
         if (effA5_start_pressed() != 0) {
             Next_Step |= ~0x7F;
         }
@@ -320,15 +331,15 @@ void effect_A6_move(WORK_Other_CONN* ewk) {
                     ewk->conn[i].chr = conn_data[i].chr;
                 }
                 ewk->wu.vitality = 0xF0;
-                ewk->wu.routine_no[1] = 0;
+                ewk->wu.routine_no[1] = R1_INIT;
             }
         }
         if (Suicide[3]) {
-            ewk->wu.routine_no[0] = 1;
+            ewk->wu.routine_no[0] = R0_HIDE;
             break;
         } else if (ewk->wu.disp_flag) {
             switch (ewk->wu.routine_no[1]) {
-            case 0:
+            case R1_INIT:
                 ewk->wu.routine_no[1]++;
                 switch (ewk->wu.dir_old) {
                 case 0x43:
@@ -340,7 +351,7 @@ void effect_A6_move(WORK_Other_CONN* ewk) {
                     ewk->wu.position_y = ewk->wu.xyz[1].disp.pos = bg_w.bgw[0].xy[1].disp.pos + 26;
                     break;
                 }
-            case 1:
+            case R1_SLIDE:
                 switch (ewk->wu.dir_old) {
                 case 0x43:
                     ewk->wu.position_x = ewk->wu.xyz[0].disp.pos = ewk->wu.xyz[0].disp.pos + 10;
@@ -358,7 +369,7 @@ void effect_A6_move(WORK_Other_CONN* ewk) {
                     break;
                 }
                 break;
-            case 2:
+            case R1_STAY:
                 break;
             }
             mwk = (WORK_Other*)ewk->my_master;
@@ -381,11 +392,11 @@ void effect_A6_move(WORK_Other_CONN* ewk) {
             sort_push_request3(&ewk->wu);
         }
         break;
-    case 1:
+    case R0_HIDE:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 0;
         break;
-    case 2:
+    case R0_END:
         ewk->wu.routine_no[0]++;
         break;
     default:
@@ -403,7 +414,7 @@ s32 effect_A6_init(WORK_Other* mwk) {
         return -1;
     }
     ewk = (WORK_Other_CONN*)frw[ix];
-    ewk->wu.routine_no[0] = 0;
+    ewk->wu.routine_no[0] = R0_MOVE;
     wwwk_set(&ewk->wu);
     ewk->master_player = My_char[Player_id];
     ewk->my_master = (u32*)mwk;

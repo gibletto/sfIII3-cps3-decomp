@@ -1,5 +1,10 @@
 /*
- * EFF05_TBL.C  game tables
+ * EFF05_TBL.C  stage scenery object list, set 05
+ *
+ * scr_obj_num starts with the number of scenery objects for each stage background (bg_index),
+ * followed by the object rows (family, colour, position, priority, animation, line-scroll
+ * sync) that scr_obj_data points into. Read by EFF05.C; EFF06.C also points some of its stage
+ * lists into it.
  */
 
 #include "types.h"

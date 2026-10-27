@@ -1,5 +1,8 @@
 /*
- * PASS10_TBL.C  game tables
+ * PASS10_TBL.C  Yang's passive pattern table
+ *
+ * Passive10_Tbl lists the 138 passive pattern routines of character 10 (Yang), indexed by
+ * Pattern_Index. Read by PASS10.C.
  */
 
 #include "types.h"

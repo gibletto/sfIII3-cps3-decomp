@@ -27,6 +27,10 @@
 #include "aboutspr.h"
 #include "effi6.h"
 
+/* routine_no[1] */
+#define R1_INIT         0       /* start the line at zero size */
+#define R1_MOVE         1       /* follow the parent's zoom */
+
 
 
 void effect_I6_move(WORK_Other* ewk) {
@@ -54,16 +58,15 @@ void effect_I6_move(WORK_Other* ewk) {
 
 
 void effi6_line_move(WORK_Other* ewk) {
-    WORK_Other* oya_ptr = (WORK_Other*)ewk->my_master;
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1] += 1;
         ewk->wu.disp_flag = 1;
         ewk->wu.my_mr_flag = 1;
         ewk->wu.my_mr.size.x = 0;
         ewk->wu.my_mr.size.y = 0;
         set_char_move_init2(&ewk->wu, 0, 2, 3, 0);
-    case 1:
+    case R1_MOVE:
         break;
     }
 }

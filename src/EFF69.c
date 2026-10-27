@@ -19,6 +19,16 @@
 #include "charmove_2.h"
 #include "EFF69.h"
 
+/* routine_no[0]: the order being carried out */
+#define R0_WAIT         0       /* wait for an order */
+
+/* routine_no[1]: within an order */
+#define R1_DELAY        0       /* count the order timer down */
+
+/* routine_no[1], EFF69_SLIDE_OUT */
+#define R1_OUT          1       /* move out until off screen */
+#define R1_KILL         99      /* (default) put the work back */
+
 
 
 void effect_69_move(WORK_Other* ewk) {
@@ -32,7 +42,7 @@ void effect_69_move(WORK_Other* ewk) {
 
 void EFF69_WAIT(WORK_Other* ewk) {
     if ((ewk->wu.routine_no[0] = Order[ewk->wu.dir_old])) {
-        ewk->wu.routine_no[1] = 0;
+        ewk->wu.routine_no[1] = R1_DELAY;
     }
 }
 
@@ -40,11 +50,11 @@ void EFF69_SLIDE_IN(WORK_Other* ewk)
 {
     if (Order[ewk->wu.dir_old] != 1) {
         ewk->wu.routine_no[0] = Order[ewk->wu.dir_old];
-        ewk->wu.routine_no[1] = 0;
+        ewk->wu.routine_no[1] = R1_DELAY;
         return;
     }
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_DELAY:
         if (--Order_Timer[ewk->wu.dir_old]) {
             break;
         }
@@ -68,14 +78,14 @@ void EFF69_SLIDE_IN(WORK_Other* ewk)
                 if (Order[ewk->wu.dir_old] == ewk->wu.routine_no[0]) {
                     Order[ewk->wu.dir_old] = 0;
                 }
-                ewk->wu.routine_no[0] = 0;
+                ewk->wu.routine_no[0] = R0_WAIT;
                 ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake;
             }
         } else if (ewk->wu.hit_quake >= ewk->wu.xyz[0].disp.pos) {
             if (Order[ewk->wu.dir_old] == ewk->wu.routine_no[0]) {
                 Order[ewk->wu.dir_old] = 0;
             }
-            ewk->wu.routine_no[0] = 0;
+            ewk->wu.routine_no[0] = R0_WAIT;
             ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake;
         }
         break;
@@ -86,9 +96,9 @@ void EFF69_SLIDE_IN(WORK_Other* ewk)
 
 void EFF69_SLIDE_OUT(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_DELAY:
         if (ewk->wu.disp_flag == 0) {
-            ewk->wu.routine_no[1] = 99;
+            ewk->wu.routine_no[1] = R1_KILL;
         } else {
             if (--Order_Timer[ewk->wu.dir_old]) {
                 break;
@@ -103,7 +113,7 @@ void EFF69_SLIDE_OUT(WORK_Other* ewk) {
             ewk->wu.mvxy.d[0].sp = 0x8000;
         }
         break;
-    case 1:
+    case R1_OUT:
         ewk->wu.xyz[0].cal += ewk->wu.mvxy.a[0].sp;
         ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;
         if (Ck_Range_Out_S(ewk, 2, 128)) {
@@ -122,18 +132,18 @@ void EFF69_SLIDE_OUT(WORK_Other* ewk) {
 
 void EFF69_SUDDENLY(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_DELAY:
         if (--Order_Timer[ewk->wu.dir_old]) {
             break;
         }
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
-        ewk->wu.xyz[0].disp.pos = Pos_Data_69[ewk->wu.dir_old][0] + 512;
-        ewk->wu.xyz[1].disp.pos = Pos_Data_69[ewk->wu.dir_old][1] + 0;
+        ewk->wu.xyz[0].disp.pos = Pos_Data_69[ewk->wu.dir_old][SEL_POS_X] + 512;
+        ewk->wu.xyz[1].disp.pos = Pos_Data_69[ewk->wu.dir_old][SEL_POS_Y] + 0;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
         break;
     default:
-        ewk->wu.routine_no[0] = 0;
+        ewk->wu.routine_no[0] = R0_WAIT;
         Order[ewk->wu.dir_old] = 0;
         break;
     }
@@ -143,7 +153,7 @@ void EFF69_SUDDENLY(WORK_Other* ewk) {
 
 void EFF69_KILL(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_DELAY:
         if (--Order_Timer[ewk->wu.dir_old] == 0) {
             ewk->wu.routine_no[1]++;
             ewk->wu.disp_flag = 0;
@@ -178,8 +188,8 @@ s32 effect_69_init(s16 dir_old) {
     ewk->wu.dir_old = dir_old;
     ewk->wu.xyz[0].disp.pos = 800;
     ewk->wu.mvxy.a[0].sp = -0xF0000;
-    ewk->wu.hit_quake = Pos_Data_69[dir_old][0] + 512;
-    ewk->wu.xyz[1].disp.pos = Pos_Data_69[dir_old][1] + 0;
+    ewk->wu.hit_quake = Pos_Data_69[dir_old][SEL_POS_X] + 512;
+    ewk->wu.xyz[1].disp.pos = Pos_Data_69[dir_old][SEL_POS_Y] + 0;
     ewk->wu.position_z = 73 - dir_old;
     return 0;
 }

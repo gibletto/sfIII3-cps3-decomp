@@ -27,6 +27,33 @@
 #include "bg_sub_5.h"
 #include "EFF18.h"
 
+/* routine_no[1], effect 17: eff17_zoom_in */
+#define R1_INIT         0       /* hidden at double size */
+#define R1_DELAY        1       /* wait out the delay, then show */
+#define R1_ZOOM         2       /* shrink to normal size */
+#define R1_SHOW         3       /* show at normal size */
+
+/* routine_no[2], effect 17: eff17_close */
+#define R2_CLOSE        0       /* squash away */
+#define R2_SHUT         1       /* squashed flat */
+
+/* routine_no[0], effect 18 */
+#define R0_INIT         0       /* first frame, then run the behaviour */
+#define R0_MOVE         1       /* run the behaviour routine */
+#define R0_KILL         99      /* (default) put the work back */
+
+/* routine_no[2], effect 18: eff18_00 */
+#define R2_INIT         0       /* start the idle animation */
+#define R2_IDLE         1       /* idle until a player does a special */
+#define R2_CUE          2       /* idle until the animation's next cue */
+#define R2_DELAY        3       /* wait out the rest of the delay */
+#define R2_HOP          4       /* hop until the animation ends */
+
+/* routine_no[2], effect 18: eff18_01 */
+#define R2_WAIT_WIN     1       /* idle until a perfect victory */
+#define R2_CHEER        2       /* start the celebration */
+#define R2_CELEBRATE    3       /* play the celebration */
+
 
 
 extern const s16 scr_obj_data18_0[];
@@ -71,7 +98,7 @@ void effect_17_move(WORK_Other* ewk) {
 void eff17_zoom_in(WORK_Other* ewk) {
     WORK* oya = (WORK*)ewk->my_master;
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 0;
         ewk->wu.my_mr_flag = 1;
@@ -79,14 +106,14 @@ void eff17_zoom_in(WORK_Other* ewk) {
         ewk->wu.my_mr.size.y = 127;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.old_rno[3], 0);
         break;
-    case 1:
+    case R1_DELAY:
         ewk->wu.old_rno[1]--;
         if (ewk->wu.old_rno[1] < 0) {
             ewk->wu.disp_flag = 1;
             ewk->wu.routine_no[1]++;
         }
         break;
-    case 2:
+    case R1_ZOOM:
         ewk->wu.my_mr.size.x -= 7;
         ewk->wu.my_mr.size.y -= 7;
         if (ewk->wu.my_mr.size.x <= 63) {
@@ -96,7 +123,7 @@ void eff17_zoom_in(WORK_Other* ewk) {
                 oya->old_rno[2] = 1;
             }
         }
-    case 3:
+    case R1_SHOW:
         disp_pos_trans_entry5(ewk);
         break;
     }
@@ -108,7 +135,7 @@ void eff17_zoom_in(WORK_Other* ewk) {
 void eff17_close(WORK_Other* ewk) {
     WORK* oya = (WORK*)ewk->my_master;
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_CLOSE:
         ewk->wu.my_mr.size.y = ewk->wu.my_mr.size.y + -7;
         if (ewk->wu.my_mr.size.y <= 0) {
             ewk->wu.my_mr.size.y = 0;
@@ -119,7 +146,7 @@ void eff17_close(WORK_Other* ewk) {
         }
         disp_pos_trans_entry5(ewk);
         break;
-    case 1:
+    case R2_SHUT:
         break;
     }
 }
@@ -163,13 +190,13 @@ void effect_18_move(WORK_Other* ewk) {
         return;
     }
     if (compel_dead_check(ewk)) {
-        ewk->wu.routine_no[0] = 99;
+        ewk->wu.routine_no[0] = R0_KILL;
         ewk->wu.disp_flag = 0;
     } else {
         switch (ewk->wu.routine_no[0]) {
-        case 0:
+        case R0_INIT:
             ewk->wu.routine_no[0]++;
-        case 1:
+        case R0_MOVE:
             if (!EXE_flag && !Game_pause) {
                 eff18_jp_tbl[ewk->wu.routine_no[1]](ewk);
             }
@@ -191,11 +218,11 @@ void effect_18_move(WORK_Other* ewk) {
 /* provisional name */
 void eff18_00(WORK* wk) {
     switch (wk->routine_no[2]) {
-    case 0:
+    case R2_INIT:
         wk->routine_no[2]++;
         wk->disp_flag = 1;
         set_char_move_init(wk, 0, wk->dir_old);
-    case 1:
+    case R2_IDLE:
         if (either_pl_hissatsu_check()) {
             wk->routine_no[2]++;
             wk->dir_timer = 5;
@@ -205,13 +232,13 @@ void eff18_00(WORK* wk) {
             char_move(wk);
         }
         break;
-    case 2:
+    case R2_CUE:
         wk->direction++;
         if (wk->cg_type) {
             wk->cg_type = 0;
             wk->dir_timer -= wk->direction;
             if (wk->dir_timer < 0) {
-                wk->routine_no[2] = 4;
+                wk->routine_no[2] = R2_HOP;
                 set_char_move_init(wk, 0, wk->dir_step);
             } else {
                 wk->routine_no[2]++;
@@ -221,7 +248,7 @@ void eff18_00(WORK* wk) {
             char_move(wk);
         }
         break;
-    case 3:
+    case R2_DELAY:
         wk->dir_timer--;
         if (wk->dir_timer < 0) {
             wk->routine_no[2]++;
@@ -231,13 +258,13 @@ void eff18_00(WORK* wk) {
             char_move(wk);
         }
         break;
-    case 4:
+    case R2_HOP:
         if (!EXE_obroll) {
             char_move(wk);
         }
         if (wk->cg_type) {
             wk->cg_type = 0;
-            wk->routine_no[2] = 0;
+            wk->routine_no[2] = R2_INIT;
         }
         break;
     }
@@ -248,11 +275,11 @@ void eff18_00(WORK* wk) {
 /* provisional name */
 void eff18_01(WORK* wk) {
     switch (wk->routine_no[2]) {
-    case 0:
+    case R2_INIT:
         wk->routine_no[2]++;
         wk->disp_flag = 1;
         set_char_move_init(wk, 0, wk->dir_old);
-    case 1:
+    case R2_WAIT_WIN:
         if (complete_victory_check()) {
             wk->routine_no[2]++;
         }
@@ -260,11 +287,11 @@ void eff18_01(WORK* wk) {
             char_move(wk);
         }
         break;
-    case 2:
+    case R2_CHEER:
         wk->routine_no[2]++;
         set_char_move_init(wk, 0, wk->dir_step);
         break;
-    case 3:
+    case R2_CELEBRATE:
         if (!EXE_obroll) {
             char_move(wk);
         }

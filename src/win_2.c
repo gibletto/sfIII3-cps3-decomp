@@ -69,6 +69,15 @@
 #include "win_2.h"
 #include "fighter.h"
 
+/* M_No1 in Win_3rd and Lose_3rd */
+#define M1_COVER        0       /* after Cover_Timer, clear the screen and wipe in */
+#define M1_REVIVAL      1       /* finish the wipe */
+
+/* GO_No[1] in GameOver_1st */
+#define GO1_INIT        0       /* bring the game-over screen in */
+#define GO1_WAIT        1       /* until Next_Step */
+#define GO1_SHOW        2       /* show it for G_Timer, then GO_RESULT */
+
 
 
 s32 Winner_Scene(void) {
@@ -108,7 +117,7 @@ void Win_1st(void) {
     load_any_color(124);
     load_char_gfx(0x9560, 1);
     load_char_gfx(0x95E0, 1);
-    if (Play_Type == 0) {
+    if (Play_Type == PLAY_VS_CPU) {
         Last_Selected_EM[Winner_id] = 1;
     }
 }
@@ -160,19 +169,19 @@ void Win_2nd(void) {
 
 void Win_3rd(void) {
     switch (M_No1) {
-    case 0:
+    case M1_COVER:
         if (--Cover_Timer == 0) {
             M_No1++;
             tilemap_fill_all(0, 32);
             Clear_Flash_No();
             commit_name_entry_row_both_players(Text_Page_Y);
-            if (G_No1 == 3) {
+            if (G_No1 == G1_WINNER) {
                 Scrn_Move_Set(4, 0, 0x100);
             }
             Switch_Screen_Init(0, 1);
         }
         break;
-    case 1:
+    case M1_REVIVAL:
         if (Switch_Screen_Revival()) {
             M_No0++;
             M_Timer = 90;
@@ -288,19 +297,19 @@ void Lose_2nd(void) {
 
 void Lose_3rd(void) {
     switch (M_No1) {
-    case 0:
+    case M1_COVER:
         if (--Cover_Timer == 0) {
             M_No1++;
             tilemap_fill_all(0, 32);
             Clear_Flash_No();
             commit_name_entry_row_both_players(Text_Page_Y);
-            if (G_No1 == 3) {
+            if (G_No1 == G1_WINNER) {
                 Scrn_Move_Set(4, 0, 0x100);
             }
             Switch_Screen_Init(0, 1);
         }
         break;
-    case 1:
+    case M1_REVIVAL:
         if (Switch_Screen_Revival() != 0) {
             M_No0++;
             M_Timer = 90;
@@ -411,6 +420,10 @@ const s16 Loser_X_Pos_Data[6][2] = {
 };
 
 
+/*
+ * Indexed by area (kage_hx) and screen mode: the text rectangle effect A3 clears, as left,
+ * top, right and bottom cells (rows counted from Text_Page_Y).
+ */
 const s16 EFFA3_Area_Data[2][2][4] = {
     { { 0, 9, 48, 10 }, { 8, 9, 62, 10 } },
     { { 0, 15, 48, 16 }, { 8, 15, 62, 16 } },
@@ -441,7 +454,7 @@ s32 Game_Over(void) {
 
 void GameOver_1st(void) {
     switch (GO_No[1]) {
-    case 0:
+    case GO1_INIT:
         GO_No[1]++;
         Target_BG_X[3] = bg_w.bgw[3].wxy[0].disp.pos + 458;
         Offset_BG_X[3] = 0;
@@ -463,13 +476,13 @@ void GameOver_1st(void) {
         Order[56] = 3;
         Order_Timer[56] = 1;
         break;
-    case 1:
+    case GO1_WAIT:
         if (Next_Step) {
             GO_No[1]++;
             G_Timer = 240;
         }
         break;
-    case 2:
+    case GO1_SHOW:
         if (Scene_Cut) {
             G_Timer = 1;
         }

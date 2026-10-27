@@ -23,21 +23,24 @@
 #include "bg_sub_5.h"
 #include "EFF72.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* show */
+#define R0_MOVE         1       /* play the animation once */
+#define R0_KILL         2       /* (default) put the work back */
+
 
 
 void effect_72_move(WORK_Other* ewk) {
-    WORK_Other* oya;
     if (obr_no_disp_check()) {
         return;
     }
-    oya = (WORK_Other*)ewk->my_master;
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R0_MOVE:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             if (ewk->wu.cg_type) {
@@ -48,7 +51,7 @@ void effect_72_move(WORK_Other* ewk) {
         disp_pos_trans_entry_r(ewk);
         break;
     default:
-    case 2:
+    case R0_KILL:
         all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
         break;

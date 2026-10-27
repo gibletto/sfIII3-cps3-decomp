@@ -1,5 +1,9 @@
 /*
- * BG_DATA.C  game tables
+ * BG_DATA.C  stage background index table
+ *
+ * bg_index_tbl gives the background number (bg_index) for each stage and area; every other
+ * stage background table is indexed by it. Read by BG000.C (bg_initialize). bg_index_tbl_tail
+ * follows bg_index_tbl and is not referred to.
  */
 
 #include "types.h"

@@ -1,5 +1,9 @@
 /*
- * EFFD6.C  game tables
+ * EFFD6.C  rose petal tables
+ *
+ * num_of_hana gives the number of petals in each petal set, and hana_dir_hosei,
+ * hana_speed_hosei and hana_delta_hosei the direction offset, speed and slowdown of each
+ * petal, picked at random. Read by EFFD6_CODE.C, the rose petals.
  */
 
 #include "types.h"

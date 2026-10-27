@@ -23,6 +23,9 @@
 #include "EFFH9.h"
 #include "BBBSCOM.h"
 
+/* Sean's attack routine 31 (pl12_exatt_table: Att_PL12_BONUS_STAGE), the ball thrower of the bonus stage */
+#define SEAN_BONUS_STAGE 31
+
 
 
 extern const BBBSTable bbbs_level_00[];
@@ -60,7 +63,7 @@ void bbbs_com_execute(PLW* wk) {
     case 1:
         switch (Bonus_Stage_RNO[1]) {
         case 0:
-            if (wk->wu.routine_no[1] != 0) {
+            if (wk->wu.routine_no[1] != PLAYER_NORMAL) {
                 break;
             }
             if (wk->wu.routine_no[2] != 1 && (wk->wu.routine_no[2] < 36 || wk->wu.routine_no[2] > 38)) {
@@ -94,9 +97,9 @@ void bbbs_com_execute(PLW* wk) {
             break;
         case 2:
             Bonus_Stage_RNO[1] = 3;
-            wk->wu.routine_no[1] = 4;
-            wk->wu.routine_no[2] = 31;
-            wk->wu.routine_no[3] = 0;
+            wk->wu.routine_no[1] = PLAYER_ATTACK;
+            wk->wu.routine_no[2] = SEAN_BONUS_STAGE;
+            wk->wu.routine_no[3] = RN3_START;
             wk->wu.char_index = 71;
             wk->wu.cmwk[5] = bbbs_table[bbbs_type][Bonus_Stage_Level][Bonus_Stage_Tix].kosuu;
             wk->wu.mvxy.d[0].sp = 0;
@@ -112,7 +115,7 @@ void bbbs_com_execute(PLW* wk) {
             }
             break;
         case 4:
-            if (wk->wu.routine_no[1] == 4 && wk->wu.routine_no[2] == 31 && wk->wu.routine_no[3] == 3) {
+            if (wk->wu.routine_no[1] == PLAYER_ATTACK && wk->wu.routine_no[2] == SEAN_BONUS_STAGE && wk->wu.routine_no[3] == 3) {
                 Bonus_Stage_RNO[1] = 0;
             }
             break;

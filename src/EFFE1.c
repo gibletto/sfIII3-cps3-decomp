@@ -18,15 +18,19 @@
 #include "CHARMOVE.h"
 #include "EFFE1.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* start the pattern */
+#define R0_MOVE         1       /* draw at full size */
+
 
 
 void effect_E1_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
-    case 1:
+    case R0_MOVE:
         ewk->wu.my_mr.size.x = 63;
         ewk->wu.my_mr.size.y = 63;
     }

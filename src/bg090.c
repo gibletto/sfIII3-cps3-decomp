@@ -58,6 +58,15 @@
 #include "meta_col_bcd.h"
 #include "BG050.h"
 
+/* bgw r_no_0 of a layer that follows the camera */
+#define SYNC_INIT       0       /* set up the layer */
+#define SYNC_MOVE       1       /* follow the camera (bg_x_move_check, bg_y_move_check) */
+
+/* bgw r_no_0 of a layer with an entrance demo: its bg*_jmp routine */
+#define R0_INIT         0       /* set up the layer */
+#define R0_DEMO         1       /* the entrance demo */
+#define R0_MOVE         2       /* follow the fight */
+
 
 
 void BG180(void) {
@@ -220,7 +229,7 @@ void bg0602_init00(void) {
 
 void bg0603(void) {
     switch (bgw_ptr->r_no_0) {
-    case 0:
+    case SYNC_INIT:
         bgw_ptr->r_no_0++;
         bgw_ptr->old_pos_x = bgw_ptr->xy[0].disp.pos = bgw_ptr->pos_x_work = 0x200;
         bgw_ptr->hos_xy[0].cal = bgw_ptr->wxy[0].cal = bgw_ptr->xy[0].cal;
@@ -232,7 +241,7 @@ void bg0603(void) {
         bgw_ptr->speed_y = 0x10000;
         sync_fam_set3(2);
         break;
-    case 1:
+    case SYNC_MOVE:
         bg_x_move_check();
         bg_y_move_check();
         sync_fam_set3(2);
@@ -311,7 +320,7 @@ void bg0702_init00(void) {
 
 void bg0703(void) {
     switch (bgw_ptr->r_no_0) {
-    case 0:
+    case SYNC_INIT:
         bgw_ptr->r_no_0 += 1;
         bgw_ptr->fam_no = 2;
         bgw_ptr->old_pos_x = bgw_ptr->xy[0].disp.pos = bgw_ptr->pos_x_work = 0x200;
@@ -323,7 +332,7 @@ void bg0703(void) {
         bgw_ptr->speed_y = 0xF800;
         sync_fam_set3(2);
         break;
-    case 1:
+    case SYNC_MOVE:
         bg_x_move_check();
         bg_y_move_check();
         sync_fam_set3(2);
@@ -513,7 +522,7 @@ void bg_fam0900(void) {
         return;
     }
     switch (bgw_ptr->r_no_0) {
-    case 0:
+    case R0_INIT:
         bgw_ptr->r_no_0++;
         bgw_ptr->old_pos_x = bgw_ptr->xy[0].disp.pos = bgw_ptr->pos_x_work = 0x200;
         bgw_ptr->hos_xy[0].cal = bgw_ptr->wxy[0].cal = bgw_ptr->xy[0].cal;
@@ -537,11 +546,11 @@ void bg_fam0900(void) {
         bg090_demo_check();
         sync_fam_set3(bgw_ptr->fam_no);
         break;
-    case 1:
+    case R0_DEMO:
         demo90_base();
         sync_fam_set3(bgw_ptr->fam_no);
         break;
-    case 2:
+    case R0_MOVE:
         bg_x_move_check();
         bg_y_move_check();
         sync_fam_set3(bgw_ptr->fam_no);
@@ -553,11 +562,11 @@ void bg_fam0900(void) {
 
 void bg090_demo_check(void) {
     if ((plw->player_number != PL_ORO) && (plw[1].player_number != PL_ORO)) {
-        bgw_ptr->r_no_0 = 2;
+        bgw_ptr->r_no_0 = R0_MOVE;
     } else if (bg_w.area != 0) {
-        bgw_ptr->r_no_0 = 2;
+        bgw_ptr->r_no_0 = R0_MOVE;
     } else {
-        bgw_ptr->r_no_0 = 1;
+        bgw_ptr->r_no_0 = R0_DEMO;
         bgw_ptr->xy[1].cal = bgw_ptr->wxy[1].cal = bgw_ptr->speed_y * 0xC0;
     }
 }

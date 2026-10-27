@@ -29,21 +29,58 @@
 #include "EFFC2.h"
 #include "EFFK2.h"
 
+/* routine_no[0], effect K1 */
+#define R0_SHOW         0       /* zoom in and show the timer */
+#define R0_LEAVE        1       /* (default) shrink away and put back */
+
+/* routine_no[1], effect K1 while shown */
+#define R1_START        0       /* start the zoom in or out */
+#define R1_ZOOM_IN      1       /* grow to full size */
+#define R1_TIMER        2       /* redraw the digits when they change */
+#define R1_FLIP         3       /* narrow, then change the digits */
+
+/* routine_no[1], effect K1 while leaving */
+#define R1_SHRINK       1       /* shrink until gone */
+#define R1_END          2       /* hidden for a frame */
+#define R1_KILL         3       /* (default) put the work back */
+
+/* routine_no[0], effect K2 */
+#define R0_INIT         0       /* set up from the debris data */
+#define R0_MOVE         1       /* run the piece's movement type */
+#define R0_END          2       /* hidden for a frame */
+#define R0_KILL         3       /* (default) put the work back */
+
+/* routine_no[2], effect K2 piece movement */
+#define R2_FLY          0       /* fly until it lands */
+#define R2_BOUNCE       1       /* bounce off the ground */
+#define R2_VANISH       10      /* choose how to vanish */
+#define R2_BLINK        11      /* blink for a while, then go */
+#define R2_STAY         15      /* stay where it fell */
+#define R2_GONE         20      /* hide and finish */
+
+/* routine_no[2], effK2_parts_move_type_4 */
+#define R2_HOLD         0       /* wait for the car to break */
+#define R2_DELAY        1       /* wait a second, then fly */
+
+/* routine_no[2], effK2_parts_move_type_6 */
+#define R2_SET_LIFE     0       /* pick a random life */
+#define R2_FADE         1       /* fly, blink and run out */
+
 
 
 
 void effect_K1_move(WORK_Other* ewk) {
     s8 tm;
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_SHOW:
         if (Time_Stop < 0) {
             ewk->wu.routine_no[0]++;
-            ewk->wu.routine_no[1] = 0;
+            ewk->wu.routine_no[1] = R1_START;
             sort_push_request(&ewk->wu);
             return;
         }
         switch (ewk->wu.routine_no[1]) {
-        case 0:
+        case R1_START:
             if (--ewk->wu.dir_timer) {
                 return;
             } else {
@@ -54,7 +91,7 @@ void effect_K1_move(WORK_Other* ewk) {
                 set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
                 break;
             }
-        case 1:
+        case R1_ZOOM_IN:
             if ((ewk->wu.my_mr.size.x -= *(s16*)&ewk->wu.mvxy.a[0]) <= 63) {
                 ewk->wu.my_mr.size.x = 63;
             }
@@ -72,7 +109,7 @@ void effect_K1_move(WORK_Other* ewk) {
                     break;
                 }
             }
-        case 2:
+        case R1_TIMER:
             tm = Select_Timer;
             if (ewk->wu.rl_waza != tm) {
                 ewk->wu.rl_waza = tm;
@@ -81,7 +118,7 @@ void effect_K1_move(WORK_Other* ewk) {
                 set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
             }
             break;
-        case 3:
+        case R1_FLIP:
             if (zoom_x_step_check(ewk)) {
                 ewk->wu.routine_no[1]++;
                 ewk->wu.mvxy.a[0].sp = -ewk->wu.mvxy.a[0].sp;
@@ -92,7 +129,7 @@ void effect_K1_move(WORK_Other* ewk) {
             break;
         default:
             if (zoom_x_step_check(ewk)) {
-                ewk->wu.routine_no[1] = 2;
+                ewk->wu.routine_no[1] = R1_TIMER;
                 ewk->wu.my_mr_flag = 0;
             }
             break;
@@ -100,18 +137,18 @@ void effect_K1_move(WORK_Other* ewk) {
         break;
     default:
         switch (ewk->wu.routine_no[1]) {
-        case 0:
+        case R1_START:
             ewk->wu.routine_no[1]++;
             ewk->wu.my_mr_flag = 1;
             ewk->wu.mvxy.a[0].sp = -0x80000;
-        case 1:
+        case R1_SHRINK:
             if (zoom_x_step_check(ewk)) {
                 ewk->wu.routine_no[1]++;
                 ewk->wu.disp_flag = 0;
                 return;
             }
             break;
-        case 2:
+        case R1_END:
             ewk->wu.routine_no[1]++;
             return;
         default:
@@ -179,7 +216,7 @@ void effect_K2_move(WORK_Other* ewk) {
         ewk->wu.dir_old = 1;
     }
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.routine_no[1] = hahen->rno;
         ewk->wu.disp_flag = hahen->init_dsp;
@@ -204,7 +241,7 @@ void effect_K2_move(WORK_Other* ewk) {
         }
         disp_effK2(&ewk->wu, mwk, hahen);
         break;
-    case 1:
+    case R0_MOVE:
         if (ewk->wu.dead_f == 1 || Suicide[0] != 0) {
             ewk->wu.disp_flag = 0;
             ewk->wu.routine_no[0]++;
@@ -215,8 +252,8 @@ void effect_K2_move(WORK_Other* ewk) {
         }
         disp_effK2(&ewk->wu, mwk, hahen);
         break;
-    case 2:
-        ewk->wu.routine_no[0] = 3;
+    case R0_END:
+        ewk->wu.routine_no[0] = R0_KILL;
         break;
     default:
         all_cgps_put_back(&ewk->wu);
@@ -259,16 +296,16 @@ void disp_effK2(WORK* wk, WORK* mk, DADD* hk) {
 
 void effK2_parts_move_type_0(WORK_Other* ewk, DADD* _p1) {
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_FLY:
         char_move(&ewk->wu);
         add_mvxy_speed(&ewk->wu);
         cal_mvxy_speed(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
             ewk->wu.routine_no[1] = 1;
-            ewk->wu.routine_no[2] = 10;
+            ewk->wu.routine_no[2] = R2_VANISH;
             reset_mvxy_data(&ewk->wu);
         } else if (screen_x_range_check(&ewk->wu)) {
-            ewk->wu.routine_no[2] = 20;
+            ewk->wu.routine_no[2] = R2_GONE;
             ewk->wu.routine_no[1] = 1;
         }
         break;
@@ -279,7 +316,7 @@ void effK2_parts_move_type_0(WORK_Other* ewk, DADD* _p1) {
 
 void effK2_parts_move_type_1(WORK_Other* ewk, DADD* hahen) {
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_FLY:
         switch (ewk->wu.dm_attlv) {
         case 2:
         case 3:
@@ -292,7 +329,7 @@ void effK2_parts_move_type_1(WORK_Other* ewk, DADD* hahen) {
         add_mvxy_speed(&ewk->wu);
         cal_mvxy_speed(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
-            ewk->wu.routine_no[2] = 10;
+            ewk->wu.routine_no[2] = R2_VANISH;
             break;
         }
         if (ewk->wu.mvxy.a[1].sp > 0) {
@@ -301,47 +338,47 @@ void effK2_parts_move_type_1(WORK_Other* ewk, DADD* hahen) {
         if (ewk->wu.xyz[1].disp.pos <= ewk->wu.next_y) {
             ewk->wu.xyz[1].disp.pos = ewk->wu.next_y;
             if (++ewk->wu.kage_hy > hahen->bau) {
-                ewk->wu.routine_no[2] = 10;
+                ewk->wu.routine_no[2] = R2_VANISH;
             } else {
-                ewk->wu.routine_no[2] = 1;
+                ewk->wu.routine_no[2] = R2_BOUNCE;
             }
         }
         if (screen_x_range_check(&ewk->wu)) {
-            ewk->wu.routine_no[2] = 20;
+            ewk->wu.routine_no[2] = R2_GONE;
         }
         break;
-    case 1:
-        ewk->wu.routine_no[2] = 0;
+    case R2_BOUNCE:
+        ewk->wu.routine_no[2] = R2_FLY;
         ewk->wu.mvxy.a[0].sp /= 2;
         ewk->wu.mvxy.d[0].sp /= 2;
         ewk->wu.mvxy.a[1].sp = -ewk->wu.mvxy.a[1].sp;
         ewk->wu.mvxy.a[1].sp /= 3;
         set_next_next_y(&ewk->wu, hahen->kage_char);
         break;
-    case 10:
+    case R2_VANISH:
         switch (hahen->doa) {
         case 0:
             ewk->wu.disp_flag = 0;
-            ewk->wu.routine_no[2] = 20;
+            ewk->wu.routine_no[2] = R2_GONE;
             break;
         case 1:
             ewk->wu.disp_flag = 1;
-            ewk->wu.routine_no[2] = 15;
+            ewk->wu.routine_no[2] = R2_STAY;
             break;
         default:
             ewk->wu.disp_flag = 2;
             ewk->wu.kage_prio = 20;
-            ewk->wu.routine_no[2] = 11;
+            ewk->wu.routine_no[2] = R2_BLINK;
             break;
         }
         break;
-    case 11:
+    case R2_BLINK:
         if (--ewk->wu.kage_prio > 0) {
             break;
         }
-    case 20:
+    case R2_GONE:
         ewk->wu.disp_flag = 0;
-        ewk->wu.routine_no[0] = 2;
+        ewk->wu.routine_no[0] = R0_END;
         break;
     }
 }
@@ -350,7 +387,7 @@ void effK2_parts_move_type_1(WORK_Other* ewk, DADD* hahen) {
 
 void effK2_parts_move_type_2(WORK_Other* ewk, DADD* _p1) {
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_FLY:
         char_move(&ewk->wu);
         add_mvxy_speed(&ewk->wu);
         cal_mvxy_speed(&ewk->wu);
@@ -360,7 +397,7 @@ void effK2_parts_move_type_2(WORK_Other* ewk, DADD* _p1) {
             char_move_cmja(&ewk->wu);
             reset_mvxy_data(&ewk->wu);
         } else if (screen_x_range_check(&ewk->wu) != 0) {
-            ewk->wu.routine_no[2] = 20;
+            ewk->wu.routine_no[2] = R2_GONE;
             ewk->wu.routine_no[1] = 1;
         }
         break;
@@ -371,7 +408,7 @@ void effK2_parts_move_type_2(WORK_Other* ewk, DADD* _p1) {
 
 void effK2_parts_move_type_3(WORK_Other* ewk, DADD* hahen) {
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_FLY:
         char_move(&ewk->wu);
         add_mvxy_speed(&ewk->wu);
         cal_mvxy_speed(&ewk->wu);
@@ -381,16 +418,16 @@ void effK2_parts_move_type_3(WORK_Other* ewk, DADD* hahen) {
         if (ewk->wu.xyz[1].disp.pos <= ewk->wu.next_y) {
             ewk->wu.xyz[1].disp.pos = ewk->wu.next_y;
             if (++ewk->wu.kage_hy > hahen->bau) {
-                ewk->wu.routine_no[2] = 10;
+                ewk->wu.routine_no[2] = R2_VANISH;
             } else {
-                ewk->wu.routine_no[2] = 1;
+                ewk->wu.routine_no[2] = R2_BOUNCE;
             }
             ewk->wu.routine_no[1] = 1;
             char_move_cmja(&ewk->wu);
             reset_mvxy_data(&ewk->wu);
         } else if (screen_x_range_check(&ewk->wu)) {
             ewk->wu.routine_no[1] = 1;
-            ewk->wu.routine_no[2] = 20;
+            ewk->wu.routine_no[2] = R2_GONE;
         }
         break;
     }
@@ -400,21 +437,21 @@ void effK2_parts_move_type_3(WORK_Other* ewk, DADD* hahen) {
 
 void effK2_parts_move_type_4(WORK_Other* ewk, DADD* arg1) {
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_HOLD:
         char_move(&ewk->wu);
         if (ewk->wu.dir_old) {
-            ewk->wu.routine_no[2] = 1;
+            ewk->wu.routine_no[2] = R2_DELAY;
             ewk->wu.kage_prio = 60;
         }
         break;
-    case 1:
+    case R2_DELAY:
         char_move(&ewk->wu);
         if (--ewk->wu.kage_prio > 0) {
             break;
         }
         char_move_cmja(&ewk->wu);
         ewk->wu.routine_no[1] = 0;
-        ewk->wu.routine_no[2] = 0;
+        ewk->wu.routine_no[2] = R2_FLY;
         break;
     }
 }
@@ -426,7 +463,7 @@ void effK2_parts_move_type_5(WORK_Other* ewk, DADD* arg1) {
     if (ewk->wu.dir_old) {
         ewk->wu.disp_flag = 0;
         ewk->wu.routine_no[1] = 1;
-        ewk->wu.routine_no[2] = 20;
+        ewk->wu.routine_no[2] = R2_GONE;
     }
 }
 
@@ -434,11 +471,11 @@ void effK2_parts_move_type_5(WORK_Other* ewk, DADD* arg1) {
 
 void effK2_parts_move_type_6(WORK_Other* ewk, DADD* arg1) {
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_SET_LIFE:
         ewk->wu.kage_prio = (random_16_com() & 7) + 28;
         ewk->wu.kage_hy = ewk->wu.kage_prio / 2;
         ewk->wu.routine_no[2]++;
-    case 1:
+    case R2_FADE:
         char_move(&ewk->wu);
         add_mvxy_speed(&ewk->wu);
         cal_mvxy_speed(&ewk->wu);
@@ -449,7 +486,7 @@ void effK2_parts_move_type_6(WORK_Other* ewk, DADD* arg1) {
         }
         if (--ewk->wu.kage_prio < 0) {
             ewk->wu.disp_flag = 0;
-            ewk->wu.routine_no[0] = 2;
+            ewk->wu.routine_no[0] = R0_END;
         }
         break;
     }
@@ -459,11 +496,11 @@ void effK2_parts_move_type_6(WORK_Other* ewk, DADD* arg1) {
 
 void effK2_parts_move_type_7(WORK_Other* ewk, DADD* arg1) {
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_HOLD:
         char_move(&ewk->wu);
         if (ewk->wu.dir_old) {
             ewk->wu.routine_no[1] = 1;
-            ewk->wu.routine_no[2] = 10;
+            ewk->wu.routine_no[2] = R2_VANISH;
         }
         break;
     }
@@ -473,7 +510,7 @@ void effK2_parts_move_type_7(WORK_Other* ewk, DADD* arg1) {
 
 void effK2_parts_move_type_8(WORK_Other* ewk, DADD* hahen) {
     switch (ewk->wu.routine_no[2]) {
-    case 0:
+    case R2_FLY:
         switch (ewk->wu.dm_attlv) {
         case 2:
         case 3:
@@ -486,7 +523,7 @@ void effK2_parts_move_type_8(WORK_Other* ewk, DADD* hahen) {
         add_mvxy_speed(&ewk->wu);
         cal_mvxy_speed(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
-            ewk->wu.routine_no[2] = 10;
+            ewk->wu.routine_no[2] = R2_VANISH;
             break;
         }
         if (ewk->wu.mvxy.a[1].sp > 0) {
@@ -495,48 +532,48 @@ void effK2_parts_move_type_8(WORK_Other* ewk, DADD* hahen) {
         if (ewk->wu.xyz[1].disp.pos <= ewk->wu.next_y) {
             ewk->wu.xyz[1].disp.pos = ewk->wu.next_y;
             if (++ewk->wu.kage_hy > hahen->bau) {
-                ewk->wu.routine_no[2] = 10;
+                ewk->wu.routine_no[2] = R2_VANISH;
             } else {
-                ewk->wu.routine_no[2] = 1;
+                ewk->wu.routine_no[2] = R2_BOUNCE;
             }
             sound_effect_request[0x3E4](ewk, 0x3E4);
         }
         if (screen_x_range_check(&ewk->wu)) {
-            ewk->wu.routine_no[2] = 20;
+            ewk->wu.routine_no[2] = R2_GONE;
         }
         break;
-    case 1:
-        ewk->wu.routine_no[2] = 0;
+    case R2_BOUNCE:
+        ewk->wu.routine_no[2] = R2_FLY;
         ewk->wu.mvxy.a[0].sp /= 2;
         ewk->wu.mvxy.d[0].sp /= 2;
         ewk->wu.mvxy.a[1].sp = -ewk->wu.mvxy.a[1].sp;
         ewk->wu.mvxy.a[1].sp /= 3;
         set_next_next_y(&ewk->wu, hahen->kage_char);
         break;
-    case 10:
+    case R2_VANISH:
         switch (hahen->doa) {
         case 0:
             ewk->wu.disp_flag = 0;
-            ewk->wu.routine_no[2] = 20;
+            ewk->wu.routine_no[2] = R2_GONE;
             break;
         case 1:
             ewk->wu.disp_flag = 1;
-            ewk->wu.routine_no[2] = 15;
+            ewk->wu.routine_no[2] = R2_STAY;
             break;
         default:
             ewk->wu.disp_flag = 2;
             ewk->wu.kage_prio = 20;
-            ewk->wu.routine_no[2] = 11;
+            ewk->wu.routine_no[2] = R2_BLINK;
             break;
         }
         break;
-    case 11:
+    case R2_BLINK:
         if (--ewk->wu.kage_prio > 0) {
             break;
         }
-    case 20:
+    case R2_GONE:
         ewk->wu.disp_flag = 0;
-        ewk->wu.routine_no[0] = 2;
+        ewk->wu.routine_no[0] = R0_END;
         break;
     }
 }

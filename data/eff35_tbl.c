@@ -1,5 +1,8 @@
 /*
- * EFF35_TBL.C  game tables
+ * EFF35_TBL.C  bonus-stage presentation object data
+ *
+ * eff35_data_tbl holds one row per bonus-stage object type: x, y, priority, animation, two
+ * parameters and the behaviour (eff35_0000 - 0006) it runs. Read by EFF35.C.
  */
 
 #include "types.h"

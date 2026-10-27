@@ -1,5 +1,8 @@
 /*
- * ACTIVE19_TBL.C  game tables
+ * ACTIVE19_TBL.C  CPU active pattern table for player 19 (Twelve)
+ *
+ * Pattern19_Tbl lists the Pattern19_nnnn scripts the computer-controlled Twelve runs in active
+ * (attacking) mode, indexed by Pattern_Index. Read by ACTIVE19.C (Computer19).
  */
 
 #include "types.h"

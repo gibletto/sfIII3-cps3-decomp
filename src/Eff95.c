@@ -26,6 +26,13 @@
 #include "charmove_2.h"
 #include "Eff95.h"
 
+/* routine_no[0] */
+#define R0_READY        0       /* show, wait for the countdown to start */
+#define R0_COUNT        1       /* change poses with the countdown */
+#define R0_STOP         2       /* stopped by a break-in */
+#define R0_OUT          3       /* until off the screen, then hide */
+#define R0_KILL         4       /* (default) put the work back */
+
 
 
 s16 RND_95;  /* 02068C10 */
@@ -34,14 +41,14 @@ s16 END_OF_95;  /* 02068C12 */
 
 void effect_95_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_READY:
         if (!Continue_Count_Down[LOSER]) {
             ewk->wu.routine_no[0]++;
         }
         ewk->wu.disp_flag = 1;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
         break;
-    case 1:
+    case R0_COUNT:
         if (Check_Coin_In(Loser_id)) {
             ewk->wu.old_rno[5] = 6;
             ewk->wu.old_rno[6] = 6;
@@ -50,7 +57,7 @@ void effect_95_move(WORK_Other* ewk) {
         } else if (ewk->wu.dmcal_m != (Continue_Count[LOSER])) {
             if (!(ewk->wu.dmcal_m = Continue_Count[LOSER])) {
                 if (Continue_Cut[Loser_id]) {
-                    ewk->wu.routine_no[0] = 3;
+                    ewk->wu.routine_no[0] = R0_OUT;
                     ewk->wu.dir_step = 0;
                     set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
                 } else {
@@ -60,7 +67,7 @@ void effect_95_move(WORK_Other* ewk) {
                     set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
                 }
             } else if (Continue_Count[LOSER] < 0) {
-                ewk->wu.routine_no[0] = 3;
+                ewk->wu.routine_no[0] = R0_OUT;
                 ewk->wu.dir_step = 0;
                 set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
             } else {
@@ -103,12 +110,12 @@ void effect_95_move(WORK_Other* ewk) {
             }
         }
         if (Break_Into) {
-            ewk->wu.routine_no[0] = 2;
+            ewk->wu.routine_no[0] = R0_STOP;
         }
         break;
-    case 2:
+    case R0_STOP:
         break;
-    case 3:
+    case R0_OUT:
         if (Ck_Range_Out_S(ewk, 1, 64)) {
             ewk->wu.routine_no[0]++;
             ewk->wu.disp_flag = 0;

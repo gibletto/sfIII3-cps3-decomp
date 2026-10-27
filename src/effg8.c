@@ -19,14 +19,21 @@
 #include "CHARMOVE.h"
 #include "effg8.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* set up hidden at zoom 0 */
+#define R0_WAIT         1       /* wait a random time */
+#define R0_GROW         2       /* grow while drifting */
+#define R0_DRIFT        3       /* drift until out of the box */
+#define R0_KILL         99      /* (default) put the work back */
+
 
 
 void effect_G8_move(WORK_Other* ewk) {
     if (!akebono_flag) {
-        ewk->wu.routine_no[0] = 99;
+        ewk->wu.routine_no[0] = R0_KILL;
     }
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0] += 1;
         ewk->wu.disp_flag = 0;
         ewk->wu.my_mr_flag = 1;
@@ -43,24 +50,24 @@ void effect_G8_move(WORK_Other* ewk) {
         ewk->wu.mvxy.a[1].sp = effg8_sp_tbl[ewk->wu.old_rno[2]][2];
         ewk->wu.mvxy.d[1].sp = effg8_sp_tbl[ewk->wu.old_rno[2]][3];
         break;
-    case 1:
+    case R0_WAIT:
         ewk->wu.old_rno[3] -= 1;
         if (ewk->wu.old_rno[3] > 0) {
             break;
         }
         ewk->wu.routine_no[0] += 1;
         ewk->wu.disp_flag = 1;
-    case 2:
+    case R0_GROW:
         ewk->wu.my_mr.size.x += 2;
         ewk->wu.my_mr.size.y += 2;
         if (ewk->wu.my_mr.size.x >= 63) {
             ewk->wu.routine_no[0] += 1;
         }
-    case 3:
+    case R0_DRIFT:
         add_x_sub(ewk);
         add_y_sub(ewk);
         if (effg8_range_check(ewk)) {
-            ewk->wu.routine_no[0] = 99;
+            ewk->wu.routine_no[0] = R0_KILL;
             break;
         }
         ewk->wu.position_x = (ewk->wu.xyz[0].disp.pos & 0x3FF);

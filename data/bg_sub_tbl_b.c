@@ -1,5 +1,8 @@
 /*
- * BG_SUB_TBL_B.C  game tables
+ * BG_SUB_TBL_B.C  finish screen scroll positions
+ *
+ * akebono_scrn_pos_tbl gives the scroll x, y of each finish screen (akebono) page. Read by
+ * akebono_scrn_move in BG000.C.
  */
 
 #include "types.h"

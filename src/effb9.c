@@ -20,6 +20,10 @@
 #include "charmove_2.h"
 #include "effb9.h"
 
+/* routine_no[1] */
+#define R1_INIT         0       /* show and start the pattern */
+#define R1_MOVE         1       /* copy the banner's zoom */
+
 
 
 WORK_Other * oya_p;  /* 02068C3C */
@@ -30,12 +34,12 @@ void effect_B9_move(WORK_Other* ewk) {
     switch (oya_p->wu.routine_no[0]) {
     case 2:
         switch (ewk->wu.routine_no[1]) {
-        case 0:
+        case R1_INIT:
             ewk->wu.routine_no[1] += 1;
             ewk->wu.disp_flag = 1;
             set_char_move_init2(&ewk->wu, 0, ewk->wu.old_rno[0], ewk->wu.char_index, 0);
             ewk->wu.my_mr_flag = 1;
-        case 1:
+        case R1_MOVE:
             ewk->wu.my_mr.size.x = oya_p->wu.my_mr.size.x;
             ewk->wu.my_mr.size.y = oya_p->wu.my_mr.size.y;
             disp_pos_trans_entry5(ewk);

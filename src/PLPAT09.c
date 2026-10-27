@@ -27,24 +27,46 @@
 #include "PLS01.h"
 #include "PLPAT09.h"
 
+/* routine_no[3], Att_SP_YAGYOUDAMA */
+#define SP_YAGYOUDAMA_CUE 1     /* run the animation to cue 20 */
+#define SP_YAGYOUDAMA_AIR 2     /* in the air until it lands */
+#define SP_YAGYOUDAMA_CUE2 3    /* run the animation to cue 1 */
+
+/* routine_no[3], Att_PL09_TOKUSHUKOUDOU */
+#define TOKUSHUKOUDOU_ACTION 1  /* the personal action, filling the super art gauge */
+
+/* routine_no[3], Att_JINNCHUUWATARI_EX */
+#define JINNCHUUWATARI_MOVE 1   /* move along its table and run the animation */
+#define JINNCHUUWATARI_AIR 2    /* in the air until it lands */
+#define JINNCHUUWATARI_AIR2 3   /* in the air until it lands */
+#define JINNCHUUWATARI_CUE 4    /* run the animation to cue 1 */
+
+/* routine_no[3], Att_PL09_EX_TENGUIWA */
+#define EX_TENGUIWA_RUN 1       /* run the animation */
+
+/* routine_no[3], Att_PL09_EX_KISHINRIKI */
+#define EX_KISHINRIKI_MOVE 1    /* move and run the animation to cue 20 */
+#define EX_KISHINRIKI_AIR 2     /* in the air until it lands */
+#define EX_KISHINRIKI_LAND 3    /* the landing */
+
 
 
 void pl09_extra_attack(PLW* wk) {
-    pl09_exatt_table[wk->wu.routine_no[2] - 16](wk);
+    pl09_exatt_table[wk->wu.routine_no[2] - ATTACK_SPECIAL](wk);
 }
 
 
 
 void Att_SP_YAGYOUDAMA(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.rl_flag = wk->wu.rl_waza;
         hoken_muriyari_chakuchi(wk);
         set_char_move_init(&wk->wu, 5, wk->as->char_ix);
         wk->wu.mvxy.index = wk->as->r_no;
         break;
-    case 1:
+    case SP_YAGYOUDAMA_CUE:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 20) {
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
@@ -53,7 +75,7 @@ void Att_SP_YAGYOUDAMA(PLW* wk) {
             wk->wu.routine_no[3]++;
         }
         break;
-    case 2:
+    case SP_YAGYOUDAMA_AIR:
         if (wk->wu.cg_type == 20) {
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.cg_type = 0;
@@ -61,12 +83,12 @@ void Att_SP_YAGYOUDAMA(PLW* wk) {
         }
         if (wk->wu.cg_type == 1) {
             wk->wu.cg_type = 0;
-            wk->wu.routine_no[3] = 3;
+            wk->wu.routine_no[3] = SP_YAGYOUDAMA_CUE2;
             break;
         }
         jumping_union_process(&wk->wu, 3);
         break;
-    case 3:
+    case SP_YAGYOUDAMA_CUE2:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 20) {
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
@@ -75,7 +97,7 @@ void Att_SP_YAGYOUDAMA(PLW* wk) {
         }
         if (wk->wu.cg_type == 1) {
             wk->wu.cg_type = 0;
-            wk->wu.routine_no[3] = 2;
+            wk->wu.routine_no[3] = SP_YAGYOUDAMA_AIR;
         }
         break;
     }
@@ -147,14 +169,14 @@ void set_tenguiwa(PLW* wk, u8 data) {
 void Att_PL09_TOKUSHUKOUDOU(PLW* wk) {
     wk->scr_pos_set_flag = 0;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->tk_success = 0;
         wk->wu.rl_flag = wk->wu.rl_waza;
         hoken_muriyari_chakuchi(wk);
         set_char_move_init((WORK*)wk, 5, wk->as->char_ix);
         break;
-    case 1:
+    case TOKUSHUKOUDOU_ACTION:
         char_move((WORK*)wk);
         if (wk->wu.cg_type == 40) {
             wk->wu.cg_type = 0;
@@ -189,7 +211,7 @@ void Att_PL09_TOKUSHUKOUDOU(PLW* wk) {
 
 void Att_JINNCHUUWATARI_EX(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.rl_flag = wk->wu.rl_waza;
         hoken_muriyari_chakuchi(wk);
@@ -197,27 +219,27 @@ void Att_JINNCHUUWATARI_EX(PLW* wk) {
         wk->wu.kow = wk->as->r_no;
         wk->wu.mvxy.index = wk->as->data_ix;
         break;
-    case 1:
+    case JINNCHUUWATARI_MOVE:
         char_move((WORK*)wk);
         mvxy_table_reader(wk);
         break;
-    case 2:
+    case JINNCHUUWATARI_AIR:
         mvxy_table_reader(wk);
         jumping_union_process((WORK*)wk, 3);
         break;
-    case 3:
+    case JINNCHUUWATARI_AIR2:
         if (wk->wu.cg_type == 1) {
             wk->wu.cg_type = 0;
-            wk->wu.routine_no[3] = (wk->wu.routine_no[1] == 0) ? 2 : 4;
+            wk->wu.routine_no[3] = (wk->wu.routine_no[1] == PLAYER_NORMAL) ? 2 : 4;
             break;
         }
         jumping_union_process((WORK*)wk, 4);
         break;
-    case 4:
+    case JINNCHUUWATARI_CUE:
         char_move((WORK*)wk);
         if (wk->wu.cg_type == 1) {
             wk->wu.cg_type = 0;
-            wk->wu.routine_no[3] = (wk->wu.routine_no[1] == 0) ? 2 : 3;
+            wk->wu.routine_no[3] = (wk->wu.routine_no[1] == PLAYER_NORMAL) ? 2 : 3;
         }
         break;
     }
@@ -287,14 +309,14 @@ void mvxy_table_reader(PLW* wk) {
 void Att_PL09_EX_TENGUIWA(PLW* wk) {
     wk->scr_pos_set_flag = 0;
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.rl_flag = wk->wu.rl_waza;
         hoken_muriyari_chakuchi(wk);
         set_char_move_init(&wk->wu, 5, wk->as->char_ix);
         wk->sa->dtm_mul = 2;
         break;
-    case 1:
+    case EX_TENGUIWA_RUN:
         char_move(&wk->wu);
         break;
     }
@@ -304,7 +326,7 @@ void Att_PL09_EX_TENGUIWA(PLW* wk) {
 
 void Att_PL09_EX_KISHINRIKI(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         wk->wu.rl_flag = wk->wu.rl_waza;
         hoken_muriyari_chakuchi(wk);
@@ -313,7 +335,7 @@ void Att_PL09_EX_KISHINRIKI(PLW* wk) {
         wk->wu.mvxy.index = wk->as->r_no;
         wk->sa->dtm_mul = 16;
         break;
-    case 1:
+    case EX_KISHINRIKI_MOVE:
         char_move(&wk->wu);
         if (wk->wu.cg_type == 20) {
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
@@ -323,10 +345,10 @@ void Att_PL09_EX_KISHINRIKI(PLW* wk) {
             add_mvxy_speed(&wk->wu);
         }
         break;
-    case 2:
+    case EX_KISHINRIKI_AIR:
         jumping_union_process(&wk->wu, 3);
         break;
-    case 3:
+    case EX_KISHINRIKI_LAND:
         char_move(&wk->wu);
         break;
     }

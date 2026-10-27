@@ -21,6 +21,9 @@
 #include "CHARMOVE.h"
 #include "charmove_2.h"
 
+/* routine_no[3], Normal_01000 */
+#define N01_RUN         1       /* run the animation */
+
 
 
 void Player_normal(wk)
@@ -85,11 +88,11 @@ void Normal_01000(PLW* wk) {
         wk->wu.next_z = wk->wu.my_priority + 1;
     }
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         set_char_move_init((WORK*)wk, 0, 0);
         break;
-    case 1:
+    case N01_RUN:
         char_move((WORK*)wk);
         break;
     }

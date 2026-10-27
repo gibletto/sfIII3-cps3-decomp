@@ -1,5 +1,8 @@
 /*
- * EFFG0_TBL.C  game tables
+ * EFFG0_TBL.C  bonus score line digits
+ *
+ * suji_table_G0 is the powers of ten used to split the score, suji_numobj_G0 the ten digit
+ * characters, and Result_Score the six-digit CONN layout of the line. Read by EFFG0.C.
  */
 
 #include "types.h"

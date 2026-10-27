@@ -1,5 +1,9 @@
 /*
- * EFF10_TBL.C  game tables
+ * EFF10_TBL.C  character scene object placement
+ *
+ * scr_obj_num10 starts with the number of objects of each of the four types, followed by the
+ * rows of each type (x offset from the owner, y position, animation number), reached through
+ * scr_obj_data10. Read by EFF10.C, the character scene objects.
  */
 
 #include "types.h"

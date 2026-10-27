@@ -1,5 +1,9 @@
 /*
- * END_20_TBL.C  game tables
+ * END_20_TBL.C  Remy's ending tables (ending 20)
+ *
+ * end_2000_bg0_cell_tbl and end_2000_ake_cell_tbl list the BG0 and overlay layer cells (map
+ * offset, cell number) written at the start of the ending, timer_20_tbl the length in frames
+ * of each of its six scenes and end_20_pos the BG x and y of each scene. Read by END_20.C.
  */
 
 #include "types.h"

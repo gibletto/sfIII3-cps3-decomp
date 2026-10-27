@@ -803,10 +803,7 @@ void Pattern00_0052(PLW* wk) {
         ETC_Term(wk, 0, 6, 0x9A);
         break;
     case 1:
-        {
-            s16 menu = 49;
-            Com_Random_Select(wk, 2, menu, menu, menu, 50, 0);
-        }
+        Com_Random_Select(wk, 2, 49, 49, 49, 50, 0);
         break;
     default:
         End_Pattern(wk);

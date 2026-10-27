@@ -1,5 +1,8 @@
 /*
- * PLPAT03_TBL.C  game tables
+ * PLPAT03_TBL.C  Yun special attack table
+ *
+ * pl03_exatt_table is the special attack routines of character 3 (Yun) by attack routine
+ * number. Read by PLPAT03.C.
  */
 
 #include "types.h"

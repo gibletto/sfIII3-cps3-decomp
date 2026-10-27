@@ -1,5 +1,8 @@
 /*
- * PASS09_TBL.C  game tables
+ * PASS09_TBL.C  CPU passive pattern table for Oro
+ *
+ * Passive09_Tbl is the 132 passive (defensive) pattern routines of character 9 (Oro),
+ * indexed by Pattern_Index. Read by PASS09.C.
  */
 
 #include "types.h"

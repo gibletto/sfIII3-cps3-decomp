@@ -1,5 +1,10 @@
 /*
- * DEMO02.C  game tables
+ * DEMO02.C  demonstration play settings
+ *
+ * Arts_Rnd_Demo_Data gives the super art picked at random for each demo player,
+ * Demo_Stage_Play_Data the two stages of each demo, and Demo_PL_Data which side is driven by
+ * the demo input in each select-screen demo. Read by DEMO02_CODE.C, the attract-mode
+ * demonstration play.
  */
 
 #include "types.h"

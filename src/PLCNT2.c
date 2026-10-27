@@ -46,6 +46,12 @@
 #include "effect_2.h"
 #include "PLCNT2.h"
 
+/* pcon_rno[2] in plcnt_b_die */
+#define BD_INIT         0       /* stop both players */
+#define BD_FOOTWORK     1       /* until both are steady */
+#define BD_POSE_INIT    2       /* the pause and the win poses */
+#define BD_POSE         3       /* until both poses are done */
+
 void move_P1_move_P2_bonus(s16* field_work);
 
 void move_P2_move_P1_bonus(s16* field_work);
@@ -103,7 +109,7 @@ run:
         sort_push_request((WORK*)&plw[0]);
         sort_push_request((WORK*)&plw[1]);
     }
-    if (pcon_rno[0] == 2 && pcon_rno[1] == 0 && pcon_rno[2] == 2) {
+    if (pcon_rno[0] == PCON_DIE && pcon_rno[1] == SETTLE_KO && pcon_rno[2] == 2) {
         return 1;
     }
     return 0;
@@ -113,8 +119,8 @@ run:
 
 void plcnt_b_init(void) {
     switch (pcon_rno[1]) {
-    case 0:
-        pcon_rno[1] = 2;
+    case APP_SETUP:
+        pcon_rno[1] = APP_PARRY;
         work_init_zero((s32*)&plw[0], sizeof(PLW));
         work_init_zero((s32*)&plw[1], sizeof(PLW));
         setup_base_and_other_data();
@@ -126,26 +132,26 @@ void plcnt_b_init(void) {
         clear_super_arts_point(&plw[0]);
         clear_super_arts_point(&plw[1]);
         break;
-    case 1:
-        if (plw[0].wu.routine_no[0] != 3 || plw[1].wu.routine_no[0] != 3) {
+    case APP_WAIT_READY:
+        if (plw[0].wu.routine_no[0] != PLAYER_MV_READY || plw[1].wu.routine_no[0] != PLAYER_MV_READY) {
             break;
         }
         if (Allow_a_battle_f) {
-            pcon_rno[0] = 1;
+            pcon_rno[0] = PCON_MOVE;
             pcon_rno[1] = 0;
-            plw[0].wu.routine_no[0] = 4;
-            plw[1].wu.routine_no[0] = 4;
+            plw[0].wu.routine_no[0] = PLAYER_MV_FIGHT;
+            plw[1].wu.routine_no[0] = PLAYER_MV_FIGHT;
             ca_check_flag = 1;
         }
         break;
-    case 2:
-        pcon_rno[1] = 3;
-        if (Bonus_Game_Flag == 22) {
+    case APP_PARRY:
+        pcon_rno[1] = APP_GFX;
+        if (Bonus_Game_Flag == BONUS_PARRY) {
             setup_bs_scrrrl_bs();
         }
         load_char_gfx(0xB2F8, 1);
         load_any_color(0x83);
-        if (Bonus_Game_Flag == 21) {
+        if (Bonus_Game_Flag == BONUS_CAR) {
             load_char_gfx(0xB498, 1);
         }
         if (plw[0].wu.operator) {
@@ -159,8 +165,8 @@ void plcnt_b_init(void) {
             paring_ctr_vs[0][1] = 0;
         }
         break;
-    case 3:
-        pcon_rno[1] = 1;
+    case APP_GFX:
+        pcon_rno[1] = APP_WAIT_READY;
         pli_3000();
         break;
     }
@@ -193,7 +199,7 @@ void plcnt_b_move(void) {
         }
     }
     if (Bonus_Stage_RNO[0] == 2) {
-        pcon_rno[0] = 2;
+        pcon_rno[0] = PCON_DIE;
     }
 }
 
@@ -202,25 +208,25 @@ void plcnt_b_move(void) {
 void plcnt_b_die(void) {
     plw[0].wu.dm_vital = plw[1].wu.dm_vital = 0;
     switch (pcon_rno[2]) {
-    case 0:
+    case BD_INIT:
         plw[0].wkey_flag = plw[1].wkey_flag = 1;
         plw[0].image_setup_flag = plw[1].image_setup_flag = 0;
         pcon_rno[2]++;
-    case 1:
+    case BD_FOOTWORK:
         if (footwork_check_bns(0) && footwork_check_bns(1)) {
             pcon_rno[2]++;
         }
         break;
-    case 2:
+    case BD_POSE_INIT:
         complete_victory_pause();
-        plw[0].wu.routine_no[2] = 40;
-        plw[1].wu.routine_no[2] = 40;
-        plw[0].wu.routine_no[3] = plw[1].wu.routine_no[3] = 0;
+        plw[0].wu.routine_no[2] = NORMAL_WIN;
+        plw[1].wu.routine_no[2] = NORMAL_WIN;
+        plw[0].wu.routine_no[3] = plw[1].wu.routine_no[3] = RN3_START;
         plw[0].wu.cg_type = plw[1].wu.cg_type = 0;
         pcon_rno[2]++;
         break;
-    case 3:
-        if ((plw[0].wu.routine_no[3] == 9) && (plw[1].wu.routine_no[3] == 9)) {
+    case BD_POSE:
+        if ((plw[0].wu.routine_no[3] == RN3_DONE) && (plw[1].wu.routine_no[3] == RN3_DONE)) {
             pcon_rno[2]++;
         }
         break;
@@ -232,10 +238,10 @@ s32 footwork_check_bns(char pl)
 {
     s16 result;
     result = 0;
-    if (Bonus_Game_Flag == 21 && plw[pl].wu.operator == 0) {
+    if (Bonus_Game_Flag == BONUS_CAR && plw[pl].wu.operator == 0) {
         return 1;
     }
-    if (plw[pl].wu.routine_no[1] == 0) {
+    if (plw[pl].wu.routine_no[1] == PLAYER_NORMAL) {
         if (plw[pl].wu.routine_no[2] == 1) {
             result = 1;
         }
@@ -286,7 +292,7 @@ void move_player_work_bonus(void) {
     set_rl_waza(&plw[0]);
     set_rl_waza(&plw[1]);
     Timer_Freeze = 0;
-    if (Bonus_Game_Flag == 21) {
+    if (Bonus_Game_Flag == BONUS_CAR) {
         setup_bs_scrrrl_bs2();
     }
     switch (plw[0].tsukami_f + (plw[1].tsukami_f * 2)) {
@@ -315,7 +321,7 @@ void move_P1_move_P2_bonus(s16* field_work) {
     if (set_field_hosei_flag(&plw[1], field_work[2], 1) != 0) {
         set_field_hosei_flag(&plw[1], field_work[3], 0);
     }
-    if (Bonus_Game_Flag == 21) {
+    if (Bonus_Game_Flag == BONUS_CAR) {
         plw[1].wu.disp_flag = 0;
     }
 }
@@ -331,7 +337,7 @@ void move_P2_move_P1_bonus(s16* field_work) {
     if (set_field_hosei_flag(&plw[0], field_work[0], 1) != 0) {
         set_field_hosei_flag(&plw[0], field_work[1], 0);
     }
-    if (Bonus_Game_Flag == 21) {
+    if (Bonus_Game_Flag == BONUS_CAR) {
         plw[0].wu.disp_flag = 0;
     }
 }

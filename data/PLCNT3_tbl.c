@@ -1,5 +1,8 @@
 /*
- * PLCNT3_TBL.C  game tables
+ * PLCNT3_TBL.C  player control phases for the second bonus stage type
+ *
+ * player_bonus2_process is the three phases (init, move, die) of player control in the second
+ * bonus stage type. Read by PLCNT3.C.
  */
 
 #include "types.h"

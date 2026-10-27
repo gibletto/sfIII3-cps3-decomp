@@ -1,5 +1,14 @@
 /*
- * CMD_MAIN_TBL_C.C  game tables
+ * CMD_MAIN_TBL_C.C  debug menu text and tables
+ *
+ * The dbg_*_str and str_* strings are the labels of the debug screens: menu titles, cg data
+ * and judgement field names, stage and character names, and the names of the normal, damage,
+ * catch, caught and attack motions. The tables give the colours of debug objects, the first cg
+ * code of each player, effect and background group, colour codes, the stage of each BG select
+ * entry, the screen positions of the hit judgement grids and columns, and hit_kind_tbl, the
+ * next hit kind when a kind is stepped up or down. Read by CMD_MAIN.C, the debug menu.
+ * chk22_tbl lists the eight lever directions marked in a move slot when the command check
+ * starts; read by CMD_MAIN_2.C, the command input.
  */
 
 #include "types.h"
@@ -933,7 +942,7 @@ const char dbg_digit1_str[4] = "1";
 
 const char dbg_digit2_str[4] = "2";
 
-const char dbg_wca_str[44] = {
+const char dbg_wca_str[44] = {  /* "Wca", then other data */
     87, 99, 97, 0, 45, 45, 0, 0,
     43, 43, 0, 0, 0, 0, 6, 0,
     12, 0, 18, 0, 24, 0, 30, 0,
@@ -947,11 +956,11 @@ const s16 dbg_obj_color_tbl[126] = {
     1, 1, 1, 1, 1, 1, 5, 2,
     2, 2, 2, 8, 1, 12, 7, 4,
     9, 11, 10, 34, 0, 36, 13, 40,
-    5, 42, 6, 6, 9, -26784, 1, -26784,
-    1, -8992, 1, -26912, 1, -26912, 1, -26912,
-    1, -26912, 1, -26912, 1, -26912, 1, -26912,
-    1, -26912, 1, -26912, 1, -25176, 1, -28672,
-    1, -28576, 1, -28672, 1, -28672, 1, -28672,
+    5, 42, 6, 6, 9, 0x9760, 1, 0x9760,
+    1, -8992, 1, 0x96E0, 1, 0x96E0, 1, 0x96E0,
+    1, 0x96E0, 1, 0x96E0, 1, 0x96E0, 1, 0x96E0,
+    1, 0x96E0, 1, 0x96E0, 1, 0x9DA8, 1, 0x9000,
+    1, 0x9060, 1, 0x9000, 1, 0x9000, 1, 0x9000,
     1, -10240, 1, -10112, 1, -10032, 1, -9840,
     1, -9680, 1, -9616, 1, -9536, 1, -9472,
     1, -9408, 1, -9232, 1, -9152, 1, -9056,

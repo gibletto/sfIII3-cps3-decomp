@@ -1,5 +1,8 @@
 /*
- * SHELL03_TBL.C  game tables
+ * SHELL03_TBL.C  CPU anti-projectile pattern table 03
+ *
+ * Shell03_Tbl lists the Shell03_nnnn pattern scripts run against a projectile by the
+ * computer-controlled players 3, 6, 8, 9 and 10, indexed by Pattern_Index. Read by SHELL03.C.
  */
 
 #include "types.h"

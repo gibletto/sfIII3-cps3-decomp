@@ -1,5 +1,8 @@
 /*
- * SHELL11_TBL.C  game tables
+ * SHELL11_TBL.C  CPU anti-projectile pattern table 11
+ *
+ * Shell11_Tbl lists the Shell11_nnnn pattern scripts run against a projectile by the
+ * computer-controlled players 2, 11 and 16 - 20, indexed by Pattern_Index. Read by SHELL11.C.
  */
 
 #include "types.h"

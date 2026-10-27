@@ -1,5 +1,10 @@
 /*
- * NEXT_CPU_TBL.C  game tables
+ * NEXT_CPU_TBL.C  CPU super art choice and Japanese game configuration screens
+ *
+ * Arts_Rnd_Data is the random pick of the computer opponent's super art (read by NEXT_CPU.C).
+ * The gcfg_*_scr_jp tables are the text-layer scripts of the Japanese GAME CONFIGURATION page
+ * of test mode: title, guide lines, the value labels of the screen, round, event and bonus
+ * items, the cursor and the star gauges. Read by GAME_CONFIG_JP.C.
  */
 
 #include "types.h"

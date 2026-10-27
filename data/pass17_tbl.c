@@ -1,5 +1,8 @@
 /*
- * PASS17_TBL.C  game tables
+ * PASS17_TBL.C  Makoto's passive pattern table
+ *
+ * Passive17_Tbl lists the 167 passive pattern routines of character 17 (Makoto), indexed by
+ * Pattern_Index. Read by PASS17.C.
  */
 
 #include "types.h"

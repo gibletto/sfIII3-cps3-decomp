@@ -1,5 +1,8 @@
 /*
- * EFF61_TBL.C  game tables
+ * EFF61_TBL.C  alternate background part patterns
+ *
+ * eff61_data_tbl has a row per part type of the alternate background; the pattern number in
+ * its last column is set when the part slides. Read by EFF62.C, which holds effects 61 and 62.
  */
 
 #include "types.h"

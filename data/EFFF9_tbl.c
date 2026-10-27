@@ -1,5 +1,8 @@
 /*
- * EFFF9_TBL.C  game tables
+ * EFFF9_TBL.C  object viewer labels
+ *
+ * The four labels "BLK", "OBJ", "MR " and "POS" that the effect F7 debug object viewer prints
+ * on the text layer. Read by EFFF7.C.
  */
 
 #include "types.h"

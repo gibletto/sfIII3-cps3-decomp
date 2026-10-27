@@ -1,5 +1,8 @@
 /*
- * EFF53_TBL.C  game tables
+ * EFF53_TBL.C  bg040 blinking object timing
+ *
+ * eff53_vanish_time holds the random times the object stays hidden before it blinks. Read by
+ * EFF53.C, the bg040 blinking stage object.
  */
 
 #include "types.h"

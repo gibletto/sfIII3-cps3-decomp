@@ -82,9 +82,7 @@ void metamor_color_trans(s16 pl, s16 ix) {
     u16* src2;
     s16 i;
     if (ix) {
-        src = metamor_color_ptr_tbl[ix];
-        (void)&((WORK*)&metamor_color_ptr_tbl[ix])->be_flag;
-        src += Player_Color[pl] * 64;
+        src = ((struct PaletteBank*)metamor_color_ptr_tbl[ix])->color[Player_Color[pl]];
         for (i = 0; i < 64; i++) {
             *dst++ = *src;
             *dst2++ = *src++;

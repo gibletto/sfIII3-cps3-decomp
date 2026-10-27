@@ -1,5 +1,13 @@
 /*
- * SYS_SUB_TBL.C  game tables
+ * SYS_SUB_TBL.C  copyright messages, text animation and HUD tables
+ *
+ * Capcom_Rights_msg, Capcom_Rights_msg2 and Capcom_USA_Rights_msg are the copyright lines put
+ * on screen by SYS_SUB.C. EFF89_Init_Data and EFF91_Init_Data give, per object type, the first
+ * entry in EFF89_Step_Data or EFF91_Step_Data, whether the steps repeat, and the step count;
+ * they are read by EFF89.C (blinking text rectangle) and by EFF91.C and EFFA3.C (cell
+ * animation). win_mark_pos_tbl and win_mark_blink_tbl place and blink the round win marks,
+ * read by SC_SUB.C; color_flash_tbl is the colour flash sequence of the zooming message, read
+ * by EFF51.C.
  */
 
 #include "types.h"
@@ -14,6 +22,10 @@ const s8 Capcom_Rights_msg2[24] = "@CAPCOM CO., LTD. \001\t\t\t,";
 
 const s8 Capcom_USA_Rights_msg[48] = "@CAPCOM U.S.A., INC. \001\t\t\t ALL RIGHTS RESERVED.";
 
+/*
+ * One row per effect 89 type: first entry in EFF89_Step_Data, whether the steps start
+ * again when they run out, and the number of steps in one pass.
+ */
 const s16 EFF89_Init_Data[11][3] = {
     { 0, 0, 13 },
     { 0, 0, 13 },
@@ -28,6 +40,10 @@ const s16 EFF89_Init_Data[11][3] = {
     { 26, 0, 11 },
 };
 
+/*
+ * One row per effect 91 / A3 type: first entry in EFF91_Step_Data, whether the steps
+ * start again when they run out, and the number of steps in one pass.
+ */
 const s16 EFF91_Init_Data[3][3] = {
     { 0, 1, 4 }, { 100, 1, 4 }, { 200, 1, 3 },
 };

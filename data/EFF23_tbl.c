@@ -1,5 +1,9 @@
 /*
- * EFF23_TBL.C  game tables
+ * EFF23_TBL.C  bg100 background cell animation tables
+ *
+ * eff23_cell_tbl lists the cells written into the two character blocks, and eff23_anm_tbl the
+ * four animation frames: block, y scroll and time. Read by EFF23.C, the bg100 background cell
+ * animation.
  */
 
 #include "types.h"

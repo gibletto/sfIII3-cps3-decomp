@@ -1,5 +1,10 @@
 /*
- * EFFI3_2.C  Effect I3 (move, init)
+ * EFFI3_2.C  Effect I3: stop the background for a while
+ *
+ * Effect I3 (effect_I3_init, called from player move code) sets bg_stop to hold the background
+ * scroll while an action plays; its i3_data entry gives the duration (fixed, the owner's hit
+ * stop or frame type) and whether it also ends when the owner's pattern changes. It clears
+ * bg_stop and frees itself when the time is up, the owner dies or a Suicide request comes.
  */
 
 #include "structs.h"
@@ -21,6 +26,11 @@
 #include "aboutspr.h"
 #include "EFFI3.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* stop the background, set the time */
+#define R0_HOLD         1       /* hold until the time or action ends */
+#define R0_KILL         2       /* restart the background and free */
+
 
 
 void effect_I3_move(WORK_Other* ewk) {
@@ -28,7 +38,7 @@ void effect_I3_move(WORK_Other* ewk) {
     WORK* mwk = (WORK*)ewk->my_master;
     tp = i3_data;
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         bg_stop = 1;
         switch (tp[ewk->wu.type].sour) {
@@ -44,7 +54,7 @@ void effect_I3_move(WORK_Other* ewk) {
             ewk->wu.dir_timer = tp[ewk->wu.type].tm;
             break;
         }
-    case 1:
+    case R0_HOLD:
         if (ewk->wu.dead_f == 1 || Suicide[0] != 0) {
             ewk->wu.routine_no[0]++;
             break;
@@ -62,9 +72,9 @@ void effect_I3_move(WORK_Other* ewk) {
         }
         break;
     next:
-        ewk->wu.routine_no[0] = 2;
+        ewk->wu.routine_no[0] = R0_KILL;
         break;
-    case 2:
+    case R0_KILL:
     default:
         bg_stop = 0;
         push_effect_work(&ewk->wu);

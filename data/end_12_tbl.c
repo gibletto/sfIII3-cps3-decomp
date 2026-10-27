@@ -1,5 +1,9 @@
 /*
- * END_12_TBL.C  game tables
+ * END_12_TBL.C  Sean's ending tables (ending 12)
+ *
+ * end_c00_bg0_cell_tbl and end_c00_bg1_cell_tbl list the BG0 and BG1 cells (map offset, cell
+ * number) written at the start of the ending, timer_c_tbl the length in frames of each of its
+ * seven scenes and end_c_pos the BG x and y of each scene. Read by END_12.C.
  */
 
 #include "types.h"

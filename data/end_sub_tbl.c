@@ -1,5 +1,11 @@
 /*
- * END_SUB_TBL.C  game tables
+ * END_SUB_TBL.C  prize card messages, combo demo players and the staff roll
+ *
+ * no_card_mes, win_card_mes and their blank strings are the prize card messages blinked by
+ * END_SUB.C; no_cd_drive_mes and no_cd_rom_mes are the CD error messages shown by END_SUB_2.C.
+ * combo_demo_pl_tbl gives each combo demo both players' character, super art and colour
+ * (EM_CAND.C). staff_roll_tbl lists the staff roll lines (wait, x, y, attribute and string)
+ * and the staff_ strings are their text; read by staff_roll_main in END_SUB_2.C.
  */
 
 #include "types.h"
@@ -340,7 +346,7 @@ const s8 win_card_mes[16] = "WIN THE CARD";
 
 const char no_cd_drive_mes[16] = "NO CD-ROM DRIVE";
 
-const char no_cd_rom_mes[42] = {
+const char no_cd_rom_mes[42] = {  /* "NO CD-ROM", then other data */
     78, 79, 32, 67, 68, 45, 82, 79,
     77, 0, 0, 0, 1, -5, 0, 0,
     2, -84, 0, 0, 1, -116, 0, 0,

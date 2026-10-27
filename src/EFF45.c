@@ -25,6 +25,10 @@
 #include "sys_config_3.h"
 #include "EFF45.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* write the cells, start the animation */
+#define R0_MOVE         1       /* cycle the animation frames */
+
 
 
 void effect_45_move(WORK_Other_CONN* ewk) {
@@ -35,7 +39,7 @@ void effect_45_move(WORK_Other_CONN* ewk) {
     const EFF45_CELL_REQ* cell;
     const EFF45_CELL_REQ* row;
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.cg_ix = 0;
         ewk->wu.char_index = 0;
@@ -51,7 +55,7 @@ void effect_45_move(WORK_Other_CONN* ewk) {
         scrn_map_set_now(0, (u32)bg_w.bgw[0].bg_address);
         Scrn_Y_Set_R(0, eff45_anm_tbl[ewk->wu.cg_ix].y);
         break;
-    case 1:
+    case R0_MOVE:
         if (!EXE_flag && !Game_pause) {
             ewk->wu.cg_ctr--;
             if (ewk->wu.cg_ctr <= 0) {

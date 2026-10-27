@@ -27,20 +27,24 @@
 #include "sys_config_3.h"
 #include "EFF74.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* load the cells and pick a pattern */
+#define R0_MOVE         1       /* step the pattern's frames */
+
 
 
 void effect_74_move(WORK_Other* ewk) {
     const EFF74_FRAME* frame;
     s16 y;
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         eff74_cell_trans();
         eff74_pattern_set(ewk);
         scrn_map_set(1, eff_bg_adrs[ewk->wu.old_rno[2]].adrs);
         Scrn_Y_Set_R(1, ewk->wu.old_rno[1]);
         break;
-    case 1:
+    case R0_MOVE:
         if (!EXE_flag && !Game_pause) {
             ewk->wu.cg_ctr--;
             if (ewk->wu.cg_ctr <= 0) {

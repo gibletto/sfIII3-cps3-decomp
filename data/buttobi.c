@@ -1,5 +1,12 @@
 /*
- * BUTTOBI.C  game tables
+ * BUTTOBI.C  blow-away (buttobi) flight tables
+ *
+ * buttobi_time_table gives the flight time used to set a blown-away player's vertical speed,
+ * and buttobi_add_y_table the height adjustment, both by damage animation and attack level;
+ * the first is read by PLPCU.C and PLPDM.C, the second by PLPDM.C. parabora_own_table points
+ * each character at the blow-away movement rows in its movexy table, and parabora_ex_table
+ * holds the extended blow-away movement by table, character, weight and attack level; both are
+ * read by PLS02.C (setup_butt_own_data and its _ex versions).
  */
 
 #include "types.h"

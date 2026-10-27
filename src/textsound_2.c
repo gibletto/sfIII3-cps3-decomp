@@ -75,7 +75,8 @@ void sound_sample_bank_set(u16 bank)
 
 
 /* provisional name */
-void sound_init(u8* data, SNDSAMPLE* bank_a, u8** bank_b, u8 stereo, u8 volume, u8 flag) {
+void sound_init(u8* data, SNDSAMPLE* sample, u8** bank_b, u8 stereo, u8 volume, u8 flag) {
+    SNDSAMPLE* bank_a = sample;
     u16 init[21] = {
         3, 1, 3, 1, 3, 1, 3, 0, 2, 1, 3, 0, 2, 0, 2, 0, 2, 2, 6, 6, 2
     };
@@ -98,7 +99,6 @@ void sound_init(u8* data, SNDSAMPLE* bank_a, u8** bank_b, u8 stereo, u8 volume, 
         while (n--) {
         }
     }
-    (void)&((TEXT_CELL*)n)->code;
     reg = (volatile u16*)SOUND_REG;
     for (n = 0x100; n != 0; reg++) {
         *reg = 0;
@@ -106,7 +106,7 @@ void sound_init(u8* data, SNDSAMPLE* bank_a, u8** bank_b, u8 stereo, u8 volume, 
     }
     ((u16 (*)[2])&snd_ctrl)[0][0] = (volume << 8) | (stereo & 1) | 0x22;
     *(u32*)(SOUND_REG + 0x210) = ((u32 (*)[1])&snd_ctrl)[0][0];
-    *(u16*)(SOUND_REG + 0x200) = 0;
+    *(u16*)SOUND_KEY_ON = 0;
     snd_seq_data = (u32*)data;
     snd_seq_max = *data++;
     snd_seq_max <<= 8;
@@ -147,6 +147,9 @@ s32 sound_request(s32 code) {
 
 
 
+#pragma inline(voice_status_disp)
+static void voice_status_disp(u8 status) {}
+
 /* provisional name */
 s32 sound_seq_start(u16 code, s16 ramp) {
     u8* seq;
@@ -154,7 +157,6 @@ s32 sound_seq_start(u16 code, s16 ramp) {
     u8* track;
     u8* bank;
     u8** bank_table;
-    SNDPATCH* initial_patch;
     SNDVOICE* v;
     SNDVOICE* mv;
     SNDVOICE* vp;
@@ -177,7 +179,6 @@ s32 sound_seq_start(u16 code, s16 ramp) {
     }
     seq = (u8*)((u32)snd_seq_data + ofs);
     p = seq;
-    (void)&((WORK*)ofs)->id;
     hdr = *p++;
     if (!hdr) {
         bgm_stop();
@@ -188,7 +189,8 @@ s32 sound_seq_start(u16 code, s16 ramp) {
         mv = bgm_voice;
         vp = &bgm_voice[0];
         for (; i < 16; ) {
-            off = *p++ << 8;
+            off = *p++;
+            off <<= 8;
             off += *p++;
             if (off) {
                 track = seq + off;
@@ -200,7 +202,7 @@ s32 sound_seq_start(u16 code, s16 ramp) {
                 v->cursor = &track[n];
                 v->status = 0x20;
                 bank_table = snd_bank_tbl;
-                (void)mv->status;
+                voice_status_disp(mv->status);
                 v->patch = (SNDPATCH*)(*bank_table + *(u16*)*bank_table);
                 v->sample = &snd_sample_tbl[v->patch->sample_index];
                 v->note_ticks = 0;
@@ -249,7 +251,8 @@ s32 sound_seq_start(u16 code, s16 ramp) {
                 mv->status = 0xC0;
             }
             i++, vp++, mv = mv + 1;
-            off = *p++ << 8;
+            off = *p++;
+            off <<= 8;
             off += *p++;
             if (off) {
                 track = seq + off;
@@ -308,7 +311,8 @@ s32 sound_seq_start(u16 code, s16 ramp) {
                 mv->status = 0xC0;
             }
             i++, vp++, mv = mv + 1;
-            off = *p++ << 8;
+            off = *p++;
+            off <<= 8;
             off += *p++;
             if (off) {
                 track = seq + off;
@@ -368,7 +372,8 @@ s32 sound_seq_start(u16 code, s16 ramp) {
                 mv->status = 0xC0;
             }
             i++, vp++, mv = mv + 1;
-            off = *p++ << 8;
+            off = *p++;
+            off <<= 8;
             off += *p++;
             if (off) {
                 track = seq + off;
@@ -442,7 +447,8 @@ s32 sound_seq_start(u16 code, s16 ramp) {
     }
     if (!(hdr & 0x80)) {
         for (i = 0; i < 16; i++) {
-            off = *p++ << 8;
+            off = *p++;
+            off <<= 8;
             off = off + *p++;
             if (off) {
                 if (((hdr >= se_voice[i].priority_flags) & 0x7F) || (se_voice[i].status & 0x80)) {
@@ -520,7 +526,6 @@ s32 sound_seq_start(u16 code, s16 ramp) {
         return;
     }
     se_voice[ch].cursor = p;
-    (void)&((WORK*)seq)->id;
     bank_table = snd_bank_tbl;
     se_voice[ch].patch = (SNDPATCH*)(*bank_table + *(u16*)*bank_table);
     (void)&((WORK*)hdr)->id;
@@ -600,7 +605,7 @@ void bgm_pause(void) {
     if (!(sound_sample_submit_work7 & 2) || (sound_sample_submit_work7 & 4)) {
         return;
     }
-    snd_reg_save = *(u16*)(SOUND_REG + 0x200);
+    snd_reg_save = *(u16*)SOUND_KEY_ON;
     for (i = 0; i < 16; i++) {
         bgm_status_save[i] = bgm_voice[i].status;
         bgm_voice[i].status = 192;
@@ -623,7 +628,7 @@ void bgm_resume(void) {
         v++;
     }
     sound_sample_submit_work7 &= ~4;
-    *(u16*)(SOUND_REG + 0x200) |= snd_reg_save;
+    *(u16*)SOUND_KEY_ON |= snd_reg_save;
 }
 
 /* provisional name */
@@ -674,7 +679,7 @@ void sound_driver_init(void) {
         se_voice[i].priority_flags = 0;
     }
     sound_sample_submit_work7 = 1;
-    *(u16*)(SOUND_REG + 0x200) = 0;
+    *(u16*)SOUND_KEY_ON = 0;
     snd_reg_save = 0;
 }
 

@@ -1,5 +1,8 @@
 /*
- * EFF00_TBL.C  game tables
+ * EFF00_TBL.C  judgement box display settings
+ *
+ * For each extra DIP switch setting, jdb gives the set of judgement boxes to draw and jdb2 the
+ * cell setting of the display. Read by EFF00.C, the judgement box display.
  */
 
 #include "types.h"

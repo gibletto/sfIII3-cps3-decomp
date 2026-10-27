@@ -1,5 +1,8 @@
 /*
- * EFFM4_TBL.C  game tables
+ * EFFM4_TBL.C  palette scripts of effect M4
+ *
+ * effM4_dir_tbl_0 .. _7 are timed palette scripts, { frames, palette } steps ending with -1,
+ * reached through the effM4_dir_tbl list. Read by EFFM5.C.
  */
 
 #include "types.h"

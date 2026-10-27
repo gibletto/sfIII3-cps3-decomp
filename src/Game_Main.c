@@ -109,6 +109,56 @@
 #include "EM_Cand.h"
 #include "lose_pl.h"
 #include "PLS02.h"
+#include "fighter.h"
+
+/* G_No2 under G1_TITLE: the Game00 routine */
+#define G2_TITLE        0       /* Game0_0: the title */
+#define G2_TITLE_WAIT   1       /* Game0_1: until a start button */
+#define G2_TITLE_WIPE   2       /* Game0_2: save the screen and start the wipe */
+#define G2_TITLE_OUT    3       /* Game0_3: finish the wipe, on to select */
+#define G2_TITLE_FREE   4       /* Game0_2 again: a free-play start skips the title */
+
+/* G_No2 under G1_SELECT */
+#define G2_SEL_INIT     0       /* set up */
+#define G2_SEL_MAIN     1       /* the select screen, until both have chosen */
+
+/* G_No2 under G1_NEXT_CPU */
+#define G2_NEXT_INIT    0       /* set up */
+#define G2_NEXT_MAIN    1       /* the next opponent screen */
+
+/* G_No2 under G1_NEXT_Q */
+#define G2_Q_INIT       0       /* set up */
+#define G2_Q_MAIN       1       /* the Q screen */
+#define G2_Q_OUT        2       /* wipe out, then the fight */
+#define G2_Q_IN         3       /* from the winner scene: set up and wipe */
+#define G2_Q_IN_WAIT    4       /* finish the wipe */
+
+/* G_No2 under G1_BONUS */
+#define G2_BONUS_INIT   0       /* set up the bonus stage */
+#define G2_BONUS_START  1       /* start its effects */
+#define G2_BONUS_INTRO  2       /* run it for G_Timer frames, then wipe in */
+#define G2_BONUS_REVIVAL 3      /* finish the wipe */
+#define G2_BONUS_PLAY   4       /* the bonus stage, until it ends */
+#define G2_BONUS_OUT    5       /* wipe out, then the next opponent */
+
+/* G_No2 under G1_AFTER_BONUS */
+#define G2_AFTER_INIT   0       /* set up */
+#define G2_AFTER_MAIN   1       /* the after-bonus screen */
+
+/* G_No2 under G1_GAME_OVER */
+#define G2_OVER_INIT    0       /* set up */
+#define G2_OVER_MAIN    1       /* Game_Over, then the ranking or the exit */
+#define G2_OVER_RANKING 2       /* the ranking */
+#define G2_OVER_EXIT    3       /* wait G_Timer and wipe out */
+#define G2_OVER_OUT     4       /* to select for a break-in, else to the attract loop */
+#define G2_OVER_PL_INIT 5       /* set up for Player_id only */
+#define G2_OVER_PL      6       /* Game_Over, then the ranking */
+
+/* G_No3 in Disp_Ranking */
+#define G3_RANK_INIT    0       /* save the screen and wipe */
+#define G3_RANK_SETUP   1       /* set up the ranking */
+#define G3_RANK_COVER   2       /* wait out the cover, then wipe in */
+#define G3_RANK_REVIVAL 3       /* finish the wipe */
 
 
 
@@ -132,7 +182,7 @@ void sound_reg_level_set(s16 level, s8 flag);
    until the next frame. */
 /* provisional name */
 void game_frame_task(void) {
-    if (0) {
+    if (DEBUG_SLOW) {
         task_sleep(1);
     }
 loop:
@@ -156,7 +206,7 @@ void match_state_0_fight(void) {
     if (Ck_Coin()) {
         tilemap_fill_all(0, 32);
         wipe_pattern_set(0, 7, 0);
-        if (G_No1 != 99) {
+        if (G_No1 != G1_DEMO_RESTART) {
             sound_driver_init();
         }
         sound_reg_level_set(0, 0);
@@ -165,8 +215,8 @@ void match_state_0_fight(void) {
         if (Demo_Flag == 0) {
             sound_request(115);
         }
-        G_No0 = 1;
-        G_No1 = 0;
+        G_No0 = G0_GAME;
+        G_No1 = G1_TITLE;
         G_No2 = 0;
         G_No3 = 0;
         D_No0 = 0;
@@ -177,11 +227,11 @@ void match_state_0_fight(void) {
         voice_all_off();
         Before_Select_Sub();
         if (Free_Play) {
-            G_No2 = 4;
+            G_No2 = G2_TITLE_FREE;
             Exit_Title_Sub_Entry();
             return;
         } else {
-            E_No0 = 1;
+            E_No0 = E0_TITLE;
             E_No1 = 0;
             E_No2 = 0;
             E_No3 = 0;
@@ -189,7 +239,7 @@ void match_state_0_fight(void) {
         return;
     }
     switch (G_No1) {
-    case 0:
+    case G1_DEMO_INIT:
         G_No1++;
         G_No2 = 0;
         G_No3 = 0;
@@ -208,7 +258,7 @@ wipe:
         wipe_pattern_set(0, 7, 0);
         scfont_page0_fill(0, 32);
         break;
-    case 1:
+    case G1_DEMO_LOGO:
         draw_operator_info(Text_Page_Y);
         Basic_Sub();
         if (CAPCOM_Logo()) {
@@ -219,7 +269,7 @@ wipe:
             bg_vbl_trans_flag = 0;
         }
         break;
-    case 2:
+    case G1_DEMO_TITLE:
         draw_operator_info(Text_Page_Y);
         Basic_Sub();
         hit_check_main_process();
@@ -231,7 +281,7 @@ wipe:
             Insert_Y = 17;
         }
         break;
-    case 3:
+    case G1_DEMO_PLAY:
         draw_operator_info(Text_Page_Y);
         if (Play_Demo()) {
             Loop_Demo_Sub();
@@ -241,7 +291,7 @@ wipe:
             Scrn_Move_Set(4, 0, 0x100);
             sound_driver_init();
             if (Version_Type == 3) {
-                G_No1 = 1;
+                G_No1 = G1_DEMO_LOGO;
                 E_No1 = 99;
                 if (++Select_Demo_Index > 3) {
                     Select_Demo_Index = 0;
@@ -249,14 +299,14 @@ wipe:
             }
         }
         break;
-    case 4:
+    case G1_DEMO_RANKING:
         draw_operator_info(Text_Page_Y);
         Basic_Sub();
         if (Ranking_Main()) {
             Loop_Demo_Sub();
         }
         break;
-    case 5:
+    case G1_DEMO_PLAY2:
         draw_operator_info(Text_Page_Y);
         if (Play_Demo()) {
             Loop_Demo_Sub();
@@ -267,17 +317,17 @@ wipe:
             Scrn_Move_Set(4, 0, 0x100);
             sound_driver_init();
             if (Version_Type == 3) {
-                G_No1 = 1;
+                G_No1 = G1_DEMO_LOGO;
                 E_No1 = 99;
             }
         }
         break;
-    case 6:
+    case G1_DEMO_RANKING2:
         draw_operator_info(Text_Page_Y);
         Basic_Sub();
         if (Ranking_Main()) {
             Loop_Demo_Sub();
-            G_No1 = 1;
+            G_No1 = G1_DEMO_LOGO;
             E_No1 = 99;
         }
         break;
@@ -290,7 +340,7 @@ wipe:
             }
             break;
         default:
-            G_No1 = 1;
+            G_No1 = G1_DEMO_LOGO;
             G_No2 = 0;
             E_No3 = 0;
             E_No1 = 99;
@@ -439,7 +489,7 @@ void Game01(void) {
     Basic_Sub();
     Setup_Play_Type();
     switch (G_No2) {
-    case 0:
+    case G2_SEL_INIT:
         G_No2++;
         S_No = 0;
         S_Sub_No = 0;
@@ -450,7 +500,7 @@ void Game01(void) {
         load_any_color(5);
         init_slow_flag();
         break;
-    case 1:
+    case G2_SEL_MAIN:
         if (Select_Player()) {
             G_No2++;
             Bonus_Game_Flag = 0;
@@ -464,11 +514,11 @@ void Game01(void) {
         Select_Player();
         if (Switch_Screen()) {
             Cover_Timer = 24;
-            appear_type = 1;
+            appear_type = APPEAR_ENTRY;
             if (Demo_Flag) {
-                G_No1 = 2;
+                G_No1 = G1_FIGHT;
                 G_No2 = 0;
-                E_No0 = 4;
+                E_No0 = E0_FIGHT;
                 E_No1 = 0;
                 E_No2 = 0;
                 E_No3 = 0;
@@ -488,9 +538,9 @@ void Game01(void) {
                 Sel_Arts_Complete[1] = -1;
             }
             if (plw[0].wu.operator != 0 && plw[1].wu.operator != 0) {
-                Play_Type = 1;
+                Play_Type = PLAY_VS_PLAYER;
             } else {
-                Play_Type = 0;
+                Play_Type = PLAY_VS_CPU;
             }
             voice_all_off();
         }
@@ -510,10 +560,10 @@ void Game01_Sub(void) {
     player_face();
     PL_Wins[0] = 0;
     PL_Wins[1] = 0;
-    Score[0][1] = 0;
-    Score[0][2] = 0;
-    Score[1][1] = 0;
-    Score[1][2] = 0;
+    Score[0][SCORE_VS] = 0;
+    Score[0][SCORE_ROUND] = 0;
+    Score[1][SCORE_VS] = 0;
+    Score[1][SCORE_ROUND] = 0;
     Score_Sub();
     Disp_Win_Record();
     Clear_Win_Type();
@@ -541,19 +591,19 @@ void Game05(void) {
     Basic_Sub();
     Setup_Play_Type();
     switch (G_No2) {
-    case 0:
+    case G2_NEXT_INIT:
         G_No2++;
         SC_No[0] = 0;
         SC_No[1] = 0;
         SC_No[2] = 0;
         SC_No[3] = 0;
         if (Check_Bonus_Stage()) {
-            SC_No[0] = 6;
+            SC_No[0] = SC0_BONUS;
         }
         Stop_Combo = 0;
         init_slow_flag();
         break;
-    case 1:
+    case G2_NEXT_MAIN:
         if (Next_CPU()) {
             G_No2++;
             if (Bonus_Type == 0) {
@@ -569,18 +619,18 @@ void Game05(void) {
             Cover_Timer = 24;
             voice_all_off();
             if (Bonus_Type == 0) {
-                G_No1 = 2;
+                G_No1 = G1_FIGHT;
                 G_No2 = 0;
-                E_No0 = 4;
+                E_No0 = E0_FIGHT;
                 E_No1 = 0;
                 E_No2 = 0;
                 E_No3 = 0;
                 Bonus_Game_Flag = 0;
             } else {
-                G_No1 = 9;
+                G_No1 = G1_BONUS;
                 G_No2 = 0;
                 G_No3 = 0;
-                E_No0 = 4;
+                E_No0 = E0_FIGHT;
                 E_No1 = 0;
                 E_No2 = 0;
                 E_No3 = 0;
@@ -596,7 +646,7 @@ void Game11(void) {
     Basic_Sub();
     Setup_Play_Type();
     switch (G_No2) {
-    case 0:
+    case G2_Q_INIT:
         G_No2 += 1;
         SC_No[0] = 0;
         SC_No[1] = 0;
@@ -606,7 +656,7 @@ void Game11(void) {
         Bonus_Type = 0;
         init_slow_flag();
         break;
-    case 1:
+    case G2_Q_MAIN:
         if (Next_Q()) {
             G_No2 += 1;
             Game01_Sub();
@@ -614,31 +664,31 @@ void Game11(void) {
             Switch_Screen_Init(3, 3);
         }
         break;
-    case 2:
+    case G2_Q_OUT:
         Next_Q();
         if (Switch_Screen()) {
             Cover_Timer = 24;
             voice_all_off();
             if (Bonus_Type == 0) {
-                G_No1 = 2;
+                G_No1 = G1_FIGHT;
                 G_No2 = 0;
-                E_No0 = 4;
+                E_No0 = E0_FIGHT;
                 E_No1 = 0;
                 E_No2 = 0;
                 E_No3 = 0;
                 Bonus_Game_Flag = 0;
             } else {
-                G_No1 = 9;
+                G_No1 = G1_BONUS;
                 G_No2 = 0;
                 G_No3 = 0;
-                E_No0 = 4;
+                E_No0 = E0_FIGHT;
                 E_No1 = 0;
                 E_No2 = 0;
                 E_No3 = 0;
             }
         }
         break;
-    case 3:
+    case G2_Q_IN:
         G_No2 += 1;
         SC_No[0] = 0;
         SC_No[1] = 0;
@@ -650,9 +700,9 @@ void Game11(void) {
         sc_vram_to_ram();
         Switch_Screen_Init(3, 3);
         break;
-    case 4:
+    case G2_Q_IN_WAIT:
         if (Switch_Screen()) {
-            G_No2 = 1;
+            G_No2 = G2_Q_MAIN;
             Cover_Timer = 24;
         }
         break;
@@ -679,7 +729,7 @@ void Game2_0(void) {
     C_No1 = 0;
     C_No2 = 0;
     C_No3 = 0;
-    G_No2 = 3;
+    G_No2 = G2_FIGHT_START;
     G_Timer = 10;
     Stage_Intro_Flag = 0x80;
     Round_num = 0;
@@ -732,7 +782,7 @@ void Game2_3(void) {
     if (--G_Timer) {
         return;
     }
-    G_No2 = 1;
+    G_No2 = G2_FIGHT;
     Clear_Flash_No();
 }
 
@@ -747,8 +797,8 @@ void Game2_4(void) {
         stngauge_work_clear();
         combo_cont_init();
         count_cont_init(1);
-        Score[0][2] = 0;
-        Score[1][2] = 0;
+        Score[0][SCORE_ROUND] = 0;
+        Score[1][SCORE_ROUND] = 0;
         Score_Sub();
         win_mark_rno[0] = 0;
         win_mark_control(0);
@@ -759,7 +809,7 @@ void Game2_4(void) {
         pcon_rno[1] = 0;
         pcon_rno[2] = 0;
         pcon_rno[3] = 0;
-        appear_type = 2;
+        appear_type = APPEAR_ROUND;
         erase_extra_plef_work();
         bg_work_clear();
         win_lose_work_clear();
@@ -771,7 +821,7 @@ void Game2_4(void) {
     default:
         Game2_1();
         if (--G_Timer == 0) {
-            G_No2 = 1;
+            G_No2 = G2_FIGHT;
             Clear_Flash_No();
         }
         break;
@@ -788,8 +838,8 @@ void Game2_5(void) {
         stngauge_work_clear();
         combo_cont_init();
         count_cont_init(1);
-        Score[0][2] = 0;
-        Score[1][2] = 0;
+        Score[0][SCORE_ROUND] = 0;
+        Score[1][SCORE_ROUND] = 0;
         Score_Sub();
         win_mark_rno[0] = 0;
         win_mark_control(0);
@@ -801,7 +851,7 @@ void Game2_5(void) {
         pcon_rno[1] = 0;
         pcon_rno[2] = 0;
         pcon_rno[3] = 0;
-        appear_type = 0;
+        appear_type = APPEAR_STAND;
         erase_extra_plef_work();
         reset_all_char_display_with_backup();
         win_lose_work_clear();
@@ -817,7 +867,7 @@ void Game2_5(void) {
     default:
         Game2_1();
         if (--G_Timer == 0) {
-            G_No2 = 1;
+            G_No2 = G2_FIGHT;
             Clear_Flash_No();
         }
         break;
@@ -838,24 +888,24 @@ void Game03(void)
             break;
         }
         if (Game_setting.set5) {
-            G_No1 = 6;
+            G_No1 = G1_GAME_OVER;
             G_No2 = 0;
             G_No3 = 0;
-            E_No0 = 8;
+            E_No0 = E0_GAME_OVER;
             E_No1 = 0;
             E_No2 = 0;
             E_No3 = 0;
         } else {
-            G_No1 = 5;
+            G_No1 = G1_NEXT_CPU;
             G_No2 = 0;
             G_No3 = 0;
-            E_No0 = 9;
+            E_No0 = E0_NEXT_CPU;
             E_No1 = 0;
             E_No2 = 0;
             E_No3 = 0;
             if (Battle_Q[WINNER]) {
-                G_No1 = 11;
-                G_No2 = 3;
+                G_No1 = G1_NEXT_Q;
+                G_No2 = G2_Q_IN;
                 G_No3 = 0;
             }
             Cover_Timer = 24;
@@ -863,7 +913,7 @@ void Game03(void)
                 break;
             }
             if (Round_Operator[LOSER]) {
-                E_Number[LOSER][0] = 1;
+                E_Number[LOSER][0] = ENTRY_CONTINUE;
                 E_Number[LOSER][1] = 0;
                 E_Number[LOSER][2] = 0;
                 E_Number[LOSER][3] = 0;
@@ -882,10 +932,10 @@ void Game04(void) {
     case 0:
         if (Loser_Scene()) {
             if (Continue_Flag) {
-                G_No1 = 7;
+                G_No1 = G1_CONTINUE;
                 G_No2 = 0;
                 G_No3 = 0;
-                E_No0 = 7;
+                E_No0 = E0_CONTINUE;
                 E_No1 = 0;
                 E_No2 = 0;
                 E_No3 = 0;
@@ -893,15 +943,15 @@ void Game04(void) {
                 Cont_Sub_No = 0;
                 Cont_Sub2_No = 0;
                 Cont_Sub3_No = 0;
-                E_Number[LOSER][0] = 1;
+                E_Number[LOSER][0] = ENTRY_CONTINUE;
                 E_Number[LOSER][1] = 0;
                 E_Number[LOSER][2] = 0;
                 E_Number[LOSER][3] = 0;
             } else {
-                G_No1 = 6;
+                G_No1 = G1_GAME_OVER;
                 G_No2 = 0;
                 G_No3 = 0;
-                E_No0 = 8;
+                E_No0 = E0_GAME_OVER;
                 E_No1 = 0;
                 E_No2 = 0;
                 E_No3 = 0;
@@ -915,7 +965,7 @@ void Game04(void) {
 
 void Game09(void) {
     switch (G_No2) {
-    case 0:
+    case G2_BONUS_INIT:
         System_all_clear_Wait();
         Bonus_Game_Flag = Bonus_Type;
         Game_difficulty = 15;
@@ -943,8 +993,8 @@ void Game09(void) {
         win_lose_work_clear();
         bg_w.stage = Bonus_Type;
         bg_w.area = 0;
-        if (Bonus_Game_Flag == 22) {
-            My_char[COM_id] = 12;
+        if (Bonus_Game_Flag == BONUS_PARRY) {
+            My_char[COM_id] = PL_SEAN;
         } else {
             My_char[COM_id] = My_char[Player_id];
         }
@@ -952,10 +1002,10 @@ void Game09(void) {
         Setup_PL_Color(COM_id, Com_Color_Shot);
         TATE00();
         break;
-    case 1:
+    case G2_BONUS_START:
         G_No2 += 1;
         G_Timer = 19;
-        if (Bonus_Type == 22) {
+        if (Bonus_Type == BONUS_PARRY) {
             makeup_bonus_game_level(COM_id);
             effect_35_init(60, 5);
             effect_J2_init(120);
@@ -967,7 +1017,7 @@ void Game09(void) {
             effect_58_init(6, 120, 161);
         }
         break;
-    case 2:
+    case G2_BONUS_INTRO:
         Bonus_Sub();
         if (--G_Timer == 0) {
             G_No2 += 1;
@@ -977,14 +1027,14 @@ void Game09(void) {
             Switch_Screen_Init(0, 1);
         }
         break;
-    case 3:
+    case G2_BONUS_REVIVAL:
         Bonus_Sub();
         if (Switch_Screen_Revival()) {
             G_No2 += 1;
             Forbid_Break = 0;
         }
         break;
-    case 4:
+    case G2_BONUS_PLAY:
         if (Bonus_Sub()) {
             G_No2 += 1;
             Cover_Timer = 24;
@@ -993,7 +1043,7 @@ void Game09(void) {
             Switch_Screen_Init(3, 3);
         }
         break;
-    case 5:
+    case G2_BONUS_OUT:
         Bonus_Sub();
         if (Switch_Screen()) {
             effect_work_quick_init();
@@ -1003,10 +1053,10 @@ void Game09(void) {
             Suicide[0] = 1;
             System_all_clear_Wait();
             tilemap_fill_all(0, 32);
-            G_No1 = 10;
+            G_No1 = G1_AFTER_BONUS;
             G_No2 = 0;
             G_No3 = 0;
-            E_No0 = 9;
+            E_No0 = E0_NEXT_CPU;
             E_No1 = 0;
             E_No2 = 0;
             E_No3 = 0;
@@ -1025,7 +1075,7 @@ s32 Bonus_Sub(void) {
     Game_timer++;
     set_EXE_flag();
     Time_Control();
-    if (Bonus_Type == 22) {
+    if (Bonus_Type == BONUS_PARRY) {
         Bonus_Game_Complete = Player_control_bonus();
     } else {
         Bonus_Game_Complete = Player_control_bonus2();
@@ -1049,7 +1099,7 @@ void Game10(void) {
     Basic_Sub();
     Setup_Play_Type();
     switch (G_No2) {
-    case 0:
+    case G2_AFTER_INIT:
         G_No2++;
         SC_No[0] = 0;
         SC_No[1] = 0;
@@ -1058,7 +1108,7 @@ void Game10(void) {
         Stop_Combo = 0;
         init_slow_flag();
         break;
-    case 1:
+    case G2_AFTER_MAIN:
         if (After_Bonus()) {
             G_No2++;
             load_any_color(2);
@@ -1071,9 +1121,9 @@ void Game10(void) {
         if (After_Bonus() && Switch_Screen()) {
             Cover_Timer = 24;
             voice_all_off();
-            G_No1 = 2;
+            G_No1 = G1_FIGHT;
             G_No2 = 0;
-            E_No0 = 4;
+            E_No0 = E0_FIGHT;
             E_No1 = 0;
             E_No2 = 0;
             E_No3 = 0;
@@ -1087,31 +1137,31 @@ void Game10(void) {
 
 void Game08(void) {
     switch (G_No2) {
-    case 0:
-        G_No2 = 1;
+    case G2_END_INIT:
+        G_No2 = G2_END_MAIN;
         Final_Result_id = WINNER;
         WGJ_Target = WINNER;
         WGJ_Win = Win_Record[WINNER];
         grade_final_grade_bonus();
-        WGJ_Score = Score[WINNER][0] + Continue_Coin[WINNER];
+        WGJ_Score = Score[WINNER][SCORE_CPU] + Continue_Coin[WINNER];
         break;
-    case 1:
+    case G2_END_MAIN:
         if (Ending_main(End_PL) && Request_Fade(107, 0)) {
             G_No2++;
         }
         break;
-    case 2:
+    case G2_END_FADE:
         if (Check_Fade_Complete_SP()) {
             G_No2++;
             G_Timer = 10;
             Suicide[4] = 1;
         }
         break;
-    case 3:
+    case G2_END_EXIT:
         if (--G_Timer == 0) {
-            G_No1 = 6;
+            G_No1 = G1_GAME_OVER;
             G_No2 = 0;
-            E_No0 = 8;
+            E_No0 = E0_GAME_OVER;
             E_No1 = 0;
             E_No2 = 0;
             E_No3 = 0;
@@ -1126,11 +1176,11 @@ void Game08(void) {
             load_any_color(5);
         }
         break;
-    case 4:
+    case G2_END_SHORT:
         if (Short_Ending_Scene()) {
-            G_No1 = 6;
+            G_No1 = G1_GAME_OVER;
             G_No2 = 0;
-            E_No0 = 8;
+            E_No0 = E0_GAME_OVER;
             E_No1 = 0;
             E_No2 = 0;
             E_No3 = 0;
@@ -1153,13 +1203,13 @@ void Game06(void) {
         return;
     }
     switch (G_No2) {
-    case 0:
+    case G2_OVER_INIT:
         G_No2 += 1;
         Stock_Com_Color[Player_id] = -1;
         Stock_Com_Arts[Player_id] = -1;
         Last_Player_id = -1;
         Control_Time = 481;
-        E_No0 = 8;
+        E_No0 = E0_GAME_OVER;
         E_No1 = 0;
         E_No2 = 0;
         E_No3 = 0;
@@ -1167,23 +1217,23 @@ void Game06(void) {
             GO_No[xx] = 0;
         }
         break;
-    case 1:
+    case G2_OVER_MAIN:
         if (Game_Over()) {
             G_Timer = 60;
             if (Check_Disp_Ranking() != 0) {
                 G_No2 += 1;
             } else {
-                G_No2 = 3;
+                G_No2 = G2_OVER_EXIT;
             }
         }
         break;
-    case 2:
+    case G2_OVER_RANKING:
         if (Disp_Ranking() != 0) {
             G_No2 += 1;
             G_Timer = 1;
         }
         break;
-    case 3:
+    case G2_OVER_EXIT:
         if (--G_Timer == 0) {
             G_No2 += 1;
             Clear_Disp_Ranking(0);
@@ -1192,7 +1242,7 @@ void Game06(void) {
             Switch_Screen_Init(0, 1);
         }
         break;
-    case 4:
+    case G2_OVER_OUT:
         if (Switch_Screen() != 0) {
             Cover_Timer = 24;
             Forbid_Break = 0;
@@ -1204,20 +1254,20 @@ void Game06(void) {
             if (Request_Break[0] != 0 || Request_Break[1] != 0) {
                 Request_Break_Sub(0);
                 Request_Break_Sub(1);
-                G_No1 = 1;
+                G_No1 = G1_SELECT;
                 G_No2 = 0;
                 G_No3 = 0;
-                E_No0 = 2;
+                E_No0 = E0_SELECT;
                 E_No1 = 0;
                 E_No2 = 0;
                 E_No3 = 0;
                 break;
             }
-            G_No0 = 0;
-            G_No1 = 99;
+            G_No0 = G0_DEMO;
+            G_No1 = G1_DEMO_RESTART;
             G_No2 = 0;
             G_No3 = 0;
-            E_No0 = 0;
+            E_No0 = E0_DEMO;
             E_No1 = 99;
             E_No2 = 0;
             E_No3 = 0;
@@ -1230,7 +1280,7 @@ void Game06(void) {
             System_all_clear_Wait();
         }
         break;
-    case 5:
+    case G2_OVER_PL_INIT:
         G_No2 += 1;
         Stock_Com_Color[Player_id] = -1;
         Stock_Com_Arts[Player_id] = -1;
@@ -1241,16 +1291,16 @@ void Game06(void) {
         grade_check_work_1st_init(Player_id, 0);
         grade_check_work_1st_init(Player_id, 1);
         Control_Time = 481;
-        E_No0 = 8;
+        E_No0 = E0_GAME_OVER;
         E_No1 = 0;
         E_No2 = 0;
         E_No3 = 0;
-        GO_No[0] = 2;
+        GO_No[0] = GO_DONE;
         GO_No[1] = 1;
         break;
-    case 6:
+    case G2_OVER_PL:
         if (Game_Over()) {
-            G_No2 = 2;
+            G_No2 = G2_OVER_RANKING;
             G_Timer = 60;
         }
         break;
@@ -1285,16 +1335,16 @@ s32 Check_Disp_Ranking(void) {
 
 /* provisional name */
 s16 Disp_Rank_Sub(s16 PL_id) {
-    if (Request_Disp_Rank[PL_id][3] >= 0) {
+    if (Request_Disp_Rank[PL_id][RANK_GRADE] >= 0) {
         return 15;
     }
-    if (Request_Disp_Rank[PL_id][2] >= 0) {
+    if (Request_Disp_Rank[PL_id][RANK_CPU_GRADE] >= 0) {
         return 10;
     }
-    if (Request_Disp_Rank[PL_id][1] >= 0) {
+    if (Request_Disp_Rank[PL_id][RANK_WINS] >= 0) {
         return 5;
     }
-    if (Request_Disp_Rank[PL_id][0] >= 0) {
+    if (Request_Disp_Rank[PL_id][RANK_SCORE] >= 0) {
         return 0;
     }
     return -1;
@@ -1304,10 +1354,10 @@ s16 Disp_Rank_Sub(s16 PL_id) {
 
 /* provisional name */
 s32 Check_Disp_Rank_Request(void) {
-    if (Request_Disp_Rank[0][0] >= 0 || Request_Disp_Rank[0][1] >= 0) {
+    if (Request_Disp_Rank[0][RANK_SCORE] >= 0 || Request_Disp_Rank[0][RANK_WINS] >= 0) {
         return 1;
     }
-    if (Request_Disp_Rank[1][0] >= 0 || Request_Disp_Rank[1][1] >= 0) {
+    if (Request_Disp_Rank[1][RANK_SCORE] >= 0 || Request_Disp_Rank[1][RANK_WINS] >= 0) {
         return 1;
     }
     return 0;
@@ -1330,12 +1380,12 @@ s16 PL_id;
 
 s32 Disp_Ranking(void) {
     switch (G_No3) {
-    case 0:
+    case G3_RANK_INIT:
         G_No3++;
         sc_vram_to_ram();
         Switch_Screen_Init(0, 0);
         break;
-    case 1:
+    case G3_RANK_SETUP:
         if (Switch_Screen() != 0) {
             Cover_Timer = 24;
             G_No3++;
@@ -1351,14 +1401,14 @@ s32 Disp_Ranking(void) {
             grade_check_work_1st_init(1, 1);
         }
         break;
-    case 2:
+    case G3_RANK_COVER:
         Ranking_Main();
         if (--Cover_Timer == 0) {
             G_No3++;
             Switch_Screen_Init(0, 0);
         }
         break;
-    case 3:
+    case G3_RANK_REVIVAL:
         Ranking_Main();
         if (Switch_Screen_Revival() != 0) {
             G_No3++;
@@ -1383,7 +1433,7 @@ void Game07(void) {
     switch (G_No2) {
     case 0:
         if (Continue_Scene() != 0) {
-            G_No1 = 6;
+            G_No1 = G1_GAME_OVER;
             G_No2 = 0;
         }
         break;
@@ -1415,9 +1465,9 @@ s32 Ck_Coin(void) {
     s16 pl;
     if (Free_Play) {
         pl = -1;
-        if (~p1sw_1 & p1sw_0 & 0x1000) {
+        if (~p1sw_1 & p1sw_0 & BUTTON_START) {
             pl = 0;
-        } else if (~p2sw_1 & p2sw_0 & 0x1000) {
+        } else if (~p2sw_1 & p2sw_0 & BUTTON_START) {
             pl = 1;
         }
         if (pl == -1) {
@@ -1451,7 +1501,7 @@ s32 Ck_Coin(void) {
 /* provisional name */
 void draw_operator_info(s32 y) {
     if (Country == 6 || Country == 5) {
-        if (p1sw_0 & 0x10) {
+        if (p1sw_0 & BUTTON_LP) {
             tilemap_print_string_attr(DE_X[18] + 36, y + 20, 18, Game_Data_msg);
             tilemap_print_string_attr(DE_X[18] + 31, y + 21, 18, Income_msg);
             tilemap_print_string_attr(DE_X[18] + 31, y + 22, 18, Service_msg);

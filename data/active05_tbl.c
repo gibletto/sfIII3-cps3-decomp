@@ -1,5 +1,8 @@
 /*
- * ACTIVE05_TBL.C  game tables
+ * ACTIVE05_TBL.C  CPU active pattern table for player 05 (Necro)
+ *
+ * Pattern05_Tbl lists the Pattern05_nnnn scripts the computer-controlled Necro runs in active
+ * (attacking) mode, indexed by Pattern_Index. Read by ACTIVE05.C (Computer05).
  */
 
 #include "types.h"

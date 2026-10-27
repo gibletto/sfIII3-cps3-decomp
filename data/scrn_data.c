@@ -1,5 +1,13 @@
 /*
- * SCRN_DATA.C  game tables
+ * SCRN_DATA.C  scroll screen data
+ *
+ * Cell maps for the scroll layers, each cell a 16 x 16 block of tile entries written with
+ * bg_cell_write and its variants. effJ5_, eff08_, eff23_, eff45_ and eff74_scrn_data serve
+ * the animated stage backgrounds (EFFJ5.C, EFF08.C, EFF23.C, EFF45.C, EFF74.C);
+ * debug_scene_ and russia2_scrn_data the debug scenes of CMD_MAIN.C; op_bg0_scrn_data the
+ * opening BG0 (END_MAIN.C); ake_scrn_data the akebono finish screen (BG000.C); and the
+ * end_*_scrn_data blocks used by the character endings (END_1.C .. END_20.C), also listed in
+ * end_cg_src_tbl. Several are listed in BG000_TBL.C as well.
  */
 
 #include "types.h"

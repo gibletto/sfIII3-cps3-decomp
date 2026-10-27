@@ -26,6 +26,12 @@
 #include "bg_sub_5.h"
 #include "PLCNT3.h"
 
+/* pcon_rno[2] in plcnt_b2_die */
+#define BD_INIT         0       /* stop both players */
+#define BD_FOOTWORK     1       /* until both are steady */
+#define BD_POSE_INIT    2       /* the pause and the win poses */
+#define BD_POSE         3       /* until both poses are done */
+
 /* provisional name */
 s32 Player_control_bonus2(void) {
     s16 i;
@@ -78,7 +84,7 @@ run:
         sort_push_request((WORK*)&plw[0]);
         sort_push_request((WORK*)&plw[1]);
     }
-    if (pcon_rno[0] == 2 && pcon_rno[1] == 0 && pcon_rno[2] == 2) {
+    if (pcon_rno[0] == PCON_DIE && pcon_rno[1] == SETTLE_KO && pcon_rno[2] == 2) {
         return 1;
     }
     return 0;
@@ -94,12 +100,12 @@ void plcnt_b2_move(void) {
     move_player_work_bonus();
     if (Bonus_Stage_RNO[0] == 2) {
         Time_Stop = 1;
-        pcon_rno[0] = 2;
+        pcon_rno[0] = PCON_DIE;
         pcon_rno[1] = 0;
         pcon_rno[2] = 0;
     }
     if (Time_Over) {
-        pcon_rno[0] = 2;
+        pcon_rno[0] = PCON_DIE;
         pcon_rno[1] = 0;
         pcon_rno[2] = 0;
     }
@@ -110,34 +116,34 @@ void plcnt_b2_move(void) {
 void plcnt_b2_die(void) {
     plw[0].wu.dm_vital = plw[1].wu.dm_vital = 0;
     switch (pcon_rno[2]) {
-    case 0:
+    case BD_INIT:
         plw[0].wkey_flag = plw[1].wkey_flag = 1;
         plw[0].image_setup_flag = plw[1].image_setup_flag = 0;
         pcon_rno[2]++;
-    case 1:
+    case BD_FOOTWORK:
         if (footwork_check_bns(0) && footwork_check_bns(1)) {
             pcon_rno[2]++;
         }
         break;
-    case 2:
+    case BD_POSE_INIT:
         complete_victory_pause();
         if (plw[0].wu.operator) {
-            plw[0].wu.routine_no[2] = 40;
-            plw[0].wu.routine_no[3] = 0;
+            plw[0].wu.routine_no[2] = NORMAL_WIN;
+            plw[0].wu.routine_no[3] = RN3_START;
         } else {
-            plw[0].wu.routine_no[3] = 9;
+            plw[0].wu.routine_no[3] = RN3_DONE;
         }
         if (plw[1].wu.operator) {
-            plw[1].wu.routine_no[2] = 40;
-            plw[1].wu.routine_no[3] = 0;
+            plw[1].wu.routine_no[2] = NORMAL_WIN;
+            plw[1].wu.routine_no[3] = RN3_START;
         } else {
-            plw[1].wu.routine_no[3] = 9;
+            plw[1].wu.routine_no[3] = RN3_DONE;
         }
         plw[0].wu.cg_type = plw[1].wu.cg_type = 0;
         pcon_rno[2]++;
         break;
-    case 3:
-        if ((plw[0].wu.routine_no[3] == 9) && (plw[1].wu.routine_no[3] == 9)) {
+    case BD_POSE:
+        if ((plw[0].wu.routine_no[3] == RN3_DONE) && (plw[1].wu.routine_no[3] == RN3_DONE)) {
             pcon_rno[2]++;
         }
         break;

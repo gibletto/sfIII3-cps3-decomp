@@ -29,6 +29,7 @@
 #include "cmd_main_2.h"
 #include "ta_sub.h"
 #include "PLS03.h"
+#include "cmd_data.h"
 
 
 
@@ -84,11 +85,11 @@ s32 check_nm_attack(PLW* wk) {
         wk->as = &asstbl_lv_10010[wk->player_number][kos][koa].as;
         break;
     default:
-        if ((Bonus_Game_Flag == 21) && wk->bs2_on_car) {
+        if ((Bonus_Game_Flag == BONUS_CAR) && wk->bs2_on_car) {
         } else if (wk->wu.xyz[1].disp.pos > 0) {
             return 0;
         }
-        if (wk->cp->sw_lvbt & 2) {
+        if (wk->cp->sw_lvbt & LEVER_DOWN) {
             koa = waza_select(wk, kos, 1);
             wk->as = &asstbl_lv_1010[wk->player_number][kos][koa].as;
         } else {
@@ -112,10 +113,10 @@ s32 check_nm_attack(PLW* wk) {
 
 /* provisional name */
 s32 check_jump_pat_status(PLW* wk) {
-    if (!(wk->cp->sw_lvbt & 1)) {
+    if (!(wk->cp->sw_lvbt & LEVER_UP)) {
         return 0;
     }
-    if (((Bonus_Game_Flag == 21) && wk->bs2_on_car) || (wk->wu.xyz[1].disp.pos <= 0)) {
+    if (((Bonus_Game_Flag == BONUS_CAR) && wk->bs2_on_car) || (wk->wu.xyz[1].disp.pos <= 0)) {
         hoken_muriyari_chakuchi(wk);
         wk->wu.pat_status = jump_pat_status_data[wk->wu.rl_flag != wk->wu.rl_waza][wk->cp->lever_dir];
         return 1;
@@ -172,7 +173,7 @@ s32 check_chouhatsu(PLW* wk) {
     if (wk->wu.xyz[1].disp.pos > 0) {
         return 0;
     }
-    if (wk->cp->sw_lvbt & 0xF) {
+    if (wk->cp->sw_lvbt & LEVER_ALL) {
         return 0;
     }
     if (wk->cp->ca36 == 0) {
@@ -197,7 +198,7 @@ s32 check_lever_up_attack(PLW* wk) {
     if (wk->spmv_ng_flag & 0x4000) {
         return 0;
     }
-    if (!(wk->cp->sw_new & 1)) {
+    if (!(wk->cp->sw_new & CMD_LV_UP)) {
         return 0;
     }
     if ((kos = shot_data_convert(wk->cp->sw_now)) < 0) {
@@ -243,15 +244,15 @@ s32 check_catch_attack(PLW* wk) {
     if (wk->cp->ca14 == 0) {
         return 0;
     }
-    kos = ((wk->cp->sw_new & 4) != 0) + (((wk->cp->sw_new & 8) != 0) * 2);
+    kos = ((wk->cp->sw_new & CMD_LV_FORWARD) != 0) + (((wk->cp->sw_new & CMD_LV_BACK) != 0) * 2);
     if ((wk->wu.pat_status < 0xE) || (wk->wu.pat_status > 0x1E)) {
         if (!(nml_catch_h2_ok[0][wk->player_number] & 0x10)) {
             return 0;
         }
-        if (wk->cp->sw_lvbt & 1) {
+        if (wk->cp->sw_lvbt & LEVER_UP) {
             return 0;
         }
-        if (wk->cp->sw_lvbt & 2) {
+        if (wk->cp->sw_lvbt & LEVER_DOWN) {
             if (!(nml_catch_h2_ok[0][wk->player_number] & 1)) {
                 return 0;
             }
@@ -265,7 +266,7 @@ s32 check_catch_attack(PLW* wk) {
         if (wk->wu.xyz[1].disp.pos < 24) {
             return 0;
         }
-        if (wk->cp->sw_lvbt & 2) {
+        if (wk->cp->sw_lvbt & LEVER_DOWN) {
             if (!(nml_catch_h2_ok[1][wk->player_number] & 1)) {
                 return 0;
             }
@@ -287,9 +288,9 @@ s32 check_catch_attack(PLW* wk) {
 
 
 void set_attack_routine_number(PLW* wk) {
-    wk->wu.routine_no[1] = 4;
+    wk->wu.routine_no[1] = PLAYER_ATTACK;
     wk->wu.routine_no[2] = wk->as->r_no;
-    wk->wu.routine_no[3] = 0;
+    wk->wu.routine_no[3] = RN3_START;
     wk->wu.cg_type = 0;
 }
 
@@ -387,7 +388,7 @@ s16 cmd_ex;
         rnum = wk->cp->sw_new & lever;
         break;
     case 0x8000:
-        rnum = (lever == (wk->cp->sw_new & 0xF));
+        rnum = (lever == (wk->cp->sw_new & CMD_LV_MASK));
         break;
     case 0x3000:
         rnum = cmd_ex_check(wk->wu.xyz[1].disp.pos, cmd_ex);
@@ -400,7 +401,7 @@ s16 cmd_ex;
         }
         break;
     case 0xB000:
-        if ((lever == (wk->cp->sw_new & 0xF))) {
+        if ((lever == (wk->cp->sw_new & CMD_LV_MASK))) {
             if ((cmd_ex_check(wk->wu.xyz[1].disp.pos, cmd_ex))) {
                 rnum = 1;
             }
@@ -417,14 +418,14 @@ s16 cmd_ex;
         }
         break;
     case 0xA000:
-        if ((wk->wu.mvxy.a[1].sp > 0) && (lever == (wk->cp->sw_new & 0xF))) {
+        if ((wk->wu.mvxy.a[1].sp > 0) && (lever == (wk->cp->sw_new & CMD_LV_MASK))) {
             if (cmd_ex_check(wk->wu.xyz[1].disp.pos, cmd_ex)) {
                 rnum = 1;
             }
         }
         break;
     case 0x9000:
-        if ((wk->wu.mvxy.a[1].sp <= 0) && (lever == (wk->cp->sw_new & 0xF))) {
+        if ((wk->wu.mvxy.a[1].sp <= 0) && (lever == (wk->cp->sw_new & CMD_LV_MASK))) {
             if (cmd_ex_check(wk->wu.xyz[1].disp.pos, cmd_ex)) {
                 rnum = 1;
             }
@@ -455,7 +456,7 @@ s32 get_em_body_range(WORK* wk) {
     WORK* em;
     s16* dad;
     s16 res_hs;
-    if (Bonus_Game_Flag == 0x15 && wk->operator != 0) {
+    if (Bonus_Game_Flag == BONUS_CAR && wk->operator != 0) {
         em = (WORK*)((WORK*)wk->target_adrs)->my_effadrs;
         dad = (s16*)(em->hosei_adrs + (get_sel_hosei_tbl_ix(((WORK_Other*)em)->master_player) + 1));
         res_hs = wk->xyz[0].disp.pos - (em->xyz[0].disp.pos + dad[0] + (dad[1] / 2));
@@ -544,7 +545,7 @@ s32 check_renda_cancel(PLW* wk) {
     }
     wk->permited_koa |= 32;
     if (wk->wu.pat_status == renda_status_table[(wk->cp->sw_new & 3)]) {
-        if (wk->current_attack == (wk->cp->sw_now & 0x770)) {
+        if (wk->current_attack == (wk->cp->sw_now & CMD_SW_SHOT)) {
             setup_comm_back((WORK*)wk);
             wk->wu.cg_ix = wk->wu.cg_eftype * wk->wu.cgd_type - (wk->wu.cgd_type * 2);
             wk->wu.cg_next_ix = 0;
@@ -590,7 +591,7 @@ s32 check_meoshi_cancel(PLW* wk) {
     t0 = (s16)(wk->wu.cg_meoshi & 0x8F) & 0x8F;
     if ((s16)t0 != 0) {
         t0 &= 0xF;
-        wdat = cnmc_conv_data[wk->cp->sw_new & 0xF];
+        wdat = cnmc_conv_data[wk->cp->sw_new & CMD_LV_MASK];
         if (wk->wu.cg_meoshi & 0x80) {
             for (i = 0; i < 6; i++) {
                 if (cnmc_Z_lever_data[t0][i] == -1) {
@@ -619,7 +620,7 @@ matched:
         }
         goto cancel;
     }
-    wdat = wk->cp->sw_new & 0x770;
+    wdat = wk->cp->sw_new & CMD_SW_SHOT;
     if (wdat & ~tdat) {
         return 0;
     }
@@ -634,7 +635,7 @@ off:
     if (!(wk->wu.cg_cancel & 0x80)) {
         return 0;
     }
-    wdat = wk->cp->sw_off & 0x770;
+    wdat = wk->cp->sw_off & CMD_SW_SHOT;
     if (wdat & ~tdat) {
         return 0;
     }

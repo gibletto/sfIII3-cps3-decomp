@@ -1,5 +1,8 @@
 /*
- * PASS03_TBL.C  game tables
+ * PASS03_TBL.C  CPU passive pattern table for Yun
+ *
+ * Passive03_Tbl is the 136 passive (defensive) pattern routines of character 3 (Yun),
+ * indexed by Pattern_Index. Read by PASS03.C.
  */
 
 #include "types.h"

@@ -29,11 +29,18 @@
 #include "charmove_2.h"
 #include "Eff81.h"
 
+/* routine_no[0] */
+#define R0_WAIT         0       /* count the start delay down */
+#define R0_SLIDE_IN     1       /* slide in to its place */
+#define R0_HOLD         2       /* hold for 39 frames */
+#define R0_SLIDE_OUT    3       /* move on until off the bg */
+#define R0_KILL         4       /* (default) put the work back */
+
 
 
 void effect_81_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_WAIT:
         if (--ewk->wu.dir_timer) {
             return;
         }
@@ -46,7 +53,7 @@ void effect_81_move(WORK_Other* ewk) {
         ewk->wu.hit_quake = bg_w.bgw[1].xy[0].disp.pos - 16;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
         break;
-    case 1:
+    case R0_SLIDE_IN:
         ewk->wu.xyz[0].cal += ewk->wu.mvxy.a[0].sp;
         ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;
         if (ewk->wu.hit_quake <= ewk->wu.xyz[0].disp.pos) {
@@ -54,12 +61,12 @@ void effect_81_move(WORK_Other* ewk) {
             ewk->wu.dir_timer = 39;
         }
         break;
-    case 2:
+    case R0_HOLD:
         if (--ewk->wu.dir_timer == 0) {
             ewk->wu.routine_no[0]++;
         }
         break;
-    case 3:
+    case R0_SLIDE_OUT:
         ewk->wu.xyz[0].cal += ewk->wu.mvxy.a[0].sp;
         ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;
         if (Ck_Range_Out_S(ewk, ewk->wu.my_family - 1, 240)) {

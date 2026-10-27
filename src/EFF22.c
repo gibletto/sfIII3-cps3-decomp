@@ -17,6 +17,12 @@
 #include "CHARMOVE.h"
 #include "EFF22.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* start the animation and show */
+#define R0_TOP          1       /* restart at the top with new speeds */
+#define R0_FALL         2       /* drift down to the floor */
+#define R0_KILL         99      /* (default) put the work back */
+
 
 
 void effect_22_move(WORK_Other* ewk) {
@@ -25,18 +31,18 @@ void effect_22_move(WORK_Other* ewk) {
         return;
     }
     if (compel_dead_check(ewk) != 0) {
-        ewk->wu.routine_no[0] = 99;
+        ewk->wu.routine_no[0] = R0_KILL;
         ewk->wu.disp_flag = 0;
         return;
     }
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.dead_f = 1;
         set_char_move_init(&ewk->wu, 0, 11);
         ewk->wu.disp_flag = 1;
         ewk->wu.old_rno[0] = 0;
-    case 1:
+    case R0_TOP:
         ewk->wu.routine_no[0]++;
         ptr = &snow_sp[ewk->wu.old_rno[0]][ewk->wu.type][0];
         ewk->wu.mvxy.a[0].sp = *ptr++;
@@ -48,12 +54,12 @@ void effect_22_move(WORK_Other* ewk) {
         ewk->wu.old_rno[0]++;
         ewk->wu.old_rno[0] &= 3;
         break;
-    case 2:
+    case R0_FALL:
         if (!EXE_flag && !Game_pause) {
             add_x_sub(ewk);
             add_y_sub(ewk);
             if (ewk->wu.xyz[1].disp.pos < 0x18) {
-                ewk->wu.routine_no[0] = 1;
+                ewk->wu.routine_no[0] = R0_TOP;
             }
         }
         disp_pos_trans_entry_r(ewk);

@@ -1,5 +1,12 @@
 /*
- * EFF24_TBL.C  game tables
+ * EFF24_TBL.C  bg050 quake-shaken objects and bg130 breakable object tables
+ *
+ * eff24_data_tbl gives the colour, position, priority, animation and bounce type of each
+ * effect 24 object. eff24_quake_index_tbl turns the background quake index into a bounce
+ * level, eff24_quake_speed_y_tbl and eff24_quake_speed_x_tbl give the bounce speeds by type
+ * and level, and dog24_x_data the distances the dog runs. Read by EFF24.C, the bg050 objects
+ * shaken by quakes. scr_obj_data25_0 is the object list of the breakable objects, reached
+ * through scr_obj_data25 in EFF25.C, the bg130 breakable stage objects.
  */
 
 #include "types.h"

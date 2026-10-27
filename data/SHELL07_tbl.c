@@ -1,5 +1,8 @@
 /*
- * SHELL07_TBL.C  game tables
+ * SHELL07_TBL.C  CPU anti-projectile pattern table 07 (Ibuki)
+ *
+ * Shell07_Tbl lists the Shell07_nnnn pattern scripts the computer-controlled Ibuki runs when
+ * the opponent fires a projectile, indexed by Pattern_Index. Read by SHELL07.C.
  */
 
 #include "types.h"

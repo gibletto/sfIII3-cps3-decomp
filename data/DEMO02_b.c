@@ -1,5 +1,8 @@
 /*
- * DEMO02_B.C  game tables
+ * DEMO02_B.C  the word after the demo tables
+ *
+ * RANKING_local_tail is a single word stored at the end of the demonstration tables; nothing
+ * in the program refers to it by name.
  */
 
 #include "types.h"

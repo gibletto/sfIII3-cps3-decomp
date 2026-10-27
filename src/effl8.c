@@ -19,6 +19,11 @@
 #include "cps3.h"
 #include "fighter.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* save the palettes, load the new colours */
+#define R0_MOVE         1       /* until killed or the super art ends */
+#define R0_RESTORE      2       /* restore the palettes and the player */
+
 
 
 extern void (*const effM0_tbl_top[8])();
@@ -46,7 +51,7 @@ s32 effect_L8_move(WORK_Other* ewk) {
     save_old_col_ptr = (s16*)&ewk->wu.zu_flag;
     ewk->wu.rl_flag = mwk->wu.rl_flag;
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.hit_adrs = (u32*)effL8_data_tbl[ewk->wu.type];
         ewk->wu.step_xy_table = (s16*)((ewk->master_id == 1) * 0x800 + COLOR_RAM);
@@ -60,7 +65,7 @@ s32 effect_L8_move(WORK_Other* ewk) {
         spmv_ng_save = mwk->spmv_ng_flag;
         mwk->spmv_ng_flag |= 16;
         break;
-    case 1:
+    case R0_MOVE:
         if (ewk->wu.dead_f == 1) {
             ewk->wu.routine_no[0]++;
             break;
@@ -70,7 +75,7 @@ s32 effect_L8_move(WORK_Other* ewk) {
             break;
         }
         break;
-    case 2:
+    case R0_RESTORE:
         ewk->wu.routine_no[0]++;
         load_old_color_data(save_old_col_ptr, ewk->wu.step_xy_table);
         load_old_color_data(save_old_col_ptr, ewk->wu.move_xy_table);

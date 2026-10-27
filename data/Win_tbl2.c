@@ -1,5 +1,9 @@
 /*
- * WIN_TBL2.C  game tables
+ * WIN_TBL2.C  per-character win screen and stage tables
+ *
+ * Win_Intro_Type_Data is the win screen background type and Victory_Color_Data the win screen
+ * colour, both per character, read by WIN_2.C and EFF76.C; Battle_Country_Data is the list of
+ * stages Setup_Battle_Country picks from at random, read by SEL_PL.C.
  */
 
 #include "types.h"

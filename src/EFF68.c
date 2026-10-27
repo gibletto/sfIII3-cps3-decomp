@@ -29,29 +29,51 @@
 #include "eff65.h"
 #include "eff66.h"
 
+/* routine_no[0], effect 67: set by the creator */
+#define R0_LEFT         0       /* wait, then slide in to the left */
+#define R0_RIGHT        1       /* wait, then slide in to the right */
+#define R0_LEFT_CONN    2       /* parts: wait, then slide in to the left */
+#define R0_STAY         3       /* stay in place */
+#define R0_STAY_CONN    4       /* parts: stay in place */
+#define R0_SHOW         5       /* show in place */
+#define R0_SHOW_CONN    6       /* parts: show in place */
+
+/* routine_no[1], effect 67 */
+#define R1_SHOW         0       /* show */
+#define R1_WAIT         1       /* count the delay down */
+#define R1_SLIDE        2       /* slide, then stay */
+
+/* routine_no[0], effect 68 */
+#define R0_INIT         0       /* show at the start point */
+#define R0_WAIT         1       /* wait, then set off */
+#define R0_FLY1         2       /* fly to the first point */
+#define R0_FLY2         3       /* fly to the second point */
+#define R0_FLY3         4       /* fly to the third point */
+#define R0_HOME         5       /* fly back to the start */
+
 
 
 void effect_67_move(WORK_Other_CONN* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_LEFT:
         switch (ewk->wu.routine_no[1]) {
-        case 0:
+        case R1_SHOW:
             ewk->wu.routine_no[1]++;
             ewk->wu.disp_flag = 1;
             set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
             break;
-        case 1:
+        case R1_WAIT:
             if (--ewk->wu.dir_timer) {
                 break;
             }
             ewk->wu.routine_no[1]++;
             ewk->wu.dir_timer = 40;
             break;
-        case 2:
+        case R1_SLIDE:
             if (--ewk->wu.dir_timer) {
                 ewk->wu.xyz[0].disp.pos = ewk->wu.xyz[0].disp.pos - 10;
             } else {
-                ewk->wu.routine_no[0] = 3;
+                ewk->wu.routine_no[0] = R0_STAY;
             }
             break;
         }
@@ -59,25 +81,25 @@ void effect_67_move(WORK_Other_CONN* ewk) {
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
         sort_push_request4(&ewk->wu);
         break;
-    case 1:
+    case R0_RIGHT:
         switch (ewk->wu.routine_no[1]) {
-        case 0:
+        case R1_SHOW:
             ewk->wu.routine_no[1]++;
             ewk->wu.disp_flag = 1;
             set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
             break;
-        case 1:
+        case R1_WAIT:
             if (--ewk->wu.dir_timer) {
                 break;
             }
             ewk->wu.routine_no[1]++;
             ewk->wu.dir_timer = 39;
             break;
-        case 2:
+        case R1_SLIDE:
             if (--ewk->wu.dir_timer) {
                 ewk->wu.xyz[0].disp.pos = ewk->wu.xyz[0].disp.pos + 10;
             } else {
-                ewk->wu.routine_no[0] = 3;
+                ewk->wu.routine_no[0] = R0_STAY;
             }
             break;
         }
@@ -85,27 +107,27 @@ void effect_67_move(WORK_Other_CONN* ewk) {
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
         sort_push_request4(&ewk->wu);
         break;
-    case 2:
+    case R0_LEFT_CONN:
         switch (ewk->wu.routine_no[1]) {
-        case 0:
+        case R1_SHOW:
             ewk->wu.routine_no[1]++;
             ewk->wu.disp_flag = 1;
             ewk->wu.old_cgnum = ewk->wu.cg_number = 0;
             ewk->wu.cg_number++;
             ewk->wu.cg_number &= 0x7FFF;
             break;
-        case 1:
+        case R1_WAIT:
             if (--ewk->wu.dir_timer) {
                 break;
             }
             ewk->wu.routine_no[1]++;
             ewk->wu.dir_timer = 40;
             break;
-        case 2:
+        case R1_SLIDE:
             if (--ewk->wu.dir_timer) {
                 ewk->wu.xyz[0].disp.pos = ewk->wu.xyz[0].disp.pos - 10;
             } else {
-                ewk->wu.routine_no[0] = 4;
+                ewk->wu.routine_no[0] = R0_STAY_CONN;
             }
             break;
         }
@@ -115,19 +137,19 @@ void effect_67_move(WORK_Other_CONN* ewk) {
         ewk->wu.cg_number &= 0x7FFF;
         sort_push_request3(&ewk->wu);
         break;
-    case 3:
+    case R0_STAY:
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
         sort_push_request4(&ewk->wu);
         break;
-    case 4:
+    case R0_STAY_CONN:
         ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
         sort_push_request3(&ewk->wu);
         break;
-    case 5:
+    case R0_SHOW:
         switch (ewk->wu.routine_no[1]) {
-        case 0:
+        case R1_SHOW:
             ewk->wu.routine_no[1]++;
             ewk->wu.disp_flag = 1;
             set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
@@ -136,9 +158,9 @@ void effect_67_move(WORK_Other_CONN* ewk) {
         ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
         sort_push_request4(&ewk->wu);
         break;
-    case 6:
+    case R0_SHOW_CONN:
         switch (ewk->wu.routine_no[1]) {
-        case 0:
+        case R1_SHOW:
             ewk->wu.routine_no[1]++;
             ewk->wu.disp_flag = 1;
             ewk->wu.old_cgnum = ewk->wu.cg_number = 0;
@@ -177,7 +199,7 @@ s32 effect_67_init(s16 id, s16 X, s16 Y, s16 time0, s16 Char_Index, s16 Priority
     ewk->wu.position_z = Priority;
     ewk->wu.dir_timer = time0;
     ewk->wu.routine_no[0] = no;
-    ewk->wu.routine_no[1] = 0;
+    ewk->wu.routine_no[1] = R1_SHOW;
     ewk->wu.xyz[0].disp.pos = X;
     ewk->wu.xyz[1].disp.pos = Y;
     if (!id) {
@@ -437,13 +459,13 @@ s32 effect_67_init(s16 id, s16 X, s16 Y, s16 time0, s16 Char_Index, s16 Priority
 
 void effect_68_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         disp_pos_trans_entry(ewk);
         break;
-    case 1:
+    case R0_WAIT:
         ewk->wu.routine_no[4]--;
         if (ewk->wu.routine_no[4] <= 0) {
             ewk->wu.routine_no[0]++;
@@ -454,7 +476,7 @@ void effect_68_move(WORK_Other* ewk) {
         }
         disp_pos_trans_entry(ewk);
         break;
-    case 2:
+    case R0_FLY1:
         ewk->wu.routine_no[4]--;
         if (ewk->wu.routine_no[4] <= 0) {
             ewk->wu.routine_no[0]++;
@@ -469,7 +491,7 @@ void effect_68_move(WORK_Other* ewk) {
         }
         disp_pos_trans_entry(ewk);
         break;
-    case 3:
+    case R0_FLY2:
         ewk->wu.routine_no[4]--;
         if (ewk->wu.routine_no[4] <= 0) {
             ewk->wu.routine_no[0]++;
@@ -483,7 +505,7 @@ void effect_68_move(WORK_Other* ewk) {
         }
         disp_pos_trans_entry(ewk);
         break;
-    case 4:
+    case R0_FLY3:
         ewk->wu.routine_no[4]--;
         if (ewk->wu.routine_no[4] <= 0) {
             ewk->wu.routine_no[0]++;
@@ -499,10 +521,10 @@ void effect_68_move(WORK_Other* ewk) {
         }
         disp_pos_trans_entry(ewk);
         break;
-    case 5:
+    case R0_HOME:
         ewk->wu.routine_no[4]--;
         if (ewk->wu.routine_no[4] <= 0) {
-            ewk->wu.routine_no[0] = 2;
+            ewk->wu.routine_no[0] = R0_FLY1;
             ewk->wu.routine_no[4] = 50;
             cal_all_speed_data(&ewk->wu, ewk->wu.routine_no[4], ewk->wu.old_rno[2], ewk->wu.old_rno[3], 1, 1);
             ewk->wu.char_index = ewk->wu.routine_no[6];

@@ -1,5 +1,9 @@
 /*
- * EFFB2_TBL.C  game tables
+ * EFFB2_TBL.C  round-start FIGHT call tables (effect B2)
+ *
+ * effb2_sound_tbl holds the four round-call voices, one picked at random each round, and
+ * fight_col_move_tbl is the colour sequence stepped through by the FIGHT colour flash
+ * (fight_col_chg_sub). Read by EFFB2.C.
  */
 
 #include "types.h"

@@ -51,7 +51,7 @@
 /* provisional name */
 void end_16000(u16 pl_num) {
     switch (end_w.r_no_1) {
-    case 0:
+    case END1_INIT:
         end_w.r_no_1++;
         end_w.r_no_2 = 0;
         common_end_init00(pl_num);
@@ -61,7 +61,7 @@ void end_16000(u16 pl_num) {
         bgm_request(0x2C);
         end_w.timer = timer_16_tbl[end_w.r_no_2];
         break;
-    case 1:
+    case END1_SCENES:
         end_w.timer--;
         if (end_w.timer < 0) {
             end_w.r_no_2++;
@@ -80,7 +80,7 @@ void end_16000(u16 pl_num) {
             }
         }
         end_1600_move();
-    case 2:
+    case END1_DONE:
         end_scn_pos_set2();
         end_bg_pos_hosei2();
         end_fam_set2();

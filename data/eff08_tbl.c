@@ -1,5 +1,9 @@
 /*
- * EFF08_TBL.C  game tables
+ * EFF08_TBL.C  animated background layer tables
+ *
+ * eff08_cell_tbl is the 2x16 cell grid written into the second BG1 page; eff08_anm_tbl and
+ * eff08_anm2_tbl are the page flip and Y scroll steps of the main cycle and the extra loops,
+ * and eff08_loop_tbl picks the number of extra loops at random. Read by EFF08.C.
  */
 
 #include "types.h"

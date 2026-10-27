@@ -1,5 +1,8 @@
 /*
- * PLPAT18_TBL.C  game tables
+ * PLPAT18_TBL.C  Q's special attack table
+ *
+ * pl18_exatt_table lists the routines of attack numbers 16 and up of character 18 (Q). Read
+ * by pl18_extra_attack in PLPAT18.C.
  */
 
 #include "types.h"

@@ -30,6 +30,11 @@
 #include "sys_config_3.h"
 #include "eff08.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* build the second page and show the first */
+#define R0_ANIM         1       /* step eff08_anm_tbl */
+#define R0_LOOP         2       /* extra loops through eff08_anm2_tbl */
+
 
 
 void effect_08_move(WORK_Other* ewk) {
@@ -37,7 +42,7 @@ void effect_08_move(WORK_Other* ewk) {
     s16 slot;
     s16 pos_y;
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.cg_ix = 0;
         ewk->wu.char_index = 0;
@@ -46,7 +51,7 @@ void effect_08_move(WORK_Other* ewk) {
         scrn_map_set_now(1, (u32)bg_w.bgw[1].bg_address);
         Scrn_Y_Set_R(1, eff08_anm_tbl[ewk->wu.cg_ix].y);
         break;
-    case 1:
+    case R0_ANIM:
         if (!EXE_flag && !Game_pause) {
             ewk->wu.cg_ctr--;
             if (ewk->wu.cg_ctr <= 0) {
@@ -78,7 +83,7 @@ void effect_08_move(WORK_Other* ewk) {
         pos_y += bg_w.bgw[1].abs_y & 0x3FF;
         Scrn_Y_Set_R(1, pos_y);
         break;
-    case 2:
+    case R0_LOOP:
         if (!EXE_flag && !Game_pause) {
             ewk->wu.cg_ctr--;
             if (ewk->wu.cg_ctr <= 0) {
@@ -87,7 +92,7 @@ void effect_08_move(WORK_Other* ewk) {
                 if (!ewk->wu.cg_ix) {
                     ewk->wu.dir_step--;
                     if (ewk->wu.dir_step <= 0) {
-                        ewk->wu.routine_no[0] = 1;
+                        ewk->wu.routine_no[0] = R0_ANIM;
                         ewk->wu.cg_ctr = eff08_anm_tbl[ewk->wu.cg_ix].timer;
                         slot = eff08_anm_tbl[ewk->wu.cg_ix].slot;
                         scrn_map_set_now(1, eff_bg_adrs[slot].adrs);

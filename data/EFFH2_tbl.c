@@ -1,5 +1,8 @@
 /*
- * EFFH2_TBL.C  game tables
+ * EFFH2_TBL.C  path of the marker on a judge's vote panel
+ *
+ * panel_guide is the eight { x, y } offsets the H2 marker steps through around the panel, one
+ * step every eight frames. Read by EFFH2.C.
  */
 
 #include "types.h"

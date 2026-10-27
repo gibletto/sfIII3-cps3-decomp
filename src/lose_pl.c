@@ -45,6 +45,9 @@
 #include "Com_Pl.h"
 #include "lose_pl.h"
 
+/* wk->wu.routine_no[3] in a win or lose pose */
+#define POSE_RUN        1       /* the pose runs until its script sets RN3_DONE */
+
 s16 lose_rno[3];  /* 020281B8 */
 s16 lose_free[2];  /* 020281BE */
 
@@ -61,7 +64,7 @@ void lose_player(PLW* wk) {
 
 
 void Lose_00000(PLW* wk) {
-    if (pcon_rno[0] == 2 && pcon_rno[1] == 3) {
+    if (pcon_rno[0] == PCON_DIE && pcon_rno[1] == SETTLE_JUDGE) {
         Judge_normal_loser(wk);
     } else {
         Normal_normal_Loser(wk);
@@ -74,9 +77,9 @@ void Lose_10000(PLW* wk) {
     if (set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
         set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
     }
-    if ((pcon_rno[0] == 2) && (pcon_rno[1] == 3)) {
+    if ((pcon_rno[0] == PCON_DIE) && (pcon_rno[1] == SETTLE_JUDGE)) {
         switch (wk->wu.routine_no[3]) {
-        case 0:
+        case RN3_START:
             wk->wu.routine_no[3]++;
             lose_rno[0] = lose_rno[1] = lose_rno[2] = 0;
             wk->wu.char_index = random_16_com();
@@ -84,24 +87,24 @@ void Lose_10000(PLW* wk) {
             set_char_move_init(&wk->wu, 9, wk->wu.char_index + 0x38);
             break;
         default:
-        case 1:
-        case 9:
+        case POSE_RUN:
+        case RN3_DONE:
             char_move(&wk->wu);
             break;
         }
-    } else if ((pcon_rno[1] == 0) || (pcon_rno[1] == 4)) {
+    } else if ((pcon_rno[1] == SETTLE_KO) || (pcon_rno[1] == SETTLE_GOUKI)) {
         return;
     } else {
         switch (wk->wu.routine_no[3]) {
-        case 0:
+        case RN3_START:
             wk->wu.routine_no[3]++;
             lose_rno[0] = lose_rno[1] = lose_rno[2] = 0;
             wk->wu.char_index = random_16_com();
             wk->wu.char_index &= 7;
             set_char_move_init(&wk->wu, 9, wk->wu.char_index + 0x18);
             break;
-        case 1:
-        case 9:
+        case POSE_RUN:
+        case RN3_DONE:
             char_move(&wk->wu);
             break;
         }
@@ -115,19 +118,19 @@ void Lose_20000(PLW* wk) {
     if (set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
         set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
     }
-    if ((pcon_rno[0] == 2) && (pcon_rno[1] == 3)) {
+    if ((pcon_rno[0] == PCON_DIE) && (pcon_rno[1] == SETTLE_JUDGE)) {
         Judge_normal_loser(wk);
         return;
     }
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         if (!Extra_Break) {
             if ((Round_num >= (work = Battle_Round[Play_Type]) * 2) || (PL_Wins[Winner_id] >= work + 1)) {
                 effect_C1_init(&wk->wu);
             }
         }
-        if ((pcon_rno[1] != 0) && (pcon_rno[1] != 4)) {
+        if ((pcon_rno[1] != SETTLE_KO) && (pcon_rno[1] != SETTLE_GOUKI)) {
             lose_rno[0] = lose_rno[1] = lose_rno[2] = 0;
             work = random_16_com();
             work &= 7;
@@ -147,9 +150,9 @@ void Lose_30000(PLW* wk) {
     if (set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
         set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
     }
-    if ((pcon_rno[0] == 2) && (pcon_rno[1] == 3)) {
+    if ((pcon_rno[0] == PCON_DIE) && (pcon_rno[1] == SETTLE_JUDGE)) {
         switch (wk->wu.routine_no[3]) {
-        case 0:
+        case RN3_START:
             wk->wu.routine_no[3]++;
             lose_rno[0] = lose_rno[1] = lose_rno[2] = 0;
             if (Country != 1) {
@@ -159,16 +162,16 @@ void Lose_30000(PLW* wk) {
             }
             break;
         default:
-        case 1:
-        case 9:
+        case POSE_RUN:
+        case RN3_DONE:
             char_move(&wk->wu);
             break;
         }
-    } else if ((pcon_rno[1] == 0) || (pcon_rno[1] == 4)) {
+    } else if ((pcon_rno[1] == SETTLE_KO) || (pcon_rno[1] == SETTLE_GOUKI)) {
         return;
     } else {
         switch (wk->wu.routine_no[3]) {
-        case 0:
+        case RN3_START:
             wk->wu.routine_no[3]++;
             lose_rno[0] = lose_rno[1] = lose_rno[2] = 0;
             if (Country != 1) {
@@ -177,8 +180,8 @@ void Lose_30000(PLW* wk) {
                 set_char_move_init(&wk->wu, 9, 0x18);
             }
             break;
-        case 1:
-        case 9:
+        case POSE_RUN:
+        case RN3_DONE:
             char_move(&wk->wu);
             break;
         }
@@ -192,19 +195,19 @@ void Normal_normal_Loser(PLW* wk) {
     if (set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
         set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
     }
-    if ((pcon_rno[1] == 0) || (pcon_rno[1] == 4)) {
+    if ((pcon_rno[1] == SETTLE_KO) || (pcon_rno[1] == SETTLE_GOUKI)) {
         return;
     }
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3]++;
         lose_rno[0] = lose_rno[1] = lose_rno[2] = 0;
         work = random_16_com();
         work &= 7;
         set_char_move_init(&wk->wu, 9, work + 0x18);
         break;
-    case 1:
-    case 9:
+    case POSE_RUN:
+    case RN3_DONE:
         char_move(&wk->wu);
         break;
     }
@@ -218,14 +221,14 @@ void Judge_normal_loser(PLW* wk) {
         set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
     }
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3] += 1;
         work = random_16_com();
         work &= 3;
         set_char_move_init(&wk->wu, 9, work + 0x38);
         break;
-    case 1:
-    case 9:
+    case POSE_RUN:
+    case RN3_DONE:
     default:
         char_move(&wk->wu);
         break;
@@ -239,16 +242,16 @@ void meta_lose_pause(PLW* wk) {
     if (set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
         set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
     }
-    if ((pcon_rno[1] == 0) || (pcon_rno[1] == 4)) {
+    if ((pcon_rno[1] == SETTLE_KO) || (pcon_rno[1] == SETTLE_GOUKI)) {
         return;
     }
     switch (wk->wu.routine_no[3]) {
-    case 0:
+    case RN3_START:
         wk->wu.routine_no[3] += 1;
         set_char_move_init(&wk->wu, 9, meta_lose_tbl[wk->player_number]);
         break;
-    case 1:
-    case 9:
+    case POSE_RUN:
+    case RN3_DONE:
         char_move(&wk->wu);
         break;
     }

@@ -20,6 +20,17 @@
 #include "CHARMOVE.h"
 #include "EFFJ9.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* take the car's character set */
+#define R0_MOVE         1       /* move with the car */
+#define R0_END          2       /* hidden for a frame */
+#define R0_KILL         3       /* (default) put the work back */
+
+/* routine_no[1] */
+#define R1_SHOW         0       /* show the first pattern */
+#define R1_QUAKE        1       /* shake until the car changes */
+#define R1_FOLLOW       2       /* (default) follow the car's x */
+
 
 
 
@@ -29,7 +40,7 @@ void effect_J9_move(WORK_Other* ewk) {
     s32 k;
 
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.charset_id = 0x17;
         set_char_base_data(&ewk->wu);
@@ -39,19 +50,19 @@ void effect_J9_move(WORK_Other* ewk) {
         ewk->wu.position_z = ewk->wu.my_priority = 68;
         ewk->wu.next_x = 0;
         break;
-    case 1:
+    case R0_MOVE:
         if (ewk->wu.dead_f == 1) {
             ewk->wu.disp_flag = 0;
             ewk->wu.routine_no[0]++;
             break;
         }
         switch (ewk->wu.routine_no[1]) {
-        case 0:
+        case R1_SHOW:
             ewk->wu.routine_no[1]++;
             ewk->wu.disp_flag = 1;
             k = 0x44;
             goto bind;
-        case 1:
+        case R1_QUAKE:
             ewk->wu.next_x = get_c2_quake(c2wk);
             if (c2wk->char_index == 0x47) {
                 ewk->wu.next_x = 0;
@@ -68,8 +79,8 @@ void effect_J9_move(WORK_Other* ewk) {
         player_hosei_data(ewk, c2wk->dir_timer);
         effJ9_trans(&ewk->wu);
         break;
-    case 2:
-        ewk->wu.routine_no[0] = 3;
+    case R0_END:
+        ewk->wu.routine_no[0] = R0_KILL;
         break;
     default:
         all_cgps_put_back(&ewk->wu);

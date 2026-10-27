@@ -1,5 +1,11 @@
 /*
- * CHARID_TBL.C  game tables
+ * CHARID_TBL.C  character base data
+ *
+ * char_init_data has one entry per charset_id: the cg script tables (normal, damage, catch,
+ * caught, attack, super art and the rest), step and move tables, sound table, overlap tables,
+ * judgement area tables and the colour, priority and family settings of each character, the
+ * projectile set of effect 13 and the bonus-stage set. Entry 0 is empty. Read by CHARID.C,
+ * which loads them into a work in set_char_base_data.
  */
 
 #include "types.h"

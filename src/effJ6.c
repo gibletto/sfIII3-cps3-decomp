@@ -29,6 +29,13 @@
 #include "sys_config_3.h"
 #include "effJ6.h"
 
+/* routine_no[0] */
+#define R0_INIT         0       /* show whole, or broken if hit before */
+#define R0_READY        1       /* wait for the parent to start */
+#define R0_HITTABLE     2       /* wait for a hit */
+#define R0_BREAK        3       /* change to the broken pattern */
+#define R0_BROKEN       4       /* stay broken */
+
 
 
 void effect_J6_move(WORK_Other* ewk) {
@@ -38,32 +45,32 @@ void effect_J6_move(WORK_Other* ewk) {
     }
     oya_ptr = (WORK_Other*)ewk->my_master;
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_INIT:
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         if (eff_hit_flag[ewk->wu.type]) {
-            ewk->wu.routine_no[0] = 4;
+            ewk->wu.routine_no[0] = R0_BROKEN;
             set_char_move_init(&ewk->wu, 0, 3);
         } else {
             set_char_move_init(&ewk->wu, 0, 4);
         }
         break;
-    case 1:
+    case R0_READY:
         if (oya_ptr->wu.routine_no[0] >= 2) {
             ewk->wu.routine_no[0]++;
         }
         disp_pos_trans_entry_r(ewk);
         break;
-    case 2:
+    case R0_HITTABLE:
         if (!EXE_flag && !Game_pause && !EXE_obroll) {
             effect_j6_hit_sub(ewk);
         }
         disp_pos_trans_entry_r(ewk);
         break;
-    case 3:
+    case R0_BREAK:
         ewk->wu.routine_no[0]++;
         set_char_move_init(&ewk->wu, 0, 3);
-    case 4:
+    case R0_BROKEN:
         disp_pos_trans_entry_r(ewk);
         break;
     default:

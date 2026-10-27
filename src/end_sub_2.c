@@ -59,6 +59,13 @@
 #include "end_sub_2.h"
 #include "cps3.h"
 
+/* staff_r_no: the staff roll (staff_roll_main) */
+#define STAFF_INIT      0       /* set up the staff roll */
+#define STAFF_ROLL      1       /* roll the names */
+#define STAFF_WAIT      2       /* wait end_w.timer, then on */
+#define STAFF_LAST      3       /* after the last name: wait end_w.timer */
+#define STAFF_END       4       /* (default) finished */
+
 s16 cd_ready_flag;  /* 02028284 */
 s16 cd_spin_timer;  /* 02028286 */
 s16 roll_rate2;  /* 02028288 */
@@ -190,7 +197,7 @@ s32 staff_roll_main(void) {
     s32 fx;
     s32 fy;
     switch (staff_r_no) {
-    case 0:
+    case STAFF_INIT:
         staff_r_no++;
         staffroll_end = 0;
         bg_w.bgw[5].wxy[0].cal = bg_w.bgw[5].xy[0].cal = 0x1000000;
@@ -208,11 +215,11 @@ s32 staff_roll_main(void) {
         name_timer = 0;
         staff_roll_timer = 0x1E96;
         break;
-    case 1:
+    case STAFF_ROLL:
         ((WORK*)1)->id;
         ((WORK*)0)->id;
         if (staff_roll_skip_check()) {
-            staff_r_no = 4;
+            staff_r_no = STAFF_END;
             end_w.timer = 0;
         } else {
             roll_rate_t2 = 1;
@@ -222,7 +229,7 @@ s32 staff_roll_main(void) {
             staff_roll_timer = staff_roll_timer - roll_rate_t2;
         } else {
             if (staff_roll_tbl[staff_name_ptr].str == 0) {
-                staff_r_no = 3;
+                staff_r_no = STAFF_LAST;
                 end_w.timer = staff_roll_tbl[staff_name_ptr].wait;
                 goto roll_wait; roll_wait:;
                 break;
@@ -323,15 +330,15 @@ e3: goto e2;
             goto e3;
         }
         break;
-    case 2:
-    case 3:
+    case STAFF_WAIT:
+    case STAFF_LAST:
         if (end_w.timer >= 0) {
             end_w.timer = end_w.timer - roll_rate_t2;
         } else {
             staff_r_no++;
         }
         if (staff_roll_skip_check()) {
-            staff_r_no = 4;
+            staff_r_no = STAFF_END;
             end_w.timer = 0;
         }
         break;

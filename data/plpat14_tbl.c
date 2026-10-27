@@ -1,5 +1,9 @@
 /*
- * PLPAT14_TBL.C  game tables
+ * PLPAT14_TBL.C  Gouki's special attack tables
+ *
+ * pl14_exatt_table lists the routines of attack numbers 16 and up of character 14 (Gouki);
+ * pl14_HYAKKI_dat gives, by opponent character, the catch box of the Hyakki move. Read by
+ * PLPAT14.C.
  */
 
 #include "types.h"

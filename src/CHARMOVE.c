@@ -33,6 +33,7 @@
 #include "cmd_main_2.h"
 #include "charmove_2.h"
 #include "fighter.h"
+#include "cmd_data.h"
 
 
 void char_move(WORK* wk);
@@ -865,7 +866,7 @@ s32 comm_ps_y(WORK* wk, CHAR_CMD* ctc) {
     if (wk->work_id == 1) {
         switch (ctc->koc) {
         case 0:
-            if (bg_w.stage == 21) {
+            if (bg_w.stage == BONUS_CAR) {
                 if (((PLW*)wk)->bs2_on_car) {
                     s16* fc = &bs2_floor[2];
                     if (ctc->pat < *fc) {
@@ -1086,7 +1087,6 @@ s32 comm_quay(s32 wk_adrs, CHAR_CMD* ctc)
 s32 comm_if_s(WORK* wk, CHAR_CMD* ctc) {
     u16 shdat;
     u16 my_shdat;
-    s16 ix;
     if (ctc->koc & 0x4000) {
         my_shdat = wk->cmwk[ctc->koc & 0xF];
     } else {
@@ -1245,7 +1245,6 @@ s32 comm_ngem(WORK* wk, CHAR_CMD* ctc) {
 s32 comm_iflb(WORK* wk, CHAR_CMD* ctc) {
     u16 shdat;
     u16 my_shdat;
-    s16 ix;
     if (ctc->koc & 0x4000) {
         my_shdat = wk->cmwk[ctc->koc & 0xF];
     } else {
@@ -1813,7 +1812,6 @@ s32 comm_atmf(PLW* wk, CHAR_CMD* ctc) {
 
 
 s32 comm_chkwf(PLW* wk, CHAR_CMD* ctc) {
-    s16 ix;
     if (wk->cp->waza_flag[ctc->koc] == 0 || wk->cp->waza_flag[ctc->koc] == -1) {
         return decord_if_jump(&wk->wu, ctc, ctc->pat);
     }
@@ -2129,7 +2127,6 @@ s32 comm_rljmp(WORK* wk, CHAR_CMD* ctc) {
 s32 comm_ifs2(WORK* wk, CHAR_CMD* ctc) {
     u16 shdat;
     u16 my_shdat;
-    s16 ix;
     if (ctc->koc & 0x4000) {
         my_shdat = wk->cmwk[ctc->koc & 0xF];
     } else {
@@ -2167,7 +2164,6 @@ s32 comm_sse(WORK* wk, CHAR_CMD* ctc) {
 s32 comm_s_chg(WORK* wk, CHAR_CMD* ctc) {
     u16 shdat;
     u16 my_shdat;
-    s16 ix;
     if (ctc->koc & 0x4000) {
         my_shdat = wk->cmwk[ctc->koc & 0xF];
     } else {
@@ -2185,7 +2181,6 @@ s32 comm_s_chg(WORK* wk, CHAR_CMD* ctc) {
 s32 comm_schg2(WORK* wk, CHAR_CMD* ctc) {
     u16 shdat;
     u16 my_shdat;
-    s16 ix;
     if (ctc->koc & 0x4000) {
         my_shdat = wk->cmwk[ctc->koc & 0xF];
     } else {
@@ -2255,7 +2250,6 @@ s32 comm_ayjmp(WORK* wk, CHAR_CMD* ctc) {
 s32 comm_ifs3(WORK* wk, CHAR_CMD* ctc) {
     u16 shdat;
     u16 my_shdat;
-    s16 ix;
     if (ctc->koc & 0x4000) {
         my_shdat = wk->cmwk[ctc->koc & 0xF];
     } else {
@@ -2297,9 +2291,9 @@ s32 decord_if_jump(WORK* wk, CHAR_CMD* cpc, s16 ix) {
 s32 get_comm_if_lever(WORK* wk) {
     u16 num;
     if (wk->work_id == 1) {
-        num = wcp[wk->id].sw_new & 0xF;
+        num = wcp[wk->id].sw_new & CMD_LV_MASK;
     } else {
-        num = wcp[((WORK_Other*)wk)->master_id & 1].sw_new & 0xF;
+        num = wcp[((WORK_Other*)wk)->master_id & 1].sw_new & CMD_LV_MASK;
     }
     return num;
 }
@@ -2309,9 +2303,9 @@ s32 get_comm_if_lever(WORK* wk) {
 s32 get_comm_if_shot(WORK* wk) {
     u16 num;
     if (wk->work_id == 1) {
-        num = wcp[wk->id].sw_new & 0x770;
+        num = wcp[wk->id].sw_new & CMD_SW_SHOT;
     } else {
-        num = wcp[(s16)(((WORK_Other*)wk)->master_id & 1)].sw_new & 0x770;
+        num = wcp[(s16)(((WORK_Other*)wk)->master_id & 1)].sw_new & CMD_SW_SHOT;
     }
     return num;
 }
@@ -2321,15 +2315,15 @@ s32 get_comm_if_shot(WORK* wk) {
 s32 get_comm_if_shot_now_off(WORK* wk) {
     u16 num;
     if (wk->work_id == 1) {
-        num = wcp[wk->id].sw_now & 0x770;
+        num = wcp[wk->id].sw_now & CMD_SW_SHOT;
     } else {
-        num = wcp[((WORK_Other*)wk)->master_id & 1].sw_now & 0x770;
+        num = wcp[((WORK_Other*)wk)->master_id & 1].sw_now & CMD_SW_SHOT;
     }
     if (wk->cg_cancel & 0x80) {
         if (wk->work_id == 1) {
-            num |= wcp[wk->id].sw_off & 0x770;
+            num |= wcp[wk->id].sw_off & CMD_SW_SHOT;
         } else {
-            num |= wcp[((WORK_Other*)wk)->master_id & 1].sw_off & 0x770;
+            num |= wcp[((WORK_Other*)wk)->master_id & 1].sw_off & CMD_SW_SHOT;
         }
     }
     return num;
@@ -2340,9 +2334,9 @@ s32 get_comm_if_shot_now_off(WORK* wk) {
 s32 get_comm_if_shot_now(WORK* wk) {
     u16 num;
     if (wk->work_id == 1) {
-        num = wcp[wk->id].sw_now & 0x770;
+        num = wcp[wk->id].sw_now & CMD_SW_SHOT;
     } else {
-        num = wcp[(s16)(((WORK_Other*)wk)->master_id & 1)].sw_now & 0x770;
+        num = wcp[(s16)(((WORK_Other*)wk)->master_id & 1)].sw_now & CMD_SW_SHOT;
     }
     return num;
 }
@@ -2352,9 +2346,9 @@ s32 get_comm_if_shot_now(WORK* wk) {
 s32 get_comm_if_lvsh(WORK* wk) {
     u16 num;
     if (wk->work_id == 1) {
-        num = wcp[wk->id].sw_new & 0x77F;
+        num = wcp[wk->id].sw_new & CMD_LVSW_ALL;
     } else {
-        num = wcp[(s16)(((WORK_Other*)wk)->master_id & 1)].sw_new & 0x77F;
+        num = wcp[(s16)(((WORK_Other*)wk)->master_id & 1)].sw_new & CMD_LVSW_ALL;
     }
     return num;
 }

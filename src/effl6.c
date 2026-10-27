@@ -27,11 +27,20 @@
 #include "bg_sub_5.h"
 #include "effl6.h"
 
+/* routine_no[0] */
+#define R0_MOVE         0       /* walk and pose until retired */
+
+/* effl6_flont: routine_no[1] */
+#define R1_INIT         0       /* show with a shadow and start walking */
+#define R1_ENTER        1       /* move in for the set time */
+#define R1_STOP         2       /* stop animation */
+#define R1_POSE         3       /* final pose */
+
 
 
 void effect_L6_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_MOVE:
         if (!EXE_flag && !Game_pause) {
             if (ewk->wu.type) {
                 effl6_flont(ewk);
@@ -54,7 +63,7 @@ void effect_L6_move(WORK_Other* ewk) {
 /* provisional name */
 void effl6_flont(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.kage_flag = 1;
@@ -64,7 +73,7 @@ void effl6_flont(WORK_Other* ewk) {
         ewk->wu.kage_char = 16;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R1_ENTER:
         char_move(&ewk->wu);
         add_x_sub(ewk);
         add_y_sub(ewk);
@@ -74,14 +83,14 @@ void effl6_flont(WORK_Other* ewk) {
             set_char_move_init(&ewk->wu, 0, 1);
         }
         break;
-    case 2:
+    case R1_STOP:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
             ewk->wu.routine_no[1]++;
             set_char_move_init(&ewk->wu, 1, 59);
         }
         break;
-    case 3:
+    case R1_POSE:
         char_move(&ewk->wu);
         break;
     }
@@ -92,7 +101,7 @@ void effl6_flont(WORK_Other* ewk) {
 /* provisional name */
 void effl6_back(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
-    case 0:
+    case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.kage_flag = 1;
@@ -102,7 +111,7 @@ void effl6_back(WORK_Other* ewk) {
         ewk->wu.kage_char = 16;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
-    case 1:
+    case R1_ENTER:
         char_move(&ewk->wu);
         add_x_sub(ewk);
         add_y_sub(ewk);
@@ -112,14 +121,14 @@ void effl6_back(WORK_Other* ewk) {
             set_char_move_init(&ewk->wu, 0, 1);
         }
         break;
-    case 2:
+    case R1_STOP:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
             ewk->wu.routine_no[1]++;
             set_char_move_init(&ewk->wu, 1, 52);
         }
         break;
-    case 3:
+    case R1_POSE:
         char_move(&ewk->wu);
         break;
     }

@@ -1,5 +1,13 @@
 /*
- * CHARSET_TBL.C  game tables
+ * CHARSET_TBL.C  cg script interpreter tables
+ *
+ * comm_jmp_tbl is the jump table of the 125 cg script commands (comm_*) and comm_if_jmp_tbl
+ * that of the conditional-jump targets. jphos_table gives the height correction picked by the
+ * low nibble of a cg line's overlap index, kezuri_pow_table the chip damage power from an
+ * attack's guard bits, and acatkoa_table the attack kind bits for each kind of move.
+ * xcopy_se_tbl holds the sound codes used in place of the normal ones while a player is in the
+ * metamorphosis super art. Read by CHARMOVE.C, the cg script interpreter; acatkoa_table also
+ * by EFFE5.C (after-images).
  */
 
 #include "types.h"

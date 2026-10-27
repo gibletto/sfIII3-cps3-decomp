@@ -379,6 +379,14 @@ extern s16 Time_in_Time;
 extern s16 Counter_hi;
 extern s16 Round_Level;
 extern u16 Round_Result;
+
+/* Round_Result: bits for how the round was won (the others are the KO attack's dm_koa) */
+#define RESULT_TIME     1       /* won on vitality at time over */
+#define RESULT_PERFECT  2       /* the winner took no damage */
+#define RESULT_CHIP     0x200   /* KO by chip damage (kezurijini_flag) */
+#define RESULT_DRAW     1024    /* a draw: both take the round */
+#define RESULT_JUDGE    0x8000  /* decided by the judges */
+
 extern s8 request_message;
 extern s8 Winner_id;
 extern s8 Loser_id;
@@ -393,13 +401,37 @@ extern s16 Fade_R_No0;
 extern s16 Fade_R_No1;
 extern u8 Fade_Mode;
 extern u32 Score[2][3];
+/* Score[pl] columns (SCORE_PLUS) */
+#define SCORE_CPU       0       /* the score against the CPU */
+#define SCORE_VS        1       /* the score of this versus match */
+#define SCORE_ROUND     2       /* all points this round, either way */
 extern s16 Play_Type;
+
+/* Play_Type */
+#define PLAY_VS_CPU     0       /* one player against the CPU */
+#define PLAY_VS_PLAYER  1       /* two players against each other (Setup_Play_Type) */
+
 extern s8 Personal_Continue_Flag[2];
 extern s8 Personal_Disp_Flag;
 extern s8 WINNER;
 extern s8 LOSER;
 extern s16 Conclusion_Type;
+
+/* Conclusion_Type: how the round ended (settle_check, time_over_check) */
+#define CONCLUSION_KO   0       /* one player KO */
+#define CONCLUSION_DOUBLE_KO 1  /* both players KO */
+#define CONCLUSION_TIME_OVER 2  /* time over */
+
 extern s16 win_type[2][4];
+
+/* win_type[pl][round]: the win mark of each round won (Setup_Win_Mark) */
+#define WIN_MARK_NORMAL 1       /* a KO or a win on time */
+#define WIN_MARK_PERFECT 3      /* a perfect */
+#define WIN_MARK_SA     4       /* a super art finish */
+#define WIN_MARK_DRAW   5       /* a draw */
+#define WIN_MARK_JUDGE  6       /* the judges' decision */
+#define WIN_MARK_CHIP   7       /* a chip damage KO */
+
 extern s8 win_pause_go;
 extern s16 message_index;
 extern s16 Conclusion_Flag;
@@ -427,6 +459,50 @@ extern s16 G_No0;
 extern s16 G_No1;
 extern s16 G_No2;
 extern s16 G_No3;
+
+/* G_No0: the top-level game routine (bg0001) */
+#define G0_DEMO         0       /* no game: the attract loop (match_state_0_fight) */
+#define G0_GAME         1       /* a game in progress (game_phase_dispatch) */
+
+/* G_No1 under G0_DEMO: the attract loop */
+#define G1_DEMO_INIT    0       /* reset the loop */
+#define G1_DEMO_LOGO    1       /* the CAPCOM logo */
+#define G1_DEMO_TITLE   2       /* the title */
+#define G1_DEMO_PLAY    3       /* a demo fight */
+#define G1_DEMO_RANKING 4       /* the ranking */
+#define G1_DEMO_PLAY2   5       /* a second demo fight */
+#define G1_DEMO_RANKING2 6      /* another ranking, then back to the logo */
+#define G1_DEMO_RESTART 99      /* (default) after a game: wait out the cover, then the logo */
+
+/* G_No1 under G0_GAME: the game phase (game_phase_dispatch) */
+#define G1_TITLE        0       /* Game00: the title, until a start button */
+#define G1_SELECT       1       /* Game01: player select */
+#define G1_FIGHT        2       /* Game02: the fight */
+#define G1_WINNER       3       /* Game03: winner scene */
+#define G1_LOSER        4       /* Game04: loser scene */
+#define G1_NEXT_CPU     5       /* Game05: the next CPU opponent */
+#define G1_GAME_OVER    6       /* Game06: game over and ranking */
+#define G1_CONTINUE     7       /* Game07: continue */
+#define G1_ENDING       8       /* Game08: ending */
+#define G1_BONUS        9       /* Game09: bonus stage */
+#define G1_AFTER_BONUS  10      /* Game10: the screen after a bonus stage */
+#define G1_NEXT_Q       11      /* Game11: Q comes in as the next opponent */
+
+/* G_No2 under G1_FIGHT: the Game02 routine */
+#define G2_FIGHT_INIT   0       /* Game2_0: set up the fight */
+#define G2_FIGHT        1       /* Game2_1: the fight */
+#define G2_FIGHT_START  3       /* Game2_3: the round start, for G_Timer frames */
+#define G2_ROUND_RESET  4       /* Game2_4: clear the stage work and displays for the next round */
+#define G2_ROUND_RESET2 5       /* Game2_5: reset the displays and characters for the next round */
+
+/* G_No2 under G1_ENDING */
+#define G2_END_INIT     0       /* set up the final result */
+#define G2_END_MAIN     1       /* the ending */
+#define G2_END_FADE     2       /* wait for the fade */
+#define G2_END_EXIT     3       /* wait G_Timer, then game over */
+#define G2_END_SHORT    4       /* the short ending, then game over */
+
+
 extern s16 D_Timer;
 extern s16 D_No0;
 extern s16 D_No1;
@@ -435,6 +511,11 @@ extern s16 D_No3;
 extern u8 Present_Rank[2];
 extern s8 Rank_In[2][4];
 extern s8 Request_Disp_Rank[2][4];
+/* Rank_In[pl][], Request_Disp_Rank[pl][]: one entry per ranking (Check_Ranking) */
+#define RANK_SCORE      0       /* score (Check_Sort_Score) */
+#define RANK_WINS       1       /* consecutive wins (Check_Sort_Wins) */
+#define RANK_CPU_GRADE  2       /* grade against the CPU (Check_Sort_CPU_Grade) */
+#define RANK_GRADE      3       /* grade (Check_Sort_Grade) */
 extern s8 Rank_Demo_Loop;
 extern s8 Rank_Type;
 extern s8 Flash_Rank_Time;
@@ -448,17 +529,55 @@ extern s16 E_No0;
 extern s16 E_No1;
 extern s16 E_No2;
 extern s16 E_No3;
+
+/* E_No0: the entry task's routine (entry_main), following the game phase */
+#define E0_DEMO         0       /* Entry_00: flash INSERT COIN / FREE PLAY */
+#define E0_TITLE        1       /* Entry_01: wait for a start button */
+#define E0_SELECT       2       /* Entry_02: player select */
+#define E0_SELECTED     3       /* Entry_03: both players have chosen */
+#define E0_FIGHT        4       /* Entry_04: a fight or bonus stage */
+#define E0_WINNER       5       /* Entry_03: winner scene */
+#define E0_LOSER        6       /* Entry_06: loser scene */
+#define E0_CONTINUE     7       /* Entry_07: continue */
+#define E0_GAME_OVER    8       /* Entry_08: game over */
+#define E0_NEXT_CPU     9       /* Entry_03: next opponent screens */
+#define E0_ENDING       10      /* Entry_10: ending */
+
 extern s16 F_No0[2];
 extern s16 F_No1[2];
 extern s16 F_No2[2];
 extern s16 F_Timer[2];
 extern s16 E_Number[2][4];
+
+/* E_Number[pl][0]: a player's entry state (Entry_Main_Sub) */
+#define ENTRY_NONE      0       /* not playing: may join or break in */
+#define ENTRY_CONTINUE  1       /* the continue count (Entry_Continue_Sub) */
+#define ENTRY_NAME      2       /* name entry for the ranking */
+#define ENTRY_NAME_WAIT 3       /* until the game-over or select screen, then name entry or GAME OVER */
+#define ENTRY_LOSER     5       /* lost, in the loser scene: may continue (Loser_Scene_Sub) */
+#define ENTRY_GAME_OVER 8       /* GAME OVER for this player (In_Game_Sub, In_Over_Sub) */
+
 extern s16 ENTRY_X;
 extern s16 C_Timer;
 extern s16 C_No0;
 extern s16 C_No1;
 extern s16 C_No2;
 extern s16 C_No3;
+
+/* C_No0: the round management routine (Game_Management) */
+#define C0_INIT         0       /* Game_Manage_1st: set up the stage */
+#define C0_ROUND_START  1       /* Game_Manage_2nd: wipe in and call the round */
+#define C0_FIGHT        2       /* Game_Manage_3rd: until the round is decided */
+#define C0_DECIDE       3       /* Game_Manage_4th: score the round by Conclusion_Type */
+#define C0_JUDGE        4       /* Game_Manage_5th: the judges' decision */
+#define C0_DRAW         5       /* Game_Manage_6th: a draw */
+#define C0_ROUND_WIN    6       /* Game_Manage_7th: the round's winner */
+#define C0_ROUND_END    7       /* Game_Manage_8th: the round scores and bonuses */
+#define C0_NEXT         8       /* Game_Manage_9th: the next round, or the match is over */
+#define C0_MATCH_END    9       /* Game_Manage_10th: on to the winner or loser scene */
+#define C0_Q            10      /* Game_Manage_11th: Q comes in */
+#define C0_BONUS        11      /* Game_Manage_12th: a bonus stage */
+
 extern s8 Complete_Victory;
 extern s8 Demo_Flag;
 extern s8 Demo_Stage_Index;
@@ -503,6 +622,25 @@ extern s8 Select_Demo_Index;
 extern u8 Country;
 extern s16 mes_already;
 extern s16 CP_No[2][4];
+
+/* CP_No[pl][0]: the computer player's routine (Com_Jmp_Tbl) */
+#define COM_INIT        0       /* Com_Initialize */
+#define COM_FREE        1       /* Com_Free */
+#define COM_ACTIVE      2       /* Com_Active */
+#define COM_BEFORE_FOLLOW 3     /* Com_Before_Follow */
+#define COM_FOLLOW      4       /* Com_Follow */
+#define COM_BEFORE_PASSIVE 5    /* Com_Before_Passive */
+#define COM_PASSIVE     6       /* Com_Passive */
+#define COM_GUARD       7       /* Com_Guard */
+#define COM_VS_SHELL    8       /* Com_VS_Shell: against a projectile */
+#define COM_SHELL_GUARD 9       /* Check_No12_Shell_Guard: guarding a projectile */
+#define COM_DAMAGE      10      /* Com_Damage */
+#define COM_FLOAT       11      /* Com_Float */
+#define COM_FLIP        12      /* Com_Flip */
+#define COM_CAUGHT      13      /* Com_Caught */
+#define COM_WAIT_LIE    14      /* Com_Wait_Lie */
+#define COM_CATCH       15      /* Com_Catch */
+
 extern s16 CP_Index[2][8];
 extern s16 Pattern_Index[2];
 extern s16 Timer_00[2];
@@ -648,6 +786,9 @@ extern s8 EM_Rank;
 extern s8 Disp_PERFECT;
 extern s8 Deley_Shot_No[2];
 extern s8 Deley_Shot_Timer[2];
+/* Bonus_Game_Flag / Bonus_Type: the bonus stage being played (its stage number), 0 for none */
+#define BONUS_CAR       21      /* smash the car */
+#define BONUS_PARRY     22      /* parry Sean's basketballs */
 extern s16 Bonus_Game_Flag;
 extern s16 Bonus_Game_Work;
 extern s16 Bonus_Game_result;
@@ -695,6 +836,16 @@ extern u16 Stock_Win_Record[2];
 extern u8 Disp_Command_Name[2][3];
 extern u32 * Synchro_Address[2][2];
 extern u8 SC_No[4];
+
+/* SC_No[0] under G1_NEXT_CPU: the Next_CPU routine */
+#define SC0_INIT        0       /* Next_CPU_1st: set up the screen */
+#define SC0_INTRO       1       /* Next_CPU_2nd: until the screen is in */
+#define SC0_SELECT      2       /* Next_CPU_3rd: choose the next opponent */
+#define SC0_VS          3       /* Next_CPU_4th: the VS screen */
+#define SC0_VS_SPEECH   4       /* Next_CPU_5th: the VS screen for an opponent with a speech (Check_EM_Speech) */
+#define SC0_DONE        5       /* Next_CPU_6th: finished */
+#define SC0_BONUS       6       /* Next_Bonus_1st: the bonus stage is next */
+
 extern s8 Sel_EM_Complete[2];
 extern s8 Temporary_EM[2];
 extern const u8 * Free_Ptr[2];
@@ -771,6 +922,7 @@ extern s8 Config_Rep_Count_en[4];
 /* debug and test features left in the source, switched off */
 #define DEBUG_DISP 0 /* extra debug and test screen output */
 #define DEBUG_EDIT 0 /* extra debug editor state changes */
+#define DEBUG_SLOW 0 /* slow motion: an extra frame of sleep per game frame */
 
 extern s8 Debug_R_No;
 extern s8 Debug_Select_No;
@@ -929,6 +1081,12 @@ extern OP_W op_w;
 extern s16 op_obj_disp;
 extern s8 op_scrn_end;
 extern END_W end_w;
+
+/* end_w.r_no_1: a character's ending script (end_0x000 in end_N.c) */
+#define END1_INIT       0       /* set up the character's ending */
+#define END1_SCENES     1       /* each scene for its timer; after the last, the staff roll */
+#define END1_DONE       2       /* hold the last screen */
+
 extern s8 end_etc_flag;
 extern s8 ending_all_end;
 extern s8 end_fade_flag;
@@ -1035,7 +1193,35 @@ extern s16 roll_rate;
 extern s16 roll_rate_t;
 extern u32 spmv_ng_save;
 extern s16 pcon_rno[4];
+
+/* pcon_rno[0]: the player control phase (player_main_process, player_bonus_process) */
+#define PCON_INIT       0       /* plcnt_init: the round start (appear_initalize) */
+#define PCON_MOVE       1       /* plcnt_move: the fight */
+#define PCON_DIE        2       /* plcnt_die: the round is decided (settle_process) */
+
+/* pcon_rno[1] under PCON_INIT: the appear_initalize step */
+#define APP_SETUP       0       /* set up the players */
+#define APP_WAIT_READY  1       /* pli_1000: until both are ready, then PCON_MOVE */
+#define APP_PARRY       2       /* the parry counters */
+#define APP_GFX         3       /* pli_3000: the extra graphics, then APP_WAIT_READY */
+
+/* pcon_rno[1] under PCON_DIE: how the round was decided */
+#define SETTLE_KO       0       /* settle_type_00000: a KO */
+#define SETTLE_DOUBLE_KO 1      /* settle_type_10000: a double KO */
+#define SETTLE_TIME_OVER 2      /* settle_type_20000: time over */
+#define SETTLE_JUDGE    3       /* settle_type_30000: the judges' decision (idle at pcon_rno[2] 0) */
+#define SETTLE_GOUKI    4       /* settle_type_40000: a KO by Gouki with Round_Result 0x800 */
+#define SETTLE_SPECIAL  5       /* settle_type_50000: Special_Settle after a KO */
+#define SETTLE_SPECIAL2 6       /* settle_type_60000: Special_Settle after SETTLE_GOUKI */
+
 extern s16 appear_type;
+
+/* appear_type: how the players come on at a round start (appear_initalize, player_mv_1000) */
+#define APPEAR_STAND    0       /* set up the players and stand them in place */
+#define APPEAR_ENTRY    1       /* set up the players, then their appear pose */
+#define APPEAR_ROUND    2       /* reset the players for a new round, then the appear pose */
+#define APPEAR_JUDGE    3       /* after the judges' decision: stand them apart again */
+
 extern u8 round_slow_flag;
 extern u8 pcon_dp_flag;
 extern u8 pl_eff_disp_stop;
@@ -1081,6 +1267,28 @@ extern COINCHUTE coin_chute1_w;
 extern COINCHUTE coin_chute2_w;
 extern COINCHUTE coin_chute3_w;
 extern COINCHUTE coin_chute4_w;
+/* lever and button words p1sw_0 .. p4sw_1 (_0 this frame, _1 the last; SHOT1-SHOT6 are LP-HK).
+   sw_to_lvbt moves the kicks up one bit for the command words of cmd_data.h */
+#define LEVER_UP        1
+#define LEVER_DOWN      2
+#define LEVER_LEFT      4
+#define LEVER_RIGHT     8
+#define BUTTON_LP       0x10
+#define BUTTON_MP       0x20
+#define BUTTON_HP       0x40
+#define BUTTON_LK       0x80
+#define BUTTON_MK       0x100
+#define BUTTON_HK       0x200
+#define BUTTON_SHOTS    0x3F0
+#define BUTTON_START    0x1000
+#define BUTTON_PUNCHES  0x70    /* LP, MP and HP */
+#define LEVER_ALL       0xF     /* all four lever bits */
+#define LEVER_LR        0xC     /* LEVER_LEFT and LEVER_RIGHT (also in a sw_lvbt word) */
+
+/* WORK_CP lever_dir (sw_pick_up) and PLW jpdir: the lever relative to the facing */
+#define LVDIR_NEUTRAL   0       /* neither forward nor back */
+#define LVDIR_FORWARD   1       /* toward the way the player faces */
+#define LVDIR_BACK      2       /* away from it */
 extern u16 p1sw_0;
 extern u16 p1sw_1;
 extern u16 p2sw_0;
@@ -1168,17 +1376,58 @@ extern s16 simm40_used[];
 extern s16 simm10_owner[];
 extern s16 simm10_link[];
 extern s16 simm10_used[];
+/* a player's routine_no[0]: the plmain_lv_00 routine that runs it (plmain_b_lv_00, player_mvbs_*, in a bonus stage) */
+#define PLAYER_MV_INIT  0       /* player_mv_0000: set up the work */
+#define PLAYER_MV_PLACE 1       /* player_mv_1000: place the player for the round */
+#define PLAYER_MV_APPEAR 2      /* player_mv_2000: the appear pose */
+#define PLAYER_MV_READY 3       /* player_mv_3000: ready, until both players are */
+#define PLAYER_MV_FIGHT 4       /* player_mv_4000: the fight, by routine_no[1] */
+
+/* a player's routine_no[1]: the plmain_lv_02 routine that runs it */
+#define PLAYER_NORMAL   0       /* Player_normal */
+#define PLAYER_DAMAGE   1       /* Player_damage: being hit */
+#define PLAYER_CATCH    2       /* Player_catch: throwing */
+#define PLAYER_CAUGHT   3       /* Player_caught: being thrown */
+#define PLAYER_ATTACK   4       /* Player_attack: special moves and super arts (hissatsu_setup_union) */
+
+/* a player's routine_no[2] under PLAYER_NORMAL: some of the plpnm_lv_00 routines */
+#define NORMAL_APPEAR   0       /* Normal_00000: appear_player, the round-start entry */
+#define NORMAL_STAND    1       /* Normal_01000: standing */
+#define NORMAL_DASH     5       /* Normal_05000: the forward dash (normal_05, by player number) */
+#define NORMAL_WIN      40      /* Normal_40000: win_player, the win pose */
+#define NORMAL_LOSE     41      /* Normal_41000: lose_player */
+
+/* a player's routine_no[2] under PLAYER_DAMAGE: some of the plpdm_lv_00 routines */
+#define DAMAGE_AIR      14      /* Damage_14000 - 23000: the airborne hits (setup_butt_own_data) */
+#define DAMAGE_BLOW_AWAY 17     /* Damage_17000: knocked into the air (buttobi) */
+#define DAMAGE_AIR_END  24      /* the first routine past them */
+#define DAMAGE_STUN     25      /* Damage_25000: stunned (kizetsu) */
+
+/* a player's routine_no[2] under PLAYER_ATTACK: 16 and up index the fighter's plNN_exatt_table (each
+   fighter's names are in cmd_data.c); these are the same for every fighter */
+#define ATTACK_SPECIAL  16      /* the first of them: plNN_exatt_table[routine_no[2] - ATTACK_SPECIAL] */
+#define ATTACK_PERSONAL 30      /* Att_PLnn_TOKUSHUKOUDOU: the fighter's personal action */
+#define ATTACK_METAMOR_WAIT 32  /* Att_METAMOR_WAIT: Twelve's X.C.O.P.Y. */
+#define ATTACK_METAMOR_REBIRTH 33 /* Att_METAMOR_REBIRTH: the end of X.C.O.P.Y. */
+
+/* a player's routine_no[3]: the step within its move routine (the other steps are the move's own) */
+#define RN3_START       0       /* the first step of a move routine: set up its animation */
+#define RN3_DONE        9       /* a win or lose pose's script has ended */
+
+#define POLY_LINE_MAX   0x155   /* polygon transfer queue entries per bank (poly_que.c) */
+#define POLY_QUAD_MAX   32
+#define POLY_ORDER_MAX  0x175
 extern s32 poly_dma_state;
 extern s16 poly_reserve0;
 extern s16 poly_reserve1;
-extern POLY_LINE poly_line_buf[2][0x155];
+extern POLY_LINE poly_line_buf[2][POLY_LINE_MAX];
 extern u32 poly_line_cnt[2];
 extern u32 poly_line_rd[2];
-extern POLYCMD poly_quad_buf[2][32];
+extern POLYCMD poly_quad_buf[2][POLY_QUAD_MAX];
 extern u32 poly_quad_cnt[2];
 extern u32 poly_quad_rd[2];
 extern u32 poly_order_pos[2];
-extern u16 poly_order_kind[2][0x175];
+extern u16 poly_order_kind[2][POLY_ORDER_MAX];
 extern s32 poly_wr_bank;
 extern s32 poly_rd_bank;
 extern SPRITE_LIST sprite_list_w[4];
@@ -1264,6 +1513,23 @@ extern u8 Demo_Lever_Play;
 extern u8 Get_Demo_Index;
 extern u8 WIN_X;
 extern u8 GO_No[4];
+
+/* GO_No[0]: the Game_Over routine */
+#define GO_START        0       /* GameOver_1st: the game-over screen comes in */
+#define GO_RESULT       1       /* GameOver_2nd: the result screen */
+#define GO_DONE         2       /* GameOver_3rd: finished */
+
+/* GO_No[1] in GameOver_2nd */
+#define GO2_START       0       /* fall into GO2_FADE */
+#define GO2_FADE        1       /* request the fade to the result screen */
+#define GO2_FADE_WAIT   2       /* until the fade is done */
+#define GO2_RESULT_FADE 3       /* after Cover_Timer, fade the results in */
+#define GO2_RESULT_IN   4       /* until that fade is done */
+#define GO2_NAME_WAIT   5       /* until the name entries are done */
+#define GO2_PAUSE       6       /* wait G_Timer */
+#define GO2_RESULT      7       /* show the results for Result_Timer, then GO_DONE */
+#define GO2_BREAK_COM   8       /* Version_Type 3 with a Break_Com: wait, fade, then GO2_RESULT_FADE */
+
 extern u8 Wipe_Panel_Count;
 extern u8 Battle_Q[2];
 extern s8 bg_vbl_trans_flag;
@@ -1333,21 +1599,10 @@ extern SUZI_CALC suzi_calc_w[2];
 extern s16 ls_cnt1;
 extern s16 ls_rate1;
 
-/* Records of these arrays are reached the way the game computes their offset: with shifts and adds,
- * cut to 16 bits (u8 for the second index of judge_item). */
-#define WCP(x) (*(WORK_CP*)((u8*)wcp + (s16)(((x) << 10) + ((x) << 2) + ((x) << 1))))
-#define WAZA(x, j) (*(WAZA_WORK*)((u8*)waza_work + (s16)(((x) << 10) + ((x) << 9) + ((x) << 5)) + (s16)(((j) << 5) - ((j) << 2))))
-#define PLAYER(x) (*(PLW*)((u8*)plw + (s16)(((x) << 10) + ((x) << 7) + ((x) << 4) + ((x) << 3))))
-#define JUDGE_ITEM(x, j) (*(GradeData*)((u8*)judge_item + ((s16)(((x) << 7) + ((x) << 4) + ((x) << 3))) + ((u8)(((j) << 6) + ((j) << 3) + ((j) << 2)))))
-#define JUDGE_FINAL(x, j) (*(GradeFinalData*)((u8*)judge_final + ((s16)(((x) << 8) + ((x) << 6) + ((x) << 4) + ((x) << 3))) + ((s16)(((j) << 7) + ((j) << 5) + ((j) << 3) + ((j) << 2)))))
-#define CMST(x, j) (*(CMST_WIN_R*)((u8*)cmst_buff + (u8)((x) * 112) + (s8)(((j) << 5) - ((j) << 2))))
-#define SE_VOICE(x) (*(SNDVOICE*)((u8*)se_voice + (s16)((x) * sizeof(SNDVOICE))))
 /* Record offsets computed per use: WCP_OFS(ofs, n) sets ofs to the offset of record n, WCP_AT(ofs)
    is the record, WCP_MUL(ofs, n) does both in one expression (one use per full expression). */
 #define WCP_OFS(ofs, n) ((ofs) = (n), (ofs) *= (s16)sizeof(WORK_CP))
 #define WCP_AT(ofs) (*(WORK_CP*)((u8*)wcp + (ofs)))
 #define WCP_MUL(ofs, n) WCP_AT((WCP_OFS(ofs, n), (ofs)))
-#define PL_CMD_NUM(x) ((const s16*)((const u8*)pl_cmd_num + (s16)(((x) << 4) - ((x) << 1))))
-#define CMB_POS(mode, pl, k) (*(const s16*)((u8*)cmb_pos_tbl + (u8)(((mode) << 6) + ((mode) << 4) + ((mode) << 2)) + (s8)(((pl) << 5) + ((pl) << 3) + ((pl) << 1)) + (k) * 2))
 
 #endif

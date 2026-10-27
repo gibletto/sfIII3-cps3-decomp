@@ -19,27 +19,35 @@
 #include "effect_2.h"
 #include "EffE0.h"
 
+/* routine_no[0] */
+#define R0_WAIT         0       /* wait until on the screen */
+#define R0_SELECT       1       /* follow the choice */
+#define R0_DECIDE       2       /* a frame, then the chosen pattern */
+#define R0_FLASH        3       /* flash for 20 frames */
+#define R0_HOLD         4       /* stay until scrolled out */
+#define R0_KILL         5       /* (default) put the work back */
+
 
 
 void effect_E0_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
-    case 0:
+    case R0_WAIT:
         if (Ck_Range_Out_S(ewk, ewk->wu.my_family - 1, 64)) {
             return;
         }
         ewk->wu.disp_flag = 1;
         if (ewk->wu.dm_vital == 1) {
-            ewk->wu.routine_no[0] = 4;
+            ewk->wu.routine_no[0] = R0_HOLD;
         } else {
             ewk->wu.routine_no[0]++;
         }
         break;
-    case 1:
+    case R0_SELECT:
         if (Sel_EM_Complete[Player_id] != 0) {
             if (VS_Index[Player_id] >= 8) {
-                ewk->wu.routine_no[0] = 4;
+                ewk->wu.routine_no[0] = R0_HOLD;
             } else {
-                ewk->wu.routine_no[0] = 2;
+                ewk->wu.routine_no[0] = R0_DECIDE;
             }
             ewk->wu.dir_timer = 1;
         } else if (Moving_Plate[Player_id] != 0 && ewk->wu.dm_vital == 0) {
@@ -50,7 +58,7 @@ void effect_E0_move(WORK_Other* ewk) {
             set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         }
         break;
-    case 2:
+    case R0_DECIDE:
         if (--ewk->wu.dir_timer == 0) {
             ewk->wu.routine_no[0]++;
             ewk->wu.dir_timer = 20;
@@ -62,7 +70,7 @@ void effect_E0_move(WORK_Other* ewk) {
             set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         }
         break;
-    case 3:
+    case R0_FLASH:
         if (Exec_Wipe == 0) {
             char_move(&ewk->wu);
         }
@@ -73,7 +81,7 @@ void effect_E0_move(WORK_Other* ewk) {
             set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         }
         break;
-    case 4:
+    case R0_HOLD:
         if (Ck_Range_Out_S(ewk, ewk->wu.my_family - 1, 64)) {
             ewk->wu.disp_flag = 0;
             ewk->wu.routine_no[0]++;

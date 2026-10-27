@@ -1,5 +1,8 @@
 /*
- * EFFC7_TBL.C  game tables
+ * EFFC7_TBL.C  parry mark positions
+ *
+ * paring_mark_data gives the offset of the parry mark from the player for each parry type and
+ * character. Read by EFFC7.C, the parry (blocking) mark.
  */
 
 #include "types.h"
