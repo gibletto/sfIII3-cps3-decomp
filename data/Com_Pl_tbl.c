@@ -27,30 +27,30 @@ extern const u8 game_cfg_default_tbl_row5[];
 extern const u8 game_cfg_default_tbl_row6[];
 extern const u8 game_cfg_default_tbl_row7[];
 extern const u8 game_cfg_default_tbl_row8[];
-extern const char str_3rd_STRIKE[];
-extern const char str_990512[];
-extern const char str_ASIA[];
-extern const char str_Animated_violence_Mild[];
+extern const s8 str_3rd_STRIKE[];
+extern const s8 str_990512[];
+extern const s8 str_ASIA[];
+extern const s8 str_Animated_violence_Mild[];
 extern const char str_Asian_countries_only[];
-extern const char str_BENT_STAFF_VERSION[];
-extern const char str_BRAZIL_3[];
-extern const char str_BUG_CHECK_VERSION[];
-extern const char str_CHARACTER_CHECK_VERSION[];
-extern const char str_CHECK_VERSION[];
+extern const s8 str_BENT_STAFF_VERSION[];
+extern const s8 str_BRAZIL_3[];
+extern const s8 str_BUG_CHECK_VERSION[];
+extern const s8 str_CHARACTER_CHECK_VERSION[];
+extern const s8 str_CHECK_VERSION[];
 extern const char str_Canada_and_the_Federative_Republ[];
-extern const char str_Contains_scenes_of_violence_invo[];
-extern const char str_DEVELOPMENT_VERSION[];
-extern const char str_EURO[];
-extern const char str_HISPANIC[];
-extern const char str_JAPAN[];
-extern const char str_LOCATION_TEST_VERSION[];
-extern const char str_NO_CD[];
-extern const char str_OCEANIA[];
-extern const char str_PRODUCT_VERSION[];
-extern const char str_PUBLICITY_VERSION[];
-extern const char str_Parental_Advisory[];
-extern const char str_SHOW_VERSION[];
-extern const char str_STREET_FIGHTER_III[];
+extern const s8 str_Contains_scenes_of_violence_invo[];
+extern const s8 str_DEVELOPMENT_VERSION[];
+extern const s8 str_EURO[];
+extern const s8 str_HISPANIC[];
+extern const s8 str_JAPAN[];
+extern const s8 str_LOCATION_TEST_VERSION[];
+extern const s8 str_NO_CD[];
+extern const s8 str_OCEANIA[];
+extern const s8 str_PRODUCT_VERSION[];
+extern const s8 str_PUBLICITY_VERSION[];
+extern const s8 str_Parental_Advisory[];
+extern const s8 str_SHOW_VERSION[];
+extern const s8 str_STREET_FIGHTER_III[];
 extern const char str_Sales_export_or_operation_outsid[];
 extern const char str_Sales_export_or_operation_outsid_2[];
 extern const char str_This_game_is_for_use_in_japan_on[];
@@ -60,14 +60,14 @@ extern const char str_This_game_is_for_use_in_the_Ocea[];
 extern const char str_This_game_is_for_use_in_the_Unit[];
 extern const char str_This_game_is_for_use_in_the_West[];
 extern const char str_This_game_is_for_use_in_the_sout[];
-extern const char str_USA[];
+extern const s8 str_USA[];
 extern const char str_Violators_are_subject_to_severe_[];
 extern const char str_WARNING[];
 extern const char str_and_trademark_infringement_and_i[];
 extern const char str_and_will_be_prosecuted_to_the_fu[];
-extern const char str_blank[];
+extern const s8 str_blank[];
 extern const char str_blank_2[];
-extern const char str_cartoon_like_characters_ina_fant[];
+extern const s8 str_cartoon_like_characters_ina_fant[];
 extern const char str_countries_except_the_United_Stat[];
 extern const char str_countries_may_be_construed_as_co[];
 extern const char str_country_may_be_construed_as_copy[];
@@ -120,69 +120,69 @@ const s8 region_param_tbl[3][2] = {
 };
 
 const TM_STRING boot_title_str[3] = {
-    { 8, 8, 2, (void*)str_STREET_FIGHTER_III },
-    { 8, 9, 2, (void*)str_3rd_STRIKE },
-    { 0x11, 0xB, 2, (void*)str_990512 },
+    { 8, 8, 2, str_STREET_FIGHTER_III },
+    { 8, 9, 2, str_3rd_STRIKE },
+    { 0x11, 0xB, 2, str_990512 },
 };
 
 const TM_STRING boot_region_str[10] = {
-    { 0xF, 0xD, 0xE, (void*)str_blank },
-    { 0x13, 0xD, 2, (void*)str_JAPAN },
-    { 0x13, 0xD, 4, (void*)str_ASIA },
-    { 0x13, 0xD, 6, (void*)str_EURO },
-    { 0x13, 0xD, 8, (void*)str_USA },
-    { 0x10, 0xD, 0xA, (void*)str_HISPANIC },
-    { 0x12, 0xD, 0xC, (void*)str_BRAZIL_3 },
-    { 0x11, 0xD, 0xE, (void*)str_OCEANIA },
-    { 0x13, 0xD, 4, (void*)str_ASIA },
-    { 0x13, 0xD, 2, (void*)str_NO_CD },
+    { 0xF, 0xD, 0xE, str_blank },
+    { 0x13, 0xD, 2, str_JAPAN },
+    { 0x13, 0xD, 4, str_ASIA },
+    { 0x13, 0xD, 6, str_EURO },
+    { 0x13, 0xD, 8, str_USA },
+    { 0x10, 0xD, 0xA, str_HISPANIC },
+    { 0x12, 0xD, 0xC, str_BRAZIL_3 },
+    { 0x11, 0xD, 0xE, str_OCEANIA },
+    { 0x13, 0xD, 4, str_ASIA },
+    { 0x13, 0xD, 2, str_NO_CD },
 };
 
 const TM_STRING boot_version_str[9] = {
-    { 0x10, 0xE, 0xE, (void*)str_PRODUCT_VERSION },
-    { 0xD, 0xE, 0xE, (void*)str_CHARACTER_CHECK_VERSION },
-    { 0x10, 0xE, 0xE, (void*)str_PUBLICITY_VERSION },
-    { 0xF, 0xE, 0xE, (void*)str_LOCATION_TEST_VERSION },
-    { 0x12, 0xE, 0xE, (void*)str_SHOW_VERSION },
-    { 0x10, 0xE, 0xE, (void*)str_BUG_CHECK_VERSION },
-    { 0x10, 0xE, 0xE, (void*)str_BENT_STAFF_VERSION },
-    { 0xF, 0xE, 0xE, (void*)str_DEVELOPMENT_VERSION },
-    { 0x11, 0xE, 0xE, (void*)str_CHECK_VERSION },
+    { 0x10, 0xE, 0xE, str_PRODUCT_VERSION },
+    { 0xD, 0xE, 0xE, str_CHARACTER_CHECK_VERSION },
+    { 0x10, 0xE, 0xE, str_PUBLICITY_VERSION },
+    { 0xF, 0xE, 0xE, str_LOCATION_TEST_VERSION },
+    { 0x12, 0xE, 0xE, str_SHOW_VERSION },
+    { 0x10, 0xE, 0xE, str_BUG_CHECK_VERSION },
+    { 0x10, 0xE, 0xE, str_BENT_STAFF_VERSION },
+    { 0xF, 0xE, 0xE, str_DEVELOPMENT_VERSION },
+    { 0x11, 0xE, 0xE, str_CHECK_VERSION },
 };
 
 const TM_STRING boot_no_cd_str[1] = {
-    { 0x14, 0xF, 2, (void*)str_NO_CD },
+    { 0x14, 0xF, 2, str_NO_CD },
 };
 
 const TM_STRING parental_advisory_msg[4] = {
-    { 6, 0x16, 0x28, (void*)str_Parental_Advisory },
-    { 6, 0x17, 0x28, (void*)str_Animated_violence_Mild },
-    { 1, 0x19, 0x28, (void*)str_Contains_scenes_of_violence_invo },
-    { 1, 0x1A, 0x28, (void*)str_cartoon_like_characters_ina_fant },
+    { 6, 0x16, 0x28, str_Parental_Advisory },
+    { 6, 0x17, 0x28, str_Animated_violence_Mild },
+    { 1, 0x19, 0x28, str_Contains_scenes_of_violence_invo },
+    { 1, 0x1A, 0x28, str_cartoon_like_characters_ina_fant },
 };
 
 /* the boot and warning screens' text */
-const char str_STREET_FIGHTER_III[36] = "S T R E E T   F I G H T E R   III\n";
-const char str_3rd_STRIKE[28] = "       3 r d  S T R I K E\n";
-const char str_990512[16] = " 9 9 0 5 1 2";
-const char str_blank[16] = "             ";
-const char str_JAPAN[12] = "J A P A N";
-const char str_ASIA[12] = " A S I A";
-const char str_EURO[12] = " E U R O ";
-const char str_USA[12] = "  U S A  ";
-const char str_HISPANIC[16] = "H I S P A N I C";
-const char str_BRAZIL_3[12] = "B R A Z I L";
-const char str_OCEANIA[16] = "O C E A N I A";
-const char str_NO_CD[8] = " NO CD";
-const char str_PRODUCT_VERSION[16] = "PRODUCT VERSION";
-const char str_CHARACTER_CHECK_VERSION[24] = "CHARACTER CHECK VERSION";
-const char str_PUBLICITY_VERSION[20] = "PUBLICITY VERSION";
-const char str_LOCATION_TEST_VERSION[24] = "LOCATION TEST VERSION";
-const char str_SHOW_VERSION[16] = "SHOW VERSION";
-const char str_BUG_CHECK_VERSION[20] = "BUG CHECK VERSION";
-const char str_BENT_STAFF_VERSION[20] = "BENT STAFF VERSION";
-const char str_DEVELOPMENT_VERSION[20] = "DEVELOPMENT VERSION";
-const char str_CHECK_VERSION[16] = "CHECK VERSION";
+const s8 str_STREET_FIGHTER_III[36] = "S T R E E T   F I G H T E R   III\n";
+const s8 str_3rd_STRIKE[28] = "       3 r d  S T R I K E\n";
+const s8 str_990512[16] = " 9 9 0 5 1 2";
+const s8 str_blank[16] = "             ";
+const s8 str_JAPAN[12] = "J A P A N";
+const s8 str_ASIA[12] = " A S I A";
+const s8 str_EURO[12] = " E U R O ";
+const s8 str_USA[12] = "  U S A  ";
+const s8 str_HISPANIC[16] = "H I S P A N I C";
+const s8 str_BRAZIL_3[12] = "B R A Z I L";
+const s8 str_OCEANIA[16] = "O C E A N I A";
+const s8 str_NO_CD[8] = " NO CD";
+const s8 str_PRODUCT_VERSION[16] = "PRODUCT VERSION";
+const s8 str_CHARACTER_CHECK_VERSION[24] = "CHARACTER CHECK VERSION";
+const s8 str_PUBLICITY_VERSION[20] = "PUBLICITY VERSION";
+const s8 str_LOCATION_TEST_VERSION[24] = "LOCATION TEST VERSION";
+const s8 str_SHOW_VERSION[16] = "SHOW VERSION";
+const s8 str_BUG_CHECK_VERSION[20] = "BUG CHECK VERSION";
+const s8 str_BENT_STAFF_VERSION[20] = "BENT STAFF VERSION";
+const s8 str_DEVELOPMENT_VERSION[20] = "DEVELOPMENT VERSION";
+const s8 str_CHECK_VERSION[16] = "CHECK VERSION";
 const char str_WARNING[12] = "WARNING\n";
 const char str_This_game_is_for_use_in_japan_on[40] = "This game is for use in japan only.\n";
 const char str_Sales_export_or_operation_outsid[44] = "Sales, export or operation outside this\n";
@@ -209,10 +209,10 @@ const char str_This_game_is_for_use_in_the_Fede[52] = "This game is for use in t
 const char str_of_Brazil_only[20] = "of Brazil only.\n";
 const char str_country_may_be_construed_as_copy_2[44] = "country may be construed as copyright and\n";
 const char str_This_game_is_for_use_in_the_Ocea[48] = "This game is for use in the Oceanian countries\n";
-const char str_Parental_Advisory[20] = "Parental Advisory\n";
-const char str_Animated_violence_Mild[28] = "Animated violence - Mild\n";
-const char str_Contains_scenes_of_violence_invo[40] = "Contains scenes of violence involving\n";
-const char str_cartoon_like_characters_ina_fant[48] = "cartoon-like characters in a fantasy setting.";
+const s8 str_Parental_Advisory[20] = "Parental Advisory\n";
+const s8 str_Animated_violence_Mild[28] = "Animated violence - Mild\n";
+const s8 str_Contains_scenes_of_violence_invo[40] = "Contains scenes of violence involving\n";
+const s8 str_cartoon_like_characters_ina_fant[48] = "cartoon-like characters in a fantasy setting.";
 const u8 sys_cfg_default_0_0[32] = { 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 const u8 sys_cfg_default_0_1[32] = { 0, 9, 1, 1, 1, 1, 0, 0, 1, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 const u8 sys_cfg_default_0_2[32] = { 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };

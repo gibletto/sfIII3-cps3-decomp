@@ -66,858 +66,858 @@
 
 extern const u16 rca_char_table_023[318];
 extern const u16 ef13_char_table_225[180];
-extern const char str_1DATA_SH5[];
-extern const char str_A[];
-extern const char str_ADD_ARTS[];
-extern const char str_AFRICA[];
-extern const char str_AFRICA_2[];
-extern const char str_AFRICA_JUMP[];
-extern const char str_AFRICA_LAND[];
-extern const char str_AIR_NORMAL[];
-extern const char str_ALEX[];
-extern const char str_ALEX_BACK_D[];
-extern const char str_ALEX_BODY_S[];
-extern const char str_ALEX_B_D[];
-extern const char str_ALEX_F_N_D[];
-extern const char str_ALEX_HYPER_B[];
-extern const char str_ALEX_POWER_B[];
-extern const char str_ALEX_SLEEPER[];
-extern const char str_ALEX_S_H_B[];
-extern const char str_ALEX_ZUTUKI[];
-extern const char str_ALL_CHARACTER[];
-extern const char str_ALL[];
-extern const char str_APPEAR_1[];
-extern const char str_APPEAR_2[];
-extern const char str_APPEAR_3[];
-extern const char str_APPEAR_4[];
-extern const char str_APPEAR_5[];
-extern const char str_APPEAR_6[];
-extern const char str_APPEAR_7[];
-extern const char str_APPEAR_8[];
-extern const char str_APPEAR_JUNBI_1[];
-extern const char str_APPEAR_JUNBI_2[];
-extern const char str_APPEAR_JUNBI_3[];
-extern const char str_APPEAR_JUNBI_4[];
-extern const char str_APPEAR_JUNBI_5[];
-extern const char str_APPEAR_JUNBI_6[];
-extern const char str_APPEAR_JUNBI_7[];
-extern const char str_APPEAR_JUNBI_8[];
-extern const char str_APPEAR_USE[];
-extern const char str_ASIBARAI_SIRI[];
-extern const char str_ASIB_SIRI_LOSE[];
-extern const char str_ASIB_TUNNOMERI[];
-extern const char str_ASIB_TUN_LOSE[];
-extern const char str_AT[];
-extern const char str_ATTACK[];
-extern const char str_ATTACK_10_L[];
-extern const char str_ATTACK_10_M[];
-extern const char str_ATTACK_10_S[];
-extern const char str_ATTACK_10_SP[];
-extern const char str_ATTACK_11_L[];
-extern const char str_ATTACK_11_M[];
-extern const char str_ATTACK_11_S[];
-extern const char str_ATTACK_11_SP[];
-extern const char str_ATTACK_12_L[];
-extern const char str_ATTACK_12_M[];
-extern const char str_ATTACK_12_S[];
-extern const char str_ATTACK_12_SP[];
-extern const char str_ATTACK_13_L[];
-extern const char str_ATTACK_13_M[];
-extern const char str_ATTACK_13_S[];
-extern const char str_ATTACK_13_SP[];
-extern const char str_ATTACK_1_L[];
-extern const char str_ATTACK_1_M[];
-extern const char str_ATTACK_1_S[];
-extern const char str_ATTACK_1_SP[];
-extern const char str_ATTACK_2_L[];
-extern const char str_ATTACK_2_M[];
-extern const char str_ATTACK_2_S[];
-extern const char str_ATTACK_2_SP[];
-extern const char str_ATTACK_3_L[];
-extern const char str_ATTACK_3_M[];
-extern const char str_ATTACK_3_S[];
-extern const char str_ATTACK_3_SP[];
-extern const char str_ATTACK_4_L[];
-extern const char str_ATTACK_4_M[];
-extern const char str_ATTACK_4_S[];
-extern const char str_ATTACK_4_SP[];
-extern const char str_ATTACK_5_L[];
-extern const char str_ATTACK_5_M[];
-extern const char str_ATTACK_5_S[];
-extern const char str_ATTACK_5_SP[];
-extern const char str_ATTACK_6_L[];
-extern const char str_ATTACK_6_M[];
-extern const char str_ATTACK_6_S[];
-extern const char str_ATTACK_6_SP[];
-extern const char str_ATTACK_7_L[];
-extern const char str_ATTACK_7_M[];
-extern const char str_ATTACK_7_S[];
-extern const char str_ATTACK_7_SP[];
-extern const char str_ATTACK_8_L[];
-extern const char str_ATTACK_8_M[];
-extern const char str_ATTACK_8_S[];
-extern const char str_ATTACK_8_SP[];
-extern const char str_ATTACK_9_L[];
-extern const char str_ATTACK_9_M[];
-extern const char str_ATTACK_9_S[];
-extern const char str_ATTACK_9_SP[];
-extern const char str_ATT_000[];
-extern const char str_ATT_IX[];
-extern const char str_ATT[];
-extern const char str_ATT_2[];
-extern const char str_AT_LEVEL[];
-extern const char str_B[];
-extern const char str_BACK[];
-extern const char str_BACK_WALK[];
-extern const char str_BASE[];
-extern const char str_BEFORE[];
-extern const char str_BG_SELECT[];
-extern const char str_BHA_000[];
-extern const char str_BIKEI[];
-extern const char str_BLANK[];
-extern const char str_BODY_BROW_L[];
-extern const char str_BODY_BROW_M[];
-extern const char str_BODY_BROW_S[];
-extern const char str_BODY_BROW_SP[];
-extern const char str_BODY_SLAM[];
-extern const char str_BODY_UPPER[];
-extern const char str_BODY_UPPER_L[];
-extern const char str_BODY_UPPER_M[];
-extern const char str_BODY_UPPER_S[];
-extern const char str_BODY_UPPER_SP[];
-extern const char str_BODY_UPPER_SP_2[];
-extern const char str_BOD_000[];
-extern const char str_BONUS[];
-extern const char str_BONUS_1[];
-extern const char str_BONUS_2[];
-extern const char str_BONUS_CHAR[];
-extern const char str_BONUS_WIN_1[];
-extern const char str_BONUS_WIN_2[];
-extern const char str_BONUS_WIN_3[];
-extern const char str_BRAZIL[];
-extern const char str_BRAZIL_1[];
-extern const char str_BRAZIL_1_2[];
-extern const char str_BRAZIL_2[];
-extern const char str_BREAST[];
-extern const char str_BT[];
-extern const char str_BUTTOBI[];
-extern const char str_BUTT_PAT[];
-extern const char str_BUTT_TYPE[];
-extern const char str_B_JUMP_K_L_A[];
-extern const char str_B_JUMP_K_L_B[];
-extern const char str_B_JUMP_K_M_A[];
-extern const char str_B_JUMP_K_M_B[];
-extern const char str_B_JUMP_K_S_A[];
-extern const char str_B_JUMP_K_S_B[];
-extern const char str_B_JUMP_P_L_A[];
-extern const char str_B_JUMP_P_L_B[];
-extern const char str_B_JUMP_P_M_A[];
-extern const char str_B_JUMP_P_M_B[];
-extern const char str_B_JUMP_P_S_A[];
-extern const char str_B_JUMP_P_S_B[];
-extern const char str_C[];
-extern const char str_CA[];
-extern const char str_CANCEL_SH6[];
-extern const char str_CATCH[];
-extern const char str_CATCH_1[];
-extern const char str_CATCH_10[];
-extern const char str_CATCH_11[];
-extern const char str_CATCH_12[];
-extern const char str_CATCH_13[];
-extern const char str_CATCH_14[];
-extern const char str_CATCH_15[];
-extern const char str_CATCH_16[];
-extern const char str_CATCH_17[];
-extern const char str_CATCH_18[];
-extern const char str_CATCH_19[];
-extern const char str_CATCH_2[];
-extern const char str_CATCH_20[];
-extern const char str_CATCH_21[];
-extern const char str_CATCH_22[];
-extern const char str_CATCH_23[];
-extern const char str_CATCH_24[];
-extern const char str_CATCH_25[];
-extern const char str_CATCH_26[];
-extern const char str_CATCH_27[];
-extern const char str_CATCH_28[];
-extern const char str_CATCH_29[];
-extern const char str_CATCH_3[];
-extern const char str_CATCH_30[];
-extern const char str_CATCH_31[];
-extern const char str_CATCH_32[];
-extern const char str_CATCH_33[];
-extern const char str_CATCH_34[];
-extern const char str_CATCH_35[];
-extern const char str_CATCH_36[];
-extern const char str_CATCH_37[];
-extern const char str_CATCH_38[];
-extern const char str_CATCH_39[];
-extern const char str_CATCH_4[];
-extern const char str_CATCH_40[];
-extern const char str_CATCH_5[];
-extern const char str_CATCH_6[];
-extern const char str_CATCH_7[];
-extern const char str_CATCH_8[];
-extern const char str_CATCH_9[];
-extern const char str_CATCH_n[];
-extern const char str_CAT_000[];
-extern const char str_CAUGHT[];
-extern const char str_CAUGHT_n[];
-extern const char str_CAU_000[];
-extern const char str_CB[];
-extern const char str_CGD1[];
-extern const char str_CGD2[];
-extern const char str_CGD3[];
-extern const char str_CGD_TYPE[];
-extern const char str_CG_ADD_XY[];
-extern const char str_CG_ATT_IX[];
-extern const char str_CG_CANCEL[];
-extern const char str_CG_CTR[];
-extern const char str_CG_EFFECT[];
-extern const char str_CG_EFTYPE[];
-extern const char str_CG_EXTDAT[];
-extern const char str_CG_FLIP[];
-extern const char str_CG_HIT_IX[];
-extern const char str_CG_NIX[];
-extern const char str_CG_NUMBER[];
-extern const char str_CG_OLC_IX[];
-extern const char str_CG_RIVAL[];
-extern const char str_CG_SE[];
-extern const char str_CG_STATUS[];
-extern const char str_CG_TYPE[];
-extern const char str_CHAINA[];
-extern const char str_CHAINA_2[];
-extern const char str_CHUN_LI[];
-extern const char str_CMCF[];
-extern const char str_CMCR[];
-extern const char str_CMJ2[];
-extern const char str_CMJ3[];
-extern const char str_CMJ4[];
-extern const char str_CMJA[];
-extern const char str_CML2[];
-extern const char str_CMLP[];
-extern const char str_CMMD[];
-extern const char str_CMMS[];
-extern const char str_CMOA[];
-extern const char str_CMSW[];
-extern const char str_CMYD[];
-extern const char str_CODE_H[];
-extern const char str_CR_1P[];
-extern const char str_CU[];
-extern const char str_CURRENT[];
-extern const char str_CURRENT_n[];
-extern const char str_D[];
-extern const char str_DADLEY_L_B[];
-extern const char str_DAMAGE[];
-extern const char str_DASH_HUMIKOMI[];
-extern const char str_DASH_TOBINOKI[];
-extern const char str_DATA_NOTHING[];
-extern const char str_DELETE_ALL_SH4[];
-extern const char str_DENKI[];
-extern const char str_DIP[];
-extern const char str_DIR_ATT[];
-extern const char str_DIR[];
-extern const char str_DM[];
-extern const char str_DUDDLEY_D_S[];
-extern const char str_DUDLEY[];
-extern const char str_D_P_GUARD_K_L[];
-extern const char str_D_P_GUARD_K_M[];
-extern const char str_D_P_GUARD_K_S[];
-extern const char str_D_P_GUARD_P_L[];
-extern const char str_D_P_GUARD_P_M[];
-extern const char str_D_P_GUARD_P_S[];
-extern const char str_EDIT_INT[];
-extern const char str_EDIT_NUM[];
-extern const char str_EFF01_CHAR[];
-extern const char str_EFF13_CHAR[];
-extern const char str_EFFECT[];
-extern const char str_ELENA[];
-extern const char str_ELENA_ASINAGE[];
-extern const char str_ENDING[];
-extern const char str_ENGLAND[];
-extern const char str_ENGLAND_2[];
-extern const char str_ETC[];
-extern const char str_ETC_1[];
-extern const char str_ETC_2[];
-extern const char str_ETC_3[];
-extern const char str_EX[];
-extern const char str_EXIT_1P_2P_START[];
-extern const char str_EXIT_OK[];
-extern const char str_EXTRA[];
-extern const char str_FACE[];
-extern const char str_FACE_L[];
-extern const char str_FACE_M[];
-extern const char str_FACE_S[];
-extern const char str_FACE_SP[];
-extern const char str_FLANKEN_S[];
-extern const char str_FLASH[];
-extern const char str_FLIP_ED[];
-extern const char str_FLIP[];
-extern const char str_FOOK_OKU_L[];
-extern const char str_FOOK_OKU_M[];
-extern const char str_FOOK_OKU_S[];
-extern const char str_FOOK_OKU_SP[];
-extern const char str_FOOK_TEMAE_L[];
-extern const char str_FOOK_TEMAE_M[];
-extern const char str_FOOK_TEMAE_S[];
-extern const char str_FOOK_TEMAE_SP[];
-extern const char str_FRANCE[];
-extern const char str_FRANCE_2[];
-extern const char str_FRONT_WALK[];
-extern const char str_FUSHIN_K_L[];
-extern const char str_FUSHIN_K_M[];
-extern const char str_FUSHIN_K_S[];
-extern const char str_FUSHIN_P_L[];
-extern const char str_FUSHIN_P_M[];
-extern const char str_FUSHIN_P_S[];
-extern const char str_F_JUMP_K_L_A[];
-extern const char str_F_JUMP_K_L_B[];
-extern const char str_F_JUMP_K_M_A[];
-extern const char str_F_JUMP_K_M_B[];
-extern const char str_F_JUMP_K_S_A[];
-extern const char str_F_JUMP_K_S_B[];
-extern const char str_F_JUMP_P_L_A[];
-extern const char str_F_JUMP_P_L_B[];
-extern const char str_F_JUMP_P_M_A[];
-extern const char str_F_JUMP_P_M_B[];
-extern const char str_F_JUMP_P_S_A[];
-extern const char str_F_JUMP_P_S_B[];
-extern const char str_GERMANY[];
-extern const char str_GERMANY_2[];
-extern const char str_GILL[];
-extern const char str_GILL_2[];
-extern const char str_GILL_3[];
-extern const char str_GILL_IMPACT_C[];
-extern const char str_GILL_SPLASH_M[];
-extern const char str_GILL_STAGE[];
-extern const char str_GOUKI_1[];
-extern const char str_GOUKI_2[];
-extern const char str_GROUP[];
-extern const char str_GUARD_AIR[];
-extern const char str_GUARD_AIR_2[];
-extern const char str_GUARD_DOWN[];
-extern const char str_GUARD_DOWN_2[];
-extern const char str_GUARD_HEAD[];
-extern const char str_GUARD_HEAD_2[];
-extern const char str_GUARD_UP[];
-extern const char str_GUARD_UP_2[];
-extern const char str_GUARD[];
-extern const char str_G[];
-extern const char str_H[];
-extern const char str_HANASARE[];
-extern const char str_HAND[];
-extern const char str_HANEAGARI[];
-extern const char str_HANEKAERI_HARA[];
-extern const char str_HAN_000[];
-extern const char str_HARAIGOSHI[];
-extern const char str_HARAYARARE[];
-extern const char str_HEAD[];
-extern const char str_HISS[];
-extern const char str_HIT_RANGE[];
-extern const char str_HIT[];
-extern const char str_HONGKONG[];
-extern const char str_HONGKONG_0[];
-extern const char str_HONGKONG_1[];
-extern const char str_HOSEI[];
-extern const char str_HOS_000[];
-extern const char str_HS_ME[];
-extern const char str_HS_YOU[];
-extern const char str_HUGO[];
-extern const char str_HUGO_BODY_S[];
-extern const char str_HUGO_M_S_P[];
-extern const char str_HUGO_N_G_T[];
-extern const char str_HUGO_S_D_B_B[];
-extern const char str_HUMI_ASIB[];
-extern const char str_HURIMUKI[];
-extern const char str_HUSHIN_AIR[];
-extern const char str_HUSHIN_DOWN[];
-extern const char str_HUSHIN_HEAD[];
-extern const char str_HUSHIN_UP[];
-extern const char str_H_n[];
-extern const char str_IBUKI[];
-extern const char str_IBUKI_2[];
-extern const char str_IBUKI_HARAIG[];
-extern const char str_IBUKI_KUBIORI[];
-extern const char str_IBUKI_YOROI_D[];
-extern const char str_IMPACT[];
-extern const char str_INE[];
-extern const char str_INTERRUT[];
-extern const char str_INT_END[];
-extern const char str_IPPONZEOI[];
-extern const char str_IX_000[];
-extern const char str_IX_1[];
-extern const char str_IX_2[];
-extern const char str_IX_3[];
-extern const char str_IX_4[];
-extern const char str_JAPAN2[];
-extern const char str_JAPAN_0[];
-extern const char str_JAPAN_1[];
-extern const char str_JAPAN_10[];
-extern const char str_JAPAN_11[];
-extern const char str_JAPAN_20[];
-extern const char str_JAPAN_21[];
-extern const char str_JAPAN_3[];
-extern const char str_JAPAN_30[];
-extern const char str_JUDGEMENT_GAL[];
-extern const char str_JUDGMENT_LOSE[];
-extern const char str_JUDGMENT_WAIT[];
-extern const char str_JUDGMENT_WIN[];
-extern const char str_JUMP_BACK[];
-extern const char str_JUMP_FRONT[];
-extern const char str_JUMP_JUNBI[];
-extern const char str_JUMP_VERTICAL[];
-extern const char str_KAGAMI_B_WALK[];
-extern const char str_KAGAMI_F_WALK[];
-extern const char str_KAGAMI_KAMAE[];
-extern const char str_KAGAMI_K_A[];
-extern const char str_KAGAMI_K_B[];
-extern const char str_KAGAMI_K_C[];
-extern const char str_KAGAMI_L[];
-extern const char str_KAGAMI_M[];
-extern const char str_KAGAMI_P_A[];
-extern const char str_KAGAMI_P_B[];
-extern const char str_KAGAMI_P_C[];
-extern const char str_KAGAMI_S[];
-extern const char str_KAGAMI_SP[];
-extern const char str_KAGAMI_TURN[];
-extern const char str_KAGAMU[];
-extern const char str_KAMAE[];
-extern const char str_KARATE[];
-extern const char str_KEN[];
-extern const char str_KEN_HIZAGERI[];
-extern const char str_KGM_DENGEKI_L[];
-extern const char str_KGM_DENGEKI_M[];
-extern const char str_KGM_DENGEKI_P[];
-extern const char str_KGM_DENGEKI_S[];
-extern const char str_KGM_TATAKI_L[];
-extern const char str_KGM_TATAKI_M[];
-extern const char str_KGM_TATAKI_S[];
-extern const char str_KGM_TATAKI_SP[];
-extern const char str_KGM_TOUKETU_L[];
-extern const char str_KGM_TOUKETU_M[];
-extern const char str_KGM_TOUKETU_P[];
-extern const char str_KGM_TOUKETU_S[];
-extern const char str_KGM_TTKI_V_L[];
-extern const char str_KGM_TTKI_V_M[];
-extern const char str_KGM_TTKI_V_S[];
-extern const char str_KGM_TTKI_V_SP[];
-extern const char str_KIND_WAZA[];
-extern const char str_KIRIMOMI[];
-extern const char str_KISHINRIKI[];
-extern const char str_KOC_IX_PT_Nix[];
-extern const char str_KOC_IX_PT_Nix_n[];
-extern const char str_KUNOJI[];
-extern const char str_KUNOJI_NOKE[];
-extern const char str_LEG[];
-extern const char str_LOSE_KAGAMI[];
-extern const char str_LOSE_NO_STAND[];
-extern const char str_LOSE_SONABA[];
-extern const char str_L_KICK_A[];
-extern const char str_L_KICK_B[];
-extern const char str_L_KICK_C[];
-extern const char str_L_PUNCH_A[];
-extern const char str_L_PUNCH_B[];
-extern const char str_L_PUNCH_C[];
-extern const char str_M[];
-extern const char str_MAWARIKOMI_M_F[];
-extern const char str_MF[];
-extern const char str_MKH_IX[];
-extern const char str_MLD[];
-extern const char str_MLF[];
-extern const char str_MLN[];
-extern const char str_MLR[];
-extern const char str_MLU[];
-extern const char str_MONKEY_FLIP[];
-extern const char str_MOTION[];
-extern const char str_M_2[];
-extern const char str_M_B[];
-extern const char str_M_KICK_A[];
-extern const char str_M_KICK_B[];
-extern const char str_M_KICK_C[];
-extern const char str_M_PUNCH_A[];
-extern const char str_M_PUNCH_B[];
-extern const char str_M_PUNCH_C[];
-extern const char str_NAKAI[];
-extern const char str_NECRO[];
-extern const char str_NECRO_F_S[];
-extern const char str_NECRO_G_S[];
-extern const char str_NECRO_SLAM_D[];
-extern const char str_NECRO_SNAKE_F[];
-extern const char str_NECRO_S_T[];
-extern const char str_NEKOROBI_L[];
-extern const char str_NEKOROBI_M[];
-extern const char str_NEKOROBI_S[];
-extern const char str_NEKOROBI_SP[];
-extern const char str_NG_TYPE[];
-extern const char str_NM[];
-extern const char str_NOBASITA_TE_L[];
-extern const char str_NOBASITA_TE_M[];
-extern const char str_NOBASITA_TE_S[];
-extern const char str_NOBASITA_TE_SP[];
-extern const char str_NOKEZORI[];
-extern const char str_NORMAL[];
-extern const char str_NOUTEN_L[];
-extern const char str_NOUTEN_M[];
-extern const char str_NOUTEN_S[];
-extern const char str_NOUTEN_SP[];
-extern const char str_NO_1P_SHOT6[];
-extern const char str_NO_EDIT[];
-extern const char str_NUM_END[];
-extern const char str_N_Y[];
-extern const char str_N_Y_0[];
-extern const char str_N_Y_1[];
-extern const char str_No_12[];
-extern const char str_OBJECT_EDIT_2[];
-extern const char str_OBJECT_EDIT[];
-extern const char str_OBJECT_LOOK[];
-extern const char str_OBJECT_TEST[];
-extern const char str_OHYA[];
-extern const char str_OKIAGARI[];
-extern const char str_OKIAGARI_B[];
-extern const char str_OKIAGARI_F[];
-extern const char str_OKIAGARI_FRONT[];
-extern const char str_OKIAGARI_K_L[];
-extern const char str_OKIAGARI_K_M[];
-extern const char str_OKIAGARI_K_S[];
-extern const char str_OKIAGARI_P_L[];
-extern const char str_OKIAGARI_P_M[];
-extern const char str_OKIAGARI_P_S[];
-extern const char str_OKIAGARI_REAR[];
-extern const char str_OLC_IX[];
-extern const char str_ORO[];
-extern const char str_OROMEKA[];
-extern const char str_ORO_GIGOKU_G[];
-extern const char str_ORO_KISINRIKI[];
-extern const char str_ORO_KUBISIME[];
-extern const char str_ORO_NIOURIKI[];
-extern const char str_ORO_TOMOENAGE[];
-extern const char str_ORUMEKA[];
-extern const char str_PA[];
-extern const char str_PARING_AIR_B[];
-extern const char str_PARING_AIR_F[];
-extern const char str_PARING_DOWN[];
-extern const char str_PARING_HEAD[];
-extern const char str_PARING_UP[];
-extern const char str_PARTS_FL[];
-extern const char str_PARTS_X_H[];
-extern const char str_PARTS_Y_H[];
-extern const char str_PARTS[];
-extern const char str_PATTERN[];
-extern const char str_PAT_ST[];
-extern const char str_PB[];
-extern const char str_PIYO[];
-extern const char str_PIYO_n[];
-extern const char str_PLAYER[];
-extern const char str_PLEF[];
-extern const char str_POS_X_H[];
-extern const char str_POS_Y_H[];
-extern const char str_POW[];
-extern const char str_PRESS_ANY_SHOT[];
-extern const char str_P_BREAK_AIR_F[];
-extern const char str_P_BREAK_AIR_R[];
-extern const char str_P_BREAK_DOWN[];
-extern const char str_P_BREAK_UP[];
-extern const char str_P_BREAK_ZUJOU[];
-extern const char str_Pa[];
-extern const char str_Q[];
-extern const char str_R[];
-extern const char str_RAOH[];
-extern const char str_REACTION[];
-extern const char str_REL_X_H[];
-extern const char str_REL_Y_H[];
-extern const char str_REVISE_X_H[];
-extern const char str_REVISE_Y_H[];
-extern const char str_RUCCIA[];
-extern const char str_RUSSIA_0[];
-extern const char str_RUSSIA_1[];
-extern const char str_RUSSIA_2[];
-extern const char str_RYU[];
-extern const char str_RYU_SEOINAGE[];
-extern const char str_RYU_TOMOENAGE[];
-extern const char str_R_n[];
-extern const char str_S[];
-extern const char str_S1[];
-extern const char str_S2[];
-extern const char str_S3[];
-extern const char str_S4[];
-extern const char str_S5[];
-extern const char str_S6[];
-extern const char str_SA[];
-extern const char str_SEAN[];
-extern const char str_SEAN_BALL_HIT[];
-extern const char str_SEAN_TACKLE[];
-extern const char str_SELECT[];
-extern const char str_SELECT_UP_DOWN[];
-extern const char str_SHIMEOTASARE[];
-extern const char str_SIZE_X_H[];
-extern const char str_SIZE_Y_H[];
-extern const char str_SNAKE_FANG[];
-extern const char str_SPLASH_M[];
-extern const char str_SP_APPEAR_1[];
-extern const char str_SP_APPEAR_2[];
-extern const char str_SP_APPEAR_3[];
-extern const char str_SP_APPEAR_4[];
-extern const char str_SP_APPEAR_5[];
-extern const char str_SP_APPEAR_6[];
-extern const char str_SP_APPEAR_7[];
-extern const char str_SP_APPEAR_8[];
-extern const char str_SP_AT[];
-extern const char str_SP_B_JP_L_K_A[];
-extern const char str_SP_B_JP_L_K_B[];
-extern const char str_SP_B_JP_L_P_A[];
-extern const char str_SP_B_JP_L_P_B[];
-extern const char str_SP_B_JP_M_K_A[];
-extern const char str_SP_B_JP_M_K_B[];
-extern const char str_SP_B_JP_M_P_A[];
-extern const char str_SP_B_JP_M_P_B[];
-extern const char str_SP_B_JP_S_K_A[];
-extern const char str_SP_B_JP_S_K_B[];
-extern const char str_SP_B_JP_S_P_A[];
-extern const char str_SP_B_JP_S_P_B[];
-extern const char str_SP_F_JP_L_K_A[];
-extern const char str_SP_F_JP_L_K_B[];
-extern const char str_SP_F_JP_L_P_A[];
-extern const char str_SP_F_JP_L_P_B[];
-extern const char str_SP_F_JP_M_K_A[];
-extern const char str_SP_F_JP_M_K_B[];
-extern const char str_SP_F_JP_M_P_A[];
-extern const char str_SP_F_JP_M_P_B[];
-extern const char str_SP_F_JP_S_K_A[];
-extern const char str_SP_F_JP_S_K_B[];
-extern const char str_SP_F_JP_S_P_A[];
-extern const char str_SP_F_JP_S_P_B[];
-extern const char str_SP_JUMP_BACK[];
-extern const char str_SP_JUMP_FRONT[];
-extern const char str_SP_JUMP_JUNBI[];
-extern const char str_SP_JUMP_V[];
-extern const char str_SP_TECH[];
-extern const char str_SP_V_JP_L_K_A[];
-extern const char str_SP_V_JP_L_K_B[];
-extern const char str_SP_V_JP_L_P_A[];
-extern const char str_SP_V_JP_L_P_B[];
-extern const char str_SP_V_JP_M_K_A[];
-extern const char str_SP_V_JP_M_K_B[];
-extern const char str_SP_V_JP_M_P_A[];
-extern const char str_SP_V_JP_M_P_B[];
-extern const char str_SP_V_JP_S_K_A[];
-extern const char str_SP_V_JP_S_K_B[];
-extern const char str_SP_V_JP_S_P_A[];
-extern const char str_SP_V_JP_S_P_B[];
-extern const char str_SP_WIN_1[];
-extern const char str_SP_WIN_2[];
-extern const char str_SP_WIN_3[];
-extern const char str_SP_WIN_4[];
-extern const char str_SP_WIN_5[];
-extern const char str_SP_WIN_6[];
-extern const char str_SP_WIN_7[];
-extern const char str_SP_WIN_8[];
-extern const char str_STAND_UP[];
-extern const char str_S_B_JP_L_K_A[];
-extern const char str_S_B_JP_L_K_B[];
-extern const char str_S_B_JP_L_P_A[];
-extern const char str_S_B_JP_L_P_B[];
-extern const char str_S_B_JP_M_K_A[];
-extern const char str_S_B_JP_M_K_B[];
-extern const char str_S_B_JP_M_P_A[];
-extern const char str_S_B_JP_M_P_B[];
-extern const char str_S_B_JP_S_K_A[];
-extern const char str_S_B_JP_S_K_B[];
-extern const char str_S_B_JP_S_P_A[];
-extern const char str_S_B_JP_S_P_B[];
-extern const char str_S_F_JP_L_K_A[];
-extern const char str_S_F_JP_L_K_B[];
-extern const char str_S_F_JP_L_P_A[];
-extern const char str_S_F_JP_L_P_B[];
-extern const char str_S_F_JP_M_K_A[];
-extern const char str_S_F_JP_M_K_B[];
-extern const char str_S_F_JP_M_P_A[];
-extern const char str_S_F_JP_M_P_B[];
-extern const char str_S_F_JP_S_K_A[];
-extern const char str_S_F_JP_S_K_B[];
-extern const char str_S_F_JP_S_P_A[];
-extern const char str_S_F_JP_S_P_B[];
-extern const char str_S_HANEAGARI[];
-extern const char str_S_JUMP_BACK[];
-extern const char str_S_JUMP_FRONT[];
-extern const char str_S_JUMP_V[];
-extern const char str_S_KICK_A[];
-extern const char str_S_KICK_B[];
-extern const char str_S_KICK_C[];
-extern const char str_S_PUNCH_A[];
-extern const char str_S_PUNCH_B[];
-extern const char str_S_PUNCH_C[];
-extern const char str_S_V_JP_L_K_A[];
-extern const char str_S_V_JP_L_K_B[];
-extern const char str_S_V_JP_L_P_A[];
-extern const char str_S_V_JP_L_P_B[];
-extern const char str_S_V_JP_M_K_A[];
-extern const char str_S_V_JP_M_K_B[];
-extern const char str_S_V_JP_M_P_A[];
-extern const char str_S_V_JP_M_P_B[];
-extern const char str_S_V_JP_S_K_A[];
-extern const char str_S_V_JP_S_K_B[];
-extern const char str_S_V_JP_S_P_A[];
-extern const char str_S_V_JP_S_P_B[];
-extern const char str_TATAKI_AIR[];
-extern const char str_TATAKI_L[];
-extern const char str_TATAKI_M[];
-extern const char str_TATAKI_S[];
-extern const char str_TATAKI_SP[];
-extern const char str_TATAKI_V_L[];
-extern const char str_TATAKI_V_M[];
-extern const char str_TATAKI_V_S[];
-extern const char str_TATAKI_V_SP[];
-extern const char str_TATI_DENGEKI_L[];
-extern const char str_TATI_DENGEKI_M[];
-extern const char str_TATI_DENGEKI_P[];
-extern const char str_TATI_DENGEKI_S[];
-extern const char str_TATI_MOE_L[];
-extern const char str_TATI_MOE_M[];
-extern const char str_TATI_MOE_S[];
-extern const char str_TATI_MOE_SP[];
-extern const char str_TATI_TOUKETU_L[];
-extern const char str_TATI_TOUKETU_M[];
-extern const char str_TATI_TOUKETU_P[];
-extern const char str_TATI_TOUKETU_S[];
-extern const char str_TATUMAKIZANKU[];
-extern const char str_TOMOE_ORO[];
-extern const char str_TOMOE_RYU[];
-extern const char str_TOUKETSU_A[];
-extern const char str_TRUNK[];
-extern const char str_TTKI_V_AIR[];
-extern const char str_TUKAMIHAZUSARE[];
-extern const char str_TUKAMIHAZUSI[];
-extern const char str_TUKAMIKAKARI_A[];
-extern const char str_TUKAMIKAKARI_B[];
-extern const char str_TUKAMIKAKARI_C[];
-extern const char str_TUKAMIKAKARI_D[];
-extern const char str_TUKAMIKAKARI_E[];
-extern const char str_TUKAMIKAKARI_F[];
-extern const char str_TUKAMI_AIR_A[];
-extern const char str_TUKAMI_AIR_B[];
-extern const char str_TUKAMI_AIR_C[];
-extern const char str_TUKAMI_AIR_D[];
-extern const char str_TUKAMI_AIR_E[];
-extern const char str_TUKAMI_AIR_F[];
-extern const char str_UKEMI_MOVE_F[];
-extern const char str_UKEMI_MOVE_R[];
-extern const char str_UNION[];
-extern const char str_UPPER[];
-extern const char str_UPPER_L[];
-extern const char str_UPPER_M[];
-extern const char str_UPPER_S[];
-extern const char str_UPPER_SP[];
-extern const char str_UP_P_GUARD_K_L[];
-extern const char str_UP_P_GUARD_K_M[];
-extern const char str_UP_P_GUARD_K_S[];
-extern const char str_UP_P_GUARD_P_L[];
-extern const char str_UP_P_GUARD_P_M[];
-extern const char str_UP_P_GUARD_P_S[];
-extern const char str_URIEN[];
-extern const char str_USEMJ[];
-extern const char str_VS_ID[];
-extern const char str_V_JUMP_K_L_A[];
-extern const char str_V_JUMP_K_L_B[];
-extern const char str_V_JUMP_K_M_A[];
-extern const char str_V_JUMP_K_M_B[];
-extern const char str_V_JUMP_K_S_A[];
-extern const char str_V_JUMP_K_S_B[];
-extern const char str_V_JUMP_P_L_A[];
-extern const char str_V_JUMP_P_L_B[];
-extern const char str_V_JUMP_P_M_A[];
-extern const char str_V_JUMP_P_M_B[];
-extern const char str_V_JUMP_P_S_A[];
-extern const char str_V_JUMP_P_S_B[];
-extern const char str_WAIT[];
-extern const char str_WALK_END[];
-extern const char str_WCA[];
-extern const char str_WCA_IX[];
-extern const char str_WIN_1[];
-extern const char str_WIN_2[];
-extern const char str_WIN_3[];
-extern const char str_WIN_4[];
-extern const char str_WIN_5[];
-extern const char str_WIN_6[];
-extern const char str_WIN_7[];
-extern const char str_WIN_8[];
-extern const char str_WORK_EMPTY[];
-extern const char str_YANG[];
-extern const char str_YES_2P_SHOT6[];
-extern const char str_YOKE_PAT[];
-extern const char str_YOKE_TYPE[];
-extern const char str_YOKOYAMA[];
-extern const char str_YOSHIZUMI[];
-extern const char str_YUN[];
-extern const char str_YUN_2[];
-extern const char str_YUN_HIZAGERI[];
-extern const char str_YUN_MONKEY_F[];
-extern const char str_YU[];
-extern const char str_ZANNEN_1[];
-extern const char str_ZANNEN_2[];
-extern const char str_ZANNEN_3[];
-extern const char str_ZANNEN_4[];
-extern const char str_ZANNEN_5[];
-extern const char str_ZANNEN_6[];
-extern const char str_ZANNEN_7[];
-extern const char str_ZANNEN_8[];
-extern const char str_ZOKUSEI[];
-extern const char str_ZU_FLAG[];
-extern const char str_a[];
-extern const char str_a_2[];
-extern const char str_c[];
-extern const char str_c_2[];
-extern const char str_d[];
-extern const char str_d_2[];
-extern const char str_empty[];
-extern const char str_empty_10[];
-extern const char str_empty_2[];
-extern const char str_empty_3[];
-extern const char str_empty_4[];
-extern const char str_empty_5[];
-extern const char str_empty_6[];
-extern const char str_empty_7[];
+extern const s8 str_1DATA_SH5[];
+extern const s8 str_A[];
+extern const s8 str_ADD_ARTS[];
+extern const s8 str_AFRICA[];
+extern const s8 str_AFRICA_2[];
+extern const s8 str_AFRICA_JUMP[];
+extern const s8 str_AFRICA_LAND[];
+extern const s8 str_AIR_NORMAL[];
+extern const s8 str_ALEX[];
+extern const s8 str_ALEX_BACK_D[];
+extern const s8 str_ALEX_BODY_S[];
+extern const s8 str_ALEX_B_D[];
+extern const s8 str_ALEX_F_N_D[];
+extern const s8 str_ALEX_HYPER_B[];
+extern const s8 str_ALEX_POWER_B[];
+extern const s8 str_ALEX_SLEEPER[];
+extern const s8 str_ALEX_S_H_B[];
+extern const s8 str_ALEX_ZUTUKI[];
+extern const s8 str_ALL_CHARACTER[];
+extern const s8 str_ALL[];
+extern const s8 str_APPEAR_1[];
+extern const s8 str_APPEAR_2[];
+extern const s8 str_APPEAR_3[];
+extern const s8 str_APPEAR_4[];
+extern const s8 str_APPEAR_5[];
+extern const s8 str_APPEAR_6[];
+extern const s8 str_APPEAR_7[];
+extern const s8 str_APPEAR_8[];
+extern const s8 str_APPEAR_JUNBI_1[];
+extern const s8 str_APPEAR_JUNBI_2[];
+extern const s8 str_APPEAR_JUNBI_3[];
+extern const s8 str_APPEAR_JUNBI_4[];
+extern const s8 str_APPEAR_JUNBI_5[];
+extern const s8 str_APPEAR_JUNBI_6[];
+extern const s8 str_APPEAR_JUNBI_7[];
+extern const s8 str_APPEAR_JUNBI_8[];
+extern const s8 str_APPEAR_USE[];
+extern const s8 str_ASIBARAI_SIRI[];
+extern const s8 str_ASIB_SIRI_LOSE[];
+extern const s8 str_ASIB_TUNNOMERI[];
+extern const s8 str_ASIB_TUN_LOSE[];
+extern const s8 str_AT[];
+extern const s8 str_ATTACK[];
+extern const s8 str_ATTACK_10_L[];
+extern const s8 str_ATTACK_10_M[];
+extern const s8 str_ATTACK_10_S[];
+extern const s8 str_ATTACK_10_SP[];
+extern const s8 str_ATTACK_11_L[];
+extern const s8 str_ATTACK_11_M[];
+extern const s8 str_ATTACK_11_S[];
+extern const s8 str_ATTACK_11_SP[];
+extern const s8 str_ATTACK_12_L[];
+extern const s8 str_ATTACK_12_M[];
+extern const s8 str_ATTACK_12_S[];
+extern const s8 str_ATTACK_12_SP[];
+extern const s8 str_ATTACK_13_L[];
+extern const s8 str_ATTACK_13_M[];
+extern const s8 str_ATTACK_13_S[];
+extern const s8 str_ATTACK_13_SP[];
+extern const s8 str_ATTACK_1_L[];
+extern const s8 str_ATTACK_1_M[];
+extern const s8 str_ATTACK_1_S[];
+extern const s8 str_ATTACK_1_SP[];
+extern const s8 str_ATTACK_2_L[];
+extern const s8 str_ATTACK_2_M[];
+extern const s8 str_ATTACK_2_S[];
+extern const s8 str_ATTACK_2_SP[];
+extern const s8 str_ATTACK_3_L[];
+extern const s8 str_ATTACK_3_M[];
+extern const s8 str_ATTACK_3_S[];
+extern const s8 str_ATTACK_3_SP[];
+extern const s8 str_ATTACK_4_L[];
+extern const s8 str_ATTACK_4_M[];
+extern const s8 str_ATTACK_4_S[];
+extern const s8 str_ATTACK_4_SP[];
+extern const s8 str_ATTACK_5_L[];
+extern const s8 str_ATTACK_5_M[];
+extern const s8 str_ATTACK_5_S[];
+extern const s8 str_ATTACK_5_SP[];
+extern const s8 str_ATTACK_6_L[];
+extern const s8 str_ATTACK_6_M[];
+extern const s8 str_ATTACK_6_S[];
+extern const s8 str_ATTACK_6_SP[];
+extern const s8 str_ATTACK_7_L[];
+extern const s8 str_ATTACK_7_M[];
+extern const s8 str_ATTACK_7_S[];
+extern const s8 str_ATTACK_7_SP[];
+extern const s8 str_ATTACK_8_L[];
+extern const s8 str_ATTACK_8_M[];
+extern const s8 str_ATTACK_8_S[];
+extern const s8 str_ATTACK_8_SP[];
+extern const s8 str_ATTACK_9_L[];
+extern const s8 str_ATTACK_9_M[];
+extern const s8 str_ATTACK_9_S[];
+extern const s8 str_ATTACK_9_SP[];
+extern const s8 str_ATT_000[];
+extern const s8 str_ATT_IX[];
+extern const s8 str_ATT[];
+extern const s8 str_ATT_2[];
+extern const s8 str_AT_LEVEL[];
+extern const s8 str_B[];
+extern const s8 str_BACK[];
+extern const s8 str_BACK_WALK[];
+extern const s8 str_BASE[];
+extern const s8 str_BEFORE[];
+extern const s8 str_BG_SELECT[];
+extern const s8 str_BHA_000[];
+extern const s8 str_BIKEI[];
+extern const s8 str_BLANK[];
+extern const s8 str_BODY_BROW_L[];
+extern const s8 str_BODY_BROW_M[];
+extern const s8 str_BODY_BROW_S[];
+extern const s8 str_BODY_BROW_SP[];
+extern const s8 str_BODY_SLAM[];
+extern const s8 str_BODY_UPPER[];
+extern const s8 str_BODY_UPPER_L[];
+extern const s8 str_BODY_UPPER_M[];
+extern const s8 str_BODY_UPPER_S[];
+extern const s8 str_BODY_UPPER_SP[];
+extern const s8 str_BODY_UPPER_SP_2[];
+extern const s8 str_BOD_000[];
+extern const s8 str_BONUS[];
+extern const s8 str_BONUS_1[];
+extern const s8 str_BONUS_2[];
+extern const s8 str_BONUS_CHAR[];
+extern const s8 str_BONUS_WIN_1[];
+extern const s8 str_BONUS_WIN_2[];
+extern const s8 str_BONUS_WIN_3[];
+extern const s8 str_BRAZIL[];
+extern const s8 str_BRAZIL_1[];
+extern const s8 str_BRAZIL_1_2[];
+extern const s8 str_BRAZIL_2[];
+extern const s8 str_BREAST[];
+extern const s8 str_BT[];
+extern const s8 str_BUTTOBI[];
+extern const s8 str_BUTT_PAT[];
+extern const s8 str_BUTT_TYPE[];
+extern const s8 str_B_JUMP_K_L_A[];
+extern const s8 str_B_JUMP_K_L_B[];
+extern const s8 str_B_JUMP_K_M_A[];
+extern const s8 str_B_JUMP_K_M_B[];
+extern const s8 str_B_JUMP_K_S_A[];
+extern const s8 str_B_JUMP_K_S_B[];
+extern const s8 str_B_JUMP_P_L_A[];
+extern const s8 str_B_JUMP_P_L_B[];
+extern const s8 str_B_JUMP_P_M_A[];
+extern const s8 str_B_JUMP_P_M_B[];
+extern const s8 str_B_JUMP_P_S_A[];
+extern const s8 str_B_JUMP_P_S_B[];
+extern const s8 str_C[];
+extern const s8 str_CA[];
+extern const s8 str_CANCEL_SH6[];
+extern const s8 str_CATCH[];
+extern const s8 str_CATCH_1[];
+extern const s8 str_CATCH_10[];
+extern const s8 str_CATCH_11[];
+extern const s8 str_CATCH_12[];
+extern const s8 str_CATCH_13[];
+extern const s8 str_CATCH_14[];
+extern const s8 str_CATCH_15[];
+extern const s8 str_CATCH_16[];
+extern const s8 str_CATCH_17[];
+extern const s8 str_CATCH_18[];
+extern const s8 str_CATCH_19[];
+extern const s8 str_CATCH_2[];
+extern const s8 str_CATCH_20[];
+extern const s8 str_CATCH_21[];
+extern const s8 str_CATCH_22[];
+extern const s8 str_CATCH_23[];
+extern const s8 str_CATCH_24[];
+extern const s8 str_CATCH_25[];
+extern const s8 str_CATCH_26[];
+extern const s8 str_CATCH_27[];
+extern const s8 str_CATCH_28[];
+extern const s8 str_CATCH_29[];
+extern const s8 str_CATCH_3[];
+extern const s8 str_CATCH_30[];
+extern const s8 str_CATCH_31[];
+extern const s8 str_CATCH_32[];
+extern const s8 str_CATCH_33[];
+extern const s8 str_CATCH_34[];
+extern const s8 str_CATCH_35[];
+extern const s8 str_CATCH_36[];
+extern const s8 str_CATCH_37[];
+extern const s8 str_CATCH_38[];
+extern const s8 str_CATCH_39[];
+extern const s8 str_CATCH_4[];
+extern const s8 str_CATCH_40[];
+extern const s8 str_CATCH_5[];
+extern const s8 str_CATCH_6[];
+extern const s8 str_CATCH_7[];
+extern const s8 str_CATCH_8[];
+extern const s8 str_CATCH_9[];
+extern const s8 str_CATCH_n[];
+extern const s8 str_CAT_000[];
+extern const s8 str_CAUGHT[];
+extern const s8 str_CAUGHT_n[];
+extern const s8 str_CAU_000[];
+extern const s8 str_CB[];
+extern const s8 str_CGD1[];
+extern const s8 str_CGD2[];
+extern const s8 str_CGD3[];
+extern const s8 str_CGD_TYPE[];
+extern const s8 str_CG_ADD_XY[];
+extern const s8 str_CG_ATT_IX[];
+extern const s8 str_CG_CANCEL[];
+extern const s8 str_CG_CTR[];
+extern const s8 str_CG_EFFECT[];
+extern const s8 str_CG_EFTYPE[];
+extern const s8 str_CG_EXTDAT[];
+extern const s8 str_CG_FLIP[];
+extern const s8 str_CG_HIT_IX[];
+extern const s8 str_CG_NIX[];
+extern const s8 str_CG_NUMBER[];
+extern const s8 str_CG_OLC_IX[];
+extern const s8 str_CG_RIVAL[];
+extern const s8 str_CG_SE[];
+extern const s8 str_CG_STATUS[];
+extern const s8 str_CG_TYPE[];
+extern const s8 str_CHAINA[];
+extern const s8 str_CHAINA_2[];
+extern const s8 str_CHUN_LI[];
+extern const s8 str_CMCF[];
+extern const s8 str_CMCR[];
+extern const s8 str_CMJ2[];
+extern const s8 str_CMJ3[];
+extern const s8 str_CMJ4[];
+extern const s8 str_CMJA[];
+extern const s8 str_CML2[];
+extern const s8 str_CMLP[];
+extern const s8 str_CMMD[];
+extern const s8 str_CMMS[];
+extern const s8 str_CMOA[];
+extern const s8 str_CMSW[];
+extern const s8 str_CMYD[];
+extern const s8 str_CODE_H[];
+extern const s8 str_CR_1P[];
+extern const s8 str_CU[];
+extern const s8 str_CURRENT[];
+extern const s8 str_CURRENT_n[];
+extern const s8 str_D[];
+extern const s8 str_DADLEY_L_B[];
+extern const s8 str_DAMAGE[];
+extern const s8 str_DASH_HUMIKOMI[];
+extern const s8 str_DASH_TOBINOKI[];
+extern const s8 str_DATA_NOTHING[];
+extern const s8 str_DELETE_ALL_SH4[];
+extern const s8 str_DENKI[];
+extern const s8 str_DIP[];
+extern const s8 str_DIR_ATT[];
+extern const s8 str_DIR[];
+extern const s8 str_DM[];
+extern const s8 str_DUDDLEY_D_S[];
+extern const s8 str_DUDLEY[];
+extern const s8 str_D_P_GUARD_K_L[];
+extern const s8 str_D_P_GUARD_K_M[];
+extern const s8 str_D_P_GUARD_K_S[];
+extern const s8 str_D_P_GUARD_P_L[];
+extern const s8 str_D_P_GUARD_P_M[];
+extern const s8 str_D_P_GUARD_P_S[];
+extern const s8 str_EDIT_INT[];
+extern const s8 str_EDIT_NUM[];
+extern const s8 str_EFF01_CHAR[];
+extern const s8 str_EFF13_CHAR[];
+extern const s8 str_EFFECT[];
+extern const s8 str_ELENA[];
+extern const s8 str_ELENA_ASINAGE[];
+extern const s8 str_ENDING[];
+extern const s8 str_ENGLAND[];
+extern const s8 str_ENGLAND_2[];
+extern const s8 str_ETC[];
+extern const s8 str_ETC_1[];
+extern const s8 str_ETC_2[];
+extern const s8 str_ETC_3[];
+extern const s8 str_EX[];
+extern const s8 str_EXIT_1P_2P_START[];
+extern const s8 str_EXIT_OK[];
+extern const s8 str_EXTRA[];
+extern const s8 str_FACE[];
+extern const s8 str_FACE_L[];
+extern const s8 str_FACE_M[];
+extern const s8 str_FACE_S[];
+extern const s8 str_FACE_SP[];
+extern const s8 str_FLANKEN_S[];
+extern const s8 str_FLASH[];
+extern const s8 str_FLIP_ED[];
+extern const s8 str_FLIP[];
+extern const s8 str_FOOK_OKU_L[];
+extern const s8 str_FOOK_OKU_M[];
+extern const s8 str_FOOK_OKU_S[];
+extern const s8 str_FOOK_OKU_SP[];
+extern const s8 str_FOOK_TEMAE_L[];
+extern const s8 str_FOOK_TEMAE_M[];
+extern const s8 str_FOOK_TEMAE_S[];
+extern const s8 str_FOOK_TEMAE_SP[];
+extern const s8 str_FRANCE[];
+extern const s8 str_FRANCE_2[];
+extern const s8 str_FRONT_WALK[];
+extern const s8 str_FUSHIN_K_L[];
+extern const s8 str_FUSHIN_K_M[];
+extern const s8 str_FUSHIN_K_S[];
+extern const s8 str_FUSHIN_P_L[];
+extern const s8 str_FUSHIN_P_M[];
+extern const s8 str_FUSHIN_P_S[];
+extern const s8 str_F_JUMP_K_L_A[];
+extern const s8 str_F_JUMP_K_L_B[];
+extern const s8 str_F_JUMP_K_M_A[];
+extern const s8 str_F_JUMP_K_M_B[];
+extern const s8 str_F_JUMP_K_S_A[];
+extern const s8 str_F_JUMP_K_S_B[];
+extern const s8 str_F_JUMP_P_L_A[];
+extern const s8 str_F_JUMP_P_L_B[];
+extern const s8 str_F_JUMP_P_M_A[];
+extern const s8 str_F_JUMP_P_M_B[];
+extern const s8 str_F_JUMP_P_S_A[];
+extern const s8 str_F_JUMP_P_S_B[];
+extern const s8 str_GERMANY[];
+extern const s8 str_GERMANY_2[];
+extern const s8 str_GILL[];
+extern const s8 str_GILL_2[];
+extern const s8 str_GILL_3[];
+extern const s8 str_GILL_IMPACT_C[];
+extern const s8 str_GILL_SPLASH_M[];
+extern const s8 str_GILL_STAGE[];
+extern const s8 str_GOUKI_1[];
+extern const s8 str_GOUKI_2[];
+extern const s8 str_GROUP[];
+extern const s8 str_GUARD_AIR[];
+extern const s8 str_GUARD_AIR_2[];
+extern const s8 str_GUARD_DOWN[];
+extern const s8 str_GUARD_DOWN_2[];
+extern const s8 str_GUARD_HEAD[];
+extern const s8 str_GUARD_HEAD_2[];
+extern const s8 str_GUARD_UP[];
+extern const s8 str_GUARD_UP_2[];
+extern const s8 str_GUARD[];
+extern const s8 str_G[];
+extern const s8 str_H[];
+extern const s8 str_HANASARE[];
+extern const s8 str_HAND[];
+extern const s8 str_HANEAGARI[];
+extern const s8 str_HANEKAERI_HARA[];
+extern const s8 str_HAN_000[];
+extern const s8 str_HARAIGOSHI[];
+extern const s8 str_HARAYARARE[];
+extern const s8 str_HEAD[];
+extern const s8 str_HISS[];
+extern const s8 str_HIT_RANGE[];
+extern const s8 str_HIT[];
+extern const s8 str_HONGKONG[];
+extern const s8 str_HONGKONG_0[];
+extern const s8 str_HONGKONG_1[];
+extern const s8 str_HOSEI[];
+extern const s8 str_HOS_000[];
+extern const s8 str_HS_ME[];
+extern const s8 str_HS_YOU[];
+extern const s8 str_HUGO[];
+extern const s8 str_HUGO_BODY_S[];
+extern const s8 str_HUGO_M_S_P[];
+extern const s8 str_HUGO_N_G_T[];
+extern const s8 str_HUGO_S_D_B_B[];
+extern const s8 str_HUMI_ASIB[];
+extern const s8 str_HURIMUKI[];
+extern const s8 str_HUSHIN_AIR[];
+extern const s8 str_HUSHIN_DOWN[];
+extern const s8 str_HUSHIN_HEAD[];
+extern const s8 str_HUSHIN_UP[];
+extern const s8 str_H_n[];
+extern const s8 str_IBUKI[];
+extern const s8 str_IBUKI_2[];
+extern const s8 str_IBUKI_HARAIG[];
+extern const s8 str_IBUKI_KUBIORI[];
+extern const s8 str_IBUKI_YOROI_D[];
+extern const s8 str_IMPACT[];
+extern const s8 str_INE[];
+extern const s8 str_INTERRUT[];
+extern const s8 str_INT_END[];
+extern const s8 str_IPPONZEOI[];
+extern const s8 str_IX_000[];
+extern const s8 str_IX_1[];
+extern const s8 str_IX_2[];
+extern const s8 str_IX_3[];
+extern const s8 str_IX_4[];
+extern const s8 str_JAPAN2[];
+extern const s8 str_JAPAN_0[];
+extern const s8 str_JAPAN_1[];
+extern const s8 str_JAPAN_10[];
+extern const s8 str_JAPAN_11[];
+extern const s8 str_JAPAN_20[];
+extern const s8 str_JAPAN_21[];
+extern const s8 str_JAPAN_3[];
+extern const s8 str_JAPAN_30[];
+extern const s8 str_JUDGEMENT_GAL[];
+extern const s8 str_JUDGMENT_LOSE[];
+extern const s8 str_JUDGMENT_WAIT[];
+extern const s8 str_JUDGMENT_WIN[];
+extern const s8 str_JUMP_BACK[];
+extern const s8 str_JUMP_FRONT[];
+extern const s8 str_JUMP_JUNBI[];
+extern const s8 str_JUMP_VERTICAL[];
+extern const s8 str_KAGAMI_B_WALK[];
+extern const s8 str_KAGAMI_F_WALK[];
+extern const s8 str_KAGAMI_KAMAE[];
+extern const s8 str_KAGAMI_K_A[];
+extern const s8 str_KAGAMI_K_B[];
+extern const s8 str_KAGAMI_K_C[];
+extern const s8 str_KAGAMI_L[];
+extern const s8 str_KAGAMI_M[];
+extern const s8 str_KAGAMI_P_A[];
+extern const s8 str_KAGAMI_P_B[];
+extern const s8 str_KAGAMI_P_C[];
+extern const s8 str_KAGAMI_S[];
+extern const s8 str_KAGAMI_SP[];
+extern const s8 str_KAGAMI_TURN[];
+extern const s8 str_KAGAMU[];
+extern const s8 str_KAMAE[];
+extern const s8 str_KARATE[];
+extern const s8 str_KEN[];
+extern const s8 str_KEN_HIZAGERI[];
+extern const s8 str_KGM_DENGEKI_L[];
+extern const s8 str_KGM_DENGEKI_M[];
+extern const s8 str_KGM_DENGEKI_P[];
+extern const s8 str_KGM_DENGEKI_S[];
+extern const s8 str_KGM_TATAKI_L[];
+extern const s8 str_KGM_TATAKI_M[];
+extern const s8 str_KGM_TATAKI_S[];
+extern const s8 str_KGM_TATAKI_SP[];
+extern const s8 str_KGM_TOUKETU_L[];
+extern const s8 str_KGM_TOUKETU_M[];
+extern const s8 str_KGM_TOUKETU_P[];
+extern const s8 str_KGM_TOUKETU_S[];
+extern const s8 str_KGM_TTKI_V_L[];
+extern const s8 str_KGM_TTKI_V_M[];
+extern const s8 str_KGM_TTKI_V_S[];
+extern const s8 str_KGM_TTKI_V_SP[];
+extern const s8 str_KIND_WAZA[];
+extern const s8 str_KIRIMOMI[];
+extern const s8 str_KISHINRIKI[];
+extern const s8 str_KOC_IX_PT_Nix[];
+extern const s8 str_KOC_IX_PT_Nix_n[];
+extern const s8 str_KUNOJI[];
+extern const s8 str_KUNOJI_NOKE[];
+extern const s8 str_LEG[];
+extern const s8 str_LOSE_KAGAMI[];
+extern const s8 str_LOSE_NO_STAND[];
+extern const s8 str_LOSE_SONABA[];
+extern const s8 str_L_KICK_A[];
+extern const s8 str_L_KICK_B[];
+extern const s8 str_L_KICK_C[];
+extern const s8 str_L_PUNCH_A[];
+extern const s8 str_L_PUNCH_B[];
+extern const s8 str_L_PUNCH_C[];
+extern const s8 str_M[];
+extern const s8 str_MAWARIKOMI_M_F[];
+extern const s8 str_MF[];
+extern const s8 str_MKH_IX[];
+extern const s8 str_MLD[];
+extern const s8 str_MLF[];
+extern const s8 str_MLN[];
+extern const s8 str_MLR[];
+extern const s8 str_MLU[];
+extern const s8 str_MONKEY_FLIP[];
+extern const s8 str_MOTION[];
+extern const s8 str_M_2[];
+extern const s8 str_M_B[];
+extern const s8 str_M_KICK_A[];
+extern const s8 str_M_KICK_B[];
+extern const s8 str_M_KICK_C[];
+extern const s8 str_M_PUNCH_A[];
+extern const s8 str_M_PUNCH_B[];
+extern const s8 str_M_PUNCH_C[];
+extern const s8 str_NAKAI[];
+extern const s8 str_NECRO[];
+extern const s8 str_NECRO_F_S[];
+extern const s8 str_NECRO_G_S[];
+extern const s8 str_NECRO_SLAM_D[];
+extern const s8 str_NECRO_SNAKE_F[];
+extern const s8 str_NECRO_S_T[];
+extern const s8 str_NEKOROBI_L[];
+extern const s8 str_NEKOROBI_M[];
+extern const s8 str_NEKOROBI_S[];
+extern const s8 str_NEKOROBI_SP[];
+extern const s8 str_NG_TYPE[];
+extern const s8 str_NM[];
+extern const s8 str_NOBASITA_TE_L[];
+extern const s8 str_NOBASITA_TE_M[];
+extern const s8 str_NOBASITA_TE_S[];
+extern const s8 str_NOBASITA_TE_SP[];
+extern const s8 str_NOKEZORI[];
+extern const s8 str_NORMAL[];
+extern const s8 str_NOUTEN_L[];
+extern const s8 str_NOUTEN_M[];
+extern const s8 str_NOUTEN_S[];
+extern const s8 str_NOUTEN_SP[];
+extern const s8 str_NO_1P_SHOT6[];
+extern const s8 str_NO_EDIT[];
+extern const s8 str_NUM_END[];
+extern const s8 str_N_Y[];
+extern const s8 str_N_Y_0[];
+extern const s8 str_N_Y_1[];
+extern const s8 str_No_12[];
+extern const s8 str_OBJECT_EDIT_2[];
+extern const s8 str_OBJECT_EDIT[];
+extern const s8 str_OBJECT_LOOK[];
+extern const s8 str_OBJECT_TEST[];
+extern const s8 str_OHYA[];
+extern const s8 str_OKIAGARI[];
+extern const s8 str_OKIAGARI_B[];
+extern const s8 str_OKIAGARI_F[];
+extern const s8 str_OKIAGARI_FRONT[];
+extern const s8 str_OKIAGARI_K_L[];
+extern const s8 str_OKIAGARI_K_M[];
+extern const s8 str_OKIAGARI_K_S[];
+extern const s8 str_OKIAGARI_P_L[];
+extern const s8 str_OKIAGARI_P_M[];
+extern const s8 str_OKIAGARI_P_S[];
+extern const s8 str_OKIAGARI_REAR[];
+extern const s8 str_OLC_IX[];
+extern const s8 str_ORO[];
+extern const s8 str_OROMEKA[];
+extern const s8 str_ORO_GIGOKU_G[];
+extern const s8 str_ORO_KISINRIKI[];
+extern const s8 str_ORO_KUBISIME[];
+extern const s8 str_ORO_NIOURIKI[];
+extern const s8 str_ORO_TOMOENAGE[];
+extern const s8 str_ORUMEKA[];
+extern const s8 str_PA[];
+extern const s8 str_PARING_AIR_B[];
+extern const s8 str_PARING_AIR_F[];
+extern const s8 str_PARING_DOWN[];
+extern const s8 str_PARING_HEAD[];
+extern const s8 str_PARING_UP[];
+extern const s8 str_PARTS_FL[];
+extern const s8 str_PARTS_X_H[];
+extern const s8 str_PARTS_Y_H[];
+extern const s8 str_PARTS[];
+extern const s8 str_PATTERN[];
+extern const s8 str_PAT_ST[];
+extern const s8 str_PB[];
+extern const s8 str_PIYO[];
+extern const s8 str_PIYO_n[];
+extern const s8 str_PLAYER[];
+extern const s8 str_PLEF[];
+extern const s8 str_POS_X_H[];
+extern const s8 str_POS_Y_H[];
+extern const s8 str_POW[];
+extern const s8 str_PRESS_ANY_SHOT[];
+extern const s8 str_P_BREAK_AIR_F[];
+extern const s8 str_P_BREAK_AIR_R[];
+extern const s8 str_P_BREAK_DOWN[];
+extern const s8 str_P_BREAK_UP[];
+extern const s8 str_P_BREAK_ZUJOU[];
+extern const s8 str_Pa[];
+extern const s8 str_Q[];
+extern const s8 str_R[];
+extern const s8 str_RAOH[];
+extern const s8 str_REACTION[];
+extern const s8 str_REL_X_H[];
+extern const s8 str_REL_Y_H[];
+extern const s8 str_REVISE_X_H[];
+extern const s8 str_REVISE_Y_H[];
+extern const s8 str_RUCCIA[];
+extern const s8 str_RUSSIA_0[];
+extern const s8 str_RUSSIA_1[];
+extern const s8 str_RUSSIA_2[];
+extern const s8 str_RYU[];
+extern const s8 str_RYU_SEOINAGE[];
+extern const s8 str_RYU_TOMOENAGE[];
+extern const s8 str_R_n[];
+extern const s8 str_S[];
+extern const s8 str_S1[];
+extern const s8 str_S2[];
+extern const s8 str_S3[];
+extern const s8 str_S4[];
+extern const s8 str_S5[];
+extern const s8 str_S6[];
+extern const s8 str_SA[];
+extern const s8 str_SEAN[];
+extern const s8 str_SEAN_BALL_HIT[];
+extern const s8 str_SEAN_TACKLE[];
+extern const s8 str_SELECT[];
+extern const s8 str_SELECT_UP_DOWN[];
+extern const s8 str_SHIMEOTASARE[];
+extern const s8 str_SIZE_X_H[];
+extern const s8 str_SIZE_Y_H[];
+extern const s8 str_SNAKE_FANG[];
+extern const s8 str_SPLASH_M[];
+extern const s8 str_SP_APPEAR_1[];
+extern const s8 str_SP_APPEAR_2[];
+extern const s8 str_SP_APPEAR_3[];
+extern const s8 str_SP_APPEAR_4[];
+extern const s8 str_SP_APPEAR_5[];
+extern const s8 str_SP_APPEAR_6[];
+extern const s8 str_SP_APPEAR_7[];
+extern const s8 str_SP_APPEAR_8[];
+extern const s8 str_SP_AT[];
+extern const s8 str_SP_B_JP_L_K_A[];
+extern const s8 str_SP_B_JP_L_K_B[];
+extern const s8 str_SP_B_JP_L_P_A[];
+extern const s8 str_SP_B_JP_L_P_B[];
+extern const s8 str_SP_B_JP_M_K_A[];
+extern const s8 str_SP_B_JP_M_K_B[];
+extern const s8 str_SP_B_JP_M_P_A[];
+extern const s8 str_SP_B_JP_M_P_B[];
+extern const s8 str_SP_B_JP_S_K_A[];
+extern const s8 str_SP_B_JP_S_K_B[];
+extern const s8 str_SP_B_JP_S_P_A[];
+extern const s8 str_SP_B_JP_S_P_B[];
+extern const s8 str_SP_F_JP_L_K_A[];
+extern const s8 str_SP_F_JP_L_K_B[];
+extern const s8 str_SP_F_JP_L_P_A[];
+extern const s8 str_SP_F_JP_L_P_B[];
+extern const s8 str_SP_F_JP_M_K_A[];
+extern const s8 str_SP_F_JP_M_K_B[];
+extern const s8 str_SP_F_JP_M_P_A[];
+extern const s8 str_SP_F_JP_M_P_B[];
+extern const s8 str_SP_F_JP_S_K_A[];
+extern const s8 str_SP_F_JP_S_K_B[];
+extern const s8 str_SP_F_JP_S_P_A[];
+extern const s8 str_SP_F_JP_S_P_B[];
+extern const s8 str_SP_JUMP_BACK[];
+extern const s8 str_SP_JUMP_FRONT[];
+extern const s8 str_SP_JUMP_JUNBI[];
+extern const s8 str_SP_JUMP_V[];
+extern const s8 str_SP_TECH[];
+extern const s8 str_SP_V_JP_L_K_A[];
+extern const s8 str_SP_V_JP_L_K_B[];
+extern const s8 str_SP_V_JP_L_P_A[];
+extern const s8 str_SP_V_JP_L_P_B[];
+extern const s8 str_SP_V_JP_M_K_A[];
+extern const s8 str_SP_V_JP_M_K_B[];
+extern const s8 str_SP_V_JP_M_P_A[];
+extern const s8 str_SP_V_JP_M_P_B[];
+extern const s8 str_SP_V_JP_S_K_A[];
+extern const s8 str_SP_V_JP_S_K_B[];
+extern const s8 str_SP_V_JP_S_P_A[];
+extern const s8 str_SP_V_JP_S_P_B[];
+extern const s8 str_SP_WIN_1[];
+extern const s8 str_SP_WIN_2[];
+extern const s8 str_SP_WIN_3[];
+extern const s8 str_SP_WIN_4[];
+extern const s8 str_SP_WIN_5[];
+extern const s8 str_SP_WIN_6[];
+extern const s8 str_SP_WIN_7[];
+extern const s8 str_SP_WIN_8[];
+extern const s8 str_STAND_UP[];
+extern const s8 str_S_B_JP_L_K_A[];
+extern const s8 str_S_B_JP_L_K_B[];
+extern const s8 str_S_B_JP_L_P_A[];
+extern const s8 str_S_B_JP_L_P_B[];
+extern const s8 str_S_B_JP_M_K_A[];
+extern const s8 str_S_B_JP_M_K_B[];
+extern const s8 str_S_B_JP_M_P_A[];
+extern const s8 str_S_B_JP_M_P_B[];
+extern const s8 str_S_B_JP_S_K_A[];
+extern const s8 str_S_B_JP_S_K_B[];
+extern const s8 str_S_B_JP_S_P_A[];
+extern const s8 str_S_B_JP_S_P_B[];
+extern const s8 str_S_F_JP_L_K_A[];
+extern const s8 str_S_F_JP_L_K_B[];
+extern const s8 str_S_F_JP_L_P_A[];
+extern const s8 str_S_F_JP_L_P_B[];
+extern const s8 str_S_F_JP_M_K_A[];
+extern const s8 str_S_F_JP_M_K_B[];
+extern const s8 str_S_F_JP_M_P_A[];
+extern const s8 str_S_F_JP_M_P_B[];
+extern const s8 str_S_F_JP_S_K_A[];
+extern const s8 str_S_F_JP_S_K_B[];
+extern const s8 str_S_F_JP_S_P_A[];
+extern const s8 str_S_F_JP_S_P_B[];
+extern const s8 str_S_HANEAGARI[];
+extern const s8 str_S_JUMP_BACK[];
+extern const s8 str_S_JUMP_FRONT[];
+extern const s8 str_S_JUMP_V[];
+extern const s8 str_S_KICK_A[];
+extern const s8 str_S_KICK_B[];
+extern const s8 str_S_KICK_C[];
+extern const s8 str_S_PUNCH_A[];
+extern const s8 str_S_PUNCH_B[];
+extern const s8 str_S_PUNCH_C[];
+extern const s8 str_S_V_JP_L_K_A[];
+extern const s8 str_S_V_JP_L_K_B[];
+extern const s8 str_S_V_JP_L_P_A[];
+extern const s8 str_S_V_JP_L_P_B[];
+extern const s8 str_S_V_JP_M_K_A[];
+extern const s8 str_S_V_JP_M_K_B[];
+extern const s8 str_S_V_JP_M_P_A[];
+extern const s8 str_S_V_JP_M_P_B[];
+extern const s8 str_S_V_JP_S_K_A[];
+extern const s8 str_S_V_JP_S_K_B[];
+extern const s8 str_S_V_JP_S_P_A[];
+extern const s8 str_S_V_JP_S_P_B[];
+extern const s8 str_TATAKI_AIR[];
+extern const s8 str_TATAKI_L[];
+extern const s8 str_TATAKI_M[];
+extern const s8 str_TATAKI_S[];
+extern const s8 str_TATAKI_SP[];
+extern const s8 str_TATAKI_V_L[];
+extern const s8 str_TATAKI_V_M[];
+extern const s8 str_TATAKI_V_S[];
+extern const s8 str_TATAKI_V_SP[];
+extern const s8 str_TATI_DENGEKI_L[];
+extern const s8 str_TATI_DENGEKI_M[];
+extern const s8 str_TATI_DENGEKI_P[];
+extern const s8 str_TATI_DENGEKI_S[];
+extern const s8 str_TATI_MOE_L[];
+extern const s8 str_TATI_MOE_M[];
+extern const s8 str_TATI_MOE_S[];
+extern const s8 str_TATI_MOE_SP[];
+extern const s8 str_TATI_TOUKETU_L[];
+extern const s8 str_TATI_TOUKETU_M[];
+extern const s8 str_TATI_TOUKETU_P[];
+extern const s8 str_TATI_TOUKETU_S[];
+extern const s8 str_TATUMAKIZANKU[];
+extern const s8 str_TOMOE_ORO[];
+extern const s8 str_TOMOE_RYU[];
+extern const s8 str_TOUKETSU_A[];
+extern const s8 str_TRUNK[];
+extern const s8 str_TTKI_V_AIR[];
+extern const s8 str_TUKAMIHAZUSARE[];
+extern const s8 str_TUKAMIHAZUSI[];
+extern const s8 str_TUKAMIKAKARI_A[];
+extern const s8 str_TUKAMIKAKARI_B[];
+extern const s8 str_TUKAMIKAKARI_C[];
+extern const s8 str_TUKAMIKAKARI_D[];
+extern const s8 str_TUKAMIKAKARI_E[];
+extern const s8 str_TUKAMIKAKARI_F[];
+extern const s8 str_TUKAMI_AIR_A[];
+extern const s8 str_TUKAMI_AIR_B[];
+extern const s8 str_TUKAMI_AIR_C[];
+extern const s8 str_TUKAMI_AIR_D[];
+extern const s8 str_TUKAMI_AIR_E[];
+extern const s8 str_TUKAMI_AIR_F[];
+extern const s8 str_UKEMI_MOVE_F[];
+extern const s8 str_UKEMI_MOVE_R[];
+extern const s8 str_UNION[];
+extern const s8 str_UPPER[];
+extern const s8 str_UPPER_L[];
+extern const s8 str_UPPER_M[];
+extern const s8 str_UPPER_S[];
+extern const s8 str_UPPER_SP[];
+extern const s8 str_UP_P_GUARD_K_L[];
+extern const s8 str_UP_P_GUARD_K_M[];
+extern const s8 str_UP_P_GUARD_K_S[];
+extern const s8 str_UP_P_GUARD_P_L[];
+extern const s8 str_UP_P_GUARD_P_M[];
+extern const s8 str_UP_P_GUARD_P_S[];
+extern const s8 str_URIEN[];
+extern const s8 str_USEMJ[];
+extern const s8 str_VS_ID[];
+extern const s8 str_V_JUMP_K_L_A[];
+extern const s8 str_V_JUMP_K_L_B[];
+extern const s8 str_V_JUMP_K_M_A[];
+extern const s8 str_V_JUMP_K_M_B[];
+extern const s8 str_V_JUMP_K_S_A[];
+extern const s8 str_V_JUMP_K_S_B[];
+extern const s8 str_V_JUMP_P_L_A[];
+extern const s8 str_V_JUMP_P_L_B[];
+extern const s8 str_V_JUMP_P_M_A[];
+extern const s8 str_V_JUMP_P_M_B[];
+extern const s8 str_V_JUMP_P_S_A[];
+extern const s8 str_V_JUMP_P_S_B[];
+extern const s8 str_WAIT[];
+extern const s8 str_WALK_END[];
+extern const s8 str_WCA[];
+extern const s8 str_WCA_IX[];
+extern const s8 str_WIN_1[];
+extern const s8 str_WIN_2[];
+extern const s8 str_WIN_3[];
+extern const s8 str_WIN_4[];
+extern const s8 str_WIN_5[];
+extern const s8 str_WIN_6[];
+extern const s8 str_WIN_7[];
+extern const s8 str_WIN_8[];
+extern const s8 str_WORK_EMPTY[];
+extern const s8 str_YANG[];
+extern const s8 str_YES_2P_SHOT6[];
+extern const s8 str_YOKE_PAT[];
+extern const s8 str_YOKE_TYPE[];
+extern const s8 str_YOKOYAMA[];
+extern const s8 str_YOSHIZUMI[];
+extern const s8 str_YUN[];
+extern const s8 str_YUN_2[];
+extern const s8 str_YUN_HIZAGERI[];
+extern const s8 str_YUN_MONKEY_F[];
+extern const s8 str_YU[];
+extern const s8 str_ZANNEN_1[];
+extern const s8 str_ZANNEN_2[];
+extern const s8 str_ZANNEN_3[];
+extern const s8 str_ZANNEN_4[];
+extern const s8 str_ZANNEN_5[];
+extern const s8 str_ZANNEN_6[];
+extern const s8 str_ZANNEN_7[];
+extern const s8 str_ZANNEN_8[];
+extern const s8 str_ZOKUSEI[];
+extern const s8 str_ZU_FLAG[];
+extern const s8 str_a[];
+extern const s8 str_a_2[];
+extern const s8 str_c[];
+extern const s8 str_c_2[];
+extern const s8 str_d[];
+extern const s8 str_d_2[];
+extern const s8 str_empty[];
+extern const s8 str_empty_10[];
+extern const s8 str_empty_2[];
+extern const s8 str_empty_3[];
+extern const s8 str_empty_4[];
+extern const s8 str_empty_5[];
+extern const s8 str_empty_6[];
+extern const s8 str_empty_7[];
 extern const char str_empty_8[];
-extern const char str_empty_9[];
-extern const char str_h[];
-extern const char str_h_2[];
-extern const char str_hsA[];
-extern const char str_hsC[];
-extern const char str_huA[];
-extern const char str_m[];
-extern const char str_m_2[];
-extern const char str_n[];
-extern const char str_n_2[];
-extern const char str_n_3[];
-extern const char str_n_4[];
-extern const char str_nmA[];
-extern const char str_nmC[];
-extern const char str_paA[];
-extern const char str_r[];
-extern const char str_r_2[];
-extern const char str_s[];
-extern const char str_s_2[];
-extern const char str_saA[];
-extern const char str_saC[];
-extern const char str_sl_00[];
-extern const char str_sl_10[];
-extern const char str_sl_12[];
-extern const char str_sl_20[];
-extern const char str_sl_22[];
-extern const char str_sl_30[];
-extern const char str_sl_32[];
-extern const char str_sl_40[];
-extern const char str_sl_42[];
-extern const char str_sl_44[];
-extern const char str_sl_50[];
-extern const char str_sl_52[];
-extern const char str_sl_54[];
-extern const char str_sl_60[];
-extern const char str_sl_62[];
-extern const char str_sl_64[];
-extern const char str_sl_70[];
-extern const char str_sl_80[];
-extern const char str_sl_82[];
-extern const char str_sl_90[];
+extern const s8 str_empty_9[];
+extern const s8 str_h[];
+extern const s8 str_h_2[];
+extern const s8 str_hsA[];
+extern const s8 str_hsC[];
+extern const s8 str_huA[];
+extern const s8 str_m[];
+extern const s8 str_m_2[];
+extern const s8 str_n[];
+extern const s8 str_n_2[];
+extern const s8 str_n_3[];
+extern const s8 str_n_4[];
+extern const s8 str_nmA[];
+extern const s8 str_nmC[];
+extern const s8 str_paA[];
+extern const s8 str_r[];
+extern const s8 str_r_2[];
+extern const s8 str_s[];
+extern const s8 str_s_2[];
+extern const s8 str_saA[];
+extern const s8 str_saC[];
+extern const s8 str_sl_00[];
+extern const s8 str_sl_10[];
+extern const s8 str_sl_12[];
+extern const s8 str_sl_20[];
+extern const s8 str_sl_22[];
+extern const s8 str_sl_30[];
+extern const s8 str_sl_32[];
+extern const s8 str_sl_40[];
+extern const s8 str_sl_42[];
+extern const s8 str_sl_44[];
+extern const s8 str_sl_50[];
+extern const s8 str_sl_52[];
+extern const s8 str_sl_54[];
+extern const s8 str_sl_60[];
+extern const s8 str_sl_62[];
+extern const s8 str_sl_64[];
+extern const s8 str_sl_70[];
+extern const s8 str_sl_80[];
+extern const s8 str_sl_82[];
+extern const s8 str_sl_90[];
 extern const u32 afc_char_table[];
 extern const u32 ag_face_panel_table[];
 extern const u32 alex_atca[];
@@ -7744,8 +7744,8 @@ void screen_work_clear_all(void)
 
 /* 02000924 */
 const char* dbg_sign_str[2] = {
-    (const char*)&dbg_wca_str[4],
-    (const char*)&dbg_wca_str[8],
+    &dbg_wca_str[4],
+    &dbg_wca_str[8],
 };
 /* 0200092C */
 s16 dbg_rgb_preset_tbl[8][3] = {
@@ -7753,1556 +7753,1556 @@ s16 dbg_rgb_preset_tbl[8][3] = {
 };
 /* 0200095C */
 TM_STRING dbg_menu_str[15] = {
-    { 0xD, 2, 2, (void*)str_OBJECT_TEST },
-    { 0xA, 4, 2, (void*)str_BG_SELECT },
-    { 0xA, 5, 2, (void*)str_OBJECT_LOOK },
-    { 0xA, 6, 2, (void*)str_OBJECT_EDIT },
-    { 0xA, 7, 2, (void*)str_OBJECT_EDIT_2 },
-    { 0xA, 8, 2, (void*)str_HIT },
-    { 0xA, 9, 2, (void*)str_ALL_CHARACTER },
-    { 0xA, 0xA, 2, (void*)str_PARTS },
-    { 0xA, 0xB, 2, (void*)str_YOKOYAMA },
-    { 0xA, 0xC, 2, (void*)str_NAKAI },
-    { 0xA, 0xD, 2, (void*)str_YOSHIZUMI },
-    { 0xA, 0xE, 2, (void*)str_YU },
-    { 0xA, 0xF, 2, (void*)str_RAOH },
-    { 0xA, 0x10, 2, (void*)str_INE },
-    { 0xA, 0x11, 2, (void*)str_OHYA },
+    { 0xD, 2, 2, str_OBJECT_TEST },
+    { 0xA, 4, 2, str_BG_SELECT },
+    { 0xA, 5, 2, str_OBJECT_LOOK },
+    { 0xA, 6, 2, str_OBJECT_EDIT },
+    { 0xA, 7, 2, str_OBJECT_EDIT_2 },
+    { 0xA, 8, 2, str_HIT },
+    { 0xA, 9, 2, str_ALL_CHARACTER },
+    { 0xA, 0xA, 2, str_PARTS },
+    { 0xA, 0xB, 2, str_YOKOYAMA },
+    { 0xA, 0xC, 2, str_NAKAI },
+    { 0xA, 0xD, 2, str_YOSHIZUMI },
+    { 0xA, 0xE, 2, str_YU },
+    { 0xA, 0xF, 2, str_RAOH },
+    { 0xA, 0x10, 2, str_INE },
+    { 0xA, 0x11, 2, str_OHYA },
 };
 /* 02000A10 */
 TM_STRING dbg_select_exit_str[2] = {
-    { 0x11, 3, 2, (void*)str_SELECT_UP_DOWN },
-    { 0x11, 4, 2, (void*)str_EXIT_1P_2P_START },
+    { 0x11, 3, 2, str_SELECT_UP_DOWN },
+    { 0x11, 4, 2, str_EXIT_1P_2P_START },
 };
 /* 02000A28 */
 TM_STRING dbg_obj_info_str[10] = {
-    { 1, 3, 2, (void*)str_PLAYER },
-    { 1, 4, 2, (void*)str_ALL },
-    { 1, 6, 2, (void*)str_MOTION },
-    { 1, 8, 2, (void*)str_PATTERN },
-    { 1, 9, 2, (void*)str_INTERRUT },
-    { 1, 0xA, 2, (void*)str_CODE_H },
-    { 1, 0xB, 2, (void*)str_FLIP },
-    { 1, 0xC, 2, (void*)str_FLIP_ED },
-    { 1, 0xD, 2, (void*)str_POS_X_H },
-    { 1, 0xE, 2, (void*)str_POS_Y_H },
+    { 1, 3, 2, str_PLAYER },
+    { 1, 4, 2, str_ALL },
+    { 1, 6, 2, str_MOTION },
+    { 1, 8, 2, str_PATTERN },
+    { 1, 9, 2, str_INTERRUT },
+    { 1, 0xA, 2, str_CODE_H },
+    { 1, 0xB, 2, str_FLIP },
+    { 1, 0xC, 2, str_FLIP_ED },
+    { 1, 0xD, 2, str_POS_X_H },
+    { 1, 0xE, 2, str_POS_Y_H },
 };
 /* 02000AA0 */
 TM_STRING dbg_obj_rel_str[3] = {
-    { 1, 0xF, 2, (void*)str_REL_X_H },
-    { 1, 0x10, 2, (void*)str_REL_Y_H },
-    { 1, 0x11, 2, (void*)str_CURRENT },
+    { 1, 0xF, 2, str_REL_X_H },
+    { 1, 0x10, 2, str_REL_Y_H },
+    { 1, 0x11, 2, str_CURRENT },
 };
 /* 02000AC4 */
 TM_STRING dbg_all_char_str[7] = {
-    { 0xF, 1, 2, (void*)str_ALL_CHARACTER },
-    { 1, 5, 2, (void*)str_H_n },
-    { 1, 7, 2, (void*)str_H_n },
-    { 4, 0xB, 2, (void*)str_GROUP },
-    { 4, 0xC, 2, (void*)str_R_n },
-    { 4, 0xD, 2, (void*)str_G },
-    { 4, 0xE, 2, (void*)str_B },
+    { 0xF, 1, 2, str_ALL_CHARACTER },
+    { 1, 5, 2, str_H_n },
+    { 1, 7, 2, str_H_n },
+    { 4, 0xB, 2, str_GROUP },
+    { 4, 0xC, 2, str_R_n },
+    { 4, 0xD, 2, str_G },
+    { 4, 0xE, 2, str_B },
 };
 /* 02000B18 */
 TM_STRING dbg_edit_num_str[4] = {
-    { 1, 0x12, 2, (void*)str_EDIT_NUM },
-    { 1, 0x13, 2, (void*)str_NUM_END },
-    { 1, 0x14, 2, (void*)str_EDIT_INT },
-    { 1, 0x15, 2, (void*)str_INT_END },
+    { 1, 0x12, 2, str_EDIT_NUM },
+    { 1, 0x13, 2, str_NUM_END },
+    { 1, 0x14, 2, str_EDIT_INT },
+    { 1, 0x15, 2, str_INT_END },
 };
 /* 02000B48 */
 TM_STRING dbg_parts_info_str[17] = {
-    { 1, 3, 2, (void*)str_PLAYER },
-    { 1, 4, 2, (void*)str_ALL },
-    { 1, 6, 2, (void*)str_MOTION },
-    { 1, 8, 2, (void*)str_PATTERN },
-    { 1, 9, 2, (void*)str_INTERRUT },
-    { 1, 0xA, 2, (void*)str_CODE_H },
-    { 1, 0xB, 2, (void*)str_FLIP },
-    { 1, 0xC, 2, (void*)str_FLIP_ED },
-    { 1, 0xD, 2, (void*)str_CURRENT_n },
-    { 1, 0xE, 2, (void*)str_PARTS_X_H },
-    { 1, 0xF, 2, (void*)str_PARTS_Y_H },
-    { 1, 0x10, 2, (void*)str_PARTS_FL },
-    { 1, 0x11, 2, (void*)str_OLC_IX },
-    { 1, 0x12, 2, (void*)str_IX_1 },
-    { 1, 0x13, 2, (void*)str_IX_2 },
-    { 1, 0x14, 2, (void*)str_IX_3 },
-    { 1, 0x15, 2, (void*)str_IX_4 },
+    { 1, 3, 2, str_PLAYER },
+    { 1, 4, 2, str_ALL },
+    { 1, 6, 2, str_MOTION },
+    { 1, 8, 2, str_PATTERN },
+    { 1, 9, 2, str_INTERRUT },
+    { 1, 0xA, 2, str_CODE_H },
+    { 1, 0xB, 2, str_FLIP },
+    { 1, 0xC, 2, str_FLIP_ED },
+    { 1, 0xD, 2, str_CURRENT_n },
+    { 1, 0xE, 2, str_PARTS_X_H },
+    { 1, 0xF, 2, str_PARTS_Y_H },
+    { 1, 0x10, 2, str_PARTS_FL },
+    { 1, 0x11, 2, str_OLC_IX },
+    { 1, 0x12, 2, str_IX_1 },
+    { 1, 0x13, 2, str_IX_2 },
+    { 1, 0x14, 2, str_IX_3 },
+    { 1, 0x15, 2, str_IX_4 },
 };
 /* 02000C14 */
 TM_STRING dbg_rec_menu_str[3] = {
-    { 0x1B, 3, 6, (void*)str_DELETE_ALL_SH4 },
-    { 0x1B, 4, 6, (void*)str_1DATA_SH5 },
-    { 0x1B, 5, 6, (void*)str_CANCEL_SH6 },
+    { 0x1B, 3, 6, str_DELETE_ALL_SH4 },
+    { 0x1B, 4, 6, str_1DATA_SH5 },
+    { 0x1B, 5, 6, str_CANCEL_SH6 },
 };
 /* 02000C38 */
 TM_STRING dbg_rec_clear_str[3] = {
-    { 0x1B, 3, 6, (void*)str_n },
-    { 0x1B, 4, 6, (void*)str_n },
-    { 0x1B, 5, 6, (void*)str_empty },
+    { 0x1B, 3, 6, str_n },
+    { 0x1B, 4, 6, str_n },
+    { 0x1B, 5, 6, str_empty },
 };
 /* 02000C5C */
 TM_STRING dbg_rec_nodata_str[2] = {
-    { 0x1B, 3, 6, (void*)str_NO_EDIT },
-    { 0x1B, 4, 6, (void*)str_DATA_NOTHING },
+    { 0x1B, 3, 6, str_NO_EDIT },
+    { 0x1B, 4, 6, str_DATA_NOTHING },
 };
 /* 02000C74 */
 TM_STRING dbg_hit_size_str[18] = {
-    { 1, 0xF, 2, (void*)str_REVISE_X_H },
-    { 1, 0x10, 2, (void*)str_SIZE_X_H },
-    { 1, 0x11, 2, (void*)str_REVISE_Y_H },
-    { 1, 0x12, 2, (void*)str_SIZE_Y_H },
-    { 1, 0x14, 2, (void*)str_IX_000 },
-    { 1, 0x15, 2, (void*)str_CR_1P },
-    { 1, 0x17, 2, (void*)str_MF },
-    { 1, 0x18, 2, (void*)str_M_B },
-    { 8, 0x14, 2, (void*)str_BOD_000 },
-    { 8, 0x15, 2, (void*)str_BHA_000 },
-    { 8, 0x16, 2, (void*)str_HAN_000 },
-    { 8, 0x17, 2, (void*)str_CAT_000 },
-    { 8, 0x18, 2, (void*)str_CAU_000 },
-    { 8, 0x19, 2, (void*)str_ATT_000 },
-    { 8, 0x1A, 2, (void*)str_HOS_000 },
-    { 0xF, 0x19, 2, (void*)str_KOC_IX_PT_Nix_n },
-    { 0xF, 0x1A, 2, (void*)str_KOC_IX_PT_Nix_n },
-    { 0xF, 0x1B, 2, (void*)str_KOC_IX_PT_Nix },
+    { 1, 0xF, 2, str_REVISE_X_H },
+    { 1, 0x10, 2, str_SIZE_X_H },
+    { 1, 0x11, 2, str_REVISE_Y_H },
+    { 1, 0x12, 2, str_SIZE_Y_H },
+    { 1, 0x14, 2, str_IX_000 },
+    { 1, 0x15, 2, str_CR_1P },
+    { 1, 0x17, 2, str_MF },
+    { 1, 0x18, 2, str_M_B },
+    { 8, 0x14, 2, str_BOD_000 },
+    { 8, 0x15, 2, str_BHA_000 },
+    { 8, 0x16, 2, str_HAN_000 },
+    { 8, 0x17, 2, str_CAT_000 },
+    { 8, 0x18, 2, str_CAU_000 },
+    { 8, 0x19, 2, str_ATT_000 },
+    { 8, 0x1A, 2, str_HOS_000 },
+    { 0xF, 0x19, 2, str_KOC_IX_PT_Nix_n },
+    { 0xF, 0x1A, 2, str_KOC_IX_PT_Nix_n },
+    { 0xF, 0x1B, 2, str_KOC_IX_PT_Nix },
 };
 /* 02000D4C */
 TM_STRING dbg_hit_part_str[15] = {
-    { 0x28, 0xC, 2, (void*)str_HEAD },
-    { 0x28, 0xD, 2, (void*)str_BREAST },
-    { 0x28, 0xE, 2, (void*)str_TRUNK },
-    { 0x28, 0xF, 2, (void*)str_LEG },
-    { 0x28, 0x10, 2, (void*)str_HAND },
-    { 0x28, 0x11, 2, (void*)str_HAND },
-    { 0x28, 0x12, 2, (void*)str_HAND },
-    { 0x28, 0x13, 2, (void*)str_HAND },
-    { 0x28, 0x14, 2, (void*)str_CATCH_n },
-    { 0x28, 0x15, 2, (void*)str_CAUGHT_n },
-    { 0x28, 0x16, 2, (void*)str_ATT },
-    { 0x28, 0x17, 2, (void*)str_ATT },
-    { 0x28, 0x18, 2, (void*)str_ATT_2 },
-    { 0x28, 0x19, 2, (void*)str_ATT_2 },
-    { 0x28, 0x1A, 2, (void*)str_HOSEI },
+    { 0x28, 0xC, 2, str_HEAD },
+    { 0x28, 0xD, 2, str_BREAST },
+    { 0x28, 0xE, 2, str_TRUNK },
+    { 0x28, 0xF, 2, str_LEG },
+    { 0x28, 0x10, 2, str_HAND },
+    { 0x28, 0x11, 2, str_HAND },
+    { 0x28, 0x12, 2, str_HAND },
+    { 0x28, 0x13, 2, str_HAND },
+    { 0x28, 0x14, 2, str_CATCH_n },
+    { 0x28, 0x15, 2, str_CAUGHT_n },
+    { 0x28, 0x16, 2, str_ATT },
+    { 0x28, 0x17, 2, str_ATT },
+    { 0x28, 0x18, 2, str_ATT_2 },
+    { 0x28, 0x19, 2, str_ATT_2 },
+    { 0x28, 0x1A, 2, str_HOSEI },
 };
 /* 02000E00 */
 TM_STRING dbg_work_empty_str[2] = {
-    { 0xF, 5, 8, (void*)str_WORK_EMPTY },
-    { 0xF, 7, 8, (void*)str_PRESS_ANY_SHOT },
+    { 0xF, 5, 8, str_WORK_EMPTY },
+    { 0xF, 7, 8, str_PRESS_ANY_SHOT },
 };
 /* 02000E18 */
 TM_STRING dbg_blank4_str[4] = {
-    { 0xB, 5, 2, (void*)str_n_2 },
-    { 0xB, 6, 2, (void*)str_n_2 },
-    { 0xB, 7, 2, (void*)str_n_2 },
-    { 0xB, 8, 2, (void*)str_empty_2 },
+    { 0xB, 5, 2, str_n_2 },
+    { 0xB, 6, 2, str_n_2 },
+    { 0xB, 7, 2, str_n_2 },
+    { 0xB, 8, 2, str_empty_2 },
 };
 /* 02000E48 */
 TM_STRING dbg_exit_ok_str[3] = {
-    { 0xE, 5, 2, (void*)str_EXIT_OK },
-    { 0xB, 7, 2, (void*)str_YES_2P_SHOT6 },
-    { 0xB, 8, 2, (void*)str_NO_1P_SHOT6 },
+    { 0xE, 5, 2, str_EXIT_OK },
+    { 0xB, 7, 2, str_YES_2P_SHOT6 },
+    { 0xB, 8, 2, str_NO_1P_SHOT6 },
 };
 /* 02000E6C */
 TM_STRING dbg_cg_head_str[6] = {
-    { 0x1B, 3, 2, (void*)str_CG_CTR },
-    { 0x1B, 4, 2, (void*)str_CG_TYPE },
-    { 0x1B, 5, 2, (void*)str_CG_SE },
-    { 0x1B, 6, 2, (void*)str_CG_FLIP },
-    { 0x1B, 7, 2, (void*)str_CG_OLC_IX },
-    { 0x1B, 8, 2, (void*)str_CG_NUMBER },
+    { 0x1B, 3, 2, str_CG_CTR },
+    { 0x1B, 4, 2, str_CG_TYPE },
+    { 0x1B, 5, 2, str_CG_SE },
+    { 0x1B, 6, 2, str_CG_FLIP },
+    { 0x1B, 7, 2, str_CG_OLC_IX },
+    { 0x1B, 8, 2, str_CG_NUMBER },
 };
 /* 02000EB4 */
 TM_STRING dbg_cg_att_str[6] = {
-    { 0x1B, 0xA, 2, (void*)str_CG_ATT_IX },
-    { 0x1B, 0xB, 2, (void*)str_CG_HIT_IX },
-    { 0x1B, 0xC, 2, (void*)str_CG_EXTDAT },
-    { 0x1B, 0xD, 2, (void*)str_CG_CANCEL },
-    { 0x1B, 0xE, 2, (void*)str_CG_EFFECT },
-    { 0x1B, 0xF, 2, (void*)str_CG_EFTYPE },
+    { 0x1B, 0xA, 2, str_CG_ATT_IX },
+    { 0x1B, 0xB, 2, str_CG_HIT_IX },
+    { 0x1B, 0xC, 2, str_CG_EXTDAT },
+    { 0x1B, 0xD, 2, str_CG_CANCEL },
+    { 0x1B, 0xE, 2, str_CG_EFFECT },
+    { 0x1B, 0xF, 2, str_CG_EFTYPE },
 };
 /* 02000EFC */
 TM_STRING dbg_cg_rival_str[4] = {
-    { 0x1B, 0x10, 2, (void*)str_CG_RIVAL },
-    { 0x1B, 0x11, 2, (void*)str_CG_ADD_XY },
-    { 0x1B, 0x12, 2, (void*)str_CG_NIX },
-    { 0x1B, 0x13, 2, (void*)str_CG_STATUS },
+    { 0x1B, 0x10, 2, str_CG_RIVAL },
+    { 0x1B, 0x11, 2, str_CG_ADD_XY },
+    { 0x1B, 0x12, 2, str_CG_NIX },
+    { 0x1B, 0x13, 2, str_CG_STATUS },
 };
 /* 02000F2C */
 TM_STRING dbg_cgd_info_str[8] = {
-    { 0x1B, 2, 2, (void*)str_CGD_TYPE },
-    { 0x1B, 3, 2, (void*)str_PAT_ST },
-    { 0x1B, 4, 2, (void*)str_KIND_WAZA },
-    { 0x1B, 5, 2, (void*)str_HIT_RANGE },
-    { 0x1B, 6, 2, (void*)str_YOKE_TYPE },
-    { 0x1B, 7, 2, (void*)str_YOKE_PAT },
-    { 0x1B, 8, 2, (void*)str_SP_TECH },
-    { 0x1B, 9, 2, (void*)str_WCA_IX },
+    { 0x1B, 2, 2, str_CGD_TYPE },
+    { 0x1B, 3, 2, str_PAT_ST },
+    { 0x1B, 4, 2, str_KIND_WAZA },
+    { 0x1B, 5, 2, str_HIT_RANGE },
+    { 0x1B, 6, 2, str_YOKE_TYPE },
+    { 0x1B, 7, 2, str_YOKE_PAT },
+    { 0x1B, 8, 2, str_SP_TECH },
+    { 0x1B, 9, 2, str_WCA_IX },
 };
 /* 02000F8C */
 TM_STRING dbg_att_data_str[21] = {
-    { 0x1B, 2, 2, (void*)str_ATT_IX },
-    { 0x1B, 3, 2, (void*)str_REACTION },
-    { 0x1B, 4, 2, (void*)str_MKH_IX },
-    { 0x1B, 5, 2, (void*)str_DIP },
-    { 0x1B, 6, 2, (void*)str_HISS },
-    { 0x1B, 7, 2, (void*)str_DIR },
-    { 0x1B, 8, 2, (void*)str_GUARD },
-    { 0x1B, 9, 2, (void*)str_POW },
-    { 0x1B, 0xA, 2, (void*)str_IMPACT },
-    { 0x1B, 0xB, 2, (void*)str_PIYO_n },
-    { 0x1B, 0xC, 2, (void*)str_NG_TYPE },
-    { 0x1B, 0xD, 2, (void*)str_HS_ME },
-    { 0x1B, 0xE, 2, (void*)str_HS_YOU },
-    { 0x1B, 0xF, 2, (void*)str_ZU_FLAG },
-    { 0x1B, 0x10, 2, (void*)str_ZOKUSEI },
-    { 0x1B, 0x11, 2, (void*)str_AT_LEVEL },
-    { 0x1B, 0x12, 2, (void*)str_ADD_ARTS },
-    { 0x1B, 0x13, 2, (void*)str_BUTT_TYPE },
-    { 0x1B, 0x14, 2, (void*)str_BUTT_PAT },
-    { 0x1B, 0x15, 2, (void*)str_DIR_ATT },
-    { 0x1B, 0x16, 2, (void*)str_VS_ID },
+    { 0x1B, 2, 2, str_ATT_IX },
+    { 0x1B, 3, 2, str_REACTION },
+    { 0x1B, 4, 2, str_MKH_IX },
+    { 0x1B, 5, 2, str_DIP },
+    { 0x1B, 6, 2, str_HISS },
+    { 0x1B, 7, 2, str_DIR },
+    { 0x1B, 8, 2, str_GUARD },
+    { 0x1B, 9, 2, str_POW },
+    { 0x1B, 0xA, 2, str_IMPACT },
+    { 0x1B, 0xB, 2, str_PIYO_n },
+    { 0x1B, 0xC, 2, str_NG_TYPE },
+    { 0x1B, 0xD, 2, str_HS_ME },
+    { 0x1B, 0xE, 2, str_HS_YOU },
+    { 0x1B, 0xF, 2, str_ZU_FLAG },
+    { 0x1B, 0x10, 2, str_ZOKUSEI },
+    { 0x1B, 0x11, 2, str_AT_LEVEL },
+    { 0x1B, 0x12, 2, str_ADD_ARTS },
+    { 0x1B, 0x13, 2, str_BUTT_TYPE },
+    { 0x1B, 0x14, 2, str_BUTT_PAT },
+    { 0x1B, 0x15, 2, str_DIR_ATT },
+    { 0x1B, 0x16, 2, str_VS_ID },
 };
 /* 02001088 */
 TM_STRING dbg_hud_clr_str[26] = {
-    { 0x1B, 2, 2, (void*)str_n_3 },
-    { 0x1B, 3, 2, (void*)str_n_3 },
-    { 0x1B, 4, 2, (void*)str_n_3 },
-    { 0x1B, 5, 2, (void*)str_n_3 },
-    { 0x1B, 6, 2, (void*)str_n_3 },
-    { 0x1B, 7, 2, (void*)str_n_3 },
-    { 0x1B, 8, 2, (void*)str_n_3 },
-    { 0x1B, 9, 2, (void*)str_n_3 },
-    { 0x1B, 0xA, 2, (void*)str_n_3 },
-    { 0x1B, 0xB, 2, (void*)str_n_3 },
-    { 0x1B, 0xC, 2, (void*)str_n_3 },
-    { 0x1B, 0xD, 2, (void*)str_n_3 },
-    { 0x1B, 0xE, 2, (void*)str_n_3 },
-    { 0x1B, 0xF, 2, (void*)str_n_3 },
-    { 0x1B, 0x10, 2, (void*)str_n_3 },
-    { 0x1B, 0x11, 2, (void*)str_n_3 },
-    { 0x1B, 0x12, 2, (void*)str_n_3 },
-    { 0x1B, 0x13, 2, (void*)str_n_3 },
-    { 0x1B, 0x14, 2, (void*)str_n_3 },
-    { 0x1B, 0x15, 2, (void*)str_n_3 },
-    { 0x1B, 0x16, 2, (void*)str_n_3 },
-    { 0x1B, 0x17, 2, (void*)str_n_3 },
-    { 0x1B, 0x18, 2, (void*)str_n_3 },
-    { 0x1B, 0x19, 2, (void*)str_n_3 },
-    { 0x1B, 0x1A, 2, (void*)str_n_3 },
-    { 0x1B, 0x1B, 2, (void*)str_empty_3 },
+    { 0x1B, 2, 2, str_n_3 },
+    { 0x1B, 3, 2, str_n_3 },
+    { 0x1B, 4, 2, str_n_3 },
+    { 0x1B, 5, 2, str_n_3 },
+    { 0x1B, 6, 2, str_n_3 },
+    { 0x1B, 7, 2, str_n_3 },
+    { 0x1B, 8, 2, str_n_3 },
+    { 0x1B, 9, 2, str_n_3 },
+    { 0x1B, 0xA, 2, str_n_3 },
+    { 0x1B, 0xB, 2, str_n_3 },
+    { 0x1B, 0xC, 2, str_n_3 },
+    { 0x1B, 0xD, 2, str_n_3 },
+    { 0x1B, 0xE, 2, str_n_3 },
+    { 0x1B, 0xF, 2, str_n_3 },
+    { 0x1B, 0x10, 2, str_n_3 },
+    { 0x1B, 0x11, 2, str_n_3 },
+    { 0x1B, 0x12, 2, str_n_3 },
+    { 0x1B, 0x13, 2, str_n_3 },
+    { 0x1B, 0x14, 2, str_n_3 },
+    { 0x1B, 0x15, 2, str_n_3 },
+    { 0x1B, 0x16, 2, str_n_3 },
+    { 0x1B, 0x17, 2, str_n_3 },
+    { 0x1B, 0x18, 2, str_n_3 },
+    { 0x1B, 0x19, 2, str_n_3 },
+    { 0x1B, 0x1A, 2, str_n_3 },
+    { 0x1B, 0x1B, 2, str_empty_3 },
 };
 /* 020011C0 */
 TM_STRING dbg_hud_clr_mid_str[6] = {
-    { 0x1B, 0xE, 2, (void*)str_n_3 },
-    { 0x1B, 0xF, 2, (void*)str_n_3 },
-    { 0x1B, 0x10, 2, (void*)str_n_3 },
-    { 0x1B, 0x11, 2, (void*)str_n_3 },
-    { 0x1B, 0x12, 2, (void*)str_n_3 },
-    { 0x1B, 0x13, 2, (void*)str_n_3 },
+    { 0x1B, 0xE, 2, str_n_3 },
+    { 0x1B, 0xF, 2, str_n_3 },
+    { 0x1B, 0x10, 2, str_n_3 },
+    { 0x1B, 0x11, 2, str_n_3 },
+    { 0x1B, 0x12, 2, str_n_3 },
+    { 0x1B, 0x13, 2, str_n_3 },
 };
 /* 02001208 */
 TM_STRING dbg_hud_clr_low_str[9] = {
-    { 0x1B, 0x14, 2, (void*)str_n_3 },
-    { 0x1B, 0x15, 2, (void*)str_n_3 },
-    { 0x1B, 0x16, 2, (void*)str_n_3 },
-    { 0x1B, 0x17, 2, (void*)str_n_3 },
-    { 0x1B, 0x18, 2, (void*)str_n_3 },
-    { 0x1B, 0x19, 2, (void*)str_n_3 },
-    { 0x1B, 0x1A, 2, (void*)str_n_3 },
-    { 0x1B, 0x1B, 2, (void*)str_empty_3 },
-    { 0x1B, 0x1C, 2, (void*)str_empty_3 },
+    { 0x1B, 0x14, 2, str_n_3 },
+    { 0x1B, 0x15, 2, str_n_3 },
+    { 0x1B, 0x16, 2, str_n_3 },
+    { 0x1B, 0x17, 2, str_n_3 },
+    { 0x1B, 0x18, 2, str_n_3 },
+    { 0x1B, 0x19, 2, str_n_3 },
+    { 0x1B, 0x1A, 2, str_n_3 },
+    { 0x1B, 0x1B, 2, str_empty_3 },
+    { 0x1B, 0x1C, 2, str_empty_3 },
 };
 /* 02001274 */
 TM_STRING dbg_hud_clr_bottom_str[3] = {
-    { 5, 0x19, 2, (void*)str_n_4 },
-    { 5, 0x1A, 2, (void*)str_n_4 },
-    { 5, 0x1B, 2, (void*)str_empty_4 },
+    { 5, 0x19, 2, str_n_4 },
+    { 5, 0x1A, 2, str_n_4 },
+    { 5, 0x1B, 2, str_empty_4 },
 };
 /* 02001298 */
 TM_STRING dbg_cm_label_str[13] = {
-    { 0x1B, 2, 2, (void*)str_CMOA },
-    { 0x1B, 3, 2, (void*)str_CMSW },
-    { 0x1B, 4, 2, (void*)str_CMLP },
-    { 0x1B, 5, 2, (void*)str_CML2 },
-    { 0x1B, 6, 2, (void*)str_CMJA },
-    { 0x1B, 7, 2, (void*)str_CMJ2 },
-    { 0x1B, 8, 2, (void*)str_CMJ3 },
-    { 0x1B, 9, 2, (void*)str_CMJ4 },
-    { 0x1B, 0xA, 2, (void*)str_CMMS },
-    { 0x1B, 0xB, 2, (void*)str_CMMD },
-    { 0x1B, 0xC, 2, (void*)str_CMYD },
-    { 0x1B, 0xD, 2, (void*)str_CMCF },
-    { 0x1B, 0xE, 2, (void*)str_CMCR },
+    { 0x1B, 2, 2, str_CMOA },
+    { 0x1B, 3, 2, str_CMSW },
+    { 0x1B, 4, 2, str_CMLP },
+    { 0x1B, 5, 2, str_CML2 },
+    { 0x1B, 6, 2, str_CMJA },
+    { 0x1B, 7, 2, str_CMJ2 },
+    { 0x1B, 8, 2, str_CMJ3 },
+    { 0x1B, 9, 2, str_CMJ4 },
+    { 0x1B, 0xA, 2, str_CMMS },
+    { 0x1B, 0xB, 2, str_CMMD },
+    { 0x1B, 0xC, 2, str_CMYD },
+    { 0x1B, 0xD, 2, str_CMCF },
+    { 0x1B, 0xE, 2, str_CMCR },
 };
 /* 02001334 */
 TM_STRING dbg_cgd_type_str[5] = {
-    { 0x25, 1, 0xA, (void*)str_WCA },
-    { 0x25, 2, 0xA, (void*)str_CGD1 },
-    { 0x25, 2, 0xA, (void*)str_CGD2 },
-    { 0x25, 2, 0xA, (void*)str_CGD3 },
-    { 0x25, 2, 0xA, (void*)str_empty_5 },
+    { 0x25, 1, 0xA, str_WCA },
+    { 0x25, 2, 0xA, str_CGD1 },
+    { 0x25, 2, 0xA, str_CGD2 },
+    { 0x25, 2, 0xA, str_CGD3 },
+    { 0x25, 2, 0xA, str_empty_5 },
 };
 /* 02001370 */
 TM_STRING dbg_pat_status_str[23] = {
-    { 0x25, 3, 0xA, (void*)str_sl_00 },
-    { 0x25, 3, 0xA, (void*)str_sl_10 },
-    { 0x25, 3, 0xA, (void*)str_sl_12 },
-    { 0x25, 3, 0xA, (void*)str_sl_20 },
-    { 0x25, 3, 0xA, (void*)str_sl_22 },
-    { 0x25, 3, 0xA, (void*)str_sl_30 },
-    { 0x25, 3, 0xA, (void*)str_sl_32 },
-    { 0x25, 3, 0xA, (void*)str_sl_40 },
-    { 0x25, 3, 0xA, (void*)str_sl_42 },
-    { 0x25, 3, 0xA, (void*)str_sl_44 },
-    { 0x25, 3, 0xA, (void*)str_sl_50 },
-    { 0x25, 3, 0xA, (void*)str_sl_52 },
-    { 0x25, 3, 0xA, (void*)str_sl_54 },
-    { 0x25, 3, 0xA, (void*)str_sl_60 },
-    { 0x25, 3, 0xA, (void*)str_sl_62 },
-    { 0x25, 3, 0xA, (void*)str_sl_64 },
-    { 0x25, 3, 0xA, (void*)str_sl_70 },
-    { 0x25, 3, 0xA, (void*)str_sl_80 },
-    { 0x25, 3, 0xA, (void*)str_sl_82 },
-    { 0x25, 3, 0xA, (void*)str_sl_90 },
-    { 0x25, 3, 0xA, (void*)str_empty_6 },
-    { 0x25, 3, 0xA, (void*)str_empty_6 },
-    { 0x25, 3, 0xA, (void*)str_empty_6 },
+    { 0x25, 3, 0xA, str_sl_00 },
+    { 0x25, 3, 0xA, str_sl_10 },
+    { 0x25, 3, 0xA, str_sl_12 },
+    { 0x25, 3, 0xA, str_sl_20 },
+    { 0x25, 3, 0xA, str_sl_22 },
+    { 0x25, 3, 0xA, str_sl_30 },
+    { 0x25, 3, 0xA, str_sl_32 },
+    { 0x25, 3, 0xA, str_sl_40 },
+    { 0x25, 3, 0xA, str_sl_42 },
+    { 0x25, 3, 0xA, str_sl_44 },
+    { 0x25, 3, 0xA, str_sl_50 },
+    { 0x25, 3, 0xA, str_sl_52 },
+    { 0x25, 3, 0xA, str_sl_54 },
+    { 0x25, 3, 0xA, str_sl_60 },
+    { 0x25, 3, 0xA, str_sl_62 },
+    { 0x25, 3, 0xA, str_sl_64 },
+    { 0x25, 3, 0xA, str_sl_70 },
+    { 0x25, 3, 0xA, str_sl_80 },
+    { 0x25, 3, 0xA, str_sl_82 },
+    { 0x25, 3, 0xA, str_sl_90 },
+    { 0x25, 3, 0xA, str_empty_6 },
+    { 0x25, 3, 0xA, str_empty_6 },
+    { 0x25, 3, 0xA, str_empty_6 },
 };
 /* 02001484 */
 TM_STRING dbg_extdat_str[3] = {
-    { 0x25, 0xC, 0xA, (void*)str_Pa },
-    { 0x25, 0xC, 0xA, (void*)str_PA },
-    { 0x25, 0xC, 0xA, (void*)str_PB },
+    { 0x25, 0xC, 0xA, str_Pa },
+    { 0x25, 0xC, 0xA, str_PA },
+    { 0x25, 0xC, 0xA, str_PB },
 };
 /* 020014A8 */
 TM_STRING dbg_eftype_names[9] = {
-    { 0x25, 0xF, 0xA, (void*)str_MLN },
-    { 0x25, 0xF, 0xA, (void*)str_MLU },
-    { 0x25, 0xF, 0xA, (void*)str_MLD },
-    { 0x25, 0xF, 0xA, (void*)str_MLF },
-    { 0x25, 0xF, 0xA, (void*)str_MLF },
-    { 0x25, 0xF, 0xA, (void*)str_MLR },
-    { 0x25, 0xF, 0xA, (void*)str_MLR },
-    { 0x25, 0xF, 0xA, (void*)str_MLR },
-    { 0x25, 0xF, 0xA, (void*)str_M },
+    { 0x25, 0xF, 0xA, str_MLN },
+    { 0x25, 0xF, 0xA, str_MLU },
+    { 0x25, 0xF, 0xA, str_MLD },
+    { 0x25, 0xF, 0xA, str_MLF },
+    { 0x25, 0xF, 0xA, str_MLF },
+    { 0x25, 0xF, 0xA, str_MLR },
+    { 0x25, 0xF, 0xA, str_MLR },
+    { 0x25, 0xF, 0xA, str_MLR },
+    { 0x25, 0xF, 0xA, str_M },
 };
 /* 02001514 */
 TM_STRING dbg_eftype_s_str[6] = {
-    { 0x28, 0xF, 0xA, (void*)str_S1 },
-    { 0x28, 0xF, 0xA, (void*)str_S2 },
-    { 0x28, 0xF, 0xA, (void*)str_S3 },
-    { 0x28, 0xF, 0xA, (void*)str_S4 },
-    { 0x28, 0xF, 0xA, (void*)str_S5 },
-    { 0x28, 0xF, 0xA, (void*)str_S6 },
+    { 0x28, 0xF, 0xA, str_S1 },
+    { 0x28, 0xF, 0xA, str_S2 },
+    { 0x28, 0xF, 0xA, str_S3 },
+    { 0x28, 0xF, 0xA, str_S4 },
+    { 0x28, 0xF, 0xA, str_S5 },
+    { 0x28, 0xF, 0xA, str_S6 },
 };
 /* 0200155C */
 TM_STRING dbg_eftype_usemj_str[8] = {
-    { 0x2A, 0xF, 0xA, (void*)str_empty_7 },
-    { 0x2A, 0xF, 0xA, (void*)str_USEMJ },
-    { 0x25, 0x18, 0xA, (void*)str_BASE },
-    { 0x25, 0x18, 0xA, (void*)str_BEFORE },
-    { 0x25, 0x18, 0xA, (void*)str_BACK },
-    { 0x25, 0x18, 0xA, (void*)str_empty_7 },
-    { 0x25, 0x18, 0xA, (void*)str_empty_7 },
-    { 0x25, 0x18, 0xA, (void*)str_empty_7 },
+    { 0x2A, 0xF, 0xA, str_empty_7 },
+    { 0x2A, 0xF, 0xA, str_USEMJ },
+    { 0x25, 0x18, 0xA, str_BASE },
+    { 0x25, 0x18, 0xA, str_BEFORE },
+    { 0x25, 0x18, 0xA, str_BACK },
+    { 0x25, 0x18, 0xA, str_empty_7 },
+    { 0x25, 0x18, 0xA, str_empty_7 },
+    { 0x25, 0x18, 0xA, str_empty_7 },
 };
 /* 020015BC */
 TM_STRING dbg_cancel_on_str[8] = {
-    { 0x2C, 0xD, 0xA, (void*)str_H },
-    { 0x2B, 0xD, 0xA, (void*)str_D },
-    { 0x2A, 0xD, 0xA, (void*)str_A },
-    { 0x29, 0xD, 0xA, (void*)str_M_2 },
-    { 0x28, 0xD, 0xA, (void*)str_R },
-    { 0x27, 0xD, 0xA, (void*)str_C },
-    { 0x26, 0xD, 0xA, (void*)str_S },
-    { 0x25, 0xD, 0xA, (void*)str_S },
+    { 0x2C, 0xD, 0xA, str_H },
+    { 0x2B, 0xD, 0xA, str_D },
+    { 0x2A, 0xD, 0xA, str_A },
+    { 0x29, 0xD, 0xA, str_M_2 },
+    { 0x28, 0xD, 0xA, str_R },
+    { 0x27, 0xD, 0xA, str_C },
+    { 0x26, 0xD, 0xA, str_S },
+    { 0x25, 0xD, 0xA, str_S },
 };
 /* 0200161C */
 TM_STRING dbg_cancel_off_str[24] = {
-    { 0x2C, 0xD, 0xA, (void*)str_h },
-    { 0x2B, 0xD, 0xA, (void*)str_d },
-    { 0x2A, 0xD, 0xA, (void*)str_a },
-    { 0x29, 0xD, 0xA, (void*)str_m },
-    { 0x28, 0xD, 0xA, (void*)str_r },
-    { 0x27, 0xD, 0xA, (void*)str_c },
-    { 0x26, 0xD, 0xA, (void*)str_s },
-    { 0x25, 0xD, 0xA, (void*)str_s },
-    { 0x25, 0x11, 0xA, (void*)str_H },
-    { 0x26, 0x11, 0xA, (void*)str_D },
-    { 0x27, 0x11, 0xA, (void*)str_A },
-    { 0x28, 0x11, 0xA, (void*)str_M_2 },
-    { 0x29, 0x11, 0xA, (void*)str_R },
-    { 0x2A, 0x11, 0xA, (void*)str_C },
-    { 0x2B, 0x11, 0xA, (void*)str_S },
-    { 0x2C, 0x11, 0xA, (void*)str_S },
-    { 0x25, 0x11, 0xA, (void*)str_h_2 },
-    { 0x26, 0x11, 0xA, (void*)str_d_2 },
-    { 0x27, 0x11, 0xA, (void*)str_a_2 },
-    { 0x28, 0x11, 0xA, (void*)str_m_2 },
-    { 0x29, 0x11, 0xA, (void*)str_r_2 },
-    { 0x2A, 0x11, 0xA, (void*)str_c_2 },
-    { 0x2B, 0x11, 0xA, (void*)str_s_2 },
-    { 0x2C, 0x11, 0xA, (void*)str_s_2 },
+    { 0x2C, 0xD, 0xA, str_h },
+    { 0x2B, 0xD, 0xA, str_d },
+    { 0x2A, 0xD, 0xA, str_a },
+    { 0x29, 0xD, 0xA, str_m },
+    { 0x28, 0xD, 0xA, str_r },
+    { 0x27, 0xD, 0xA, str_c },
+    { 0x26, 0xD, 0xA, str_s },
+    { 0x25, 0xD, 0xA, str_s },
+    { 0x25, 0x11, 0xA, str_H },
+    { 0x26, 0x11, 0xA, str_D },
+    { 0x27, 0x11, 0xA, str_A },
+    { 0x28, 0x11, 0xA, str_M_2 },
+    { 0x29, 0x11, 0xA, str_R },
+    { 0x2A, 0x11, 0xA, str_C },
+    { 0x2B, 0x11, 0xA, str_S },
+    { 0x2C, 0x11, 0xA, str_S },
+    { 0x25, 0x11, 0xA, str_h_2 },
+    { 0x26, 0x11, 0xA, str_d_2 },
+    { 0x27, 0x11, 0xA, str_a_2 },
+    { 0x28, 0x11, 0xA, str_m_2 },
+    { 0x29, 0x11, 0xA, str_r_2 },
+    { 0x2A, 0x11, 0xA, str_c_2 },
+    { 0x2B, 0x11, 0xA, str_s_2 },
+    { 0x2C, 0x11, 0xA, str_s_2 },
 };
 /* 0200173C */
 TM_STRING dbg_koc_cmlp_str[11] = {
-    { 0xC, 0x19, 0xA, (void*)str_NM },
-    { 0xC, 0x19, 0xA, (void*)str_DM },
-    { 0xC, 0x19, 0xA, (void*)str_CA },
-    { 0xC, 0x19, 0xA, (void*)str_CU },
-    { 0xC, 0x19, 0xA, (void*)str_AT },
-    { 0xC, 0x19, 0xA, (void*)str_BT },
-    { 0xC, 0x19, 0xA, (void*)str_EX },
-    { 0xC, 0x19, 0xA, (void*)str_SA },
-    { 0x20, 0x19, 0xA, (void*)str_CB },
+    { 0xC, 0x19, 0xA, str_NM },
+    { 0xC, 0x19, 0xA, str_DM },
+    { 0xC, 0x19, 0xA, str_CA },
+    { 0xC, 0x19, 0xA, str_CU },
+    { 0xC, 0x19, 0xA, str_AT },
+    { 0xC, 0x19, 0xA, str_BT },
+    { 0xC, 0x19, 0xA, str_EX },
+    { 0xC, 0x19, 0xA, str_SA },
+    { 0x20, 0x19, 0xA, str_CB },
     { 0x20, 0x19, 0xA, (void*)str_empty_8 },
     { 0x20, 0x19, 0xA, (void*)str_empty_8 },
 };
 /* 020017C0 */
 TM_STRING dbg_koc_cml2_str[11] = {
-    { 0xC, 0x1A, 0xA, (void*)str_NM },
-    { 0xC, 0x1A, 0xA, (void*)str_DM },
-    { 0xC, 0x1A, 0xA, (void*)str_CA },
-    { 0xC, 0x1A, 0xA, (void*)str_CU },
-    { 0xC, 0x1A, 0xA, (void*)str_AT },
-    { 0xC, 0x1A, 0xA, (void*)str_BT },
-    { 0xC, 0x1A, 0xA, (void*)str_EX },
-    { 0xC, 0x1A, 0xA, (void*)str_SA },
-    { 0x20, 0x1A, 0xA, (void*)str_CB },
+    { 0xC, 0x1A, 0xA, str_NM },
+    { 0xC, 0x1A, 0xA, str_DM },
+    { 0xC, 0x1A, 0xA, str_CA },
+    { 0xC, 0x1A, 0xA, str_CU },
+    { 0xC, 0x1A, 0xA, str_AT },
+    { 0xC, 0x1A, 0xA, str_BT },
+    { 0xC, 0x1A, 0xA, str_EX },
+    { 0xC, 0x1A, 0xA, str_SA },
+    { 0x20, 0x1A, 0xA, str_CB },
     { 0x20, 0x1A, 0xA, (void*)str_empty_8 },
     { 0x20, 0x1A, 0xA, (void*)str_empty_8 },
 };
 /* 02001844 */
 TM_STRING dbg_koc_cmsw_str[11] = {
-    { 0x20, 0x19, 0xA, (void*)str_NM },
-    { 0x20, 0x19, 0xA, (void*)str_DM },
-    { 0x20, 0x19, 0xA, (void*)str_CA },
-    { 0x20, 0x19, 0xA, (void*)str_CU },
-    { 0x20, 0x19, 0xA, (void*)str_AT },
-    { 0x20, 0x19, 0xA, (void*)str_SA },
-    { 0x20, 0x19, 0xA, (void*)str_BT },
-    { 0x20, 0x19, 0xA, (void*)str_EX },
-    { 0x20, 0x19, 0xA, (void*)str_CB },
+    { 0x20, 0x19, 0xA, str_NM },
+    { 0x20, 0x19, 0xA, str_DM },
+    { 0x20, 0x19, 0xA, str_CA },
+    { 0x20, 0x19, 0xA, str_CU },
+    { 0x20, 0x19, 0xA, str_AT },
+    { 0x20, 0x19, 0xA, str_SA },
+    { 0x20, 0x19, 0xA, str_BT },
+    { 0x20, 0x19, 0xA, str_EX },
+    { 0x20, 0x19, 0xA, str_CB },
     { 0x20, 0x19, 0xA, (void*)str_empty_8 },
     { 0x20, 0x19, 0xA, (void*)str_empty_8 },
 };
 /* 020018C8 */
 TM_STRING dbg_koc_cmja_str[11] = {
-    { 0x20, 0x1A, 0xA, (void*)str_NM },
-    { 0x20, 0x1A, 0xA, (void*)str_DM },
-    { 0x20, 0x1A, 0xA, (void*)str_CA },
-    { 0x20, 0x1A, 0xA, (void*)str_CU },
-    { 0x20, 0x1A, 0xA, (void*)str_AT },
-    { 0x20, 0x1A, 0xA, (void*)str_SA },
-    { 0x20, 0x1A, 0xA, (void*)str_BT },
-    { 0x20, 0x1A, 0xA, (void*)str_EX },
-    { 0x20, 0x1A, 0xA, (void*)str_CB },
+    { 0x20, 0x1A, 0xA, str_NM },
+    { 0x20, 0x1A, 0xA, str_DM },
+    { 0x20, 0x1A, 0xA, str_CA },
+    { 0x20, 0x1A, 0xA, str_CU },
+    { 0x20, 0x1A, 0xA, str_AT },
+    { 0x20, 0x1A, 0xA, str_SA },
+    { 0x20, 0x1A, 0xA, str_BT },
+    { 0x20, 0x1A, 0xA, str_EX },
+    { 0x20, 0x1A, 0xA, str_CB },
     { 0x20, 0x1A, 0xA, (void*)str_empty_8 },
     { 0x20, 0x1A, 0xA, (void*)str_empty_8 },
 };
 /* 0200194C */
 TM_STRING dbg_koc_cmoa_str[9] = {
-    { 0x20, 0x1B, 0xA, (void*)str_NM },
-    { 0x20, 0x1B, 0xA, (void*)str_DM },
-    { 0x20, 0x1B, 0xA, (void*)str_CA },
-    { 0x20, 0x1B, 0xA, (void*)str_CU },
-    { 0x20, 0x1B, 0xA, (void*)str_AT },
-    { 0x20, 0x1B, 0xA, (void*)str_SA },
-    { 0x20, 0x1B, 0xA, (void*)str_BT },
-    { 0x20, 0x1B, 0xA, (void*)str_EX },
-    { 0x20, 0x1B, 0xA, (void*)str_CB },
+    { 0x20, 0x1B, 0xA, str_NM },
+    { 0x20, 0x1B, 0xA, str_DM },
+    { 0x20, 0x1B, 0xA, str_CA },
+    { 0x20, 0x1B, 0xA, str_CU },
+    { 0x20, 0x1B, 0xA, str_AT },
+    { 0x20, 0x1B, 0xA, str_SA },
+    { 0x20, 0x1B, 0xA, str_BT },
+    { 0x20, 0x1B, 0xA, str_EX },
+    { 0x20, 0x1B, 0xA, str_CB },
 };
 /* 020019B8: provisional name */
 TM_STRING dbg_koc_str[9] = {
-    { 0x20, 2, 2, (void*)str_NM },
-    { 0x20, 2, 2, (void*)str_DM },
-    { 0x20, 2, 2, (void*)str_CA },
-    { 0x20, 2, 2, (void*)str_CU },
-    { 0x20, 2, 2, (void*)str_AT },
-    { 0x20, 2, 2, (void*)str_SA },
-    { 0x20, 2, 2, (void*)str_BT },
-    { 0x20, 2, 2, (void*)str_EX },
-    { 0x20, 2, 2, (void*)str_CB },
+    { 0x20, 2, 2, str_NM },
+    { 0x20, 2, 2, str_DM },
+    { 0x20, 2, 2, str_CA },
+    { 0x20, 2, 2, str_CU },
+    { 0x20, 2, 2, str_AT },
+    { 0x20, 2, 2, str_SA },
+    { 0x20, 2, 2, str_BT },
+    { 0x20, 2, 2, str_EX },
+    { 0x20, 2, 2, str_CB },
 };
 /* 02001A24 */
 TM_STRING dbg_waza_kind_str[8] = {
-    { 0x25, 4, 0xA, (void*)str_nmA },
-    { 0x25, 4, 0xA, (void*)str_hsA },
-    { 0x25, 4, 0xA, (void*)str_nmC },
-    { 0x25, 4, 0xA, (void*)str_hsC },
-    { 0x25, 4, 0xA, (void*)str_saA },
-    { 0x25, 4, 0xA, (void*)str_saC },
-    { 0x25, 4, 0xA, (void*)str_paA },
-    { 0x25, 4, 0xA, (void*)str_huA },
+    { 0x25, 4, 0xA, str_nmA },
+    { 0x25, 4, 0xA, str_hsA },
+    { 0x25, 4, 0xA, str_nmC },
+    { 0x25, 4, 0xA, str_hsC },
+    { 0x25, 4, 0xA, str_saA },
+    { 0x25, 4, 0xA, str_saC },
+    { 0x25, 4, 0xA, str_paA },
+    { 0x25, 4, 0xA, str_huA },
 };
 /* 02001A84 */
 TM_STRING dbg_bg_name_str[25] = {
-    { 2, 3, 2, (void*)str_BLANK },
-    { 2, 3, 2, (void*)str_FLASH },
-    { 2, 3, 2, (void*)str_GILL },
-    { 2, 3, 2, (void*)str_N_Y_0 },
-    { 2, 3, 2, (void*)str_JAPAN_0 },
-    { 2, 3, 2, (void*)str_HONGKONG_0 },
-    { 2, 3, 2, (void*)str_ENGLAND },
-    { 2, 3, 2, (void*)str_RUSSIA_0 },
-    { 2, 3, 2, (void*)str_GERMANY },
-    { 2, 3, 2, (void*)str_JAPAN_1 },
-    { 2, 3, 2, (void*)str_AFRICA },
-    { 2, 3, 2, (void*)str_BRAZIL },
-    { 2, 3, 2, (void*)str_HONGKONG_1 },
-    { 2, 3, 2, (void*)str_N_Y_1 },
-    { 2, 3, 2, (void*)str_BRAZIL_1 },
-    { 2, 3, 2, (void*)str_OROMEKA },
-    { 2, 3, 2, (void*)str_JAPAN_20 },
-    { 2, 3, 2, (void*)str_JAPAN_21 },
-    { 2, 3, 2, (void*)str_CHAINA },
-    { 2, 3, 2, (void*)str_JAPAN_30 },
-    { 2, 3, 2, (void*)str_RUSSIA_1 },
-    { 2, 3, 2, (void*)str_RUSSIA_2 },
-    { 2, 3, 2, (void*)str_FRANCE },
-    { 2, 3, 2, (void*)str_BONUS_1 },
-    { 2, 3, 2, (void*)str_BONUS_2 },
+    { 2, 3, 2, str_BLANK },
+    { 2, 3, 2, str_FLASH },
+    { 2, 3, 2, str_GILL },
+    { 2, 3, 2, str_N_Y_0 },
+    { 2, 3, 2, str_JAPAN_0 },
+    { 2, 3, 2, str_HONGKONG_0 },
+    { 2, 3, 2, str_ENGLAND },
+    { 2, 3, 2, str_RUSSIA_0 },
+    { 2, 3, 2, str_GERMANY },
+    { 2, 3, 2, str_JAPAN_1 },
+    { 2, 3, 2, str_AFRICA },
+    { 2, 3, 2, str_BRAZIL },
+    { 2, 3, 2, str_HONGKONG_1 },
+    { 2, 3, 2, str_N_Y_1 },
+    { 2, 3, 2, str_BRAZIL_1 },
+    { 2, 3, 2, str_OROMEKA },
+    { 2, 3, 2, str_JAPAN_20 },
+    { 2, 3, 2, str_JAPAN_21 },
+    { 2, 3, 2, str_CHAINA },
+    { 2, 3, 2, str_JAPAN_30 },
+    { 2, 3, 2, str_RUSSIA_1 },
+    { 2, 3, 2, str_RUSSIA_2 },
+    { 2, 3, 2, str_FRANCE },
+    { 2, 3, 2, str_BONUS_1 },
+    { 2, 3, 2, str_BONUS_2 },
 };
 /* 02001BB0 */
 TM_STRING dbg_char_name_str[25] = {
-    { 0xB, 3, 2, (void*)str_GILL_2 },
-    { 0xB, 3, 2, (void*)str_ALEX },
-    { 0xB, 3, 2, (void*)str_RYU },
-    { 0xB, 3, 2, (void*)str_YUN },
-    { 0xB, 3, 2, (void*)str_DUDLEY },
-    { 0xB, 3, 2, (void*)str_NECRO },
-    { 0xB, 3, 2, (void*)str_HUGO },
-    { 0xB, 3, 2, (void*)str_IBUKI },
-    { 0xB, 3, 2, (void*)str_ELENA },
-    { 0xB, 3, 2, (void*)str_ORO },
-    { 0xB, 3, 2, (void*)str_YANG },
-    { 0xB, 3, 2, (void*)str_KEN },
-    { 0xB, 3, 2, (void*)str_SEAN },
-    { 0xB, 3, 2, (void*)str_URIEN },
-    { 0xB, 3, 2, (void*)str_GOUKI_1 },
-    { 0xB, 3, 2, (void*)str_GOUKI_2 },
-    { 0xB, 3, 2, (void*)str_CHUN_LI },
-    { 0xB, 3, 2, (void*)str_KARATE },
-    { 0xB, 3, 2, (void*)str_Q },
-    { 0xB, 3, 2, (void*)str_No_12 },
-    { 0xB, 3, 2, (void*)str_BIKEI },
-    { 0xB, 3, 2, (void*)str_empty_9 },
-    { 0xB, 3, 2, (void*)str_empty_9 },
-    { 0xB, 3, 2, (void*)str_empty_9 },
-    { 0xB, 3, 2, (void*)str_ETC },
+    { 0xB, 3, 2, str_GILL_2 },
+    { 0xB, 3, 2, str_ALEX },
+    { 0xB, 3, 2, str_RYU },
+    { 0xB, 3, 2, str_YUN },
+    { 0xB, 3, 2, str_DUDLEY },
+    { 0xB, 3, 2, str_NECRO },
+    { 0xB, 3, 2, str_HUGO },
+    { 0xB, 3, 2, str_IBUKI },
+    { 0xB, 3, 2, str_ELENA },
+    { 0xB, 3, 2, str_ORO },
+    { 0xB, 3, 2, str_YANG },
+    { 0xB, 3, 2, str_KEN },
+    { 0xB, 3, 2, str_SEAN },
+    { 0xB, 3, 2, str_URIEN },
+    { 0xB, 3, 2, str_GOUKI_1 },
+    { 0xB, 3, 2, str_GOUKI_2 },
+    { 0xB, 3, 2, str_CHUN_LI },
+    { 0xB, 3, 2, str_KARATE },
+    { 0xB, 3, 2, str_Q },
+    { 0xB, 3, 2, str_No_12 },
+    { 0xB, 3, 2, str_BIKEI },
+    { 0xB, 3, 2, str_empty_9 },
+    { 0xB, 3, 2, str_empty_9 },
+    { 0xB, 3, 2, str_empty_9 },
+    { 0xB, 3, 2, str_ETC },
 };
 /* 02001CDC */
 TM_STRING dbg_act_kind_str[994] = {
-    { 3, 5, 4, (void*)str_NORMAL },
-    { 3, 5, 4, (void*)str_DAMAGE },
-    { 3, 5, 4, (void*)str_CATCH },
-    { 3, 5, 4, (void*)str_CAUGHT },
-    { 3, 5, 4, (void*)str_ATTACK },
-    { 3, 5, 4, (void*)str_SP_AT },
-    { 3, 5, 4, (void*)str_BUTTOBI },
-    { 3, 5, 4, (void*)str_UNION },
-    { 3, 5, 4, (void*)str_ETC },
-    { 3, 5, 4, (void*)str_ETC },
-    { 3, 5, 4, (void*)str_EFFECT },
-    { 3, 5, 4, (void*)str_empty_9 },
-    { 3, 7, 4, (void*)str_KAMAE },
-    { 3, 7, 4, (void*)str_HURIMUKI },
-    { 3, 7, 4, (void*)str_FRONT_WALK },
-    { 3, 7, 4, (void*)str_BACK_WALK },
-    { 3, 7, 4, (void*)str_DASH_HUMIKOMI },
-    { 3, 7, 4, (void*)str_DASH_TOBINOKI },
-    { 3, 7, 4, (void*)str_KAGAMU },
-    { 3, 7, 4, (void*)str_KAGAMI_KAMAE },
-    { 3, 7, 4, (void*)str_KAGAMI_TURN },
-    { 3, 7, 4, (void*)str_KAGAMI_F_WALK },
-    { 3, 7, 4, (void*)str_KAGAMI_B_WALK },
-    { 3, 7, 4, (void*)str_STAND_UP },
-    { 3, 7, 4, (void*)str_JUMP_JUNBI },
-    { 3, 7, 4, (void*)str_SP_JUMP_JUNBI },
-    { 3, 7, 4, (void*)str_JUMP_FRONT },
-    { 3, 7, 4, (void*)str_JUMP_VERTICAL },
-    { 3, 7, 4, (void*)str_JUMP_BACK },
-    { 3, 7, 4, (void*)str_S_JUMP_FRONT },
-    { 3, 7, 4, (void*)str_S_JUMP_V },
-    { 3, 7, 4, (void*)str_S_JUMP_BACK },
-    { 3, 7, 4, (void*)str_SP_JUMP_FRONT },
-    { 3, 7, 4, (void*)str_SP_JUMP_V },
-    { 3, 7, 4, (void*)str_SP_JUMP_BACK },
-    { 3, 7, 4, (void*)str_WALK_END },
-    { 3, 7, 4, (void*)str_PARING_HEAD },
-    { 3, 7, 4, (void*)str_PARING_UP },
-    { 3, 7, 4, (void*)str_PARING_DOWN },
-    { 3, 7, 4, (void*)str_PARING_AIR_F },
-    { 3, 7, 4, (void*)str_PARING_AIR_B },
-    { 3, 7, 4, (void*)str_GUARD_HEAD },
-    { 3, 7, 4, (void*)str_GUARD_UP },
-    { 3, 7, 4, (void*)str_GUARD_DOWN },
-    { 3, 7, 4, (void*)str_GUARD_AIR },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_P_BREAK_ZUJOU },
-    { 3, 7, 4, (void*)str_P_BREAK_UP },
-    { 3, 7, 4, (void*)str_P_BREAK_DOWN },
-    { 3, 7, 4, (void*)str_P_BREAK_AIR_F },
-    { 3, 7, 4, (void*)str_P_BREAK_AIR_R },
-    { 3, 7, 4, (void*)str_TUKAMIHAZUSI },
-    { 3, 7, 4, (void*)str_TUKAMIHAZUSARE },
-    { 3, 7, 4, (void*)str_TUKAMIHAZUSI },
-    { 3, 7, 4, (void*)str_TUKAMIHAZUSARE },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_GUARD_HEAD_2 },
-    { 3, 7, 4, (void*)str_GUARD_UP_2 },
-    { 3, 7, 4, (void*)str_GUARD_DOWN_2 },
-    { 3, 7, 4, (void*)str_GUARD_AIR_2 },
-    { 3, 7, 4, (void*)str_HUSHIN_HEAD },
-    { 3, 7, 4, (void*)str_HUSHIN_UP },
-    { 3, 7, 4, (void*)str_HUSHIN_DOWN },
-    { 3, 7, 4, (void*)str_HUSHIN_AIR },
-    { 3, 7, 4, (void*)str_FACE_S },
-    { 3, 7, 4, (void*)str_FACE_M },
-    { 3, 7, 4, (void*)str_FACE_L },
-    { 3, 7, 4, (void*)str_FACE_SP },
-    { 3, 7, 4, (void*)str_FOOK_OKU_S },
-    { 3, 7, 4, (void*)str_FOOK_OKU_M },
-    { 3, 7, 4, (void*)str_FOOK_OKU_L },
-    { 3, 7, 4, (void*)str_FOOK_OKU_SP },
-    { 3, 7, 4, (void*)str_FOOK_TEMAE_S },
-    { 3, 7, 4, (void*)str_FOOK_TEMAE_M },
-    { 3, 7, 4, (void*)str_FOOK_TEMAE_L },
-    { 3, 7, 4, (void*)str_FOOK_TEMAE_SP },
-    { 3, 7, 4, (void*)str_UPPER_S },
-    { 3, 7, 4, (void*)str_UPPER_M },
-    { 3, 7, 4, (void*)str_UPPER_L },
-    { 3, 7, 4, (void*)str_UPPER_SP },
-    { 3, 7, 4, (void*)str_NOUTEN_S },
-    { 3, 7, 4, (void*)str_NOUTEN_M },
-    { 3, 7, 4, (void*)str_NOUTEN_L },
-    { 3, 7, 4, (void*)str_NOUTEN_SP },
-    { 3, 7, 4, (void*)str_BODY_BROW_S },
-    { 3, 7, 4, (void*)str_BODY_BROW_M },
-    { 3, 7, 4, (void*)str_BODY_BROW_L },
-    { 3, 7, 4, (void*)str_BODY_BROW_SP },
-    { 3, 7, 4, (void*)str_BODY_UPPER_S },
-    { 3, 7, 4, (void*)str_BODY_UPPER_M },
-    { 3, 7, 4, (void*)str_BODY_UPPER_L },
-    { 3, 7, 4, (void*)str_BODY_UPPER_SP },
-    { 3, 7, 4, (void*)str_TATAKI_S },
-    { 3, 7, 4, (void*)str_TATAKI_M },
-    { 3, 7, 4, (void*)str_TATAKI_L },
-    { 3, 7, 4, (void*)str_TATAKI_SP },
-    { 3, 7, 4, (void*)str_TATAKI_V_S },
-    { 3, 7, 4, (void*)str_TATAKI_V_M },
-    { 3, 7, 4, (void*)str_TATAKI_V_L },
-    { 3, 7, 4, (void*)str_TATAKI_V_SP },
-    { 3, 7, 4, (void*)str_NOBASITA_TE_S },
-    { 3, 7, 4, (void*)str_NOBASITA_TE_M },
-    { 3, 7, 4, (void*)str_NOBASITA_TE_L },
-    { 3, 7, 4, (void*)str_NOBASITA_TE_SP },
-    { 3, 7, 4, (void*)str_KAGAMI_S },
-    { 3, 7, 4, (void*)str_KAGAMI_M },
-    { 3, 7, 4, (void*)str_KAGAMI_L },
-    { 3, 7, 4, (void*)str_KAGAMI_SP },
-    { 3, 7, 4, (void*)str_KGM_TATAKI_S },
-    { 3, 7, 4, (void*)str_KGM_TATAKI_M },
-    { 3, 7, 4, (void*)str_KGM_TATAKI_L },
-    { 3, 7, 4, (void*)str_KGM_TATAKI_SP },
-    { 3, 7, 4, (void*)str_KGM_TTKI_V_S },
-    { 3, 7, 4, (void*)str_KGM_TTKI_V_M },
-    { 3, 7, 4, (void*)str_KGM_TTKI_V_L },
-    { 3, 7, 4, (void*)str_KGM_TTKI_V_SP },
-    { 3, 7, 4, (void*)str_NEKOROBI_S },
-    { 3, 7, 4, (void*)str_NEKOROBI_M },
-    { 3, 7, 4, (void*)str_NEKOROBI_L },
-    { 3, 7, 4, (void*)str_NEKOROBI_SP },
-    { 3, 7, 4, (void*)str_OKIAGARI },
-    { 3, 7, 4, (void*)str_OKIAGARI_F },
-    { 3, 7, 4, (void*)str_OKIAGARI_B },
-    { 3, 7, 4, (void*)str_LOSE_NO_STAND },
-    { 3, 7, 4, (void*)str_LOSE_SONABA },
-    { 3, 7, 4, (void*)str_LOSE_KAGAMI },
-    { 3, 7, 4, (void*)str_PIYO },
-    { 3, 7, 4, (void*)str_UKEMI_MOVE_F },
-    { 3, 7, 4, (void*)str_UKEMI_MOVE_R },
-    { 3, 7, 4, (void*)str_SHIMEOTASARE },
-    { 3, 7, 4, (void*)str_TATI_TOUKETU_S },
-    { 3, 7, 4, (void*)str_TATI_TOUKETU_M },
-    { 3, 7, 4, (void*)str_TATI_TOUKETU_L },
-    { 3, 7, 4, (void*)str_TATI_TOUKETU_P },
-    { 3, 7, 4, (void*)str_KGM_TOUKETU_S },
-    { 3, 7, 4, (void*)str_KGM_TOUKETU_M },
-    { 3, 7, 4, (void*)str_KGM_TOUKETU_L },
-    { 3, 7, 4, (void*)str_KGM_TOUKETU_P },
-    { 3, 7, 4, (void*)str_TATI_DENGEKI_S },
-    { 3, 7, 4, (void*)str_TATI_DENGEKI_M },
-    { 3, 7, 4, (void*)str_TATI_DENGEKI_L },
-    { 3, 7, 4, (void*)str_TATI_DENGEKI_P },
-    { 3, 7, 4, (void*)str_KGM_DENGEKI_S },
-    { 3, 7, 4, (void*)str_KGM_DENGEKI_M },
-    { 3, 7, 4, (void*)str_KGM_DENGEKI_L },
-    { 3, 7, 4, (void*)str_KGM_DENGEKI_P },
-    { 3, 7, 4, (void*)str_OKIAGARI_FRONT },
-    { 3, 7, 4, (void*)str_OKIAGARI_REAR },
-    { 3, 7, 4, (void*)str_TATI_MOE_S },
-    { 3, 7, 4, (void*)str_TATI_MOE_M },
-    { 3, 7, 4, (void*)str_TATI_MOE_L },
-    { 3, 7, 4, (void*)str_TATI_MOE_SP },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_AIR_NORMAL },
-    { 3, 7, 4, (void*)str_ASIBARAI_SIRI },
-    { 3, 7, 4, (void*)str_ASIB_TUNNOMERI },
-    { 3, 7, 4, (void*)str_NOKEZORI },
-    { 3, 7, 4, (void*)str_KUNOJI },
-    { 3, 7, 4, (void*)str_KIRIMOMI },
-    { 3, 7, 4, (void*)str_UPPER },
-    { 3, 7, 4, (void*)str_BODY_UPPER },
-    { 3, 7, 4, (void*)str_HARAYARARE },
-    { 3, 7, 4, (void*)str_TATAKI_AIR },
-    { 3, 7, 4, (void*)str_TTKI_V_AIR },
-    { 3, 7, 4, (void*)str_HUMI_ASIB },
-    { 3, 7, 4, (void*)str_FACE },
-    { 3, 7, 4, (void*)str_ASIB_SIRI_LOSE },
-    { 3, 7, 4, (void*)str_ASIB_TUN_LOSE },
-    { 3, 7, 4, (void*)str_DENKI },
-    { 3, 7, 4, (void*)str_KUNOJI_NOKE },
-    { 3, 7, 4, (void*)str_BODY_UPPER_SP_2 },
-    { 3, 7, 4, (void*)str_HANEAGARI },
-    { 3, 7, 4, (void*)str_TOUKETSU_A },
-    { 3, 7, 4, (void*)str_BODY_SLAM },
-    { 3, 7, 4, (void*)str_IPPONZEOI },
-    { 3, 7, 4, (void*)str_TOMOE_RYU },
-    { 3, 7, 4, (void*)str_MONKEY_FLIP },
-    { 3, 7, 4, (void*)str_TOMOE_ORO },
-    { 3, 7, 4, (void*)str_SNAKE_FANG },
-    { 3, 7, 4, (void*)str_FLANKEN_S },
-    { 3, 7, 4, (void*)str_KISHINRIKI },
-    { 3, 7, 4, (void*)str_SPLASH_M },
-    { 3, 7, 4, (void*)str_HARAIGOSHI },
-    { 3, 7, 4, (void*)str_ALEX_B_D },
-    { 3, 7, 4, (void*)str_GILL_3 },
-    { 3, 7, 4, (void*)str_HANEKAERI_HARA },
-    { 3, 7, 4, (void*)str_S_HANEAGARI },
-    { 3, 7, 4, (void*)str_TATUMAKIZANKU },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_CATCH_1 },
-    { 3, 7, 4, (void*)str_CATCH_2 },
-    { 3, 7, 4, (void*)str_CATCH_3 },
-    { 3, 7, 4, (void*)str_CATCH_4 },
-    { 3, 7, 4, (void*)str_CATCH_5 },
-    { 3, 7, 4, (void*)str_CATCH_6 },
-    { 3, 7, 4, (void*)str_CATCH_7 },
-    { 3, 7, 4, (void*)str_CATCH_8 },
-    { 3, 7, 4, (void*)str_CATCH_9 },
-    { 3, 7, 4, (void*)str_CATCH_10 },
-    { 3, 7, 4, (void*)str_CATCH_11 },
-    { 3, 7, 4, (void*)str_CATCH_12 },
-    { 3, 7, 4, (void*)str_CATCH_13 },
-    { 3, 7, 4, (void*)str_CATCH_14 },
-    { 3, 7, 4, (void*)str_CATCH_15 },
-    { 3, 7, 4, (void*)str_CATCH_16 },
-    { 3, 7, 4, (void*)str_CATCH_17 },
-    { 3, 7, 4, (void*)str_CATCH_18 },
-    { 3, 7, 4, (void*)str_CATCH_19 },
-    { 3, 7, 4, (void*)str_CATCH_20 },
-    { 3, 7, 4, (void*)str_CATCH_21 },
-    { 3, 7, 4, (void*)str_CATCH_22 },
-    { 3, 7, 4, (void*)str_CATCH_23 },
-    { 3, 7, 4, (void*)str_CATCH_24 },
-    { 3, 7, 4, (void*)str_CATCH_25 },
-    { 3, 7, 4, (void*)str_CATCH_26 },
-    { 3, 7, 4, (void*)str_CATCH_27 },
-    { 3, 7, 4, (void*)str_CATCH_28 },
-    { 3, 7, 4, (void*)str_CATCH_29 },
-    { 3, 7, 4, (void*)str_CATCH_30 },
-    { 3, 7, 4, (void*)str_CATCH_31 },
-    { 3, 7, 4, (void*)str_CATCH_32 },
-    { 3, 7, 4, (void*)str_CATCH_33 },
-    { 3, 7, 4, (void*)str_CATCH_34 },
-    { 3, 7, 4, (void*)str_CATCH_35 },
-    { 3, 7, 4, (void*)str_CATCH_36 },
-    { 3, 7, 4, (void*)str_CATCH_37 },
-    { 3, 7, 4, (void*)str_CATCH_38 },
-    { 3, 7, 4, (void*)str_CATCH_39 },
-    { 3, 7, 4, (void*)str_CATCH_40 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_ALEX_ZUTUKI },
-    { 3, 7, 4, (void*)str_ALEX_BODY_S },
-    { 3, 7, 4, (void*)str_ALEX_BACK_D },
-    { 3, 7, 4, (void*)str_ALEX_POWER_B },
-    { 3, 7, 4, (void*)str_ALEX_SLEEPER },
-    { 3, 7, 4, (void*)str_RYU_SEOINAGE },
-    { 3, 7, 4, (void*)str_IBUKI_2 },
-    { 3, 7, 4, (void*)str_DADLEY_L_B },
-    { 3, 7, 4, (void*)str_IBUKI_KUBIORI },
-    { 3, 7, 4, (void*)str_NECRO_S_T },
-    { 3, 7, 4, (void*)str_RYU_TOMOENAGE },
-    { 3, 7, 4, (void*)str_YUN_HIZAGERI },
-    { 3, 7, 4, (void*)str_ORO_KUBISIME },
-    { 3, 7, 4, (void*)str_NECRO_G_S },
-    { 3, 7, 4, (void*)str_DUDDLEY_D_S },
-    { 3, 7, 4, (void*)str_YUN_MONKEY_F },
-    { 3, 7, 4, (void*)str_ORO_TOMOENAGE },
-    { 3, 7, 4, (void*)str_ORO_NIOURIKI },
-    { 3, 7, 4, (void*)str_ORO_GIGOKU_G },
-    { 3, 7, 4, (void*)str_YUN_2 },
-    { 3, 7, 4, (void*)str_NECRO_SNAKE_F },
-    { 3, 7, 4, (void*)str_NECRO_F_S },
-    { 3, 7, 4, (void*)str_IBUKI_HARAIG },
-    { 3, 7, 4, (void*)str_GILL_SPLASH_M },
-    { 3, 7, 4, (void*)str_KEN_HIZAGERI },
-    { 3, 7, 4, (void*)str_ORO_KISINRIKI },
-    { 3, 7, 4, (void*)str_SEAN_TACKLE },
-    { 3, 7, 4, (void*)str_ALEX_HYPER_B },
-    { 3, 7, 4, (void*)str_NECRO_SLAM_D },
-    { 3, 7, 4, (void*)str_ELENA_ASINAGE },
-    { 3, 7, 4, (void*)str_GILL_IMPACT_C },
-    { 3, 7, 4, (void*)str_ALEX_S_H_B },
-    { 3, 7, 4, (void*)str_ALEX_F_N_D },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_IBUKI_2 },
-    { 3, 7, 4, (void*)str_IBUKI_YOROI_D },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_MAWARIKOMI_M_F },
-    { 3, 7, 4, (void*)str_HUGO_BODY_S },
-    { 3, 7, 4, (void*)str_HUGO_N_G_T },
-    { 3, 7, 4, (void*)str_HUGO_M_S_P },
-    { 3, 7, 4, (void*)str_HUGO_S_D_B_B },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_S_PUNCH_A },
-    { 3, 7, 4, (void*)str_S_PUNCH_B },
-    { 3, 7, 4, (void*)str_S_PUNCH_C },
-    { 3, 7, 4, (void*)str_M_PUNCH_A },
-    { 3, 7, 4, (void*)str_M_PUNCH_B },
-    { 3, 7, 4, (void*)str_M_PUNCH_C },
-    { 3, 7, 4, (void*)str_L_PUNCH_A },
-    { 3, 7, 4, (void*)str_L_PUNCH_B },
-    { 3, 7, 4, (void*)str_L_PUNCH_C },
-    { 3, 7, 4, (void*)str_S_KICK_A },
-    { 3, 7, 4, (void*)str_S_KICK_B },
-    { 3, 7, 4, (void*)str_S_KICK_C },
-    { 3, 7, 4, (void*)str_M_KICK_A },
-    { 3, 7, 4, (void*)str_M_KICK_B },
-    { 3, 7, 4, (void*)str_M_KICK_C },
-    { 3, 7, 4, (void*)str_L_KICK_A },
-    { 3, 7, 4, (void*)str_L_KICK_B },
-    { 3, 7, 4, (void*)str_L_KICK_C },
-    { 3, 7, 4, (void*)str_KAGAMI_P_A },
-    { 3, 7, 4, (void*)str_KAGAMI_P_B },
-    { 3, 7, 4, (void*)str_KAGAMI_P_C },
-    { 3, 7, 4, (void*)str_KAGAMI_P_A },
-    { 3, 7, 4, (void*)str_KAGAMI_P_B },
-    { 3, 7, 4, (void*)str_KAGAMI_P_C },
-    { 3, 7, 4, (void*)str_KAGAMI_P_A },
-    { 3, 7, 4, (void*)str_KAGAMI_P_B },
-    { 3, 7, 4, (void*)str_KAGAMI_P_C },
-    { 3, 7, 4, (void*)str_KAGAMI_K_A },
-    { 3, 7, 4, (void*)str_KAGAMI_K_B },
-    { 3, 7, 4, (void*)str_KAGAMI_K_C },
-    { 3, 7, 4, (void*)str_KAGAMI_K_A },
-    { 3, 7, 4, (void*)str_KAGAMI_K_B },
-    { 3, 7, 4, (void*)str_KAGAMI_K_C },
-    { 3, 7, 4, (void*)str_KAGAMI_K_A },
-    { 3, 7, 4, (void*)str_KAGAMI_K_B },
-    { 3, 7, 4, (void*)str_KAGAMI_K_C },
-    { 3, 7, 4, (void*)str_V_JUMP_P_S_A },
-    { 3, 7, 4, (void*)str_V_JUMP_P_S_B },
-    { 3, 7, 4, (void*)str_V_JUMP_P_M_A },
-    { 3, 7, 4, (void*)str_V_JUMP_P_M_B },
-    { 3, 7, 4, (void*)str_V_JUMP_P_L_A },
-    { 3, 7, 4, (void*)str_V_JUMP_P_L_B },
-    { 3, 7, 4, (void*)str_V_JUMP_K_S_A },
-    { 3, 7, 4, (void*)str_V_JUMP_K_S_B },
-    { 3, 7, 4, (void*)str_V_JUMP_K_M_A },
-    { 3, 7, 4, (void*)str_V_JUMP_K_M_B },
-    { 3, 7, 4, (void*)str_V_JUMP_K_L_A },
-    { 3, 7, 4, (void*)str_V_JUMP_K_L_B },
-    { 3, 7, 4, (void*)str_F_JUMP_P_S_A },
-    { 3, 7, 4, (void*)str_F_JUMP_P_S_B },
-    { 3, 7, 4, (void*)str_F_JUMP_P_M_A },
-    { 3, 7, 4, (void*)str_F_JUMP_P_M_B },
-    { 3, 7, 4, (void*)str_F_JUMP_P_L_A },
-    { 3, 7, 4, (void*)str_F_JUMP_P_L_B },
-    { 3, 7, 4, (void*)str_F_JUMP_K_S_A },
-    { 3, 7, 4, (void*)str_F_JUMP_K_S_B },
-    { 3, 7, 4, (void*)str_F_JUMP_K_M_A },
-    { 3, 7, 4, (void*)str_F_JUMP_K_M_B },
-    { 3, 7, 4, (void*)str_F_JUMP_K_L_A },
-    { 3, 7, 4, (void*)str_F_JUMP_K_L_B },
-    { 3, 7, 4, (void*)str_B_JUMP_P_S_A },
-    { 3, 7, 4, (void*)str_B_JUMP_P_S_B },
-    { 3, 7, 4, (void*)str_B_JUMP_P_M_A },
-    { 3, 7, 4, (void*)str_B_JUMP_P_M_B },
-    { 3, 7, 4, (void*)str_B_JUMP_P_L_A },
-    { 3, 7, 4, (void*)str_B_JUMP_P_L_B },
-    { 3, 7, 4, (void*)str_B_JUMP_K_S_A },
-    { 3, 7, 4, (void*)str_B_JUMP_K_S_B },
-    { 3, 7, 4, (void*)str_B_JUMP_K_M_A },
-    { 3, 7, 4, (void*)str_B_JUMP_K_M_B },
-    { 3, 7, 4, (void*)str_B_JUMP_K_L_A },
-    { 3, 7, 4, (void*)str_B_JUMP_K_L_B },
-    { 3, 7, 4, (void*)str_SP_V_JP_S_P_A },
-    { 3, 7, 4, (void*)str_SP_V_JP_S_P_B },
-    { 3, 7, 4, (void*)str_SP_V_JP_M_P_A },
-    { 3, 7, 4, (void*)str_SP_V_JP_M_P_B },
-    { 3, 7, 4, (void*)str_SP_V_JP_L_P_A },
-    { 3, 7, 4, (void*)str_SP_V_JP_L_P_B },
-    { 3, 7, 4, (void*)str_SP_V_JP_S_K_A },
-    { 3, 7, 4, (void*)str_SP_V_JP_S_K_B },
-    { 3, 7, 4, (void*)str_SP_V_JP_M_K_A },
-    { 3, 7, 4, (void*)str_SP_V_JP_M_K_B },
-    { 3, 7, 4, (void*)str_SP_V_JP_L_K_A },
-    { 3, 7, 4, (void*)str_SP_V_JP_L_K_B },
-    { 3, 7, 4, (void*)str_SP_F_JP_S_P_A },
-    { 3, 7, 4, (void*)str_SP_F_JP_S_P_B },
-    { 3, 7, 4, (void*)str_SP_F_JP_M_P_A },
-    { 3, 7, 4, (void*)str_SP_F_JP_M_P_B },
-    { 3, 7, 4, (void*)str_SP_F_JP_L_P_A },
-    { 3, 7, 4, (void*)str_SP_F_JP_L_P_B },
-    { 3, 7, 4, (void*)str_SP_F_JP_S_K_A },
-    { 3, 7, 4, (void*)str_SP_F_JP_S_K_B },
-    { 3, 7, 4, (void*)str_SP_F_JP_M_K_A },
-    { 3, 7, 4, (void*)str_SP_F_JP_M_K_B },
-    { 3, 7, 4, (void*)str_SP_F_JP_L_K_A },
-    { 3, 7, 4, (void*)str_SP_F_JP_L_K_B },
-    { 3, 7, 4, (void*)str_SP_B_JP_S_P_A },
-    { 3, 7, 4, (void*)str_SP_B_JP_S_P_B },
-    { 3, 7, 4, (void*)str_SP_B_JP_M_P_A },
-    { 3, 7, 4, (void*)str_SP_B_JP_M_P_B },
-    { 3, 7, 4, (void*)str_SP_B_JP_L_P_A },
-    { 3, 7, 4, (void*)str_SP_B_JP_L_P_B },
-    { 3, 7, 4, (void*)str_SP_B_JP_S_K_A },
-    { 3, 7, 4, (void*)str_SP_B_JP_S_K_B },
-    { 3, 7, 4, (void*)str_SP_B_JP_M_K_A },
-    { 3, 7, 4, (void*)str_SP_B_JP_M_K_B },
-    { 3, 7, 4, (void*)str_SP_B_JP_L_K_A },
-    { 3, 7, 4, (void*)str_SP_B_JP_L_K_B },
-    { 3, 7, 4, (void*)str_S_V_JP_S_P_A },
-    { 3, 7, 4, (void*)str_S_V_JP_S_P_B },
-    { 3, 7, 4, (void*)str_S_V_JP_M_P_A },
-    { 3, 7, 4, (void*)str_S_V_JP_M_P_B },
-    { 3, 7, 4, (void*)str_S_V_JP_L_P_A },
-    { 3, 7, 4, (void*)str_S_V_JP_L_P_B },
-    { 3, 7, 4, (void*)str_S_V_JP_S_K_A },
-    { 3, 7, 4, (void*)str_S_V_JP_S_K_B },
-    { 3, 7, 4, (void*)str_S_V_JP_M_K_A },
-    { 3, 7, 4, (void*)str_S_V_JP_M_K_B },
-    { 3, 7, 4, (void*)str_S_V_JP_L_K_A },
-    { 3, 7, 4, (void*)str_S_V_JP_L_K_B },
-    { 3, 7, 4, (void*)str_S_F_JP_S_P_A },
-    { 3, 7, 4, (void*)str_S_F_JP_S_P_B },
-    { 3, 7, 4, (void*)str_S_F_JP_M_P_A },
-    { 3, 7, 4, (void*)str_S_F_JP_M_P_B },
-    { 3, 7, 4, (void*)str_S_F_JP_L_P_A },
-    { 3, 7, 4, (void*)str_S_F_JP_L_P_B },
-    { 3, 7, 4, (void*)str_S_F_JP_S_K_A },
-    { 3, 7, 4, (void*)str_S_F_JP_S_K_B },
-    { 3, 7, 4, (void*)str_S_F_JP_M_K_A },
-    { 3, 7, 4, (void*)str_S_F_JP_M_K_B },
-    { 3, 7, 4, (void*)str_S_F_JP_L_K_A },
-    { 3, 7, 4, (void*)str_S_F_JP_L_K_B },
-    { 3, 7, 4, (void*)str_S_B_JP_S_P_A },
-    { 3, 7, 4, (void*)str_S_B_JP_S_P_B },
-    { 3, 7, 4, (void*)str_S_B_JP_M_P_A },
-    { 3, 7, 4, (void*)str_S_B_JP_M_P_B },
-    { 3, 7, 4, (void*)str_S_B_JP_L_P_A },
-    { 3, 7, 4, (void*)str_S_B_JP_L_P_B },
-    { 3, 7, 4, (void*)str_S_B_JP_S_K_A },
-    { 3, 7, 4, (void*)str_S_B_JP_S_K_B },
-    { 3, 7, 4, (void*)str_S_B_JP_M_K_A },
-    { 3, 7, 4, (void*)str_S_B_JP_M_K_B },
-    { 3, 7, 4, (void*)str_S_B_JP_L_K_A },
-    { 3, 7, 4, (void*)str_S_B_JP_L_K_B },
-    { 3, 7, 4, (void*)str_TUKAMIKAKARI_A },
-    { 3, 7, 4, (void*)str_TUKAMIKAKARI_B },
-    { 3, 7, 4, (void*)str_TUKAMIKAKARI_C },
-    { 3, 7, 4, (void*)str_TUKAMIKAKARI_D },
-    { 3, 7, 4, (void*)str_TUKAMIKAKARI_E },
-    { 3, 7, 4, (void*)str_TUKAMIKAKARI_F },
-    { 3, 7, 4, (void*)str_TUKAMI_AIR_A },
-    { 3, 7, 4, (void*)str_TUKAMI_AIR_B },
-    { 3, 7, 4, (void*)str_TUKAMI_AIR_C },
-    { 3, 7, 4, (void*)str_TUKAMI_AIR_D },
-    { 3, 7, 4, (void*)str_TUKAMI_AIR_E },
-    { 3, 7, 4, (void*)str_TUKAMI_AIR_F },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_UP_P_GUARD_P_S },
-    { 3, 7, 4, (void*)str_UP_P_GUARD_P_M },
-    { 3, 7, 4, (void*)str_UP_P_GUARD_P_L },
-    { 3, 7, 4, (void*)str_UP_P_GUARD_K_S },
-    { 3, 7, 4, (void*)str_UP_P_GUARD_K_M },
-    { 3, 7, 4, (void*)str_UP_P_GUARD_K_L },
-    { 3, 7, 4, (void*)str_D_P_GUARD_P_S },
-    { 3, 7, 4, (void*)str_D_P_GUARD_P_M },
-    { 3, 7, 4, (void*)str_D_P_GUARD_P_L },
-    { 3, 7, 4, (void*)str_D_P_GUARD_K_S },
-    { 3, 7, 4, (void*)str_D_P_GUARD_K_M },
-    { 3, 7, 4, (void*)str_D_P_GUARD_K_L },
-    { 3, 7, 4, (void*)str_FUSHIN_P_S },
-    { 3, 7, 4, (void*)str_FUSHIN_P_M },
-    { 3, 7, 4, (void*)str_FUSHIN_P_L },
-    { 3, 7, 4, (void*)str_FUSHIN_K_S },
-    { 3, 7, 4, (void*)str_FUSHIN_K_M },
-    { 3, 7, 4, (void*)str_FUSHIN_K_L },
-    { 3, 7, 4, (void*)str_OKIAGARI_P_S },
-    { 3, 7, 4, (void*)str_OKIAGARI_P_M },
-    { 3, 7, 4, (void*)str_OKIAGARI_P_L },
-    { 3, 7, 4, (void*)str_OKIAGARI_K_S },
-    { 3, 7, 4, (void*)str_OKIAGARI_K_M },
-    { 3, 7, 4, (void*)str_OKIAGARI_K_L },
-    { 3, 7, 4, (void*)str_ATTACK_1_S },
-    { 3, 7, 4, (void*)str_ATTACK_1_M },
-    { 3, 7, 4, (void*)str_ATTACK_1_L },
-    { 3, 7, 4, (void*)str_ATTACK_1_SP },
-    { 3, 7, 4, (void*)str_ATTACK_2_S },
-    { 3, 7, 4, (void*)str_ATTACK_2_M },
-    { 3, 7, 4, (void*)str_ATTACK_2_L },
-    { 3, 7, 4, (void*)str_ATTACK_2_SP },
-    { 3, 7, 4, (void*)str_ATTACK_3_S },
-    { 3, 7, 4, (void*)str_ATTACK_3_M },
-    { 3, 7, 4, (void*)str_ATTACK_3_L },
-    { 3, 7, 4, (void*)str_ATTACK_3_SP },
-    { 3, 7, 4, (void*)str_ATTACK_4_S },
-    { 3, 7, 4, (void*)str_ATTACK_4_M },
-    { 3, 7, 4, (void*)str_ATTACK_4_L },
-    { 3, 7, 4, (void*)str_ATTACK_4_SP },
-    { 3, 7, 4, (void*)str_ATTACK_5_S },
-    { 3, 7, 4, (void*)str_ATTACK_5_M },
-    { 3, 7, 4, (void*)str_ATTACK_5_L },
-    { 3, 7, 4, (void*)str_ATTACK_5_SP },
-    { 3, 7, 4, (void*)str_ATTACK_6_S },
-    { 3, 7, 4, (void*)str_ATTACK_6_M },
-    { 3, 7, 4, (void*)str_ATTACK_6_L },
-    { 3, 7, 4, (void*)str_ATTACK_6_SP },
-    { 3, 7, 4, (void*)str_ATTACK_7_S },
-    { 3, 7, 4, (void*)str_ATTACK_7_M },
-    { 3, 7, 4, (void*)str_ATTACK_7_L },
-    { 3, 7, 4, (void*)str_ATTACK_7_SP },
-    { 3, 7, 4, (void*)str_ATTACK_8_S },
-    { 3, 7, 4, (void*)str_ATTACK_8_M },
-    { 3, 7, 4, (void*)str_ATTACK_8_L },
-    { 3, 7, 4, (void*)str_ATTACK_8_SP },
-    { 3, 7, 4, (void*)str_ATTACK_9_S },
-    { 3, 7, 4, (void*)str_ATTACK_9_M },
-    { 3, 7, 4, (void*)str_ATTACK_9_L },
-    { 3, 7, 4, (void*)str_ATTACK_9_SP },
-    { 3, 7, 4, (void*)str_ATTACK_10_S },
-    { 3, 7, 4, (void*)str_ATTACK_10_M },
-    { 3, 7, 4, (void*)str_ATTACK_10_L },
-    { 3, 7, 4, (void*)str_ATTACK_10_SP },
-    { 3, 7, 4, (void*)str_ATTACK_11_S },
-    { 3, 7, 4, (void*)str_ATTACK_11_M },
-    { 3, 7, 4, (void*)str_ATTACK_11_L },
-    { 3, 7, 4, (void*)str_ATTACK_11_SP },
-    { 3, 7, 4, (void*)str_ATTACK_12_S },
-    { 3, 7, 4, (void*)str_ATTACK_12_M },
-    { 3, 7, 4, (void*)str_ATTACK_12_L },
-    { 3, 7, 4, (void*)str_ATTACK_12_SP },
-    { 3, 7, 4, (void*)str_ATTACK_13_S },
-    { 3, 7, 4, (void*)str_ATTACK_13_M },
-    { 3, 7, 4, (void*)str_ATTACK_13_L },
-    { 3, 7, 4, (void*)str_ATTACK_13_SP },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_HANASARE },
-    { 3, 7, 4, (void*)str_HANASARE },
-    { 3, 7, 4, (void*)str_HANASARE },
-    { 3, 7, 4, (void*)str_HANASARE },
-    { 3, 7, 4, (void*)str_HANASARE },
-    { 3, 7, 4, (void*)str_HANASARE },
-    { 3, 7, 4, (void*)str_HANASARE },
-    { 3, 7, 4, (void*)str_HANASARE },
-    { 3, 7, 4, (void*)str_HANASARE },
-    { 3, 7, 4, (void*)str_HANASARE },
-    { 3, 7, 4, (void*)str_HANASARE },
-    { 3, 7, 4, (void*)str_HANASARE },
-    { 3, 7, 4, (void*)str_HANASARE },
-    { 3, 7, 4, (void*)str_HANASARE },
-    { 3, 7, 4, (void*)str_HANASARE },
-    { 3, 7, 4, (void*)str_HANASARE },
-    { 3, 7, 4, (void*)str_HANASARE },
-    { 3, 7, 4, (void*)str_HANASARE },
-    { 3, 7, 4, (void*)str_HANASARE },
-    { 3, 7, 4, (void*)str_HANASARE },
-    { 3, 7, 4, (void*)str_HANASARE },
-    { 3, 7, 4, (void*)str_HANASARE },
-    { 3, 7, 4, (void*)str_HANASARE },
-    { 3, 7, 4, (void*)str_HANASARE },
-    { 3, 7, 4, (void*)str_HANASARE },
-    { 3, 7, 4, (void*)str_HANASARE },
-    { 3, 7, 4, (void*)str_HANASARE },
-    { 3, 7, 4, (void*)str_HANASARE },
-    { 3, 7, 4, (void*)str_HANASARE },
-    { 3, 7, 4, (void*)str_HANASARE },
-    { 3, 7, 4, (void*)str_HANASARE },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_EFF01_CHAR },
-    { 3, 7, 4, (void*)str_EFF13_CHAR },
-    { 3, 7, 4, (void*)str_BONUS_CHAR },
-    { 3, 7, 4, (void*)str_JUDGEMENT_GAL },
-    { 3, 7, 4, (void*)str_JUDGEMENT_GAL },
-    { 3, 7, 4, (void*)str_JUDGEMENT_GAL },
-    { 3, 7, 4, (void*)str_JUDGEMENT_GAL },
-    { 3, 7, 4, (void*)str_JUDGEMENT_GAL },
-    { 3, 7, 4, (void*)str_JUDGEMENT_GAL },
-    { 3, 7, 4, (void*)str_JUDGEMENT_GAL },
-    { 3, 7, 4, (void*)str_JUDGEMENT_GAL },
-    { 3, 7, 4, (void*)str_EXTRA },
-    { 3, 7, 4, (void*)str_PLEF },
-    { 3, 7, 4, (void*)str_SELECT },
-    { 3, 7, 4, (void*)str_ETC_1 },
-    { 3, 7, 4, (void*)str_ETC_2 },
-    { 3, 7, 4, (void*)str_ETC_3 },
-    { 3, 7, 4, (void*)str_RUCCIA },
-    { 3, 7, 4, (void*)str_AFRICA_2 },
-    { 3, 7, 4, (void*)str_N_Y },
-    { 3, 7, 4, (void*)str_HONGKONG },
-    { 3, 7, 4, (void*)str_JAPAN2 },
-    { 3, 7, 4, (void*)str_GERMANY_2 },
-    { 3, 7, 4, (void*)str_BRAZIL_2 },
-    { 3, 7, 4, (void*)str_ORUMEKA },
-    { 3, 7, 4, (void*)str_ENGLAND_2 },
-    { 3, 7, 4, (void*)str_JAPAN_3 },
-    { 3, 7, 4, (void*)str_GILL_STAGE },
-    { 3, 7, 4, (void*)str_JAPAN_11 },
-    { 3, 7, 4, (void*)str_BONUS },
-    { 3, 7, 4, (void*)str_FRANCE_2 },
-    { 3, 7, 4, (void*)str_CHAINA_2 },
-    { 3, 7, 4, (void*)str_BRAZIL_1_2 },
-    { 3, 7, 4, (void*)str_JAPAN_10 },
-    { 3, 7, 4, (void*)str_ENDING },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_APPEAR_JUNBI_1 },
-    { 3, 7, 4, (void*)str_APPEAR_JUNBI_2 },
-    { 3, 7, 4, (void*)str_APPEAR_JUNBI_3 },
-    { 3, 7, 4, (void*)str_APPEAR_JUNBI_4 },
-    { 3, 7, 4, (void*)str_APPEAR_JUNBI_5 },
-    { 3, 7, 4, (void*)str_APPEAR_JUNBI_6 },
-    { 3, 7, 4, (void*)str_APPEAR_JUNBI_7 },
-    { 3, 7, 4, (void*)str_APPEAR_JUNBI_8 },
-    { 3, 7, 4, (void*)str_APPEAR_1 },
-    { 3, 7, 4, (void*)str_APPEAR_2 },
-    { 3, 7, 4, (void*)str_APPEAR_3 },
-    { 3, 7, 4, (void*)str_APPEAR_4 },
-    { 3, 7, 4, (void*)str_APPEAR_5 },
-    { 3, 7, 4, (void*)str_APPEAR_6 },
-    { 3, 7, 4, (void*)str_APPEAR_7 },
-    { 3, 7, 4, (void*)str_APPEAR_8 },
-    { 3, 7, 4, (void*)str_SP_APPEAR_1 },
-    { 3, 7, 4, (void*)str_SP_APPEAR_2 },
-    { 3, 7, 4, (void*)str_SP_APPEAR_3 },
-    { 3, 7, 4, (void*)str_SP_APPEAR_4 },
-    { 3, 7, 4, (void*)str_SP_APPEAR_5 },
-    { 3, 7, 4, (void*)str_SP_APPEAR_6 },
-    { 3, 7, 4, (void*)str_SP_APPEAR_7 },
-    { 3, 7, 4, (void*)str_SP_APPEAR_8 },
-    { 3, 7, 4, (void*)str_ZANNEN_1 },
-    { 3, 7, 4, (void*)str_ZANNEN_2 },
-    { 3, 7, 4, (void*)str_ZANNEN_3 },
-    { 3, 7, 4, (void*)str_ZANNEN_4 },
-    { 3, 7, 4, (void*)str_ZANNEN_5 },
-    { 3, 7, 4, (void*)str_ZANNEN_6 },
-    { 3, 7, 4, (void*)str_ZANNEN_7 },
-    { 3, 7, 4, (void*)str_ZANNEN_8 },
-    { 3, 7, 4, (void*)str_WIN_1 },
-    { 3, 7, 4, (void*)str_WIN_2 },
-    { 3, 7, 4, (void*)str_WIN_3 },
-    { 3, 7, 4, (void*)str_WIN_4 },
-    { 3, 7, 4, (void*)str_WIN_5 },
-    { 3, 7, 4, (void*)str_WIN_6 },
-    { 3, 7, 4, (void*)str_WIN_7 },
-    { 3, 7, 4, (void*)str_WIN_8 },
-    { 3, 7, 4, (void*)str_SP_WIN_1 },
-    { 3, 7, 4, (void*)str_SP_WIN_2 },
-    { 3, 7, 4, (void*)str_SP_WIN_3 },
-    { 3, 7, 4, (void*)str_SP_WIN_4 },
-    { 3, 7, 4, (void*)str_SP_WIN_5 },
-    { 3, 7, 4, (void*)str_SP_WIN_6 },
-    { 3, 7, 4, (void*)str_SP_WIN_7 },
-    { 3, 7, 4, (void*)str_SP_WIN_8 },
-    { 3, 7, 4, (void*)str_JUDGMENT_WAIT },
-    { 3, 7, 4, (void*)str_JUDGMENT_WAIT },
-    { 3, 7, 4, (void*)str_JUDGMENT_WAIT },
-    { 3, 7, 4, (void*)str_JUDGMENT_WAIT },
-    { 3, 7, 4, (void*)str_JUDGMENT_WIN },
-    { 3, 7, 4, (void*)str_JUDGMENT_WIN },
-    { 3, 7, 4, (void*)str_JUDGMENT_WIN },
-    { 3, 7, 4, (void*)str_JUDGMENT_WIN },
-    { 3, 7, 4, (void*)str_JUDGMENT_LOSE },
-    { 3, 7, 4, (void*)str_JUDGMENT_LOSE },
-    { 3, 7, 4, (void*)str_JUDGMENT_LOSE },
-    { 3, 7, 4, (void*)str_JUDGMENT_LOSE },
-    { 3, 7, 4, (void*)str_WAIT },
-    { 3, 7, 4, (void*)str_AFRICA_JUMP },
-    { 3, 7, 4, (void*)str_AFRICA_LAND },
-    { 3, 7, 4, (void*)str_SEAN_BALL_HIT },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_BONUS_WIN_1 },
-    { 3, 7, 4, (void*)str_BONUS_WIN_2 },
-    { 3, 7, 4, (void*)str_BONUS_WIN_3 },
-    { 3, 7, 4, (void*)str_APPEAR_USE },
-    { 3, 7, 4, (void*)str_APPEAR_USE },
-    { 3, 7, 4, (void*)str_APPEAR_USE },
-    { 3, 7, 4, (void*)str_APPEAR_USE },
-    { 3, 7, 4, (void*)str_APPEAR_USE },
-    { 3, 7, 4, (void*)str_APPEAR_USE },
-    { 3, 7, 4, (void*)str_APPEAR_USE },
-    { 3, 7, 4, (void*)str_APPEAR_USE },
-    { 3, 7, 4, (void*)str_APPEAR_USE },
-    { 3, 7, 4, (void*)str_APPEAR_USE },
-    { 3, 7, 4, (void*)str_APPEAR_USE },
-    { 3, 7, 4, (void*)str_APPEAR_USE },
-    { 3, 7, 4, (void*)str_APPEAR_USE },
-    { 3, 7, 4, (void*)str_APPEAR_USE },
-    { 3, 7, 4, (void*)str_APPEAR_USE },
-    { 3, 7, 4, (void*)str_APPEAR_USE },
-    { 3, 7, 4, (void*)str_APPEAR_USE },
-    { 3, 7, 4, (void*)str_APPEAR_USE },
-    { 3, 7, 4, (void*)str_APPEAR_USE },
-    { 3, 7, 4, (void*)str_APPEAR_USE },
-    { 3, 7, 4, (void*)str_APPEAR_USE },
-    { 3, 7, 4, (void*)str_APPEAR_USE },
-    { 3, 7, 4, (void*)str_APPEAR_USE },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
-    { 3, 7, 4, (void*)str_empty_10 },
+    { 3, 5, 4, str_NORMAL },
+    { 3, 5, 4, str_DAMAGE },
+    { 3, 5, 4, str_CATCH },
+    { 3, 5, 4, str_CAUGHT },
+    { 3, 5, 4, str_ATTACK },
+    { 3, 5, 4, str_SP_AT },
+    { 3, 5, 4, str_BUTTOBI },
+    { 3, 5, 4, str_UNION },
+    { 3, 5, 4, str_ETC },
+    { 3, 5, 4, str_ETC },
+    { 3, 5, 4, str_EFFECT },
+    { 3, 5, 4, str_empty_9 },
+    { 3, 7, 4, str_KAMAE },
+    { 3, 7, 4, str_HURIMUKI },
+    { 3, 7, 4, str_FRONT_WALK },
+    { 3, 7, 4, str_BACK_WALK },
+    { 3, 7, 4, str_DASH_HUMIKOMI },
+    { 3, 7, 4, str_DASH_TOBINOKI },
+    { 3, 7, 4, str_KAGAMU },
+    { 3, 7, 4, str_KAGAMI_KAMAE },
+    { 3, 7, 4, str_KAGAMI_TURN },
+    { 3, 7, 4, str_KAGAMI_F_WALK },
+    { 3, 7, 4, str_KAGAMI_B_WALK },
+    { 3, 7, 4, str_STAND_UP },
+    { 3, 7, 4, str_JUMP_JUNBI },
+    { 3, 7, 4, str_SP_JUMP_JUNBI },
+    { 3, 7, 4, str_JUMP_FRONT },
+    { 3, 7, 4, str_JUMP_VERTICAL },
+    { 3, 7, 4, str_JUMP_BACK },
+    { 3, 7, 4, str_S_JUMP_FRONT },
+    { 3, 7, 4, str_S_JUMP_V },
+    { 3, 7, 4, str_S_JUMP_BACK },
+    { 3, 7, 4, str_SP_JUMP_FRONT },
+    { 3, 7, 4, str_SP_JUMP_V },
+    { 3, 7, 4, str_SP_JUMP_BACK },
+    { 3, 7, 4, str_WALK_END },
+    { 3, 7, 4, str_PARING_HEAD },
+    { 3, 7, 4, str_PARING_UP },
+    { 3, 7, 4, str_PARING_DOWN },
+    { 3, 7, 4, str_PARING_AIR_F },
+    { 3, 7, 4, str_PARING_AIR_B },
+    { 3, 7, 4, str_GUARD_HEAD },
+    { 3, 7, 4, str_GUARD_UP },
+    { 3, 7, 4, str_GUARD_DOWN },
+    { 3, 7, 4, str_GUARD_AIR },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_P_BREAK_ZUJOU },
+    { 3, 7, 4, str_P_BREAK_UP },
+    { 3, 7, 4, str_P_BREAK_DOWN },
+    { 3, 7, 4, str_P_BREAK_AIR_F },
+    { 3, 7, 4, str_P_BREAK_AIR_R },
+    { 3, 7, 4, str_TUKAMIHAZUSI },
+    { 3, 7, 4, str_TUKAMIHAZUSARE },
+    { 3, 7, 4, str_TUKAMIHAZUSI },
+    { 3, 7, 4, str_TUKAMIHAZUSARE },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_GUARD_HEAD_2 },
+    { 3, 7, 4, str_GUARD_UP_2 },
+    { 3, 7, 4, str_GUARD_DOWN_2 },
+    { 3, 7, 4, str_GUARD_AIR_2 },
+    { 3, 7, 4, str_HUSHIN_HEAD },
+    { 3, 7, 4, str_HUSHIN_UP },
+    { 3, 7, 4, str_HUSHIN_DOWN },
+    { 3, 7, 4, str_HUSHIN_AIR },
+    { 3, 7, 4, str_FACE_S },
+    { 3, 7, 4, str_FACE_M },
+    { 3, 7, 4, str_FACE_L },
+    { 3, 7, 4, str_FACE_SP },
+    { 3, 7, 4, str_FOOK_OKU_S },
+    { 3, 7, 4, str_FOOK_OKU_M },
+    { 3, 7, 4, str_FOOK_OKU_L },
+    { 3, 7, 4, str_FOOK_OKU_SP },
+    { 3, 7, 4, str_FOOK_TEMAE_S },
+    { 3, 7, 4, str_FOOK_TEMAE_M },
+    { 3, 7, 4, str_FOOK_TEMAE_L },
+    { 3, 7, 4, str_FOOK_TEMAE_SP },
+    { 3, 7, 4, str_UPPER_S },
+    { 3, 7, 4, str_UPPER_M },
+    { 3, 7, 4, str_UPPER_L },
+    { 3, 7, 4, str_UPPER_SP },
+    { 3, 7, 4, str_NOUTEN_S },
+    { 3, 7, 4, str_NOUTEN_M },
+    { 3, 7, 4, str_NOUTEN_L },
+    { 3, 7, 4, str_NOUTEN_SP },
+    { 3, 7, 4, str_BODY_BROW_S },
+    { 3, 7, 4, str_BODY_BROW_M },
+    { 3, 7, 4, str_BODY_BROW_L },
+    { 3, 7, 4, str_BODY_BROW_SP },
+    { 3, 7, 4, str_BODY_UPPER_S },
+    { 3, 7, 4, str_BODY_UPPER_M },
+    { 3, 7, 4, str_BODY_UPPER_L },
+    { 3, 7, 4, str_BODY_UPPER_SP },
+    { 3, 7, 4, str_TATAKI_S },
+    { 3, 7, 4, str_TATAKI_M },
+    { 3, 7, 4, str_TATAKI_L },
+    { 3, 7, 4, str_TATAKI_SP },
+    { 3, 7, 4, str_TATAKI_V_S },
+    { 3, 7, 4, str_TATAKI_V_M },
+    { 3, 7, 4, str_TATAKI_V_L },
+    { 3, 7, 4, str_TATAKI_V_SP },
+    { 3, 7, 4, str_NOBASITA_TE_S },
+    { 3, 7, 4, str_NOBASITA_TE_M },
+    { 3, 7, 4, str_NOBASITA_TE_L },
+    { 3, 7, 4, str_NOBASITA_TE_SP },
+    { 3, 7, 4, str_KAGAMI_S },
+    { 3, 7, 4, str_KAGAMI_M },
+    { 3, 7, 4, str_KAGAMI_L },
+    { 3, 7, 4, str_KAGAMI_SP },
+    { 3, 7, 4, str_KGM_TATAKI_S },
+    { 3, 7, 4, str_KGM_TATAKI_M },
+    { 3, 7, 4, str_KGM_TATAKI_L },
+    { 3, 7, 4, str_KGM_TATAKI_SP },
+    { 3, 7, 4, str_KGM_TTKI_V_S },
+    { 3, 7, 4, str_KGM_TTKI_V_M },
+    { 3, 7, 4, str_KGM_TTKI_V_L },
+    { 3, 7, 4, str_KGM_TTKI_V_SP },
+    { 3, 7, 4, str_NEKOROBI_S },
+    { 3, 7, 4, str_NEKOROBI_M },
+    { 3, 7, 4, str_NEKOROBI_L },
+    { 3, 7, 4, str_NEKOROBI_SP },
+    { 3, 7, 4, str_OKIAGARI },
+    { 3, 7, 4, str_OKIAGARI_F },
+    { 3, 7, 4, str_OKIAGARI_B },
+    { 3, 7, 4, str_LOSE_NO_STAND },
+    { 3, 7, 4, str_LOSE_SONABA },
+    { 3, 7, 4, str_LOSE_KAGAMI },
+    { 3, 7, 4, str_PIYO },
+    { 3, 7, 4, str_UKEMI_MOVE_F },
+    { 3, 7, 4, str_UKEMI_MOVE_R },
+    { 3, 7, 4, str_SHIMEOTASARE },
+    { 3, 7, 4, str_TATI_TOUKETU_S },
+    { 3, 7, 4, str_TATI_TOUKETU_M },
+    { 3, 7, 4, str_TATI_TOUKETU_L },
+    { 3, 7, 4, str_TATI_TOUKETU_P },
+    { 3, 7, 4, str_KGM_TOUKETU_S },
+    { 3, 7, 4, str_KGM_TOUKETU_M },
+    { 3, 7, 4, str_KGM_TOUKETU_L },
+    { 3, 7, 4, str_KGM_TOUKETU_P },
+    { 3, 7, 4, str_TATI_DENGEKI_S },
+    { 3, 7, 4, str_TATI_DENGEKI_M },
+    { 3, 7, 4, str_TATI_DENGEKI_L },
+    { 3, 7, 4, str_TATI_DENGEKI_P },
+    { 3, 7, 4, str_KGM_DENGEKI_S },
+    { 3, 7, 4, str_KGM_DENGEKI_M },
+    { 3, 7, 4, str_KGM_DENGEKI_L },
+    { 3, 7, 4, str_KGM_DENGEKI_P },
+    { 3, 7, 4, str_OKIAGARI_FRONT },
+    { 3, 7, 4, str_OKIAGARI_REAR },
+    { 3, 7, 4, str_TATI_MOE_S },
+    { 3, 7, 4, str_TATI_MOE_M },
+    { 3, 7, 4, str_TATI_MOE_L },
+    { 3, 7, 4, str_TATI_MOE_SP },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_AIR_NORMAL },
+    { 3, 7, 4, str_ASIBARAI_SIRI },
+    { 3, 7, 4, str_ASIB_TUNNOMERI },
+    { 3, 7, 4, str_NOKEZORI },
+    { 3, 7, 4, str_KUNOJI },
+    { 3, 7, 4, str_KIRIMOMI },
+    { 3, 7, 4, str_UPPER },
+    { 3, 7, 4, str_BODY_UPPER },
+    { 3, 7, 4, str_HARAYARARE },
+    { 3, 7, 4, str_TATAKI_AIR },
+    { 3, 7, 4, str_TTKI_V_AIR },
+    { 3, 7, 4, str_HUMI_ASIB },
+    { 3, 7, 4, str_FACE },
+    { 3, 7, 4, str_ASIB_SIRI_LOSE },
+    { 3, 7, 4, str_ASIB_TUN_LOSE },
+    { 3, 7, 4, str_DENKI },
+    { 3, 7, 4, str_KUNOJI_NOKE },
+    { 3, 7, 4, str_BODY_UPPER_SP_2 },
+    { 3, 7, 4, str_HANEAGARI },
+    { 3, 7, 4, str_TOUKETSU_A },
+    { 3, 7, 4, str_BODY_SLAM },
+    { 3, 7, 4, str_IPPONZEOI },
+    { 3, 7, 4, str_TOMOE_RYU },
+    { 3, 7, 4, str_MONKEY_FLIP },
+    { 3, 7, 4, str_TOMOE_ORO },
+    { 3, 7, 4, str_SNAKE_FANG },
+    { 3, 7, 4, str_FLANKEN_S },
+    { 3, 7, 4, str_KISHINRIKI },
+    { 3, 7, 4, str_SPLASH_M },
+    { 3, 7, 4, str_HARAIGOSHI },
+    { 3, 7, 4, str_ALEX_B_D },
+    { 3, 7, 4, str_GILL_3 },
+    { 3, 7, 4, str_HANEKAERI_HARA },
+    { 3, 7, 4, str_S_HANEAGARI },
+    { 3, 7, 4, str_TATUMAKIZANKU },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_CATCH_1 },
+    { 3, 7, 4, str_CATCH_2 },
+    { 3, 7, 4, str_CATCH_3 },
+    { 3, 7, 4, str_CATCH_4 },
+    { 3, 7, 4, str_CATCH_5 },
+    { 3, 7, 4, str_CATCH_6 },
+    { 3, 7, 4, str_CATCH_7 },
+    { 3, 7, 4, str_CATCH_8 },
+    { 3, 7, 4, str_CATCH_9 },
+    { 3, 7, 4, str_CATCH_10 },
+    { 3, 7, 4, str_CATCH_11 },
+    { 3, 7, 4, str_CATCH_12 },
+    { 3, 7, 4, str_CATCH_13 },
+    { 3, 7, 4, str_CATCH_14 },
+    { 3, 7, 4, str_CATCH_15 },
+    { 3, 7, 4, str_CATCH_16 },
+    { 3, 7, 4, str_CATCH_17 },
+    { 3, 7, 4, str_CATCH_18 },
+    { 3, 7, 4, str_CATCH_19 },
+    { 3, 7, 4, str_CATCH_20 },
+    { 3, 7, 4, str_CATCH_21 },
+    { 3, 7, 4, str_CATCH_22 },
+    { 3, 7, 4, str_CATCH_23 },
+    { 3, 7, 4, str_CATCH_24 },
+    { 3, 7, 4, str_CATCH_25 },
+    { 3, 7, 4, str_CATCH_26 },
+    { 3, 7, 4, str_CATCH_27 },
+    { 3, 7, 4, str_CATCH_28 },
+    { 3, 7, 4, str_CATCH_29 },
+    { 3, 7, 4, str_CATCH_30 },
+    { 3, 7, 4, str_CATCH_31 },
+    { 3, 7, 4, str_CATCH_32 },
+    { 3, 7, 4, str_CATCH_33 },
+    { 3, 7, 4, str_CATCH_34 },
+    { 3, 7, 4, str_CATCH_35 },
+    { 3, 7, 4, str_CATCH_36 },
+    { 3, 7, 4, str_CATCH_37 },
+    { 3, 7, 4, str_CATCH_38 },
+    { 3, 7, 4, str_CATCH_39 },
+    { 3, 7, 4, str_CATCH_40 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_ALEX_ZUTUKI },
+    { 3, 7, 4, str_ALEX_BODY_S },
+    { 3, 7, 4, str_ALEX_BACK_D },
+    { 3, 7, 4, str_ALEX_POWER_B },
+    { 3, 7, 4, str_ALEX_SLEEPER },
+    { 3, 7, 4, str_RYU_SEOINAGE },
+    { 3, 7, 4, str_IBUKI_2 },
+    { 3, 7, 4, str_DADLEY_L_B },
+    { 3, 7, 4, str_IBUKI_KUBIORI },
+    { 3, 7, 4, str_NECRO_S_T },
+    { 3, 7, 4, str_RYU_TOMOENAGE },
+    { 3, 7, 4, str_YUN_HIZAGERI },
+    { 3, 7, 4, str_ORO_KUBISIME },
+    { 3, 7, 4, str_NECRO_G_S },
+    { 3, 7, 4, str_DUDDLEY_D_S },
+    { 3, 7, 4, str_YUN_MONKEY_F },
+    { 3, 7, 4, str_ORO_TOMOENAGE },
+    { 3, 7, 4, str_ORO_NIOURIKI },
+    { 3, 7, 4, str_ORO_GIGOKU_G },
+    { 3, 7, 4, str_YUN_2 },
+    { 3, 7, 4, str_NECRO_SNAKE_F },
+    { 3, 7, 4, str_NECRO_F_S },
+    { 3, 7, 4, str_IBUKI_HARAIG },
+    { 3, 7, 4, str_GILL_SPLASH_M },
+    { 3, 7, 4, str_KEN_HIZAGERI },
+    { 3, 7, 4, str_ORO_KISINRIKI },
+    { 3, 7, 4, str_SEAN_TACKLE },
+    { 3, 7, 4, str_ALEX_HYPER_B },
+    { 3, 7, 4, str_NECRO_SLAM_D },
+    { 3, 7, 4, str_ELENA_ASINAGE },
+    { 3, 7, 4, str_GILL_IMPACT_C },
+    { 3, 7, 4, str_ALEX_S_H_B },
+    { 3, 7, 4, str_ALEX_F_N_D },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_IBUKI_2 },
+    { 3, 7, 4, str_IBUKI_YOROI_D },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_MAWARIKOMI_M_F },
+    { 3, 7, 4, str_HUGO_BODY_S },
+    { 3, 7, 4, str_HUGO_N_G_T },
+    { 3, 7, 4, str_HUGO_M_S_P },
+    { 3, 7, 4, str_HUGO_S_D_B_B },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_S_PUNCH_A },
+    { 3, 7, 4, str_S_PUNCH_B },
+    { 3, 7, 4, str_S_PUNCH_C },
+    { 3, 7, 4, str_M_PUNCH_A },
+    { 3, 7, 4, str_M_PUNCH_B },
+    { 3, 7, 4, str_M_PUNCH_C },
+    { 3, 7, 4, str_L_PUNCH_A },
+    { 3, 7, 4, str_L_PUNCH_B },
+    { 3, 7, 4, str_L_PUNCH_C },
+    { 3, 7, 4, str_S_KICK_A },
+    { 3, 7, 4, str_S_KICK_B },
+    { 3, 7, 4, str_S_KICK_C },
+    { 3, 7, 4, str_M_KICK_A },
+    { 3, 7, 4, str_M_KICK_B },
+    { 3, 7, 4, str_M_KICK_C },
+    { 3, 7, 4, str_L_KICK_A },
+    { 3, 7, 4, str_L_KICK_B },
+    { 3, 7, 4, str_L_KICK_C },
+    { 3, 7, 4, str_KAGAMI_P_A },
+    { 3, 7, 4, str_KAGAMI_P_B },
+    { 3, 7, 4, str_KAGAMI_P_C },
+    { 3, 7, 4, str_KAGAMI_P_A },
+    { 3, 7, 4, str_KAGAMI_P_B },
+    { 3, 7, 4, str_KAGAMI_P_C },
+    { 3, 7, 4, str_KAGAMI_P_A },
+    { 3, 7, 4, str_KAGAMI_P_B },
+    { 3, 7, 4, str_KAGAMI_P_C },
+    { 3, 7, 4, str_KAGAMI_K_A },
+    { 3, 7, 4, str_KAGAMI_K_B },
+    { 3, 7, 4, str_KAGAMI_K_C },
+    { 3, 7, 4, str_KAGAMI_K_A },
+    { 3, 7, 4, str_KAGAMI_K_B },
+    { 3, 7, 4, str_KAGAMI_K_C },
+    { 3, 7, 4, str_KAGAMI_K_A },
+    { 3, 7, 4, str_KAGAMI_K_B },
+    { 3, 7, 4, str_KAGAMI_K_C },
+    { 3, 7, 4, str_V_JUMP_P_S_A },
+    { 3, 7, 4, str_V_JUMP_P_S_B },
+    { 3, 7, 4, str_V_JUMP_P_M_A },
+    { 3, 7, 4, str_V_JUMP_P_M_B },
+    { 3, 7, 4, str_V_JUMP_P_L_A },
+    { 3, 7, 4, str_V_JUMP_P_L_B },
+    { 3, 7, 4, str_V_JUMP_K_S_A },
+    { 3, 7, 4, str_V_JUMP_K_S_B },
+    { 3, 7, 4, str_V_JUMP_K_M_A },
+    { 3, 7, 4, str_V_JUMP_K_M_B },
+    { 3, 7, 4, str_V_JUMP_K_L_A },
+    { 3, 7, 4, str_V_JUMP_K_L_B },
+    { 3, 7, 4, str_F_JUMP_P_S_A },
+    { 3, 7, 4, str_F_JUMP_P_S_B },
+    { 3, 7, 4, str_F_JUMP_P_M_A },
+    { 3, 7, 4, str_F_JUMP_P_M_B },
+    { 3, 7, 4, str_F_JUMP_P_L_A },
+    { 3, 7, 4, str_F_JUMP_P_L_B },
+    { 3, 7, 4, str_F_JUMP_K_S_A },
+    { 3, 7, 4, str_F_JUMP_K_S_B },
+    { 3, 7, 4, str_F_JUMP_K_M_A },
+    { 3, 7, 4, str_F_JUMP_K_M_B },
+    { 3, 7, 4, str_F_JUMP_K_L_A },
+    { 3, 7, 4, str_F_JUMP_K_L_B },
+    { 3, 7, 4, str_B_JUMP_P_S_A },
+    { 3, 7, 4, str_B_JUMP_P_S_B },
+    { 3, 7, 4, str_B_JUMP_P_M_A },
+    { 3, 7, 4, str_B_JUMP_P_M_B },
+    { 3, 7, 4, str_B_JUMP_P_L_A },
+    { 3, 7, 4, str_B_JUMP_P_L_B },
+    { 3, 7, 4, str_B_JUMP_K_S_A },
+    { 3, 7, 4, str_B_JUMP_K_S_B },
+    { 3, 7, 4, str_B_JUMP_K_M_A },
+    { 3, 7, 4, str_B_JUMP_K_M_B },
+    { 3, 7, 4, str_B_JUMP_K_L_A },
+    { 3, 7, 4, str_B_JUMP_K_L_B },
+    { 3, 7, 4, str_SP_V_JP_S_P_A },
+    { 3, 7, 4, str_SP_V_JP_S_P_B },
+    { 3, 7, 4, str_SP_V_JP_M_P_A },
+    { 3, 7, 4, str_SP_V_JP_M_P_B },
+    { 3, 7, 4, str_SP_V_JP_L_P_A },
+    { 3, 7, 4, str_SP_V_JP_L_P_B },
+    { 3, 7, 4, str_SP_V_JP_S_K_A },
+    { 3, 7, 4, str_SP_V_JP_S_K_B },
+    { 3, 7, 4, str_SP_V_JP_M_K_A },
+    { 3, 7, 4, str_SP_V_JP_M_K_B },
+    { 3, 7, 4, str_SP_V_JP_L_K_A },
+    { 3, 7, 4, str_SP_V_JP_L_K_B },
+    { 3, 7, 4, str_SP_F_JP_S_P_A },
+    { 3, 7, 4, str_SP_F_JP_S_P_B },
+    { 3, 7, 4, str_SP_F_JP_M_P_A },
+    { 3, 7, 4, str_SP_F_JP_M_P_B },
+    { 3, 7, 4, str_SP_F_JP_L_P_A },
+    { 3, 7, 4, str_SP_F_JP_L_P_B },
+    { 3, 7, 4, str_SP_F_JP_S_K_A },
+    { 3, 7, 4, str_SP_F_JP_S_K_B },
+    { 3, 7, 4, str_SP_F_JP_M_K_A },
+    { 3, 7, 4, str_SP_F_JP_M_K_B },
+    { 3, 7, 4, str_SP_F_JP_L_K_A },
+    { 3, 7, 4, str_SP_F_JP_L_K_B },
+    { 3, 7, 4, str_SP_B_JP_S_P_A },
+    { 3, 7, 4, str_SP_B_JP_S_P_B },
+    { 3, 7, 4, str_SP_B_JP_M_P_A },
+    { 3, 7, 4, str_SP_B_JP_M_P_B },
+    { 3, 7, 4, str_SP_B_JP_L_P_A },
+    { 3, 7, 4, str_SP_B_JP_L_P_B },
+    { 3, 7, 4, str_SP_B_JP_S_K_A },
+    { 3, 7, 4, str_SP_B_JP_S_K_B },
+    { 3, 7, 4, str_SP_B_JP_M_K_A },
+    { 3, 7, 4, str_SP_B_JP_M_K_B },
+    { 3, 7, 4, str_SP_B_JP_L_K_A },
+    { 3, 7, 4, str_SP_B_JP_L_K_B },
+    { 3, 7, 4, str_S_V_JP_S_P_A },
+    { 3, 7, 4, str_S_V_JP_S_P_B },
+    { 3, 7, 4, str_S_V_JP_M_P_A },
+    { 3, 7, 4, str_S_V_JP_M_P_B },
+    { 3, 7, 4, str_S_V_JP_L_P_A },
+    { 3, 7, 4, str_S_V_JP_L_P_B },
+    { 3, 7, 4, str_S_V_JP_S_K_A },
+    { 3, 7, 4, str_S_V_JP_S_K_B },
+    { 3, 7, 4, str_S_V_JP_M_K_A },
+    { 3, 7, 4, str_S_V_JP_M_K_B },
+    { 3, 7, 4, str_S_V_JP_L_K_A },
+    { 3, 7, 4, str_S_V_JP_L_K_B },
+    { 3, 7, 4, str_S_F_JP_S_P_A },
+    { 3, 7, 4, str_S_F_JP_S_P_B },
+    { 3, 7, 4, str_S_F_JP_M_P_A },
+    { 3, 7, 4, str_S_F_JP_M_P_B },
+    { 3, 7, 4, str_S_F_JP_L_P_A },
+    { 3, 7, 4, str_S_F_JP_L_P_B },
+    { 3, 7, 4, str_S_F_JP_S_K_A },
+    { 3, 7, 4, str_S_F_JP_S_K_B },
+    { 3, 7, 4, str_S_F_JP_M_K_A },
+    { 3, 7, 4, str_S_F_JP_M_K_B },
+    { 3, 7, 4, str_S_F_JP_L_K_A },
+    { 3, 7, 4, str_S_F_JP_L_K_B },
+    { 3, 7, 4, str_S_B_JP_S_P_A },
+    { 3, 7, 4, str_S_B_JP_S_P_B },
+    { 3, 7, 4, str_S_B_JP_M_P_A },
+    { 3, 7, 4, str_S_B_JP_M_P_B },
+    { 3, 7, 4, str_S_B_JP_L_P_A },
+    { 3, 7, 4, str_S_B_JP_L_P_B },
+    { 3, 7, 4, str_S_B_JP_S_K_A },
+    { 3, 7, 4, str_S_B_JP_S_K_B },
+    { 3, 7, 4, str_S_B_JP_M_K_A },
+    { 3, 7, 4, str_S_B_JP_M_K_B },
+    { 3, 7, 4, str_S_B_JP_L_K_A },
+    { 3, 7, 4, str_S_B_JP_L_K_B },
+    { 3, 7, 4, str_TUKAMIKAKARI_A },
+    { 3, 7, 4, str_TUKAMIKAKARI_B },
+    { 3, 7, 4, str_TUKAMIKAKARI_C },
+    { 3, 7, 4, str_TUKAMIKAKARI_D },
+    { 3, 7, 4, str_TUKAMIKAKARI_E },
+    { 3, 7, 4, str_TUKAMIKAKARI_F },
+    { 3, 7, 4, str_TUKAMI_AIR_A },
+    { 3, 7, 4, str_TUKAMI_AIR_B },
+    { 3, 7, 4, str_TUKAMI_AIR_C },
+    { 3, 7, 4, str_TUKAMI_AIR_D },
+    { 3, 7, 4, str_TUKAMI_AIR_E },
+    { 3, 7, 4, str_TUKAMI_AIR_F },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_UP_P_GUARD_P_S },
+    { 3, 7, 4, str_UP_P_GUARD_P_M },
+    { 3, 7, 4, str_UP_P_GUARD_P_L },
+    { 3, 7, 4, str_UP_P_GUARD_K_S },
+    { 3, 7, 4, str_UP_P_GUARD_K_M },
+    { 3, 7, 4, str_UP_P_GUARD_K_L },
+    { 3, 7, 4, str_D_P_GUARD_P_S },
+    { 3, 7, 4, str_D_P_GUARD_P_M },
+    { 3, 7, 4, str_D_P_GUARD_P_L },
+    { 3, 7, 4, str_D_P_GUARD_K_S },
+    { 3, 7, 4, str_D_P_GUARD_K_M },
+    { 3, 7, 4, str_D_P_GUARD_K_L },
+    { 3, 7, 4, str_FUSHIN_P_S },
+    { 3, 7, 4, str_FUSHIN_P_M },
+    { 3, 7, 4, str_FUSHIN_P_L },
+    { 3, 7, 4, str_FUSHIN_K_S },
+    { 3, 7, 4, str_FUSHIN_K_M },
+    { 3, 7, 4, str_FUSHIN_K_L },
+    { 3, 7, 4, str_OKIAGARI_P_S },
+    { 3, 7, 4, str_OKIAGARI_P_M },
+    { 3, 7, 4, str_OKIAGARI_P_L },
+    { 3, 7, 4, str_OKIAGARI_K_S },
+    { 3, 7, 4, str_OKIAGARI_K_M },
+    { 3, 7, 4, str_OKIAGARI_K_L },
+    { 3, 7, 4, str_ATTACK_1_S },
+    { 3, 7, 4, str_ATTACK_1_M },
+    { 3, 7, 4, str_ATTACK_1_L },
+    { 3, 7, 4, str_ATTACK_1_SP },
+    { 3, 7, 4, str_ATTACK_2_S },
+    { 3, 7, 4, str_ATTACK_2_M },
+    { 3, 7, 4, str_ATTACK_2_L },
+    { 3, 7, 4, str_ATTACK_2_SP },
+    { 3, 7, 4, str_ATTACK_3_S },
+    { 3, 7, 4, str_ATTACK_3_M },
+    { 3, 7, 4, str_ATTACK_3_L },
+    { 3, 7, 4, str_ATTACK_3_SP },
+    { 3, 7, 4, str_ATTACK_4_S },
+    { 3, 7, 4, str_ATTACK_4_M },
+    { 3, 7, 4, str_ATTACK_4_L },
+    { 3, 7, 4, str_ATTACK_4_SP },
+    { 3, 7, 4, str_ATTACK_5_S },
+    { 3, 7, 4, str_ATTACK_5_M },
+    { 3, 7, 4, str_ATTACK_5_L },
+    { 3, 7, 4, str_ATTACK_5_SP },
+    { 3, 7, 4, str_ATTACK_6_S },
+    { 3, 7, 4, str_ATTACK_6_M },
+    { 3, 7, 4, str_ATTACK_6_L },
+    { 3, 7, 4, str_ATTACK_6_SP },
+    { 3, 7, 4, str_ATTACK_7_S },
+    { 3, 7, 4, str_ATTACK_7_M },
+    { 3, 7, 4, str_ATTACK_7_L },
+    { 3, 7, 4, str_ATTACK_7_SP },
+    { 3, 7, 4, str_ATTACK_8_S },
+    { 3, 7, 4, str_ATTACK_8_M },
+    { 3, 7, 4, str_ATTACK_8_L },
+    { 3, 7, 4, str_ATTACK_8_SP },
+    { 3, 7, 4, str_ATTACK_9_S },
+    { 3, 7, 4, str_ATTACK_9_M },
+    { 3, 7, 4, str_ATTACK_9_L },
+    { 3, 7, 4, str_ATTACK_9_SP },
+    { 3, 7, 4, str_ATTACK_10_S },
+    { 3, 7, 4, str_ATTACK_10_M },
+    { 3, 7, 4, str_ATTACK_10_L },
+    { 3, 7, 4, str_ATTACK_10_SP },
+    { 3, 7, 4, str_ATTACK_11_S },
+    { 3, 7, 4, str_ATTACK_11_M },
+    { 3, 7, 4, str_ATTACK_11_L },
+    { 3, 7, 4, str_ATTACK_11_SP },
+    { 3, 7, 4, str_ATTACK_12_S },
+    { 3, 7, 4, str_ATTACK_12_M },
+    { 3, 7, 4, str_ATTACK_12_L },
+    { 3, 7, 4, str_ATTACK_12_SP },
+    { 3, 7, 4, str_ATTACK_13_S },
+    { 3, 7, 4, str_ATTACK_13_M },
+    { 3, 7, 4, str_ATTACK_13_L },
+    { 3, 7, 4, str_ATTACK_13_SP },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_HANASARE },
+    { 3, 7, 4, str_HANASARE },
+    { 3, 7, 4, str_HANASARE },
+    { 3, 7, 4, str_HANASARE },
+    { 3, 7, 4, str_HANASARE },
+    { 3, 7, 4, str_HANASARE },
+    { 3, 7, 4, str_HANASARE },
+    { 3, 7, 4, str_HANASARE },
+    { 3, 7, 4, str_HANASARE },
+    { 3, 7, 4, str_HANASARE },
+    { 3, 7, 4, str_HANASARE },
+    { 3, 7, 4, str_HANASARE },
+    { 3, 7, 4, str_HANASARE },
+    { 3, 7, 4, str_HANASARE },
+    { 3, 7, 4, str_HANASARE },
+    { 3, 7, 4, str_HANASARE },
+    { 3, 7, 4, str_HANASARE },
+    { 3, 7, 4, str_HANASARE },
+    { 3, 7, 4, str_HANASARE },
+    { 3, 7, 4, str_HANASARE },
+    { 3, 7, 4, str_HANASARE },
+    { 3, 7, 4, str_HANASARE },
+    { 3, 7, 4, str_HANASARE },
+    { 3, 7, 4, str_HANASARE },
+    { 3, 7, 4, str_HANASARE },
+    { 3, 7, 4, str_HANASARE },
+    { 3, 7, 4, str_HANASARE },
+    { 3, 7, 4, str_HANASARE },
+    { 3, 7, 4, str_HANASARE },
+    { 3, 7, 4, str_HANASARE },
+    { 3, 7, 4, str_HANASARE },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_EFF01_CHAR },
+    { 3, 7, 4, str_EFF13_CHAR },
+    { 3, 7, 4, str_BONUS_CHAR },
+    { 3, 7, 4, str_JUDGEMENT_GAL },
+    { 3, 7, 4, str_JUDGEMENT_GAL },
+    { 3, 7, 4, str_JUDGEMENT_GAL },
+    { 3, 7, 4, str_JUDGEMENT_GAL },
+    { 3, 7, 4, str_JUDGEMENT_GAL },
+    { 3, 7, 4, str_JUDGEMENT_GAL },
+    { 3, 7, 4, str_JUDGEMENT_GAL },
+    { 3, 7, 4, str_JUDGEMENT_GAL },
+    { 3, 7, 4, str_EXTRA },
+    { 3, 7, 4, str_PLEF },
+    { 3, 7, 4, str_SELECT },
+    { 3, 7, 4, str_ETC_1 },
+    { 3, 7, 4, str_ETC_2 },
+    { 3, 7, 4, str_ETC_3 },
+    { 3, 7, 4, str_RUCCIA },
+    { 3, 7, 4, str_AFRICA_2 },
+    { 3, 7, 4, str_N_Y },
+    { 3, 7, 4, str_HONGKONG },
+    { 3, 7, 4, str_JAPAN2 },
+    { 3, 7, 4, str_GERMANY_2 },
+    { 3, 7, 4, str_BRAZIL_2 },
+    { 3, 7, 4, str_ORUMEKA },
+    { 3, 7, 4, str_ENGLAND_2 },
+    { 3, 7, 4, str_JAPAN_3 },
+    { 3, 7, 4, str_GILL_STAGE },
+    { 3, 7, 4, str_JAPAN_11 },
+    { 3, 7, 4, str_BONUS },
+    { 3, 7, 4, str_FRANCE_2 },
+    { 3, 7, 4, str_CHAINA_2 },
+    { 3, 7, 4, str_BRAZIL_1_2 },
+    { 3, 7, 4, str_JAPAN_10 },
+    { 3, 7, 4, str_ENDING },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_APPEAR_JUNBI_1 },
+    { 3, 7, 4, str_APPEAR_JUNBI_2 },
+    { 3, 7, 4, str_APPEAR_JUNBI_3 },
+    { 3, 7, 4, str_APPEAR_JUNBI_4 },
+    { 3, 7, 4, str_APPEAR_JUNBI_5 },
+    { 3, 7, 4, str_APPEAR_JUNBI_6 },
+    { 3, 7, 4, str_APPEAR_JUNBI_7 },
+    { 3, 7, 4, str_APPEAR_JUNBI_8 },
+    { 3, 7, 4, str_APPEAR_1 },
+    { 3, 7, 4, str_APPEAR_2 },
+    { 3, 7, 4, str_APPEAR_3 },
+    { 3, 7, 4, str_APPEAR_4 },
+    { 3, 7, 4, str_APPEAR_5 },
+    { 3, 7, 4, str_APPEAR_6 },
+    { 3, 7, 4, str_APPEAR_7 },
+    { 3, 7, 4, str_APPEAR_8 },
+    { 3, 7, 4, str_SP_APPEAR_1 },
+    { 3, 7, 4, str_SP_APPEAR_2 },
+    { 3, 7, 4, str_SP_APPEAR_3 },
+    { 3, 7, 4, str_SP_APPEAR_4 },
+    { 3, 7, 4, str_SP_APPEAR_5 },
+    { 3, 7, 4, str_SP_APPEAR_6 },
+    { 3, 7, 4, str_SP_APPEAR_7 },
+    { 3, 7, 4, str_SP_APPEAR_8 },
+    { 3, 7, 4, str_ZANNEN_1 },
+    { 3, 7, 4, str_ZANNEN_2 },
+    { 3, 7, 4, str_ZANNEN_3 },
+    { 3, 7, 4, str_ZANNEN_4 },
+    { 3, 7, 4, str_ZANNEN_5 },
+    { 3, 7, 4, str_ZANNEN_6 },
+    { 3, 7, 4, str_ZANNEN_7 },
+    { 3, 7, 4, str_ZANNEN_8 },
+    { 3, 7, 4, str_WIN_1 },
+    { 3, 7, 4, str_WIN_2 },
+    { 3, 7, 4, str_WIN_3 },
+    { 3, 7, 4, str_WIN_4 },
+    { 3, 7, 4, str_WIN_5 },
+    { 3, 7, 4, str_WIN_6 },
+    { 3, 7, 4, str_WIN_7 },
+    { 3, 7, 4, str_WIN_8 },
+    { 3, 7, 4, str_SP_WIN_1 },
+    { 3, 7, 4, str_SP_WIN_2 },
+    { 3, 7, 4, str_SP_WIN_3 },
+    { 3, 7, 4, str_SP_WIN_4 },
+    { 3, 7, 4, str_SP_WIN_5 },
+    { 3, 7, 4, str_SP_WIN_6 },
+    { 3, 7, 4, str_SP_WIN_7 },
+    { 3, 7, 4, str_SP_WIN_8 },
+    { 3, 7, 4, str_JUDGMENT_WAIT },
+    { 3, 7, 4, str_JUDGMENT_WAIT },
+    { 3, 7, 4, str_JUDGMENT_WAIT },
+    { 3, 7, 4, str_JUDGMENT_WAIT },
+    { 3, 7, 4, str_JUDGMENT_WIN },
+    { 3, 7, 4, str_JUDGMENT_WIN },
+    { 3, 7, 4, str_JUDGMENT_WIN },
+    { 3, 7, 4, str_JUDGMENT_WIN },
+    { 3, 7, 4, str_JUDGMENT_LOSE },
+    { 3, 7, 4, str_JUDGMENT_LOSE },
+    { 3, 7, 4, str_JUDGMENT_LOSE },
+    { 3, 7, 4, str_JUDGMENT_LOSE },
+    { 3, 7, 4, str_WAIT },
+    { 3, 7, 4, str_AFRICA_JUMP },
+    { 3, 7, 4, str_AFRICA_LAND },
+    { 3, 7, 4, str_SEAN_BALL_HIT },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_BONUS_WIN_1 },
+    { 3, 7, 4, str_BONUS_WIN_2 },
+    { 3, 7, 4, str_BONUS_WIN_3 },
+    { 3, 7, 4, str_APPEAR_USE },
+    { 3, 7, 4, str_APPEAR_USE },
+    { 3, 7, 4, str_APPEAR_USE },
+    { 3, 7, 4, str_APPEAR_USE },
+    { 3, 7, 4, str_APPEAR_USE },
+    { 3, 7, 4, str_APPEAR_USE },
+    { 3, 7, 4, str_APPEAR_USE },
+    { 3, 7, 4, str_APPEAR_USE },
+    { 3, 7, 4, str_APPEAR_USE },
+    { 3, 7, 4, str_APPEAR_USE },
+    { 3, 7, 4, str_APPEAR_USE },
+    { 3, 7, 4, str_APPEAR_USE },
+    { 3, 7, 4, str_APPEAR_USE },
+    { 3, 7, 4, str_APPEAR_USE },
+    { 3, 7, 4, str_APPEAR_USE },
+    { 3, 7, 4, str_APPEAR_USE },
+    { 3, 7, 4, str_APPEAR_USE },
+    { 3, 7, 4, str_APPEAR_USE },
+    { 3, 7, 4, str_APPEAR_USE },
+    { 3, 7, 4, str_APPEAR_USE },
+    { 3, 7, 4, str_APPEAR_USE },
+    { 3, 7, 4, str_APPEAR_USE },
+    { 3, 7, 4, str_APPEAR_USE },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
+    { 3, 7, 4, str_empty_10 },
 };
 /* 02004B74 */
 const TM_STRING* dbg_act_name_tbl[11] = {
-    (const TM_STRING*)&dbg_act_kind_str[12],
-    (const TM_STRING*)&dbg_act_kind_str[77],
-    (const TM_STRING*)&dbg_act_kind_str[231],
-    (const TM_STRING*)&dbg_act_kind_str[279],
-    (const TM_STRING*)&dbg_act_kind_str[329],
-    (const TM_STRING*)&dbg_act_kind_str[610],
-    (const TM_STRING*)&dbg_act_kind_str[181],
-    (const TM_STRING*)&dbg_act_kind_str[722],
-    (const TM_STRING*)&dbg_act_kind_str[895],
-    (const TM_STRING*)&dbg_act_kind_str[895],
-    (const TM_STRING*)&dbg_act_kind_str[853],
+    &dbg_act_kind_str[12],
+    &dbg_act_kind_str[77],
+    &dbg_act_kind_str[231],
+    &dbg_act_kind_str[279],
+    &dbg_act_kind_str[329],
+    &dbg_act_kind_str[610],
+    &dbg_act_kind_str[181],
+    &dbg_act_kind_str[722],
+    &dbg_act_kind_str[895],
+    &dbg_act_kind_str[895],
+    &dbg_act_kind_str[853],
 };
 /* 02004BA0 */
 u32* dbg_pl_char_tbl[29][9] = {

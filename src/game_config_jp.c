@@ -105,25 +105,25 @@ TMSCRIPT gcfg_exit_guide_scr_jp[1] = {
 };
 /* 020007FC */
 TMSCRIPT gcfg_screen_scr_jp[2] = {
-    { 1, 0, (void*)((const u8*)gcfg_screen_scr_jp_0) },
-    { 1, 0, (void*)((const u8*)gcfg_screen_scr_jp_1) },
+    { 1, 0, (void*)(gcfg_screen_scr_jp_0) },
+    { 1, 0, (void*)(gcfg_screen_scr_jp_1) },
 };
 /* 0200080C */
 TMSCRIPT gcfg_round_scr_jp[4] = {
-    { 1, 0, (void*)((const u8*)gcfg_round_scr_jp_0) },
-    { 1, 0, (void*)((const u8*)gcfg_round_scr_jp_1) },
-    { 1, 0, (void*)((const u8*)gcfg_round_scr_jp_2) },
-    { 1, 0, (void*)((const u8*)gcfg_round_scr_jp_3) },
+    { 1, 0, (void*)(gcfg_round_scr_jp_0) },
+    { 1, 0, (void*)(gcfg_round_scr_jp_1) },
+    { 1, 0, (void*)(gcfg_round_scr_jp_2) },
+    { 1, 0, (void*)(gcfg_round_scr_jp_3) },
 };
 /* 0200082C */
 TMSCRIPT gcfg_event_scr_jp[2] = {
-    { 1, 0, (void*)((const u8*)gcfg_event_scr_jp_0) },
-    { 1, 0, (void*)((const u8*)gcfg_event_scr_jp_1) },
+    { 1, 0, (void*)(gcfg_event_scr_jp_0) },
+    { 1, 0, (void*)(gcfg_event_scr_jp_1) },
 };
 /* 0200083C */
 TMSCRIPT gcfg_bonus_scr_jp[2] = {
-    { 1, 0, (void*)((const u8*)gcfg_bonus_scr_jp_0) },
-    { 1, 0, (void*)((const u8*)gcfg_bonus_scr_jp_1) },
+    { 1, 0, (void*)(gcfg_bonus_scr_jp_0) },
+    { 1, 0, (void*)(gcfg_bonus_scr_jp_1) },
 };
 /* 0200084C */
 TMSCRIPT gcfg_cursor_scr_jp[1] = {

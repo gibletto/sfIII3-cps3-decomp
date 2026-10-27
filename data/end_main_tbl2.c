@@ -16,26 +16,26 @@
 
 #pragma section TBL
 
-extern const u8 end_1000_scrn_data[];
-extern const u8 end_100_scrn_data[];
-extern const u8 end_1100_scrn_data[];
-extern const u8 end_1600_scrn_data[];
-extern const u8 end_1800_scrn_data[];
-extern const u8 end_1900_scrn_data[];
-extern const u8 end_2000_scrn_data[];
-extern const u8 end_200_scrn_data[];
-extern const u8 end_300_scrn_data[];
-extern const u8 end_400_scrn_data[];
-extern const u8 end_500_scrn_data[];
-extern const u8 end_600_scrn_data[];
-extern const u8 end_700_scrn_data[];
-extern const u8 end_800_scrn_data[];
-extern const u8 end_900_scrn_data[];
-extern const u8 end_ake_scrn_data[];
-extern const u8 end_b00_scrn_data[];
-extern const u8 end_c00_scrn_data[];
-extern const u8 end_d00_scrn_data[];
-extern const u8 end_e00_scrn_data[];
+extern const u32 end_1000_scrn_data[];
+extern const u32 end_100_scrn_data[];
+extern const u32 end_1100_scrn_data[];
+extern const char end_1600_scrn_data[];
+extern const u32 end_1800_scrn_data[];
+extern const u32 end_1900_scrn_data[];
+extern const u32 end_2000_scrn_data[];
+extern const u32 end_200_scrn_data[];
+extern const u32 end_300_scrn_data[];
+extern const u32 end_400_scrn_data[];
+extern const u32 end_500_scrn_data[];
+extern const u32 end_600_scrn_data[];
+extern const u32 end_700_scrn_data[];
+extern const u32 end_800_scrn_data[];
+extern const u32 end_900_scrn_data[];
+extern const u32 end_ake_scrn_data[];
+extern const u32 end_b00_scrn_data[];
+extern const u32 end_c00_scrn_data[];
+extern const u32 end_d00_scrn_data[];
+extern const u32 end_e00_scrn_data[];
 
 const s16 op_bg0_0015_tbl[6] = {
     45, 46, 45, 46, 47, 41,

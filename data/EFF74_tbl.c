@@ -54,8 +54,8 @@ const u8 eff74_anim_tbl_7[10] = {
 };
 
 const EFF74_ANIM eff74_anim_tbl[4] = {
-    { (void*)((const u8*)eff74_anim_tbl_0), (void*)((const u8*)eff74_anim_tbl_1), 5 },
-    { (void*)((const u8*)eff74_anim_tbl_2), (void*)((const u8*)eff74_anim_tbl_3), 2 },
-    { (void*)((const u8*)eff74_anim_tbl_4), (void*)((const u8*)eff74_anim_tbl_3), 2 },
-    { (void*)((const u8*)eff74_anim_tbl_0), (void*)((const u8*)eff74_anim_tbl_7), 5 },
+    { (void*)(eff74_anim_tbl_0), (void*)(eff74_anim_tbl_1), 5 },
+    { (void*)(eff74_anim_tbl_2), (void*)(eff74_anim_tbl_3), 2 },
+    { (void*)(eff74_anim_tbl_4), (void*)(eff74_anim_tbl_3), 2 },
+    { (void*)(eff74_anim_tbl_0), (void*)(eff74_anim_tbl_7), 5 },
 };

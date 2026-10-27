@@ -57,13 +57,13 @@ const s16 coltbl_008_2P[8] = {
 };
 
 const ColorTableIndex color_table_index[9] = {
-    { 8, 0, (void*)coltbl_000_1P, (void*)coltbl_000_2P },
-    { 7, 24, (void*)&coltbl_000_2P[30], (void*)&coltbl_000_2P[36] },
-    { 7, 30, (void*)&coltbl_000_2P[10], (void*)&coltbl_000_2P[16] },
-    { 5, 0, (void*)&coltbl_000_2P[22], (void*)&coltbl_000_2P[26] },
-    { 7, 18, (void*)&coltbl_000_2P[42], (void*)&coltbl_000_2P[48] },
-    { 18, 24, (void*)&coltbl_000_2P[54], (void*)&coltbl_000_2P[60] },
-    { 17, 24, (void*)&coltbl_000_2P[66], (void*)&coltbl_000_2P[76] },
-    { 2, 10, (void*)coltbl_007_1P, (void*)coltbl_007_2P },
-    { 8, 0, (void*)coltbl_008_1P, (void*)coltbl_008_2P },
+    { 8, 0, coltbl_000_1P, coltbl_000_2P },
+    { 7, 24, &coltbl_000_2P[30], &coltbl_000_2P[36] },
+    { 7, 30, &coltbl_000_2P[10], &coltbl_000_2P[16] },
+    { 5, 0, &coltbl_000_2P[22], &coltbl_000_2P[26] },
+    { 7, 18, &coltbl_000_2P[42], &coltbl_000_2P[48] },
+    { 18, 24, &coltbl_000_2P[54], &coltbl_000_2P[60] },
+    { 17, 24, &coltbl_000_2P[66], &coltbl_000_2P[76] },
+    { 2, 10, coltbl_007_1P, coltbl_007_2P },
+    { 8, 0, coltbl_008_1P, coltbl_008_2P },
 };

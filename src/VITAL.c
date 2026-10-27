@@ -36,14 +36,14 @@ VITAL_BAR vit_bar_2p;  /* 02028660 */
 
 /* 020069B4 */
 const u16* vital_npos_tbl[2] = {
-    (const u16*)&vital_cell_1p_tbl[81],
-    (const u16*)&vital_cell_1p_tbl[101],
+    &vital_cell_1p_tbl[81],
+    &vital_cell_1p_tbl[101],
 };
 /* 020069BC */
 const u16* vital_attr_tbl[3] = {
-    (const u16*)&vital_cell_1p_tbl[121],
-    (const u16*)&vital_cell_1p_tbl[124],
-    (const u16*)&vital_cell_1p_tbl[127],
+    &vital_cell_1p_tbl[121],
+    &vital_cell_1p_tbl[124],
+    &vital_cell_1p_tbl[127],
 };
 
 
