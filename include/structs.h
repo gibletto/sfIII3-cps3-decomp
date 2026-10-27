@@ -2477,22 +2477,22 @@ typedef struct {
     PATTERN_REC rec[99];
     void* judge;
     u16 hit_ix[99][8];
-    u8* body_adrs;
-    u8* h_bod;
-    u8* hand_adrs;
-    u8* h_han;
+    BODY_BOX* body_adrs;
+    BODY_BOX* h_bod;
+    HAND_BOX* hand_adrs;
+    HAND_BOX* h_han;
     u8* adrs4;
     u8* adrs5;
-    u8* catch_adrs;
-    u8* h_cat;
-    u8* caught_adrs;
-    u8* h_cau;
-    u8* attack_adrs;
+    CATCH_BOX* catch_adrs;
+    CATCH_BOX* h_cat;
+    CAUGHT_BOX* caught_adrs;
+    CAUGHT_BOX* h_cau;
+    ATTACK_BOX* attack_adrs;
     u8* adrs11;
-    u8* h_att;
+    ATTACK_BOX* h_att;
     u8* adrs13;
-    u8* hosei_adrs;
-    u8* h_hos;
+    HOSEI_BOX* hosei_adrs;
+    HOSEI_BOX* h_hos;
 } PATTERN_BUF;
 
 typedef struct {

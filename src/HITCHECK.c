@@ -1344,13 +1344,14 @@ void attack_hit_check(void) {
             if (!(mad->att.dipsw & 2) ||
                 (!(sad->att.dipsw & 2) && (sad->work_id == 1 || !(((WORK_Other*)sad)->refrected)))) {
                 (void)sad->xyz[sad->work_id & 2].disp.pos;
-                if ((mad->work_id != 1 && mad->work_id != 8) || !(sad->att.dipsw & 2)) {
-                    goto g1; g1:;
-                    if (!(mad->vs_id & sad->work_id)) {
-                        goto next2;
-                    }
+                if ((mad->work_id == 1 || mad->work_id == 8) && (sad->att.dipsw & 2)) {
+                    goto owner_check;
+                }
+                if (!(mad->vs_id & sad->work_id)) {
+                    goto next2;
                 }
             }
+        owner_check:
             if (mad->work_id != 1) {
                 if (sad->work_id == 1) {
                     if (((WORK_Other*)mad)->master_id == sad->id) {
@@ -1432,10 +1433,10 @@ void attack_hit_check(void) {
                 next4:
                     lp2++;
                 test4:
-                if (lp2 < 11) {
-                    goto g0; g0:;
-                    goto loop4;
+                if (lp2 >= 11) {
+                    goto next3;
                 }
+                goto loop4;
             }
             next3:
                 lp = lp + 1;
