@@ -84,9 +84,9 @@ void Att_PL20_AT1(PLW* wk) {
             wk->wu.mvxy.index++;
             wk->wu.routine_no[3] = AT1_AIR;
             wk->wu.cg_type = 0;
-            goto out;
+        default:
+            break;
         }
-    out:
         break;
     case AT1_AIR:
         jumping_union_process(&wk->wu, 3);
@@ -197,9 +197,9 @@ void Att_PL20_AT3(PLW* wk) {
             wk->wu.mvxy.index++;
             wk->wu.routine_no[3] = AT3_AIR;
             wk->wu.cg_type = 0;
-            goto out;
+        default:
+            break;
         }
-    out:
         break;
     case AT3_AIR:
         jumping_union_process((WORK*)wk, 3);

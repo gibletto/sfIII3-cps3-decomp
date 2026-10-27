@@ -411,9 +411,9 @@ s32 ja_nmj_rno_change(WORK* wk) {
     case 30:
         wk->routine_no[2] = 26;
         rnum = 1;
-        goto out;
+    default:
+        break;
     }
-out:
     return rnum;
 }
 

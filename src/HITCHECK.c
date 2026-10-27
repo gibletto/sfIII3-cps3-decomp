@@ -212,9 +212,9 @@ wait_dm:
             goto three;
         }
         goto four;
-    } else if (ds->wu.xyz[1].disp.pos > 0) {
-        if (0) {
-            return;
+    } else {
+        if (ds->wu.xyz[1].disp.pos <= 0) {
+            goto ground;
         }
         switch (defense_sky(as, ds, gddir)) {
         case 0:
@@ -226,7 +226,7 @@ wait_dm:
         as->wu.hf.hit.player = 2;
         ds->wu.routine_no[2] = as->wu.att.reaction;
         goto react;
-    } else {
+    ground:
         switch (defense_ground(as, ds, gddir)) {
         case 0:
             goto blocking;
@@ -1292,7 +1292,6 @@ void attack_hit_check(void) {
     s16 mw;
     s16** slot;
     s16** slot_copy;
-    s16* width;
     si = 0;
     goto test0;
     loop0:

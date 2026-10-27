@@ -104,8 +104,8 @@ void sound_init(u8* data, SNDSAMPLE* sample, u8** bank_b, u8 stereo, u8 volume, 
         *reg = 0;
         n--;
     }
-    ((u16 (*)[2])&snd_ctrl)[0][0] = (volume << 8) | (stereo & 1) | 0x22;
-    *(u32*)(SOUND_REG + 0x210) = ((u32 (*)[1])&snd_ctrl)[0][0];
+    *(u16*)&snd_ctrl = (volume << 8) | (stereo & 1) | 0x22;
+    *(SOUND_CTRL*)(SOUND_REG + 0x210) = snd_ctrl;
     *(u16*)SOUND_KEY_ON = 0;
     snd_seq_data = (u32*)data;
     snd_seq_max = *data++;
@@ -439,13 +439,9 @@ s32 sound_seq_start(u16 code, s16 ramp) {
         }
         bgm_tempo_add = 0;
         bgm_tick_step = 0;
-        if (0) {
-            sound_sample_submit_work7 |= 8;
-        }
         sound_sample_submit_work7 |= 2;
         return;
-    }
-    if (!(hdr & 0x80)) {
+    } else if (!(hdr & 0x80)) {
         for (i = 0; i < 16; i++) {
             off = *p++;
             off <<= 8;

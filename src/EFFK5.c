@@ -172,9 +172,9 @@ loop:
                 break;
             }
             goto loop;
+        } else {
+            goto end;
         }
-        goto end;
-        goto end;
     }
 end:
     ewk->old_rno[0] = 1;

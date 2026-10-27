@@ -1483,6 +1483,9 @@ s16 PL_id;
     return 0;
 }
 
+#pragma inline(flash_pos_disp)
+static void flash_pos_disp(s16 x, s16 y) {}
+
 /* provisional name */
 s32 Flash_More_Coins(PL_id, unused, coins)
 s16 PL_id;
@@ -1496,8 +1499,7 @@ s8 coins;
         F_No0[PL_id] = F_No1[PL_id] = 0;
         F_Timer[PL_id] = 1;
         (void)tilemap_print_string_attr;
-        (void)Text_Page_Y;
-        (void)Entry_Mes_X[PL_id];
+        flash_pos_disp(Entry_Mes_X[PL_id], Text_Page_Y);
         tilemap_print_string_attr(Entry_Mes_X[PL_id] + DE_X[Entry_Mes_Wide[PL_id]], Text_Page_Y, 18,
                                   msg_blank);
         if (E_No0 == E0_LOSER && PL_id == LOSER) {

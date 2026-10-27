@@ -231,17 +231,9 @@ s32 staff_roll_main(void) {
             if (staff_roll_tbl[staff_name_ptr].str == 0) {
                 staff_r_no = STAFF_LAST;
                 end_w.timer = staff_roll_tbl[staff_name_ptr].wait;
-                goto roll_wait; roll_wait:;
                 break;
-            }
-            name_timer = 0x7FFF;
-            x = staff_roll_tbl[staff_name_ptr].x;
-            y = staff_roll_tbl[staff_name_ptr].y;
-            attr = staff_roll_tbl[staff_name_ptr].attr;
-            staff_roll_put(240, x, y, attr, staff_roll_tbl[staff_name_ptr].str);
-            end_w.timer = staff_roll_tbl[staff_name_ptr].wait;
-            staff_name_ptr++;
-            if (end_w.timer <= 0) {
+            } else {
+                name_timer = 0x7FFF;
                 x = staff_roll_tbl[staff_name_ptr].x;
                 y = staff_roll_tbl[staff_name_ptr].y;
                 attr = staff_roll_tbl[staff_name_ptr].attr;
@@ -253,8 +245,16 @@ s32 staff_roll_main(void) {
                     y = staff_roll_tbl[staff_name_ptr].y;
                     attr = staff_roll_tbl[staff_name_ptr].attr;
                     staff_roll_put(240, x, y, attr, staff_roll_tbl[staff_name_ptr].str);
-                    end_w.timer = 240;
+                    end_w.timer = staff_roll_tbl[staff_name_ptr].wait;
                     staff_name_ptr++;
+                    if (end_w.timer <= 0) {
+                        x = staff_roll_tbl[staff_name_ptr].x;
+                        y = staff_roll_tbl[staff_name_ptr].y;
+                        attr = staff_roll_tbl[staff_name_ptr].attr;
+                        staff_roll_put(240, x, y, attr, staff_roll_tbl[staff_name_ptr].str);
+                        end_w.timer = 240;
+                        staff_name_ptr++;
+                    }
                 }
             }
         }
