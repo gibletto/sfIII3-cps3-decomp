@@ -322,8 +322,8 @@ s32 check_super_arts_attack(PLW* wk) {
                         continue;
                     }
                     exsw = cmdshot_conv_tbl[wk->cp->exdt[wk->sa->nmsa_g_ix][j]];
-                    (void)&((WORK*)(s32)exsw)->id;
-                    if ((u16)(exsw & cusw) != cmdshot_conv_tbl[wk->cp->exdt[wk->sa->nmsa_g_ix][j] & CMD_EX_BUTTON]) {
+                    exsw = exsw & cusw;
+                    if ((u16)exsw != cmdshot_conv_tbl[wk->cp->exdt[wk->sa->nmsa_g_ix][j] & CMD_EX_BUTTON]) {
                         continue;
                     }
                     setup_comm_back(&wk->wu);
@@ -334,7 +334,6 @@ s32 check_super_arts_attack(PLW* wk) {
                     waza_compel_all_init2(wk);
                     return 1;
                 }
-                (void)&((WORK*)(s32)cusw)->id;
             }
         }
         return 0;
@@ -380,7 +379,6 @@ s32 check_super_arts_attack(PLW* wk) {
                 return 1;
             }
             (void)&((WORK*)(s32)cusw)->id;
-            (void)&((WORK*)(s16)cusw)->id;
         }
     }
     return 0;
