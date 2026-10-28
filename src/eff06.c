@@ -31,7 +31,6 @@
 
 
 
-extern const s16 scr_obj_num[352];
 
 /* 02006B38 */
 const s16* scr_obj_data6[23] = {

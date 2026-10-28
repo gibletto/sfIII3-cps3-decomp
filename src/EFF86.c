@@ -28,7 +28,6 @@
 #define R2_MOVE         1       /* play the pattern once */
 
 
-extern const s16 eff86_data_tbl00[];
 
 /* 02006D88 */
 const s16* eff86_adrs_tbl[1] = {

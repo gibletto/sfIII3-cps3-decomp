@@ -35,20 +35,9 @@
 
 extern const u16 rca_char_table_023[318];
 extern const u32 afc_char_table[];
-extern const u32 bns_char_table[];
-extern const u32 brz_char_table[];
-extern const u32 chn_char_table[];
-extern const u32 eng_char_table[];
 extern const u32 fnl_char_table[];
-extern const u32 frc_char_table[];
-extern const u32 grm_char_table[];
-extern const u32 hkg_char_table[];
-extern const u32 j10_char_table[];
 extern const u32 j11_char_table[];
-extern const u32 jp3_char_table[];
 extern const u32 orm_char_table[];
-extern const u32 rca_char_table[];
-extern const u32 usa_char_table[];
 
 /* 02006A80 */
 u32* char_add[23] = {

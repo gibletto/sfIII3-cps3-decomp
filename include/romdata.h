@@ -553,7 +553,7 @@ extern const XFER2 side_color_2p_tbl[];
 extern const u32 opt_color_tbl[];
 extern const PAL_BYTE_LIST sc_chr_list_tbl[];
 extern const u16 * const sc_chr_slot_tbl[];
-extern const CELL_SET sc_ram_vram_tbl[];
+extern const CELL_SET sc_ram_vram_tbl[30];
 extern const s8 sc_celllist_scr_tbl[];
 extern const TONE_ENTRY tone_down_tbl[];
 extern const u16 picture_chr_tbl[];

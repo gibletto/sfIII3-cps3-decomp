@@ -413,7 +413,6 @@ void sc_chr_slot_trans(s8 ix, u16 code, s8 to_ram) {
     }
 }
 
-extern const CELL_SET sc_ram_vram_tbl[30];
 
 void sc_ram_to_vram(char ix, char dx, char dy) {
     const u16 **tbl;

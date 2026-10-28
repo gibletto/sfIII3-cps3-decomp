@@ -79,7 +79,6 @@
 #define R0_DEMO         1       /* the entrance demo */
 #define R0_MOVE         2       /* follow the fight */
 
-extern const s16 bg_scr_record_data[92];
 
 
 
