@@ -4483,7 +4483,6 @@ void debug_hit_box_edit(void) {
         body = dbg_copy_buf.h_bod;
         hand = dbg_copy_buf.h_han;
         attack = dbg_copy_buf.h_att;
-        (void)&((WORK*)attack)->id;
         switch (dbg_judge_ewk->curr_ja) {
         case 0:
             box = body->body_dm[0];
@@ -4618,10 +4617,10 @@ void debug_hit_box_edit(void) {
                     box[2]--;
                 }
                 if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, 4, 6)) {
-                    box[0]--;
+                    box[0] = box[0] - 1;
                 }
                 if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, 8, 7)) {
-                    box[0]++;
+                    box[0] = box[0] + 1;
                 }
             }
         }

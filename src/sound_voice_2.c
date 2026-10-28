@@ -304,9 +304,7 @@ void voice_process_secondary(SNDVOICE* voice, u8 voice_index, u8 is_bgm) {
     }
     if (voice->lfo_rate) {
         if (voice->pitch_lfo_depth) {
-            depth = voice->pitch_lfo_depth;
-            step = (s32)(depth * voice->lfo_rate);
-            (void)&((TEXT_CELL*)step)->code;
+            step = (depth = voice->pitch_lfo_depth) * voice->lfo_rate;
             depth <<= 16;
             if (voice->lfo_phase_flags & 0x01) {
                 if ((s32)(step - depth) < voice->pitch_lfo) {
