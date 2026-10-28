@@ -6,6 +6,8 @@ rem Hitachi SHC 5.0, asmsh 4.0, lnk 6.0; SEGA rof2bin 2.51
 if "%SHC_LIB%"=="" set SHC_LIB=bin
 if "%SHC_TMP%"=="" set SHC_TMP=C:\TEMP
 set PATH=%SHC_LIB%;%PATH%
+rem the compiler revision that built 3rd Strike (see README.md, Compiler)
+set MDL_EQ_CONST=3
 if not exist "%SHC_TMP%" mkdir "%SHC_TMP%"
 if not exist obj mkdir obj
 if exist obj\warnings.log del obj\warnings.log

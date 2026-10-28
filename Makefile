@@ -5,6 +5,9 @@ PYTHON ?= python
 export SHC_LIB ?= bin
 export SHC_TMP ?= C:\TEMP
 
+# the compiler revision that built 3rd Strike (see README.md, Compiler)
+export MDL_EQ_CONST = 3
+
 CFLAGS = -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include
 OPT = -optimize=1 -speed
 
