@@ -55,7 +55,7 @@ void effect_70_move(WORK_Other* ewk) {
             sort_push_request4(&ewk->wu);
             /* fallthrough */
         case R0_STAY:
-            if (Play_Type == 1) {
+            if (Play_Type == PLAY_VS_PLAYER) {
                 s16* complete;
                 s32 mask;
                 mask = 0x8000;

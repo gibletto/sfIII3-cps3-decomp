@@ -397,7 +397,7 @@ s16 Option;
     case 0:
         CP_Index[wk->wu.id][1]++;
         dash_flag_clear(wk->wu.id);
-        Timer_00[wk->wu.id] = 0x78;
+        Timer_00[wk->wu.id] = 120;
     case 1:
         xx = Standing_Timer[wk->wu.id];
         if (Lie_Flag[wk->wu.id] == 0) {
@@ -423,7 +423,7 @@ s16 Option;
         } else {
             Ck_Distance_Lv(wk);
             if (Option == 3) {
-                Lever_Buff[wk->wu.id] ^= 0xC;
+                Lever_Buff[wk->wu.id] ^= LEVER_LR;
             }
         }
     }
@@ -598,12 +598,12 @@ u16 Lever_Data;
         if (Check_Passive(wk) != 0) {
             break;
         }
-        if (Lever_Data & 2) {
+        if (Lever_Data & LEVER_DOWN) {
             Lever_LR[wk->wu.id] = Setup_Guard_Lever(wk, 1);
         } else {
             Lever_LR[wk->wu.id] = 0;
         }
-        Lever_LR[wk->wu.id] |= Lever_Data & 2;
+        Lever_LR[wk->wu.id] |= Lever_Data & LEVER_DOWN;
         (&Lever_Buff[0])[wk->wu.id] = Lever_LR[wk->wu.id];
         if (Check_Start_Normal_Attack(wk, Reaction, Lever_Data) != 0) {
             break;
@@ -633,7 +633,7 @@ u16 Lever_Data;
 
 
 s32 Small_Jump_Measure(PLW* wk) {
-    if (Lever_Squat[wk->wu.id] & 2) {
+    if (Lever_Squat[wk->wu.id] & LEVER_DOWN) {
         return Setup_Guard_Lever(wk, 1);
     }
     return 0;
@@ -664,7 +664,7 @@ s16 Time;
         }
         if (--Combo_Speed[wk->wu.id] == 0) {
             Lever_Buff[wk->wu.id] = Lever_Data;
-            Lever_Squat[wk->wu.id] = Lever_Data & 2;
+            Lever_Squat[wk->wu.id] = Lever_Data & LEVER_DOWN;
             CP_Index[wk->wu.id][1]++;
             Timer_00[wk->wu.id]--;
         } else {
@@ -674,7 +674,7 @@ s16 Time;
     case 2:
         if (--Timer_00[wk->wu.id]) {
             Lever_Buff[wk->wu.id] = Lever_Data;
-            Lever_Squat[wk->wu.id] = Lever_Data & 2;
+            Lever_Squat[wk->wu.id] = Lever_Data & LEVER_DOWN;
         } else {
             CP_Index[wk->wu.id][1]++;
         }
@@ -846,7 +846,7 @@ s16 Time;
     case 2:
         if (--Timer_00[wk->wu.id]) {
             Lever_Buff[wk->wu.id] = Lever_Data;
-            Lever_Squat[wk->wu.id] = Lever_Data & 2;
+            Lever_Squat[wk->wu.id] = Lever_Data & LEVER_DOWN;
         } else {
             CP_Index[wk->wu.id][1]++;
         }
@@ -1247,7 +1247,7 @@ s16 Time;
             } else {
                 tm[wk->wu.id] = Time;
             }
-            if (Lever_LR[wk->wu.id] & 2) {
+            if (Lever_LR[wk->wu.id] & LEVER_DOWN) {
                 tm[wk->wu.id] += 50;
             }
         }
@@ -1277,7 +1277,7 @@ s16 Option_Data;
     case 0:
         CP_Index[wk->wu.id][1]++;
         dash_flag_clear(wk->wu.id);
-        Timer_00[wk->wu.id] = 0xA;
+        Timer_00[wk->wu.id] = 10;
         Free_Lever[wk->wu.id] = Lever_Data;
         if (Option_Data != -1) {
             Free_Lever[wk->wu.id] |= Setup_Guard_Lever(wk, Option_Data);
@@ -1348,7 +1348,7 @@ u16 Lever_Data;
         Rolling_Flag[wk->wu.id] = 0;
         if (Lever_Data != 0) {
             Free_Lever[wk->wu.id] = Setup_Guard_Lever(wk, 1);
-            Free_Lever[wk->wu.id] |= Lever_Data & 2;
+            Free_Lever[wk->wu.id] |= Lever_Data & LEVER_DOWN;
         } else {
             Free_Lever[wk->wu.id] = 0;
         }
@@ -1381,7 +1381,7 @@ s16 Option;
         Rolling_Flag[wk->wu.id] = 0;
         if (Lever_Data != 0) {
             Lever_LR[wk->wu.id] = Setup_Guard_Lever(wk, 1);
-            Lever_LR[wk->wu.id] |= Lever_Data & 2;
+            Lever_LR[wk->wu.id] |= Lever_Data & LEVER_DOWN;
         } else {
             Lever_LR[wk->wu.id] = 0;
         }
@@ -1437,7 +1437,7 @@ s16 Option;
         dash_flag_clear(wk->wu.id);
         if (Lever_Data != 0) {
             Lever_LR[wk->wu.id] = Setup_Guard_Lever(wk, 1);
-            Lever_LR[wk->wu.id] |= Lever_Data & 2;
+            Lever_LR[wk->wu.id] |= Lever_Data & LEVER_DOWN;
             Guard_Flag[wk->wu.id] = 1;
         } else {
             Lever_LR[wk->wu.id] = 0;
@@ -1500,7 +1500,7 @@ s16 Next_Menu;
             CP_Index[wk->wu.id][1]++;
             Check_First_Menu(wk);
             Ck_Distance_LvJ(wk);
-            xx = get_nearing_range(wk->player_number, xx = Lever_Data & 0x3F0);
+            xx = get_nearing_range(wk->player_number, xx = Lever_Data & BUTTON_SHOTS);
             if (PL_Distance[wk->wu.id] > xx) {
                 Next_Another_Menu(wk, Next_Action, Next_Menu);
             }
@@ -1795,7 +1795,7 @@ s16 Jump_Dir;
             Lever_Buff[wk->wu.id] |= Lever_Pool[wk->wu.id];
             break;
         }
-        if (!(Lever_Buff[wk->wu.id] & 2)) {
+        if (!(Lever_Buff[wk->wu.id] & LEVER_DOWN)) {
             Lever_Buff[wk->wu.id] |= Lever_Pool[wk->wu.id];
         }
         break;
@@ -1872,7 +1872,7 @@ s32 Check_Air_Guard(PLW* wk) {
     }
     Guard_Type[wk->wu.id] = Guard_Data[zz][Lv][random_16_ex_com()];
     Lever_LR[wk->wu.id] = Setup_Guard_Lever(wk, 1);
-    Lever_LR[wk->wu.id] |= 2;
+    Lever_LR[wk->wu.id] |= LEVER_DOWN;
     return Guard_Type[wk->wu.id] |= 0x8000;
 }
 
@@ -2178,7 +2178,7 @@ s16 Jump_Dir;
             Tech_Index[wk->wu.id] = 0xC;
             dash_flag_clear(wk->wu.id);
             Jump_Init(wk, Jump_Dir);
-            Lever_Pool[wk->wu.id] &= 0xC;
+            Lever_Pool[wk->wu.id] &= LEVER_LR;
             Lever_Buff[wk->wu.id] = 0;
             Check_Air_Guard(wk);
             if (Check_Diagonal_Shell(wk) != 0) {
@@ -2195,7 +2195,7 @@ s16 Jump_Dir;
             Lever_Buff[wk->wu.id] |= Lever_Pool[wk->wu.id];
             break;
         }
-        if (Lever_Buff[wk->wu.id] & 2) {
+        if (Lever_Buff[wk->wu.id] & LEVER_DOWN) {
             return;
         }
         Lever_Buff[wk->wu.id] |= Lever_Pool[wk->wu.id];
@@ -2284,7 +2284,7 @@ u16 J_Lever_Data;
             Tech_Index[wk->wu.id] = 0xC;
             dash_flag_clear(wk->wu.id);
             Jump_Init(wk, Jump_Dir);
-            Lever_Pool[wk->wu.id] &= 0xC;
+            Lever_Pool[wk->wu.id] &= LEVER_LR;
             Lever_Buff[wk->wu.id] = 0;
             if (Check_Diagonal_Shell(wk) != 0) {
                 Next_Be_Free(wk);
@@ -2299,7 +2299,7 @@ u16 J_Lever_Data;
             CP_Index[wk->wu.id][1]++;
             Lever_Buff[wk->wu.id] |= Lever_Pool[wk->wu.id];
         } else {
-            if (Lever_Buff[wk->wu.id] & 2) {
+            if (Lever_Buff[wk->wu.id] & LEVER_DOWN) {
                 return;
             }
             Lever_Buff[wk->wu.id] |= Lever_Pool[wk->wu.id];
@@ -2596,7 +2596,7 @@ u16 JLD;
             CP_Index[wk->wu.id][1]++;
             Tech_Index[wk->wu.id] = 0xC;
             Jump_Init(wk, Jump_Dir);
-            Lever_Pool[wk->wu.id] &= 0xC;
+            Lever_Pool[wk->wu.id] &= LEVER_LR;
             Lever_Buff[wk->wu.id] = 0;
             Check_Air_Guard(wk);
             if (Check_Diagonal_Shell(wk) != 0) {
@@ -2609,8 +2609,8 @@ u16 JLD;
             break;
         }
         CP_Index[wk->wu.id][1]++;
-        Lever_Buff[wk->wu.id] = 2;
-        Lever_Pool[wk->wu.id] |= 1;
+        Lever_Buff[wk->wu.id] = LEVER_DOWN;
+        Lever_Pool[wk->wu.id] |= LEVER_UP;
         break;
     case 3:
         if (wk->wu.xyz[1].disp.pos > 0) {
@@ -2789,7 +2789,7 @@ s16 Ex_Shot;
         break;
     case 5:
         if (PL_Distance[wk->wu.id] > 0x70) {
-            Lever_Buff[wk->wu.id] = 0x40;
+            Lever_Buff[wk->wu.id] = BUTTON_HP;
         }
         if (((wk->wu.cg_type) == 0x40) || (wk->wu.routine_no[1] == PLAYER_NORMAL)) {
             Reaction_Exit_Sub(wk);
@@ -3054,7 +3054,7 @@ void Rapid_Sub(PLW* wk) {
                 Timer_00[wk->wu.id] = 2;
                 if (--Timer_01[wk->wu.id] == 0) {
                     Rapid_No[wk->wu.id][1]++;
-                    Timer_01[wk->wu.id] = 0x18;
+                    Timer_01[wk->wu.id] = 24;
                 }
             }
             break;
@@ -3330,7 +3330,7 @@ u16 JLD;
             CP_Index[wk->wu.id][1]++;
             Tech_Index[wk->wu.id] = 0xC;
             Jump_Init(wk, Jump_Dir);
-            Lever_Pool[wk->wu.id] &= 0xC;
+            Lever_Pool[wk->wu.id] &= LEVER_LR;
             Lever_Buff[wk->wu.id] = 0;
             Check_Air_Guard(wk);
             if (Check_Diagonal_Shell(wk) != 0) {
@@ -3343,8 +3343,8 @@ u16 JLD;
             break;
         }
         CP_Index[wk->wu.id][1]++;
-        Lever_Buff[wk->wu.id] = 2;
-        Lever_Pool[wk->wu.id] |= 1;
+        Lever_Buff[wk->wu.id] = LEVER_DOWN;
+        Lever_Pool[wk->wu.id] |= LEVER_UP;
         break;
     case 3:
         if (wk->wu.xyz[1].disp.pos > 0) {
@@ -3554,7 +3554,7 @@ u16 JLD;
             CP_Index[wk->wu.id][1]++;
             Tech_Index[wk->wu.id] = 0xC;
             Jump_Init(wk, Jump_Dir);
-            Lever_Pool[wk->wu.id] &= 0xC;
+            Lever_Pool[wk->wu.id] &= LEVER_LR;
             Lever_Buff[wk->wu.id] = 0;
             Check_Air_Guard(wk);
             if (Check_Diagonal_Shell(wk) != 0) {
@@ -3567,8 +3567,8 @@ u16 JLD;
             break;
         }
         CP_Index[wk->wu.id][1]++;
-        Lever_Buff[wk->wu.id] = 2;
-        Lever_Pool[wk->wu.id] |= 1;
+        Lever_Buff[wk->wu.id] = LEVER_DOWN;
+        Lever_Pool[wk->wu.id] |= LEVER_UP;
         break;
     case 3:
         Lever_Buff[wk->wu.id] = Lever_Pool[wk->wu.id] | 1;
@@ -3789,8 +3789,8 @@ s16 Ex_Shot;
         Lever_Buff[wk->wu.id] = Tech_Address[wk->wu.id][Tech_Index[wk->wu.id] + 3] & 0x7FFF;
         Lever_Buff[wk->wu.id] = datacmd_conpanecmd(Lever_Buff[wk->wu.id]);
         if (wk->wu.rl_waza) {
-            if (Lever_Buff[wk->wu.id] & 0xC) {
-                Lever_Buff[wk->wu.id] ^= 0xC;
+            if (Lever_Buff[wk->wu.id] & LEVER_LR) {
+                Lever_Buff[wk->wu.id] ^= LEVER_LR;
             }
         }
         Tech_Index[wk->wu.id] += 4;
@@ -3798,8 +3798,8 @@ s16 Ex_Shot;
     } else {
         Lever_Buff[wk->wu.id] = Tech_Address[wk->wu.id][Tech_Index[wk->wu.id] + 3] & 0x7FFF;
         if (wk->wu.rl_waza) {
-            if (Lever_Buff[wk->wu.id] & 0xC) {
-                Lever_Buff[wk->wu.id] ^= 0xC;
+            if (Lever_Buff[wk->wu.id] & LEVER_LR) {
+                Lever_Buff[wk->wu.id] ^= LEVER_LR;
             }
         }
         if (Tech_Address[wk->wu.id][7] == 0x80) {
@@ -3813,16 +3813,16 @@ s16 Ex_Shot;
         }
         if ((My_char[wk->wu.id] == PL_RYU) && ((Tech_Number) == 0x8015) && (Power_Level != 8)) {
             CP_Index[wk->wu.id][0]++;
-            Lever_LR[wk->wu.id] = Lever_Buff[wk->wu.id] & 0x3F0;
+            Lever_LR[wk->wu.id] = Lever_Buff[wk->wu.id] & BUTTON_SHOTS;
             if (Power_Level == 0xA) {
                 CP_Index[wk->wu.id][1] = 1;
             } else {
                 CP_Index[wk->wu.id][1] = 0;
             }
         } else {
-            if (CP_No[wk->wu.id][0] == 0xA) {
-                Rapid_Index[wk->wu.id] = Lever_Buff[wk->wu.id] & 0x3F0;
-                Lever_Pool[wk->wu.id] = Lever_Buff[wk->wu.id] & 0x3F0;
+            if (CP_No[wk->wu.id][0] == COM_DAMAGE) {
+                Rapid_Index[wk->wu.id] = Lever_Buff[wk->wu.id] & BUTTON_SHOTS;
+                Lever_Pool[wk->wu.id] = Lever_Buff[wk->wu.id] & BUTTON_SHOTS;
             }
             if ((wk->player_number == PL_HUGO) && ((Tech_Number) == 0x8016)) {
                 CP_Index[wk->wu.id][1] = 5;
@@ -3876,8 +3876,8 @@ s16 Ex_Shot;
         (&Lever_Pool[0])[wk->wu.id] = Tech_Address[wk->wu.id][Tech_Index[wk->wu.id] + 3];
         Setup_Command_01(wk);
         if (wk->wu.rl_waza) {
-            if (Lever_Pool[wk->wu.id] & 0xC) {
-                Lever_Pool[wk->wu.id] ^= 0xC;
+            if (Lever_Pool[wk->wu.id] & LEVER_LR) {
+                Lever_Pool[wk->wu.id] ^= LEVER_LR;
             }
         }
     case 1:
@@ -4162,9 +4162,9 @@ s32 Ck_Area_Shell(PLW* wk) {
 void Ck_Distance_Lv(PLW* wk) {
     PL_Distance[wk->wu.id] = ((WORK*)wk->wu.target_adrs)->xyz[0].disp.pos - wk->wu.xyz[0].disp.pos;
     if (PL_Distance[wk->wu.id] > 0) {
-        Lever_Buff[wk->wu.id] = 8;
+        Lever_Buff[wk->wu.id] = LEVER_RIGHT;
     } else {
-        Lever_Buff[wk->wu.id] = 4;
+        Lever_Buff[wk->wu.id] = LEVER_LEFT;
         PL_Distance[wk->wu.id] = PL_Distance[wk->wu.id] * -1;
     }
 }
@@ -4174,9 +4174,9 @@ void Ck_Distance_Lv(PLW* wk) {
 void Ck_Distance_LvJ(PLW* wk) {
     PL_Distance[wk->wu.id] = ((WORK*)wk->wu.target_adrs)->xyz[0].disp.pos - wk->wu.xyz[0].disp.pos;
     if (PL_Distance[wk->wu.id] > 0) {
-        Lever_Pool[wk->wu.id] = 9;
+        Lever_Pool[wk->wu.id] = (LEVER_UP | LEVER_RIGHT);
     } else {
-        Lever_Pool[wk->wu.id] = 5;
+        Lever_Pool[wk->wu.id] = (LEVER_UP | LEVER_LEFT);
         PL_Distance[wk->wu.id] = PL_Distance[wk->wu.id] * -1;
     }
 }
@@ -4587,7 +4587,7 @@ s32 Select_Passive(PLW* wk) {
         if (xx == 0xFF) {
             Counter_Attack[wk->wu.id] = 0;
             Passive_Flag[wk->wu.id] = 0;
-            Jump_Pass_Timer[wk->wu.id][0] = 0x78;
+            Jump_Pass_Timer[wk->wu.id][0] = 120;
             return -1;
         }
         Pattern_Index[wk->wu.id] = xx;
@@ -4598,7 +4598,7 @@ s32 Select_Passive(PLW* wk) {
         if (xx == 0xFF) {
             Counter_Attack[wk->wu.id] = 0;
             Passive_Flag[wk->wu.id] = 0;
-            Jump_Pass_Timer[wk->wu.id][1] = 0x78;
+            Jump_Pass_Timer[wk->wu.id][1] = 120;
             return -1;
         }
         Pattern_Index[wk->wu.id] = xx;
@@ -4609,7 +4609,7 @@ s32 Select_Passive(PLW* wk) {
         if (xx == 0xFF) {
             Counter_Attack[wk->wu.id] = 0;
             Passive_Flag[wk->wu.id] = 0;
-            Jump_Pass_Timer[wk->wu.id][2] = 0x78;
+            Jump_Pass_Timer[wk->wu.id][2] = 120;
             return -1;
         }
         Pattern_Index[wk->wu.id] = xx;
@@ -4620,7 +4620,7 @@ s32 Select_Passive(PLW* wk) {
         if (xx == 0xFF) {
             Counter_Attack[wk->wu.id] = 0;
             Passive_Flag[wk->wu.id] = 0;
-            Jump_Pass_Timer[wk->wu.id][3] = 0x78;
+            Jump_Pass_Timer[wk->wu.id][3] = 120;
             return -1;
         }
         Pattern_Index[wk->wu.id] = xx;
@@ -4892,7 +4892,7 @@ s16 xx;
 {
     WORK* em;
     em = (WORK*)wk->wu.target_adrs;
-    CP_No[wk->wu.id][0] = 0xC;
+    CP_No[wk->wu.id][0] = COM_FLIP;
     CP_No[wk->wu.id][1] = 0;
     CP_No[wk->wu.id][2] = 0;
     CP_No[wk->wu.id][3] = 0;
@@ -4900,7 +4900,7 @@ s16 xx;
     Flip_Counter[wk->wu.id] = 0;
     if (xx) {
         if ((em->pat_status == 0x21) || (em->pat_status == 0x20)) {
-            Lever_Buff[wk->wu.id] = 2;
+            Lever_Buff[wk->wu.id] = LEVER_DOWN;
         } else {
             Lever_Buff[wk->wu.id] = Setup_Guard_Lever(wk, 0);
         }
@@ -5082,7 +5082,7 @@ s32 Decide_Shell_Guard(PLW* wk, WORK_Other* tmw) {
     if (Shell_Guard_Data[xx][Lv] > Rnd) {
         return 0;
     }
-    Shell_Ignore_Timer[wk->wu.id] = 0x3C;
+    Shell_Ignore_Timer[wk->wu.id] = 60;
     return 1;
 }
 
@@ -5132,7 +5132,7 @@ void Next_Be_Shell_Guard(PLW* wk, WORK* tmw) {
     CP_No[wk->wu.id][1] = 0;
     CP_No[wk->wu.id][2] = 0;
     CP_No[wk->wu.id][3] = 0;
-    Timer_00[wk->wu.id] = 0xA;
+    Timer_00[wk->wu.id] = 10;
     dash_flag_clear(wk->wu.id);
     Guard_Type[wk->wu.id] = 0;
     Check_Guard_Type(wk, tmw);
@@ -5229,10 +5229,10 @@ s16 Lever;
         Lever_LR[PL_id] = 0;
     } else {
         if (Lever & 0x1000) {
-            Lever_LR[PL_id] = 1;
+            Lever_LR[PL_id] = LEVER_UP;
         }
         else if (Lever & 0x2000) {
-            Lever_LR[PL_id] |= 2;
+            Lever_LR[PL_id] |= LEVER_DOWN;
         }
         if (Lever & 0x4000) {
             Lever_LR[PL_id] |= Setup_Guard_Lever(wk, 0);
@@ -5310,7 +5310,7 @@ s32 Exit_Term_0000(PLW* wk, WORK* em) {
     switch (Term_No[wk->wu.id]) {
     case TERM_INIT:
         Term_No[wk->wu.id]++;
-        Timer_00[wk->wu.id] = 0x1E;
+        Timer_00[wk->wu.id] = 30;
         break;
     default:
         if (--Timer_00[wk->wu.id]) {
@@ -5345,7 +5345,7 @@ s32 Exit_Term_0003(PLW* wk, WORK* em) {
     switch (Term_No[wk->wu.id]) {
     case TERM_INIT:
         Term_No[wk->wu.id]++;
-        Timer_00[wk->wu.id] = 0xA;
+        Timer_00[wk->wu.id] = 10;
         break;
     default:
         if (--Timer_00[wk->wu.id]) {
@@ -5408,7 +5408,7 @@ s32 Exit_Term_0006(PLW* wk, WORK* em) {
     switch (Term_No[wk->wu.id]) {
     case TERM_INIT:
         Term_No[wk->wu.id]++;
-        Timer_00[wk->wu.id] = 0x3C;
+        Timer_00[wk->wu.id] = 60;
         break;
     default:
         if (--Timer_00[wk->wu.id]) {
@@ -5429,7 +5429,7 @@ s32 Exit_Term_0007(PLW* wk, WORK* em) {
     switch (Term_No[wk->wu.id]) {
     case TERM_INIT:
         Term_No[wk->wu.id]++;
-        Timer_00[wk->wu.id] = 0x1E;
+        Timer_00[wk->wu.id] = 30;
     default:
         if (Check_Drop_Term(em, 0x28) != 0) {
             if (Area_Number[wk->wu.id] >= 3) {
@@ -5453,7 +5453,7 @@ s32 Exit_Term_0008(PLW* wk, WORK* em) {
     switch (Term_No[wk->wu.id]) {
     case TERM_INIT:
         Term_No[wk->wu.id]++;
-        Timer_00[wk->wu.id] = 0xb4;
+        Timer_00[wk->wu.id] = 180;
     default:
         if ((wk->wu.old_pos[1] == 0) && (wk->wu.xyz[1].disp.pos == 0) && (wk->wu.routine_no[1] != PLAYER_ATTACK)) {
             return 1;
@@ -5635,7 +5635,7 @@ s32 ETC_Term_0006(PLW* wk, WORK* em) {
     switch (CP_Index[wk->wu.id][1]) {
     case 0:
         CP_Index[wk->wu.id][1]++;
-        Timer_00[wk->wu.id] = 0x78;
+        Timer_00[wk->wu.id] = 120;
         /* fall through */
     case 1:
         if (--Timer_00[wk->wu.id] == 0) {
@@ -5644,7 +5644,7 @@ s32 ETC_Term_0006(PLW* wk, WORK* em) {
         if (PL_Distance[wk->wu.id] < 0x70) {
             return 1;
         }
-        Lever_Buff[wk->wu.id] = 0x40;
+        Lever_Buff[wk->wu.id] = BUTTON_HP;
         return -1;
     default:
         break;

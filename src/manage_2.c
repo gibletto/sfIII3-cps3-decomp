@@ -609,7 +609,7 @@ void Game_Manage_5_4(void) {
         judge_flag = 1;
         load_bg_color_fade(bg_palette_no_tbl[bg_w.bg_index], 15, 15, 15);
         load_bg_color_fade(bg_color2_tbl[bg_w.bg_index], 15, 15, 15);
-        pcon_rno[0] = 0;
+        pcon_rno[0] = PCON_INIT;
         pcon_rno[1] = 0;
         pcon_rno[2] = 0;
         pcon_rno[3] = 0;
@@ -1137,7 +1137,7 @@ void Game_Manage_10th(void) {
             sound_system_init();
             Check_Naming(0);
             Check_Naming(1);
-            pcon_rno[1] = pcon_rno[0] = 0;
+            pcon_rno[1] = pcon_rno[0] = PCON_INIT;
             pcon_rno[2] = 0;
             pcon_rno[3] = 0;
             appear_type = APPEAR_ENTRY;

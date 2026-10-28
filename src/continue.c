@@ -238,7 +238,7 @@ s16 Limit;
     } else {
         xx = p1sw_0 & ~p1sw_1;
     }
-    return xx & 0x3F0;
+    return xx & BUTTON_SHOTS;
 }
 
 

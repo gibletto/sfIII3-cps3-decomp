@@ -386,8 +386,8 @@ void grade_makeup_stage_parameter(s16 ix) {
     grade = get_grade_ix(point);
     if (Play_Type == PLAY_VS_CPU) {
         switch (bg_w.stage) {
-        case 21:
-        case 22:
+        case BONUS_CAR:
+        case BONUS_PARRY:
             bs = 1;
             break;
         default:
@@ -457,10 +457,10 @@ s16 ix;
 void grade_makeup_bonus_parameter(s16 ix) {
     if (Round_Operator[ix] != 0) {
         switch (bg_w.stage) {
-        case 22:
+        case BONUS_PARRY:
             judge_final[ix][Play_Type].vs_cpu_grade[13] = (Bonus_Game_result == 20) + (Bonus_Game_ex_result == 20) * 2;
             break;
-        case 21:
+        case BONUS_CAR:
             judge_final[ix][Play_Type].vs_cpu_grade[14] = Bonus_Game_result;
             break;
         }
@@ -719,7 +719,7 @@ s16 wf;
 void grade_add_clean_hits(WORK_Other* wk) {
     WORK* mwk;
     s16 ix;
-    if (pcon_rno[0] != 0) {
+    if (pcon_rno[0] != PCON_INIT) {
         ix = wk->wu.id;
         if (wk->wu.work_id != 1) {
             mwk = (WORK*)(wk->my_master);
@@ -737,7 +737,7 @@ void grade_add_clean_hits(WORK_Other* wk) {
 void grade_add_att_renew(WORK_Other* wk) {
     WORK* mwk;
     s16 ix;
-    if (pcon_rno[0] != 0) {
+    if (pcon_rno[0] != PCON_INIT) {
         ix = wk->wu.id;
         if (wk->wu.work_id != 1) {
             mwk = (WORK*)(wk->my_master);

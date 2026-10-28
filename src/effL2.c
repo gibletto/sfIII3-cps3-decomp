@@ -78,7 +78,7 @@ void effl2_dir_check(WORK_Other* ewk) {
     s16 work;
 
     work = plw[ewk->master_id].wu.xyz[0].disp.pos >> 6;
-    work &= 15;
+    work &= 0xF;
     if (effl2_dir_tbl[ewk->master_id][work] != ewk->wu.direction) {
         ewk->wu.direction = effl2_dir_tbl[ewk->master_id][work];
         set_char_move_init2(&ewk->wu, 0, 0, ewk->wu.direction + 1, 0);

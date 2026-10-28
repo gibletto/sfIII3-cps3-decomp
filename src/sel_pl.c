@@ -446,10 +446,10 @@ s32 Deley_Shot_Sub(s16 PL_id) {
         sw = ~p2sw_1 & p2sw_0;
     }
     lever = Disposal_Of_Diagonal(sw);
-    sw = sw & 0x3F0;
+    sw = sw & BUTTON_SHOTS;
     switch (Deley_Shot_No[PL_id]) {
     case DELAY_NONE:
-        if (sw & 0x3F0) {
+        if (sw & BUTTON_SHOTS) {
             if (sw == 0x150) {
                 return lever | 0x150;
             }
@@ -519,20 +519,20 @@ void Sel_PL_6th(void) {}
 
 
 s32 Disposal_Of_Diagonal(u16 sw) {
-    sw = sw & 0xF;
-    if (sw == 1) {
-        return 1;
+    sw = sw & LEVER_ALL;
+    if (sw == LEVER_UP) {
+        return LEVER_UP;
     }
-    if (sw == 2) {
-        return 2;
+    if (sw == LEVER_DOWN) {
+        return LEVER_DOWN;
     }
-    if (sw == 9) {
-        return 1;
+    if (sw == (LEVER_UP | LEVER_RIGHT)) {
+        return LEVER_UP;
     }
-    if (sw == 6) {
-        return 2;
+    if (sw == (LEVER_DOWN | LEVER_LEFT)) {
+        return LEVER_DOWN;
     }
-    return sw &= 0xC;
+    return sw &= LEVER_LR;
 }
 
 
@@ -546,23 +546,23 @@ u16 sw;
         return;
     }
     if (Time_Over != 0) {
-        sw = 16;
+        sw = BUTTON_LP;
     }
     if (sw == 0) {
         Auto_Repeat_Sub(PL_id);
     }
     if ((Cursor_Timer[PL_id] -= 1) == 0) {
         Cursor_Timer[PL_id] = 1;
-        if (sw & 8) {
+        if (sw & LEVER_RIGHT) {
             Cursor_Timer[PL_id] = 5;
             Sel_PL_Sub_CR(PL_id);
-        } else if (sw & 4) {
+        } else if (sw & LEVER_LEFT) {
             Cursor_Timer[PL_id] = 5;
             Sel_PL_Sub_CL(PL_id);
-        } else if (sw & 1) {
+        } else if (sw & LEVER_UP) {
             Cursor_Timer[PL_id] = 5;
             Sel_PL_Sub_CU(PL_id);
-        } else if (sw & 2) {
+        } else if (sw & LEVER_DOWN) {
             Cursor_Timer[PL_id] = 5;
             Sel_PL_Sub_CD(PL_id);
         }
@@ -570,7 +570,7 @@ u16 sw;
     if (Cursor_Move[PL_id] != 0) {
         Sound_SE(ID + 96);
     }
-    if (!(sw & 0x3F0)) {
+    if (!(sw & BUTTON_SHOTS)) {
         return;
     }
     Sel_PL_Complete[PL_id] = 1;
@@ -721,25 +721,25 @@ s16 PL_id;
     sw = Disposal_Of_Diagonal(sw);
     switch (Auto_No[PL_id]) {
     case AUTO_IDLE:
-        if (sw & 8) {
+        if (sw & LEVER_RIGHT) {
             Auto_No[PL_id] = AUTO_REPEAT;
             Auto_Cursor[PL_id] = 8;
             Auto_Timer[PL_id] = Repeat_Time_Data[0];
             Auto_Index[PL_id] = 1;
             break;
-        } else if (sw & 4) {
+        } else if (sw & LEVER_LEFT) {
             Auto_No[PL_id] = AUTO_REPEAT;
             Auto_Cursor[PL_id] = 4;
             Auto_Timer[PL_id] = Repeat_Time_Data[0];
             Auto_Index[PL_id] = 1;
             break;
-        } else if (sw & 1) {
+        } else if (sw & LEVER_UP) {
             Auto_No[PL_id] = AUTO_REPEAT;
             Auto_Cursor[PL_id] = 1;
             Auto_Timer[PL_id] = Repeat_Time_Data[0];
             Auto_Index[PL_id] = 1;
             break;
-        } else if (sw & 2) {
+        } else if (sw & LEVER_DOWN) {
             Auto_No[PL_id] = AUTO_REPEAT;
             Auto_Cursor[PL_id] = 2;
             Auto_Timer[PL_id] = Repeat_Time_Data[0];
@@ -760,16 +760,16 @@ s16 PL_id;
         if (Auto_Index[PL_id] > 2) {
             Auto_Index[PL_id] = 2;
         }
-        if (sw & 8) {
+        if (sw & LEVER_RIGHT) {
             Sel_PL_Sub_CR(PL_id);
         }
-        if (sw & 4) {
+        if (sw & LEVER_LEFT) {
             Sel_PL_Sub_CL(PL_id);
         }
-        if (sw & 1) {
+        if (sw & LEVER_UP) {
             Sel_PL_Sub_CU(PL_id);
         }
-        if (sw & 2) {
+        if (sw & LEVER_DOWN) {
             Sel_PL_Sub_CD(PL_id);
         }
         break;
@@ -790,14 +790,14 @@ s32 Auto_Repeat_Sub_Wife(s16 pl) {
     }
     switch (Auto_No[pl]) {
     case AUTO_IDLE:
-        if (sw & 1) {
+        if (sw & LEVER_UP) {
             Auto_No[pl] = AUTO_REPEAT;
             Auto_Cursor[pl] = 1;
             Auto_Timer[pl] = Auto_Repeat_Wife_Data[0];
             Auto_Index[pl] = 1;
             break;
         }
-        if (sw & 2) {
+        if (sw & LEVER_DOWN) {
             Auto_No[pl] = AUTO_REPEAT;
             Auto_Cursor[pl] = 2;
             Auto_Timer[pl] = Auto_Repeat_Wife_Data[0];
@@ -812,10 +812,10 @@ s32 Auto_Repeat_Sub_Wife(s16 pl) {
                 if (Auto_Index[pl] > 2) {
                     Auto_Index[pl] = 2;
                 }
-                if (sw & 1) {
+                if (sw & LEVER_UP) {
                     return 1;
                 }
-                if (sw & 2) {
+                if (sw & LEVER_DOWN) {
                     return 2;
                 }
             }
@@ -847,13 +847,13 @@ u16 sw;
         return;
     }
     if (Time_Over) {
-        sw = 16;
+        sw = BUTTON_LP;
     }
-    lever_sw = sw & 0xF;
+    lever_sw = sw & LEVER_ALL;
     if (lever_sw == 0) {
         sw |= Auto_Repeat_Sub_Wife(PL_id);
     }
-    if (sw & 2) {
+    if (sw & LEVER_DOWN) {
         Sound_SE(ID + 96);
         Moving_Plate[PL_id] = 2;
         Moving_Plate_Counter[PL_id] = 3;
@@ -862,7 +862,7 @@ u16 sw;
             Arts_Y[PL_id] = 0;
         }
     }
-    if (sw & 1) {
+    if (sw & LEVER_UP) {
         Sound_SE(ID + 96);
         Moving_Plate[PL_id] = 1;
         Moving_Plate_Counter[PL_id] = 3;
@@ -871,7 +871,7 @@ u16 sw;
             Arts_Y[PL_id] = 2;
         }
     }
-    if (sw & 0x3F0) {
+    if (sw & BUTTON_SHOTS) {
         Stop_Cursor[ID] = 1;
         Last_Arts_PL = PL_id;
         Sel_Arts_Complete[PL_id] = 1;

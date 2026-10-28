@@ -805,7 +805,7 @@ void Game2_4(void) {
         win_mark_rno[1] = 0;
         win_mark_control(1);
         Game_pause = 0;
-        pcon_rno[0] = 0;
+        pcon_rno[0] = PCON_INIT;
         pcon_rno[1] = 0;
         pcon_rno[2] = 0;
         pcon_rno[3] = 0;
@@ -847,7 +847,7 @@ void Game2_5(void) {
         win_mark_control(1);
         Suicide[0] = 1;
         Game_pause = 0;
-        pcon_rno[0] = 0;
+        pcon_rno[0] = PCON_INIT;
         pcon_rno[1] = 0;
         pcon_rno[2] = 0;
         pcon_rno[3] = 0;

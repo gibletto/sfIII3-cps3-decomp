@@ -58,8 +58,8 @@ s32 debug_player_change(void) {
         if (plw[0].cp->sw_now & CMD_SW_LP) {
             chg = 1;
             My_char[0]++;
-            if (My_char[0] > 20) {
-                My_char[0] = 0;
+            if (My_char[0] > PL_BIKEI) {
+                My_char[0] = PL_GILL;
             }
         }
         if (plw[0].cp->sw_now & CMD_SW_MP) {
@@ -79,8 +79,8 @@ s32 debug_player_change(void) {
         if (plw[1].cp->sw_now & CMD_SW_LP) {
             chg = 1;
             My_char[1]++;
-            if (My_char[1] > 20) {
-                My_char[1] = 0;
+            if (My_char[1] > PL_BIKEI) {
+                My_char[1] = PL_GILL;
             }
         }
         if (plw[1].cp->sw_now & CMD_SW_MP) {

@@ -560,7 +560,7 @@ void player_name_trans(void) {
         return;
     }
     for (i = 0; i < 2; i++) {
-        if ((My_char[i] & 0x7F) == 14 || (My_char[i] & 0x7F) == 15) {
+        if ((My_char[i] & 0x7F) == PL_GOUKI1 || (My_char[i] & 0x7F) == PL_GOUKI2) {
             sc_trans_src = sc_name_export_chr;
         } else {
             sc_trans_src = (u8*)((u32)sc_chr_data + (((My_char[i] * 8 + 0x408) << 5) >> 1) * 2);
@@ -1215,7 +1215,7 @@ void debug_scrfont_view(void) {
         if ((~p1sw_1 & p1sw_0 & LEVER_ALL) == LEVER_DOWN) {
             scrfont_view_attr -= 2;
         }
-        scrfont_view_attr = scrfont_view_attr & 62;
+        scrfont_view_attr = scrfont_view_attr & 0x3E;
     }
     for (i = 0; i < 16; i++) {
         for (j = 0; j < 16; j++) {
@@ -1227,6 +1227,6 @@ void debug_scrfont_view(void) {
             tilemap_put_cell(j + 24, i + 6, scrfont_view_attr, code++);
         }
     }
-    tilemap_put_cell(23, 5, 42, (scrfont_view_attr >> 5) & 15);
-    tilemap_put_cell(24, 5, 42, (scrfont_view_attr >> 1) & 15);
+    tilemap_put_cell(23, 5, 42, (scrfont_view_attr >> 5) & 0xF);
+    tilemap_put_cell(24, 5, 42, (scrfont_view_attr >> 1) & 0xF);
 }

@@ -51,8 +51,6 @@
 
 
 
-extern const u16 ef13_char_table_225[180];
-
 /* 0200704C */
 u32* ag_char_table[8] = {
     (u32*)&ef13_char_table_225[108],
@@ -202,7 +200,7 @@ void effect_C9_move(WORK_Other* ewk) {
 
 
 
-s32 effect_C9_init(PLW* arg0, u8 data) {
+s32 effect_C9_init(PLW* wk, u8 data) {
     WORK_Other* ewk;
     s16 ix;
     if ((ix = pull_effect_work(4)) == -1) {

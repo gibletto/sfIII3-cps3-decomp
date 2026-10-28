@@ -1181,7 +1181,7 @@ extern const u16 car_parts[][8][18][2];
 extern const ColorTableIndex color_table_index[];
 extern const s16 crow_char_tbl[3][3];
 extern const s16 damage_pause_table[][4];
-extern const s16 eff78_data_tbl[][2];
+extern const s16 eff78_data_tbl[];
 extern const u16 exdm_ix_data[][24][5];
 extern const EXPLEM explem[];
 extern const EXPLEM explem2[][24];

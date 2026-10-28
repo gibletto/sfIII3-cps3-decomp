@@ -257,7 +257,7 @@ void Next_CPU_4th(void) {
             SC_No[1]++;
             Forbid_Break = 0;
             bgm_request(3);
-            S_Timer = 0xB2;
+            S_Timer = 178;
             Exit_Timer = 2;
             bg_w.bgw[0].wxy[1].disp.pos = 0x200;
             bg_w.bgw[1].wxy[1].disp.pos = 0x200;
@@ -355,7 +355,7 @@ void Next_CPU_5th(void) {
             Suicide[3] = 1;
             effect_43_init(1, 0);
             bgm_request(3);
-            S_Timer = 0xB2;
+            S_Timer = 178;
         }
         break;
     case NC5_FADE_WAIT:
@@ -533,7 +533,7 @@ void After_Bonus_6th(void) {
             SC_No[1]++;
             Forbid_Break = 0;
             bgm_request(3);
-            S_Timer = 0xB2;
+            S_Timer = 178;
             Exit_Timer = 2;
             bg_w.bgw[0].wxy[1].disp.pos = 0x200;
             bg_w.bgw[1].wxy[1].disp.pos = 0x200;
@@ -1021,13 +1021,13 @@ u16 sw;
         return;
     }
     if (Time_Over) {
-        sw = 16;
+        sw = BUTTON_LP;
     }
     if (VS_Index[PL_id] >= 8) {
-        sw = 16;
+        sw = BUTTON_LP;
     }
-    lever_sw = sw & 3;
-    if (lever_sw & 2) {
+    lever_sw = sw & (LEVER_UP | LEVER_DOWN);
+    if (lever_sw & LEVER_DOWN) {
         if (Temporary_EM[Player_id] == 2) {
             return;
         }
@@ -1036,7 +1036,7 @@ u16 sw;
         Moving_Plate_Counter[PL_id] = 2;
         Temporary_EM[Player_id] = 2;
     }
-    if (lever_sw & 1) {
+    if (lever_sw & LEVER_UP) {
         if (Temporary_EM[Player_id] == 1) {
             return;
         }
@@ -1045,7 +1045,7 @@ u16 sw;
         Moving_Plate_Counter[PL_id] = 2;
         Temporary_EM[Player_id] = 1;
     }
-    if (sw & 0x3F0) {
+    if (sw & BUTTON_SHOTS) {
         Sel_EM_Complete[PL_id] = 1;
         EM_id = EM_List[Player_id][Temporary_EM[Player_id] - 1];
         My_char[COM_id] = EM_id;

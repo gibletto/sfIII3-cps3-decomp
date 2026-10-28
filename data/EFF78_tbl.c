@@ -1,7 +1,7 @@
 /*
  * EFF78_TBL.C  bg000 crow tables
  *
- * eff78_data_tbl gives the perch position of each of the two crows, and crow_char_tbl the
+ * eff78_data_tbl gives the perch position (x, y) of each of the two crows, and crow_char_tbl the
  * take-off pattern and the x, y distance to fly for each take-off direction. Read by EFF78.C,
  * the crows.
  */
@@ -12,8 +12,9 @@
 #pragma section TBL
 
 
-const s16 eff78_data_tbl[2][2] = {
-    { 416, 71 }, { 912, 64 },
+const s16 eff78_data_tbl[4] = {
+    416, 71,
+    912, 64,
 };
 
 /*

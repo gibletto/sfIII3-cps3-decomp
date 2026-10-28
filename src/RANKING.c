@@ -235,7 +235,7 @@ void Ranking_00_Last(void) {
     if (--D_Timer == 0) {
         D_Timer = 1;
         Ranking_X = 1;
-    } else if (D_Timer == 0x3C) {
+    } else if (D_Timer == 60) {
         bgm_fade_out(0x222);
         return;
     }

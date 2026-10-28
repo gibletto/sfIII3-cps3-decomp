@@ -837,13 +837,13 @@ char gddir;
         return 0;
     }
 guard:
-    if (!(as->wu.att.guard & 32)) {
+    if (!(as->wu.att.guard & 0x20)) {
         return 2;
     }
     if (ds->guard_flag & 1) {
         goto miss;
     } else {
-        if (ds->spmv_ng_flag & 32) {
+        if (ds->spmv_ng_flag & 0x20) {
             goto miss;
         } else {
             if (ds->saishin_lvdir & gddir) {
@@ -1109,7 +1109,7 @@ void nise_combo_work(PLW* as, PLW* ds, s16 num) {
         kow = &ds->cb->kind_of[0][0][0];
         cal = &calc_hit[ds->wu.id][0];
         kow[as->wu.kind_of_waza]++;
-        cal[(as->wu.kind_of_waza & 120) / 8]++;
+        cal[(as->wu.kind_of_waza & 0x78) / 8]++;
         ds->cb->total++;
         kow = &ds->rp->kind_of[0][0][0];
         kow[as->wu.kind_of_waza]++;
@@ -1408,7 +1408,7 @@ void attack_hit_check(void) {
                         }
                     }
                     if (lp2 == 10) {
-                        if (!(mad->att.dipsw & 64) || sad->kind_of_waza & 0x60) {
+                        if (!(mad->att.dipsw & 0x40) || sad->kind_of_waza & 0x60) {
                             goto next4;
                         }
                         if (pcon_dp_flag || sad->pat_status == 0x26) {

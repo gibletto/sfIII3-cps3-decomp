@@ -67,7 +67,7 @@ s32 end_cut_check(void) {
         } else {
             sw = p1sw_0;
         }
-        if (sw & 0x3F0) {
+        if (sw & BUTTON_SHOTS) {
             return 1;
         }
     }
@@ -320,7 +320,7 @@ s32 effect_H6_init(s16 timer, s8* str, s16 X, s16 Y, s16 Original_Color, s32 unu
         ewk->wu.dir_step = 0;
         switch (Original_Color) {
         case 0:
-            ewk->wu.routine_no[1] = 0;
+            ewk->wu.routine_no[1] = R1_RIGHT;
             ewk->wu.routine_no[5] = X;
             ewk->wu.xyz[0].disp.pos = 384;
             ewk->wu.xyz[1].disp.pos = Y;

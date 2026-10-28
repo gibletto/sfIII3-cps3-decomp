@@ -189,8 +189,8 @@ MVJ* mvj;
 u16 mf;
 {
     s16 i;
-    s16 t0;
-    s16 t1;
+    s16 x1;
+    s16 y1;
     MVSW_BE mvsw;
     get_table_adrs_K5(wk);
     mvsw.swi = decode_mvsw(mf);
@@ -203,12 +203,12 @@ u16 mf;
         if (mvj[i].r[1].pos.h != 0) {
             wk->xyz[0].disp.pos = mvj[i].r[0].pos.h;
             wk->xyz[1].disp.pos = mvj[i].r[1].pos.h;
-            if ((t1 = wk->h_bod->body_dm[i][1])) {
-                t0 = wk->h_bod->body_dm[i][0];
+            if ((y1 = wk->h_bod->body_dm[i][1])) {
+                x1 = wk->h_bod->body_dm[i][0];
             } else {
-                t0 = wk->xyz[0].disp.pos + wk->xyz[1].disp.pos / 2;
+                x1 = wk->xyz[0].disp.pos + wk->xyz[1].disp.pos / 2;
             }
-            cal_all_speed_data(wk, wk->old_rno[0], t0, t1, mvsw.swc[0], mvsw.swc[2]);
+            cal_all_speed_data(wk, wk->old_rno[0], x1, y1, mvsw.swc[0], mvsw.swc[2]);
             mvj[i].r[0].cal = wk->xyz[0].cal;
             mvj[i].r[1].cal = wk->xyz[1].cal;
             mvj[i].a[0].sp = wk->mvxy.a[0].sp;
@@ -217,12 +217,12 @@ u16 mf;
             mvj[i].d[1].sp = wk->mvxy.d[1].sp;
             wk->xyz[0].disp.pos = mvj[i].r[2].pos.h;
             wk->xyz[1].disp.pos = mvj[i].r[3].pos.h;
-            if ((t1 = wk->h_bod->body_dm[i][3])) {
-                t0 = wk->h_bod->body_dm[i][2];
+            if ((y1 = wk->h_bod->body_dm[i][3])) {
+                x1 = wk->h_bod->body_dm[i][2];
             } else {
-                t0 = wk->xyz[0].disp.pos + wk->xyz[1].disp.pos / 2;
+                x1 = wk->xyz[0].disp.pos + wk->xyz[1].disp.pos / 2;
             }
-            cal_all_speed_data(wk, wk->old_rno[0], t0, t1, mvsw.swc[1], mvsw.swc[3]);
+            cal_all_speed_data(wk, wk->old_rno[0], x1, y1, mvsw.swc[1], mvsw.swc[3]);
             mvj[i].r[2].cal = wk->xyz[0].cal;
             mvj[i].r[3].cal = wk->xyz[1].cal;
             mvj[i].a[2].sp = wk->mvxy.a[0].sp;
@@ -248,12 +248,12 @@ next:
             if (mvj[i].r[1].pos.h != 0) {
                 wk->xyz[0].disp.pos = mvj[i].r[0].pos.h;
                 wk->xyz[1].disp.pos = mvj[i].r[1].pos.h;
-                if ((t1 = wk->h_han->hand_dm[i - 4][1])) {
-                    t0 = wk->h_han->hand_dm[i - 4][0];
+                if ((y1 = wk->h_han->hand_dm[i - 4][1])) {
+                    x1 = wk->h_han->hand_dm[i - 4][0];
                 } else {
-                    t0 = wk->xyz[0].disp.pos + wk->xyz[1].disp.pos / 2;
+                    x1 = wk->xyz[0].disp.pos + wk->xyz[1].disp.pos / 2;
                 }
-                cal_all_speed_data(wk, wk->old_rno[0], t0, t1, mvsw.swc[0], mvsw.swc[2]);
+                cal_all_speed_data(wk, wk->old_rno[0], x1, y1, mvsw.swc[0], mvsw.swc[2]);
                 mvj[i].r[0].cal = wk->xyz[0].cal;
                 mvj[i].r[1].cal = wk->xyz[1].cal;
                 mvj[i].a[0].sp = wk->mvxy.a[0].sp;
@@ -262,12 +262,12 @@ next:
                 mvj[i].d[1].sp = wk->mvxy.d[1].sp;
                 wk->xyz[0].disp.pos = mvj[i].r[2].pos.h;
                 wk->xyz[1].disp.pos = mvj[i].r[3].pos.h;
-                if ((t1 = wk->h_han->hand_dm[i - 4][3])) {
-                    t0 = wk->h_han->hand_dm[i - 4][2];
+                if ((y1 = wk->h_han->hand_dm[i - 4][3])) {
+                    x1 = wk->h_han->hand_dm[i - 4][2];
                 } else {
-                    t0 = wk->xyz[0].disp.pos + wk->xyz[1].disp.pos / 2;
+                    x1 = wk->xyz[0].disp.pos + wk->xyz[1].disp.pos / 2;
                 }
-                cal_all_speed_data(wk, wk->old_rno[0], t0, t1, mvsw.swc[1], mvsw.swc[3]);
+                cal_all_speed_data(wk, wk->old_rno[0], x1, y1, mvsw.swc[1], mvsw.swc[3]);
                 mvj[i].r[2].cal = wk->xyz[0].cal;
                 mvj[i].r[3].cal = wk->xyz[1].cal;
                 mvj[i].a[2].sp = wk->mvxy.a[0].sp;

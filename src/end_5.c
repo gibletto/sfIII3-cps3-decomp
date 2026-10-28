@@ -211,7 +211,7 @@ void end_500_0006(void) {
         if (end_fade_complete()) {
             bgw_ptr->r_no_1++;
             end_no_cut = 0;
-            end_w.timer = 0x1E;
+            end_w.timer = 30;
         }
         break;
     case 3:
@@ -484,7 +484,7 @@ void end_501_0010(void) {
         if (end_fade_complete()) {
             bgw_ptr->r_no_1++;
             end_no_cut = 0;
-            end_w.timer = 0x1E;
+            end_w.timer = 30;
         }
         break;
     case 2:

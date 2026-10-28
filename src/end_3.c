@@ -224,7 +224,7 @@ void end_300_0004(void) {
                 load_any_color(0x40);
                 load_any_color(0x41);
                 load_any_color(0x42);
-                ew->timer = 0x32;
+                ew->timer = 50;
                 end_etc_flag = 1;
             } else {
                 load_any_color(end_300_col_tbl[(*pp)->l_limit]);

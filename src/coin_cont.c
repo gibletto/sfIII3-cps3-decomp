@@ -19,8 +19,8 @@
 #include "textsound_2.h"
 #include "textsound_3.h"
 #include "coin_cont.h"
+#include "continue.h"
 
-void Disp_Personal_Count();
 
 
 

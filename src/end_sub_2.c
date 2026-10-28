@@ -58,6 +58,7 @@
 #include "end_sub.h"
 #include "end_sub_2.h"
 #include "cps3.h"
+#include "effh6_code.h"
 
 /* staff_r_no: the staff roll (staff_roll_main) */
 #define STAFF_INIT      0       /* set up the staff roll */
@@ -84,7 +85,6 @@ u32 staffroll_end_tail[1] = {
 };
 
 
-s32 effect_H6_init(s16 timer, s8* str, s16 X, s16 Y, s16 Original_Color, s32 unused);
 
 extern s32 staff_r_no;
 
@@ -97,7 +97,7 @@ void cd_keep_spinning_tick(void) {
     if (cd_ready_flag) {
         if (!cd_spin_timer) {
             scsi_start_stop_unit(1, 1);
-            cd_spin_timer = 0x258;
+            cd_spin_timer = 600;
         }
         cd_spin_timer--;
     }
@@ -158,7 +158,7 @@ s32 staff_roll_skip_check(void) {
         } else {
             v = p1sw_0;
         }
-        if (v & 0x3f0) {
+        if (v & BUTTON_SHOTS) {
             return 1;
         }
     }
@@ -213,7 +213,7 @@ s32 staff_roll_main(void) {
         staff_name_ptr = roll_stop = 0;
         end_w.timer = 0;
         name_timer = 0;
-        staff_roll_timer = 0x1E96;
+        staff_roll_timer = 7830;
         break;
     case STAFF_ROLL:
         ((WORK*)1)->id;

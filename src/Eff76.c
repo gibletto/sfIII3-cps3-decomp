@@ -27,6 +27,7 @@
 #include "Grade.h"
 #include "CHARMOVE.h"
 #include "charmove_2.h"
+#include "fighter.h"
 #include "Eff76.h"
 
 /* routine_no[0]: the order being carried out */
@@ -588,7 +589,7 @@ s32 ewk;
 s32 chkNameAkuma(char_id)
 s16 char_id;
 {
-    if (Country != 1 && char_id == 14) {
+    if (Country != 1 && char_id == PL_GOUKI1) {
         return 1;
     }
     return 0;

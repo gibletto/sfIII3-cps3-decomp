@@ -63,7 +63,7 @@ s32 effect_L8_move(WORK_Other* ewk) {
         check_new_color_data_L8(ewk);
         mwk->att_plus = 14;
         spmv_ng_save = mwk->spmv_ng_flag;
-        mwk->spmv_ng_flag |= 16;
+        mwk->spmv_ng_flag |= 0x10;
         break;
     case R0_MOVE:
         if (ewk->wu.dead_f == 1) {

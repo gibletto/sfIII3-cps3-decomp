@@ -309,8 +309,8 @@ s32 check_hit_stop(PLW* wk) {
             char_move(&wk->wu);
         }
         if (wk->wu.routine_no[3] == RN3_START) {
-            if (wk->wu.routine_no[1] == 1 || wk->wu.routine_no[1] == 3) {
-                if (emwk->routine_no[1] != 1 && emwk->routine_no[1] != 3) {
+            if (wk->wu.routine_no[1] == PLAYER_DAMAGE || wk->wu.routine_no[1] == PLAYER_CAUGHT) {
+                if (emwk->routine_no[1] != PLAYER_DAMAGE && emwk->routine_no[1] != PLAYER_CAUGHT) {
                     num = 0;
                 }
             }
@@ -620,19 +620,19 @@ void sag_timer(PLW* wk) {
             break;
         }
         if (My_char[wk->wu.id] == PL_YUN) {
-            wk->wu.kind_of_waza |= 32;
+            wk->wu.kind_of_waza |= 0x20;
             wk->wu.at_koa = 128;
         }
         if (My_char[wk->wu.id] == PL_YANG) {
-            wk->wu.kind_of_waza |= 32;
+            wk->wu.kind_of_waza |= 0x20;
             wk->wu.at_koa = 128;
         }
         if (My_char[wk->wu.id] == PL_KARATE) {
-            wk->wu.kind_of_waza |= 32;
+            wk->wu.kind_of_waza |= 0x20;
             wk->wu.at_koa = 128;
         }
         if (My_char[wk->wu.id] == PL_NO12) {
-            wk->wu.kind_of_waza |= 32;
+            wk->wu.kind_of_waza |= 0x20;
             wk->wu.at_koa = 128;
         }
         if ((My_char[wk->wu.id] == PL_ORO) && (wk->sa->kind_of_arts == 2)) {

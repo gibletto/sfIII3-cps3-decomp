@@ -596,7 +596,7 @@ s32 Button_Cut_Hold(s16* timer, s16 first, s16 repeat) {
     } else {
         trig = ~p1sw_1 & p1sw_0;
     }
-    if (trig & 0x3F0) {
+    if (trig & BUTTON_SHOTS) {
         if (repeat >= *timer) {
             Reserve_Cut = 0;
             return 1;
@@ -637,7 +637,7 @@ s32 Button_Cut_EX(s16* Timer, s16 Limit_Time) {
     if (*Timer == 0) {
         return 1;
     }
-    if ((xx & 0x3F0) && Limit_Time >= *Timer) {
+    if ((xx & BUTTON_SHOTS) && Limit_Time >= *Timer) {
         return 1;
     }
     return 0;

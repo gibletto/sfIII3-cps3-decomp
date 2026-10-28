@@ -435,7 +435,7 @@ void effK2_parts_move_type_3(WORK_Other* ewk, DADD* hahen) {
 
 
 
-void effK2_parts_move_type_4(WORK_Other* ewk, DADD* arg1) {
+void effK2_parts_move_type_4(WORK_Other* ewk, DADD* _p1) {
     switch (ewk->wu.routine_no[2]) {
     case R2_HOLD:
         char_move(&ewk->wu);
@@ -458,7 +458,7 @@ void effK2_parts_move_type_4(WORK_Other* ewk, DADD* arg1) {
 
 
 
-void effK2_parts_move_type_5(WORK_Other* ewk, DADD* arg1) {
+void effK2_parts_move_type_5(WORK_Other* ewk, DADD* _p1) {
     char_move(&ewk->wu);
     if (ewk->wu.dir_old) {
         ewk->wu.disp_flag = 0;
@@ -469,7 +469,7 @@ void effK2_parts_move_type_5(WORK_Other* ewk, DADD* arg1) {
 
 
 
-void effK2_parts_move_type_6(WORK_Other* ewk, DADD* arg1) {
+void effK2_parts_move_type_6(WORK_Other* ewk, DADD* _p1) {
     switch (ewk->wu.routine_no[2]) {
     case R2_SET_LIFE:
         ewk->wu.kage_prio = (random_16_com() & 7) + 28;
@@ -494,7 +494,7 @@ void effK2_parts_move_type_6(WORK_Other* ewk, DADD* arg1) {
 
 
 
-void effK2_parts_move_type_7(WORK_Other* ewk, DADD* arg1) {
+void effK2_parts_move_type_7(WORK_Other* ewk, DADD* _p1) {
     switch (ewk->wu.routine_no[2]) {
     case R2_HOLD:
         char_move(&ewk->wu);

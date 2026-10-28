@@ -2929,7 +2929,7 @@ void common_end_init00(s16 pl_num) {
         bg_w.bgw[i].bg_address = (u16 *)simmram_slot_addr(bg_w.bgw[i].bg_adrs_c_no);
         scrn_map_set_now(i, (u32)bg_w.bgw[i].bg_address);
         scrn_map_set(i, (u32)bg_w.bgw[i].bg_address);
-        sprite_list_setup((s16)i, 1, (s16*)end_map_tbl[i]);
+        sprite_list_setup(i, 1, (s16*)end_map_tbl[i]);
         bg_w.bgw[i].r_no_1 = bg_w.bgw[i].r_no_2 = 0;
         bg_w.bgw[i].fam_no = i;
     }
@@ -3128,7 +3128,7 @@ s32 Cut_Cut_Cut_t(void) {
         } else {
             sw_w = p1sw_0 & ~p1sw_1;
         }
-        if (sw_w & 0x3F0) {
+        if (sw_w & BUTTON_SHOTS) {
             return 1;
         }
     }

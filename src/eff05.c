@@ -33,7 +33,6 @@
 
 
 
-extern const u16 rca_char_table_023[318];
 extern const u32 afc_char_table[];
 extern const u32 fnl_char_table[];
 extern const u32 j11_char_table[];

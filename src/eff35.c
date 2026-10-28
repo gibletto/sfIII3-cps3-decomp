@@ -271,7 +271,7 @@ void eff35_0004(WORK_Other* ewk) {
         set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.old_rno[3], 0);
         break;
     case R1_STAND:
-        if (pcon_rno[0] == 2 && pcon_rno[2] >= 3) {
+        if (pcon_rno[0] == PCON_DIE && pcon_rno[2] >= 3) {
             if (Bonus_Game_result >= 10 || Bonus_Game_ex_result >= 10) {
                 ewk->wu.routine_no[1]++;
             } else {

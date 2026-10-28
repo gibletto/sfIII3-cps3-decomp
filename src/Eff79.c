@@ -309,7 +309,7 @@ void effect_79_move(WORK_Other* ewk) {
 
 
 s32 Check_Play_Status_79(WORK_Other* ewk) {
-    if (ewk->wu.dir_old == 0 && Play_Type == 1) {
+    if (ewk->wu.dir_old == 0 && Play_Type == PLAY_VS_PLAYER) {
         ewk->wu.routine_no[1] = R1_REARRANGE;
         ewk->wu.routine_no[2] = R2_DELAY;
         ewk->wu.routine_no[5] = R5_MOVE;
@@ -669,7 +669,7 @@ void Setup_Pos_79(WORK_Other* ewk) {
 
 
 void Check_Speed_79(WORK_Other* ewk) {
-    if (Play_Type == 1) {
+    if (Play_Type == PLAY_VS_PLAYER) {
         ewk->wu.mvxy.a[0].sp /= 3;
         ewk->wu.mvxy.d[0].sp /= 3;
         ewk->wu.mvxy.a[1].sp /= 3;

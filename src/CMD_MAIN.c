@@ -56,6 +56,8 @@
 #include "cmd_main_2.h"
 #include "CMD_MAIN.h"
 #include "cps3.h"
+#include "eff05.h"
+#include "EFFC9.h"
 
 /* Debug_R_No: the debug menu routine (debug_scene_outer_dispatch) */
 #define DBG_INIT        0       /* debug_menu_work_init */
@@ -64,8 +66,6 @@
 #define DBG_SELECT      3       /* debug_menu_select_dispatch */
 #define DBG_RUN         4       /* the debug scene, until exit */
 
-extern const u16 rca_char_table_023[318];
-extern const u16 ef13_char_table_225[180];
 extern const s8 str_1DATA_SH5[];
 extern const s8 str_A[];
 extern const s8 str_ADD_ARTS[];
@@ -1401,20 +1401,20 @@ void debug_menu_select_init(void)
 /* provisional name */
 void debug_menu_select_run(void) {
     u16 sw = ~dbg_p1sw_1 & dbg_p1sw_0;
-    if (sw & 0x10) {
+    if (sw & BUTTON_LP) {
         Debug_Menu_No -= 4;
         Debug_R_No++;
         Debug_Tool_No = 0;
         debug_bg_stage_load();
         return;
     }
-    if (sw & 1) {
+    if (sw & LEVER_UP) {
         tilemap_print_string_attr(8, Debug_Menu_No, 6, " ");
         Debug_Menu_No--;
         if (Debug_Menu_No < 4) {
             Debug_Menu_No = 17;
         }
-    } else if (sw & 2) {
+    } else if (sw & LEVER_DOWN) {
         tilemap_print_string_attr(8, Debug_Menu_No, 6, " ");
         Debug_Menu_No++;
         if (Debug_Menu_No > 17) {
@@ -2123,7 +2123,7 @@ void debug_player_color_next(void) {
     u16 sw;
     if (exsw_0 & 0x100) {
         sw = ~dbg_p1sw_1 & dbg_p1sw_0;
-        if (sw & 0x1000) {
+        if (sw & BUTTON_START) {
             dbg_col_ix[dbg_pl->wu.id] += 1;
             if (dbg_col_ix[dbg_pl->wu.id] > 12) {
                 dbg_col_ix[dbg_pl->wu.id] = 12;
@@ -2708,7 +2708,7 @@ void debug_hit_a_judgement_run(void) {
     wk->dir_timer++;
     sw1 = ~dbg_p1sw_1 & dbg_p1sw_0;
     sw2 = ~dbg_p2sw_1 & dbg_p2sw_0;
-    if (sw1 & 0x20) {
+    if (sw1 & BUTTON_MP) {
         char_move_z(wk);
     } else {
         switch (dbg_p1sw_0 & BUTTON_PUNCHES) {
@@ -2731,13 +2731,13 @@ void debug_hit_a_judgement_run(void) {
             }
             break;
         case 0x40:
-            if (!(wk->dir_timer & 15)) {
+            if (!(wk->dir_timer & 0xF)) {
                 char_move(wk);
             }
             break;
         }
     }
-    if (sw2 & 0x80) {
+    if (sw2 & BUTTON_LK) {
         dbg_hita_grid_sw = (dbg_hita_grid_sw + 1) & 1;
     }
     debug_hit_a_judgement_navigate_xy(wk);
@@ -2757,7 +2757,7 @@ void debug_hit_a_judgement_run(void) {
     group = debug_cg_group_index(wk->cg_number);
     debug_draw_cg_group(wk->cg_number, group, 2, 25, 4);
     debug_draw_cg_group_offset(wk->cg_number, group, 8, 25, 4);
-    if (sw1 & 0x200) {
+    if (sw1 & BUTTON_HK) {
         Debug_Tool_No = 4;
         tilemap_print_string(0, 0, 0xFFFF, dbg_blank4_str);
         tilemap_print_string(0, 0, 0xFFFF, dbg_exit_ok_str);
@@ -2937,7 +2937,7 @@ s32 debug_hit_a_judgement_edit_grid(WORK* wk) {
         return 1;
     } else {
         sw = ~dbg_p1sw_1 & dbg_p1sw_0;
-        if (sw & 0x80) {
+        if (sw & BUTTON_LK) {
             goto add;
         add:
             if (wk->dir_step < 2) {
@@ -2958,7 +2958,7 @@ s32 debug_hit_a_judgement_edit_grid(WORK* wk) {
             return 1;
             goto added;
         added:;
-        } else if (sw & 0x100) {
+        } else if (sw & BUTTON_MK) {
             goto del;
         del:
             if (wk->dir_step < 2) {
@@ -3004,10 +3004,10 @@ s32 debug_hit_a_judgement_edit_step(void) {
         return 0;
     }
     sw = ~dbg_p2sw_1 & dbg_p2sw_0;
-    if (sw & 0x20) {
+    if (sw & BUTTON_MP) {
         return 1;
     }
-    if (sw & 0x40) {
+    if (sw & BUTTON_HP) {
         return -1;
     }
     return 0;
@@ -3252,7 +3252,7 @@ void debug_hit_a_exit_confirm(void) {
         }
         return;
     } else {
-        if (sw2 & 0x200) {
+        if (sw2 & BUTTON_HK) {
             plw[0].wu.xyz[0].disp.pos -= 0x180;
             plw[0].wu.position_x -= 0x180;
             plw[1].wu.xyz[0].disp.pos -= 0x180;
@@ -3261,7 +3261,7 @@ void debug_hit_a_exit_confirm(void) {
             Debug_Tool_No = 5;
             return;
         }
-        if (sw1 & 0x200) {
+        if (sw1 & BUTTON_HK) {
             Debug_Tool_No = 3;
             tilemap_print_string(0, 0, 0xFFFF, dbg_blank4_str);
         }
@@ -3305,7 +3305,7 @@ void debug_rgb_editor_navigate(s16 mode) {
                     Debug_RGB[i]++;
                 }
             }
-            if (sw & 0x200) {
+            if (sw & BUTTON_HK) {
                 for (i = 0; i < 3; i++) {
                     Debug_RGB[i] += 3;
                 }
@@ -3314,45 +3314,45 @@ void debug_rgb_editor_navigate(s16 mode) {
         }
         if (dbg_p2sw_0 & BUTTON_LP) {
             Debug_RGB[0]--;
-            if (sw & 0x10) {
+            if (sw & BUTTON_LP) {
                 Debug_RGB[0] -= 3;
             }
         }
         if (dbg_p2sw_0 & BUTTON_MP) {
             Debug_RGB[1]--;
-            if (sw & 0x20) {
+            if (sw & BUTTON_MP) {
                 Debug_RGB[1] -= 3;
             }
         }
         if (dbg_p2sw_0 & BUTTON_HP) {
             Debug_RGB[2]--;
-            if (sw & 0x40) {
+            if (sw & BUTTON_HP) {
                 Debug_RGB[2] -= 3;
             }
         }
     }
     if (dbg_p2sw_0 & BUTTON_LK) {
         Debug_RGB[0]++;
-        if (sw & 0x80) {
+        if (sw & BUTTON_LK) {
             Debug_RGB[0] += 3;
         }
     }
     if (dbg_p2sw_0 & BUTTON_MK) {
         Debug_RGB[1]++;
-        if (sw & 0x100) {
+        if (sw & BUTTON_MK) {
             Debug_RGB[1] += 3;
         }
     }
     if (dbg_p2sw_0 & BUTTON_HK) {
         Debug_RGB[2]++;
-        if (sw & 0x200) {
+        if (sw & BUTTON_HK) {
             Debug_RGB[2] += 3;
         }
     }
 mask:
-    Debug_RGB[0] &= 127;
-    Debug_RGB[1] &= 127;
-    Debug_RGB[2] &= 127;
+    Debug_RGB[0] &= 0x7F;
+    Debug_RGB[1] &= 0x7F;
+    Debug_RGB[2] &= 0x7F;
 }
 
 
@@ -3360,7 +3360,7 @@ mask:
 /* provisional name */
 void debug_bg_color_preset_next(void) {
     u16 sw = ~dbg_p1sw_1 & dbg_p1sw_0;
-    if (sw & 0x40) {
+    if (sw & BUTTON_HP) {
         dbg_bgcol_ix++;
         dbg_bgcol_ix &= 7;
     }
@@ -3381,9 +3381,9 @@ void debug_rgb_editor_print(s16 print) {
     r = Debug_RGB[0] >> 2;
     g = Debug_RGB[1] >> 2;
     b = Debug_RGB[2] >> 2;
-    r &= 31;
-    g &= 31;
-    b &= 31;
+    r &= 0x1F;
+    g &= 0x1F;
+    b &= 0x1F;
     green = g;
     blue = b;
     if (print) {
@@ -4072,7 +4072,7 @@ s32 debug_slot_all_select(u16 sw)
     if (!(dbg_p1sw_0 & BUTTON_START)) {
         return 0;
     }
-    if (!(dbg_p1sw_0 & 3)) {
+    if (!(dbg_p1sw_0 & (LEVER_UP | LEVER_DOWN))) {
         return 0;
     }
     moved = 0;
@@ -4314,7 +4314,7 @@ void debug_move_record_menu(void)
         tilemap_print_string(0, 0, 0xFFFF, dbg_rec_nodata_str);
     }
     sw = ~dbg_p1sw_1 & dbg_p1sw_0;
-    if (sw & 0x80) {
+    if (sw & BUTTON_LK) {
         /* clear all recorded frames */
         tilemap_print_string(0, 0, 0xFFFF, dbg_rec_clear_str);
         Debug_Rec_Frame = 0;
@@ -4325,7 +4325,7 @@ void debug_move_record_menu(void)
         dbg_rec_exist = 0;
         Debug_Play_Flag = 0;
     }
-    if (sw & 0x100) {
+    if (sw & BUTTON_MK) {
         /* delete the current frame: pull the following snapshots down one slot */
         tilemap_print_string(0, 0, 0xFFFF, dbg_rec_clear_str);
         for (i = Debug_Rec_Frame; i < Debug_Rec_Count; i++) {
@@ -4338,7 +4338,7 @@ void debug_move_record_menu(void)
         dbg_snap_req = 1;
         Debug_Play_Flag = 1;
     }
-    if (sw & 0x200) {
+    if (sw & BUTTON_HK) {
         tilemap_print_string(0, 0, 0xFFFF, dbg_rec_clear_str);
         dbg_rec_menu = 0;
     }
@@ -4478,7 +4478,7 @@ void debug_hit_box_edit(void) {
         return;
     }
     pad = ~dbg_p2sw_1 & dbg_p2sw_0;
-    if (pad & 0x20) {
+    if (pad & BUTTON_MP) {
         dbg_judge_ewk->look_up_flag ^= 1;
     }
     if (Debug_Box_Edit) {
@@ -4593,7 +4593,7 @@ void debug_hit_box_edit(void) {
         }
         dbg_edit_box = box;
         if (!Debug_Box_Edit) {
-            if (pad & 0x10) {
+            if (pad & BUTTON_LP) {
                 if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, 1, 4)) {
                     box[3]++;
                 }
@@ -4770,13 +4770,13 @@ void debug_hit_box_cursor(void) {
         sw = ~dbg_p2sw_1 & now;
         if (now & 0x240) {
             tilemap_rect_fill(dbg_hud_x + 40, (s8)((WORK_Other*)dbg_judge_ewk)->refrected + 12, 8, 1, 2, 0xFFFF);
-            if (sw & 0x40) {
+            if (sw & BUTTON_HP) {
                 ((WORK_Other*)dbg_judge_ewk)->refrected--;
                 if ((s8)((WORK_Other*)dbg_judge_ewk)->refrected < 0) {
                     ((WORK_Other*)dbg_judge_ewk)->refrected = 14;
                 }
             }
-            if (sw & 0x200) {
+            if (sw & BUTTON_HK) {
                 ((WORK_Other*)dbg_judge_ewk)->refrected++;
                 if ((s8)((WORK_Other*)dbg_judge_ewk)->refrected > 14) {
                     ((WORK_Other*)dbg_judge_ewk)->refrected = 0;
@@ -4805,7 +4805,7 @@ void debug_hit_box_copy(void) {
         return;
     }
     sw = ~dbg_p2sw_1 & dbg_p2sw_0;
-    if (sw & 0x100) {
+    if (sw & BUTTON_MK) {
         Debug_Box_Edit ^= 1;
         if (Debug_Box_Edit) {
             if (dbg_judge_ewk->look_up_flag) {
@@ -4827,7 +4827,7 @@ void debug_hit_box_copy(void) {
             dbg_copy_done = 0;
         }
     }
-    if (sw & 0x80) {
+    if (sw & BUTTON_LK) {
         if (Debug_Box_Edit) {
         dbg_copy_done = 1;
         dbg_copy_pat = dbg_slot->sel[2];
@@ -5276,7 +5276,7 @@ void debug_object_look_input(void) {
         return;
     }
     sw = ~dbg_p1sw_1 & dbg_p1sw_0;
-    if (sw & 0x40) {
+    if (sw & BUTTON_HP) {
         Debug_Command = 6;
         return;
     }
@@ -5385,11 +5385,11 @@ void debug_hit_judgment_input(void) {
         debug_position_by_pad();
     }
     sw = ~dbg_p2sw_1 & dbg_p2sw_0;
-    if (sw & 0x1000) {
+    if (sw & BUTTON_START) {
         Debug_PL_id = Debug_PL_id ^ 1;
     }
     if (Debug_PL_id) {
-        if (sw & 0x10) {
+        if (sw & BUTTON_LP) {
             plw[1].wu.disp_flag ^= 1;
         }
     }
@@ -5436,10 +5436,10 @@ void debug_parts_input(void) {
             return;
         }
     } else {
-        if (sw & 0x100) {
+        if (sw & BUTTON_MK) {
             dbg_parts_plw[dbg_parts_sel].wu.dir_step = -dbg_parts_plw[dbg_parts_sel].wu.dir_step;
         }
-        if (sw & 0x200) {
+        if (sw & BUTTON_HK) {
             dbg_parts_plw[dbg_parts_sel].wu.dir_timer = -dbg_parts_plw[dbg_parts_sel].wu.dir_timer;
         }
     }
@@ -5457,7 +5457,7 @@ void debug_parts_input(void) {
         return;
     }
     sw = dbg_p2sw_0 & ~dbg_p2sw_1;
-    if (sw & 0x10) {
+    if (sw & BUTTON_LP) {
         dbg_parts_sel++;
         dbg_parts_sel &= 3;
     }
@@ -6192,8 +6192,8 @@ void debug_save_player_snapshot(SNAPSHOT* rec, WORK* wk) {
     rec->pos_y = wk->xyz[1].disp.pos;
     rec->priority = wk->my_priority;
     rec->cg_number = wk->cg_number;
-    rec->v8 = Debug_RL_Flag[wk->id];
-    rec->v9 = Debug_CG_Flip[wk->id];
+    rec->dbg_rl_flag = Debug_RL_Flag[wk->id];
+    rec->dbg_cg_flip = Debug_CG_Flip[wk->id];
     rec->used = 1;
     rec->col_mode = wk->my_col_mode;
     rec->col_code = wk->my_col_code;
@@ -6213,8 +6213,8 @@ void debug_copy_player_snapshot(SNAPSHOT* src, SNAPSHOT* dst) {
     dst->pos_y = src->pos_y;
     dst->priority = src->priority;
     dst->cg_number = src->cg_number;
-    dst->v8 = src->v8;
-    dst->v9 = src->v9;
+    dst->dbg_rl_flag = src->dbg_rl_flag;
+    dst->dbg_cg_flip = src->dbg_cg_flip;
     dst->used = 1;
     dst->cg_ctr = src->cg_ctr;
     dst->col_mode = src->col_mode;
@@ -7365,7 +7365,7 @@ void debug_draw_cg_data(void) {
             bit = bit << 1;
         }
         if (plw[0].wu.cg_cancel & 8) {
-            n = plw[0].wu.cg_eftype & 15;
+            n = plw[0].wu.cg_eftype & 0xF;
             if (n > 8) {
                 tilemap_print_string(dbg_hud_x, 0, 0xFFFF, &dbg_eftype_names[8]);
             } else {
@@ -7461,7 +7461,7 @@ void debug_draw_cgd_info(void) {
 /* provisional name */
 void debug_hud_mode_dispatch(void) {
     u16 trg = ~dbg_p2sw_1 & dbg_p2sw_0;
-    if (trg & 0x1000) {
+    if (trg & BUTTON_START) {
         dbg_hud_mode++;
         if (dbg_hud_mode > 4) {
             dbg_hud_mode = 0;
@@ -7623,8 +7623,8 @@ void debug_move_snapshot_frame(SNAPSHOT* rec, WORK* wk, s16 priority) {
     rec->pos_y = wk->xyz[1].disp.pos;
     rec->priority = priority;
     rec->cg_number = wk->cg_number;
-    rec->v8 = wk->rl_flag;
-    rec->v9 = wk->cg_flip;
+    rec->dbg_rl_flag = wk->rl_flag;
+    rec->dbg_cg_flip = wk->cg_flip;
     rec->used = 1;
     rec->cg_ctr = wk->cg_ctr;
     rec->col_mode = wk->my_col_mode;

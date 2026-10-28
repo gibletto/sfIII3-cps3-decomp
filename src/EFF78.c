@@ -135,8 +135,8 @@ void crow_fuss_move(WORK_Other* ewk) {
             ewk->wu.routine_no[1]++;
             set_char_move_init(&ewk->wu, 0, ewk->wu.old_rno[0] + 3);
             ewk->wu.dir_timer = 48;
-            ewk->wu.old_rno[1] = eff78_data_tbl[0][ewk->wu.type * 2];
-            ewk->wu.old_rno[2] = eff78_data_tbl[0][ewk->wu.type * 2 + 1];
+            ewk->wu.old_rno[1] = *(eff78_data_tbl + ewk->wu.type * 2);
+            ewk->wu.old_rno[2] = *(eff78_data_tbl + ewk->wu.type * 2 + 1);
             cal_all_speed_data(&ewk->wu, ewk->wu.dir_timer, ewk->wu.old_rno[1], ewk->wu.old_rno[2] + 4, 0, 0);
         }
         break;
@@ -159,9 +159,6 @@ void crow_fuss_move(WORK_Other* ewk) {
         } else {
             add_x_sub(ewk);
             add_y_sub(ewk);
-            if (0) {
-                ewk->wu.dir_timer = 48;
-            }
         }
         break;
     case R1_LAND:
@@ -181,7 +178,7 @@ s32 effect_78_entry(void) {
     WORK_Other* ewk;
     s16 ix;
     s16 i;
-    const s16* data_ptr = eff78_data_tbl[0];
+    const s16* data_ptr = eff78_data_tbl;
     for (i = 0; i < 2; i++) {
         if ((ix = pull_effect_work(4)) == -1) {
             return -1;

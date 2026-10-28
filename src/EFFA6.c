@@ -188,7 +188,7 @@ s32 effA5_shot_pressed(void) {
     } else {
         sw = p1sw_0;
     }
-    if (sw & 0x3F0) {
+    if (sw & BUTTON_SHOTS) {
         return 1;
     }
     return 0;
@@ -204,7 +204,7 @@ s32 effA5_start_pressed(void) {
     } else {
         sw = p1sw_0;
     }
-    if (sw & 0x1000) {
+    if (sw & BUTTON_START) {
         return 1;
     }
     return 0;
