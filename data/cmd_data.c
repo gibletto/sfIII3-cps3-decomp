@@ -35,9 +35,9 @@
 
 #pragma section TBL
 
-extern const s16 lvr_chk_tbl_0[];
-extern const s16 lvr_chk_tbl_1[];
-extern const s16 lvr_chk_tbl_2[];
+extern const char lvr_chk_tbl_0[];
+extern const char lvr_chk_tbl_1[];
+extern const char lvr_chk_tbl_2[];
 extern const char player_cmd_0[];
 extern const char player_cmd_1[];
 extern const char player_cmd_11[];
@@ -1780,17 +1780,11 @@ const char player_cmd_5[12] = "SHOT6 =\n";
 
 const char player_cmd_11[8] = "SHOT6 =";
 
-const s16 lvr_chk_tbl_0[2] = {
-    'S' << 8 | ' ', 0,     /* the text "S " */
-};
+const char lvr_chk_tbl_0[4] = "S ";
 
-const s16 lvr_chk_tbl_1[2] = {
-    'M' << 8 | ' ', 0,     /* the text "M " */
-};
+const char lvr_chk_tbl_1[4] = "M ";
 
-const s16 lvr_chk_tbl_2[2] = {
-    'L' << 8 | ' ', 0,     /* the text "L " */
-};
+const char lvr_chk_tbl_2[4] = "L ";
 
 #pragma section
 

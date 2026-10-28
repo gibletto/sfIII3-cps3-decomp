@@ -97,11 +97,11 @@ s8 Config_Rep_Count_jp[4];  /* 0201704E */
 
 /* 020007EC */
 TMSCRIPT gcfg_guide_scr_jp[1] = {
-    { 1, 0, (void*)((const u8*)gcfg_guide_scr_jp_0) },
+    { 1, 0, (void*)gcfg_guide_scr_jp_0 },
 };
 /* 020007F4 */
 TMSCRIPT gcfg_exit_guide_scr_jp[1] = {
-    { 1, 0, (void*)((const u8*)gcfg_exit_guide_scr_jp_0) },
+    { 1, 0, (void*)gcfg_exit_guide_scr_jp_0 },
 };
 /* 020007FC */
 TMSCRIPT gcfg_screen_scr_jp[2] = {
@@ -127,30 +127,30 @@ TMSCRIPT gcfg_bonus_scr_jp[2] = {
 };
 /* 0200084C */
 TMSCRIPT gcfg_cursor_scr_jp[1] = {
-    { 1, 0, (void*)((const u8*)gcfg_cursor_scr_jp_0) },
+    { 1, 0, (void*)gcfg_cursor_scr_jp_0 },
 };
 /* 02000854 */
 TMSCRIPT gcfg_cursor_clr_scr_jp[1] = {
-    { 1, 0, (void*)((const u8*)gcfg_cursor_clr_scr_jp_0) },
+    { 1, 0, (void*)gcfg_cursor_clr_scr_jp_0 },
 };
 /* 0200085C */
 TMSCRIPT gcfg_gauge_scr_jp[8] = {
-    { 1, 0, (void*)((const u8*)gcfg_gauge_scr_jp_0) },
-    { 1, 0, (void*)((const u8*)gcfg_gauge_scr_jp_1) },
-    { 1, 0, (void*)((const u8*)gcfg_gauge_scr_jp_2) },
-    { 1, 0, (void*)((const u8*)gcfg_gauge_scr_jp_3) },
-    { 1, 0, (void*)((const u8*)gcfg_gauge_scr_jp_4) },
-    { 1, 0, (void*)((const u8*)gcfg_gauge_scr_jp_5) },
-    { 1, 0, (void*)((const u8*)gcfg_gauge_scr_jp_6) },
-    { 1, 0, (void*)((const u8*)gcfg_gauge_scr_jp_7) },
+    { 1, 0, (void*)gcfg_gauge_scr_jp_0 },
+    { 1, 0, (void*)gcfg_gauge_scr_jp_1 },
+    { 1, 0, (void*)gcfg_gauge_scr_jp_2 },
+    { 1, 0, (void*)gcfg_gauge_scr_jp_3 },
+    { 1, 0, (void*)gcfg_gauge_scr_jp_4 },
+    { 1, 0, (void*)gcfg_gauge_scr_jp_5 },
+    { 1, 0, (void*)gcfg_gauge_scr_jp_6 },
+    { 1, 0, (void*)gcfg_gauge_scr_jp_7 },
 };
 /* 0200089C */
 TMSCRIPT gcfg_gauge_clr_scr_jp[1] = {
-    { 1, 0, (void*)((const u8*)gcfg_gauge_clr_scr_jp_0) },
+    { 1, 0, (void*)gcfg_gauge_clr_scr_jp_0 },
 };
 /* 020008A4 */
 TMSCRIPT gcfg_title_scr_jp[1] = {
-    { 1, 0, (void*)((const u8*)gcfg_title_scr_jp_0) },
+    { 1, 0, (void*)gcfg_title_scr_jp_0 },
 };
 
 

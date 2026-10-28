@@ -72,27 +72,27 @@ extern const u16 sc_vram_29_attr[];
 extern const u16 sc_vram_29_code[];
 extern const u16 sc_vram_29_pos[];
 
-extern const u32 sc_celllist_data[1324];
+extern const CELL_ENTRY sc_celllist_data[662];
 extern const CELL_ENTRY* const sc_celllist_tbl[];
 
 const CELL_ENTRY* const sc_celllist_tbl[17] = {
-    (const CELL_ENTRY*)&sc_celllist_data[0],
-    (const CELL_ENTRY*)&sc_celllist_data[0],
-    (const CELL_ENTRY*)&sc_celllist_data[42],
-    (const CELL_ENTRY*)&sc_celllist_data[168],
-    (const CELL_ENTRY*)&sc_celllist_data[218],
-    (const CELL_ENTRY*)&sc_celllist_data[238],
-    (const CELL_ENTRY*)&sc_celllist_data[258],
-    (const CELL_ENTRY*)&sc_celllist_data[1032],
-    (const CELL_ENTRY*)&sc_celllist_data[1082],
-    (const CELL_ENTRY*)&sc_celllist_data[1132],
-    (const CELL_ENTRY*)&sc_celllist_data[1194],
-    (const CELL_ENTRY*)&sc_celllist_data[452],
-    (const CELL_ENTRY*)&sc_celllist_data[710],
-    (const CELL_ENTRY*)&sc_celllist_data[1280],
-    (const CELL_ENTRY*)&sc_celllist_data[1302],
-    (const CELL_ENTRY*)&sc_celllist_data[84],
-    (const CELL_ENTRY*)&sc_celllist_data[126],
+    &sc_celllist_data[0],
+    &sc_celllist_data[0],
+    &sc_celllist_data[21],
+    &sc_celllist_data[84],
+    &sc_celllist_data[109],
+    &sc_celllist_data[119],
+    &sc_celllist_data[129],
+    &sc_celllist_data[516],
+    &sc_celllist_data[541],
+    &sc_celllist_data[566],
+    &sc_celllist_data[597],
+    &sc_celllist_data[226],
+    &sc_celllist_data[355],
+    &sc_celllist_data[640],
+    &sc_celllist_data[651],
+    &sc_celllist_data[42],
+    &sc_celllist_data[63],
 };
 
 /* the screen parts sc_ram_vram_tbl copies to the SS layer: for each, a list of screen positions, one of
