@@ -2956,24 +2956,22 @@ s32 debug_hit_a_judgement_edit_grid(WORK* wk) {
                 ixtbl[wk->dmcal_d] = *h;
             }
             return 1;
-            goto added;
-        added:;
-        } else if (sw & BUTTON_MK) {
-            goto del;
-        del:
-            if (wk->dir_step < 2) {
-                if (wk->dmcal_m < 2) {
-                    goto none;
-                }
-                for (i = ix; i < wk->dmcal_m; i++) {
-                    pat[i] = pat[i + 1];
-                }
-                wk->dmcal_m--;
-            } else {
-                *h = ixtbl[0];
-            }
-            return 1;
         }
+        if (!(sw & BUTTON_MK)) {
+            goto none;
+        }
+        if (wk->dir_step < 2) {
+            if (wk->dmcal_m < 2) {
+                goto none;
+            }
+            for (i = ix; i < wk->dmcal_m; i++) {
+                pat[i] = pat[i + 1];
+            }
+            wk->dmcal_m--;
+        } else {
+            *h = ixtbl[0];
+        }
+        return 1;
     }
 none:
     return 0;
