@@ -2580,7 +2580,7 @@ void debug_hit_a_judgement_build_table(void) {
     wk->vital_new = n;
     n = 0;
     for (i = 1; i <= wk->dmcal_m; i = i + 1) {
-        for (j = n; j >= 0; j = j - 1) {
+        for (j = n; j >= 0; j--) {
             if (debug_memcmp_u32((u32*)&att[j], (u32*)&dbg_look_attack[i], 8)) {
                 keys[i].ix[2] = j;
                 break;
@@ -2609,7 +2609,7 @@ void debug_hit_a_judgement_build_table(void) {
             pat[i - 1].bits = n;
         }
     }
-    for (i = 0; i < wk->dmcal_m; i = i + 1) {
+    for (i = 0; i < wk->dmcal_m; i++) {
         pat[i].bits <<= 13;
     }
     ixtbl = (HITA_IX*)ixkey;
