@@ -2440,12 +2440,11 @@ void debug_hit_judgment_move(void) {
             debug_set_all_boxes(dbg_slot->sel[2]);
         }
         break;
+    default:
+        break;
     }
-    wk = &plw[0].wu;
-    goto disp;
-disp:
-    debug_char_disp(wk);
-    debug_char_disp(&plw[1].wu);
+    debug_char_disp((WORK*)&plw[0]);
+    debug_char_disp((WORK*)&plw[1]);
     debug_bg_color_preset_next();
     debug_rgb_editor_print(0);
     debug_draw_object_info();
@@ -3134,9 +3133,6 @@ void debug_hit_a_print_pattern_rows(WORK* wk, GRID_REC* recs) {
         tilemap_print_string_attr(hit_grid5_pos_tbl[i].x, hit_grid5_pos_tbl[i].y, attr, debug_blank3_msg);
     }
 rows:;
-    if (DEBUG_DISP) {
-        attr = 14;
-    }
     for (i = 0; i < 9; ix = ix + 1, i++) {
         if (ix < 0 || ix >= wk->dmcal_m) {
             tilemap_print_string_attr(2, hit_grid5_pos_tbl[i].y, 0, grid_empty_row_msg);
@@ -3154,9 +3150,6 @@ rows:;
                                       (hit = hit_grid5_pos_tbl[i].hit)->y, attr, debug_zero2_msg);
             tilemap_print_hex(hit->x, hit->y, attr, remake_2_10(v, 2), 2, 2);
         }
-    }
-    if (DEBUG_DISP) {
-        attr = 4;
     }
 }
 

@@ -141,49 +141,44 @@ void Att_PL10_MACH_SLIDE2(PLW* wk) {
         hoken_muriyari_chakuchi(wk);
         wk->wu.rl_flag = wk->wu.rl_waza;
         wk->rl_save = wk->wu.rl_flag;
-        reset_mvxy_data((WORK*)wk);
+        reset_mvxy_data(&wk->wu);
         wk->wu.mvxy.index = wk->as->r_no;
-        set_char_move_init((WORK*)wk, 5, wk->as->char_ix);
+        set_char_move_init(&wk->wu, 5, wk->as->char_ix);
         break;
     case MACH_SLIDE2_MOVE:
-        char_move((WORK*)wk);
+        char_move(&wk->wu);
         if (wk->wu.cg_type == 30) {
-            setup_mvxy_data((WORK*)wk, wk->wu.mvxy.index);
+            setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.a[1].sp = wk->wu.mvxy.d[1].sp = wk->wu.mvxy.kop[1] = 0;
             wk->wu.mvxy.index++;
             wk->wu.routine_no[3] = MACH_SLIDE2_MOVE2;
             wk->wu.cg_type = 0;
         }
         if (wk->wu.routine_no[3] != MACH_SLIDE2_MOVE) {
-            add_mvxy_speed((WORK*)wk);
+            add_mvxy_speed(&wk->wu);
         }
         break;
     case MACH_SLIDE2_MOVE2:
-        char_move((WORK*)wk);
-        cal_mvxy_speed((WORK*)wk);
+        char_move(&wk->wu);
+        cal_mvxy_speed(&wk->wu);
         if (wk->rl_save) {
             wk->wu.xyz[0].cal += wk->wu.mvxy.a[0].sp;
         } else {
             wk->wu.xyz[0].cal -= wk->wu.mvxy.a[0].sp;
         }
         wk->wu.xyz[1].cal += wk->wu.mvxy.a[1].sp;
-        if (!wk->micchaku_flag) {
-            break;
+        if (wk->micchaku_flag) {
+            char_move_z(&wk->wu);
+        } else {
+            return;
         }
-        char_move_z((WORK*)wk);
-        if (1) {
-            goto slide_continue;
-        }
-        switch (0) {
-        }
-slide_continue:;
         if (wk->wu.cg_type == 21) {
-            reset_mvxy_data((WORK*)wk);
+            reset_mvxy_data(&wk->wu);
             wk->wu.cg_type = 0;
             wk->wu.routine_no[3] = MACH_SLIDE2_MOVE;
         }
         if (wk->wu.cg_type == 30) {
-            setup_mvxy_data((WORK*)wk, wk->wu.mvxy.index);
+            setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.a[1].sp = wk->wu.mvxy.d[1].sp = wk->wu.mvxy.kop[1] = 0;
             wk->wu.mvxy.index++;
             wk->wu.cg_type = 0;
