@@ -1388,13 +1388,13 @@ void attack_hit_check(void) {
                     if ((lp == 2 || lp == 3) && (lp2 == 8 || lp2 == 9)) {
                         goto next4;
                     }
-                    if ((lp2 > 3) && (lp2 < 0xA)) {
-                        if (!(((mad->rl_flag) + (sad->rl_flag)) & 1)) {
+                    if (lp2 > 3 && lp2 < 10) {
+                        if (!((mad->rl_flag + sad->rl_flag) & 1)) {
                             if (mad->rl_flag) {
-                                if (!(mad->xyz[0].disp.pos <= sad->xyz[0].disp.pos)) {
+                                if (mad->xyz[0].disp.pos > sad->xyz[0].disp.pos) {
                                     goto next4;
                                 }
-                            } else if (!(mad->xyz[0].disp.pos >= sad->xyz[0].disp.pos)) {
+                            } else if (mad->xyz[0].disp.pos < sad->xyz[0].disp.pos) {
                                 goto next4;
                             }
                         }
