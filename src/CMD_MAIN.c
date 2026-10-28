@@ -2867,7 +2867,8 @@ s32 debug_hit_a_judgement_edit_grid(WORK* wk) {
             break;
         }
         return 1;
-    } else if ((step = debug_hit_a_judgement_edit_step()) != 0) {
+    }
+    if ((step = debug_hit_a_judgement_edit_step()) != 0) {
         switch (judge_column_tbl[wk->dir_step].rest[0]) {
         case 0:
             step = step + pat[ix].frames;
@@ -2935,44 +2936,43 @@ s32 debug_hit_a_judgement_edit_grid(WORK* wk) {
             break;
         }
         return 1;
-    } else {
-        sw = ~dbg_p1sw_1 & dbg_p1sw_0;
-        if (sw & BUTTON_LK) {
-            goto add;
-        add:
-            if (wk->dir_step < 2) {
-                if (wk->dmcal_m > 95) {
-                    goto none;
-                }
-                wk->dmcal_m++;
-                for (i = wk->dmcal_m + 1; i > ix; i--) {
-                    pat[i] = pat[i - 1];
-                }
-            } else {
-                if (wk->dmcal_d > 95) {
-                    goto none;
-                }
-                wk->dmcal_d++;
-                ixtbl[wk->dmcal_d] = *h;
-            }
-            return 1;
-        }
-        if (!(sw & BUTTON_MK)) {
-            goto none;
-        }
+    }
+    sw = ~dbg_p1sw_1 & dbg_p1sw_0;
+    if (sw & BUTTON_LK) {
+        goto add;
+    add:
         if (wk->dir_step < 2) {
-            if (wk->dmcal_m < 2) {
+            if (wk->dmcal_m > 95) {
                 goto none;
             }
-            for (i = ix; i < wk->dmcal_m; i++) {
-                pat[i] = pat[i + 1];
+            wk->dmcal_m++;
+            for (i = wk->dmcal_m + 1; i > ix; i--) {
+                pat[i] = pat[i - 1];
             }
-            wk->dmcal_m--;
         } else {
-            *h = ixtbl[0];
+            if (wk->dmcal_d > 95) {
+                goto none;
+            }
+            wk->dmcal_d++;
+            ixtbl[wk->dmcal_d] = *h;
         }
         return 1;
     }
+    if (!(sw & BUTTON_MK)) {
+        goto none;
+    }
+    if (wk->dir_step < 2) {
+        if (wk->dmcal_m < 2) {
+            goto none;
+        }
+        for (i = ix; i < wk->dmcal_m; i++) {
+            pat[i] = pat[i + 1];
+        }
+        wk->dmcal_m--;
+    } else {
+        *h = ixtbl[0];
+    }
+    return 1;
 none:
     return 0;
 }
@@ -4757,28 +4757,23 @@ void debug_hit_box_cursor(void) {
     u16 sw;
     u16 *input = &now;
     if (Debug_PL_id) {
-        if (DEBUG_EDIT) {
-            sw = ~dbg_p2sw_1 & now;
-        }
         return;
-    } else {
-    poll:
-        now = dbg_p2sw_0;
-    held:;
-        sw = ~dbg_p2sw_1 & now;
-        if (now & 0x240) {
-            tilemap_rect_fill(dbg_hud_x + 40, (s8)((WORK_Other*)dbg_judge_ewk)->refrected + 12, 8, 1, 2, 0xFFFF);
-            if (sw & BUTTON_HP) {
-                ((WORK_Other*)dbg_judge_ewk)->refrected--;
-                if ((s8)((WORK_Other*)dbg_judge_ewk)->refrected < 0) {
-                    ((WORK_Other*)dbg_judge_ewk)->refrected = 14;
-                }
+    }
+    now = dbg_p2sw_0;
+held:;
+    sw = ~dbg_p2sw_1 & now;
+    if (now & 0x240) {
+        tilemap_rect_fill(dbg_hud_x + 40, (s8)((WORK_Other*)dbg_judge_ewk)->refrected + 12, 8, 1, 2, 0xFFFF);
+        if (sw & BUTTON_HP) {
+            ((WORK_Other*)dbg_judge_ewk)->refrected--;
+            if ((s8)((WORK_Other*)dbg_judge_ewk)->refrected < 0) {
+                ((WORK_Other*)dbg_judge_ewk)->refrected = 14;
             }
-            if (sw & BUTTON_HK) {
-                ((WORK_Other*)dbg_judge_ewk)->refrected++;
-                if ((s8)((WORK_Other*)dbg_judge_ewk)->refrected > 14) {
-                    ((WORK_Other*)dbg_judge_ewk)->refrected = 0;
-                }
+        }
+        if (sw & BUTTON_HK) {
+            ((WORK_Other*)dbg_judge_ewk)->refrected++;
+            if ((s8)((WORK_Other*)dbg_judge_ewk)->refrected > 14) {
+                ((WORK_Other*)dbg_judge_ewk)->refrected = 0;
             }
         }
     }
