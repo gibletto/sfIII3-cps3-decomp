@@ -59,13 +59,13 @@
 
 
 
-extern const s16 scr_obj_data27_0[];
-extern const s16 scr_obj_data27_1[];
+extern const s16 scr_obj_data27_0[][19];
+extern const s16 scr_obj_data27_1[][19];
 
 /* 02006C90 */
 const s16* scr_obj_data27[2] = {
-    scr_obj_data27_0,
-    scr_obj_data27_1,
+    scr_obj_data27_0[0],
+    scr_obj_data27_1[0],
 };
 /* 02006C98 */
 void (*eff27_jp_tbl[11])(WORK_Other*) = {

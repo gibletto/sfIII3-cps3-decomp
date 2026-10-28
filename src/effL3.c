@@ -266,7 +266,7 @@ s32 effect_L3_init(PLW* oya) {
     if (!Perfect_Flag) {
         return;
     }
-    t = effl3_data_tbl;
+    t = effl3_data_tbl[0];
     k = oya->wu.id ^ 1;
     for (i = 0, f = &plw[k]; i < 6; i++) {
         s = pull_effect_work(3);

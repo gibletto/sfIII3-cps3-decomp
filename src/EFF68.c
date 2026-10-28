@@ -549,7 +549,7 @@ s32 effect_68_init(void) {
     WORK_Other* ewk;
     s16 ix;
     s16 i;
-    const s16* data_ptr = eff68_data_tbl;
+    const s16* data_ptr = eff68_data_tbl[0];
     for (i = 0; i < 3; i++) {
         if ((ix = pull_effect_work(4)) == -1) {
             return -1;

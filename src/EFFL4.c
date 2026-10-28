@@ -64,7 +64,7 @@ s32 effect_L4_init(void) {
     WORK_Other* ewk;
     s16 ix;
     s16 i;
-    const s16* data_ptr = effl4_data_tbl;
+    const s16* data_ptr = effl4_data_tbl[0];
     for (i = 0; i < 6; i++) {
         if ((ix = pull_effect_work(3)) == -1) {
             return -1;

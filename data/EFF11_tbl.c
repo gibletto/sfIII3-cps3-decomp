@@ -14,10 +14,12 @@
 #pragma section TBL
 
 
-const s16 eff11_data_tbl[24] = {
-    8320, 816, 51, 80, 6, 0, 8320, 176,
-    51, 80, 6, 0, 8320, 720, 55, 80,
-    12, 1, 8320, 240, 55, 80, 12, 1,
+/* one row per object: { colour code, x, y, priority, char_index, old_rno[3] } */
+const s16 eff11_data_tbl[4][6] = {
+    { 0x2080, 816, 51, 80, 6, 0 },
+    { 0x2080, 176, 51, 80, 6, 0 },
+    { 0x2080, 720, 55, 80, 12, 1 },
+    { 0x2080, 240, 55, 80, 12, 1 },
 };
 
 const s16 eff11_quake_index_tbl[111] = {

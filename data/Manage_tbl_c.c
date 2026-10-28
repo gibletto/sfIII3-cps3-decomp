@@ -13,8 +13,8 @@
 #pragma section TBL
 
 const u32 Ball_Perfect_PTS[2][5] = {
-    { 0x4E20, 0x7530, 0xC350, 0x13880, 0x1D4C0 },
-    { 0x2710, 0x4E20, 0x9C40, 0x13880, 0x27100 },
+    { 20000, 30000, 50000, 80000, 120000 },
+    { 10000, 20000, 40000, 80000, 160000 },
 };
 
 const s8 Game_Manage_7_2_sub0_table[4] = "WIN";

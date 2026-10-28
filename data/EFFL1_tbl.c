@@ -30,7 +30,7 @@ extern void effL1_w_score_init();
 extern void effL1_w_win_init();
 
 const u32 bunkai_table_l1[8] = {
-    1, 0xA, 0x64, 0x3E8, 0x2710, 0x186A0, 0xF4240, 0x989680,
+    1, 10, 100, 1000, 10000, 100000, 1000000, 10000000,
 };
 
 void (*const effL1_item_init[20])() = {

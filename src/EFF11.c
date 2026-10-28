@@ -264,7 +264,7 @@ s32 effect_11_init(void) {
     WORK_Other* ewk;
     s16 ix;
     s16 i;
-    const s16* data_ptr = eff11_data_tbl;
+    const s16* data_ptr = eff11_data_tbl[0];
     for (i = 0; i < 4; i++) {
         ix = pull_effect_work(4);
         if (ix == -1) {

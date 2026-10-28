@@ -979,9 +979,9 @@ const u16 bcp_group_top_tbl[26] = {
 
 const u16 bcp_group_no_tbl[30] = {
     0, 1, 2, 3, 4, 5, 6, 7,
-    8, 9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xE,
-    0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17,
-    0x18, 0x19, 0x1A, 0x1B, 0x1C, 0x1D,
+    8, 9, 10, 11, 12, 13, 14, 14,
+    16, 17, 18, 19, 20, 21, 22, 23,
+    24, 25, 26, 27, 28, 29,
 };
 
 const u16 bce_group_top_tbl[59] = {
@@ -1982,5 +1982,5 @@ const char hit_kind_da_str[4] = "da";
 const char hit_kind_dd_str[4] = "dd";
 
 const u16 chk22_tbl[8] = {
-    1, 9, 8, 0xA, 2, 6, 4, 5,
+    1, 9, 8, 10, 2, 6, 4, 5,
 };

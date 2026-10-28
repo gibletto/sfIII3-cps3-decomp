@@ -12,7 +12,7 @@
 
 
 const u32 suji_table_G0[6] = {
-    1, 0xA, 0x64, 0x3E8, 0x2710, 0x186A0,
+    1, 10, 100, 1000, 10000, 100000,
 };
 
 const u16 suji_numobj_G0[10] = {
