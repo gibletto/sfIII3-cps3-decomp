@@ -26,20 +26,20 @@
 
 
 
-extern void (*const effM0_tbl_top[8])();
+extern const ColorCode effM0_cctbl[];
 
 u32 spmv_ng_save;  /* 02068C58 */
 
 
 /* 020074A0 */
-const s16* effL8_data_tbl[7] = {
-    (const s16*)&effM0_tbl_top[4],
-    (const s16*)&effM0_tbl_top[4],
-    (const s16*)&effM0_tbl_top[4],
-    (const s16*)&effM0_tbl_top[4],
-    (const s16*)&effM0_tbl_top[4],
-    (const s16*)&effM0_tbl_top[4],
-    (const s16*)&effM0_tbl_top[4],
+const ColorCode* effL8_data_tbl[7] = {
+    effM0_cctbl,
+    effM0_cctbl,
+    effM0_cctbl,
+    effM0_cctbl,
+    effM0_cctbl,
+    effM0_cctbl,
+    effM0_cctbl,
 };
 
 

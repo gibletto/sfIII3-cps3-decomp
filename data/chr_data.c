@@ -12,7 +12,8 @@
  * (EFFF9.C), the winner's message banner (EFFB8.C) and the pre-fight dialogue (EFFA6.C), with
  * their numbered sub-tables reached through them. test_menu_str_, test_menu_scr_jp_0 and the
  * sys_cfg_ and cfg_top_ tables are the test menu and system configuration screen scripts, read
- * by TEST_MENU_SCR.C.
+ * by TEST_MENU_SCR.C: lists of blocks, each the glyph count, column, row and attribute followed by
+ * the glyphs, ended by a count of 0.
  */
 
 #include "types.h"
@@ -20,9 +21,9 @@
 
 #pragma section TBL
 
-extern const u8 cfg_top_guide_jp_0[];
-extern const u8 cfg_top_reset_guide_jp_0[];
-extern const u8 config_top_scr_jp_0[];
+extern const u16 cfg_top_guide_jp_0[];
+extern const u16 cfg_top_reset_guide_jp_0[];
+extern const u16 config_top_scr_jp_0[];
 extern const EFFA6_MESSAGE effA6_mes_en_0[];
 extern const CONN effA6_mes_en_0_0[];
 extern const u16 effA6_mes_en_0_1[];
@@ -136,23 +137,27 @@ extern const u16 effA6_mes_en_20_11[];
 extern const CONN effA6_mes_en_20_12[];
 extern const u16 effA6_mes_en_20_13[];
 extern const CONN effA6_mes_en_20_14[];
-extern const u32 effA6_mes_en_20_15[];
-extern const u32 effA6_mes_en_20_15_10[];
-extern const u32 effA6_mes_en_20_15_10_12[];
-extern const u32 effA6_mes_en_20_15_10_14[];
-extern const u32 effA6_mes_en_20_15_10_16[];
-extern const u32 effA6_mes_en_20_15_10_16_100[];
-extern const u32 effA6_mes_en_20_15_10_16_102[];
-extern const u32 effA6_mes_en_20_15_10_16_104[];
-extern const u32 effA6_mes_en_20_15_10_16_104_12[];
-extern const u32 effA6_mes_en_20_15_10_16_104_14[];
-extern const u32 effA6_mes_en_20_15_10_16_104_16[];
-extern const u32 effA6_mes_en_20_15_10_16_104_8[];
-extern const u32 effA6_mes_en_20_15_10_16_96[];
-extern const u32 effA6_mes_en_20_15_10_8[];
-extern const u32 effA6_mes_en_20_15_2[];
-extern const u32 effA6_mes_en_20_15_6[];
-extern const u32 effA6_mes_en_20_15_8[];
+extern const u16 effA6_mes_en_20_15[];
+extern const EFFA6_LINE effA6_mes_en_20_15_list[];
+extern const CONN effA6_mes_en_20_15_10[];
+extern const EFFA6_LINE effA6_mes_en_20_15_10_list[];
+extern const CONN effA6_mes_en_20_15_10_12[];
+extern const CONN effA6_mes_en_20_15_10_14[];
+extern const CONN effA6_mes_en_20_15_10_16[];
+extern const EFFA6_LINE effA6_mes_en_20_15_10_16_list[];
+extern const CONN effA6_mes_en_20_15_10_16_100[];
+extern const CONN effA6_mes_en_20_15_10_16_102[];
+extern const CONN effA6_mes_en_20_15_10_16_104[];
+extern const EFFA6_LINE effA6_mes_en_20_15_10_16_104_list[];
+extern const CONN effA6_mes_en_20_15_10_16_104_12[];
+extern const CONN effA6_mes_en_20_15_10_16_104_14[];
+extern const CONN effA6_mes_en_20_15_10_16_104_16[];
+extern const CONN effA6_mes_en_20_15_10_16_104_8[];
+extern const CONN effA6_mes_en_20_15_10_16_96[];
+extern const CONN effA6_mes_en_20_15_10_8[];
+extern const CONN effA6_mes_en_20_15_2[];
+extern const CONN effA6_mes_en_20_15_6[];
+extern const CONN effA6_mes_en_20_15_8[];
 extern const u16 effA6_mes_en_20_3[];
 extern const CONN effA6_mes_en_20_4[];
 extern const u16 effA6_mes_en_20_5[];
@@ -3475,105 +3480,105 @@ extern const CONN effF9_mes_jp_9_6[];
 extern const u16 effF9_mes_jp_9_7[];
 extern const CONN effF9_mes_jp_9_8[];
 extern const u16 effF9_mes_jp_9_9[];
-extern const u32 sys_cfg_exit_guide_jp_0[];
-extern const u32 sys_cfg_item_guide_jp_0[];
-extern const u8 sys_cfg_page_scr_jp_0[];
-extern const u32 sys_cfg_page_scr_jp_1[];
-extern const u32 sys_cfg_page_scr_jp_10[];
-extern const u32 sys_cfg_page_scr_jp_11[];
-extern const u32 sys_cfg_page_scr_jp_12[];
-extern const u32 sys_cfg_page_scr_jp_13[];
-extern const u32 sys_cfg_page_scr_jp_14[];
-extern const u32 sys_cfg_page_scr_jp_15[];
-extern const u32 sys_cfg_page_scr_jp_16[];
-extern const u32 sys_cfg_page_scr_jp_17[];
-extern const u32 sys_cfg_page_scr_jp_18[];
-extern const u32 sys_cfg_page_scr_jp_19[];
-extern const u32 sys_cfg_page_scr_jp_2[];
-extern const u32 sys_cfg_page_scr_jp_20[];
-extern const u8 sys_cfg_page_scr_jp_21[];
-extern const u8 sys_cfg_page_scr_jp_22[];
-extern const u8 sys_cfg_page_scr_jp_23[];
-extern const u8 sys_cfg_page_scr_jp_24[];
-extern const u8 sys_cfg_page_scr_jp_25[];
-extern const u8 sys_cfg_page_scr_jp_26[];
-extern const u8 sys_cfg_page_scr_jp_27[];
-extern const u8 sys_cfg_page_scr_jp_28[];
-extern const u8 sys_cfg_page_scr_jp_29[];
-extern const u32 sys_cfg_page_scr_jp_3[];
-extern const u8 sys_cfg_page_scr_jp_30[];
-extern const u8 sys_cfg_page_scr_jp_31[];
-extern const u8 sys_cfg_page_scr_jp_32[];
-extern const u8 sys_cfg_page_scr_jp_33[];
-extern const u8 sys_cfg_page_scr_jp_34[];
-extern const u8 sys_cfg_page_scr_jp_35[];
-extern const u8 sys_cfg_page_scr_jp_36[];
-extern const u8 sys_cfg_page_scr_jp_37[];
-extern const u8 sys_cfg_page_scr_jp_38[];
-extern const u8 sys_cfg_page_scr_jp_39[];
-extern const u32 sys_cfg_page_scr_jp_4[];
-extern const u8 sys_cfg_page_scr_jp_40[];
-extern const u32 sys_cfg_page_scr_jp_41[];
-extern const u32 sys_cfg_page_scr_jp_42[];
-extern const u8 sys_cfg_page_scr_jp_43[];
-extern const u8 sys_cfg_page_scr_jp_44[];
-extern const u8 sys_cfg_page_scr_jp_45[];
-extern const u8 sys_cfg_page_scr_jp_46[];
-extern const u8 sys_cfg_page_scr_jp_47[];
-extern const u8 sys_cfg_page_scr_jp_48[];
-extern const u8 sys_cfg_page_scr_jp_49[];
-extern const u32 sys_cfg_page_scr_jp_5[];
-extern const u8 sys_cfg_page_scr_jp_50[];
-extern const u32 sys_cfg_page_scr_jp_51[];
-extern const u32 sys_cfg_page_scr_jp_52[];
-extern const u32 sys_cfg_page_scr_jp_53[];
-extern const u32 sys_cfg_page_scr_jp_54[];
-extern const u32 sys_cfg_page_scr_jp_55[];
-extern const u32 sys_cfg_page_scr_jp_56[];
-extern const u32 sys_cfg_page_scr_jp_57[];
-extern const u32 sys_cfg_page_scr_jp_58[];
-extern const u32 sys_cfg_page_scr_jp_59[];
-extern const u32 sys_cfg_page_scr_jp_6[];
-extern const u8 sys_cfg_page_scr_jp_60[];
-extern const u8 sys_cfg_page_scr_jp_61[];
-extern const u8 sys_cfg_page_scr_jp_62[];
-extern const u8 sys_cfg_page_scr_jp_63[];
-extern const u8 sys_cfg_page_scr_jp_64[];
-extern const u8 sys_cfg_page_scr_jp_65[];
-extern const u8 sys_cfg_page_scr_jp_66[];
-extern const u8 sys_cfg_page_scr_jp_67[];
-extern const u8 sys_cfg_page_scr_jp_68[];
-extern const u8 sys_cfg_page_scr_jp_69[];
-extern const u32 sys_cfg_page_scr_jp_7[];
-extern const u8 sys_cfg_page_scr_jp_70[];
-extern const u8 sys_cfg_page_scr_jp_71[];
-extern const u8 sys_cfg_page_scr_jp_72[];
-extern const u8 sys_cfg_page_scr_jp_73[];
-extern const u8 sys_cfg_page_scr_jp_74[];
-extern const u8 sys_cfg_page_scr_jp_75[];
-extern const u8 sys_cfg_page_scr_jp_76[];
-extern const u8 sys_cfg_page_scr_jp_77[];
-extern const u8 sys_cfg_page_scr_jp_78[];
-extern const u8 sys_cfg_page_scr_jp_79[];
-extern const u32 sys_cfg_page_scr_jp_8[];
-extern const u32 sys_cfg_page_scr_jp_80[];
-extern const u32 sys_cfg_page_scr_jp_9[];
-extern const u32 sys_cfg_sound_scr_jp_0[];
-extern const u8 test_menu_scr_jp_0[];
-extern const u8 test_menu_str_0[];
-extern const u8 test_menu_str_1[];
-extern const u8 test_menu_str_10[];
-extern const u8 test_menu_str_11[];
-extern const u8 test_menu_str_12[];
-extern const u8 test_menu_str_2[];
-extern const u8 test_menu_str_3[];
-extern const u8 test_menu_str_4[];
-extern const u8 test_menu_str_5[];
-extern const u8 test_menu_str_6[];
-extern const u8 test_menu_str_7[];
-extern const u8 test_menu_str_8[];
-extern const u8 test_menu_str_9[];
-extern const u8 test_menu_str_asia_9[];
+extern const u16 sys_cfg_exit_guide_jp_0[];
+extern const u16 sys_cfg_item_guide_jp_0[];
+extern const u16 sys_cfg_page_scr_jp_0[];
+extern const u16 sys_cfg_page_scr_jp_1[];
+extern const u16 sys_cfg_page_scr_jp_10[];
+extern const u16 sys_cfg_page_scr_jp_11[];
+extern const u16 sys_cfg_page_scr_jp_12[];
+extern const u16 sys_cfg_page_scr_jp_13[];
+extern const u16 sys_cfg_page_scr_jp_14[];
+extern const u16 sys_cfg_page_scr_jp_15[];
+extern const u16 sys_cfg_page_scr_jp_16[];
+extern const u16 sys_cfg_page_scr_jp_17[];
+extern const u16 sys_cfg_page_scr_jp_18[];
+extern const u16 sys_cfg_page_scr_jp_19[];
+extern const u16 sys_cfg_page_scr_jp_2[];
+extern const u16 sys_cfg_page_scr_jp_20[];
+extern const u16 sys_cfg_page_scr_jp_21[];
+extern const u16 sys_cfg_page_scr_jp_22[];
+extern const u16 sys_cfg_page_scr_jp_23[];
+extern const u16 sys_cfg_page_scr_jp_24[];
+extern const u16 sys_cfg_page_scr_jp_25[];
+extern const u16 sys_cfg_page_scr_jp_26[];
+extern const u16 sys_cfg_page_scr_jp_27[];
+extern const u16 sys_cfg_page_scr_jp_28[];
+extern const u16 sys_cfg_page_scr_jp_29[];
+extern const u16 sys_cfg_page_scr_jp_3[];
+extern const u16 sys_cfg_page_scr_jp_30[];
+extern const u16 sys_cfg_page_scr_jp_31[];
+extern const u16 sys_cfg_page_scr_jp_32[];
+extern const u16 sys_cfg_page_scr_jp_33[];
+extern const u16 sys_cfg_page_scr_jp_34[];
+extern const u16 sys_cfg_page_scr_jp_35[];
+extern const u16 sys_cfg_page_scr_jp_36[];
+extern const u16 sys_cfg_page_scr_jp_37[];
+extern const u16 sys_cfg_page_scr_jp_38[];
+extern const u16 sys_cfg_page_scr_jp_39[];
+extern const u16 sys_cfg_page_scr_jp_4[];
+extern const u16 sys_cfg_page_scr_jp_40[];
+extern const u16 sys_cfg_page_scr_jp_41[];
+extern const u16 sys_cfg_page_scr_jp_42[];
+extern const u16 sys_cfg_page_scr_jp_43[];
+extern const u16 sys_cfg_page_scr_jp_44[];
+extern const u16 sys_cfg_page_scr_jp_45[];
+extern const u16 sys_cfg_page_scr_jp_46[];
+extern const u16 sys_cfg_page_scr_jp_47[];
+extern const u16 sys_cfg_page_scr_jp_48[];
+extern const u16 sys_cfg_page_scr_jp_49[];
+extern const u16 sys_cfg_page_scr_jp_5[];
+extern const u16 sys_cfg_page_scr_jp_50[];
+extern const u16 sys_cfg_page_scr_jp_51[];
+extern const u16 sys_cfg_page_scr_jp_52[];
+extern const u16 sys_cfg_page_scr_jp_53[];
+extern const u16 sys_cfg_page_scr_jp_54[];
+extern const u16 sys_cfg_page_scr_jp_55[];
+extern const u16 sys_cfg_page_scr_jp_56[];
+extern const u16 sys_cfg_page_scr_jp_57[];
+extern const u16 sys_cfg_page_scr_jp_58[];
+extern const u16 sys_cfg_page_scr_jp_59[];
+extern const u16 sys_cfg_page_scr_jp_6[];
+extern const u16 sys_cfg_page_scr_jp_60[];
+extern const u16 sys_cfg_page_scr_jp_61[];
+extern const u16 sys_cfg_page_scr_jp_62[];
+extern const u16 sys_cfg_page_scr_jp_63[];
+extern const u16 sys_cfg_page_scr_jp_64[];
+extern const u16 sys_cfg_page_scr_jp_65[];
+extern const u16 sys_cfg_page_scr_jp_66[];
+extern const u16 sys_cfg_page_scr_jp_67[];
+extern const u16 sys_cfg_page_scr_jp_68[];
+extern const u16 sys_cfg_page_scr_jp_69[];
+extern const u16 sys_cfg_page_scr_jp_7[];
+extern const u16 sys_cfg_page_scr_jp_70[];
+extern const u16 sys_cfg_page_scr_jp_71[];
+extern const u16 sys_cfg_page_scr_jp_72[];
+extern const u16 sys_cfg_page_scr_jp_73[];
+extern const u16 sys_cfg_page_scr_jp_74[];
+extern const u16 sys_cfg_page_scr_jp_75[];
+extern const u16 sys_cfg_page_scr_jp_76[];
+extern const u16 sys_cfg_page_scr_jp_77[];
+extern const u16 sys_cfg_page_scr_jp_78[];
+extern const u16 sys_cfg_page_scr_jp_79[];
+extern const u16 sys_cfg_page_scr_jp_8[];
+extern const u16 sys_cfg_page_scr_jp_80[];
+extern const u16 sys_cfg_page_scr_jp_9[];
+extern const u16 sys_cfg_sound_scr_jp_0[];
+extern const u16 test_menu_scr_jp_0[];
+extern const s8 test_menu_str_0[];
+extern const s8 test_menu_str_1[];
+extern const s8 test_menu_str_10[];
+extern const s8 test_menu_str_11[];
+extern const s8 test_menu_str_12[];
+extern const s8 test_menu_str_2[];
+extern const s8 test_menu_str_3[];
+extern const s8 test_menu_str_4[];
+extern const s8 test_menu_str_5[];
+extern const s8 test_menu_str_6[];
+extern const s8 test_menu_str_7[];
+extern const s8 test_menu_str_8[];
+extern const s8 test_menu_str_9[];
+extern const s8 test_menu_str_asia_9[];
 
 extern const u8 jp_menu_cg_5[];
 
@@ -47199,7 +47204,7 @@ const EFFA6_MESSAGE effA6_mes_en_20[8] = {
     { effA6_mes_en_20_0, effA6_mes_en_20_1 }, { effA6_mes_en_20_0, effA6_mes_en_20_3 },
     { effA6_mes_en_20_4, effA6_mes_en_20_5 }, { effA6_mes_en_20_6, effA6_mes_en_20_7 },
     { effA6_mes_en_20_8, effA6_mes_en_20_9 }, { effA6_mes_en_20_10, effA6_mes_en_20_11 },
-    { effA6_mes_en_20_12, effA6_mes_en_20_13 }, { effA6_mes_en_20_14, (const u16*)effA6_mes_en_20_15 },
+    { effA6_mes_en_20_12, effA6_mes_en_20_13 }, { effA6_mes_en_20_14, effA6_mes_en_20_15 },
 };
 
 const CONN effA6_mes_en_20_0[25] = {
@@ -47342,689 +47347,752 @@ const u16 effA6_mes_en_20_13[3] = {
     1, 0xB5A8, 45,
 };
 
-const u32 effA6_mes_en_20_15[12] = {
-    0x1B5A8, 0x310000, (u32)effA6_mes_en_20_15_2, 0, (u32)effA6_mes_en_20_15_2, 0x16, (u32)effA6_mes_en_20_15_6, 0x16,
-    (u32)effA6_mes_en_20_15_8, 0x15, (u32)effA6_mes_en_20_15_10, 4,
+const u16 effA6_mes_en_20_15[3] = {
+    1, 0xB5A8, 49,
 };
 
-const u32 effA6_mes_en_20_15_2[44] = {
-    0, 0xA31D, 0x100000, 0xA2FF, 0x200000, 0xA33F, 0x300000, 0xA301,
-    0x400000, 0xA301, 0x500000, 0xA316, 0x600000, 0xA343, 0x700000, 0xA307,
-    0x800000, 0xA344, 0x900000, 0xA31F, 0xA00000, 0xA309, 0xB00000, 0xA2F9,
-    0xC00000, 0xA307, 0xFFEA, 0xA422, 0x10FFEA, 0xA336, 0x20FFEA, 0xA2FC,
-    0x30FFEA, 0xA47E, 0x40FFEA, 0xA414, 0x50FFEA, 0xA303, 0x60FFEA, 0xA31D,
-    0x70FFEA, 0xA2FA, 0x80FFEA, 0xA34F,
+/* provisional name */
+/* The _list tables are message tables in the { CONN table, count } form, each stored after its last
+   CONN table; nothing in the program refers to them. */
+const EFFA6_LINE effA6_mes_en_20_15_list[5] = {
+    { effA6_mes_en_20_15_2, 0 }, { effA6_mes_en_20_15_2, 22 },
+    { effA6_mes_en_20_15_6, 22 }, { effA6_mes_en_20_15_8, 21 },
+    { effA6_mes_en_20_15_10, 4 },
 };
 
-const u32 effA6_mes_en_20_15_6[44] = {
-    0, 0xA34F, 0x100000, 0xA30B, 0x200000, 0xA54B, 0x300000, 0xA2F9,
-    0x400000, 0xA307, 0x500000, 0xA2F9, 0x600000, 0xA30B, 0x700000, 0xA301,
-    0x800000, 0xA322, 0x900000, 0xA340, 0xA00000, 0xA336, 0xFFEA, 0xA3A2,
-    0x10FFEA, 0xA380, 0x20FFEA, 0xA38A, 0x30FFEA, 0xA384, 0x40FFEA, 0xA38B,
-    0x50FFEA, 0xA311, 0x60FFEA, 0xA301, 0x70FFEA, 0xA301, 0x80FFEA, 0xA316,
-    0x90FFEA, 0xA343, 0xA0FFEA, 0xA340,
+const CONN effA6_mes_en_20_15_2[22] = {
+    { 0, 0, 0, 0xA31D }, { 16, 0, 0, 0xA2FF }, { 32, 0, 0, 0xA33F }, { 48, 0, 0, 0xA301 },
+    { 64, 0, 0, 0xA301 }, { 80, 0, 0, 0xA316 }, { 96, 0, 0, 0xA343 }, { 112, 0, 0, 0xA307 },
+    { 128, 0, 0, 0xA344 }, { 144, 0, 0, 0xA31F }, { 160, 0, 0, 0xA309 }, { 176, 0, 0, 0xA2F9 },
+    { 192, 0, 0, 0xA307 }, { 0, -22, 0, 0xA422 }, { 16, -22, 0, 0xA336 }, { 32, -22, 0, 0xA2FC },
+    { 48, -22, 0, 0xA47E }, { 64, -22, 0, 0xA414 }, { 80, -22, 0, 0xA303 }, { 96, -22, 0, 0xA31D },
+    { 112, -22, 0, 0xA2FA }, { 128, -22, 0, 0xA34F },
 };
 
-const u32 effA6_mes_en_20_15_8[42] = {
-    0, 0xA316, 0x100000, 0xA307, 0x200000, 0xA310, 0x300000, 0xA46D,
-    0x400000, 0xA488, 0x500000, 0xA30D, 0x600000, 0xA598, 0x700000, 0xA336,
-    0x800000, 0xA473, 0x900000, 0xA310, 0xA00000, 0xA411, 0xB00000, 0xA32F,
-    0xFFEA, 0xA6F5, 0x10FFEA, 0xA565, 0x20FFEA, 0xA30D, 0x30FFEA, 0xA57D,
-    0x40FFEA, 0xA323, 0x50FFEA, 0xA2FA, 0x60FFEA, 0xA336, 0x70FFEA, 0xA2F9,
-    0x80FFEA, 0xA2F9,
+const CONN effA6_mes_en_20_15_6[22] = {
+    { 0, 0, 0, 0xA34F }, { 16, 0, 0, 0xA30B }, { 32, 0, 0, 0xA54B }, { 48, 0, 0, 0xA2F9 },
+    { 64, 0, 0, 0xA307 }, { 80, 0, 0, 0xA2F9 }, { 96, 0, 0, 0xA30B }, { 112, 0, 0, 0xA301 },
+    { 128, 0, 0, 0xA322 }, { 144, 0, 0, 0xA340 }, { 160, 0, 0, 0xA336 }, { 0, -22, 0, 0xA3A2 },
+    { 16, -22, 0, 0xA380 }, { 32, -22, 0, 0xA38A }, { 48, -22, 0, 0xA384 }, { 64, -22, 0, 0xA38B },
+    { 80, -22, 0, 0xA311 }, { 96, -22, 0, 0xA301 }, { 112, -22, 0, 0xA301 }, { 128, -22, 0, 0xA316 },
+    { 144, -22, 0, 0xA343 }, { 160, -22, 0, 0xA340 },
 };
 
-const u32 effA6_mes_en_20_15_10[18] = {
-    0, 0xA393, 0x100000, 0xA393, 0x200000, 0xA393, 0x300000, 0xA34F,
-    (u32)effA6_mes_en_20_15_10_8, 0, (u32)effA6_mes_en_20_15_10_8, 0x28, (u32)effA6_mes_en_20_15_10_12, 0x33, (u32)effA6_mes_en_20_15_10_14, 0x22,
-    (u32)effA6_mes_en_20_15_10_16, 0x30,
+const CONN effA6_mes_en_20_15_8[21] = {
+    { 0, 0, 0, 0xA316 }, { 16, 0, 0, 0xA307 }, { 32, 0, 0, 0xA310 }, { 48, 0, 0, 0xA46D },
+    { 64, 0, 0, 0xA488 }, { 80, 0, 0, 0xA30D }, { 96, 0, 0, 0xA598 }, { 112, 0, 0, 0xA336 },
+    { 128, 0, 0, 0xA473 }, { 144, 0, 0, 0xA310 }, { 160, 0, 0, 0xA411 }, { 176, 0, 0, 0xA32F },
+    { 0, -22, 0, 0xA6F5 }, { 16, -22, 0, 0xA565 }, { 32, -22, 0, 0xA30D }, { 48, -22, 0, 0xA57D },
+    { 64, -22, 0, 0xA323 }, { 80, -22, 0, 0xA2FA }, { 96, -22, 0, 0xA336 }, { 112, -22, 0, 0xA2F9 },
+    { 128, -22, 0, 0xA2F9 },
 };
 
-const u32 effA6_mes_en_20_15_10_8[80] = {
-    0, 0xA1A0, 0x80000, 0xA18B, 0x180000, 0xA180, 0x200000, 0xA18A,
-    0x300000, 0xA180, 0x380000, 0xA184, 0x400000, 0xA187, 0x480000, 0xA189,
-    0x500000, 0xA17C, 0x580000, 0xA18A, 0x600000, 0xA18A, 0x680000, 0xA180,
-    0x700000, 0xA18D, 0x780000, 0xA17C, 0x880000, 0xA18B, 0x900000, 0xA17F,
-    0x980000, 0xA178, 0xA00000, 0xA18B, 0xB00000, 0xA190, 0xB80000, 0xA186,
-    0xC00000, 0xA18C, 0xC80000, 0xA197, 0xD00000, 0xA18D, 0xD80000, 0xA17C,
-    0xFFF0, 0xA184, 0x8FFF0, 0xA178, 0x10FFF0, 0xA17B, 0x18FFF0, 0xA17C,
-    0x28FFF0, 0xA180, 0x30FFF0, 0xA18B, 0x40FFF0, 0xA18B, 0x48FFF0, 0xA17F,
-    0x50FFF0, 0xA180, 0x58FFF0, 0xA18A, 0x68FFF0, 0xA17D, 0x70FFF0, 0xA178,
-    0x78FFF0, 0xA189, 0x80FFF0, 0xA194, 0x88FFF0, 0xA194, 0x90FFF0, 0xA194,
+const CONN effA6_mes_en_20_15_10[4] = {
+    { 0, 0, 0, 0xA393 }, { 16, 0, 0, 0xA393 }, { 32, 0, 0, 0xA393 }, { 48, 0, 0, 0xA34F },
 };
 
-const u32 effA6_mes_en_20_15_10_12[102] = {
-    0, 0xA199, 0x80000, 0xA18C, 0x100000, 0xA18B, 0x200000, 0xA180,
-    0x280000, 0xA18B, 0x380000, 0xA186, 0x400000, 0xA185, 0x480000, 0xA183,
-    0x500000, 0xA190, 0x600000, 0xA184, 0x680000, 0xA17C, 0x700000, 0xA178,
-    0x780000, 0xA185, 0x800000, 0xA18A, 0x900000, 0xA18B, 0x980000, 0xA17F,
-    0xA00000, 0xA178, 0xA80000, 0xA18B, 0xB80000, 0xA1A0, 0xC80000, 0xA18E,
-    0xD00000, 0xA180, 0xD80000, 0xA183, 0xE00000, 0xA183, 0xFFF0, 0xA17F,
-    0x8FFF0, 0xA178, 0x10FFF0, 0xA18D, 0x18FFF0, 0xA17C, 0x28FFF0, 0xA18B,
-    0x30FFF0, 0xA186, 0x40FFF0, 0xA180, 0x48FFF0, 0xA185, 0x50FFF0, 0xA17A,
-    0x58FFF0, 0xA189, 0x60FFF0, 0xA17C, 0x68FFF0, 0xA178, 0x70FFF0, 0xA18A,
-    0x78FFF0, 0xA17C, 0x88FFF0, 0xA18B, 0x90FFF0, 0xA17F, 0x98FFF0, 0xA17C,
-    0xA8FFF0, 0xA17B, 0xB0FFF0, 0xA180, 0xB8FFF0, 0xA17D, 0xC0FFF0, 0xA17D,
-    0xC8FFF0, 0xA180, 0xD0FFF0, 0xA17A, 0xD8FFF0, 0xA18C, 0xE0FFF0, 0xA183,
-    0xE8FFF0, 0xA18B, 0xF0FFF0, 0xA190, 0xF8FFF0, 0xA194,
+/* provisional name */
+const EFFA6_LINE effA6_mes_en_20_15_10_list[5] = {
+    { effA6_mes_en_20_15_10_8, 0 }, { effA6_mes_en_20_15_10_8, 40 },
+    { effA6_mes_en_20_15_10_12, 51 }, { effA6_mes_en_20_15_10_14, 34 },
+    { effA6_mes_en_20_15_10_16, 48 },
 };
 
-const u32 effA6_mes_en_20_15_10_14[68] = {
-    0, 0xA1B0, 0x80000, 0xA186, 0x100000, 0xA18C, 0x200000, 0xA18A,
-    0x280000, 0xA17C, 0x300000, 0xA17C, 0x380000, 0xA194, 0x400000, 0xA194,
-    0x480000, 0xA194, 0xFFF0, 0xA1AB, 0x8FFF0, 0xA17F, 0x10FFF0, 0xA180,
-    0x18FFF0, 0xA18A, 0x28FFF0, 0xA18E, 0x30FFF0, 0xA178, 0x38FFF0, 0xA18A,
-    0x48FFF0, 0xA186, 0x50FFF0, 0xA185, 0x58FFF0, 0xA183, 0x60FFF0, 0xA190,
-    0x70FFF0, 0xA178, 0x80FFF0, 0xA1A3, 0x88FFF0, 0xA186, 0x90FFF0, 0xA17A,
-    0x98FFF0, 0xA178, 0xA0FFF0, 0xA18B, 0xA8FFF0, 0xA180, 0xB0FFF0, 0xA186,
-    0xB8FFF0, 0xA185, 0xC8FFF0, 0xA1AB, 0xD0FFF0, 0xA17C, 0xD8FFF0, 0xA18A,
-    0xE0FFF0, 0xA18B, 0xE8FFF0, 0xA194,
+const CONN effA6_mes_en_20_15_10_8[40] = {
+    { 0, 0, 0, 0xA1A0 }, { 8, 0, 0, 0xA18B }, { 24, 0, 0, 0xA180 }, { 32, 0, 0, 0xA18A },
+    { 48, 0, 0, 0xA180 }, { 56, 0, 0, 0xA184 }, { 64, 0, 0, 0xA187 }, { 72, 0, 0, 0xA189 },
+    { 80, 0, 0, 0xA17C }, { 88, 0, 0, 0xA18A }, { 96, 0, 0, 0xA18A }, { 104, 0, 0, 0xA180 },
+    { 112, 0, 0, 0xA18D }, { 120, 0, 0, 0xA17C }, { 136, 0, 0, 0xA18B }, { 144, 0, 0, 0xA17F },
+    { 152, 0, 0, 0xA178 }, { 160, 0, 0, 0xA18B }, { 176, 0, 0, 0xA190 }, { 184, 0, 0, 0xA186 },
+    { 192, 0, 0, 0xA18C }, { 200, 0, 0, 0xA197 }, { 208, 0, 0, 0xA18D }, { 216, 0, 0, 0xA17C },
+    { 0, -16, 0, 0xA184 }, { 8, -16, 0, 0xA178 }, { 16, -16, 0, 0xA17B }, { 24, -16, 0, 0xA17C },
+    { 40, -16, 0, 0xA180 }, { 48, -16, 0, 0xA18B }, { 64, -16, 0, 0xA18B }, { 72, -16, 0, 0xA17F },
+    { 80, -16, 0, 0xA180 }, { 88, -16, 0, 0xA18A }, { 104, -16, 0, 0xA17D }, { 112, -16, 0, 0xA178 },
+    { 120, -16, 0, 0xA189 }, { 128, -16, 0, 0xA194 }, { 136, -16, 0, 0xA194 }, { 144, -16, 0, 0xA194 },
 };
 
-const u32 effA6_mes_en_20_15_10_16[106] = {
-    0, 0xA1B0, 0x80000, 0xA186, 0x100000, 0xA18C, 0x180000, 0xA197,
-    0x200000, 0xA18D, 0x280000, 0xA17C, 0x380000, 0xA186, 0x400000, 0xA185,
-    0x480000, 0xA183, 0x500000, 0xA190, 0x600000, 0xA17F, 0x680000, 0xA17C,
-    0x700000, 0xA183, 0x780000, 0xA187, 0x800000, 0xA17C, 0x880000, 0xA17B,
-    0x980000, 0xA18B, 0xA00000, 0xA186, 0xB00000, 0xA184, 0xB80000, 0xA178,
-    0xC00000, 0xA182, 0xC80000, 0xA17C, 0xD80000, 0xA184, 0xE00000, 0xA17C,
-    0xFFF0, 0xA18A, 0x8FFF0, 0xA18B, 0x10FFF0, 0xA189, 0x18FFF0, 0xA186,
-    0x20FFF0, 0xA185, 0x28FFF0, 0xA17E, 0x30FFF0, 0xA17C, 0x38FFF0, 0xA189,
-    0x40FFF0, 0xA192, 0x50FFF0, 0xA19F, 0x58FFF0, 0xA178, 0x68FFF0, 0xA17F,
-    0x70FFF0, 0xA178, 0x80FFF0, 0xA17F, 0x88FFF0, 0xA178, 0x98FFF0, 0xA17F,
-    0xA0FFF0, 0xA178, 0xB0FFF0, 0xA17F, 0xB8FFF0, 0xA178, 0xC8FFF0, 0xA17F,
-    0xD0FFF0, 0xA178, 0xD8FFF0, 0xA194, 0xE0FFF0, 0xA194, 0xE8FFF0, 0xA194,
-    (u32)effA6_mes_en_20_15_10_16_96, 0, (u32)effA6_mes_en_20_15_10_16_96, 0x16, (u32)effA6_mes_en_20_15_10_16_100, 0x13, (u32)effA6_mes_en_20_15_10_16_102, 0x15,
-    (u32)effA6_mes_en_20_15_10_16_104, 4,
+const CONN effA6_mes_en_20_15_10_12[51] = {
+    { 0, 0, 0, 0xA199 }, { 8, 0, 0, 0xA18C }, { 16, 0, 0, 0xA18B }, { 32, 0, 0, 0xA180 },
+    { 40, 0, 0, 0xA18B }, { 56, 0, 0, 0xA186 }, { 64, 0, 0, 0xA185 }, { 72, 0, 0, 0xA183 },
+    { 80, 0, 0, 0xA190 }, { 96, 0, 0, 0xA184 }, { 104, 0, 0, 0xA17C }, { 112, 0, 0, 0xA178 },
+    { 120, 0, 0, 0xA185 }, { 128, 0, 0, 0xA18A }, { 144, 0, 0, 0xA18B }, { 152, 0, 0, 0xA17F },
+    { 160, 0, 0, 0xA178 }, { 168, 0, 0, 0xA18B }, { 184, 0, 0, 0xA1A0 }, { 200, 0, 0, 0xA18E },
+    { 208, 0, 0, 0xA180 }, { 216, 0, 0, 0xA183 }, { 224, 0, 0, 0xA183 }, { 0, -16, 0, 0xA17F },
+    { 8, -16, 0, 0xA178 }, { 16, -16, 0, 0xA18D }, { 24, -16, 0, 0xA17C }, { 40, -16, 0, 0xA18B },
+    { 48, -16, 0, 0xA186 }, { 64, -16, 0, 0xA180 }, { 72, -16, 0, 0xA185 }, { 80, -16, 0, 0xA17A },
+    { 88, -16, 0, 0xA189 }, { 96, -16, 0, 0xA17C }, { 104, -16, 0, 0xA178 }, { 112, -16, 0, 0xA18A },
+    { 120, -16, 0, 0xA17C }, { 136, -16, 0, 0xA18B }, { 144, -16, 0, 0xA17F }, { 152, -16, 0, 0xA17C },
+    { 168, -16, 0, 0xA17B }, { 176, -16, 0, 0xA180 }, { 184, -16, 0, 0xA17D }, { 192, -16, 0, 0xA17D },
+    { 200, -16, 0, 0xA180 }, { 208, -16, 0, 0xA17A }, { 216, -16, 0, 0xA18C }, { 224, -16, 0, 0xA183 },
+    { 232, -16, 0, 0xA18B }, { 240, -16, 0, 0xA190 }, { 248, -16, 0, 0xA194 },
 };
 
-const u32 effA6_mes_en_20_15_10_16_96[44] = {
-    0, 0xA31D, 0x100000, 0xA2FF, 0x200000, 0xA33F, 0x300000, 0xA301,
-    0x400000, 0xA301, 0x500000, 0xA316, 0x600000, 0xA343, 0x700000, 0xA307,
-    0x800000, 0xA344, 0x900000, 0xA31F, 0xA00000, 0xA309, 0xB00000, 0xA2F9,
-    0xC00000, 0xA307, 0xFFEA, 0xA422, 0x10FFEA, 0xA336, 0x20FFEA, 0xA2FC,
-    0x30FFEA, 0xA47E, 0x40FFEA, 0xA414, 0x50FFEA, 0xA303, 0x60FFEA, 0xA31D,
-    0x70FFEA, 0xA2FA, 0x80FFEA, 0xA34F,
+const CONN effA6_mes_en_20_15_10_14[34] = {
+    { 0, 0, 0, 0xA1B0 }, { 8, 0, 0, 0xA186 }, { 16, 0, 0, 0xA18C }, { 32, 0, 0, 0xA18A },
+    { 40, 0, 0, 0xA17C }, { 48, 0, 0, 0xA17C }, { 56, 0, 0, 0xA194 }, { 64, 0, 0, 0xA194 },
+    { 72, 0, 0, 0xA194 }, { 0, -16, 0, 0xA1AB }, { 8, -16, 0, 0xA17F }, { 16, -16, 0, 0xA180 },
+    { 24, -16, 0, 0xA18A }, { 40, -16, 0, 0xA18E }, { 48, -16, 0, 0xA178 }, { 56, -16, 0, 0xA18A },
+    { 72, -16, 0, 0xA186 }, { 80, -16, 0, 0xA185 }, { 88, -16, 0, 0xA183 }, { 96, -16, 0, 0xA190 },
+    { 112, -16, 0, 0xA178 }, { 128, -16, 0, 0xA1A3 }, { 136, -16, 0, 0xA186 }, { 144, -16, 0, 0xA17A },
+    { 152, -16, 0, 0xA178 }, { 160, -16, 0, 0xA18B }, { 168, -16, 0, 0xA180 }, { 176, -16, 0, 0xA186 },
+    { 184, -16, 0, 0xA185 }, { 200, -16, 0, 0xA1AB }, { 208, -16, 0, 0xA17C }, { 216, -16, 0, 0xA18A },
+    { 224, -16, 0, 0xA18B }, { 232, -16, 0, 0xA194 },
 };
 
-const u32 effA6_mes_en_20_15_10_16_100[38] = {
-    0, 0xA34F, 0x100000, 0xA30B, 0x200000, 0xA54B, 0x300000, 0xA2F9,
-    0x400000, 0xA307, 0x500000, 0xA2F9, 0x600000, 0xA30B, 0x700000, 0xA301,
-    0x800000, 0xA322, 0x900000, 0xA340, 0xA00000, 0xA336, 0xFFEA, 0xA487,
-    0x10FFEA, 0xA4EA, 0x20FFEA, 0xA311, 0x30FFEA, 0xA301, 0x40FFEA, 0xA301,
-    0x50FFEA, 0xA316, 0x60FFEA, 0xA343, 0x70FFEA, 0xA340,
+const CONN effA6_mes_en_20_15_10_16[48] = {
+    { 0, 0, 0, 0xA1B0 }, { 8, 0, 0, 0xA186 }, { 16, 0, 0, 0xA18C }, { 24, 0, 0, 0xA197 },
+    { 32, 0, 0, 0xA18D }, { 40, 0, 0, 0xA17C }, { 56, 0, 0, 0xA186 }, { 64, 0, 0, 0xA185 },
+    { 72, 0, 0, 0xA183 }, { 80, 0, 0, 0xA190 }, { 96, 0, 0, 0xA17F }, { 104, 0, 0, 0xA17C },
+    { 112, 0, 0, 0xA183 }, { 120, 0, 0, 0xA187 }, { 128, 0, 0, 0xA17C }, { 136, 0, 0, 0xA17B },
+    { 152, 0, 0, 0xA18B }, { 160, 0, 0, 0xA186 }, { 176, 0, 0, 0xA184 }, { 184, 0, 0, 0xA178 },
+    { 192, 0, 0, 0xA182 }, { 200, 0, 0, 0xA17C }, { 216, 0, 0, 0xA184 }, { 224, 0, 0, 0xA17C },
+    { 0, -16, 0, 0xA18A }, { 8, -16, 0, 0xA18B }, { 16, -16, 0, 0xA189 }, { 24, -16, 0, 0xA186 },
+    { 32, -16, 0, 0xA185 }, { 40, -16, 0, 0xA17E }, { 48, -16, 0, 0xA17C }, { 56, -16, 0, 0xA189 },
+    { 64, -16, 0, 0xA192 }, { 80, -16, 0, 0xA19F }, { 88, -16, 0, 0xA178 }, { 104, -16, 0, 0xA17F },
+    { 112, -16, 0, 0xA178 }, { 128, -16, 0, 0xA17F }, { 136, -16, 0, 0xA178 }, { 152, -16, 0, 0xA17F },
+    { 160, -16, 0, 0xA178 }, { 176, -16, 0, 0xA17F }, { 184, -16, 0, 0xA178 }, { 200, -16, 0, 0xA17F },
+    { 208, -16, 0, 0xA178 }, { 216, -16, 0, 0xA194 }, { 224, -16, 0, 0xA194 }, { 232, -16, 0, 0xA194 },
 };
 
-const u32 effA6_mes_en_20_15_10_16_102[42] = {
-    0, 0xA316, 0x100000, 0xA307, 0x200000, 0xA310, 0x300000, 0xA46D,
-    0x400000, 0xA488, 0x500000, 0xA30D, 0x600000, 0xA598, 0x700000, 0xA336,
-    0x800000, 0xA473, 0x900000, 0xA310, 0xA00000, 0xA411, 0xB00000, 0xA32F,
-    0xFFEA, 0xA6F5, 0x10FFEA, 0xA565, 0x20FFEA, 0xA30D, 0x30FFEA, 0xA57D,
-    0x40FFEA, 0xA323, 0x50FFEA, 0xA2FA, 0x60FFEA, 0xA336, 0x70FFEA, 0xA2F9,
-    0x80FFEA, 0xA2F9,
+/* provisional name */
+const EFFA6_LINE effA6_mes_en_20_15_10_16_list[5] = {
+    { effA6_mes_en_20_15_10_16_96, 0 }, { effA6_mes_en_20_15_10_16_96, 22 },
+    { effA6_mes_en_20_15_10_16_100, 19 }, { effA6_mes_en_20_15_10_16_102, 21 },
+    { effA6_mes_en_20_15_10_16_104, 4 },
 };
 
-const u32 effA6_mes_en_20_15_10_16_104[18] = {
-    0, 0xA393, 0x100000, 0xA393, 0x200000, 0xA393, 0x300000, 0xA34F,
-    (u32)effA6_mes_en_20_15_10_16_104_8, 0, (u32)effA6_mes_en_20_15_10_16_104_8, 0x28, (u32)effA6_mes_en_20_15_10_16_104_12, 0x33, (u32)effA6_mes_en_20_15_10_16_104_14, 0x21,
-    (u32)effA6_mes_en_20_15_10_16_104_16, 0x30,
+const CONN effA6_mes_en_20_15_10_16_96[22] = {
+    { 0, 0, 0, 0xA31D }, { 16, 0, 0, 0xA2FF }, { 32, 0, 0, 0xA33F }, { 48, 0, 0, 0xA301 },
+    { 64, 0, 0, 0xA301 }, { 80, 0, 0, 0xA316 }, { 96, 0, 0, 0xA343 }, { 112, 0, 0, 0xA307 },
+    { 128, 0, 0, 0xA344 }, { 144, 0, 0, 0xA31F }, { 160, 0, 0, 0xA309 }, { 176, 0, 0, 0xA2F9 },
+    { 192, 0, 0, 0xA307 }, { 0, -22, 0, 0xA422 }, { 16, -22, 0, 0xA336 }, { 32, -22, 0, 0xA2FC },
+    { 48, -22, 0, 0xA47E }, { 64, -22, 0, 0xA414 }, { 80, -22, 0, 0xA303 }, { 96, -22, 0, 0xA31D },
+    { 112, -22, 0, 0xA2FA }, { 128, -22, 0, 0xA34F },
 };
 
-const u32 effA6_mes_en_20_15_10_16_104_8[80] = {
-    0, 0xA1A0, 0x80000, 0xA18B, 0x180000, 0xA180, 0x200000, 0xA18A,
-    0x300000, 0xA180, 0x380000, 0xA184, 0x400000, 0xA187, 0x480000, 0xA189,
-    0x500000, 0xA17C, 0x580000, 0xA18A, 0x600000, 0xA18A, 0x680000, 0xA180,
-    0x700000, 0xA18D, 0x780000, 0xA17C, 0x880000, 0xA18B, 0x900000, 0xA17F,
-    0x980000, 0xA178, 0xA00000, 0xA18B, 0xB00000, 0xA190, 0xB80000, 0xA186,
-    0xC00000, 0xA18C, 0xC80000, 0xA197, 0xD00000, 0xA18D, 0xD80000, 0xA17C,
-    0xFFF0, 0xA184, 0x8FFF0, 0xA178, 0x10FFF0, 0xA17B, 0x18FFF0, 0xA17C,
-    0x28FFF0, 0xA180, 0x30FFF0, 0xA18B, 0x40FFF0, 0xA18B, 0x48FFF0, 0xA17F,
-    0x50FFF0, 0xA180, 0x58FFF0, 0xA18A, 0x68FFF0, 0xA17D, 0x70FFF0, 0xA178,
-    0x78FFF0, 0xA189, 0x80FFF0, 0xA194, 0x88FFF0, 0xA194, 0x90FFF0, 0xA194,
+const CONN effA6_mes_en_20_15_10_16_100[19] = {
+    { 0, 0, 0, 0xA34F }, { 16, 0, 0, 0xA30B }, { 32, 0, 0, 0xA54B }, { 48, 0, 0, 0xA2F9 },
+    { 64, 0, 0, 0xA307 }, { 80, 0, 0, 0xA2F9 }, { 96, 0, 0, 0xA30B }, { 112, 0, 0, 0xA301 },
+    { 128, 0, 0, 0xA322 }, { 144, 0, 0, 0xA340 }, { 160, 0, 0, 0xA336 }, { 0, -22, 0, 0xA487 },
+    { 16, -22, 0, 0xA4EA }, { 32, -22, 0, 0xA311 }, { 48, -22, 0, 0xA301 }, { 64, -22, 0, 0xA301 },
+    { 80, -22, 0, 0xA316 }, { 96, -22, 0, 0xA343 }, { 112, -22, 0, 0xA340 },
 };
 
-const u32 effA6_mes_en_20_15_10_16_104_12[102] = {
-    0, 0xA199, 0x80000, 0xA18C, 0x100000, 0xA18B, 0x200000, 0xA180,
-    0x280000, 0xA18B, 0x380000, 0xA186, 0x400000, 0xA185, 0x480000, 0xA183,
-    0x500000, 0xA190, 0x600000, 0xA184, 0x680000, 0xA17C, 0x700000, 0xA178,
-    0x780000, 0xA185, 0x800000, 0xA18A, 0x900000, 0xA18B, 0x980000, 0xA17F,
-    0xA00000, 0xA178, 0xA80000, 0xA18B, 0xB80000, 0xA1A0, 0xC80000, 0xA18E,
-    0xD00000, 0xA180, 0xD80000, 0xA183, 0xE00000, 0xA183, 0xFFF0, 0xA17F,
-    0x8FFF0, 0xA178, 0x10FFF0, 0xA18D, 0x18FFF0, 0xA17C, 0x28FFF0, 0xA18B,
-    0x30FFF0, 0xA186, 0x40FFF0, 0xA180, 0x48FFF0, 0xA185, 0x50FFF0, 0xA17A,
-    0x58FFF0, 0xA189, 0x60FFF0, 0xA17C, 0x68FFF0, 0xA178, 0x70FFF0, 0xA18A,
-    0x78FFF0, 0xA17C, 0x88FFF0, 0xA18B, 0x90FFF0, 0xA17F, 0x98FFF0, 0xA17C,
-    0xA8FFF0, 0xA17B, 0xB0FFF0, 0xA180, 0xB8FFF0, 0xA17D, 0xC0FFF0, 0xA17D,
-    0xC8FFF0, 0xA180, 0xD0FFF0, 0xA17A, 0xD8FFF0, 0xA18C, 0xE0FFF0, 0xA183,
-    0xE8FFF0, 0xA18B, 0xF0FFF0, 0xA190, 0xF8FFF0, 0xA194,
+const CONN effA6_mes_en_20_15_10_16_102[21] = {
+    { 0, 0, 0, 0xA316 }, { 16, 0, 0, 0xA307 }, { 32, 0, 0, 0xA310 }, { 48, 0, 0, 0xA46D },
+    { 64, 0, 0, 0xA488 }, { 80, 0, 0, 0xA30D }, { 96, 0, 0, 0xA598 }, { 112, 0, 0, 0xA336 },
+    { 128, 0, 0, 0xA473 }, { 144, 0, 0, 0xA310 }, { 160, 0, 0, 0xA411 }, { 176, 0, 0, 0xA32F },
+    { 0, -22, 0, 0xA6F5 }, { 16, -22, 0, 0xA565 }, { 32, -22, 0, 0xA30D }, { 48, -22, 0, 0xA57D },
+    { 64, -22, 0, 0xA323 }, { 80, -22, 0, 0xA2FA }, { 96, -22, 0, 0xA336 }, { 112, -22, 0, 0xA2F9 },
+    { 128, -22, 0, 0xA2F9 },
 };
 
-const u32 effA6_mes_en_20_15_10_16_104_14[66] = {
-    0, 0xA1B0, 0x80000, 0xA186, 0x100000, 0xA18C, 0x200000, 0xA18A,
-    0x280000, 0xA17C, 0x300000, 0xA17C, 0x380000, 0xA194, 0x400000, 0xA194,
-    0x480000, 0xA194, 0xFFF0, 0xA1AB, 0x8FFF0, 0xA17F, 0x10FFF0, 0xA180,
-    0x18FFF0, 0xA18A, 0x28FFF0, 0xA18E, 0x30FFF0, 0xA178, 0x38FFF0, 0xA18A,
-    0x48FFF0, 0xA186, 0x50FFF0, 0xA185, 0x58FFF0, 0xA183, 0x60FFF0, 0xA190,
-    0x70FFF0, 0xA178, 0x80FFF0, 0xA1AA, 0x88FFF0, 0xA17F, 0x90FFF0, 0xA186,
-    0x98FFF0, 0xA18E, 0xA8FFF0, 0xA1AD, 0xB0FFF0, 0xA17C, 0xB8FFF0, 0xA189,
-    0xC0FFF0, 0xA18A, 0xC8FFF0, 0xA180, 0xD0FFF0, 0xA186, 0xD8FFF0, 0xA185,
-    0xE0FFF0, 0xA194,
+const CONN effA6_mes_en_20_15_10_16_104[4] = {
+    { 0, 0, 0, 0xA393 }, { 16, 0, 0, 0xA393 }, { 32, 0, 0, 0xA393 }, { 48, 0, 0, 0xA34F },
 };
 
-const u32 effA6_mes_en_20_15_10_16_104_16[96] = {
-    0, 0xA1B0, 0x80000, 0xA186, 0x100000, 0xA18C, 0x180000, 0xA197,
-    0x200000, 0xA18D, 0x280000, 0xA17C, 0x380000, 0xA186, 0x400000, 0xA185,
-    0x480000, 0xA183, 0x500000, 0xA190, 0x600000, 0xA17F, 0x680000, 0xA17C,
-    0x700000, 0xA183, 0x780000, 0xA187, 0x800000, 0xA17C, 0x880000, 0xA17B,
-    0x980000, 0xA18B, 0xA00000, 0xA186, 0xB00000, 0xA184, 0xB80000, 0xA178,
-    0xC00000, 0xA182, 0xC80000, 0xA17C, 0xD80000, 0xA184, 0xE00000, 0xA17C,
-    0xFFF0, 0xA18A, 0x8FFF0, 0xA18B, 0x10FFF0, 0xA189, 0x18FFF0, 0xA186,
-    0x20FFF0, 0xA185, 0x28FFF0, 0xA17E, 0x30FFF0, 0xA17C, 0x38FFF0, 0xA189,
-    0x40FFF0, 0xA192, 0x50FFF0, 0xA19F, 0x58FFF0, 0xA178, 0x68FFF0, 0xA17F,
-    0x70FFF0, 0xA178, 0x80FFF0, 0xA17F, 0x88FFF0, 0xA178, 0x98FFF0, 0xA17F,
-    0xA0FFF0, 0xA178, 0xB0FFF0, 0xA17F, 0xB8FFF0, 0xA178, 0xC8FFF0, 0xA17F,
-    0xD0FFF0, 0xA178, 0xD8FFF0, 0xA194, 0xE0FFF0, 0xA194, 0xE8FFF0, 0xA194,
+/* provisional name */
+const EFFA6_LINE effA6_mes_en_20_15_10_16_104_list[5] = {
+    { effA6_mes_en_20_15_10_16_104_8, 0 }, { effA6_mes_en_20_15_10_16_104_8, 40 },
+    { effA6_mes_en_20_15_10_16_104_12, 51 }, { effA6_mes_en_20_15_10_16_104_14, 33 },
+    { effA6_mes_en_20_15_10_16_104_16, 48 },
 };
 
-const u8 test_menu_scr_jp_0[310] = {
-    0, 7, 0, 17, 0, 0, 0, 2, 18, 196, 18, 176, 18, 204, 19, 0,
-    18, 212, 19, 8, 19, 200, 0, 7, 0, 17, 0, 4, 0, 2, 18, 24,
-    18, 16, 19, 40, 19, 48, 18, 196, 18, 176, 18, 204, 0, 7, 0, 17,
-    0, 6, 0, 2, 18, 28, 18, 16, 19, 44, 19, 48, 18, 196, 18, 176,
-    18, 204, 0, 9, 0, 17, 0, 8, 0, 2, 18, 32, 18, 16, 18, 164,
-    18, 144, 19, 28, 18, 208, 18, 196, 18, 176, 18, 204, 0, 8, 0, 17,
-    0, 10, 0, 2, 18, 36, 18, 16, 19, 32, 19, 12, 19, 200, 18, 196,
-    18, 176, 18, 204, 0, 11, 0, 17, 0, 12, 0, 2, 18, 40, 18, 16,
-    19, 4, 18, 212, 18, 184, 18, 108, 18, 112, 18, 96, 18, 196, 18, 176,
-    18, 204, 0, 8, 0, 17, 0, 14, 0, 2, 18, 44, 18, 16, 18, 156,
-    19, 200, 18, 252, 18, 200, 19, 200, 18, 184, 0, 4, 0, 17, 0, 16,
-    0, 2, 18, 48, 18, 16, 19, 60, 19, 64, 0, 9, 0, 17, 0, 18,
-    0, 2, 18, 52, 18, 16, 19, 0, 19, 4, 19, 16, 19, 200, 18, 196,
-    18, 176, 18, 204, 0, 6, 0, 17, 0, 20, 0, 2, 18, 56, 18, 16,
-    19, 16, 19, 12, 18, 136, 18, 204, 0, 9, 0, 15, 0, 22, 0, 2,
-    18, 24, 18, 20, 18, 16, 18, 156, 19, 200, 18, 252, 18, 92, 19, 68,
-    18, 100, 0, 21, 0, 3, 0, 26, 0, 2, 18, 24, 19, 196, 19, 24,
-    18, 220, 19, 200, 19, 72, 19, 76, 18, 84, 19, 88, 19, 92, 18, 132,
-    18, 24, 19, 196, 18, 168, 19, 36, 18, 192, 18, 204, 18, 24, 18, 84,
-    19, 96, 19, 64, 0, 0,
+const CONN effA6_mes_en_20_15_10_16_104_8[40] = {
+    { 0, 0, 0, 0xA1A0 }, { 8, 0, 0, 0xA18B }, { 24, 0, 0, 0xA180 }, { 32, 0, 0, 0xA18A },
+    { 48, 0, 0, 0xA180 }, { 56, 0, 0, 0xA184 }, { 64, 0, 0, 0xA187 }, { 72, 0, 0, 0xA189 },
+    { 80, 0, 0, 0xA17C }, { 88, 0, 0, 0xA18A }, { 96, 0, 0, 0xA18A }, { 104, 0, 0, 0xA180 },
+    { 112, 0, 0, 0xA18D }, { 120, 0, 0, 0xA17C }, { 136, 0, 0, 0xA18B }, { 144, 0, 0, 0xA17F },
+    { 152, 0, 0, 0xA178 }, { 160, 0, 0, 0xA18B }, { 176, 0, 0, 0xA190 }, { 184, 0, 0, 0xA186 },
+    { 192, 0, 0, 0xA18C }, { 200, 0, 0, 0xA197 }, { 208, 0, 0, 0xA18D }, { 216, 0, 0, 0xA17C },
+    { 0, -16, 0, 0xA184 }, { 8, -16, 0, 0xA178 }, { 16, -16, 0, 0xA17B }, { 24, -16, 0, 0xA17C },
+    { 40, -16, 0, 0xA180 }, { 48, -16, 0, 0xA18B }, { 64, -16, 0, 0xA18B }, { 72, -16, 0, 0xA17F },
+    { 80, -16, 0, 0xA180 }, { 88, -16, 0, 0xA18A }, { 104, -16, 0, 0xA17D }, { 112, -16, 0, 0xA178 },
+    { 120, -16, 0, 0xA189 }, { 128, -16, 0, 0xA194 }, { 136, -16, 0, 0xA194 }, { 144, -16, 0, 0xA194 },
 };
 
-const u8 config_top_scr_jp_0[144] = {
-    0, 6, 0, 18, 0, 0, 0, 2, 19, 60, 19, 64, 19, 0, 18, 212,
-    19, 8, 19, 200, 0, 8, 0, 8, 0, 4, 0, 2, 18, 24, 18, 16,
-    18, 168, 18, 176, 18, 196, 18, 252, 19, 60, 19, 64, 0, 7, 0, 8,
-    0, 6, 0, 2, 18, 28, 18, 16, 18, 156, 19, 200, 18, 252, 19, 60,
-    19, 64, 0, 17, 0, 8, 0, 8, 0, 2, 18, 32, 18, 16, 19, 16,
-    18, 180, 18, 192, 18, 204, 18, 12, 19, 128, 19, 132, 19, 44, 19, 100,
-    19, 60, 19, 64, 18, 92, 19, 68, 18, 76, 18, 16, 0, 13, 0, 8,
-    0, 12, 0, 2, 18, 36, 18, 16, 18, 180, 19, 200, 18, 232, 18, 72,
-    18, 80, 18, 196, 18, 176, 18, 204, 18, 92, 19, 68, 18, 100, 0, 0,
+const CONN effA6_mes_en_20_15_10_16_104_12[51] = {
+    { 0, 0, 0, 0xA199 }, { 8, 0, 0, 0xA18C }, { 16, 0, 0, 0xA18B }, { 32, 0, 0, 0xA180 },
+    { 40, 0, 0, 0xA18B }, { 56, 0, 0, 0xA186 }, { 64, 0, 0, 0xA185 }, { 72, 0, 0, 0xA183 },
+    { 80, 0, 0, 0xA190 }, { 96, 0, 0, 0xA184 }, { 104, 0, 0, 0xA17C }, { 112, 0, 0, 0xA178 },
+    { 120, 0, 0, 0xA185 }, { 128, 0, 0, 0xA18A }, { 144, 0, 0, 0xA18B }, { 152, 0, 0, 0xA17F },
+    { 160, 0, 0, 0xA178 }, { 168, 0, 0, 0xA18B }, { 184, 0, 0, 0xA1A0 }, { 200, 0, 0, 0xA18E },
+    { 208, 0, 0, 0xA180 }, { 216, 0, 0, 0xA183 }, { 224, 0, 0, 0xA183 }, { 0, -16, 0, 0xA17F },
+    { 8, -16, 0, 0xA178 }, { 16, -16, 0, 0xA18D }, { 24, -16, 0, 0xA17C }, { 40, -16, 0, 0xA18B },
+    { 48, -16, 0, 0xA186 }, { 64, -16, 0, 0xA180 }, { 72, -16, 0, 0xA185 }, { 80, -16, 0, 0xA17A },
+    { 88, -16, 0, 0xA189 }, { 96, -16, 0, 0xA17C }, { 104, -16, 0, 0xA178 }, { 112, -16, 0, 0xA18A },
+    { 120, -16, 0, 0xA17C }, { 136, -16, 0, 0xA18B }, { 144, -16, 0, 0xA17F }, { 152, -16, 0, 0xA17C },
+    { 168, -16, 0, 0xA17B }, { 176, -16, 0, 0xA180 }, { 184, -16, 0, 0xA17D }, { 192, -16, 0, 0xA17D },
+    { 200, -16, 0, 0xA180 }, { 208, -16, 0, 0xA17A }, { 216, -16, 0, 0xA18C }, { 224, -16, 0, 0xA183 },
+    { 232, -16, 0, 0xA18B }, { 240, -16, 0, 0xA190 }, { 248, -16, 0, 0xA194 },
 };
 
-const u8 sys_cfg_page_scr_jp_0[158] = {
-    0, 6, 0, 16, 0, 0, 0, 2, 18, 168, 18, 176, 18, 196, 18, 252,
-    19, 60, 19, 64, 0, 3, 0, 4, 0, 4, 0, 2, 18, 160, 18, 136,
-    19, 28, 0, 8, 0, 4, 0, 6, 0, 2, 18, 160, 18, 136, 19, 28,
-    18, 168, 19, 8, 19, 200, 18, 184, 19, 200, 0, 7, 0, 4, 0, 8,
-    0, 2, 18, 160, 19, 28, 18, 196, 18, 140, 18, 212, 19, 8, 19, 200,
-    0, 3, 0, 4, 0, 10, 0, 2, 19, 4, 18, 212, 18, 184, 0, 6,
-    0, 4, 0, 12, 0, 2, 18, 200, 19, 4, 18, 164, 18, 144, 19, 28,
-    18, 208, 0, 4, 0, 4, 0, 14, 0, 2, 18, 164, 18, 144, 19, 28,
-    18, 208, 0, 9, 0, 4, 0, 18, 0, 2, 19, 60, 19, 64, 19, 0,
-    18, 212, 19, 8, 19, 200, 18, 92, 19, 68, 18, 100, 0, 0,
+const CONN effA6_mes_en_20_15_10_16_104_14[33] = {
+    { 0, 0, 0, 0xA1B0 }, { 8, 0, 0, 0xA186 }, { 16, 0, 0, 0xA18C }, { 32, 0, 0, 0xA18A },
+    { 40, 0, 0, 0xA17C }, { 48, 0, 0, 0xA17C }, { 56, 0, 0, 0xA194 }, { 64, 0, 0, 0xA194 },
+    { 72, 0, 0, 0xA194 }, { 0, -16, 0, 0xA1AB }, { 8, -16, 0, 0xA17F }, { 16, -16, 0, 0xA180 },
+    { 24, -16, 0, 0xA18A }, { 40, -16, 0, 0xA18E }, { 48, -16, 0, 0xA178 }, { 56, -16, 0, 0xA18A },
+    { 72, -16, 0, 0xA186 }, { 80, -16, 0, 0xA185 }, { 88, -16, 0, 0xA183 }, { 96, -16, 0, 0xA190 },
+    { 112, -16, 0, 0xA178 }, { 128, -16, 0, 0xA1AA }, { 136, -16, 0, 0xA17F }, { 144, -16, 0, 0xA186 },
+    { 152, -16, 0, 0xA18E }, { 168, -16, 0, 0xA1AD }, { 176, -16, 0, 0xA17C }, { 184, -16, 0, 0xA189 },
+    { 192, -16, 0, 0xA18A }, { 200, -16, 0, 0xA180 }, { 208, -16, 0, 0xA186 }, { 216, -16, 0, 0xA185 },
+    { 224, -16, 0, 0xA194 },
 };
 
-const u32 sys_cfg_page_scr_jp_1[52] = {
-    0x30010, 2, 0x129C1200, 0x12FC0003, 0x40004, 0x21398, 0x139C13A0, 0x10018,
-    0x40002, 0x139C0001, 0x2A0004, 0x21398, 0x30004, 0x60002, 0x13901394, 0x13300001,
-    0x180006, 0x213A4, 0x1002C, 0x60002, 0x13A80004, 0x40008, 0x212B8, 0x128812F8,
-    0x12000001, 0x180008, 0x213AC, 0x1002A, 0x80002, 0x13B00004, 0x4000A, 0x212B0,
-    0x12E01200, 0x12D00005, 0x4000C, 0x21388, 0x138C1304, 0x120012D0, 0x20004, 0xE0002,
-    0x12001328, 0x40004, 0x100002, 0x128812F0, 0x131C12CC, 0x90004, 0x120002, 0x133C1340,
-    0x130012D4, 0x13081200, 0x125C1344, 0x12640000,
+const CONN effA6_mes_en_20_15_10_16_104_16[48] = {
+    { 0, 0, 0, 0xA1B0 }, { 8, 0, 0, 0xA186 }, { 16, 0, 0, 0xA18C }, { 24, 0, 0, 0xA197 },
+    { 32, 0, 0, 0xA18D }, { 40, 0, 0, 0xA17C }, { 56, 0, 0, 0xA186 }, { 64, 0, 0, 0xA185 },
+    { 72, 0, 0, 0xA183 }, { 80, 0, 0, 0xA190 }, { 96, 0, 0, 0xA17F }, { 104, 0, 0, 0xA17C },
+    { 112, 0, 0, 0xA183 }, { 120, 0, 0, 0xA187 }, { 128, 0, 0, 0xA17C }, { 136, 0, 0, 0xA17B },
+    { 152, 0, 0, 0xA18B }, { 160, 0, 0, 0xA186 }, { 176, 0, 0, 0xA184 }, { 184, 0, 0, 0xA178 },
+    { 192, 0, 0, 0xA182 }, { 200, 0, 0, 0xA17C }, { 216, 0, 0, 0xA184 }, { 224, 0, 0, 0xA17C },
+    { 0, -16, 0, 0xA18A }, { 8, -16, 0, 0xA18B }, { 16, -16, 0, 0xA189 }, { 24, -16, 0, 0xA186 },
+    { 32, -16, 0, 0xA185 }, { 40, -16, 0, 0xA17E }, { 48, -16, 0, 0xA17C }, { 56, -16, 0, 0xA189 },
+    { 64, -16, 0, 0xA192 }, { 80, -16, 0, 0xA19F }, { 88, -16, 0, 0xA178 }, { 104, -16, 0, 0xA17F },
+    { 112, -16, 0, 0xA178 }, { 128, -16, 0, 0xA17F }, { 136, -16, 0, 0xA178 }, { 152, -16, 0, 0xA17F },
+    { 160, -16, 0, 0xA178 }, { 176, -16, 0, 0xA17F }, { 184, -16, 0, 0xA178 }, { 200, -16, 0, 0xA17F },
+    { 208, -16, 0, 0xA178 }, { 216, -16, 0, 0xA194 }, { 224, -16, 0, 0xA194 }, { 232, -16, 0, 0xA194 },
 };
 
-const u32 sys_cfg_exit_guide_jp_0[20] = {
-    0xA000E, 0x160002, 0x121813C4, 0x131812DC, 0x13C81348, 0x134C1254, 0x1358135C, 0x150002,
-    0x180002, 0x12001200, 0x121813C4, 0x12A81324, 0x12C012CC, 0x12181254, 0x133C1340, 0x130012D4,
-    0x130813C8, 0x125C1344, 0x12641200, 0x12000000,
+const u16 test_menu_scr_jp_0[155] = {
+    7, 17, 0, 2,    0x12C4, 0x12B0, 0x12CC, 0x1300, 0x12D4, 0x1308, 0x13C8,
+    7, 17, 4, 2,    0x1218, 0x1210, 0x1328, 0x1330, 0x12C4, 0x12B0, 0x12CC,
+    7, 17, 6, 2,    0x121C, 0x1210, 0x132C, 0x1330, 0x12C4, 0x12B0, 0x12CC,
+    9, 17, 8, 2,    0x1220, 0x1210, 0x12A4, 0x1290, 0x131C, 0x12D0, 0x12C4, 0x12B0, 0x12CC,
+    8, 17, 10, 2,   0x1224, 0x1210, 0x1320, 0x130C, 0x13C8, 0x12C4, 0x12B0, 0x12CC,
+    11, 17, 12, 2,  0x1228, 0x1210, 0x1304, 0x12D4, 0x12B8, 0x126C, 0x1270, 0x1260, 0x12C4, 0x12B0, 0x12CC,
+    8, 17, 14, 2,   0x122C, 0x1210, 0x129C, 0x13C8, 0x12FC, 0x12C8, 0x13C8, 0x12B8,
+    4, 17, 16, 2,   0x1230, 0x1210, 0x133C, 0x1340,
+    9, 17, 18, 2,   0x1234, 0x1210, 0x1300, 0x1304, 0x1310, 0x13C8, 0x12C4, 0x12B0, 0x12CC,
+    6, 17, 20, 2,   0x1238, 0x1210, 0x1310, 0x130C, 0x1288, 0x12CC,
+    9, 15, 22, 2,   0x1218, 0x1214, 0x1210, 0x129C, 0x13C8, 0x12FC, 0x125C, 0x1344, 0x1264,
+    21, 3, 26, 2,   0x1218, 0x13C4, 0x1318, 0x12DC, 0x13C8, 0x1348, 0x134C, 0x1254, 0x1358, 0x135C,
+                    0x1284, 0x1218, 0x13C4, 0x12A8, 0x1324, 0x12C0, 0x12CC, 0x1218, 0x1254, 0x1360,
+                    0x1340,
+    0,
 };
 
-const u32 sys_cfg_item_guide_jp_0[19] = {
-    0xA000E, 0x160002, 0x121813C4, 0x131812DC, 0x13C81348, 0x134C1254, 0x1358135C, 0x130004,
-    0x180002, 0x13541350, 0x12741278, 0x127C12A8, 0x132412C0, 0x12CC1218, 0x128412A8, 0x132412C0,
-    0x12CC121C, 0x12541378, 0x137C0000,
+const u16 config_top_scr_jp_0[72] = {
+    6, 18, 0, 2,    0x133C, 0x1340, 0x1300, 0x12D4, 0x1308, 0x13C8,
+    8, 8, 4, 2,     0x1218, 0x1210, 0x12A8, 0x12B0, 0x12C4, 0x12FC, 0x133C, 0x1340,
+    7, 8, 6, 2,     0x121C, 0x1210, 0x129C, 0x13C8, 0x12FC, 0x133C, 0x1340,
+    17, 8, 8, 2,    0x1220, 0x1210, 0x1310, 0x12B4, 0x12C0, 0x12CC, 0x120C, 0x1380, 0x1384, 0x132C,
+                    0x1364, 0x133C, 0x1340, 0x125C, 0x1344, 0x124C, 0x1210,
+    13, 8, 12, 2,   0x1224, 0x1210, 0x12B4, 0x13C8, 0x12E8, 0x1248, 0x1250, 0x12C4, 0x12B0, 0x12CC,
+                    0x125C, 0x1344, 0x1264,
+    0,
 };
 
-const u8 cfg_top_guide_jp_0[82] = {
-    0, 10, 0, 14, 0, 22, 0, 2, 18, 24, 19, 196, 19, 24, 18, 220,
-    19, 200, 19, 72, 19, 76, 18, 84, 19, 88, 19, 92, 0, 22, 0, 2,
-    0, 24, 0, 2, 18, 0, 18, 0, 18, 0, 18, 0, 18, 0, 18, 0,
-    18, 24, 19, 196, 18, 168, 19, 36, 18, 192, 18, 204, 18, 24, 18, 84,
-    19, 96, 19, 64, 18, 0, 18, 0, 18, 0, 18, 0, 18, 0, 18, 0,
+const u16 sys_cfg_page_scr_jp_0[79] = {
+    6, 16, 0, 2,    0x12A8, 0x12B0, 0x12C4, 0x12FC, 0x133C, 0x1340,
+    3, 4, 4, 2,     0x12A0, 0x1288, 0x131C,
+    8, 4, 6, 2,     0x12A0, 0x1288, 0x131C, 0x12A8, 0x1308, 0x13C8, 0x12B8, 0x13C8,
+    7, 4, 8, 2,     0x12A0, 0x131C, 0x12C4, 0x128C, 0x12D4, 0x1308, 0x13C8,
+    3, 4, 10, 2,    0x1304, 0x12D4, 0x12B8,
+    6, 4, 12, 2,    0x12C8, 0x1304, 0x12A4, 0x1290, 0x131C, 0x12D0,
+    4, 4, 14, 2,    0x12A4, 0x1290, 0x131C, 0x12D0,
+    9, 4, 18, 2,    0x133C, 0x1340, 0x1300, 0x12D4, 0x1308, 0x13C8, 0x125C, 0x1344, 0x1264,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_1[104] = {
+    3, 16, 0, 2,    0x129C, 0x1200, 0x12FC,
+    3, 4, 4, 2,     0x1398, 0x139C, 0x13A0,
+    1, 24, 4, 2,    0x139C,
+    1, 42, 4, 2,    0x1398,
+    3, 4, 6, 2,     0x1390, 0x1394, 0x1330,
+    1, 24, 6, 2,    0x13A4,
+    1, 44, 6, 2,    0x13A8,
+    4, 4, 8, 2,     0x12B8, 0x1288, 0x12F8, 0x1200,
+    1, 24, 8, 2,    0x13AC,
+    1, 42, 8, 2,    0x13B0,
+    4, 4, 10, 2,    0x12B0, 0x12E0, 0x1200, 0x12D0,
+    5, 4, 12, 2,    0x1388, 0x138C, 0x1304, 0x1200, 0x12D0,
+    2, 4, 14, 2,    0x1200, 0x1328,
+    4, 4, 16, 2,    0x1288, 0x12F0, 0x131C, 0x12CC,
+    9, 4, 18, 2,    0x133C, 0x1340, 0x1300, 0x12D4, 0x1308, 0x1200, 0x125C, 0x1344, 0x1264,
+    0,
+};
+
+const u16 sys_cfg_exit_guide_jp_0[40] = {
+    10, 14, 22, 2,  0x1218, 0x13C4, 0x1318, 0x12DC, 0x13C8, 0x1348, 0x134C, 0x1254, 0x1358, 0x135C,
+    21, 2, 24, 2,   0x1200, 0x1200, 0x1218, 0x13C4, 0x12A8, 0x1324, 0x12C0, 0x12CC, 0x1218, 0x1254,
+                    0x133C, 0x1340, 0x1300, 0x12D4, 0x1308, 0x13C8, 0x125C, 0x1344, 0x1264, 0x1200,
+                    0x1200,
+    0,
+};
+
+const u16 sys_cfg_item_guide_jp_0[38] = {
+    10, 14, 22, 2,  0x1218, 0x13C4, 0x1318, 0x12DC, 0x13C8, 0x1348, 0x134C, 0x1254, 0x1358, 0x135C,
+    19, 4, 24, 2,   0x1354, 0x1350, 0x1274, 0x1278, 0x127C, 0x12A8, 0x1324, 0x12C0, 0x12CC, 0x1218,
+                    0x1284, 0x12A8, 0x1324, 0x12C0, 0x12CC, 0x121C, 0x1254, 0x1378, 0x137C,
+    0,
+};
+
+const u16 cfg_top_guide_jp_0[41] = {
+    10, 14, 22, 2,  0x1218, 0x13C4, 0x1318, 0x12DC, 0x13C8, 0x1348, 0x134C, 0x1254, 0x1358, 0x135C,
+    22, 2, 24, 2,   0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1218, 0x13C4, 0x12A8, 0x1324,
+                    0x12C0, 0x12CC, 0x1218, 0x1254, 0x1360, 0x1340, 0x1200, 0x1200, 0x1200, 0x1200,
+                    0x1200, 0x1200,
+    0,
+};
+
+const u16 cfg_top_reset_guide_jp_0[27] = {
+    22, 2, 24, 2,   0x1218, 0x13C4, 0x12A8, 0x1324, 0x12C0, 0x12CC, 0x1218, 0x1280, 0x12A8, 0x1324,
+                    0x12C0, 0x12CC, 0x121C, 0x13B8, 0x13BC, 0x13C0, 0x1248, 0x1254, 0x1310, 0x12B4,
+                    0x12C0, 0x12CC,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_2[24] = {
+    19, 22, 4, 2,   0x1218, 0x12A0, 0x1288, 0x131C, 0x1218, 0x1298, 0x1318, 0x12AC, 0x12C0, 0x12CC,
+                    0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_3[24] = {
+    19, 22, 4, 2,   0x1218, 0x12A0, 0x1288, 0x131C, 0x121C, 0x1298, 0x1318, 0x12AC, 0x12C0, 0x12CC,
+                    0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_4[24] = {
+    19, 22, 4, 2,   0x1218, 0x12A0, 0x1288, 0x131C, 0x1220, 0x1298, 0x1318, 0x12AC, 0x12C0, 0x12CC,
+                    0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_5[24] = {
+    19, 22, 4, 2,   0x1218, 0x12A0, 0x1288, 0x131C, 0x1224, 0x1298, 0x1318, 0x12AC, 0x12C0, 0x12CC,
+                    0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_6[24] = {
+    19, 22, 4, 2,   0x1218, 0x12A0, 0x1288, 0x131C, 0x1228, 0x1298, 0x1318, 0x12AC, 0x12C0, 0x12CC,
+                    0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_7[24] = {
+    19, 22, 4, 2,   0x1218, 0x12A0, 0x1288, 0x131C, 0x122C, 0x1298, 0x1318, 0x12AC, 0x12C0, 0x12CC,
+                    0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_8[24] = {
+    19, 22, 4, 2,   0x1218, 0x12A0, 0x1288, 0x131C, 0x1230, 0x1298, 0x1318, 0x12AC, 0x12C0, 0x12CC,
+                    0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_9[24] = {
+    19, 22, 4, 2,   0x1218, 0x12A0, 0x1288, 0x131C, 0x1234, 0x1298, 0x1318, 0x12AC, 0x12C0, 0x12CC,
+                    0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_10[24] = {
+    19, 22, 4, 2,   0x1218, 0x12A0, 0x1288, 0x131C, 0x1238, 0x1298, 0x1318, 0x12AC, 0x12C0, 0x12CC,
+                    0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_11[24] = {
+    19, 22, 4, 2,   0x121C, 0x12A0, 0x1288, 0x131C, 0x1218, 0x1298, 0x1318, 0x12AC, 0x12C0, 0x12CC,
+                    0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_12[24] = {
+    19, 22, 4, 2,   0x1220, 0x12A0, 0x1288, 0x131C, 0x1218, 0x1298, 0x1318, 0x12AC, 0x12C0, 0x12CC,
+                    0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_13[24] = {
+    19, 22, 4, 2,   0x1224, 0x12A0, 0x1288, 0x131C, 0x1218, 0x1298, 0x1318, 0x12AC, 0x12C0, 0x12CC,
+                    0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_14[24] = {
+    19, 22, 4, 2,   0x1228, 0x12A0, 0x1288, 0x131C, 0x1218, 0x1298, 0x1318, 0x12AC, 0x12C0, 0x12CC,
+                    0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_15[24] = {
+    19, 22, 4, 2,   0x122C, 0x12A0, 0x1288, 0x131C, 0x1218, 0x1298, 0x1318, 0x12AC, 0x12C0, 0x12CC,
+                    0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_16[24] = {
+    19, 22, 4, 2,   0x1230, 0x12A0, 0x1288, 0x131C, 0x1218, 0x1298, 0x1318, 0x12AC, 0x12C0, 0x12CC,
+                    0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_17[24] = {
+    19, 22, 4, 2,   0x1234, 0x12A0, 0x1288, 0x131C, 0x1218, 0x1298, 0x1318, 0x12AC, 0x12C0, 0x12CC,
+                    0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_18[24] = {
+    19, 22, 4, 2,   0x1238, 0x12A0, 0x1288, 0x131C, 0x1218, 0x1298, 0x1318, 0x12AC, 0x12C0, 0x12CC,
+                    0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_19[24] = {
+    19, 22, 4, 2,   0x121C, 0x12B0, 0x12B8, 0x13C8, 0x12CC, 0x1218, 0x12A0, 0x131C, 0x12C4, 0x128C,
+                    0x12D4, 0x1308, 0x13C8, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_20[24] = {
+    19, 22, 4, 2,   0x12E4, 0x1310, 0x13C8, 0x12EC, 0x1318, 0x1288, 0x1200, 0x1200, 0x1200, 0x1200,
+                    0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_21[13] = {
+    8, 22, 6, 2,    0x1218, 0x12A8, 0x1308, 0x13C8, 0x12B8, 0x13C8, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_22[13] = {
+    8, 22, 6, 2,    0x121C, 0x12A8, 0x1308, 0x13C8, 0x12B8, 0x13C8, 0x1368, 0x136C,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_23[13] = {
+    8, 22, 6, 2,    0x121C, 0x12A8, 0x1308, 0x13C8, 0x12B8, 0x13C8, 0x1370, 0x1374,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_24[13] = {
+    8, 22, 6, 2,    0x1218, 0x12A8, 0x1308, 0x13C8, 0x12B8, 0x13C8, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_25[13] = {
+    8, 22, 6, 2,    0x121C, 0x12A8, 0x1308, 0x13C8, 0x12B8, 0x13C8, 0x1368, 0x136C,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_26[13] = {
+    8, 22, 6, 2,    0x1220, 0x12A8, 0x1308, 0x13C8, 0x12B8, 0x13C8, 0x1368, 0x136C,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_27[13] = {
+    8, 22, 6, 2,    0x1220, 0x12A8, 0x1308, 0x13C8, 0x12B8, 0x13C8, 0x1370, 0x1374,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_28[13] = {
+    8, 22, 6, 2,    0x1218, 0x12A8, 0x1308, 0x13C8, 0x12B8, 0x13C8, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_29[13] = {
+    8, 22, 6, 2,    0x121C, 0x12A8, 0x1308, 0x13C8, 0x12B8, 0x13C8, 0x1368, 0x136C,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_30[13] = {
+    8, 22, 6, 2,    0x121C, 0x12A8, 0x1308, 0x13C8, 0x12B8, 0x13C8, 0x1370, 0x1374,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_31[13] = {
+    8, 22, 6, 2,    0x1224, 0x12A8, 0x1308, 0x13C8, 0x12B8, 0x13C8, 0x1368, 0x136C,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_32[13] = {
+    8, 22, 6, 2,    0x1224, 0x12A8, 0x1308, 0x13C8, 0x12B8, 0x13C8, 0x1370, 0x1374,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_33[9] = {
+    4, 22, 8, 2,    0x1254, 0x1244, 0x1258, 0x1240,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_34[9] = {
+    4, 22, 8, 2,    0x1254, 0x1244, 0x1264, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_35[9] = {
+    4, 22, 10, 2,   0x12D8, 0x13C8, 0x12F8, 0x1314,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_36[9] = {
+    4, 22, 10, 2,   0x12E4, 0x1310, 0x12C0, 0x12EC,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_37[7] = {
+    2, 22, 12, 2,   0x1258, 0x1248,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_38[7] = {
+    2, 22, 12, 2,   0x123C, 0x1268,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_39[13] = {
+    8, 22, 14, 2,   0x1328, 0x1208, 0x1330, 0x1328, 0x1338, 0x126C, 0x130C, 0x1270,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_40[13] = {
+    8, 22, 14, 2,   0x1294, 0x130C, 0x13D0, 0x13D0, 0x130C, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_41[8] = {
+    3, 22, 16, 2,   0x1248, 0x1258, 0x1240,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_42[8] = {
+    3, 22, 16, 2,   0x124C, 0x1264, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_43[13] = {
+    8, 26, 4, 14,   0x1218, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_44[13] = {
+    8, 26, 4, 14,   0x1200, 0x121C, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_45[13] = {
+    8, 26, 4, 14,   0x1200, 0x1200, 0x1220, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_46[13] = {
+    8, 26, 4, 14,   0x1200, 0x1200, 0x1200, 0x1224, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_47[13] = {
+    8, 26, 4, 14,   0x1200, 0x1200, 0x1200, 0x1200, 0x1228, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_48[13] = {
+    8, 26, 4, 14,   0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x122C, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_49[13] = {
+    8, 26, 4, 14,   0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1230, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_50[13] = {
+    8, 26, 4, 14,   0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1234,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_51[14] = {
+    9, 26, 6, 14,   0x1218, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_52[14] = {
+    9, 26, 6, 14,   0x1200, 0x121C, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_53[14] = {
+    9, 26, 6, 14,   0x1200, 0x1200, 0x1220, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_54[14] = {
+    9, 26, 6, 14,   0x1200, 0x1200, 0x1200, 0x1224, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_55[14] = {
+    9, 26, 6, 14,   0x1200, 0x1200, 0x1200, 0x1200, 0x1228, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_56[14] = {
+    9, 26, 6, 14,   0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x122C, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_57[14] = {
+    9, 26, 6, 14,   0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1230, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_58[14] = {
+    9, 26, 6, 14,   0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1234, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_59[14] = {
+    9, 26, 6, 14,   0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1238,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_60[13] = {
+    8, 26, 8, 14,   0x1218, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_61[13] = {
+    8, 26, 8, 14,   0x1200, 0x121C, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_62[13] = {
+    8, 26, 8, 14,   0x1200, 0x1200, 0x1220, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_63[13] = {
+    8, 26, 8, 14,   0x1200, 0x1200, 0x1200, 0x1224, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_64[13] = {
+    8, 26, 8, 14,   0x1200, 0x1200, 0x1200, 0x1200, 0x1228, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_65[13] = {
+    8, 26, 8, 14,   0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x122C, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_66[13] = {
+    8, 26, 8, 14,   0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1230, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_67[13] = {
+    8, 26, 8, 14,   0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1234,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_68[13] = {
+    8, 24, 10, 14,  0x1200, 0x1200, 0x120C, 0x12B8, 0x1200, 0x12F4, 0x1218, 0x1210,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_69[13] = {
+    8, 24, 10, 14,  0x1200, 0x1240, 0x120C, 0x12B8, 0x1200, 0x12F4, 0x121C, 0x1210,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_70[13] = {
+    8, 24, 10, 14,  0x1200, 0x1200, 0x120C, 0x12B8, 0x1200, 0x12F4, 0x1220, 0x1210,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_71[13] = {
+    8, 24, 10, 14,  0x12E4, 0x1310, 0x1200, 0x12B4, 0x1318, 0x1298, 0x12CC, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_72[9] = {
+    4, 24, 12, 14,  0x1218, 0x13B4, 0x1388, 0x138C,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_73[9] = {
+    4, 24, 12, 14,  0x1220, 0x13B4, 0x1388, 0x138C,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_74[9] = {
+    4, 24, 12, 14,  0x1228, 0x13B4, 0x1388, 0x138C,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_75[9] = {
+    4, 24, 14, 14,  0x1254, 0x1244, 0x1258, 0x1240,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_76[9] = {
+    4, 24, 14, 14,  0x1254, 0x1244, 0x1264, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_77[15] = {
+    10, 24, 16, 14, 0x12D8, 0x1200, 0x12F8, 0x1314, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_78[15] = {
+    10, 24, 16, 14, 0x1218, 0x12F8, 0x12C0, 0x12BC, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_79[15] = {
+    10, 24, 16, 14, 0x12A4, 0x12D0, 0x131C, 0x12C8, 0x12B0, 0x1200, 0x1200, 0x1200, 0x1200, 0x1200,
+    0,
+};
+
+const u16 sys_cfg_page_scr_jp_80[16] = {
+    10, 24, 16, 14, 0x1218, 0x12F8, 0x12C0, 0x12BC, 0x1208, 0x12A4, 0x12D0, 0x131C, 0x12C8, 0x12B0,
     0, 0,
 };
 
-const u8 cfg_top_reset_guide_jp_0[54] = {
-    0, 22, 0, 2, 0, 24, 0, 2, 18, 24, 19, 196, 18, 168, 19, 36,
-    18, 192, 18, 204, 18, 24, 18, 128, 18, 168, 19, 36, 18, 192, 18, 204,
-    18, 28, 19, 184, 19, 188, 19, 192, 18, 72, 18, 84, 19, 16, 18, 180,
-    18, 192, 18, 204, 0, 0,
-};
+const s8 test_menu_str_0[20] = "T E S T   M E N U\n";
 
-const u32 sys_cfg_page_scr_jp_2[12] = {
-    0x130016, 0x40002, 0x121812A0, 0x1288131C, 0x12181298, 0x131812AC, 0x12C012CC, 0x12001200,
-    0x12001200, 0x12001200, 0x12001200, 0x12000000,
-};
+const s8 test_menu_str_1[12] = " 1. INPUT\n";
 
-const u32 sys_cfg_page_scr_jp_3[12] = {
-    0x130016, 0x40002, 0x121812A0, 0x1288131C, 0x121C1298, 0x131812AC, 0x12C012CC, 0x12001200,
-    0x12001200, 0x12001200, 0x12001200, 0x12000000,
-};
+const s8 test_menu_str_2[12] = " 2. OUTPUT\n";
 
-const u32 sys_cfg_page_scr_jp_4[12] = {
-    0x130016, 0x40002, 0x121812A0, 0x1288131C, 0x12201298, 0x131812AC, 0x12C012CC, 0x12001200,
-    0x12001200, 0x12001200, 0x12001200, 0x12000000,
-};
+const s8 test_menu_str_3[20] = " 3. SOUND & VOICE\n";
 
-const u32 sys_cfg_page_scr_jp_5[12] = {
-    0x130016, 0x40002, 0x121812A0, 0x1288131C, 0x12241298, 0x131812AC, 0x12C012CC, 0x12001200,
-    0x12001200, 0x12001200, 0x12001200, 0x12000000,
-};
+const s8 test_menu_str_4[12] = " 4. COLOR\n";
 
-const u32 sys_cfg_page_scr_jp_6[12] = {
-    0x130016, 0x40002, 0x121812A0, 0x1288131C, 0x12281298, 0x131812AC, 0x12C012CC, 0x12001200,
-    0x12001200, 0x12001200, 0x12001200, 0x12000000,
-};
+const s8 test_menu_str_5[24] = " 5. DOT CROSS HATCH\n";
 
-const u32 sys_cfg_page_scr_jp_7[12] = {
-    0x130016, 0x40002, 0x121812A0, 0x1288131C, 0x122C1298, 0x131812AC, 0x12C012CC, 0x12001200,
-    0x12001200, 0x12001200, 0x12001200, 0x12000000,
-};
+const s8 test_menu_str_6[16] = " 6. GAME DATA\n";
 
-const u32 sys_cfg_page_scr_jp_8[12] = {
-    0x130016, 0x40002, 0x121812A0, 0x1288131C, 0x12301298, 0x131812AC, 0x12C012CC, 0x12001200,
-    0x12001200, 0x12001200, 0x12001200, 0x12000000,
-};
+const s8 test_menu_str_7[20] = " 7. CONFIGURATION\n";
 
-const u32 sys_cfg_page_scr_jp_9[12] = {
-    0x130016, 0x40002, 0x121812A0, 0x1288131C, 0x12341298, 0x131812AC, 0x12C012CC, 0x12001200,
-    0x12001200, 0x12001200, 0x12001200, 0x12000000,
-};
+const s8 test_menu_str_8[20] = " 8. MEMORY CHECK\n";
 
-const u32 sys_cfg_page_scr_jp_10[12] = {
-    0x130016, 0x40002, 0x121812A0, 0x1288131C, 0x12381298, 0x131812AC, 0x12C012CC, 0x12001200,
-    0x12001200, 0x12001200, 0x12001200, 0x12000000,
-};
+const s8 test_menu_str_9[20] = " 9. GAME REWRITE\n";
 
-const u32 sys_cfg_page_scr_jp_11[12] = {
-    0x130016, 0x40002, 0x121C12A0, 0x1288131C, 0x12181298, 0x131812AC, 0x12C012CC, 0x12001200,
-    0x12001200, 0x12001200, 0x12001200, 0x12000000,
-};
+const s8 test_menu_str_10[12] = "10. EXIT\n";
 
-const u32 sys_cfg_page_scr_jp_12[12] = {
-    0x130016, 0x40002, 0x122012A0, 0x1288131C, 0x12181298, 0x131812AC, 0x12C012CC, 0x12001200,
-    0x12001200, 0x12001200, 0x12001200, 0x12000000,
-};
+const s8 test_menu_str_11[24] = "SELECT = 1P UP or DOWN\n";
 
-const u32 sys_cfg_page_scr_jp_13[12] = {
-    0x130016, 0x40002, 0x122412A0, 0x1288131C, 0x12181298, 0x131812AC, 0x12C012CC, 0x12001200,
-    0x12001200, 0x12001200, 0x12001200, 0x12000000,
-};
+const s8 test_menu_str_12[20] = "START  = 1P SHOT1";
 
-const u32 sys_cfg_page_scr_jp_14[12] = {
-    0x130016, 0x40002, 0x122812A0, 0x1288131C, 0x12181298, 0x131812AC, 0x12C012CC, 0x12001200,
-    0x12001200, 0x12001200, 0x12001200, 0x12000000,
-};
+const s8 test_menu_str_asia_9[12] = " 9. EXIT\n";
 
-const u32 sys_cfg_page_scr_jp_15[12] = {
-    0x130016, 0x40002, 0x122C12A0, 0x1288131C, 0x12181298, 0x131812AC, 0x12C012CC, 0x12001200,
-    0x12001200, 0x12001200, 0x12001200, 0x12000000,
-};
-
-const u32 sys_cfg_page_scr_jp_16[12] = {
-    0x130016, 0x40002, 0x123012A0, 0x1288131C, 0x12181298, 0x131812AC, 0x12C012CC, 0x12001200,
-    0x12001200, 0x12001200, 0x12001200, 0x12000000,
-};
-
-const u32 sys_cfg_page_scr_jp_17[12] = {
-    0x130016, 0x40002, 0x123412A0, 0x1288131C, 0x12181298, 0x131812AC, 0x12C012CC, 0x12001200,
-    0x12001200, 0x12001200, 0x12001200, 0x12000000,
-};
-
-const u32 sys_cfg_page_scr_jp_18[12] = {
-    0x130016, 0x40002, 0x123812A0, 0x1288131C, 0x12181298, 0x131812AC, 0x12C012CC, 0x12001200,
-    0x12001200, 0x12001200, 0x12001200, 0x12000000,
-};
-
-const u32 sys_cfg_page_scr_jp_19[12] = {
-    0x130016, 0x40002, 0x121C12B0, 0x12B813C8, 0x12CC1218, 0x12A0131C, 0x12C4128C, 0x12D41308,
-    0x13C81200, 0x12001200, 0x12001200, 0x12000000,
-};
-
-const u32 sys_cfg_page_scr_jp_20[12] = {
-    0x130016, 0x40002, 0x12E41310, 0x13C812EC, 0x13181288, 0x12001200, 0x12001200, 0x12001200,
-    0x12001200, 0x12001200, 0x12001200, 0x12000000,
-};
-
-const u8 sys_cfg_page_scr_jp_21[26] = {
-    0, 8, 0, 22, 0, 6, 0, 2, 18, 24, 18, 168, 19, 8, 19, 200,
-    18, 184, 19, 200, 18, 0, 18, 0, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_22[26] = {
-    0, 8, 0, 22, 0, 6, 0, 2, 18, 28, 18, 168, 19, 8, 19, 200,
-    18, 184, 19, 200, 19, 104, 19, 108, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_23[26] = {
-    0, 8, 0, 22, 0, 6, 0, 2, 18, 28, 18, 168, 19, 8, 19, 200,
-    18, 184, 19, 200, 19, 112, 19, 116, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_24[26] = {
-    0, 8, 0, 22, 0, 6, 0, 2, 18, 24, 18, 168, 19, 8, 19, 200,
-    18, 184, 19, 200, 18, 0, 18, 0, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_25[26] = {
-    0, 8, 0, 22, 0, 6, 0, 2, 18, 28, 18, 168, 19, 8, 19, 200,
-    18, 184, 19, 200, 19, 104, 19, 108, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_26[26] = {
-    0, 8, 0, 22, 0, 6, 0, 2, 18, 32, 18, 168, 19, 8, 19, 200,
-    18, 184, 19, 200, 19, 104, 19, 108, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_27[26] = {
-    0, 8, 0, 22, 0, 6, 0, 2, 18, 32, 18, 168, 19, 8, 19, 200,
-    18, 184, 19, 200, 19, 112, 19, 116, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_28[26] = {
-    0, 8, 0, 22, 0, 6, 0, 2, 18, 24, 18, 168, 19, 8, 19, 200,
-    18, 184, 19, 200, 18, 0, 18, 0, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_29[26] = {
-    0, 8, 0, 22, 0, 6, 0, 2, 18, 28, 18, 168, 19, 8, 19, 200,
-    18, 184, 19, 200, 19, 104, 19, 108, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_30[26] = {
-    0, 8, 0, 22, 0, 6, 0, 2, 18, 28, 18, 168, 19, 8, 19, 200,
-    18, 184, 19, 200, 19, 112, 19, 116, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_31[26] = {
-    0, 8, 0, 22, 0, 6, 0, 2, 18, 36, 18, 168, 19, 8, 19, 200,
-    18, 184, 19, 200, 19, 104, 19, 108, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_32[26] = {
-    0, 8, 0, 22, 0, 6, 0, 2, 18, 36, 18, 168, 19, 8, 19, 200,
-    18, 184, 19, 200, 19, 112, 19, 116, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_33[18] = {
-    0, 4, 0, 22, 0, 8, 0, 2, 18, 84, 18, 68, 18, 88, 18, 64,
-    0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_34[18] = {
-    0, 4, 0, 22, 0, 8, 0, 2, 18, 84, 18, 68, 18, 100, 18, 0,
-    0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_35[18] = {
-    0, 4, 0, 22, 0, 10, 0, 2, 18, 216, 19, 200, 18, 248, 19, 20,
-    0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_36[18] = {
-    0, 4, 0, 22, 0, 10, 0, 2, 18, 228, 19, 16, 18, 192, 18, 236,
-    0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_37[14] = {
-    0, 2, 0, 22, 0, 12, 0, 2, 18, 88, 18, 72, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_38[14] = {
-    0, 2, 0, 22, 0, 12, 0, 2, 18, 60, 18, 104, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_39[26] = {
-    0, 8, 0, 22, 0, 14, 0, 2, 19, 40, 18, 8, 19, 48, 19, 40,
-    19, 56, 18, 108, 19, 12, 18, 112, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_40[26] = {
-    0, 8, 0, 22, 0, 14, 0, 2, 18, 148, 19, 12, 19, 208, 19, 208,
-    19, 12, 18, 0, 18, 0, 18, 0, 0, 0,
-};
-
-const u32 sys_cfg_page_scr_jp_41[4] = {
-    0x30016, 0x100002, 0x12481258, 0x12400000,
-};
-
-const u32 sys_cfg_page_scr_jp_42[4] = {
-    0x30016, 0x100002, 0x124C1264, 0x12000000,
-};
-
-const u8 sys_cfg_page_scr_jp_43[26] = {
-    0, 8, 0, 26, 0, 4, 0, 14, 18, 24, 18, 0, 18, 0, 18, 0,
-    18, 0, 18, 0, 18, 0, 18, 0, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_44[26] = {
-    0, 8, 0, 26, 0, 4, 0, 14, 18, 0, 18, 28, 18, 0, 18, 0,
-    18, 0, 18, 0, 18, 0, 18, 0, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_45[26] = {
-    0, 8, 0, 26, 0, 4, 0, 14, 18, 0, 18, 0, 18, 32, 18, 0,
-    18, 0, 18, 0, 18, 0, 18, 0, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_46[26] = {
-    0, 8, 0, 26, 0, 4, 0, 14, 18, 0, 18, 0, 18, 0, 18, 36,
-    18, 0, 18, 0, 18, 0, 18, 0, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_47[26] = {
-    0, 8, 0, 26, 0, 4, 0, 14, 18, 0, 18, 0, 18, 0, 18, 0,
-    18, 40, 18, 0, 18, 0, 18, 0, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_48[26] = {
-    0, 8, 0, 26, 0, 4, 0, 14, 18, 0, 18, 0, 18, 0, 18, 0,
-    18, 0, 18, 44, 18, 0, 18, 0, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_49[26] = {
-    0, 8, 0, 26, 0, 4, 0, 14, 18, 0, 18, 0, 18, 0, 18, 0,
-    18, 0, 18, 0, 18, 48, 18, 0, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_50[26] = {
-    0, 8, 0, 26, 0, 4, 0, 14, 18, 0, 18, 0, 18, 0, 18, 0,
-    18, 0, 18, 0, 18, 0, 18, 52, 0, 0,
-};
-
-const u32 sys_cfg_page_scr_jp_51[7] = {
-    0x9001A, 0x6000E, 0x12181200, 0x12001200, 0x12001200, 0x12001200, 0x12000000,
-};
-
-const u32 sys_cfg_page_scr_jp_52[7] = {
-    0x9001A, 0x6000E, 0x1200121C, 0x12001200, 0x12001200, 0x12001200, 0x12000000,
-};
-
-const u32 sys_cfg_page_scr_jp_53[7] = {
-    0x9001A, 0x6000E, 0x12001200, 0x12201200, 0x12001200, 0x12001200, 0x12000000,
-};
-
-const u32 sys_cfg_page_scr_jp_54[7] = {
-    0x9001A, 0x6000E, 0x12001200, 0x12001224, 0x12001200, 0x12001200, 0x12000000,
-};
-
-const u32 sys_cfg_page_scr_jp_55[7] = {
-    0x9001A, 0x6000E, 0x12001200, 0x12001200, 0x12281200, 0x12001200, 0x12000000,
-};
-
-const u32 sys_cfg_page_scr_jp_56[7] = {
-    0x9001A, 0x6000E, 0x12001200, 0x12001200, 0x1200122C, 0x12001200, 0x12000000,
-};
-
-const u32 sys_cfg_page_scr_jp_57[7] = {
-    0x9001A, 0x6000E, 0x12001200, 0x12001200, 0x12001200, 0x12301200, 0x12000000,
-};
-
-const u32 sys_cfg_page_scr_jp_58[7] = {
-    0x9001A, 0x6000E, 0x12001200, 0x12001200, 0x12001200, 0x12001234, 0x12000000,
-};
-
-const u32 sys_cfg_page_scr_jp_59[7] = {
-    0x9001A, 0x6000E, 0x12001200, 0x12001200, 0x12001200, 0x12001200, 0x12380000,
-};
-
-const u8 sys_cfg_page_scr_jp_60[26] = {
-    0, 8, 0, 26, 0, 8, 0, 14, 18, 24, 18, 0, 18, 0, 18, 0,
-    18, 0, 18, 0, 18, 0, 18, 0, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_61[26] = {
-    0, 8, 0, 26, 0, 8, 0, 14, 18, 0, 18, 28, 18, 0, 18, 0,
-    18, 0, 18, 0, 18, 0, 18, 0, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_62[26] = {
-    0, 8, 0, 26, 0, 8, 0, 14, 18, 0, 18, 0, 18, 32, 18, 0,
-    18, 0, 18, 0, 18, 0, 18, 0, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_63[26] = {
-    0, 8, 0, 26, 0, 8, 0, 14, 18, 0, 18, 0, 18, 0, 18, 36,
-    18, 0, 18, 0, 18, 0, 18, 0, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_64[26] = {
-    0, 8, 0, 26, 0, 8, 0, 14, 18, 0, 18, 0, 18, 0, 18, 0,
-    18, 40, 18, 0, 18, 0, 18, 0, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_65[26] = {
-    0, 8, 0, 26, 0, 8, 0, 14, 18, 0, 18, 0, 18, 0, 18, 0,
-    18, 0, 18, 44, 18, 0, 18, 0, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_66[26] = {
-    0, 8, 0, 26, 0, 8, 0, 14, 18, 0, 18, 0, 18, 0, 18, 0,
-    18, 0, 18, 0, 18, 48, 18, 0, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_67[26] = {
-    0, 8, 0, 26, 0, 8, 0, 14, 18, 0, 18, 0, 18, 0, 18, 0,
-    18, 0, 18, 0, 18, 0, 18, 52, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_68[26] = {
-    0, 8, 0, 24, 0, 10, 0, 14, 18, 0, 18, 0, 18, 12, 18, 184,
-    18, 0, 18, 244, 18, 24, 18, 16, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_69[26] = {
-    0, 8, 0, 24, 0, 10, 0, 14, 18, 0, 18, 64, 18, 12, 18, 184,
-    18, 0, 18, 244, 18, 28, 18, 16, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_70[26] = {
-    0, 8, 0, 24, 0, 10, 0, 14, 18, 0, 18, 0, 18, 12, 18, 184,
-    18, 0, 18, 244, 18, 32, 18, 16, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_71[26] = {
-    0, 8, 0, 24, 0, 10, 0, 14, 18, 228, 19, 16, 18, 0, 18, 180,
-    19, 24, 18, 152, 18, 204, 18, 0, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_72[18] = {
-    0, 4, 0, 24, 0, 12, 0, 14, 18, 24, 19, 180, 19, 136, 19, 140,
-    0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_73[18] = {
-    0, 4, 0, 24, 0, 12, 0, 14, 18, 32, 19, 180, 19, 136, 19, 140,
-    0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_74[18] = {
-    0, 4, 0, 24, 0, 12, 0, 14, 18, 40, 19, 180, 19, 136, 19, 140,
-    0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_75[18] = {
-    0, 4, 0, 24, 0, 14, 0, 14, 18, 84, 18, 68, 18, 88, 18, 64,
-    0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_76[18] = {
-    0, 4, 0, 24, 0, 14, 0, 14, 18, 84, 18, 68, 18, 100, 18, 0,
-    0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_77[30] = {
-    0, 10, 0, 24, 0, 16, 0, 14, 18, 216, 18, 0, 18, 248, 19, 20,
-    18, 0, 18, 0, 18, 0, 18, 0, 18, 0, 18, 0, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_78[30] = {
-    0, 10, 0, 24, 0, 16, 0, 14, 18, 24, 18, 248, 18, 192, 18, 188,
-    18, 0, 18, 0, 18, 0, 18, 0, 18, 0, 18, 0, 0, 0,
-};
-
-const u8 sys_cfg_page_scr_jp_79[30] = {
-    0, 10, 0, 24, 0, 16, 0, 14, 18, 164, 18, 208, 19, 28, 18, 200,
-    18, 176, 18, 0, 18, 0, 18, 0, 18, 0, 18, 0, 0, 0,
-};
-
-const u32 sys_cfg_page_scr_jp_80[8] = {
-    0xA0018, 0x10000E, 0x121812F8, 0x12C012BC, 0x120812A4, 0x12D0131C, 0x12C812B0, 0,
-};
-
-const u8 test_menu_str_0[20] = "T E S T   M E N U\n";
-
-const u8 test_menu_str_1[12] = " 1. INPUT\n";
-
-const u8 test_menu_str_2[12] = " 2. OUTPUT\n";
-
-const u8 test_menu_str_3[20] = " 3. SOUND & VOICE\n";
-
-const u8 test_menu_str_4[12] = " 4. COLOR\n";
-
-const u8 test_menu_str_5[24] = " 5. DOT CROSS HATCH\n";
-
-const u8 test_menu_str_6[16] = " 6. GAME DATA\n";
-
-const u8 test_menu_str_7[20] = " 7. CONFIGURATION\n";
-
-const u8 test_menu_str_8[20] = " 8. MEMORY CHECK\n";
-
-const u8 test_menu_str_9[20] = " 9. GAME REWRITE\n";
-
-const u8 test_menu_str_10[12] = "10. EXIT\n";
-
-const u8 test_menu_str_11[24] = "SELECT = 1P UP or DOWN\n";
-
-const u8 test_menu_str_12[20] = "START  = 1P SHOT1";
-
-const u8 test_menu_str_asia_9[12] = " 9. EXIT\n";
-
-const u32 sys_cfg_sound_scr_jp_0[25] = {
-    0xF000C, 0xE, 0x12B01200, 0x12DC1200, 0x121C12C8, 0x128C1200, 0x12C412B0, 0x12CC1300,
-    0x12D41308, 0x12000003, 0x120004, 0xE1330, 0x13101228, 0x50012, 0x6000E, 0x12B812C4,
-    0x12C412B0, 0x12CC0003, 0x120008, 0xE1330, 0x1310122C, 0x30012, 0xA000E, 0x12A8131C,
-    0x12A80000,
+const u16 sys_cfg_sound_scr_jp_0[50] = {
+    15, 12, 0, 14,  0x12B0, 0x1200, 0x12DC, 0x1200, 0x121C, 0x12C8, 0x128C, 0x1200, 0x12C4, 0x12B0,
+                    0x12CC, 0x1300, 0x12D4, 0x1308, 0x1200,
+    3, 18, 4, 14,   0x1330, 0x1310, 0x1228,
+    5, 18, 6, 14,   0x12B8, 0x12C4, 0x12C4, 0x12B0, 0x12CC,
+    3, 18, 8, 14,   0x1330, 0x1310, 0x122C,
+    3, 18, 10, 14,  0x12A8, 0x131C, 0x12A8,
+    0,
 };
 

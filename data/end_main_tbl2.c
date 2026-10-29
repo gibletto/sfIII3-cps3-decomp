@@ -7,8 +7,8 @@
  * end_scno_tbl gives its number of BG layers, end_color_tbl its colour load, staff_fade_tbl
  * the fade that closes the ending scenes and end_fade_tbl the fade from its closing picture
  * into the staff roll. end_cg_src_tbl holds the screen data of each character's closing
- * picture, followed by the four scroll layout records reached through end_map_tbl. All read
- * by END_MAIN.C; end_stage_no_tbl is not read.
+ * picture, and end_map_data_0 .. 3 are the layout records of the four ending BG layers,
+ * reached through end_map_tbl. All read by END_MAIN.C; end_stage_no_tbl is not read.
  */
 
 #include "types.h"
@@ -16,26 +16,26 @@
 
 #pragma section TBL
 
-extern const u32 end_1000_scrn_data[];
-extern const u32 end_100_scrn_data[];
-extern const u32 end_1100_scrn_data[];
-extern const char end_1600_scrn_data[];
-extern const u32 end_1800_scrn_data[];
-extern const u32 end_1900_scrn_data[];
-extern const u32 end_2000_scrn_data[];
-extern const u32 end_200_scrn_data[];
-extern const u32 end_300_scrn_data[];
-extern const u32 end_400_scrn_data[];
-extern const u32 end_500_scrn_data[];
-extern const u32 end_600_scrn_data[];
-extern const u32 end_700_scrn_data[];
-extern const u32 end_800_scrn_data[];
-extern const u32 end_900_scrn_data[];
-extern const u32 end_ake_scrn_data[];
-extern const u32 end_b00_scrn_data[];
-extern const u32 end_c00_scrn_data[];
-extern const u32 end_d00_scrn_data[];
-extern const u32 end_e00_scrn_data[];
+extern const u16 end_1000_scrn_data[9][16][32];
+extern const u16 end_100_scrn_data[12][16][32];
+extern const u16 end_1100_scrn_data[19][16][32];
+extern const u16 end_1600_scrn_data[14][16][32];
+extern const u16 end_1800_scrn_data[11][16][32];
+extern const u16 end_1900_scrn_data[10][16][32];
+extern const u16 end_2000_scrn_data[8][16][32];
+extern const u16 end_200_scrn_data[9][16][32];
+extern const u16 end_300_scrn_data[14][16][32];
+extern const u16 end_400_scrn_data[22][16][32];
+extern const u16 end_500_scrn_data[18][16][32];
+extern const u16 end_600_scrn_data[15][16][32];
+extern const u16 end_700_scrn_data[15][16][32];
+extern const u16 end_800_scrn_data[12][16][32];
+extern const u16 end_900_scrn_data[9][16][32];
+extern const u16 end_ake_scrn_data[21][16][32];
+extern const u16 end_b00_scrn_data[16][16][32];
+extern const u16 end_c00_scrn_data[19][16][32];
+extern const u16 end_d00_scrn_data[9][16][32];
+extern const u16 end_e00_scrn_data[16][16][32];
 
 const s16 op_bg0_0015_tbl[6] = {
     45, 46, 45, 46, 47, 41,
@@ -68,7 +68,7 @@ const END_BG_GFX end_bg_gfx_tbl[24] = {
     { 0x1BC8000, 32991, 0x1BC8080 }, { 0x1C16000, 16687, 0x1C16080 }, { 0x1C3D000, 10703, 0x1C3D080 }, { 0x1C8D000, 15071, 0x1C8D080 }, { 0x1C8D000, 15071, 0x1C8D080 }, { 0x1CB5000, 18255, 0x1CB5080 }, { 0, 0, 0 }, { 0, 0, 0 },
 };
 
-const u32 end_cg_src_tbl[80] = {
+const u32 end_cg_src_tbl[24] = {
     (u32)end_100_scrn_data,
     (u32)end_100_scrn_data,
     (u32)end_200_scrn_data,
@@ -93,62 +93,38 @@ const u32 end_cg_src_tbl[80] = {
     0,
     0,
     0,
-    0x10054,
-    0x7F7F00,
-    0xC00FF,
-    0x7F00000C,
-    0x17F7F00,
-    0xC01FF,
-    0x7F00000C,
-    0x27F7F00,
-    0xC02FF,
-    0x7F00000C,
-    0x37F7F00,
-    0xC03FF,
-    0x7F00000C,
-    0xFFFFFFFF,
-    0x2005E,
-    0x7F7F00,
-    0x1C00FF,
-    0x7F00001C,
-    0x17F7F00,
-    0x1C01FF,
-    0x7F00001C,
-    0x27F7F00,
-    0x1C02FF,
-    0x7F00001C,
-    0x37F7F00,
-    0x1C03FF,
-    0x7F00001C,
-    0xFFFFFFFF,
-    0x30068,
-    0x7F7F00,
-    0x2C00FF,
-    0x7F00002C,
-    0x17F7F00,
-    0x2C01FF,
-    0x7F00002C,
-    0x27F7F00,
-    0x2C02FF,
-    0x7F00002C,
-    0x37F7F00,
-    0x2C03FF,
-    0x7F00002C,
-    0xFFFFFFFF,
-    0x40072,
-    0x7F7F00,
-    0x3C00FF,
-    0x7F00003C,
-    0x17F7F00,
-    0x3C01FF,
-    0x7F00003C,
-    0x27F7F00,
-    0x3C02FF,
-    0x7F00003C,
-    0x37F7F00,
-    0x3C03FF,
-    0x7F00003C,
-    0xFFFFFFFF,
+};
+
+/* provisional name */
+const s16 end_map_data_0[28] = {
+    /* [0] */
+    1, 84,  0x7F, 0x7F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  0x27F, 0x7F00, 12,
+           0x2FF, 0x7F00, 12,  0x37F, 0x7F00, 12,  0x3FF, 0x7F00, 12,  -1,
+    -1,
+};
+
+/* provisional name */
+const s16 end_map_data_1[28] = {
+    /* [0] */
+    2, 94,  0x7F, 0x7F00, 28,  0xFF, 0x7F00, 28,  0x17F, 0x7F00, 28,  0x1FF, 0x7F00, 28,  0x27F, 0x7F00, 28,
+           0x2FF, 0x7F00, 28,  0x37F, 0x7F00, 28,  0x3FF, 0x7F00, 28,  -1,
+    -1,
+};
+
+/* provisional name */
+const s16 end_map_data_2[28] = {
+    /* [0] */
+    3, 104,  0x7F, 0x7F00, 44,  0xFF, 0x7F00, 44,  0x17F, 0x7F00, 44,  0x1FF, 0x7F00, 44,  0x27F, 0x7F00, 44,
+           0x2FF, 0x7F00, 44,  0x37F, 0x7F00, 44,  0x3FF, 0x7F00, 44,  -1,
+    -1,
+};
+
+/* provisional name */
+const s16 end_map_data_3[28] = {
+    /* [0] */
+    4, 114,  0x7F, 0x7F00, 60,  0xFF, 0x7F00, 60,  0x17F, 0x7F00, 60,  0x1FF, 0x7F00, 60,  0x27F, 0x7F00, 60,
+           0x2FF, 0x7F00, 60,  0x37F, 0x7F00, 60,  0x3FF, 0x7F00, 60,  -1,
+    -1,
 };
 
 const s8 end_color_tbl[24] = {

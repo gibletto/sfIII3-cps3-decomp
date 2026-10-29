@@ -86,111 +86,111 @@
 #define A15_LAND        3       /* the landing */
 /* 02007A88 */
 const u8* cjdr_karaburi_table[24] = {
-    (const u8*)&plxx_extra_attack_table[30],
-    (const u8*)&plxx_extra_attack_table[30],
-    (const u8*)&plxx_extra_attack_table[30],
-    (const u8*)&plxx_extra_attack_table[30],
-    (const u8*)&plxx_extra_attack_table[30],
-    (const u8*)&plxx_extra_attack_table[30],
-    (const u8*)&plxx_extra_attack_table[30],
-    (const u8*)&plxx_extra_attack_table[30],
-    (const u8*)&plxx_extra_attack_table[30],
-    (const u8*)&plxx_extra_attack_table[30],
-    (const u8*)&plxx_extra_attack_table[30],
-    (const u8*)&plxx_extra_attack_table[30],
-    (const u8*)&plxx_extra_attack_table[30],
-    (const u8*)&plxx_extra_attack_table[30],
-    (const u8*)&plxx_extra_attack_table[30],
-    (const u8*)&plxx_extra_attack_table[30],
-    (const u8*)&plxx_extra_attack_table[30],
-    (const u8*)&plxx_extra_attack_table[30],
-    (const u8*)&plxx_extra_attack_table[30],
-    (const u8*)&plxx_extra_attack_table[30],
-    (const u8*)&plxx_extra_attack_table[30],
-    (const u8*)&plxx_extra_attack_table[30],
-    (const u8*)&plxx_extra_attack_table[30],
-    (const u8*)&plxx_extra_attack_table[30],
+    cjdr_frame_tbl[3],  /* Gill */
+    cjdr_frame_tbl[3],  /* Alex */
+    cjdr_frame_tbl[3],  /* Ryu */
+    cjdr_frame_tbl[3],  /* Yun */
+    cjdr_frame_tbl[3],  /* Dudley */
+    cjdr_frame_tbl[3],  /* Necro */
+    cjdr_frame_tbl[3],  /* Hugo */
+    cjdr_frame_tbl[3],  /* Ibuki */
+    cjdr_frame_tbl[3],  /* Elena */
+    cjdr_frame_tbl[3],  /* Oro */
+    cjdr_frame_tbl[3],  /* Yang */
+    cjdr_frame_tbl[3],  /* Ken */
+    cjdr_frame_tbl[3],  /* Sean */
+    cjdr_frame_tbl[3],  /* Urien */
+    cjdr_frame_tbl[3],  /* Gouki */
+    cjdr_frame_tbl[3],  /* Shin Gouki */
+    cjdr_frame_tbl[3],  /* Chun-Li */
+    cjdr_frame_tbl[3],  /* Makoto */
+    cjdr_frame_tbl[3],  /* Q */
+    cjdr_frame_tbl[3],  /* Twelve */
+    cjdr_frame_tbl[3],  /* Remy */
+    cjdr_frame_tbl[3],  /* 21 */
+    cjdr_frame_tbl[3],  /* 22 */
+    cjdr_frame_tbl[3],  /* 23 */
 };
 /* 02007AE8 */
 const u8* cjdr_hits_table[24] = {
-    (const u8*)&plxx_extra_attack_table[38],
-    (const u8*)&plxx_extra_attack_table[38],
-    (const u8*)&plxx_extra_attack_table[38],
-    (const u8*)&plxx_extra_attack_table[38],
-    (const u8*)&plxx_extra_attack_table[38],
-    (const u8*)&plxx_extra_attack_table[38],
-    (const u8*)&plxx_extra_attack_table[38],
-    (const u8*)&plxx_extra_attack_table[38],
-    (const u8*)&plxx_extra_attack_table[38],
-    (const u8*)&plxx_extra_attack_table[38],
-    (const u8*)&plxx_extra_attack_table[38],
-    (const u8*)&plxx_extra_attack_table[38],
-    (const u8*)&plxx_extra_attack_table[38],
-    (const u8*)&plxx_extra_attack_table[38],
-    (const u8*)&plxx_extra_attack_table[38],
-    (const u8*)&plxx_extra_attack_table[38],
-    (const u8*)&plxx_extra_attack_table[38],
-    (const u8*)&plxx_extra_attack_table[38],
-    (const u8*)&plxx_extra_attack_table[38],
-    (const u8*)&plxx_extra_attack_table[38],
-    (const u8*)&plxx_extra_attack_table[38],
-    (const u8*)&plxx_extra_attack_table[38],
-    (const u8*)&plxx_extra_attack_table[38],
-    (const u8*)&plxx_extra_attack_table[38],
+    cjdr_frame_tbl[7],  /* Gill */
+    cjdr_frame_tbl[7],  /* Alex */
+    cjdr_frame_tbl[7],  /* Ryu */
+    cjdr_frame_tbl[7],  /* Yun */
+    cjdr_frame_tbl[7],  /* Dudley */
+    cjdr_frame_tbl[7],  /* Necro */
+    cjdr_frame_tbl[7],  /* Hugo */
+    cjdr_frame_tbl[7],  /* Ibuki */
+    cjdr_frame_tbl[7],  /* Elena */
+    cjdr_frame_tbl[7],  /* Oro */
+    cjdr_frame_tbl[7],  /* Yang */
+    cjdr_frame_tbl[7],  /* Ken */
+    cjdr_frame_tbl[7],  /* Sean */
+    cjdr_frame_tbl[7],  /* Urien */
+    cjdr_frame_tbl[7],  /* Gouki */
+    cjdr_frame_tbl[7],  /* Shin Gouki */
+    cjdr_frame_tbl[7],  /* Chun-Li */
+    cjdr_frame_tbl[7],  /* Makoto */
+    cjdr_frame_tbl[7],  /* Q */
+    cjdr_frame_tbl[7],  /* Twelve */
+    cjdr_frame_tbl[7],  /* Remy */
+    cjdr_frame_tbl[7],  /* 21 */
+    cjdr_frame_tbl[7],  /* 22 */
+    cjdr_frame_tbl[7],  /* 23 */
 };
 /* 02007B48 */
 const u8* cjdr_blocking_table[24] = {
-    (const u8*)&plxx_extra_attack_table[40],
-    (const u8*)&plxx_extra_attack_table[42],
-    (const u8*)&plxx_extra_attack_table[42],
-    (const u8*)&plxx_extra_attack_table[42],
-    (const u8*)&plxx_extra_attack_table[40],
-    (const u8*)&plxx_extra_attack_table[44],
-    (const u8*)&plxx_extra_attack_table[42],
-    (const u8*)&plxx_extra_attack_table[40],
-    (const u8*)&plxx_extra_attack_table[42],
-    (const u8*)&plxx_extra_attack_table[42],
-    (const u8*)&plxx_extra_attack_table[42],
-    (const u8*)&plxx_extra_attack_table[40],
-    (const u8*)&plxx_extra_attack_table[42],
-    (const u8*)&plxx_extra_attack_table[44],
-    (const u8*)&plxx_extra_attack_table[40],
-    (const u8*)&plxx_extra_attack_table[40],
-    (const u8*)&plxx_extra_attack_table[42],
-    (const u8*)&plxx_extra_attack_table[42],
-    (const u8*)&plxx_extra_attack_table[42],
-    (const u8*)&plxx_extra_attack_table[44],
-    (const u8*)&plxx_extra_attack_table[42],
-    (const u8*)&plxx_extra_attack_table[40],
-    (const u8*)&plxx_extra_attack_table[40],
-    (const u8*)&plxx_extra_attack_table[40],
+    cjdr_frame_tbl[8],  /* Gill */
+    cjdr_frame_tbl[9],  /* Alex */
+    cjdr_frame_tbl[9],  /* Ryu */
+    cjdr_frame_tbl[9],  /* Yun */
+    cjdr_frame_tbl[8],  /* Dudley */
+    cjdr_frame_tbl[10],  /* Necro */
+    cjdr_frame_tbl[9],  /* Hugo */
+    cjdr_frame_tbl[8],  /* Ibuki */
+    cjdr_frame_tbl[9],  /* Elena */
+    cjdr_frame_tbl[9],  /* Oro */
+    cjdr_frame_tbl[9],  /* Yang */
+    cjdr_frame_tbl[8],  /* Ken */
+    cjdr_frame_tbl[9],  /* Sean */
+    cjdr_frame_tbl[10],  /* Urien */
+    cjdr_frame_tbl[8],  /* Gouki */
+    cjdr_frame_tbl[8],  /* Shin Gouki */
+    cjdr_frame_tbl[9],  /* Chun-Li */
+    cjdr_frame_tbl[9],  /* Makoto */
+    cjdr_frame_tbl[9],  /* Q */
+    cjdr_frame_tbl[10],  /* Twelve */
+    cjdr_frame_tbl[9],  /* Remy */
+    cjdr_frame_tbl[8],  /* 21 */
+    cjdr_frame_tbl[8],  /* 22 */
+    cjdr_frame_tbl[8],  /* 23 */
 };
 /* 02007BA8 */
 const u8* cjdr_defense_table[24] = {
-    (const u8*)&plxx_extra_attack_table[52],
-    (const u8*)&plxx_extra_attack_table[52],
-    (const u8*)&plxx_extra_attack_table[52],
-    (const u8*)&plxx_extra_attack_table[52],
-    (const u8*)&plxx_extra_attack_table[52],
-    (const u8*)&plxx_extra_attack_table[52],
-    (const u8*)&plxx_extra_attack_table[52],
-    (const u8*)&plxx_extra_attack_table[52],
-    (const u8*)&plxx_extra_attack_table[52],
-    (const u8*)&plxx_extra_attack_table[52],
-    (const u8*)&plxx_extra_attack_table[52],
-    (const u8*)&plxx_extra_attack_table[52],
-    (const u8*)&plxx_extra_attack_table[52],
-    (const u8*)&plxx_extra_attack_table[52],
-    (const u8*)&plxx_extra_attack_table[52],
-    (const u8*)&plxx_extra_attack_table[52],
-    (const u8*)&plxx_extra_attack_table[52],
-    (const u8*)&plxx_extra_attack_table[52],
-    (const u8*)&plxx_extra_attack_table[52],
-    (const u8*)&plxx_extra_attack_table[52],
-    (const u8*)&plxx_extra_attack_table[52],
-    (const u8*)&plxx_extra_attack_table[52],
-    (const u8*)&plxx_extra_attack_table[52],
-    (const u8*)&plxx_extra_attack_table[52],
+    cjdr_frame_tbl[14],  /* Gill */
+    cjdr_frame_tbl[14],  /* Alex */
+    cjdr_frame_tbl[14],  /* Ryu */
+    cjdr_frame_tbl[14],  /* Yun */
+    cjdr_frame_tbl[14],  /* Dudley */
+    cjdr_frame_tbl[14],  /* Necro */
+    cjdr_frame_tbl[14],  /* Hugo */
+    cjdr_frame_tbl[14],  /* Ibuki */
+    cjdr_frame_tbl[14],  /* Elena */
+    cjdr_frame_tbl[14],  /* Oro */
+    cjdr_frame_tbl[14],  /* Yang */
+    cjdr_frame_tbl[14],  /* Ken */
+    cjdr_frame_tbl[14],  /* Sean */
+    cjdr_frame_tbl[14],  /* Urien */
+    cjdr_frame_tbl[14],  /* Gouki */
+    cjdr_frame_tbl[14],  /* Shin Gouki */
+    cjdr_frame_tbl[14],  /* Chun-Li */
+    cjdr_frame_tbl[14],  /* Makoto */
+    cjdr_frame_tbl[14],  /* Q */
+    cjdr_frame_tbl[14],  /* Twelve */
+    cjdr_frame_tbl[14],  /* Remy */
+    cjdr_frame_tbl[14],  /* 21 */
+    cjdr_frame_tbl[14],  /* 22 */
+    cjdr_frame_tbl[14],  /* 23 */
 };
 
 

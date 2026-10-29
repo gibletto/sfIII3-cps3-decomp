@@ -171,14 +171,23 @@ extern const char sh_mn_div1_rm_rn[];
 extern const char sh_mn_dmulul_rm_rn[];
 extern const char sh_mn_cmp_hi_rm_rn[];
 
-/* provisional name: opcode records ahead of the disassembler's tables; nothing reads them */
-const u32 monitor_msg_tbl[42] = {
-    0x10016, 0xE0000, (u32)sh_str_monitor_entry, 0x10016, 0xE0000, (u32)sh_str_illegal_inst, 0x10016, 0xE0000,
-    (u32)sh_str_slot_illegal_inst, 0x10016, 0xE0000, (u32)sh_str_cpu_addr_error, 0x10016, 0xE0000, (u32)sh_str_dma_addr_error, 0x10016,
-    0xE0000, (u32)sh_str_unknown_exception, 0xC0000, 0xE0000, (u32)sh_str_monitor_title, 2, 0xE0000, (u32)sh_str_regs_r0_r2,
-    3, 0xE0000, (u32)sh_str_regs_r3_r5, 4, 0xE0000, (u32)sh_str_regs_r6_r8, 5, 0xE0000,
-    (u32)sh_str_regs_r9_r11, 6, 0xE0000, (u32)sh_str_regs_r12_r14, 7, 0xE0000, (u32)sh_str_regs_sp_pc, 8,
-    0xE0000, (u32)sh_str_regs_pr_gbr,
+/* provisional name: the exception monitor's text, the six exception messages ([0..5]) and the register
+   panel ([6..13]) */
+const TM_STRING monitor_msg_tbl[14] = {
+    { 1, 22, 14, sh_str_monitor_entry },
+    { 1, 22, 14, sh_str_illegal_inst },
+    { 1, 22, 14, sh_str_slot_illegal_inst },
+    { 1, 22, 14, sh_str_cpu_addr_error },
+    { 1, 22, 14, sh_str_dma_addr_error },
+    { 1, 22, 14, sh_str_unknown_exception },
+    { 12, 0, 14, sh_str_monitor_title },
+    { 0, 2, 14, sh_str_regs_r0_r2 },
+    { 0, 3, 14, sh_str_regs_r3_r5 },
+    { 0, 4, 14, sh_str_regs_r6_r8 },
+    { 0, 5, 14, sh_str_regs_r9_r11 },
+    { 0, 6, 14, sh_str_regs_r12_r14 },
+    { 0, 7, 14, sh_str_regs_sp_pc },
+    { 0, 8, 14, sh_str_regs_pr_gbr },
 };
 
 const TM_STRING dbg_dump_title[1] = {

@@ -47,7 +47,7 @@
 
 
 
-extern const s16 effF9_mes_pt_0[];
+extern const u16 efff9_no_scene[];
 extern const EFFF9_MESSAGE effF9_mes_en_0[];
 extern const EFFF9_MESSAGE effF9_mes_en_10[];
 extern const EFFF9_MESSAGE effF9_mes_en_11[];
@@ -144,7 +144,7 @@ extern const u16 pl19txt4[14];
 extern const u16 pl19txt6[10];
 
 s16 efff9_suicide;  /* 02068C40 */
-s32 * efff9_txt_no_adrs;  /* 02068C44 */
+const u16** efff9_txt_no_adrs;  /* 02068C44 */
 u16 * efff9_txt_scene_adrs;  /* 02068C48 */
 s16 efff9_PL_NO;  /* 02068C4C */
 s16 efff9_txt_point;  /* 02068C4E */
@@ -232,7 +232,7 @@ const EFFF9_MESSAGE* effF9_mes_es[21] = {
     effF9_mes_jp_14,
 };
 /* 02007184 */
-const EFFF9_MESSAGE* effF9_mes_pt[141] = {
+const EFFF9_MESSAGE* effF9_mes_pt[21] = {
     effF9_mes_jp_0,
     effF9_mes_jp_0,
     effF9_mes_jp_2,
@@ -254,157 +254,141 @@ const EFFF9_MESSAGE* effF9_mes_pt[141] = {
     effF9_mes_jp_14,
     effF9_mes_jp_14,
     effF9_mes_jp_14,
-    (const EFFF9_MESSAGE*)effF9_mes_pt_0,
-    (const EFFF9_MESSAGE*)pl01txt1,
-    (const EFFF9_MESSAGE*)&pl01txt1[6],
-    (const EFFF9_MESSAGE*)&pl01txt1[16],
-    (const EFFF9_MESSAGE*)&pl01txt1[30],
-    (const EFFF9_MESSAGE*)&pl01txt1[34],
-    (const EFFF9_MESSAGE*)effF9_mes_pt_0,
-    (const EFFF9_MESSAGE*)pl02txt1,
-    (const EFFF9_MESSAGE*)&pl02txt1[6],
-    (const EFFF9_MESSAGE*)&pl02txt1[14],
-    (const EFFF9_MESSAGE*)&pl02txt1[18],
-    (const EFFF9_MESSAGE*)pl02txt5,
-    (const EFFF9_MESSAGE*)effF9_mes_pt_0,
-    (const EFFF9_MESSAGE*)pl03txt1,
-    (const EFFF9_MESSAGE*)pl03txt2,
-    (const EFFF9_MESSAGE*)&pl03txt2[6],
-    (const EFFF9_MESSAGE*)pl03txt4,
-    (const EFFF9_MESSAGE*)&pl03txt4[10],
-    (const EFFF9_MESSAGE*)pl03txt6,
-    (const EFFF9_MESSAGE*)effF9_mes_pt_0,
-    (const EFFF9_MESSAGE*)pl04txt1,
-    (const EFFF9_MESSAGE*)&pl04txt1[10],
-    (const EFFF9_MESSAGE*)effF9_mes_pt_0,
-    (const EFFF9_MESSAGE*)pl05txt1,
-    (const EFFF9_MESSAGE*)pl05txt2,
-    (const EFFF9_MESSAGE*)&pl05txt2[10],
-    (const EFFF9_MESSAGE*)&pl05txt2[16],
-    (const EFFF9_MESSAGE*)pl05txt5,
-    (const EFFF9_MESSAGE*)pl05txt6,
-    (const EFFF9_MESSAGE*)effF9_mes_pt_0,
-    (const EFFF9_MESSAGE*)&pl05txt6[6],
-    (const EFFF9_MESSAGE*)pl06txt2,
-    (const EFFF9_MESSAGE*)pl06txt3,
-    (const EFFF9_MESSAGE*)pl06txt4,
-    (const EFFF9_MESSAGE*)pl06txt5,
-    (const EFFF9_MESSAGE*)effF9_mes_pt_0,
-    (const EFFF9_MESSAGE*)pl07txt1,
-    (const EFFF9_MESSAGE*)pl07txt2,
-    (const EFFF9_MESSAGE*)pl07txt3,
-    (const EFFF9_MESSAGE*)&pl07txt3[8],
-    (const EFFF9_MESSAGE*)effF9_mes_pt_0,
-    (const EFFF9_MESSAGE*)pl08txt1,
-    (const EFFF9_MESSAGE*)pl08txt2,
-    (const EFFF9_MESSAGE*)pl08txt3,
-    (const EFFF9_MESSAGE*)&pl08txt3[10],
-    (const EFFF9_MESSAGE*)effF9_mes_pt_0,
-    (const EFFF9_MESSAGE*)&pl08txt3[14],
-    (const EFFF9_MESSAGE*)pl09txt2,
-    (const EFFF9_MESSAGE*)&pl09txt2[6],
-    (const EFFF9_MESSAGE*)pl09txt4,
-    (const EFFF9_MESSAGE*)pl09txt5,
-    (const EFFF9_MESSAGE*)pl09txt6,
-    (const EFFF9_MESSAGE*)effF9_mes_pt_0,
-    (const EFFF9_MESSAGE*)pl10txt1,
-    (const EFFF9_MESSAGE*)pl10txt2,
-    (const EFFF9_MESSAGE*)&pl10txt2[10],
-    (const EFFF9_MESSAGE*)pl10txt4,
-    (const EFFF9_MESSAGE*)&pl10txt4[10],
-    (const EFFF9_MESSAGE*)pl10txt6,
-    (const EFFF9_MESSAGE*)effF9_mes_pt_0,
-    (const EFFF9_MESSAGE*)&pl10txt6[8],
-    (const EFFF9_MESSAGE*)pl11txt2,
-    (const EFFF9_MESSAGE*)&pl11txt2[6],
-    (const EFFF9_MESSAGE*)&pl11txt2[14],
-    (const EFFF9_MESSAGE*)&pl11txt2[26],
-    (const EFFF9_MESSAGE*)effF9_mes_pt_0,
-    (const EFFF9_MESSAGE*)&pl11txt2[34],
-    (const EFFF9_MESSAGE*)pl12txt2,
-    (const EFFF9_MESSAGE*)&pl12txt2[8],
-    (const EFFF9_MESSAGE*)pl12txt4,
-    (const EFFF9_MESSAGE*)pl12txt5,
-    (const EFFF9_MESSAGE*)&pl12txt5[6],
-    (const EFFF9_MESSAGE*)effF9_mes_pt_0,
-    (const EFFF9_MESSAGE*)pl13txt1,
-    (const EFFF9_MESSAGE*)pl13txt2,
-    (const EFFF9_MESSAGE*)&pl13txt2[8],
-    (const EFFF9_MESSAGE*)&pl13txt2[14],
-    (const EFFF9_MESSAGE*)effF9_mes_pt_0,
-    (const EFFF9_MESSAGE*)pl14txt1,
-    (const EFFF9_MESSAGE*)pl14txt2,
-    (const EFFF9_MESSAGE*)&pl14txt2[10],
-    (const EFFF9_MESSAGE*)&pl14txt2[16],
-    (const EFFF9_MESSAGE*)&pl14txt2[18],
-    (const EFFF9_MESSAGE*)effF9_mes_pt_0,
-    (const EFFF9_MESSAGE*)pl15txt1,
-    (const EFFF9_MESSAGE*)&pl15txt1[10],
-    (const EFFF9_MESSAGE*)pl15txt3,
-    (const EFFF9_MESSAGE*)pl15txt4,
-    (const EFFF9_MESSAGE*)&pl15txt4[8],
-    (const EFFF9_MESSAGE*)effF9_mes_pt_0,
-    (const EFFF9_MESSAGE*)pl16txt1,
-    (const EFFF9_MESSAGE*)pl16txt2,
-    (const EFFF9_MESSAGE*)pl16txt3,
-    (const EFFF9_MESSAGE*)&pl16txt3[6],
-    (const EFFF9_MESSAGE*)pl16txt5,
-    (const EFFF9_MESSAGE*)pl16txt6,
-    (const EFFF9_MESSAGE*)pl16txt7,
-    (const EFFF9_MESSAGE*)effF9_mes_pt_0,
-    (const EFFF9_MESSAGE*)pl17txt1,
-    (const EFFF9_MESSAGE*)pl17txt2,
-    (const EFFF9_MESSAGE*)pl17txt3,
-    (const EFFF9_MESSAGE*)&pl17txt6[10],
-    (const EFFF9_MESSAGE*)pl17txt5,
-    (const EFFF9_MESSAGE*)pl17txt6,
-    (const EFFF9_MESSAGE*)effF9_mes_pt_0,
-    (const EFFF9_MESSAGE*)&pl17txt5[6],
-    (const EFFF9_MESSAGE*)&pl17txt5[12],
-    (const EFFF9_MESSAGE*)&pl17txt5[22],
-    (const EFFF9_MESSAGE*)&pl17txt5[30],
-    (const EFFF9_MESSAGE*)&pl17txt5[40],
-    (const EFFF9_MESSAGE*)effF9_mes_pt_0,
-    (const EFFF9_MESSAGE*)&pl17txt5[48],
-    (const EFFF9_MESSAGE*)pl19txt2,
-    (const EFFF9_MESSAGE*)pl19txt3,
-    (const EFFF9_MESSAGE*)pl19txt4,
-    (const EFFF9_MESSAGE*)&pl19txt4[10],
-    (const EFFF9_MESSAGE*)pl19txt6,
-    (const EFFF9_MESSAGE*)&pl19txt6[8],
-    (const EFFF9_MESSAGE*)effF9_mes_pt_0,
-    (const EFFF9_MESSAGE*)pl15txt1,
+};
+/* provisional name */
+const u16* txt_no_00[6] = {
+    efff9_no_scene, pl01txt1,
+    &pl01txt1[6], &pl01txt1[16],
+    &pl01txt1[30], &pl01txt1[34],
+};
+/* provisional name */
+const u16* txt_no_02[6] = {
+    efff9_no_scene, pl02txt1,
+    &pl02txt1[6], &pl02txt1[14],
+    &pl02txt1[18], pl02txt5,
+};
+/* provisional name */
+const u16* txt_no_03[7] = {
+    efff9_no_scene, pl03txt1,
+    pl03txt2, &pl03txt2[6],
+    pl03txt4, &pl03txt4[10],
+    pl03txt6,
+};
+/* provisional name */
+const u16* txt_no_04[3] = {
+    efff9_no_scene, pl04txt1,
+    &pl04txt1[10],
+};
+/* provisional name */
+const u16* txt_no_05[7] = {
+    efff9_no_scene, pl05txt1,
+    pl05txt2, &pl05txt2[10],
+    &pl05txt2[16], pl05txt5,
+    pl05txt6,
+};
+/* provisional name */
+const u16* txt_no_06[6] = {
+    efff9_no_scene, &pl05txt6[6],
+    pl06txt2, pl06txt3,
+    pl06txt4, pl06txt5,
+};
+/* provisional name */
+const u16* txt_no_07[5] = {
+    efff9_no_scene, pl07txt1,
+    pl07txt2, pl07txt3,
+    &pl07txt3[8],
+};
+/* provisional name */
+const u16* txt_no_08[5] = {
+    efff9_no_scene, pl08txt1,
+    pl08txt2, pl08txt3,
+    &pl08txt3[10],
+};
+/* provisional name */
+const u16* txt_no_09[7] = {
+    efff9_no_scene, &pl08txt3[14],
+    pl09txt2, &pl09txt2[6],
+    pl09txt4, pl09txt5,
+    pl09txt6,
+};
+/* provisional name */
+const u16* txt_no_10[7] = {
+    efff9_no_scene, pl10txt1,
+    pl10txt2, &pl10txt2[10],
+    pl10txt4, &pl10txt4[10],
+    pl10txt6,
+};
+/* provisional name */
+const u16* txt_no_11[6] = {
+    efff9_no_scene, &pl10txt6[8],
+    pl11txt2, &pl11txt2[6],
+    &pl11txt2[14], &pl11txt2[26],
+};
+/* provisional name */
+const u16* txt_no_12[7] = {
+    efff9_no_scene, &pl11txt2[34],
+    pl12txt2, &pl12txt2[8],
+    pl12txt4, pl12txt5,
+    &pl12txt5[6],
+};
+/* provisional name */
+const u16* txt_no_13[5] = {
+    efff9_no_scene, pl13txt1,
+    pl13txt2, &pl13txt2[8],
+    &pl13txt2[14],
+};
+/* provisional name */
+const u16* txt_no_14[6] = {
+    efff9_no_scene, pl14txt1,
+    pl14txt2, &pl14txt2[10],
+    &pl14txt2[16], &pl14txt2[18],
+};
+/* provisional name */
+const u16* txt_no_16[6] = {
+    efff9_no_scene, pl15txt1,
+    &pl15txt1[10], pl15txt3,
+    pl15txt4, &pl15txt4[8],
+};
+/* provisional name */
+const u16* txt_no_17[8] = {
+    efff9_no_scene, pl16txt1,
+    pl16txt2, pl16txt3,
+    &pl16txt3[6], pl16txt5,
+    pl16txt6, pl16txt7,
+};
+/* provisional name */
+const u16* txt_no_18[7] = {
+    efff9_no_scene, pl17txt1,
+    pl17txt2, pl17txt3,
+    &pl17txt6[10], pl17txt5,
+    pl17txt6,
+};
+/* provisional name */
+const u16* txt_no_19[6] = {
+    efff9_no_scene, &pl17txt5[6],
+    &pl17txt5[12], &pl17txt5[22],
+    &pl17txt5[30], &pl17txt5[40],
+};
+/* provisional name */
+const u16* txt_no_20[8] = {
+    efff9_no_scene, &pl17txt5[48],
+    pl19txt2, pl19txt3,
+    pl19txt4, &pl19txt4[10],
+    pl19txt6, &pl19txt6[8],
+};
+/* provisional name */
+const u16* txt_no_26[2] = {
+    efff9_no_scene, pl15txt1,
 };
 /* 020073B8 */
-s32* txt_no_tbl[28] = {
-    (s32*)&effF9_mes_pt[21],
-    (s32*)&effF9_mes_pt[21],
-    (s32*)&effF9_mes_pt[27],
-    (s32*)&effF9_mes_pt[33],
-    (s32*)&effF9_mes_pt[40],
-    (s32*)&effF9_mes_pt[43],
-    (s32*)&effF9_mes_pt[50],
-    (s32*)&effF9_mes_pt[56],
-    (s32*)&effF9_mes_pt[61],
-    (s32*)&effF9_mes_pt[66],
-    (s32*)&effF9_mes_pt[73],
-    (s32*)&effF9_mes_pt[80],
-    (s32*)&effF9_mes_pt[86],
-    (s32*)&effF9_mes_pt[93],
-    (s32*)&effF9_mes_pt[98],
-    (s32*)&effF9_mes_pt[98],
-    (s32*)&effF9_mes_pt[104],
-    (s32*)&effF9_mes_pt[110],
-    (s32*)&effF9_mes_pt[118],
-    (s32*)&effF9_mes_pt[125],
-    (s32*)&effF9_mes_pt[131],
-    (s32*)&effF9_mes_pt[98],
-    (s32*)&effF9_mes_pt[98],
-    (s32*)&effF9_mes_pt[98],
-    (s32*)&effF9_mes_pt[98],
-    (s32*)&effF9_mes_pt[98],
-    (s32*)&effF9_mes_pt[139],
-    (s32*)&effF9_mes_pt[139],
+const u16** txt_no_tbl[28] = {
+    txt_no_00, txt_no_00, txt_no_02, txt_no_03,
+    txt_no_04, txt_no_05, txt_no_06, txt_no_07,
+    txt_no_08, txt_no_09, txt_no_10, txt_no_11,
+    txt_no_12, txt_no_13, txt_no_14, txt_no_14,
+    txt_no_16, txt_no_17, txt_no_18, txt_no_19,
+    txt_no_20, txt_no_14, txt_no_14, txt_no_14,
+    txt_no_14, txt_no_14, txt_no_26, txt_no_26,
 };
 
 

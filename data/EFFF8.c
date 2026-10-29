@@ -2,8 +2,8 @@
  * EFFF8.C  second parry mark offsets and the empty ending scene list
  *
  * paring_b_mark_data is indexed by parry type and character and gives the { x, y } offset of
- * the parry mark from the player; read by EFFF8_CODE.C. effF9_mes_pt_0 is an empty scene list
- * (0, -1) that starts each character's group in the effF9_mes_pt list of EFFF9.C.
+ * the parry mark from the player; read by EFFF8_CODE.C. efff9_no_scene is an empty scene list
+ * (0, -1) that starts each character's group in the txt_no_ tables of EFFF9.C.
  */
 
 #include "types.h"
@@ -11,7 +11,7 @@
 
 #pragma section TBL
 
-extern const s16 effF9_mes_pt_0[];
+extern const u16 efff9_no_scene[];
 
 
 const s16 paring_b_mark_data[3][24][2] = {
@@ -20,7 +20,8 @@ const s16 paring_b_mark_data[3][24][2] = {
     { { 40, 92 }, { 42, 62 }, { 28, 76 }, { 28, 76 }, { 38, 68 }, { 30, 84 }, { 28, 108 }, { 28, 56 }, { 38, 52 }, { 40, 60 }, { 28, 76 }, { 32, 48 }, { 32, 48 }, { 40, 92 }, { 28, 76 }, { 28, 76 }, { 28, 64 }, { 28, 76 }, { 52, 95 }, { 20, 97 }, { 26, 77 }, { 0, 0 }, { 0, 0 }, { 0, 0 } },
 };
 
-const s16 effF9_mes_pt_0[2] = {
-    0, -1,
+/* provisional name */
+const u16 efff9_no_scene[2] = {
+    0, 0xFFFF,
 };
 

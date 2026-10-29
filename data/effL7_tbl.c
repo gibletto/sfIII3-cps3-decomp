@@ -3,7 +3,7 @@
  *
  * effl7_data_tbl is the random choice of the companion's performance routine; read by EFFL7.C.
  * effM0_tbl_top_0 is the timed colour data of player 17's super art palette effect, reached
- * through effM0_tbl_top in EFFM0_TBL.C.
+ * through effM0_cctbl in EFFM0_TBL.C.
  */
 
 #include "types.h"

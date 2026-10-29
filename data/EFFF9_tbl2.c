@@ -3,7 +3,7 @@
  *
  * pl01txt1 .. pl19txt6 are the ending talk scenes of each character (pl01 = character 1): {
  * message number, display time } pairs, each scene ending with 0, -1. They are reached through
- * the effF9_mes_pt and txt_no_tbl lists of EFFF9.C, the ending message window.
+ * the txt_no_ tables and txt_no_tbl of EFFF9.C, the ending message window.
  */
 
 #include "types.h"

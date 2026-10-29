@@ -1203,8 +1203,8 @@ void bg_cell_fill(s16 bg, s16 attr) {
 void bg_scr_write(void) {
     s32 attr = bg_attr_tbl[bg_w.bg_index] + bg_attr_add_tbl[bg_w.bg_index];
     s16 set;
-    HUD_CELL** cells;
-    HUD_CELL* c;
+    const HUD_CELL** cells;
+    const HUD_CELL* c;
     s16 i;
     s16 j;
     if (Country == 8) {
@@ -1306,7 +1306,7 @@ void akebono_scr_write(void)
 void bg_etc_scr_write(s16 n) {
     s16 i;
     s16 j;
-    TILEREQ* t;
+    const TILEREQ* t;
     s16 attr;
 
     for (i = 0; i < bg_w.scno; i++) {
@@ -2096,114 +2096,67 @@ char ake_attr_tbl[32] = {
     0, 6, 0, 6, 0, 7, 0, 7,
 };
 /* 020065A4 */
-u32 bg_map_tbl[1][3] = {
+u32 bg_map_tbl[23][3] = {
     { (u32)bg_scr_record_data, (u32)&bg_scr_record_data[16], (u32)&bg_scr_record_data[32] },
-};
-/* 020065B0 */
-void* scene_bg_map[66] = {
-    (void*)&ake_scr_record_data[56],
-    (void*)&bg_scr_record_data[16],
-    0,
-    (void*)&ake_scr_record_data[240],
-    (void*)&ake_scr_record_data[272],
-    (void*)&ake_scr_record_data[286],
-    (void*)&ake_scr_record_data[318],
-    (void*)&bg_scr_record_data[16],
-    0,
-    (void*)&ake_scr_record_data[56],
-    (void*)&bg_scr_record_data[16],
-    0,
-    (void*)&ake_scr_record_data[382],
-    (void*)&bg_scr_record_data[16],
-    0,
-    (void*)&ake_scr_record_data[56],
-    (void*)&bg_scr_record_data[16],
-    0,
-    (void*)&ake_scr_record_data[478],
-    (void*)&bg_scr_record_data[16],
-    0,
-    (void*)&ake_scr_record_data[556],
-    (void*)&ake_scr_record_data[588],
-    (void*)&ake_scr_record_data[602],
-    (void*)&ake_scr_record_data[616],
-    (void*)&ake_scr_record_data[648],
-    0,
-    (void*)&ake_scr_record_data[350],
-    (void*)&bg_scr_record_data[16],
-    0,
-    (void*)&ake_scr_record_data[56],
-    (void*)&ake_scr_record_data[208],
-    0,
-    (void*)&ake_scr_record_data[680],
-    (void*)&ake_scr_record_data[712],
-    0,
-    (void*)&ake_scr_record_data[744],
-    (void*)&bg_scr_record_data[16],
-    0,
-    (void*)&ake_scr_record_data[776],
-    (void*)&bg_scr_record_data[16],
-    0,
-    (void*)&ake_scr_record_data[776],
-    (void*)&bg_scr_record_data[16],
-    0,
-    (void*)&ake_scr_record_data[840],
-    (void*)&bg_scr_record_data[16],
-    0,
-    (void*)&ake_scr_record_data[866],
-    (void*)&bg_scr_record_data[16],
-    0,
-    (void*)&ake_scr_record_data[886],
-    (void*)&ake_scr_record_data[918],
-    0,
-    (void*)&ake_scr_record_data[382],
-    (void*)&bg_scr_record_data[16],
-    0,
-    (void*)&ake_scr_record_data[56],
-    (void*)&ake_scr_record_data[1046],
-    0,
-    (void*)&ake_scr_record_data[1078],
-    (void*)&ake_scr_record_data[1110],
-    0,
-    (void*)&ake_scr_record_data[1142],
-    (void*)&ake_scr_record_data[1174],
-    0,
+    { (u32)&ake_scr_record_data[28], (u32)&bg_scr_record_data[16], 0 },
+    { (u32)&ake_scr_record_data[120], (u32)&ake_scr_record_data[136], (u32)&ake_scr_record_data[143] },
+    { (u32)&ake_scr_record_data[159], (u32)&bg_scr_record_data[16], 0 },
+    { (u32)&ake_scr_record_data[28], (u32)&bg_scr_record_data[16], 0 },
+    { (u32)&ake_scr_record_data[191], (u32)&bg_scr_record_data[16], 0 },
+    { (u32)&ake_scr_record_data[28], (u32)&bg_scr_record_data[16], 0 },
+    { (u32)&ake_scr_record_data[239], (u32)&bg_scr_record_data[16], 0 },
+    { (u32)&ake_scr_record_data[278], (u32)&ake_scr_record_data[294], (u32)&ake_scr_record_data[301] },
+    { (u32)&ake_scr_record_data[308], (u32)&ake_scr_record_data[324], 0 },
+    { (u32)&ake_scr_record_data[175], (u32)&bg_scr_record_data[16], 0 },
+    { (u32)&ake_scr_record_data[28], (u32)&ake_scr_record_data[104], 0 },
+    { (u32)&ake_scr_record_data[340], (u32)&ake_scr_record_data[356], 0 },
+    { (u32)&ake_scr_record_data[372], (u32)&bg_scr_record_data[16], 0 },
+    { (u32)&ake_scr_record_data[388], (u32)&bg_scr_record_data[16], 0 },
+    { (u32)&ake_scr_record_data[388], (u32)&bg_scr_record_data[16], 0 },
+    { (u32)&ake_scr_record_data[420], (u32)&bg_scr_record_data[16], 0 },
+    { (u32)&ake_scr_record_data[433], (u32)&bg_scr_record_data[16], 0 },
+    { (u32)&ake_scr_record_data[443], (u32)&ake_scr_record_data[459], 0 },
+    { (u32)&ake_scr_record_data[191], (u32)&bg_scr_record_data[16], 0 },
+    { (u32)&ake_scr_record_data[28], (u32)&ake_scr_record_data[523], 0 },
+    { (u32)&ake_scr_record_data[539], (u32)&ake_scr_record_data[555], 0 },
+    { (u32)&ake_scr_record_data[571], (u32)&ake_scr_record_data[587], 0 },
 };
 /* 020066B8 */
 u32 bg_map_tbl2[12][3] = {
-    { (u32)&ake_scr_record_data[1206], (u32)&bg_scr_record_data[16], 0 },
+    { (u32)&ake_scr_record_data[603], (u32)&bg_scr_record_data[16], 0 },
     { (u32)bg_scr_record_data, 0, 0 },
     { (u32)bg_scr_record_data, 0, 0 },
     { (u32)bg_scr_record_data, 0, 0 },
     { (u32)bg_scr_record_data, (u32)&bg_scr_record_data[16], 0 },
     { (u32)bg_scr_record_data, 0, 0 },
-    { (u32)&ake_scr_record_data[1206], 0, 0 },
+    { (u32)&ake_scr_record_data[603], 0, 0 },
     { (u32)bg_scr_record_data, 0, 0 },
-    { (u32)&ake_scr_record_data[1206], 0, 0 },
-    { (u32)&ake_scr_record_data[1206], 0, 0 },
-    { (u32)&ake_scr_record_data[1206], 0, 0 },
+    { (u32)&ake_scr_record_data[603], 0, 0 },
+    { (u32)&ake_scr_record_data[603], 0, 0 },
+    { (u32)&ake_scr_record_data[603], 0, 0 },
     { (u32)bg_scr_record_data, 0, 0 },
 };
 /* 02006748 */
-HUD_CELL* bg_rewrite_cell_tbl[6][3] = {
-    { (HUD_CELL*)&etc_bg_cg_src_tbl[12], (HUD_CELL*)&etc_bg_cg_src_tbl[28], (HUD_CELL*)&etc_bg_cg_src_tbl[44] },
-    { (HUD_CELL*)&etc_bg_cg_src_tbl[76], (HUD_CELL*)&etc_bg_cg_src_tbl[28], (HUD_CELL*)&etc_bg_cg_src_tbl[44] },
-    { (HUD_CELL*)&etc_bg_cg_src_tbl[164], (HUD_CELL*)&etc_bg_cg_src_tbl[108], (HUD_CELL*)&etc_bg_cg_src_tbl[124] },
-    { (HUD_CELL*)&etc_bg_cg_src_tbl[12], (HUD_CELL*)&etc_bg_cg_src_tbl[60], (HUD_CELL*)&etc_bg_cg_src_tbl[44] },
-    { (HUD_CELL*)&etc_bg_cg_src_tbl[12], (HUD_CELL*)&etc_bg_cg_src_tbl[28], (HUD_CELL*)&etc_bg_cg_src_tbl[44] },
-    { (HUD_CELL*)&etc_bg_cg_src_tbl[12], (HUD_CELL*)&etc_bg_cg_src_tbl[92], (HUD_CELL*)&etc_bg_cg_src_tbl[44] },
+const HUD_CELL* bg_rewrite_cell_tbl[6][3] = {
+    { bg_rewrite_cells0, bg_rewrite_cells1, bg_rewrite_cells2 },
+    { bg_rewrite_cells4, bg_rewrite_cells1, bg_rewrite_cells2 },
+    { bg_rewrite_cells9, bg_rewrite_cells6, bg_rewrite_cells7 },
+    { bg_rewrite_cells0, bg_rewrite_cells3, bg_rewrite_cells2 },
+    { bg_rewrite_cells0, bg_rewrite_cells1, bg_rewrite_cells2 },
+    { bg_rewrite_cells0, bg_rewrite_cells5, bg_rewrite_cells2 },
 };
 /* 02006790 */
-TILEREQ* bg_etc_cell_tbl[12][3] = {
-    { (TILEREQ*)&bg_cell_set_tbl[24], 0, 0 },
-    { (TILEREQ*)&bg_cell_set_tbl[120], 0, 0 },
-    { (TILEREQ*)&bg_cell_set_tbl[132], 0, 0 },
-    { (TILEREQ*)&bg_cell_set_tbl[156], 0, 0 },
-    { (TILEREQ*)&bg_cell_set_tbl[168], (TILEREQ*)&bg_cell_set_tbl[180], 0 },
-    { (TILEREQ*)&bg_cell_set_tbl[192], 0, 0 },
-    { (TILEREQ*)&bg_cell_set_tbl[204], 0, 0 },
-    { (TILEREQ*)&bg_cell_set_tbl[228], 0, 0 },
-    { (TILEREQ*)&bg_cell_set_tbl[48], 0, 0 },
-    { (TILEREQ*)&bg_cell_set_tbl[72], 0, 0 },
-    { (TILEREQ*)&bg_cell_set_tbl[96], 0, 0 },
-    { (TILEREQ*)&bg_cell_set_tbl[144], 0, 0 },
+const TILEREQ* bg_etc_cell_tbl[12][3] = {
+    { bg_etc_cells0, 0, 0 },
+    { bg_etc_cells4, 0, 0 },
+    { bg_etc_cells5, 0, 0 },
+    { bg_etc_cells7, 0, 0 },
+    { bg_etc_cells8, bg_etc_cells9, 0 },
+    { bg_etc_cells10, 0, 0 },
+    { bg_etc_cells11, 0, 0 },
+    { bg_etc_cells12, 0, 0 },
+    { bg_etc_cells1, 0, 0 },
+    { bg_etc_cells2, 0, 0 },
+    { bg_etc_cells3, 0, 0 },
+    { bg_etc_cells6, 0, 0 },
 };

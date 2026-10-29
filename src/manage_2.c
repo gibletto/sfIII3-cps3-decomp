@@ -2322,12 +2322,12 @@ void Check_Stage_BGM(void) {
         Stage_BGM((u16)bg_w.stage, Round_num);
     } else {
         switch (EM_id) {
-        case 0:
+        case PL_GILL:
             if (Introduce_Boss[Player_id][1] & 0x80) {
                 Stage_BGM((u16)bg_w.stage, Round_num);
             }
             break;
-        case 18:
+        case PL_Q:
             Stage_BGM(18, Round_num);
             break;
         default:

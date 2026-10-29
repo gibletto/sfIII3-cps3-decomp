@@ -171,10 +171,10 @@ void (*end_main_jp[24])(s16) = {
 };
 /* 0200691C */
 u32 end_map_tbl[4] = {
-    (u32)&end_cg_src_tbl[24],
-    (u32)&end_cg_src_tbl[38],
-    (u32)&end_cg_src_tbl[52],
-    (u32)&end_cg_src_tbl[66],
+    (u32)end_map_data_0,
+    (u32)end_map_data_1,
+    (u32)end_map_data_2,
+    (u32)end_map_data_3,
 };
 
 

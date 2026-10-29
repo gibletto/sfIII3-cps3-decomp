@@ -9,247 +9,247 @@
 #include "structs.h"
 
 
-extern const u8 cfg_top_guide_jp_0[];
-extern const u8 cfg_top_reset_guide_jp_0[];
-extern const u8 config_top_scr_jp_0[];
-extern const u32 sys_cfg_exit_guide_jp_0[];
-extern const u32 sys_cfg_item_guide_jp_0[];
-extern const u8 sys_cfg_page_scr_jp_0[];
-extern const u32 sys_cfg_page_scr_jp_1[];
-extern const u32 sys_cfg_page_scr_jp_10[];
-extern const u32 sys_cfg_page_scr_jp_11[];
-extern const u32 sys_cfg_page_scr_jp_12[];
-extern const u32 sys_cfg_page_scr_jp_13[];
-extern const u32 sys_cfg_page_scr_jp_14[];
-extern const u32 sys_cfg_page_scr_jp_15[];
-extern const u32 sys_cfg_page_scr_jp_16[];
-extern const u32 sys_cfg_page_scr_jp_17[];
-extern const u32 sys_cfg_page_scr_jp_18[];
-extern const u32 sys_cfg_page_scr_jp_19[];
-extern const u32 sys_cfg_page_scr_jp_2[];
-extern const u32 sys_cfg_page_scr_jp_20[];
-extern const u8 sys_cfg_page_scr_jp_21[];
-extern const u8 sys_cfg_page_scr_jp_22[];
-extern const u8 sys_cfg_page_scr_jp_23[];
-extern const u8 sys_cfg_page_scr_jp_24[];
-extern const u8 sys_cfg_page_scr_jp_25[];
-extern const u8 sys_cfg_page_scr_jp_26[];
-extern const u8 sys_cfg_page_scr_jp_27[];
-extern const u8 sys_cfg_page_scr_jp_28[];
-extern const u8 sys_cfg_page_scr_jp_29[];
-extern const u32 sys_cfg_page_scr_jp_3[];
-extern const u8 sys_cfg_page_scr_jp_30[];
-extern const u8 sys_cfg_page_scr_jp_31[];
-extern const u8 sys_cfg_page_scr_jp_32[];
-extern const u8 sys_cfg_page_scr_jp_33[];
-extern const u8 sys_cfg_page_scr_jp_34[];
-extern const u8 sys_cfg_page_scr_jp_35[];
-extern const u8 sys_cfg_page_scr_jp_36[];
-extern const u8 sys_cfg_page_scr_jp_37[];
-extern const u8 sys_cfg_page_scr_jp_38[];
-extern const u8 sys_cfg_page_scr_jp_39[];
-extern const u32 sys_cfg_page_scr_jp_4[];
-extern const u8 sys_cfg_page_scr_jp_40[];
-extern const u32 sys_cfg_page_scr_jp_41[];
-extern const u32 sys_cfg_page_scr_jp_42[];
-extern const u8 sys_cfg_page_scr_jp_43[];
-extern const u8 sys_cfg_page_scr_jp_44[];
-extern const u8 sys_cfg_page_scr_jp_45[];
-extern const u8 sys_cfg_page_scr_jp_46[];
-extern const u8 sys_cfg_page_scr_jp_47[];
-extern const u8 sys_cfg_page_scr_jp_48[];
-extern const u8 sys_cfg_page_scr_jp_49[];
-extern const u32 sys_cfg_page_scr_jp_5[];
-extern const u8 sys_cfg_page_scr_jp_50[];
-extern const u32 sys_cfg_page_scr_jp_51[];
-extern const u32 sys_cfg_page_scr_jp_52[];
-extern const u32 sys_cfg_page_scr_jp_53[];
-extern const u32 sys_cfg_page_scr_jp_54[];
-extern const u32 sys_cfg_page_scr_jp_55[];
-extern const u32 sys_cfg_page_scr_jp_56[];
-extern const u32 sys_cfg_page_scr_jp_57[];
-extern const u32 sys_cfg_page_scr_jp_58[];
-extern const u32 sys_cfg_page_scr_jp_59[];
-extern const u32 sys_cfg_page_scr_jp_6[];
-extern const u8 sys_cfg_page_scr_jp_60[];
-extern const u8 sys_cfg_page_scr_jp_61[];
-extern const u8 sys_cfg_page_scr_jp_62[];
-extern const u8 sys_cfg_page_scr_jp_63[];
-extern const u8 sys_cfg_page_scr_jp_64[];
-extern const u8 sys_cfg_page_scr_jp_65[];
-extern const u8 sys_cfg_page_scr_jp_66[];
-extern const u8 sys_cfg_page_scr_jp_67[];
-extern const u8 sys_cfg_page_scr_jp_68[];
-extern const u8 sys_cfg_page_scr_jp_69[];
-extern const u32 sys_cfg_page_scr_jp_7[];
-extern const u8 sys_cfg_page_scr_jp_70[];
-extern const u8 sys_cfg_page_scr_jp_71[];
-extern const u8 sys_cfg_page_scr_jp_72[];
-extern const u8 sys_cfg_page_scr_jp_73[];
-extern const u8 sys_cfg_page_scr_jp_74[];
-extern const u8 sys_cfg_page_scr_jp_75[];
-extern const u8 sys_cfg_page_scr_jp_76[];
-extern const u8 sys_cfg_page_scr_jp_77[];
-extern const u8 sys_cfg_page_scr_jp_78[];
-extern const u8 sys_cfg_page_scr_jp_79[];
-extern const u32 sys_cfg_page_scr_jp_8[];
-extern const u32 sys_cfg_page_scr_jp_80[];
-extern const u32 sys_cfg_page_scr_jp_9[];
-extern const u32 sys_cfg_sound_scr_jp_0[];
-extern const u8 test_menu_scr_jp_0[];
-extern const u8 test_menu_str_0[];
-extern const u8 test_menu_str_1[];
-extern const u8 test_menu_str_10[];
-extern const u8 test_menu_str_11[];
-extern const u8 test_menu_str_12[];
-extern const u8 test_menu_str_2[];
-extern const u8 test_menu_str_3[];
-extern const u8 test_menu_str_4[];
-extern const u8 test_menu_str_5[];
-extern const u8 test_menu_str_6[];
-extern const u8 test_menu_str_7[];
-extern const u8 test_menu_str_8[];
-extern const u8 test_menu_str_9[];
-extern const u8 test_menu_str_asia_9[];
+extern const u16 cfg_top_guide_jp_0[];
+extern const u16 cfg_top_reset_guide_jp_0[];
+extern const u16 config_top_scr_jp_0[];
+extern const u16 sys_cfg_exit_guide_jp_0[];
+extern const u16 sys_cfg_item_guide_jp_0[];
+extern const u16 sys_cfg_page_scr_jp_0[];
+extern const u16 sys_cfg_page_scr_jp_1[];
+extern const u16 sys_cfg_page_scr_jp_10[];
+extern const u16 sys_cfg_page_scr_jp_11[];
+extern const u16 sys_cfg_page_scr_jp_12[];
+extern const u16 sys_cfg_page_scr_jp_13[];
+extern const u16 sys_cfg_page_scr_jp_14[];
+extern const u16 sys_cfg_page_scr_jp_15[];
+extern const u16 sys_cfg_page_scr_jp_16[];
+extern const u16 sys_cfg_page_scr_jp_17[];
+extern const u16 sys_cfg_page_scr_jp_18[];
+extern const u16 sys_cfg_page_scr_jp_19[];
+extern const u16 sys_cfg_page_scr_jp_2[];
+extern const u16 sys_cfg_page_scr_jp_20[];
+extern const u16 sys_cfg_page_scr_jp_21[];
+extern const u16 sys_cfg_page_scr_jp_22[];
+extern const u16 sys_cfg_page_scr_jp_23[];
+extern const u16 sys_cfg_page_scr_jp_24[];
+extern const u16 sys_cfg_page_scr_jp_25[];
+extern const u16 sys_cfg_page_scr_jp_26[];
+extern const u16 sys_cfg_page_scr_jp_27[];
+extern const u16 sys_cfg_page_scr_jp_28[];
+extern const u16 sys_cfg_page_scr_jp_29[];
+extern const u16 sys_cfg_page_scr_jp_3[];
+extern const u16 sys_cfg_page_scr_jp_30[];
+extern const u16 sys_cfg_page_scr_jp_31[];
+extern const u16 sys_cfg_page_scr_jp_32[];
+extern const u16 sys_cfg_page_scr_jp_33[];
+extern const u16 sys_cfg_page_scr_jp_34[];
+extern const u16 sys_cfg_page_scr_jp_35[];
+extern const u16 sys_cfg_page_scr_jp_36[];
+extern const u16 sys_cfg_page_scr_jp_37[];
+extern const u16 sys_cfg_page_scr_jp_38[];
+extern const u16 sys_cfg_page_scr_jp_39[];
+extern const u16 sys_cfg_page_scr_jp_4[];
+extern const u16 sys_cfg_page_scr_jp_40[];
+extern const u16 sys_cfg_page_scr_jp_41[];
+extern const u16 sys_cfg_page_scr_jp_42[];
+extern const u16 sys_cfg_page_scr_jp_43[];
+extern const u16 sys_cfg_page_scr_jp_44[];
+extern const u16 sys_cfg_page_scr_jp_45[];
+extern const u16 sys_cfg_page_scr_jp_46[];
+extern const u16 sys_cfg_page_scr_jp_47[];
+extern const u16 sys_cfg_page_scr_jp_48[];
+extern const u16 sys_cfg_page_scr_jp_49[];
+extern const u16 sys_cfg_page_scr_jp_5[];
+extern const u16 sys_cfg_page_scr_jp_50[];
+extern const u16 sys_cfg_page_scr_jp_51[];
+extern const u16 sys_cfg_page_scr_jp_52[];
+extern const u16 sys_cfg_page_scr_jp_53[];
+extern const u16 sys_cfg_page_scr_jp_54[];
+extern const u16 sys_cfg_page_scr_jp_55[];
+extern const u16 sys_cfg_page_scr_jp_56[];
+extern const u16 sys_cfg_page_scr_jp_57[];
+extern const u16 sys_cfg_page_scr_jp_58[];
+extern const u16 sys_cfg_page_scr_jp_59[];
+extern const u16 sys_cfg_page_scr_jp_6[];
+extern const u16 sys_cfg_page_scr_jp_60[];
+extern const u16 sys_cfg_page_scr_jp_61[];
+extern const u16 sys_cfg_page_scr_jp_62[];
+extern const u16 sys_cfg_page_scr_jp_63[];
+extern const u16 sys_cfg_page_scr_jp_64[];
+extern const u16 sys_cfg_page_scr_jp_65[];
+extern const u16 sys_cfg_page_scr_jp_66[];
+extern const u16 sys_cfg_page_scr_jp_67[];
+extern const u16 sys_cfg_page_scr_jp_68[];
+extern const u16 sys_cfg_page_scr_jp_69[];
+extern const u16 sys_cfg_page_scr_jp_7[];
+extern const u16 sys_cfg_page_scr_jp_70[];
+extern const u16 sys_cfg_page_scr_jp_71[];
+extern const u16 sys_cfg_page_scr_jp_72[];
+extern const u16 sys_cfg_page_scr_jp_73[];
+extern const u16 sys_cfg_page_scr_jp_74[];
+extern const u16 sys_cfg_page_scr_jp_75[];
+extern const u16 sys_cfg_page_scr_jp_76[];
+extern const u16 sys_cfg_page_scr_jp_77[];
+extern const u16 sys_cfg_page_scr_jp_78[];
+extern const u16 sys_cfg_page_scr_jp_79[];
+extern const u16 sys_cfg_page_scr_jp_8[];
+extern const u16 sys_cfg_page_scr_jp_80[];
+extern const u16 sys_cfg_page_scr_jp_9[];
+extern const u16 sys_cfg_sound_scr_jp_0[];
+extern const u16 test_menu_scr_jp_0[];
+extern const s8 test_menu_str_0[];
+extern const s8 test_menu_str_1[];
+extern const s8 test_menu_str_10[];
+extern const s8 test_menu_str_11[];
+extern const s8 test_menu_str_12[];
+extern const s8 test_menu_str_2[];
+extern const s8 test_menu_str_3[];
+extern const s8 test_menu_str_4[];
+extern const s8 test_menu_str_5[];
+extern const s8 test_menu_str_6[];
+extern const s8 test_menu_str_7[];
+extern const s8 test_menu_str_8[];
+extern const s8 test_menu_str_9[];
+extern const s8 test_menu_str_asia_9[];
 
 /* 020074DC */
 TM_STRING test_menu_str[13] = {
-    { 15, 1, 2, (void*)(test_menu_str_0) },
-    { 16, 3, 2, (void*)(test_menu_str_1) },
-    { 16, 5, 2, (void*)(test_menu_str_2) },
-    { 16, 7, 2, (void*)(test_menu_str_3) },
-    { 16, 9, 2, (void*)(test_menu_str_4) },
-    { 16, 11, 2, (void*)(test_menu_str_5) },
-    { 16, 13, 2, (void*)(test_menu_str_6) },
-    { 16, 15, 2, (void*)(test_menu_str_7) },
-    { 16, 17, 2, (void*)(test_menu_str_8) },
-    { 16, 19, 2, (void*)(test_menu_str_9) },
-    { 16, 21, 2, (void*)(test_menu_str_10) },
-    { 13, 26, 2, (void*)(test_menu_str_11) },
-    { 13, 27, 2, (void*)(test_menu_str_12) },
+    { 15, 1, 2, test_menu_str_0 },
+    { 16, 3, 2, test_menu_str_1 },
+    { 16, 5, 2, test_menu_str_2 },
+    { 16, 7, 2, test_menu_str_3 },
+    { 16, 9, 2, test_menu_str_4 },
+    { 16, 11, 2, test_menu_str_5 },
+    { 16, 13, 2, test_menu_str_6 },
+    { 16, 15, 2, test_menu_str_7 },
+    { 16, 17, 2, test_menu_str_8 },
+    { 16, 19, 2, test_menu_str_9 },
+    { 16, 21, 2, test_menu_str_10 },
+    { 13, 26, 2, test_menu_str_11 },
+    { 13, 27, 2, test_menu_str_12 },
 };
 /* 02007578 */
 TM_STRING test_menu_str_asia[12] = {
-    { 15, 1, 2, (void*)(test_menu_str_0) },
-    { 16, 3, 2, (void*)(test_menu_str_1) },
-    { 16, 5, 2, (void*)(test_menu_str_2) },
-    { 16, 7, 2, (void*)(test_menu_str_3) },
-    { 16, 9, 2, (void*)(test_menu_str_4) },
-    { 16, 11, 2, (void*)(test_menu_str_5) },
-    { 16, 13, 2, (void*)(test_menu_str_6) },
-    { 16, 15, 2, (void*)(test_menu_str_7) },
-    { 16, 17, 2, (void*)(test_menu_str_8) },
-    { 16, 19, 2, (void*)(test_menu_str_asia_9) },
-    { 13, 26, 2, (void*)(test_menu_str_11) },
-    { 13, 27, 2, (void*)(test_menu_str_12) },
+    { 15, 1, 2, test_menu_str_0 },
+    { 16, 3, 2, test_menu_str_1 },
+    { 16, 5, 2, test_menu_str_2 },
+    { 16, 7, 2, test_menu_str_3 },
+    { 16, 9, 2, test_menu_str_4 },
+    { 16, 11, 2, test_menu_str_5 },
+    { 16, 13, 2, test_menu_str_6 },
+    { 16, 15, 2, test_menu_str_7 },
+    { 16, 17, 2, test_menu_str_8 },
+    { 16, 19, 2, test_menu_str_asia_9 },
+    { 13, 26, 2, test_menu_str_11 },
+    { 13, 27, 2, test_menu_str_12 },
 };
 /* 02007608 */
 TMSCRIPT test_menu_scr_jp[1] = {
-    { 1, 0, (void*)(test_menu_scr_jp_0) },
+    { 1, 0, test_menu_scr_jp_0 },
 };
 /* 02007610 */
 TMSCRIPT config_top_scr_jp[1] = {
-    { 1, 0, (void*)(config_top_scr_jp_0) },
+    { 1, 0, config_top_scr_jp_0 },
 };
 /* 02007618 */
 TMSCRIPT sys_cfg_page_scr_jp[81] = {
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_0) },
-    { 1, 0, (void*)sys_cfg_page_scr_jp_1 },
-    { 1, 0, (void*)sys_cfg_page_scr_jp_2 },
-    { 1, 0, (void*)sys_cfg_page_scr_jp_3 },
-    { 1, 0, (void*)sys_cfg_page_scr_jp_4 },
-    { 1, 0, (void*)sys_cfg_page_scr_jp_5 },
-    { 1, 0, (void*)sys_cfg_page_scr_jp_6 },
-    { 1, 0, (void*)sys_cfg_page_scr_jp_7 },
-    { 1, 0, (void*)sys_cfg_page_scr_jp_8 },
-    { 1, 0, (void*)sys_cfg_page_scr_jp_9 },
-    { 1, 0, (void*)sys_cfg_page_scr_jp_10 },
-    { 1, 0, (void*)sys_cfg_page_scr_jp_11 },
-    { 1, 0, (void*)sys_cfg_page_scr_jp_12 },
-    { 1, 0, (void*)sys_cfg_page_scr_jp_13 },
-    { 1, 0, (void*)sys_cfg_page_scr_jp_14 },
-    { 1, 0, (void*)sys_cfg_page_scr_jp_15 },
-    { 1, 0, (void*)sys_cfg_page_scr_jp_16 },
-    { 1, 0, (void*)sys_cfg_page_scr_jp_17 },
-    { 1, 0, (void*)sys_cfg_page_scr_jp_18 },
-    { 1, 0, (void*)sys_cfg_page_scr_jp_19 },
-    { 1, 0, (void*)sys_cfg_page_scr_jp_20 },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_21) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_22) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_23) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_24) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_25) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_26) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_27) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_28) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_29) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_30) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_31) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_32) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_33) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_34) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_35) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_36) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_37) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_38) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_39) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_40) },
-    { 1, 0, (void*)sys_cfg_page_scr_jp_41 },
-    { 1, 0, (void*)sys_cfg_page_scr_jp_42 },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_43) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_44) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_45) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_46) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_47) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_48) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_49) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_50) },
-    { 1, 0, (void*)sys_cfg_page_scr_jp_51 },
-    { 1, 0, (void*)sys_cfg_page_scr_jp_52 },
-    { 1, 0, (void*)sys_cfg_page_scr_jp_53 },
-    { 1, 0, (void*)sys_cfg_page_scr_jp_54 },
-    { 1, 0, (void*)sys_cfg_page_scr_jp_55 },
-    { 1, 0, (void*)sys_cfg_page_scr_jp_56 },
-    { 1, 0, (void*)sys_cfg_page_scr_jp_57 },
-    { 1, 0, (void*)sys_cfg_page_scr_jp_58 },
-    { 1, 0, (void*)sys_cfg_page_scr_jp_59 },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_60) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_61) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_62) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_63) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_64) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_65) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_66) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_67) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_68) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_69) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_70) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_71) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_72) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_73) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_74) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_75) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_76) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_77) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_78) },
-    { 1, 0, (void*)(sys_cfg_page_scr_jp_79) },
-    { 1, 0, (void*)sys_cfg_page_scr_jp_80 },
+    { 1, 0, sys_cfg_page_scr_jp_0 },
+    { 1, 0, sys_cfg_page_scr_jp_1 },
+    { 1, 0, sys_cfg_page_scr_jp_2 },
+    { 1, 0, sys_cfg_page_scr_jp_3 },
+    { 1, 0, sys_cfg_page_scr_jp_4 },
+    { 1, 0, sys_cfg_page_scr_jp_5 },
+    { 1, 0, sys_cfg_page_scr_jp_6 },
+    { 1, 0, sys_cfg_page_scr_jp_7 },
+    { 1, 0, sys_cfg_page_scr_jp_8 },
+    { 1, 0, sys_cfg_page_scr_jp_9 },
+    { 1, 0, sys_cfg_page_scr_jp_10 },
+    { 1, 0, sys_cfg_page_scr_jp_11 },
+    { 1, 0, sys_cfg_page_scr_jp_12 },
+    { 1, 0, sys_cfg_page_scr_jp_13 },
+    { 1, 0, sys_cfg_page_scr_jp_14 },
+    { 1, 0, sys_cfg_page_scr_jp_15 },
+    { 1, 0, sys_cfg_page_scr_jp_16 },
+    { 1, 0, sys_cfg_page_scr_jp_17 },
+    { 1, 0, sys_cfg_page_scr_jp_18 },
+    { 1, 0, sys_cfg_page_scr_jp_19 },
+    { 1, 0, sys_cfg_page_scr_jp_20 },
+    { 1, 0, sys_cfg_page_scr_jp_21 },
+    { 1, 0, sys_cfg_page_scr_jp_22 },
+    { 1, 0, sys_cfg_page_scr_jp_23 },
+    { 1, 0, sys_cfg_page_scr_jp_24 },
+    { 1, 0, sys_cfg_page_scr_jp_25 },
+    { 1, 0, sys_cfg_page_scr_jp_26 },
+    { 1, 0, sys_cfg_page_scr_jp_27 },
+    { 1, 0, sys_cfg_page_scr_jp_28 },
+    { 1, 0, sys_cfg_page_scr_jp_29 },
+    { 1, 0, sys_cfg_page_scr_jp_30 },
+    { 1, 0, sys_cfg_page_scr_jp_31 },
+    { 1, 0, sys_cfg_page_scr_jp_32 },
+    { 1, 0, sys_cfg_page_scr_jp_33 },
+    { 1, 0, sys_cfg_page_scr_jp_34 },
+    { 1, 0, sys_cfg_page_scr_jp_35 },
+    { 1, 0, sys_cfg_page_scr_jp_36 },
+    { 1, 0, sys_cfg_page_scr_jp_37 },
+    { 1, 0, sys_cfg_page_scr_jp_38 },
+    { 1, 0, sys_cfg_page_scr_jp_39 },
+    { 1, 0, sys_cfg_page_scr_jp_40 },
+    { 1, 0, sys_cfg_page_scr_jp_41 },
+    { 1, 0, sys_cfg_page_scr_jp_42 },
+    { 1, 0, sys_cfg_page_scr_jp_43 },
+    { 1, 0, sys_cfg_page_scr_jp_44 },
+    { 1, 0, sys_cfg_page_scr_jp_45 },
+    { 1, 0, sys_cfg_page_scr_jp_46 },
+    { 1, 0, sys_cfg_page_scr_jp_47 },
+    { 1, 0, sys_cfg_page_scr_jp_48 },
+    { 1, 0, sys_cfg_page_scr_jp_49 },
+    { 1, 0, sys_cfg_page_scr_jp_50 },
+    { 1, 0, sys_cfg_page_scr_jp_51 },
+    { 1, 0, sys_cfg_page_scr_jp_52 },
+    { 1, 0, sys_cfg_page_scr_jp_53 },
+    { 1, 0, sys_cfg_page_scr_jp_54 },
+    { 1, 0, sys_cfg_page_scr_jp_55 },
+    { 1, 0, sys_cfg_page_scr_jp_56 },
+    { 1, 0, sys_cfg_page_scr_jp_57 },
+    { 1, 0, sys_cfg_page_scr_jp_58 },
+    { 1, 0, sys_cfg_page_scr_jp_59 },
+    { 1, 0, sys_cfg_page_scr_jp_60 },
+    { 1, 0, sys_cfg_page_scr_jp_61 },
+    { 1, 0, sys_cfg_page_scr_jp_62 },
+    { 1, 0, sys_cfg_page_scr_jp_63 },
+    { 1, 0, sys_cfg_page_scr_jp_64 },
+    { 1, 0, sys_cfg_page_scr_jp_65 },
+    { 1, 0, sys_cfg_page_scr_jp_66 },
+    { 1, 0, sys_cfg_page_scr_jp_67 },
+    { 1, 0, sys_cfg_page_scr_jp_68 },
+    { 1, 0, sys_cfg_page_scr_jp_69 },
+    { 1, 0, sys_cfg_page_scr_jp_70 },
+    { 1, 0, sys_cfg_page_scr_jp_71 },
+    { 1, 0, sys_cfg_page_scr_jp_72 },
+    { 1, 0, sys_cfg_page_scr_jp_73 },
+    { 1, 0, sys_cfg_page_scr_jp_74 },
+    { 1, 0, sys_cfg_page_scr_jp_75 },
+    { 1, 0, sys_cfg_page_scr_jp_76 },
+    { 1, 0, sys_cfg_page_scr_jp_77 },
+    { 1, 0, sys_cfg_page_scr_jp_78 },
+    { 1, 0, sys_cfg_page_scr_jp_79 },
+    { 1, 0, sys_cfg_page_scr_jp_80 },
 };
 /* 020078A0 */
 TMSCRIPT sys_cfg_exit_guide_jp[1] = {
-    { 1, 0, (void*)sys_cfg_exit_guide_jp_0 },
+    { 1, 0, sys_cfg_exit_guide_jp_0 },
 };
 /* 020078A8 */
 TMSCRIPT sys_cfg_item_guide_jp[1] = {
-    { 1, 0, (void*)sys_cfg_item_guide_jp_0 },
+    { 1, 0, sys_cfg_item_guide_jp_0 },
 };
 /* 020078B0 */
 TMSCRIPT cfg_top_guide_jp[1] = {
-    { 1, 0, (void*)(cfg_top_guide_jp_0) },
+    { 1, 0, cfg_top_guide_jp_0 },
 };
 /* 020078B8 */
 TMSCRIPT cfg_top_reset_guide_jp[1] = {
-    { 1, 0, (void*)(cfg_top_reset_guide_jp_0) },
+    { 1, 0, cfg_top_reset_guide_jp_0 },
 };
 /* 020078C0 */
 TMSCRIPT* sys_cfg_coin_scr_jp[19] = {
@@ -350,7 +350,7 @@ TMSCRIPT* sys_cfg_sound_scr_jp[42] = {
 };
 /* Stored after sys_cfg_sound_scr_jp. Nothing in the program refers to it by name or address; if it is read,
    it is through an index past the end of sys_cfg_sound_scr_jp. */
-u32 sys_cfg_sound_scr_jp_tail[2] = {
-    0x00010000, (u32)sys_cfg_sound_scr_jp_0,
+TMSCRIPT sys_cfg_sound_scr_jp_tail[1] = {
+    { 1, 0, sys_cfg_sound_scr_jp_0 },
 };
 

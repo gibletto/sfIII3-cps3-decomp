@@ -1487,6 +1487,11 @@ typedef struct {
 } EFFA6_MESSAGE;
 
 typedef struct {
+    const CONN* conn;
+    s32 num;
+} EFFA6_LINE;
+
+typedef struct {
     s16 d[6];
 } B6_SRC;
 

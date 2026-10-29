@@ -20,7 +20,7 @@ const s16 eff21_num[2] = {
 };
 
 const s32 eff21_sp_tbl[1][2] = {
-    { 8192, 8192 },
+    { 0x2000, 0x2000 },
 };
 
 const s16 eff21_data_adrs_0[28] = {

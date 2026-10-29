@@ -9,6 +9,7 @@ export SHC_TMP ?= C:\TEMP
 export MDL_EQ_CONST = 3
 export MDL_IV_WEB_ORDER = 1
 export PEP_RETURN_EXIT = 2
+export MDL_GCSE = 26
 
 CFLAGS = -cpu=sh2 -division=cpu -endian=big -pic=0 -extra=m=8,a=8 -nortnext -include=include
 OPT = -optimize=1 -speed

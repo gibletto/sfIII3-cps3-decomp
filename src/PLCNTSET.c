@@ -164,10 +164,8 @@ static void effm8_flag_disp(s8 be_flag, s8 disp_flag) {}
 s32 effect_M8_init(WORK* oya, u8 data) {
     s16 work;
     s16 ix;
-    WORK_Other* ewk;
-    WORK_Other* ewk2;
     const s16* timer;
-    WORK_Other* ewk3;
+    WORK_Other* ewk;
     if (data) {
         s16 i;
         work = random_16_com();
@@ -218,81 +216,81 @@ s32 effect_M8_init(WORK* oya, u8 data) {
             if ((ix = pull_effect_work(3)) == -1) {
                 return -1;
             }
-            ewk2 = (WORK_Other*)frw[(ix)];
-            ewk2->wu.be_flag = 1;
-            ewk2->wu.id = 228;
-            ewk2->wu.work_id = 16;
-            ewk2->wu.cgromtype = 1;
-            ewk2->wu.disp_flag = 0;
-            ewk2->my_master = (u32*)oya;
-            ewk2->master_id = oya->id;
-            ewk2->wu.type = 1;
-            ewk2->wu.my_family = 2;
-            ewk2->wu.my_col_mode = 0x4200;
-            ewk2->wu.my_col_code = oya->my_col_code;
-            ewk2->wu.rl_flag = oya->rl_flag;
+            ewk = (WORK_Other*)frw[(ix)];
+            ewk->wu.be_flag = 1;
+            ewk->wu.id = 228;
+            ewk->wu.work_id = 16;
+            ewk->wu.cgromtype = 1;
+            ewk->wu.disp_flag = 0;
+            ewk->my_master = (u32*)oya;
+            ewk->master_id = oya->id;
+            ewk->wu.type = 1;
+            ewk->wu.my_family = 2;
+            ewk->wu.my_col_mode = 0x4200;
+            ewk->wu.my_col_code = oya->my_col_code;
+            ewk->wu.rl_flag = oya->rl_flag;
             if (oya->rl_flag) {
-                ewk2->wu.xyz[0].disp.pos = bg_w.bgw[1].position_x - 48;
-                ewk2->wu.mvxy.a[0].sp = 0x48000;
-                ewk2->wu.mvxy.d[0].sp = 0;
+                ewk->wu.xyz[0].disp.pos = bg_w.bgw[1].position_x - 48;
+                ewk->wu.mvxy.a[0].sp = 0x48000;
+                ewk->wu.mvxy.d[0].sp = 0;
             } else {
-                ewk2->wu.xyz[0].disp.pos = bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset + 48;
-                ewk2->wu.mvxy.a[0].sp = -0x48000;
-                ewk2->wu.mvxy.d[0].sp = 0;
+                ewk->wu.xyz[0].disp.pos = bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset + 48;
+                ewk->wu.mvxy.a[0].sp = -0x48000;
+                ewk->wu.mvxy.d[0].sp = 0;
             }
-            ewk2->wu.xyz[1].cal = oya->xyz[1].cal;
-            ewk2->wu.xyz[1].disp.pos -= 5;
-            ewk2->wu.position_z = oya->my_priority;
-            ewk2->wu.position_z = ewk2->wu.position_z - 2;
-            ewk2->wu.my_priority = ewk2->wu.position_z;
-            *ewk2->wu.char_table = etc2_char_table;
-            ewk2->wu.char_index = 55;
-            ewk2->wu.kage_flag = 1;
-            ewk2->wu.kage_hx = -2;
-            ewk2->wu.kage_hy = 0;
-            ewk2->wu.kage_prio = 71;
-            ewk2->wu.kage_char = 8;
-            effm8_flag_disp(ewk2->wu.be_flag, ewk2->wu.disp_flag);
-            ewk2->wu.old_rno[0] = *timer;
+            ewk->wu.xyz[1].cal = oya->xyz[1].cal;
+            ewk->wu.xyz[1].disp.pos -= 5;
+            ewk->wu.position_z = oya->my_priority;
+            ewk->wu.position_z = ewk->wu.position_z - 2;
+            ewk->wu.my_priority = ewk->wu.position_z;
+            *ewk->wu.char_table = etc2_char_table;
+            ewk->wu.char_index = 55;
+            ewk->wu.kage_flag = 1;
+            ewk->wu.kage_hx = -2;
+            ewk->wu.kage_hy = 0;
+            ewk->wu.kage_prio = 71;
+            ewk->wu.kage_char = 8;
+            effm8_flag_disp(ewk->wu.be_flag, ewk->wu.disp_flag);
+            ewk->wu.old_rno[0] = *timer;
             timer = timer + 1;
         }
     } else {
         if ((ix = pull_effect_work(3)) == -1) {
             return -1;
         }
-        ewk3 = (WORK_Other*)frw[(ix)];
-        ewk3->wu.be_flag = 1;
-        ewk3->wu.id = 228;
-        ewk3->wu.work_id = 16;
-        ewk3->wu.cgromtype = 1;
-        ewk3->wu.disp_flag = 0;
-        ewk3->my_master = (u32*)oya;
-        ewk3->master_id = oya->id;
-        ewk3->wu.type = 0;
-        ewk3->wu.my_family = 2;
-        ewk3->wu.my_col_mode = 0x4200;
-        ewk3->wu.my_col_code = oya->my_col_code;
+        ewk = (WORK_Other*)frw[(ix)];
+        ewk->wu.be_flag = 1;
+        ewk->wu.id = 228;
+        ewk->wu.work_id = 16;
+        ewk->wu.cgromtype = 1;
+        ewk->wu.disp_flag = 0;
+        ewk->my_master = (u32*)oya;
+        ewk->master_id = oya->id;
+        ewk->wu.type = 0;
+        ewk->wu.my_family = 2;
+        ewk->wu.my_col_mode = 0x4200;
+        ewk->wu.my_col_code = oya->my_col_code;
         if (oya->id) {
-            ewk3->wu.xyz[0].disp.pos = 648;
-            ewk3->wu.mvxy.a[0].sp = 0x48000;
-            ewk3->wu.mvxy.d[0].sp = 0;
+            ewk->wu.xyz[0].disp.pos = 648;
+            ewk->wu.mvxy.a[0].sp = 0x48000;
+            ewk->wu.mvxy.d[0].sp = 0;
         } else {
-            ewk3->wu.xyz[0].disp.pos = 376;
-            ewk3->wu.mvxy.a[0].sp = -0x48000;
-            ewk3->wu.mvxy.d[0].sp = 0;
+            ewk->wu.xyz[0].disp.pos = 376;
+            ewk->wu.mvxy.a[0].sp = -0x48000;
+            ewk->wu.mvxy.d[0].sp = 0;
         }
-        ewk3->wu.xyz[1].cal = oya->xyz[1].cal;
-        ewk3->wu.position_z = oya->my_priority;
-        ewk3->wu.position_z = ewk3->wu.position_z + 1;
-        ewk3->wu.my_priority = ewk3->wu.position_z;
-        ewk3->wu.rl_flag = oya->rl_flag ^ 1;
-        *ewk3->wu.char_table = etc2_char_table;
-        ewk3->wu.char_index = 54;
-        ewk3->wu.kage_flag = 1;
-        ewk3->wu.kage_hx = -2;
-        ewk3->wu.kage_hy = 4;
-        ewk3->wu.kage_prio = 71;
-        ewk3->wu.kage_char = 8;
+        ewk->wu.xyz[1].cal = oya->xyz[1].cal;
+        ewk->wu.position_z = oya->my_priority;
+        ewk->wu.position_z = ewk->wu.position_z + 1;
+        ewk->wu.my_priority = ewk->wu.position_z;
+        ewk->wu.rl_flag = oya->rl_flag ^ 1;
+        *ewk->wu.char_table = etc2_char_table;
+        ewk->wu.char_index = 54;
+        ewk->wu.kage_flag = 1;
+        ewk->wu.kage_hx = -2;
+        ewk->wu.kage_hy = 4;
+        ewk->wu.kage_prio = 71;
+        ewk->wu.kage_char = 8;
     }
     return 0;
 }

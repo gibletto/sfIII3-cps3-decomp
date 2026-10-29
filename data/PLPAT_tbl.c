@@ -3,9 +3,9 @@
  *
  * plpat_lv_00 is the common attack routines Attack_00000 - Attack_15000, indexed by attack
  * routine number. plxx_extra_attack_table starts with each character's extra attack dispatcher
- * (pl00_extra_attack - pl20_extra_attack, by player number); the words after them are packed
- * jump-attack recovery frame counts, reached through cjdr_karaburi_table and its companions
- * for get_cjdR. Read by PLPAT.C.
+ * (pl00_extra_attack - pl20_extra_attack, by player number). cjdr_frame_tbl holds rows of
+ * jump-attack recovery frame counts, one per kind of jump attack, reached through
+ * cjdr_karaburi_table and its companions for get_cjdR. Read by PLPAT.C.
  */
 
 #include "types.h"
@@ -54,7 +54,7 @@ void (*const plpat_lv_00[16])() = {
     Attack_00000,  Attack_00000,  Attack_14000,  Attack_15000,  /* 12 */
 };
 
-void (*const plxx_extra_attack_table[54])() = {
+void (*const plxx_extra_attack_table[24])() = {
     pl00_extra_attack,
     pl01_extra_attack,
     pl02_extra_attack,
@@ -79,34 +79,23 @@ void (*const plxx_extra_attack_table[54])() = {
     0,
     0,
     0,
-    (void (*)())0x0A0A0E0E,
-    (void (*)())0x12121212,
-    (void (*)())0x0B0B1010,
-    (void (*)())0x15151515,
-    (void (*)())0x0E0E1212,
-    (void (*)())0x16161616,
-    (void (*)())0xFFFFFFFF,
-    (void (*)())0xFFFFFFFF,
-    (void (*)())0x160A170B,
-    (void (*)())0x180C180C,
-    (void (*)())0x180C190D,
-    (void (*)())0x1A0E1A0E,
-    (void (*)())0x1A0E1B0F,
-    (void (*)())0x1C101C10,
-    (void (*)())0xFFFFFFFF,
-    (void (*)())0xFFFFFFFF,
-    (void (*)())0x10071209,
-    (void (*)())0x140B140B,
-    (void (*)())0x1108130A,
-    (void (*)())0x150C150C,
-    (void (*)())0x1209140B,
-    (void (*)())0x160D160D,
-    (void (*)())0x14141717,
-    (void (*)())0x1A1A1A1A,
-    (void (*)())0x16161818,
-    (void (*)())0x1A1A1A1A,
-    (void (*)())0x17171919,
-    (void (*)())0x1A1A1A1A,
-    (void (*)())0xFFFFFFFF,
-    (void (*)())0xFFFFFFFF,
+};
+
+/* provisional name */
+const u8 cjdr_frame_tbl[15][8] = {
+    { 10, 10, 14, 14, 18, 18, 18, 18 },  /* [0] */
+    { 11, 11, 16, 16, 21, 21, 21, 21 },  /* [1] */
+    { 14, 14, 18, 18, 22, 22, 22, 22 },  /* [2] */
+    { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF },  /* [3] */
+    { 22, 10, 23, 11, 24, 12, 24, 12 },  /* [4] */
+    { 24, 12, 25, 13, 26, 14, 26, 14 },  /* [5] */
+    { 26, 14, 27, 15, 28, 16, 28, 16 },  /* [6] */
+    { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF },  /* [7] */
+    { 16, 7, 18, 9, 20, 11, 20, 11 },  /* [8] */
+    { 17, 8, 19, 10, 21, 12, 21, 12 },  /* [9] */
+    { 18, 9, 20, 11, 22, 13, 22, 13 },  /* [10] */
+    { 20, 20, 23, 23, 26, 26, 26, 26 },  /* [11] */
+    { 22, 22, 24, 24, 26, 26, 26, 26 },  /* [12] */
+    { 23, 23, 25, 25, 26, 26, 26, 26 },  /* [13] */
+    { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF },  /* [14] */
 };
