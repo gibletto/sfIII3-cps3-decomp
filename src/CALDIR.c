@@ -565,7 +565,7 @@ void cal_initial_speed_y0(WORK* wk, s16 tm) {
 
 
 
-s16 cal_top_of_position_y(WORK* wk) {
+s32 cal_top_of_position_y(WORK* wk) {
     register s32 num;
     s32 num2;
     PS_UNI ps_uni;

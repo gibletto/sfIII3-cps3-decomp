@@ -111,8 +111,6 @@
 extern s16 flip_crt_ofs_x;
 extern s16 flip_crt_ofs_y;
 
-#define WINDOW_ROW(m) ((const s16*)((const u8*)screen_window_tbl + (u8)((m) * sizeof(screen_window_tbl[0]))))
-
 
 s8 Monitor_Flip_Old = 0;  /* 02000660 */
 
@@ -164,15 +162,15 @@ s32 mode;
         screen_window[1].b = screen_window_flip_tbl[7];
         screen_disp_ctrl = screen_window_flip_tbl[8];
     } else {
-        screen_window[0].l = WINDOW_ROW(mode)[0];
-        screen_window[0].t = WINDOW_ROW(mode)[1];
-        screen_window[0].r = WINDOW_ROW(mode)[2];
-        screen_window[0].b = WINDOW_ROW(mode)[3];
-        screen_window[1].l = WINDOW_ROW(mode)[4];
-        screen_window[1].t = WINDOW_ROW(mode)[5];
-        screen_window[1].r = WINDOW_ROW(mode)[6];
-        screen_window[1].b = WINDOW_ROW(mode)[7];
-        screen_disp_ctrl = WINDOW_ROW(mode)[8];
+        screen_window[0].l = screen_window_tbl[mode][0];
+        screen_window[0].t = screen_window_tbl[mode][1];
+        screen_window[0].r = screen_window_tbl[mode][2];
+        screen_window[0].b = screen_window_tbl[mode][3];
+        screen_window[1].l = screen_window_tbl[mode][4];
+        screen_window[1].t = screen_window_tbl[mode][5];
+        screen_window[1].r = screen_window_tbl[mode][6];
+        screen_window[1].b = screen_window_tbl[mode][7];
+        screen_disp_ctrl = screen_window_tbl[mode][8];
     }
 }
 

@@ -44,7 +44,11 @@
 #include "efff8_code.h"
 #include "EFFF9.h"
 #include "fifo.h"
-#include "bg_sub.h"
+void bg_cell_write_yflip(s16 bg, s32 ofs, s32 cell, u32 src, s16 u5, s16 attr);
+void bg_cell_write_xflip(s16 bg, s32 ofs, s32 cell, u32 src, s16 u5, s16 attr);
+void blit_16x16_tile();
+void bg_cell_write(s16 bg, s32 ofs, s32 cell, u32 src, u16 u5, s16 attr);
+void bg_cell_write_xyflip(s16 bg, s32 ofs, s32 cell, u32 src, s16 u5, s16 attr);
 #include "bg_sub_2.h"
 #include "bg_sub_3.h"
 #include "bg_sub_4.h"
@@ -237,7 +241,7 @@ void opning_init_00000(void) {
     clear_scroll_layer_state_and_mask();
     scrn_pos_clear();
     Zoomf_Init();
-    scr_cg_c_no = ((s16)simmram_block_alloc_10(0x165, 1));
+    scr_cg_c_no = simmram_block_alloc_10(0x165, 1);
     bg_w.scroll_cg_adr = simmram_slot_to_offset(scr_cg_c_no);
     bg_w.scno = 3;
     polygon2d_submit_line(0x01D2C000, 0, 0, 3);
@@ -2565,7 +2569,7 @@ void opening_title_00(void) {
     op_w.free_work = 8;
     op_end_flag = 0;
     bg_vbl_trans_flag = 0;
-    scr_cg_c_no = ((s16)simmram_block_alloc_10(0x165, 1));
+    scr_cg_c_no = simmram_block_alloc_10(0x165, 1);
     bg_w.scroll_cg_adr = simmram_slot_to_offset(scr_cg_c_no);
     bg_w.scno = 1;
     polygon2d_submit_line(0x01D2C000, 0, 0, 3);
@@ -2884,7 +2888,7 @@ void common_end_init00(s16 pl_num) {
     bg_w.scno = end_scno_tbl[end_w.type];
     n = ((end_bg_gfx_tbl[bg_w.bg_index].size << 4) + 0xFFF) / 0x1000;
     blocks = n;
-    scr_cg_c_no = ((s16)simmram_block_alloc_10(blocks, 1));
+    scr_cg_c_no = simmram_block_alloc_10(blocks, 1);
     bg_w.scroll_cg_adr = simmram_slot_to_offset(scr_cg_c_no);
     gfx = &end_bg_gfx_tbl[bg_w.bg_index];
     polygon2d_submit_line(gfx->prep, 0, 0, 3);
@@ -2896,7 +2900,7 @@ void common_end_init00(s16 pl_num) {
         gfx = &end_bg_gfx_tbl[3];
         n = ((gfx->size << 4) + 0xFFF) / 0x1000;
         blocks = n;
-        ake_cg_c_no = ((s16)simmram_block_alloc_10(blocks, 1));
+        ake_cg_c_no = simmram_block_alloc_10(blocks, 1);
         bg_w.ake_cg_adr = simmram_slot_to_offset(ake_cg_c_no);
         polygon2d_submit_line(gfx->prep, 0, 0, 3);
         polygon2d_submit_line(end_bg_gfx_tbl[3].src, bg_w.ake_cg_adr, gfx->size, 1);
@@ -3153,7 +3157,7 @@ void end_ake_cell_put(s8 map, s32 ofs, s32 cell, u32 src) {
     dst = (u16*)ofs;
     s = (u16*)cell;
     x += bg_w.ake_cg_adr >> 7;
-    ((void(*)())blit_16x16_tile)(s, (u16)x, dst, 0x220);
+    blit_16x16_tile(s, (u16)x, dst, 0x220);
 }
 
 

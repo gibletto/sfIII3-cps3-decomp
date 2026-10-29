@@ -253,13 +253,13 @@ s16 set;
     for (i = n = 0; i < judge_final[pl][set].vcr_ix; i++) {
         if (i == judge_final[pl][set].vs_cpu_player[15]) {
             ev[n][0] = 9;
-            ev[n][1] = ((u8 *)judge_final[pl][set].vs_cpu_grade)[31];
+            ev[n][1] = judge_final[pl][set].vs_cpu_grade[15];
             ev[n][2] = 18;
             n++;
         }
         ev[n][0] = i;
-        ev[n][1] = ((u8 *)judge_final[pl][set].vs_cpu_grade)[i * 2 + 1];
-        ev[n][2] = ((u8 *)judge_final[pl][set].vs_cpu_player)[i * 2 + 1];
+        ev[n][1] = judge_final[pl][set].vs_cpu_grade[i];
+        ev[n][2] = judge_final[pl][set].vs_cpu_player[i];
         n++;
     }
     judge_final[pl][set].fr_ix = n;

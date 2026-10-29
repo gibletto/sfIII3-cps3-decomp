@@ -36,7 +36,7 @@ s32 cal_move_dir_forecast(WORK* wk, s16 tm);
 s16 cal_move_quantity2(s16 x1, s16 x2, s16 y1, s16 y2);
 s16 cal_move_quantity3(WORK* wk, s16 tm);
 s32 cal_time_of_sign_change(WORK* wk);
-s16 cal_top_of_position_y(WORK* wk);
+s32 cal_top_of_position_y(WORK* wk);
 void cmsd_all_x_speed_data(MotionState* cc);
 void cmsd_all_y_speed_data(MotionState* cc);
 void cmsd_swx_0(MotionState* cc);

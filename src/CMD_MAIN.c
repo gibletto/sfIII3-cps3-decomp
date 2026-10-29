@@ -2648,8 +2648,6 @@ void debug_hit_a_judgement_build_table(void) {
     dbg_hita_grid_sw = 0;
     if (DEBUG_EDIT) {
         effect_K5_init((PLW*)wk);
-    }
-    if (DEBUG_EDIT) {
         wk->cg_ctr = 1;
     }
 }
@@ -6785,13 +6783,13 @@ void debug_draw_record_info(void) {
     s16 bcd;
     debug_draw_position_delta();
     debug_draw_edit_side();
-    bcd = ((s16)debug_hex4_to_bcd(Debug_Rec_Count));
+    bcd = debug_hex4_to_bcd(Debug_Rec_Count);
     tilemap_print_hex(11, 19, 2, bcd, 4, 0);
-    bcd = ((s16)debug_hex4_to_bcd(Debug_Rec_Frame));
+    bcd = debug_hex4_to_bcd(Debug_Rec_Frame);
     tilemap_print_hex(11, 18, 2, bcd, 4, 0);
-    bcd = ((s16)debug_hex4_to_bcd(dbg_snap_ptr->used));
+    bcd = debug_hex4_to_bcd(dbg_snap_ptr->used);
     tilemap_print_hex(11, 20, 2, bcd, 4, 0);
-    bcd = ((s16)debug_hex4_to_bcd(dbg_snap_ptr->cg_ctr));
+    bcd = debug_hex4_to_bcd(dbg_snap_ptr->cg_ctr);
     tilemap_print_hex(11, 21, 2, bcd, 4, 0);
     switch (dbg_save_mode) {
     case 0:
@@ -7640,7 +7638,7 @@ void debug_bg_tile_put(s16 bg, s32 ofs, s32 page, s32 src) {
 
 /* provisional name */
 void debug_bg_alloc_init(void) {
-    scr_cg_c_no = ((s16)simmram_block_alloc_10(104, 1));
+    scr_cg_c_no = simmram_block_alloc_10(104, 1);
     bg_w.ake_cg_adr = simmram_slot_to_offset(scr_cg_c_no);
     load_any_color(0x8C);
     load_any_color(0x8F);
@@ -7669,7 +7667,7 @@ void debug_bg_alloc_init(void) {
 void debug_bg_alloc_scene_init(void) {
     s32 n = (bg_gfx_tbl[1].size * 16 + 0xFFF) / 0x1000;
     u32 blocks = n;
-    scr_cg_c_no = ((s16)simmram_block_alloc_10(blocks, 1));
+    scr_cg_c_no = simmram_block_alloc_10(blocks, 1);
     bg_w.scroll_cg_adr = simmram_slot_to_offset(scr_cg_c_no);
     load_bg_color(1);
     load_bg_color(16);

@@ -84,7 +84,7 @@ s32 stage_index_get(void) {
 
 void Initialize_EM_Candidate(s16 PL_id) {
     s16 ix;
-    s16 ok_urien = ((s16)random_16_com());
+    s16 ok_urien = random_16_com();
     for (ix = 0; ix < 16; ix++) {
         Candidate_Buff[ix] = 0xFF;
     }

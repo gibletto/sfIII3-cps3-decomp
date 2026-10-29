@@ -15,7 +15,9 @@
 #include "extern.h"
 #include "ta_sub.h"
 #include "CALDIR.h"
-#include "CHARMOVE.h"
+void char_move(WORK* wk);
+void set_char_move_init2();
+void set_char_move_init();
 #include "charmove_2.h"
 #include "EFFECT.h"
 #include "effect_2.h"
@@ -114,7 +116,7 @@ void effl7_move(WORK_Other* ewk) {
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
             ewk->wu.routine_no[1] += 1;
-            ((void (*)(WORK*, s16, s16, s16))set_char_move_init2)(&ewk->wu, 0, 0, 3);
+            set_char_move_init2(&ewk->wu, 0, 0, 3);
             if (ewk->wu.rl_flag) {
                 ewk->wu.mvxy.a[0].sp = 0x20000;
             } else {

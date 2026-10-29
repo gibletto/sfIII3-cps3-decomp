@@ -387,7 +387,7 @@ two:
 
 s32 hoseishitemo_eenka(WORK* wk, s16 tx) {
     s16 rnum = 0;
-    if (((s32 (*)(WORK*))cal_top_of_position_y)(wk) + wk->cg_jphos > bs2_floor[2] || wk->mvxy.a[1].real.h < 0) {
+    if (cal_top_of_position_y(wk) + wk->cg_jphos > bs2_floor[2] || wk->mvxy.a[1].real.h < 0) {
         switch ((wk->xyz[0].disp.pos < tx) + (wk->rl_flag != 0) * 2) {
         case 1:
         case 2:

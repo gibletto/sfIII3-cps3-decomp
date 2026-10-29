@@ -139,49 +139,38 @@ static void effect_14_write(WORK_Other* ewk) {
     s8* pattern;
     u16* dst;
     u32 row;
-    volatile s16 col;
-    volatile s8 rows;
+    s16 col;
+    s8 rows;
     s8 cols;
     s16 i;
     s16 j;
-    u16 mask;
     u16 v;
-    (void)&((E14_WORK*)0)->rows;
     rows = eff14_work[ewk->wu.rl_flag].rows;
-    mask = 0xFE00;
     cols = eff14_work[ewk->wu.rl_flag].cols;
     pattern = eff14_work[ewk->wu.rl_flag].pattern;
     dst = (u16*)eff14_work[ewk->wu.rl_flag].dst;
     col = eff14_work[ewk->wu.rl_flag].col;
     row = eff14_work[ewk->wu.rl_flag].row;
-    eff14_flag_disp(ewk->wu.be_flag);
-    i = 0;
-    goto test;
-loop:
-    for (j = 0; j < cols; j++) {
-        if (*pattern == 1) {
-            dst++;
-            v = *dst;
-            v &= mask;
-            v |= col;
-            *dst = v;
-            dst++;
-            pattern++;
-        } else if (*pattern == 2) {
-            j = cols;
-            pattern++;
-        } else {
-            dst += 2;
-            pattern++;
+    for (i = 0; i < rows; i++) {
+        for (j = 0; j < cols; j++) {
+            if (*pattern == 1) {
+                dst++;
+                v = *dst;
+                v &= 0xFE00;
+                v |= col;
+                *dst = v;
+                dst++;
+                pattern++;
+            } else if (*pattern == 2) {
+                j = cols;
+                pattern++;
+            } else {
+                dst += 2;
+                pattern++;
+            }
         }
-    }
-    eff14_flag_disp(ewk->wu.be_flag);
-    row = (u32)(dst = (u16*)(row + 0x100));
-    (void)&((E14_WORK*)row)->rows;
-    i++;
-test:
-    if (i < rows) {
-        goto loop;
+        dst = (u16*)(row + 0x100);
+        row = (u32)dst;
     }
     eff14_flag_disp(ewk->wu.be_flag);
 }

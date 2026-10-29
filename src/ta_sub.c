@@ -217,7 +217,7 @@ s32 range_x_out_y_in_check(WORK_Other* ewk, s16 bg_no) {
     if (range_x_check(&ewk->wu)) {
         return 0;
     }
-    bgw = (BGW*)((u8*)bg_w.bgw + (s16)(bg_no * sizeof(BGW)));
+    bgw = &bg_w.bgw[bg_no];
     if ((s8)bg_w.chase_flag & 0xF) {
         pos_y_work = bgw->chase_xy[1].disp.pos;
     } else {

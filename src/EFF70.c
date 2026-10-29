@@ -78,10 +78,10 @@ void effect_70_move(WORK_Other* ewk) {
             sort_push_request4(&ewk->wu);
             break;
         case R0_SHRINK:
-            if ((ewk->wu.my_mr.size.x -= *(s16*)((u8*)ewk + 124)) <= 0) {
+            if ((ewk->wu.my_mr.size.x -= *(s16*)&ewk->wu.mvxy.a[0]) <= 0) {
                 ewk->wu.my_mr.size.x = 0;
             }
-            if ((ewk->wu.my_mr.size.y -= *(s16*)((u8*)ewk + 124)) <= 0) {
+            if ((ewk->wu.my_mr.size.y -= *(s16*)&ewk->wu.mvxy.a[0]) <= 0) {
                 ewk->wu.my_mr.size.y = 0;
             }
             if (ewk->wu.my_mr.size.x <= 0 && ewk->wu.my_mr.size.y <= 0) {

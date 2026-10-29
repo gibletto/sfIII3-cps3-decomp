@@ -599,7 +599,7 @@ extern const GRID_CELL eff08_cell_tbl[2][16];
 extern const EFF08_FRAME eff08_anm_tbl[8];
 extern const EFF08_FRAME eff08_anm2_tbl[4];
 extern const s8 eff08_loop_tbl[16];
-extern const s16 eff09_data[18];
+extern const s16 eff09_data[2][9];
 extern const s16 eff09_data2[43][8];
 extern const s32 eff09_2000_data[2][4];
 extern const s32 eff09_add_tbl0[2][2];

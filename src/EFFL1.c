@@ -11,7 +11,7 @@
  * ranks and totals (the effL1_f_xxx routines).
  * effL1_suuchi_bunkai_sub splits a number into digits; effL1_trans steps the pattern counter
  * and queues the work for drawing.
- * Type 10 cycles its characters on a timer; grade_data_disp is an empty per-frame hook.
+ * Type 10 cycles its characters on a timer.
  */
 
 #include "structs.h"
@@ -31,10 +31,6 @@
 #define R0_MOVE         1       /* show the plate until retired */
 #define R0_END          2       /* hidden for a frame */
 #define R0_KILL         3       /* (default) put the work back */
-
-
-
-static void grade_data_disp(void) {}
 
 
 
@@ -70,7 +66,6 @@ void effect_L1_move(WORK_Other_CONN* ewk) {
                 ewk->wu.dir_timer = 0;
                 ewk->wu.disp_flag = 1;
             }
-            grade_data_disp();
             break;
         case 10:
             if (--ewk->wu.dir_timer < 0) {

@@ -1344,13 +1344,10 @@ void attack_hit_check(void) {
                 (!(sad->att.dipsw & 2) && (sad->work_id == 1 || !(((WORK_Other*)sad)->refrected)))) {
                 (void)sad->xyz[sad->work_id & 2].disp.pos;
                 if ((mad->work_id == 1 || mad->work_id == 8) && (sad->att.dipsw & 2)) {
-                    goto owner_check;
-                }
-                if (!(mad->vs_id & sad->work_id)) {
+                } else if (!(mad->vs_id & sad->work_id)) {
                     goto next2;
                 }
             }
-        owner_check:
             if (mad->work_id != 1) {
                 if (sad->work_id == 1) {
                     if (((WORK_Other*)mad)->master_id == sad->id) {
