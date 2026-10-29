@@ -187,9 +187,9 @@ Coins are read twice a frame (once from vblank, once from a mid-frame timer inte
 into a little history byte. A coin only counts once the history shows a clean press and release:
 
 ```c
-if ((coin_sw_hist[n] & 15) == 3)        /* 0011: closed for two samples -> coin arriving */
+if ((coin_sw_hist[n] & 0xF) == 0x3)        /* 0011: closed for two samples -> coin arriving */
     ...
-else if ((coin_sw_hist[n] & 15) == 12)  /* 1100: open again for two samples -> coin dropped */
+else if ((coin_sw_hist[n] & 0xF) == 0xC)   /* 1100: open again for two samples -> coin dropped */
     ...
 ```
 
@@ -218,7 +218,7 @@ p1sw_0 = ~(s16)(*(volatile u16*)(IO_REG + 0x2)) % 256U;   /* this frame */
 With both values you can tell "just pressed" from "held". This idiom is everywhere:
 
 ```c
-if (~p1sw_1 & p1sw_0 & 0x1000)   /* Start went down this frame */
+if (~p1sw_1 & p1sw_0 & BUTTON_START)   /* Start (0x1000) went down this frame */
 ```
 
 The lever is 4 bits (1 up, 2 down, 4 left, 8 right), then the buttons, coin and Start.
@@ -457,19 +457,19 @@ doesn't. Each fighter has 56 command slots, and each slot is a tiny state machin
 next input arrives, within a time limit. Here's Ryu's fireball motion:
 
 ```c
-const s16 p2_cmd_29[25] = {
-    12, 1, 0, 16, 16, 16, 16, 3077, 0, 1, 2, 19,   /* header */
-    1, 0, 0, -32766,                               /* step: lever == down              */
-    1, 10, 0, -32762,                              /* step: lever == down+forward, 10f */
-    1, 10, 0, -32764,                              /* step: lever == forward, 10f      */
-    28,                                            /* end                              */
+const s16 p2_cmd_29[25] = {  /* Ryu: Hadoken, 236+P */
+    CMD_RESET, CMD_LV_UP, 0, CMD_WAZA(RYU_HADOKEN), CMD_BT_CHG | CMD_BT_EX | CMD_BT_SHELL, CMD_EX_PUNCHES,
+    CMD_LEVER(0, CMD_LV_DOWN),                       /* step: lever == down              */
+    CMD_LEVER(10, CMD_LV_DOWN | CMD_LV_FORWARD),     /* step: lever == down+forward, 10f */
+    CMD_LEVER(10, CMD_LV_FORWARD),                   /* step: lever == forward, 10f      */
+    CMD_END,
 };
 ```
 
 - The header says: once complete, stay valid for 12 frames; pressing up cancels it; which routine to run for each
   strength; which button word to check; and which buttons mean light, medium, heavy and EX.
-- Each step is `{type, frames allowed, -, lever}`. The `0x8000` bit on the lever value means "exactly this
-  direction". The first step has a 0-frame window, so it just waits for "down"; each later step has 10 frames.
+- Each step is `{type, frames allowed, -, lever}` (`CMD_LEVER`). The `0x8000` bit on the lever value
+  (`CMD_EXACT`) means "exactly this direction". The first step has a 0-frame window, so it just waits for "down"; each later step has 10 frames.
 
 When the last step matches, the slot sets `waza_flag[29] = 12`, and that flag counts down. The button check looks
 at the flags, so you can finish the motion and press the button a few frames later.
@@ -634,20 +634,20 @@ the command tables by fighter, and Ryu is fighter 2), the quarter-circle above. 
 **2. The button.** While standing, `check_special_attack` loops over the ground-special slots 28-37:
 
 ```c
-for (i = 28; i < 38; i++) {
+for (i = CMD_SP_GROUND; i < CMD_SA_AIR; i++) {        /* slots 28-37 */
     if (wk->cp->waza_flag[i] == -1) continue;            /* motion not done */
     ...
-    cusw = conpane[wk->cp->btix[i] & 0xFF];              /* the button word to look at */
+    cusw = conpane[wk->cp->btix[i] & CMD_BT_INDEX];      /* the button word to look at */
     for (j = 3; j >= 0; j--) {                           /* EX, heavy, medium, light */
         exsw = cusw & cmdshot_conv_tbl[wk->cp->exdt[i][j]];
         ...
-        wk->as = &asstbl_sa_ground[wk->player_number][i - 20][j].as;
+        wk->as = &asstbl_sa_ground[wk->player_number][i - CMD_SA_GROUND][j].as;
         hissatsu_setup_union(wk, wk->cp->waza_r[i][j]);
 ```
 
-- `btix & 0xFF` picks the `sw_chg` word, so pressing *or* releasing the button counts.
+- `btix & CMD_BT_INDEX` (0xFF) picks the `sw_chg` word, so pressing *or* releasing the button counts.
 - It checks EX first, then heavy, medium, light, so pressing two punches gets you EX, not light.
-- Flag `0x800` in `btix` means "only one at a time": `shell_live_check` looks through Ryu's live projectiles for
+- Flag `CMD_BT_SHELL` (0x800) in `btix` means "only one at a time": `shell_live_check` looks through Ryu's live projectiles for
   one from move 29, and if there is one, nothing happens.
 - `asstbl_sa_ground` gives the animation number for this strength (24 for light), and `waza_r` gives the attack
   routine (16). `hissatsu_setup_union` sets `routine_no[1] = 4` (attacking) and `routine_no[2] = 16`.

@@ -733,10 +733,7 @@ s32 char_cell_unflip_xy(WORK* wk) {
 
 
 
-static void judge_area_disp(s8 be_flag) {}
-
-s32 set_judge_area_sprite(WORK_Other* owk) {
-    WORK_Other_JUDGE* wk = (WORK_Other_JUDGE*)owk;
+s32 set_judge_area_sprite(WORK_Other_JUDGE* wk) {
     GFX_CELL* base;
     const u16* flip;
     s16 blk;
@@ -749,16 +746,11 @@ s32 set_judge_area_sprite(WORK_Other* owk) {
     s16 k;
     s32 n;
     s32 t;
-    judge_area_disp(owk->wu.be_flag);
     if (wk->wu.spr.gfx_cells == 0) {
         return 0;
     }
     set = cg_data_list[wk->wu.cg_number].set;
     base_code = cg_slot_tbl[set->slot].addr;
-    if (0) {
-        simmram_block_free_40(wk->wu.spr.gfx_blk40[2]);
-        wk->wu.spr.gfx_blk40[2] = wk->wu.spr.gfx_blk40[1];
-    }
     if ((blk = simmram_block_alloc_40(wk->wu.spr.gfx_cells / 16 + 1, 1)) == 0) {
         return 0;
     }

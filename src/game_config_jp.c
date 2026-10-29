@@ -160,7 +160,6 @@ TMSCRIPT gcfg_title_scr_jp[1] = {
 
 /* provisional name */
 void game_config_init_jp(void) {
-    s8 n;
     char *wk;
     char *wk1;
     Config_No_2++;
@@ -180,36 +179,36 @@ void game_config_init_jp(void) {
     tilemap_fill_all(0, 0x1200);
     tilemap_print_script_seq(0, 0, 0xFFFF, gcfg_title_scr_jp);
     Config_Attr_jp = 2;
-    n = Config_Item_jp = 6;
+    Config_Item_jp = 6;
     Config_New_jp = game_config_work.bonus & 1;
     Config_Old_jp = Game_setting.bonus & 1;
     Config_Attr_jp = (Config_New_jp != Config_Old_jp) ? 8 : 2;
     game_config_print_value_jp(Config_Attr_jp, &gcfg_bonus_scr_jp[Config_New_jp]);
-    n = Config_Item_jp = 5;
+    Config_Item_jp = 5;
     Config_New_jp = game_config_work.set5;
     Config_Attr_jp = (Config_New_jp != Game_setting.set5) ? 8 : 2;
     game_config_print_value_jp(Config_Attr_jp, &gcfg_event_scr_jp[Config_New_jp]);
-    n = Config_Item_jp = 4;
+    Config_Item_jp = 4;
     Config_New_jp = game_config_work.set4 / 16;
     Config_New_jp &= 3;
     Config_Org_jp = Game_setting.set4 / 16;
     Config_Org_jp &= 3;
     Config_Attr_jp = (Config_New_jp != Config_Org_jp) ? 8 : 2;
     game_config_print_value_jp(Config_Attr_jp, &gcfg_round_scr_jp[Config_New_jp]);
-    n = Config_Item_jp = 3;
-    Config_New_jp = game_config_work.set4 & n;
-    Config_Org_jp = Game_setting.set4 & n;
+    Config_Item_jp = 3;
+    Config_New_jp = game_config_work.set4 & 3;
+    Config_Org_jp = Game_setting.set4 & 3;
     Config_Attr_jp = (Config_New_jp != Config_Org_jp) ? 8 : 2;
     game_config_print_value_jp(Config_Attr_jp, &gcfg_round_scr_jp[Config_New_jp]);
-    n = Config_Item_jp = 2;
+    Config_Item_jp = 2;
     Config_New_jp = game_config_work.set3;
     Config_Attr_jp = (Config_New_jp != Game_setting.set3) ? 8 : 2;
     game_config_print_gauge_jp(Config_New_jp, 0xFFFF, Config_Attr_jp);
-    n = Config_Item_jp = 1;
+    Config_Item_jp = 1;
     Config_New_jp = game_config_work.set2;
     Config_Attr_jp = (Config_New_jp != Game_setting.set2) ? 8 : 2;
     game_config_print_gauge_jp(Config_New_jp, 0xFFFF, Config_Attr_jp);
-    n = Config_Item_jp = 0;
+    Config_Item_jp = 0;
     Config_New_jp = game_config_work.level;
     Config_Attr_jp = (Config_New_jp != Game_setting.level) ? 8 : 2;
     game_config_print_gauge_jp(Config_New_jp, 0xFFFF, Config_Attr_jp);

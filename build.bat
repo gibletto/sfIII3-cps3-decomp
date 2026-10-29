@@ -9,6 +9,7 @@ set PATH=%SHC_LIB%;%PATH%
 rem the compiler revision that built 3rd Strike (see README.md, Compiler)
 set MDL_EQ_CONST=3
 set MDL_IV_WEB_ORDER=1
+set PEP_RETURN_EXIT=2
 if not exist "%SHC_TMP%" mkdir "%SHC_TMP%"
 if not exist obj mkdir obj
 if exist obj\warnings.log del obj\warnings.log

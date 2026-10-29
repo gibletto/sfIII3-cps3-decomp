@@ -240,7 +240,7 @@ void Setup_Pos_52(WORK_Other* ewk) {
         }
     } else {
         ix = chkNameAkuma(ewk->wu.dir_step);
-        ewk->wu.xyz[0].disp.pos = Pos_Data_52[ewk->master_id][ewk->wu.dir_step + ix][0] + 512;
-        ewk->wu.xyz[1].disp.pos = Pos_Data_52[ewk->master_id][ewk->wu.dir_step + ix][1] + 0;
+        ewk->wu.xyz[0].disp.pos = Pos_Data_52[ewk->master_id][ewk->wu.dir_step + ix][SEL_POS_X] + 512;
+        ewk->wu.xyz[1].disp.pos = Pos_Data_52[ewk->master_id][ewk->wu.dir_step + ix][SEL_POS_Y] + 0;
     }
 }

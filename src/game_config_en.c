@@ -122,8 +122,6 @@ s32 game_config_menu_en(void) {
 
 /* provisional name */
 void game_config_init_en(void) {
-    s8 n;
-
     Config_No_2++;
     Config_Exit_en = 0;
     init_render_lists();
@@ -132,36 +130,36 @@ void game_config_init_en(void) {
     tilemap_chunk_copy_16b((s16*)(SS_RAM + 0x8000), (char*)sys_font_cg, 0x8C);
     tilemap_fill_all(0, 32);
     tilemap_print_string(0, 0, 0xFFFF, config_title_str_tbl);
-    n = Config_Item_en = 6;
+    Config_Item_en = 6;
     Config_New_en = game_config_work.bonus & 1;
     Config_Old_en = Game_setting.bonus & 1;
     Config_Attr_en = (Config_New_en != Config_Old_en) ? 8 : 2;
     game_config_print_value_en(Config_Attr_en, &gcfg_bonus_str_en[Config_New_en]);
-    n = Config_Item_en = 5;
+    Config_Item_en = 5;
     Config_New_en = game_config_work.set5;
     Config_Attr_en = (Config_New_en != Game_setting.set5) ? 8 : 2;
     game_config_print_value_en(Config_Attr_en, &gcfg_event_str_en[Config_New_en]);
-    n = Config_Item_en = 4;
+    Config_Item_en = 4;
     Config_New_en = game_config_work.set4 / 16;
     Config_New_en &= 3;
     Config_Org_en = Game_setting.set4 / 16;
     Config_Org_en &= 3;
     Config_Attr_en = (Config_New_en != Config_Org_en) ? 8 : 2;
     game_config_print_value_en(Config_Attr_en, &gcfg_round_str_en[Config_New_en]);
-    n = Config_Item_en = 3;
-    Config_New_en = game_config_work.set4 & n;
-    Config_Org_en = Game_setting.set4 & n;
+    Config_Item_en = 3;
+    Config_New_en = game_config_work.set4 & 3;
+    Config_Org_en = Game_setting.set4 & 3;
     Config_Attr_en = (Config_New_en != Config_Org_en) ? 8 : 2;
     game_config_print_value_en(Config_Attr_en, &gcfg_round_str_en[Config_New_en]);
-    n = Config_Item_en = 2;
+    Config_Item_en = 2;
     Config_New_en = game_config_work.set3;
     Config_Attr_en = (Config_New_en != Game_setting.set3) ? 8 : 2;
     game_config_print_gauge_en(Config_New_en, 0xFFFF, Config_Attr_en);
-    n = Config_Item_en = 1;
+    Config_Item_en = 1;
     Config_New_en = game_config_work.set2;
     Config_Attr_en = (Config_New_en != Game_setting.set2) ? 8 : 2;
     game_config_print_gauge_en(Config_New_en, 0xFFFF, Config_Attr_en);
-    n = Config_Item_en = 0;
+    Config_Item_en = 0;
     Config_New_en = game_config_work.level;
     Config_Attr_en = (Config_New_en != Game_setting.level) ? 8 : 2;
     game_config_print_gauge_en(Config_New_en, 0xFFFF, Config_Attr_en);

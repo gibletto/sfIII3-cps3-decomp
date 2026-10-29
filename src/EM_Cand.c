@@ -135,7 +135,6 @@ s32 Check_EM_Buff(s16 grade, s16 flag) {
         return chr;
     }
     step = random_16_com() & 1;
-    (void)&((WORK*)15)->be_flag;
     if (step == 0) {
         step = -1;
     }

@@ -190,7 +190,9 @@ s8* b;
 
 
 /* provisional name */
-s32 staff_roll_main(void) {
+s32 staff_roll_main(flag)
+s8 flag;
+{
     s16 x;
     s16 y;
     s16 attr;
@@ -210,14 +212,13 @@ s32 staff_roll_main(void) {
         fy = (0x300 - (fy & 0x3FF)) & 0x3FF;
         Family_Set_R(6, fx, fy);
         roll_rate2 = 1;
-        staff_name_ptr = roll_stop = 0;
+        roll_stop = 0;
+        staff_name_ptr = 0;
         end_w.timer = 0;
         name_timer = 0;
         staff_roll_timer = 7830;
         break;
     case STAFF_ROLL:
-        ((WORK*)1)->id;
-        ((WORK*)0)->id;
         if (staff_roll_skip_check()) {
             staff_r_no = STAFF_END;
             end_w.timer = 0;
@@ -225,7 +226,7 @@ s32 staff_roll_main(void) {
             roll_rate_t2 = 1;
         }
         if (end_w.timer >= 0) {
-            end_w.timer -= roll_rate_t2;
+            end_w.timer = end_w.timer - roll_rate_t2;
             staff_roll_timer = staff_roll_timer - roll_rate_t2;
         } else {
             if (staff_roll_tbl[staff_name_ptr].str == 0) {

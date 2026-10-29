@@ -23,12 +23,10 @@
 #define R0_END          2       /* hidden for a frame */
 #define R0_KILL         3       /* (default) put the work back */
 
-static void judge_rno_disp(s16 rno, s16 old_rno) {}
-
 void effect_00_move(WORK_Other_JUDGE* judge) {
     WORK_Other_JUDGE* ewk = judge;
     u16 dip;
-    ewk->fade_cja.l = ewk->fade_cja.l + 0x2000;
+    ewk->fade_cja.l += 0x2000;
     ewk->fade_cja.w = ewk->fade_cja.w & 3;
     switch (ewk->wu.routine_no[0]) {
     case R0_INIT:
@@ -53,8 +51,7 @@ void effect_00_move(WORK_Other_JUDGE* judge) {
             break;
         }
         dip = exsw_1 & 0x3F00;
-        ewk->wu.spr.gfx_cells = 0;
-        ewk->ja_disp_bit = 0;
+        ewk->ja_disp_bit = ewk->wu.spr.gfx_cells = 0;
         if (judge_disp_all) {
             ewk->ja_disp_bit = jdb[15];
             ewk->wu.spr.gfx_cells = jdb2[15];
@@ -67,7 +64,6 @@ void effect_00_move(WORK_Other_JUDGE* judge) {
             dip = (dip >> 8) & 0xF;
             ewk->ja_disp_bit = jdb[dip];
             ewk->wu.spr.gfx_cells = jdb2[dip];
-            judge_rno_disp(ewk->wu.routine_no[dip], ewk->wu.old_rno[dip]);
         }
     out:
         renewal_table_address(ewk, ewk->my_master);
