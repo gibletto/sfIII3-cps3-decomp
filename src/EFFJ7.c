@@ -146,7 +146,6 @@ void check_new_color_data(WORK* wk) {
 
 
 
-/* provisional name */
 void get_new_color_data(WORK* wk, ColorCode* trom, s16* tram) {
     s16 i;
     const s16* data;

@@ -75,7 +75,6 @@ void effect_M0_move(WORK_Other* ewk) {
 
 
 
-/* provisional name */
 void animal_init(WORK_Other* ewk) {
     s16 work_l = bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset;
     s16 work_r = bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset;
@@ -398,7 +397,6 @@ void don_run_set(WORK_Other* ewk) {
 }
 
 
-/* provisional name */
 s32 effect_M0_init(u8 pl_rl, u8 animal_type) {
     WORK_Other* ewk;
     s16 ix;

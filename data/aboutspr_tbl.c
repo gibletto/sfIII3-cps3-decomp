@@ -1,7 +1,7 @@
 /*
  * ABOUTSPR_TBL.C  character sprite cell tables
  *
- * kage_width_tbl is the shadow width by height above the ground; make_char_cells_tbl lists the
+ * gkw_table is the shadow width by height above the ground; make_char_cells_tbl lists the
  * cell builders for each sprite flip (make_char_cells_n/x/y/xy); cell_size_tbl and
  * flip_attr_tbl give the sprite size and flip attribute codes; judge_area_code_tbl is the cell
  * code of each hit/hurt box kind drawn by set_judge_area_sprite; cell_zoom_tbl is the zoom
@@ -24,7 +24,7 @@ extern void make_char_cells_x();
 extern void make_char_cells_xy();
 extern void make_char_cells_y();
 
-const s16 kage_width_tbl[64] = {
+const s16 gkw_table[64] = {
     0, 1, 2, 3, 4, 4, 5, 5,
     5, 6, 6, 6, 7, 7, 7, 7,
     8, 8, 8, 8, 9, 9, 9, 9,

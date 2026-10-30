@@ -4,7 +4,7 @@
  * op_bg0_0015_tbl is the six-step pattern list passed to oh_opening_demo by an opening BG0
  * scene. The rest are indexed by the ending's character number: end_bg_index_tbl picks the
  * ending's entry in end_bg_gfx_tbl (scroll graphics source, size and preparation data),
- * end_scno_tbl gives its number of BG layers, end_color_tbl its colour load, staff_fade_tbl
+ * end_use_scr gives its number of BG layers, end_color_tbl its colour load, staff_fade_tbl
  * the fade that closes the ending scenes and end_fade_tbl the fade from its closing picture
  * into the staff roll. end_cg_src_tbl holds the screen data of each character's closing
  * picture, and end_map_data_0 .. 3 are the layout records of the four ending BG layers,
@@ -42,7 +42,7 @@ const s16 op_bg0_0015_tbl[6] = {
 };
 
 /* provisional name */
-/* A per-player number like end_scno_tbl (player 15 shares 14, players 21-23 and 0 give 5), stored after
+/* A per-player number like end_use_scr (player 15 shares 14, players 21-23 and 0 give 5), stored after
    op_bg0_0015_tbl. Nothing in the program refers to it. */
 const s16 end_stage_no_tbl[24] = {
     5, 1, 2, 3, 4, 5, 6, 7,
@@ -50,7 +50,7 @@ const s16 end_stage_no_tbl[24] = {
     16, 17, 18, 19, 20, 5, 5, 5,
 };
 
-const s16 end_scno_tbl[24] = {
+const s16 end_use_scr[24] = {
     0, 1, 3, 2, 3, 2, 2, 2,
     1, 1, 3, 2, 2, 2, 3, 3,
     1, 3, 2, 2, 2, 2, 2, 2,

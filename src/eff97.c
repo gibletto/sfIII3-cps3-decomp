@@ -44,7 +44,7 @@ void effect_97_move(WORK_Other* ewk) {
     case R0_MOVE:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
-            if (plw[ewk->master_id].wu.routine_no[2] == 1 && plw[ewk->master_id].wu.routine_no[3] == 0) {
+            if (plw[ewk->master_id].wu.routine_no[2] == 1 && plw[ewk->master_id].wu.routine_no[3] == RN3_START) {
                 ewk->wu.routine_no[0]++;
                 ewk->wu.old_rno[0] = 16;
             }

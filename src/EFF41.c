@@ -118,7 +118,7 @@ void eff41_process_00(WORK_Other* ewk, PLW* mwk) {
 
 void eff41_process_01(WORK_Other* ewk, PLW* mwk) {
     const s16 (*t)[5];
-    switch ((u8)ewk->wu.cg_type) {
+    switch (ewk->wu.cg_type) {
     case 1:
         gauge_minus(ewk, mwk);
         ewk->wu.routine_no[1] = R1_LOW;

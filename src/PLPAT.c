@@ -278,7 +278,7 @@ void Attack_01000(PLW* wk) {
         break;
     case A01_MOVE:
         char_move(&wk->wu);
-        if ((u8)wk->wu.cg_type == 1) {
+        if (wk->wu.cg_type == 1) {
             add_mvxy_speed(&wk->wu);
             wk->wu.routine_no[3] = A01_AIR;
             wk->wu.cg_type = 0;
@@ -338,7 +338,7 @@ void Attack_03000(PLW* wk) {
             hoken_muriyari_chakuchi(wk);
             wk->wu.rl_flag = wk->wu.rl_waza;
             setup_lvdir_after_autodir(wk);
-            Normal_18000_init_unit(wk, (u8)wk->wu.pat_status);
+            Normal_18000_init_unit(wk, wk->wu.pat_status);
         }
         set_char_move_init(&wk->wu, 4, wk->as->char_ix);
         break;
@@ -357,7 +357,7 @@ void Attack_03000(PLW* wk) {
             break;
         }
         check_ja_nmj_dummy_RTNM(wk);
-        if ((u8)wk->wu.cg_type == 0x40) {
+        if (wk->wu.cg_type == 0x40) {
             if (!(wk->spmv_ng_flag & 0x100000) && ja_nmj_rno_change(&wk->wu)) {
                 wk->wu.routine_no[1] = PLAYER_NORMAL;
                 wk->wu.routine_no[3] = A03_MOVE;
@@ -375,7 +375,7 @@ void Attack_03000(PLW* wk) {
 
 s32 ja_nmj_rno_change(WORK* wk) {
     s16 rnum = 0;
-    switch ((u8)wk->pat_status) {
+    switch (wk->pat_status) {
     case 20:
         wk->routine_no[2] = 21;
         rnum = 1;
@@ -433,24 +433,18 @@ void check_ja_nmj_dummy_RTNM(PLW* wk) {
         break;
     case NMJ_ACTIVE:
         if ((wk->wu.cg_ja.atix == 0) && (wk->wu.cg_ja.caix == 0)) {
-            goto cancel;
-        }
-        if (wk->wu.att_hit_ok) {
+        } else if (wk->wu.att_hit_ok) {
             break;
         }
-    cancel:
         wk->ja_nmj_cnt = get_cjdR(wk);
         wk->ja_nmj_rno = NMJ_COUNT;
         break;
     case NMJ_COUNT:
         if ((wk->wu.cg_ja.atix == 0) && (wk->wu.cg_ja.caix == 0)) {
-            goto count;
-        }
-        if (wk->wu.att_hit_ok) {
+        } else if (wk->wu.att_hit_ok) {
             wk->ja_nmj_rno = NMJ_ACTIVE;
             break;
         }
-    count:
         if (--wk->ja_nmj_cnt) {
             break;
         }
@@ -477,9 +471,7 @@ void check_ja_nmj_dummy_RTNM(PLW* wk) {
 s32 get_cjdR(PLW* wk) {
     s16 w_ix = (wk->wu.kind_of_waza & 6) + ((wk->wu.hf.hit.player & 0xA2) != 0);
     if (wk->wu.att_hit_ok) {
-        goto case0;
-    }
-    if (wk->wu.hf.hit.player != 0) {
+    } else if (wk->wu.hf.hit.player != 0) {
         if (wk->wu.hf.hit.player & 3) {
             goto case1;
         }
@@ -490,7 +482,6 @@ s32 get_cjdR(PLW* wk) {
             goto case3;
         }
     }
-case0:
     return cjdr_karaburi_table[wk->player_number][w_ix];
 case1:
     return cjdr_hits_table[wk->player_number][w_ix];
@@ -541,7 +532,7 @@ void Attack_05000(PLW* wk) {
         break;
     case A05_MOVE:
         char_move(&wk->wu);
-        if ((u8)wk->wu.cg_type == 1) {
+        if (wk->wu.cg_type == 1) {
             add_mvxy_speed(&wk->wu);
             wk->wu.routine_no[3] = A05_AIR;
             wk->wu.cg_type = 0;
@@ -598,7 +589,7 @@ void Attack_08000(PLW* wk) {
         if (wk->wu.xyz[1].disp.pos <= 0) {
             wk->wu.rl_flag = wk->wu.rl_waza;
             wk->wu.xyz[1].disp.pos = 0;
-            ixx = (((u8)wk->wu.pat_status - 20) / 2 & 3) + 9;
+            ixx = ((wk->wu.pat_status - 20) / 2 & 3) + 9;
             if (ixx > 11) {
                 ixx = 10;
             }
@@ -610,10 +601,10 @@ void Attack_08000(PLW* wk) {
         break;
     case A08_CUE:
         char_move(&wk->wu);
-        if ((u8)wk->wu.cg_type == 1) {
+        if (wk->wu.cg_type == 1) {
             wk->wu.routine_no[3]++;
         }
-        if ((u8)wk->wu.cg_type == 20) {
+        if (wk->wu.cg_type == 20) {
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.cg_type = 0;
             wk->wu.mvxy.index++;
@@ -621,7 +612,7 @@ void Attack_08000(PLW* wk) {
         break;
     case A08_MOVE:
         jumping_union_process(&wk->wu, 3);
-        if ((wk->wu.routine_no[3] != A08_RUN) && ((u8)wk->wu.cg_type == 20)) {
+        if ((wk->wu.routine_no[3] != A08_RUN) && (wk->wu.cg_type == 20)) {
             add_to_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.cg_type = 0;
             wk->wu.mvxy.index++;
@@ -643,18 +634,18 @@ void Attack_09000(PLW* wk) {
         get_cancel_timer(wk);
         set_char_move_init(&wk->wu, 5, wk->as->char_ix);
         setup_mvxy_data(&wk->wu, wk->as->data_ix);
-        if ((u8)wk->wu.cg_type == 20) {
+        if (wk->wu.cg_type == 20) {
             wk->wu.cg_type = 0;
             wk->wu.rl_flag = wk->wu.rl_waza;
         }
         break;
     case A09_MOVE:
         char_move(&wk->wu);
-        if ((u8)wk->wu.cg_type == 20) {
+        if (wk->wu.cg_type == 20) {
             wk->wu.cg_type = 0;
             wk->wu.rl_flag = wk->wu.rl_waza;
         }
-        if ((u8)wk->wu.cg_type == 1) {
+        if (wk->wu.cg_type == 1) {
             add_mvxy_speed(&wk->wu);
             wk->wu.routine_no[3] = A09_AIR;
             wk->wu.cg_type = 0;

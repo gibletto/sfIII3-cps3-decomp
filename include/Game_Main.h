@@ -33,10 +33,10 @@ void Game2_1(void);
 void Game2_5(void);
 void Game2_3(void);
 void Time_Control(void);
-void game_phase_dispatch(void);
+void Game(void);
 s32 Check_Disp_Ranking(void);
 s16 Disp_Rank_Sub(s16 PL_id);
-void match_state_0_fight(void);
+void Loop_Demo(void);
 void Game2_2(void);
 
 s32 Ck_Coin(void);

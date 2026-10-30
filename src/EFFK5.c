@@ -89,7 +89,6 @@ void effect_K5_move(WORK_Other* ewk) {
 
 
 
-/* provisional name */
 void K5_main_process(WORK* ewk, WORK* mwk, MVJ* mvj) {
     s16 i;
     switch (ewk->routine_no[1]) {

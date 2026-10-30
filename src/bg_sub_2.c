@@ -78,7 +78,6 @@ void (*scr_x_mv_jp[35])() = {
 #pragma inline(remake_x_mvstep)
 
 
-/* provisional name */
 void check_cg_zoom(void) {
     s16 i;
     s16 zoom_wk;
@@ -607,7 +606,6 @@ void scr_12_21_2(void) {
 
 
 
-/* provisional name */
 void bg_base_x_move_sub(void) {
     s16 work0;
     s16 work1;
@@ -663,7 +661,6 @@ static s32 remake_x_mvstep(s16 x) {
 
 
 
-/* provisional name */
 void bg_base_x_move_check() {
     s16 mvstep, old_work;
 

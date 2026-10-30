@@ -64,7 +64,7 @@ void Att_PL20_AT1(PLW* wk) {
         char_move(&wk->wu);
         add_mvxy_speed(&wk->wu);
         cal_mvxy_speed(&wk->wu);
-        switch ((u8)wk->wu.cg_type) {
+        switch (wk->wu.cg_type) {
         case 20:
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
@@ -93,7 +93,7 @@ void Att_PL20_AT1(PLW* wk) {
         break;
     case AT1_CUE:
         char_move(&wk->wu);
-        if ((u8)wk->wu.cg_type == 20) {
+        if (wk->wu.cg_type == 20) {
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
             wk->wu.routine_no[3] = AT1_MOVE;
@@ -177,7 +177,7 @@ void Att_PL20_AT3(PLW* wk) {
         char_move((WORK*)wk);
         add_mvxy_speed((WORK*)wk);
         cal_mvxy_speed((WORK*)wk);
-        switch ((u8)wk->wu.cg_type) {
+        switch (wk->wu.cg_type) {
         case 20:
             setup_mvxy_data((WORK*)wk, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
@@ -206,7 +206,7 @@ void Att_PL20_AT3(PLW* wk) {
         break;
     case AT3_CUE:
         char_move((WORK*)wk);
-        if ((u8)wk->wu.cg_type == 20) {
+        if (wk->wu.cg_type == 20) {
             setup_mvxy_data((WORK*)wk, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
             wk->wu.routine_no[3] = AT3_MOVE;

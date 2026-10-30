@@ -3,9 +3,9 @@
  *
  * Effect F9 is the ending message window. effect_F9_move picks the message by Country and
  * Language (effF9_mes_jp / _en / _es / _pt), loads its graphics, types it out a few characters
- * every three frames and calls Next_Talk_Message when its display time runs out. The ending
+ * every three frames and calls Rewrite when its display time runs out. The ending
  * scripts (end_*.c) drive it through Rewrite_End_Message, Rewrite_Talk_Message,
- * Set_Direct_Message and Next_Talk_Message, which read the per-character scene lists in
+ * Set_Direct_Message and Rewrite, which read the per-character scene lists in
  * txt_no_tbl (message + time pairs); effF9_talk_init opens the window on BG3.
  */
 
@@ -47,7 +47,7 @@
 
 
 
-extern const u16 efff9_no_scene[];
+extern const u16 plXXtxt0[];
 extern const EFFF9_MESSAGE effF9_mes_en_0[];
 extern const EFFF9_MESSAGE effF9_mes_en_10[];
 extern const EFFF9_MESSAGE effF9_mes_en_11[];
@@ -298,140 +298,121 @@ const EFFF9_MESSAGE* effF9_mes_pt[21] = {
     effF9_mes_jp_14,
     effF9_mes_jp_14,
 };
-/* provisional name */
-const u16* txt_no_00[6] = {
-    efff9_no_scene, pl01txt1,
+const u16* alex[6] = {
+    plXXtxt0, pl01txt1,
     pl01txt2, pl01txt3,
     pl01txt4, pl01txt5,
 };
-/* provisional name */
-const u16* txt_no_02[6] = {
-    efff9_no_scene, pl02txt1,
+const u16* ryu[6] = {
+    plXXtxt0, pl02txt1,
     pl02txt2, pl02txt3,
     pl02txt4, pl02txt5,
 };
-/* provisional name */
-const u16* txt_no_03[7] = {
-    efff9_no_scene, pl03txt1,
+const u16* yun[7] = {
+    plXXtxt0, pl03txt1,
     pl03txt2, pl03txt3,
     pl03txt4, pl03txt5,
     pl03txt6,
 };
-/* provisional name */
-const u16* txt_no_04[3] = {
-    efff9_no_scene, pl04txt1,
+const u16* dudley[3] = {
+    plXXtxt0, pl04txt1,
     pl04txt2,
 };
-/* provisional name */
-const u16* txt_no_05[7] = {
-    efff9_no_scene, pl05txt1,
+const u16* necro[7] = {
+    plXXtxt0, pl05txt1,
     pl05txt2, pl05txt3,
     pl05txt4, pl05txt5,
     pl05txt6,
 };
-/* provisional name */
-const u16* txt_no_06[6] = {
-    efff9_no_scene, pl06txt1,
+const u16* hugo[6] = {
+    plXXtxt0, pl06txt1,
     pl06txt2, pl06txt3,
     pl06txt4, pl06txt5,
 };
-/* provisional name */
-const u16* txt_no_07[5] = {
-    efff9_no_scene, pl07txt1,
+const u16* ibuki[5] = {
+    plXXtxt0, pl07txt1,
     pl07txt2, pl07txt3,
     pl07txt4,
 };
-/* provisional name */
-const u16* txt_no_08[5] = {
-    efff9_no_scene, pl08txt1,
+const u16* elena[5] = {
+    plXXtxt0, pl08txt1,
     pl08txt2, pl08txt3,
     pl08txt4,
 };
-/* provisional name */
-const u16* txt_no_09[7] = {
-    efff9_no_scene, pl09txt1,
+const u16* oro[7] = {
+    plXXtxt0, pl09txt1,
     pl09txt2, pl09txt3,
     pl09txt4, pl09txt5,
     pl09txt6,
 };
-/* provisional name */
-const u16* txt_no_10[7] = {
-    efff9_no_scene, pl10txt1,
+const u16* yang[7] = {
+    plXXtxt0, pl10txt1,
     pl10txt2, pl10txt3,
     pl10txt4, pl10txt5,
     pl10txt6,
 };
-/* provisional name */
-const u16* txt_no_11[6] = {
-    efff9_no_scene, pl11txt1,
+const u16* ken[6] = {
+    plXXtxt0, pl11txt1,
     pl11txt2, pl11txt3,
     pl11txt4, pl11txt5,
 };
-/* provisional name */
-const u16* txt_no_12[7] = {
-    efff9_no_scene, pl12txt1,
+const u16* sean[7] = {
+    plXXtxt0, pl12txt1,
     pl12txt2, pl12txt3,
     pl12txt4, pl12txt5,
     pl12txt6,
 };
-/* provisional name */
-const u16* txt_no_13[5] = {
-    efff9_no_scene, pl13txt1,
+const u16* urien[5] = {
+    plXXtxt0, pl13txt1,
     pl13txt2, pl13txt3,
     pl13txt4,
 };
-/* provisional name */
-const u16* txt_no_14[6] = {
-    efff9_no_scene, pl14txt1,
+const u16* gouki[6] = {
+    plXXtxt0, pl14txt1,
     pl14txt2, pl14txt3,
     pl14txt4, pl14txt5,
 };
-/* provisional name */
-const u16* txt_no_16[6] = {
-    efff9_no_scene, pl15txt1,
+const u16* chun[6] = {
+    plXXtxt0, pl15txt1,
     pl15txt2, pl15txt3,
     pl15txt4, pl15txt5,
 };
-/* provisional name */
-const u16* txt_no_17[8] = {
-    efff9_no_scene, pl16txt1,
+const u16* makoto[8] = {
+    plXXtxt0, pl16txt1,
     pl16txt2, pl16txt3,
     pl16txt4, pl16txt5,
     pl16txt6, pl16txt7,
 };
-/* provisional name */
-const u16* txt_no_18[7] = {
-    efff9_no_scene, pl17txt1,
+const u16* q[7] = {
+    plXXtxt0, pl17txt1,
     pl17txt2, pl17txt3,
     pl17txt4, pl17txt5,
     pl17txt6,
 };
-/* provisional name */
-const u16* txt_no_19[6] = {
-    efff9_no_scene, pl18txt1,
+const u16* twelve[6] = {
+    plXXtxt0, pl18txt1,
     pl18txt2, pl18txt3,
     pl18txt4, pl18txt5,
 };
-/* provisional name */
-const u16* txt_no_20[8] = {
-    efff9_no_scene, pl19txt1,
+const u16* remy[8] = {
+    plXXtxt0, pl19txt1,
     pl19txt2, pl19txt3,
     pl19txt4, pl19txt5,
     pl19txt6, pl19txt7,
 };
 /* provisional name */
 const u16* txt_no_26[2] = {
-    efff9_no_scene, pl15txt1,
+    plXXtxt0, pl15txt1,
 };
 /* 020073B8 */
 const u16** txt_no_tbl[28] = {
-    txt_no_00, txt_no_00, txt_no_02, txt_no_03,
-    txt_no_04, txt_no_05, txt_no_06, txt_no_07,
-    txt_no_08, txt_no_09, txt_no_10, txt_no_11,
-    txt_no_12, txt_no_13, txt_no_14, txt_no_14,
-    txt_no_16, txt_no_17, txt_no_18, txt_no_19,
-    txt_no_20, txt_no_14, txt_no_14, txt_no_14,
-    txt_no_14, txt_no_14, txt_no_26, txt_no_26,
+    alex, alex, ryu, yun,
+    dudley, necro, hugo, ibuki,
+    elena, oro, yang, ken,
+    sean, urien, gouki, gouki,
+    chun, makoto, q, twelve,
+    remy, gouki, gouki, gouki,
+    gouki, gouki, txt_no_26, txt_no_26,
 };
 
 
@@ -555,7 +536,7 @@ void effect_F9_move(WORK_Other_CONN* ewk) {
             }
         }
         if (ewk->wu.old_rno[3] == 0) {
-            Next_Talk_Message();
+            Rewrite();
             ewk->wu.disp_flag = 0;
             ewk->wu.routine_no[0] = R0_END;
             break;
@@ -682,7 +663,7 @@ s32 Rewrite_End_Message(u16 mes_no) {
     efff9_wk_set((WORK_Other_CONN*)ewk);
     efff9_txt_point = 2;
     efff9_txt_no_adrs = txt_no_tbl[efff9_PL_NO];
-    efff9_txt_scene_adrs = (u16*)efff9_txt_no_adrs[mes_no];
+    efff9_txt_scene_adrs = efff9_txt_no_adrs[mes_no];
     efff9_message = efff9_txt_scene_adrs[0];
     ewk->wu.old_rno[3] = *(s16*)(efff9_txt_scene_adrs + 1);
     mes_already = efff9_message;
@@ -706,7 +687,7 @@ s32 Rewrite_Talk_Message(u16 mes_no) {
     effF9_talk_wk_set(ewk);
     efff9_txt_point = 2;
     efff9_txt_no_adrs = txt_no_tbl[efff9_PL_NO];
-    efff9_txt_scene_adrs = (u16*)efff9_txt_no_adrs[mes_no];
+    efff9_txt_scene_adrs = efff9_txt_no_adrs[mes_no];
     efff9_message = efff9_txt_scene_adrs[0];
     ewk->wu.old_rno[3] = *(s16*)(efff9_txt_scene_adrs + 1);
     mes_already = efff9_message;
@@ -733,8 +714,7 @@ s32 Set_Direct_Message(s16 mes) {
 
 
 
-/* provisional name */
-s32 Next_Talk_Message(void) {
+s32 Rewrite(void) {
     WORK_Other* ewk;
     s16 ix;
     if ((ix = pull_effect_work(4)) == -1) {
@@ -746,7 +726,7 @@ s32 Next_Talk_Message(void) {
     ewk->master_player = efff9_PL_NO;
     efff9_wk_set((WORK_Other_CONN*)ewk);
     efff9_txt_no_adrs = txt_no_tbl[efff9_PL_NO];
-    efff9_txt_scene_adrs = (u16*)efff9_txt_no_adrs[keep_mes_no];
+    efff9_txt_scene_adrs = efff9_txt_no_adrs[keep_mes_no];
     efff9_message = efff9_txt_scene_adrs[efff9_txt_point];
     ewk->wu.old_rno[3] = efff9_txt_scene_adrs[efff9_txt_point + 1];
     efff9_txt_point += 2;

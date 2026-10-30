@@ -284,7 +284,7 @@ void eff35_0004(WORK_Other* ewk) {
         break;
     case R1_GOOD:
         char_move(&ewk->wu);
-        if ((u8)ewk->wu.cg_type == 9) {
+        if (ewk->wu.cg_type == 9) {
             ewk->wu.routine_no[1]++;
             set_char_move_init(&ewk->wu, 0, 8);
         }

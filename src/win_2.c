@@ -108,7 +108,7 @@ void Win_1st(void) {
     All_Clear_Suicide();
     System_all_clear_Wait();
     base_y_pos = 40;
-    bg_etc_write(Win_Intro_Type_Data[My_char[Winner_id]]);
+    bg_etc_write(PL_Color_Data[My_char[Winner_id]]);
     Setup_Virtual_BG(0, 0x200, 0);
     Setup_Virtual_BG(2, 0x300, 0);
     Setup_Virtual_BG(1, 0x200, 0);
@@ -185,7 +185,7 @@ void Win_3rd(void) {
         if (Switch_Screen_Revival()) {
             M_No0++;
             M_Timer = 90;
-            bgm_request(4);
+            BGM_Request(4);
             Forbid_Break = -1;
             Ignore_Entry[LOSER] = 0;
             Target_BG_X[2] = bg_w.bgw[2].wxy[0].disp.pos - 0x180;
@@ -257,7 +257,7 @@ void Lose_1st(void) {
     All_Clear_Suicide();
     System_all_clear_Wait();
     base_y_pos = 40;
-    bg_etc_write(Win_Intro_Type_Data[My_char[Winner_id]]);
+    bg_etc_write(PL_Color_Data[My_char[Winner_id]]);
     Setup_Virtual_BG(0, 0x200, 0);
     Setup_Virtual_BG(2, 0x300, 0);
     Setup_Virtual_BG(1, 0x200, 0);
@@ -313,7 +313,7 @@ void Lose_3rd(void) {
         if (Switch_Screen_Revival() != 0) {
             M_No0++;
             M_Timer = 90;
-            bgm_request(4);
+            BGM_Request(4);
             Forbid_Break = -1;
             Ignore_Entry[LOSER] = 0;
         }
@@ -463,7 +463,7 @@ void GameOver_1st(void) {
         bg_mvxy.a[0].sp = 0xE0000;
         bg_mvxy.d[0].sp = 0;
         effect_A9_init(32, 5, 18, 0);
-        bgm_request(9);
+        BGM_Request(9);
         Next_Step = 0;
         effect_58_init(12, 1, 3);
         effect_58_init(12, 1, 1);

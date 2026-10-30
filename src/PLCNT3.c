@@ -32,7 +32,6 @@
 #define BD_POSE_INIT    2       /* the pause and the win poses */
 #define BD_POSE         3       /* until both poses are done */
 
-/* provisional name */
 s32 Player_control_bonus2(void) {
     s16 i;
     pl_eff_disp_stop = 0;
@@ -41,8 +40,8 @@ s32 Player_control_bonus2(void) {
     }
     if (!Game_pause && !EXE_flag) {
 run:
-        pcon_timer++;
-        pcon_timer &= 0x7FFF;
+        players_timer++;
+        players_timer &= 0x7FFF;
         player_bonus2_process[pcon_rno[0]]();
         check_body_touch2();
         check_damage_hosei_bonus();
@@ -84,7 +83,7 @@ run:
         sort_push_request((WORK*)&plw[0]);
         sort_push_request((WORK*)&plw[1]);
     }
-    if (pcon_rno[0] == PCON_DIE && pcon_rno[1] == SETTLE_KO && pcon_rno[2] == 2) {
+    if (pcon_rno[0] == PCON_DIE && pcon_rno[1] == SETTLE_KO && pcon_rno[2] == KO_FOOTWORK) {
         return 1;
     }
     return 0;

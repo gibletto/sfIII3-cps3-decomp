@@ -42,7 +42,6 @@
 #include "effe6.h"
 #include "aboutspr.h"
 #include "end_18.h"
-/* provisional name */
 void end_18000(u16 pl_num) {
     switch (end_w.r_no_1) {
     case END1_INIT:
@@ -52,7 +51,7 @@ void end_18000(u16 pl_num) {
         load_char_gfx(0xE3B0, 1);
         common_end_init01();
         end_1800_cell_set();
-        bgm_request(0x2D);
+        BGM_Request(0x2D);
         end_w.timer = timer_18_tbl[end_w.r_no_2];
         break;
     case END1_SCENES:
@@ -63,7 +62,7 @@ void end_18000(u16 pl_num) {
                 end_w.r_no_1++;
                 end_w.end_flag = 1;
                 load_any_color(0x24);
-                bgm_request(0x2E);
+                BGM_Request(0x2E);
                 fadeout_to_staff_roll();
                 end_scn_pos_set2();
                 end_bg_pos_hosei2();

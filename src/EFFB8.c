@@ -3,7 +3,7 @@
  *
  * Effect B8 is the win message shown after a match. effect_B8_init (called from Win.c) takes
  * the winner and a delay and chooses the message: sometimes a line for the defeated character,
- * otherwise one of eight general lines picked by b8_sel_1_by_8 without repeating the last two.
+ * otherwise one of eight general lines picked by effb8_sel_1_by_8 without repeating the last two.
  * effect_B8_move waits the delay, picks effB8_mes_jp / _en / _es / _pt by Country and Language,
  * loads the line's graphics and connected sprites, slides the banner in from the right and
  * holds it until Suicide[2]; on death it purges the line's graphics. With extra switch 2 bit 2
@@ -175,7 +175,7 @@ const EFFB8_MESSAGE* effB8_mes_pt[21] = {
 };
 
 
-#pragma inline(b8_sel_1_by_8)
+#pragma inline(effb8_sel_1_by_8)
 
 void effect_B8_move(WORK_Other_CONN* ewk) {
     const CONN* conn_data;
@@ -377,8 +377,7 @@ void effect_B8_move(WORK_Other_CONN* ewk) {
     }
 }
 
-/* provisional name */
-static u16 b8_sel_1_by_8(void) {
+static u16 effb8_sel_1_by_8(void) {
     u16 mes_no;
     mes_no = (random_16_com() >> 1) & 7;
     old_mes_no2 = old_mes_no2 & 7;

@@ -50,12 +50,9 @@ s32 check_full_gauge_attack(PLW* wk, s8 always) {
         return 0;
     }
     if (Bonus_Game_Flag == BONUS_CAR && wk->bs2_on_car) {
-        goto ground;
-    }
-    if (wk->wu.xyz[1].disp.pos > 0) {
+    } else if (wk->wu.xyz[1].disp.pos > 0) {
         goto air;
     }
-ground:
     if (wk->spmv_ng_flag & 0x40000000) {
         return 0;
     }
@@ -173,12 +170,9 @@ s32 check_full_gauge_attack2(PLW* wk, s8 always) {
         return 0;
     }
     if (Bonus_Game_Flag == BONUS_CAR && wk->bs2_on_car) {
-        goto ground;
-    }
-    if (wk->wu.xyz[1].disp.pos > 0) {
+    } else if (wk->wu.xyz[1].disp.pos > 0) {
         goto air;
     }
-ground:
     if (wk->spmv_ng_flag & 0x40000000) {
         return 0;
     }
@@ -299,12 +293,9 @@ s32 check_super_arts_attack(PLW* wk) {
         wk->permited_koa |= 1;
     }
     if (Bonus_Game_Flag == BONUS_CAR && wk->bs2_on_car) {
-        goto ground;
-    }
-    if (wk->wu.xyz[1].disp.pos > 0) {
+    } else if (wk->wu.xyz[1].disp.pos > 0) {
         goto air;
     }
-ground:
     if (wk->spmv_ng_flag & 0x40000000) {
         return 0;
     }
@@ -404,12 +395,9 @@ s32 execute_super_arts(PLW* wk) {
         return 0;
     }
     if (Bonus_Game_Flag == BONUS_CAR && wk->bs2_on_car) {
-        goto ground;
-    }
-    if (wk->wu.xyz[1].disp.pos > 0) {
+    } else if (wk->wu.xyz[1].disp.pos > 0) {
         goto air;
     }
-ground:
     if (wk->spmv_ng_flag & 0x40000000) {
         return 0;
     }
@@ -476,12 +464,9 @@ s32 check_special_attack(PLW* wk) {
         return 0;
     }
     if (Bonus_Game_Flag == BONUS_CAR && wk->bs2_on_car) {
-        goto ground;
-    }
-    if (wk->wu.xyz[1].disp.pos > 0) {
+    } else if (wk->wu.xyz[1].disp.pos > 0) {
         goto air;
     }
-ground:
     if (wk->spmv_ng_flag & 0x10000000) {
         return 0;
     }
@@ -644,12 +629,9 @@ s32 check_leap_attack(PLW* wk) {
         return 0;
     }
     if (Bonus_Game_Flag == BONUS_CAR && wk->bs2_on_car) {
-        goto go;
-    }
-    if (wk->wu.xyz[1].disp.pos > 0) {
+    } else if (wk->wu.xyz[1].disp.pos > 0) {
         return 0;
     }
-go:
     setup_comm_back(&wk->wu);
     wk->as = &asstbl_lv_D010[wk->player_number][0].as;
     hissatsu_setup_union(wk, wk->cp->waza_r[14][0]);

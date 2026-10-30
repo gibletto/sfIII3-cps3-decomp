@@ -427,18 +427,17 @@ s32 trans_char_cells(WORK* wk) {
         if (wk->spr.done_rl != wk->rl_flag) {
             goto both;
         }
-        goto flip;
+    } else {
+        if (wk->spr.done_rl == wk->rl_flag) {
+            return char_cell_flip_none(wk);
+        }
+        if (!char_cell_flip_x(wk)) {
+            return 0;
+        }
+        wk->spr.done_rl = wk->rl_flag;
+        wk->spr.sprite_flip = wk->cg_flip ^ wk->rl_flag;
+        return 1;
     }
-    if (wk->spr.done_rl == wk->rl_flag) {
-        return char_cell_flip_none(wk);
-    }
-    if (!char_cell_flip_x(wk)) {
-        return 0;
-    }
-    wk->spr.done_rl = wk->rl_flag;
-    wk->spr.sprite_flip = wk->cg_flip ^ wk->rl_flag;
-    return 1;
-    flip:
     if (!char_cell_flip_tbl[wk->spr.done_flip][wk->cg_flip](wk)) {
         return 0;
     }
@@ -519,16 +518,14 @@ void make_char_cells_n(WORK* wk, CHAR_CELL* cell, CHAR_SPRITE* spr, u16 count, s
     s16 i;
 
     for (i = 0; i < count; i++) {
-        CHAR_SPRITE* s;
-        CHAR_CELL* c;
         u16 size;
-        (s = &spr[i])->x = (c = &cell[i])->code + x;
-        s->y = c->col + y;
-        s->sx = (c->x + wk->cg_ofs_x) & 0x3FF;
-        s->sy = (-c->y + wk->spr.cg_ofs_y) & 0x3FF;
-        size = *(u8*)&c->y >> 4;
-        s->attr = size | 0x300;
-        s->size = cell_size_tbl[size];
+        spr[i].x = cell[i].code + x;
+        spr[i].y = cell[i].col + y;
+        spr[i].sx = (cell[i].x + wk->cg_ofs_x) & 0x3FF;
+        spr[i].sy = (-cell[i].y + wk->spr.cg_ofs_y) & 0x3FF;
+        size = *(u8*)&cell[i].y >> 4;
+        spr[i].attr = size | 0x300;
+        spr[i].size = cell_size_tbl[size];
     }
 }
 
@@ -539,16 +536,14 @@ void make_char_cells_x(WORK* wk, CHAR_CELL* cell, CHAR_SPRITE* spr, u16 count, s
     s16 i;
 
     for (i = 0; i < count; i++) {
-        CHAR_SPRITE* s;
-        CHAR_CELL* c;
         u16 size;
-        (s = &spr[i])->x = (c = &cell[i])->code + x;
-        s->y = c->col + y;
-        s->sx = (-c->x - wk->cg_ofs_x) & 0x3FF;
-        s->sy = (-c->y + wk->spr.cg_ofs_y) & 0x3FF;
-        size = *(u8*)&c->y >> 4;
-        s->attr = size | 0x300;
-        s->size = cell_size_tbl[size];
+        spr[i].x = cell[i].code + x;
+        spr[i].y = cell[i].col + y;
+        spr[i].sx = (-cell[i].x - wk->cg_ofs_x) & 0x3FF;
+        spr[i].sy = (-cell[i].y + wk->spr.cg_ofs_y) & 0x3FF;
+        size = *(u8*)&cell[i].y >> 4;
+        spr[i].attr = size | 0x300;
+        spr[i].size = cell_size_tbl[size];
     }
 }
 
@@ -559,16 +554,14 @@ void make_char_cells_y(WORK* wk, CHAR_CELL* cell, CHAR_SPRITE* spr, u16 count, s
     s16 i;
 
     for (i = 0; i < count; i++) {
-        CHAR_SPRITE* s;
-        CHAR_CELL* c;
         u16 size;
-        (s = &spr[i])->x = (c = &cell[i])->code + x;
-        s->y = c->col + y;
-        s->sx = (c->x + wk->cg_ofs_x) & 0x3FF;
-        s->sy = (c->y - wk->spr.cg_ofs_y) & 0x3FF;
-        size = *(u8*)&c->y >> 4;
-        s->attr = size | 0x300;
-        s->size = cell_size_tbl[size];
+        spr[i].x = cell[i].code + x;
+        spr[i].y = cell[i].col + y;
+        spr[i].sx = (cell[i].x + wk->cg_ofs_x) & 0x3FF;
+        spr[i].sy = (cell[i].y - wk->spr.cg_ofs_y) & 0x3FF;
+        size = *(u8*)&cell[i].y >> 4;
+        spr[i].attr = size | 0x300;
+        spr[i].size = cell_size_tbl[size];
     }
 }
 
@@ -579,16 +572,14 @@ void make_char_cells_xy(WORK* wk, CHAR_CELL* cell, CHAR_SPRITE* spr, u16 count, 
     s16 i;
 
     for (i = 0; i < count; i++) {
-        CHAR_SPRITE* s;
-        CHAR_CELL* c;
         u16 size;
-        (s = &spr[i])->x = (c = &cell[i])->code + x;
-        s->y = c->col + y;
-        s->sx = (-c->x - wk->cg_ofs_x) & 0x3FF;
-        s->sy = (c->y - wk->spr.cg_ofs_y) & 0x3FF;
-        size = *(u8*)&c->y >> 4;
-        s->attr = size | 0x300;
-        s->size = cell_size_tbl[size];
+        spr[i].x = cell[i].code + x;
+        spr[i].y = cell[i].col + y;
+        spr[i].sx = (-cell[i].x - wk->cg_ofs_x) & 0x3FF;
+        spr[i].sy = (cell[i].y - wk->spr.cg_ofs_y) & 0x3FF;
+        size = *(u8*)&cell[i].y >> 4;
+        spr[i].attr = size | 0x300;
+        spr[i].size = cell_size_tbl[size];
     }
 }
 
@@ -643,7 +634,7 @@ s32 char_cell_flip_x(WORK* wk) {
         return 0;
     }
     dst = (CharSpriteK*)simmram_slot_addr(handle);
-    src = (CharSpriteK*)(SPRITE_RAM + (u16)wk->spr.gfx_ofs * 16);
+    src = (CharSpriteK*)(SPRITE_RAM + wk->spr.gfx_ofs * 16);
     for (i = 0; i < wk->spr.gfx_cells; i++) {
         dst[i] = src[i];
         dst[i].x = -dst[i].x & 0x3FF;
@@ -663,7 +654,7 @@ s32 char_cell_flip_y(WORK* wk) {
         return 0;
     }
     dst = (CharSpriteK*)simmram_slot_addr(handle);
-    src = (CharSpriteK*)(SPRITE_RAM + (u16)wk->spr.gfx_ofs * 16);
+    src = (CharSpriteK*)(SPRITE_RAM + wk->spr.gfx_ofs * 16);
     for (i = 0; i < wk->spr.gfx_cells; i++) {
         dst[i] = src[i];
         dst[i].y = -dst[i].y & 0x3FF;
@@ -683,7 +674,7 @@ s32 char_cell_unflip_y(WORK* wk) {
         return 0;
     }
     dst = (CharSpriteK*)simmram_slot_addr(handle);
-    src = (CharSpriteK*)(SPRITE_RAM + (u16)wk->spr.gfx_ofs * 16);
+    src = (CharSpriteK*)(SPRITE_RAM + wk->spr.gfx_ofs * 16);
     for (i = 0; i < wk->spr.gfx_cells; i++) {
         dst[i] = src[i];
         dst[i].y = -dst[i].y & 0x3FF;
@@ -703,7 +694,7 @@ s32 char_cell_flip_xy(WORK* wk) {
         return 0;
     }
     dst = (CHAR_SPRITE*)simmram_slot_addr(handle);
-    src = (CHAR_SPRITE*)(SPRITE_RAM + (u16)wk->spr.gfx_ofs * 16);
+    src = (CHAR_SPRITE*)(SPRITE_RAM + wk->spr.gfx_ofs * 16);
     for (i = 0; i < wk->spr.gfx_cells; i++) {
         dst[i] = src[i];
         dst[i].sx = -dst[i].sx & 0x3FF;
@@ -724,7 +715,7 @@ s32 char_cell_unflip_xy(WORK* wk) {
         return 0;
     }
     dst = (CHAR_SPRITE*)simmram_slot_addr(handle);
-    src = (CHAR_SPRITE*)(SPRITE_RAM + (u16)wk->spr.gfx_ofs * 16);
+    src = (CHAR_SPRITE*)(SPRITE_RAM + wk->spr.gfx_ofs * 16);
     for (i = 0; i < wk->spr.gfx_cells; i++) {
         dst[i] = src[i];
         dst[i].sx = -dst[i].sx & 0x3FF;
@@ -818,7 +809,6 @@ s32 set_judge_area_sprite(WORK_Other_JUDGE* wk) {
 s32 set_conn_sprite(WORK_Other_CONN* wk) {
     s16 handle;
     CharSpriteK* dst;
-    CharSpriteK* s;
     CHAR_CELL* cells;
     CharGfxSet* set;
     s16 base;
@@ -858,13 +848,13 @@ s32 set_conn_sprite(WORK_Other_CONN* wk) {
         cells = (CHAR_CELL*)set->chunk;
         cells += set->count;
         for (j = 0; j < set->cells; j++) {
-            (s = &dst[n])->code = base + cells[j].code;
-            s->pal = cells[j].col + wk->wu.spr.disp_colcd + wk->conn[i].col;
-            s->x = (cells[j].x + wk->conn[i].nx + cg_data_list[chr].x) & 0x3FF;
-            s->y = (wk->conn[i].ny - cells[j].y - cg_data_list[chr].y) & 0x3FF;
+            dst[n].code = base + cells[j].code;
+            dst[n].pal = cells[j].col + wk->wu.spr.disp_colcd + wk->conn[i].col;
+            dst[n].x = (cells[j].x + wk->conn[i].nx + cg_data_list[chr].x) & 0x3FF;
+            dst[n].y = (wk->conn[i].ny - cells[j].y - cg_data_list[chr].y) & 0x3FF;
             size = *(u8*)&cells[j].y >> 4;
-            s->attr = size | 0x300;
-            s->zoom = cell_size_tbl[size];
+            dst[n].attr = size | 0x300;
+            dst[n].zoom = cell_size_tbl[size];
             n++;
         }
     }
@@ -1276,7 +1266,7 @@ s16 v;
     if (v >= 64) {
         return 16;
     }
-    return kage_width_tbl[v];
+    return gkw_table[v];
 }
 
 
@@ -1295,7 +1285,7 @@ void char_sprite_zoom_cells(WORK* wk) {
     s32 base_y;
     s16 i;
     s16* p;
-    spr = (CharSpriteK*)(SPRITE_RAM + (u16)wk->spr.gfx_ofs * 16);
+    spr = (CharSpriteK*)(SPRITE_RAM + wk->spr.gfx_ofs * 16);
     *(u32*)&wk->spr.old_mr = *(u32*)&wk->my_mr;
     p = &m.mul_x;
     switch (wk->my_mr.size.x) {
@@ -1422,10 +1412,10 @@ s32 get_cell_zoom(lo, hi, rows)
 
     lo_row = rows & 3;
     hi_row = (s32)(rows & 12) >> 2;
-    value = (s16)cell_zoom_tbl[hi_row][hi] << 8;
+    value = cell_zoom_tbl[hi_row][hi] << 8;
     if (lo < 4) {
         lo = 4;
     }
-    value |= (s16)cell_zoom_tbl[lo_row][lo];
+    value |= cell_zoom_tbl[lo_row][lo];
     return (s16)value;
 }

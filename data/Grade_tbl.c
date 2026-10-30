@@ -164,7 +164,7 @@ const s16 grade_t_f_stage[4][2] = {
     { 0, -40 }, { 4, -20 }, { 8, 0 }, { 10, 60 },
 };
 
-const s16 grade_t_f_all_clear[2] = {
+const s16 grade_t_f_all[2] = {
     0, 100,
 };
 

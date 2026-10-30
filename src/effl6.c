@@ -60,7 +60,6 @@ void effect_L6_move(WORK_Other* ewk) {
 
 
 
-/* provisional name */
 void effl6_flont(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
     case R1_INIT:
@@ -98,7 +97,6 @@ void effl6_flont(WORK_Other* ewk) {
 
 
 
-/* provisional name */
 void effl6_back(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
     case R1_INIT:

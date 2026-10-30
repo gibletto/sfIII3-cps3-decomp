@@ -2,7 +2,7 @@
  * APPEAR.C  Fighter entrance (appearance) sequences
  *
  * Runs each fighter's entrance at the start of a match.
- * appear_data_init_set chooses the entrance type from appear_type_tbl (or appear_type_hv_tbl
+ * appear_data_init_set chooses the entrance type from app_type_tbl (or app_type_tbl2
  * for a home/visitor rematch decided by home_visitor_check) by fighter, opponent and stage,
  * and loads its APPEAR_DATA. appear_player then dispatches on routine_no[4] to one of about
  * forty routines Appear_00000-Appear_39000: walk-ins, jumps and drops, poses, vehicles
@@ -311,9 +311,9 @@ void appear_data_init_set(PLW* wk) {
     if (bg_w.area) {
         ap_work = 0;
     } else if (Appear_hv[wk->wu.id]) {
-        ap_work = appear_type_hv_tbl[wk->player_number][plw[id_work].player_number][bg_w.stage];
+        ap_work = app_type_tbl2[wk->player_number][plw[id_work].player_number][bg_w.stage];
     } else {
-        ap_work = appear_type_tbl[wk->player_number][plw[id_work].player_number][bg_w.stage];
+        ap_work = app_type_tbl[wk->player_number][plw[id_work].player_number][bg_w.stage];
     }
     dtbl = &appear_data[ap_work];
     appear_data_set(wk, dtbl);
@@ -403,7 +403,7 @@ void Appear_03000(PLW* wk) {
         break;
     case AP03_END:
         char_move(&wk->wu);
-        if ((u8)wk->wu.cg_type == 0xFF) {
+        if (wk->wu.cg_type == 0xFF) {
             wk->wu.routine_no[2] = NORMAL_STAND;
             wk->wu.routine_no[3] = RN3_START;
             Appear_end++;

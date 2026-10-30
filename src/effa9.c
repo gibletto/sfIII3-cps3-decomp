@@ -126,7 +126,6 @@ s32 effect_A9_init(s16 Char_Index, s16 Option, s16 Pos_Index, s16 Option2) {
 
 
 
-/* provisional name */
 void Setup_A9(WORK_Other* ewk, s16 Char_Index, s16 Option, s16 Option2) {
     switch (Char_Index) {
     case 32:

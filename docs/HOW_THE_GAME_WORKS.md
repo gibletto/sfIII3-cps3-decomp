@@ -121,11 +121,11 @@ a table of function pointers says what to do there. Capcom call the number an "r
 
 ```c
 void bg0001(void) {
-    void (*Main_Jmp_Tbl[3])() = { match_state_0_fight, game_phase_dispatch, Game_Dummy };
+    void (*Main_Jmp_Tbl[3])() = { Loop_Demo, Game, Game_Dummy };
     Main_Jmp_Tbl[G_No0]();
 }
 
-void game_phase_dispatch(void) {
+void Game(void) {
     void (*Game_Jmp_Tbl[12])() = { Game00, Game01, Game02, Game03, Game04, Game05,
                                    Game06, Game07, Game08, Game09, Game10, Game11 };
     Game_Jmp_Tbl[G_No1]();
@@ -140,7 +140,7 @@ The top levels:
 
 | `G_No0` | `G_No1` | Scene |
 |---|---|---|
-| 0 | 1-6 | attract mode: logo, title, demos, rankings (`match_state_0_fight`, whose name is misleading) |
+| 0 | 1-6 | attract mode: logo, title, demos, rankings (`Loop_Demo`) |
 | 1 | 0 | title / start |
 | 1 | 1 | player select |
 | 1 | 2 | the fight |
@@ -180,7 +180,8 @@ The ones you'll meet everywhere:
 - **Match state:** `Round_num`, `PL_Wins[2]`, `Score[2][3]`, `My_char[2]`, `Super_Arts[2]`, the round timer.
 - **Credits:** `credit_1p..credit_4p`, in BCD (each nibble one decimal digit, which makes drawing numbers trivial).
 - **Settings:** `Game_setting` and friends, filled from EEPROM at boot. Difficulty, round count, timer speed, free
-  play and so on all come from here.
+  play and so on all come from here. The 128-byte EEPROM image (`EEP_IMAGE` in `structs.h`) holds two copies of the
+  settings, each a `SYS_SETTINGS` (test menu 7-1) followed by a `SETTINGS` (7-2), then the bookkeeping counters.
 
 ### Coins and free play
 
@@ -198,7 +199,7 @@ Matching a 4-bit pattern is a cheap way to ignore a switch that bounces. After t
 coin rate from the settings (2 coins, 1 credit, etc.), capped at 9, and a mechanical coin meter is pulsed through
 an output latch.
 
-Free play is just a coin setting. When it's on, `entry_main` sets both players' credits to 9 every frame and the
+Free play is just a coin setting. When it's on, `Entry_Task` sets both players' credits to 9 every frame and the
 coin chutes are locked. Text like "INSERT COIN", "FREE PLAY" or "PRESS 1P START" is picked by `Disp_Start_Message`
 from the credit count and the settings, and blinks 50 frames on, 30 off.
 

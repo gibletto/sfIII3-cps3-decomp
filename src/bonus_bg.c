@@ -1,7 +1,7 @@
 /*
  * BONUS_BG.C  First bonus stage background
  *
- * Bonus_bg1 moves bgw[1] and bgw[0] through their ROM jump tables (bns02, bns01), then display
+ * Bonus_bg moves bgw[1] and bgw[0] through their ROM jump tables (bns02, bns01), then display
  * positions and family set, with no zoom check. bns01_init00 loads the stage graphics and starts
  * effect 05.
  */
@@ -37,8 +37,7 @@
 
 #pragma inline(bns01, bns02)
 
-/* provisional name */
-void Bonus_bg1(void) {
+void Bonus_bg(void) {
     bgw_ptr = &bg_w.bgw[1];
     bns02();
     bgw_ptr = &bg_w.bgw[0];

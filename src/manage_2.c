@@ -147,7 +147,7 @@
 #define BGM_ROUND_WAIT  1       /* the next round: wait BGM_Timer */
 #define BGM_ROUND       2       /* when the music has stopped, the stage music */
 #define BGM_JUDGE_WAIT  3       /* the judges' decision: wait BGM_Timer */
-#define BGM_JUDGE       4       /* when the music has stopped, bgm_request(6) */
+#define BGM_JUDGE       4       /* when the music has stopped, BGM_Request(6) */
 
 void Scrn_Move_Set(s32 n, s16 x, s16 y);
 
@@ -297,7 +297,7 @@ void Game_Manage_2_2(void) {
     }
     Complete_Judgement = 0;
     judge_flag = 0;
-    BGM_Fade_Out_Flag = 0;
+    Music_Fade = 0;
     Pause_Hit_Marks = 0;
     CP_No[0][0] = COM_INIT;
     CP_No[1][0] = COM_INIT;
@@ -623,7 +623,7 @@ void Game_Manage_5_5(void) {
     if (--Cover_Timer == 0) {
         C_No1++;
         pcon_rno[1] = SETTLE_JUDGE;
-        pcon_rno[2] = 1;
+        pcon_rno[2] = JG_WAIT;
         Clear_Flash_No();
         Switch_Screen_Init(3, 3);
     }
@@ -670,7 +670,7 @@ void Game_Manage_6th(void) {
             C_No1++;
             C_Timer = 60;
             pcon_rno[1] = SETTLE_JUDGE;
-            pcon_rno[2] = 0;
+            pcon_rno[2] = JG_IDLE;
             grade_makeup_round_para_dko();
             effect_58_init(6, 1, Winner_id + 100);
             effect_92_init(0, win_type[0][PL_Wins[0] - 1]);
@@ -1043,7 +1043,6 @@ void Additional_Bonus(s16 PL_id) {
 
 
 
-/* provisional name */
 u32 Setup_Comp_Bonus(void) {
     u32 xx;
     u16 zz;
@@ -1134,7 +1133,7 @@ void Game_Manage_10th(void) {
     case CM10_WIPE_WAIT:
         if (Switch_Screen()) {
             effect_work_quick_init();
-            sound_system_init();
+            SE_All_Off();
             Check_Naming(0);
             Check_Naming(1);
             pcon_rno[1] = pcon_rno[0] = PCON_INIT;
@@ -1274,7 +1273,7 @@ void Game_Manage_12_0(void) {
     }
     Complete_Judgement = 0;
     judge_flag = 0;
-    BGM_Fade_Out_Flag = 0;
+    Music_Fade = 0;
     win_sp_flag = 0;
     Round_Operator[0] = plw[0].wu.operator;
     Round_Operator[1] = plw[1].wu.operator;
@@ -1418,10 +1417,10 @@ void Game_Manage_12_4(void) {
             if (--Bonus_Game_result == 0) {
                 C_No2++;
                 if (PB_Status) {
-                    C_No3 = 1;
+                    C_No3 = CM12_4_T_BONUS2;
                     C_Timer = 10;
                 } else {
-                    C_No3 = 0;
+                    C_No3 = CM12_4_T_BONUS;
                     C_Timer = 20;
                 }
                 break;
@@ -1967,11 +1966,10 @@ void request_center_message(s16 Kind_of_Message) {
 
 
 s32 Judge_Next_Disposal(void) {
-    s16* p;
-    if (*(p = &PL_Wins[0]) != PL_Wins[1]) {
+    if (PL_Wins[0] != PL_Wins[1]) {
         return 0;
     }
-    if (*p >= Battle_Round[Play_Type]) {
+    if (PL_Wins[0] >= Battle_Round[Play_Type]) {
         return 1;
     }
     return 0;
@@ -1980,9 +1978,8 @@ s32 Judge_Next_Disposal(void) {
 
 
 void Check_Perfect(s16 PL_id) {
-    PLW* f = &plw[PL_id];
 
-    if (f->wu.vitality == f->wu.vital_new) {
+    if (plw[PL_id].wu.vitality == plw[PL_id].wu.vital_new) {
         Perfect_Flag = 1;
         Perfect_Counter[Winner_id]++;
         Round_Result |= RESULT_PERFECT;
@@ -2179,9 +2176,9 @@ void Update_Personal_Time(s16 id) {
 
 
 void Check_Fade_Out_BGM(s16 Time) {
-    if (!BGM_Fade_Out_Flag) {
+    if (!Music_Fade) {
         if (PL_Wins[Winner_id] >= Battle_Round[Play_Type] + 1) {
-            BGM_Fade_Out_Flag = 1;
+            Music_Fade = 1;
             bgm_fade_out(Time);
         }
     }
@@ -2198,7 +2195,7 @@ void Control_Music_Fade(s16 time)
 void BGM_Fade_Sub(void) {
     u8* p;
     s8* v;
-    switch (v = &BGM_Fade_Level, p = &BGM_Timer[1], BGM_No[1]) {
+    switch (v = &BGM_Vol, p = &BGM_Timer[1], BGM_No[1]) {
     case 1:
         if (--*p == 0) {
             BGM_No[1]++;
@@ -2232,7 +2229,7 @@ void BGM_Control(void) {
         }
     case BGM_ROUND:
         if (gSeqStatus[0] == 2) {
-            BGM_No[0] = 0;
+            BGM_No[0] = BGM_IDLE;
             if (Play_Type == PLAY_VS_CPU && EM_id == PL_Q) {
                 Stage_BGM(18, Round_num);
             } else {
@@ -2246,8 +2243,8 @@ void BGM_Control(void) {
         }
     case BGM_JUDGE:
         if (gSeqStatus[0] == 2) {
-            BGM_No[0] = 0;
-            bgm_request(6, 0);
+            BGM_No[0] = BGM_IDLE;
+            BGM_Request(6, 0);
         }
         break;
     }
@@ -2289,7 +2286,7 @@ s32 Check_Break_Into_CPU(s16 PL_id) {
     if (judge_final[Player_id][0].sp_point < 2) {
         return 0;
     }
-    if (Super_Arts_Finish[PL_id] < Break_Into_Level_Data[Battle_Round[Play_Type]]) {
+    if (Super_Arts_Finish[PL_id] < BIC_SA_Data[Battle_Round[Play_Type]]) {
         return 0;
     }
     if (Check_BI_Grade(PL_id)) {

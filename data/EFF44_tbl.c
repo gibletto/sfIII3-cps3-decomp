@@ -18,25 +18,25 @@ const s16 scr_obj_num44[10] = {
     4, 2,
 };
 
-/* type 0; provisional name */
-const s16 scr_obj_data44_0[16] = {
+/* type 0 */
+const s16 eff44_data_tbl0[16] = {
     0, 7, 128, 576, 43, 88, 14, 0,
     0, 7, 128, 640, 43, 88, 15, 0,
 };
 
-/* type 1; provisional name */
-const s16 scr_obj_data44_1[8] = {
+/* type 1 */
+const s16 eff44_data_tbl1[8] = {
     0, 2, 128, 607, 156, 80, 0, 0,
 };
 
-/* type 2; provisional name */
-const s16 scr_obj_data44_2[16] = {
+/* type 2 */
+const s16 eff44_data_tbl2[16] = {
     0, 2, 128, 495, 48, 80, 5, 0,
     0, 2, 128, 479, 48, 79, 8, 0,
 };
 
-/* type 3; provisional name */
-const s16 scr_obj_data44_3[56] = {
+/* type 3 */
+const s16 eff44_data_tbl3[56] = {
     0, 2, 8320, 672, 208, 82, 3, 0,
     0, 2, 8320, 741, 183, 82, 4, 0,
     0, 2, 8320, 780, 161, 82, 5, 0,
@@ -46,47 +46,47 @@ const s16 scr_obj_data44_3[56] = {
     0, 2, 8320, 654, 64, 82, 11, 0,
 };
 
-/* type 4; provisional name */
-const s16 scr_obj_data44_4[8] = {
+/* type 4 */
+const s16 eff44_data_tbl4[8] = {
     0, 2, 128, 735, 80, 82, 23, 0,
 };
 
-/* type 5; provisional name */
-const s16 scr_obj_data44_5[24] = {
+/* type 5 */
+const s16 eff44_data_tbl5[24] = {
     0, 2, 8320, 223, 112, 82, 1, 0,
     0, 2, 8320, 208, 32, 82, 3, 0,
     0, 2, 8320, 320, 32, 82, 4, 0,
 };
 
-/* type 6; provisional name */
-const s16 scr_obj_data44_6[16] = {
+/* type 6 */
+const s16 eff44_data_tbl6[16] = {
     0, 2, 8320, 336, 147, 82, 6, 0,
     0, 2, 8320, 863, 104, 82, 7, 0,
 };
 
-/* type 7; provisional name */
-const s16 scr_obj_data44_7[24] = {
+/* type 7 */
+const s16 eff44_data_tbl7[24] = {
     0, 2, 8320, 640, 32, 81, 1, 0,
     0, 2, 128, 192, 32, 81, 3, 0,
     0, 2, 128, 200, 88, 80, 4, 0,
 };
 
-/* not referred to; the rows of scr_obj_data44_9; provisional name */
+/* not referred to; the rows of eff44_data_tbl9; provisional name */
 const s16 scr_obj_data44_unref_0[16] = {
     0, 2, 8320, 720, 80, 83, 5, 0,
     0, 2, 128, 286, 64, 82, 6, 0,
 };
 
-/* type 8; provisional name */
-const s16 scr_obj_data44_8[32] = {
+/* type 8 */
+const s16 eff44_data_tbl8[32] = {
     0, 2, 8320, 240, 80, 72, 16, 0,
     0, 2, 8320, 319, 80, 72, 17, 0,
     0, 2, 8320, 401, 95, 72, 18, 0,
     0, 2, 8320, 864, 80, 72, 21, 0,
 };
 
-/* type 9; provisional name */
-const s16 scr_obj_data44_9[16] = {
+/* type 9 */
+const s16 eff44_data_tbl9[16] = {
     0, 2, 8320, 720, 80, 83, 5, 0,
     0, 2, 128, 286, 64, 82, 6, 0,
 };

@@ -3,7 +3,7 @@
  *
  * Player routines for the winner at the end of a round. win_player sends a player who
  * is not in his own character to meta_win_pause, a bonus stage winner to bonus_game_win_pause,
- * and otherwise picks the character's win routine (Win_00000..Win_15000) by win_type_tbl.
+ * and otherwise picks the character's win routine (Win_00000..Win_15000) by winner_type_tbl.
  * Each win routine chooses a victory animation, often at random (win_select), with a different
  * set for the final round and some stage-specific poses. Several have their own movement:
  * the jijii_* routines fly up, jump or run a full sequence for the old man's poses, the q_*
@@ -156,7 +156,6 @@ void set_char_move_init();
 void set_char_move_init2();
 
 
-/* provisional name */
 void win_player(PLW* wk) {
     void (*win_jp_tbl[16])(PLW*) = { Win_00000, Win_01000, Win_02000, Win_03000, Win_04000, Win_05000, Win_06000, Win_07000, Win_08000, Win_09000, Win_10000, Win_11000, Win_12000, Win_13000, Win_14000, Win_15000 };
     if (My_char[wk->wu.id] != wk->player_number) {
@@ -166,7 +165,7 @@ void win_player(PLW* wk) {
     } else if (pcon_rno[0] == PCON_DIE && pcon_rno[1] == SETTLE_JUDGE) {
         Judge_normal_winner(wk);
     } else {
-        win_jp_tbl[win_type_tbl[wk->player_number]](wk);
+        win_jp_tbl[winner_type_tbl[wk->player_number]](wk);
     }
 }
 
@@ -895,7 +894,7 @@ void q_keeping_action(PLW* wk) {
         break;
     case Q_TURN:
         char_move(&wk->wu);
-        if ((u8)wk->wu.cg_type == 0xFF) {
+        if (wk->wu.cg_type == 0xFF) {
             win_rno[1]++;
         }
         break;
@@ -914,7 +913,7 @@ void q_keeping_action(PLW* wk) {
         add_x_sub((WORK_Other*)wk);
         if (q_em_distance_chk(wk)) {
             win_rno[1]++;
-            set_char_move_init(&wk->wu, 9, win_rno[0] == 1 ? 36 : 37);
+            set_char_move_init(&wk->wu, 9, win_rno[0] == QW_KEEP ? 36 : 37);
         }
         break;
     case Q_STAND:
@@ -960,7 +959,7 @@ void q_leave_after_action(PLW* wk) {
         add_x_sub((WORK_Other*)wk);
         if (q_em_distance_chk(wk)) {
             win_rno[1]++;
-            if (win_rno[0] == 2) {
+            if (win_rno[0] == QW_LEAVE) {
                 set_char_move_init(&wk->wu, 9, 36);
             } else {
                 set_char_move_init(&wk->wu, 9, 39);
@@ -1079,7 +1078,7 @@ void Win_11000(PLW* wk) {
                 }
             }
         } else {
-            win_rno[0] = 0;
+            win_rno[0] = TW_NORMAL;
             set_char_move_init(&wk->wu, 9, work + 32);
         }
         break;
@@ -1346,7 +1345,7 @@ void urien_dash(PLW* wk) {
         if (urien_dash_chk(wk)) {
             win_rno[1]++;
         } else {
-            win_rno[1] = 0;
+            win_rno[1] = UD_START;
         }
         break;
     case UD_STOP:

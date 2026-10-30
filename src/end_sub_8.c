@@ -105,8 +105,7 @@ void load_player_sub_color(void)
 
 /* provisional name */
 void load_opt_color(u16 ix) {
-    const u32* p = &opt_color_tbl[ix];
-    if (*p != 0) {
-        polygon2d_submit_quad(*p, 0x2980, 0x80, 0, 0, 0);
+    if (opt_color_tbl[ix] != 0) {
+        polygon2d_submit_quad(opt_color_tbl[ix], 0x2980, 0x80, 0, 0, 0);
     }
 }

@@ -1029,7 +1029,7 @@ void nm_27_cg_type_check(PLW* wk) {
     if (wk->sa_stop_flag == 1) {
         return;
     }
-    switch ((u8)wk->wu.cg_type) {
+    switch (wk->wu.cg_type) {
     case 1:
         check_defense_kind(wk);
         break;
@@ -1121,7 +1121,7 @@ void nm_31000(PLW* wk) {
     if (wk->wu.routine_no[3] == RN3_START) {
         return;
     }
-    switch ((u8)wk->wu.cg_type) {
+    switch (wk->wu.cg_type) {
     case 0:
         if (check_full_gauge_attack(wk, 0)) {
             return;
@@ -1149,14 +1149,14 @@ void nm_31000(PLW* wk) {
         }
         break;
     case 64:
-        if ((u8)wk->wu.pat_status < 32) {
+        if (wk->wu.pat_status < 32) {
             TO_nm_36000((WORK*)wk);
             break;
         }
         TO_nm_37000((WORK*)wk);
         break;
     case 0xFF:
-        if ((u8)wk->wu.pat_status < 32) {
+        if (wk->wu.pat_status < 32) {
             TO_nm_01000((WORK*)wk);
             break;
         }
@@ -1169,14 +1169,14 @@ void nm_31000(PLW* wk) {
 
 void nm_34000(PLW* wk) {
     if (wk->wu.routine_no[3] != RN3_START) {
-        switch ((u8)wk->wu.cg_type) {
+        switch (wk->wu.cg_type) {
         case 64:
         case 0xFF:
             TO_nm_18000_01((WORK*)wk);
             break;
         default:
             if (wk->wu.routine_no[3] >= 3) {
-                if ((u8)wk->wu.pat_status < 32) {
+                if (wk->wu.pat_status < 32) {
                     TO_nm_36000((WORK*)wk);
                 } else {
                     TO_nm_37000((WORK*)wk);
@@ -1191,15 +1191,15 @@ void nm_34000(PLW* wk) {
 void nm_36000(PLW* wk) {
     if (wk->wu.cg_type == 0xFF) {
         if (wk->wu.now_koc == 0 && wk->wu.char_index == 0) {
-            wk->wu.routine_no[2] = 1;
+            wk->wu.routine_no[2] = NORMAL_STAND;
             wk->wu.routine_no[3] = 1;
         } else {
-            wk->wu.routine_no[2] = 1;
+            wk->wu.routine_no[2] = NORMAL_STAND;
             wk->wu.routine_no[3] = RN3_START;
         }
     } else if (wk->player_number == PL_ELENA && wk->wu.now_koc == 0 && wk->wu.char_index == 36) {
         exset_char_move_init(&wk->wu, 0, 0);
-        wk->wu.routine_no[2] = 1;
+        wk->wu.routine_no[2] = NORMAL_STAND;
         wk->wu.routine_no[3] = 1;
     }
     nm_01000(wk);
@@ -1252,10 +1252,10 @@ void nm_38000(PLW* wk) {
 void nm_39000(PLW* wk) {
     if (wk->wu.cg_type == 0xFF) {
         if (wk->wu.now_koc == 0 && wk->wu.char_index == 0) {
-            wk->wu.routine_no[2] = 1;
+            wk->wu.routine_no[2] = NORMAL_STAND;
             wk->wu.routine_no[3] = 1;
         } else {
-            wk->wu.routine_no[2] = 1;
+            wk->wu.routine_no[2] = NORMAL_STAND;
             wk->wu.routine_no[3] = RN3_START;
         }
     }
@@ -1552,16 +1552,16 @@ void process_catch(PLW* wk) {
 
 
 void nm_91000(PLW* wk) {
-    switch ((u8)wk->wu.cg_type) {
+    switch (wk->wu.cg_type) {
     case 64:
-        if ((u8)wk->wu.pat_status < 32) {
+        if (wk->wu.pat_status < 32) {
             TO_nm_36000((WORK*)wk);
         } else {
             TO_nm_37000((WORK*)wk);
         }
         break;
     case 0xFF:
-        if ((u8)wk->wu.pat_status < 32) {
+        if (wk->wu.pat_status < 32) {
             TO_nm_01000((WORK*)wk);
         } else {
             TO_nm_09000((WORK*)wk);

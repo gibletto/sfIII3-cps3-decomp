@@ -119,7 +119,6 @@ void EFF38_SLIDE_IN(WORK_Other* ewk) {
 
 
 
-/* provisional name */
 void Exit_Slide_in_38(WORK_Other* ewk) {
     ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake;
     if (--Select_Start[ewk->master_id] < 0) {

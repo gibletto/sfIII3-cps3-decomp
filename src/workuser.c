@@ -84,7 +84,7 @@ s16 D_No3;
 u8 Present_Rank[2];  /* 02015448 */
 s8 Rank_In[2][4];  /* 0201544A */
 s8 Request_Disp_Rank[2][4];  /* 02015452 */
-s8 Rank_Demo_Loop;  /* 0201545A */
+s8 Demo_Type;  /* 0201545A */
 s8 Rank_Type;  /* 0201545B */
 s8 Flash_Sign[2];  /* 0201545C */
 s8 Flash_Rank_Time;  /* 0201545E */
@@ -222,7 +222,7 @@ u8 Continue_Coin[2];  /* 02015665 */
 s8 Ignore_Entry[2];  /* 02015667 */
 s16 Cursor_Y[2];  /* 0201566A */
 u8 Cursor_Y_tail[12];  /* after Cursor_Y; nothing refers to it by name or address */
-s8 Last_Arts_PL;  /* 0201567A */
+s8 Slide_Type;  /* 0201567A */
 s8 Moving_Plate[2];  /* 0201567B */
 s8 Naming_Cut[2];  /* 0201567D */
 s8 Moving_Plate_Counter[2];  /* 0201567F */
@@ -236,7 +236,7 @@ s16 Insert_Y;  /* 020156AE */
 u8 Insert_Y_tail[2];  /* after Insert_Y; nothing refers to it by name or address */
 u8 Version_Type;  /* 020156B2 */
 u8 Version_Type_tail[1];  /* after Version_Type; nothing refers to it by name or address */
-s8 BGM_Fade_Out_Flag;  /* 020156B4 */
+s8 Music_Fade;  /* 020156B4 */
 s16 zoom_request_flag;  /* 020156B6 */
 s16 zoom_req_flag_old;  /* 020156B8 */
 s16 zoom_request_level;  /* 020156BA */
@@ -288,10 +288,10 @@ s8 Jump_Pass_Timer[2][4];  /* 020157C0 */
 s8 sa_gauge_flash[2];  /* 020157C8 */
 s8 Receive_Flag[2];  /* 020157CA */
 s8 Disposal_Again[2];  /* 020157CC */
-u16 pcon_timer;  /* 020157CE */
+u16 players_timer;  /* 020157CE */
 s8 unused_flag_a;  /* 020157D0 */
-volatile s8 BGM_Fade_Level;  /* 020157D1 */
-u8 Decided_My_char[2];  /* 020157D2 */
+volatile s8 BGM_Vol;  /* 020157D1 */
+u8 Used_char[2];  /* 020157D2 */
 s8 Break_Com[2][24];  /* 020157D4 */
 s8 Sel_Exit_Flag;  /* 02015804 */
 u16 Lever_Store[2][3];  /* 02015806 */

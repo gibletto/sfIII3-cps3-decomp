@@ -868,9 +868,8 @@ s32 comm_ps_y(WORK* wk, CHAR_CMD* ctc) {
         case 0:
             if (bg_w.stage == BONUS_CAR) {
                 if (((PLW*)wk)->bs2_on_car) {
-                    s16* fc = &bs2_floor[2];
-                    if (ctc->pat < *fc) {
-                        wk->xyz[1].disp.pos = *fc;
+                    if (ctc->pat < bs2_floor[2]) {
+                        wk->xyz[1].disp.pos = bs2_floor[2];
                         break;
                     }
                 }

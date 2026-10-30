@@ -13,7 +13,7 @@
  * up both players at the start of a match (pli_0000 clears the works, loads the combo demo
  * players if needed and calls setup_base_and_other_data), stores the parry counters and waits
  * until both players are ready (pli_1000) before starting the fight. init_app_20000 and
- * init_app_30000 are the lighter resets used by the other appear types. pli_3000 queues the
+ * init_app_30000 are the lighter resets used by the other appear types. pli_0002 queues the
  * per-character extra graphics transfers.
  */
 
@@ -69,12 +69,6 @@
 #include "sc_sub_2.h"
 #include "EFFM7.h"
 
-/* pcon_rno[2] in settle_type_00000 */
-#define KO_INIT         0       /* start the winner's timer */
-#define KO_DOWN         1       /* until the loser is down */
-#define KO_FOOTWORK     2       /* until the winner is steady: the win and lose poses (or a special settle) */
-#define KO_POSE         3       /* until the win pose is done */
-
 /* pcon_rno[2] in settle_type_10000 */
 #define DK_DOWN         0       /* until both are down */
 #define DK_PAUSE        1       /* the pause */
@@ -85,11 +79,6 @@
 #define TO_DECIDE       2       /* the pause: a draw stops here, else the win and lose poses */
 #define TO_POSE         3       /* until a win pose is done */
 #define TO_DRAW         4       /* a draw: nothing more */
-
-/* pcon_rno[2] in settle_type_30000 */
-#define JG_IDLE         0       /* nothing yet */
-#define JG_WAIT         1       /* until the judges are done, then the poses */
-#define JG_POSE         2       /* until both poses are done */
 
 /* pcon_rno[2] in settle_type_40000 */
 #define GK_INIT         0       /* stop the winner */
@@ -117,8 +106,8 @@ void Player_control(void) {
     }
     if (!Game_pause && !EXE_flag) {
 run:
-        pcon_timer++;
-        pcon_timer &= 0x7FFF;
+        players_timer++;
+        players_timer &= 0x7FFF;
         set_scrrrl();
         player_main_process[pcon_rno[0]]();
         check_body_touch();
@@ -204,7 +193,7 @@ void init_app_10000(void) {
         break;
     case APP_GFX:
         pcon_rno[1] = APP_WAIT_READY;
-        pli_3000();
+        pli_0002();
         break;
     }
 }
@@ -257,7 +246,7 @@ void init_app_30000(void) {
         }
         pcon_rno[0] = PCON_DIE;
         pcon_rno[1] = SETTLE_JUDGE;
-        pcon_rno[2] = 1;
+        pcon_rno[2] = JG_WAIT;
         setup_EJG_index();
         effect_C9_init(&plw[0], 0);
         effect_C9_init(&plw[0], 1);
@@ -306,8 +295,7 @@ void pli_1000(void) {
 
 
 
-/* provisional name */
-void pli_3000(void) {
+void pli_0002(void) {
     if (plw[0].player_number == PL_GOUKI1 || plw[1].player_number == PL_GOUKI1) {
         load_any_color(0x99);
     }
@@ -708,7 +696,7 @@ void move_player_work(void) {
 
 void move_P1_move_P2(void) {
     if (plw[0].do_not_move == 0) {
-        Player_move(&plw[0], sw_to_lvbt(p1sw_0));
+        Player_move(&plw[0], processed_lvbt(p1sw_0));
     }
     if (bg_app_stop == 0 && bg_app == 0) {
         if (set_field_hosei_flag(&plw[0], scrr, 1)) {
@@ -716,7 +704,7 @@ void move_P1_move_P2(void) {
         }
     }
     if (plw[1].do_not_move == 0) {
-        Player_move(&plw[1], sw_to_lvbt(p2sw_0));
+        Player_move(&plw[1], processed_lvbt(p2sw_0));
     }
     if (bg_app_stop == 0 && bg_app == 0) {
         if (set_field_hosei_flag(&plw[1], scrr, 1)) {
@@ -728,7 +716,7 @@ void move_P1_move_P2(void) {
 
 void move_P2_move_P1(void) {
     if (plw[1].do_not_move == 0) {
-        Player_move(&plw[1], sw_to_lvbt(p2sw_0));
+        Player_move(&plw[1], processed_lvbt(p2sw_0));
     }
     if (bg_app_stop == 0 && bg_app == 0) {
         if (set_field_hosei_flag(&plw[1], scrr, 1)) {
@@ -736,7 +724,7 @@ void move_P2_move_P1(void) {
         }
     }
     if (plw[0].do_not_move == 0) {
-        Player_move(&plw[0], sw_to_lvbt(p1sw_0));
+        Player_move(&plw[0], processed_lvbt(p1sw_0));
     }
     if (bg_app_stop == 0 && bg_app == 0) {
         if (set_field_hosei_flag(&plw[0], scrr, 1)) {
@@ -837,7 +825,6 @@ s32 will_die(void) {
 
 
 
-/* provisional name */
 void setup_settle_rno(kos)
 s16 kos;
 {
@@ -897,7 +884,6 @@ retry:
 
 
 
-/* provisional name */
 s32 check_sa_resurrection(PLW* wk) {
     if (check_sa_type_rebirth(wk) == 0) {
         return 0;
@@ -937,7 +923,7 @@ s32 footwork_check(char pl)
     s16 result;
     result = 0;
     if (plw[pl].wu.routine_no[1] == PLAYER_NORMAL) {
-        if (plw[pl].wu.routine_no[2] == 1) {
+        if (plw[pl].wu.routine_no[2] == NORMAL_STAND) {
             result = 1;
         }
     }
@@ -980,7 +966,6 @@ void add_next_position(PLW* wk) {
     wk->wu.next_y = 0;
 }
 
-/* provisional name */
 void setup_gouki_wins(void)
 {
     gouki_wins = 0;

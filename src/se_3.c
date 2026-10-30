@@ -2,7 +2,7 @@
  * SE_3.C  Screen wipe patterns and sound request routines (part 3)
  *
  * The sound routines start stage BGM (Stage_BGM, bgm_fade_in_stage), initialise sound
- * (sound_system_init) and play effects for objects: the Se_ table handlers (Se_Myself, Se_Let,
+ * (SE_All_Off) and play effects for objects: the Se_ table handlers (Se_Myself, Se_Let,
  * Se_Let_SP, ...) and Se_Shock play a code in the character's own sound bank, panned by screen
  * position (Get_Position), with voice replacement from Check_Voice_SE. Call_Se plays a fixed code;
  * Finish_SE plays the winner's finishing voice.
@@ -36,7 +36,7 @@ s32 Round_Number;
     if (PB_Music_Off) {
         return;
     }
-    code = stage_bgm_tbl[Stage_Number] + (Round_Number & 1);
+    code = BGM_Stage_Data[Stage_Number] + (Round_Number & 1);
     gSeqStatus[0] = 0;
     sound_request(code);
 }
@@ -48,7 +48,7 @@ void bgm_fade_in_stage(s16 x) {
     if (PB_Music_Off) {
         return;
     }
-    sound_fade_in_submit(stage_bgm_tbl[bg_w.stage], 0x8000 / x);
+    sound_fade_in_submit(BGM_Stage_Data[bg_w.stage], 0x8000 / x);
 }
 
 void Sound_SE(Code)
@@ -65,8 +65,7 @@ void sound_bgm_fade_out(s16 speed) {
     bgm_fade_out(speed);
 }
 
-/* provisional name */
-void bgm_request(bgm_code)
+void BGM_Request(bgm_code)
 s16 bgm_code;
 {
     if (Demo_Sound == 0 && Demo_Flag == 0) {
@@ -81,13 +80,11 @@ s16 bgm_code;
 
 
 
-/* provisional name */
-void voice_all_off(void) { bgm_stop(); }
+void BGM_Stop(void) { bgm_stop(); }
 
 
 
-/* provisional name */
-void sound_system_init(void) {
+void SE_All_Off(void) {
     s16 i;
     sound_request_pan(0x78, 0x40, 0x40, 0, 2);
     for (i = 0; i < 14; i++) {
@@ -274,16 +271,14 @@ s32 Se_Term(WORK_Other* ewk, u16 Code) {
 void Finish_SE(void) {
     s32 se;
     s16 pos;
-    PLW* wk;
 
     if ((Demo_Sound != 0 || Demo_Flag != 0) && (Combo_Demo_Flag & 0x80) == 0) {
         se = Check_Finish_SE();
         if ((s16)se != -1) {
-            wk = &plw[Winner_id];
             if ((s16)se) {
-                se += wk->wu.id * 0x300;
+                se += plw[Winner_id].wu.id * 0x300;
             }
-            pos = Get_Position(wk);
+            pos = Get_Position(&plw[Winner_id]);
             sound_request_pan(se, pos, pos, 0, 2);
         }
     }

@@ -105,7 +105,6 @@ void effect_36_move(WORK_Other* ewk) {
 
 
 
-/* provisional name */
 void eff36_move00(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
     case R2_INIT:
@@ -131,7 +130,6 @@ void eff36_move00(WORK_Other* ewk) {
 
 
 
-/* provisional name */
 void eff36_move01(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
     case R2_INIT:
@@ -147,7 +145,6 @@ void eff36_move01(WORK_Other* ewk) {
 
 
 
-/* provisional name */
 void eff36_move02(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
     case R2_INIT:
@@ -164,7 +161,6 @@ void eff36_move02(WORK_Other* ewk) {
 
 
 
-/* provisional name */
 void eff36_move03(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
     case R2_INIT:
@@ -185,7 +181,6 @@ void eff36_move03(WORK_Other* ewk) {
 
 
 
-/* provisional name */
 void eff36_move04(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
     case R2_INIT:
@@ -244,7 +239,6 @@ void eff36_move04(WORK_Other* ewk) {
 
 
 
-/* provisional name */
 void eff36_move05(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
     case R2_INIT:
@@ -265,7 +259,6 @@ void eff36_move05(WORK_Other* ewk) {
 
 
 
-/* provisional name */
 void eff36_move06(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
     case R2_INIT:

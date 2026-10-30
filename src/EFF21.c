@@ -30,11 +30,11 @@
 
 
 
-extern const s16 eff21_data_adrs_0[];
+extern const s16 eff21_data_tbl_00[];
 
 /* 02006C44 */
 const s16* eff21_data_adrs[1] = {
-    eff21_data_adrs_0,
+    eff21_data_tbl_00,
 };
 
 

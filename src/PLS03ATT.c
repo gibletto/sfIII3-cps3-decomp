@@ -216,7 +216,6 @@ s32 check_lever_up_attack(PLW* wk) {
 
 
 
-/* provisional name */
 s32 check_nagenuke_cmd(PLW* wk) {
     if (wk->cat_break_reserve) {
         return 1;
@@ -316,7 +315,6 @@ s16 kos;
     return nrange;
 }
 
-/* provisional name */
 s32 waza_select(wk, kos, sf)
 PLW* wk;
 s16 kos;
@@ -497,7 +495,6 @@ s16 cx;
 
 
 
-/* provisional name */
 s32 shot_data_convert(sw)
 u16 sw;
 {
@@ -577,7 +574,6 @@ s32 check_sp_waza_flag(PLW* wk) {
 
 
 
-/* provisional name */
 s32 check_meoshi_cancel(PLW* wk) {
     s16 i;
     s16 tdat;

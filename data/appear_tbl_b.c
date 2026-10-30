@@ -1,8 +1,8 @@
 /*
  * APPEAR_TBL_B.C  fighter entrance choice tables
  *
- * appear_type_tbl gives the entrance type (a row of appear_data) by fighter, opponent and
- * stage, and appear_type_hv_tbl the same for a home/visitor rematch. smoke_check picks, per
+ * app_type_tbl gives the entrance type (a row of appear_data) by fighter, opponent and
+ * stage, and app_type_tbl2 the same for a home/visitor rematch. smoke_check picks, per
  * background, which animation the Appear_16000 entrance starts with; animal_decide_tbl picks
  * the stage animal from a random number. Read by APPEAR.C.
  */
@@ -23,7 +23,7 @@ const u8 animal_decide_tbl[16] = {
     0, 1, 2, 3, 4, 5, 0, 0,
 };
 
-const s8 appear_type_tbl[21][21][23] = {
+const s8 app_type_tbl[21][21][23] = {
     {  /* Gill */
         { 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 28, 27 },
         { 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 28, 27 },
@@ -509,7 +509,7 @@ const s8 appear_type_tbl[21][21][23] = {
     },
 };
 
-const s8 appear_type_hv_tbl[21][21][23] = {
+const s8 app_type_tbl2[21][21][23] = {
     {  /* Gill */
         { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 28, 27 },
         { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 28, 27 },

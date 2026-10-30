@@ -146,19 +146,18 @@ void Flash_G0(WORK_Other_CONN* ewk) {
 
 
 
-/* provisional name */
 s16 score_bunkai_G0(WORK_Other_CONN* ewk, u32 tsc) {
     s16 noobjans = 0;
     s16 i;
     s16 ixs[6];
     s16 ixa[6];
     for (i = 5; i > 0; i--) {
-        ixa[i] = tsc / suji_table_G0[i];
-        ixs[i] = tsc = tsc % suji_table_G0[i];
+        ixa[i] = tsc / bunkai_table_G0[i];
+        ixs[i] = tsc = tsc % bunkai_table_G0[i];
     }
     ixa[i] = tsc;
     for (i = 0; i < 6; i++) {
-        if ((ewk->conn[i].chr = suji_numobj_G0[ixa[i]]) != 0xBD33) {
+        if ((ewk->conn[i].chr = bunkai_numobj_G0[ixa[i]]) != 0xBD33) {
             noobjans = i + 1;
         }
     }

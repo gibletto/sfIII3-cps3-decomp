@@ -1,7 +1,7 @@
 /*
  * COM_PL_TBL.C  region, boot screen, default settings and screen mode tables
  *
- * region_type_tbl, region_cc_type_tbl and region_param_tbl turn the region into the area type
+ * region_type_tbl, region_cc_type_tbl and Difficult_V_Data turn the region into the area type
  * and its parameters; boot_title_str, boot_region_str and boot_no_cd_str lay out the boot
  * screen, and the str_* strings are the boot, version and region warning text.
  * sys_cfg_default_* are the default system settings by cabinet type and region and
@@ -114,7 +114,7 @@ const s8 region_cc_type_tbl[8] = {
     0, 2, 1, 1, 1, 1, 1, 2,
 };
 
-const s8 region_param_tbl[3][2] = {
+const s8 Difficult_V_Data[3][2] = {
     { 0, 0 }, { 1, 2 }, { 2, 4 },
 };
 

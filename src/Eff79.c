@@ -567,7 +567,6 @@ void Setup_Command_Name_dummy(void) {}
 
 
 
-/* provisional name */
 s32 Select_End_Sub_79(WORK_Other* ewk) {
     if (Sel_Arts_Complete[ewk->master_id] == 0) {
         return 0;

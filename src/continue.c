@@ -109,7 +109,7 @@ void Continue_1st(void) {
         Next_Step = 0;
         Setup_Continue_OBJ();
         effect_A9_init(55, 0, 19, 0);
-        bgm_request(8);
+        BGM_Request(8);
         effect_76_init(56);
         Order[56] = 3;
         Order_Timer[56] = 1;
@@ -243,7 +243,6 @@ s16 Limit;
 
 
 
-/* provisional name */
 s32 Clear_Personal_Data(PL_id)
 s16 PL_id;
 {
@@ -265,7 +264,7 @@ s16 PL_id;
     Win_Record[PL_id] = 0;
     Stock_Win_Record[PL_id] = 0;
     VS_Index[PL_id] = 0;
-    Decided_My_char[PL_id] = 0xFF;
+    Used_char[PL_id] = 0xFF;
     Arts_Y[PL_id] = 0;
     Continue_Count[PL_id] = 0;
     Continue_Coin2[PL_id] = 0;

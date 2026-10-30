@@ -76,13 +76,13 @@ void Player_move(PLW* wk, u16 lv_data) {
         if (wk->wu.operator) {
             wk->cp->sw_lvbt = lv_data;
         } else {
-            wk->cp->sw_lvbt = sw_to_lvbt(CPU_Sub(wk));
+            wk->cp->sw_lvbt = processed_lvbt(CPU_Sub(wk));
         }
         if (wk->metamor_over) {
             wk->cp->sw_lvbt = 0;
         }
     } else {
-        wk->cp->sw_lvbt = sw_to_lvbt(cpu_algorithm(wk->wu.id));
+        wk->cp->sw_lvbt = processed_lvbt(cpu_algorithm(wk->wu.id));
     }
     if (wk->dead_flag) {
         wk->cp->sw_lvbt = 0;
@@ -384,7 +384,6 @@ void about_gauge_process(PLW* wk) {
     mpg_union(wk);
 }
 
-/* provisional name */
 void mpg_union(wk)
 PLW* wk;
 {
@@ -441,7 +440,6 @@ PLW* wk;
 
 
 
-/* provisional name */
 void eag_union(wk)
 PLW* wk;
 {

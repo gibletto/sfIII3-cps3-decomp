@@ -975,7 +975,7 @@ void Normal_52000(PLW* wk) {
         break;
     case N52_END:
         char_move(&wk->wu);
-        if ((u8)wk->wu.cg_type == 0xFF) {
+        if (wk->wu.cg_type == 0xFF) {
             wk->wu.routine_no[2] = 21;
             wk->wu.routine_no[3] = N52_END;
             set_char_move_init(&wk->wu, 0, 14);
@@ -1000,7 +1000,7 @@ void Normal_53000(PLW* wk)
     case N53_END:
         char_move(&wk->wu);
         set_new_jpdir(wk);
-        if ((u8)wk->wu.cg_type == 0xFF) {
+        if (wk->wu.cg_type == 0xFF) {
             check_jump_rl_dir(wk);
             switch (wk->jpdir) {
             case LVDIR_FORWARD: wk->wu.routine_no[2] = 21; break;

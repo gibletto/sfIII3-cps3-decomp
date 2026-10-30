@@ -78,7 +78,6 @@ void check_em_tk_power_off(PLW* wk, PLW* tk) {
 
 
 
-/* provisional name */
 s32 check_ukemi_flag(PLW* wk) {
     return wk->cp->waza_flag[7];
 }
@@ -298,12 +297,9 @@ s32 check_F_R_dash(PLW* wk) {
     s16 num;
     s16 rnum;
     if (Bonus_Game_Flag == BONUS_CAR && wk->bs2_on_car) {
-        goto ok;
-    }
-    if (wk->wu.xyz[1].disp.pos > 0) {
+    } else if (wk->wu.xyz[1].disp.pos > 0) {
         return 0;
     }
-ok:
     q = &wk->cp->waza_flag[0];
     num = (q[0] != 0);
     num += (q[1] != 0) * 2;
@@ -315,7 +311,7 @@ loop:
             break;
         }
         wk->wu.routine_no[1] = PLAYER_NORMAL;
-        wk->wu.routine_no[2] = 5;
+        wk->wu.routine_no[2] = NORMAL_DASH;
         wk->wu.routine_no[3] = RN3_START;
         rnum = 1;
         break;
@@ -526,7 +522,7 @@ s32 check_walking_lv_dir(PLW* wk) {
     }
     if (rnum) {
         if (wk->wu.pat_status < 32) {
-            wk->wu.routine_no[2] = 1;
+            wk->wu.routine_no[2] = NORMAL_STAND;
         } else {
             wk->wu.routine_no[2] = 9;
         }
@@ -558,7 +554,7 @@ s32 check_walking_lv_dir2(PLW* wk) {
     }
     if (rnum) {
         if (wk->wu.pat_status < 32) {
-            wk->wu.routine_no[2] = 1;
+            wk->wu.routine_no[2] = NORMAL_STAND;
         } else {
             wk->wu.routine_no[2] = 9;
         }

@@ -22,21 +22,21 @@ const s8 msg_continue[20] = "     CONTINUE_     ";
 
 const s8 msg_continue_cnt[20] = "     CONTINUE_\t    ";
 
-const u8 msg_game_over[20] = "     GAME OVER     ";
+const s8 msg_game_over[20] = "     GAME OVER     ";
 
 /* Messages whose digits are the font's glyph numbers 0-9 (not ASCII) are written as numbers; the comment
    after each name is the text it shows. */
-const u8 msg_insert_2coins[24] = {  /* "   INSERT 2 COINS   " */
+const s8 msg_insert_2coins[24] = {  /* "   INSERT 2 COINS   " */
     32, 32, 32, 73, 78, 83, 69, 82,
     84, 32, 2, 32, 67, 79, 73, 78,
     83, 32, 32, 32, 0, 0, 0, 0,
 };
 
-const u8 msg_insert_coin[20] = "    INSERT COIN    ";
+const s8 msg_insert_coin[20] = "    INSERT COIN    ";
 
-const u8 msg_insert_coins[20] = "   INSERT   COINS  ";
+const s8 msg_insert_coins[20] = "   INSERT   COINS  ";
 
-const u8 msg_join_in[20] = "      JOIN IN      ";
+const s8 msg_join_in[20] = "      JOIN IN      ";
 
 const s8 msg_press_2p_start[20] = "   PRESS \002P START  ";
 

@@ -274,11 +274,11 @@ void eff94_4000(WORK_Other* ewk) {
         break;
     case R2_PLAY:
         char_move(&ewk->wu);
-        if ((u8)ewk->wu.cg_type == 9) {
+        if (ewk->wu.cg_type == 9) {
             if (bg_w.quake_y_index > 3) {
                 ewk->wu.routine_no[2] = R2_SHAKE;
             }
-        } else if ((u8)ewk->wu.cg_type == 0xFF) {
+        } else if (ewk->wu.cg_type == 0xFF) {
             ewk->wu.routine_no[2] = R2_WAIT;
             set_char_move_init(&ewk->wu, 0, ewk->wu.old_rno[0]);
         }

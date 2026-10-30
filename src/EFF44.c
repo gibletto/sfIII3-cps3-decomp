@@ -36,20 +36,19 @@
 
 /* 02006CC8 */
 const s16* scr_obj_data44[10] = {
-    scr_obj_data44_0,
-    scr_obj_data44_1,
-    scr_obj_data44_2,
-    scr_obj_data44_3,
-    scr_obj_data44_4,
-    scr_obj_data44_5,
-    scr_obj_data44_6,
-    scr_obj_data44_7,
-    scr_obj_data44_8,
-    scr_obj_data44_9,
+    eff44_data_tbl0,
+    eff44_data_tbl1,
+    eff44_data_tbl2,
+    eff44_data_tbl3,
+    eff44_data_tbl4,
+    eff44_data_tbl5,
+    eff44_data_tbl6,
+    eff44_data_tbl7,
+    eff44_data_tbl8,
+    eff44_data_tbl9,
 };
 
 
-/* provisional name */
 void effect_43_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
     case R0_WAIT:

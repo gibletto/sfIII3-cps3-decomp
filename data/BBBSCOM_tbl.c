@@ -4,7 +4,7 @@
  * bbbs_level_00 .. bbbs_level_09 are the throw sequences of the ten difficulty levels (two
  * sets of five, picked through bbbs_table by bbbs_type and Bonus_Stage_Level). Each row holds
  * the wait before the throw, the jump level, the number of balls and up to four ball settings
- * for bbbs_ball_set; a wait of -1 ends the sequence. bbbs_jump_level gives the jump speed and
+ * for setup_effI8; a wait of -1 ends the sequence. bbbs_jump_level gives the jump speed and
  * gravity of each jump level. Read by BBBSCOM.C, the ball-thrower control.
  */
 

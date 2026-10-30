@@ -50,7 +50,7 @@ void Att_PL06_HASHIRI_NAGE(PLW* wk) {
         break;
     case HASHIRI_NAGE_MOVE:
         char_move(&wk->wu);
-        switch ((u8)wk->wu.cg_type) {
+        switch (wk->wu.cg_type) {
         case 20:
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
@@ -88,7 +88,7 @@ void Att_PL06_HASHIRI_NAGE(PLW* wk) {
         if (wk->wu.routine_no[3] == HASHIRI_NAGE_LAND) {
             break;
         }
-        if ((u8)wk->wu.cg_type == 30) {
+        if (wk->wu.cg_type == 30) {
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
             wk->wu.cg_type = 0;
@@ -99,7 +99,7 @@ void Att_PL06_HASHIRI_NAGE(PLW* wk) {
         break;
     case HASHIRI_NAGE_MOVE2:
         char_move(&wk->wu);
-        switch ((u8)wk->wu.cg_type) {
+        switch (wk->wu.cg_type) {
         case 20:
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;

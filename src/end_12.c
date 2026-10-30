@@ -50,7 +50,7 @@ void end_12000(u16 pl_num) {
         end_w.timer = timer_c_tbl[end_w.r_no_2];
         load_char_gfx(0xE280, 1);
         end_C00_cell_set();
-        bgm_request(0x2C);
+        BGM_Request(0x2C);
         break;
     case END1_SCENES:
         end_w.timer--;
@@ -59,7 +59,7 @@ void end_12000(u16 pl_num) {
             if (end_w.r_no_2 == 7) {
                 end_w.r_no_1++;
                 end_w.end_flag = 1;
-                bgm_request(0x2E);
+                BGM_Request(0x2E);
                 fadeout_to_staff_roll();
                 end_scn_pos_set2();
                 end_bg_pos_hosei2();

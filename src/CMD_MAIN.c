@@ -4476,7 +4476,7 @@ void debug_hit_box_edit(void) {
         attack = dbg_copy_buf.h_att;
         switch (dbg_judge_ewk->curr_ja) {
         case 0:
-            box = body->body_dm[0];
+            box = dbg_copy_buf.h_bod->body_dm[0];
             break;
         case 1:
             box = body->body_dm[1];
@@ -4619,7 +4619,6 @@ void debug_hit_box_edit(void) {
         body = dbg_edit_buf.h_bod;
         hand = dbg_edit_buf.h_han;
         attack = dbg_edit_buf.h_att;
-        (void)&((WORK*)attack)->id;
         switch (dbg_judge_ewk->curr_ja) {
         case 0:
             box = body->body_dm[0];
@@ -4745,13 +4744,11 @@ s16 n;
 void debug_hit_box_cursor(void) {
     u16 now;
     u16 sw;
-    u16 *input = &now;
     if (Debug_PL_id) {
         return;
     }
     now = dbg_p2sw_0;
-held:;
-    sw = ~dbg_p2sw_1 & now;
+    sw = ~dbg_p2sw_1 & dbg_p2sw_0;
     if (now & 0x240) {
         tilemap_rect_fill(dbg_hud_x + 40, (s8)((WORK_Other*)dbg_judge_ewk)->refrected + 12, 8, 1, 2, 0xFFFF);
         if (sw & BUTTON_HP) {
@@ -5240,7 +5237,7 @@ void debug_cg_number_browse(void) {
     }
     group = get_cg_slot_no(dbg_pl->wu.cg_number);
     if (dbg_pl->zuru_timer != group) {
-        purge_char_gfx((u16)bcp_group_top_tbl[(dbg_pl->zuru_timer & 0x7fff) / 4]);
+        purge_char_gfx(bcp_group_top_tbl[(dbg_pl->zuru_timer & 0x7fff) / 4]);
         dbg_pl->zuru_timer = group;
     }
 }
@@ -6130,7 +6127,7 @@ void debug_pattern_preview_step(WORK* wk)
         dbg_slot->sel[2] = 1;
     }
     wk->cg_olc = wk->olc_ix_table[wk->cg_olc_ix];
-    if (((WORK_Other_JUDGE *)dbg_judge_ewk)->look_up_flag) {
+    if (dbg_judge_ewk->look_up_flag) {
         wk->cgd_type = dbg_look_buf.rec[dbg_slot->sel[2]].type;
         wk->cg_ctr = dbg_look_buf.rec[dbg_slot->sel[2]].u.frames;
         wk->cg_number = dbg_look_buf.rec[dbg_slot->sel[2]].param;
@@ -6409,7 +6406,9 @@ void debug_draw_object_info(void) {
     tilemap_print_hex(11, 14, 2, dbg_pl->wu.position_y, 4, 0);
     if (dbg_slot->sel[0] <= 216) {
         tilemap_print_string(0, 0, 0xFFFF, &dbg_act_kind_str[dbg_slot->row]);
-        tilemap_print_string(0, 0, 0xFFFF, &(*(dbg_slot->row + dbg_act_name_tbl))[dbg_slot->sel[1] - 1]);
+        p = dbg_act_name_tbl[dbg_slot->row];
+        p = &p[dbg_slot->sel[1] - 1];
+        tilemap_print_string(0, 0, 0xFFFF, p);
         tilemap_print_string(0, 0, 0xFFFF, &dbg_char_name_str[dbg_pl->player_number]);
     } else {
         tilemap_print_string(0, 0, 0xFFFF, &dbg_act_kind_str[10]);
@@ -6578,7 +6577,7 @@ void debug_draw_hit_edit_info(void)
     const HIT_IX *hit;
     u16 x;
 
-    tilemap_rect_fill(dbg_hud_x + 40, ((WORK_Other_JUDGE *)dbg_judge_ewk)->curr_ja + 12, 8, 1, 14, 0xFFFF);
+    tilemap_rect_fill(dbg_hud_x + 40, dbg_judge_ewk->curr_ja + 12, 8, 1, 14, 0xFFFF);
     if (Debug_Box_Edit) {
         tilemap_print_string_attr(dbg_hud_x + 40, 8, 6, dbg_hold_str);
     } else {
@@ -6596,7 +6595,7 @@ void debug_draw_hit_edit_info(void)
     } else {
         tilemap_print_string_attr(dbg_hud_x + 40, 9, 14, dbg_copy_str);
     }
-    if (((WORK_Other_JUDGE *)dbg_judge_ewk)->look_up_flag) {
+    if (dbg_judge_ewk->look_up_flag) {
         tilemap_print_string_attr(dbg_hud_x + 40, 10, 2, dbg_user_str);
     } else {
         tilemap_print_string_attr(dbg_hud_x + 40, 10, 2, dbg_define_str);

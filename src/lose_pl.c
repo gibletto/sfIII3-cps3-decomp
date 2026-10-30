@@ -57,7 +57,7 @@ void lose_player(PLW* wk) {
     if (My_char[wk->wu.id] != wk->player_number) {
         meta_lose_pause(wk);
     } else {
-        lose_jp_tbl[lose_type_tbl[wk->player_number]](wk);
+        lose_jp_tbl[loser_type_tbl[wk->player_number]](wk);
     }
 }
 

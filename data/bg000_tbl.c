@@ -2,10 +2,10 @@
  * BG000_TBL.C  stage background set-up tables
  *
  * Per stage background (bg_index), and for the special screens drawn by bg_etc_write (the etc_
- * tables, by screen type): the scroll graphics number (bg_scno_tbl), graphics source and size
- * (bg_gfx_tbl), layer scroll speeds (bg_speed_tbl), layer priorities (bg_prio_tbl), cell
+ * tables, by screen type): the scroll graphics number (use_scr), graphics source and size
+ * (bg_gfx_tbl), layer scroll speeds (msp), layer priorities (bg_prio_tbl), cell
  * attributes, cell counts and cell sources (bg_attr_tbl, bg_cell_cnt_tbl, bg_cg_src_tbl), the
- * cell set per stage (bg_cell_set_tbl) and the layer scroll limits (bg_limit_tbl).
+ * cell set per stage (bg_cell_set_tbl) and the layer scroll limits (limit_tbl3).
  * bg_rewrite_cells0 - 9 are the cell lists (map offset, cell number) bg_scr_write puts into each
  * background layer, and bg_etc_cells0 - 12 those bg_etc_scr_write puts on the special screens;
  * both are reached through bg_rewrite_cell_tbl and bg_etc_cell_tbl in BG000.C. Also the
@@ -52,13 +52,13 @@ extern const u16 etc_bg_scrn_data_0[12][16][32];
 extern const u16 etc_bg_scrn_data_3[95][16][32];
 extern const u16 etc_bg_scrn_data_7[3][16][32];
 
-const s16 bg_scno_tbl[23] = {
+const s16 use_scr[23] = {
     2, 2, 3, 2, 2, 2, 2, 2,
     2, 2, 2, 2, 2, 2, 2, 2,
     2, 2, 2, 2, 2, 2, 2,
 };
 
-const s16 etc_bg_scno_tbl[12] = {
+const s16 use_scr2[12] = {
     1, 1, 1, 1, 2, 1, 1, 1,
     1, 1, 1, 1,
 };
@@ -372,7 +372,7 @@ const s16 bg_scr_record_unref_18[16] = {
     -1,
 };
 
-const s32 bg_speed_tbl[23][3][2] = {
+const s32 msp[23][3][2] = {
     { { 0xE000, 0xA000 }, { 0x10000, 0x10000 }, { 0, 0 } },
     { { 0xC000, 0xF000 }, { 0x10000, 0x10000 }, { 0xA000, 0x10000 } },
     { { 0xD000, 0xD000 }, { 0x10000, 0x10000 }, { 0x8000, 0xD000 } },
@@ -400,7 +400,7 @@ const s32 bg_speed_tbl[23][3][2] = {
 
 /* Layer scroll speeds of the first eight special screen types. bg_etc_write reads it with types 8-11 too,
    past the end, into etc_bg_zuubun_tbl: those screens' layers get the speed 0 found there. */
-const s32 etc_bg_speed_tbl[8][3][2] = {
+const s32 msp2[8][3][2] = {
     { { 0x10000, 0x10000 }, { 0x10000, 0x10000 }, { 0xF800, 0xF000 } },
     { { 0x10000, 0x10000 }, { 0x10000, 0x10000 }, { 0xE000, 0xE000 } },
     { { 0x10000, 0x10000 }, { 0x10000, 0x10000 }, { 0xE000, 0xE000 } },
@@ -692,7 +692,7 @@ const TILEREQ bg_etc_cells12[2] = {
     { 32, 0x3040, 1 }, { 32, 0x3080, 2 },
 };
 
-const s16 bg_limit_tbl[23][3][6] = {
+const s16 limit_tbl3[23][3][6] = {
     { { 272, 692, 360, 636, 240, 240 }, { 272, 752, 328, 696, 240, 240 }, { 209, 756, 265, 700, 240, 240 } },
     { { 333, 695, 389, 639, 240, 240 }, { 272, 764, 314, 708, 240, 240 }, { 393, 634, 449, 578, 240, 240 } },
     { { 333, 695, 389, 639, 240, 240 }, { 272, 748, 314, 708, 240, 240 }, { 393, 634, 449, 578, 240, 240 } },

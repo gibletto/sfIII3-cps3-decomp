@@ -25,15 +25,14 @@ s16 ix;
     PLW* as = (PLW*)q_hit_push[ix2];
     PLW* ds = (PLW*)q_hit_push[ix];
     s8 gddir;
-    HS* hit;
 loop:
-    if (hit = &hs[ix2], ix != hit->my_hit) {
+    if (ix != hs[ix2].my_hit) {
         goto loop;
     }
-    if (!(hit->flag.results & 1)) {
+    if (!(hs[ix2].flag.results & 1)) {
         goto end;
     }
-    if (ix != hit->dm_me) {
+    if (ix != hs[ix2].dm_me) {
         goto end;
     }
     if (as->wu.att.dipsw & 0x40) {
@@ -66,11 +65,11 @@ loop:
     if (!(ds->wu.kind_of_waza & 2)) goto end;
 
 own:
-    hit->flag.results &= 0x1101;
+    hs[ix2].flag.results &= 0x1101;
     hs[ix].flag.results &= 0x1110;
     return;
 two:
-    hit->flag.results &= 0x1110;
+    hs[ix2].flag.results &= 0x1110;
     hs[ix].flag.results &= 0x1101;
 end:
     ds->dm_point = hs[ix].dm_body;

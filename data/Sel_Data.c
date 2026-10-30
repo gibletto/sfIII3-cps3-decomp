@@ -162,7 +162,7 @@ const u16 EM_Select_Voice_Data[4] = {
 };
 
 /* One row per effect 76 order from 0x2B: x, y from its BG, priority. */
-const s16 EFF76_Pos_Data_A[26][3] = {
+const s16 Pos_Data_76[26][3] = {
     { -472, 54, 68 },
     { -527, 85, 64 },
     { 360, 20, 70 },
@@ -191,7 +191,7 @@ const s16 EFF76_Pos_Data_A[26][3] = {
     { 400, 32, 13 },
 };
 
-const s16 EFF76_Score_Pos_Data[2][5][3] = {
+const s16 Compute_Pos_Data_76[2][5][3] = {
     { { 0, 152, 7 }, { 112, 136, 7 }, { 128, 120, 7 }, { 144, 104, 7 }, { 144, 104, 7 } },
     { { 0, 152, 7 }, { 96, 136, 7 }, { 112, 120, 7 }, { 128, 104, 7 }, { 144, 88, 7 } },
 };
@@ -211,7 +211,7 @@ const s16 Pos_Cont_Data_76[5][3] = {
 };
 
 /* One row per character: x, y of the face from BG0. */
-const s16 EFF76_Face_Pos_Data[21][2] = {
+const s16 Bust_Pos_Data_76[21][2] = {
     { 32, 16 },  /* Gill */
     { 80, 16 },  /* Alex */
     { 88, 16 },  /* Ryu */
@@ -236,7 +236,7 @@ const s16 EFF76_Face_Pos_Data[21][2] = {
 };
 
 /* provisional name */
-/* Stored after EFF76_Face_Pos_Data: another (x, y) per character. Nothing in the program refers to it. */
+/* Stored after Bust_Pos_Data_76: another (x, y) per character. Nothing in the program refers to it. */
 const s16 EFF76_Face_Pos_Data_2[21][2] = {
     80, 16,
     80, 16,

@@ -154,7 +154,7 @@ void Sel_PL_Control(void) {
     void (*cont_tbl[4])() = { Sel_PL_Cont_1st, Sel_PL_Cont_2nd, Sel_PL_Cont_3rd, Sel_PL_Cont_4th };
     Setup_Select_Status();
     cont_tbl[S_No]();
-    sel_pl_face_control();
+    Face_Control();
     OBJ_Control();
     ID2 = 0;
     Player_Select_Control();
@@ -241,7 +241,7 @@ void Sel_PL_Cont_3rd(void) {
         S_No++;
         Forbid_Break = 0;
         if (G_No1 == G1_SELECT || !Demo_Flag) {
-            bgm_request(2);
+            BGM_Request(2);
             if (E_Number[0][0] != ENTRY_NAME && E_Number[1][0] != ENTRY_NAME) {
                 Ranking_00_6th(0);
             }
@@ -584,7 +584,7 @@ u16 sw;
     Order[1] = 2;
     Order_Timer[1] = 1;
     Order_Dir[1] = 8;
-    if (Select_Status[0] != 3) {
+    if (Select_Status[0] != SEL_BOTH) {
         Order[2] = 1;
         Order_Timer[2] = 10;
         Order_Dir[2] = 4;
@@ -698,7 +698,7 @@ const s8 Repeat_Time_Data[3] = {
 };
 
 
-const s8 Auto_Repeat_Wife_Data[5] = {
+const s8 Repeat_Time_Data_Wife[5] = {
     1, 1, 1, 0, 0,
 };
 
@@ -793,14 +793,14 @@ s32 Auto_Repeat_Sub_Wife(s16 pl) {
         if (sw & LEVER_UP) {
             Auto_No[pl] = AUTO_REPEAT;
             Auto_Cursor[pl] = 1;
-            Auto_Timer[pl] = Auto_Repeat_Wife_Data[0];
+            Auto_Timer[pl] = Repeat_Time_Data_Wife[0];
             Auto_Index[pl] = 1;
             break;
         }
         if (sw & LEVER_DOWN) {
             Auto_No[pl] = AUTO_REPEAT;
             Auto_Cursor[pl] = 2;
-            Auto_Timer[pl] = Auto_Repeat_Wife_Data[0];
+            Auto_Timer[pl] = Repeat_Time_Data_Wife[0];
             Auto_Index[pl] = 1;
             break;
         }
@@ -808,7 +808,7 @@ s32 Auto_Repeat_Sub_Wife(s16 pl) {
     case AUTO_REPEAT:
         if (sw &= Auto_Cursor[pl]) {
             if (--Auto_Timer[pl] == 0) {
-                Auto_Timer[pl] = Auto_Repeat_Wife_Data[Auto_Index[pl]++];
+                Auto_Timer[pl] = Repeat_Time_Data_Wife[Auto_Index[pl]++];
                 if (Auto_Index[pl] > 2) {
                     Auto_Index[pl] = 2;
                 }
@@ -873,7 +873,7 @@ u16 sw;
     }
     if (sw & BUTTON_SHOTS) {
         Stop_Cursor[ID] = 1;
-        Last_Arts_PL = PL_id;
+        Slide_Type = PL_id;
         Sel_Arts_Complete[PL_id] = 1;
         *(s8*)&Last_Super_Arts[PL_id] = *(s8*)&Super_Arts[PL_id] = Arts_Y[PL_id];
         Sound_SE(ID + 98);
@@ -883,10 +883,10 @@ u16 sw;
         } else {
             Setup_ID();
         }
-        if (Decided_My_char[PL_id] != My_char[PL_id]) {
+        if (Used_char[PL_id] != My_char[PL_id]) {
             Last_Player_id = PL_id;
         }
-        Decided_My_char[PL_id] = My_char[PL_id];
+        Used_char[PL_id] = My_char[PL_id];
     }
 }
 
@@ -903,7 +903,7 @@ void OBJ_Control(void) {
 void OBJ_1st(void) {
     load_char_gfx(0xA0F8, 1);
     Setup_EFF69();
-    if (Select_Status[0] != 3) {
+    if (Select_Status[0] != SEL_BOTH) {
         SO_No[0] = 1;
         effect_38_init(Aborigine, Aborigine + 11, 127, 0, 2);
         Order[Aborigine + 11] = 1;
@@ -996,7 +996,7 @@ void OBJ_1st(void) {
 
 
 void OBJ_2nd(void) {
-    if (Select_Status[0] != 3) {
+    if (Select_Status[0] != SEL_BOTH) {
         return;
     }
     SO_No[0]++;
@@ -1062,7 +1062,7 @@ void OBJ_3rd(void) {}
 
 
 
-void sel_pl_face_control(void) {
+void Face_Control(void) {
     void (*Face_Tbl[4])() = { Face_1st, Face_2nd, Face_3rd, Face_4th };
     Face_Tbl[Face_No[0]]();
     Move_Face_BG();
@@ -1152,7 +1152,6 @@ void Move_Face_BG(void) {
 
 
 
-/* provisional name */
 void Player_Select_Control(void) {
     void (*Obj_Tbl[5])() = { PL_Sel_Begin, PL_Sel_2nd, PL_Sel_3rd, PL_Sel_4th, PL_Sel_5th };
 
@@ -1168,7 +1167,7 @@ void PL_Sel_Begin(void) {
     if (Sel_PL_Complete[ID2] == -0x8000) {
         SP_No[ID2][1] = 2;
         Sel_Arts_Complete[ID2] = 0;
-        sel_pl_disp_char_effect_trio(ID2, 0x55);
+        Setup_Plates(ID2, 0x55);
         effect_50_init(ID2, 1, 0);
         effect_50_init(ID2, 1, 1);
         effect_50_init(ID2, 2, 0);
@@ -1201,7 +1200,7 @@ s32 PL_Sel_Mode_2(void) {
 void PL_Sel_2nd(void) {
     if (Sel_PL_Complete[ID2]) {
         SP_No[ID2][1]++;
-        sel_pl_disp_char_effect_trio(ID2, 1);
+        Setup_Plates(ID2, 1);
         effect_50_init(ID2, 1, 0);
         effect_50_init(ID2, 1, 1);
         effect_50_init(ID2, 2, 0);
@@ -1223,17 +1222,17 @@ void PL_Sel_4th(void) {}
 
 
 
-const u8 Setup_Aborigine_table[3][3] = {
+const u8 Arts_Y_Data[3][3] = {
     { 0, 1, 2 }, { 2, 0, 1 }, { 1, 2, 0 },
 };
 
 
-void sel_pl_disp_char_effect_trio(s8 PL_id, s16 Time) {
+void Setup_Plates(s8 PL_id, s16 Time) {
     Move_Super_Arts[PL_id] = 3;
     Select_Arts[PL_id] = 3;
-    effect_79_init(PL_id, 0, Setup_Aborigine_table[Super_Arts[PL_id]][0], Time, 2);
-    effect_79_init(PL_id, 1, Setup_Aborigine_table[Super_Arts[PL_id]][1], Time, 2);
-    effect_79_init(PL_id, 2, Setup_Aborigine_table[Super_Arts[PL_id]][2], Time, 2);
+    effect_79_init(PL_id, 0, Arts_Y_Data[Super_Arts[PL_id]][0], Time, 2);
+    effect_79_init(PL_id, 1, Arts_Y_Data[Super_Arts[PL_id]][1], Time, 2);
+    effect_79_init(PL_id, 2, Arts_Y_Data[Super_Arts[PL_id]][2], Time, 2);
 }
 
 
@@ -1308,7 +1307,6 @@ void Basic_Sub_Ex(void) {
 
 
 
-/* provisional name */
 void Setup_BG_General(void) {
     Zoomf_Init();
     bg_etc_write(6);
@@ -1361,9 +1359,14 @@ void Setup_BG_Layer3(void) {
 
 
 
-const s16 Cursor_Y_Data[13] = {
-    80, 104, 128, 80, 104, 128, 16, 32,
-    64, 128, 256, 512, 0,
+const s16 Cursor_Y_Data[6] = {
+    80, 104, 128, 80, 104, 128,
+};
+
+/* provisional name */
+/* The six button bits, LP to HK, and a 0. Nothing in the program refers to it by name or address. */
+const s16 Sel_Shot_Data[7] = {
+    16, 32, 64, 128, 256, 512, 0,
 };
 
 
@@ -1419,7 +1422,6 @@ void Go_Away_Red_Lines(void) {
 
 
 
-/* provisional name */
 void Check_Exit(void) {
     void (*Exit_Tbl[7])(void) = { Exit_1st, Exit_2nd, Exit_3rd, Exit_4th, Exit_5th, Exit_6th, Exit_7th };
 
@@ -1496,10 +1498,10 @@ void Exit_4th(void) {
         Exit_No++;
         Forbid_Break = 0;
         Suicide[0] = 1;
-        bgm_request(3);
+        BGM_Request(3);
         Exit_Timer = 180;
         effect_58_init(17, 2, 0);
-        if (Select_Status[0] != 3) {
+        if (Select_Status[0] != SEL_BOTH) {
             effect_K6_init(0, 35, 35, 2);
             Order[35] = 3;
             Order_Timer[35] = 1;
@@ -1620,8 +1622,7 @@ s32 Check_Boss(s16 PL_id) {
 }
 
 
-/* provisional name */
-void Setup_Play_Type_1st(void) {
+void Setup_1st_Play_Type(void) {
     if (Play_Type == PLAY_VS_PLAYER) {
         Play_Type_1st = 99;
     } else {
@@ -1639,14 +1640,13 @@ s32 Setup_Battle_Country(void) {
         ix += random_16_com() & 1;
         {
             s16 rnd = random_16_com();
-            return Battle_Country_Data[ix + rnd];
+            return Random_Stage_Data[ix + rnd];
         }
     }
     {
-        u8* pl = &My_char[New_Challenger];
-        if (*pl == PL_Q) {
+        if (My_char[New_Challenger] == PL_Q) {
             return My_char[Champion];
         }
-        return *pl;
+        return My_char[New_Challenger];
     }
 }

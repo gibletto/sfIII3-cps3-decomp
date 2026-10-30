@@ -178,7 +178,7 @@ const EFFA6_MESSAGE* effA6_mes_pt[21] = {
 };
 
 
-#pragma inline(effA5_start_pressed)
+#pragma inline(check2_A6_shortcut)
 
 /* provisional name */
 s32 effA5_shot_pressed(void) {
@@ -196,8 +196,7 @@ s32 effA5_shot_pressed(void) {
 
 
 
-/* provisional name */
-s32 effA5_start_pressed(void) {
+s32 check2_A6_shortcut(void) {
     u16 sw;
     if (Player_id) {
         sw = p2sw_0;
@@ -222,7 +221,7 @@ void effect_A6_move(WORK_Other_CONN* ewk) {
     s16 i;
     switch (ewk->wu.routine_no[0]) {
     case R0_MOVE:
-        if (effA5_start_pressed() != 0) {
+        if (check2_A6_shortcut() != 0) {
             Next_Step |= ~0x7F;
         }
         if (Auto_Cut_Sub() != 0) {

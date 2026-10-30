@@ -33,7 +33,6 @@ s32 get_kind_of_head_dm(s16 dir, char rl)
 
 
 
-/* provisional name */
 s32 get_kind_of_trunk_dm(s16 dir, char rl)
 {
     if (rl == 0) {
@@ -170,7 +169,6 @@ void add_sp_arts_gauge_hit_dm(PLW* wk) {
 
 
 
-/* provisional name */
 s32 cal_sa_gauge_waribiki(wk, asag)
 PLW* wk;
 s16 asag;

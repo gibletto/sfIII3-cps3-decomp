@@ -1,7 +1,7 @@
 /*
  * RANKING.C  Ranking display screens
  *
- * Draws the score ranking. Ranking_Main runs either Ranking_00 (the attract-mode ranking shown
+ * Draws the score ranking. Ranking runs either Ranking_00 (the attract-mode ranking shown
  * between demos) or Ranking_01 (the ranking shown during a game) step by step and returns 1
  * when finished. The steps clear the text layer, load the ranking background and effects,
  * change the BGM, flash the entries in, count down the display time and wipe out; Ranking_01
@@ -68,8 +68,7 @@ RANK_DATA Ranking_Data[20];  /* 02016E4C */
 RANK_DATA Present_Data[2];  /* 02016FDC */
 
 
-/* provisional name */
-s32 Ranking_Main(void) {
+s32 Ranking(void) {
     void (*jmp_tbl[2])() = { Ranking_01, Ranking_00 };
     Ranking_X = 0;
     jmp_tbl[D_No0]();
@@ -87,7 +86,7 @@ void Ranking_00(void) {
 void Ranking_00_1st(void)
 {
     D_No1++;
-    Rank_Demo_Loop = 0;
+    Demo_Type = 0;
     Flash_Sign[0] = 1;
     Ranking_Sub();
 }
@@ -259,14 +258,13 @@ void Ranking_01_1st(void) {
     Present_Rank[1] = 99;
     Ranking_Sub();
     effect_58_init(1, 1, -1);
-    bgm_request(7);
+    BGM_Request(7);
 }
 
 
 
 void Ranking_01_2nd(void) {
     s16 Char_Index;
-    RANK_DATA *wp;
     D_No1++;
     D_Timer = 420;
     Rank_X = 0;
@@ -312,11 +310,10 @@ void Ranking_01_2nd(void) {
     base_y_pos = 40;
     switch (Rank_Type) {
     case 0:
-        wp = &Ranking_Data[10];
-        if (wp->cpu_grade == 0xFF) {
+        if (Ranking_Data[10].cpu_grade == 0xFF) {
             Char_Index = 0;
         } else {
-            Char_Index = wp->cpu_grade;
+            Char_Index = Ranking_Data[10].cpu_grade;
         }
         break;
     case 5:
@@ -377,7 +374,7 @@ void Ranking_01_5th(void) {
             break;
         }
         D_No2++;
-        if ((Demo_Flag == 0) && (Rank_Demo_Loop == 0)) {
+        if ((Demo_Flag == 0) && (Demo_Type == 0)) {
             Text_Page_Y = 0;
             Setup_Demo_PL();
             Setup_Demo_Arts();

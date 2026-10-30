@@ -31,7 +31,7 @@ void settle_type_40000(void);
 s32 time_over_check(void);
 s32 will_die(void);
 void init_app_10000(void);
-void pli_3000(void);
+void pli_0002(void);
 void init_app_20000(void);
 void init_app_30000(void);
 void pli_0000(void);

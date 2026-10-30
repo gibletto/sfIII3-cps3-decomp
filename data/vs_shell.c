@@ -3,7 +3,7 @@
  *
  * VS_Shell_Active_Data gives, by character, reaction type of the incoming projectile, level
  * and random number, the pattern the computer player runs against an opponent's projectile
- * (Shell_Reaction_Type_Data gives the reaction type of each projectile). Read by
+ * (Shell_Change_Data_For_Reaction gives the reaction type of each projectile). Read by
  * Decide_Shell_Reaction in COM_SUB.C.
  */
 

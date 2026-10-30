@@ -99,7 +99,7 @@ void Att_METAMORPHOSE(PLW* wk) {
         break;
     case METAMORPHOSE_CUE:
         char_move(&wk->wu);
-        if ((u8)wk->wu.cg_type == 20) {
+        if (wk->wu.cg_type == 20) {
             wk->wu.routine_no[2] = ATTACK_METAMOR_WAIT;
             wk->wu.routine_no[3] = METAMORPHOSE_CUE;
         }
@@ -450,7 +450,7 @@ void Att_pl19_TOKUSHUKOUDOU(PLW* wk) {
         break;
     case TOKUSHUKOUDOU_ACTION:
         char_move((WORK*)wk);
-        switch ((u8)wk->wu.cg_type) {
+        switch (wk->wu.cg_type) {
         case 40:
             wk->wu.cg_type = 0;
             add_sp_arts_gauge_tokushu(wk);

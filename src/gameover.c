@@ -138,7 +138,7 @@ void GameOver_2nd(void) {
     case GO2_RESULT_IN:
         if (Check_Fade_Complete_SP()) {
             Forbid_Break = 0;
-            bgm_request(47);
+            BGM_Request(47);
             Ignore_Entry[LOSER] = 0;
             if (E_Number[0][0] != ENTRY_NAME && E_Number[1][0] != ENTRY_NAME) {
                 GO_No[1] += 2;

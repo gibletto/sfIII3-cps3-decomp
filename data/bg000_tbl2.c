@@ -1,7 +1,7 @@
 /*
  * BG000_TBL2.C  special screen layer positions
  *
- * etc_bg_pos_tbl gives the starting x, y of each layer of the special screens drawn by
+ * bg_pos_tbl2 gives the starting x, y of each layer of the special screens drawn by
  * bg_etc_write, by screen type. Read by BG000.C. bg_test_menu_scr, the position lines of the
  * background test (strings in BG000_TBL3.C), is not referred to.
  */
@@ -26,7 +26,7 @@ extern const s8 str_BG_4[];
 extern const s8 str_STAGE[];
 extern const s8 str_AREA[];
 
-const s32 etc_bg_pos_tbl[13][3][2] = {
+const s32 bg_pos_tbl2[13][3][2] = {
     { { 33554432, 0 }, { 33554432, 0 }, { 0, 0 } },
     { { 33554432, 0 }, { 33554432, 0 }, { 0, 0 } },
     { { 33554432, 0 }, { 33554432, 0 }, { 0, 0 } },

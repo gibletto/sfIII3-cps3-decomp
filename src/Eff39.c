@@ -269,7 +269,7 @@ s32 effect_39_init(s16 PL_id, s16 dir_old, s16 Your_Char, s16 Target_BG, s16 Opt
         ewk->wu.dir_step = Your_Char;
     }
     ewk->wu.dir_step += chkNameAkuma(ewk->wu.dir_step);
-    ewk->wu.dir_step += chkNameExport(ewk->wu.dir_step);
+    ewk->wu.dir_step += chkNameSuv(ewk->wu.dir_step);
     if (Option == 1) {
         effect_59_init(ewk, ewk->wu.my_family, 5, 1);
     }

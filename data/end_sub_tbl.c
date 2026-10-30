@@ -4,8 +4,8 @@
  * no_card_mes, win_card_mes and their blank strings are the prize card messages blinked by
  * END_SUB.C; no_cd_drive_mes and no_cd_rom_mes are the CD error messages shown by END_SUB_2.C.
  * combo_demo_pl_tbl gives each combo demo both players' character, super art and colour
- * (EM_CAND.C). staff_roll_tbl lists the staff roll lines (wait, x, y, attribute and string)
- * and the staff_ strings are their text; read by staff_roll_main in END_SUB_2.C.
+ * (EM_CAND.C). sf3_staff lists the staff roll lines (wait, x, y, attribute and string)
+ * and the staff_ strings are their text; read by staff_credits in END_SUB_2.C.
  */
 
 #include "types.h"
@@ -13,7 +13,7 @@
 
 #pragma section TBL
 
-extern const STAFF_LINE staff_roll_tbl[];
+extern const STAFF_LINE sf3_staff[];
 extern const u8 staff_STREET_FIGHTER_3rd_STRIKE[];
 extern const u8 staff_Fight_for_the_Future[];
 extern const u8 staff_STAFF[];
@@ -361,7 +361,7 @@ const s8 combo_demo_pl_tbl[3][6] = {
     { 3, 0, 0, 10, 0, 0 },
 };
 
-const STAFF_LINE staff_roll_tbl[340] = {
+const STAFF_LINE sf3_staff[340] = {
     { -1, 48, 128, 3, staff_STREET_FIGHTER_3rd_STRIKE },
     { -1, 48, 96, 3, staff_Fight_for_the_Future },
     { -1, 48, 64, 3, staff_STAFF },

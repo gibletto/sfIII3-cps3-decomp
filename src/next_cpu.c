@@ -127,7 +127,6 @@ u8 SEL_CPU_X;  /* 02017038 */
 s16 Start_X;  /* 0201703A */
 
 
-/* provisional name */
 s32 Next_CPU(void) {
     void (*Next_CPU_Tbl[10])() = { Next_CPU_1st, Next_CPU_2nd, Next_CPU_3rd, Next_CPU_4th, Next_CPU_5th, Next_CPU_6th, Next_Bonus_1st, Next_Bonus_2nd, Next_Bonus_3rd, Next_Bonus_End };
     if (Break_Into) {
@@ -174,7 +173,7 @@ void Next_CPU_1st(void) {
     }
     Setup_Regular_OBJ(Player_id);
     Moving_Plate[Player_id] = 0;
-    bgm_request(7);
+    BGM_Request(7);
     Order[56] = 3;
     Order_Timer[56] = 1;
     Time_Stop = 1;
@@ -256,7 +255,7 @@ void Next_CPU_4th(void) {
         if (Request_Fade(65, 0)) {
             SC_No[1]++;
             Forbid_Break = 0;
-            bgm_request(3);
+            BGM_Request(3);
             S_Timer = 178;
             Exit_Timer = 2;
             bg_w.bgw[0].wxy[1].disp.pos = 0x200;
@@ -354,7 +353,7 @@ void Next_CPU_5th(void) {
             Forbid_Break = 0;
             Suicide[3] = 1;
             effect_43_init(1, 0);
-            bgm_request(3);
+            BGM_Request(3);
             S_Timer = 178;
         }
         break;
@@ -386,7 +385,7 @@ s32 Check_EM_Speech(void) {
     if (Introduce_Boss[Player_id][VS_Index[Player_id] - 8] & 1) {
         return 0;
     }
-    return (u8)EM_Speech_Data[My_char[Player_id] - 1][VS_Index[Player_id] - 8];
+    return (u8)Boss_Speech_Data[My_char[Player_id] - 1][VS_Index[Player_id] - 8];
 }
 
 
@@ -398,9 +397,8 @@ void Next_CPU_6th(void)
 
 
 
-/* provisional name */
 s32 After_Bonus(void) {
-    void (*After_Bonus_Tbl[7])() = { After_Bonus_1st, After_Bonus_2nd, After_Bonus_3rd, After_Bonus_4th, Next_CPU_3rd, After_Bonus_6th, After_Bonus_End };
+    void (*After_Bonus_Tbl[7])() = { After_Bonus_1st, After_Bonus_2nd, After_Bonus_3rd, NC_Cut_Sub, Next_CPU_3rd, After_Bonus_6th, After_Bonus_End };
     if (Break_Into) {
         return 0;
     }
@@ -421,7 +419,6 @@ s32 After_Bonus(void) {
 
 
 
-/* provisional name */
 void After_Bonus_1st(void) {
     SC_No[0]++;
     Cover_Timer = 23;
@@ -438,10 +435,9 @@ void After_Bonus_1st(void) {
 
 
 void After_Bonus_2nd(void) {
-    u8* p = &SC_No[1];
-    switch (*p) {
+    switch (SC_No[1]) {
     case 0:
-        (*p)++;
+        SC_No[1]++;
         load_any_color(5);
         effect_76_init(55);
         Order[55] = 3;
@@ -464,7 +460,7 @@ void After_Bonus_2nd(void) {
             SC_No[0]++;
             SC_No[1] = 0;
             S_Timer = 30;
-            bgm_request(7);
+            BGM_Request(7);
             Forbid_Break = 0;
             Ignore_Entry[LOSER] = 0;
         }
@@ -513,8 +509,7 @@ void After_Bonus_3rd(void) {
 
 
 
-/* provisional name */
-void After_Bonus_4th(void) {
+void NC_Cut_Sub(void) {
     Check_Auto_Cut();
     if (Next_Step) {
         SC_No[0]++;
@@ -532,7 +527,7 @@ void After_Bonus_6th(void) {
         if (Request_Fade(65, 0)) {
             SC_No[1]++;
             Forbid_Break = 0;
-            bgm_request(3);
+            BGM_Request(3);
             S_Timer = 178;
             Exit_Timer = 2;
             bg_w.bgw[0].wxy[1].disp.pos = 0x200;
@@ -580,7 +575,6 @@ void After_Bonus_End(void) {
 
 
 
-/* provisional name */
 s32 Select_CPU_First(void) {
     void (*SC_Tbl[4])() = { Select_CPU_1st, Select_CPU_2nd, Select_CPU_3rd, Select_CPU_4th };
     if (Break_Into) {
@@ -791,7 +785,7 @@ void Next_Bonus_1st(void) {
     bg_mvxy.d[0].sp = 0;
     Setup_History_OBJ();
     Setup_Next_Stage(60);
-    bgm_request(7);
+    BGM_Request(7);
     Order[56] = 3;
     Order_Timer[56] = 1;
     Rnd = random_16_com() & 3;
@@ -831,7 +825,7 @@ void Next_Bonus_3rd(void) {
         if (Request_Fade(0x41, 0)) {
             SC_No[1]++;
             Forbid_Break = 0;
-            bgm_request(3);
+            BGM_Request(3);
             S_Timer = 178;
             Exit_Timer = 2;
             bg_w.bgw[0].wxy[1].disp.pos = 512;
@@ -901,7 +895,6 @@ s32 Next_Q(void) {
 
 
 
-/* provisional name */
 void Next_Q_1st(void) {
     SC_No[0]++;
     Cover_Timer = 23;
@@ -950,7 +943,7 @@ void Next_Q_2nd(void) {
             SC_No[0]++;
             SC_No[1] = 0;
             S_Timer = 10;
-            bgm_request(7);
+            BGM_Request(7);
             Forbid_Break = 0;
             Ignore_Entry[LOSER] = 0;
         }
@@ -972,7 +965,7 @@ void Next_Q_3rd(void) {
             SC_No[1]++;
             Forbid_Break = 0;
             effect_43_init(1, 0);
-            bgm_request(3);
+            BGM_Request(3);
             S_Timer = 180;
             effect_58_init(15, 5, 0);
             return;
@@ -1008,7 +1001,6 @@ void PL_Sel_1st(void) {
 
 
 
-/* provisional name */
 void Sel_CPU_Sub(PL_id, sw)
 s16 PL_id;
 u16 sw;
@@ -1309,7 +1301,7 @@ s32 Check_Bonus_Stage(void) {
     if (Bonus_Type == 0) {
         return 0;
     }
-    return Completion_Bonus[Player_id][Bonus_Type - 21] = 1;
+    return Completion_Bonus[Player_id][Bonus_Type - BONUS_CAR] = 1;
 }
 
 
@@ -1319,13 +1311,13 @@ u8 Check_Bonus_Type(void) {
         if (Completion_Bonus[Player_id][1] & 0x80) {
             return 0;
         }
-        return 22;
+        return BONUS_PARRY;
     }
     if (VS_Index[Player_id] >= 3) {
         if (Completion_Bonus[Player_id][0] & 0x80) {
             return 0;
         }
-        return 21;
+        return BONUS_CAR;
     }
     return 0;
 }

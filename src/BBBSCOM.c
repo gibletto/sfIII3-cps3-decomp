@@ -4,7 +4,7 @@
  * bbbs_com_execute is the control routine for the computer side in the ball bonus game
  * (Bonus_Game_Flag 22, called from PLMAIN2 instead of the normal CPU). It steps through the
  * bbbs_table entries for the current type and level: waits, sets the throw action and jump
- * level, launches the balls through bbbs_ball_set, and ends when the table runs out.
+ * level, launches the balls through setup_effI8, and ends when the table runs out.
  * It also creates the score display (effect 16) and the bonus-stage level objects.
  * bbbs_com_initialize clears Bonus_Stage_RNO.
  * makeup_bonus_game_level picks Bonus_Stage_Level: from the secret button combination held
@@ -66,7 +66,7 @@ void bbbs_com_execute(PLW* wk) {
             if (wk->wu.routine_no[1] != PLAYER_NORMAL) {
                 break;
             }
-            if (wk->wu.routine_no[2] != 1 && (wk->wu.routine_no[2] < 36 || wk->wu.routine_no[2] > 38)) {
+            if (wk->wu.routine_no[2] != NORMAL_STAND && (wk->wu.routine_no[2] < 36 || wk->wu.routine_no[2] > 38)) {
                 return;
             }
             Bonus_Stage_Tix++;
@@ -110,7 +110,7 @@ void bbbs_com_execute(PLW* wk) {
         case 3:
             if (wk->wu.cg_type == 20) {
                 wk->wu.cg_type = 0;
-                bbbs_ball_set(wk, &bbbs_table[bbbs_type][Bonus_Stage_Level][Bonus_Stage_Tix]);
+                setup_effI8(wk, &bbbs_table[bbbs_type][Bonus_Stage_Level][Bonus_Stage_Tix]);
                 Bonus_Stage_RNO[1] = 4;
             }
             break;

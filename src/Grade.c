@@ -196,7 +196,7 @@ s16 pt;
     }
     tt += grade_t_f_stage[i][1];
     if (judge_final[ix][pt].all_clear) {
-        tt += grade_t_f_all_clear[judge_final[ix][pt].all_clear];
+        tt += grade_t_f_all[judge_final[ix][pt].all_clear];
         for (i = 0; i < 10; i++) {
             if (judge_final[ix][pt].keizoku < grade_t_f_continue[i + 1][0]) {
                 break;
@@ -296,7 +296,6 @@ void grade_makeup_round_parameter(s16 ix) {
 
 
 
-/* provisional name */
 void backup_RO_PT(void) {
     RO_backup[0] = Round_Operator[0];
     RO_backup[1] = Round_Operator[1];
@@ -426,7 +425,6 @@ void grade_makeup_stage_parameter(s16 ix) {
 }
 
 
-/* provisional name */
 u32 rannyuu_Q_check(s16 pl)
 {
     if (Round_Operator[pl] == 0 && My_char[pl] == PL_Q) {
@@ -1081,23 +1079,14 @@ char gddir;
     }
     judge_item[ds->wu.id][Play_Type].grd_mcnt++;
     if (ds->guard_flag == 3) {
-        goto miss;
-    }
-    if (!(as->att.guard & 0x3F)) {
-        goto miss;
-    }
-    if (ds->wu.xyz[1].disp.pos > 1) {
-        goto miss;
-    }
-    if ((as->work_id == 1 && as->jump_att_flag && (ds->cp->sw_new & CMD_LV_MASK)) || (ds->cp->sw_new & CMD_LV_UP)) {
-        goto miss;
-    }
-    if (!(ds->saishin_lvdir & gddir)) {
+    } else if (!(as->att.guard & 0x3F)) {
+    } else if (ds->wu.xyz[1].disp.pos > 1) {
+    } else if ((as->work_id == 1 && as->jump_att_flag && (ds->cp->sw_new & CMD_LV_MASK)) || (ds->cp->sw_new & CMD_LV_UP)) {
+    } else if (!(ds->saishin_lvdir & gddir)) {
         wf = ds->cp->waza_flag;
         if ((wf[3] + wf[4]) == 0) {
             return;
         }
     }
-miss:
     judge_item[ds->wu.id][Play_Type].grd_miss++;
 }

@@ -110,7 +110,6 @@ void effect_i4_hit_sub(WORK_Other* ewk) {
 
 
 
-/* provisional name */
 void effi4_down_to_up(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[3]) {
     case R3_RISE:
@@ -148,7 +147,6 @@ void effi4_down_to_up(WORK_Other* ewk) {
 
 
 
-/* provisional name */
 void effi4_up_to_down(WORK_Other* ewk) {
     char_move(&ewk->wu);
     if (ewk->wu.cg_type == 0xFF) {

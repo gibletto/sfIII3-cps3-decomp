@@ -441,8 +441,8 @@ extern s16 G_No2;
 extern s16 G_No3;
 
 /* G_No0: the top-level game routine (bg0001) */
-#define G0_DEMO         0       /* no game: the attract loop (match_state_0_fight) */
-#define G0_GAME         1       /* a game in progress (game_phase_dispatch) */
+#define G0_DEMO         0       /* no game: the attract loop (Loop_Demo) */
+#define G0_GAME         1       /* a game in progress (Game) */
 
 /* G_No1 under G0_DEMO: the attract loop */
 #define G1_DEMO_INIT    0       /* reset the loop */
@@ -454,7 +454,7 @@ extern s16 G_No3;
 #define G1_DEMO_RANKING2 6      /* another ranking, then back to the logo */
 #define G1_DEMO_RESTART 99      /* (default) after a game: wait out the cover, then the logo */
 
-/* G_No1 under G0_GAME: the game phase (game_phase_dispatch) */
+/* G_No1 under G0_GAME: the game phase (Game) */
 #define G1_TITLE        0       /* Game00: the title, until a start button */
 #define G1_SELECT       1       /* Game01: player select */
 #define G1_FIGHT        2       /* Game02: the fight */
@@ -496,7 +496,7 @@ extern s8 Request_Disp_Rank[2][4];
 #define RANK_WINS       1       /* consecutive wins (Check_Sort_Wins) */
 #define RANK_CPU_GRADE  2       /* grade against the CPU (Check_Sort_CPU_Grade) */
 #define RANK_GRADE      3       /* grade (Check_Sort_Grade) */
-extern s8 Rank_Demo_Loop;
+extern s8 Demo_Type;
 extern s8 Rank_Type;
 extern s8 Flash_Rank_Time;
 extern s8 Flash_Rank_Interval;
@@ -510,7 +510,7 @@ extern s16 E_No1;
 extern s16 E_No2;
 extern s16 E_No3;
 
-/* E_No0: the entry task's routine (entry_main), following the game phase */
+/* E_No0: the entry task's routine (Entry_Task), following the game phase */
 #define E0_DEMO         0       /* Entry_00: flash INSERT COIN / FREE PLAY */
 #define E0_TITLE        1       /* Entry_01: wait for a start button */
 #define E0_SELECT       2       /* Entry_02: player select */
@@ -665,7 +665,7 @@ extern u8 Stock_Hit_Flag[2];
 extern s8 Rolling_Flag[2];
 extern u8 Continue_Coin[2];
 extern s16 Cursor_Y[2];
-extern s8 Last_Arts_PL;
+extern s8 Slide_Type;
 extern s8 Moving_Plate[2];
 extern s8 Naming_Cut[2];
 extern s8 Moving_Plate_Counter[2];
@@ -676,7 +676,7 @@ extern u8 Stock_My_char[2];
 extern s8 Stock_Player_Color[2];
 extern s16 Insert_Y;
 extern u8 Version_Type;
-extern s8 BGM_Fade_Out_Flag;
+extern s8 Music_Fade;
 extern s16 zoom_request_flag;
 extern s16 zoom_request_level;
 extern s16 Stock_Com_Color[2];
@@ -715,8 +715,8 @@ extern s8 Jump_Pass_Timer[2][4];
 extern s8 sa_gauge_flash[2];
 extern s8 Receive_Flag[2];
 extern s8 Disposal_Again[2];
-extern volatile s8 BGM_Fade_Level;
-extern u8 Decided_My_char[2];
+extern volatile s8 BGM_Vol;
+extern u8 Used_char[2];
 extern s8 Break_Com[2][24];
 extern s8 Sel_Exit_Flag;
 extern u16 Lever_Store[2][3];
@@ -1183,7 +1183,7 @@ extern s16 pcon_rno[4];
 #define APP_SETUP       0       /* set up the players */
 #define APP_WAIT_READY  1       /* pli_1000: until both are ready, then PCON_MOVE */
 #define APP_PARRY       2       /* the parry counters */
-#define APP_GFX         3       /* pli_3000: the extra graphics, then APP_WAIT_READY */
+#define APP_GFX         3       /* pli_0002: the extra graphics, then APP_WAIT_READY */
 
 /* pcon_rno[1] under PCON_DIE: how the round was decided */
 #define SETTLE_KO       0       /* settle_type_00000: a KO */
@@ -1193,6 +1193,17 @@ extern s16 pcon_rno[4];
 #define SETTLE_GOUKI    4       /* settle_type_40000: a KO by Gouki with Round_Result 0x800 */
 #define SETTLE_SPECIAL  5       /* settle_type_50000: Special_Settle after a KO */
 #define SETTLE_SPECIAL2 6       /* settle_type_60000: Special_Settle after SETTLE_GOUKI */
+
+/* pcon_rno[2] in settle_type_00000 */
+#define KO_INIT         0       /* start the winner's timer */
+#define KO_DOWN         1       /* until the loser is down */
+#define KO_FOOTWORK     2       /* until the winner is steady: the win and lose poses (or a special settle) */
+#define KO_POSE         3       /* until the win pose is done */
+
+/* pcon_rno[2] in settle_type_30000 */
+#define JG_IDLE         0       /* nothing yet */
+#define JG_WAIT         1       /* until the judges are done, then the poses */
+#define JG_POSE         2       /* until both poses are done */
 
 extern s16 appear_type;
 
@@ -1248,7 +1259,7 @@ extern COINCHUTE coin_chute2_w;
 extern COINCHUTE coin_chute3_w;
 extern COINCHUTE coin_chute4_w;
 /* lever and button words p1sw_0 .. p4sw_1 (_0 this frame, _1 the last; SHOT1-SHOT6 are LP-HK).
-   sw_to_lvbt moves the kicks up one bit for the command words of cmd_data.h */
+   processed_lvbt moves the kicks up one bit for the command words of cmd_data.h */
 #define LEVER_UP        1
 #define LEVER_DOWN      2
 #define LEVER_LEFT      4
@@ -1303,9 +1314,8 @@ extern u16 eep_strobe_0;
 extern u16 eep_strobe_1;
 extern u16 eep_strobe_2;
 extern u16 eeprom_test_save[64];
-/* the 128-byte EEPROM image: two 48-byte copies of the operator settings (the system settings of test menu 7-1,
-   then the game settings, a SETTINGS), followed by the bookkeeping counters */
-#define EEP_VERSION         0   /* checked against the defaults on load */
+/* the EEPROM image (EEP_IMAGE): byte offsets into eeprom_w and into a settings record */
+#define EEP_VERSION         0   /* the SYS_SETTINGS fields */
 #define EEP_COIN_MODE       1
 #define EEP_CONTINUE        2
 #define EEP_CHUTE_MODE      3
@@ -1318,12 +1328,12 @@ extern u16 eeprom_test_save[64];
 #define EEP_WIN_POINT_COM   11
 #define EEP_WIN_POINT_HUMAN 12
 #define EEP_VOICE_TYPE      13
-#define EEP_SYSTEM_SIZE     32
-#define EEP_GAME_SIZE       16  /* sizeof(SETTINGS) */
-#define EEP_GAME            32  /* the SETTINGS of a copy */
-#define EEP_COPY_SIZE       48
-#define EEP_BACKUP          48  /* the second copy */
-#define EEP_BOOK_COIN       0x60
+#define EEP_SYSTEM_SIZE     ((int)sizeof(SYS_SETTINGS))
+#define EEP_GAME_SIZE       ((int)sizeof(SETTINGS))
+#define EEP_GAME            EEP_SYSTEM_SIZE     /* the SETTINGS of a copy */
+#define EEP_COPY_SIZE       ((int)sizeof(EEP_COPY))
+#define EEP_BACKUP          EEP_COPY_SIZE       /* the second copy */
+#define EEP_BOOK_COIN       0x60    /* the EEP_IMAGE counters */
 #define EEP_BOOK_SERVICE    0x64
 #define EEP_BOOK_FREE       0x68
 #define EEP_BOOK_CARD       0x6C
@@ -1502,7 +1512,7 @@ extern s16 M_No3;
 extern s8 Demo_Time_Stop;
 extern s8 judge_disp_all;
 extern s8 PB_Music_Off;
-extern u16 pcon_timer;
+extern u16 players_timer;
 extern u8 CC_Type;
 extern s16 hitmark_gfx_ofs[2][512];
 extern s16 hitmark_gfx_cells[512];

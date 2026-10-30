@@ -1299,7 +1299,6 @@ void eff09_22000(WORK_Other* ewk) {
 
 void eff09_23000(WORK_Other* ewk) {
     WORK* oya_ptr = (WORK*)ewk->my_master;
-    s16* exe = &EXE_flag;
     switch (ewk->wu.routine_no[1]) {
     case R1_INIT:
         ewk->wu.routine_no[1]++;
@@ -1313,7 +1312,7 @@ void eff09_23000(WORK_Other* ewk) {
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
     case R1_WAIT:
-        if (!*exe && !Game_pause) {
+        if (!EXE_flag && !Game_pause) {
             if (oya_ptr->cg_type == 1) {
                 ewk->wu.routine_no[1]++;
             }
@@ -1321,7 +1320,7 @@ void eff09_23000(WORK_Other* ewk) {
         pl_eff_trans_entry(ewk);
         break;
     case R1_PLAY:
-        if (!*exe && !Game_pause) {
+        if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             if (ewk->wu.cg_type == 0xFF) {
                 ewk->wu.routine_no[1]++;
@@ -1337,7 +1336,7 @@ void eff09_23000(WORK_Other* ewk) {
         pl_eff_trans_entry(ewk);
         break;
     case R1_SLIDE:
-        if (!*exe && !Game_pause) {
+        if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
             add_x_sub(ewk);
             if (range_x_check3(&ewk->wu, 64) == 0) {

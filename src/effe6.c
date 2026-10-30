@@ -741,8 +741,7 @@ void effe6_0014(WORK_Other* ewk) {
 
 
 void effe6_0015(WORK_Other* ewk) {
-    END_W* ew = &end_w;
-    if (ewk->wu.old_rno[6] < ew->r_no_2) {
+    if (ewk->wu.old_rno[6] < end_w.r_no_2) {
         ewk->wu.routine_no[2] = R2_END;
     }
     switch (ewk->wu.routine_no[1]) {
@@ -752,7 +751,7 @@ void effe6_0015(WORK_Other* ewk) {
         cal_all_speed_data(&ewk->wu, ewk->wu.old_rno[2], 544, 48, 2, 2);
         break;
     case R1_FLY:
-        if (ewk->wu.old_rno[6] == ew->r_no_2) {
+        if (ewk->wu.old_rno[6] == end_w.r_no_2) {
             ewk->wu.routine_no[1] = R1_STAY;
             ewk->wu.xyz[0].disp.pos = 544;
             ewk->wu.xyz[1].disp.pos = 48;
@@ -770,7 +769,7 @@ void effe6_0015(WORK_Other* ewk) {
         disp_pos_trans_entry(ewk);
         break;
     case R1_PLAY:
-        if (ewk->wu.old_rno[6] == ew->r_no_2) {
+        if (ewk->wu.old_rno[6] == end_w.r_no_2) {
             ewk->wu.routine_no[1] = R1_STAY;
         } else {
             char_move(&ewk->wu);

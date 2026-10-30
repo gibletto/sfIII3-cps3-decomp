@@ -105,7 +105,7 @@ void effl3_0000(WORK_Other* ewk) {
         break;
     case R2_ARRIVE:
         char_move(&ewk->wu);
-        if ((u8)ewk->wu.cg_type == 0xFF) {
+        if (ewk->wu.cg_type == 0xFF) {
             ewk->wu.routine_no[2]++;
             set_char_move_init(&ewk->wu, 0, 0);
         }
@@ -184,7 +184,6 @@ void effl3_0002(WORK_Other* ewk) {
 
 
 
-/* provisional name */
 void effl3_tobi(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[4]) {
     case R4_WAIT:
@@ -234,7 +233,6 @@ void effl3_tobi(WORK_Other* ewk) {
 
 
 
-/* provisional name */
 void effl3_kie(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[4]) {
     case R4_WAIT:
@@ -257,7 +255,6 @@ void effl3_kie(WORK_Other* ewk) {
 
 s32 effect_L3_init(PLW* oya) {
     s16 i;
-    PLW* f;
     const s16* t;
     s16 s;
     WORK_Other* n;
@@ -268,7 +265,7 @@ s32 effect_L3_init(PLW* oya) {
     }
     t = effl3_data_tbl[0];
     k = oya->wu.id ^ 1;
-    for (i = 0, f = &plw[k]; i < 6; i++) {
+    for (i = 0; i < 6; i++) {
         s = pull_effect_work(3);
         if (s == -1) {
             return -1;
@@ -286,14 +283,14 @@ s32 effect_L3_init(PLW* oya) {
         n->wu.type = i;
         n->wu.xyz[0].disp.pos = bg_w.bgw[1].wxy[0].disp.pos;
         n->wu.xyz[0].disp.pos += *t++;
-        n->wu.xyz[1].disp.pos = f->wu.xyz[1].disp.pos;
+        n->wu.xyz[1].disp.pos = plw[k].wu.xyz[1].disp.pos;
         n->wu.xyz[1].disp.pos += *t++;
-        n->wu.position_z = f->wu.position_z;
+        n->wu.position_z = plw[k].wu.position_z;
         n->wu.position_z += *t++;
         n->wu.my_priority = n->wu.position_z;
         n->wu.rl_flag = *t++;
         n->wu.kage_char = *t++;
-        n->wu.old_rno[0] = f->wu.xyz[0].disp.pos;
+        n->wu.old_rno[0] = plw[k].wu.xyz[0].disp.pos;
         n->wu.old_rno[0] += *t++;
         n->wu.old_rno[1] = *t++;
         n->wu.routine_no[1] = *t++;

@@ -32,7 +32,6 @@ static u8 pass_spare[1728];  /* nothing in the program refers to it */
 
 
 
-/* provisional name */
 s32 Ck_Passive_Term(PLW* wk) {
     PASSIVE_X = 0;
     Passive_jmp_tbl[((PLW*)wk->wu.target_adrs)->player_number](wk);
@@ -575,7 +574,6 @@ s32 Check_Jump_Counter(PLW* wk, PLW* em, s16 Option, s16 Height) {
 
 
 
-/* provisional name */
 s32 Check_Rolling(PLW* wk, WORK* em) {
     if (em->pat_status != 34) {
         return 0;
@@ -620,7 +618,7 @@ s32 Check_Specific_Term(PLW* wk, WORK* em, s16 VS_Technique, u8 Status_00, u8 St
 
 
 s32 Check_Dash(PLW* wk, WORK* em, s16 VS_Technique) {
-    if ((em->routine_no[1] == PLAYER_NORMAL) && (em->routine_no[2] == NORMAL_DASH) && (em->routine_no[3] != 0)) {
+    if ((em->routine_no[1] == PLAYER_NORMAL) && (em->routine_no[2] == NORMAL_DASH) && (em->routine_no[3] != RN3_START)) {
         VS_Tech[wk->wu.id] = VS_Technique;
         return PASSIVE_X = 1;
     }
@@ -714,9 +712,7 @@ s32 Setup_Next_Stand_Timer(PLW* wk) {
 /* provisional name */
 s32 Check_Turn_Over(PLW* wk, WORK* em, s16 VS_Technique) {
     if (Attack_Flag[wk->wu.id] || em->routine_no[1] || em->xyz[1].disp.pos) {
-        goto reset;
-    }
-    if (Ck_Distance_XX(wk) != 0) {
+    } else if (Ck_Distance_XX(wk) != 0) {
         if (--Turn_Over_Timer[wk->wu.id] != 0) {
             return 0;
         }
@@ -725,7 +721,6 @@ s32 Check_Turn_Over(PLW* wk, WORK* em, s16 VS_Technique) {
         VS_Tech[wk->wu.id] = VS_Technique;
         return PASSIVE_X = 1;
     }
-reset:
     Turn_Over_Timer[wk->wu.id] = 1;
     return 0;
 }

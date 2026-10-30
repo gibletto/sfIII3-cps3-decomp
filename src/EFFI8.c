@@ -361,8 +361,7 @@ const s16* sptr;
 
 
 
-/* provisional name */
-void bbbs_ball_set(PLW* wk, const BBBSTable* dadr) {
+void setup_effI8(PLW* wk, const BBBSTable* dadr) {
     s16 i;
     s16 ttime = 0;
     for (i = 0; i < dadr->kosuu; i++) {

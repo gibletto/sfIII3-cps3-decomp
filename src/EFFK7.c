@@ -270,11 +270,11 @@ s32 K7_mt0_rebirth_check(PLW* mwk) {
     switch (mwk->wu.routine_no[1]) {
     case PLAYER_NORMAL:
         if (pcon_dp_flag) {
-            if (mwk->wu.routine_no[2] == 1 && mwk->wu.routine_no[3] != 0) {
+            if (mwk->wu.routine_no[2] == NORMAL_STAND && mwk->wu.routine_no[3] != RN3_START) {
                 num = 1;
             }
         } else {
-            if ((u8)mwk->guard_flag != 3 && !mwk->wu.hit_stop) {
+            if (mwk->guard_flag != 3 && !mwk->wu.hit_stop) {
                 num = 1;
             }
         }

@@ -118,13 +118,13 @@ void Att_METAMOR_WAIT(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
     case METAMOR_WAIT_CUE:
         char_move(&wk->wu);
-        if ((u8)wk->wu.cg_type == 0x1E) {
+        if (wk->wu.cg_type == 0x1E) {
             wk->wu.routine_no[3] = METAMOR_WAIT_CUE2;
         }
         break;
     case METAMOR_WAIT_CUE2:
         char_move(&wk->wu);
-        if ((u8)wk->wu.cg_type == 0x1E) {
+        if (wk->wu.cg_type == 0x1E) {
             break;
         }
         wk->wu.routine_no[3] = METAMOR_WAIT_AIR;

@@ -82,7 +82,6 @@ void effect_00_move(WORK_Other_JUDGE* judge) {
 
 
 
-/* provisional name */
 void renewal_table_address(WORK_Other_JUDGE* ewk, WORK* twk) {
     ewk->wu.rl_flag = twk->rl_flag;
     if (judge_disp_all == 0) {
@@ -125,7 +124,6 @@ void renewal_table_address(WORK_Other_JUDGE* ewk, WORK* twk) {
 
 
 
-/* provisional name */
 void renewal_table_data(WORK_Other_JUDGE* ewk) {
     u16* mm;
     s16 i;

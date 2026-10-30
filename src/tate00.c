@@ -73,7 +73,7 @@ void (*ta_move_tbl[23])() = {
     BG180,
     BG180,
     BG190,
-    Bonus_bg1,
+    Bonus_bg,
     Bonus_bg2,
 };
 

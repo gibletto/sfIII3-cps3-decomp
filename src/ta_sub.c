@@ -117,7 +117,7 @@ s16 bg_no;
 s32 range_x_check(WORK* wk) {
     s16 x;
     s16 left;
-    if ((s8)bg_w.chase_flag & 0xF) {
+    if (bg_w.chase_flag & 0xF) {
         x = bg_w.bgw[wk->my_family - 1].chase_xy[0].disp.pos;
     } else {
         x = bg_w.bgw[wk->my_family - 1].wxy[0].disp.pos;
@@ -157,7 +157,7 @@ s32 range_x_check2(WORK* wk) {
 s32 range_x_check3(WORK* wk, s16 w) {
     s16 x;
     s16 left;
-    if ((s8)bg_w.chase_flag & 0xF) {
+    if (bg_w.chase_flag & 0xF) {
         x = bg_w.bgw[wk->my_family - 1].chase_xy[0].disp.pos;
     } else {
         x = bg_w.bgw[wk->my_family - 1].wxy[0].disp.pos;
@@ -178,7 +178,7 @@ s32 range_x_check3(WORK* wk, s16 w) {
 s32 range_y_check(WORK* wk) {
     s16 y;
     s16 top;
-    if ((s8)bg_w.chase_flag & 0xF) {
+    if (bg_w.chase_flag & 0xF) {
         y = bg_w.bgw[wk->my_family - 1].chase_xy[1].disp.pos;
     } else {
         y = bg_w.bgw[wk->my_family - 1].wxy[1].disp.pos;
@@ -211,17 +211,15 @@ s32 range_xy_check(WORK_Other* ewk) {
 
 /* provisional name */
 s32 range_x_out_y_in_check(WORK_Other* ewk, s16 bg_no) {
-    BGW* bgw;
     s16 pos_y_work;
     s16 work2;
     if (range_x_check(&ewk->wu)) {
         return 0;
     }
-    bgw = &bg_w.bgw[bg_no];
-    if ((s8)bg_w.chase_flag & 0xF) {
-        pos_y_work = bgw->chase_xy[1].disp.pos;
+    if (bg_w.chase_flag & 0xF) {
+        pos_y_work = bg_w.bgw[bg_no].chase_xy[1].disp.pos;
     } else {
-        pos_y_work = bgw->wxy[1].disp.pos;
+        pos_y_work = bg_w.bgw[bg_no].wxy[1].disp.pos;
     }
     work2 = pos_y_work + 256;
     pos_y_work -= 32;

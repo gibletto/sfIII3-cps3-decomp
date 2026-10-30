@@ -373,7 +373,7 @@ void sc_chr_list_trans(s8 ix) {
     for (i = 0; i < n; i++) {
         sc_trans_dst = (u16*)((SS_RAM + 0x8000) + *slot++ * 64);
         sc_trans_src = (u8*)((u32)sc_chr_data + *src++ * 32);
-        sc_trans_src = (u8*)((u32)sc_chr_data + (*src++ * 32 / 2) * 2);
+        sc_trans_src = (u8*)sc_chr_data + (*src++ * 32 / 2) * 2;
         *sc_trans_dst = *sc_trans_src;
     }
 }
@@ -549,7 +549,7 @@ void player_name_trans(void) {
     sc_trans_dst = (u16*)(SS_RAM + 0x8D40);
     if (Country == 1) {
         for (i = 0; i < 2; i++) {
-            sc_trans_src = (u8*)((u32)sc_chr_data + (((My_char[i] * 8 + 0x408) << 5) >> 1) * 2);
+            sc_trans_src = (u8*)&sc_chr_data[((My_char[i] * 8 + 0x408) << 5) >> 1];
             sc_chr_trans(5);
             sc_trans_dst = (u16*)(SS_RAM + 0x8E80);
         }

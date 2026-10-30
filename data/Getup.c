@@ -2,10 +2,10 @@
  * GETUP.C  CPU get-up, quick stand and active pattern choice tables
  *
  * By character and CPU level, with 32 random draws: Get_Up_Data picks the get-up action after
- * a knock-down, Get_Up_Area_Data replaces an action that does not suit the screen area, and
+ * a knock-down, Get_Up_Action_Check_Data replaces an action that does not suit the screen area, and
  * Get_Up_Action_Tech_Data gives four random pattern pairs for it; Receive_Data is the chance,
- * by opponent rank and level, of a quick stand. Read by COM_PL.C. Active_Area0_Data ..
- * Active_Area3_Data pick the active pattern by area, and SA_Active_A_Unit_Data .. _D_ the
+ * by opponent rank and level, of a quick stand. Read by COM_PL.C. Active_A_Unit_Data ..
+ * Active_D_Unit_Data pick the active pattern by area, and SA_Active_A_Unit_Data .. _D_ the
  * pattern while a super art is ready; read by COM_SUB.C.
  */
 
@@ -273,7 +273,7 @@ const u16 Get_Up_Action_Tech_Data[21][4][8] = {
     },
 };
 
-const u8 Get_Up_Area_Data[21][8][5] = {
+const u8 Get_Up_Action_Check_Data[21][8][5] = {
     {  /* Gill */
         { 1, 1, 0, 0, 1 },
         { 0, 0, 0, 1, 1 },
@@ -509,7 +509,7 @@ const u8 Receive_Data[21][8] = {
     { 4, 8, 10, 12, 14, 16, 18, 22 },
 };
 
-const u8 Active_Area0_Data[21][8][32] = {
+const u8 Active_A_Unit_Data[21][8][32] = {
     {  /* Gill */
         { 0, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 6, 6, 6, 6, 9, 9, 11, 11, 13, 13, 13, 16, 16, 55, 55, 55, 59, 59, 64, 64 },
         { 0, 1, 1, 1, 1, 3, 3, 3, 3, 6, 6, 6, 6, 9, 9, 11, 11, 11, 13, 13, 13, 13, 16, 16, 55, 55, 55, 55, 59, 59, 64, 64 },
@@ -722,7 +722,7 @@ const u8 Active_Area0_Data[21][8][32] = {
     },
 };
 
-const u8 Active_Area1_Data[21][8][32] = {
+const u8 Active_B_Unit_Data[21][8][32] = {
     {  /* Gill */
         { 1, 1, 3, 3, 6, 6, 6, 6, 6, 6, 9, 9, 11, 11, 11, 12, 12, 12, 14, 14, 14, 15, 15, 15, 16, 16, 18, 18, 21, 21, 64, 64 },
         { 1, 1, 1, 3, 3, 6, 6, 6, 6, 9, 11, 11, 11, 12, 12, 13, 13, 13, 14, 14, 14, 15, 15, 15, 16, 16, 18, 18, 21, 21, 64, 64 },
@@ -935,7 +935,7 @@ const u8 Active_Area1_Data[21][8][32] = {
     },
 };
 
-const u8 Active_Area2_Data[21][8][32] = {
+const u8 Active_C_Unit_Data[21][8][32] = {
     {  /* Gill */
         { 6, 6, 6, 6, 7, 9, 9, 10, 11, 11, 12, 12, 12, 14, 14, 14, 15, 15, 15, 16, 16, 18, 18, 20, 21, 58, 58, 58, 58, 64, 64, 64 },
         { 1, 6, 6, 6, 7, 9, 10, 10, 11, 11, 11, 12, 12, 13, 14, 14, 14, 15, 15, 15, 16, 16, 18, 18, 20, 21, 58, 58, 58, 58, 64, 64 },
@@ -1148,7 +1148,7 @@ const u8 Active_Area2_Data[21][8][32] = {
     },
 };
 
-const u8 Active_Area3_Data[21][8][32] = {
+const u8 Active_D_Unit_Data[21][8][32] = {
     {  /* Gill */
         { 2, 6, 6, 6, 13, 20, 20, 20, 21, 21, 22, 22, 22, 26, 26, 26, 27, 27, 28, 28, 28, 28, 40, 40, 52, 58, 58, 58, 58, 60, 64, 64 },
         { 2, 2, 6, 6, 6, 13, 20, 20, 21, 21, 22, 22, 26, 26, 26, 27, 27, 28, 28, 28, 28, 28, 40, 52, 58, 58, 58, 58, 60, 60, 64, 64 },

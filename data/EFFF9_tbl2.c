@@ -4,8 +4,8 @@
  * pl01txt1 .. pl19txt7 are the ending talk scenes, plNNtxtK scene K of ending NN. Endings 1-14
  * are those of characters 1-14 and endings 15-19 those of characters 16-20; the other entries of
  * txt_no_tbl reuse one of them. Each scene is { message number, display time } pairs ending
- * with 0, -1. They are reached through the txt_no_ tables and txt_no_tbl of EFFF9.C, the ending
- * message window.
+ * with 0, -1. They are reached through the per-character scene tables (alex .. remy) and
+ * txt_no_tbl of EFFF9.C, the ending message window.
  */
 
 #include "types.h"

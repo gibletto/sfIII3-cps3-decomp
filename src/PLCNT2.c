@@ -66,8 +66,8 @@ s32 Player_control_bonus(void) {
     }
     if (!Game_pause && !EXE_flag) {
 run:
-        pcon_timer++;
-        pcon_timer &= 0x7FFF;
+        players_timer++;
+        players_timer &= 0x7FFF;
         player_bonus_process[pcon_rno[0]]();
         check_body_touch();
         check_damage_hosei_bonus();
@@ -109,7 +109,7 @@ run:
         sort_push_request((WORK*)&plw[0]);
         sort_push_request((WORK*)&plw[1]);
     }
-    if (pcon_rno[0] == PCON_DIE && pcon_rno[1] == SETTLE_KO && pcon_rno[2] == 2) {
+    if (pcon_rno[0] == PCON_DIE && pcon_rno[1] == SETTLE_KO && pcon_rno[2] == KO_FOOTWORK) {
         return 1;
     }
     return 0;
@@ -167,7 +167,7 @@ void plcnt_b_init(void) {
         break;
     case APP_GFX:
         pcon_rno[1] = APP_WAIT_READY;
-        pli_3000();
+        pli_0002();
         break;
     }
     move_player_work_bonus();
@@ -242,7 +242,7 @@ s32 footwork_check_bns(char pl)
         return 1;
     }
     if (plw[pl].wu.routine_no[1] == PLAYER_NORMAL) {
-        if (plw[pl].wu.routine_no[2] == 1) {
+        if (plw[pl].wu.routine_no[2] == NORMAL_STAND) {
             result = 1;
         }
     }
@@ -313,11 +313,11 @@ void move_player_work_bonus(void) {
 
 
 void move_P1_move_P2_bonus(s16* field_work) {
-    Player_move_bonus(&plw[0], sw_to_lvbt(p1sw_0));
+    Player_move_bonus(&plw[0], processed_lvbt(p1sw_0));
     if (set_field_hosei_flag(&plw[0], field_work[0], 1) != 0) {
         set_field_hosei_flag(&plw[0], field_work[1], 0);
     }
-    Player_move_bonus(&plw[1], sw_to_lvbt(p2sw_0));
+    Player_move_bonus(&plw[1], processed_lvbt(p2sw_0));
     if (set_field_hosei_flag(&plw[1], field_work[2], 1) != 0) {
         set_field_hosei_flag(&plw[1], field_work[3], 0);
     }
@@ -329,11 +329,11 @@ void move_P1_move_P2_bonus(s16* field_work) {
 
 
 void move_P2_move_P1_bonus(s16* field_work) {
-    Player_move_bonus(&plw[1], sw_to_lvbt(p2sw_0));
+    Player_move_bonus(&plw[1], processed_lvbt(p2sw_0));
     if (set_field_hosei_flag(&plw[1], field_work[2], 1) != 0) {
         set_field_hosei_flag(&plw[1], field_work[3], 0);
     }
-    Player_move_bonus(&plw[0], sw_to_lvbt(p1sw_0));
+    Player_move_bonus(&plw[0], processed_lvbt(p1sw_0));
     if (set_field_hosei_flag(&plw[0], field_work[0], 1) != 0) {
         set_field_hosei_flag(&plw[0], field_work[1], 0);
     }
