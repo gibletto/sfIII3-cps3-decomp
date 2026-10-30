@@ -115,7 +115,9 @@ void effF1_data_set(WORK_Other* ewk, PLW* mwk) {
     }
 }
 
-u32 effect_F1_init()
+u32 effect_F1_init(wk, type)
+WORK* wk;
+u8 type;
 {
     return 0;
 }

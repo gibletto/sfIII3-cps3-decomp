@@ -15,6 +15,7 @@
 
 #include "types.h"
 #include "structs.h"
+#include "fighter.h"
 
 #pragma section TBL
 
@@ -24,9 +25,9 @@ const u8 sel_digit_tbl[13] = {
 };
 
 const s8 Face_Cursor_Data[3][7] = {
-    { -1, 1, 12, 7, 5, 13, 14 },
-    { 10, 19, 17, 16, 18, 20, 3 },
-    { 11, 6, 8, 4, 9, 2, -1 },
+    { -1, PL_ALEX, PL_SEAN, PL_IBUKI, PL_NECRO, PL_URIEN, PL_GOUKI1 },
+    { PL_YANG, PL_NO12, PL_KARATE, PL_CHUN, PL_Q, PL_BIKEI, PL_YUN },
+    { PL_KEN, PL_HUGO, PL_ELENA, PL_DUDLEY, PL_ORO, PL_RYU, -1 },
 };
 
 /* x, y of each face on the character select screen (512 is added to x). */

@@ -12,15 +12,15 @@
 
 #pragma section TBL
 
-extern const u8 end_5_bg1_cell_0[];
+extern const PANEL end_5_bg1_cell_0[];
 
 const PANEL end_1100_bg0_cell_tbl[16] = {
     { 0, 1 }, { 0x40, 2 }, { 0x80, 3 }, { 0xC0, 4 }, { 0x1000, 5 }, { 0x1040, 6 }, { 0x1080, 7 }, { 0x10C0, 8 },
     { 0x2000, 9 }, { 0x2040, 10 }, { 0x2080, 11 }, { 0x20C0, 12 }, { 0x3000, 13 }, { 0x3040, 14 }, { 0x3080, 15 }, { 0x30C0, 16 },
 };
 
-const u8 end_5_bg1_cell_0[16] = {
-    0, 0, 16, 0, 0, 0, 0, 0, 0, 0, 16, 64, 0, 0, 0, 0,
+const PANEL end_5_bg1_cell_0[2] = {
+    { 0x1000, 0 }, { 0x1040, 0 },
 };
 
 const s16 timer_11_tbl[7] = {

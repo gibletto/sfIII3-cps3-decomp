@@ -919,7 +919,7 @@ void winner_name_put(s8 ch) {
     if (Country == 1) {
         sc_chr_block_trans(p->cell, 0x180, p->w, p->h);
     } else {
-        if (ch == 14 || ch == 15) {
+        if (ch == PL_GOUKI1 || ch == PL_GOUKI2) {
             p = &nwdata_tbl[21];
         }
         sc_chr_block_trans(p->cell, 0x180, p->w, p->h);
@@ -999,8 +999,8 @@ u32 SF3_logo(s16 y)
 }
 
 /* provisional name */
-void break_into_banner_trans(ewk, kind)
-WORK_Other* ewk;
+void break_into_banner_trans(sel, kind)
+s8 sel;
 s16 kind;
 {
     switch (kind) {

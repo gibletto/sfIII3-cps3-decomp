@@ -999,7 +999,7 @@ s32 sort_push_request(WORK* wk) {
     if (wk->extra_col) {
         wk->spr.disp_colcd = wk->extra_col;
     }
-    push_char_sprite(wk, (u16*)spr, base_y_pos);
+    push_char_sprite(wk, spr, base_y_pos);
     if (wk->my_mr_flag && *(u32*)&wk->spr.old_mr != *(u32*)&wk->my_mr) {
         char_sprite_zoom_cells(wk);
     }
@@ -1027,13 +1027,13 @@ s32 sort_push_request2(WORK_Other* wk) {
     if (wk->wu.disp_flag == 0 && wk->master_work_id == 1) {
         return 1;
     }
-    if (!set_judge_area_sprite(wk)) {
+    if (!set_judge_area_sprite((WORK_Other_JUDGE*)wk)) {
         return 0;
     }
     if ((spr = sprite_entry_alloc(0)) == 0) {
         return 0;
     }
-    push_char_sprite(&wk->wu, (u16*)spr, base_y_pos);
+    push_char_sprite(&wk->wu, spr, base_y_pos);
     if (wk->wu.spr.done_rl != wk->wu.rl_flag) {
         wk->wu.spr.done_rl = wk->wu.rl_flag;
         spr->w8 ^= 0x1000;
@@ -1067,7 +1067,7 @@ s32 sort_push_request3(WORK* wk) {
     if ((spr = sprite_entry_alloc(0)) == 0) {
         return 0;
     }
-    push_char_sprite(wk, (u16*)spr, base_y_pos);
+    push_char_sprite(wk, spr, base_y_pos);
     if (wk->spr.done_rl != wk->rl_flag) {
         wk->spr.done_rl = wk->rl_flag;
         spr->w8 ^= 0x1000;
@@ -1105,7 +1105,7 @@ s32 sort_push_request4(WORK* wk) {
     if (wk->extra_col) {
         wk->spr.disp_colcd = wk->extra_col;
     }
-    push_char_sprite(wk, (u16*)spr, 0);
+    push_char_sprite(wk, spr, 0);
     if (wk->my_mr_flag && *(u32*)&wk->spr.old_mr != *(u32*)&wk->my_mr) {
         char_sprite_zoom_cells(wk);
     }
@@ -1118,15 +1118,15 @@ s32 sort_push_request4(WORK* wk) {
 
 
 /* provisional name */
-void push_char_sprite(WORK* wk, u16* spr, s16 y_ofs) {
-    spr[0] = wk->spr.gfx_cells;
-    spr[0] |= wk->my_family << 12;
-    spr[1] = wk->spr.gfx_ofs;
-    spr[2] = wk->position_x;
-    spr[3] = wk->position_y + y_ofs;
-    spr[8] = wk->position_z;
-    spr[4] = wk->spr.disp_colcd | wk->my_col_mode | flip_attr_tbl[wk->spr.sprite_flip];
-    spr[5] = wk->my_ext_pri;
+void push_char_sprite(WORK* wk, SPRITE_ENTRY* spr, s16 y_ofs) {
+    spr->w0 = wk->spr.gfx_cells;
+    spr->w0 |= wk->my_family << 12;
+    spr->w2 = wk->spr.gfx_ofs;
+    spr->w4 = wk->position_x;
+    spr->w6 = wk->position_y + y_ofs;
+    spr->prio = wk->position_z;
+    spr->w8 = wk->spr.disp_colcd | wk->my_col_mode | flip_attr_tbl[wk->spr.sprite_flip];
+    spr->w10 = wk->my_ext_pri;
     sprite_entry_push_prio(spr, wk->position_z);
 }
 
@@ -1144,7 +1144,7 @@ loop:
 
 /* provisional name */
 s32 disp_seraph_cells(WORK* wk) {
-    u16* spr;
+    SPRITE_ENTRY* spr;
     u16 ix;
     if (wk->disp_flag == 0 || wk->cg_number == 0) {
         return 1;
@@ -1153,18 +1153,18 @@ s32 disp_seraph_cells(WORK* wk) {
     if (cg_slot_tbl[ix].addr == 0) {
         return;
     }
-    if ((spr = (u16*)sprite_entry_alloc(0)) == 0) {
+    if ((spr = sprite_entry_alloc(0)) == 0) {
         return 0;
     }
     ix = wk->cg_number - 0xB478;
-    spr[0] = seraph_gfx_cells[ix];
-    spr[0] |= wk->my_family << 12;
-    spr[1] = seraph_gfx_ofs[ix];
-    spr[2] = wk->position_x;
-    spr[3] = wk->position_y + base_y_pos;
-    spr[8] = wk->position_z;
-    spr[4] = wk->my_col_code | wk->my_col_mode | flip_attr_tbl[wk->rl_flag];
-    spr[5] = 0;
+    spr->w0 = seraph_gfx_cells[ix];
+    spr->w0 |= wk->my_family << 12;
+    spr->w2 = seraph_gfx_ofs[ix];
+    spr->w4 = wk->position_x;
+    spr->w6 = wk->position_y + base_y_pos;
+    spr->prio = wk->position_z;
+    spr->w8 = wk->my_col_code | wk->my_col_mode | flip_attr_tbl[wk->rl_flag];
+    spr->w10 = 0;
     sprite_entry_push_prio(spr, wk->position_z);
     return 2;
 }
@@ -1173,7 +1173,7 @@ s32 disp_seraph_cells(WORK* wk) {
 
 s32 sort_push_request8(WORK* wk) {
     u16 no;
-    u16* spr;
+    SPRITE_ENTRY* spr;
     u16 ix;
     if (wk->disp_flag == 0 || wk->cg_number == 0) {
         return 1;
@@ -1188,18 +1188,18 @@ s32 sort_push_request8(WORK* wk) {
     if (cg_slot_tbl[no].addr == 0) {
         return;
     }
-    if ((spr = (u16*)sprite_entry_alloc(0)) == 0) {
+    if ((spr = sprite_entry_alloc(0)) == 0) {
         return 0;
     }
     ix = wk->cg_number - 0x9EC8;
-    spr[0] = ((u16)hitmark_gfx_cells[ix]);
-    spr[0] |= wk->my_family << 12;
-    spr[1] = ((u16)hitmark_gfx_ofs[wk->rl_flag][ix]);
-    spr[2] = wk->position_x;
-    spr[3] = wk->position_y + base_y_pos;
-    spr[8] = wk->position_z;
-    spr[4] = wk->my_col_code | wk->my_col_mode | flip_attr_tbl[wk->rl_flag];
-    spr[5] = 0;
+    spr->w0 = ((u16)hitmark_gfx_cells[ix]);
+    spr->w0 |= wk->my_family << 12;
+    spr->w2 = ((u16)hitmark_gfx_ofs[wk->rl_flag][ix]);
+    spr->w4 = wk->position_x;
+    spr->w6 = wk->position_y + base_y_pos;
+    spr->prio = wk->position_z;
+    spr->w8 = wk->my_col_code | wk->my_col_mode | flip_attr_tbl[wk->rl_flag];
+    spr->w10 = 0;
     sprite_entry_push_prio(spr, wk->position_z);
     return 2;
 }
@@ -1208,7 +1208,7 @@ s32 sort_push_request8(WORK* wk) {
 
 /* provisional name */
 s32 disp_car_parts_cells(WORK* wk) {
-    u16* spr;
+    SPRITE_ENTRY* spr;
     u16 ix;
     if (wk->disp_flag == 0 || wk->cg_number == 0) {
         return 1;
@@ -1217,18 +1217,18 @@ s32 disp_car_parts_cells(WORK* wk) {
     if (cg_slot_tbl[ix].addr == 0) {
         return;
     }
-    if ((spr = (u16*)sprite_entry_alloc(0)) == 0) {
+    if ((spr = sprite_entry_alloc(0)) == 0) {
         return 0;
     }
     ix = wk->cg_number - 0xB0C8;
-    spr[0] = car_gfx_cells[ix];
-    spr[0] |= wk->my_family << 12;
-    spr[1] = car_gfx_ofs[ix];
-    spr[2] = wk->position_x;
-    spr[3] = wk->position_y + base_y_pos;
-    spr[8] = wk->position_z;
-    spr[4] = wk->my_col_code | wk->my_col_mode | flip_attr_tbl[wk->rl_flag];
-    spr[5] = 0;
+    spr->w0 = car_gfx_cells[ix];
+    spr->w0 |= wk->my_family << 12;
+    spr->w2 = car_gfx_ofs[ix];
+    spr->w4 = wk->position_x;
+    spr->w6 = wk->position_y + base_y_pos;
+    spr->prio = wk->position_z;
+    spr->w8 = wk->my_col_code | wk->my_col_mode | flip_attr_tbl[wk->rl_flag];
+    spr->w10 = 0;
     sprite_entry_push_prio(spr, wk->position_z);
     return 2;
 }
@@ -1236,7 +1236,7 @@ s32 disp_car_parts_cells(WORK* wk) {
 
 
 void shadow_drawing(WORK* wk, s16 y_ofs) {
-    u16* spr;
+    SPRITE_ENTRY* spr;
     s16 size;
     if (Combo_Demo_Flag) {
         return;
@@ -1244,7 +1244,7 @@ void shadow_drawing(WORK* wk, s16 y_ofs) {
     if (cg_slot_tbl[cg_data_list[0x9020].set->slot].addr == 0) {
         return;
     }
-    if ((spr = (u16*)sprite_entry_alloc(0)) == 0) {
+    if ((spr = sprite_entry_alloc(0)) == 0) {
         return;
     }
     size = wk->kage_char - get_kage_width(wk->xyz[1].disp.pos - wk->kage_hy);
@@ -1253,14 +1253,14 @@ void shadow_drawing(WORK* wk, s16 y_ofs) {
     } else if (size < 0) {
         size = 0;
     }
-    spr[0] = kage_gfx_cells[size];
-    spr[0] |= wk->my_family << 12;
-    spr[1] = kage_gfx_ofs[size];
-    spr[2] = wk->position_x + (s16)(wk->kage_hx * (1 - (wk->rl_flag != 0) * 2));
-    spr[3] = wk->kage_hy + y_ofs;
-    spr[8] = wk->kage_prio;
-    spr[4] = 0x6400;
-    spr[5] = 0;
+    spr->w0 = kage_gfx_cells[size];
+    spr->w0 |= wk->my_family << 12;
+    spr->w2 = kage_gfx_ofs[size];
+    spr->w4 = wk->position_x + (s16)(wk->kage_hx * (1 - (wk->rl_flag != 0) * 2));
+    spr->w6 = wk->kage_hy + y_ofs;
+    spr->prio = wk->kage_prio;
+    spr->w8 = 0x6400;
+    spr->w10 = 0;
     sprite_entry_push_prio(spr, wk->kage_prio);
 }
 

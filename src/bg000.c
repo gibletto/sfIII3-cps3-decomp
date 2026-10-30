@@ -1095,9 +1095,8 @@ void bg_cell_write_xflip(s16 bg, s32 ofs, s32 cell, u32 src, s16 u5, s16 attr) {
 
 
 /* provisional name */
-void blit_16x16_yflip(u16* src, s16 code, u16* dst, s16 attr) {
+void blit_16x16_yflip(register u16* src, s16 code, u16* dst, register s16 attr) {
     u16 i;
-    u16* pi = &i;
     u16 j;
     s32 off;
     u16* d;
@@ -1284,16 +1283,16 @@ void akebono_scrn_move(s16 ix) {
 /* provisional name */
 void akebono_scr_write(void)
 {
-    s16 *attr = (s16 *)ake_attr_tbl;
-    PANEL *cell;
+    s16 *attr = ake_attr_tbl;
+    const PANEL *cell;
     s16 i;
 
-    cell = (PANEL *)ake_cell1_data;
+    cell = ake_cell1_data;
     for (i = 0; i < 16; i++) {
         ake_cell_write_attr(1, cell->ofs, cell->cell, (u32)ake_scrn_data, *attr++);
         cell++;
     }
-    cell = (PANEL *)ake_cell2_data;
+    cell = ake_cell2_data;
     for (i = 0; i < 8; i++) {
         ake_cell_write(2, cell->ofs, cell->cell, (u32)ake_scrn_data);
         cell++;
@@ -1656,7 +1655,8 @@ void bg_initialize(void) {
     Zoomf_Init();
     bg_w.bg_index = bg_index_tbl[bg_w.stage][bg_w.area];
     bg_w.scno = bg_scno_tbl[bg_w.bg_index];
-    n = ((bg_gfx_tbl[bg_w.bg_index].size << 4) + 0xFFF) / 0x1000;
+    n = bg_gfx_tbl[bg_w.bg_index].size << 4;
+    n = (n + 0xFFF) / 0x1000;
     scr_cg_c_no = simmram_block_alloc_10(n, 1);
     bg_w.scroll_cg_adr = simmram_slot_to_offset(scr_cg_c_no);
     gfx = &bg_gfx_tbl[bg_w.bg_index];
@@ -1712,9 +1712,6 @@ void bg_initialize(void) {
     bg_w.quake_x_index = 0;
     bg_w.quake_y_index = 0;
     bg_w.frame_deff = 64;
-    if (DEBUG_DISP) {
-        scrn_map_set(0, simmram_big_page_alloc_40(1));
-    }
     bg_ofs_work[0] = bg_ofs_work[1] = bg_ofs_work[2] = 0;
     for (i = 0; i < bg_w.scno; i++) {
         Bg_On_R(1 << i);
@@ -2089,11 +2086,9 @@ void bg0103(void) {
 }
 
 /* 02006584 */
-char ake_attr_tbl[32] = {
-    0, 0, 0, 0, 0, 1, 0, 1,
-    0, 2, 0, 2, 0, 3, 0, 3,
-    0, 4, 0, 4, 0, 5, 0, 5,
-    0, 6, 0, 6, 0, 7, 0, 7,
+s16 ake_attr_tbl[16] = {
+    0, 0, 1, 1, 2, 2, 3, 3,
+    4, 4, 5, 5, 6, 6, 7, 7,
 };
 /* 020065A4 */
 const s16* bg_map_tbl[23][3] = {

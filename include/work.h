@@ -179,7 +179,7 @@ extern const_s16_arr * player_cmd[24];
 extern s16 lvr_chk_tbl[2][4];
 extern void (*ta_move_tbl[23])();
 extern void (*scr_x_mv_jp[])();
-extern char ake_attr_tbl[32];
+extern s16 ake_attr_tbl[16];
 extern const s16* bg_map_tbl[][3];
 extern const s16* bg_map_tbl2[][3];
 extern const HUD_CELL * bg_rewrite_cell_tbl[][3];
@@ -198,7 +198,7 @@ extern const u16* vital_npos_tbl[2];
 extern const u16* vital_attr_tbl[3];
 extern const u16 * spgauge_puttbl[2];
 extern const u16 * spgauge_postbl[2];
-extern u32 fade_adrs_tbl[36];
+extern const u32* fade_adrs_tbl[36];
 extern const u16 * stngauge_puttbl[2];
 extern const u16 * stngauge_postbl[2];
 extern const s16 * scr_obj_data[23];
@@ -307,7 +307,7 @@ extern u16 sprite_pad_y;
 extern u32 spr_pool_busy;
 extern u32 poly_buf_offset;
 extern s32 poly_cram_bank;
-extern TASK_QUEUE task_req_queue;
+extern FIFO32 task_req_queue;
 extern u8 task_req_buff[716];
 extern s16 test_rno;
 extern s16 test_menu_no;
@@ -1319,6 +1319,7 @@ extern u16 eeprom_test_save[64];
 #define EEP_WIN_POINT_HUMAN 12
 #define EEP_VOICE_TYPE      13
 #define EEP_SYSTEM_SIZE     32
+#define EEP_GAME_SIZE       16  /* sizeof(SETTINGS) */
 #define EEP_GAME            32  /* the SETTINGS of a copy */
 #define EEP_COPY_SIZE       48
 #define EEP_BACKUP          48  /* the second copy */
@@ -1592,11 +1593,5 @@ extern s16 Random_ix32_ex_com;
 extern SUZI_CALC suzi_calc_w[2];
 extern s16 ls_cnt1;
 extern s16 ls_rate1;
-
-/* Record offsets computed per use: WCP_OFS(ofs, n) sets ofs to the offset of record n, WCP_AT(ofs)
-   is the record, WCP_MUL(ofs, n) does both in one expression (one use per full expression). */
-#define WCP_OFS(ofs, n) ((ofs) = (n), (ofs) *= (s16)sizeof(WORK_CP))
-#define WCP_AT(ofs) (*(WORK_CP*)((u8*)wcp + (ofs)))
-#define WCP_MUL(ofs, n) WCP_AT((WCP_OFS(ofs, n), (ofs)))
 
 #endif

@@ -25,6 +25,7 @@
 #include "plcntdat_2.h"
 #include "HITCHECK.h"
 #include "PLS02.h"
+#include "fighter.h"
 
 
 
@@ -106,10 +107,10 @@ void Setup_Candidate_Buff(s16 PL_id) {
         if (ix == My_char[PL_id]) {
             continue;
         }
-        if (ix == 18) {
+        if (ix == PL_Q) {
             continue;
         }
-        if (ix == 15) {
+        if (ix == PL_GOUKI2) {
             continue;
         }
         if (ix == Middle_Class_Boss_Data[My_char[PL_id] - 1]) {

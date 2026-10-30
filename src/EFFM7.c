@@ -156,9 +156,9 @@ s32 effect_M7_init(PLW* oya) {
         ewk->wu.my_col_code = oya->wu.my_col_code;
         ewk->wu.xyz[0].disp.pos = *data_ptr++;
         ewk->wu.xyz[1].cal = plw[em_id].wu.xyz[1].cal;
-        ewk->wu.xyz[1].disp.pos += *(s16*)data_ptr++;
+        ewk->wu.xyz[1].disp.pos += *data_ptr++;
         ewk->wu.position_z = plw[em_id].wu.my_priority;
-        ewk->wu.position_z += *(s16*)data_ptr++;
+        ewk->wu.position_z += *data_ptr++;
         ewk->wu.my_priority = ewk->wu.position_z;
         ewk->wu.rl_flag = *data_ptr++;
         ewk->wu.kage_char = *data_ptr++;

@@ -43,7 +43,7 @@
 
 
 
-extern const u8 end_5_bg1_cell_0[];
+extern const PANEL end_5_bg1_cell_0[];
 
 s8 end5_col_ix;  /* 02028264 */
 s8 wr5_index;  /* 02028265 */

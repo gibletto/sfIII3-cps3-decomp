@@ -12,6 +12,7 @@
 
 #include "types.h"
 #include "structs.h"
+#include "work.h"
 
 #pragma section TBL
 
@@ -70,8 +71,8 @@ const s32 Hadou_Check_Data[21][2] = {
 };
 
 const u16 Rolling_Lv_Data[2][9] = {
-    { 4, 1, 8, 2, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF },
-    { 4, 2, 8, 1, 4, 2, 8, 1, 0xFFFF },
+    { LEVER_LEFT, LEVER_UP, LEVER_RIGHT, LEVER_DOWN, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF },
+    { LEVER_LEFT, LEVER_DOWN, LEVER_RIGHT, LEVER_UP, LEVER_LEFT, LEVER_DOWN, LEVER_RIGHT, LEVER_UP, 0xFFFF },
 };
 
 const s8 PL_Status[10] = {

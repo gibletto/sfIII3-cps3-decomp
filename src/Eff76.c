@@ -575,15 +575,15 @@ s32 Check_Range_Out(WORK_Other* ewk) {
 
 
 void Setup_Color_76(ewk)
-s32 ewk;
+WORK_Other* ewk;
 {
-    ((WORK *)ewk)->my_col_code = Victory_Color_Data[My_char[Winner_id]] + 0x2040;
+    ewk->wu.my_col_code = Victory_Color_Data[My_char[Winner_id]] + 0x2040;
 }
 
 void Setup_Color_L1(ewk)
-s32 ewk;
+WORK_Other* ewk;
 {
-    ((WORK *)ewk)->my_col_code = Victory_Color_Data[My_char[Winner_id]] + 0x40;
+    ewk->wu.my_col_code = Victory_Color_Data[My_char[Winner_id]] + 0x40;
 }
 
 s32 chkNameAkuma(char_id)

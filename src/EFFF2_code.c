@@ -88,12 +88,11 @@ s32 effect_F2_init(void) {
     s16 ix;
     s16 i;
     const s16* data_ptr = &efff2_data_tbl1[0][0];
-    ((WORK*)end_char_table)->id;
     for (i = 0; i < 10; i++) {
         if ((ix = pull_effect_work(4)) == -1) {
             return -1;
         }
-        ewk = (WORK_Other*)frw[ix];
+        ewk = (WORK_Other*)((u32)frw + (ix << 11));
         ewk->wu.id = 152;
         ewk->wu.be_flag = 1;
         ewk->wu.work_id = 0x10;

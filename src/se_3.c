@@ -346,11 +346,8 @@ s16 Code;
     if (Code >= 0x760) {
         return Code;
     }
-    {
-        s32 ofs = (Code - 0x100) * 2;
-        if (Voice_Type == 0) {
-            return *(u16*)((s32)Bonus_Voice_Data + ofs);
-        }
-        return *(u16*)((s32)Bonus_SE_Voice_Data + ofs);
+    if (Voice_Type == 0) {
+        return Bonus_Voice_Data[Code - 0x100];
     }
+    return Bonus_SE_Voice_Data[Code - 0x100];
 }

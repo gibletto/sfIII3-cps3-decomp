@@ -16,6 +16,8 @@
 
 #include "types.h"
 #include "structs.h"
+#include "fighter.h"
+#include "work.h"
 
 #pragma section TBL
 
@@ -1923,13 +1925,30 @@ const s16 KA_Jump_Data[48] = {
 };
 
 const u16 Free_Lever_Data[4] = {
-    0x10, 0x20, 0x40, 0x70,
+    BUTTON_LP, BUTTON_MP, BUTTON_HP, BUTTON_PUNCHES,
 };
 
 const u8 Middle_Class_Boss_Data[20] = {
-    2, 11, 10, 2, 19, 2, 9, 17,
-    14, 3, 13, 11, 5, 2, 0, 13,
-    2, 14, 5, 1,
+    PL_RYU,    /* Alex */
+    PL_KEN,    /* Ryu */
+    PL_YANG,   /* Yun */
+    PL_RYU,    /* Dudley */
+    PL_NO12,   /* Necro */
+    PL_RYU,    /* Hugo */
+    PL_ORO,    /* Ibuki */
+    PL_KARATE, /* Elena */
+    PL_GOUKI1, /* Oro */
+    PL_YUN,    /* Yang */
+    PL_URIEN,  /* Ken */
+    PL_KEN,    /* Sean */
+    PL_NECRO,  /* Urien */
+    PL_RYU,    /* Gouki */
+    PL_GILL,   /* Shin Gouki */
+    PL_URIEN,  /* Chun-Li */
+    PL_RYU,    /* Makoto */
+    PL_GOUKI1, /* Q */
+    PL_NECRO,  /* Twelve */
+    PL_ALEX,   /* Remy */
 };
 
 /* rows from fighter 1 (Alex): the speech is looked up with My_char - 1 */

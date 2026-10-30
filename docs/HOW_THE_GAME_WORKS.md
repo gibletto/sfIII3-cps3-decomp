@@ -213,7 +213,7 @@ frame's value next to this frame's:
 
 ```c
 p1sw_1 = p1sw_0;                                          /* last frame */
-p1sw_0 = ~(s16)(*(volatile u16*)(IO_REG + 0x2)) % 256U;   /* this frame */
+p1sw_0 = ~(s16)SW_PLAYER12 % 256U;                       /* this frame: player 1 in the low byte */
 ```
 
 With both values you can tell "just pressed" from "held". This idiom is everywhere:
@@ -274,11 +274,14 @@ nothing is copied again. Loading art is slow, and this keeps it to the frames wh
 Every visible object calls something like `push_char_sprite` once a frame:
 
 ```c
-spr[0] = wk->spr.gfx_cells | (wk->my_family << 12);   /* how many cells, which scroll group */
-spr[1] = wk->spr.gfx_ofs;                             /* where its cell table is */
-spr[2] = wk->position_x;
-spr[3] = wk->position_y + y_ofs;
-spr[4] = wk->spr.disp_colcd | wk->my_col_mode | flip_attr_tbl[wk->spr.sprite_flip];
+spr->w0 = wk->spr.gfx_cells;                          /* how many cells, */
+spr->w0 |= wk->my_family << 12;                       /* which scroll group */
+spr->w2 = wk->spr.gfx_ofs;                            /* where its cell table is */
+spr->w4 = wk->position_x;
+spr->w6 = wk->position_y + y_ofs;
+spr->prio = wk->position_z;
+spr->w8 = wk->spr.disp_colcd | wk->my_col_mode | flip_attr_tbl[wk->spr.sprite_flip];
+spr->w10 = wk->my_ext_pri;
 sprite_entry_push_prio(spr, wk->position_z);          /* drop it in a depth bucket */
 ```
 

@@ -176,7 +176,7 @@ s32 effect_M8_init(WORK* oya, u8 data) {
         if ((ix = pull_effect_work(3)) == -1) {
             return -1;
         }
-        ewk = (WORK_Other*)frw[(ix)];
+        ewk = (WORK_Other*)frw[ix];
         ewk->wu.be_flag = 1;
         ewk->wu.id = 228;
         ewk->wu.work_id = 16;
@@ -216,7 +216,7 @@ s32 effect_M8_init(WORK* oya, u8 data) {
             if ((ix = pull_effect_work(3)) == -1) {
                 return -1;
             }
-            ewk = (WORK_Other*)frw[(ix)];
+            ewk = (WORK_Other*)frw[ix];
             ewk->wu.be_flag = 1;
             ewk->wu.id = 228;
             ewk->wu.work_id = 16;
@@ -258,7 +258,7 @@ s32 effect_M8_init(WORK* oya, u8 data) {
         if ((ix = pull_effect_work(3)) == -1) {
             return -1;
         }
-        ewk = (WORK_Other*)frw[(ix)];
+        ewk = (WORK_Other*)frw[ix];
         ewk->wu.be_flag = 1;
         ewk->wu.id = 228;
         ewk->wu.work_id = 16;

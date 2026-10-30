@@ -2669,14 +2669,14 @@ s32 debug_memcmp_u32(u32* a, u32* b, s16 n) {
 u32 debug_hit_a_judgement_alloc_slot(WORK_Other **slot)
 {
     s16 ix;
-    u8 *ewk;
+    WORK_Other *ewk;
 
     if ((ix = pull_effect_work(7)) == -1) {
         return 0xFFFFFFFF;
     }
-    ewk = (u8 *)&frw[ix];
-    *(u8 *)&frw[ix] = 1;
-    *slot = (WORK_Other *)ewk;
+    ewk = (WORK_Other *)&frw[ix];
+    ((WORK *)frw[ix])->be_flag = 1;
+    *slot = ewk;
     return 0;
 }
 

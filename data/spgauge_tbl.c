@@ -13,41 +13,41 @@
 
 #pragma section TBL
 
-extern const u16 fade_adrs_tbl_0[];
-extern const u16 fade_adrs_tbl_1[];
-extern const u16 fade_adrs_tbl_10[];
-extern const u16 fade_adrs_tbl_11[];
-extern const u16 fade_adrs_tbl_12[];
-extern const u16 fade_adrs_tbl_13[];
-extern const u16 fade_adrs_tbl_14[];
-extern const u16 fade_adrs_tbl_15[];
-extern const u16 fade_adrs_tbl_16[];
-extern const u16 fade_adrs_tbl_17[];
-extern const u16 fade_adrs_tbl_18[];
-extern const u16 fade_adrs_tbl_19[];
-extern const u16 fade_adrs_tbl_2[];
-extern const u16 fade_adrs_tbl_20[];
-extern const u16 fade_adrs_tbl_21[];
-extern const u16 fade_adrs_tbl_22[];
-extern const u16 fade_adrs_tbl_23[];
-extern const u16 fade_adrs_tbl_25[];
-extern const u16 fade_adrs_tbl_26[];
-extern const u16 fade_adrs_tbl_27[];
-extern const u16 fade_adrs_tbl_28[];
-extern const u16 fade_adrs_tbl_29[];
-extern const u16 fade_adrs_tbl_3[];
-extern const u16 fade_adrs_tbl_30[];
-extern const u16 fade_adrs_tbl_31[];
-extern const u16 fade_adrs_tbl_32[];
-extern const u16 fade_adrs_tbl_33[];
-extern const u16 fade_adrs_tbl_34[];
-extern const u16 fade_adrs_tbl_35[];
-extern const u16 fade_adrs_tbl_4[];
-extern const u16 fade_adrs_tbl_5[];
-extern const u16 fade_adrs_tbl_6[];
-extern const u16 fade_adrs_tbl_7[];
-extern const u16 fade_adrs_tbl_8[];
-extern const u16 fade_adrs_tbl_9[];
+extern const u32 fade_adrs_tbl_0[];
+extern const u32 fade_adrs_tbl_1[];
+extern const u32 fade_adrs_tbl_10[];
+extern const u32 fade_adrs_tbl_11[];
+extern const u32 fade_adrs_tbl_12[];
+extern const u32 fade_adrs_tbl_13[];
+extern const u32 fade_adrs_tbl_14[];
+extern const u32 fade_adrs_tbl_15[];
+extern const u32 fade_adrs_tbl_16[];
+extern const u32 fade_adrs_tbl_17[];
+extern const u32 fade_adrs_tbl_18[];
+extern const u32 fade_adrs_tbl_19[];
+extern const u32 fade_adrs_tbl_2[];
+extern const u32 fade_adrs_tbl_20[];
+extern const u32 fade_adrs_tbl_21[];
+extern const u32 fade_adrs_tbl_22[];
+extern const u32 fade_adrs_tbl_23[];
+extern const u32 fade_adrs_tbl_25[];
+extern const u32 fade_adrs_tbl_26[];
+extern const u32 fade_adrs_tbl_27[];
+extern const u32 fade_adrs_tbl_28[];
+extern const u32 fade_adrs_tbl_29[];
+extern const u32 fade_adrs_tbl_3[];
+extern const u32 fade_adrs_tbl_30[];
+extern const u32 fade_adrs_tbl_31[];
+extern const u32 fade_adrs_tbl_32[];
+extern const u32 fade_adrs_tbl_33[];
+extern const u32 fade_adrs_tbl_34[];
+extern const u32 fade_adrs_tbl_35[];
+extern const u32 fade_adrs_tbl_4[];
+extern const u32 fade_adrs_tbl_5[];
+extern const u32 fade_adrs_tbl_6[];
+extern const u32 fade_adrs_tbl_7[];
+extern const u32 fade_adrs_tbl_8[];
+extern const u32 fade_adrs_tbl_9[];
 
 
 const u16 sa_time_data_tbl[6][2] = {
@@ -72,154 +72,149 @@ const u16 sagauge_colchg_tbl[4][2] = {
     { 0x24, 0xA4 },
 };
 
-const u16 fade_adrs_tbl_17[2] = {
-    0, 5,
+const u32 fade_adrs_tbl_17[1] = {
+    0x5,
 };
 
-const u16 fade_adrs_tbl_18[4] = {
-    0, 4, 0, 2,
+const u32 fade_adrs_tbl_18[2] = {
+    0x4, 0x2,
 };
 
-const u16 fade_adrs_tbl_19[2] = {
-    0, 4,
+const u32 fade_adrs_tbl_19[1] = {
+    0x4,
 };
 
-const u16 fade_adrs_tbl_20[2] = {
-    0, 2,
+const u32 fade_adrs_tbl_20[1] = {
+    0x2,
 };
 
-const u16 fade_adrs_tbl_21[2] = {
-    0, 0xA,
+const u32 fade_adrs_tbl_21[1] = {
+    0xA,
 };
 
-const u16 fade_adrs_tbl_13[2] = {
-    0, 0x28,
+const u32 fade_adrs_tbl_13[1] = {
+    0x28,
 };
 
-const u16 fade_adrs_tbl_22[2] = {
-    0, 0x82,
+const u32 fade_adrs_tbl_22[1] = {
+    0x82,
 };
 
-const u16 fade_adrs_tbl_25[2] = {
-    0, 0x27,
+const u32 fade_adrs_tbl_25[1] = {
+    0x27,
 };
 
-const u16 fade_adrs_tbl_34[2] = {
-    0, 0x30,
+const u32 fade_adrs_tbl_34[1] = {
+    0x30,
 };
 
-const u16 fade_adrs_tbl_14[2] = {
-    0, 0x29,
+const u32 fade_adrs_tbl_14[1] = {
+    0x29,
 };
 
-const u16 fade_adrs_tbl_16[2] = {
-    0, 0x2F,
+const u32 fade_adrs_tbl_16[1] = {
+    0x2F,
 };
 
-const u16 fade_adrs_tbl_10[2] = {
-    0, 0x22,
+const u32 fade_adrs_tbl_10[1] = {
+    0x22,
 };
 
-const u16 fade_adrs_tbl_26[2] = {
-    0, 0x13,
+const u32 fade_adrs_tbl_26[1] = {
+    0x13,
 };
 
-const u16 fade_adrs_tbl_2[2] = {
-    0, 0x18,
+const u32 fade_adrs_tbl_2[1] = {
+    0x18,
 };
 
-const u16 fade_adrs_tbl_9[2] = {
-    0, 0x1F,
+const u32 fade_adrs_tbl_9[1] = {
+    0x1F,
 };
 
-const u16 fade_adrs_tbl_6[2] = {
-    0, 0x1C,
+const u32 fade_adrs_tbl_6[1] = {
+    0x1C,
 };
 
-const u16 fade_adrs_tbl_1[2] = {
-    0, 0x15,
+const u32 fade_adrs_tbl_1[1] = {
+    0x15,
 };
 
-const u16 fade_adrs_tbl_7[2] = {
-    0, 0x1D,
+const u32 fade_adrs_tbl_7[1] = {
+    0x1D,
 };
 
-const u16 fade_adrs_tbl_11[2] = {
-    0, 0x23,
+const u32 fade_adrs_tbl_11[1] = {
+    0x23,
 };
 
-const u16 fade_adrs_tbl_4[2] = {
-    0, 0x1A,
+const u32 fade_adrs_tbl_4[1] = {
+    0x1A,
 };
 
-const u16 fade_adrs_tbl_3[2] = {
-    0, 0x19,
+const u32 fade_adrs_tbl_3[1] = {
+    0x19,
 };
 
-const u16 fade_adrs_tbl_0[2] = {
-    0, 0x14,
+const u32 fade_adrs_tbl_0[1] = {
+    0x14,
 };
 
-const u16 fade_adrs_tbl_8[2] = {
-    0, 0x1E,
+const u32 fade_adrs_tbl_8[1] = {
+    0x1E,
 };
 
-const u16 fade_adrs_tbl_28[2] = {
-    0, 0x12,
+const u32 fade_adrs_tbl_28[1] = {
+    0x12,
 };
 
-const u16 fade_adrs_tbl_12[2] = {
-    0, 0x24,
+const u32 fade_adrs_tbl_12[1] = {
+    0x24,
 };
 
-const u16 fade_adrs_tbl_15[2] = {
-    0, 0x2B,
+const u32 fade_adrs_tbl_15[1] = {
+    0x2B,
 };
 
-const u16 fade_adrs_tbl_5[2] = {
-    0, 0x1B,
+const u32 fade_adrs_tbl_5[1] = {
+    0x1B,
 };
 
-const u16 fade_adrs_tbl_29[2] = {
-    0, 0x84,
+const u32 fade_adrs_tbl_29[1] = {
+    0x84,
 };
 
-const u16 fade_adrs_tbl_27[2] = {
-    0, 0x91,
+const u32 fade_adrs_tbl_27[1] = {
+    0x91,
 };
 
-const u16 fade_adrs_tbl_23[2] = {
-    0, 0x86,
+const u32 fade_adrs_tbl_23[1] = {
+    0x86,
 };
 
-const u16 fade_adrs_tbl_30[2] = {
-    0, 0xB4,
+const u32 fade_adrs_tbl_30[1] = {
+    0xB4,
 };
 
-const u16 fade_adrs_tbl_31[6] = {
-    0, 5, 0, 0x59, 0, 0x86,
+const u32 fade_adrs_tbl_31[3] = {
+    0x5, 0x59, 0x86,
 };
 
-const u16 fade_adrs_tbl_32[4] = {
-    0, 0x2A, 0, 0x81,
+const u32 fade_adrs_tbl_32[2] = {
+    0x2A, 0x81,
 };
 
-const u16 fade_adrs_tbl_33[4] = {
-    0, 5, 0, 0x59,
+const u32 fade_adrs_tbl_33[2] = {
+    0x5, 0x59,
 };
 
-const u16 fade_adrs_tbl_35[86] = {
-    0, 0x93, 0, 0x7B, 0, 0, 0, 0,
+const u32 fade_adrs_tbl_35[43] = {
+    0x93, 0x7B, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0,
+    0, 0, 0,
 };
 
 const s16 fade_param_tbl[42][6] = {
