@@ -4,7 +4,8 @@
  * ake_cell1_data and ake_cell2_data are the cell panels written for the finish screen
  * (akebono) by BG000.C. pos_area_tbl and pos_area_wide_tbl map a player's screen x to an area
  * code, for the normal and wide modes; the two players' codes pick the background scroll
- * routine in bg_base_x_move_sub of BG_SUB_2.C.
+ * routine in bg_base_x_move_sub of BG_SUB_2.C. str_BG_1_POS_X .. str_AREA are the strings of
+ * the background test lines in bg_test_menu_scr (BG000_TBL2.C).
  */
 
 #include "types.h"
@@ -93,7 +94,7 @@ const s8 pos_area_tbl[384] = {
     2, 2, 2, 2, 2, 2, 2, 2,
 };
 
-const s8 pos_area_wide_tbl[692] = {
+const s8 pos_area_wide_tbl[496] = {
     1, 1, 1, 1, 1, 1, 1, 1,
     1, 1, 1, 1, 1, 1, 1, 1,
     1, 1, 1, 1, 1, 1, 1, 1,
@@ -156,29 +157,32 @@ const s8 pos_area_wide_tbl[692] = {
     2, 2, 2, 2, 2, 2, 2, 2,
     2, 2, 2, 2, 2, 2, 2, 2,
     2, 2, 2, 2, 2, 2, 2, 2,
-    66, 71, 32, 49, 32, 80, 79, 83,
-    32, 88, 32, 61, 32, 10, 0, 0,
-    66, 71, 32, 49, 32, 80, 79, 83,
-    32, 89, 32, 61, 32, 10, 0, 0,
-    66, 71, 32, 50, 32, 80, 79, 83,
-    32, 88, 32, 61, 32, 10, 0, 0,
-    66, 71, 32, 50, 32, 80, 79, 83,
-    32, 89, 32, 61, 32, 10, 0, 0,
-    66, 71, 32, 51, 32, 80, 79, 83,
-    32, 88, 32, 61, 32, 10, 0, 0,
-    66, 71, 32, 51, 32, 80, 79, 83,
-    32, 89, 32, 61, 32, 10, 0, 0,
-    66, 71, 32, 52, 32, 80, 79, 83,
-    32, 88, 32, 61, 32, 10, 0, 0,
-    66, 71, 32, 52, 32, 80, 79, 83,
-    32, 89, 32, 61, 32, 0, 0, 0,
-    66, 71, 32, 49, 32, 61, 32, 10,
-    0, 0, 0, 0, 66, 71, 32, 50,
-    32, 61, 32, 10, 0, 0, 0, 0,
-    66, 71, 32, 51, 32, 61, 32, 10,
-    0, 0, 0, 0, 66, 71, 32, 52,
-    32, 61, 32, 0, 83, 84, 65, 71,
-    69, 32, 61, 32, 10, 0, 0, 0,
-    65, 82, 69, 65, 32, 32, 61, 32,
-    0, 0, 0, 0,
 };
+
+const s8 str_BG_1_POS_X[16] = "BG 1 POS X = \n";
+
+const s8 str_BG_1_POS_Y[16] = "BG 1 POS Y = \n";
+
+const s8 str_BG_2_POS_X[16] = "BG 2 POS X = \n";
+
+const s8 str_BG_2_POS_Y[16] = "BG 2 POS Y = \n";
+
+const s8 str_BG_3_POS_X[16] = "BG 3 POS X = \n";
+
+const s8 str_BG_3_POS_Y[16] = "BG 3 POS Y = \n";
+
+const s8 str_BG_4_POS_X[16] = "BG 4 POS X = \n";
+
+const s8 str_BG_4_POS_Y[16] = "BG 4 POS Y = ";
+
+const s8 str_BG_1[12] = "BG 1 = \n";
+
+const s8 str_BG_2[12] = "BG 2 = \n";
+
+const s8 str_BG_3[12] = "BG 3 = \n";
+
+const s8 str_BG_4[8] = "BG 4 = ";
+
+const s8 str_STAGE[12] = "STAGE = \n";
+
+const s8 str_AREA[12] = "AREA  = ";

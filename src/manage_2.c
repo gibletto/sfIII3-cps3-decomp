@@ -153,7 +153,7 @@ void Scrn_Move_Set(s32 n, s16 x, s16 y);
 
 #pragma inline(request_center_message)
 
-void sound_reg_level_set(s16 level, s8 flag);
+void sound_reg_level_set(s16 pitch, s8 volume);
 
 
 
@@ -976,7 +976,7 @@ void Game_Manage_8_2(void) {
     if (--C_Timer != 0) {
         return;
     }
-    if (Game_setting.set5) {
+    if (Game_setting.Event) {
         tilemap_clear_rect(0, 0, 47, 31);
     } else {
         if (Winner_id == 0) {
@@ -1233,7 +1233,7 @@ void Check_Naming(id)
 s16 id;
 {
     s32 num;
-    if (!Game_setting.set5) {
+    if (!Game_setting.Event) {
         num = E_Number[id][0];
         if (num != ENTRY_NAME && num != ENTRY_NAME_WAIT) {
             Rank_In[id][RANK_SCORE] = -1;
@@ -1383,7 +1383,7 @@ void Game_Manage_12_4(void) {
         if (--C_Timer == 0) {
             C_No2++;
             C_Timer = 20;
-            sc_ram_to_vram_opc(27, Game_setting.mode * 7, 1, 30);
+            sc_ram_to_vram_opc(27, Game_setting.Screen_Mode * 7, 1, 30);
             Disp_Digit16x24(Bonus_Score, DE_X[3] + 35, 11, 30);
         }
         break;
@@ -1576,7 +1576,7 @@ void Game_Manage_12_8(void) {
                 C_No2++;
                 C_Timer = 20;
                 Score[Player_id][SCORE_CPU] += Bonus_Score;
-                sc_ram_to_vram_opc(27, Game_setting.mode * 7, 1, 30);
+                sc_ram_to_vram_opc(27, Game_setting.Screen_Mode * 7, 1, 30);
                 Disp_Digit16x24(Bonus_Score, 35, 11, 30);
                 if (Bonus_Game_result == 0) {
                     C_No2 = 99;
@@ -1654,17 +1654,17 @@ s32 Check_Bonus_Perfect(void) {
 void Disp_Bonus_Perfect(void) {
     switch (PB_Status) {
     case 1:
-        sc_ram_to_vram_opc(23, Game_setting.mode * 7, 5, 30);
+        sc_ram_to_vram_opc(23, Game_setting.Screen_Mode * 7, 5, 30);
         Disp_Digit16x24(Ball_Perfect_PTS[0][Bonus_Stage_Level], DE_X[3] + 35, 15, 30);
         break;
     case 2:
-        sc_ram_to_vram_opc(23, Game_setting.mode * 7, 5, 52);
+        sc_ram_to_vram_opc(23, Game_setting.Screen_Mode * 7, 5, 52);
         Disp_Digit16x24(Ball_Perfect_PTS[1][Bonus_Stage_Level], DE_X[3] + 35, 15, 52);
         break;
     case 3:
-        sc_ram_to_vram_opc(23, Game_setting.mode * 7, 5, 30);
+        sc_ram_to_vram_opc(23, Game_setting.Screen_Mode * 7, 5, 30);
         Disp_Digit16x24(Ball_Perfect_PTS[0][Bonus_Stage_Level], DE_X[3] + 35, 15, 30);
-        sc_ram_to_vram_opc(23, Game_setting.mode * 7, 9, 52);
+        sc_ram_to_vram_opc(23, Game_setting.Screen_Mode * 7, 9, 52);
         Disp_Digit16x24(Ball_Perfect_PTS[1][Bonus_Stage_Level], DE_X[3] + 35, 19, 52);
         break;
     }
@@ -1741,7 +1741,7 @@ s32 Bonus_Cut_Sub(void) {
         if (Score[Player_id][SCORE_CPU] >= 99999900) {
             Score[Player_id][SCORE_CPU] = 99999900;
         }
-        sc_ram_to_vram_opc(27, Game_setting.mode * 7, 1, 30);
+        sc_ram_to_vram_opc(27, Game_setting.Screen_Mode * 7, 1, 30);
         if (Bonus_Type == BONUS_PARRY) {
             Disp_Digit16x24(Stock_Bonus_Game_Result * 1000, 35, 11, 30);
             Disp_Bonus_Perfect();
@@ -2098,17 +2098,17 @@ void Loser_Sub(void) {
         }
         Stage_Continue[LOSER]++;
     }
-    if (Game_setting.set5 == 0) {
-        tilemap_clear_rect(Score_X_Pos_Data[LOSER][Game_setting.mode] - 7, Text_Page_Y, Score_X_Pos_Data[LOSER][Game_setting.mode], Text_Page_Y + 1);
+    if (Game_setting.Event == 0) {
+        tilemap_clear_rect(Score_X_Pos_Data[LOSER][Game_setting.Screen_Mode] - 7, Text_Page_Y, Score_X_Pos_Data[LOSER][Game_setting.Screen_Mode], Text_Page_Y + 1);
     }
-    tilemap_print_string_attr(Loser_X_Pos_Data[LOSER][Game_setting.mode] - 2, 0, 18, Loser_Erase_msg);
+    tilemap_print_string_attr(Loser_X_Pos_Data[LOSER][Game_setting.Screen_Mode] - 2, 0, 18, Loser_Erase_msg);
 }
 
 
 
 void Be_Continue(void) {
     s8 s = LOSER;
-    if (Continue_Flag != 0 && Game_setting.set5 == 0) {
+    if (Continue_Flag != 0 && Game_setting.Event == 0) {
         Continue_Count_Down[s] = 0;
         Continue_Count[LOSER] = 9;
         E_Number[LOSER][0] = ENTRY_LOSER;

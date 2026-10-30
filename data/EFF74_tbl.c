@@ -12,12 +12,12 @@
 
 #pragma section TBL
 
-extern const u8 eff74_anim_tbl_0[];
-extern const u8 eff74_anim_tbl_1[];
-extern const u8 eff74_anim_tbl_2[];
-extern const u8 eff74_anim_tbl_3[];
-extern const u8 eff74_anim_tbl_4[];
-extern const u8 eff74_anim_tbl_7[];
+extern const EFF74_FRAME eff74_anim_tbl_0[];
+extern const s16 eff74_anim_tbl_1[];
+extern const EFF74_FRAME eff74_anim_tbl_2[];
+extern const s16 eff74_anim_tbl_3[];
+extern const EFF74_FRAME eff74_anim_tbl_4[];
+extern const s16 eff74_anim_tbl_7[];
 
 extern const CELL_REQ eff74_cell_tbl[][16];
 
@@ -27,35 +27,44 @@ const CELL_REQ eff74_cell_tbl[3][16] = {
     { { 0, 9 }, { 0x40, 0xA }, { 0x80, 0xB }, { 0xC0, 0xC }, { 0x1000, 0xD }, { 0x1040, 0xE }, { 0x1080, 7 }, { 0x10C0, 8 }, { 0x2000, 9 }, { 0x2040, 0xA }, { 0x2080, 0xB }, { 0x20C0, 0xC }, { 0x3000, 0xD }, { 0x3040, 0xE }, { 0x3080, 7 }, { 0x30C0, 8 } },
 };
 
-const u8 eff74_anim_tbl_0[30] = {
-    0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 2, 0, 0, 1, 2, 0,
-    2, 0, 0, 1, 0, 0, 2, 0, 0, 2, 2, 0, 2, 0,
+const EFF74_FRAME eff74_anim_tbl_0[5] = {
+    { 0, 0x200, 2 },
+    { 0, 0, 2 },
+    { 1, 0x200, 2 },
+    { 1, 0, 2 },
+    { 2, 0x200, 2 },
 };
 
-const u8 eff74_anim_tbl_2[12] = {
-    0, 0, 2, 0, 1, 0, 0, 1, 2, 0, 1, 0,
+const EFF74_FRAME eff74_anim_tbl_2[2] = {
+    { 0, 0x200, 1 },
+    { 1, 0x200, 1 },
 };
 
-const u8 eff74_anim_tbl_4[20] = {
-    0, 1, 0, 0, 1, 0, 0, 2, 2, 0, 1, 0, 0, 0, 0, 1,
-    0, 2, 0, 0,
+const EFF74_FRAME eff74_anim_tbl_4[2] = {
+    { 1, 0, 1 },
+    { 2, 0x200, 1 },
 };
 
-const u8 eff74_anim_tbl_1[8] = {
-    0, 8, 0, 10, 0, 12, 0, 11,
+/* a cell index list like eff74_anim_tbl_1; nothing in the program refers to it (provisional name) */
+const s16 eff74_anim_unref_0[4] = {
+    0, 1, 2, 0,
 };
 
-const u8 eff74_anim_tbl_3[8] = {
-    0, 3, 0, 2, 0, 1, 0, 4,
+const s16 eff74_anim_tbl_1[4] = {
+    8, 10, 12, 11,
 };
 
-const u8 eff74_anim_tbl_7[10] = {
-    0, 1, 0, 2, 0, 2, 0, 1, 0, 0,
+const s16 eff74_anim_tbl_3[4] = {
+    3, 2, 1, 4,
+};
+
+const s16 eff74_anim_tbl_7[5] = {
+    1, 2, 2, 1, 0,
 };
 
 const EFF74_ANIM eff74_anim_tbl[4] = {
-    { (void*)(eff74_anim_tbl_0), (void*)(eff74_anim_tbl_1), 5 },
-    { (void*)(eff74_anim_tbl_2), (void*)(eff74_anim_tbl_3), 2 },
-    { (void*)(eff74_anim_tbl_4), (void*)(eff74_anim_tbl_3), 2 },
-    { (void*)(eff74_anim_tbl_0), (void*)(eff74_anim_tbl_7), 5 },
+    { eff74_anim_tbl_0, eff74_anim_tbl_1, 5 },
+    { eff74_anim_tbl_2, eff74_anim_tbl_3, 2 },
+    { eff74_anim_tbl_4, eff74_anim_tbl_3, 2 },
+    { eff74_anim_tbl_0, eff74_anim_tbl_7, 5 },
 };

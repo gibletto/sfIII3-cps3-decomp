@@ -1,10 +1,11 @@
 /*
  * VITAL_TBL.C  vitality bar and round timer tables
  *
- * vital_cell_tbl and vital_cell_1p_tbl are the text-layer cells of the vitality bars (the end
- * of vital_cell_1p_tbl is also reached through vital_npos_tbl); read by VITAL.C.
- * hoji_counter_tbl is the round timer tick length for each game-speed setting, read by
- * COUNT.C.
+ * vital_cell_tbl and vital_cell_1p_tbl are the text-layer cells of the vitality bars,
+ * vital_npos_0 and vital_npos_1 the cell columns of the 1P and 2P bars and vital_attr_0 ..
+ * vital_attr_2 the cell attributes for each bar colour, reached through vital_npos_tbl and
+ * vital_attr_tbl; read by VITAL.C. vital_unref_0 is not referred to. hoji_counter_tbl is the
+ * round timer tick length for each game-speed setting, read by COUNT.C.
  */
 
 #include "types.h"
@@ -27,7 +28,7 @@ const u16 vital_cell_tbl[81] = {
     0,
 };
 
-const u16 vital_cell_1p_tbl[131] = {
+const u16 vital_cell_1p_tbl[81] = {
     0x137, 0x136, 0x135, 0x134, 0x133, 0x132, 0x131, 0x130,
     0x15C, 0x15B, 0x15A, 0x159, 0x158, 0x157, 0x156, 0x155,
     0x138, 0, 0x154, 0x153, 0x152, 0x151, 0x150, 0x15F,
@@ -38,13 +39,41 @@ const u16 vital_cell_1p_tbl[131] = {
     0x13D, 0, 0, 0, 0, 0, 0, 0x140,
     0x13E, 0, 0, 0, 0, 0, 0, 0,
     0x13F, 0, 0, 0, 0, 0, 0, 0,
-    0, 1, 2, 3, 4, 5, 6, 7,
-    8, 9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF,
-    0x10, 0x11, 0x12, 0x13, 0x14, 0x2E, 0x2D, 0x2C,
-    0x2B, 0x2A, 0x29, 0x28, 0x27, 0x26, 0x25, 0x24,
-    0x23, 0x22, 0x21, 0x20, 0x1F, 0x1E, 0x1D, 0x1C,
-    0x1B, 2, 4, 6, 0x82, 0x84, 0x86, 2,
-    4, 6, 0,
+    0,
+};
+
+/* cell columns of the 1P bar, reached through vital_npos_tbl[0]; provisional name */
+const u16 vital_npos_0[20] = {
+    1, 2, 3, 4, 5, 6, 7, 8,
+    9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF, 0x10,
+    0x11, 0x12, 0x13, 0x14,
+};
+
+/* cell columns of the 2P bar, reached through vital_npos_tbl[1]; provisional name */
+const u16 vital_npos_1[20] = {
+    0x2E, 0x2D, 0x2C, 0x2B, 0x2A, 0x29, 0x28, 0x27,
+    0x26, 0x25, 0x24, 0x23, 0x22, 0x21, 0x20, 0x1F,
+    0x1E, 0x1D, 0x1C, 0x1B,
+};
+
+/* cell attributes for each bar colour, reached through vital_attr_tbl[0]; provisional name */
+const u16 vital_attr_0[3] = {
+    2, 4, 6,
+};
+
+/* cell attributes for each bar colour, reached through vital_attr_tbl[1]; provisional name */
+const u16 vital_attr_1[3] = {
+    0x82, 0x84, 0x86,
+};
+
+/* cell attributes for each bar colour, reached through vital_attr_tbl[2]; provisional name */
+const u16 vital_attr_2[3] = {
+    2, 4, 6,
+};
+
+/* not referred to; provisional name */
+const u16 vital_unref_0[1] = {
+    0,
 };
 
 const s16 hoji_counter_tbl[4] = {

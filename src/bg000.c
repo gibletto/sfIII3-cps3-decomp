@@ -330,7 +330,7 @@ s32 zoom_frame_judge_dist(void) {
 /* provisional name */
 void zoom_x_width_check(void) {
     s32 f;
-    if (Game_setting.mode) {
+    if (Game_setting.Screen_Mode) {
         return;
     }
     if (bg_stop) {
@@ -369,7 +369,7 @@ void zoom_x_width_check(void) {
 /* provisional name */
 void zoom_y_width_check(void) {
     s32 f;
-    if (Game_setting.mode) {
+    if (Game_setting.Screen_Mode) {
         return;
     }
     /* previous bg_f_y, kept in the unnamed word at bg_w+0x34 */
@@ -1102,7 +1102,7 @@ void blit_16x16_yflip(u16* src, s16 code, u16* dst, s16 attr) {
     s32 off;
     u16* d;
     register u16* s;
-    s32 q = (s32)src + -0x440;
+    s32 q = (s32)src - 0x440;
     i = 0;
     off = 0x800;
     do {
@@ -1663,7 +1663,7 @@ void bg_initialize(void) {
     load_bg_color(bg_palette_no_tbl[bg_w.bg_index]);
     polygon2d_submit_line(gfx->prep, 0, 0, 3);
     polygon2d_submit_line(gfx->src, bg_w.scroll_cg_adr, gfx->size, 1);
-    if (Game_setting.mode) {
+    if (Game_setting.Screen_Mode) {
         bg_w.pos_offset = 0xF8;
     } else {
         bg_w.pos_offset = 0xC0;
@@ -1689,7 +1689,7 @@ void bg_initialize(void) {
         bg_w.bgw[i].bg_address = (u16 *)simmram_slot_addr(bg_w.bgw[i].bg_adrs_c_no);
         scrn_map_set_now(i, (u32)bg_w.bgw[i].bg_address);
         scrn_map_set(i, (u32)bg_w.bgw[i].bg_address);
-        ptr = (const s16*)bg_map_tbl[bg_w.bg_index][i];
+        ptr = bg_map_tbl[bg_w.bg_index][i];
         sprite_list_setup(i, 1, ptr);
     }
     bg_scr_write();
@@ -1732,7 +1732,7 @@ void bg_initialize(void) {
         bg_w.bgw[i].r_limit2 = *ptr++;
         bg_w.bgw[i].y_limit = *ptr++;
         bg_w.bgw[i].y_limit2 = *ptr;
-        if (!Game_setting.mode) {
+        if (!Game_setting.Screen_Mode) {
             bg_w.bgw[i].r_limit2 = bg_w.bgw[i].r_limit;
             bg_w.bgw[i].l_limit2 = bg_w.bgw[i].l_limit;
         }
@@ -1819,7 +1819,7 @@ void bg_etc_write(s16 type) {
     polygon2d_submit_line(gfx->prep, 0, 0, 3);
     mode = gfx->mode;
     polygon2d_submit_line(gfx->src, bg_w.scroll_cg_adr, gfx->size, mode);
-    bg_w.pos_offset = Game_setting.mode ? 0xF8 : 0xC0;
+    bg_w.pos_offset = Game_setting.Screen_Mode ? 0xF8 : 0xC0;
     for (i = 0; i < 7; i++) {
         bg_w.bgw[i].pos_x_work = 0;
         bg_w.bgw[i].pos_y_work = 0;
@@ -1841,7 +1841,7 @@ void bg_etc_write(s16 type) {
         bg_w.bgw[i].bg_address = (u16 *)simmram_slot_addr(bg_w.bgw[i].bg_adrs_c_no);
         scrn_map_set_now(i, (u32)bg_w.bgw[i].bg_address);
         scrn_map_set(i, (u32)bg_w.bgw[i].bg_address);
-        ptr = (const s16*)bg_map_tbl2[type][i];
+        ptr = bg_map_tbl2[type][i];
         sprite_list_setup(i, 1, ptr);
     }
     bg_etc_scr_write(type);
@@ -1878,7 +1878,7 @@ void bg_etc_write(s16 type) {
         bg_w.bgw[j].frame_deff = 64;
         bg_w.bgw[j].max_x_limit = bg_w.bgw[j].speed_x * bg_w.max_x;
     }
-    if (type == 1 && Game_setting.mode) {
+    if (type == 1 && Game_setting.Screen_Mode) {
         bg_w.bgw[0].wxy[0].cal = bg_w.bgw[0].xy[0].cal = 0x2000000;
         bg_w.bgw[0].pos_x_work = 0x200;
     }
@@ -2096,45 +2096,45 @@ char ake_attr_tbl[32] = {
     0, 6, 0, 6, 0, 7, 0, 7,
 };
 /* 020065A4 */
-u32 bg_map_tbl[23][3] = {
-    { (u32)bg_scr_record_data, (u32)&bg_scr_record_data[16], (u32)&bg_scr_record_data[32] },
-    { (u32)&ake_scr_record_data[28], (u32)&bg_scr_record_data[16], 0 },
-    { (u32)&ake_scr_record_data[120], (u32)&ake_scr_record_data[136], (u32)&ake_scr_record_data[143] },
-    { (u32)&ake_scr_record_data[159], (u32)&bg_scr_record_data[16], 0 },
-    { (u32)&ake_scr_record_data[28], (u32)&bg_scr_record_data[16], 0 },
-    { (u32)&ake_scr_record_data[191], (u32)&bg_scr_record_data[16], 0 },
-    { (u32)&ake_scr_record_data[28], (u32)&bg_scr_record_data[16], 0 },
-    { (u32)&ake_scr_record_data[239], (u32)&bg_scr_record_data[16], 0 },
-    { (u32)&ake_scr_record_data[278], (u32)&ake_scr_record_data[294], (u32)&ake_scr_record_data[301] },
-    { (u32)&ake_scr_record_data[308], (u32)&ake_scr_record_data[324], 0 },
-    { (u32)&ake_scr_record_data[175], (u32)&bg_scr_record_data[16], 0 },
-    { (u32)&ake_scr_record_data[28], (u32)&ake_scr_record_data[104], 0 },
-    { (u32)&ake_scr_record_data[340], (u32)&ake_scr_record_data[356], 0 },
-    { (u32)&ake_scr_record_data[372], (u32)&bg_scr_record_data[16], 0 },
-    { (u32)&ake_scr_record_data[388], (u32)&bg_scr_record_data[16], 0 },
-    { (u32)&ake_scr_record_data[388], (u32)&bg_scr_record_data[16], 0 },
-    { (u32)&ake_scr_record_data[420], (u32)&bg_scr_record_data[16], 0 },
-    { (u32)&ake_scr_record_data[433], (u32)&bg_scr_record_data[16], 0 },
-    { (u32)&ake_scr_record_data[443], (u32)&ake_scr_record_data[459], 0 },
-    { (u32)&ake_scr_record_data[191], (u32)&bg_scr_record_data[16], 0 },
-    { (u32)&ake_scr_record_data[28], (u32)&ake_scr_record_data[523], 0 },
-    { (u32)&ake_scr_record_data[539], (u32)&ake_scr_record_data[555], 0 },
-    { (u32)&ake_scr_record_data[571], (u32)&ake_scr_record_data[587], 0 },
+const s16* bg_map_tbl[23][3] = {
+    { bg_scr_record_data, bg_scr_record_00_1, bg_scr_record_00_2 },
+    { bg_scr_record_01_0, bg_scr_record_00_1, 0 },
+    { bg_scr_record_02_0, bg_scr_record_02_1, bg_scr_record_02_2 },
+    { bg_scr_record_03_0, bg_scr_record_00_1, 0 },
+    { bg_scr_record_01_0, bg_scr_record_00_1, 0 },
+    { bg_scr_record_05_0, bg_scr_record_00_1, 0 },
+    { bg_scr_record_01_0, bg_scr_record_00_1, 0 },
+    { bg_scr_record_07_0, bg_scr_record_00_1, 0 },
+    { bg_scr_record_08_0, bg_scr_record_08_1, bg_scr_record_08_2 },
+    { bg_scr_record_09_0, bg_scr_record_09_1, 0 },
+    { bg_scr_record_10_0, bg_scr_record_00_1, 0 },
+    { bg_scr_record_01_0, bg_scr_record_11_1, 0 },
+    { bg_scr_record_12_0, bg_scr_record_12_1, 0 },
+    { bg_scr_record_13_0, bg_scr_record_00_1, 0 },
+    { bg_scr_record_14_0, bg_scr_record_00_1, 0 },
+    { bg_scr_record_14_0, bg_scr_record_00_1, 0 },
+    { bg_scr_record_16_0, bg_scr_record_00_1, 0 },
+    { bg_scr_record_17_0, bg_scr_record_00_1, 0 },
+    { bg_scr_record_18_0, bg_scr_record_18_1, 0 },
+    { bg_scr_record_05_0, bg_scr_record_00_1, 0 },
+    { bg_scr_record_01_0, bg_scr_record_20_1, 0 },
+    { bg_scr_record_21_0, bg_scr_record_21_1, 0 },
+    { bg_scr_record_22_0, bg_scr_record_22_1, 0 },
 };
 /* 020066B8 */
-u32 bg_map_tbl2[12][3] = {
-    { (u32)&ake_scr_record_data[603], (u32)&bg_scr_record_data[16], 0 },
-    { (u32)bg_scr_record_data, 0, 0 },
-    { (u32)bg_scr_record_data, 0, 0 },
-    { (u32)bg_scr_record_data, 0, 0 },
-    { (u32)bg_scr_record_data, (u32)&bg_scr_record_data[16], 0 },
-    { (u32)bg_scr_record_data, 0, 0 },
-    { (u32)&ake_scr_record_data[603], 0, 0 },
-    { (u32)bg_scr_record_data, 0, 0 },
-    { (u32)&ake_scr_record_data[603], 0, 0 },
-    { (u32)&ake_scr_record_data[603], 0, 0 },
-    { (u32)&ake_scr_record_data[603], 0, 0 },
-    { (u32)bg_scr_record_data, 0, 0 },
+const s16* bg_map_tbl2[12][3] = {
+    { etc_bg_scr_record_0_0, bg_scr_record_00_1, 0 },
+    { bg_scr_record_data, 0, 0 },
+    { bg_scr_record_data, 0, 0 },
+    { bg_scr_record_data, 0, 0 },
+    { bg_scr_record_data, bg_scr_record_00_1, 0 },
+    { bg_scr_record_data, 0, 0 },
+    { etc_bg_scr_record_0_0, 0, 0 },
+    { bg_scr_record_data, 0, 0 },
+    { etc_bg_scr_record_0_0, 0, 0 },
+    { etc_bg_scr_record_0_0, 0, 0 },
+    { etc_bg_scr_record_0_0, 0, 0 },
+    { bg_scr_record_data, 0, 0 },
 };
 /* 02006748 */
 const HUD_CELL* bg_rewrite_cell_tbl[6][3] = {

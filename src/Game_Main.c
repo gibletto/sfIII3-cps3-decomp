@@ -170,7 +170,7 @@
  */
 void Scrn_Move_Set(s32 n, s16 x, s16 y);
 
-void sound_reg_level_set(s16 level, s8 flag);
+void sound_reg_level_set(s16 pitch, s8 volume);
 
 #pragma noregsave(game_frame_task)
 #pragma inline(bg0001)
@@ -553,8 +553,8 @@ void Game01(void) {
 
 
 void Game01_Sub(void) {
-    tilemap_print_string_attr((*(const s16(*)[2][2])&(Entry_Msg_X_Data[4]))[0][Game_setting.mode], 0, 18, "                   ");
-    tilemap_print_string_attr((*(const s16(*)[2][2])&(Entry_Msg_X_Data[4]))[1][Game_setting.mode], 0, 18, "                   ");
+    tilemap_print_string_attr((*(const s16(*)[2][2])&(Entry_Msg_X_Data[4]))[0][Game_setting.Screen_Mode], 0, 18, "                   ");
+    tilemap_print_string_attr((*(const s16(*)[2][2])&(Entry_Msg_X_Data[4]))[1][Game_setting.Screen_Mode], 0, 18, "                   ");
     vital_cont_init();
     combo_cont_init();
     count_cont_init(0);
@@ -889,7 +889,7 @@ void Game03(void)
             Forbid_Break = 1;
             break;
         }
-        if (Game_setting.set5) {
+        if (Game_setting.Event) {
             G_No1 = G1_GAME_OVER;
             G_No2 = 0;
             G_No3 = 0;
@@ -1477,7 +1477,7 @@ s32 Ck_Coin(void) {
         }
         bg_vbl_trans_flag = 0;
         bookkeep_freeplay_count();
-        if (Game_setting.set5) {
+        if (Game_setting.Event) {
             plw[0].wu.operator = 1;
             plw[1].wu.operator = 1;
             Operator_Status[0] = 1;

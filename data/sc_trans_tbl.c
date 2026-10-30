@@ -1,10 +1,10 @@
 /*
  * SC_TRANS_TBL.C  text layer cell and transfer lists
  *
- * sc_celllist_tbl points at the 17 cell lists in END_SUB_TBL_C.C. The sc_vram_NN_pos, _code
- * and _attr lists are the screen parts that sc_ram_vram_tbl (SC_DATA.C) copies to the text
- * layer, and sc_cells_* are the character slot lists used by sc_chr_list_tbl and
- * sc_chr_slot_tbl. Read by SC_TRANS.C.
+ * sc_celllist_tbl names the cell lists sc_celllist_0 - 16 in END_SUB_TBL_C.C. The
+ * sc_vram_NN_pos, _code and _attr lists are the screen parts that sc_ram_vram_tbl (SC_DATA.C)
+ * copies to the text layer, and sc_cells_* are the character slot lists used by sc_chr_list_tbl
+ * and sc_chr_slot_tbl. Read by SC_TRANS.C.
  */
 
 #include "types.h"
@@ -72,27 +72,42 @@ extern const u16 sc_vram_29_attr[];
 extern const u16 sc_vram_29_code[];
 extern const u16 sc_vram_29_pos[];
 
-extern const CELL_ENTRY sc_celllist_data[662];
+extern const CELL_ENTRY sc_celllist_0[21];
+extern const CELL_ENTRY sc_celllist_2[21];
+extern const CELL_ENTRY sc_celllist_15[21];
+extern const CELL_ENTRY sc_celllist_16[21];
+extern const CELL_ENTRY sc_celllist_3[25];
+extern const CELL_ENTRY sc_celllist_4[10];
+extern const CELL_ENTRY sc_celllist_5[10];
+extern const CELL_ENTRY sc_celllist_6[97];
+extern const CELL_ENTRY sc_celllist_11[129];
+extern const CELL_ENTRY sc_celllist_12[161];
+extern const CELL_ENTRY sc_celllist_7[25];
+extern const CELL_ENTRY sc_celllist_8[25];
+extern const CELL_ENTRY sc_celllist_9[31];
+extern const CELL_ENTRY sc_celllist_10[43];
+extern const CELL_ENTRY sc_celllist_13[11];
+extern const CELL_ENTRY sc_celllist_14[11];
 extern const CELL_ENTRY* const sc_celllist_tbl[];
 
 const CELL_ENTRY* const sc_celllist_tbl[17] = {
-    &sc_celllist_data[0],
-    &sc_celllist_data[0],
-    &sc_celllist_data[21],
-    &sc_celllist_data[84],
-    &sc_celllist_data[109],
-    &sc_celllist_data[119],
-    &sc_celllist_data[129],
-    &sc_celllist_data[516],
-    &sc_celllist_data[541],
-    &sc_celllist_data[566],
-    &sc_celllist_data[597],
-    &sc_celllist_data[226],
-    &sc_celllist_data[355],
-    &sc_celllist_data[640],
-    &sc_celllist_data[651],
-    &sc_celllist_data[42],
-    &sc_celllist_data[63],
+    sc_celllist_0,
+    sc_celllist_0,
+    sc_celllist_2,
+    sc_celllist_3,
+    sc_celllist_4,
+    sc_celllist_5,
+    sc_celllist_6,
+    sc_celllist_7,
+    sc_celllist_8,
+    sc_celllist_9,
+    sc_celllist_10,
+    sc_celllist_11,
+    sc_celllist_12,
+    sc_celllist_13,
+    sc_celllist_14,
+    sc_celllist_15,
+    sc_celllist_16,
 };
 
 /* the screen parts sc_ram_vram_tbl copies to the SS layer: for each, a list of screen positions, one of

@@ -1072,7 +1072,7 @@ void Normal_55000(PLW* wk) {
 
 void make_nm55_init_sp(PLW* wk) {
     WORK* efw;
-    s16* dad;
+    const s16* dad;
     s16 ix;
     s16 isp;
     wk->wu.mvxy.a[1].sp /= 3;
@@ -1122,7 +1122,7 @@ void Normal_56000(PLW* wk) {
 
 void nm56_char_select(PLW* wk) {
     WORK* efw;
-    s16* dad;
+    const s16* dad;
     s16 ix;
     efw = (WORK*)((WORK*)wk->wu.target_adrs)->my_effadrs;
     ix = get_sel_hosei_tbl_ix(wk->player_number) + 1;
@@ -1178,7 +1178,7 @@ void Normal_57000(PLW* wk) {
 
 void nm57_dir_select(PLW* wk) {
     WORK* efw;
-    s16* dad;
+    const s16* dad;
     s16 ix;
     efw = (WORK*)((WORK*)wk->wu.target_adrs)->my_effadrs;
     ix = get_sel_hosei_tbl_ix(wk->player_number) + 1;

@@ -50,7 +50,8 @@ From there it's all tasks. `boot_task` creates `mode_init_task`, which does the 
 
 - work out the region and country
 - set up sprite lists, palettes and the font
-- load the operator settings from EEPROM (`eeprom_config_load`), resetting them to defaults if the checksum is bad
+- load the operator settings from EEPROM (`eeprom_config_load`), resetting them to defaults if the version byte or
+  the stamp after the game settings (release date, region and game code) doesn't match this ROM
 - clear every game-state variable, and hand out 9 credits if free play is on
 - show the region text and the warning screen
 - start the two tasks that run the actual game, `game_frame_task` and `entry_task`, then end itself

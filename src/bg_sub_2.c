@@ -627,7 +627,7 @@ void bg_base_x_move_sub(void) {
         work1 = plw[1].wu.scr_mv_x + satse[plw[1].player_number];
     }
     work1 -= bg_pos;
-    if (Game_setting.mode) {
+    if (Game_setting.Screen_Mode) {
         if (work0 < 0) {
             work0 = 0;
         } else if (work0 > 0x1EF) {

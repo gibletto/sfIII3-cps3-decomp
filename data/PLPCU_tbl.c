@@ -49,8 +49,7 @@ void (*const plpcu_lv_00[4])() = {
     Caught_03000,
 };
 
-/* Stored after plpcu_lv_00. Nothing in the program refers to it by name or address; if it is read,
-   it is through an index past the end of plpcu_lv_00. */
+/* Stored after plpcu_lv_00. Nothing in the program refers to it by name or address. */
 const u8 plpcu_lv_00_tail[4] = {
     0, 0, 0, 0,
 };

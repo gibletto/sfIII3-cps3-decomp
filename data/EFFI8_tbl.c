@@ -35,8 +35,7 @@ const u16 cbm_table[8][5] = {
     { 0, 0, 0xFFF, 0xFFFE, 0 },
 };
 
-/* Stored after cbm_table. Nothing in the program refers to it by name or address; if it is read,
-   it is through an index past the end of cbm_table. */
+/* Stored after cbm_table. Nothing in the program refers to it by name or address. */
 const u16 cbm_table_tail[2] = {
     0, 0,
 };

@@ -28,6 +28,3 @@ const s16 end_e_pos[10][2] = {
     { 256, 256 },
     { 768, 256 },
 };
-
-/* Stored after end_e_pos. Nothing in the program refers to it by name or address; if it is read,
-   it is through an index past the end of end_e_pos. */

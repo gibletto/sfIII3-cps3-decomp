@@ -107,7 +107,7 @@ void GameOver_2nd(void) {
         if (Check_Fade_Complete_SP() == 0) {
             break;
         }
-        if (Game_setting.set5) {
+        if (Game_setting.Event) {
             GO_No[0] = GO_DONE;
             break;
         }

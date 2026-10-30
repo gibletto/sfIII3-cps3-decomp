@@ -52,15 +52,15 @@
 
 
 /* 0200704C */
-u32* ag_char_table[8] = {
-    (u32*)&ef13_char_table_225[108],
-    (u32*)&ef13_char_table_225[116],
-    (u32*)&ef13_char_table_225[124],
-    (u32*)&ef13_char_table_225[132],
-    (u32*)&ef13_char_table_225[140],
-    (u32*)&ef13_char_table_225[148],
-    (u32*)&ef13_char_table_225[156],
-    (u32*)&ef13_char_table_225[164],
+const u32* ag_char_table[8] = {
+    ag_00_char_table,
+    ag_01_char_table,
+    ag_02_char_table,
+    ag_03_char_table,
+    ag_04_char_table,
+    ag_05_char_table,
+    ag_06_char_table,
+    ag_07_char_table,
 };
 
 

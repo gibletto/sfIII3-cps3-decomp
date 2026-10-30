@@ -6,9 +6,10 @@
  * through the range rows asstbl_lv_0000 - 4000 (waza_select, get_nearing_range);
  * asstbl_lv_A010 and B010 the throws, asstbl_lv_E010 the taunt, asstbl_lever_up_att,
  * asstbl_paring_att and asstbl_dm_att the lever-up, after-parry and after-damage attacks.
- * These are read by PLS03ATT.C. asstbl_lv_D010 (leap attack) and asstbl_sa_ground and
- * asstbl_sa_air (super arts and special moves on the ground and in the air) are read by
- * PLS03.C. asstbl_lv_unref is not referred to.
+ * These are read by PLS03ATT.C; asstbl_lever_up_att only by check_lever_up_attack, which nothing
+ * calls (Ken's rows give movexy row 72, one past ken_movexy_table: ken_parabora_data[0]).
+ * asstbl_lv_D010 (leap attack) and asstbl_sa_ground and asstbl_sa_air (super arts and special
+ * moves on the ground and in the air) are read by PLS03.C. asstbl_lv_unref is not referred to.
  */
 
 #include "types.h"

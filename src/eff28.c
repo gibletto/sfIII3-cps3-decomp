@@ -32,7 +32,7 @@
 
 /* 02006CC4 */
 const s16* scr_obj_data28[1] = {
-    &scr_obj_num28[1],
+    scr_obj_data28_0,
 };
 
 

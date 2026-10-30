@@ -1,8 +1,8 @@
 /*
  * EFF44_TBL.C  animated stage object placement
  *
- * scr_obj_num44 starts with the number of effect 44 objects for each type, followed by the
- * rows of each type (settings, position, priority, animation), reached through scr_obj_data44.
+ * scr_obj_num44 gives the number of effect 44 objects for each type, and scr_obj_data44_N the
+ * rows of type N (settings, position, priority, animation), named by scr_obj_data44.
  * Read by EFF44.C, which holds the select-screen object (effect 43) and the animated stage
  * objects.
  */
@@ -13,36 +13,80 @@
 #pragma section TBL
 
 
-const s16 scr_obj_num44[242] = {
+const s16 scr_obj_num44[10] = {
     2, 1, 2, 7, 1, 3, 2, 3,
-    4, 2, 0, 7, 128, 576, 43, 88,
-    14, 0, 0, 7, 128, 640, 43, 88,
-    15, 0, 0, 2, 128, 607, 156, 80,
-    0, 0, 0, 2, 128, 495, 48, 80,
-    5, 0, 0, 2, 128, 479, 48, 79,
-    8, 0, 0, 2, 8320, 672, 208, 82,
-    3, 0, 0, 2, 8320, 741, 183, 82,
-    4, 0, 0, 2, 8320, 780, 161, 82,
-    5, 0, 0, 2, 8320, 809, 161, 82,
-    6, 0, 0, 2, 8320, 159, 80, 80,
-    9, 0, 0, 2, 8320, 792, 72, 82,
-    10, 0, 0, 2, 8320, 654, 64, 82,
-    11, 0, 0, 2, 128, 735, 80, 82,
-    23, 0, 0, 2, 8320, 223, 112, 82,
-    1, 0, 0, 2, 8320, 208, 32, 82,
-    3, 0, 0, 2, 8320, 320, 32, 82,
-    4, 0, 0, 2, 8320, 336, 147, 82,
-    6, 0, 0, 2, 8320, 863, 104, 82,
-    7, 0, 0, 2, 8320, 640, 32, 81,
-    1, 0, 0, 2, 128, 192, 32, 81,
-    3, 0, 0, 2, 128, 200, 88, 80,
-    4, 0, 0, 2, 8320, 720, 80, 83,
-    5, 0, 0, 2, 128, 286, 64, 82,
-    6, 0, 0, 2, 8320, 240, 80, 72,
-    16, 0, 0, 2, 8320, 319, 80, 72,
-    17, 0, 0, 2, 8320, 401, 95, 72,
-    18, 0, 0, 2, 8320, 864, 80, 72,
-    21, 0, 0, 2, 8320, 720, 80, 83,
-    5, 0, 0, 2, 128, 286, 64, 82,
-    6, 0,
+    4, 2,
+};
+
+/* type 0; provisional name */
+const s16 scr_obj_data44_0[16] = {
+    0, 7, 128, 576, 43, 88, 14, 0,
+    0, 7, 128, 640, 43, 88, 15, 0,
+};
+
+/* type 1; provisional name */
+const s16 scr_obj_data44_1[8] = {
+    0, 2, 128, 607, 156, 80, 0, 0,
+};
+
+/* type 2; provisional name */
+const s16 scr_obj_data44_2[16] = {
+    0, 2, 128, 495, 48, 80, 5, 0,
+    0, 2, 128, 479, 48, 79, 8, 0,
+};
+
+/* type 3; provisional name */
+const s16 scr_obj_data44_3[56] = {
+    0, 2, 8320, 672, 208, 82, 3, 0,
+    0, 2, 8320, 741, 183, 82, 4, 0,
+    0, 2, 8320, 780, 161, 82, 5, 0,
+    0, 2, 8320, 809, 161, 82, 6, 0,
+    0, 2, 8320, 159, 80, 80, 9, 0,
+    0, 2, 8320, 792, 72, 82, 10, 0,
+    0, 2, 8320, 654, 64, 82, 11, 0,
+};
+
+/* type 4; provisional name */
+const s16 scr_obj_data44_4[8] = {
+    0, 2, 128, 735, 80, 82, 23, 0,
+};
+
+/* type 5; provisional name */
+const s16 scr_obj_data44_5[24] = {
+    0, 2, 8320, 223, 112, 82, 1, 0,
+    0, 2, 8320, 208, 32, 82, 3, 0,
+    0, 2, 8320, 320, 32, 82, 4, 0,
+};
+
+/* type 6; provisional name */
+const s16 scr_obj_data44_6[16] = {
+    0, 2, 8320, 336, 147, 82, 6, 0,
+    0, 2, 8320, 863, 104, 82, 7, 0,
+};
+
+/* type 7; provisional name */
+const s16 scr_obj_data44_7[24] = {
+    0, 2, 8320, 640, 32, 81, 1, 0,
+    0, 2, 128, 192, 32, 81, 3, 0,
+    0, 2, 128, 200, 88, 80, 4, 0,
+};
+
+/* not referred to; the rows of scr_obj_data44_9; provisional name */
+const s16 scr_obj_data44_unref_0[16] = {
+    0, 2, 8320, 720, 80, 83, 5, 0,
+    0, 2, 128, 286, 64, 82, 6, 0,
+};
+
+/* type 8; provisional name */
+const s16 scr_obj_data44_8[32] = {
+    0, 2, 8320, 240, 80, 72, 16, 0,
+    0, 2, 8320, 319, 80, 72, 17, 0,
+    0, 2, 8320, 401, 95, 72, 18, 0,
+    0, 2, 8320, 864, 80, 72, 21, 0,
+};
+
+/* type 9; provisional name */
+const s16 scr_obj_data44_9[16] = {
+    0, 2, 8320, 720, 80, 83, 5, 0,
+    0, 2, 128, 286, 64, 82, 6, 0,
 };

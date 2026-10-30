@@ -1,7 +1,7 @@
 /*
  * STAGE_CHAR.C  Stage background character scripts
  *
- * Scripts for the characters in the stage backgrounds, one table per stage (usa, rca, afc, hkg, grm, brz, orm, eng, jp3, chn, fnl, j11, frc, bns, j10).
+ * Scripts for the characters in the stage backgrounds, one table per stage (usa, rca, jp2, afc, hkg, grm, brz, orm, eng, jp3, chn, fnl, j11, frc, bns, j10).
  * Each *_char_table is an index of animation scripts ending in 0 followed by the scripts, in the
  * format of the fighters' tables: an effect's work takes the table as its char_table and
  * set_char_move_init starts its scripts. See charscr.h for the line layouts.
@@ -62,6 +62,17 @@ extern const u16 rca_char_table_020_head[];
 extern const u16 rca_char_table_021_head[];
 extern const u16 rca_char_table_022_head[];
 extern const u16 rca_char_table_023_head[];
+extern const u16 jp2_char_table_000[], jp2_char_table_001[], jp2_char_table_002[], jp2_char_table_003[], jp2_char_table_004[], jp2_char_table_005[], jp2_char_table_006[], jp2_char_table_007[], jp2_char_table_008[], jp2_char_table_009[];
+extern const u16 jp2_char_table_000_head[];
+extern const u16 jp2_char_table_001_head[];
+extern const u16 jp2_char_table_002_head[];
+extern const u16 jp2_char_table_003_head[];
+extern const u16 jp2_char_table_004_head[];
+extern const u16 jp2_char_table_005_head[];
+extern const u16 jp2_char_table_006_head[];
+extern const u16 jp2_char_table_007_head[];
+extern const u16 jp2_char_table_008_head[];
+extern const u16 jp2_char_table_009_head[];
 extern const u16 afc_char_table_000[], afc_char_table_001[], afc_char_table_002[], afc_char_table_003[], afc_char_table_004[], afc_char_table_005[], afc_char_table_006[], afc_char_table_007[], afc_char_table_008[], afc_char_table_009[], afc_char_table_010[], afc_char_table_011[], afc_char_table_012[], afc_char_table_013[], afc_char_table_014[], afc_char_table_015[], afc_char_table_016[], afc_char_table_017[], afc_char_table_018[], afc_char_table_019[];
 extern const u16 afc_char_table_000_head[];
 extern const u16 afc_char_table_001_head[];
@@ -1002,7 +1013,7 @@ const u16 rca_char_table_022[8] = {
 };
 
 const u16 rca_char_table_023_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
-const u16 rca_char_table_023[318] = {
+const u16 rca_char_table_023[36] = {
     L2(1, 0, 0, 0, 0, 0, 0, 0xD817),
     L2(1, 0, 0, 0, 0, 0, 0, 0xD818),
     L2(1, 0, 0, 0, 0, 0, 0, 0xD819),
@@ -1012,77 +1023,108 @@ const u16 rca_char_table_023[318] = {
     L2(1, 0, 0, 0, 0, 0, 0, 0xD819),
     L2(1, 0, 0, 0, 0, 0, 0, 0xD818),
     CMD(CM_ROA, 0, 0, 0),
-    L2(6, 70, 3927, 1, 0, 100, 6, 0xF58C),
-    L2(6, 70, 3930, 1, 0, 100, 6, 0xF5BC),
-    L2(6, 70, 3933, 1, 0, 100, 6, 0xF5EC),
-    L2(6, 70, 3936, 1, 0, 100, 6, 0xF61C),
-    L2(6, 70, 3939, 1, 0, 100, 6, 0xF764),
-    CMD(CM_DUMMY, 0, 2, 0),
-    CMD(CM_DUMMY, 0, 2304, 0),
-    CMD(CM_DUMMY, -9680, 1, 0),
-    CMD(CM_DUMMY, 0, 2, 0),
-    CMD(CM_DUMMY, 0, 2304, 0),
-    CMD(CM_DUMMY, -9679, 1, 0),
-    CMD(CM_DUMMY, 0, 2, 0),
-    CMD(CM_DUMMY, 0, 2304, 0),
-    CMD(CM_DUMMY, -9678, 1, 0),
-    CMD(CM_DUMMY, 0, 2, 0),
-    CMD(CM_DUMMY, 0, 1024, 0),
-    CMD(CM_DUMMY, -9677, 1, 0),
-    CMD(CM_DUMMY, 0, 2, 0),
-    CMD(CM_DUMMY, 0, 1024, 0),
-    CMD(CM_DUMMY, -9676, 1, 0),
-    CMD(CM_DUMMY, 0, 2, 0),
-    CMD(CM_DUMMY, 0, 1024, 0),
-    CMD(CM_DUMMY, -9675, 1, 0),
-    CMD(CM_DUMMY, 0, 2, 0),
-    CMD(CM_DUMMY, 0, 11264, 0),
-    CMD(CM_DUMMY, -9674, 1, 0),
-    CMD(CM_DUMMY, 0, 2, 0),
-    CMD(CM_DUMMY, 0, 11264, 0),
-    CMD(CM_DUMMY, -9673, 1, 0),
-    CMD(CM_DUMMY, 0, 2, 0),
-    CMD(CM_DUMMY, 0, 12, 0),
-    CMD(CM_DUMMY, 10, 0xB400, 0),
-    CMD(CM_DUMMY, -9672, 1536, 0),
-    CMD(CM_DUMMY, -9671, 2560, 0),
-    CMD(CM_DUMMY, -9672, 1536, 0),
-    CMD(CM_DUMMY, -9671, 13, 0),
-    CMD(CM_DUMMY, 0, 2560, 0),
-    CMD(CM_DUMMY, -9672, 2560, 0),
-    CMD(CM_DUMMY, -9671, 2560, 0),
-    CMD(CM_DUMMY, -9670, 20480, 0),
-    CMD(CM_DUMMY, -9669, 2560, 0),
-    CMD(CM_DUMMY, -9670, 2560, 0),
-    CMD(CM_DUMMY, -9671, 2560, 0),
-    CMD(CM_DUMMY, -9668, 20480, 0),
-    CMD(CM_DUMMY, -9667, 2560, 0),
-    CMD(CM_DUMMY, -9668, 12, 0),
-    CMD(CM_DUMMY, 4, 0xB400, 0),
-    CMD(CM_DUMMY, -9672, 1536, 0),
-    CMD(CM_DUMMY, -9671, 2560, 0),
-    CMD(CM_DUMMY, -9672, 1536, 0),
-    CMD(CM_DUMMY, -9671, 13, 0),
-    CMD(CM_DUMMY, 0, 2560, 0),
-    CMD(CM_DUMMY, -9672, 2560, 0),
-    CMD(CM_DUMMY, -9671, 2560, 0),
-    CMD(CM_DUMMY, -9670, 20480, 0),
-    CMD(CM_DUMMY, -9669, 2560, 0),
-    CMD(CM_DUMMY, -9670, 2560, 0),
-    CMD(CM_DUMMY, -9671, 2560, 0),
-    CMD(CM_DUMMY, -9668, 20480, 0),
-    CMD(CM_DUMMY, -9667, 2560, 0),
-    CMD(CM_DUMMY, -9668, 12, 0),
-    CMD(CM_DUMMY, 2, 0xB400, 0),
-    CMD(CM_DUMMY, -9672, 1536, 0),
-    CMD(CM_DUMMY, -9671, 2560, 0),
-    CMD(CM_DUMMY, -9672, 1536, 0),
-    CMD(CM_DUMMY, -9671, 13, 0),
-    CMD(CM_DUMMY, 0, 1, 0),
-    CMD(CM_DUMMY, 0, 2, 0),
-    CMD(CM_DUMMY, 0, 2304, 0),
-    CMD(CM_DUMMY, -9664, 1, 0),
-    0x0000, 0x0000,
+};
+
+/* jp2_char_table scripts: 10 entries */
+const u32 jp2_char_table[11] = {
+    (u32)jp2_char_table_000, (u32)jp2_char_table_001, (u32)jp2_char_table_002, (u32)jp2_char_table_003, (u32)jp2_char_table_004, (u32)jp2_char_table_005,
+    (u32)jp2_char_table_006, (u32)jp2_char_table_007, (u32)jp2_char_table_008, (u32)jp2_char_table_009,
+    0
+};
+
+const u16 jp2_char_table_000_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 jp2_char_table_000[8] = {
+    L2(9, 0, 0, 0, 0, 0, 0, 0xDA30),
+    CMD(CM_ROA, 0, 0, 0),
+};
+
+const u16 jp2_char_table_001_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 jp2_char_table_001[8] = {
+    L2(9, 0, 0, 0, 0, 0, 0, 0xDA31),
+    CMD(CM_ROA, 0, 0, 0),
+};
+
+const u16 jp2_char_table_002_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 jp2_char_table_002[8] = {
+    L2(9, 0, 0, 0, 0, 0, 0, 0xDA32),
+    CMD(CM_ROA, 0, 0, 0),
+};
+
+const u16 jp2_char_table_003_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 jp2_char_table_003[8] = {
+    L2(4, 0, 0, 0, 0, 0, 0, 0xDA33),
+    CMD(CM_ROA, 0, 0, 0),
+};
+
+const u16 jp2_char_table_004_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 jp2_char_table_004[8] = {
+    L2(4, 0, 0, 0, 0, 0, 0, 0xDA34),
+    CMD(CM_ROA, 0, 0, 0),
+};
+
+const u16 jp2_char_table_005_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 jp2_char_table_005[8] = {
+    L2(4, 0, 0, 0, 0, 0, 0, 0xDA35),
+    CMD(CM_ROA, 0, 0, 0),
+};
+
+const u16 jp2_char_table_006_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 jp2_char_table_006[8] = {
+    L2(44, 0, 0, 0, 0, 0, 0, 0xDA36),
+    CMD(CM_ROA, 0, 0, 0),
+};
+
+const u16 jp2_char_table_007_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 jp2_char_table_007[8] = {
+    L2(44, 0, 0, 0, 0, 0, 0, 0xDA37),
+    CMD(CM_ROA, 0, 0, 0),
+};
+
+const u16 jp2_char_table_008_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 jp2_char_table_008[148] = {
+    CMD(CM_FOR, 0, 0, 10),
+    L2(180, 0, 0, 0, 0, 0, 0, 0xDA38),
+    L2(6, 0, 0, 0, 0, 0, 0, 0xDA39),
+    L2(10, 0, 0, 0, 0, 0, 0, 0xDA38),
+    L2(6, 0, 0, 0, 0, 0, 0, 0xDA39),
+    CMD(CM_NEX, 0, 0, 0),
+    L2(10, 0, 0, 0, 0, 0, 0, 0xDA38),
+    L2(10, 0, 0, 0, 0, 0, 0, 0xDA39),
+    L2(10, 0, 0, 0, 0, 0, 0, 0xDA3A),
+    L2(80, 0, 0, 0, 0, 0, 0, 0xDA3B),
+    L2(10, 0, 0, 0, 0, 0, 0, 0xDA3A),
+    L2(10, 0, 0, 0, 0, 0, 0, 0xDA39),
+    L2(10, 0, 0, 0, 0, 0, 0, 0xDA3C),
+    L2(80, 0, 0, 0, 0, 0, 0, 0xDA3D),
+    L2(10, 0, 0, 0, 0, 0, 0, 0xDA3C),
+    CMD(CM_FOR, 0, 0, 4),
+    L2(180, 0, 0, 0, 0, 0, 0, 0xDA38),
+    L2(6, 0, 0, 0, 0, 0, 0, 0xDA39),
+    L2(10, 0, 0, 0, 0, 0, 0, 0xDA38),
+    L2(6, 0, 0, 0, 0, 0, 0, 0xDA39),
+    CMD(CM_NEX, 0, 0, 0),
+    L2(10, 0, 0, 0, 0, 0, 0, 0xDA38),
+    L2(10, 0, 0, 0, 0, 0, 0, 0xDA39),
+    L2(10, 0, 0, 0, 0, 0, 0, 0xDA3A),
+    L2(80, 0, 0, 0, 0, 0, 0, 0xDA3B),
+    L2(10, 0, 0, 0, 0, 0, 0, 0xDA3A),
+    L2(10, 0, 0, 0, 0, 0, 0, 0xDA39),
+    L2(10, 0, 0, 0, 0, 0, 0, 0xDA3C),
+    L2(80, 0, 0, 0, 0, 0, 0, 0xDA3D),
+    L2(10, 0, 0, 0, 0, 0, 0, 0xDA3C),
+    CMD(CM_FOR, 0, 0, 2),
+    L2(180, 0, 0, 0, 0, 0, 0, 0xDA38),
+    L2(6, 0, 0, 0, 0, 0, 0, 0xDA39),
+    L2(10, 0, 0, 0, 0, 0, 0, 0xDA38),
+    L2(6, 0, 0, 0, 0, 0, 0, 0xDA39),
+    CMD(CM_NEX, 0, 0, 0),
+    CMD(CM_ROA, 0, 0, 0),
+};
+
+const u16 jp2_char_table_009_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 jp2_char_table_009[8] = {
+    L2(9, 0, 0, 0, 0, 0, 0, 0xDA40),
+    CMD(CM_ROA, 0, 0, 0),
 };
 
 /* afc_char_table scripts: 20 entries */

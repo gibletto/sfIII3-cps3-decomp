@@ -1370,7 +1370,7 @@ void debug_menu_player_setup(void) {
     dbg_hud_mode = 0;
     ixbfw_cut = 0;
     Game_pause = 0;
-    if (Game_setting.mode) {
+    if (Game_setting.Screen_Mode) {
         dbg_hud_x = 8;
     } else {
         dbg_hud_x = 0;
@@ -3190,7 +3190,7 @@ void debug_hit_a_print_hit_ix_rows(WORK* wk, GRID9_REC* recs) {
 
 /* provisional name */
 void debug_hit_a_print_box_values(WORK* wk) {
-    BODY_BOX* box;
+    const BODY_BOX* box;
     s16 i;
     s16 v;
     if (dbg_hita_grid_sw != 0 && wk->dir_step >= 2 && wk->dir_step != 4 && wk->dir_step != 5) {
@@ -3965,7 +3965,7 @@ void debug_parts_run(void) {
 /* provisional name */
 void debug_parts_copy_overlap(void) {
     s16 i;
-    OVERLAP_PARTS* oct;
+    const OVERLAP_PARTS* oct;
     for (i = 0; i < 4; i++) {
         oct = &plw[0].wu.overlap_char_tbl[plw[0].wu.cg_olc.olc_ix[i]];
         dbg_parts_plw[i].wu.cg_olc.olc_ix[i] = plw[0].wu.cg_olc.olc_ix[i];
@@ -5911,7 +5911,7 @@ void debug_parts_disp(void) {
 
 /* provisional name */
 void debug_pattern_edit_init_counts(void) {
-    u32** pat;
+    const u32** pat;
     ((DBG_SLOT*)&dbg_slot_w[0])->sel[0] = 1;
     ((DBG_SLOT*)&dbg_slot_w[1])->sel[0] = 1;
     ((DBG_SLOT*)&dbg_slot_w[0])->sel0_max = 0;
@@ -5926,7 +5926,7 @@ void debug_pattern_edit_init_counts(void) {
 
 /* provisional name */
 void debug_motion_list_count(void) {
-    u32* p;
+    const u32* p;
     dbg_slot->sel[1] = 1;
     if (dbg_slot->sel[0] > 0xD8) {
         p = dbg_pl->wu.char_table[0];
@@ -5999,7 +5999,7 @@ void debug_pattern_entry_copy_dual(s16 n, s16 box) {
     u16* a;
     u16* b;
     s16 i;
-    HIT_IX* ix;
+    const HIT_IX* ix;
     src = (u16*)&dbg_pl->wu.hit_ix_table[box];
     a = dbg_look_buf.hit_ix[n];
     b = dbg_edit_buf.hit_ix[n];
@@ -6575,7 +6575,7 @@ void debug_draw_hit_edit_info(void)
 {
     s16 i;
     s16 num;
-    HIT_IX *hit;
+    const HIT_IX *hit;
     u16 x;
 
     tilemap_rect_fill(dbg_hud_x + 40, ((WORK_Other_JUDGE *)dbg_judge_ewk)->curr_ja + 12, 8, 1, 14, 0xFFFF);
@@ -6972,7 +6972,7 @@ void debug_draw_parts_info(void)
 /* provisional name */
 void debug_char_init(void) {
     s16 x;
-    if (Game_setting.mode) {
+    if (Game_setting.Screen_Mode) {
         x = 32;
     } else {
         x = 0;
@@ -7083,7 +7083,7 @@ void debug_bg_stage_load(void)
         load_any_color(0x17);
         polygon2d_submit_line(0x020B0000, 0, 0, 3);
         polygon2d_submit_line(0x020B0080, bg_w.scroll_cg_adr, 0x1E5F, 1);
-        if (Game_setting.mode) {
+        if (Game_setting.Screen_Mode) {
             bg_w.pos_offset = 248;
         } else {
             bg_w.pos_offset = 192;
@@ -7146,7 +7146,7 @@ void debug_bg_stage_load(void)
         break;
     }
 
-    if (Game_setting.mode) {
+    if (Game_setting.Screen_Mode) {
         bg_w.pos_offset = 248;
     } else {
         bg_w.pos_offset = 192;
@@ -7648,7 +7648,7 @@ void debug_bg_alloc_init(void) {
     bg_w.bgw[0].bg_address = (u16*)simmram_slot_addr(bg_w.bgw[0].bg_adrs_c_no);
     scrn_map_set_now(0, (u32)bg_w.bgw[0].bg_address);
     scrn_map_set(0, (u32)bg_w.bgw[0].bg_address);
-    sprite_list_setup(0, 1, (s16*)bg_map_tbl[0][0]);
+    sprite_list_setup(0, 1, bg_map_tbl[0][0]);
     bg_w.bgw[0].r_no_1 = bg_w.bgw[0].r_no_2 = 0;
     bg_w.bgw[0].fam_no = 0;
     debug_bg_tile_put(0, 0x3000, 3, (s32)ake_scrn_data);
@@ -7677,7 +7677,7 @@ void debug_bg_alloc_scene_init(void) {
     bg_w.bgw[0].bg_address = (u16*)simmram_slot_addr(bg_w.bgw[0].bg_adrs_c_no);
     scrn_map_set_now(0, (u32)bg_w.bgw[0].bg_address);
     scrn_map_set(0, (u32)bg_w.bgw[0].bg_address);
-    sprite_list_setup(0, 1, (s16*)bg_map_tbl[1][0]);
+    sprite_list_setup(0, 1, bg_map_tbl[1][0]);
     bg_w.bgw[0].r_no_1 = bg_w.bgw[0].r_no_2 = 0;
     bg_w.bgw[0].fam_no = 0;
     bg_cell_write(0, 0x2000, 0, (u32)debug_scene_scrn_data, 0, 0x280);
@@ -7705,8 +7705,8 @@ void screen_work_clear_all(void)
 
 /* 02000924 */
 const char* dbg_sign_str[2] = {
-    &dbg_wca_str[4],
-    &dbg_wca_str[8],
+    dbg_sign_minus_str,
+    dbg_sign_plus_str,
 };
 /* 0200092C */
 s16 dbg_rgb_preset_tbl[8][3] = {
@@ -8118,8 +8118,8 @@ TM_STRING dbg_koc_cmlp_str[11] = {
     { 12, 25, 0xA, str_EX },
     { 12, 25, 0xA, str_SA },
     { 32, 25, 0xA, str_CB },
-    { 32, 25, 0xA, (void*)str_empty_8 },
-    { 32, 25, 0xA, (void*)str_empty_8 },
+    { 32, 25, 0xA, str_empty_8 },
+    { 32, 25, 0xA, str_empty_8 },
 };
 /* 020017C0 */
 TM_STRING dbg_koc_cml2_str[11] = {
@@ -8132,8 +8132,8 @@ TM_STRING dbg_koc_cml2_str[11] = {
     { 12, 26, 0xA, str_EX },
     { 12, 26, 0xA, str_SA },
     { 32, 26, 0xA, str_CB },
-    { 32, 26, 0xA, (void*)str_empty_8 },
-    { 32, 26, 0xA, (void*)str_empty_8 },
+    { 32, 26, 0xA, str_empty_8 },
+    { 32, 26, 0xA, str_empty_8 },
 };
 /* 02001844 */
 TM_STRING dbg_koc_cmsw_str[11] = {
@@ -8146,8 +8146,8 @@ TM_STRING dbg_koc_cmsw_str[11] = {
     { 32, 25, 0xA, str_BT },
     { 32, 25, 0xA, str_EX },
     { 32, 25, 0xA, str_CB },
-    { 32, 25, 0xA, (void*)str_empty_8 },
-    { 32, 25, 0xA, (void*)str_empty_8 },
+    { 32, 25, 0xA, str_empty_8 },
+    { 32, 25, 0xA, str_empty_8 },
 };
 /* 020018C8 */
 TM_STRING dbg_koc_cmja_str[11] = {
@@ -8160,8 +8160,8 @@ TM_STRING dbg_koc_cmja_str[11] = {
     { 32, 26, 0xA, str_BT },
     { 32, 26, 0xA, str_EX },
     { 32, 26, 0xA, str_CB },
-    { 32, 26, 0xA, (void*)str_empty_8 },
-    { 32, 26, 0xA, (void*)str_empty_8 },
+    { 32, 26, 0xA, str_empty_8 },
+    { 32, 26, 0xA, str_empty_8 },
 };
 /* 0200194C */
 TM_STRING dbg_koc_cmoa_str[9] = {
@@ -8226,6 +8226,8 @@ TM_STRING dbg_bg_name_str[25] = {
     { 2, 3, 2, str_BONUS_1 },
     { 2, 3, 2, str_BONUS_2 },
 };
+/* The fighter names by player_number, then ETC (entry 24). The effect lines of debug_draw_object_info
+   and debug_draw_record_info print entry 16 (CHUN-LI) and entry 26, past the end (dbg_act_kind_str[1]). */
 /* 02001BB0 */
 TM_STRING dbg_char_name_str[25] = {
     { 11, 3, 2, str_GILL_2 },
@@ -9251,6 +9253,9 @@ TM_STRING dbg_act_kind_str[994] = {
     { 3, 7, 4, str_empty_10 },
     { 3, 7, 4, str_empty_10 },
 };
+/* Where each kind's script names start in dbg_act_kind_str, by kind. The editor shows script number n
+   of a kind as entry n - 1 from there; some characters have more scripts of a kind than the list has
+   names, and their higher numbers show the names of the kind after it. */
 /* 02004B74 */
 const TM_STRING* dbg_act_name_tbl[11] = {
     &dbg_act_kind_str[12],
@@ -9266,7 +9271,7 @@ const TM_STRING* dbg_act_name_tbl[11] = {
     &dbg_act_kind_str[853],
 };
 /* 02004BA0 */
-u32* dbg_pl_char_tbl[29][9] = {
+const u32* dbg_pl_char_tbl[29][9] = {
     { gill_nmca, gill_dmca, gill_caca, gill_cuca, gill_atca, gill_saca, gill_btca, gill_exca, gill_yuca },
     { alex_nmca, alex_dmca, alex_caca, alex_cuca, alex_atca, alex_saca, alex_btca, alex_exca, alex_yuca },
     { ryu_nmca, ryu_dmca, ryu_caca, ryu_cuca, ryu_atca, ryu_saca, ryu_btca, ryu_exca, ryu_yuca },
@@ -9291,9 +9296,9 @@ u32* dbg_pl_char_tbl[29][9] = {
     { gill_nmca, gill_dmca, gill_caca, gill_cuca, gill_atca, gill_saca, gill_btca, gill_exca, gill_yuca },
     { gill_nmca, gill_dmca, gill_caca, gill_cuca, gill_atca, gill_saca, gill_btca, gill_exca, gill_yuca },
     { gill_nmca, gill_dmca, gill_caca, gill_cuca, gill_atca, gill_saca, gill_btca, gill_exca, gill_yuca },
-    { ef01_char_table, ef13_char_table, bonus_char_table, (u32*)&ef13_char_table_225[108], (u32*)&ef13_char_table_225[116], (u32*)&ef13_char_table_225[124], (u32*)&ef13_char_table_225[132], (u32*)&ef13_char_table_225[140], (u32*)&ef13_char_table_225[148] },
-    { (u32*)&ef13_char_table_225[156], (u32*)&ef13_char_table_225[164], ag_face_panel_table, plef_char_table, sel_pl_char_table, etc_char_table, etc2_char_table, etc3_char_table, rca_char_table },
-    { afc_char_table, usa_char_table, hkg_char_table, (u32*)&rca_char_table_023[36], grm_char_table, brz_char_table, orm_char_table, eng_char_table, jp3_char_table },
+    { ef01_char_table, ef13_char_table, bonus_char_table, ag_00_char_table, ag_01_char_table, ag_02_char_table, ag_03_char_table, ag_04_char_table, ag_05_char_table },
+    { ag_06_char_table, ag_07_char_table, ag_face_panel_table, plef_char_table, sel_pl_char_table, etc_char_table, etc2_char_table, etc3_char_table, rca_char_table },
+    { afc_char_table, usa_char_table, hkg_char_table, jp2_char_table, grm_char_table, brz_char_table, orm_char_table, eng_char_table, jp3_char_table },
     { fnl_char_table, j11_char_table, bns_char_table, frc_char_table, chn_char_table, brz_char_table, j10_char_table, end_char_table, op_char_table },
     { 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 };

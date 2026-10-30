@@ -43,7 +43,7 @@
 
 /* 02006D9C */
 const s16* scr_obj_data88[1][4] = {
-    { &eff88_loop_tbl[1][0], &eff88_loop_tbl[1][0], &eff88_loop_tbl[1][0], &eff88_loop_tbl[1][0] },
+    { scr_obj_data88_0, scr_obj_data88_0, scr_obj_data88_0, scr_obj_data88_0 },
 };
 
 

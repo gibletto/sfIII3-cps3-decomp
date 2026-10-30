@@ -86,62 +86,105 @@ extern const EFFF9_MESSAGE effF9_mes_jp_6[];
 extern const EFFF9_MESSAGE effF9_mes_jp_7[];
 extern const EFFF9_MESSAGE effF9_mes_jp_8[];
 extern const EFFF9_MESSAGE effF9_mes_jp_9[];
-extern const u16 pl01txt1[40];
-extern const u16 pl02txt1[20];
+extern const u16 pl01txt1[6];
+extern const u16 pl01txt2[10];
+extern const u16 pl01txt3[14];
+extern const u16 pl01txt4[4];
+extern const u16 pl01txt5[6];
+extern const u16 pl02txt1[6];
+extern const u16 pl02txt2[8];
+extern const u16 pl02txt3[4];
+extern const u16 pl02txt4[2];
 extern const u16 pl02txt5[];
 extern const u16 pl03txt1[];
-extern const u16 pl03txt2[14];
-extern const u16 pl03txt4[18];
+extern const u16 pl03txt2[6];
+extern const u16 pl03txt3[8];
+extern const u16 pl03txt4[10];
+extern const u16 pl03txt5[8];
 extern const u16 pl03txt6[];
-extern const u16 pl04txt1[24];
+extern const u16 pl04txt1[10];
+extern const u16 pl04txt2[14];
 extern const u16 pl05txt1[];
-extern const u16 pl05txt2[20];
+extern const u16 pl05txt2[10];
+extern const u16 pl05txt3[6];
+extern const u16 pl05txt4[4];
 extern const u16 pl05txt5[];
-extern const u16 pl05txt6[12];
+extern const u16 pl05txt6[6];
+extern const u16 pl06txt1[6];
 extern const u16 pl06txt2[];
 extern const u16 pl06txt3[];
 extern const u16 pl06txt4[];
 extern const u16 pl06txt5[];
 extern const u16 pl07txt1[];
 extern const u16 pl07txt2[];
-extern const u16 pl07txt3[20];
+extern const u16 pl07txt3[8];
+extern const u16 pl07txt4[12];
 extern const u16 pl08txt1[];
 extern const u16 pl08txt2[];
-extern const u16 pl08txt3[18];
-extern const u16 pl09txt2[10];
+extern const u16 pl08txt3[10];
+extern const u16 pl08txt4[4];
+extern const u16 pl09txt1[4];
+extern const u16 pl09txt2[6];
+extern const u16 pl09txt3[4];
 extern const u16 pl09txt4[];
 extern const u16 pl09txt5[];
 extern const u16 pl09txt6[];
 extern const u16 pl10txt1[];
-extern const u16 pl10txt2[16];
-extern const u16 pl10txt4[16];
-extern const u16 pl10txt6[12];
-extern const u16 pl11txt2[40];
-extern const u16 pl12txt2[14];
+extern const u16 pl10txt2[10];
+extern const u16 pl10txt3[6];
+extern const u16 pl10txt4[10];
+extern const u16 pl10txt5[6];
+extern const u16 pl10txt6[8];
+extern const u16 pl11txt1[4];
+extern const u16 pl11txt2[6];
+extern const u16 pl11txt3[8];
+extern const u16 pl11txt4[12];
+extern const u16 pl11txt5[8];
+extern const u16 pl12txt1[6];
+extern const u16 pl12txt2[8];
+extern const u16 pl12txt3[6];
 extern const u16 pl12txt4[];
-extern const u16 pl12txt5[10];
+extern const u16 pl12txt5[6];
+extern const u16 pl12txt6[4];
 extern const u16 pl13txt1[];
-extern const u16 pl13txt2[22];
+extern const u16 pl13txt2[8];
+extern const u16 pl13txt3[6];
+extern const u16 pl13txt4[8];
 extern const u16 pl14txt1[];
-extern const u16 pl14txt2[24];
-extern const u16 pl15txt1[14];
+extern const u16 pl14txt2[10];
+extern const u16 pl14txt3[6];
+extern const u16 pl14txt4[2];
+extern const u16 pl14txt5[6];
+extern const u16 pl15txt1[10];
+extern const u16 pl15txt2[4];
 extern const u16 pl15txt3[];
-extern const u16 pl15txt4[12];
+extern const u16 pl15txt4[8];
+extern const u16 pl15txt5[4];
 extern const u16 pl16txt1[];
 extern const u16 pl16txt2[];
-extern const u16 pl16txt3[8];
+extern const u16 pl16txt3[6];
+extern const u16 pl16txt4[2];
 extern const u16 pl16txt5[];
 extern const u16 pl16txt6[];
 extern const u16 pl16txt7[];
 extern const u16 pl17txt1[];
 extern const u16 pl17txt2[];
 extern const u16 pl17txt3[];
-extern const u16 pl17txt5[54];
-extern const u16 pl17txt6[14];
+extern const u16 pl17txt5[6];
+extern const u16 pl18txt1[6];
+extern const u16 pl18txt2[10];
+extern const u16 pl18txt3[8];
+extern const u16 pl18txt4[10];
+extern const u16 pl18txt5[8];
+extern const u16 pl19txt1[6];
+extern const u16 pl17txt6[10];
+extern const u16 pl17txt4[4];
 extern const u16 pl19txt2[];
 extern const u16 pl19txt3[];
-extern const u16 pl19txt4[14];
-extern const u16 pl19txt6[10];
+extern const u16 pl19txt4[10];
+extern const u16 pl19txt5[4];
+extern const u16 pl19txt6[8];
+extern const u16 pl19txt7[2];
 
 s16 efff9_suicide;  /* 02068C40 */
 const u16** efff9_txt_no_adrs;  /* 02068C44 */
@@ -258,37 +301,37 @@ const EFFF9_MESSAGE* effF9_mes_pt[21] = {
 /* provisional name */
 const u16* txt_no_00[6] = {
     efff9_no_scene, pl01txt1,
-    &pl01txt1[6], &pl01txt1[16],
-    &pl01txt1[30], &pl01txt1[34],
+    pl01txt2, pl01txt3,
+    pl01txt4, pl01txt5,
 };
 /* provisional name */
 const u16* txt_no_02[6] = {
     efff9_no_scene, pl02txt1,
-    &pl02txt1[6], &pl02txt1[14],
-    &pl02txt1[18], pl02txt5,
+    pl02txt2, pl02txt3,
+    pl02txt4, pl02txt5,
 };
 /* provisional name */
 const u16* txt_no_03[7] = {
     efff9_no_scene, pl03txt1,
-    pl03txt2, &pl03txt2[6],
-    pl03txt4, &pl03txt4[10],
+    pl03txt2, pl03txt3,
+    pl03txt4, pl03txt5,
     pl03txt6,
 };
 /* provisional name */
 const u16* txt_no_04[3] = {
     efff9_no_scene, pl04txt1,
-    &pl04txt1[10],
+    pl04txt2,
 };
 /* provisional name */
 const u16* txt_no_05[7] = {
     efff9_no_scene, pl05txt1,
-    pl05txt2, &pl05txt2[10],
-    &pl05txt2[16], pl05txt5,
+    pl05txt2, pl05txt3,
+    pl05txt4, pl05txt5,
     pl05txt6,
 };
 /* provisional name */
 const u16* txt_no_06[6] = {
-    efff9_no_scene, &pl05txt6[6],
+    efff9_no_scene, pl06txt1,
     pl06txt2, pl06txt3,
     pl06txt4, pl06txt5,
 };
@@ -296,85 +339,85 @@ const u16* txt_no_06[6] = {
 const u16* txt_no_07[5] = {
     efff9_no_scene, pl07txt1,
     pl07txt2, pl07txt3,
-    &pl07txt3[8],
+    pl07txt4,
 };
 /* provisional name */
 const u16* txt_no_08[5] = {
     efff9_no_scene, pl08txt1,
     pl08txt2, pl08txt3,
-    &pl08txt3[10],
+    pl08txt4,
 };
 /* provisional name */
 const u16* txt_no_09[7] = {
-    efff9_no_scene, &pl08txt3[14],
-    pl09txt2, &pl09txt2[6],
+    efff9_no_scene, pl09txt1,
+    pl09txt2, pl09txt3,
     pl09txt4, pl09txt5,
     pl09txt6,
 };
 /* provisional name */
 const u16* txt_no_10[7] = {
     efff9_no_scene, pl10txt1,
-    pl10txt2, &pl10txt2[10],
-    pl10txt4, &pl10txt4[10],
+    pl10txt2, pl10txt3,
+    pl10txt4, pl10txt5,
     pl10txt6,
 };
 /* provisional name */
 const u16* txt_no_11[6] = {
-    efff9_no_scene, &pl10txt6[8],
-    pl11txt2, &pl11txt2[6],
-    &pl11txt2[14], &pl11txt2[26],
+    efff9_no_scene, pl11txt1,
+    pl11txt2, pl11txt3,
+    pl11txt4, pl11txt5,
 };
 /* provisional name */
 const u16* txt_no_12[7] = {
-    efff9_no_scene, &pl11txt2[34],
-    pl12txt2, &pl12txt2[8],
+    efff9_no_scene, pl12txt1,
+    pl12txt2, pl12txt3,
     pl12txt4, pl12txt5,
-    &pl12txt5[6],
+    pl12txt6,
 };
 /* provisional name */
 const u16* txt_no_13[5] = {
     efff9_no_scene, pl13txt1,
-    pl13txt2, &pl13txt2[8],
-    &pl13txt2[14],
+    pl13txt2, pl13txt3,
+    pl13txt4,
 };
 /* provisional name */
 const u16* txt_no_14[6] = {
     efff9_no_scene, pl14txt1,
-    pl14txt2, &pl14txt2[10],
-    &pl14txt2[16], &pl14txt2[18],
+    pl14txt2, pl14txt3,
+    pl14txt4, pl14txt5,
 };
 /* provisional name */
 const u16* txt_no_16[6] = {
     efff9_no_scene, pl15txt1,
-    &pl15txt1[10], pl15txt3,
-    pl15txt4, &pl15txt4[8],
+    pl15txt2, pl15txt3,
+    pl15txt4, pl15txt5,
 };
 /* provisional name */
 const u16* txt_no_17[8] = {
     efff9_no_scene, pl16txt1,
     pl16txt2, pl16txt3,
-    &pl16txt3[6], pl16txt5,
+    pl16txt4, pl16txt5,
     pl16txt6, pl16txt7,
 };
 /* provisional name */
 const u16* txt_no_18[7] = {
     efff9_no_scene, pl17txt1,
     pl17txt2, pl17txt3,
-    &pl17txt6[10], pl17txt5,
+    pl17txt4, pl17txt5,
     pl17txt6,
 };
 /* provisional name */
 const u16* txt_no_19[6] = {
-    efff9_no_scene, &pl17txt5[6],
-    &pl17txt5[12], &pl17txt5[22],
-    &pl17txt5[30], &pl17txt5[40],
+    efff9_no_scene, pl18txt1,
+    pl18txt2, pl18txt3,
+    pl18txt4, pl18txt5,
 };
 /* provisional name */
 const u16* txt_no_20[8] = {
-    efff9_no_scene, &pl17txt5[48],
+    efff9_no_scene, pl19txt1,
     pl19txt2, pl19txt3,
-    pl19txt4, &pl19txt4[10],
-    pl19txt6, &pl19txt6[8],
+    pl19txt4, pl19txt5,
+    pl19txt6, pl19txt7,
 };
 /* provisional name */
 const u16* txt_no_26[2] = {
@@ -613,7 +656,7 @@ void effF9_talk_wk_set(WORK_Other* ewk) {
     ewk->wu.my_col_code = 0;
     ewk->wu.my_family = 3;
     ewk->wu.my_priority = 5;
-    if (Game_setting.mode == 0) {
+    if (Game_setting.Screen_Mode == 0) {
         ewk->wu.position_x = 0x280;
     } else {
         ewk->wu.position_x = 0x2E8;

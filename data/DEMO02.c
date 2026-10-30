@@ -23,6 +23,3 @@ const s8 Demo_Stage_Play_Data[4][2] = {
 const s8 Demo_PL_Data[4] = {
     0, 1, 0, 1,
 };
-
-/* Stored after Demo_PL_Data. Nothing in the program refers to it by name or address; if it is read,
-   it is through an index past the end of Demo_PL_Data. */

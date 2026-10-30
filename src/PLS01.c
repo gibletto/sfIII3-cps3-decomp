@@ -629,7 +629,7 @@ s32 check_attbox_dir(PLW* wk) {
     s16 target_pos_x;
     s16 target_pos_y;
     s16 emdir;
-    s16* dttbl;
+    const s16* dttbl;
     get_target_att_position((WORK*)wk->wu.target_adrs, &target_pos_x, &target_pos_y);
     dttbl = sel_hd_fg_hos[wk->player_number];
     if (wk->wu.rl_flag) {
@@ -775,7 +775,7 @@ s32 check_floor_2(PLW* wk) {
         return 0;
     }
     efw = (WORK*)((WORK*)wk->wu.target_adrs)->my_effadrs;
-    if (hit_check_x_only(&wk->wu, efw, &wk->wu.hosei_adrs->hos_box[4], &efw->h_hos->hos_box[0])) {
+    if (hit_check_x_only(&wk->wu, efw, &wk->wu.hosei_adrs[1].hos_box[0], &efw->h_hos->hos_box[0])) {
         return 0;
     }
     return 1;

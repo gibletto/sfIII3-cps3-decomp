@@ -46,31 +46,31 @@ u16 metamor_original2[64];  /* 0206A000 */
 
 
 /* 02007C30 */
-u16* metamor_color_ptr_tbl[24] = {
-    (u16*)metamor_color_bank_00,
-    (u16*)metamor_color_bank_01,
-    (u16*)metamor_color_bank_02,
-    (u16*)metamor_color_bank_03,
-    (u16*)metamor_color_bank_04,
-    (u16*)metamor_color_bank_05,
-    (u16*)metamor_color_bank_06,
-    (u16*)metamor_color_bank_07,
-    (u16*)metamor_color_bank_08,
-    (u16*)metamor_color_bank_09,
-    (u16*)metamor_color_bank_10,
-    (u16*)metamor_color_bank_11,
-    (u16*)metamor_color_bank_12,
-    (u16*)metamor_color_bank_13,
-    (u16*)metamor_color_bank_14,
-    (u16*)metamor_color_bank_14,
-    (u16*)metamor_color_bank_15,
-    (u16*)metamor_color_bank_16,
-    (u16*)metamor_color_bank_17,
-    (u16*)metamor_color_bank_18,
-    (u16*)metamor_color_bank_19,
-    (u16*)metamor_color_bank_00,
-    (u16*)metamor_color_bank_00,
-    (u16*)metamor_color_bank_00,
+const u16* metamor_color_ptr_tbl[24] = {
+    metamor_color_bank_00,
+    metamor_color_bank_01,
+    metamor_color_bank_02,
+    metamor_color_bank_03,
+    metamor_color_bank_04,
+    metamor_color_bank_05,
+    metamor_color_bank_06,
+    metamor_color_bank_07,
+    metamor_color_bank_08,
+    metamor_color_bank_09,
+    metamor_color_bank_10,
+    metamor_color_bank_11,
+    metamor_color_bank_12,
+    metamor_color_bank_13,
+    metamor_color_bank_14,
+    metamor_color_bank_14,
+    metamor_color_bank_15,
+    metamor_color_bank_16,
+    metamor_color_bank_17,
+    metamor_color_bank_18,
+    metamor_color_bank_19,
+    metamor_color_bank_00,
+    metamor_color_bank_00,
+    metamor_color_bank_00,
 };
 
 
@@ -78,18 +78,18 @@ void metamor_color_trans(s16 pl, s16 ix) {
     u16* dst = (u16*)COLOR_RAM + (pl == 1) * 0x400;
     u16* dst2 = dst + 0x200;
     struct PaletteBank { u16 color[7 * 2][64]; };
-    u16* src;
-    u16* src2;
+    const u16* src;
+    const u16* src2;
     s16 i;
     if (ix) {
-        src = ((struct PaletteBank*)metamor_color_ptr_tbl[ix])->color[Player_Color[pl]];
+        src = ((const struct PaletteBank*)metamor_color_ptr_tbl[ix])->color[Player_Color[pl]];
         for (i = 0; i < 64; i++) {
             *dst++ = *src;
             *dst2++ = *src++;
         }
     } else {
-        src = ((struct PaletteBank*)metamor_color_ptr_tbl[ix])->color[Player_Color[pl] * 2];
-        src2 = ((struct PaletteBank*)metamor_color_ptr_tbl[ix])->color[Player_Color[pl] * 2] + 64;
+        src = ((const struct PaletteBank*)metamor_color_ptr_tbl[ix])->color[Player_Color[pl] * 2];
+        src2 = ((const struct PaletteBank*)metamor_color_ptr_tbl[ix])->color[Player_Color[pl] * 2] + 64;
         for (i = 0; i < 64; i++) {
             *dst++ = *src++;
             *dst2++ = *src2++;

@@ -122,7 +122,7 @@
 
 u8 SEL_PL_X;  /* 0201701C */
 s16 Play_Type_1st;  /* 0201701E */
-u16 * Demo_Ptr[2];  /* 02017020 */
+const u16 * Demo_Ptr[2];  /* 02017020 */
 u8 Demo_Ptr_tail[10];  /* after Demo_Ptr; nothing refers to it by name or address */
 u16 Color7[2];  /* 02017032 */
 

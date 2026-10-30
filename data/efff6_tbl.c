@@ -144,6 +144,3 @@ const EFFF6_ETC efff6_etc_data[61] = {
     { 0, 0, 0, 127, 0, 0, 0, 0 },
     { 0, 0, 0, 127, 0, 0, 0, 0 },
 };
-
-/* Stored after efff6_etc_data. Nothing in the program refers to it by name or address; if it is read,
-   it is through an index past the end of efff6_etc_data. */

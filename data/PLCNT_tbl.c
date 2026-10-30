@@ -7,8 +7,8 @@
  * character: plid_data (character set), weight_lv_table, spmv_ng_table, kage_base (shadow
  * offset and pattern), super_arts_data (16 bytes per super art), pl_piyo_tbl and
  * pl_nr_piyo_tbl (stun limit and recovery); read by PLCNTDAT.C. The tsuujyou_*, hissatsu_* and
- * super_arts_nage_* tables are the stun times after strikes, special moves, throws and super
- * art throws at three settings, reached through the kizetsu_timer_table lists of PLPDM.C.
+ * super_arts_* tables are the stun times after normal, special-move and super art strikes and
+ * throws at three settings, reached through the kizetsu_timer_table lists of PLPDM.C.
  */
 
 #include "types.h"
@@ -311,19 +311,37 @@ const s16 tsuujyou_nage_01[16] = {
     140, 140, 140, 140, 120, 120, 120, 120,
 };
 
-const s16 tsuujyou_nage_02[112] = {
+const s16 tsuujyou_nage_02[16] = {
     180, 180, 180, 180, 180, 180, 160, 160,
     160, 160, 160, 140, 140, 140, 120, 120,
+};
+
+const s16 hissatsu_nage_00[16] = {
     240, 240, 200, 200, 200, 160, 160, 160,
     160, 160, 120, 120, 120, 120, 120, 120,
+};
+
+const s16 hissatsu_nage_01[16] = {
     240, 240, 240, 240, 200, 200, 200, 200,
     160, 160, 160, 160, 120, 120, 120, 120,
+};
+
+const s16 hissatsu_nage_02[16] = {
     240, 240, 240, 240, 240, 240, 200, 200,
     200, 200, 200, 160, 160, 160, 120, 120,
+};
+
+const s16 super_arts_dageki_00[16] = {
     240, 240, 200, 200, 200, 160, 160, 160,
     160, 160, 120, 120, 120, 120, 120, 120,
+};
+
+const s16 super_arts_dageki_01[16] = {
     240, 240, 240, 240, 200, 200, 200, 200,
     160, 160, 160, 160, 120, 120, 120, 120,
+};
+
+const s16 super_arts_dageki_02[16] = {
     240, 240, 240, 240, 240, 240, 200, 200,
     200, 200, 200, 160, 160, 160, 120, 120,
 };

@@ -30,12 +30,12 @@
 
 /* 02006C14 */
 const s16* scr_obj_data12[6] = {
-    &scr_obj_num12[6],
-    &scr_obj_num12[14],
-    &scr_obj_num12[22],
-    &scr_obj_num12[38],
-    &scr_obj_num12[54],
-    &scr_obj_num12[78],
+    scr_obj_data12_0,
+    scr_obj_data12_1,
+    scr_obj_data12_2,
+    scr_obj_data12_3,
+    scr_obj_data12_4,
+    scr_obj_data12_5,
 };
 
 

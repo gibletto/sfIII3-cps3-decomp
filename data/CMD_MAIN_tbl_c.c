@@ -942,13 +942,18 @@ const char dbg_digit1_str[4] = "1";
 
 const char dbg_digit2_str[4] = "2";
 
-const char dbg_wca_str[44] = {  /* "Wca", then other data */
-    87, 99, 97, 0, 45, 45, 0, 0,
-    43, 43, 0, 0, 0, 0, 6, 0,
-    12, 0, 18, 0, 24, 0, 30, 0,
-    36, 0, 42, 0, 48, 0, 54, 0,
-    60, 0, 66, 0, 72, 0, 78, 0,
-    84, 0, -118, 0,
+const char dbg_wca_str[4] = "Wca";
+
+/* dbg_sign_str[0]; provisional name */
+const char dbg_sign_minus_str[4] = "--";
+
+/* dbg_sign_str[1]; provisional name */
+const char dbg_sign_plus_str[4] = "++";
+
+/* not referred to; its first 15 values are those of bcp_group_top_tbl; provisional name */
+const u16 dbg_unref_tbl_0[16] = {
+    0, 0x600, 0xC00, 0x1200, 0x1800, 0x1E00, 0x2400, 0x2A00,
+    0x3000, 0x3600, 0x3C00, 0x4200, 0x4800, 0x4E00, 0x5400, 0x8A00,
 };
 
 const s16 dbg_obj_color_tbl[126] = {

@@ -4,9 +4,9 @@
  * buttobi_time_table gives the flight time used to set a blown-away player's vertical speed,
  * and buttobi_add_y_table the height adjustment, both by damage animation and attack level;
  * the first is read by PLPCU.C and PLPDM.C, the second by PLPDM.C. parabora_own_table points
- * each character at the blow-away movement rows in its movexy table, and parabora_ex_table
- * holds the extended blow-away movement by table, character, weight and attack level; both are
- * read by PLS02.C (setup_butt_own_data and its _ex versions).
+ * each character at its blow-away movement data (gill_parabora_data, alex_parabora_data, ...),
+ * and parabora_ex_table holds the extended blow-away movement by table, character, weight and
+ * attack level; both are read by PLS02.C (setup_butt_own_data and its _ex versions).
  */
 
 #include "types.h"
@@ -14,27 +14,27 @@
 
 #pragma section TBL
 
-extern const s16 alex_movexy_table[209][6];
-extern const s16 chun_movexy_table[207][6];
-extern const s16 dudley_movexy_table[249][6];
-extern const s16 elena_movexy_table[197][6];
-extern const s16 gill_movexy_table[140][6];
-extern const s16 gouki1_movexy_table[295][6];
-extern const s16 gouki2_movexy_table[232][6];
-extern const s16 hugo_movexy_table[227][6];
-extern const s16 ibuki_movexy_table[298][6];
-extern const s16 ken_movexy_table[228][6];
-extern const s16 makoto_movexy_table[194][6];
-extern const s16 necro_movexy_table[143][6];
-extern const s16 no12_movexy_table[162][6];
-extern const s16 oro_movexy_table[191][6];
-extern const s16 q_movexy_table[232][6];
-extern const s16 remy_movexy_table[179][6];
-extern const s16 ryu_movexy_table[243][6];
-extern const s16 sean_movexy_table[271][6];
-extern const s16 urien_movexy_table[164][6];
-extern const s16 yang_movexy_table[237][6];
-extern const s16 yun_movexy_table[257][6];
+extern const PARABORA_DATA alex_parabora_data[29];
+extern const PARABORA_DATA chun_parabora_data[40];
+extern const PARABORA_DATA dudley_parabora_data[41];
+extern const PARABORA_DATA elena_parabora_data[30];
+extern const PARABORA_DATA gill_parabora_data[22];
+extern const PARABORA_DATA gouki1_parabora_data[49];
+extern const PARABORA_DATA gouki2_parabora_data[36];
+extern const PARABORA_DATA hugo_parabora_data[33];
+extern const PARABORA_DATA ibuki_parabora_data[38];
+extern const PARABORA_DATA ken_parabora_data[39];
+extern const PARABORA_DATA makoto_parabora_data[34];
+extern const PARABORA_DATA necro_parabora_data[23];
+extern const PARABORA_DATA no12_parabora_data[25];
+extern const PARABORA_DATA oro_parabora_data[29];
+extern const PARABORA_DATA q_parabora_data[45];
+extern const PARABORA_DATA remy_parabora_data[29];
+extern const PARABORA_DATA ryu_parabora_data[44];
+extern const PARABORA_DATA sean_parabora_data[39];
+extern const PARABORA_DATA urien_parabora_data[24];
+extern const PARABORA_DATA yang_parabora_data[33];
+extern const PARABORA_DATA yun_parabora_data[42];
 
 const s16 buttobi_time_table[35][4] = {
     { 22, 26, 30, 34 },
@@ -113,27 +113,27 @@ const s16 buttobi_add_y_table[35][4] = {
 };
 
 const PARABORA_DATA* const parabora_own_table[21] = {
-    (const PARABORA_DATA*)&gill_movexy_table[52],
-    (const PARABORA_DATA*)&alex_movexy_table[93],
-    (const PARABORA_DATA*)&ryu_movexy_table[67],
-    (const PARABORA_DATA*)&yun_movexy_table[89],
-    (const PARABORA_DATA*)&dudley_movexy_table[85],
-    (const PARABORA_DATA*)&necro_movexy_table[51],
-    (const PARABORA_DATA*)&hugo_movexy_table[95],
-    (const PARABORA_DATA*)&ibuki_movexy_table[146],
-    (const PARABORA_DATA*)&elena_movexy_table[77],
-    (const PARABORA_DATA*)&oro_movexy_table[75],
-    (const PARABORA_DATA*)&yang_movexy_table[105],
-    (const PARABORA_DATA*)&ken_movexy_table[72],
-    (const PARABORA_DATA*)&sean_movexy_table[115],
-    (const PARABORA_DATA*)&urien_movexy_table[68],
-    (const PARABORA_DATA*)&gouki1_movexy_table[99],
-    (const PARABORA_DATA*)&gouki2_movexy_table[88],
-    (const PARABORA_DATA*)&chun_movexy_table[47],
-    (const PARABORA_DATA*)&makoto_movexy_table[58],
-    (const PARABORA_DATA*)&q_movexy_table[52],
-    (const PARABORA_DATA*)&no12_movexy_table[62],
-    (const PARABORA_DATA*)&remy_movexy_table[63],
+    gill_parabora_data,
+    alex_parabora_data,
+    ryu_parabora_data,
+    yun_parabora_data,
+    dudley_parabora_data,
+    necro_parabora_data,
+    hugo_parabora_data,
+    ibuki_parabora_data,
+    elena_parabora_data,
+    oro_parabora_data,
+    yang_parabora_data,
+    ken_parabora_data,
+    sean_parabora_data,
+    urien_parabora_data,
+    gouki1_parabora_data,
+    gouki2_parabora_data,
+    chun_parabora_data,
+    makoto_parabora_data,
+    q_parabora_data,
+    no12_parabora_data,
+    remy_parabora_data,
 };
 
 /* Blow-away movement for the extended set-up (setup_butt_own_data_ex/_ex2): [table][character][weight]

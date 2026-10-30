@@ -36,16 +36,16 @@
 
 /* 02006CC8 */
 const s16* scr_obj_data44[10] = {
-    &scr_obj_num44[10],
-    &scr_obj_num44[26],
-    &scr_obj_num44[34],
-    &scr_obj_num44[50],
-    &scr_obj_num44[106],
-    &scr_obj_num44[114],
-    &scr_obj_num44[138],
-    &scr_obj_num44[154],
-    &scr_obj_num44[194],
-    &scr_obj_num44[226],
+    scr_obj_data44_0,
+    scr_obj_data44_1,
+    scr_obj_data44_2,
+    scr_obj_data44_3,
+    scr_obj_data44_4,
+    scr_obj_data44_5,
+    scr_obj_data44_6,
+    scr_obj_data44_7,
+    scr_obj_data44_8,
+    scr_obj_data44_9,
 };
 
 

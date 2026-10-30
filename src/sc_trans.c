@@ -39,7 +39,7 @@
 
 u16 * sc_trans_dst;  /* 020283A0 */
 u8 * sc_bak_ptr;  /* 020283A4 */
-u8 * sc_trans_src;  /* 020283A8 */
+const u8 * sc_trans_src;  /* 020283A8 */
 u8 sc_trans_src_tail[6];  /* after sc_trans_src; nothing refers to it by name or address */
 u16 sc_trans_word;  /* 020283B2 */
 u8 sc_chr_bak_1p[320];  /* 020283B4 */
@@ -48,8 +48,7 @@ u8 sc_chr_bak_2p[324];  /* 020284F4 */
 
 u16 scrfont_view_attr = 0;  /* 020069B0 */
 /* 020069B2 */
-/* Stored after scrfont_view_attr. Nothing in the program refers to it by name or address; if it is read,
-   it is through an index past the end of scrfont_view_attr. */
+/* Stored after scrfont_view_attr. Nothing in the program refers to it by name or address. */
 u16 scrfont_view_attr_tail[1] = {
     19,
 };
@@ -61,7 +60,7 @@ s32 sc_chr_trans(rows)
 u16 rows;
 {
     u16* dst = sc_trans_dst;
-    u8* src = sc_trans_src;
+    const u8* src = sc_trans_src;
     s32 i;
     for (i = 0; i < rows * 32; i++) {
         *dst = *src;
@@ -139,7 +138,7 @@ u16 w;
 u16 h;
 {
     s32 i, j, k;
-    u8* src;
+    const u8* src;
     u16* dst;
     sc_trans_src = (u8*)&sc_chr_data[chr * 32 / 2];
     sc_trans_dst = (u16*)(pos * 64 + (SS_RAM + 0x8000));
@@ -258,7 +257,7 @@ u16 n;
 {
     u16 i;
     u16 k;
-    u8* blank;
+    const u8* blank;
     sc_trans_src = sc_blank_chr;
     blank = sc_trans_src;
     sc_trans_dst = (u16*)((SS_RAM + 0x8000) + pos * 64);
@@ -291,7 +290,7 @@ void sc_chr_to_ram(u16 n) {
 void sc_chr_sheet_to_ram(u16 chr, u16 pos, u16 w, u16 h) {
     u16 i, j, k;
     u16 d;
-    u8* src;
+    const u8* src;
     sc_trans_src = (u8*)&sc_chr_data[chr * 32 / 2];
     sc_bak_ptr = &sc_chr_ram[pos * 32];
     src = sc_trans_src;
@@ -784,7 +783,7 @@ void bcount_mark_trans(u8 mode) {
         sc_chr_trans(1);
         break;
     case 1:
-        sc_bak_ptr = bcount_mark_chr_w;
+        sc_bak_ptr = &sc_chr_ram[0x1CC0];
         sc_chr_to_ram(32);
         break;
     }
@@ -1127,7 +1126,7 @@ void combo_window_slide(s8 pl, s16 x, s16 y, s16 n) {
 
 /* provisional name */
 void combo_window_erase(s8 col, s8 kind, s16 row) {
-    u32* cell = (u32*)((SS_RAM + 0x700) + combo_erase_pos_tbl[Game_setting.mode][kind][col] * 4 + row * 0x300);
+    u32* cell = (u32*)((SS_RAM + 0x700) + combo_erase_pos_tbl[Game_setting.Screen_Mode][kind][col] * 4 + row * 0x300);
     u16 i;
     for (i = 0; i < combo_erase_len_tbl[kind]; i++) {
         cell[0] = 0x200000;
@@ -1140,7 +1139,7 @@ void combo_window_erase(s8 col, s8 kind, s16 row) {
 
 /* provisional name */
 void combo_window_all_clear(void) {
-    if (Game_setting.mode == 0) {
+    if (Game_setting.Screen_Mode == 0) {
         tilemap_clear_rect(0, 7, 20, 9);
         tilemap_clear_rect(0, 10, 18, 11);
         tilemap_clear_rect(27, 7, 47, 9);

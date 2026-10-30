@@ -39,7 +39,7 @@ extern const u32 j11_char_table[];
 extern const u32 orm_char_table[];
 
 /* 02006A80 */
-u32* char_add[23] = {
+const u32* char_add[23] = {
     fnl_char_table,
     usa_char_table,
     j10_char_table,
@@ -54,8 +54,8 @@ u32* char_add[23] = {
     usa_char_table,
     brz_char_table,
     orm_char_table,
-    (u32*)&rca_char_table_023[36],
-    (u32*)&rca_char_table_023[36],
+    jp2_char_table,
+    jp2_char_table,
     chn_char_table,
     jp3_char_table,
     usa_char_table,
@@ -68,29 +68,29 @@ u32* char_add[23] = {
 
 /* 02006ADC */
 const s16* scr_obj_data[23] = {
-    &scr_obj_num[23],
-    &scr_obj_num[24],
-    &scr_obj_num[23],
-    &scr_obj_num[23],
-    &scr_obj_num[23],
-    &scr_obj_num[48],
-    &scr_obj_num[112],
-    &scr_obj_num[120],
-    &scr_obj_num[152],
-    &scr_obj_num[200],
-    &scr_obj_num[40],
-    &scr_obj_num[24],
-    &scr_obj_num[208],
-    &scr_obj_num[216],
-    &scr_obj_num[224],
-    &scr_obj_num[224],
-    &scr_obj_num[248],
-    &scr_obj_num[264],
-    &scr_obj_num[23],
-    &scr_obj_num[80],
-    &scr_obj_num[280],
-    &scr_obj_num[312],
-    &scr_obj_num[320],
+    scr_obj_data_0,
+    scr_obj_data_1,
+    scr_obj_data_0,
+    scr_obj_data_0,
+    scr_obj_data_0,
+    scr_obj_data_5,
+    scr_obj_data_6,
+    scr_obj_data_7,
+    scr_obj_data_8,
+    scr_obj_data_9,
+    scr_obj_data_10,
+    scr_obj_data_1,
+    scr_obj_data_12,
+    scr_obj_data_13,
+    scr_obj_data_14,
+    scr_obj_data_14,
+    scr_obj_data_16,
+    scr_obj_data_17,
+    scr_obj_data_0,
+    scr_obj_data_19,
+    scr_obj_data_20,
+    scr_obj_data_21,
+    scr_obj_data_22,
 };
 
 

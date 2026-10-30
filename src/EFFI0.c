@@ -253,7 +253,7 @@ s16 nxy;
 
 
 void effect_I0_init(WORK* wk, u8 num) {
-    s16* dix;
+    const s16* dix;
     s16 i;
     s16 hsx;
     s16 hsy;

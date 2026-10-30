@@ -151,13 +151,6 @@
 s32 Check_Hamari(PLW* wk);
 
 
-const u16 Correct_Lv_Data[22] = {
-    0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0x106, 0x16,
-    288, 0, 265, 0, 0, 0,
-};
-
-
 s32 CPU_Sub(PLW* wk) {
     WORK* em = (WORK*)wk->wu.target_adrs;
     if (Allow_a_battle_f == 0 || pcon_dp_flag == 1) {
@@ -1309,7 +1302,7 @@ void Com_Caught(PLW* wk) {
 s16 Decide_Exit_Catch(PLW* wk) {
     s16 Rnd;
     s16 xx;
-    s16 Lv = Setup_Lv18(Game_setting.level);
+    s16 Lv = Setup_Lv18(Game_setting.Difficulty);
     Lv += CC_Value[0];
     if (Break_Into_CPU == 2) {
         Lv = 19;

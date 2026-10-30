@@ -18,8 +18,8 @@ const s16 bg_index_tbl[23][3] = {
     { 16, 16, 16 }, { 17, 17, 17 }, { 4, 4, 4 }, { 19, 19, 19 }, { 20, 20, 20 }, { 21, 21, 21 }, { 22, 22, 22 },
 };
 
-/* Stored after bg_index_tbl. Nothing in the program refers to it by name or address; if it is read,
-   it is through an index past the end of bg_index_tbl. */
+/* Stored after bg_index_tbl: twelve records of (256, 256, 312, 0, 0, 0), as many as there are special
+   screen types, then a 0. Nothing in the program refers to it by name or address. */
 const s16 bg_index_tbl_tail[73] = {
     256, 256, 312, 0, 0, 0,
     256, 256, 312, 0, 0, 0,

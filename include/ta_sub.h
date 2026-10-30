@@ -28,7 +28,7 @@ s32 eff_hit_check_sub(WORK_Other* ewk, PLW* pl);
 s32 eff_hit_check_sub2();
 void eff_hit_flag_clear(void);
 void disp_pos_trans_entry_r4(WORK_Other* ewk);
-s32 hit_check_subroutine_yu(WORK* tpl, WORK* tef, s16* hd1, s16* hd2);
+s32 hit_check_subroutine_yu(WORK* tpl, WORK* tef, const s16* hd1, const s16* hd2);
 s32 range_x_check(WORK* wk);
 s32 range_x_check2(WORK* wk);
 s32 range_x_check3(WORK* wk, s16 w);

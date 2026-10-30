@@ -170,11 +170,11 @@ void (*end_main_jp[24])(s16) = {
     end_01000,
 };
 /* 0200691C */
-u32 end_map_tbl[4] = {
-    (u32)end_map_data_0,
-    (u32)end_map_data_1,
-    (u32)end_map_data_2,
-    (u32)end_map_data_3,
+const s16* end_map_tbl[4] = {
+    end_map_data_0,
+    end_map_data_1,
+    end_map_data_2,
+    end_map_data_3,
 };
 
 
@@ -246,7 +246,7 @@ void opning_init_00000(void) {
     bg_w.scno = 3;
     polygon2d_submit_line(0x01D2C000, 0, 0, 3);
     polygon2d_submit_line(0x01D2C080, bg_w.scroll_cg_adr, 0x164AF, 1);
-    if (Game_setting.mode) {
+    if (Game_setting.Screen_Mode) {
         bg_w.pos_offset = 0xF8;
     } else {
         bg_w.pos_offset = 0xC0;
@@ -403,7 +403,7 @@ void op_102_move(void) {
     register OP_W* r = &op_w;
     register s8 s = r->r_no_2;
     u8* g = gSeqStatus;
-    s16* t = &op_102_sound[s];
+    const s16* t = &op_102_sound[s];
     switch (s) {
     case 0:
         r->r_no_2++;
@@ -698,7 +698,7 @@ void op_106_move(void) {
     OP_W* r = &op_w;
     u8* g = gSeqStatus;
     s8 s = r->r_no_2;
-    register s16* t = &op_106_sound[s];
+    register const s16* t = &op_106_sound[s];
     switch (s) {
     case 0:
         r->r_no_2++;
@@ -888,7 +888,7 @@ void op_107_move(void) {
 
 /* provisional name */
 void op_108_move(void) {
-    s16* t = op_108_sound;
+    const s16* t = op_108_sound;
     switch (op_w.r_no_2) {
     case 0:
         op_w.r_no_2++;
@@ -1164,7 +1164,7 @@ void op_111_move(void) {
     OP_W* r = &op_w;
     u8* g = gSeqStatus;
     s8 s = r->r_no_2;
-    s16* t = &op_111_sound[s];
+    const s16* t = &op_111_sound[s];
     switch (s) {
     case 0:
         r->r_no_2++;
@@ -2574,7 +2574,7 @@ void opening_title_00(void) {
     bg_w.scno = 1;
     polygon2d_submit_line(0x01D2C000, 0, 0, 3);
     polygon2d_submit_line(0x01D2C080, bg_w.scroll_cg_adr, 0x164AF, 1);
-    if (Game_setting.mode) {
+    if (Game_setting.Screen_Mode) {
         bg_w.pos_offset = 0xF8;
     } else {
         bg_w.pos_offset = 0xC0;
@@ -2725,7 +2725,7 @@ s16 pl_num;
         card_win_check(1);
         break;
     case END_COVER:
-        if (Cover_Timer -= 1) {
+        if (--Cover_Timer) {
             break;
         }
         end_w.r_no_0 += 1;
@@ -2908,7 +2908,7 @@ void common_end_init00(s16 pl_num) {
         ake_scrl_w[0].adrs = (u32)simmram_slot_addr(ake_scrl_w[0].handle);
         break;
     }
-    if (Game_setting.mode) {
+    if (Game_setting.Screen_Mode) {
         bg_w.pos_offset = 0xF8;
     } else {
         bg_w.pos_offset = 0xC0;
@@ -2933,7 +2933,7 @@ void common_end_init00(s16 pl_num) {
         bg_w.bgw[i].bg_address = (u16 *)simmram_slot_addr(bg_w.bgw[i].bg_adrs_c_no);
         scrn_map_set_now(i, (u32)bg_w.bgw[i].bg_address);
         scrn_map_set(i, (u32)bg_w.bgw[i].bg_address);
-        sprite_list_setup(i, 1, (s16*)end_map_tbl[i]);
+        sprite_list_setup(i, 1, end_map_tbl[i]);
         bg_w.bgw[i].r_no_1 = bg_w.bgw[i].r_no_2 = 0;
         bg_w.bgw[i].fam_no = i;
     }

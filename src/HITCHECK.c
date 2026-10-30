@@ -48,7 +48,7 @@
 WORK * q_hit_push[32];  /* 0200EBC4 */
 HS hs[32];  /* 0200EC44 */
 s8 ca_check_flag;  /* 0200EE44 */
-s16 * dmdat_adrs[16];  /* 0200EE48 */
+const s16 * dmdat_adrs[16];  /* 0200EE48 */
 s16 mkm_wk[32];  /* 0200EE88 */
 s16 hpq_in;  /* 0200EEC8 */
 
@@ -326,7 +326,7 @@ void set_catch_hit_mark_pos(WORK* as, WORK* ds) {
         }
         as->hit_mark_y = as->xyz[1].disp.pos + hit_mark_hosei_table[as->att.mkh_ix][MARK_HOSEI_Y];
     } else {
-        cal_hit_mark_position(ds, as, (s16*)ds->h_cau, (s16*)as->h_cat);
+        cal_hit_mark_position(ds, as, (const s16*)ds->h_cau, (const s16*)as->h_cat);
     }
 }
 
@@ -1187,8 +1187,8 @@ void cal_combo_waribiki2(PLW* ds) {
 void catch_hit_check(void) {
     WORK* mad;
     WORK* sad;
-    s16* mh;
-    s16* sh;
+    const s16* mh;
+    const s16* sh;
     s16 mi;
     s16 si;
 
@@ -1283,15 +1283,15 @@ void attack_hit_check(void) {
     typedef struct { s16* box; } BoxSlot;
     WORK* mad;
     WORK* sad;
-    s16 (*boxes)[4];
-    s16* sh;
+    const s16 (*boxes)[4];
+    const s16* sh;
     s16 mi;
     s16 si;
     s16 lp;
     s16 lp2;
     s16 mw;
-    s16** slot;
-    s16** slot_copy;
+    const s16** slot;
+    const s16** slot_copy;
     si = 0;
     goto test0;
     loop0:
@@ -1499,7 +1499,7 @@ s32 hit_check_subroutine(WORK* wk1, WORK* wk2, const s16* hd1, const s16* hd2) {
 
 
 
-s32 hit_check_x_only(WORK* wk1, WORK* wk2, s16* hd1, s16* hd2) {
+s32 hit_check_x_only(WORK* wk1, WORK* wk2, const s16* hd1, const s16* hd2) {
     s16 d0;
     s16 d1;
     s16 d2;
@@ -1528,7 +1528,7 @@ s32 hit_check_x_only(WORK* wk1, WORK* wk2, s16* hd1, s16* hd2) {
 
 
 
-void cal_hit_mark_position(WORK* wk1, WORK* wk2, s16* hd1, s16* hd2) {
+void cal_hit_mark_position(WORK* wk1, WORK* wk2, const s16* hd1, const s16* hd2) {
     s16 d0 = *hd1++;
     s16 d1 = *hd1++;
     s16 d2;
@@ -1571,7 +1571,7 @@ void cal_hit_mark_position(WORK* wk1, WORK* wk2, s16* hd1, s16* hd2) {
 
 void get_target_att_position(WORK* wk, s16* tx, s16* ty) {
     s16 i;
-    s16* ta;
+    const s16* ta;
     *tx = wk->xyz[0].disp.pos;
     *ty = wk->xyz[1].disp.pos;
     ta = wk->h_att->att_box[0];
@@ -1594,7 +1594,7 @@ s32 get_att_head_position(WORK* wk) {
     s16 v = wk->xyz[0].disp.pos;
     s32 b = v;
     s16 i;
-    s16* p;
+    const s16* p;
     if (wk->cg_ja.atix == 0) {
         return b;
     }

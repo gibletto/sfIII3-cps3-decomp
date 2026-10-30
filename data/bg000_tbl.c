@@ -9,28 +9,48 @@
  * bg_rewrite_cells0 - 9 are the cell lists (map offset, cell number) bg_scr_write puts into each
  * background layer, and bg_etc_cells0 - 12 those bg_etc_scr_write puts on the special screens;
  * both are reached through bg_rewrite_cell_tbl and bg_etc_cell_tbl in BG000.C. Also the
- * sprite list data bg_scr_record_data and ake_scr_record_data (finish screen). Read by
- * BG000.C; bg_gfx_tbl and bg_scr_record_data also by the debug fight setups in CMD_MAIN.C.
+ * layer layout records that bg_map_tbl and bg_map_tbl2 in BG000.C name per stage and layer:
+ * bg_scr_record_NN_n (stage NN, layer n) and etc_bg_scr_record_N_n (special screen N), each
+ * named after the first entry that uses it, bg_scr_record_data (layer 0 of stage 0 and most
+ * special screens), ake_scr_record_data (the finish screen's layer 3) and the unreferenced
+ * bg_scr_record_unref_N. Read by BG000.C; bg_gfx_tbl and bg_scr_record_data also by the debug
+ * fight setups in CMD_MAIN.C.
  *
  * A layer layout record (sprite_list_setup) is a run of groups, each the layer and priority followed by
- * (code, position, attribute) entries and -1, ended by -1; the comments give each record's word index,
- * the index the pointer tables use.
+ * (code, position, attribute) entries and -1, ended by -1; the comment before each record says which
+ * stages' layers use it.
  */
 
 #include "types.h"
 #include "structs.h"
 
 #pragma section TBL
-extern const u16 op_char_table_012[21512];
 
-extern const u16 debug_scene_scrn_data[68][16][32];
+extern const u16 debug_scene_scrn_data[17][16][32];
 extern const u16 eff08_scrn_data[29][16][32];
 extern const u16 eff23_scrn_data[49][16][32];
 extern const u16 eff45_scrn_data[29][16][32];
-extern const u16 eff74_scrn_data[51][16][32];
-extern const u16 effJ5_scrn_data[151][16][32];
-extern const u16 end_2000_scrn_data[8][16][32];
-extern const u16 russia2_scrn_data[111][16][32];
+extern const u16 eff74_scrn_data[17][16][32];
+extern const u16 effJ5_scrn_data[29][16][32];
+extern const u16 end_2000_scrn_data[5][16][32];
+extern const u16 russia2_scrn_data[4][16][32];
+extern const u16 bg_scrn_data_00[17][16][32];
+extern const u16 bg_scrn_data_02[25][16][32];
+extern const u16 bg_scrn_data_04[17][16][32];
+extern const u16 bg_scrn_data_05[17][16][32];
+extern const u16 bg_scrn_data_06[17][16][32];
+extern const u16 bg_scrn_data_09[17][16][32];
+extern const u16 bg_scrn_data_12[17][16][32];
+extern const u16 bg_scrn_data_13[17][16][32];
+extern const u16 bg_scrn_data_14[19][16][32];
+extern const u16 bg_scrn_data_16[17][16][32];
+extern const u16 bg_scrn_data_17[18][16][32];
+extern const u16 bg_scrn_data_18[17][16][32];
+extern const u16 bg_scrn_data_21[17][16][32];
+extern const u16 bg_scrn_data_22[17][16][32];
+extern const u16 etc_bg_scrn_data_0[12][16][32];
+extern const u16 etc_bg_scrn_data_3[95][16][32];
+extern const u16 etc_bg_scrn_data_7[3][16][32];
 
 const s16 bg_scno_tbl[23] = {
     2, 2, 3, 2, 2, 2, 2, 2,
@@ -43,164 +63,311 @@ const s16 etc_bg_scno_tbl[12] = {
     1, 1, 1, 1,
 };
 
-const s16 bg_scr_record_data[92] = {
-    /* [0] */
+/* layer 0 of stage 0; layer 0 of special screens 1, 2, 3, 4, 5, 7, 11 */
+const s16 bg_scr_record_data[16] = {
     1, 94,  0x7F, 0x7F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [16] */
+};
+
+/* layer 1 of stages 0, 1, 3, 4, 5, 6, 7, 10, 13, 14, 15, 16, 17, 19; layer 1 of special screens 0, 4; provisional name */
+const s16 bg_scr_record_00_1[16] = {
     2, 84,  0x7F, 0x7F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [32] */
+};
+
+/* layer 2 of stage 0; provisional name */
+const s16 bg_scr_record_00_2[16] = {
     3, 104,  0x7F, 0x7F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [48] */
+};
+
+/* not referred to; provisional name */
+const s16 bg_scr_record_unref_0[16] = {
     4, 94,  0x7F, 0x7F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [64] */
+};
+
+/* not referred to; provisional name */
+const s16 bg_scr_record_unref_1[28] = {
     0, 94,  0x7F, 0x7F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  0x27F, 0x7F00, 12,
            0x2FF, 0x7F00, 12,  0x37F, 0x7F00, 12,  0x3FF, 0x7F00, 12,  -1,
     -1,
 };
 
-const s16 ake_scr_record_data[679] = {
-    /* [0] */
+/* layer 3 of the finish screen (akebono_initialize) */
+const s16 ake_scr_record_data[28] = {
     4, 69,  0x7F, 0x7F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  0x27F, 0x7F00, 12,
            0x2FF, 0x7F00, 12,  0x37F, 0x7F00, 12,  0x3FF, 0x7F00, 12,  -1,
     -1,
-    /* [28] */
+};
+
+/* layer 0 of stages 1, 4, 6, 11, 20; provisional name */
+const s16 bg_scr_record_01_0[7] = {
     1, 94,  0x1FF, 0x100, 12,  -1,
     -1,
-    /* [35] */
+};
+
+/* not referred to; provisional name */
+const s16 bg_scr_record_unref_2[7] = {
     2, 84,  0x1FF, 0x100, 12,  -1,
     -1,
-    /* [42] */
+};
+
+/* not referred to; provisional name */
+const s16 bg_scr_record_unref_3[7] = {
     3, 104,  0x1FF, 0x100, 12,  -1,
     -1,
-    /* [49] */
+};
+
+/* not referred to; provisional name */
+const s16 bg_scr_record_unref_4[7] = {
     4, 94,  0x1FF, 0x100, 12,  -1,
     -1,
-    /* [56] */
+};
+
+/* not referred to; provisional name */
+const s16 bg_scr_record_unref_5[16] = {
     1, 94,  0x7F, 0x7F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [72] */
+};
+
+/* not referred to; provisional name */
+const s16 bg_scr_record_unref_6[16] = {
     2, 84,  0x7F, 0x7F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [88] */
+};
+
+/* not referred to; provisional name */
+const s16 bg_scr_record_unref_7[16] = {
     3, 104,  0x7F, 0x7F00, 44,  0xFF, 0x7F00, 44,  0x17F, 0x7F00, 44,  0x1FF, 0x7F00, 44,  -1,
     -1,
-    /* [104] */
+};
+
+/* layer 1 of stage 11; provisional name */
+const s16 bg_scr_record_11_1[16] = {
     1, 84,  0x7F, 0x7F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1F0, 0x7F00, 12,  -1,
     -1,
-    /* [120] */
+};
+
+/* layer 0 of stage 2; provisional name */
+const s16 bg_scr_record_02_0[16] = {
     1, 94,  0x7F, 0x4F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [136] */
+};
+
+/* layer 1 of stage 2; provisional name */
+const s16 bg_scr_record_02_1[7] = {
     2, 84,  0x4A, 0x4A00, 12,  -1,
     -1,
-    /* [143] */
+};
+
+/* layer 2 of stage 2; provisional name */
+const s16 bg_scr_record_02_2[16] = {
     3, 104,  0x7F, 0x1000, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [159] */
+};
+
+/* layer 0 of stage 3; provisional name */
+const s16 bg_scr_record_03_0[16] = {
     1, 94,  0x7F, 0x5800, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [175] */
+};
+
+/* layer 0 of stage 10; provisional name */
+const s16 bg_scr_record_10_0[16] = {
     1, 20,  0x7F, 0x7F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [191] */
+};
+
+/* layer 0 of stages 5, 19; provisional name */
+const s16 bg_scr_record_05_0[16] = {
     1, 94,  0x7F, 0x5100, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [207] */
+};
+
+/* not referred to; provisional name */
+const s16 bg_scr_record_unref_8[16] = {
     1, 94,  0x7F, 0x7F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [223] */
+};
+
+/* not referred to; provisional name */
+const s16 bg_scr_record_unref_9[16] = {
     2, 84,  0x7F, 0x7F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [239] */
+};
+
+/* layer 0 of stage 7; provisional name */
+const s16 bg_scr_record_07_0[16] = {
     1, 104,  0x7F, 0x5400, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [255] */
+};
+
+/* not referred to; provisional name */
+const s16 bg_scr_record_unref_10[7] = {
     2, 84,  0x4F, 0x4F00, 12,  -1,
     -1,
-    /* [262] */
+};
+
+/* not referred to; provisional name */
+const s16 bg_scr_record_unref_11[16] = {
     3, 94,  0x7F, 0x1000, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [278] */
+};
+
+/* layer 0 of stage 8; provisional name */
+const s16 bg_scr_record_08_0[16] = {
     1, 104,  0x7F, 0x3C00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [294] */
+};
+
+/* layer 1 of stage 8; provisional name */
+const s16 bg_scr_record_08_1[7] = {
     2, 84,  0x3F, 0x3F00, 12,  -1,
     -1,
-    /* [301] */
+};
+
+/* layer 2 of stage 8; provisional name */
+const s16 bg_scr_record_08_2[7] = {
     3, 94,  0x70, 0x2000, 12,  -1,
     -1,
-    /* [308] */
+};
+
+/* layer 0 of stage 9; provisional name */
+const s16 bg_scr_record_09_0[16] = {
     1, 94,  0x7F, 0x3F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [324] */
+};
+
+/* layer 1 of stage 9; provisional name */
+const s16 bg_scr_record_09_1[16] = {
     2, 84,  0x7F, 0x7F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [340] */
+};
+
+/* layer 0 of stage 12; provisional name */
+const s16 bg_scr_record_12_0[16] = {
     1, 94,  0x7F, 0x3F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [356] */
+};
+
+/* layer 1 of stage 12; provisional name */
+const s16 bg_scr_record_12_1[16] = {
     2, 84,  0x7F, 0x7F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [372] */
+};
+
+/* layer 0 of stage 13; provisional name */
+const s16 bg_scr_record_13_0[16] = {
     1, 94,  0x7F, 0x4F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [388] */
+};
+
+/* layer 0 of stages 14, 15; provisional name */
+const s16 bg_scr_record_14_0[16] = {
     1, 94,  0x7F, 0x4F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [404] */
+};
+
+/* not referred to; provisional name */
+const s16 bg_scr_record_unref_12[16] = {
     2, 84,  0x3F, 0x3F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [420] */
+};
+
+/* layer 0 of stage 16; provisional name */
+const s16 bg_scr_record_16_0[13] = {
     1, 94,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [433] */
+};
+
+/* layer 0 of stage 17; provisional name */
+const s16 bg_scr_record_17_0[10] = {
     1, 94,  0x17F, 0x6000, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [443] */
+};
+
+/* layer 0 of stage 18; provisional name */
+const s16 bg_scr_record_18_0[16] = {
     1, 94,  0x7F, 0x7F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [459] */
+};
+
+/* layer 1 of stage 18; provisional name */
+const s16 bg_scr_record_18_1[16] = {
     2, 84,  0x7F, 0x7F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [475] */
+};
+
+/* not referred to; provisional name */
+const s16 bg_scr_record_unref_13[16] = {
     1, 94,  0x7F, 0x7F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [491] */
+};
+
+/* not referred to; provisional name */
+const s16 bg_scr_record_unref_14[16] = {
     2, 84,  0x7F, 0x7F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [507] */
+};
+
+/* not referred to; provisional name */
+const s16 bg_scr_record_unref_15[16] = {
     1, 94,  0x7F, 0x7F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [523] */
+};
+
+/* layer 1 of stage 20; provisional name */
+const s16 bg_scr_record_20_1[16] = {
     2, 84,  0x7F, 0x7F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [539] */
+};
+
+/* layer 0 of stage 21; provisional name */
+const s16 bg_scr_record_21_0[16] = {
     1, 94,  0x7F, 0x7F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [555] */
+};
+
+/* layer 1 of stage 21; provisional name */
+const s16 bg_scr_record_21_1[16] = {
     2, 84,  0x7F, 0x7F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [571] */
+};
+
+/* layer 0 of stage 22; provisional name */
+const s16 bg_scr_record_22_0[16] = {
     1, 94,  0x7F, 0x7F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [587] */
+};
+
+/* layer 1 of stage 22; provisional name */
+const s16 bg_scr_record_22_1[16] = {
     2, 84,  0x7F, 0x7F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [603] */
+};
+
+/* layer 0 of special screens 0, 6, 8, 9, 10; provisional name */
+const s16 etc_bg_scr_record_0_0[28] = {
     1, 84,  0x7F, 0x7F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  0x27F, 0x7F00, 12,
            0x2FF, 0x7F00, 12,  0x37F, 0x7F00, 12,  0x3FF, 0x7F00, 12,  -1,
     -1,
-    /* [631] */
+};
+
+/* not referred to; provisional name */
+const s16 bg_scr_record_unref_16[16] = {
     1, 84,  0x7F, 0x7F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [647] */
+};
+
+/* not referred to; provisional name */
+const s16 bg_scr_record_unref_17[16] = {
     2, 94,  0x7F, 0x7F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
-    /* [663] */
+};
+
+/* not referred to; provisional name */
+const s16 bg_scr_record_unref_18[16] = {
     3, 104,  0x7F, 0x7F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  -1,
     -1,
 };
@@ -231,6 +398,8 @@ const s32 bg_speed_tbl[23][3][2] = {
     { { 0x8000, 0xE000 }, { 0x10000, 0x10000 }, { 0, 0 } },
 };
 
+/* Layer scroll speeds of the first eight special screen types. bg_etc_write reads it with types 8-11 too,
+   past the end, into etc_bg_zuubun_tbl: those screens' layers get the speed 0 found there. */
 const s32 etc_bg_speed_tbl[8][3][2] = {
     { { 0x10000, 0x10000 }, { 0x10000, 0x10000 }, { 0xF800, 0xF000 } },
     { { 0x10000, 0x10000 }, { 0x10000, 0x10000 }, { 0xE000, 0xE000 } },
@@ -348,44 +517,44 @@ const s16 etc_bg_cell_cnt_tbl[12][3] = {
 };
 
 const u32 bg_cg_src_tbl[23] = {
-    (u32)&op_char_table_012[8],
+    (u32)bg_scrn_data_00,
     (u32)debug_scene_scrn_data,
-    (u32)&op_char_table_012[8712],
+    (u32)bg_scrn_data_02,
     (u32)eff08_scrn_data,
-    (u32)&effJ5_scrn_data[117],
-    (u32)&debug_scene_scrn_data[17],
-    (u32)&debug_scene_scrn_data[51],
+    (u32)bg_scrn_data_04,
+    (u32)bg_scrn_data_05,
+    (u32)bg_scrn_data_06,
     (u32)effJ5_scrn_data,
     (u32)eff45_scrn_data,
-    (u32)&effJ5_scrn_data[100],
+    (u32)bg_scrn_data_09,
     (u32)eff23_scrn_data,
     (u32)debug_scene_scrn_data,
-    (u32)&effJ5_scrn_data[83],
-    (u32)&effJ5_scrn_data[134],
-    (u32)&effJ5_scrn_data[29],
-    (u32)&effJ5_scrn_data[29],
-    (u32)&effJ5_scrn_data[66],
-    (u32)&effJ5_scrn_data[48],
-    (u32)&debug_scene_scrn_data[34],
-    (u32)&debug_scene_scrn_data[34],
+    (u32)bg_scrn_data_12,
+    (u32)bg_scrn_data_13,
+    (u32)bg_scrn_data_14,
+    (u32)bg_scrn_data_14,
+    (u32)bg_scrn_data_16,
+    (u32)bg_scrn_data_17,
+    (u32)bg_scrn_data_18,
+    (u32)bg_scrn_data_18,
     (u32)eff74_scrn_data,
-    (u32)&eff74_scrn_data[17],
-    (u32)&eff74_scrn_data[34],
+    (u32)bg_scrn_data_21,
+    (u32)bg_scrn_data_22,
 };
 
 const u32 etc_bg_cg_src_tbl[12] = {
-    (u32)&russia2_scrn_data[4],
-    (u32)&russia2_scrn_data[4],
-    (u32)&russia2_scrn_data[4],
-    (u32)&russia2_scrn_data[16],
-    (u32)&russia2_scrn_data[16],
-    (u32)&russia2_scrn_data[4],
-    (u32)&russia2_scrn_data[4],
-    (u32)&end_2000_scrn_data[5],
-    (u32)&russia2_scrn_data[4],
-    (u32)&russia2_scrn_data[4],
-    (u32)&russia2_scrn_data[4],
-    (u32)&russia2_scrn_data[4],
+    (u32)etc_bg_scrn_data_0,
+    (u32)etc_bg_scrn_data_0,
+    (u32)etc_bg_scrn_data_0,
+    (u32)etc_bg_scrn_data_3,
+    (u32)etc_bg_scrn_data_3,
+    (u32)etc_bg_scrn_data_0,
+    (u32)etc_bg_scrn_data_0,
+    (u32)etc_bg_scrn_data_7,
+    (u32)etc_bg_scrn_data_0,
+    (u32)etc_bg_scrn_data_0,
+    (u32)etc_bg_scrn_data_0,
+    (u32)etc_bg_scrn_data_0,
 };
 
 /* provisional name */

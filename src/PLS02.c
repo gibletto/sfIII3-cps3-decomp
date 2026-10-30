@@ -76,7 +76,7 @@ void setup_mvxy_data(wk, ix)
 
 /* Unreferenced: blow-away movement from parabora_ex_table, by the attacker's character and our weight. */
 void setup_butt_own_data_ex(WORK* wk, s16 ix) {
-    s16* adrs;
+    const s16* adrs;
     s16 pn;
     wk->mvxy.index = ix;
     pn = ((PLW*)wk->target_adrs)->player_number;
@@ -86,7 +86,7 @@ void setup_butt_own_data_ex(WORK* wk, s16 ix) {
 
 /* Unreferenced: as above, by our character and the attacker's weight. */
 void setup_butt_own_data_ex2(WORK* wk, s16 ix) {
-    s16* adrs;
+    const s16* adrs;
     u8 wl;
     wk->mvxy.index = ix;
     wl = ((WORK*)wk->target_adrs)->weight_level;
@@ -103,7 +103,7 @@ void setup_butt_own_data(WORK* wk) {
 
 
 
-void read_adrs_store_mvxy(WORK* wk, s16* adrs) {
+void read_adrs_store_mvxy(WORK* wk, const s16* adrs) {
     wk->mvxy.a[0].sp = adrs[0];
     wk->mvxy.a[0].sp <<= 8;
     wk->mvxy.d[0].sp = adrs[1];
@@ -322,8 +322,8 @@ void check_body_touch2(void) {
     PLW* hmw;
     PLW* cmw;
     WORK* efw;
-    s16* dad0;
-    s16* dad1;
+    const s16* dad0;
+    const s16* dad1;
     s16 meri;
     s16 ix;
     s16 dad2[4];

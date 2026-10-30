@@ -1,7 +1,8 @@
 /*
  * EFFECT_CHAR.C  Effect character scripts
  *
- * Scripts for effects drawn with character data: player effects (plef), ef01, the ef13 effect, the rival face panels (ag_face_panel_table) and effD4.
+ * Scripts for effects drawn with character data: player effects (plef), ef01, the ef13 effect, the character sets
+ * of effect C9 (ag_00_char_table - ag_07_char_table), the rival face panels (ag_face_panel_table) and effD4.
  * Each *_char_table is an index of animation scripts ending in 0 followed by the scripts, in the
  * format of the fighters' tables: an effect's work takes the table as its char_table and
  * set_char_move_init starts its scripts. See charscr.h for the line layouts.
@@ -472,8 +473,32 @@ extern const u16 ef13_char_table_222_head[];
 extern const u16 ef13_char_table_223_head[];
 extern const u16 ef13_char_table_224_head[];
 extern const u16 ef13_char_table_225_head[];
-extern const u16 ag_face_panel_table_unused[], ag_face_panel_table_000[];
-extern const u16 ag_face_panel_table_unused_head[];
+extern const u16 ag_00_char_table_000[], ag_00_char_table_001[], ag_00_char_table_002[], ag_01_char_table_000[], ag_01_char_table_001[], ag_01_char_table_002[], ag_02_char_table_000[], ag_02_char_table_001[], ag_02_char_table_002[], ag_03_char_table_000[], ag_03_char_table_001[], ag_03_char_table_002[], ag_04_char_table_000[], ag_04_char_table_001[], ag_04_char_table_002[], ag_05_char_table_000[], ag_05_char_table_001[], ag_05_char_table_002[], ag_06_char_table_000[], ag_06_char_table_001[], ag_06_char_table_002[], ag_07_char_table_000[], ag_07_char_table_001[], ag_07_char_table_002[];
+extern const u16 ag_00_char_table_000_head[];
+extern const u16 ag_00_char_table_001_head[];
+extern const u16 ag_00_char_table_002_head[];
+extern const u16 ag_01_char_table_000_head[];
+extern const u16 ag_01_char_table_001_head[];
+extern const u16 ag_01_char_table_002_head[];
+extern const u16 ag_02_char_table_000_head[];
+extern const u16 ag_02_char_table_001_head[];
+extern const u16 ag_02_char_table_002_head[];
+extern const u16 ag_03_char_table_000_head[];
+extern const u16 ag_03_char_table_001_head[];
+extern const u16 ag_03_char_table_002_head[];
+extern const u16 ag_04_char_table_000_head[];
+extern const u16 ag_04_char_table_001_head[];
+extern const u16 ag_04_char_table_002_head[];
+extern const u16 ag_05_char_table_000_head[];
+extern const u16 ag_05_char_table_001_head[];
+extern const u16 ag_05_char_table_002_head[];
+extern const u16 ag_06_char_table_000_head[];
+extern const u16 ag_06_char_table_001_head[];
+extern const u16 ag_06_char_table_002_head[];
+extern const u16 ag_07_char_table_000_head[];
+extern const u16 ag_07_char_table_001_head[];
+extern const u16 ag_07_char_table_002_head[];
+extern const u16 ag_face_panel_table_000[];
 extern const u16 ag_face_panel_table_000_head[];
 extern const u16 effD4_char_table_000[], effD4_char_table_001[];
 extern const u16 effD4_char_table_000_head[];
@@ -8363,7 +8388,7 @@ const u16 ef13_char_table_224[236] = {
 };
 
 const u16 ef13_char_table_225_head[4] = { HEAD(2, 0, 8, 0, 0, 0, 0) };
-const u16 ef13_char_table_225[180] = {
+const u16 ef13_char_table_225[108] = {
     L2(2, 0, 0, 0, 0, 0, 0, 0x20F2),
     L2(2, 0, 0, 0, 0, 0, 0, 0x20F3),
     L2(2, 0, 0, 0, 0, 0, 0, 0x20F4),
@@ -8391,24 +8416,61 @@ const u16 ef13_char_table_225[180] = {
     L2(2, 0, 0, 0, 0, 0, 0, 0x21A3),
     L2(2, 0, 0, 0, 0, 0, 0, 0x21A4),
     CMD(CM_ROA, 0, 0, 0),
-    L2(6, 53, 4069, 0, 0, 99, 5, 0xFE68),
-    L2(6, 53, 4073, 2, 0, 0, 0, 0x0000),
-    L2(6, 53, 4078, 2, 0, 99, 5, 0xFF00),
-    L2(6, 53, 4086, 2, 0, 0, 0, 0x0000),
-    L2(6, 54, 0, 0, 0, 99, 6, 0x0018),
-    L2(6, 54, 6, 0, 0, 0, 0, 0x0000),
-    L2(6, 54, 11, 0, 0, 99, 6, 0x00C8),
-    L2(6, 54, 17, 0, 0, 0, 0, 0x0000),
-    L2(6, 54, 22, 0, 0, 99, 6, 0x0178),
-    L2(6, 54, 28, 0, 0, 0, 0, 0x0000),
-    L2(6, 54, 33, 0, 0, 99, 6, 0x0228),
-    L2(6, 54, 43, 2, 0, 0, 0, 0x0000),
-    L2(6, 54, 48, 2, 0, 99, 6, 0x0320),
-    L2(6, 54, 56, 2, 0, 0, 0, 0x0000),
-    L2(6, 54, 65, 2, 0, 99, 6, 0x0488),
-    L2(6, 54, 76, 2, 0, 0, 0, 0x0000),
-    L2(6, 54, 65, 2, 0, 99, 6, 0x0488),
-    L2(6, 54, 76, 2, 0, 0, 0, 0x0000),
+};
+
+/* ag_00_char_table scripts: 3 entries (effect C9, character set 0) */
+const u32 ag_00_char_table[4] = {
+    (u32)ag_00_char_table_000, (u32)ag_00_char_table_001, (u32)ag_00_char_table_002,
+    0
+};
+
+/* ag_01_char_table scripts: 3 entries (effect C9, character set 1) */
+const u32 ag_01_char_table[4] = {
+    (u32)ag_01_char_table_000, (u32)ag_01_char_table_001, (u32)ag_01_char_table_002,
+    0
+};
+
+/* ag_02_char_table scripts: 3 entries (effect C9, character set 2) */
+const u32 ag_02_char_table[4] = {
+    (u32)ag_02_char_table_000, (u32)ag_02_char_table_001, (u32)ag_02_char_table_002,
+    0
+};
+
+/* ag_03_char_table scripts: 3 entries (effect C9, character set 3) */
+const u32 ag_03_char_table[4] = {
+    (u32)ag_03_char_table_000, (u32)ag_03_char_table_001, (u32)ag_03_char_table_002,
+    0
+};
+
+/* ag_04_char_table scripts: 3 entries (effect C9, character set 4) */
+const u32 ag_04_char_table[4] = {
+    (u32)ag_04_char_table_000, (u32)ag_04_char_table_001, (u32)ag_04_char_table_002,
+    0
+};
+
+/* ag_05_char_table scripts: 3 entries (effect C9, character set 5) */
+const u32 ag_05_char_table[4] = {
+    (u32)ag_05_char_table_000, (u32)ag_05_char_table_001, (u32)ag_05_char_table_002,
+    0
+};
+
+/* ag_06_char_table scripts: 3 entries (effect C9, character set 6) */
+const u32 ag_06_char_table[4] = {
+    (u32)ag_06_char_table_000, (u32)ag_06_char_table_001, (u32)ag_06_char_table_002,
+    0
+};
+
+/* ag_07_char_table scripts: 3 entries (effect C9, character set 7) */
+const u32 ag_07_char_table[4] = {
+    (u32)ag_07_char_table_000, (u32)ag_07_char_table_001, (u32)ag_07_char_table_002,
+    0
+};
+
+/* ag_08_char_table: the scripts of ag_07_char_table again; no reference */
+/* provisional name */
+const u32 ag_08_char_table[4] = {
+    (u32)ag_07_char_table_000, (u32)ag_07_char_table_001, (u32)ag_07_char_table_002,
+    0
 };
 
 /* ag_face_panel_table scripts: 1 entries */
@@ -8417,17 +8479,23 @@ const u32 ag_face_panel_table[2] = {
     0
 };
 
-const u16 ag_face_panel_table_unused_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
-const u16 ag_face_panel_table_unused[876] = {
+const u16 ag_00_char_table_000_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 ag_00_char_table_000[8] = {
     L2(250, 255, 0, 0, 0, 0, 0, 0x96E0),
     CMD(CM_ROA, 0, 0, 0),
-    CMD(CM_END, 0, 0, 0),
+};
+
+const u16 ag_00_char_table_001_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 ag_00_char_table_001[20] = {
     L2(5, 0, 0, 0, 0, 0, 0, 0x96E1),
     L2(6, 0, 0, 0, 0, 0, 0, 0x96E2),
     L2(90, 0, 0, 0, 0, 0, 0, 0x96E3),
     L2(250, 255, 0, 0, 0, 0, 0, 0x96E3),
     CMD(CM_ROA, 0, 0, 0),
-    CMD(CM_END, 0, 0, 0),
+};
+
+const u16 ag_00_char_table_002_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 ag_00_char_table_002[36] = {
     L2(5, 0, 0, 0, 0, 0, 0, 0x96E4),
     L2(5, 0, 0, 0, 0, 0, 0, 0x96E5),
     L2(5, 0, 0, 0, 0, 0, 0, 0x96E6),
@@ -8437,10 +8505,16 @@ const u16 ag_face_panel_table_unused[876] = {
     L2(250, 255, 0, 0, 0, 0, 0, 0x96E9),
     CMD(CM_IXBW, 0, 0, 1),
     CMD(CM_ROA, 0, 0, 0),
-    CMD(CM_END, 0, 0, 0),
+};
+
+const u16 ag_01_char_table_000_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 ag_01_char_table_000[8] = {
     L2(250, 255, 0, 0, 0, 0, 0, 0x96EA),
     CMD(CM_ROA, 0, 0, 0),
-    CMD(CM_END, 0, 0, 0),
+};
+
+const u16 ag_01_char_table_001_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 ag_01_char_table_001[48] = {
     L2(5, 0, 0, 0, 0, 0, 0, 0x96EB),
     L2(7, 0, 0, 0, 0, 0, 0, 0x96EC),
     L2(32, 0, 0, 0, 0, 0, 0, 0x96ED),
@@ -8453,7 +8527,10 @@ const u16 ag_face_panel_table_unused[876] = {
     CMD(CM_NEX, 0, 0, 0),
     L2(250, 255, 0, 0, 0, 0, 0, 0x96ED),
     CMD(CM_ROA, 0, 0, 0),
-    CMD(CM_END, 0, 0, 0),
+};
+
+const u16 ag_01_char_table_002_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 ag_01_char_table_002[72] = {
     L2(8, 0, 0, 0, 0, 0, 0, 0x96F1),
     L2(8, 0, 0, 0, 0, 0, 0, 0x96F2),
     L2(32, 0, 0, 0, 0, 0, 0, 0x96F3),
@@ -8472,10 +8549,16 @@ const u16 ag_face_panel_table_unused[876] = {
     L2(250, 255, 0, 0, 0, 0, 0, 0x96FF),
     CMD(CM_IXBW, 0, 0, 1),
     CMD(CM_ROA, 0, 0, 0),
-    CMD(CM_END, 0, 0, 0),
+};
+
+const u16 ag_02_char_table_000_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 ag_02_char_table_000[8] = {
     L2(250, 255, 0, 0, 0, 0, 0, 0x9704),
     CMD(CM_ROA, 0, 0, 0),
-    CMD(CM_END, 0, 0, 0),
+};
+
+const u16 ag_02_char_table_001_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 ag_02_char_table_001[32] = {
     L2(8, 0, 0, 0, 0, 0, 0, 0x9702),
     L2(58, 0, 0, 0, 0, 0, 0, 0x9703),
     L2(7, 0, 0, 0, 0, 0, 0, 0x9702),
@@ -8484,7 +8567,10 @@ const u16 ag_face_panel_table_unused[876] = {
     L2(5, 0, 0, 0, 0, 0, 0, 0x9701),
     L2(250, 255, 0, 0, 0, 0, 0, 0x9701),
     CMD(CM_ROA, 0, 0, 0),
-    CMD(CM_END, 0, 0, 0),
+};
+
+const u16 ag_02_char_table_002_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 ag_02_char_table_002[36] = {
     L2(8, 0, 0, 0, 0, 0, 0, 0x9705),
     L2(8, 0, 0, 0, 0, 0, 0, 0x9706),
     L2(8, 0, 0, 0, 0, 0, 0, 0x9707),
@@ -8494,10 +8580,16 @@ const u16 ag_face_panel_table_unused[876] = {
     L2(250, 255, 0, 0, 0, 0, 0, 0x970A),
     CMD(CM_IXBW, 0, 0, 1),
     CMD(CM_ROA, 0, 0, 0),
-    CMD(CM_END, 0, 0, 0),
+};
+
+const u16 ag_03_char_table_000_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 ag_03_char_table_000[8] = {
     L2(250, 255, 0, 0, 0, 0, 0, 0x970F),
     CMD(CM_ROA, 0, 0, 0),
-    CMD(CM_END, 0, 0, 0),
+};
+
+const u16 ag_03_char_table_001_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 ag_03_char_table_001[32] = {
     L2(8, 0, 0, 0, 0, 0, 0, 0x970D),
     L2(58, 0, 0, 0, 0, 0, 0, 0x970E),
     L2(7, 0, 0, 0, 0, 0, 0, 0x970D),
@@ -8506,7 +8598,10 @@ const u16 ag_face_panel_table_unused[876] = {
     L2(5, 0, 0, 0, 0, 0, 0, 0x970C),
     L2(250, 255, 0, 0, 0, 0, 0, 0x970C),
     CMD(CM_ROA, 0, 0, 0),
-    CMD(CM_END, 0, 0, 0),
+};
+
+const u16 ag_03_char_table_002_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 ag_03_char_table_002[36] = {
     L2(8, 0, 0, 0, 0, 0, 0, 0x9710),
     L2(8, 0, 0, 0, 0, 0, 0, 0x9711),
     L2(8, 0, 0, 0, 0, 0, 0, 0x9712),
@@ -8516,10 +8611,16 @@ const u16 ag_face_panel_table_unused[876] = {
     L2(250, 255, 0, 0, 0, 0, 0, 0x9715),
     CMD(CM_IXBW, 0, 0, 1),
     CMD(CM_ROA, 0, 0, 0),
-    CMD(CM_END, 0, 0, 0),
+};
+
+const u16 ag_04_char_table_000_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 ag_04_char_table_000[8] = {
     L2(250, 255, 0, 0, 0, 0, 0, 0x971A),
     CMD(CM_ROA, 0, 0, 0),
-    CMD(CM_END, 0, 0, 0),
+};
+
+const u16 ag_04_char_table_001_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 ag_04_char_table_001[32] = {
     L2(8, 0, 0, 0, 0, 0, 0, 0x9718),
     L2(58, 0, 0, 0, 0, 0, 0, 0x9719),
     L2(7, 0, 0, 0, 0, 0, 0, 0x9718),
@@ -8528,7 +8629,10 @@ const u16 ag_face_panel_table_unused[876] = {
     L2(5, 0, 0, 0, 0, 0, 0, 0x9717),
     L2(250, 255, 0, 0, 0, 0, 0, 0x9717),
     CMD(CM_ROA, 0, 0, 0),
-    CMD(CM_END, 0, 0, 0),
+};
+
+const u16 ag_04_char_table_002_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 ag_04_char_table_002[36] = {
     L2(8, 0, 0, 0, 0, 0, 0, 0x971B),
     L2(8, 0, 0, 0, 0, 0, 0, 0x971C),
     L2(8, 0, 0, 0, 0, 0, 0, 0x971D),
@@ -8538,10 +8642,16 @@ const u16 ag_face_panel_table_unused[876] = {
     L2(250, 255, 0, 0, 0, 0, 0, 0x9720),
     CMD(CM_IXBW, 0, 0, 1),
     CMD(CM_ROA, 0, 0, 0),
-    CMD(CM_END, 0, 0, 0),
+};
+
+const u16 ag_05_char_table_000_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 ag_05_char_table_000[8] = {
     L2(250, 255, 0, 0, 0, 0, 0, 0x9721),
     CMD(CM_ROA, 0, 0, 0),
-    CMD(CM_END, 0, 0, 0),
+};
+
+const u16 ag_05_char_table_001_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 ag_05_char_table_001[68] = {
     L2(4, 0, 0, 0, 0, 0, 0, 0x9722),
     L2(4, 0, 0, 0, 0, 0, 0, 0x9723),
     L2(4, 0, 0, 0, 0, 0, 0, 0x9724),
@@ -8559,7 +8669,10 @@ const u16 ag_face_panel_table_unused[876] = {
     L2(32, 0, 0, 0, 0, 0, 0, 0x972B),
     L2(250, 255, 0, 0, 0, 0, 0, 0x972B),
     CMD(CM_ROA, 0, 0, 0),
-    CMD(CM_END, 0, 0, 0),
+};
+
+const u16 ag_05_char_table_002_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 ag_05_char_table_002[36] = {
     L2(6, 0, 0, 0, 0, 0, 0, 0x972C),
     L2(4, 0, 0, 0, 0, 0, 0, 0x972D),
     L2(4, 1, 0, 0, 0, 0, 0, 0x972E),
@@ -8569,10 +8682,16 @@ const u16 ag_face_panel_table_unused[876] = {
     L2(250, 255, 0, 0, 0, 0, 0, 0x9731),
     CMD(CM_IXBW, 0, 0, 1),
     CMD(CM_ROA, 0, 0, 0),
-    CMD(CM_END, 0, 0, 0),
+};
+
+const u16 ag_06_char_table_000_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 ag_06_char_table_000[8] = {
     L2(250, 255, 0, 0, 0, 0, 0, 0x9732),
     CMD(CM_ROA, 0, 0, 0),
-    CMD(CM_END, 0, 0, 0),
+};
+
+const u16 ag_06_char_table_001_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 ag_06_char_table_001[48] = {
     L2(4, 0, 0, 0, 0, 0, 0, 0x9733),
     L2(4, 0, 0, 0, 0, 0, 0, 0x9734),
     L2(5, 0, 0, 0, 0, 0, 0, 0x9735),
@@ -8585,7 +8704,10 @@ const u16 ag_face_panel_table_unused[876] = {
     L2(32, 0, 0, 0, 0, 0, 0, 0x973C),
     L2(250, 255, 0, 0, 0, 0, 0, 0x973C),
     CMD(CM_ROA, 0, 0, 0),
-    CMD(CM_END, 0, 0, 0),
+};
+
+const u16 ag_06_char_table_002_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 ag_06_char_table_002[68] = {
     L2(4, 0, 0, 0, 0, 0, 0, 0x973D),
     L2(4, 0, 0, 0, 0, 0, 0, 0x973E),
     L2(4, 0, 0, 0, 0, 0, 0, 0x973F),
@@ -8603,7 +8725,10 @@ const u16 ag_face_panel_table_unused[876] = {
     L2(250, 255, 0, 0, 0, 0, 0, 0x974A),
     CMD(CM_IXBW, 0, 0, 1),
     CMD(CM_ROA, 0, 0, 0),
-    CMD(CM_END, 0, 0, 0),
+};
+
+const u16 ag_07_char_table_000_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 ag_07_char_table_000[52] = {
     L2(250, 0, 0, 0, 0, 0, 0, 0x2245),
     L2(4, 0, 0, 0, 0, 0, 0, 0x2246),
     L2(4, 0, 0, 0, 0, 0, 0, 0x2247),
@@ -8617,7 +8742,10 @@ const u16 ag_face_panel_table_unused[876] = {
     L2(4, 0, 0, 0, 0, 0, 0, 0x224F),
     L2(250, 255, 0, 0, 0, 0, 0, 0x224F),
     CMD(CM_ROA, 0, 0, 0),
-    CMD(CM_END, 0, 0, 0),
+};
+
+const u16 ag_07_char_table_001_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 ag_07_char_table_001[28] = {
     L2(56, 0, 0, 0, 0, 0, 0, 0x2250),
     L2(2, 0, 0, 0, 0, 0, 0, 0x2251),
     L2(2, 0, 0, 0, 0, 0, 0, 0x2252),
@@ -8625,7 +8753,10 @@ const u16 ag_face_panel_table_unused[876] = {
     L2(16, 0, 0, 0, 0, 0, 0, 0x2252),
     L2(250, 255, 0, 0, 0, 0, 0, 0x2252),
     CMD(CM_ROA, 0, 0, 0),
-    CMD(CM_END, 0, 0, 0),
+};
+
+const u16 ag_07_char_table_002_head[4] = { HEAD(2, 0, 0, 0, 0, 0, 0) };
+const u16 ag_07_char_table_002[48] = {
     L2(4, 0, 0, 0, 0, 0, 0, 0x2253),
     L2(4, 0, 0, 0, 0, 0, 0, 0x2254),
     L2(4, 0, 0, 0, 0, 0, 0, 0x2255),

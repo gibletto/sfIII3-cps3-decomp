@@ -1,10 +1,10 @@
 /*
  * ENTRY_TBL.C  debug monitor and disassembler strings and opcode tables
  *
- * monitor_msg_tbl holds the text records of the exception monitor (exception names, title and
- * register lines); dbg_dump_title and dbg_disasm_title are the memory dump and disassembly
- * headers. The sh_op_*_tbl lists give { opcode, mnemonic } pairs for each SH-2 operand form,
- * ending with 0xFFFF; sh_mn_* are the mnemonic strings, sh_str_* the monitor messages, and
+ * monitor_msg_tbl holds the exception monitor's messages and monitor_panel_tbl its register panel
+ * (title and register lines); dbg_dump_title and dbg_disasm_title are the memory dump and
+ * disassembly headers. The sh_op_*_tbl lists give { opcode, mnemonic } pairs for each SH-2 operand
+ * form, ending with 0xFFFF; sh_mn_* are the mnemonic strings, sh_str_* the monitor messages, and
  * str_R0 .. str_SP the register names reached through reg_name_tbl. Read by ENTRY_DBG.C.
  */
 
@@ -171,15 +171,20 @@ extern const char sh_mn_div1_rm_rn[];
 extern const char sh_mn_dmulul_rm_rn[];
 extern const char sh_mn_cmp_hi_rm_rn[];
 
-/* provisional name: the exception monitor's text, the six exception messages ([0..5]) and the register
-   panel ([6..13]) */
-const TM_STRING monitor_msg_tbl[14] = {
+/* provisional name: the exception monitor's messages, one per exception; nothing in the program refers
+   to them */
+const TM_STRING monitor_msg_tbl[6] = {
     { 1, 22, 14, sh_str_monitor_entry },
     { 1, 22, 14, sh_str_illegal_inst },
     { 1, 22, 14, sh_str_slot_illegal_inst },
     { 1, 22, 14, sh_str_cpu_addr_error },
     { 1, 22, 14, sh_str_dma_addr_error },
     { 1, 22, 14, sh_str_unknown_exception },
+};
+
+/* provisional name: the register panel of the exception monitor (cpu_hang_forever): the title and the
+   register lines, printed as one text whose line feeds step to the next record */
+const TM_STRING monitor_panel_tbl[8] = {
     { 12, 0, 14, sh_str_monitor_title },
     { 0, 2, 14, sh_str_regs_r0_r2 },
     { 0, 3, 14, sh_str_regs_r3_r5 },

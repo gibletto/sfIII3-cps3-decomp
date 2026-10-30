@@ -14,23 +14,23 @@
 
 extern const u16 snd_bank_00[], snd_bank_01[], snd_bank_02[], snd_bank_03[], snd_bank_04[], snd_bank_05[], snd_bank_06[], snd_bank_07[], snd_bank_08[], snd_bank_09[], snd_bank_10[], snd_bank_11[], snd_bank_12[], snd_bank_13[], snd_bank_14[], snd_bank_15[];
 
-u8* const snd_bank_rom_tbl[16] = {
-    (u8*)snd_bank_00,
-    (u8*)snd_bank_01,
-    (u8*)snd_bank_02,
-    (u8*)snd_bank_03,
-    (u8*)snd_bank_04,
-    (u8*)snd_bank_05,
-    (u8*)snd_bank_06,
-    (u8*)snd_bank_07,
-    (u8*)snd_bank_08,
-    (u8*)snd_bank_09,
-    (u8*)snd_bank_10,
-    (u8*)snd_bank_11,
-    (u8*)snd_bank_12,
-    (u8*)snd_bank_13,
-    (u8*)snd_bank_14,
-    (u8*)snd_bank_15,
+const u8* const snd_bank_rom_tbl[16] = {
+    (const u8*)snd_bank_00,
+    (const u8*)snd_bank_01,
+    (const u8*)snd_bank_02,
+    (const u8*)snd_bank_03,
+    (const u8*)snd_bank_04,
+    (const u8*)snd_bank_05,
+    (const u8*)snd_bank_06,
+    (const u8*)snd_bank_07,
+    (const u8*)snd_bank_08,
+    (const u8*)snd_bank_09,
+    (const u8*)snd_bank_10,
+    (const u8*)snd_bank_11,
+    (const u8*)snd_bank_12,
+    (const u8*)snd_bank_13,
+    (const u8*)snd_bank_14,
+    (const u8*)snd_bank_15,
 };
 
 const u16 snd_bank_00[128] = {  /* program -> offset of its key splits */

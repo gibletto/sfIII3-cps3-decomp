@@ -22,7 +22,7 @@ extern const u16 end_1100_scrn_data[19][16][32];
 extern const u16 end_1600_scrn_data[14][16][32];
 extern const u16 end_1800_scrn_data[11][16][32];
 extern const u16 end_1900_scrn_data[10][16][32];
-extern const u16 end_2000_scrn_data[8][16][32];
+extern const u16 end_2000_scrn_data[5][16][32];
 extern const u16 end_200_scrn_data[9][16][32];
 extern const u16 end_300_scrn_data[14][16][32];
 extern const u16 end_400_scrn_data[22][16][32];

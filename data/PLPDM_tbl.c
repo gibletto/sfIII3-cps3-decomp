@@ -361,8 +361,7 @@ const s16 exdm_ix_data[2][24][5] = {
     { { 0, 0, 1, 0, 0x167 }, { -1, 14, 1, 0, 0x6E9 }, { 6, 9, 1, 0, 0xC98 }, { 12, 3, 1, 0, 0x1339 }, { 9, -1, 1, 0, 0x1905 }, { -7, 3, 1, 0, 0x1FC4 }, { 18, -18, 1, 0, 0x24D9 }, { 0, 19, 1, 964, 0x2B32 }, { 40, 21, 1, 0, 0x30BA }, { 14, 22, 1, 0, 0x3687 }, { 12, 3, 1, 0, 0x3D39 }, { 6, 9, 1, 0, 0x4298 }, { 6, 9, 1, 0, 0x4898 }, { 0, 0, 1, 0, 0x4F67 }, { 6, 9, 1, 0, 0x5498 }, { 6, 9, 1, 0, 0x5498 }, { 25, 14, 1, 0, 0x5BA3 }, { 16, 20, 1, 0, 0x619C }, { -6, 0, 1, 0, 0x6733 }, { 23, 2, 1, 0, 0x6E30 }, { 9, 22, 1, 0, 0x72F7 }, { 0, 0, 1, 0, 0 }, { 0, 0, 1, 0, 0 }, { 0, 0, 1, 0, 0 } },
 };
 
-/* Stored after exdm_ix_data. Nothing in the program refers to it by name or address; if it is read,
-   it is through an index past the end of exdm_ix_data. */
+/* Stored after exdm_ix_data. Nothing in the program refers to it by name or address. */
 const u16 exdm_ix_data_tail[18] = {
     32, 31, 30, 29, 28, 27, 26, 25,
     24, 23, 22, 21, 20, 19, 18, 17,

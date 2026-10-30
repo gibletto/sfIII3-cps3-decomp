@@ -527,7 +527,7 @@ void c2_last_char_and_mvxy(WORK_Other* ewk) {
 
 s32 c2_last_dir_select(PLW* wk, WORK* efw) {
     s16 ix = get_sel_hosei_tbl_ix(wk->player_number) + 1;
-    s16* dad = efw->hosei_adrs[ix].hos_box;
+    const s16* dad = efw->hosei_adrs[ix].hos_box;
     s16 dir = 4;
     if (check_work_position_bonus(&wk->wu, efw->xyz[0].disp.pos + dad[0] + (dad[1] / 2))) {
         dir = 0;
@@ -842,7 +842,7 @@ WORK_Other* ewk;
 
 
 void set_bs2_floor(WORK_Other* wk) {
-    s16* dad;
+    const s16* dad;
     player_hosei_data(wk, wk->wu.dir_timer, 1);
     dad = wk->wu.hosei_adrs[wk->wu.cg_ja.hoix].hos_box;
     bs2_floor[0] = wk->wu.xyz[0].disp.pos + dad[0];

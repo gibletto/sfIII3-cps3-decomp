@@ -1302,7 +1302,7 @@ void Setup_VS_OBJ(s16 Option) {
 
 s32 Check_Bonus_Stage(void) {
     Setup_ID();
-    if ((Game_setting.bonus & 1) == 0) {
+    if ((Game_setting.Bonus_Game & 1) == 0) {
         return 0;
     }
     Bonus_Type = Check_Bonus_Type();

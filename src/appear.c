@@ -274,9 +274,9 @@ s32 home_visitor_check(PLW* wk) {
     return hv_type;
 }
 
-void appear_data_set(PLW* wk, APPEAR_DATA* dtbl) {
+void appear_data_set(PLW* wk, const APPEAR_DATA* dtbl) {
     if (wk->wu.id) {
-        if (Game_setting.mode) {
+        if (Game_setting.Screen_Mode) {
             wk->wu.xyz[0].disp.pos = bg_w.bgw[1].pos_x_work - dtbl->whx;
         } else {
             wk->wu.xyz[0].disp.pos = bg_w.bgw[1].pos_x_work - dtbl->hx;
@@ -287,7 +287,7 @@ void appear_data_set(PLW* wk, APPEAR_DATA* dtbl) {
         Appear_flag[0] = dtbl->ixod;
         wk->wu.char_index = dtbl->char_index;
     } else {
-        if (Game_setting.mode) {
+        if (Game_setting.Screen_Mode) {
             wk->wu.xyz[0].disp.pos = bg_w.bgw[1].pos_x_work + dtbl->whx;
         } else {
             wk->wu.xyz[0].disp.pos = bg_w.bgw[1].pos_x_work + dtbl->hx;
@@ -303,7 +303,7 @@ void appear_data_set(PLW* wk, APPEAR_DATA* dtbl) {
 
 
 void appear_data_init_set(PLW* wk) {
-    APPEAR_DATA* dtbl;
+    const APPEAR_DATA* dtbl;
     s8 ap_work;
     s16 id_work;
     Appear_hv[wk->wu.id] = home_visitor_check(wk);
@@ -758,7 +758,7 @@ void Appear_08000(PLW* wk) {
             bg_app_stop = 1;
             break;
         }
-        appear_data_set(wk, (APPEAR_DATA*)appear_data);
+        appear_data_set(wk, appear_data);
         wk->wu.routine_no[4] = 2;
         break;
     case AP08_END:
@@ -1105,7 +1105,7 @@ void Appear_17000(PLW* wk) {
         wk->wu.routine_no[3]++;
         wk->wu.disp_flag = 1;
         if (gill_appear_check()) {
-            appear_data_set(wk, (APPEAR_DATA*)appear_data);
+            appear_data_set(wk, appear_data);
             Appear_00000(wk);
             break;
         }
@@ -1313,7 +1313,7 @@ void Appear_21000(PLW* wk) {
         work = random_16_com();
         work &= 7;
         if (work == 6 || work == 7) {
-            appear_data_set(wk, (APPEAR_DATA*)appear_data + 24);
+            appear_data_set(wk, &appear_data[24]);
             set_char_move_init(&wk->wu, 9, 0xE);
         } else {
             set_char_move_init(&wk->wu, 9, work + 8);
@@ -1395,12 +1395,12 @@ void Appear_23000(PLW* wk) {
 void Appear_24000(PLW* wk) {
     if (wk->wu.operator == 0) {
         if (wk->wu.id) {
-            if (Game_setting.mode) {
+            if (Game_setting.Screen_Mode) {
                 wk->wu.xyz[0].disp.pos = bg_w.bgw[1].pos_x_work + 200;
             } else {
                 wk->wu.xyz[0].disp.pos = bg_w.bgw[1].pos_x_work + 168;
             }
-        } else if (Game_setting.mode) {
+        } else if (Game_setting.Screen_Mode) {
             wk->wu.xyz[0].disp.pos = bg_w.bgw[1].pos_x_work - 200;
         } else {
             wk->wu.xyz[0].disp.pos = bg_w.bgw[1].pos_x_work - 144;
@@ -1687,7 +1687,7 @@ void Appear_30000(PLW* wk) {
         bg_app_stop = 1;
         work = random_16_com();
         work &= 3;
-        appear_data_set(wk, (APPEAR_DATA*)appear_data + 24);
+        appear_data_set(wk, &appear_data[24]);
         set_char_move_init(&wk->wu, 9, 0xE);
         break;
     case AP30_END:
@@ -1707,7 +1707,7 @@ void Appear_31000(PLW* wk) {
         wk->wu.routine_no[3]++;
         wk->wu.disp_flag = 1;
         if (Appear_flag[wk->wu.id]) {
-            appear_data_set(wk, (APPEAR_DATA*)appear_data);
+            appear_data_set(wk, appear_data);
             Appear_00000(wk);
         } else {
             set_char_move_init(&wk->wu, 9, 8);
@@ -1978,7 +1978,7 @@ void Appear_39000(PLW* wk) {
         wk->wu.routine_no[3]++;
         wk->wu.disp_flag = 1;
         if (gill_appear_check()) {
-            appear_data_set(wk, (APPEAR_DATA*)appear_data);
+            appear_data_set(wk, appear_data);
             Appear_00000(wk);
             break;
         }

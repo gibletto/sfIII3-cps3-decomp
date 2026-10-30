@@ -9,8 +9,7 @@
  * MODE_INIT.C. All read by MODE_INIT.C, except parental_advisory_msg (DEMO00.C, the
  * attract-mode logos), test_cursor_x_tbl and test_cursor_y_tbl (TEST_MODE.C, the test-mode
  * cursor) and the screen_* window, origin, display register and flip offset tables of each
- * screen mode (SCRN_CTRL.C). boot_version_str and screen_flip_ofs_tbl_tail are not referred to
- * by name.
+ * screen mode (SCRN_CTRL.C). boot_version_str is not referred to by name.
  */
 
 #include "types.h"
@@ -297,17 +296,14 @@ const s16 screen_disp_reg_tbl[8][4] = {
     { 64, 0, 159, 2 },
 };
 
-const s16 screen_flip_ofs_tbl[5][8] = {
+const s16 screen_flip_ofs_tbl[8][8] = {
     { 0, 0, 0, 0, 0, 0, 0, 0 },
     { 0, 0, 0, 0, 0, 0, 0, 0 },
     { 0, 0, 0, 0, 0, 0, 0, 0 },
     { 0, 262, 128, 288, 0, 265, 128, 0 },
     { 0, 0, 0, 0, 0, 0, 0, 0 },
-};
-
-/* Stored after screen_flip_ofs_tbl. Nothing in the program refers to it by name or address; if it is read,
-   it is through an index past the end of screen_flip_ofs_tbl. */
-const s16 screen_flip_ofs_tbl_tail[3] = {
-    0, 0, 0,
+    { 0, 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 262, 22, 288, 0, 265, 0, 0 },
 };
 

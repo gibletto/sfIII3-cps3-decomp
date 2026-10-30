@@ -31,9 +31,9 @@ u8 pl;
     const s16 *t;
     g = &Game_setting;
     t = hoji_counter_tbl;
-    (*&count_work).hoji_counter = t[g->set3];
+    (*&count_work).hoji_counter = t[g->Timer_Speed];
     Counter_hi = 99;
-    Counter_low = t[g->set3];
+    Counter_low = t[g->Timer_Speed];
     *(s16*)&round_timer = Counter_hi;
     count_digit_trans((s8)pl, 9, 9);
     if (pl == 0) {
@@ -50,9 +50,9 @@ u8 pl;
 
 /* provisional name */
 void count_cont_reset(void) {
-    (*&count_work).hoji_counter = hoji_counter_tbl[Game_setting.set3];
+    (*&count_work).hoji_counter = hoji_counter_tbl[Game_setting.Timer_Speed];
     Counter_hi = 99;
-    Counter_low = hoji_counter_tbl[Game_setting.set3];
+    Counter_low = hoji_counter_tbl[Game_setting.Timer_Speed];
     *(s16*)&round_timer = Counter_hi;
     flash_r_num = 0;
     flash_col = 0;

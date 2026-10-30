@@ -64,8 +64,7 @@ s8 Wipe_Count;  /* 02011426 */
 u8 Wipe_Limit;  /* 02011427 */
 u8 Wipe_Mode;  /* 02011428 */
 u8 Wipe_Kind;  /* 02011429 */
-u8 sc_chr_ram[7360];  /* 0201142A */
-u8 bcount_mark_chr_w[9024];  /* 020130EA */
+u8 sc_chr_ram[16384];  /* 0201142A */
 s8 Cover_Timer;  /* 0201542A */
 s16 Text_Page_Y;  /* 0201542C */
 s8 E_07_Flag[2];  /* 0201542E */

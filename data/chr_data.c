@@ -6,14 +6,14 @@
  * ending window frame (end_waku_chr), Gill's super art numbers (gill_sa_number_chr) and the
  * bonus count marks (bcount_mark_chr); these are read by SC_TRANS.C, and wipe_mask_chr, the
  * screen wipe mask, by SE_2.C. config_jp_chr_0, config_jp_chr_1 and jp_menu_cg_2 - 5 are the
- * graphics of the Japanese configuration pages, read by GAME_CONFIG_JP.C and SYS_CONFIG_2.C
- * (sysconfig_jp_cg is reached through config_jp_chr_0). The effF9_mes_, effB8_mes_ and
- * effA6_mes_ tables are the Japanese and English message scripts of the ending window
- * (EFFF9.C), the winner's message banner (EFFB8.C) and the pre-fight dialogue (EFFA6.C), with
- * their numbered sub-tables reached through them. test_menu_str_, test_menu_scr_jp_0 and the
- * sys_cfg_ and cfg_top_ tables are the test menu and system configuration screen scripts, read
- * by TEST_MENU_SCR.C: lists of blocks, each the glyph count, column, row and attribute followed by
- * the glyphs, ended by a count of 0.
+ * graphics of the Japanese configuration pages, read by GAME_CONFIG_JP.C; sysconfig_jp_cg holds
+ * the nine character blocks of the Japanese system configuration menu, read by SYS_CONFIG_2.C.
+ * The effF9_mes_, effB8_mes_ and effA6_mes_ tables are the Japanese and English message scripts
+ * of the ending window (EFFF9.C), the winner's message banner (EFFB8.C) and the pre-fight
+ * dialogue (EFFA6.C), with their numbered sub-tables reached through them. test_menu_str_,
+ * test_menu_scr_jp_0 and the sys_cfg_ and cfg_top_ tables are the test menu and system
+ * configuration screen scripts, read by TEST_MENU_SCR.C: lists of blocks, each the glyph count,
+ * column, row and attribute followed by the glyphs, ended by a count of 0.
  */
 
 #include "types.h"
@@ -3563,7 +3563,7 @@ extern const u16 sys_cfg_page_scr_jp_79[];
 extern const u16 sys_cfg_page_scr_jp_8[];
 extern const u16 sys_cfg_page_scr_jp_80[];
 extern const u16 sys_cfg_page_scr_jp_9[];
-extern const u16 sys_cfg_sound_scr_jp_0[];
+extern const u16 sys_cfg_sound_page_scr_jp_0[];
 extern const u16 test_menu_scr_jp_0[];
 extern const s8 test_menu_str_0[];
 extern const s8 test_menu_str_1[];
@@ -48086,7 +48086,7 @@ const s8 test_menu_str_12[20] = "START  = 1P SHOT1";
 
 const s8 test_menu_str_asia_9[12] = " 9. EXIT\n";
 
-const u16 sys_cfg_sound_scr_jp_0[50] = {
+const u16 sys_cfg_sound_page_scr_jp_0[50] = {
     15, 12, 0, 14,  0x12B0, 0x1200, 0x12DC, 0x1200, 0x121C, 0x12C8, 0x128C, 0x1200, 0x12C4, 0x12B0,
                     0x12CC, 0x1300, 0x12D4, 0x1308, 0x1200,
     3, 18, 4, 14,   0x1330, 0x1310, 0x1228,

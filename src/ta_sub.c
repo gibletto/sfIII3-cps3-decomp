@@ -464,7 +464,7 @@ WORK_Other* ewk;
 PLW* pl;
 s16 where_type;
 {
-    s16* hd1 = pl->wu.h_bod->body_dm[where_type];
+    const s16* hd1 = pl->wu.h_bod->body_dm[where_type];
     if (hit_check_subroutine_yu(&pl->wu, &ewk->wu, hd1, eff_hit_data[ewk->wu.type])) {
         return 1;
     }
@@ -473,7 +473,7 @@ s16 where_type;
 
 
 
-s32 hit_check_subroutine_yu(WORK* tpl, WORK* tef, s16* hd1, s16* hd2) {
+s32 hit_check_subroutine_yu(WORK* tpl, WORK* tef, const s16* hd1, const s16* hd2) {
     s16 d0 = *hd1++;
     s16 d1 = *hd1++;
     s16 d2;
