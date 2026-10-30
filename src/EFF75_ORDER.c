@@ -51,7 +51,7 @@ void EFF75_CHAR_CHANGE(WORK_Other* ewk) {
         return;
     }
     ewk->wu.routine_no[0] = R0_WAIT;
-    Order[ewk->wu.dir_old] = 0;
+    Order[ewk->wu.dir_old] = R0_WAIT;
     ewk->wu.dir_step = Order_Dir[ewk->wu.dir_old];
     set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
 }
@@ -74,7 +74,7 @@ void EFF75_SUDDENLY(WORK_Other* ewk) {
         break;
     default:
         ewk->wu.routine_no[0] = R0_WAIT;
-        Order[ewk->wu.dir_old] = 0;
+        Order[ewk->wu.dir_old] = R0_WAIT;
         break;
     }
 }

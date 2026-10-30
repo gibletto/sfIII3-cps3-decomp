@@ -103,7 +103,7 @@ s32 Winner_Scene(void) {
 
 void Win_1st(void) {
     M_No0++;
-    M_No1 = 0;
+    M_No1 = M1_COVER;
     Cover_Timer = 23;
     All_Clear_Suicide();
     System_all_clear_Wait();
@@ -252,7 +252,7 @@ s32 Loser_Scene(void) {
 /* provisional name */
 void Lose_1st(void) {
     M_No0++;
-    M_No1 = 0;
+    M_No1 = M1_COVER;
     Cover_Timer = 23;
     All_Clear_Suicide();
     System_all_clear_Wait();

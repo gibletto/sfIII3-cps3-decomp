@@ -411,7 +411,7 @@ void kotp_01000(WORK_Other* ewk, TAMA* twk) {
         if (ewk->wu.cg_type == 0xFF) {
             set_char_move_init(&ewk->wu, 0, twk->ernm);
             ewk->wu.routine_no[1] = R1_VANISH;
-            ewk->wu.routine_no[2] = 0;
+            ewk->wu.routine_no[2] = R2_DRIFT;
             break;
         }
         if (screen_range_check(&ewk->wu)) {
@@ -430,7 +430,7 @@ void kotp_01000(WORK_Other* ewk, TAMA* twk) {
             set_char_move_init(&ewk->wu, 0, twk->erex);
         }
         ewk->wu.routine_no[1] = R1_VANISH;
-        ewk->wu.routine_no[2] = 0;
+        ewk->wu.routine_no[2] = R2_DRIFT;
         ewk->wu.hf.hit_flag = 0;
         ewk->wu.hit_quake = 0;
         break;
@@ -1415,7 +1415,7 @@ void kotp_13000(WORK_Other* ewk, TAMA* twk) {
         if (ewk->wu.cg_type == 0xFF) {
             set_char_move_init(&ewk->wu, 0, twk->ernm);
             ewk->wu.routine_no[1] = R1_VANISH;
-            ewk->wu.routine_no[2] = 0;
+            ewk->wu.routine_no[2] = R2_DRIFT;
             break;
         }
         if (screen_range_check(&ewk->wu)) {
@@ -1429,7 +1429,7 @@ void kotp_13000(WORK_Other* ewk, TAMA* twk) {
         ewk->wu.dm_vital = 0;
         if (ewk->wu.vital_new < 256) {
             ewk->wu.routine_no[1] = R1_VANISH;
-            ewk->wu.routine_no[2] = 1;
+            ewk->wu.routine_no[2] = R2_STAY;
             ewk->wu.kage_flag = 0;
             ewk->wu.hit_stop = 0;
             ewk->wu.att_hit_ok = 0;

@@ -61,7 +61,7 @@ void effect_J7_move(WORK_Other* ewk) {
             if (mwk->wu.routine_no[1] != PLAYER_NORMAL) {
                 return;
             }
-            if (mwk->wu.routine_no[2] != 1) {
+            if (mwk->wu.routine_no[2] != NORMAL_STAND) {
                 return;
             }
         }

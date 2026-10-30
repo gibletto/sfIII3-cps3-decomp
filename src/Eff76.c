@@ -63,14 +63,14 @@ void effect_76_move(WORK_Other* ewk) {
 
 void EFF76_WAIT(WORK_Other* ewk) {
     if (Check_Range_Out(ewk)) {
-        Order[ewk->wu.dir_old] = 4;
+        Order[ewk->wu.dir_old] = R0_DIE;
         ewk->wu.routine_no[0] = R0_DIE;
         ewk->wu.routine_no[1] = R1_DELAY;
         Order_Timer[ewk->wu.dir_old] = 1;
         return;
     }
     if (Suicide[ewk->wu.direction] != 0) {
-        Order[ewk->wu.dir_old] = 4;
+        Order[ewk->wu.dir_old] = R0_DIE;
         ewk->wu.routine_no[0] = R0_DIE;
         ewk->wu.routine_no[1] = R1_KILL;
         Order_Timer[ewk->wu.dir_old] = 1;
@@ -84,7 +84,7 @@ void EFF76_WAIT(WORK_Other* ewk) {
 
 void EFF76_WAIT_BREAK_INTO(WORK_Other* ewk) {
     if (Suicide[ewk->wu.direction] != 0) {
-        Order[ewk->wu.dir_old] = 4;
+        Order[ewk->wu.dir_old] = R0_DIE;
         ewk->wu.routine_no[0] = R0_DIE;
         ewk->wu.routine_no[1] = R1_KILL;
         Order_Timer[ewk->wu.dir_old] = 1;
@@ -117,14 +117,14 @@ void EFF76_SLIDE_IN(WORK_Other* ewk) {
         if (0 < ewk->wu.mvxy.a[0].sp) {
             if (ewk->wu.hit_quake <= ewk->wu.xyz[0].disp.pos) {
                 if (Order[ewk->wu.dir_old] == ewk->wu.routine_no[0]) {
-                    Order[ewk->wu.dir_old] = 0;
+                    Order[ewk->wu.dir_old] = R0_WAIT;
                 }
                 ewk->wu.routine_no[0] = R0_WAIT;
                 ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake;
             }
         } else if (ewk->wu.hit_quake >= ewk->wu.xyz[0].disp.pos) {
             if (Order[ewk->wu.dir_old] == ewk->wu.routine_no[0]) {
-                Order[ewk->wu.dir_old] = 0;
+                Order[ewk->wu.dir_old] = R0_WAIT;
             }
             ewk->wu.routine_no[0] = R0_WAIT;
             ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake;
@@ -160,7 +160,7 @@ void EFF76_SUDDENLY(WORK_Other* ewk) {
             break;
         default:
             ewk->wu.routine_no[0] = R0_WAIT;
-            Order[ewk->wu.dir_old] = 0;
+            Order[ewk->wu.dir_old] = R0_WAIT;
             break;
         }
         set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
@@ -171,7 +171,7 @@ void EFF76_SUDDENLY(WORK_Other* ewk) {
             ewk->wu.xyz[0].disp.pos = bg_w.bgw[0].wxy[0].disp.pos;
             ewk->wu.xyz[1].disp.pos = bg_w.bgw[0].wxy[1].disp.pos + Pos_Cont_Data_76[ewk->wu.dir_old - 59][SEL_POS_Y];
             ewk->wu.routine_no[0] = R0_WAIT;
-            Order[ewk->wu.dir_old] = 0;
+            Order[ewk->wu.dir_old] = R0_WAIT;
         }
         break;
     case R1_TO_BG4:
@@ -180,7 +180,7 @@ void EFF76_SUDDENLY(WORK_Other* ewk) {
             ewk->wu.xyz[0].disp.pos = bg_w.bgw[3].wxy[0].disp.pos - 16;
             ewk->wu.xyz[1].disp.pos = bg_w.bgw[3].wxy[1].disp.pos + Pos_Data_76[ewk->wu.dir_old - 43][SEL_POS_Y];
             ewk->wu.routine_no[0] = R0_WAIT;
-            Order[ewk->wu.dir_old] = 0;
+            Order[ewk->wu.dir_old] = R0_WAIT;
         }
         break;
     }
@@ -197,7 +197,7 @@ void EFF76_BEFORE(WORK_Other* ewk) {
     ewk->wu.position_z = 2;
     ewk->wu.routine_no[0] = R0_WAIT;
     ewk->wu.routine_no[1] = R1_DELAY;
-    Order[ewk->wu.dir_old] = 0;
+    Order[ewk->wu.dir_old] = R0_WAIT;
     set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
 }
 
@@ -237,7 +237,7 @@ void EFF76_SHIFT(WORK_Other* ewk) {
         ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;
         if (ewk->wu.hit_quake >= ewk->wu.xyz[0].disp.pos) {
             ewk->wu.routine_no[0] = R0_WAIT;
-            Order[ewk->wu.dir_old] = 0;
+            Order[ewk->wu.dir_old] = R0_WAIT;
             ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake;
         }
         break;

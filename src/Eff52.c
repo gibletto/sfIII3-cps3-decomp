@@ -80,7 +80,7 @@ void EFF52_SUDDENLY(WORK_Other* ewk) {
         ewk->wu.routine_no[6]++;
     case R6_HOLD:
         if (Select_Start[ewk->master_id] == 0) {
-            Order[ewk->wu.dir_old] = 4;
+            Order[ewk->wu.dir_old] = R0_KILL;
             ewk->wu.routine_no[0] = R0_KILL;
             ewk->wu.routine_no[1] = R1_START;
             Order_Timer[ewk->wu.dir_old] = 1;
@@ -92,7 +92,7 @@ void EFF52_SUDDENLY(WORK_Other* ewk) {
 
 
 void EFF52_SLIDE_IN(WORK_Other* ewk) {
-    if (Order[ewk->wu.dir_old] == 4) {
+    if (Order[ewk->wu.dir_old] == R0_KILL) {
         ewk->wu.routine_no[0] = R0_KILL;
         ewk->wu.routine_no[1] = R1_START;
         return;
@@ -111,13 +111,13 @@ void EFF52_SLIDE_IN(WORK_Other* ewk) {
         if (0 < ewk->wu.mvxy.a[0].sp) {
             if (ewk->wu.hit_quake <= ewk->wu.xyz[0].disp.pos) {
                 ewk->wu.routine_no[0] = R0_WAIT;
-                Order[ewk->wu.dir_old] = 0;
+                Order[ewk->wu.dir_old] = R0_WAIT;
                 ewk->wu.routine_no[6] = R6_START;
                 ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake;
             }
         } else if (ewk->wu.hit_quake >= ewk->wu.xyz[0].disp.pos) {
             ewk->wu.routine_no[0] = R0_WAIT;
-            Order[ewk->wu.dir_old] = 0;
+            Order[ewk->wu.dir_old] = R0_WAIT;
             ewk->wu.routine_no[6] = R6_START;
             ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake;
         }

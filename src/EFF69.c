@@ -76,14 +76,14 @@ void EFF69_SLIDE_IN(WORK_Other* ewk)
         if (0 < ewk->wu.mvxy.a[0].sp) {
             if (ewk->wu.hit_quake <= ewk->wu.xyz[0].disp.pos) {
                 if (Order[ewk->wu.dir_old] == ewk->wu.routine_no[0]) {
-                    Order[ewk->wu.dir_old] = 0;
+                    Order[ewk->wu.dir_old] = R0_WAIT;
                 }
                 ewk->wu.routine_no[0] = R0_WAIT;
                 ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake;
             }
         } else if (ewk->wu.hit_quake >= ewk->wu.xyz[0].disp.pos) {
             if (Order[ewk->wu.dir_old] == ewk->wu.routine_no[0]) {
-                Order[ewk->wu.dir_old] = 0;
+                Order[ewk->wu.dir_old] = R0_WAIT;
             }
             ewk->wu.routine_no[0] = R0_WAIT;
             ewk->wu.xyz[0].disp.pos = ewk->wu.hit_quake;
@@ -144,7 +144,7 @@ void EFF69_SUDDENLY(WORK_Other* ewk) {
         break;
     default:
         ewk->wu.routine_no[0] = R0_WAIT;
-        Order[ewk->wu.dir_old] = 0;
+        Order[ewk->wu.dir_old] = R0_WAIT;
         break;
     }
 }

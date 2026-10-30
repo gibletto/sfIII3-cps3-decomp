@@ -111,49 +111,6 @@
 #include "PLS02.h"
 #include "fighter.h"
 
-/* G_No2 under G1_TITLE: the Game00 routine */
-#define G2_TITLE        0       /* Game0_0: the title */
-#define G2_TITLE_WAIT   1       /* Game0_1: until a start button */
-#define G2_TITLE_WIPE   2       /* Game0_2: save the screen and start the wipe */
-#define G2_TITLE_OUT    3       /* Game0_3: finish the wipe, on to select */
-#define G2_TITLE_FREE   4       /* Game0_2 again: a free-play start skips the title */
-
-/* G_No2 under G1_SELECT */
-#define G2_SEL_INIT     0       /* set up */
-#define G2_SEL_MAIN     1       /* the select screen, until both have chosen */
-
-/* G_No2 under G1_NEXT_CPU */
-#define G2_NEXT_INIT    0       /* set up */
-#define G2_NEXT_MAIN    1       /* the next opponent screen */
-
-/* G_No2 under G1_NEXT_Q */
-#define G2_Q_INIT       0       /* set up */
-#define G2_Q_MAIN       1       /* the Q screen */
-#define G2_Q_OUT        2       /* wipe out, then the fight */
-#define G2_Q_IN         3       /* from the winner scene: set up and wipe */
-#define G2_Q_IN_WAIT    4       /* finish the wipe */
-
-/* G_No2 under G1_BONUS */
-#define G2_BONUS_INIT   0       /* set up the bonus stage */
-#define G2_BONUS_START  1       /* start its effects */
-#define G2_BONUS_INTRO  2       /* run it for G_Timer frames, then wipe in */
-#define G2_BONUS_REVIVAL 3      /* finish the wipe */
-#define G2_BONUS_PLAY   4       /* the bonus stage, until it ends */
-#define G2_BONUS_OUT    5       /* wipe out, then the next opponent */
-
-/* G_No2 under G1_AFTER_BONUS */
-#define G2_AFTER_INIT   0       /* set up */
-#define G2_AFTER_MAIN   1       /* the after-bonus screen */
-
-/* G_No2 under G1_GAME_OVER */
-#define G2_OVER_INIT    0       /* set up */
-#define G2_OVER_MAIN    1       /* Game_Over, then the ranking or the exit */
-#define G2_OVER_RANKING 2       /* the ranking */
-#define G2_OVER_EXIT    3       /* wait G_Timer and wipe out */
-#define G2_OVER_OUT     4       /* to select for a break-in, else to the attract loop */
-#define G2_OVER_PL_INIT 5       /* set up for Player_id only */
-#define G2_OVER_PL      6       /* Game_Over, then the ranking */
-
 /* G_No3 in Disp_Ranking */
 #define G3_RANK_INIT    0       /* save the screen and wipe */
 #define G3_RANK_SETUP   1       /* set up the ranking */
@@ -217,7 +174,7 @@ void Loop_Demo(void) {
         }
         G_No0 = G0_GAME;
         G_No1 = G1_TITLE;
-        G_No2 = 0;
+        G_No2 = G2_TITLE;
         G_No3 = 0;
         D_No0 = 0;
         D_No1 = 0;
@@ -517,7 +474,7 @@ void Game01(void) {
             appear_type = APPEAR_ENTRY;
             if (Demo_Flag) {
                 G_No1 = G1_FIGHT;
-                G_No2 = 0;
+                G_No2 = G2_FIGHT_INIT;
                 E_No0 = E0_FIGHT;
                 E_No1 = 0;
                 E_No2 = 0;
@@ -593,7 +550,7 @@ void Game05(void) {
     switch (G_No2) {
     case G2_NEXT_INIT:
         G_No2++;
-        SC_No[0] = 0;
+        SC_No[0] = SC0_INIT;
         SC_No[1] = 0;
         SC_No[2] = 0;
         SC_No[3] = 0;
@@ -620,7 +577,7 @@ void Game05(void) {
             BGM_Stop();
             if (Bonus_Type == 0) {
                 G_No1 = G1_FIGHT;
-                G_No2 = 0;
+                G_No2 = G2_FIGHT_INIT;
                 E_No0 = E0_FIGHT;
                 E_No1 = 0;
                 E_No2 = 0;
@@ -628,7 +585,7 @@ void Game05(void) {
                 Bonus_Game_Flag = 0;
             } else {
                 G_No1 = G1_BONUS;
-                G_No2 = 0;
+                G_No2 = G2_BONUS_INIT;
                 G_No3 = 0;
                 E_No0 = E0_FIGHT;
                 E_No1 = 0;
@@ -671,7 +628,7 @@ void Game11(void) {
             BGM_Stop();
             if (Bonus_Type == 0) {
                 G_No1 = G1_FIGHT;
-                G_No2 = 0;
+                G_No2 = G2_FIGHT_INIT;
                 E_No0 = E0_FIGHT;
                 E_No1 = 0;
                 E_No2 = 0;
@@ -679,7 +636,7 @@ void Game11(void) {
                 Bonus_Game_Flag = 0;
             } else {
                 G_No1 = G1_BONUS;
-                G_No2 = 0;
+                G_No2 = G2_BONUS_INIT;
                 G_No3 = 0;
                 E_No0 = E0_FIGHT;
                 E_No1 = 0;
@@ -889,7 +846,7 @@ void Game03(void)
         }
         if (Game_setting.Event) {
             G_No1 = G1_GAME_OVER;
-            G_No2 = 0;
+            G_No2 = G2_OVER_INIT;
             G_No3 = 0;
             E_No0 = E0_GAME_OVER;
             E_No1 = 0;
@@ -897,7 +854,7 @@ void Game03(void)
             E_No3 = 0;
         } else {
             G_No1 = G1_NEXT_CPU;
-            G_No2 = 0;
+            G_No2 = G2_NEXT_INIT;
             G_No3 = 0;
             E_No0 = E0_NEXT_CPU;
             E_No1 = 0;
@@ -949,7 +906,7 @@ void Game04(void) {
                 E_Number[LOSER][3] = 0;
             } else {
                 G_No1 = G1_GAME_OVER;
-                G_No2 = 0;
+                G_No2 = G2_OVER_INIT;
                 G_No3 = 0;
                 E_No0 = E0_GAME_OVER;
                 E_No1 = 0;
@@ -1054,7 +1011,7 @@ void Game09(void) {
             System_all_clear_Wait();
             tilemap_fill_all(0, 32);
             G_No1 = G1_AFTER_BONUS;
-            G_No2 = 0;
+            G_No2 = G2_AFTER_INIT;
             G_No3 = 0;
             E_No0 = E0_NEXT_CPU;
             E_No1 = 0;
@@ -1122,7 +1079,7 @@ void Game10(void) {
             Cover_Timer = 24;
             BGM_Stop();
             G_No1 = G1_FIGHT;
-            G_No2 = 0;
+            G_No2 = G2_FIGHT_INIT;
             E_No0 = E0_FIGHT;
             E_No1 = 0;
             E_No2 = 0;
@@ -1160,7 +1117,7 @@ void Game08(void) {
     case G2_END_EXIT:
         if (--G_Timer == 0) {
             G_No1 = G1_GAME_OVER;
-            G_No2 = 0;
+            G_No2 = G2_OVER_INIT;
             E_No0 = E0_GAME_OVER;
             E_No1 = 0;
             E_No2 = 0;
@@ -1179,7 +1136,7 @@ void Game08(void) {
     case G2_END_SHORT:
         if (Short_Ending_Scene()) {
             G_No1 = G1_GAME_OVER;
-            G_No2 = 0;
+            G_No2 = G2_OVER_INIT;
             E_No0 = E0_GAME_OVER;
             E_No1 = 0;
             E_No2 = 0;
@@ -1255,7 +1212,7 @@ void Game06(void) {
                 Request_Break_Sub(0);
                 Request_Break_Sub(1);
                 G_No1 = G1_SELECT;
-                G_No2 = 0;
+                G_No2 = G2_SEL_INIT;
                 G_No3 = 0;
                 E_No0 = E0_SELECT;
                 E_No1 = 0;
@@ -1432,7 +1389,7 @@ void Game07(void) {
     case 0:
         if (Continue_Scene() != 0) {
             G_No1 = G1_GAME_OVER;
-            G_No2 = 0;
+            G_No2 = G2_OVER_INIT;
         }
         break;
     }

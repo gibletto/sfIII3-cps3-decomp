@@ -185,7 +185,7 @@ void Game_Manage_1st(void) {
     appear_work_clear();
     win_sp_flag = 0;
     BGM_No[1] = 0;
-    BGM_No[0] = 0;
+    BGM_No[0] = BGM_IDLE;
     Shin_Gouki_BGM = 0;
     Special_Settle = 0;
     Appear_Q = 0;
@@ -1213,7 +1213,7 @@ void Game_Manage_11th(void) {
     case CM11_WIPE_WAIT2:
         if (Switch_Screen()) {
             G_No1 = G1_NEXT_Q;
-            G_No2 = 0;
+            G_No2 = G2_Q_INIT;
             G_No3 = 0;
             E_No0 = E0_NEXT_CPU;
             E_No1 = 0;
@@ -2016,7 +2016,7 @@ s32 Check_Ending(void) {
     }
     if (Check_Ending_Sub()) {
         G_No1 = G1_ENDING;
-        G_No2 = 0;
+        G_No2 = G2_END_INIT;
         E_No0 = E0_ENDING;
         End_PL = My_char[WINNER];
         plw[WINNER].wu.operator = 0;

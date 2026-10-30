@@ -1092,9 +1092,9 @@ s32 Setup_Com_Arts(void) {
 void Setup_Com_Color(void) {
     Com_Color_Shot = Stock_Com_Color[Player_id];
     if (Break_Com[Player_id][EM_id]) {
-        Com_Color_Shot = 0x200;
+        Com_Color_Shot = BUTTON_HK;
     } else {
-        Com_Color_Shot = 16;
+        Com_Color_Shot = BUTTON_LP;
     }
 }
 
@@ -1117,7 +1117,7 @@ u16 sw;
         id_0 = 127;
     }
     switch (sw) {
-    case 336:
+    case BUTTON_LP | BUTTON_HP | BUTTON_MK:
         if (Version_Type == 3) {
             if (Player_Color[PL_id ^ 1] == 0 && id_0 == id_1) {
                 Player_Color[PL_id] = 3;
@@ -1130,35 +1130,35 @@ u16 sw;
             Player_Color[PL_id] = 6;
         }
         break;
-    case 16:
+    case BUTTON_LP:
         if (Player_Color[PL_id ^ 1] == 0 && id_0 == id_1) {
             Player_Color[PL_id] = 3;
         } else {
             Player_Color[PL_id] = 0;
         }
         break;
-    case 32:
+    case BUTTON_MP:
         if (Player_Color[PL_id ^ 1] == 1 && id_0 == id_1) {
             Player_Color[PL_id] = 4;
         } else {
             Player_Color[PL_id] = 1;
         }
         break;
-    case 64:
+    case BUTTON_HP:
         if (Player_Color[PL_id ^ 1] == 2 && id_0 == id_1) {
             Player_Color[PL_id] = 5;
         } else {
             Player_Color[PL_id] = 2;
         }
         break;
-    case 128:
+    case BUTTON_LK:
         if (Player_Color[PL_id ^ 1] == 3 && id_0 == id_1) {
             Player_Color[PL_id] = 0;
         } else {
             Player_Color[PL_id] = 3;
         }
         break;
-    case 256:
+    case BUTTON_MK:
         if (Player_Color[PL_id ^ 1] == 4 && id_0 == id_1) {
             Player_Color[PL_id] = 1;
         } else {

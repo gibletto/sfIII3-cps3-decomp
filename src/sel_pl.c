@@ -175,7 +175,7 @@ void Sel_PL_Cont_1st(void) {
     S_No++;
     All_Clear_Suicide();
     Face_No[0] = 0;
-    Face_No[1] = 0;
+    Face_No[1] = FACE_MOVE_IDLE;
     SO_No[0] = 0;
     SO_No[1] = 0;
     Sel_Sub_No[0] = 0;
@@ -348,7 +348,7 @@ void Sel_PL_1st(void) {
     }
     SP_No[ID][0]++;
     Stop_Cursor[ID] = 1;
-    Auto_No[ID] = 0;
+    Auto_No[ID] = AUTO_IDLE;
     Auto_Index[ID] = 0;
     Auto_Cursor[ID] = 0;
     Moving_Plate[ID] = 0;
@@ -386,7 +386,7 @@ void Sel_PL_2nd(void) {
     }
     SP_No[ID][0]++;
     Stop_Cursor[ID] = 0;
-    Deley_Shot_No[ID] = 0;
+    Deley_Shot_No[ID] = DELAY_NONE;
     Cursor_Timer[ID] = 1;
     if (Demo_Flag == 0) {
         Demo_Ptr[ID] = Demo_Lever_Data[Select_Demo_Index];
@@ -416,7 +416,7 @@ void Sel_PL_3rd(void) {
     }
     SP_No[ID][0]++;
     Stop_Cursor[ID] = 1;
-    Auto_No[ID] = 0;
+    Auto_No[ID] = AUTO_IDLE;
     paring_ctr_vs[0][ID] = 0;
     paring_ctr_vs[1][ID] = 0;
     if (Continue_Coin[ID] == 0) {

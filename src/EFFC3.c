@@ -162,7 +162,7 @@ void clear_parts_hit_data(WORK* wk) {
 void effC3_main_process(WORK_Other* ewk) {
     if (ewk->wu.dir_old) {
         ewk->wu.routine_no[0] = R0_BREAK;
-        ewk->wu.routine_no[1] = 0;
+        ewk->wu.routine_no[1] = R1_BREAK_WAIT;
         ewk->wu.routine_no[2] = R2_SEND;
         bs2_get_parts_break(&ewk->wu);
         set_char_move_init2(&ewk->wu, 0, ewk->wu.dir_step + 7, ewk->wu.scr_mv_x, 0);
@@ -187,7 +187,7 @@ void effC3_main_process(WORK_Other* ewk) {
             if (!setup_effK3(&ewk->wu)) {
                 setup_effK4(&ewk->wu);
             }
-            ewk->wu.routine_no[1] = 0;
+            ewk->wu.routine_no[1] = R1_NORMAL;
             ewk->wu.routine_no[2] = R2_SEND;
             break;
         }

@@ -327,7 +327,7 @@ void Entry_03_2nd(void) {
         if (Switch_Screen() != 0) {
             Cover_Timer = 23;
             G_No1 = G1_SELECT;
-            G_No2 = 0;
+            G_No2 = G2_SEL_INIT;
             G_No3 = 0;
             E_No0 = E0_SELECT;
             E_No1 = 0;
@@ -392,7 +392,7 @@ void Entry_04_2nd(void) {
         if (Switch_Screen() != 0) {
             Cover_Timer = 23;
             G_No1 = G1_SELECT;
-            G_No2 = 0;
+            G_No2 = G2_SEL_INIT;
             G_No3 = 0;
             if (E_No3 == -1 && Continue_Flag != 0) {
                 E_Number[LOSER][0] = ENTRY_CONTINUE;
@@ -468,7 +468,7 @@ void Entry_06_2nd(void) {
     default:
         if (Switch_Screen() != 0) {
             G_No1 = G1_SELECT;
-            G_No2 = 0;
+            G_No2 = G2_SEL_INIT;
             G_No3 = 0;
             E_No0 = E0_SELECT;
             E_No1 = 0;
@@ -547,7 +547,7 @@ void Entry_07_2nd(void) {
         if (Switch_Screen() != 0) {
             Cover_Timer = 23;
             G_No1 = G1_SELECT;
-            G_No2 = 0;
+            G_No2 = G2_SEL_INIT;
             G_No3 = 0;
             E_No0 = E0_SELECT;
             E_No1 = 0;
@@ -625,7 +625,7 @@ void Entry_08_2nd(void) {
         if (Switch_Screen() != 0) {
             Cover_Timer = 23;
             G_No1 = G1_SELECT;
-            G_No2 = 0;
+            G_No2 = G2_SEL_INIT;
             G_No3 = 0;
             E_No0 = E0_SELECT;
             E_No1 = 0;
@@ -722,7 +722,7 @@ void Entry_10_2nd(void) {
         if (Switch_Screen() != 0) {
             Cover_Timer = 23;
             G_No1 = G1_SELECT;
-            G_No2 = 0;
+            G_No2 = G2_SEL_INIT;
             G_No3 = 0;
             E_No0 = E0_SELECT;
             E_No1 = 0;

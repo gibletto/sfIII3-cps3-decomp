@@ -81,7 +81,7 @@ s32 Check_Short_Ending(void) {
             G_No1 = G1_ENDING;
             G_No2 = G2_END_SHORT;
             E_No0 = E0_ENDING;
-            GO_No[0] = 0;
+            GO_No[0] = GO_START;
             GO_No[1] = 0;
             End_PL = My_char[WINNER];
             plw[WINNER].wu.operator = 0;

@@ -101,12 +101,12 @@ void EFF98_SLIDE_IN(WORK_Other* ewk) {
         ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;
         if (0 < ewk->wu.mvxy.a[0].sp) {
             if (ewk->wu.vital_new <= ewk->wu.xyz[0].disp.pos) {
-                Order[ewk->wu.dir_old] = 0;
+                Order[ewk->wu.dir_old] = R0_WAIT;
                 ewk->wu.routine_no[0] = R0_WAIT;
                 ewk->wu.xyz[0].disp.pos = ewk->wu.vital_new;
             }
         } else if (ewk->wu.vital_new >= ewk->wu.xyz[0].disp.pos) {
-            Order[ewk->wu.dir_old] = 0;
+            Order[ewk->wu.dir_old] = R0_WAIT;
             ewk->wu.routine_no[0] = R0_WAIT;
             ewk->wu.xyz[0].disp.pos = ewk->wu.vital_new;
         }
@@ -136,7 +136,7 @@ void EFF98_SUDDENLY(WORK_Other* ewk) {
         break;
     default:
         ewk->wu.routine_no[0] = R0_WAIT;
-        Order[ewk->wu.dir_old] = 0;
+        Order[ewk->wu.dir_old] = R0_WAIT;
         break;
     }
 }

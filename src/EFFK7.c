@@ -235,7 +235,7 @@ void K7_move_type_0(WORK_Other* ewk, PLW* mwk) {
         ewk->wu.routine_no[1] = R1_RETURN;
         mwk->wu.routine_no[1] = PLAYER_ATTACK;
         mwk->wu.routine_no[2] = ATTACK_METAMOR_REBIRTH;
-        mwk->wu.routine_no[3] = 0;
+        mwk->wu.routine_no[3] = RN3_START;
         mwk->metamor_over = 0;
         mwk->wu.cg_type = 0;
         mwk->wu.cg_hit_ix = 0;
