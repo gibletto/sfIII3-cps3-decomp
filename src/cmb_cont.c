@@ -275,7 +275,7 @@ s8 PL;
         if (plw[PL].wu.routine_no[2] >= 0x10) {
             rever_attack[PL] = 1;
             if (PL == 0) {
-                PLS = (1);
+                PLS = 1;
             } else {
                 PLS = 0;
             }
@@ -333,7 +333,7 @@ s8 PL;
     s32* sa_ptr = (s32*)plw[PL].cb->kind_of[4][0];
     s8 lpx;
     for (lpx = 0; lpx < 20; lpx++) {
-        if (!(*sa_ptr++ == 0)) {
+        if (*sa_ptr++ != 0) {
             if (arts_finish_check(PL)) {
                 if (lpx <= 7) {
                     bonus_pts[PL] += 2;
@@ -351,7 +351,6 @@ s8 PL;
         }
     }
     combo_window_push(PL, 0);
-    return;
 }
 
 
@@ -374,10 +373,8 @@ s8 PL;
 {
     if (Conclusion_Flag) {
         if (Conclusion_Type == CONCLUSION_KO) {
-            if (Loser_id == PL) {
-                if ((plw[PL].cb->new_dm & 0x3F) >= 32) {
-                    return 1;
-                }
+            if (Loser_id == PL && (plw[PL].cb->new_dm & 0x3F) >= 32) {
+                return 1;
             }
         }
     }

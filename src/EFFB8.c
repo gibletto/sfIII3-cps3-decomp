@@ -412,7 +412,7 @@ s32 effect_B8_init(s8 WIN_PL_NO, s16 timer)
     if (work_index == -1) {
         return -1;
     }
-    ewk = (WORK_Other_CONN *)frw[work_index];
+    ewk = (WORK_Other_CONN*)frw[work_index];
     ewk->wu.routine_no[0] = R0_INIT;
     wk_set(ewk);
     mes_timer = timer;

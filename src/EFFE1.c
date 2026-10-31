@@ -34,8 +34,8 @@ void effect_E1_move(WORK_Other* ewk) {
         ewk->wu.my_mr.size.x = 63;
         ewk->wu.my_mr.size.y = 63;
     }
-    ewk->wu.position_x = (u16)ewk->wu.xyz[0].disp.pos & 0x3FF;
-    ewk->wu.position_y = (u16)ewk->wu.xyz[1].disp.pos & 0x3FF;
+    ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
+    ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
     sort_push_request4(&ewk->wu);
 }
 

@@ -146,7 +146,7 @@ void Pattern09_0007(PLW* wk) {
 void Pattern09_0008(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Jump_Attack_Term(wk, 0x8070, 0x8040, 0, (0x100), 0, -1, -1, -1);
+        Jump_Attack_Term(wk, 0x8070, 0x8040, 0, 0x100, 0, -1, -1, -1);
         break;
     default:
         End_Pattern(wk);
@@ -458,7 +458,7 @@ void Pattern09_0029(PLW* wk) {
         EM_Term(wk, 0x8050, -1, 5, 1, -1);
         break;
     case 1:
-        Adjust_Attack(wk, 9, (0x80));
+        Adjust_Attack(wk, 9, 0x80);
         break;
     case 2:
         Command_Attack(wk, 8, 30, 9, -1);
@@ -694,7 +694,7 @@ void Pattern09_0042(PLW* wk) {
 void Pattern09_0043(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Jump_Attack_Term(wk, 0x8068, 0x8058, 8, 0x40, 0, -1, 0x30, (0x401F));
+        Jump_Attack_Term(wk, 0x8068, 0x8058, 8, 0x40, 0, -1, 0x30, 0x401F);
         break;
     default:
         End_Pattern(wk);
@@ -720,7 +720,7 @@ void Pattern09_0044(PLW* wk) {
 void Pattern09_0045(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Jump_Attack_Term(wk, 0x8060, 0x8040, 8, (0x200), 0, -1, -1, -1);
+        Jump_Attack_Term(wk, 0x8060, 0x8040, 8, 0x200, 0, -1, -1, -1);
         break;
     default:
         End_Pattern(wk);
@@ -765,7 +765,7 @@ void Pattern09_0047(PLW* wk) {
 void Pattern09_0048(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Jump_Attack_Term(wk, 0x8060, 0x8040, 0xA009, (0x200), 0, 0x8050, -1, (0x200));
+        Jump_Attack_Term(wk, 0x8060, 0x8040, 0xA009, 0x200, 0, 0x8050, -1, 0x200);
         break;
     case 1:
         Normal_Attack(wk, 9, 0x22);
@@ -784,10 +784,10 @@ void Pattern09_0048(PLW* wk) {
 void Pattern09_0049(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Jump_Attack_Term(wk, 0x8068, 0x8058, 9, 0x40, 0, 0x8050, -1, (0x200));
+        Jump_Attack_Term(wk, 0x8068, 0x8058, 9, 0x40, 0, 0x8050, -1, 0x200);
         break;
     case 1:
-        Normal_Attack(wk, 9, (0x100));
+        Normal_Attack(wk, 9, 0x100);
         break;
     case 2:
         Command_Attack(wk, 0xC, 0x1D, 8, -1);
@@ -1077,7 +1077,7 @@ void Pattern09_0068(PLW* wk) {
 void Pattern09_0069(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Jump_Command_Attack_Term(wk, 8, 0x2f, 9, -1, -1, 0x8040, 0, -1, -1, -1);
+        Jump_Command_Attack_Term(wk, 8, 0x2F, 9, -1, -1, 0x8040, 0, -1, -1, -1);
         break;
     default:
         End_Pattern(wk);
@@ -1196,7 +1196,7 @@ void Pattern09_0076(PLW* wk) {
 void Pattern09_0077(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Jump_Attack_Term(wk, 0x8060, 0x8040, 0xA009, (0x200), 0, 0x8060, -1, 0x40);
+        Jump_Attack_Term(wk, 0x8060, 0x8040, 0xA009, 0x200, 0, 0x8060, -1, 0x40);
         break;
     case 1:
         Normal_Attack(wk, 9, 0x22);
@@ -1313,7 +1313,7 @@ void Pattern09_0082(PLW* wk) {
 void Pattern09_0083(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        ORO_JA_Term(wk, 8, 0, 0x30, 1, -1, 0x8060, (0x200), 0x8050, 0x8030, (0x200));
+        ORO_JA_Term(wk, 8, 0, 0x30, 1, -1, 0x8060, 0x200, 0x8050, 0x8030, 0x200);
         break;
     default:
         End_Pattern(wk);
@@ -1352,7 +1352,7 @@ void Pattern09_0085(PLW* wk) {
 void Pattern09_0086(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        ORO_JA_Term(wk, 8, 0, 0x50, 1, -1, -1, -1, 0x8050, 0x8030, (0x200));
+        ORO_JA_Term(wk, 8, 0, 0x50, 1, -1, -1, -1, 0x8050, 0x8030, 0x200);
         break;
     default:
         End_Pattern(wk);
@@ -1365,7 +1365,7 @@ void Pattern09_0086(PLW* wk) {
 void Pattern09_0087(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        ORO_JA_Term(wk, 8, 1, 0x40, 2, -1, -1, -1, 0x8050, 0x8030, (0x200));
+        ORO_JA_Term(wk, 8, 1, 0x40, 2, -1, -1, -1, 0x8050, 0x8030, 0x200);
         break;
     default:
         End_Pattern(wk);
@@ -1378,7 +1378,7 @@ void Pattern09_0087(PLW* wk) {
 void Pattern09_0088(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        ORO_JA_Term(wk, 8, 1, 0x40, 1, -1, -1, -1, 0x8050, 0x8030, (0x200));
+        ORO_JA_Term(wk, 8, 1, 0x40, 1, -1, -1, -1, 0x8050, 0x8030, 0x200);
         break;
     default:
         End_Pattern(wk);
@@ -1404,7 +1404,7 @@ void Pattern09_0089(PLW* wk) {
 void Pattern09_0090(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        ORO_JA_Term(wk, 8, 0, 0x50, 0, -1, -1, -1, 0x8050, 0x8030, (0x200));
+        ORO_JA_Term(wk, 8, 0, 0x50, 0, -1, -1, -1, 0x8050, 0x8030, 0x200);
         break;
     default:
         End_Pattern(wk);
@@ -1417,7 +1417,7 @@ void Pattern09_0090(PLW* wk) {
 void Pattern09_0091(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        ORO_JA_Term(wk, 8, 0, 0x50, 2, -1, -1, -1, 0x8050, 0x8030, (0x200));
+        ORO_JA_Term(wk, 8, 0, 0x50, 2, -1, -1, -1, 0x8050, 0x8030, 0x200);
         break;
     default:
         End_Pattern(wk);
@@ -1469,7 +1469,7 @@ void Pattern09_0094(PLW* wk) {
 void Pattern09_0095(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        ORO_JCA_Term(wk, 8, 0, 0x40, 1, -1, 0x8050, 0x2F, 0xA, -1, 0x8050, 0x8030, (0x200));
+        ORO_JCA_Term(wk, 8, 0, 0x40, 1, -1, 0x8050, 0x2F, 0xA, -1, 0x8050, 0x8030, 0x200);
         break;
     default:
         End_Pattern(wk);
@@ -1482,7 +1482,7 @@ void Pattern09_0095(PLW* wk) {
 void Pattern09_0096(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        ORO_JCA_Term(wk, 8, 0, 0x40, 0, 0x8060, -1, 0x2F, 0xA, -1, 0x8050, 0x8030, (0x200));
+        ORO_JCA_Term(wk, 8, 0, 0x40, 0, 0x8060, -1, 0x2F, 0xA, -1, 0x8050, 0x8030, 0x200);
         break;
     default:
         End_Pattern(wk);
@@ -1495,7 +1495,7 @@ void Pattern09_0096(PLW* wk) {
 void Pattern09_0097(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        ORO_HJCA_Term(wk, 8, 0, 0x40, 0, 0x8060, -1, 0x2F, 0xA, -1, 0x8050, 0x8030, (0x200));
+        ORO_HJCA_Term(wk, 8, 0, 0x40, 0, 0x8060, -1, 0x2F, 0xA, -1, 0x8050, 0x8030, 0x200);
         break;
     default:
         End_Pattern(wk);

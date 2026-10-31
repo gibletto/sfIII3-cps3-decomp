@@ -90,8 +90,7 @@ s32 effect_88_init(s16 type) {
     if (n != 0) {
         t = scr_obj_data88[type][bg_w.compel_flag];
         for (i = 0; i < n; i++) {
-            s = pull_effect_work(4);
-            if (s == -1) {
+            if ((s = pull_effect_work(4)) == -1) {
                 return -1;
             }
             o = (WORK_Other*)frw[s];

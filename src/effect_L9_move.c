@@ -31,14 +31,14 @@ void effect_L9_move(WORK_Other* ewk) {
     WORK_Other* oya = (WORK_Other*)ewk->my_master;
     switch (ewk->wu.routine_no[1]) {
     case R1_INIT:
-        ewk->wu.routine_no[1] += 1;
+        ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
     case R1_MOVE:
         char_move(&ewk->wu);
         if (oya->wu.routine_no[0] >= 3) {
-            ewk->wu.routine_no[1] += 1;
+            ewk->wu.routine_no[1]++;
             ewk->wu.disp_flag = 0;
         }
         ewk->wu.xyz[0].disp.pos = bg_w.bgw[1].wxy[0].disp.pos;
@@ -48,7 +48,7 @@ void effect_L9_move(WORK_Other* ewk) {
         sort_push_request4(&ewk->wu);
         break;
     case R1_END:
-        ewk->wu.routine_no[1] += 1;
+        ewk->wu.routine_no[1]++;
         break;
     default:
         all_cgps_put_back(&ewk->wu);

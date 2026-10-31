@@ -347,7 +347,7 @@ void Frame_Adgjust(u16 pos_x, u16 pos_y) {
             zoom_adj_y = buff;
         }
         if (zoom_adj_y == -0x20) {
-            zoom_adj_y = zoom_adj_y + 1;
+            zoom_adj_y++;
         }
     } else {
         buff = 0x40;
@@ -361,7 +361,7 @@ void Frame_Adgjust(u16 pos_x, u16 pos_y) {
             zoom_adj_y = buff;
         }
         if (zoom_adj_y == -0x20) {
-            zoom_adj_y = zoom_adj_y + 1;
+            zoom_adj_y++;
         }
     }
 }

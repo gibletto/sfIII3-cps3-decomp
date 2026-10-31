@@ -141,5 +141,4 @@ s32 effect_K4_init(WORK_Other* wk, WORK* dad) {
 
 void setup_effK4(void)
 {
-  return;
 }

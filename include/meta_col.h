@@ -3,9 +3,9 @@
 
 #include "structs.h"
 
-void metamor_color_trans(s16 wkid, s16 plnum);
-void metamor_color_copy(s16 wkid);
-void metamor_color_reset(s16 wkid);
+void metamor_color_trans(s16 pl, s16 ix);
+void metamor_color_copy(s16 page);
+void metamor_color_reset(s16 pl);
 void metamor_color_store(s16 pl);
 
 #endif

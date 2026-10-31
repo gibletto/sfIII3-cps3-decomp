@@ -32,6 +32,6 @@ void set_parts_priority(WORK* wk);
 void setup_demojump(PLW* twk, s16 ix);
 void setup_parts_break(WORK* wk);
 void setup_parts_break2(WORK* wk);
-void setup_prio_ix(WORK_Other* c2wk);
+void setup_prio_ix(WORK_Other* ewk);
 
 #endif

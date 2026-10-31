@@ -52,8 +52,6 @@ const s16 * dmdat_adrs[16];  /* 0200EE48 */
 s16 mkm_wk[32];  /* 0200EE88 */
 s16 hpq_in;  /* 0200EEC8 */
 
-struct PLW_tag;
-
 void hit_check_main_process(void) {
     aiuchi_flag = 0;
     if (hpq_in > 1) {
@@ -250,7 +248,7 @@ react:
         as->wu.char_index = as->wu.cmcf.pat;
         break;
     }
-    as->wu.routine_no[3] = 0;
+    as->wu.routine_no[3] = RN3_START;
     if (ds->guard_flag == 3 || blocking_status & 1) {
         ds->hazusenai_flag = 1;
     }
@@ -259,7 +257,7 @@ react:
     ds->tsukamare_f = 1;
     ds->wu.routine_no[1] = PLAYER_CAUGHT;
     ds->wu.routine_no[2] = as->wu.att.ng_type;
-    ds->wu.routine_no[3] = 0;
+    ds->wu.routine_no[3] = RN3_START;
     grade_add_clean_hits((WORK_Other*)as);
     check_guard_miss(&as->wu, ds, gddir);
     if (as->wu.att.ng_type == 2) {
@@ -471,7 +469,7 @@ char gddir;
         }
     }
     ds->wu.routine_no[1] = PLAYER_DAMAGE;
-    ds->wu.routine_no[3] = 0;
+    ds->wu.routine_no[3] = RN3_START;
     grade_add_clean_hits((WORK_Other*)as);
     check_guard_miss(&as->wu, ds, gddir);
     effect_02_init(&as->wu, ds->dm_point, 1, ds->wu.dm_rl);
@@ -524,7 +522,7 @@ void set_guard_status(PLW* as, PLW* ds) {
         ds->wu.routine_no[2] = ds->wu.old_rno[2];
     } else {
         ds->wu.routine_no[1] = PLAYER_DAMAGE;
-        ds->wu.routine_no[3] = 0;
+        ds->wu.routine_no[3] = RN3_START;
         effect_02_init(&as->wu, ds->dm_point, 2, ds->wu.dm_rl);
         dm_status_copy(&as->wu, &ds->wu);
         same_dm_stop(&as->wu, &ds->wu);
@@ -560,7 +558,7 @@ void set_paring_status(PLW* as, PLW* ds) {
             hsadix = (as->wu.kind_of_waza / 2) & 3;
         }
         ds->wu.routine_no[1] = PLAYER_NORMAL;
-        ds->wu.routine_no[3] = 0;
+        ds->wu.routine_no[3] = RN3_START;
         waza_compel_all_init2(ds);
         dm_status_copy(&as->wu, &ds->wu);
         ds->wu.dm_piyo = 0;
@@ -611,7 +609,7 @@ void set_paring_status(PLW* as, PLW* ds) {
             ds->wu.xyz[1].cal = 0;
         }
         ds->wu.dm_arts_point = 0;
-        if (as->wu.pat_status >= 0xE && as->wu.pat_status <= 0x1E && as->wu.work_id == 1 &&
+        if (as->wu.pat_status >= 14 && as->wu.pat_status <= 30 && as->wu.work_id == 1 &&
             sel_sp_ch_tbl[as->wu.kind_of_waza >> 3] == 0) {
             remake_mvxy_PoGR(&as->wu);
         }
@@ -817,7 +815,7 @@ char gddir;
         }
         blocking_point_count_up(ds);
         as->wu.hf.hit.player = 0x80;
-        ds->wu.routine_no[2] = 0x22;
+        ds->wu.routine_no[2] = 34;
         if (check_dm_att_blocking(&as->wu, &ds->wu, 7)) {
             return 2;
         }
@@ -828,7 +826,7 @@ char gddir;
         }
         blocking_point_count_up(ds);
         as->wu.hf.hit.player = 0x80;
-        ds->wu.routine_no[2] = 0x23;
+        ds->wu.routine_no[2] = 35;
         if (check_dm_att_blocking(&as->wu, &ds->wu, 7)) {
             return 2;
         }
@@ -1404,7 +1402,7 @@ void attack_hit_check(void) {
                         if (!(mad->att.dipsw & 0x40) || sad->kind_of_waza & 0x60) {
                             goto next4;
                         }
-                        if (pcon_dp_flag || sad->pat_status == 0x26) {
+                        if (pcon_dp_flag || sad->pat_status == 38) {
                             goto next4;
                         }
                     }

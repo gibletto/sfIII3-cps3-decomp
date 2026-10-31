@@ -195,39 +195,35 @@ void end_300_0003(void) {
 
 
 void end_300_0004(void) {
-    END_W* ew = &end_w;
-    BGW** pp = &bgw_ptr;
-    BGW* bw = *pp;
-
-    switch (bw->r_no_1) {
+    switch (bgw_ptr->r_no_1) {
     case 0:
-        bw->r_no_1++;
-        (*pp)->xy[0].disp.pos = end_3_pos[ew->r_no_2][0];
-        (*pp)->xy[1].disp.pos = end_3_pos[ew->r_no_2][1];
-        (*pp)->abs_x = 0x200;
-        (*pp)->abs_y = 0;
+        bgw_ptr->r_no_1++;
+        bgw_ptr->xy[0].disp.pos = end_3_pos[end_w.r_no_2][0];
+        bgw_ptr->xy[1].disp.pos = end_3_pos[end_w.r_no_2][1];
+        bgw_ptr->abs_x = 0x200;
+        bgw_ptr->abs_y = 0;
         effect_E6_init(0x9E);
         end_etc_flag = 0;
         effect_E6_init(0x9F);
         Rewrite_End_Message(5);
-        (*pp)->free = 0x21C;
-        (*pp)->l_limit = -1;
+        bgw_ptr->free = 0x21C;
+        bgw_ptr->l_limit = -1;
         break;
     case 1:
-        bw->free--;
-        if ((*pp)->free < 0) {
-            (*pp)->free = 0x10;
-            (*pp)->l_limit++;
-            if ((*pp)->l_limit >= 3) {
-                (*pp)->r_no_1++;
+        bgw_ptr->free--;
+        if (bgw_ptr->free < 0) {
+            bgw_ptr->free = 0x10;
+            bgw_ptr->l_limit++;
+            if (bgw_ptr->l_limit >= 3) {
+                bgw_ptr->r_no_1++;
                 load_any_color(0x3E);
                 load_any_color(0x40);
                 load_any_color(0x41);
                 load_any_color(0x42);
-                ew->timer = 50;
+                end_w.timer = 50;
                 end_etc_flag = 1;
             } else {
-                load_any_color(end_300_col_tbl[(*pp)->l_limit]);
+                load_any_color(end_300_col_tbl[bgw_ptr->l_limit]);
             }
         }
         break;

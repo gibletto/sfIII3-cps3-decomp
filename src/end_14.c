@@ -423,7 +423,7 @@ void end_e00_6000(void) {
 void end_e00_7000(void) {
     switch (bgw_ptr->r_no_1) {
     case 0:
-        bgw_ptr->r_no_1 = bgw_ptr->r_no_1 + 1;
+        bgw_ptr->r_no_1++;
         bg_cell_write(0, 0, 2, (u32)end_e00_scrn_data, 0, 0x220);
         bg_cell_write(0, 0x40, 3, (u32)end_e00_scrn_data, 0, 0x220);
         bg_cell_write(0, 0x1000, 4, (u32)end_e00_scrn_data, 0, 0x220);

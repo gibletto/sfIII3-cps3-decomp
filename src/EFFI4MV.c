@@ -45,11 +45,6 @@
 #define R3_DOWN         2       /* play the knock-down to its end */
 
 
-void effi4_down_to_up(WORK_Other* ewk);
-
-void effi4_up_to_down(WORK_Other* ewk);
-
-
 
 void effect_I4_move(WORK_Other* ewk) {
     if (obr_no_disp_check()) {

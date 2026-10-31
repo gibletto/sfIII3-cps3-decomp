@@ -35,7 +35,6 @@
 /* provisional name */
 void effect_I1_move(void)
 {
-  return;
 }
 
 

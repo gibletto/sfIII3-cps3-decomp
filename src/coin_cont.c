@@ -26,10 +26,8 @@
 
 /* provisional name */
 void coin_in_sound_request(void) {
-    if (coin_chute1_w.dropped | coin_chute2_w.dropped) {
-        if (Demo_Flag == 1) {
-            sound_request(E_No0 == E0_TITLE ? 115 : 106);
-        }
+    if ((coin_chute1_w.dropped | coin_chute2_w.dropped) && Demo_Flag == 1) {
+        sound_request(E_No0 == E0_TITLE ? 115 : 106);
     }
 }
 

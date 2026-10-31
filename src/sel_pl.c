@@ -251,7 +251,11 @@ void Sel_PL_Cont_3rd(void) {
 
 
 
-void Sel_PL_Cont_4th(void) {}void Initialize_BG(void)
+void Sel_PL_Cont_4th(void) {}
+
+
+
+void Initialize_BG(void)
 {
     Setup_BG_General();
     Setup_BG_Layer0(0);
@@ -858,7 +862,7 @@ u16 sw;
         Moving_Plate[PL_id] = 2;
         Moving_Plate_Counter[PL_id] = 3;
         OK_Priority[PL_id] = 0;
-        if ((Arts_Y[PL_id] += 1) > 2) {
+        if (++Arts_Y[PL_id] > 2) {
             Arts_Y[PL_id] = 0;
         }
     }
@@ -867,7 +871,7 @@ u16 sw;
         Moving_Plate[PL_id] = 1;
         Moving_Plate_Counter[PL_id] = 3;
         OK_Priority[PL_id] = 0;
-        if ((Arts_Y[PL_id] -= 1) < 0) {
+        if (--Arts_Y[PL_id] < 0) {
             Arts_Y[PL_id] = 2;
         }
     }
@@ -1250,12 +1254,12 @@ void Setup_Select_Status(void) {
     if (plw[1].wu.operator) {
         Select_Status[0] |= SEL_2P;
     }
-    if (Sel_Arts_Complete[0] != -1 && plw[0].wu.operator != 0) {
+    if (Sel_Arts_Complete[0] != -1 && plw[0].wu.operator) {
         Select_Status[1] = SEL_1P;
     } else {
         Select_Status[1] = 0;
     }
-    if (Sel_Arts_Complete[1] != -1 && plw[1].wu.operator != 0) {
+    if (Sel_Arts_Complete[1] != -1 && plw[1].wu.operator) {
         Select_Status[1] |= SEL_2P;
     }
 }
@@ -1429,7 +1433,7 @@ void Check_Exit(void) {
 }
 
 void Exit_1st(void) {
-    if (plw[0].wu.operator && Sel_Arts_Complete[0] >= 0) {
+    if (plw[0].wu.operator != 0 && Sel_Arts_Complete[0] >= 0) {
         return;
     }
     if (plw[1].wu.operator != 0 && Sel_Arts_Complete[1] >= 0) {
@@ -1611,12 +1615,10 @@ s16 PL_id;
 
 
 s32 Check_Boss(s16 PL_id) {
-    if (VS_Index[Player_id] >= 9) {
-        if (Introduce_Boss[Player_id][1] == 0) {
-            Control_Time = Limit_Time;
-            SC_Personal_Time[PL_id] = Control_Time;
-            return Break_Into_CPU = 1;
-        }
+    if (VS_Index[Player_id] >= 9 && Introduce_Boss[Player_id][1] == 0) {
+        Control_Time = Limit_Time;
+        SC_Personal_Time[PL_id] = Control_Time;
+        return Break_Into_CPU = 1;
     }
     return Break_Into_CPU = 0;
 }

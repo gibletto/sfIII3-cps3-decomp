@@ -24,7 +24,6 @@
 #include "bg_sub_4.h"
 #include "bg_sub_5.h"
 #include "SYS_sub.h"
-#include "end_main.h"
 #include "EM_Cand.h"
 #include "end_sub.h"
 #include "end_sub_2.h"
@@ -77,6 +76,10 @@
 s16 CONTINUE_X;  /* 02017018 */
 
 
+/* The continue scene, one step per Cont_No: Continue_1st sets up the screen and waits for Next_Step,
+   Continue_2nd waits for the loser's count to run out, Continue_3rd waits for Check_Exit_Continue,
+   Continue_4th counts down the frames it gave and Continue_5th stays finished. Returns 1 once the
+   scene is over; the BG planes are placed every frame. */
 s32 Continue_Scene(void) {
     void (*Scene_Tbl[5])() = { Continue_1st, Continue_2nd, Continue_3rd, Continue_4th, Continue_5th };
     CONTINUE_X = 0;
@@ -195,6 +198,9 @@ void Setup_Continue_OBJ(void) {
 
 
 
+/* The frames to wait before the continue scene ends, or 0 while it may not: 0 while either player is
+   in name entry; 60 when the other player is out (ENTRY_NONE); 1 when both are out or waiting for name
+   entry (ENTRY_NAME_WAIT); 0 otherwise. */
 s32 Check_Exit_Continue(void) {
     s16* p;
     s8 id;

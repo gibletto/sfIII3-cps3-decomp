@@ -1,9 +1,13 @@
 /*
- * GAME.C  Task sleep timer tick
+ * ENTRY.C  Task control
  *
- * task_sleep_tick is called once per frame from the Game_Task scheduler loop. It counts down the sleep
- * timer of every waiting task control block (status 1) and marks the task ready to run (status 2)
- * when the timer reaches zero.
+ * The game's cooperative tasks. Game_Task is the scheduler: each frame it walks the eight task control
+ * blocks (task_tbl) and runs every task that is due. task_sleep_tick counts down the sleep timer of
+ * every waiting task (status 1) and marks the task ready (status 2) when it reaches zero.
+ * init_task_stacks gives each block its stack in task_stack; create_task, destroy_current_task,
+ * kill_task, suspend_task, post_task, kill_tasks_by_func and kill_tasks_by_priority start, end,
+ * suspend and wake tasks. The exception record, the task stacks and the interrupt stack pointers are
+ * defined here; vblank_user_hook is empty.
  */
 
 #include "structs.h"

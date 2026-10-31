@@ -59,7 +59,7 @@ void Pattern19_0001(PLW* wk) {
 void Pattern19_0002(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Jump_Command_Attack_Term(wk, 8, 0x2F, 9, -1, -1, 0x8058, 1, -1, 0x30, (0x200));
+        Jump_Command_Attack_Term(wk, 8, 0x2F, 9, -1, -1, 0x8058, 1, -1, 0x30, 0x200);
         break;
     default:
         End_Pattern(wk);
@@ -285,7 +285,7 @@ void Pattern19_0017(PLW* wk) {
 void Pattern19_0018(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Jump_Command_Attack_Term(wk, 8, 0x2F, 9, -1, -1, 0x8058, 1, -1, 0x30, (0x200));
+        Jump_Command_Attack_Term(wk, 8, 0x2F, 9, -1, -1, 0x8058, 1, -1, 0x30, 0x200);
         break;
     default:
         End_Pattern(wk);
@@ -327,7 +327,7 @@ void Pattern19_0020(PLW* wk) {
 void Pattern19_0021(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Jump_Attack_Term(wk, -1, 0x8060, 0xB, (0x200), 0, 0x8060, -1, (0x100));
+        Jump_Attack_Term(wk, -1, 0x8060, 0xB, 0x200, 0, 0x8060, -1, 0x100);
         break;
     default:
         End_Pattern(wk);
@@ -340,7 +340,7 @@ void Pattern19_0021(PLW* wk) {
 void Pattern19_0022(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Jump_Attack(wk, 8, 0xF, (0x200), 0);
+        Jump_Attack(wk, 8, 0xF, 0x200, 0);
         break;
     default:
         End_Pattern(wk);
@@ -565,7 +565,7 @@ void Pattern19_0037(PLW* wk) {
         Command_Attack(wk, 8, 0x1C, 0xA, -1);
         break;
     case 1:
-        Normal_Attack(wk, 8, (0x200));
+        Normal_Attack(wk, 8, 0x200);
         break;
     default:
         End_Pattern(wk);
@@ -648,7 +648,7 @@ void Pattern19_0042(PLW* wk) {
         Normal_Attack(wk, 8, 0x12);
         break;
     case 2:
-        Normal_Attack(wk, 8, (0x202));
+        Normal_Attack(wk, 8, 0x202);
         break;
     default:
         End_Pattern(wk);
@@ -949,7 +949,7 @@ void Pattern19_0060(PLW* wk) {
 void Pattern19_0061(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Jump_Command_Attack_Term(wk, 8, 0x2F, 9, (0x380), -1, 0x8058, 1, -1, 0x30, (0x200));
+        Jump_Command_Attack_Term(wk, 8, 0x2F, 9, 0x380, -1, 0x8058, 1, -1, 0x30, 0x200);
         break;
     default:
         End_Pattern(wk);
@@ -1163,7 +1163,7 @@ void Pattern19_0076(PLW* wk) {
 void Pattern19_0077(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Normal_Attack(wk, 8, (0x10));
+        Normal_Attack(wk, 8, 0x10);
         break;
     default:
         End_Pattern(wk);
@@ -1176,7 +1176,7 @@ void Pattern19_0077(PLW* wk) {
 void Pattern19_0078(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Normal_Attack(wk, 8, (0x80));
+        Normal_Attack(wk, 8, 0x80);
         break;
     default:
         End_Pattern(wk);
@@ -1189,7 +1189,7 @@ void Pattern19_0078(PLW* wk) {
 void Pattern19_0079(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Normal_Attack(wk, 8, (0x82));
+        Normal_Attack(wk, 8, 0x82);
         break;
     default:
         End_Pattern(wk);
@@ -1215,7 +1215,7 @@ void Pattern19_0080(PLW* wk) {
 void Pattern19_0081(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Jump_Command_Attack_Term(wk, 8, 0x2F, 8, -1, -1, 0x8058, 2, -1, 0x30, (0x200));
+        Jump_Command_Attack_Term(wk, 8, 0x2F, 8, -1, -1, 0x8058, 2, -1, 0x30, 0x200);
         break;
     default:
         End_Pattern(wk);
@@ -1228,7 +1228,7 @@ void Pattern19_0081(PLW* wk) {
 void Pattern19_0082(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Jump_Command_Attack_Term(wk, 8, 0x2F, 9, -1, -1, 0x8058, 2, -1, 0x30, (0x200));
+        Jump_Command_Attack_Term(wk, 8, 0x2F, 9, -1, -1, 0x8058, 2, -1, 0x30, 0x200);
         break;
     default:
         End_Pattern(wk);
@@ -1241,7 +1241,7 @@ void Pattern19_0082(PLW* wk) {
 void Pattern19_0083(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Jump_Command_Attack_Term(wk, 8, 0x2F, 0xA, -1, -1, 0x8058, 2, -1, 0x30, (0x200));
+        Jump_Command_Attack_Term(wk, 8, 0x2F, 0xA, -1, -1, 0x8058, 2, -1, 0x30, 0x200);
         break;
     default:
         End_Pattern(wk);
@@ -1267,7 +1267,7 @@ void Pattern19_0084(PLW* wk) {
 void Pattern19_0085(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Jump_Command_Attack_Term(wk, 8, 0x2F, 8, -1, -1, 0x8058, 0, -1, 0x30, (0x200));
+        Jump_Command_Attack_Term(wk, 8, 0x2F, 8, -1, -1, 0x8058, 0, -1, 0x30, 0x200);
         break;
     default:
         End_Pattern(wk);
@@ -1280,7 +1280,7 @@ void Pattern19_0085(PLW* wk) {
 void Pattern19_0086(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Jump_Command_Attack_Term(wk, 8, 0x2F, 9, -1, -1, 0x8058, 0, -1, 0x30, (0x200));
+        Jump_Command_Attack_Term(wk, 8, 0x2F, 9, -1, -1, 0x8058, 0, -1, 0x30, 0x200);
         break;
     default:
         End_Pattern(wk);
@@ -1293,7 +1293,7 @@ void Pattern19_0086(PLW* wk) {
 void Pattern19_0087(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Jump_Command_Attack_Term(wk, 8, 0x2F, 0xA, -1, -1, 0x8058, 0, -1, 0x30, (0x200));
+        Jump_Command_Attack_Term(wk, 8, 0x2F, 0xA, -1, -1, 0x8058, 0, -1, 0x30, 0x200);
         break;
     default:
         End_Pattern(wk);
@@ -1319,7 +1319,7 @@ void Pattern19_0088(PLW* wk) {
 void Pattern19_0089(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Jump_Command_Attack_Term(wk, 8, 0x2F, 8, -1, -1, 0x8058, 0, -1, 0x30, (0x200));
+        Jump_Command_Attack_Term(wk, 8, 0x2F, 8, -1, -1, 0x8058, 0, -1, 0x30, 0x200);
         break;
     default:
         End_Pattern(wk);
@@ -1332,7 +1332,7 @@ void Pattern19_0089(PLW* wk) {
 void Pattern19_0090(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Jump_Command_Attack_Term(wk, 8, 0x2F, 9, -1, -1, 0x8058, 0, -1, 0x30, (0x200));
+        Jump_Command_Attack_Term(wk, 8, 0x2F, 9, -1, -1, 0x8058, 0, -1, 0x30, 0x200);
         break;
     default:
         End_Pattern(wk);
@@ -1345,7 +1345,7 @@ void Pattern19_0090(PLW* wk) {
 void Pattern19_0091(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Jump_Command_Attack_Term(wk, 8, 0x2F, 0xA, -1, -1, 0x8058, 0, -1, 0x30, (0x200));
+        Jump_Command_Attack_Term(wk, 8, 0x2F, 0xA, -1, -1, 0x8058, 0, -1, 0x30, 0x200);
         break;
     default:
         End_Pattern(wk);
@@ -1358,10 +1358,10 @@ void Pattern19_0091(PLW* wk) {
 void Pattern19_0092(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Normal_Attack(wk, 12, (0x80));
+        Normal_Attack(wk, 12, 0x80);
         break;
     case 1:
-        Command_Attack(wk, 8, 29, 8, (-1));
+        Command_Attack(wk, 8, 29, 8, -1);
         break;
     default:
         End_Pattern(wk);
@@ -1374,10 +1374,10 @@ void Pattern19_0092(PLW* wk) {
 void Pattern19_0093(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Normal_Attack(wk, 12, (0x100));
+        Normal_Attack(wk, 12, 0x100);
         break;
     case 1:
-        Command_Attack(wk, 8, 28, 8, (-1));
+        Command_Attack(wk, 8, 28, 8, -1);
         break;
     default:
         End_Pattern(wk);
@@ -1390,10 +1390,10 @@ void Pattern19_0093(PLW* wk) {
 void Pattern19_0094(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Normal_Attack(wk, 12, (0x20));
+        Normal_Attack(wk, 12, 0x20);
         break;
     case 1:
-        Command_Attack(wk, 8, 29, 8, (-1));
+        Command_Attack(wk, 8, 29, 8, -1);
         break;
     default:
         End_Pattern(wk);
@@ -1406,10 +1406,10 @@ void Pattern19_0094(PLW* wk) {
 void Pattern19_0095(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Normal_Attack(wk, 12, (0x20));
+        Normal_Attack(wk, 12, 0x20);
         break;
     case 1:
-        Command_Attack(wk, 8, 28, 8, (-1));
+        Command_Attack(wk, 8, 28, 8, -1);
         break;
     default:
         End_Pattern(wk);
@@ -1422,10 +1422,10 @@ void Pattern19_0095(PLW* wk) {
 void Pattern19_0096(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Normal_Attack(wk, 12, (0x10));
+        Normal_Attack(wk, 12, 0x10);
         break;
     case 1:
-        Command_Attack(wk, 8, 29, 8, (-1));
+        Command_Attack(wk, 8, 29, 8, -1);
         break;
     default:
         End_Pattern(wk);
@@ -1438,10 +1438,10 @@ void Pattern19_0096(PLW* wk) {
 void Pattern19_0097(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Normal_Attack(wk, 12, (0x10));
+        Normal_Attack(wk, 12, 0x10);
         break;
     case 1:
-        Command_Attack(wk, 8, 28, 8, (-1));
+        Command_Attack(wk, 8, 28, 8, -1);
         break;
     default:
         End_Pattern(wk);
@@ -1454,10 +1454,10 @@ void Pattern19_0097(PLW* wk) {
 void Pattern19_0098(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Normal_Attack(wk, 12, (0x80));
+        Normal_Attack(wk, 12, 0x80);
         break;
     case 1:
-        Command_Attack(wk, 8, 29, 8, (-1));
+        Command_Attack(wk, 8, 29, 8, -1);
         break;
     default:
         End_Pattern(wk);
@@ -1470,10 +1470,10 @@ void Pattern19_0098(PLW* wk) {
 void Pattern19_0099(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Normal_Attack(wk, 12, (0x20));
+        Normal_Attack(wk, 12, 0x20);
         break;
     case 1:
-        Command_Attack(wk, 8, 28, 8, (-1));
+        Command_Attack(wk, 8, 28, 8, -1);
         break;
     default:
         End_Pattern(wk);
@@ -1486,10 +1486,10 @@ void Pattern19_0099(PLW* wk) {
 void Pattern19_0100(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Normal_Attack(wk, 12, (0x20));
+        Normal_Attack(wk, 12, 0x20);
         break;
     case 1:
-        Command_Attack(wk, 8, 29, 8, (-1));
+        Command_Attack(wk, 8, 29, 8, -1);
         break;
     default:
         End_Pattern(wk);
@@ -1502,10 +1502,10 @@ void Pattern19_0100(PLW* wk) {
 void Pattern19_0101(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Normal_Attack(wk, 12, (0x20));
+        Normal_Attack(wk, 12, 0x20);
         break;
     case 1:
-        Command_Attack(wk, 8, 28, 8, (-1));
+        Command_Attack(wk, 8, 28, 8, -1);
         break;
     default:
         End_Pattern(wk);
@@ -1518,13 +1518,13 @@ void Pattern19_0101(PLW* wk) {
 void Pattern19_0102(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Normal_Attack(wk, 9, (0x82));
+        Normal_Attack(wk, 9, 0x82);
         break;
     case 1:
         Normal_Attack(wk, 9, 0x12);
         break;
     case 2:
-        Normal_Attack(wk, 8, (0x202));
+        Normal_Attack(wk, 8, 0x202);
         break;
     default:
         End_Pattern(wk);
@@ -1607,10 +1607,10 @@ void Pattern19_0106(PLW* wk) {
 void Pattern19_0107(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
-        Command_Attack(wk, 8, 28, 10, (-1));
+        Command_Attack(wk, 8, 28, 10, -1);
         break;
     case 1:
-        Command_Attack(wk, 8, 28, 9, (-1));
+        Command_Attack(wk, 8, 28, 9, -1);
         break;
     default:
         End_Pattern(wk);
@@ -1626,10 +1626,10 @@ void Pattern19_0108(PLW* wk) {
         Pierce_On(wk);
         break;
     case 1:
-        Command_Attack(wk, 8, 28, 10, (-1));
+        Command_Attack(wk, 8, 28, 10, -1);
         break;
     case 2:
-        Command_Attack(wk, 8, 28, 9, (-1));
+        Command_Attack(wk, 8, 28, 9, -1);
         break;
     default:
         End_Pattern(wk);

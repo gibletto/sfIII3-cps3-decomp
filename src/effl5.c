@@ -66,7 +66,7 @@ void hukuromoji_move(WORK_Other* ewk) {
     WORK_Other* oya_ptr = (WORK_Other*)ewk->my_master;
     switch (ewk->wu.routine_no[1]) {
     case R1_INIT:
-        ewk->wu.routine_no[1] += 1;
+        ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.my_mr_flag = 1;
         ewk->wu.my_mr.size.x = 127;
@@ -75,9 +75,9 @@ void hukuromoji_move(WORK_Other* ewk) {
         ewk->wu.hit_stop = 2;
         break;
     case R1_WAIT:
-        ewk->wu.hit_stop -= 1;
+        ewk->wu.hit_stop--;
         if (ewk->wu.hit_stop < 0) {
-            ewk->wu.routine_no[1] += 1;
+            ewk->wu.routine_no[1]++;
             Sound_SE(oya_ptr->wu.dir_old + 1);
             return;
         }
@@ -86,7 +86,7 @@ void hukuromoji_move(WORK_Other* ewk) {
         ewk->wu.my_mr.size.x -= 6;
         ewk->wu.my_mr.size.y -= 6;
         if (ewk->wu.my_mr.size.x <= 63) {
-            ewk->wu.routine_no[1] += 1;
+            ewk->wu.routine_no[1]++;
             ewk->wu.my_mr.size.x = 63;
             ewk->wu.my_mr.size.y = 63;
             ewk->wu.hit_stop = 4;
@@ -95,9 +95,9 @@ void hukuromoji_move(WORK_Other* ewk) {
         }
         break;
     case R1_HOLD:
-        ewk->wu.hit_stop -= 1;
+        ewk->wu.hit_stop--;
         if (ewk->wu.hit_stop <= 0) {
-            ewk->wu.routine_no[1] += 1;
+            ewk->wu.routine_no[1]++;
             rf_b2_flag = 1;
         }
         break;

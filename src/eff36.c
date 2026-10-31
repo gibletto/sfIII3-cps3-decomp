@@ -108,7 +108,7 @@ void effect_36_move(WORK_Other* ewk) {
 void eff36_move00(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
     case R2_INIT:
-        ewk->wu.routine_no[2] += 1;
+        ewk->wu.routine_no[2]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.old_rno[0], ewk->wu.char_index, 0);
         ewk->wu.my_mr_flag = 1;
@@ -116,10 +116,10 @@ void eff36_move00(WORK_Other* ewk) {
         ewk->wu.my_mr.size.y = 63;
         break;
     case R2_ZOOM:
-        ewk->wu.my_mr.size.x += 1;
-        ewk->wu.my_mr.size.y += 1;
+        ewk->wu.my_mr.size.x++;
+        ewk->wu.my_mr.size.y++;
         if (ewk->wu.my_mr.size.x >= 88) {
-            ewk->wu.routine_no[2] += 1;
+            ewk->wu.routine_no[2]++;
             ewk->wu.my_mr.size.x = 88;
             ewk->wu.my_mr.size.y = 88;
         }
@@ -133,7 +133,7 @@ void eff36_move00(WORK_Other* ewk) {
 void eff36_move01(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
     case R2_INIT:
-        ewk->wu.routine_no[2] += 1;
+        ewk->wu.routine_no[2]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.old_rno[0], ewk->wu.char_index, 0);
         break;
@@ -148,7 +148,7 @@ void eff36_move01(WORK_Other* ewk) {
 void eff36_move02(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
     case R2_INIT:
-        ewk->wu.routine_no[2] += 1;
+        ewk->wu.routine_no[2]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.old_rno[0], ewk->wu.char_index, 0);
         break;
@@ -164,7 +164,7 @@ void eff36_move02(WORK_Other* ewk) {
 void eff36_move03(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
     case R2_INIT:
-        ewk->wu.routine_no[2] += 1;
+        ewk->wu.routine_no[2]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.old_rno[0], ewk->wu.char_index, 0);
         break;
@@ -184,7 +184,7 @@ void eff36_move03(WORK_Other* ewk) {
 void eff36_move04(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
     case R2_INIT:
-        ewk->wu.routine_no[2] += 1;
+        ewk->wu.routine_no[2]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.old_rno[6] = 4;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.old_rno[0], ewk->wu.char_index, 0);
@@ -193,10 +193,10 @@ void eff36_move04(WORK_Other* ewk) {
         if (ewk->wu.old_rno[6] <= 0) {
             ewk->wu.disp_flag = 0;
         } else {
-            ewk->wu.old_rno[6] -= 1;
+            ewk->wu.old_rno[6]--;
         }
         if ((gSeqStatus[0] >= eff36_04_tbl[ewk->wu.routine_no[2]]) && (gSeqStatus[0] != 0x74)) {
-            ewk->wu.routine_no[2] += 1;
+            ewk->wu.routine_no[2]++;
             ewk->wu.disp_flag = 1;
             ewk->wu.old_rno[6] = 4;
             set_char_move_init2(&ewk->wu, 0, ewk->wu.old_rno[0], 0x17, 0);
@@ -207,10 +207,10 @@ void eff36_move04(WORK_Other* ewk) {
         if (ewk->wu.old_rno[6] <= 0) {
             ewk->wu.disp_flag = 0;
         } else {
-            ewk->wu.old_rno[6] -= 1;
+            ewk->wu.old_rno[6]--;
         }
         if (gSeqStatus[0] >= eff36_04_tbl[ewk->wu.routine_no[2]]) {
-            ewk->wu.routine_no[2] += 1;
+            ewk->wu.routine_no[2]++;
             ewk->wu.disp_flag = 1;
             ewk->wu.old_rno[6] = 4;
             set_char_move_init2(&ewk->wu, 0, ewk->wu.old_rno[0], 0x18, 0);
@@ -221,10 +221,10 @@ void eff36_move04(WORK_Other* ewk) {
         if (ewk->wu.old_rno[6] <= 0) {
             ewk->wu.disp_flag = 0;
         } else {
-            ewk->wu.old_rno[6] -= 1;
+            ewk->wu.old_rno[6]--;
         }
         if (gSeqStatus[0] >= eff36_04_tbl[ewk->wu.routine_no[2]]) {
-            ewk->wu.routine_no[2] += 1;
+            ewk->wu.routine_no[2]++;
             ewk->wu.disp_flag = 1;
             ewk->wu.old_rno[6] = 4;
             set_char_move_init2(&ewk->wu, 0, ewk->wu.old_rno[0], 0x19, 0);
@@ -242,14 +242,14 @@ void eff36_move04(WORK_Other* ewk) {
 void eff36_move05(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
     case R2_INIT:
-        ewk->wu.routine_no[2] += 1;
+        ewk->wu.routine_no[2]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.old_rno[0], ewk->wu.char_index, 0);
         break;
     case R2_ONCE:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 255) {
-            ewk->wu.routine_no[0] += 1;
+            ewk->wu.routine_no[0]++;
             break;
         }
         disp_pos_trans_entry(ewk);
@@ -262,7 +262,7 @@ void eff36_move05(WORK_Other* ewk) {
 void eff36_move06(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
     case R2_INIT:
-        ewk->wu.routine_no[2] += 1;
+        ewk->wu.routine_no[2]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.old_rno[0], ewk->wu.char_index, 0);
         ewk->wu.my_mr_flag = 1;
@@ -272,13 +272,13 @@ void eff36_move06(WORK_Other* ewk) {
         ewk->wu.old_rno[6] = 2;
         break;
     case R2_GROW:
-        ewk->wu.old_rno[6] -= 1;
+        ewk->wu.old_rno[6]--;
         if (ewk->wu.old_rno[6] <= 0) {
             ewk->wu.old_rno[6] = 2;
-            ewk->wu.my_mr.size.x += 1;
-            ewk->wu.my_mr.size.y += 1;
+            ewk->wu.my_mr.size.x++;
+            ewk->wu.my_mr.size.y++;
             if (ewk->wu.my_mr.size.x >= 127) {
-                ewk->wu.routine_no[2] += 1;
+                ewk->wu.routine_no[2]++;
                 ewk->wu.my_mr.size.x = 127;
                 ewk->wu.my_mr.size.y = 127;
             }

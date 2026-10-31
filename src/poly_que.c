@@ -127,10 +127,10 @@ void poly_bank_flip(void) {
 
 /* provisional name */
 s32 polygon2d_submit_line(addr, y, x, kind)
-    u32 addr;
-    u32 y;
-    u32 x;
-    u8 kind;
+u32 addr;
+u32 y;
+u32 x;
+u8 kind;
 {
     register POLY_LINE* line;
     if (poly_line_cnt[poly_wr_bank] >= POLY_LINE_MAX) {

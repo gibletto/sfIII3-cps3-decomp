@@ -91,7 +91,7 @@ void Eff93_SLIDE_R(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
     case R1_WAIT:
         if (--ewk->wu.dir_timer == 0) {
-            ewk->wu.routine_no[1] += 1;
+            ewk->wu.routine_no[1]++;
             bg_mvxy.a[0].sp = -0x90000;
             bg_mvxy.d[0].sp = -0x8000;
             ewk->wu.hit_quake = 0x25C;
@@ -134,7 +134,7 @@ void Eff93_SLIDE_L_OUT(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
     case R1_WAIT:
         if (--ewk->wu.dir_timer == 0) {
-            ewk->wu.routine_no[1] += 1;
+            ewk->wu.routine_no[1]++;
             bg_mvxy.a[0].sp = 0x80000;
             bg_mvxy.d[0].sp = 0x28000;
             ewk->wu.hit_quake = bg_w.bgw[1].wxy[0].disp.pos + 208;
@@ -159,7 +159,7 @@ void Eff93_SLIDE_R_OUT(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
     case R1_WAIT:
         if (--ewk->wu.dir_timer == 0) {
-            ewk->wu.routine_no[1] += 1;
+            ewk->wu.routine_no[1]++;
             bg_mvxy.a[0].sp = -0x80000;
             bg_mvxy.d[0].sp = -0x28000;
             ewk->wu.hit_quake = bg_w.bgw[1].wxy[0].disp.pos - 208;

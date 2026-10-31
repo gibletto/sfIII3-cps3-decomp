@@ -243,8 +243,8 @@ void tilemap_put_block(u16 x, u16 y, u16 attr, u16 code);
 /* provisional name */
 s8 config_menu_run(void)
 {
-  config_menu_tbl[Config_No_0]();
-  return cfg_reserve;
+    config_menu_tbl[Config_No_0]();
+    return cfg_reserve;
 }
 
 
@@ -769,7 +769,7 @@ void sysconfig_coin(void) {
         }
         break;
     }
-    if (Area_Type != 0) {
+    if (Area_Type) {
         tilemap_print_string(0, 0, 0xFFFF, sysconfig_modify_guide);
     } else {
         tilemap_print_script_seq(0, 0, 0xFFFF, sys_cfg_item_guide_jp);

@@ -23,8 +23,7 @@
 
 
 
-s32 get_kind_of_head_dm(s16 dir, char rl)
-{
+s32 get_kind_of_head_dm(s16 dir, char rl) {
     if (rl == 0) {
         dir = dir16_rl_conv[dir];
     }
@@ -33,8 +32,7 @@ s32 get_kind_of_head_dm(s16 dir, char rl)
 
 
 
-s32 get_kind_of_trunk_dm(s16 dir, char rl)
-{
+s32 get_kind_of_trunk_dm(s16 dir, char rl) {
     if (rl == 0) {
         dir = dir16_rl_conv[dir];
     }
@@ -291,10 +289,10 @@ void add_sp_arts_gauge_nagenuke(PLW* wk) {
 
 
 s32 add_super_arts_gauge(wk, ix, asag, mf)
-    SA_WORK *wk;
-    s16 ix;
-    s16 asag;
-    u8 mf;
+SA_WORK *wk;
+s16 ix;
+s16 asag;
+u8 mf;
 {
     if (!test_flag) {
         if (mf) {
@@ -344,8 +342,7 @@ s16 check_buttobi_type(PLW* wk) {
     return rn;
 }
 
-s32 check_buttobi_type2(WORK* wk)
-{
+s32 check_buttobi_type2(WORK* wk) {
     s32 dir;
     setup_butt_own_data();
     dir = cal_move_dir_forecast(wk, 5);
@@ -407,7 +404,7 @@ void dead_voice_request2(PLW* wk) {
     }
     secd1 = dead_voice_table[wk->player_number][0];
     secd2 = dead_voice_table[wk->player_number][1];
-    if ((wk->wu.routine_no[1] == PLAYER_DAMAGE) && atsagct[wk->wu.routine_no[2]] & 0x10) {
+    if (wk->wu.routine_no[1] == PLAYER_DAMAGE && atsagct[wk->wu.routine_no[2]] & 0x10) {
         sound_effect_request[secd2](wk, secd2 + ks);
     } else {
         sound_effect_request[secd1](wk, secd1 + ks);

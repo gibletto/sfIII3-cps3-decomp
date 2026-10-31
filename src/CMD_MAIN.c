@@ -4338,7 +4338,7 @@ void debug_playback_mode_cycle(u16 sw) {
     if ((sw & 0x200) != 0) {
         if (Debug_Rec_Count != 0) {
             dbg_rec_exist = 1;
-            dbg_save_mode = dbg_save_mode + 1;
+            dbg_save_mode++;
             if (2 < dbg_save_mode) {
                 dbg_save_mode = 0;
             }
@@ -4953,7 +4953,7 @@ void debug_screen_zoom_by_pad(void) {
         dbg_zoom_x--;
         dbg_zoom_y--;
         if (dbg_zoom_x > 0) {
-            Frame_Down(0xc0, 0xe0, 1, 1);
+            Frame_Down(0xC0, 0xE0, 1, 1);
         } else {
             dbg_zoom_x = 0;
             dbg_zoom_y = 0;
@@ -4963,7 +4963,7 @@ void debug_screen_zoom_by_pad(void) {
         dbg_zoom_x++;
         dbg_zoom_y++;
         if (dbg_zoom_x < 38) {
-            Frame_Up(0xc0, 0xe0, 1, 1);
+            Frame_Up(0xC0, 0xE0, 1, 1);
         } else {
             dbg_zoom_x = 38;
             dbg_zoom_y = 38;
@@ -5033,7 +5033,7 @@ void debug_cmd_panel_run(void) {
     u16 trg = ~dbg_p1sw_1 & dbg_p1sw_0;
     u16 sel = ~dbg_p2sw_1 & dbg_p2sw_0 & BUTTON_SHOTS;
     u16 i;
-    sel = sel * 16 + (0x3f0 & trg) / 16;
+    sel = sel * 16 + (0x3F0 & trg) / 16;
     if (dbg_cmd_panel != 0) {
         wk = &dbg_pl->wu;
         switch (sel) {
@@ -5118,18 +5118,18 @@ void debug_cg_number_browse(void) {
             moved = 1;
             switch (kind) {
             case 0:
-                if (dbg_pl->wu.cg_number > 0xe5b8) {
-                    dbg_pl->wu.cg_number = 0xe5b7;
+                if (dbg_pl->wu.cg_number > 0xE5B8) {
+                    dbg_pl->wu.cg_number = 0xE5B7;
                 }
                 break;
             case 1:
                 if (dbg_pl->wu.cg_number < 0x9000) {
-                    dbg_pl->wu.cg_number = 0x77ff;
+                    dbg_pl->wu.cg_number = 0x77FF;
                 }
                 break;
             case 2:
-                if (dbg_pl->wu.cg_number < 0xd800) {
-                    dbg_pl->wu.cg_number = 0xbde7;
+                if (dbg_pl->wu.cg_number < 0xD800) {
+                    dbg_pl->wu.cg_number = 0xBDE7;
                 }
                 break;
             }
@@ -5139,17 +5139,17 @@ void debug_cg_number_browse(void) {
             moved = 1;
             switch (kind) {
             case 0:
-                if (dbg_pl->wu.cg_number > 0x77ff) {
+                if (dbg_pl->wu.cg_number > 0x77FF) {
                     dbg_pl->wu.cg_number = 0x9000;
                 }
                 break;
             case 1:
-                if (dbg_pl->wu.cg_number > 0xbde8) {
-                    dbg_pl->wu.cg_number = 0xd800;
+                if (dbg_pl->wu.cg_number > 0xBDE8) {
+                    dbg_pl->wu.cg_number = 0xD800;
                 }
                 break;
             case 2:
-                if (dbg_pl->wu.cg_number > 0xe5b8) {
+                if (dbg_pl->wu.cg_number > 0xE5B8) {
                     dbg_pl->wu.cg_number = 0;
                 }
                 break;
@@ -5160,18 +5160,18 @@ void debug_cg_number_browse(void) {
             moved = 1;
             switch (kind) {
             case 0:
-                if (dbg_pl->wu.cg_number > 0xe5b8) {
-                    dbg_pl->wu.cg_number = 0xe5b7;
+                if (dbg_pl->wu.cg_number > 0xE5B8) {
+                    dbg_pl->wu.cg_number = 0xE5B7;
                 }
                 break;
             case 1:
                 if (dbg_pl->wu.cg_number < 0x9000) {
-                    dbg_pl->wu.cg_number = 0x77ff;
+                    dbg_pl->wu.cg_number = 0x77FF;
                 }
                 break;
             case 2:
-                if (dbg_pl->wu.cg_number < 0xd800) {
-                    dbg_pl->wu.cg_number = 0xbde7;
+                if (dbg_pl->wu.cg_number < 0xD800) {
+                    dbg_pl->wu.cg_number = 0xBDE7;
                 }
                 break;
             }
@@ -5181,17 +5181,17 @@ void debug_cg_number_browse(void) {
             moved = 1;
             switch (kind) {
             case 0:
-                if (dbg_pl->wu.cg_number > 0x77ff) {
+                if (dbg_pl->wu.cg_number > 0x77FF) {
                     dbg_pl->wu.cg_number = 0x9000;
                 }
                 break;
             case 1:
-                if (dbg_pl->wu.cg_number > 0xbde8) {
-                    dbg_pl->wu.cg_number = 0xd800;
+                if (dbg_pl->wu.cg_number > 0xBDE8) {
+                    dbg_pl->wu.cg_number = 0xD800;
                 }
                 break;
             case 2:
-                if (dbg_pl->wu.cg_number > 0xe5b8) {
+                if (dbg_pl->wu.cg_number > 0xE5B8) {
                     dbg_pl->wu.cg_number = 0;
                 }
                 break;
@@ -5200,10 +5200,10 @@ void debug_cg_number_browse(void) {
         if (moved == 0) {
             return;
         }
-        if (dbg_pl->wu.cg_number < 0x8a00) {
+        if (dbg_pl->wu.cg_number < 0x8A00) {
             code = dbg_pl->wu.cg_number;
             ix = code / 0x600;
-            if (code >= 0x5a00) {
+            if (code >= 0x5A00) {
                 ix++;
             }
             if (ix != dbg_col_char) {
@@ -5225,7 +5225,7 @@ void debug_cg_number_browse(void) {
                     dbg_col_char = 21;
                 }
             }
-            if (dbg_pl->wu.cg_number >= 0xb478 && dbg_pl->wu.cg_number <= 0xb498) {
+            if (dbg_pl->wu.cg_number >= 0xB478 && dbg_pl->wu.cg_number <= 0xB498) {
                 load_any_color(9);
                 dbg_pl->wu.my_col_code = 0x2140;
             }
@@ -5237,7 +5237,7 @@ void debug_cg_number_browse(void) {
     }
     group = get_cg_slot_no(dbg_pl->wu.cg_number);
     if (dbg_pl->zuru_timer != group) {
-        purge_char_gfx(bcp_group_top_tbl[(dbg_pl->zuru_timer & 0x7fff) / 4]);
+        purge_char_gfx(bcp_group_top_tbl[(dbg_pl->zuru_timer & 0x7FFF) / 4]);
         dbg_pl->zuru_timer = group;
     }
 }
@@ -5494,10 +5494,10 @@ void debug_parts_input(void) {
 
 /* provisional name */
 s32 debug_lever_repeat(sw, old, mask, ix)
-    u16 sw;
-    u16 old;
-    u16 mask;
-    s16 ix;
+u16 sw;
+u16 old;
+u16 mask;
+s16 ix;
 {
     if (sw & mask) {
         if (Debug_Menu_No == 5 && (sw & 0x10)) {
@@ -5647,7 +5647,7 @@ void debug_slot_char_load(void) {
     s16 row;
     s16 col;
     u16 group;
-    if (dbg_slot->sel[0] <= 0xd8) {
+    if (dbg_slot->sel[0] <= 0xD8) {
         dbg_pl->wu.operator = 0;
         if (dbg_slot->sel[0] < 10) {
             ix = 0;
@@ -5671,11 +5671,11 @@ void debug_slot_char_load(void) {
         set_char_move_init(&dbg_pl->wu, dbg_slot->row, 0);
     } else {
         switch (dbg_slot->sel[0]) {
-        case 0xd9:
+        case 0xD9:
             load_player_color(1, 0, 0);
             dbg_pl->wu.my_col_code = 0x4007;
             break;
-        case 0xda:
+        case 0xDA:
             dbg_pl->wu.hit_ix_table = (HIT_IX*)&ef13_hit_ix_table;
             dbg_pl->wu.body_adrs = (BODY_BOX*)&ef13_body_box;
             dbg_pl->wu.hand_adrs = (HAND_BOX*)&ef13_hand_box;
@@ -5684,10 +5684,10 @@ void debug_slot_char_load(void) {
             dbg_pl->wu.caught_adrs = (CAUGHT_BOX*)&ef13_cau_box;
             dbg_pl->wu.hosei_adrs = (HOSEI_BOX*)&ef13_hos_box;
             dbg_pl->wu.att_ix_table = (ATTACK_ATTR*)&ef13_catt_table;
-            load_any_color(dbg_obj_color_tbl[dbg_slot->sel[0] - 0xd7]);
+            load_any_color(dbg_obj_color_tbl[dbg_slot->sel[0] - 0xD7]);
             dbg_pl->wu.my_col_code = 0x4020;
             break;
-        case 0xdb:
+        case 0xDB:
             dbg_pl->wu.hit_ix_table = (HIT_IX*)&ef13_hit_ix_table;
             dbg_pl->wu.body_adrs = (BODY_BOX*)&ef13_body_box;
             dbg_pl->wu.hand_adrs = (HAND_BOX*)&ef13_hand_box;
@@ -5696,11 +5696,11 @@ void debug_slot_char_load(void) {
             dbg_pl->wu.caught_adrs = (CAUGHT_BOX*)&ef13_cau_box;
             dbg_pl->wu.hosei_adrs = (HOSEI_BOX*)&ef13_hos_box;
             dbg_pl->wu.att_ix_table = (ATTACK_ATTR*)&ef13_catt_table;
-            load_any_color(dbg_obj_color_tbl[dbg_slot->sel[0] - 0xd7]);
+            load_any_color(dbg_obj_color_tbl[dbg_slot->sel[0] - 0xD7]);
             break;
-        case 0xfb:
+        case 0xFB:
             dbg_pl->wu.my_col_code = 0x4140;
-            load_any_color(dbg_obj_color_tbl[dbg_slot->sel[0] - 0xd7]);
+            load_any_color(dbg_obj_color_tbl[dbg_slot->sel[0] - 0xD7]);
             break;
         default:
             dbg_pl->wu.my_col_mode = 0x4200;
@@ -5709,7 +5709,7 @@ void debug_slot_char_load(void) {
         }
         dbg_pl->player_number = 0x99;
         dbg_pl->wu.operator = 1;
-        n = dbg_slot->sel[0] - 0xd8;
+        n = dbg_slot->sel[0] - 0xD8;
         if (n < 10) {
             col = n - 1;
             row = 0;
@@ -5751,7 +5751,7 @@ void debug_slot_char_load_keep_col(void) {
     s16 row;
     s16 col;
     u16 group;
-    if (dbg_slot->sel[0] <= 0xd8) {
+    if (dbg_slot->sel[0] <= 0xD8) {
         dbg_pl->wu.operator = 0;
         if (dbg_slot->sel[0] < 10) {
             ix = 0;
@@ -5776,11 +5776,11 @@ void debug_slot_char_load_keep_col(void) {
     } else {
         dbg_pl->wu.my_col_mode = 0x4200;
         dbg_pl->wu.my_col_code = 0x4080;
-        if (dbg_slot->sel[0] == 0xd9) {
+        if (dbg_slot->sel[0] == 0xD9) {
             load_player_color(1, 0, 0);
             dbg_pl->wu.my_col_code = 0x4007;
         }
-        if (dbg_slot->sel[0] == 0xda) {
+        if (dbg_slot->sel[0] == 0xDA) {
             dbg_pl->wu.hit_ix_table = ef13_hit_ix_table;
             dbg_pl->wu.body_adrs = ef13_body_box;
             dbg_pl->wu.hand_adrs = ef13_hand_box;
@@ -5789,10 +5789,10 @@ void debug_slot_char_load_keep_col(void) {
             dbg_pl->wu.caught_adrs = ef13_cau_box;
             dbg_pl->wu.hosei_adrs = ef13_hos_box;
             dbg_pl->wu.att_ix_table = ef13_catt_table;
-            load_any_color(dbg_obj_color_tbl[dbg_slot->sel[0] - 0xda]);
+            load_any_color(dbg_obj_color_tbl[dbg_slot->sel[0] - 0xDA]);
             dbg_pl->wu.my_col_code = 0x4020;
         }
-        if (dbg_slot->sel[0] == 0xdb) {
+        if (dbg_slot->sel[0] == 0xDB) {
             dbg_pl->wu.hit_ix_table = ef13_hit_ix_table;
             dbg_pl->wu.body_adrs = ef13_body_box;
             dbg_pl->wu.hand_adrs = ef13_hand_box;
@@ -5801,12 +5801,12 @@ void debug_slot_char_load_keep_col(void) {
             dbg_pl->wu.caught_adrs = ef13_cau_box;
             dbg_pl->wu.hosei_adrs = ef13_hos_box;
             dbg_pl->wu.att_ix_table = ef13_catt_table;
-            load_any_color(dbg_obj_color_tbl[dbg_slot->sel[0] - 0xdb]);
+            load_any_color(dbg_obj_color_tbl[dbg_slot->sel[0] - 0xDB]);
             dbg_pl->wu.my_col_code = 0x4040;
         }
         dbg_pl->player_number = 0x99;
         dbg_pl->wu.operator = 1;
-        n = dbg_slot->sel[0] - 0xd8;
+        n = dbg_slot->sel[0] - 0xD8;
         if (n < 10) {
             col = n - 1;
             row = 0;
@@ -6286,11 +6286,11 @@ s16 debug_cg_bank_kind(u16 code) {
 
 /* provisional name */
 void debug_draw_cg_group(code, n, x, y, attr)
-    u16 code;
-    s16 n;
-    s32 x;
-    s32 y;
-    s16 attr;
+u16 code;
+s16 n;
+s32 x;
+s32 y;
+s16 attr;
 {
     switch (debug_cg_bank_kind(code)) {
     case 0:
@@ -6309,11 +6309,11 @@ void debug_draw_cg_group(code, n, x, y, attr)
 
 /* provisional name */
 void debug_draw_cg_group_offset(code, ix, x, y, attr)
-    u16 code;
-    s16 ix;
-    s16 x;
-    s16 y;
-    s16 attr;
+u16 code;
+s16 ix;
+s16 x;
+s16 y;
+s16 attr;
 {
     s16 base;
     switch (debug_cg_bank_kind(code)) {
@@ -6770,9 +6770,8 @@ void debug_draw_cm_data(void)
 /* provisional name */
 void debug_draw_delta_and_side(void)
 {
-  debug_draw_position_delta();
-  debug_draw_edit_side();
-  return;
+    debug_draw_position_delta();
+    debug_draw_edit_side();
 }
 
 
@@ -7175,7 +7174,7 @@ void debug_bg_stage_load(void)
 
 /* provisional name */
 s32 debug_cg_group_index(code)
-    u16 code;
+u16 code;
 {
     u16 i;
     if (code >= 0xD800) {
@@ -7551,10 +7550,8 @@ s16 debug_catch_move_record(SNAPSHOT* p1, SNAPSHOT* p2) {
             if (plw[0].wu.cg_type == 0xFF) {
                 break;
             }
-            if (ixbfw_cut & 4) {
-                if (plw[0].wu.cg_rival == 0) {
-                    break;
-                }
+            if ((ixbfw_cut & 4) && plw[0].wu.cg_rival == 0) {
+                break;
             }
         }
     } else {
@@ -7586,10 +7583,8 @@ s16 debug_catch_move_record(SNAPSHOT* p1, SNAPSHOT* p2) {
             if (plw[0].wu.cg_type == 0xFF) {
                 break;
             }
-            if (ixbfw_cut & 4) {
-                if (plw[0].wu.cg_rival == 0) {
-                    break;
-                }
+            if ((ixbfw_cut & 4) && plw[0].wu.cg_rival == 0) {
+                break;
             }
         }
     }

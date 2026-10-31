@@ -124,7 +124,7 @@
 #define TIME_OVER_WAIT  1       /* count down C_Timer */
 
 /* C_No1, Game_Manage_6th */
-#define CM6_VICTORY     0       /* until the win is shown */
+#define CM6_VICTORY     0       /* wait G_Timer, then show both win marks */
 #define CM6_WAIT        1       /* count down C_Timer */
 
 /* C_No1, Game_Manage_9th */
@@ -148,6 +148,10 @@
 #define BGM_ROUND       2       /* when the music has stopped, the stage music */
 #define BGM_JUDGE_WAIT  3       /* the judges' decision: wait BGM_Timer */
 #define BGM_JUDGE       4       /* when the music has stopped, BGM_Request(6) */
+
+/* BGM_No[1]: the music fade-in (BGM_Fade_Sub) */
+#define BGMF_NONE       0       /* nothing to do */
+#define BGMF_WAIT       1       /* wait BGM_Timer, then (default) raise the volume */
 
 void Scrn_Move_Set(s32 n, s16 x, s16 y);
 
@@ -184,7 +188,7 @@ void Game_Manage_1st(void) {
     }
     appear_work_clear();
     win_sp_flag = 0;
-    BGM_No[1] = 0;
+    BGM_No[1] = BGMF_NONE;
     BGM_No[0] = BGM_IDLE;
     Shin_Gouki_BGM = 0;
     Special_Settle = 0;
@@ -550,6 +554,10 @@ void Update_BI_Term(void)
 
 
 
+/* The judges' decision (a time over with equal vitality, or a double KO that Judge_Next_Disposal sends
+   here), one step per C_No1: wait G_Timer, show the decision message, pick the winner (Judge_Winner)
+   behind a screen switch, run the judges' scene (APPEAR_JUDGE, SETTLE_JUDGE), then hand the round to
+   Game_Manage_7th at step 7 with a judge win mark. */
 void Game_Manage_5th(void) {
     void (*SC5_Jmp_Tbl[8])() = { Game_Manage_5_0, Game_Manage_5_1, Game_Manage_5_2, Game_Manage_5_3, Game_Manage_5_4, Game_Manage_5_5, Game_Manage_5_6, Game_Manage_5_7 };
     SC5_Jmp_Tbl[C_No1]();
@@ -610,7 +618,7 @@ void Game_Manage_5_4(void) {
         load_bg_color_fade(bg_palette_no_tbl[bg_w.bg_index], 15, 15, 15);
         load_bg_color_fade(bg_color2_tbl[bg_w.bg_index], 15, 15, 15);
         pcon_rno[0] = PCON_INIT;
-        pcon_rno[1] = 0;
+        pcon_rno[1] = APP_SETUP;
         pcon_rno[2] = 0;
         pcon_rno[3] = 0;
         appear_type = APPEAR_JUDGE;
@@ -690,6 +698,10 @@ void Game_Manage_6th(void) {
 
 
 
+/* The round's winner, one step per C_No1: 7_0 waits G_Timer and shows the win mark, 7_2 waits for
+   the combo display to finish and shows the winner's message (Disp_Winner), 7_3 clears it and goes
+   on to C0_ROUND_END, or for a perfect 7_4 to 7_6 show the perfect message first. After the judges'
+   decision 7_7 to 7_9 run the judges' event (Event_Judge_Gals) and then go back to 7_0. */
 void Game_Manage_7th(void) {
     void (*SC7_Jmp_Tbl[10])() = { Game_Manage_7_0, Game_Manage_7_1, Game_Manage_7_2, Game_Manage_7_3, Game_Manage_7_4, Game_Manage_7_5, Game_Manage_7_6, Game_Manage_7_7, Game_Manage_7_8, Game_Manage_7_9 };
     SC7_Jmp_Tbl[C_No1]();
@@ -836,6 +848,9 @@ void Game_Manage_7_9(void) {
 
 
 
+/* The round's scores, one step per C_No1: 8_0 pools the bonuses of a winning player and, when the
+   match is won, adds them to the score; 8_1 runs the bonus tally (Game_Manage_81_x by C_No2); 8_2
+   clears the text layer after the wait; 8_3 only waits. Both go on to C0_NEXT. */
 void Game_Manage_8th(void) {
     void (*SC8_Jmp_Tbl[4])() = { Game_Manage_8_0, Game_Manage_8_1, Game_Manage_8_2, Game_Manage_8_3 };
     SC8_Jmp_Tbl[C_No1]();
@@ -1011,6 +1026,8 @@ void Game_Manage_8_3(void) {
 
 
 
+/* Add the round's bonuses for the winner: 50000 for a perfect, 500 for each percent of PL_id's
+   vitality left and 300 for each count left on the timer. */
 void Pool_Score(s16 PL_id) {
     u32 Score_Buff;
     if (Perfect_Flag) {
@@ -1030,6 +1047,8 @@ const u32 Comp_Bonus_Data[11] = {
 };
 
 
+/* Add the pooled bonuses and the completion bonus (Setup_Comp_Bonus) to PL_id's score, at most
+   99999900. */
 void Additional_Bonus(s16 PL_id) {
     Complete_Bonus = Setup_Comp_Bonus();
     Score[PL_id][Play_Type] += Perfect_Bonus[Winner_id];
@@ -1043,6 +1062,9 @@ void Additional_Bonus(s16 PL_id) {
 
 
 
+/* The bonus for a match won without losing a round: 30000 in versus play; against the CPU it grows
+   by 10000 with each such win in a row (Straight_Counter), from 30000 to 130000, and a lost round
+   starts it again. */
 u32 Setup_Comp_Bonus(void) {
     u32 xx;
     u16 zz;
@@ -1673,18 +1695,16 @@ void Disp_Bonus_Perfect(void) {
 
 
 void Flash_Bonus_Perfect(void) {
-    s32 (*fp)() = effect_89_init;
-    register s16* py = &DE_X[1];
     switch (PB_Status) {
     case 1:
-        fp(10, 1, 15, *py + 36, 3);
+        effect_89_init(10, 1, 15, DE_X[1] + 36, 3);
         break;
     case 2:
-        fp(9, 1, 15, *py + 36, 3);
+        effect_89_init(9, 1, 15, DE_X[1] + 36, 3);
         break;
     case 3:
-        fp(10, 1, 15, *py + 36, 3);
-        fp(9, 1, 19, *py + 36, 3);
+        effect_89_init(10, 1, 15, DE_X[1] + 36, 3);
+        effect_89_init(9, 1, 19, DE_X[1] + 36, 3);
         break;
     }
 }
@@ -1922,7 +1942,7 @@ s32 Check_Disp_Winner(void) {
 
 void Disp_Winner(void) {
     if (Play_Type == PLAY_VS_PLAYER) {
-        winner_name_put((s32)My_char[Winner_id]);
+        winner_name_put(My_char[Winner_id]);
         effect_89_init(1, DE_X[3] + 10, 9, 29, 4);
         sound_request(0x8D);
     } else {
@@ -2196,7 +2216,7 @@ void BGM_Fade_Sub(void) {
     u8* p;
     s8* v;
     switch (v = &BGM_Vol, p = &BGM_Timer[1], BGM_No[1]) {
-    case 1:
+    case BGMF_WAIT:
         if (--*p == 0) {
             BGM_No[1]++;
             BGM_Timer[1] = 1;
@@ -2207,12 +2227,12 @@ void BGM_Fade_Sub(void) {
         if (--*p == 0) {
             BGM_Timer[1] = 2;
             if (++*v == 0) {
-                BGM_No[1] = 0;
+                BGM_No[1] = BGMF_NONE;
             }
         }
         sound_reg_level_set(0, *v);
         break;
-    case 0:
+    case BGMF_NONE:
         break;
     }
 }
@@ -2254,7 +2274,7 @@ void Setup_BGM_Fade_In(u8 time) {
     if (PB_Music_Off) {
         return;
     }
-    BGM_No[1] = 1;
+    BGM_No[1] = BGMF_WAIT;
     BGM_Timer[1] = time;
 }
 

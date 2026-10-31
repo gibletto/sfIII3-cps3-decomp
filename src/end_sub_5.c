@@ -88,7 +88,7 @@ void debug_play09_init(void) {
     set_kizetsu_status(1);
     set_super_arts_status(0);
     set_super_arts_status(1);
-    C_No0 = 0;
+    C_No0 = C0_INIT;
     Game_timer = 0;
     Game_pause = 0;
     Round_num = 0;

@@ -43,7 +43,7 @@ void effect_F6_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
     case R0_MOVE:
         if (ewk->wu.old_rno[1] <= op_w.index) {
-            ewk->wu.routine_no[0] += 1;
+            ewk->wu.routine_no[0]++;
         } else if (ewk->wu.old_rno[2] <= op_w.index) {
             if (ewk->wu.type == 0x1B) {
                 efff6_move01(ewk);
@@ -64,7 +64,7 @@ void effect_F6_move(WORK_Other* ewk) {
 void efff6_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
     case R2_INIT:
-        ewk->wu.routine_no[2] += 1;
+        ewk->wu.routine_no[2]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.old_rno[0], ewk->wu.char_index, 0);
         if (ewk->wu.my_mr.size.x == 0x3F) {
@@ -89,7 +89,7 @@ void efff6_move_common(WORK_Other* ewk) {
         case 0x20:
             add_x_sub(ewk);
             if (ewk->wu.xyz[0].disp.pos <= ewk->wu.old_rno[3]) {
-                ewk->wu.routine_no[3] += 1;
+                ewk->wu.routine_no[3]++;
                 ewk->wu.xyz[0].disp.pos = ewk->wu.old_rno[3];
             }
             break;
@@ -98,21 +98,21 @@ void efff6_move_common(WORK_Other* ewk) {
         case 0x10:
             add_x_sub(ewk);
             if (ewk->wu.xyz[0].disp.pos >= ewk->wu.old_rno[3]) {
-                ewk->wu.routine_no[3] += 1;
+                ewk->wu.routine_no[3]++;
                 ewk->wu.xyz[0].disp.pos = ewk->wu.old_rno[3];
             }
             break;
         case 0x200:
             add_y_sub(ewk);
             if (ewk->wu.xyz[1].disp.pos <= ewk->wu.old_rno[4]) {
-                ewk->wu.routine_no[3] += 1;
+                ewk->wu.routine_no[3]++;
                 ewk->wu.xyz[1].disp.pos = ewk->wu.old_rno[4];
             }
             break;
         case 0x100:
             add_y_sub(ewk);
             if (ewk->wu.xyz[1].disp.pos >= ewk->wu.old_rno[4]) {
-                ewk->wu.routine_no[3] += 1;
+                ewk->wu.routine_no[3]++;
                 ewk->wu.xyz[1].disp.pos = ewk->wu.old_rno[4];
             }
             break;
@@ -131,7 +131,7 @@ void efff6_move_common(WORK_Other* ewk) {
                 work |= 0x10;
             }
             if (work == 0x11) {
-                ewk->wu.routine_no[3] += 1;
+                ewk->wu.routine_no[3]++;
             }
             break;
         case 0x220:
@@ -149,7 +149,7 @@ void efff6_move_common(WORK_Other* ewk) {
                 work |= 0x10;
             }
             if (work == 0x11) {
-                ewk->wu.routine_no[3] += 1;
+                ewk->wu.routine_no[3]++;
             }
             break;
         case 0x110:
@@ -167,7 +167,7 @@ void efff6_move_common(WORK_Other* ewk) {
                 work |= 0x10;
             }
             if (work == 0x11) {
-                ewk->wu.routine_no[3] += 1;
+                ewk->wu.routine_no[3]++;
             }
             break;
         case 0x210:
@@ -185,7 +185,7 @@ void efff6_move_common(WORK_Other* ewk) {
                 work |= 0x10;
             }
             if (work == 0x11) {
-                ewk->wu.routine_no[3] += 1;
+                ewk->wu.routine_no[3]++;
             }
             break;
         }
@@ -200,7 +200,7 @@ void efff6_move_common(WORK_Other* ewk) {
 void efff6_move01(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[2]) {
     case R2_INIT:
-        ewk->wu.routine_no[2] += 1;
+        ewk->wu.routine_no[2]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.old_rno[0], ewk->wu.char_index, 0);
         if (ewk->wu.my_mr.size.x == 0x3F) {
@@ -211,12 +211,12 @@ void efff6_move01(WORK_Other* ewk) {
         ewk->wu.old_rno[5] = 1;
         ewk->wu.old_rno[6] = 0;
     case R2_COLOUR:
-        ewk->wu.old_rno[5] -= 1;
+        ewk->wu.old_rno[5]--;
         if (ewk->wu.old_rno[5] <= 0) {
             ewk->wu.old_rno[5] = 2;
-            ewk->wu.old_rno[6] += 1;
+            ewk->wu.old_rno[6]++;
             if (ewk->wu.old_rno[6] >= 6) {
-                ewk->wu.routine_no[2] += 1;
+                ewk->wu.routine_no[2]++;
             } else {
                 ewk->wu.extra_col_2 = efff6_move01_tbl[ewk->wu.old_rno[6]];
             }

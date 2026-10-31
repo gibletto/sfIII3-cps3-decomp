@@ -244,7 +244,7 @@ s32 check_catch_attack(PLW* wk) {
         return 0;
     }
     kos = ((wk->cp->sw_new & CMD_LV_FORWARD) != 0) + (((wk->cp->sw_new & CMD_LV_BACK) != 0) * 2);
-    if ((wk->wu.pat_status < 0xE) || (wk->wu.pat_status > 0x1E)) {
+    if ((wk->wu.pat_status < 14) || (wk->wu.pat_status > 30)) {
         if (!(nml_catch_h2_ok[0][wk->player_number] & 0x10)) {
             return 0;
         }

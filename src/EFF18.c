@@ -136,7 +136,7 @@ void eff17_close(WORK_Other* ewk) {
     WORK* oya = (WORK*)ewk->my_master;
     switch (ewk->wu.routine_no[2]) {
     case R2_CLOSE:
-        ewk->wu.my_mr.size.y = ewk->wu.my_mr.size.y + -7;
+        ewk->wu.my_mr.size.y -= 7;
         if (ewk->wu.my_mr.size.y <= 0) {
             ewk->wu.my_mr.size.y = 0;
             ewk->wu.routine_no[2]++;

@@ -1,8 +1,9 @@
 /*
- * MANAGE.C  Round and match management
+ * MANAGE.C  FBI warning screen
  *
- * Other routines: stage BGM selection (Check_Stage_BGM), win records (Disp_Win_Record),
- * request_center_message for the centre-screen messages and the FBI warning screen (FBI_Warning).
+ * FBI_Warning runs the FBI warning screen through FBI_Warning_1st (FBI_Warning_2nd is empty).
+ * attract_menu_str holds the attract sequence titles and the coin and start prompts. MANAGE_X, the
+ * Game_Management result, is defined here.
  */
 
 #include "structs.h"
@@ -71,7 +72,6 @@
 #include "gameover.h"
 #include "continue.h"
 #include "pow_pow.h"
-#include "end_main.h"
 #include "Entry.h"
 #include "entry_2.h"
 

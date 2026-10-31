@@ -734,9 +734,9 @@ s8 Stpl_Num;
 
 
 void sa_moji_trans(Stpl_Num, Kind, OnOff)
-    s32 Stpl_Num;
-    s8 Kind;
-    s8 OnOff;
+s32 Stpl_Num;
+s8 Kind;
+s8 OnOff;
 {
     SPG_DAT* spg;
     switch (Kind) {
@@ -871,7 +871,6 @@ void spgauge_wipe_write(s32 Stpl_Num) {
     }
     sa_waku_trans(Stpl_Num, Stpl_Num);
     sa_gauge_trans(s, 0);
-    return;
 }
 
 

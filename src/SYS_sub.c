@@ -2,10 +2,10 @@
  * SYS_SUB.C  System subroutines for scenes and screens
  *
  * General helpers used by the scene and menu code, and cpu_algorithm, which returns the next
- * lever/button word of a recorded demonstration input (Demo_Ptr) for PLMAIN. System_all_clear_Ex empties the effect lists. Request_Fade/Check_Fade_Complete(_SP) run
- * fades; Switch_Screen_Init(_Panel), Switch_Screen and Switch_Screen_Revival run the screen
- * wipes built from the patterns in SE. scfont_page0_fill / scfont_page1_fill fill a whole page of the text (SS)
- * layer.
+ * lever/button word of a recorded demonstration input (Demo_Ptr) for PLMAIN. System_all_clear_Ex
+ * empties the effect lists. Request_Fade/Check_Fade_Complete(_SP) run fades;
+ * Switch_Screen_Init(_Panel), Switch_Screen and Switch_Screen_Revival run the screen wipes built from
+ * the patterns in SE. scfont_page0_fill / scfont_page1_fill fill a whole page of the text (SS) layer.
  * Ranking entry insertion (insert_ranking_*, Check_Grade_Score, Check_CPU_Grade_Score) and
  * Setup_Play_Type are here, with scene-cut helpers (Button_Cut_Hold, Button_Cut_EX,
  * Cut_Cut_Cut and friends) that let a player's button shorten a scene.
@@ -121,6 +121,7 @@ void Fade_Cont(void)
 
 
 
+/* Run the fade for a frame; 1 once it has finished. */
 s32 Check_Fade_Complete_SP(void) {
     fade_cont_main();
     return Fade_Flag ^ 1;
@@ -128,6 +129,8 @@ s32 Check_Fade_Complete_SP(void) {
 
 
 
+/* Run the fade; once it has finished, count down Fade_Gap_Timer (3 from Request_Fade) and return 1
+   when it runs out. */
 s32 Check_Fade_Complete(void) {
     if (Fade_Flag) {
         fade_cont_main();
@@ -212,6 +215,7 @@ u8 wipe_mode;
 
 
 
+/* One step of the wipe that covers the screen, drawn in Wipe_Mode; 1 when the wipe is complete. */
 s32 Switch_Screen(void) {
     switch (((s8)Wipe_Mode)) {
     case 0:
@@ -259,6 +263,7 @@ s32 Switch_Screen(void) {
 
 
 
+/* One step of the wipe that uncovers the screen again; 1 when the wipe is complete. */
 s32 Switch_Screen_Revival(void) {
     switch (((s8)Wipe_Mode)) {
     case 0:
@@ -624,6 +629,8 @@ s32 Button_Cut_Hold(s16* timer, s16 first, s16 repeat) {
 
 
 
+/* Count down *Timer: 1 when it reaches zero, or sooner once it is at most Limit_Time while the
+   target player (Setup_Target_PL) holds a button. */
 s32 Button_Cut_EX(s16* Timer, s16 Limit_Time) {
     s16 PL_id = Setup_Target_PL();
     u16 xx;
@@ -725,7 +732,7 @@ void Disp_Win_Type(void) {
 
 /* provisional name */
 void commit_name_entry_row_both_players(pos_y)
-    s16 pos_y;
+s16 pos_y;
 {
     if (E_Number[0][0] == ENTRY_NAME && name_wk[0].dmm) {
         rank_display_set(0, pos_y);
@@ -784,6 +791,7 @@ void Disp_Copyright(void) {
 
 
 
+/* 1 while a player (not the CPU) holds a button. */
 s32 Cut_Cut_Cut(void) {
     s32 m = 0x3F0;
     PLW* pl = plw;

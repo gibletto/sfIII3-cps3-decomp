@@ -3,6 +3,6 @@
 
 #include "structs.h"
 
-void suzi_line_calc2(s16 bg_no);
+void suzi_line_calc2(s16 bg_num);
 
 #endif

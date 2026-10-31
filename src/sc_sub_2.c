@@ -1,8 +1,10 @@
 /*
- * SC_SUB_2.C  HUD win marks, palette fade control and stun gauge (part 2)
+ * SC_SUB_2.C  Palette fade control
  *
- * Routines: fade_cont_init, fade_cont_main, stngauge_cont_init, stngauge_cont_main,
- * stngauge_control, stun_put, stun_mark_write, stun_gauge_waku_write, stngauge_work_clear.
+ * fade_cont_init / fade_cont_main run a multi-layer palette fade: the fade number selects a list of
+ * palette groups and step parameters, and each frame the groups due for an update are re-sent through
+ * the colour request queue with the next brightness until every layer has reached its target, after
+ * which the fade flags are cleared.
  */
 
 #include "structs.h"

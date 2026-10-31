@@ -135,7 +135,7 @@ s32 effect_19_init(void) {
     WORK_Other* ewk;
     s16 ix;
     s16 i;
-    const s16* data_ptr = &eff19_data_tbl[0];
+    const s16* data_ptr = eff19_data_tbl;
     for (i = 0; i < 7; i++) {
         if ((ix = pull_effect_work(4)) == -1) {
             return -1;

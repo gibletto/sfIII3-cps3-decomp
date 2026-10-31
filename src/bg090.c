@@ -616,7 +616,7 @@ void demo90_base(void) {
 
 
 void jijii_win_bg(void) {
-    if ((EXE_flag || Game_pause)) {
+    if (EXE_flag || Game_pause) {
         return;
     }
     switch (bgw_ptr->r_no_1) {
@@ -639,7 +639,7 @@ void jijii_win_bg(void) {
 void jijii_win_bg2(void) {
     s16 zuu_work;
     s32 sp_work;
-    if ((EXE_flag || Game_pause)) {
+    if (EXE_flag || Game_pause) {
         return;
     }
     switch (bg_w.bgw[1].r_no_1) {

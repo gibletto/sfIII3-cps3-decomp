@@ -59,12 +59,14 @@
 
 /* routine_no[2], effC2_main_process_first: nobody hitting the car */
 #define R2_EMPTY        0       /* nobody on the car */
+#define R2_ON_CAR       1       /* a player stands on the car */
 
 /* routine_no[2], while the car takes a hit */
 #define R2_HIT          0       /* take the damage */
 #define R2_HITSTOP      1       /* wait out the hit stop */
 
 /* routine_no[2], effC2_main_process_second: the first collapse */
+#define R2_BROKEN       0       /* the broken car at rest */
 #define R2_BREAK        9       /* hit stop, then throw the debris */
 #define R2_DROP         10      /* drop to the ground */
 #define R2_LAND         11      /* settle after landing */
@@ -109,7 +111,7 @@ void effect_C2_move(WORK_Other* ewk) {
         ewk->wu.direction = 0;
         ewk->wu.dir_timer = 0;
         ewk->wu.routine_no[1] = R1_NORMAL;
-        ewk->wu.routine_no[2] = 0;
+        ewk->wu.routine_no[2] = R2_EMPTY;
         effect_J9_init(ewk, 8);
         return;
     case R0_MOVE:
@@ -134,7 +136,7 @@ void effect_C2_move(WORK_Other* ewk) {
                 break;
             }
             ewk->wu.routine_no[1] = R1_LAST_FALL;
-            ewk->wu.routine_no[2] = 0;
+            ewk->wu.routine_no[2] = R2_LAST_FALL;
             Bonus_Game_result |= 2;
             ewk->wu.xyz[1].disp.pos = 80;
             ewk->wu.next_y = 64;
@@ -210,33 +212,33 @@ void effC2_main_process_first(WORK_Other* ewk, PLW* twk) {
             if (ewk->wu.routine_no[1] == R1_DAMAGE) {
                 break;
             }
-            if (ewk->wu.routine_no[2] == 0) {
+            if (ewk->wu.routine_no[2] == R2_EMPTY) {
                 break;
             }
-            ewk->wu.routine_no[2] = 0;
+            ewk->wu.routine_no[2] = R2_EMPTY;
             ewk->wu.routine_no[3] = R3_STILL;
             break;
         case 3:
             if (ewk->wu.routine_no[1] == R1_DAMAGE) {
                 break;
             }
-            if (ewk->wu.routine_no[2] == 1) {
+            if (ewk->wu.routine_no[2] == R2_ON_CAR) {
                 break;
             }
-            ewk->wu.routine_no[2] = 1;
+            ewk->wu.routine_no[2] = R2_ON_CAR;
             ewk->wu.routine_no[3] = R3_STILL;
             break;
         case 1:
-            if (ewk->wu.routine_no[1] != R1_DAMAGE || ewk->wu.routine_no[2] != 0) {
+            if (ewk->wu.routine_no[1] != R1_DAMAGE || ewk->wu.routine_no[2] != R2_HIT) {
                 ewk->wu.routine_no[1] = R1_NORMAL;
-                ewk->wu.routine_no[2] = 0;
+                ewk->wu.routine_no[2] = R2_EMPTY;
                 ewk->wu.routine_no[3] = R3_START;
             }
             break;
         case 2:
-            if (ewk->wu.routine_no[1] != R1_DAMAGE || ewk->wu.routine_no[2] != 0) {
+            if (ewk->wu.routine_no[1] != R1_DAMAGE || ewk->wu.routine_no[2] != R2_HIT) {
                 ewk->wu.routine_no[1] = R1_NORMAL;
-                ewk->wu.routine_no[2] = 1;
+                ewk->wu.routine_no[2] = R2_ON_CAR;
                 ewk->wu.routine_no[3] = R3_START;
             }
             break;
@@ -315,7 +317,7 @@ void effC2_main_process_first(WORK_Other* ewk, PLW* twk) {
                 char_move(&ewk->wu);
                 if (ewk->wu.cg_type == 0xFF) {
                     ewk->wu.routine_no[1] = R1_NORMAL;
-                    ewk->wu.routine_no[2] = 0;
+                    ewk->wu.routine_no[2] = R2_EMPTY;
                     ewk->wu.cg_type = 0;
                 }
                 break;
@@ -400,7 +402,7 @@ void effC2_main_process_second(WORK_Other* ewk, PLW* twk) {
         switch (ewk->wu.routine_no[1]) {
         case R1_NORMAL:
             switch (ewk->wu.routine_no[2]) {
-            case 0:
+            case R2_BROKEN:
                 break;
             case R2_BREAK:
                 if (ewk->wu.hit_stop == 0) {
@@ -450,7 +452,7 @@ void effC2_main_process_second(WORK_Other* ewk, PLW* twk) {
                 }
                 set_char_move_init(&ewk->wu, 0, 70);
                 ewk->wu.dir_old = 0;
-                ewk->wu.routine_no[2] = 0;
+                ewk->wu.routine_no[2] = R2_BROKEN;
                 ewk->wu.original_vitality = ewk->wu.shell_ix[0] = 0x640;
                 ewk->wu.vital_old = 0;
                 Time_Stop = 0;
@@ -480,7 +482,7 @@ void effC2_main_process_second(WORK_Other* ewk, PLW* twk) {
                 if (ewk->wu.shell_ix[0] < 0 || ewk->wu.cg_type == 0xFF) {
                     ewk->wu.dir_old = 1;
                     ewk->wu.routine_no[0] = R0_COLLAPSE;
-                    ewk->wu.routine_no[1] = 0;
+                    ewk->wu.routine_no[1] = R1_LAST_STOP;
                     ewk->wu.routine_no[2] = 0;
                     ewk->wu.cg_type = 0;
                     Time_Stop = 1;
@@ -489,7 +491,7 @@ void effC2_main_process_second(WORK_Other* ewk, PLW* twk) {
             case R2_HITSTOP:
                 if (--ewk->wu.hit_stop <= 0) {
                     ewk->wu.routine_no[1] = R1_NORMAL;
-                    ewk->wu.routine_no[2] = 0;
+                    ewk->wu.routine_no[2] = R2_BROKEN;
                 }
                 break;
             }
@@ -541,21 +543,21 @@ void setup_demojump(PLW* twk, s16 ix) {
         if (twk->wu.xyz[1].disp.pos > 3) {
             twk->wu.routine_no[1] = PLAYER_NORMAL;
             twk->wu.routine_no[2] = 56;
-            twk->wu.routine_no[3] = 0;
+            twk->wu.routine_no[3] = RN3_START;
         }
         break;
     case 1:
         if (twk->bs2_on_car) {
             twk->wu.routine_no[1] = PLAYER_NORMAL;
             twk->wu.routine_no[2] = 58;
-            twk->wu.routine_no[3] = 0;
+            twk->wu.routine_no[3] = RN3_START;
         }
         break;
     case 2:
         if ((twk->wu.pat_status >= 14 && twk->wu.pat_status <= 30) || twk->bs2_on_car) {
             twk->wu.routine_no[1] = PLAYER_NORMAL;
             twk->wu.routine_no[2] = 56;
-            twk->wu.routine_no[3] = 0;
+            twk->wu.routine_no[3] = RN3_START;
         }
         break;
     }
@@ -695,7 +697,7 @@ void c3_new_damage(WORK* wk) {
     }
     c2wk = (WORK*)wk->my_effadrs;
     c2wk->routine_no[1] = R1_DAMAGE;
-    c2wk->routine_no[2] = 0;
+    c2wk->routine_no[2] = R2_HIT;
     c2wk->dm_attlv = wk->dm_attlv;
     c2wk->dm_rl = wk->dm_rl;
     c2wk->dm_dir = wk->dm_dir;

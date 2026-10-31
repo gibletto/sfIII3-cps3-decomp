@@ -100,7 +100,7 @@ void eff48_0000(WORK_Other* ewk) {
     }
     switch (ewk->wu.routine_no[1]) {
     case R1_INIT:
-        ewk->wu.routine_no[1] += 1;
+        ewk->wu.routine_no[1]++;
         if (ewk->wu.routine_no[0] == R0_TINTED) {
             ewk->wu.my_col_code += ewk->wu.old_rno[2];
         }
@@ -108,7 +108,7 @@ void eff48_0000(WORK_Other* ewk) {
         set_char_move_init2(&ewk->wu, 0, ewk->wu.old_rno[0], ewk->wu.char_index, 0);
     case R1_SHOW:
         if (op_obj_disp) {
-            ewk->wu.routine_no[1] += 1;
+            ewk->wu.routine_no[1]++;
         } else {
             disp_pos_trans_entry(ewk);
         }
@@ -128,16 +128,16 @@ void eff48_1000(WORK_Other* ewk) {
     }
     switch (ewk->wu.routine_no[1]) {
     case R1_INIT:
-        ewk->wu.routine_no[1] += 1;
+        ewk->wu.routine_no[1]++;
         op_scrn_end = 0;
         ewk->wu.disp_flag = 1;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.old_rno[0], ewk->wu.char_index, 0);
         ewk->wu.old_rno[3] = 10;
         cal_all_speed_data(&ewk->wu, ewk->wu.old_rno[3], ewk->wu.xyz[0].disp.pos, ewk->wu.old_rno[2], 2, 2);
     case R1_DROP:
-        ewk->wu.old_rno[3] -= 1;
+        ewk->wu.old_rno[3]--;
         if (ewk->wu.old_rno[3] < 0) {
-            ewk->wu.routine_no[1] += 1;
+            ewk->wu.routine_no[1]++;
             ewk->wu.xyz[1].disp.pos = ewk->wu.old_rno[2];
             op_scrn_end = 1;
             switch (ewk->wu.type) {

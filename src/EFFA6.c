@@ -320,7 +320,7 @@ void effect_A6_move(WORK_Other_CONN* ewk) {
                     chr_data = effA6_mes_en[ewk->master_player][mmes_already].chr;
                     break;
                 }
-                for (i = 0; i < chr_data[0]; i = i + 1) {
+                for (i = 0; i < chr_data[0]; i++) {
                     load_char_gfx(chr_data[i + 1], 1);
                 }
                 ewk->num_of_conn = chr_data[i + 1];

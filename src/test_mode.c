@@ -282,7 +282,7 @@ void test_menu_run(void) {
         }
         break;
     case MENU_EXIT:
-        test_rno += 1;
+        test_rno++;
         break;
     }
     if (done != 0) {

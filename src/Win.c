@@ -1,9 +1,9 @@
 /*
  * WIN.C  Short ending check
  *
- * Check_Short_Ending starts the short ending (G_No1 8, E_No0 10) for the winner in one region
- * (Version_Type 3) once the winner has beaten six opponents, outside versus play; it returns whether
- * it did.
+ * Check_Short_Ending starts the short ending (G1_ENDING / G2_END_SHORT, E0_ENDING) for the winner
+ * in one region (Version_Type 3) once the winner has beaten six opponents, outside versus play; it
+ * returns whether it did.
  */
 
 #include "structs.h"

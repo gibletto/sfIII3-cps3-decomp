@@ -144,7 +144,6 @@ u8 b;
 /* provisional name */
 void color_trans_dummy(void)
 {
-  return;
 }
 
 /* provisional name */
@@ -160,9 +159,9 @@ void color_dma_error_disp(void)
 
 /* provisional name */
 void load_player_color(a, b, c)
-    u16 a;
-    s16 b;
-    s16 c;
+u16 a;
+s16 b;
+s16 c;
 {
     const XFER* p = player_color_tbl[a][b][c];
     s8 i;

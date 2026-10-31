@@ -40,7 +40,7 @@ void effect_K5_move(WORK_Other* ewk) {
     MVJ* mvj;
     switch (ewk->wu.routine_no[0]) {
     case R0_INIT:
-        ewk->wu.routine_no[0] += 1;
+        ewk->wu.routine_no[0]++;
         if (get_cal_work(&ewk->wu) == -1) {
             ewk->wu.routine_no[0] = R0_ABORT;
             break;

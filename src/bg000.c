@@ -371,7 +371,6 @@ void zoom_y_width_check(void) {
     if (Game_setting.Screen_Mode) {
         return;
     }
-    /* previous bg_f_y, kept in the unnamed word at bg_w+0x34 */
     bg_w.old_bg_f_y = bg_w.bg_f_y;
     bg_w.frame_flag = zoom_frame_judge();
     f = bg_w.bg_f_y;
@@ -1607,8 +1606,8 @@ void scroll_cell_write(s16 i, u32 ofs, u32 cell, u32 tbl) {
 /* provisional name */
 void bg_extra_color_trans(void)
 {
-    load_bg_color(0x2c);
-    load_bg_color(0x2d);
+    load_bg_color(0x2C);
+    load_bg_color(0x2D);
 }
 
 void bg_base_move_common(void) {
@@ -1967,13 +1966,13 @@ void bg0000_demo(void) {
         if (bgw_ptr->free > 0) {
             break;
         }
-        bgw_ptr->r_no_1 += 1;
+        bgw_ptr->r_no_1++;
         break;
     case 2:
         if (bgw_ptr->u_line) {
             bgw_ptr->wxy[0].cal += bgw_ptr->speed_x;
             if (bgw_ptr->wxy[0].disp.pos > 0x1D0) {
-                bgw_ptr->r_no_1 += 1;
+                bgw_ptr->r_no_1++;
                 bgw_ptr->wxy[0].disp.pos = 0x1D0;
                 bgw_ptr->wxy[0].disp.low = 0;
                 bgw_ptr->xy[0].cal = bgw_ptr->wxy[0].cal;
@@ -1982,7 +1981,7 @@ void bg0000_demo(void) {
         } else {
             bgw_ptr->wxy[0].cal -= bgw_ptr->speed_x;
             if (bgw_ptr->wxy[0].disp.pos < 0x1D0) {
-                bgw_ptr->r_no_1 += 1;
+                bgw_ptr->r_no_1++;
                 bgw_ptr->wxy[0].disp.pos = 0x1D0;
                 bgw_ptr->wxy[0].disp.low = 0;
                 bgw_ptr->xy[0].cal = bgw_ptr->wxy[0].cal;

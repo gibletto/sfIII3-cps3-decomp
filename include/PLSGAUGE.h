@@ -22,7 +22,7 @@ void setup_lvdir_after_autodir(PLW* wk);
 void setup_saishin_lvdir();
 void setup_vitality(WORK* wk, s16 pno);
 
-s32 short_to_bcd(s16 ix);
+s32 short_to_bcd(s16 num);
 void kakushi_setup(s32 pl);
 
 s32 get_kind_of_head_dm(s16 dir, char rl);

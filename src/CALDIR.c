@@ -599,8 +599,8 @@ s32 cal_move_dir_forecast(WORK* wk, s16 tm) {
 
 
 s32 remake_2_10(v, digits)
-    s16 v;
-    s16 digits;
+s16 v;
+s16 digits;
 {
     s16 bcd;
     s32 wk;

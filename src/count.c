@@ -1,9 +1,12 @@
 /*
- * COUNT.C  Vitality bars and round timers (part 3)
+ * COUNT.C  Round timer and bonus-stage timer
  *
- * Routines: count_cont_init, count_cont_reset, count_cont_main, counter_control, counter_flash,
- * counter_color_clear, bcount_cont_init, bcount_cont_reset, bcount_cont_main, bcounter_control,
- * bcounter_down.
+ * count_cont_init / count_cont_reset / count_cont_main and counter_control run the 99-count round
+ * timer, one count every hoji_counter_tbl[Timer_Speed] + 1 frames; counter_flash cycles the digit
+ * colour from 30 down, at the second flash_timer_tbl rate from 10, and counter_color_clear puts the
+ * colour back. bcount_cont_init / bcount_cont_reset / bcount_cont_main and bcounter_control run the
+ * 50-count bonus-stage timer (one count every 61 frames, Time_Over at zero); bcounter_down counts it
+ * down for the result tally.
  */
 
 #include "structs.h"

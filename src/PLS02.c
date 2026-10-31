@@ -20,14 +20,11 @@
 #include "PLS01.h"
 #include "PLS02.h"
 
-struct PLW_tag;
-
-
 
 
 void add_to_mvxy_data(wk, ix)
-    WORK *wk;
-    u16 ix;
+WORK *wk;
+u16 ix;
 {
     s16* adrs;
     s32 sp;
@@ -67,8 +64,8 @@ void setup_move_data_easy(WORK* wk, const s16* adrs, s16 prx, s16 pry) {
 
 
 void setup_mvxy_data(wk, ix)
-    WORK *wk;
-    u16 ix;
+WORK *wk;
+u16 ix;
 {
     wk->mvxy.index = ix;
     read_adrs_store_mvxy(wk, &wk->move_xy_table[ix * 6]);
@@ -116,8 +113,7 @@ void read_adrs_store_mvxy(WORK* wk, const s16* adrs) {
     wk->mvxy.kop[1] = adrs[5];
 }
 
-s32 get_weight_point(WORK* wk)
-{
+s32 get_weight_point(WORK* wk) {
     return wk->dm_weight - wk->weight_level + 3;
 }
 
@@ -290,13 +286,12 @@ two:
     p2w->wu.xyz[0].disp.pos += meri * (p2w->micchaku_flag != 1);
     p1w->hos_em_flag = 1;
     p2w->hos_em_flag = 2;
-    return;
 }
 
 
 
 s32 meri_case_switch(meri)
-    s16 meri;
+s16 meri;
 {
     switch (meri & 0xFFF8) {
     case 0:
@@ -538,16 +533,14 @@ s32 random_16_com(void) {
 }
 
 /* Next value from the CPU's 32-entry extra random table. */
-s32 random_32_ex_com(void)
-{
+s32 random_32_ex_com(void) {
     Random_ix32_ex_com++;
     Random_ix32_ex_com &= 0x1F;
     return random_tbl_32_ex[Random_ix32_ex_com];
 }
 
 /* Next value from the CPU's 16-entry extra random table. */
-s32 random_16_ex_com(void)
-{
+s32 random_16_ex_com(void) {
     Random_ix16_ex_com++;
     Random_ix16_ex_com &= 0xF;
     return random_tbl_16_ex_com[Random_ix16_ex_com];

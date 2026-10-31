@@ -68,7 +68,7 @@ void effect_B2_move(WORK_Other* ewk) {
     b3_Break_Into_check(ewk);
     switch (ewk->wu.routine_no[0]) {
     case R0_INIT:
-        ewk->wu.routine_no[0] += 1;
+        ewk->wu.routine_no[0]++;
         ewk->wu.old_rno[0] = ewk->wu.old_rno[1] = ewk->wu.old_rno[2] = 0;
         rf_b2_flag = 0;
         b2_curr_no = 0;
@@ -80,9 +80,9 @@ void effect_B2_move(WORK_Other* ewk) {
         ewk->wu.my_mr.size.y = 63;
         break;
     case R0_ROUND:
-        ewk->wu.hit_stop -= 1;
+        ewk->wu.hit_stop--;
         if (ewk->wu.hit_stop < 0) {
-            ewk->wu.routine_no[0] += 1;
+            ewk->wu.routine_no[0]++;
             ewk->wu.my_mr.size.y = 0;
             effect_I6_init(ewk);
         }
@@ -90,16 +90,16 @@ void effect_B2_move(WORK_Other* ewk) {
     case R0_ROUND_OPEN:
         ewk->wu.my_mr.size.y += 10;
         if (ewk->wu.my_mr.size.y >= 63) {
-            ewk->wu.routine_no[0] += 1;
+            ewk->wu.routine_no[0]++;
             ewk->wu.my_mr.size.y = 63;
             ewk->wu.hit_stop = 64;
             rf_b2_flag = 0;
         }
         break;
     case R0_ROUND_HOLD:
-        ewk->wu.hit_stop -= 1;
+        ewk->wu.hit_stop--;
         if (ewk->wu.hit_stop < 0) {
-            ewk->wu.routine_no[0] += 1;
+            ewk->wu.routine_no[0]++;
             b2_curr_no = 0;
             rf_b2_flag = 0;
             ewk->wu.hit_stop = 10;
@@ -108,9 +108,9 @@ void effect_B2_move(WORK_Other* ewk) {
     case R0_FIGHT:
         ewk->wu.my_mr.size.x = 63;
         ewk->wu.my_mr.size.y = 0;
-        ewk->wu.hit_stop -= 1;
+        ewk->wu.hit_stop--;
         if (ewk->wu.hit_stop < 0) {
-            ewk->wu.routine_no[0] += 1;
+            ewk->wu.routine_no[0]++;
             rf_b2_flag = 0;
             effect_L5_init(ewk);
         }
@@ -118,40 +118,40 @@ void effect_B2_move(WORK_Other* ewk) {
     case R0_FIGHT_OPEN:
         ewk->wu.my_mr.size.y += 6;
         if (ewk->wu.my_mr.size.y >= 63) {
-            ewk->wu.routine_no[0] += 1;
+            ewk->wu.routine_no[0]++;
             ewk->wu.my_mr.size.y = 63;
         }
         break;
     case R0_STAMP:
         if (rf_b2_flag) {
-            ewk->wu.routine_no[0] += 1;
+            ewk->wu.routine_no[0]++;
             rf_b2_flag = 0;
         }
         break;
     case R0_FLASH:
         if (fight_col_chg_sub(ewk) != 0) {
-            ewk->wu.routine_no[0] += 1;
+            ewk->wu.routine_no[0]++;
             rf_b2_flag = 0;
             ewk->wu.routine_no[1] = R1_INIT;
         }
         break;
     case R0_FIGHT_OUT:
         if (rf_b2_flag) {
-            ewk->wu.routine_no[0] += 1;
+            ewk->wu.routine_no[0]++;
         }
         break;
     case R0_GO:
         Next_Step = 1;
-        ewk->wu.routine_no[0] += 1;
+        ewk->wu.routine_no[0]++;
         break;
     case R0_END:
-        ewk->wu.routine_no[0] += 1;
+        ewk->wu.routine_no[0]++;
         break;
     case R0_BREAK:
-        ewk->wu.routine_no[0] += 1;
+        ewk->wu.routine_no[0]++;
         break;
     case R0_BREAK_END:
-        ewk->wu.routine_no[0] += 1;
+        ewk->wu.routine_no[0]++;
         break;
     default:
         all_cgps_put_back(&ewk->wu);
@@ -175,17 +175,17 @@ s32 b3_Break_Into_check(WORK_Other* ewk) {
 s32 fight_col_chg_sub(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
     case R1_INIT:
-        ewk->wu.routine_no[1] += 1;
+        ewk->wu.routine_no[1]++;
         ewk->wu.vital_new = 0;
         ewk->wu.hit_stop = 1;
         break;
     case R1_FLASH:
-        ewk->wu.hit_stop -= 1;
+        ewk->wu.hit_stop--;
         if (ewk->wu.hit_stop <= 0) {
             ewk->wu.hit_stop = 1;
-            ewk->wu.vital_new += 1;
+            ewk->wu.vital_new++;
             if (ewk->wu.vital_new > 17) {
-                ewk->wu.routine_no[1] += 1;
+                ewk->wu.routine_no[1]++;
                 ewk->wu.hit_stop = 6;
             } else {
                 ewk->wu.extra_col = fight_col_move_tbl[ewk->wu.vital_new];
@@ -195,9 +195,9 @@ s32 fight_col_chg_sub(WORK_Other* ewk) {
         }
         break;
     case R1_HOLD:
-        ewk->wu.hit_stop -= 1;
+        ewk->wu.hit_stop--;
         if (ewk->wu.hit_stop <= 0) {
-            ewk->wu.routine_no[1] += 1;
+            ewk->wu.routine_no[1]++;
             return 1;
         }
     case R1_DRAW:

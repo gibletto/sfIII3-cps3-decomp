@@ -173,7 +173,7 @@ s16 emid;
     if (s < 9) {
         return 0;
     }
-    if (s < 0xf) {
+    if (s < 0xF) {
         return 1;
     }
     if (s < 0x12) {
@@ -225,13 +225,13 @@ u16 swdat;
 s32 katteni_bonus_nando(swdat)
 u16 swdat;
 {
-    if (swdat & 1) {
-        if (swdat & 0x70) {
+    if (swdat & LEVER_UP) {
+        if (swdat & BUTTON_PUNCHES) {
             return 1;
         }
     }
-    if (swdat & 2) {
-        if (swdat & 0x380) {
+    if (swdat & LEVER_DOWN) {
+        if (swdat & (BUTTON_LK | BUTTON_MK | BUTTON_HK)) {
             return 1;
         }
     }

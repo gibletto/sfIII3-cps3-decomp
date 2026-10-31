@@ -94,7 +94,7 @@ void effect_B3_move(WORK_Other* ewk) {
 void round_move_init(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
     case R1_INIT:
-        ewk->wu.routine_no[1] += 1;
+        ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.my_mr_flag = 1;
         set_char_move_init2(&ewk->wu, 0, 2, 1, 0);
@@ -111,7 +111,7 @@ void round_move_init(WORK_Other* ewk) {
 void round_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
     case R1_INIT:
-        ewk->wu.routine_no[1] += 1;
+        ewk->wu.routine_no[1]++;
         if (ewk->wu.hit_quake) {
             Sound_SE(138);
             ewk->wu.xyz[0].disp.pos = bg_w.bgw[ewk->wu.my_family - 1].position_x + bg_w.pos_offset;
@@ -137,7 +137,7 @@ void round_move(WORK_Other* ewk) {
 void fight_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
     case R1_INIT:
-        ewk->wu.routine_no[1] += 1;
+        ewk->wu.routine_no[1]++;
         set_char_move_init2(&ewk->wu, 0, 2, 5, 0);
         ewk->wu.my_mr.size.x = 63;
         ewk->wu.my_mr.size.y = 0;
@@ -165,7 +165,7 @@ void fight_col_move(WORK_Other* ewk) {
 void fight_vanish(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
     case R1_INIT:
-        ewk->wu.routine_no[1] += 1;
+        ewk->wu.routine_no[1]++;
         set_char_move_init2(&ewk->wu, 0, 4, 1, 0);
         disp_pos_trans_entry5(ewk);
         ewk->wu.my_col_code = 0x1E0;
@@ -174,7 +174,7 @@ void fight_vanish(WORK_Other* ewk) {
     case R1_VANISH:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
-            ewk->wu.routine_no[1] += 1;
+            ewk->wu.routine_no[1]++;
         }
         disp_pos_trans_entry5(ewk);
         break;

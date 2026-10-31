@@ -10,7 +10,7 @@ void EFF42_SUDDENLY(WORK_Other* ewk);
 void EFF42_KILL(WORK_Other* ewk);
 void Setup_Char_Index(WORK_Other* ewk);
 s32 effect_41_init(PLW* wk, u8 data);
-s32 effect_42_init(s16 Type);
+s32 effect_42_init(s16 type);
 void effect_42_move(WORK_Other* ewk);
 
 s32 zoom_x_step_check();

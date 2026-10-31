@@ -918,8 +918,7 @@ s32 nekorobi_check(char pl) {
     return result;
 }
 
-s32 footwork_check(char pl)
-{
+s32 footwork_check(char pl) {
     s16 result;
     result = 0;
     if (plw[pl].wu.routine_no[1] == PLAYER_NORMAL) {
@@ -966,8 +965,7 @@ void add_next_position(PLW* wk) {
     wk->wu.next_y = 0;
 }
 
-void setup_gouki_wins(void)
-{
+void setup_gouki_wins(void) {
     gouki_wins = 0;
     if (plw[Winner_id].player_number == PL_GOUKI1 || plw[Winner_id].player_number == PL_GOUKI2) {
         gouki_wins = 1;

@@ -73,10 +73,10 @@ run:
         check_damage_hosei_bonus();
         set_quake(&plw[0]);
         set_quake(&plw[1]);
-        if ((plw[0].zuru_flag == 0) && (plw[0].zettai_muteki_flag == 0)) {
+        if (plw[0].zuru_flag == 0 && plw[0].zettai_muteki_flag == 0) {
             hit_push_request((WORK*)&plw[0]);
         }
-        if ((plw[1].zuru_flag == 0) && (plw[1].zettai_muteki_flag == 0)) {
+        if (plw[1].zuru_flag == 0 && plw[1].zettai_muteki_flag == 0) {
             hit_push_request((WORK*)&plw[1]);
         }
         add_next_position(&plw[0]);
@@ -234,8 +234,7 @@ void plcnt_b_die(void) {
     move_player_work_bonus();
 }
 
-s32 footwork_check_bns(char pl)
-{
+s32 footwork_check_bns(char pl) {
     s16 result;
     result = 0;
     if (Bonus_Game_Flag == BONUS_CAR && plw[pl].wu.operator == 0) {

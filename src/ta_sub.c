@@ -37,7 +37,7 @@
 #pragma inline(obr_no_disp_check)
 
 
-struct PLW_tag;/* provisional name */
+/* provisional name */
 void sw_dummy_1(void) {}
 
 

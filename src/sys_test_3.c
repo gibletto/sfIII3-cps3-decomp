@@ -553,9 +553,9 @@ s32 cd_check_disc_id(void) {
         if (cd_sector_buf[1] == 'C' && cd_sector_buf[2] == 'D' && cd_sector_buf[3] == '0' &&
             cd_sector_buf[4] == '0' && cd_sector_buf[5] == '1') {
             if (cd_sector_buf[0x28] == CD_VOLUME_ID[0] && cd_sector_buf[0x29] == CD_VOLUME_ID[1] &&
-                cd_sector_buf[0x2a] == CD_VOLUME_ID[2] && cd_sector_buf[0x2b] == CD_VOLUME_ID[3] &&
-                cd_sector_buf[0x2c] == CD_VOLUME_ID[4] && cd_sector_buf[0x2d] == CD_VOLUME_ID[5] &&
-                cd_sector_buf[0x2e] == CD_VOLUME_ID[6] && cd_sector_buf[0x2f] == CD_VOLUME_ID[7] &&
+                cd_sector_buf[0x2A] == CD_VOLUME_ID[2] && cd_sector_buf[0x2B] == CD_VOLUME_ID[3] &&
+                cd_sector_buf[0x2C] == CD_VOLUME_ID[4] && cd_sector_buf[0x2D] == CD_VOLUME_ID[5] &&
+                cd_sector_buf[0x2E] == CD_VOLUME_ID[6] && cd_sector_buf[0x2F] == CD_VOLUME_ID[7] &&
                 cd_sector_buf[0x30] == CD_VOLUME_ID[8] && cd_sector_buf[0x31] == CD_VOLUME_ID[9] &&
                 cd_sector_buf[0x32] == CD_VOLUME_ID[10]) {
                 return 0;

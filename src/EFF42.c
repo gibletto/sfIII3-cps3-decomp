@@ -142,7 +142,7 @@ void EFF42_SLIDE_OUT(WORK_Other* ewk) {
         ewk->wu.xyz[0].cal += ewk->wu.mvxy.a[0].sp;
         ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;
         if (Ck_Range_Out_S(ewk, 2, 16)) {
-            ewk->wu.routine_no[6] += 1;
+            ewk->wu.routine_no[6]++;
             ewk->wu.disp_flag = 0;
         }
         break;
@@ -159,7 +159,7 @@ void EFF42_KILL(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
     case R1_START:
         if (--Order_Timer[ewk->wu.dir_old] == 0) {
-            ewk->wu.routine_no[1] += 1;
+            ewk->wu.routine_no[1]++;
             ewk->wu.disp_flag = 0;
         }
         break;

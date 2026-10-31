@@ -60,7 +60,7 @@ void effect_I6_move(WORK_Other* ewk) {
 void effi6_line_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
     case R1_INIT:
-        ewk->wu.routine_no[1] += 1;
+        ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.my_mr_flag = 1;
         ewk->wu.my_mr.size.x = 0;

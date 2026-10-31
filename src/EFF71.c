@@ -1,9 +1,8 @@
 /*
  * EFF71.C  Effect 71: timer for an occasional stage animation (bg040)
  *
- * effect_71_init creates the controller. effect_71_move waits a
- * random time from eff71_time_tbl, creates the two effect 72 parts and then starts waiting
- * again.
+ * effect_71_init creates the controller. effect_71_move waits a random time from eff71_time_tbl,
+ * creates the two effect 72 parts and then starts waiting again.
  */
 
 #include "structs.h"

@@ -89,8 +89,8 @@ void effect_work_quick_clear(void) {
 
 /* provisional name */
 void effect_work_list_release(lix, iid)
-    s16 lix;
-    s16 iid;
+s16 lix;
+s16 iid;
 {
     WORK* c_addr;
     s16 curr_ix;
@@ -512,7 +512,10 @@ s32 exec_char_asxy(WORK* wk, u8 data) {
 }
 
 
-void setup_free_program(WORK* wk, u8 arg) {}/* Start a horizontal background quake using quake pattern ix. */
+void setup_free_program(WORK* wk, u8 arg) {}
+
+
+/* Start a horizontal background quake using quake pattern ix. */
 void setup_bg_quake_x(WORK* wk, u8 ix)
 {
     bg_w.quake_x_index = ix;

@@ -560,7 +560,7 @@ void Damage_17000(PLW* wk) {
     case D17_NEXT:
         wk->wu.routine_no[3]++;
         char_move_wca_init(&wk->wu);
-        wk->wu.cmwk[14] = (*(const s16(*)[4])&(damage_pause_table[3]))[wk->wu.dm_attlv];
+        wk->wu.cmwk[14] = damage_pause_table[3][wk->wu.dm_attlv];
     case D17_AIR:
         jumping_union_process(&wk->wu, 3);
         set_dm_hos_flag_sky(wk);
@@ -1076,20 +1076,15 @@ void Damage_31000(PLW* wk) {
 
 /* provisional name */
 void set_dm_char_by_pat_status(WORK* wk) {
-    void (*a)() = set_char_move_init;
-    if (wk->pat_status >= 14) {
-        goto m;
+    if (wk->pat_status < 14) {
+        set_char_move_init(wk, 1, 40);
+        return;
     }
-    a(wk, 1, 40);
-    goto e;
-m:
     if (wk->pat_status >= 32) {
-        a(wk, 1, 56);
-        goto e;
+        set_char_move_init(wk, 1, 56);
+        return;
     }
-    a(wk, 6, 10);
-e:
-    ;
+    set_char_move_init(wk, 6, 10);
 }
 
 

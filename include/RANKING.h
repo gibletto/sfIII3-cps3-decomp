@@ -10,7 +10,7 @@ void Ranking_01_5th(void);
 void Ranking_Sub(void);
 void Setup_Score_Small(s16 y);
 void Setup_Wins(s16 y);
-void Name_Sub(s32 xx, s32 y);
+void Name_Sub(s32 name_ix, s32 disp_y);
 void Ranking_00_2nd(void);
 void Ranking_00_4th(void);
 void Ranking_01_4th(void);

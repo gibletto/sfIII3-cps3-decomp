@@ -17,7 +17,6 @@
 
 void effect_J1_move(void)
 {
-  return;
 }
 
 

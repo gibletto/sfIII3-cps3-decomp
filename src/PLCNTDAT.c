@@ -120,8 +120,7 @@ s32 debug_player_change(void) {
 
 
 /* provisional name */
-void reset_piyori_and_fight(void)
-{
+void reset_piyori_and_fight(void) {
   set_kizetsu_status(0);
   set_kizetsu_status(1);
   reset_fight_status();
@@ -308,8 +307,7 @@ void clear_kizetsu_point(PLW* wk) {
     wk->py->recover = pl_nr_piyo_tbl[wk->player_number];
 }
 
-void set_super_arts_status(s16 pl)
-{
+void set_super_arts_status(s16 pl) {
     const SA_DATA *data;
 
     data = &super_arts_data[My_char[pl]][Super_Arts[pl]];
@@ -383,8 +381,7 @@ s16 ix;
     return rnum;
 }
 
-void set_scrrrl(void)
-{
+void set_scrrrl(void) {
     s16 center;
     center = get_center_position();
     scrr = center + 192;

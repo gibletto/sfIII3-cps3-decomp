@@ -158,7 +158,7 @@
 #define N58_AIR         1       /* in the air until it lands */
 #define N58_LAND        2       /* the landing */
 
-struct PLW_tag;void Normal_02000(PLW* wk) {
+void Normal_02000(PLW* wk) {
     if (wk->the_same_players) {
         wk->wu.next_z = wk->wu.my_priority + 1;
     }
@@ -988,8 +988,7 @@ void Normal_52000(PLW* wk) {
 
 
 
-void Normal_53000(PLW* wk)
-{
+void Normal_53000(PLW* wk) {
     if (wk->the_same_players) wk->wu.next_z = wk->wu.my_priority + 1;
     switch (wk->wu.routine_no[3]) {
     case RN3_START:

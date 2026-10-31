@@ -4,7 +4,7 @@
 #include "structs.h"
 
 s32 sound_request(s32 code);
-void sound_init(u8* data, SNDSAMPLE* bank_a, u8** bank_b, u8 stereo, u8 volume, u8 flag);
+void sound_init(u8* data, SNDSAMPLE* sample, u8** bank_b, u8 stereo, u8 volume, u8 flag);
 void sound_request_pan(u16 code, s16 vol_l, s16 vol_r, s16 time, s16 ramp);
 void sound_driver_init(void);
 void sound_driver_tick(void);

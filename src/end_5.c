@@ -515,7 +515,7 @@ void end_501_0011(void) {
         break;
     case 2:
         if (end_fade_complete()) {
-            bgw_ptr->r_no_1 += 1;
+            bgw_ptr->r_no_1++;
             end_no_cut = 0;
         }
     case 3:

@@ -206,7 +206,7 @@ s16 Power_Level;
             Reaction_Exit_Sub(wk);
         } else {
             Lever_Buff[wk->wu.id] = Lever_LR[wk->wu.id];
-            if ((wk->wu.now_koc == 8) && (wk->wu.char_index == 0xD)) {
+            if ((wk->wu.now_koc == 8) && (wk->wu.char_index == 13)) {
                 xx = wk->wu.cg_ix / wk->wu.cgd_type;
                 if (xx >= Power_Level) {
                     CP_Index[wk->wu.id][1] = 0x63;
@@ -693,7 +693,7 @@ s16 Time;
 static s32 Check_Squat(wk)
 PLW* wk;
 {
-    if (((WORK*)wk->wu.target_adrs)->pat_status == 0x20) {
+    if (((WORK*)wk->wu.target_adrs)->pat_status == 32) {
         return 0;
     }
     return 2;
@@ -1409,7 +1409,7 @@ s16 Option;
 {
     WORK* em;
     em = (WORK*)wk->wu.target_adrs;
-    if (em->routine_no[1] == PLAYER_DAMAGE && em->pat_status == 0x18) {
+    if (em->routine_no[1] == PLAYER_DAMAGE && em->pat_status == 24) {
         return 0;
     }
     if (Lie_Flag[wk->wu.id] == 0) {
@@ -2109,7 +2109,7 @@ s32 Check_VS_Air_Attack(PLW* wk, s16 Range_JX, s16 Range_JY, s16 J_Lever_Data) {
         return 0;
     }
     em = (WORK*)wk->wu.target_adrs;
-    if ((em->pat_status != 0xE) && (em->pat_status != 0x14) && (em->pat_status != 0x1A) && (em->xyz[1].disp.pos <= 0)) {
+    if ((em->pat_status != 14) && (em->pat_status != 20) && (em->pat_status != 26) && (em->xyz[1].disp.pos <= 0)) {
         return 0;
     }
     if (Check_Term_Sub_Air(wk, PL_Distance[wk->wu.id], Range_JX) == 0) {
@@ -3001,7 +3001,7 @@ void Check_Rapid(PLW* wk, u16 Tech_Number) {
         Rapid_No[wk->wu.id][0] = Rapid_SA_Data[Lv][random_32_com() & 7];
         Rapid_No[wk->wu.id][1] = RAPID1_INIT;
         Setup_Rapid_End_Term(wk, Tech_Number);
-        Rapid_Index[wk->wu.id] = 0x3F0;
+        Rapid_Index[wk->wu.id] = BUTTON_SHOTS;
     }
 }
 
@@ -4677,7 +4677,7 @@ s16 PL_id;
     if (plw[wk->wu.id].sa->ok) {
         return Rnd | 8;
     }
-    if ((plw[PL_id].wu.vital_new <= 0x30) || (plw[PL_id ^ 1].wu.vital_new <= 0x30)) {
+    if ((plw[PL_id].wu.vital_new <= 48) || (plw[PL_id ^ 1].wu.vital_new <= 48)) {
         return Rnd | 8;
     }
     return Rnd;
@@ -4816,7 +4816,7 @@ s32 Check_Flip_Term(PLW* wk) {
 
 s32 Setup_EM_Rank_Index(PLW* wk) {
     if (EM_Rank != 0) {
-        return 0x12;
+        return 18;
     } else {
         return wk->player_number;
     }
@@ -4826,7 +4826,7 @@ s32 Setup_EM_Rank_Index(PLW* wk) {
 
 s32 Flip_Term_Correct(PLW* wk) {
     s16 xx = 0;
-    if (plw[wk->wu.id].wu.vital_new <= 0x30) {
+    if (plw[wk->wu.id].wu.vital_new <= 48) {
         xx++;
     }
     if ((PL_Wins[wk->wu.id]) < (PL_Wins[wk->wu.id ^ 1])) {
@@ -4888,7 +4888,7 @@ s16 xx;
     Timer_00[wk->wu.id] = 9;
     Flip_Counter[wk->wu.id] = 0;
     if (xx) {
-        if ((em->pat_status == 0x21) || (em->pat_status == 0x20)) {
+        if ((em->pat_status == 33) || (em->pat_status == 32)) {
             Lever_Buff[wk->wu.id] = LEVER_DOWN;
         } else {
             Lever_Buff[wk->wu.id] = Setup_Guard_Lever(wk, 0);
@@ -5265,7 +5265,7 @@ s16* xx;
         break;
     case PL_YUN:
     case PL_YANG:
-        if (Check_Special_Technique(wk, em, 0, 0, 0x2b, -1, -1) != 0) {
+        if (Check_Special_Technique(wk, em, 0, 0, 0x2B, -1, -1) != 0) {
             return *xx = 2;
         }
         break;
@@ -5582,7 +5582,7 @@ s32 ETC_Term_0001(PLW* wk, WORK* em) {
 
 
 s32 ETC_Term_0002(PLW* wk, WORK* em) {
-    if (plw[wk->wu.id].wu.vital_new <= 0x30) {
+    if (plw[wk->wu.id].wu.vital_new <= 48) {
         return 1;
     }
     return 0;
@@ -5591,7 +5591,7 @@ s32 ETC_Term_0002(PLW* wk, WORK* em) {
 
 
 s32 ETC_Term_0003(PLW* wk, WORK* em) {
-    if ((em->pat_status != 0x20) && (em->pat_status != 0x21) && (em->pat_status != 2)) {
+    if ((em->pat_status != 32) && (em->pat_status != 33) && (em->pat_status != 2)) {
         return 1;
     }
     return 0;
@@ -5600,10 +5600,10 @@ s32 ETC_Term_0003(PLW* wk, WORK* em) {
 
 
 s32 ETC_Term_0004(PLW* wk, WORK* em) {
-    if (em->vital_new >= 0x50) {
+    if (em->vital_new >= 80) {
         return 0;
     }
-    if (plw[wk->wu.id].wu.vital_new < 0x78) {
+    if (plw[wk->wu.id].wu.vital_new < 120) {
         return 0;
     }
     return 1;
@@ -5654,8 +5654,7 @@ s32 ETC_Term_0008(PLW* wk) {
     }
 }
 
-s32 ETC_Term_0009(PLW* wk)
-{
+s32 ETC_Term_0009(PLW* wk) {
     if (plw[wk->wu.id].sa->kind_of_arts != 0) {
         return 0;
     }

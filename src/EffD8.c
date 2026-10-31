@@ -31,17 +31,17 @@
 
 void effect_D8_move(WORK_Other* ewk) {
     s16 offset_x;
-    ewk->wu.hit_quake += 1;
+    ewk->wu.hit_quake++;
     switch (ewk->wu.routine_no[0]) {
     case R0_WAIT:
         if (Complete_Face == 0) {
-            ewk->wu.routine_no[0] += 1;
+            ewk->wu.routine_no[0]++;
             ewk->wu.dir_timer = 10;
         }
         break;
     case R0_DELAY:
         if (--ewk->wu.dir_timer == 0) {
-            ewk->wu.routine_no[0] += 1;
+            ewk->wu.routine_no[0]++;
             ewk->wu.disp_flag = 1;
             set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         }
@@ -59,9 +59,9 @@ void effect_D8_move(WORK_Other* ewk) {
             set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, (ewk->wu.cg_ix / ewk->wu.cgd_type) + 1, 0);
         }
         if (Sel_PL_Complete[ewk->master_id]) {
-            ewk->wu.routine_no[0] += 1;
+            ewk->wu.routine_no[0]++;
             ewk->wu.dir_timer = 20;
-            ewk->wu.char_index += 1;
+            ewk->wu.char_index++;
             set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         } else {
             char_move(&ewk->wu);
@@ -71,18 +71,18 @@ void effect_D8_move(WORK_Other* ewk) {
         if (--ewk->wu.dir_timer) {
             char_move(&ewk->wu);
         } else {
-            ewk->wu.routine_no[0] += 1;
+            ewk->wu.routine_no[0]++;
             Sel_PL_Complete[ewk->master_id] = -0x8000;
             if (Select_Start[ewk->master_id] == 0) {
                 Select_Timer = 32;
             }
             Unit_Of_Timer = 50;
-            ewk->wu.char_index += 1;
+            ewk->wu.char_index++;
             set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         }
         break;
     case R0_END:
-        ewk->wu.routine_no[0] += 1;
+        ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 0;
         break;
     default:

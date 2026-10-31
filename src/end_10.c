@@ -343,7 +343,7 @@ void end_1003_1000(void) {
     case 2:
         bgw_ptr->xy[1].cal -= 0x4000;
         if (bg_w.bgw[1].r_no_1 >= 3) {
-            bgw_ptr->r_no_1 += 1;
+            bgw_ptr->r_no_1++;
         }
         bgw_ptr->abs_y = bgw_ptr->xy[1].disp.pos;
     case 3:

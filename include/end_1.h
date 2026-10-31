@@ -3,7 +3,7 @@
 
 #include "structs.h"
 
-void end_ake_cell_put(s8 bg, s32 ofs, s32 cell, u32 src);
+void end_ake_cell_put(s8 map, s32 ofs, s32 cell, u32 src);
 void end_100_0001(void);
 void end_100_0002(void);
 void end_100_0000(void);

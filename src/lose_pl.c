@@ -1,13 +1,9 @@
 /*
- * LOSE_PL.C  Win/lose poses after a round and the opening demo (first half)
+ * LOSE_PL.C  Lose poses after a round
  *
  * Player routines for the end of a round: lose_player dispatches the loser through
  * Lose_00000..Lose_30000 by the character's lose type (normal loser, judged-loss loser and special
- * cases); meta_lose_pause handles a loser who is not in his own character. The second part starts
- * the opening demo: opening_demo_tick is the per-frame entry (init, move, Capcom screen),
- * opning_init_00000/01000 allocate scroll graphics and set up the BG planes, and opening_move
- * advances the scene number when the music sequence reaches the next cue in op_change_sound_tbl,
- * then runs op_100_move..op_106_move; the later bars continue in end_main.c.
+ * cases); meta_lose_pause handles a loser who is not in his own character.
  */
 
 #include "structs.h"
@@ -37,7 +33,6 @@
 #include "EFF48.h"
 #include "EFFC1.h"
 #include "efff6.h"
-#include "end_main.h"
 #include "sys_config.h"
 #include "sys_config_2.h"
 #include "sys_config_3.h"

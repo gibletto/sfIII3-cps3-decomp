@@ -66,7 +66,7 @@ void bgm_tempo_set(s8 tempo) {
 /* provisional name */
 s32 sound_driver_version(void)
 {
-  return (s32)((s16)(341));
+    return 341;
 }
 
 /* provisional name */

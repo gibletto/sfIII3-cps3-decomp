@@ -468,7 +468,7 @@ void grade_makeup_bonus_parameter(s16 ix) {
 
 
 s32 get_offence_total(ix)
-    s16 ix;
+s16 ix;
 {
     s32 num;
     s32 num2;
@@ -919,7 +919,6 @@ void grade_set_round_result(s16 ix) {
         return;
     }
     judge_item[ix][Play_Type].kimarite = 0;
-    return;
 }
 
 

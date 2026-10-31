@@ -60,7 +60,7 @@ void effect_L7_move(WORK_Other* ewk) {
         pl_eff_trans_entry(ewk);
         break;
     case R0_END:
-        ewk->wu.routine_no[0] += 1;
+        ewk->wu.routine_no[0]++;
         poison_flag[oya_ptr->id] = 0;
         break;
     default:
@@ -75,7 +75,7 @@ void effect_L7_move(WORK_Other* ewk) {
 void effl7_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[1]) {
     case R1_INIT:
-        ewk->wu.routine_no[1] += 1;
+        ewk->wu.routine_no[1]++;
         ewk->wu.disp_flag = 1;
         ewk->wu.kage_flag = 1;
         ewk->wu.kage_hx = 0;
@@ -92,7 +92,7 @@ void effl7_move(WORK_Other* ewk) {
         add_y_sub(ewk);
         ewk->wu.old_rno[0]--;
         if (ewk->wu.old_rno[0] <= 0) {
-            ewk->wu.routine_no[1] += 1;
+            ewk->wu.routine_no[1]++;
             set_char_move_init(&ewk->wu, 0, 1);
         }
         return;
@@ -101,21 +101,21 @@ void effl7_move(WORK_Other* ewk) {
     case R1_STOP:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
-            ewk->wu.routine_no[1] += 1;
+            ewk->wu.routine_no[1]++;
             set_char_move_init(&ewk->wu, 1, ewk->wu.old_rno[2]);
         }
         break;
     case R1_PERFORM:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 9) {
-            ewk->wu.routine_no[1] += 1;
+            ewk->wu.routine_no[1]++;
             ewk->wu.rl_flag ^= 1;
         }
         break;
     case R1_TURN:
         char_move(&ewk->wu);
         if (ewk->wu.cg_type == 0xFF) {
-            ewk->wu.routine_no[1] += 1;
+            ewk->wu.routine_no[1]++;
             set_char_move_init2(&ewk->wu, 0, 0, 3);
             if (ewk->wu.rl_flag) {
                 ewk->wu.mvxy.a[0].sp = 0x20000;
@@ -129,14 +129,14 @@ void effl7_move(WORK_Other* ewk) {
         char_move(&ewk->wu);
         add_x_sub(ewk);
         if (range_x_check3((WORK*)ewk, 64) == 0) {
-            ewk->wu.routine_no[1] += 1;
+            ewk->wu.routine_no[1]++;
             ewk->wu.disp_flag = 0;
             ewk->wu.kage_flag = 0;
         }
         break;
     case R1_END:
-        ewk->wu.routine_no[1] += 1;
-        ewk->wu.routine_no[0] += 1;
+        ewk->wu.routine_no[1]++;
+        ewk->wu.routine_no[0]++;
         break;
     }
 }

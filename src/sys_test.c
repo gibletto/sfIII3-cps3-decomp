@@ -1,16 +1,14 @@
 /*
- * SYS_TEST.C  System library: scroll registers, test mode pages, CD/SCSI, coin chutes
+ * SYS_TEST.C  Scroll layer registers
  *
- * Scroll control: Bg_On_W / Bg_Off_W and the layer masks, Scrn_Move_Set and Scrn_Pos_Init set plane
- * positions, Irl_Family and scroll_layers_finalize_frame write the scroll and family registers each
- * frame, and the sprite slot setters point planes at their tilemaps. Operator test menu pages: input
- * and output tests, sound test, colour bars, screen cross hatch, backup RAM (game data) display and
- * clear, and the memory test with its RAM, SIMM and SRAM checks. The boot self-test routines test
- * cell, work, video, palette and sprite RAM and check the CD drive and disc ID; the rewrite menu
- * handles the CD-ROM setup screen. SCSI commands (test unit ready, mode sense, read capacity,
- * request sense, start/stop unit, medium lock, read(10)) drive the CD drive. The last part runs the
- * coin chutes, the service coin and the lockout coils each frame (the chute, credit and switch
- * routines they call are in coin_sw.c).
+ * Bg_On_R / Bg_On_W / Bg_Off_R / Bg_Off_W and clear_scroll_layer_state_and_mask switch the layers;
+ * Scrn_Pos_Init, Scrn_Move_Set*, Scrn_X_Set_* / Scrn_Y_Set_* and Scrn_Move_Add set the plane
+ * positions; scrn_map_set*, scrn_line_set*, scrn_linescroll_set* and scrn_attr_set point a plane at its
+ * tilemap, line table and line scroll and set its attributes, with simmram_large_page_addr /
+ * simmram_small_page_addr giving the page addresses; scrn_flip_set / scrn_flip_toggle flip the
+ * screen, Scrn_Renew rewrites the registers, and scroll_layers_finalize_frame writes the scroll
+ * registers each frame. The test mode pages follow in sys_test_2.c to sys_test_5.c and the other
+ * test files.
  */
 
 #include "structs.h"
@@ -276,8 +274,8 @@ void Scrn_Move_Set_R(s32 n, s16 x, s16 y) {
 
 /* provisional name: unreferenced */
 void Scrn_X_Set_R(ix, x)
-    s32 ix;
-    s16 x;
+s32 ix;
+s16 x;
 {
     scrn_pos[ix].set_x.disp.pos = x;
     scrn_pos[ix].cur_x.disp.pos = x;
@@ -285,8 +283,8 @@ void Scrn_X_Set_R(ix, x)
 
 /* provisional name */
 void Scrn_Y_Set_R(ix, y)
-    s32 ix;
-    s16 y;
+s32 ix;
+s16 y;
 {
     scrn_pos[ix].set_y.disp.pos = y;
     scrn_pos[ix].cur_y.disp.pos = y;
