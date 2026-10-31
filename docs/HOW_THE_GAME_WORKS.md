@@ -273,7 +273,7 @@ The video hardware does the drawing. The game only writes lists. One naming trap
 "CRAM" means **character RAM** (tile pixels), not palette RAM.
 
 Graphics and colours reach the video hardware through two DMA units (copy engines that work while the CPU carries on),
-both queued in `poly_que.c`:
+both queued in `dma_que.c`:
 
 - `chr_dma_request` copies or decompresses graphics from the ROM into character RAM, which works as a cache.
 - `col_dma_request` copies a block of colours from the ROM into colour RAM and can fade it on the way, towards
