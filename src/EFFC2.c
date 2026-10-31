@@ -259,6 +259,7 @@ void effC2_main_process_first(WORK_Other* ewk, PLW* twk) {
                         break;
                     }
                     ewk->wu.routine_no[3]++;
+                    /* fall through */
                 default:
                     ewk->wu.cg_type = 0;
                     ewk->wu.cg_number = 9;
@@ -277,6 +278,7 @@ void effC2_main_process_first(WORK_Other* ewk, PLW* twk) {
                         break;
                     }
                     ewk->wu.routine_no[3]++;
+                    /* fall through */
                 default:
                     ewk->wu.cg_type = 0;
                     ewk->wu.cg_number = 18;
@@ -310,6 +312,7 @@ void effC2_main_process_first(WORK_Other* ewk, PLW* twk) {
                     break;
                 }
                 check_parts_break_level(&ewk->wu);
+                /* fall through */
             case R2_HITSTOP:
                 if (--ewk->wu.hit_stop > 0) {
                     break;
@@ -444,6 +447,7 @@ void effC2_main_process_second(WORK_Other* ewk, PLW* twk) {
                 case 3:
                     illegal_setup_effK2(&ewk->wu, 3);
                     ewk->wu.cg_type = 0;
+                    /* fall through */
                 default:
                     break;
                 }

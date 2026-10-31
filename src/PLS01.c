@@ -92,8 +92,8 @@ s32 check_rl_flag(WORK* wk) {
 
 void set_rl_waza(PLW* wk) {
     s16 lever;
-    s16 d;
-    WORK_Other* p;
+    s16 dx;
+    WORK_Other* em;
     if (Bonus_Game_Flag != BONUS_CAR) {
         goto other;
     }
@@ -109,16 +109,16 @@ void set_rl_waza(PLW* wk) {
     wk->wu.rl_waza = wk->wu.rl_flag;
     return;
 other:
-    p = (WORK_Other*)wk->wu.target_adrs;
-    d = wk->wu.xyz[0].disp.pos - p->wu.xyz[0].disp.pos;
-    if (d) {
-        if (d > 0) {
+    em = (WORK_Other*)wk->wu.target_adrs;
+    dx = wk->wu.xyz[0].disp.pos - em->wu.xyz[0].disp.pos;
+    if (dx) {
+        if (dx > 0) {
             wk->wu.rl_waza = 0;
         } else {
             wk->wu.rl_waza = 1;
         }
     } else {
-        wk->wu.rl_waza = (p->wu.rl_waza + 1) & 1;
+        wk->wu.rl_waza = (em->wu.rl_waza + 1) & 1;
     }
 }
 

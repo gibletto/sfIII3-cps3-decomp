@@ -84,6 +84,7 @@ void end_20000(u16 pl_num) {
         }
         end_2000_move();
         end_2001_move();
+        /* fall through */
     case END1_DONE:
         end_scn_pos_set2();
         end_bg_pos_hosei2();
@@ -285,8 +286,7 @@ void end_2001_0002(void) {
     }
 }
 
-void end_2001_0003(void)
-{
+void end_2001_0003(void) {
     s16 *line;
     u16 i;
     u16 ix;
@@ -325,6 +325,7 @@ void end_2001_0004(void) {
     switch (bgw_ptr->r_no_1) {
     case 0:
         Bg_Off_W(32);
+        /* fall through */
     case 1:
         end_X_com01();
         break;
@@ -341,6 +342,7 @@ void end_2001_0005(void) {
         bgw_ptr->xy[1].disp.pos = end_20_pos[end_w.r_no_2][1];
         bgw_ptr->abs_x = 512;
         bgw_ptr->abs_y = 0;
+        /* fall through */
     case 1:
     case 2:
         break;

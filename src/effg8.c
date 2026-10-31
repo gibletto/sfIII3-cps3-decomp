@@ -57,12 +57,14 @@ void effect_G8_move(WORK_Other* ewk) {
         }
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
+        /* fall through */
     case R0_GROW:
         ewk->wu.my_mr.size.x += 2;
         ewk->wu.my_mr.size.y += 2;
         if (ewk->wu.my_mr.size.x >= 63) {
             ewk->wu.routine_no[0]++;
         }
+        /* fall through */
     case R0_DRIFT:
         add_x_sub(ewk);
         add_y_sub(ewk);

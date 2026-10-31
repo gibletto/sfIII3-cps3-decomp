@@ -20,6 +20,7 @@ const s16 eff87_loop_tbl[1][4] = {
     { 0, 0, 0, 0 },
 };
 
+/* provisional name */
 const s16 scr_obj_data87_0[2] = {
     0, 0,
 };
@@ -28,6 +29,7 @@ const s16 eff88_loop_tbl[1][4] = {
     { 0, 0, 0, 0 },
 };
 
+/* provisional name */
 const s16 scr_obj_data88_0[2] = {
     0, 0,
 };

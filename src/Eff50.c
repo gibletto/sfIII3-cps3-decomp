@@ -26,7 +26,6 @@
 #define R0_KILL         4       /* (default) put the work back */
 
 
-
 void effect_50_move(WORK_Other* ewk) {
     WORK_Other* pwk;
     if (Sel_Arts_Complete[ewk->master_id] < 0) {
@@ -99,7 +98,6 @@ void effect_50_char_move(WORK_Other* ewk) {
         char_move(&ewk->wu);
     }
 }
-
 
 
 s32 effect_50_init(s16 PL_id, s16 Direction, s16 dm_vital) {

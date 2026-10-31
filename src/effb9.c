@@ -39,6 +39,7 @@ void effect_B9_move(WORK_Other* ewk) {
             ewk->wu.disp_flag = 1;
             set_char_move_init2(&ewk->wu, 0, ewk->wu.old_rno[0], ewk->wu.char_index, 0);
             ewk->wu.my_mr_flag = 1;
+            /* fall through */
         case R1_MOVE:
             ewk->wu.my_mr.size.x = oya_p->wu.my_mr.size.x;
             ewk->wu.my_mr.size.y = oya_p->wu.my_mr.size.y;

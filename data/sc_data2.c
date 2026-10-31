@@ -25,6 +25,7 @@ const s16 flash_color_tbl[4] = {
     10, 12, 10, 8,
 };
 
+/* provisional name */
 const u16 spgauge_puttbl_0[9] = {
     176, 177, 178, 179, 180, 181, 182, 183,
     184,

@@ -239,6 +239,7 @@ void nm_05_0000(PLW* wk) {
         wk->wu.rl_flag = wk->wu.rl_waza;
         set_char_move_init((WORK*)wk, 0, 4);
         setup_mvxy_data((WORK*)wk, 2);
+        /* fall through */
     case N05_00_MOVE:
         if (wk->wu.cg_type == 1) {
             add_mvxy_speed((WORK*)wk);
@@ -331,6 +332,7 @@ void nm_06_0100(PLW* wk) {
         wk->wu.rl_flag = wk->wu.rl_waza;
         set_char_move_init((WORK*)wk, 0, 5);
         setup_mvxy_data((WORK*)wk, 3);
+        /* fall through */
     case N06_01_MOVE:
         if (wk->wu.cg_type == 1) {
             add_mvxy_speed((WORK*)wk);
@@ -660,6 +662,7 @@ void Normal_air_paring(PLW* wk) {
     case N_AIR_PARI_RUN:
         wk->wu.routine_no[3]++;
         char_move_wca_init((WORK*)wk);
+        /* fall through */
     case N_AIR_PARI_AIR:
         if (((WORK*)wk->wu.target_adrs)->cg_prio != 2) {
             wk->wu.next_z = 32;
@@ -695,6 +698,7 @@ void Normal_35000(PLW* wk) {
     case N35_RUN:
         wk->wu.routine_no[3]++;
         char_move_wca_init((WORK*)wk);
+        /* fall through */
     case N35_AIR:
         if (((WORK*)wk->wu.target_adrs)->cg_prio != 2) {
             wk->wu.next_z = 32;

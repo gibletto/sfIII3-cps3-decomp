@@ -70,7 +70,6 @@ void grade_check_work_stage_init(s16 ix) {
 
 
 
-
 void grade_check_work_round_init(ix)
 s16 ix;
 {
@@ -179,7 +178,7 @@ s16 pt;
     } else {
         if (judge_final[ix][pt].vs_cpu_result[15] != -1) {
             tt += judge_final[ix][pt].vs_cpu_result[15];
-            dt += 1;
+            dt++;
         }
         judge_final[ix][pt].vs_cpu_result[11] = tt / dt;
         judge_final[ix][pt].vs_cpu_grade[11] = get_grade_ix(tt / dt);
@@ -311,7 +310,7 @@ void grade_makeup_round_para_dko(void) {
         judge_item[i][Play_Type].defence_total += get_defence_total(i, 0);
         judge_item[i][Play_Type].tech_pts_total += get_tech_pts_total(i);
         judge_item[i][Play_Type].ex_point_total += get_ex_point_total(i, 0);
-        judge_item[i][Play_Type].round += 1;
+        judge_item[i][Play_Type].round++;
     }
     backup_RO_PT();
 }
@@ -400,7 +399,7 @@ void grade_makeup_stage_parameter(s16 ix) {
                 judge_final[ix][Play_Type].vs_cpu_result[judge_final[ix][Play_Type].vcr_ix] = point;
                 judge_final[ix][Play_Type].vs_cpu_grade[judge_final[ix][Play_Type].vcr_ix] = grade;
                 judge_final[ix][Play_Type].vs_cpu_player[judge_final[ix][Play_Type].vcr_ix] = plnum;
-                judge_final[ix][Play_Type].vcr_ix += 1;
+                judge_final[ix][Play_Type].vcr_ix++;
             }
             judge_item[ix][Play_Type].grade = grade;
             break;
@@ -425,8 +424,7 @@ void grade_makeup_stage_parameter(s16 ix) {
 }
 
 
-u32 rannyuu_Q_check(s16 pl)
-{
+u32 rannyuu_Q_check(s16 pl) {
     if (Round_Operator[pl] == 0 && My_char[pl] == PL_Q) {
         return 1;
     }
@@ -513,7 +511,6 @@ s16 ix;
     point += grade_t_max_combo[i][1];
     return (s16)point;
 }
-
 
 
 
@@ -726,7 +723,7 @@ void grade_add_clean_hits(WORK_Other* wk) {
             }
             ix = mwk->id;
         }
-        judge_item[ix][Play_Type].clean_hits += 1;
+        judge_item[ix][Play_Type].clean_hits++;
     }
 }
 
@@ -744,7 +741,7 @@ void grade_add_att_renew(WORK_Other* wk) {
             }
             ix = mwk->id;
         }
-        judge_item[ix][Play_Type].att_renew += 1;
+        judge_item[ix][Play_Type].att_renew++;
     }
 }
 
@@ -760,7 +757,7 @@ void grade_add_guard_success(s16 ix) {
 
 
 void grade_add_em_stun(s16 ix) {
-    judge_item[ix][Play_Type].em_stun += 1;
+    judge_item[ix][Play_Type].em_stun++;
     if (judge_item[ix][Play_Type].em_stun > 4) {
         judge_item[ix][Play_Type].em_stun = 4;
     }
@@ -780,7 +777,7 @@ s16 num;
 
 
 void grade_add_leap_attack(s16 ix) {
-    judge_item[ix][Play_Type].leap_attack += 1;
+    judge_item[ix][Play_Type].leap_attack++;
     if (judge_item[ix][Play_Type].leap_attack > 12) {
         judge_item[ix][Play_Type].leap_attack = 12;
     }
@@ -789,7 +786,7 @@ void grade_add_leap_attack(s16 ix) {
 
 
 void grade_add_grap_def(s16 ix) {
-    judge_item[ix][Play_Type].grap_def += 1;
+    judge_item[ix][Play_Type].grap_def++;
     if (judge_item[ix][Play_Type].grap_def > 16) {
         judge_item[ix][Play_Type].grap_def = 16;
     }
@@ -810,7 +807,7 @@ void grade_add_nml_nage(WORK* wk) {
     s16 ix;
     if (check_normal_attack(wk->kind_of_waza)) {
         ix = wk->id;
-        judge_item[ix][Play_Type].nml_nage += 1;
+        judge_item[ix][Play_Type].nml_nage++;
         if (judge_item[ix][Play_Type].nml_nage > 0xC) {
             judge_item[ix][Play_Type].nml_nage = 0xC;
         }
@@ -822,7 +819,7 @@ void grade_add_nml_nage(WORK* wk) {
 void grade_add_reversal(ix)
 s16 ix;
 {
-    judge_item[ix][Play_Type].reversal += 1;
+    judge_item[ix][Play_Type].reversal++;
     if (judge_item[ix][Play_Type].reversal > 10) {
         judge_item[ix][Play_Type].reversal = 10;
     }
@@ -840,7 +837,7 @@ void grade_add_target_combo(s16 ix) {
 
 
 void grade_add_command_waza(s16 ix) {
-    judge_item[ix][Play_Type].comwaza += 1;
+    judge_item[ix][Play_Type].comwaza++;
     if (judge_item[ix][Play_Type].comwaza > 36) {
         judge_item[ix][Play_Type].comwaza = 36;
     }
@@ -949,8 +946,6 @@ void grade_check_tairyokusa(void) {
         }
     }
 }
-
-
 
 
 

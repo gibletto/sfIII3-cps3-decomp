@@ -115,6 +115,7 @@ void quake_level_middle(WORK_Other* ewk) {
         set_char_move_init(&ewk->wu, 0, ewk->wu.old_rno[6] + 1);
         ewk->wu.mvxy.a[1].sp = eff11_quake_speed_y_tbl[ewk->wu.old_rno[3]][ewk->wu.old_rno[1]];
         ewk->wu.mvxy.d[1].sp = -0x6000;
+        /* fall through */
     case R2_UP1:
     case R2_UP2:
     case R2_UP3:
@@ -166,6 +167,7 @@ void quake_level_large(WORK_Other* ewk) {
         if (work & 1) {
             ewk->wu.mvxy.a[0].sp = -ewk->wu.mvxy.a[0].sp;
         }
+        /* fall through */
     case R2_JUMP:
         char_move(&ewk->wu);
         add_x_sub(ewk);

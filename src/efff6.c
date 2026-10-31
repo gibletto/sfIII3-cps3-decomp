@@ -72,6 +72,7 @@ void efff6_move(WORK_Other* ewk) {
         } else {
             ewk->wu.my_mr_flag = 1;
         }
+        /* fall through */
     case R2_MOVE:
         efff6_move_common(ewk);
         disp_pos_trans_entry5(ewk);
@@ -210,6 +211,7 @@ void efff6_move01(WORK_Other* ewk) {
         }
         ewk->wu.old_rno[5] = 1;
         ewk->wu.old_rno[6] = 0;
+        /* fall through */
     case R2_COLOUR:
         ewk->wu.old_rno[5]--;
         if (ewk->wu.old_rno[5] <= 0) {
@@ -221,6 +223,7 @@ void efff6_move01(WORK_Other* ewk) {
                 ewk->wu.extra_col_2 = efff6_move01_tbl[ewk->wu.old_rno[6]];
             }
         }
+        /* fall through */
     case R2_SLIDE:
         efff6_move_common(ewk);
         disp_pos_trans_entry5(ewk);

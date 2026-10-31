@@ -60,8 +60,7 @@ void effect_19_move(WORK_Other* ewk) {
     }
 }
 
-void eff19_quake_sub(WORK_Other* ewk)
-{
+void eff19_quake_sub(WORK_Other* ewk) {
     s16 rnd;
     s8 sel;
 

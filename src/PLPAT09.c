@@ -284,6 +284,7 @@ void mvxy_table_reader(PLW* wk) {
             wk->wu.mvxy.a[0].sp = 0;
             cal_initial_speed(&wk->wu, curr_kop[1], ex, ey);
             wk->wu.kow++;
+            /* fall through */
         default:
             break;
         }

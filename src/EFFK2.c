@@ -68,7 +68,6 @@
 
 
 
-
 void effect_K1_move(WORK_Other* ewk) {
     s8 tm;
     switch (ewk->wu.routine_no[0]) {
@@ -141,6 +140,7 @@ void effect_K1_move(WORK_Other* ewk) {
             ewk->wu.routine_no[1]++;
             ewk->wu.my_mr_flag = 1;
             ewk->wu.mvxy.a[0].sp = -0x80000;
+            /* fall through */
         case R1_SHRINK:
             if (zoom_x_step_check(ewk)) {
                 ewk->wu.routine_no[1]++;
@@ -321,6 +321,7 @@ void effK2_parts_move_type_1(WORK_Other* ewk, DADD* hahen) {
         case 2:
         case 3:
             char_move(&ewk->wu);
+            /* fall through */
         case 1:
             char_move(&ewk->wu);
             break;
@@ -376,6 +377,7 @@ void effK2_parts_move_type_1(WORK_Other* ewk, DADD* hahen) {
         if (--ewk->wu.kage_prio > 0) {
             break;
         }
+        /* fall through */
     case R2_GONE:
         ewk->wu.disp_flag = 0;
         ewk->wu.routine_no[0] = R0_END;
@@ -475,6 +477,7 @@ void effK2_parts_move_type_6(WORK_Other* ewk, DADD* _p1) {
         ewk->wu.kage_prio = (random_16_com() & 7) + 28;
         ewk->wu.kage_hy = ewk->wu.kage_prio / 2;
         ewk->wu.routine_no[2]++;
+        /* fall through */
     case R2_FADE:
         char_move(&ewk->wu);
         add_mvxy_speed(&ewk->wu);
@@ -515,6 +518,7 @@ void effK2_parts_move_type_8(WORK_Other* ewk, DADD* hahen) {
         case 2:
         case 3:
             char_move(&ewk->wu);
+            /* fall through */
         case 1:
             char_move(&ewk->wu);
             break;
@@ -571,6 +575,7 @@ void effK2_parts_move_type_8(WORK_Other* ewk, DADD* hahen) {
         if (--ewk->wu.kage_prio > 0) {
             break;
         }
+        /* fall through */
     case R2_GONE:
         ewk->wu.disp_flag = 0;
         ewk->wu.routine_no[0] = R0_END;

@@ -280,6 +280,7 @@ void effect_79_move(WORK_Other* ewk) {
             }
             break;
         }
+        /* fall through */
     case R0_DONE:
         break;
     case R0_STAY:
@@ -452,6 +453,7 @@ void Check_Priority(WORK_Other* ewk) {
             return;
         }
         ewk->wu.routine_no[7]++;
+        /* fall through */
     case R7_COUNT:
         if (--ewk->wu.dm_vital == 0) {
             ewk->wu.routine_no[7]++;

@@ -121,8 +121,7 @@ void effect_08_move(WORK_Other* ewk) {
 
 
 /* provisional name */
-void effect_08_build_tile_grid()
-{
+void effect_08_build_tile_grid() {
     const GRID_CELL* cell;
     const GRID_CELL* row;
     s16 i;

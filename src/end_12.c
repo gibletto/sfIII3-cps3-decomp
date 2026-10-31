@@ -73,6 +73,7 @@ void end_12000(u16 pl_num) {
         }
         end_C00_move();
         end_C01_move();
+        /* fall through */
     case END1_DONE:
         end_scn_pos_set2();
         end_bg_pos_hosei2();
@@ -106,6 +107,7 @@ void end_C00_0000(void) {
             bgw_ptr->r_no_1++;
             effect_F2_init();
         }
+        /* fall through */
     case 2:
         bgw_ptr->xy[1].cal += 0x10000;
         if (bgw_ptr->xy[1].disp.pos > 384) {
@@ -187,6 +189,7 @@ void end_C00_3000(void) {
         bgw_ptr->xy[0].disp.pos = end_c_pos[end_w.r_no_2][0];
         bgw_ptr->xy[1].disp.pos = end_c_pos[end_w.r_no_2][1];
         Rewrite_End_Message(3);
+        /* fall through */
     case 1:
         if (Request_Fade(44, 0) == 0) {
             break;

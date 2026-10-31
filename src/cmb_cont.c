@@ -39,7 +39,6 @@
 
 
 
-
 s16 old_cmb_flag[2];  /* 02028838 */
 s8 cmb_stock[2];  /* 0202883C */
 s8 first_attack;  /* 0202883E */
@@ -95,8 +94,6 @@ void combo_cont_init(void) {
     memset(score_calc[0], 0, sizeof(score_calc[0]));
     memset(score_calc[1], 0, sizeof(score_calc[0]));
 }
-
-
 
 
 
@@ -322,7 +319,6 @@ s8 PL;
     }
     return 0;
 }
-
 
 
 

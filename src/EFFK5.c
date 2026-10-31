@@ -81,6 +81,7 @@ void effect_K5_move(WORK_Other* ewk) {
         break;
     case R0_KILL:
         push_effect_work((WORK*)ewk->wu.target_adrs);
+        /* fall through */
     default:
         push_effect_work(&ewk->wu);
         break;
@@ -167,6 +168,7 @@ loop:
                 } else {
                     ewk->cg_ix -= (gotcp.cps[3] + 1) * mwk->cgd_type;
                 }
+                /* fall through */
             default:
                 break;
             }

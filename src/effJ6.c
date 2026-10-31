@@ -70,6 +70,7 @@ void effect_J6_move(WORK_Other* ewk) {
     case R0_BREAK:
         ewk->wu.routine_no[0]++;
         set_char_move_init(&ewk->wu, 0, 3);
+        /* fall through */
     case R0_BROKEN:
         disp_pos_trans_entry_r(ewk);
         break;

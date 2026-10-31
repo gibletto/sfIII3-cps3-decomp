@@ -74,6 +74,7 @@ void Caught_01000(PLW* wk, PLW* emwk) {
         set_char_move_init(&wk->wu, 3, emwk->wu.cmyd.ix);
         emwk->kind_of_catch = 0;
         wk->wu.cmwk[11] = 0;
+        /* fall through */
     case CU01_HELD:
         if (check_tsukamare_keizoku_check(wk, emwk) != 0) {
             break;
@@ -112,6 +113,7 @@ void Caught_02000(PLW* wk, PLW* emwk) {
         set_char_move_init(&wk->wu, 3, emwk->wu.cmyd.ix);
         emwk->kind_of_catch = 1;
         wk->wu.cmwk[11] = 0;
+        /* fall through */
     case CU02_HELD:
         if (check_tsukamare_keizoku_check(wk, emwk) != 0) {
             break;

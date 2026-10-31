@@ -103,6 +103,7 @@ void end_05000(u16 pl_num) {
         }
         end_500_move();
         end_501_move();
+        /* fall through */
     case END1_DONE:
         end_scn_pos_set2();
         end_bg_pos_hosei2();
@@ -148,6 +149,7 @@ void end_500_comm(void) {
             Rewrite_End_Message(5);
             break;
         }
+        /* fall through */
     case 1:
         break;
     }
@@ -283,6 +285,7 @@ void end_500_0008(void) {
     switch (bgw_ptr->r_no_1) {
     case 0:
         bgw_ptr->r_no_1++;
+        /* fall through */
     case 1:
         end_5_bg0_move_sub();
         end_500_quake_y_sub();
@@ -418,6 +421,7 @@ void end_501_0007(void) {
         end5_col_ix = 0;
         wr5_index = 0;
         end5_bg1_pos = 0x200;
+        /* fall through */
     case 1:
         if (Request_Fade(0x11, 0) == 0) {
             break;
@@ -428,11 +432,13 @@ void end_501_0007(void) {
     case 2:
         bgw_ptr->r_no_1++;
         Bg_On_W(2);
+        /* fall through */
     case 3:
         if (end_fade_complete()) {
             bgw_ptr->r_no_1++;
             bg_w.bgw[0].r_no_1 = 2;
         }
+        /* fall through */
     case 4:
         end_5_bg1_move_sub();
         end_5_bg1_cell_sub(0);
@@ -446,6 +452,7 @@ void end_501_0008(void) {
     switch (bgw_ptr->r_no_1) {
     case 0:
         bgw_ptr->r_no_1++;
+        /* fall through */
     case 1:
         end_5_bg1_move_sub();
         end_5_bg1_cell_sub(0);
@@ -521,6 +528,7 @@ void end_501_0011(void) {
             bgw_ptr->r_no_1++;
             end_no_cut = 0;
         }
+        /* fall through */
     case 3:
         bgw_ptr->xy[1].cal += 0x40000;
         break;
@@ -536,6 +544,7 @@ void end_501_0012(void) {
         effect_E6_init(14);
         end_fade_flag = 1;
         end_fade_timer = timer_5_tbl[end_w.r_no_2] - 120;
+        /* fall through */
     case 1:
         bgw_ptr->xy[1].cal += 0x40000;
         break;

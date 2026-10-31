@@ -317,7 +317,7 @@ u8 mf;
         wk->gauge.s.h += asag;
         wk->gauge.s.l = -1;
         if (wk->gauge.s.h > wk->gauge_len) {
-            wk->store += 1;
+            wk->store++;
             if (wk->store < wk->store_max) {
                 wk->gauge.s.h -= wk->gauge_len;
             } else {

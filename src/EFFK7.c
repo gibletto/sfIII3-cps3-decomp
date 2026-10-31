@@ -98,6 +98,7 @@ void effect_K7_move(WORK_Other* ewk) {
         mwk->wu.my_col_mode = ewk->wu.my_col_mode;
         mwk->wu.my_col_code = ewk->wu.my_col_code;
         mwk->wu.disp_flag = 1;
+        /* fall through */
     default:
         push_effect_work(&ewk->wu);
         return;
@@ -127,6 +128,7 @@ void K7_move_type_1(WORK_Other* ewk, PLW* mwk) {
         ewk->wu.dir_timer = blink[ewk->wu.dir_step][0];
         mwk->wu.disp_flag = blink[ewk->wu.dir_step][1];
         mwk->wu.my_col_mode = blink[ewk->wu.dir_step][2];
+        /* fall through */
     case R1_BLINK:
         if (ewk->wu.dir_step > 2) {
             if ((mwk->sa->gauge.i - 0x10000) / (mwk->sa->dtm * mwk->sa->dtm_mul) <= 45) {
@@ -218,6 +220,7 @@ void K7_move_type_0(WORK_Other* ewk, PLW* mwk) {
         metamor_color_trans(mwk->wu.id, mwk->player_number);
         metamor_color_copy(mwk->wu.id);
         mwk->metamorphose = 1;
+        /* fall through */
     case R1_ACTIVE:
         if (mwk->dead_flag != 0) {
             ewk->wu.routine_no[1] = R1_DEAD;
@@ -228,6 +231,7 @@ void K7_move_type_0(WORK_Other* ewk, PLW* mwk) {
         }
         ewk->wu.routine_no[1] = R1_REBIRTH;
         mwk->metamor_over = 1;
+        /* fall through */
     case R1_REBIRTH:
         if (K7_mt0_rebirth_check(mwk) == 0) {
             break;

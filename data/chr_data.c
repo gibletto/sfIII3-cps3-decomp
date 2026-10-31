@@ -3649,6 +3649,7 @@ const u16 sc_chr_data[512] = {
     0, 0, 0, 0, 0, 0, 0, 0,
 };
 
+/* provisional name */
 const u8 sc_blank_chr[37376] = {
     0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0,

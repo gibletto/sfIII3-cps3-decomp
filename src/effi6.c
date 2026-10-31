@@ -38,6 +38,7 @@ void effect_I6_move(WORK_Other* ewk) {
     switch (oya_ptr->wu.routine_no[0]) {
     case 2:
         effi6_line_move(ewk);
+        /* fall through */
     case 3:
         ewk->wu.my_mr.size.x = oya_ptr->wu.my_mr.size.x;
         ewk->wu.my_mr.size.y = oya_ptr->wu.my_mr.size.y;
@@ -66,6 +67,7 @@ void effi6_line_move(WORK_Other* ewk) {
         ewk->wu.my_mr.size.x = 0;
         ewk->wu.my_mr.size.y = 0;
         set_char_move_init2(&ewk->wu, 0, 2, 3, 0);
+        /* fall through */
     case R1_MOVE:
         break;
     }

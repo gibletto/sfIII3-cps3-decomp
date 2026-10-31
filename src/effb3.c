@@ -98,6 +98,7 @@ void round_move_init(WORK_Other* ewk) {
         ewk->wu.disp_flag = 1;
         ewk->wu.my_mr_flag = 1;
         set_char_move_init2(&ewk->wu, 0, 2, 1, 0);
+        /* fall through */
     case R1_FOLLOW:
         ewk->wu.my_mr.size.x = oya_adrs->wu.my_mr.size.x;
         ewk->wu.my_mr.size.y = oya_adrs->wu.my_mr.size.y;
@@ -124,6 +125,7 @@ void round_move(WORK_Other* ewk) {
             ewk->wu.xyz[0].disp.pos -= 32;
             set_char_move_init2(&ewk->wu, 0, 2, 2, 0);
         }
+        /* falls through: the mark follows its parent from this frame */
     case R1_FOLLOW:
         ewk->wu.my_mr.size.x = oya_adrs->wu.my_mr.size.x;
         ewk->wu.my_mr.size.y = oya_adrs->wu.my_mr.size.y;

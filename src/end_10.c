@@ -74,6 +74,7 @@ void end_10000(u16 pl_num) {
         end_1001_move();
         end_1002_move();
         end_1003_move();
+        /* fall through */
     case END1_DONE:
         end_scn_pos_set2();
         end_bg_pos_hosei2();
@@ -346,6 +347,7 @@ void end_1003_1000(void) {
             bgw_ptr->r_no_1++;
         }
         bgw_ptr->abs_y = bgw_ptr->xy[1].disp.pos;
+        /* fall through */
     case 3:
         end_bg_pos_hosei(5);
         end_fam_set(5);
@@ -363,6 +365,7 @@ void end_1003_2000(void) {
         bgw_ptr->xy[1].disp.pos = end_10_pos[end_w.r_no_2][1];
         bgw_ptr->abs_x = 512;
         bgw_ptr->abs_y = bgw_ptr->xy[1].disp.pos;
+        /* fall through */
     case 1:
         end_bg_pos_hosei(5);
         end_fam_set(5);

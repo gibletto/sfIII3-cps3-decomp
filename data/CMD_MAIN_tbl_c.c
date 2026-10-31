@@ -956,6 +956,7 @@ const u16 dbg_unref_tbl_0[16] = {
     0x3000, 0x3600, 0x3C00, 0x4200, 0x4800, 0x4E00, 0x5400, 0x8A00,
 };
 
+/* provisional name */
 const s16 dbg_obj_color_tbl[126] = {
     1, 1, 13, 1, 1, 1, 1, 1,
     1, 1, 1, 1, 1, 1, 5, 2,

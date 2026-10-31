@@ -36,7 +36,6 @@
 #include "cmb_win.h"
 
 
-
 u16 * sc_trans_dst;  /* 020283A0 */
 u8 * sc_bak_ptr;  /* 020283A4 */
 const u8 * sc_trans_src;  /* 020283A8 */
@@ -175,8 +174,7 @@ u16 h;
 }
 
 /* Puts a w x h block of cells from the 16-wide font sheet, starting at code, on the text layer at x, y. */
-void scfont_sqput(s16 x, s16 y, u16 w, u16 h, u16 attr, s16 code)
-{
+void scfont_sqput(s16 x, s16 y, u16 w, u16 h, u16 attr, s16 code) {
     u16 row;
     u16 col;
 
@@ -202,8 +200,7 @@ void scfont_sqput_rev(s16 x, s16 y, u16 w, u16 h, s16 attr, s16 code) {
 
 /* Puts w x h cells on the text layer at x, y, numbered on one after another from code. */
 /* provisional name */
-void scfont_lnput(s16 x, s16 y, u16 w, u16 h, s16 attr, s16 code)
-{
+void scfont_lnput(s16 x, s16 y, u16 w, u16 h, s16 attr, s16 code) {
     u16 row;
     u16 col;
     s16 n;
@@ -219,8 +216,7 @@ void scfont_lnput(s16 x, s16 y, u16 w, u16 h, s16 attr, s16 code)
 
 /* As scfont_lnput, mirrored: the columns run right to left and the attribute gets 0x80. */
 /* provisional name */
-void scfont_lnput_rev(s16 x, s16 y, u16 w, u16 h, s16 attr, s16 code)
-{
+void scfont_lnput_rev(s16 x, s16 y, u16 w, u16 h, s16 attr, s16 code) {
     u16 row;
     u16 col;
     s16 n;
@@ -619,8 +615,7 @@ void stun_mark_put(s8 pl) {
 
 /* Puts count cells of a player's max mark on text row 26 beside the player's super art gauge; mark picks the
    six-cell set. */
-void max_mark_write(char side, s32 left, u32 count, s32 x, char mark)
-{
+void max_mark_write(char side, s32 left, u32 count, s32 x, char mark) {
     u16 i;
 
     for (i = 0; i < (u16)count; i++) {
@@ -669,8 +664,7 @@ u32 y1;
 /* Fills a w x h rectangle of text-layer cells at x, y with code and attr; bit 8 of code goes into the
    attribute. */
 /* provisional name */
-void sc_fill_rect(u32 x, u32 y, u16 w, u16 h, u16 code, u16 attr)
-{
+void sc_fill_rect(u32 x, u32 y, u16 w, u16 h, u16 code, u16 attr) {
     u16 *line;
     u16 row;
     u16 col;
@@ -689,8 +683,7 @@ void sc_fill_rect(u32 x, u32 y, u16 w, u16 h, u16 code, u16 attr)
 }
 
 /* Clears text rows 25 to 27, the super art frame rows. */
-void Sa_frame_Clear(void)
-{
+void Sa_frame_Clear(void) {
     tilemap_clear_rect(0, 0x19, 0x37, 0x1B);
 }
 
@@ -805,10 +798,8 @@ void bcount_mark_trans(u8 mode) {
 }
 
 
-/* provisional name */
-
-
 /* Draws one name-entry character for a player. */
+/* provisional name */
 void sa_stock_chr_trans(s8 pl, s16 n) {
     sc_trans_dst = (u16*)((SS_RAM + 0xB440) + pl * 0xC0);
     sc_trans_src = (u8*)(sc_chr_data + (((n * 2 + 0x910) << 5) >> 1));
@@ -1008,8 +999,7 @@ void player_face(void) {
 }
 
 /* Puts the SF3 logo, a block of font cells, on the text layer below row y. */
-u32 SF3_logo(s16 y)
-{
+u32 SF3_logo(s16 y) {
     sc_chr_clear(384, 128);
     scfont_sqput(DE_X[3] + 16, y + 10, 16, 6, 58, 384);
 }
@@ -1031,7 +1021,6 @@ s16 kind;
         break;
     }
 }
-
 
 
 /*
@@ -1057,7 +1046,6 @@ void combo_message_set(s8 pl, s8 kind) {
 }
 
 
-
 /* provisional name */
 void combo_hitnum_set(s8 pl, s8 kind, u16 hits) {
     s16 x = combo_hitpos_tbl[kind][pl];
@@ -1076,7 +1064,6 @@ void combo_hitnum_set(s8 pl, s8 kind, u16 hits) {
     tilemap_put_cell(x + 2, y, 16, 32);
     tilemap_put_cell(x + 2, y + 1, 16, 32);
 }
-
 
 
 s16 combo_pts_set(s8 PL, u32 pts) {
@@ -1122,7 +1109,6 @@ s16 combo_pts_set(s8 PL, u32 pts) {
 }
 
 
-
 /* provisional name */
 void combo_window_slide(s8 pl, s16 x, s16 y, s16 n) {
     u32* src = (u32*)(SS_RAM + ((y * 4 + pl * 2 + 30) << 8) + ((pl * 19) << 2));
@@ -1139,7 +1125,6 @@ void combo_window_slide(s8 pl, s16 x, s16 y, s16 n) {
 }
 
 
-
 /* provisional name */
 void combo_window_erase(s8 col, s8 kind, s16 row) {
     u32* cell = (u32*)((SS_RAM + 0x700) + combo_erase_pos_tbl[Game_setting.Screen_Mode][kind][col] * 4 + row * 0x300);
@@ -1150,7 +1135,6 @@ void combo_window_erase(s8 col, s8 kind, s16 row) {
         cell++;
     }
 }
-
 
 
 /* provisional name */
@@ -1165,7 +1149,6 @@ void combo_window_all_clear(void) {
         tilemap_clear_rect(37, 7, 61, 11);
     }
 }
-
 
 
 /* provisional name */

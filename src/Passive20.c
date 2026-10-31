@@ -15,8 +15,7 @@
 #include "Com_Sub.h"
 #include "Passive20.h"
 #include "ACTIVE00.h"
-void Passive20(PLW* wk)
-{
+void Passive20(PLW* wk) {
     Passive20_Tbl[Pattern_Index[wk->wu.id]](wk);
 }
 
@@ -2644,8 +2643,7 @@ void Passive20_0160(PLW* wk) {
     }
 }
 
-void Passive20_0161(PLW* wk)
-{
+void Passive20_0161(PLW* wk) {
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
         Search_Back_Term(wk, 0x20, 2, 0x1B);

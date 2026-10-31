@@ -82,6 +82,7 @@ void end_06000(u16 pl_num) {
         }
         end_600_move();
         end_601_move();
+        /* fall through */
     case END1_DONE:
         end_scn_pos_set2();
         end_bg_pos_hosei2();
@@ -141,6 +142,7 @@ void end_600_1000(void) {
             bgw_ptr->r_no_1++;
             bgw_ptr->xy[1].cal = 0x2700000;
         }
+        /* fall through */
     case 2:
         bgw_ptr->old_pos_x++;
         if (bgw_ptr->old_pos_x > 2) {

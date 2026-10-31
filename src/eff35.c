@@ -196,6 +196,7 @@ void eff35_0003(WORK_Other* ewk) {
     case R1_INIT:
         ewk->wu.routine_no[1]++;
         ewk->wu.old_rno[4] = 0;
+        /* fall through */
     case R1_DELAY:
         if (Break_Into) {
             ewk->wu.routine_no[1] = R1_STOP;

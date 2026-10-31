@@ -31,16 +31,13 @@
 #define R0_KILL         2       /* put the work back */
 
 
-
 /* provisional name */
-void effect_I1_move(void)
-{
+void effect_I1_move(void) {
 }
 
 
 /* provisional name */
 void effect_I1_dummy(void) {}
-
 
 
 s32 effect_I2_init(void) {
@@ -58,11 +55,11 @@ s32 effect_I2_init(void) {
 }
 
 
-
 void effect_I2_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
     case R0_INIT:
         ewk->wu.routine_no[0]++;
+        /* fall through */
     case R0_MOVE:
         if (Suicide[0]) {
             all_cgps_put_back(&ewk->wu);

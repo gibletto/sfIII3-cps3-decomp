@@ -241,8 +241,7 @@ void tilemap_put_block(u16 x, u16 y, u16 attr, u16 code);
 
 
 /* provisional name */
-s8 config_menu_run(void)
-{
+s8 config_menu_run(void) {
     config_menu_tbl[Config_No_0]();
     return cfg_reserve;
 }
@@ -307,8 +306,7 @@ void config_menu_dispatch(void) {
 
 /* Configuration top page: draw it, then run its menu (step Config_No_2). */
 /* provisional name */
-void config_top_page(void)
-{
+void config_top_page(void) {
     config_top_step_tbl[Config_No_2]();
 }
 
@@ -316,8 +314,7 @@ void config_top_page(void)
    Japanese boards load the kana font and the glyphs for the menu headings
    into the text layer and print the Japanese menu. */
 /* provisional name */
-void config_top_draw(void)
-{
+void config_top_draw(void) {
     Config_No_2++;
     if (Area_Type) {
         tilemap_fill_all(0, 0x20);
@@ -678,6 +675,7 @@ void sysconfig_coin(void) {
                 cfg_coin_sel = 3;
             }
         }
+        /* fall through */
     case 1:
     default:
         cfg_coin_special = 0;
@@ -1009,6 +1007,7 @@ void gameconfig_page(void) {
             }
             cfg_continue = 0;
         }
+        /* fall through */
     case 0:
         break;
     }

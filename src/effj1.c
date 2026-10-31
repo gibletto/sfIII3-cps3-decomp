@@ -14,9 +14,7 @@
 #include "effj1.h"
 
 
-
-void effect_J1_move(void)
-{
+void effect_J1_move(void) {
 }
 
 

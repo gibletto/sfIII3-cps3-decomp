@@ -67,6 +67,15 @@
 #define R0_DEMO         1       /* the entrance demo */
 #define R0_MOVE         2       /* follow the fight */
 
+/* bgw r_no_1 in demo90_base */
+#define DEMO_WAIT       0       /* until Appear_free */
+#define DEMO_SCROLL     1       /* scroll the Y down to 0 */
+#define DEMO_APPEAR     2       /* until Appear_end is 2, then the next r_no_0 */
+
+/* bg_w.bgw[1].r_no_1 in jijii_win_bg; jijii_win_bg2 follows it */
+#define JW_RISE         0       /* at win_sp_flag 2, scroll the layer up, then set the flag to 3 */
+#define JW_DONE         1       /* finished */
+
 
 
 void BG180(void) {
@@ -129,8 +138,7 @@ void bg1802_init00(void) {
 
 
 
-void bg1802_move(void)
-{
+void bg1802_move(void) {
     bg_base_x_move_check();
     bg_base_y_move_check();
     bg_chase_move();
@@ -320,7 +328,7 @@ void bg0702_init00(void) {
 void bg0703(void) {
     switch (bgw_ptr->r_no_0) {
     case SYNC_INIT:
-        bgw_ptr->r_no_0 += 1;
+        bgw_ptr->r_no_0++;
         bgw_ptr->fam_no = 2;
         bgw_ptr->old_pos_x = bgw_ptr->xy[0].disp.pos = bgw_ptr->pos_x_work = 0x200;
         bgw_ptr->xy[0].disp.low = bgw_ptr->xy[1].disp.low = 0;
@@ -338,15 +346,6 @@ void bg0703(void) {
         break;
     }
 }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -578,7 +577,7 @@ void demo90_base(void) {
         return;
     }
     switch (bgw_ptr->r_no_1) {
-    case 0:
+    case DEMO_WAIT:
         chk_pl = 0;
         if (plw->player_number == PL_ORO && plw[1].player_number == PL_ORO) {
             if (Appear_hv[0]) {
@@ -591,7 +590,7 @@ void demo90_base(void) {
             bgw_ptr->r_no_1++;
         }
         break;
-    case 1:
+    case DEMO_SCROLL:
         bgw_ptr->xy[1].cal -= bgw_ptr->speed_y * 0xA;
         bgw_ptr->wxy[1].cal -= bgw_ptr->speed_y * 0xA;
         if (bgw_ptr->xy[1].disp.pos <= 0) {
@@ -601,7 +600,7 @@ void demo90_base(void) {
             break;
         }
         break;
-    case 2:
+    case DEMO_APPEAR:
         if (Appear_end != 2) {
             break;
         }
@@ -619,16 +618,17 @@ void jijii_win_bg(void) {
         return;
     }
     switch (bgw_ptr->r_no_1) {
-    case 0:
+    case JW_RISE:
         if (win_sp_flag == 2) {
             bgw_ptr->xy[1].cal += 0xA0000;
             bgw_ptr->wxy[1].cal += 0xA0000;
             if (bgw_ptr->xy[1].disp.pos > 0xB0) {
-                bgw_ptr->r_no_1 += 1;
+                bgw_ptr->r_no_1++;
                 win_sp_flag = 3;
             }
         }
-    case 1:
+        /* fall through */
+    case JW_DONE:
         break;
     }
 }
@@ -642,14 +642,15 @@ void jijii_win_bg2(void) {
         return;
     }
     switch (bg_w.bgw[1].r_no_1) {
-    case 0:
+    case JW_RISE:
         if (win_sp_flag == 2) {
             zuu_work = 0xA;
             sp_work = bgw_ptr->speed_y * zuu_work;
             bgw_ptr->xy[1].cal += sp_work;
             bgw_ptr->wxy[1].cal += sp_work;
         }
-    case 1:
+        /* fall through */
+    case JW_DONE:
         break;
     }
 }

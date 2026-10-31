@@ -128,6 +128,7 @@ void bbbs_com_execute(PLW* wk) {
             Bonus_Stage_RNO[0] = 2;
             Bonus_Stage_RNO[1] = 0;
         }
+        /* fall through */
     case 2:
         break;
     }

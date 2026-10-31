@@ -206,6 +206,7 @@ void setup_air_paring_mvxy(WORK* wk) {
     case 1:
         wk->mvxy.a[0].sp = -wk->mvxy.a[0].sp;
         wk->mvxy.d[0].sp = -wk->mvxy.d[0].sp;
+        /* fall through */
     case 2:
         if (*(s16*)&wk->mvxy.a[0] > -2) {
             *(s16*)&wk->mvxy.a[0] = -2;

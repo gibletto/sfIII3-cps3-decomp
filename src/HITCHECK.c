@@ -459,6 +459,7 @@ char gddir;
                 case 6:
                 case 7:
                     ds->wu.routine_no[2] = get_grd_hand_damage(ds->wu.routine_no[2]);
+                    /* fall through */
                 default:
                     if (check_trunk_damage(ds->wu.routine_no[2])) {
                         ds->wu.routine_no[2] = get_kind_of_trunk_dm(as->wu.dir_atthit, ds->wu.dm_rl);
@@ -659,6 +660,7 @@ void hit_pattern_extdat_check(WORK* as) {
         break;
     case 0x41:
         as->cg_ctr = 1;
+        /* fall through */
     case 0x1:
         setup_comm_abbak(as);
         as->cg_ix = ((as->cg_extdat & 0x3F) - 1) * as->cgd_type - as->cgd_type;
@@ -792,6 +794,7 @@ void same_dm_stop(WORK* as, WORK* ds) {
         switch ((ds->dm_stop < 0) + ((as->att.hs_me < 0) * 2)) {
         case 1:
             ds->dm_stop = -as->att.hs_me;
+            /* fall through */
         case 2:
             ds->dm_stop = -as->att.hs_me;
             break;
@@ -1027,6 +1030,7 @@ void setup_dm_rl(WORK* as, WORK* ds) {
             ds->dm_rl = as->rl_flag;
             break;
         }
+        /* fall through */
     default:
         if (dx) {
             if (dx > 0) {
@@ -1309,11 +1313,9 @@ void attack_hit_check(void) {
         test1:
         if (lp < 4) {
             goto loop1;
+        } else {
+            dmdat_adrs[8] = (s16*)sad->h_att + 8;
         }
-        exit1:;
-        goto fill_complete;
-        fill_complete:;
-        dmdat_adrs[8] = (s16*)sad->h_att + 8;
         dmdat_adrs[9] = (s16*)sad->h_att + 12;
         dmdat_adrs[10] = (s16*)sad->h_hos;
         (void)&((WORK*)dmdat_adrs)->id;

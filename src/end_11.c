@@ -69,6 +69,7 @@ void end_11000(u16 pl_num) {
         }
         end_b00_move();
         end_b01_move();
+        /* fall through */
     case END1_DONE:
         end_scn_pos_set2();
         end_bg_pos_hosei2();
@@ -154,6 +155,7 @@ void end_b00_1000(void) {
             bgw_ptr->r_no_1++;
             end_w.timer = 10;
         }
+        /* fall through */
     case 2:
         break;
     }
@@ -219,6 +221,7 @@ void end_b01_0000(void) {
     case 1:
         bgw_ptr->r_no_1++;
         Bg_On_W(2U);
+        /* fall through */
     case 2:
         bgw_ptr->xy[1].cal += bgw_ptr->speed_y;
         bgw_ptr->abs_y += bgw_ptr->speed_y;

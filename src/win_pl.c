@@ -323,6 +323,7 @@ void jijii_jump(PLW* wk) {
         }
         wk->wu.mvxy.d[0].sp = 0;
         wk->wu.xyz[1].cal = 0;
+        /* fall through */
     case JJ_RETURN:
         add_x_sub((WORK_Other*)wk);
         char_move(&wk->wu);
@@ -1315,6 +1316,7 @@ void urien_dash(PLW* wk) {
             set_char_move_init(&wk->wu, 0, 4);
             setup_mvxy_data(&wk->wu, 2);
         }
+        /* fall through */
     case UD_RISE:
         if (wk->wu.cg_type == 1) {
             win_rno[1]++;
@@ -1353,6 +1355,7 @@ void urien_dash(PLW* wk) {
             break;
         }
         win_rno[1]++;
+        /* fall through */
     case UD_POSE_INIT:
         win_rno[1]++;
         set_char_move_init(&wk->wu, 9, 36);

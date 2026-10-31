@@ -218,6 +218,7 @@ void EFF39_MOVE(WORK_Other* ewk) {
             } else {
                 ewk->wu.routine_no[1]++;
             }
+            /* fall through */
         case R1_FOLLOW:
             if (ewk->wu.dir_step != ID_of_Face[Cursor_Y[ewk->master_id]][Cursor_X[ewk->master_id]]) {
                 ewk->wu.dir_step = ID_of_Face[Cursor_Y[ewk->master_id]][Cursor_X[ewk->master_id]];

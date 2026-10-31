@@ -14,12 +14,14 @@
 #pragma section TBL
 
 
+/* provisional name */
 const s8 sc_celllist_scr_tbl[18] = {
     0, 3, 3, 3, 13, 12, 3, 3,
     3, 3, 3, 3, 3, 6, 0, 3,
     3, 0,
 };
 
+/* provisional name */
 const TONE_ENTRY tone_down_tbl[20] = {
     { 0x80, 0x600, 0 },
     { 4, 0x1B0, 0xBA },
@@ -43,14 +45,17 @@ const TONE_ENTRY tone_down_tbl[20] = {
     { 0x10, 0x600, 0 },
 };
 
+/* provisional name */
 const u16 picture_chr_tbl[8] = {
     0xD80, 0xC80, 0xF00, 0xE80, 0xC00, 0xD00, 0xF80, 0x780,
 };
 
+/* provisional name */
 const s16 picture_set_tbl[8] = {
     19, 26, 26, 18, 26, 18, 18, 28,
 };
 
+/* provisional name */
 const u16 picture_attr_tbl[8] = {
     0x28, 0x28, 0x28, 0x28, 0x28, 0x28, 0x28, 0x28,
 };

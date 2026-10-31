@@ -35,6 +35,7 @@ void effect_K9_move(WORK_Other* ewk) {
         ewk->wu.disp_flag = 1;
         ewk->wu.my_priority = ewk->wu.position_z = 32;
         set_char_move_init(&ewk->wu, 0, 0x90);
+        /* fall through */
     case R0_MOVE:
         if (ewk->wu.dead_f != 0) {
             goto hide;

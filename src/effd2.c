@@ -72,6 +72,7 @@ void effD2_wipe_close(WORK_Other* ewk) {
             ewk->wu.disp_flag = 1;
             set_char_move_init2(&ewk->wu, 0, ewk->wu.char_index, ewk->wu.dir_step + 1, 0);
         }
+        /* fall through */
     case R1_CLOSE:
         ewk->wu.xyz[0].cal += ewk->wu.mvxy.a[0].sp;
         ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;

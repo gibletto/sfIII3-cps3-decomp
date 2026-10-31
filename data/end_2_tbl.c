@@ -11,6 +11,7 @@
 
 #pragma section TBL
 
+/* provisional name */
 const PANEL end_200_panel0[6] = {
     { 0, 1 }, { 0x40, 2 }, { 0x1000, 3 }, { 0x1040, 4 }, { 0x2000, 5 }, { 0x2040, 6 },
 };

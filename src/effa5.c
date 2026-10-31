@@ -34,7 +34,6 @@
 #define R0_OVER         3       /* time over until the timer is reset */
 
 
-
 void effect_A5_move(WORK_Other* ewk) {
     if (Break_Into) {
         return;
@@ -96,8 +95,7 @@ s32 Check_Sleep_A5(WORK_Other* ewk) {
 }
 
 /* provisional name */
-u32 effect_A5_entry(void)
-{
+u32 effect_A5_entry(void) {
     WORK_Other* ewk;
     s16 ix;
 

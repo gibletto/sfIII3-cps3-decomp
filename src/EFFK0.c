@@ -61,8 +61,7 @@ void effect_K0_move(WORK_Other* ewk) {
     }
 }
 
-u32 effect_A5_init(void)
-{
+u32 effect_A5_init(void) {
     WORK_Other* ewk;
     s16 ix;
 

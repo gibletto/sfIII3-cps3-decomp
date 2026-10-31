@@ -46,6 +46,7 @@ void effect_G0_move(WORK_Other* ewk) {
             ewk->wu.routine_no[1] = R1_SLIDE;
             ewk->wu.disp_flag = 1;
             ewk->wu.old_cgnum = 0;
+            /* fall through */
         default:
             effG0_trans(&ewk->wu);
             break;
@@ -116,6 +117,7 @@ void Flash_G0(WORK_Other_CONN* ewk) {
         ewk->wu.routine_no[2]++;
         ewk->wu.vital_new = 4;
         ewk->wu.dir_timer = 1;
+        /* fall through */
     case R2_PLAIN:
         if (--ewk->wu.dir_timer == 0) {
             ewk->wu.routine_no[2] = R2_LIT;

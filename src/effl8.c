@@ -81,6 +81,7 @@ s32 effect_L8_move(WORK_Other* ewk) {
         load_old_color_data(save_old_col_ptr, ewk->wu.move_xy_table);
         mwk->att_plus = 8;
         mwk->spmv_ng_flag = spmv_ng_save;
+        /* fall through */
     default:
         push_effect_work(&ewk->wu);
         break;

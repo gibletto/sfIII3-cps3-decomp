@@ -51,7 +51,6 @@
 
 
 
-
 void effect_38_move(WORK_Other* ewk) {
     EFF38_Jmp_Tbl[ewk->wu.routine_no[0]](ewk);
     ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
@@ -233,7 +232,7 @@ void EFF38_SHIFT(WORK_Other* ewk) {
 
 s32 Shift_38(WORK_Other* ewk) {
     s16 loop;
-    s16 t[2];
+    s16 unused[2];
     s16 ix;
     if (Scene_Cut) {
         loop = 3;
@@ -309,6 +308,7 @@ void EFF38_MOVE(WORK_Other* ewk) {
         } else {
             ewk->wu.routine_no[1]++;
         }
+        /* fall through */
     case R1_FOLLOW:
         if (ewk->wu.dir_step != ID_of_Face[Cursor_Y[ewk->master_id]][Cursor_X[ewk->master_id]]) {
             ewk->wu.dir_step = ID_of_Face[Cursor_Y[ewk->master_id]][Cursor_X[ewk->master_id]];

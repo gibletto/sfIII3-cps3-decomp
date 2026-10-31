@@ -256,8 +256,7 @@ void Sel_PL_Cont_4th(void) {}
 
 
 /* Sets up the BG layers of the select screen. */
-void Initialize_BG(void)
-{
+void Initialize_BG(void) {
     Setup_BG_General();
     Setup_BG_Layer0(0);
     Setup_BG_Layer2();

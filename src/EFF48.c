@@ -106,6 +106,7 @@ void eff48_0000(WORK_Other* ewk) {
         }
         ewk->wu.disp_flag = 1;
         set_char_move_init2(&ewk->wu, 0, ewk->wu.old_rno[0], ewk->wu.char_index, 0);
+        /* fall through */
     case R1_SHOW:
         if (op_obj_disp) {
             ewk->wu.routine_no[1]++;
@@ -134,6 +135,7 @@ void eff48_1000(WORK_Other* ewk) {
         set_char_move_init2(&ewk->wu, 0, ewk->wu.old_rno[0], ewk->wu.char_index, 0);
         ewk->wu.old_rno[3] = 10;
         cal_all_speed_data(&ewk->wu, ewk->wu.old_rno[3], ewk->wu.xyz[0].disp.pos, ewk->wu.old_rno[2], 2, 2);
+        /* fall through */
     case R1_DROP:
         ewk->wu.old_rno[3]--;
         if (ewk->wu.old_rno[3] < 0) {
@@ -157,6 +159,7 @@ void eff48_1000(WORK_Other* ewk) {
         } else {
             add_y_sub(ewk);
         }
+        /* fall through */
     case R1_STAY:
         disp_pos_trans_entry(ewk);
         break;

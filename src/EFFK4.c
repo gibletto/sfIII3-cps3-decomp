@@ -41,6 +41,7 @@ void effect_K4_move(WORK_Other* ewk) {
         get_init_speed_and_timer_effK4(&ewk->wu);
         ewk->wu.position_z = 24;
         set_char_move_init(&ewk->wu, 0, effK4_char_sel_table[ewk->wu.dm_attlv][random_16_com()]);
+        /* fall through */
     case R0_MOVE:
         if (ewk->wu.dead_f == 1 || Suicide[0] != 0) {
             ewk->wu.disp_flag = 0;
@@ -139,6 +140,5 @@ s32 effect_K4_init(WORK_Other* wk, WORK* dad) {
 
 
 
-void setup_effK4(void)
-{
+void setup_effK4(void) {
 }

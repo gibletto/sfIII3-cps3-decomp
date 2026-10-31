@@ -74,11 +74,15 @@
 #define LOGO_OUT        4       /* the last colour steps, then report the end */
 #define LOGO_END        5       /* finished */
 
+/* bg_w.bgw[1].r_no_2 in capcom_logo_color_step */
+#define LSTEP_FIRST     0       /* colour steps up to 90 */
+#define LSTEP_LAST      1       /* colour steps up to 95, then layer 1 off */
+#define LSTEP_DONE      2       /* finished */
+
 /* bgw r_no_0 of a layer with an entrance demo: its bg*_jmp routine */
 #define R0_INIT         0       /* set up the layer */
 #define R0_DEMO         1       /* the entrance demo */
 #define R0_MOVE         2       /* follow the fight */
-
 
 
 
@@ -767,8 +771,7 @@ void suzi_offset_set(WORK* wk) {
     }
 }
 
-u32 suzi_offset_set_sub(WORK* wk)
-{
+u32 suzi_offset_set_sub(WORK* wk) {
     s16 work;
     s16 work2;
     s16 pos = wk->xyz[1].disp.pos;
@@ -792,7 +795,7 @@ void suzi_sync_pos_set(WORK_Other* ewk) {
     s16 sub;
     if (ewk->wu.sync_suzi) {
         if (ewk->wu.sync_suzi == 2) {
-            suzi_offset_set_sub((WORK*)ewk);
+            suzi_offset_set_sub(&ewk->wu);
         }
         sub = *ewk->wu.suzi_offset;
         sub -= 0x200;
@@ -931,8 +934,7 @@ void bg_pos_hosei_sub3(s32 bg_no) {
     bg_w.bgw[bg_no].abs_y = pos2;
 }
 
-void bg_pos_hosei2(void)
-{
+void bg_pos_hosei2(void) {
     s32 pos;
     s32 pos2;
     s16 i;
@@ -1276,8 +1278,7 @@ void akebono_scrn_move(s16 ix) {
 }
 
 /* provisional name */
-void akebono_scr_write(void)
-{
+void akebono_scr_write(void) {
     s16 *attr = ake_attr_tbl;
     const PANEL *cell;
     s16 i;
@@ -1442,8 +1443,7 @@ s16 prio;
     u16* p;
     adrs += x;
     adrs += y;
-    i = 0;
-    while (i < h) {
+    for (i = 0; i < h; i++) {
         p = adrs;
         for (j = 0; j < w; j++) {
             cell = *++p;
@@ -1454,7 +1454,6 @@ s16 prio;
             p++;
         }
         adrs += 0x80;
-        i++;
     }
 }
 
@@ -1494,7 +1493,7 @@ s16 add;
 s16 capcom_logo_color_step(void) {
     s16 ret = 0;
     switch (bg_w.bgw[1].r_no_2) {
-    case 0:
+    case LSTEP_FIRST:
         bg_w.bgw[1].l_limit--;
         if (bg_w.bgw[1].l_limit < 0) {
             bg_w.bgw[1].r_limit++;
@@ -1508,7 +1507,7 @@ s16 capcom_logo_color_step(void) {
             bg_vbl_trans_flag = 0;
         }
         break;
-    case 1:
+    case LSTEP_LAST:
         ret = 2;
         bg_w.bgw[1].l_limit--;
         if (bg_w.bgw[1].l_limit < 0) {
@@ -1526,7 +1525,7 @@ s16 capcom_logo_color_step(void) {
             bg_vbl_trans_flag = 0;
         }
         break;
-    case 2:
+    case LSTEP_DONE:
         ret = 3;
         break;
     }
@@ -1602,8 +1601,7 @@ void scroll_cell_write(s16 i, u32 ofs, u32 cell, u32 tbl) {
 
 
 /* provisional name */
-void bg_extra_color_trans(void)
-{
+void bg_extra_color_trans(void) {
     load_bg_color(0x2C);
     load_bg_color(0x2D);
 }

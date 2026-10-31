@@ -146,6 +146,7 @@ void EFF76_SUDDENLY(WORK_Other* ewk) {
             ewk->wu.routine_no[1]++;
             ewk->wu.disp_flag = 0;
         }
+        /* fall through */
     case R1_APPEAR:
         if (Ck_Range_Out_S(ewk, ewk->wu.my_family - 1, ewk->wu.dm_vital)) {
             break;
@@ -452,6 +453,7 @@ void Setup_Char_76(WORK_Other* ewk) {
         break;
     case 0x36:
         ewk->wu.my_family = 1;
+        /* fall through */
     case 0x34:
         ewk->wu.my_col_mode = 0x4400;
         ewk->wu.char_index = 9;
@@ -510,6 +512,7 @@ void Setup_Char_76(WORK_Other* ewk) {
         break;
     case 0x40:
         ewk->wu.my_family = 1;
+        /* fall through */
     case 0x35:
         ewk->wu.char_index = 9;
         ewk->wu.dir_step = My_char[Winner_id];
@@ -523,6 +526,7 @@ void Setup_Char_76(WORK_Other* ewk) {
         ewk->wu.my_family = 2;
         ewk->wu.char_index = 0x53;
         ewk->wu.dir_step = ewk->wu.dir_old - 0x3B;
+        /* fall through */
     case 0x3B:
     case 0x3C:
     case 0x3E:

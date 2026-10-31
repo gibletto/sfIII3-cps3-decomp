@@ -35,11 +35,9 @@
 #define MACH_SLIDE2_MOVE2 3     /* move and run the animation to cue 21 */
 
 
-
 void pl10_extra_attack(PLW* wk) {
     pl10_exatt_table[wk->wu.routine_no[2] - ATTACK_SPECIAL](wk);
 }
-
 
 
 void Att_PL10_TOKUSHUKOUDOU(PLW* wk) {
@@ -137,7 +135,7 @@ void Att_PL10_MACH_SLIDE(PLW* wk) {
 void Att_PL10_MACH_SLIDE2(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
     case RN3_START:
-        wk->wu.routine_no[3] += 1;
+        wk->wu.routine_no[3]++;
         hoken_muriyari_chakuchi(wk);
         wk->wu.rl_flag = wk->wu.rl_waza;
         wk->rl_save = wk->wu.rl_flag;

@@ -11,6 +11,7 @@
 #include "types.h"
 #include "structs.h"
 
+/* provisional name */
 u32 frt_tick_count = 0;  /* 02000000 */
 s8 Coin_Mode = 0;  /* 02000004 */
 s8 Monitor_Flip = 0;  /* 02000005 */

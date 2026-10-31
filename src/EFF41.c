@@ -56,6 +56,7 @@ void effect_41_move(WORK_Other* ewk) {
             break;
         case 2:
             sa_gauge_flash[mwk->wu.id] |= 4;
+            /* fall through */
         default:
             break;
         }

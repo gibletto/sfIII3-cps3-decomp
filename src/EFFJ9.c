@@ -33,7 +33,6 @@
 
 
 
-
 void effect_J9_move(WORK_Other* ewk) {
     WORK* c2wk = (WORK*)ewk->my_master;
     s32 k;

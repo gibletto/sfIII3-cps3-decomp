@@ -30,6 +30,7 @@ void effect_E1_move(WORK_Other* ewk) {
         ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
+        /* fall through */
     case R0_MOVE:
         ewk->wu.my_mr.size.x = 63;
         ewk->wu.my_mr.size.y = 63;

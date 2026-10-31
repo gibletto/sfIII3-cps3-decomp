@@ -54,6 +54,7 @@ void effect_I3_move(WORK_Other* ewk) {
             ewk->wu.dir_timer = tp[ewk->wu.type].tm;
             break;
         }
+        /* fall through */
     case R0_HOLD:
         if (ewk->wu.dead_f == 1 || Suicide[0] != 0) {
             ewk->wu.routine_no[0]++;

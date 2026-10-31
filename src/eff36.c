@@ -283,6 +283,7 @@ void eff36_move06(WORK_Other* ewk) {
                 ewk->wu.my_mr.size.y = 127;
             }
         }
+        /* fall through */
     case R2_FULL:
         disp_pos_trans_entry5(ewk);
         break;

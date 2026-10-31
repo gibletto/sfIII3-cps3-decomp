@@ -219,6 +219,7 @@ void effH5_0004(WORK_Other* ewk) {
             add_x_sub(ewk);
             add_y_sub(ewk);
         }
+        /* fall through */
     case R1_STAY:
         disp_pos_trans_entry(ewk);
         break;

@@ -420,6 +420,7 @@ PLW* wk;
             if (wk->wu.routine_no[1] == PLAYER_ATTACK) {
                 break;
             }
+            /* fall through */
         default:
             wk->sa->saeff_mp = 0;
             wk->sa->mp_rno = MP_NONE;
@@ -536,6 +537,7 @@ void sag_normal(PLW* wk) {
             if (wk->wu.routine_no[1] == PLAYER_ATTACK) {
                 break;
             }
+            /* fall through */
         default:
             wk->sa->saeff_ok = 0;
             wk->sa->sa_rno = SA_NONE;
@@ -591,6 +593,7 @@ void sag_timer(PLW* wk) {
             if (wk->wu.routine_no[1] == PLAYER_ATTACK) {
                 break;
             }
+            /* fall through */
         default:
             wk->sa->saeff_ok = 0;
             wk->sa->sa_rno = SA_NONE;
@@ -604,6 +607,7 @@ void sag_timer(PLW* wk) {
             break;
         }
         wk->sa->sa_rno = SA_TIMER_RUN;
+        /* fall through */
     case SA_TIMER_RUN:
         if ((wk->sa_stop_flag != 1) && (((PLW*)wk->wu.target_adrs)->sa_stop_flag != 1)) {
             wk->sa->gauge.i -= wk->sa->dtm * wk->sa->dtm_mul;

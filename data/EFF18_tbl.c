@@ -16,6 +16,7 @@ const s16 scr_obj_num18[1][4] = {
     { 1, 1, 1, 1 },
 };
 
+/* provisional name */
 const s16 scr_obj_data18_0[2] = {
     0, 0,
 };

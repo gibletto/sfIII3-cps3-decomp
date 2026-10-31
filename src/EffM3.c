@@ -90,12 +90,14 @@ void effect_M3_move(WORK_Other* ewk) {
             ewk->wu.mvxy.d[0].real.l = M3_bahn_data[4] * 16;
             ewk->wu.mvxy.kop[0] = 1;
             ewk->wu.my_mr_flag = 1;
+            /* fall through */
         case R1_DELAY:
             if (--ewk->wu.dir_timer >= 0) {
                 break;
             }
             ewk->wu.routine_no[1]++;
             ewk->wu.disp_flag = 1;
+            /* fall through */
         case R1_ZOOM:
             cal_mvxy_speed(&ewk->wu);
             ewk->wu.mvxy.d[0].sp = (ewk->wu.mvxy.d[0].sp * ewk->wu.dmcal_m) / ewk->wu.dmcal_d;

@@ -68,7 +68,7 @@ void effect_C9_move(WORK_Other* ewk) {
     s16 scrc;
     switch (ewk->wu.routine_no[0]) {
     case R0_INIT:
-        ++ewk->wu.routine_no[0];
+        ewk->wu.routine_no[0]++;
         ewk->wu.disp_flag = 1;
         scrc = get_center_position();
         ewk->wu.xyz[0].disp.pos = app_pos_hosei[ewk->wu.type][0] + scrc;
@@ -94,7 +94,7 @@ void effect_C9_move(WORK_Other* ewk) {
         sort_push_request(&ewk->wu);
         break;
     case R0_MOVE:
-        if ((ewk->wu.dead_f == 1) || (Suicide[0] != 0)) {
+        if (ewk->wu.dead_f == 1 || Suicide[0] != 0) {
             ewk->wu.disp_flag = 0;
             ewk->wu.routine_no[0] = R0_END;
             break;
@@ -112,6 +112,7 @@ void effect_C9_move(WORK_Other* ewk) {
                                 break;
                             }
                             ewk->wu.routine_no[2]++;
+                            /* fall through */
                         case R2_JUMP:
                             ewk->wu.mvxy.a[0].sp = efy_data[2];
                             ewk->wu.mvxy.d[0].sp = efy_data[3];
@@ -119,6 +120,7 @@ void effect_C9_move(WORK_Other* ewk) {
                             ewk->wu.mvxy.d[1].sp = efy_data[5];
                             ewk->wu.mvxy.kop[0] = 2;
                             ewk->wu.routine_no[2]++;
+                            /* fall through */
                         case R2_DROP:
                             add_mvxy_speed(&ewk->wu);
                             cal_mvxy_speed(&ewk->wu);
@@ -160,6 +162,7 @@ void effect_C9_move(WORK_Other* ewk) {
                     if (Event_Judge_Gals < 0) {
                         ewk->wu.routine_no[1]++;
                     }
+                    /* fall through */
                 case R1_NEXT:
                     if (bg_w.stage == 8 && Round_num == 0) {
                         ewk->wu.routine_no[1]++;

@@ -74,6 +74,7 @@ void end_13000(u16 pl_num) {
         }
         end_d00_move();
         end_d01_move();
+        /* fall through */
     case END1_DONE:
         end_scn_pos_set2();
         end_bg_pos_hosei2();
@@ -150,6 +151,7 @@ void end_d00_3000(void) {
         bgw_ptr->xy[0].disp.pos = end_d_pos[end_w.r_no_2][0];
         bgw_ptr->xy[1].disp.pos = end_d_pos[end_w.r_no_2][1];
         effect_E6_init(0x35);
+        /* fall through */
     case 1:
         if (!Request_Fade(43, 0)) {
             break;

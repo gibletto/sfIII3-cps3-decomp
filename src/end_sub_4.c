@@ -107,8 +107,7 @@ void debug_play08_init(void) {
 }
 
 /* provisional name */
-void debug_play08_move(void)
-{
+void debug_play08_move(void) {
     round_timer.size.full = 0x990000;
     Game_timer++;
     set_EXE_flag();

@@ -49,6 +49,7 @@ void Shell14_0013(void) {}
 
 
 
+/* provisional name */
 void init_char_gfx_tables(void) {
     s16 i;
     cg_data_list = (CharGfxEntry*)cg_data_tbl;

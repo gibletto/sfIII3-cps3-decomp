@@ -23,7 +23,6 @@
 
 
 
-
 /* provisional name */
 void coin_in_sound_request(void) {
     if ((coin_chute1_w.dropped | coin_chute2_w.dropped) && Demo_Flag == 1) {

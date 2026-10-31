@@ -114,6 +114,7 @@ void end_04000(u16 pl_num) {
         end_400_move();
         end_401_move();
         end_402_move();
+        /* fall through */
     case END1_DONE:
         end_scn_pos_set2();
         end_bg_pos_hosei2();
@@ -280,6 +281,7 @@ void end_401_2000(void) {
     case 1:
         bgw_ptr->r_no_1++;
         end_no_cut = 0;
+        /* fall through */
     case 2:
         bg_w.frame_vol--;
         if (bg_w.frame_vol <= 0) {
@@ -315,6 +317,7 @@ void end_401_3000(void) {
         Frame_Up(bg_w.center_x, bg_w.center_y, 0x1E, 0x1E);
         bg_w.frame_deff = 48;
         bg_w.frame_vol = 1;
+        /* fall through */
     case 2:
         bg_w.frame_vol--;
         if (bg_w.frame_vol <= 0) {
@@ -352,6 +355,7 @@ void end_401_4000(void) {
         Frame_Up(bg_w.center_x, bg_w.center_y, 0x1E, 0x1E);
         bg_w.frame_deff = 0x2E;
         bg_w.frame_vol = 1;
+        /* fall through */
     case 2:
         bg_w.frame_vol--;
         if (bg_w.frame_vol <= 0) {

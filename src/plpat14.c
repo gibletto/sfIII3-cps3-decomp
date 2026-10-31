@@ -75,6 +75,7 @@ void Att_PL14_AT1(PLW* wk) {
         switch (wk->wu.cg_type) {
         case 10:
             wk->wu.routine_no[3]++;
+            /* fall through */
         case 20:
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;

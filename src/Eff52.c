@@ -78,6 +78,7 @@ void EFF52_SUDDENLY(WORK_Other* ewk) {
             break;
         }
         ewk->wu.routine_no[6]++;
+        /* falls through: the hold starts this frame */
     case R6_HOLD:
         if (Select_Start[ewk->master_id] == 0) {
             Order[ewk->wu.dir_old] = R0_KILL;

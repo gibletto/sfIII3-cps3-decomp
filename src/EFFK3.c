@@ -37,6 +37,7 @@ void effect_K3_move(WORK_Other* ewk) {
         set_init_posspeed_effK3(&ewk->wu);
         ewk->wu.position_z = 24;
         set_char_move_init(&ewk->wu, 0, (random_16_com() & 1) + 0x71);
+        /* fall through */
     case R0_MOVE:
         if (ewk->wu.dead_f == 1 || Suicide[0] != 0) {
             ewk->wu.disp_flag = 0;

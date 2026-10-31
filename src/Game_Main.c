@@ -414,8 +414,7 @@ void Scrn_Move_Set(s32 n, s16 x, s16 y);
 
 
 /* Title hand-off: step the game routine, save the screen and start wipe 0. */
-void Game0_2(void)
-{
+void Game0_2(void) {
     G_No2++;
     sc_vram_to_ram();
     Switch_Screen_Init(0, 1);
@@ -597,7 +596,7 @@ void Game11(void) {
     Setup_Play_Type();
     switch (G_No2) {
     case G2_Q_INIT:
-        G_No2 += 1;
+        G_No2++;
         SC_No[0] = 0;
         SC_No[1] = 0;
         SC_No[2] = 0;
@@ -608,7 +607,7 @@ void Game11(void) {
         break;
     case G2_Q_MAIN:
         if (Next_Q()) {
-            G_No2 += 1;
+            G_No2++;
             Game01_Sub();
             sc_vram_to_ram();
             Switch_Screen_Init(3, 3);
@@ -639,7 +638,7 @@ void Game11(void) {
         }
         break;
     case G2_Q_IN:
-        G_No2 += 1;
+        G_No2++;
         SC_No[0] = 0;
         SC_No[1] = 0;
         SC_No[2] = 0;
@@ -698,7 +697,7 @@ void Game2_0(void) {
 
 
 void Game2_1(void) {
-    Game_timer += 1;
+    Game_timer++;
     set_EXE_flag();
     Time_Control();
     Player_control();
@@ -721,8 +720,7 @@ void Game2_1(void) {
 
 
 /* Step 2 of the fight routine (Game02_Jmp_Tbl) has no work. */
-void Game2_2(void)
-{
+void Game2_2(void) {
 }
 
 
@@ -826,8 +824,7 @@ void Game2_5(void) {
 
 /* The winner scene: runs Winner_Scene, then wipes out to the winner's next stage, or to game over in event
    mode. */
-void Game03(void)
-{
+void Game03(void) {
     move_effect_work(4);
     move_effect_work(5);
     switch (G_No2) {
@@ -928,7 +925,7 @@ void Game09(void) {
         C_No1 = 0;
         C_No2 = 0;
         C_No3 = 0;
-        G_No2 += 1;
+        G_No2++;
         Round_num = 0;
         Allow_a_battle_f = 0;
         Time_in_Time = 60;
@@ -955,7 +952,7 @@ void Game09(void) {
         TATE00();
         break;
     case G2_BONUS_START:
-        G_No2 += 1;
+        G_No2++;
         G_Timer = 19;
         if (Bonus_Type == BONUS_PARRY) {
             makeup_bonus_game_level(COM_id);
@@ -972,7 +969,7 @@ void Game09(void) {
     case G2_BONUS_INTRO:
         Bonus_Sub();
         if (--G_Timer == 0) {
-            G_No2 += 1;
+            G_No2++;
             Clear_Flash_No();
             Text_Page_Y = 0;
             Scrn_Move_Set(4, 0, 0);
@@ -982,13 +979,13 @@ void Game09(void) {
     case G2_BONUS_REVIVAL:
         Bonus_Sub();
         if (Switch_Screen_Revival()) {
-            G_No2 += 1;
+            G_No2++;
             Forbid_Break = 0;
         }
         break;
     case G2_BONUS_PLAY:
         if (Bonus_Sub()) {
-            G_No2 += 1;
+            G_No2++;
             Cover_Timer = 24;
             sc_vram_to_ram();
             Stop_Combo = 1;
@@ -1156,7 +1153,7 @@ void Game06(void) {
     }
     switch (G_No2) {
     case G2_OVER_INIT:
-        G_No2 += 1;
+        G_No2++;
         Stock_Com_Color[Player_id] = -1;
         Stock_Com_Arts[Player_id] = -1;
         Last_Player_id = -1;
@@ -1173,7 +1170,7 @@ void Game06(void) {
         if (Game_Over()) {
             G_Timer = 60;
             if (Check_Disp_Ranking() != 0) {
-                G_No2 += 1;
+                G_No2++;
             } else {
                 G_No2 = G2_OVER_EXIT;
             }
@@ -1181,13 +1178,13 @@ void Game06(void) {
         break;
     case G2_OVER_RANKING:
         if (Disp_Ranking()) {
-            G_No2 += 1;
+            G_No2++;
             G_Timer = 1;
         }
         break;
     case G2_OVER_EXIT:
         if (--G_Timer == 0) {
-            G_No2 += 1;
+            G_No2++;
             Clear_Disp_Ranking(0);
             Clear_Disp_Ranking(1);
             sc_vram_to_ram();
@@ -1233,7 +1230,7 @@ void Game06(void) {
         }
         break;
     case G2_OVER_PL_INIT:
-        G_No2 += 1;
+        G_No2++;
         Stock_Com_Color[Player_id] = -1;
         Stock_Com_Arts[Player_id] = -1;
         Last_Player_id = -1;

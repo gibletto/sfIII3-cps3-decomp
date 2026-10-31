@@ -86,6 +86,7 @@ void end_14000(u16 pl_num) {
         end_e00_move();
         end_e01_move();
         end_e02_move();
+        /* fall through */
     case END1_DONE:
         end_scn_pos_set2();
         end_bg_pos_hosei2();
@@ -147,10 +148,12 @@ void end_e00_0000(void) {
         bgw_ptr->r_no_1++;
         bgw_ptr->free = 7;
         bgw_ptr->l_limit = 0;
+        /* fall through */
     case 5:
         if (end_e00_0000_col_sub()) {
             bgw_ptr->r_no_1++;
         }
+        /* fall through */
     case 6:
         bgw_ptr->xy[1].cal -= 0x4000;
         if (bgw_ptr->xy[1].disp.pos <= -0x138) {
@@ -159,6 +162,7 @@ void end_e00_0000(void) {
             end_w.timer = 20;
         }
         bgw_ptr->abs_y = bgw_ptr->xy[1].disp.pos;
+        /* fall through */
     case 7:
         break;
     }
@@ -220,6 +224,7 @@ void end_e00_1000(void) {
             bgw_ptr->xy[1].cal = 0x240000;
         }
         bgw_ptr->abs_y = bgw_ptr->xy[1].disp.pos;
+        /* fall through */
     case 2:
         end_e00_1000_col_sub();
         break;
@@ -437,6 +442,7 @@ void end_e00_7000(void) {
         end_fade_flag = 1;
         end_fade_timer = timer_e_tbl[end_w.r_no_2] - 120;
         Rewrite_End_Message(5);
+        /* fall through */
     case 1:
         if (Request_Fade(49, 0) == 0) {
             break;
@@ -449,6 +455,7 @@ void end_e00_7000(void) {
             bgw_ptr->r_no_1++;
             end_no_cut = 0;
         }
+        /* fall through */
     case 3:
         bgw_ptr->xy[1].cal -= 0x3000;
         if (bgw_ptr->xy[1].disp.pos <= 0x2B8) {

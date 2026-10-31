@@ -524,8 +524,7 @@ void Setup_Win_Mark(void) {
 
 /* Counts how the winner finished a round against the CPU (super art, perfect or chip finish), for the game and
    for the stage. */
-void Update_BI_Term(void)
-{
+void Update_BI_Term(void) {
     if (Play_Type == PLAY_VS_PLAYER) {
         return;
     }
@@ -1125,6 +1124,7 @@ void Game_Manage_9th(void) {
         C_No1++;
         Game_pause = 1;
         Switch_Screen_Init(3, 3);
+        /* fall through */
     default:
         if (Switch_Screen()) {
             BGM_No[0] = BGM_ROUND_WAIT;
@@ -2053,8 +2053,7 @@ s32 Check_Ending(void) {
 }
 
 /* Nonzero once the winner's VS_Index is past 9: the ending follows. */
-u32 Check_Ending_Sub(void)
-{
+u32 Check_Ending_Sub(void) {
     if (VS_Index[WINNER] > 9) {
         return 1;
     }
@@ -2207,8 +2206,7 @@ void Check_Fade_Out_BGM(s16 Time) {
 }
 
 /* Silences the music; unless the music is off, it fades back in after time frames. */
-void Control_Music_Fade(s16 time)
-{
+void Control_Music_Fade(s16 time) {
     Setup_BGM_Fade_In(time);
     sound_reg_level_set(0, -128);
 }
@@ -2250,6 +2248,7 @@ void BGM_Control(void) {
         if (--BGM_Timer[0] == 0) {
             BGM_No[0]++;
         }
+        /* fall through */
     case BGM_ROUND:
         if (gSeqStatus[0] == 2) {
             BGM_No[0] = BGM_IDLE;
@@ -2264,6 +2263,7 @@ void BGM_Control(void) {
         if (--BGM_Timer[0] == 0) {
             BGM_No[0]++;
         }
+        /* fall through */
     case BGM_JUDGE:
         if (gSeqStatus[0] == 2) {
             BGM_No[0] = BGM_IDLE;
@@ -2282,8 +2282,7 @@ void Setup_BGM_Fade_In(u8 time) {
 }
 
 /* Sets Complete_Victory, which ends the round-end waits of Game_Management at once. */
-void complete_victory_pause(void)
-{
+void complete_victory_pause(void) {
     Complete_Victory = 1;
 }
 

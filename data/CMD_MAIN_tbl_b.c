@@ -83,6 +83,7 @@ const s8 str_1_MATCH[8] = "1 MATCH";
 const s8 str_OFF_2[4] = "OFF";
 const char str_ON[4] = "ON ";
 
+/* provisional name */
 const u8 debug_charset_tbl[24] = {
     6, 3, 5, 1, 2, 9, 7, 4,
     10, 8, 12, 13, 14, 15, 16, 17,

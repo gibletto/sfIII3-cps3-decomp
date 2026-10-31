@@ -458,14 +458,12 @@ s16 wix;
 }
 
 /* Clear the player's caution (guard-warning) flag. */
-void clear_caution_flag(PLW* wk)
-{
+void clear_caution_flag(PLW* wk) {
     wk->caution_flag = 0;
 }
 
 /* Set the player's caution (guard-warning) flag. */
-void set_caution_flag(PLW* wk)
-{
+void set_caution_flag(PLW* wk) {
     wk->caution_flag = 1;
 }
 
@@ -479,8 +477,7 @@ void reset_extra_bg_flag(WORK* wk) {
     another_bg[wk->id] = 0;
 }
 
-void flip_my_rl_flag(WORK* wk)
-{
+void flip_my_rl_flag(WORK* wk) {
     wk->rl_flag = ((u8)wk->rl_flag + 1U) & 1;
 }
 
@@ -512,14 +509,12 @@ void setup_free_program(WORK* wk, u8 arg) {}
 
 
 /* Start a horizontal background quake using quake pattern ix. */
-void setup_bg_quake_x(WORK* wk, u8 ix)
-{
+void setup_bg_quake_x(WORK* wk, u8 ix) {
     bg_w.quake_x_index = ix;
 }
 
 /* Start a vertical background quake using quake pattern ix. */
-void setup_bg_quake_y(WORK* wk, u8 ix)
-{
+void setup_bg_quake_y(WORK* wk, u8 ix) {
     bg_w.quake_y_index = ix;
 }
 
@@ -539,7 +534,6 @@ void setup_disp_flag(WORK* wk, s8 flag) {
 }
 
 /* Queue a special command number for the player to perform. */
-void setup_command_number(PLW* wk, u8 cmd_no)
-{
+void setup_command_number(PLW* wk, u8 cmd_no) {
     wk->cmd_request = cmd_no;
 }

@@ -28,7 +28,6 @@
 #define R0_KILL         5       /* (default) put the work back */
 
 
-
 void effect_E0_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
     case R0_WAIT:
@@ -112,7 +111,6 @@ void Setup_Char_E0(WORK_Other* ewk) {
         ewk->wu.char_index++;
     }
 }
-
 
 
 s32 effect_E0_init(s16 Direction, s16 dm_vital, s16 Pos_Type) {

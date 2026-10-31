@@ -354,6 +354,7 @@ void effect_A6_move(WORK_Other_CONN* ewk) {
                     ewk->wu.position_y = ewk->wu.xyz[1].disp.pos = bg_w.bgw[0].xy[1].disp.pos + 26;
                     break;
                 }
+                /* fall through */
             case R1_SLIDE:
                 switch (ewk->wu.dir_old) {
                 case 0x43:

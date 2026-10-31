@@ -80,6 +80,7 @@ void end_03000(u16 pl_num) {
         }
         end_300_move();
         end_301_move();
+        /* fall through */
     case END1_DONE:
         end_scn_pos_set2();
         end_bg_pos_hosei2();
@@ -168,6 +169,7 @@ void end_300_0003(void) {
         bgw_ptr->abs_y = bgw_ptr->xy[1].disp.pos;
         effect_E6_init(0x9D);
         Rewrite_End_Message(4);
+        /* fall through */
     case 1:
         if (Request_Fade(0x6A, 0) == 0) {
             break;

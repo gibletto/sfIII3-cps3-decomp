@@ -86,6 +86,7 @@ void effect_M4_move(WORK_Other* ewk) {
         ewk->wu.dir_timer = effM4_dir_tbl[ewk->wu.type][ewk->wu.dir_step][0];
         ewk->wu.direction = effM4_dir_tbl[ewk->wu.type][ewk->wu.dir_step][1];
         ewk->wu.routine_no[0] = R0_MOVE;
+        /* fall through */
     case R0_MOVE:
         if (ewk->wu.dead_f == 1) {
             ewk->wu.routine_no[0] = R0_KILL;
@@ -109,8 +110,7 @@ void effect_M4_move(WORK_Other* ewk) {
     }
 }
 
-u32 effect_M4_init(s16 type)
-{
+u32 effect_M4_init(s16 type) {
     WORK_Other *ewk;
     s16 ix;
 

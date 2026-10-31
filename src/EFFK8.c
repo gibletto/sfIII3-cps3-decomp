@@ -39,6 +39,7 @@ void effect_K8_move(WORK_Other* ewk) {
         ewk->wu.my_mr.size.x = 127;
         ewk->wu.my_mr.size.y = 127;
         set_char_move_init(&ewk->wu, 0, 0x8F);
+        /* fall through */
     case R0_MOVE:
         if (ewk->wu.dead_f != 0) {
             ewk->wu.disp_flag = 0;

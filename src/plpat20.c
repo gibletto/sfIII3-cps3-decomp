@@ -79,11 +79,13 @@ void Att_PL20_AT1(PLW* wk) {
             setup_mvxy_data(&wk->wu, wk->as->data_ix);
             wk->wu.routine_no[3] = AT1_AIR;
             wk->wu.cg_type = 0;
+            /* fall through */
         case 35:
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
             wk->wu.routine_no[3] = AT1_AIR;
             wk->wu.cg_type = 0;
+            /* fall through */
         default:
             break;
         }
@@ -143,6 +145,7 @@ void Att_PL20_AT2(PLW* wk) {
     case AT2_SET_MOVE:
         wk->wu.routine_no[3]++;
         setup_mvxy_data(&wk->wu, wk->as->data_ix);
+        /* fall through */
     case AT2_MOVE2:
         cal_mvxy_speed(&wk->wu);
         add_mvxy_speed(&wk->wu);
@@ -192,11 +195,13 @@ void Att_PL20_AT3(PLW* wk) {
             setup_mvxy_data((WORK*)wk, wk->as->data_ix);
             wk->wu.routine_no[3] = AT3_AIR;
             wk->wu.cg_type = 0;
+            /* fall through */
         case 35:
             setup_mvxy_data((WORK*)wk, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
             wk->wu.routine_no[3] = AT3_AIR;
             wk->wu.cg_type = 0;
+            /* fall through */
         default:
             break;
         }

@@ -31,6 +31,7 @@ void effect_L0_move(WORK_Other* ewk) {
     case R0_INIT:
         ewk->wu.routine_no[0]++;
         mwk->wu.disp_flag = 0;
+        /* fall through */
     case R0_MOVE:
         if (ewk->wu.dead_f == 0 && Suicide[0] == 0) {
             if (mwk->sa_stop_flag != 1) {

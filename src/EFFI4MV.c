@@ -64,6 +64,7 @@ void effect_I4_move(WORK_Other* ewk) {
         if (!EXE_flag && !Game_pause && !EXE_obroll) {
             effect_i4_hit_sub(ewk);
         }
+        /* fall through */
     case R0_STAY:
         disp_pos_trans_entry_r(ewk);
         break;

@@ -31,7 +31,6 @@
 
 
 
-
 /* 02006B38 */
 const s16* scr_obj_data6[23] = {
     st0000_data_tbl,

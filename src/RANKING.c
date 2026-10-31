@@ -83,8 +83,7 @@ void Ranking_00(void) {
     jmp_tbl[D_No1]();
 }
 
-void Ranking_00_1st(void)
-{
+void Ranking_00_1st(void) {
     D_No1++;
     Demo_Type = 0;
     Flash_Sign[0] = 1;
@@ -218,8 +217,7 @@ void Ranking_00_4th(void) {
     }
 }
 
-void Ranking_00_5th(void)
-{
+void Ranking_00_5th(void) {
     if (--D_Timer == 0) {
         D_No1++;
         D_Timer = 300;
@@ -399,8 +397,7 @@ void Ranking_01_5th(void) {
     }
 }
 
-void Ranking_Sub(void)
-{
+void Ranking_Sub(void) {
     System_all_clear_Wait();
     if (Rank_Type == 0) {
         bg_etc_write(2);
@@ -431,12 +428,14 @@ void Setup_grade(s16 y) {
         } else {
             Char_Index = Ranking_Data[Rank].grade;
         }
+        /* fall through */
     case 10:
         if ((Ranking_Data[Rank].cpu_grade) == 0xFF) {
             Char_Index = 0;
         } else {
             Char_Index = Ranking_Data[Rank].cpu_grade;
         }
+        /* fall through */
     case 15:
         if ((Ranking_Data[Rank].grade) == 0xFF) {
             Char_Index = 0;
@@ -584,15 +583,15 @@ void Setup_Wins(s16 y) {
         }
         Rank_Pos_X += 16;
     }
-    Rank_X += 1;
+    Rank_X++;
     Flash_Rank_Time += Flash_Rank_Interval;
     effect_67_init(26, Rank_Pos_X + 6, Rank_Pos_Y, 180, Digit[0] + 130, 10, y, 0);
     Rank_Pos_X += 40;
-    Rank_X += 1;
+    Rank_X++;
     Flash_Rank_Time += Flash_Rank_Interval;
     effect_67_init(24, Rank_Pos_X, Rank_Pos_Y, 180, 6, 10, y, 0);
     Rank_Pos_X += 64;
-    Rank_X += 1;
+    Rank_X++;
 }
 
 
@@ -618,12 +617,12 @@ void Setup_Wins2(s16 y) {
         }
         Rank_Pos_X += 16;
     }
-    Rank_X += 1;
+    Rank_X++;
     Flash_Rank_Time += Flash_Rank_Interval;
     effect_67_init(26, Rank_Pos_X, Rank_Pos_Y, 180, Digit[0] + 75, 10, y, 0);
     Rank_Pos_X += 40;
     effect_67_init(24, Rank_Pos_X, Rank_Pos_Y + 8, 180, 11, 10, y, 0);
-    Rank_X += 1;
+    Rank_X++;
     Flash_Rank_Time += Flash_Rank_Interval;
 }
 

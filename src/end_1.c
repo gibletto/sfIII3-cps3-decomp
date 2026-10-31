@@ -71,6 +71,7 @@ void end_01000(u16 pl_num) {
             bg_w.bgw[1].r_no_1 = 0;
         }
         end_100_move();
+        /* fall through */
     case END1_DONE:
         end_scn_pos_set2();
         end_bg_pos_hosei2();
@@ -216,6 +217,7 @@ void end_100_0004(void) {
             bgw_ptr->r_no_1++;
         }
         bgw_ptr->abs_y = bgw_ptr->xy[1].disp.pos;
+        /* fall through */
     case 2:
         break;
     }

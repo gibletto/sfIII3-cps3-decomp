@@ -54,12 +54,14 @@ const s16 quake_y_tbl[130] = {
     15, -15,
 };
 
+/* provisional name */
 const u16 bg_color2_tbl[23] = {
     0xF, 0x21, 0x15, 0x1B, 0x19, 0x11, 0x13, 0x25,
     0x17, 0x2B, 0x1F, 0x10, 0x18, 0x1A, 0x16, 0x27,
     0x14, 0x23, 0x10, 0x12, 0x29, 0x1C, 0x1D,
 };
 
+/* provisional name */
 const u16 bg_palette_no_tbl[23] = {
     0, 0x20, 6, 0xC, 0xA, 2, 4, 0x24,
     8, 0x2A, 0x1E, 1, 9, 0xB, 7, 0x26,
@@ -72,6 +74,7 @@ const s16 bg_attr_add_tbl[23] = {
     128, 128, 128, 128, 128, 128, 128,
 };
 
+/* provisional name */
 const u16 etc_bg_color_tbl[35] = {
     5, 5, 5, 10, 10, 5, 5, 42,
     5, 5, 5, 5, 32, 6, 12, 10,

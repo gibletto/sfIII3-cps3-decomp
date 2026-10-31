@@ -325,7 +325,7 @@ void effect_B8_move(WORK_Other_CONN* ewk) {
                     }
                 }
                 if (sw & BUTTON_MK) {
-                    test_mes_no = test_mes_no + 1;
+                    test_mes_no++;
                     if (test_mes_no > 27) {
                         if (Country == 1) {
                             test_mes_no = 0;
@@ -335,7 +335,7 @@ void effect_B8_move(WORK_Other_CONN* ewk) {
                     }
                 }
                 if (sw & BUTTON_HK) {
-                    test_mes_no = test_mes_no - 1;
+                    test_mes_no--;
                     if (test_mes_no < 0) {
                         test_mes_no = 27;
                     }
@@ -399,8 +399,7 @@ static u16 effb8_sel_1_by_8(void) {
 
 
 
-s32 effect_B8_init(s8 WIN_PL_NO, s16 timer)
-{
+s32 effect_B8_init(s8 WIN_PL_NO, s16 timer) {
     PLW *wk;
     WORK_Other_CONN *ewk;
     s16 work_index;

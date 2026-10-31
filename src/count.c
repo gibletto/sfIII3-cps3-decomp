@@ -95,11 +95,11 @@ void counter_control(void) {
         counter_flash(0);
     }
     if (Counter_low != 0) {
-        Counter_low -= 1;
+        Counter_low--;
         return;
     }
     Counter_low = (*&count_work).hoji_counter;
-    Counter_hi -= 1;
+    Counter_hi--;
     if (Counter_hi == 0) {
         sq_paint_chenge(22, 0, 4, 5, 8);
     }
@@ -190,11 +190,11 @@ void bcounter_control(void) {
         return;
     }
     if (Counter_low != 0) {
-        Counter_low -= 1;
+        Counter_low--;
         return;
     }
     Counter_low = (*&count_work).hoji_counter;
-    Counter_hi -= 1;
+    Counter_hi--;
     *(s16*)&round_timer = Counter_hi;
     hi = Counter_hi;
     hi = hi / 10;

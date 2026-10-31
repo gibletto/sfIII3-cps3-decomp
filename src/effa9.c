@@ -132,6 +132,7 @@ void Setup_A9(WORK_Other* ewk, s16 Char_Index, s16 Option, s16 Option2) {
         if (Option2) {
             effect_59_init(ewk, ewk->wu.my_family, 4, 1);
         }
+        /* falls through: 32 takes the step as well */
     case 33:
     case 34:
     case 81:

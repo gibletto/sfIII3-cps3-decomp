@@ -95,6 +95,7 @@ const s16 bg_scr_record_unref_1[28] = {
 };
 
 /* layer 3 of the finish screen (akebono_initialize) */
+/* provisional name */
 const s16 ake_scr_record_data[28] = {
     4, 69,  0x7F, 0x7F00, 12,  0xFF, 0x7F00, 12,  0x17F, 0x7F00, 12,  0x1FF, 0x7F00, 12,  0x27F, 0x7F00, 12,
            0x2FF, 0x7F00, 12,  0x37F, 0x7F00, 12,  0x3FF, 0x7F00, 12,  -1,
@@ -411,11 +412,13 @@ const s32 msp2[8][3][2] = {
     { { 0x10000, 0x10000 }, { 0x10000, 0x10000 }, { 0xE000, 0xE000 } },
 };
 
+/* provisional name */
 const s32 etc_bg_zuubun_tbl[12][3] = {
     { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 },
     { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 },
 };
 
+/* provisional name */
 const BG_GFX bg_gfx_tbl[23] = {
     { 0x1FFB800, 30623, 0x1FFB880, 1 },
     { 0x1E7D800, 21023, 0x1E7D880, 1 },
@@ -442,6 +445,7 @@ const BG_GFX bg_gfx_tbl[23] = {
     { 0x1F8B800, 13055, 0x1F8B880, 1 },
 };
 
+/* provisional name */
 const BG_GFX etc_bg_gfx_tbl[23] = {
     { 0x2082000, 36879, 0x2082080, 1 },
     { 0x2082000, 36879, 0x2082080, 1 },
@@ -494,28 +498,33 @@ const s16 bg_prio_tbl[23][3] = {
     { 0, 24, 0 },
 };
 
+/* provisional name */
 const s16 bg_attr_tbl[23] = {
     512, 512, 512, 512, 512, 512, 512, 512,
     512, 512, 512, 512, 512, 512, 512, 512,
     512, 512, 512, 512, 512, 512, 512,
 };
 
+/* provisional name */
 const s16 etc_bg_attr_tbl[13] = {
     512, 512, 512, 512, 512, 512, 512, 512,
     512, 512, 512, 512, 512,
 };
 
+/* provisional name */
 const s16 bg_cell_cnt_tbl[23][3] = {
     { 8, 8, 8 }, { 8, 8, 8 }, { 8, 8, 8 }, { 8, 8, 8 }, { 8, 8, 8 }, { 8, 8, 8 }, { 8, 8, 8 }, { 8, 8, 8 },
     { 8, 8, 8 }, { 8, 8, 8 }, { 8, 8, 8 }, { 8, 8, 8 }, { 8, 8, 8 }, { 8, 8, 8 }, { 8, 8, 8 }, { 8, 8, 8 },
     { 8, 8, 8 }, { 8, 8, 8 }, { 8, 8, 8 }, { 8, 8, 8 }, { 8, 8, 8 }, { 8, 8, 8 }, { 8, 8, 8 },
 };
 
+/* provisional name */
 const s16 etc_bg_cell_cnt_tbl[12][3] = {
     { 4, 0, 0 }, { 2, 0, 0 }, { 2, 0, 0 }, { 2, 0, 0 }, { 2, 2, 0 }, { 2, 0, 0 }, { 4, 0, 0 }, { 2, 0, 0 },
     { 4, 0, 0 }, { 4, 0, 0 }, { 4, 0, 0 }, { 2, 0, 0 },
 };
 
+/* provisional name */
 const u32 bg_cg_src_tbl[23] = {
     (u32)bg_scrn_data_00,
     (u32)debug_scene_scrn_data,

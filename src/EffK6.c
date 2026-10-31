@@ -212,6 +212,7 @@ void EFFK6_MOVE(WORK_Other* ewk) {
             } else {
                 ewk->wu.routine_no[1]++;
             }
+            /* fall through */
         case R1_FOLLOW:
             if (ewk->wu.dir_step != ID_of_Face[Cursor_Y[ewk->master_id]][Cursor_X[ewk->master_id]]) {
                 ewk->wu.dir_step = ID_of_Face[Cursor_Y[ewk->master_id]][Cursor_X[ewk->master_id]];
@@ -386,8 +387,7 @@ s16 Setup_K6_Index(WORK_Other* ewk) {
 
 
 /* Outside region 1, name 21 is shown with its alternative spelling, two entries on. */
-s32 chkNameSuv(s16 name_no)
-{
+s32 chkNameSuv(s16 name_no) {
     if (Country != 1 && name_no == 21) {
         return 2;
     }

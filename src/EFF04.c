@@ -41,6 +41,7 @@ void effect_04_move(WORK_Other* ewk) {
         }
         ewk->wu.routine_no[0]++;
         effect_17_init(&ewk->wu);
+        /* fall through */
     case R0_OPEN:
         if (Break_Into) {
             ewk->wu.routine_no[0] = R0_END;

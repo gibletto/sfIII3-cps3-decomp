@@ -390,8 +390,7 @@ s32 Check_EM_Speech(void) {
 
 
 
-void Next_CPU_6th(void)
-{
+void Next_CPU_6th(void) {
     SEL_CPU_X = 1;
 }
 
@@ -445,6 +444,7 @@ void After_Bonus_2nd(void) {
         effect_76_init(56);
         Order[56] = 3;
         Order_Timer[56] = 1;
+        /* fall through */
     case 1:
         if (--Cover_Timer == 0) {
             SC_No[1]++;
@@ -637,6 +637,7 @@ void Select_CPU_2nd(void) {
         Cut_Scroll = 2;
         Next_Step = 0;
         effect_58_init(12, 1, 3);
+        /* fall through */
     case SC2_WAIT:
         Check_Auto_Cut();
         if (Next_Step) {
@@ -648,8 +649,7 @@ void Select_CPU_2nd(void) {
     }
 }
 
-void Select_CPU_3rd(void)
-{
+void Select_CPU_3rd(void) {
     s8 pid;
 
     switch (SC_No[1]) {
@@ -767,8 +767,7 @@ void Select_CPU_3rd(void)
     }
 }
 
-void Select_CPU_4th(void)
-{
+void Select_CPU_4th(void) {
     SEL_CPU_X = 1;
     Next_Step = 1;
 }
@@ -919,6 +918,7 @@ void Next_Q_2nd(void) {
     case 0:
         (*p)++;
         load_any_color(5);
+        /* fall through */
     case 1:
         if (--*pb == 5) {
             SC_No[1]++;
@@ -1050,8 +1050,7 @@ u16 sw;
     }
 }
 
-void Setup_EM_List(void)
-{
+void Setup_EM_List(void) {
     EM_List[Player_id][0] = EM_Candidate[Player_id][0][VS_Index[Player_id]];
     EM_List[Player_id][1] = EM_Candidate[Player_id][1][VS_Index[Player_id]];
 }

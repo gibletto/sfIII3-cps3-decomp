@@ -95,8 +95,7 @@ void load_side_color(u8 side, u16 ix) {
 }
 
 /* provisional name */
-void load_player_sub_color(void)
-{
+void load_player_sub_color(void) {
     polygon2d_submit_quad(Player_Color[0] * 0x300 + 0x03389900, 0x2E00, 0x300, 0, 0, 0);
     polygon2d_submit_quad(Player_Color[1] * 0x300 + 0x03389900, 0x3100, 0x300, 0, 0, 0);
 }

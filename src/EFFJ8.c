@@ -103,8 +103,7 @@ void dragonfly_l_move_0(WORK_Other* ewk) {
 }
 
 /* Left dragonfly: move, then draw its flight line. */
-void dragonfly_l_move_1(WORK_Other* ewk)
-{
+void dragonfly_l_move_1(WORK_Other* ewk) {
     char_move(&ewk->wu);
     dragonfly_line_set(ewk, 0);
 }
@@ -161,6 +160,7 @@ void dragonfly_l_move(WORK_Other* ewk) {
     case R2_INIT:
         ewk->wu.routine_no[2]++;
         dragonfly_l_move_0(ewk);
+        /* fall through */
     case R2_LINE:
         ewk->wu.routine_no[2]++;
         dragonfly_l_move_1(ewk);
@@ -200,8 +200,7 @@ void dragonfly_r_move_0(WORK_Other* ewk) {
 }
 
 /* Right dragonfly: move, then draw its flight line. */
-void dragonfly_r_move_1(WORK_Other* ewk)
-{
+void dragonfly_r_move_1(WORK_Other* ewk) {
     char_move(&ewk->wu);
     dragonfly_line_set(ewk, 1);
 }
@@ -258,6 +257,7 @@ void dragonfly_r_move(WORK_Other* ewk) {
     case R2_INIT:
         ewk->wu.routine_no[2]++;
         dragonfly_r_move_0(ewk);
+        /* fall through */
     case R2_LINE:
         ewk->wu.routine_no[2]++;
         dragonfly_r_move_1(ewk);
@@ -345,6 +345,7 @@ void dragonfly_move_0001(WORK_Other* ewk) {
     case R2_TAKE_OFF:
         ewk->wu.routine_no[2]++;
         dragonfly_l_move_1(ewk);
+        /* fall through */
     case R2_FLY_OFF:
         ewk->wu.routine_no[2] += dragonfly_l_move_2(ewk);
         break;

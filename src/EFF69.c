@@ -46,8 +46,7 @@ void EFF69_WAIT(WORK_Other* ewk) {
     }
 }
 
-void EFF69_SLIDE_IN(WORK_Other* ewk)
-{
+void EFF69_SLIDE_IN(WORK_Other* ewk) {
     if (Order[ewk->wu.dir_old] != 1) {
         ewk->wu.routine_no[0] = Order[ewk->wu.dir_old];
         ewk->wu.routine_no[1] = R1_DELAY;
@@ -194,8 +193,7 @@ s32 effect_69_init(s16 dir_old) {
     return 0;
 }
 
-void Setup_Clear_OBJ(WORK_Other* ewk)
-{
+void Setup_Clear_OBJ(WORK_Other* ewk) {
     if (ewk->wu.dir_old < 3) {
         effect_59_init(ewk, ewk->wu.my_family, ewk->wu.dir_old, 1);
     }

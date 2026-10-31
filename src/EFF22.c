@@ -42,6 +42,7 @@ void effect_22_move(WORK_Other* ewk) {
         set_char_move_init(&ewk->wu, 0, 11);
         ewk->wu.disp_flag = 1;
         ewk->wu.old_rno[0] = 0;
+        /* fall through */
     case R0_TOP:
         ewk->wu.routine_no[0]++;
         ptr = &snow_sp[ewk->wu.old_rno[0]][ewk->wu.type][0];

@@ -277,6 +277,7 @@ void Att_KUUCHUUHISSATU(PLW* wk) {
         wk->wu.routine_no[3]++;
         set_char_move_init(&wk->wu, 5, wk->as->char_ix);
         setup_mvxy_data(&wk->wu, wk->as->r_no);
+        /* fall through */
     case KUUCHUUHISSATU_AIR:
         jumping_union_process(&wk->wu, 2);
         if ((wk->wu.routine_no[3] != KUUCHUUHISSATU_END) && (wk->wu.cg_type == 20)) {

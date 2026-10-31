@@ -210,7 +210,7 @@ void op_work_clear(void) {
 /* provisional name */
 s16 opening_demo_tick(void) {
     void (*opening_demo_jp[3])() = { opening_init2, opening_move, opening_title };
-    Game_timer += 1;
+    Game_timer++;
     opening_demo_jp[op_w.r_no_0]();
     Bg_Family_Set_op();
     return op_end_flag;
@@ -1494,6 +1494,7 @@ void op_116_move(void) {
             break;
         }
         op_w.r_no_2++;
+        /* fall through */
     case 2:
         if (Request_Fade(0x29, 0) == 0) {
             break;
@@ -1552,7 +1553,7 @@ void op_118_move(void) {
         op_w.mv_ctr = 60;
         break;
     case 1:
-        op_w.mv_ctr -= 1;
+        op_w.mv_ctr--;
         if (op_w.mv_ctr < 0) {
             op_w.r_no_2++;
         }
@@ -1572,7 +1573,7 @@ void op_118_move(void) {
         op_bg_move(93);
         break;
     case 4:
-        op_w.mv_ctr -= 1;
+        op_w.mv_ctr--;
         if (op_w.mv_ctr < 0) {
             op_w.r_no_2++;
         }
@@ -1844,8 +1845,9 @@ void op_bg0_0001(s16 r_index) {
             bg_cell_write(0, 0x3080, 87, (u32)&op_bg0_scrn_data, 0, 0x2C0);
             break;
         }
+        /* fall through */
     case 1:
-        bgw_ptr->free -= 1;
+        bgw_ptr->free--;
         if (bgw_ptr->free <= 0) {
             bgw_ptr->free = 1;
             bgw_ptr->frame_deff++;
@@ -1883,7 +1885,7 @@ void op_bg0_0002(s16 r_index) {
 void op_bg0_0003(s16 r_index) {
     switch (opw_ptr->r_no_0) {
     case 0:
-        opw_ptr->r_no_0 = opw_ptr->r_no_0 + 1;
+        opw_ptr->r_no_0++;
         bgw_ptr->free = 1;
         bgw_ptr->frame_deff = 0;
         Bg_On_W(1);
@@ -1947,8 +1949,9 @@ void op_bg0_0004(s16 r_index) {
         opw_ptr->r_no_0++;
         bgw_ptr->free = 1;
         bgw_ptr->l_limit = 0;
+        /* fall through */
     case 2:
-        bgw_ptr->free -= 1;
+        bgw_ptr->free--;
         if (bgw_ptr->free <= 0) {
             bgw_ptr->l_limit++;
             if (bgw_ptr->l_limit >= 6) {
@@ -2073,6 +2076,7 @@ void op_bg0_0008(s16 r_index) {
         bgw_ptr->xy[1].cal = 0xFFF00000;
         bg_cell_write_xflip(0, 0x3080, 0x16, (u32)op_bg0_scrn_data, 0, 0x2C1);
         bg_cell_write_xflip(0, 0x3040, 0x17, (u32)op_bg0_scrn_data, 0, 0x2C1);
+        /* fall through */
     case 1:
         if (bgw_ptr->wxy[0].disp.pos > 0x200) {
             bgw_ptr->wxy[0].cal -= 0xC000;
@@ -2102,6 +2106,7 @@ void op_bg0_0009(s16 r_index) {
         bgw_ptr->xy[1].cal = -0x100000;
         bg_cell_write(0, 0x3040, 0x18, (u32)op_bg0_scrn_data, 0, 0x2C0);
         bg_cell_write(0, 0x3080, 0x19, (u32)op_bg0_scrn_data, 0, 0x2C0);
+        /* fall through */
     case 1:
         bgw_ptr->xy[1].cal += 0x8000;
         if (bgw_ptr->xy[1].disp.pos >= 0) {
@@ -2157,12 +2162,13 @@ void op_bg0_0011(s16 r_index) {
         bgw_ptr->frame_deff = 56;
         Frame_Up(0xC0, 0x40, bgw_ptr->frame_deff, bgw_ptr->frame_deff);
         bgw_ptr->xy[1].cal = 0xFFE00000;
+        /* fall through */
     case 2:
         if (bgw_ptr->xy[1].disp.pos < 0) {
             bgw_ptr->xy[1].cal += 0x20000;
         }
         if (bgw_ptr->frame_deff > 0) {
-            bgw_ptr->frame_deff -= 1;
+            bgw_ptr->frame_deff--;
             Frame_Down(0xC0, 0x40, 1, 1);
         }
         break;
@@ -2251,7 +2257,7 @@ void op_bg0_0015(s16 r_index) {
         }
         break;
     case 1:
-        bgw_ptr->free -= 1;
+        bgw_ptr->free--;
         if (bgw_ptr->free <= 0) {
             bgw_ptr->l_limit++;
             if (bgw_ptr->l_limit >= 6) {
@@ -2285,13 +2291,13 @@ void op_bg0_0016(s16 r_index) {
         bgw_ptr->free = 10;
         break;
     case 1:
-        bgw_ptr->free -= 1;
+        bgw_ptr->free--;
         if (bgw_ptr->free <= 0) {
             opw_ptr->r_no_0++;
         }
         break;
     case 2:
-        bgw_ptr->frame_deff -= 1;
+        bgw_ptr->frame_deff--;
         if (bgw_ptr->frame_deff >= 0) {
             Frame_Down(0xC0, 0x70, 1, 1);
         } else {
@@ -2843,8 +2849,7 @@ void end_main_move(s16 pl_num) {
     end_fade_bgm();
 }
 
-void end_00000(void)
-{
+void end_00000(void) {
     end_06000(6);
 }
 
@@ -3090,7 +3095,7 @@ void end_X_com01(void) {
 
 void end_fade_bgm(void) {
     if (end_fade_flag != 0) {
-        end_fade_timer -= 1;
+        end_fade_timer--;
         if (end_fade_timer < 0) {
             end_fade_flag = 0;
             bgm_fade_out(0x111);

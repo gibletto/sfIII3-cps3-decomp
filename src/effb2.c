@@ -200,6 +200,7 @@ s32 fight_col_chg_sub(WORK_Other* ewk) {
             ewk->wu.routine_no[1]++;
             return 1;
         }
+        /* fall through */
     case R1_DRAW:
         disp_pos_trans_entry5(ewk);
         break;

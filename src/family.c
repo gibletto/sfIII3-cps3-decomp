@@ -16,8 +16,7 @@
 SCRLPOS fm_pos[8];  /* 0206A084 */
 
 
-void Family_Init(void)
-{
+void Family_Init(void) {
     s32 i;
 
     for (i = 0; i < 8; i++) {

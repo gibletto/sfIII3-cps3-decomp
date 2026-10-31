@@ -266,8 +266,7 @@ void check_cg_zoom(void) {
 
 /* Outside the bonus game, turn the players' positions into a camera request
    and, while the background is chasing, apply it. */
-void bg_chase_move(void)
-{
+void bg_chase_move(void) {
     if (!Bonus_Game_Flag) {
         chase_start_check();
         if (bg_w.chase_flag) {
@@ -342,14 +341,14 @@ s32 chase_xy_move(void) {
     if (bg_w.chase_flag & 0xF) {
         bg_w.bg2_sp_x2 = bg_w.bg2_sp_x = 0;
         if (bg_w.chase_flag & 1) {
-            chase_time_x -= 1;
+            chase_time_x--;
             if (chase_time_x > 0) {
                 bg_mvxy.a[0].sp += bg_mvxy.d[0].sp;
                 bgw_ptr->chase_xy[0].cal += bg_mvxy.a[0].sp;
             }
         }
         if (bg_w.chase_flag & 2) {
-            chase_time_x -= 1;
+            chase_time_x--;
             if (chase_time_x > 0) {
                 bg_mvxy.a[0].sp += bg_mvxy.d[0].sp;
                 bgw_ptr->chase_xy[0].cal += bg_mvxy.a[0].sp;
@@ -371,14 +370,14 @@ s32 chase_xy_move(void) {
     }
     if (bg_w.chase_flag & 0xF0) {
         if (bg_w.chase_flag & 0x10) {
-            chase_time_y -= 1;
+            chase_time_y--;
             if (chase_time_y > 0) {
                 bg_mvxy.a[1].sp += bg_mvxy.d[1].sp;
                 bgw_ptr->chase_xy[1].cal += bg_mvxy.a[1].sp;
             }
         }
         if (bg_w.chase_flag & 0x20) {
-            chase_time_y -= 1;
+            chase_time_y--;
             if (chase_time_y > 0) {
                 bg_mvxy.a[1].sp += bg_mvxy.d[1].sp;
                 bgw_ptr->chase_xy[1].cal += bg_mvxy.a[1].sp;

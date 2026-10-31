@@ -86,6 +86,7 @@ void GameOver_2nd(void) {
     switch (GO_No[1]) {
     case GO2_START:
         GO_No[1]++;
+        /* fall through */
     case GO2_FADE:
         if (Version_Type == 3 && Break_Com[Player_id][0]) {
             if (Request_Fade(108, 0) == 0) {

@@ -117,6 +117,7 @@ void eff24_quake_sub(WORK_Other* ewk) {
             break;
         }
         ewk->wu.routine_no[1]++;
+        /* fall through */
     case R1_STOP:
         char_move(&ewk->wu);
         add_x_sub(ewk);

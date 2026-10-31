@@ -258,6 +258,7 @@ void Catch_05000(PLW* wk) {
             setup_mvxy_data(&wk->wu, wk->wu.mvxy.index);
             wk->wu.mvxy.index++;
             wk->wu.cg_type = 0;
+            /* fall through */
         default:
             break;
         }
@@ -493,6 +494,7 @@ void catch_cg_type_check(PLW* wk) {
         emwk->wu.routine_no[1] = wk->wu.cmyd.koc;
         emwk->wu.routine_no[2] = wk->wu.cmyd.ix;
         emwk->wu.routine_no[3] = wk->wu.cmyd.pat;
+        /* fall through */
     case 9:
         grade_add_nml_nage(&wk->wu);
         wk->wu.cg_type = 0;

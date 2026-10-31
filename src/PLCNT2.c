@@ -212,6 +212,7 @@ void plcnt_b_die(void) {
         plw[0].wkey_flag = plw[1].wkey_flag = 1;
         plw[0].image_setup_flag = plw[1].image_setup_flag = 0;
         pcon_rno[2]++;
+        /* fall through */
     case BD_FOOTWORK:
         if (footwork_check_bns(0) && footwork_check_bns(1)) {
             pcon_rno[2]++;
