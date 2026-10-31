@@ -269,10 +269,16 @@ sound driver is a software sequencer (it steps through the music data) that the 
 
 ## Drawing: the game writes lists, the hardware draws
 
-The video hardware does the drawing. The game only writes lists. First, two naming traps in the source:
+The video hardware does the drawing. The game only writes lists. One naming trap in the source: in `cram_bank.c`,
+"CRAM" means **character RAM** (tile pixels), not palette RAM.
 
-- In `cram_bank.c`, "CRAM" means **character RAM** (tile pixels), not palette RAM.
-- The `polygon2d_*` functions don't draw polygons. They're the DMA calls that copy graphics and palettes.
+Graphics and colours reach the video hardware through two DMA units (copy engines that work while the CPU carries on),
+both queued in `poly_que.c`:
+
+- `chr_dma_request` copies or decompresses graphics from the ROM into character RAM, which works as a cache.
+- `col_dma_request` copies a block of colours from the ROM into colour RAM and can fade it on the way, towards
+  black or white. The `load_*_color` wrappers call it, and a screen fade simply sends the same blocks again with a
+  new fade value.
 
 ### Graphics come from the ROM, by number
 

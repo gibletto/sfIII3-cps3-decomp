@@ -7067,8 +7067,8 @@ void debug_bg_stage_load(void) {
         bg_w.scroll_cg_adr = simmram_slot_to_offset(scr_cg_c_no);
         load_any_color(0x16);
         load_any_color(0x17);
-        polygon2d_submit_line(0x020B0000, 0, 0, 3);
-        polygon2d_submit_line(0x020B0080, bg_w.scroll_cg_adr, 0x1E5F, 1);
+        chr_dma_request(0x020B0000, 0, 0, 3);
+        chr_dma_request(0x020B0080, bg_w.scroll_cg_adr, 0x1E5F, 1);
         if (Game_setting.Screen_Mode) {
             bg_w.pos_offset = 248;
         } else {
@@ -7628,8 +7628,8 @@ void debug_bg_alloc_init(void) {
     bg_w.ake_cg_adr = simmram_slot_to_offset(scr_cg_c_no);
     load_any_color(0x8C);
     load_any_color(0x8F);
-    polygon2d_submit_line(0x020F0000, 0, 0, 3);
-    polygon2d_submit_line(0x020F0080, bg_w.ake_cg_adr, 0x14FF, 1);
+    chr_dma_request(0x020F0000, 0, 0, 3);
+    chr_dma_request(0x020F0080, bg_w.ake_cg_adr, 0x14FF, 1);
     bg_w.bgw[0].bg_adrs_c_no = simmram_big_page_alloc_40(1);
     bg_w.bgw[0].bg_address = (u16*)simmram_slot_addr(bg_w.bgw[0].bg_adrs_c_no);
     scrn_map_set_now(0, (u32)bg_w.bgw[0].bg_address);
@@ -7657,8 +7657,8 @@ void debug_bg_alloc_scene_init(void) {
     bg_w.scroll_cg_adr = simmram_slot_to_offset(scr_cg_c_no);
     load_bg_color(1);
     load_bg_color(16);
-    polygon2d_submit_line(bg_gfx_tbl[1].prep, 0, 0, 3);
-    polygon2d_submit_line(bg_gfx_tbl[1].src, bg_w.scroll_cg_adr, bg_gfx_tbl[1].size, 1);
+    chr_dma_request(bg_gfx_tbl[1].prep, 0, 0, 3);
+    chr_dma_request(bg_gfx_tbl[1].src, bg_w.scroll_cg_adr, bg_gfx_tbl[1].size, 1);
     bg_w.bgw[0].bg_adrs_c_no = simmram_big_page_alloc_40(1);
     bg_w.bgw[0].bg_address = (u16*)simmram_slot_addr(bg_w.bgw[0].bg_adrs_c_no);
     scrn_map_set_now(0, (u32)bg_w.bgw[0].bg_address);

@@ -86,7 +86,7 @@
 
 
 
-s32 polygon2d_submit_line();
+s32 chr_dma_request();
 s32 simmram_block_alloc_10(s32 blocks, s32 kind);
 u32 simmram_big_page_alloc_40(s32 kind);
 u32 simmram_slot_addr(s16 no);
@@ -1650,8 +1650,8 @@ void bg_initialize(void) {
     bg_w.scroll_cg_adr = simmram_slot_to_offset(scr_cg_c_no);
     gfx = &bg_gfx_tbl[bg_w.bg_index];
     load_bg_color(bg_palette_no_tbl[bg_w.bg_index]);
-    polygon2d_submit_line(gfx->prep, 0, 0, 3);
-    polygon2d_submit_line(gfx->src, bg_w.scroll_cg_adr, gfx->size, 1);
+    chr_dma_request(gfx->prep, 0, 0, 3);
+    chr_dma_request(gfx->src, bg_w.scroll_cg_adr, gfx->size, 1);
     if (Game_setting.Screen_Mode) {
         bg_w.pos_offset = 0xF8;
     } else {
@@ -1746,8 +1746,8 @@ void akebono_initialize(void) {
     bg_w.ake_cg_adr = simmram_slot_to_offset(ake_cg_c_no);
     load_any_color(140);
     load_any_color(143);
-    polygon2d_submit_line(0x0209F800, 0, 0, 3);
-    polygon2d_submit_line(0x0209F880, bg_w.ake_cg_adr, 0x14FF, 1);
+    chr_dma_request(0x0209F800, 0, 0, 3);
+    chr_dma_request(0x0209F880, bg_w.ake_cg_adr, 0x14FF, 1);
     ake_scrl_w[1].handle = simmram_big_page_alloc_40(1);
     ake_scrl_w[1].adrs = simmram_slot_addr(ake_scrl_w[1].handle);
     ake_scrl_w[2].handle = simmram_big_page_alloc_40(1);
@@ -1802,9 +1802,9 @@ void bg_etc_write(s16 type) {
         break;
     }
     gfx = &etc_bg_gfx_tbl[type];
-    polygon2d_submit_line(gfx->prep, 0, 0, 3);
+    chr_dma_request(gfx->prep, 0, 0, 3);
     mode = gfx->mode;
-    polygon2d_submit_line(gfx->src, bg_w.scroll_cg_adr, gfx->size, mode);
+    chr_dma_request(gfx->src, bg_w.scroll_cg_adr, gfx->size, mode);
     bg_w.pos_offset = Game_setting.Screen_Mode ? 0xF8 : 0xC0;
     for (i = 0; i < 7; i++) {
         bg_w.bgw[i].pos_x_work = 0;

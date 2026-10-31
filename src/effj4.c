@@ -1,7 +1,7 @@
 /*
  * EFFJ4.C  Effects J3 and J4: background pieces
  *
- * effect_J3 plays a one-shot animation at its owner's position and submits a 2D polygon quad.
+ * effect_J3 plays a one-shot animation at its owner's position and loads a block of colours with the colour DMA.
  * effect_J4 places background pieces from effJ4_data_tbl that scroll with BG1, either for a
  * limited life or permanently (effJ4_piece_set / effJ4_piece_set_stay, effect_J4_init2).
  */
@@ -91,7 +91,7 @@ s32 effect_J3_init(WORK* wk, u8 type) {
     }
     ewk->wu.xyz[0].disp.pos = wk->xyz[0].disp.pos;
     ewk->wu.xyz[1].disp.pos = wk->xyz[1].disp.pos;
-    polygon2d_submit_quad(0x03304980, 0x9280, 0x100, 0, 0, 0);
+    col_dma_request(0x03304980, 0x9280, 0x100, 0, 0, 0);
     return 0;
 }
 

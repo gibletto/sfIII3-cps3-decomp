@@ -69,7 +69,7 @@ void load_player_color_fade(u16 a, s16 b, s16 c, u8 d, u8 e, u8 f) {
     const XFER* p = player_color_tbl[a][b][c];
     s8 i;
     for (i = 0; i < 13; i++, p++) {
-        col_trans_result = polygon2d_submit_quad(p->src, p->dst, p->size, d + 64, e + 64, f + 64);
+        col_trans_result = col_dma_request(p->src, p->dst, p->size, d + 64, e + 64, f + 64);
     }
 }
 
@@ -80,7 +80,7 @@ void load_char_eff_color(ix, slot)
 u16 ix;
 u16 slot;
 {
-    col_trans_result = polygon2d_submit_quad(char_eff_color_tbl[ix], slot * 0x400 + 0x2000, 0x400, 0, 0, 0);
+    col_trans_result = col_dma_request(char_eff_color_tbl[ix], slot * 0x400 + 0x2000, 0x400, 0, 0, 0);
 }
 
 
@@ -88,16 +88,16 @@ u16 slot;
 /* provisional name */
 void load_side_color(u8 side, u16 ix) {
     if (side) {
-        polygon2d_submit_quad(side_color_2p_tbl[ix].src, 0xF000, side_color_2p_tbl[ix].size, 0, 0, 0);
+        col_dma_request(side_color_2p_tbl[ix].src, 0xF000, side_color_2p_tbl[ix].size, 0, 0, 0);
     } else {
-        polygon2d_submit_quad(side_color_1p_tbl[ix].src, 0xE000, side_color_1p_tbl[ix].size, 0, 0, 0);
+        col_dma_request(side_color_1p_tbl[ix].src, 0xE000, side_color_1p_tbl[ix].size, 0, 0, 0);
     }
 }
 
 /* provisional name */
 void load_player_sub_color(void) {
-    polygon2d_submit_quad(Player_Color[0] * 0x300 + 0x03389900, 0x2E00, 0x300, 0, 0, 0);
-    polygon2d_submit_quad(Player_Color[1] * 0x300 + 0x03389900, 0x3100, 0x300, 0, 0, 0);
+    col_dma_request(Player_Color[0] * 0x300 + 0x03389900, 0x2E00, 0x300, 0, 0, 0);
+    col_dma_request(Player_Color[1] * 0x300 + 0x03389900, 0x3100, 0x300, 0, 0, 0);
 }
 
 
@@ -105,6 +105,6 @@ void load_player_sub_color(void) {
 /* provisional name */
 void load_opt_color(u16 ix) {
     if (opt_color_tbl[ix] != 0) {
-        polygon2d_submit_quad(opt_color_tbl[ix], 0x2980, 0x80, 0, 0, 0);
+        col_dma_request(opt_color_tbl[ix], 0x2980, 0x80, 0, 0, 0);
     }
 }

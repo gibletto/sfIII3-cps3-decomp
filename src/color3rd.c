@@ -81,7 +81,7 @@ void load_any_color(ix)
 u8 ix;
 {
     const XFER* p = &any_color_tbl[ix];
-    polygon2d_submit_quad(p->src, p->dst, p->size, 0, 0, 0);
+    col_dma_request(p->src, p->dst, p->size, 0, 0, 0);
 }
 
 
@@ -91,7 +91,7 @@ void load_bg_color(ix)
 u8 ix;
 {
     const XFER* p = &bg_color_tbl[ix];
-    polygon2d_submit_quad(p->src, p->dst, p->size, 0, 0, 0);
+    col_dma_request(p->src, p->dst, p->size, 0, 0, 0);
 }
 
 /* provisional name */
@@ -103,7 +103,7 @@ u8 b;
 {
     const XFER *xfer = &bg_color_tbl[(u8)col_no];
 
-    polygon2d_submit_quad(xfer->src, xfer->dst, xfer->size, r + 0x40, g + 0x40, b + 0x40);
+    col_dma_request(xfer->src, xfer->dst, xfer->size, r + 0x40, g + 0x40, b + 0x40);
 }
 
 /* provisional name */
@@ -115,14 +115,14 @@ u8 b;
 {
     const XFER *xfer = &any_color_tbl[(u8)col_no];
 
-    polygon2d_submit_quad(xfer->src, xfer->dst, xfer->size, r + 0x40, g + 0x40, b + 0x40);
+    col_dma_request(xfer->src, xfer->dst, xfer->size, r + 0x40, g + 0x40, b + 0x40);
 }
 
 /* provisional name */
 void load_any_color_attr(u16 col_no, u8 r, u8 g, u8 b) {
     const XFER *xfer = &any_color_tbl[(u8)col_no];
 
-    polygon2d_submit_quad(xfer->src, xfer->dst, xfer->size, r, g, b);
+    col_dma_request(xfer->src, xfer->dst, xfer->size, r, g, b);
 }
 
 /* provisional name */
@@ -134,7 +134,7 @@ u8 b;
 {
     const XFER *xfer = &any_color_tbl[(u8)col_no];
 
-    polygon2d_queue_quad(xfer->src, xfer->dst, xfer->size, r, g, b);
+    col_dma_queue(xfer->src, xfer->dst, xfer->size, r, g, b);
 }
 
 
@@ -163,7 +163,7 @@ s16 c;
     s8 i;
     for (i = 0; i < 14; p++, i++) {
         if (p->size) {
-            col_trans_result = polygon2d_submit_quad(p->src, p->dst, p->size, 0, 0, 0);
+            col_trans_result = col_dma_request(p->src, p->dst, p->size, 0, 0, 0);
         }
     }
 }
@@ -173,6 +173,6 @@ s16 c;
 typedef const u32 METAMOR_PL[7][14][3];
 void metamor_color_restore(register u16 wkid) {
     const u32* p = (*(METAMOR_PL*)&metamor_color_tbl[wkid])[Player_Color[wkid]][0];
-    col_trans_result = polygon2d_submit_quad(p[0], p[1], p[2], 0, 0, 0);
-    col_trans_result = polygon2d_submit_quad(p[0], p[1] + 0x400, p[2], 0, 0, 0);
+    col_trans_result = col_dma_request(p[0], p[1], p[2], 0, 0, 0);
+    col_trans_result = col_dma_request(p[0], p[1] + 0x400, p[2], 0, 0, 0);
 }

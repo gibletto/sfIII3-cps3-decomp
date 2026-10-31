@@ -247,8 +247,8 @@ void opning_init_00000(void) {
     scr_cg_c_no = simmram_block_alloc_10(0x165, 1);
     bg_w.scroll_cg_adr = simmram_slot_to_offset(scr_cg_c_no);
     bg_w.scno = 3;
-    polygon2d_submit_line(0x01D2C000, 0, 0, 3);
-    polygon2d_submit_line(0x01D2C080, bg_w.scroll_cg_adr, 0x164AF, 1);
+    chr_dma_request(0x01D2C000, 0, 0, 3);
+    chr_dma_request(0x01D2C080, bg_w.scroll_cg_adr, 0x164AF, 1);
     if (Game_setting.Screen_Mode) {
         bg_w.pos_offset = 0xF8;
     } else {
@@ -2570,8 +2570,8 @@ void opening_title_00(void) {
     scr_cg_c_no = simmram_block_alloc_10(0x165, 1);
     bg_w.scroll_cg_adr = simmram_slot_to_offset(scr_cg_c_no);
     bg_w.scno = 1;
-    polygon2d_submit_line(0x01D2C000, 0, 0, 3);
-    polygon2d_submit_line(0x01D2C080, bg_w.scroll_cg_adr, 0x164AF, 1);
+    chr_dma_request(0x01D2C000, 0, 0, 3);
+    chr_dma_request(0x01D2C080, bg_w.scroll_cg_adr, 0x164AF, 1);
     if (Game_setting.Screen_Mode) {
         bg_w.pos_offset = 0xF8;
     } else {
@@ -2886,8 +2886,8 @@ void common_end_init00(s16 pl_num) {
     scr_cg_c_no = simmram_block_alloc_10(blocks, 1);
     bg_w.scroll_cg_adr = simmram_slot_to_offset(scr_cg_c_no);
     gfx = &end_bg_gfx_tbl[bg_w.bg_index];
-    polygon2d_submit_line(gfx->prep, 0, 0, 3);
-    polygon2d_submit_line(gfx->src, bg_w.scroll_cg_adr, gfx->size, 1);
+    chr_dma_request(gfx->prep, 0, 0, 3);
+    chr_dma_request(gfx->src, bg_w.scroll_cg_adr, gfx->size, 1);
     switch (end_w.type) {
     case 14:
     case 15:
@@ -2897,8 +2897,8 @@ void common_end_init00(s16 pl_num) {
         blocks = n;
         ake_cg_c_no = simmram_block_alloc_10(blocks, 1);
         bg_w.ake_cg_adr = simmram_slot_to_offset(ake_cg_c_no);
-        polygon2d_submit_line(gfx->prep, 0, 0, 3);
-        polygon2d_submit_line(end_bg_gfx_tbl[3].src, bg_w.ake_cg_adr, gfx->size, 1);
+        chr_dma_request(gfx->prep, 0, 0, 3);
+        chr_dma_request(end_bg_gfx_tbl[3].src, bg_w.ake_cg_adr, gfx->size, 1);
         ake_scrl_w[0].handle = simmram_big_page_alloc_40(1);
         ake_scrl_w[0].adrs = (u32)simmram_slot_addr(ake_scrl_w[0].handle);
         break;
