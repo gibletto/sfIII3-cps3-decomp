@@ -41,7 +41,7 @@ When the board powers on, the SH-2 reads its vector table (`data/vectors.c`, lin
 addresses the CPU needs at start-up. Entry 0 is the start address, `reset_entry`, and entry 1 is the starting stack
 pointer.
 
-`reset_entry` (in `src/tasksw.src`, written in assembler) does the bare-metal setup:
+`reset_entry` (in `src/reset.c`) does the bare-metal setup:
 
 1. Zero the RAM for variables that start at 0, and copy the starting values of the other variables from ROM into
    RAM. In a normal C program this happens automatically before `main`; here it is done by hand.
