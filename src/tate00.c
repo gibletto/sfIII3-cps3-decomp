@@ -213,7 +213,7 @@ void bg_debug_scroll_layers(void) {
 void bg_test_stage_select(void) {
     u16 sw;
     s16 changed;
-    s8 save_27;
+    s8 save_test;
     s8 save_entry;
     changed = 0;
     sw = ~p1sw_1 & p1sw_0;
@@ -238,11 +238,11 @@ void bg_test_stage_select(void) {
     if (changed) {
         System_all_clear_Wait();
         pcon_rno[0] = pcon_rno[1] = pcon_rno[2] = pcon_rno[3] = 0;
-        save_27 = bg_test_flag;
+        save_test = bg_test_flag;
         save_entry = bg_select_no;
         bg_work_clear();
         bg_select_no = save_entry;
-        bg_test_flag = save_27;
+        bg_test_flag = save_test;
     }
 }
 

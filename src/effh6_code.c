@@ -98,7 +98,7 @@ void effect_H6_move(WORK_Other* ewk) {
             default:
                 ewk->wu.xyz[1].disp.pos = ewk->wu.xyz[1].disp.pos + roll_rate;
                 ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-                if (256 <= ewk->wu.xyz[1].disp.pos) {
+                if (ewk->wu.xyz[1].disp.pos >= 256) {
                     ewk->wu.routine_no[0]++;
                 }
                 break;
@@ -132,7 +132,7 @@ void effect_H6_move(WORK_Other* ewk) {
             case R2_OUT:
                 ewk->wu.xyz[0].disp.pos = ewk->wu.xyz[0].disp.pos + roll_rate;
                 ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
-                if (512 <= ewk->wu.xyz[0].disp.pos) {
+                if (ewk->wu.xyz[0].disp.pos >= 512) {
                     ewk->wu.routine_no[0]++;
                 }
                 break;
@@ -160,7 +160,7 @@ void effect_H6_move(WORK_Other* ewk) {
             case R2_OUT:
                 ewk->wu.xyz[1].disp.pos = ewk->wu.xyz[1].disp.pos + roll_rate;
                 ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-                if (256 <= ewk->wu.xyz[1].disp.pos) {
+                if (ewk->wu.xyz[1].disp.pos >= 256) {
                     ewk->wu.routine_no[0]++;
                 }
                 break;
@@ -222,7 +222,7 @@ void effect_H6_move(WORK_Other* ewk) {
             case R2_OUT:
                 ewk->wu.xyz[1].disp.pos = ewk->wu.xyz[1].disp.pos + roll_rate;
                 ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-                if (256 <= ewk->wu.xyz[1].disp.pos) {
+                if (ewk->wu.xyz[1].disp.pos >= 256) {
                     ewk->wu.routine_no[0]++;
                 }
                 break;
@@ -233,7 +233,7 @@ void effect_H6_move(WORK_Other* ewk) {
         case R1_SCROLL_UP:
             ewk->wu.xyz[1].disp.pos = ewk->wu.xyz[1].disp.pos + roll_rate;
             ewk->wu.position_y = ewk->wu.xyz[1].disp.pos & 0x3FF;
-            if (256 <= ewk->wu.xyz[1].disp.pos) {
+            if (ewk->wu.xyz[1].disp.pos >= 256) {
                 ewk->wu.routine_no[0]++;
             }
             break;

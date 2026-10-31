@@ -125,7 +125,7 @@ void EFF39_SLIDE_IN(WORK_Other* ewk) {
     default:
         ewk->wu.xyz[0].cal += ewk->wu.mvxy.a[0].sp;
         ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;
-        if (0 < ewk->wu.mvxy.a[0].sp) {
+        if (ewk->wu.mvxy.a[0].sp > 0) {
             if (ewk->wu.hit_quake <= ewk->wu.xyz[0].disp.pos) {
                 ewk->wu.routine_no[0] = R0_MOVE;
                 Order[ewk->wu.dir_old] = R0_MOVE;
@@ -180,7 +180,7 @@ void EFF39_SLIDE_OUT(WORK_Other* ewk) {
         }
         break;
     default:
-        all_cgps_put_back(ewk);
+        all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
         break;
     }
@@ -260,7 +260,7 @@ s32 effect_39_init(s16 PL_id, s16 dir_old, s16 Your_Char, s16 Target_BG, s16 Opt
     ewk->wu.my_family = Target_BG + 1;
     ewk->wu.position_z = 71;
     ewk->wu.char_index = 1;
-    *ewk->wu.char_table = sel_pl_char_table;
+    ewk->wu.char_table[0] = sel_pl_char_table;
     ewk->master_id = PL_id;
     ewk->wu.dir_old = dir_old;
     if (Your_Char == 0x7F) {

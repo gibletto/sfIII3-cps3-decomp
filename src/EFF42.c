@@ -106,7 +106,7 @@ void EFF42_SLIDE_IN(WORK_Other* ewk) {
     default:
         ewk->wu.xyz[0].cal += ewk->wu.mvxy.a[0].sp;
         ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;
-        if (0 < ewk->wu.mvxy.a[0].sp) {
+        if (ewk->wu.mvxy.a[0].sp > 0) {
             if (ewk->wu.hit_quake <= ewk->wu.xyz[0].disp.pos) {
                 Order[ewk->wu.dir_old] = 3;
                 ewk->wu.routine_no[6] = R6_START;
@@ -147,7 +147,7 @@ void EFF42_SLIDE_OUT(WORK_Other* ewk) {
         }
         break;
     default:
-        all_cgps_put_back(ewk);
+        all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
         break;
     }
@@ -224,7 +224,7 @@ s32 effect_42_init(s16 type) {
     ewk->wu.my_family = 3;
     ewk->wu.dir_timer = 10;
     ewk->wu.rl_waza = Select_Timer;
-    *ewk->wu.char_table = sel_pl_char_table;
+    ewk->wu.char_table[0] = sel_pl_char_table;
     ewk->wu.dir_old = type;
     if (type & 1) {
         ewk->wu.direction = 4;

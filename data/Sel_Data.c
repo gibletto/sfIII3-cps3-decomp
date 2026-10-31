@@ -238,27 +238,27 @@ const s16 Bust_Pos_Data_76[21][2] = {
 /* provisional name */
 /* Stored after Bust_Pos_Data_76: another (x, y) per character. Nothing in the program refers to it. */
 const s16 EFF76_Face_Pos_Data_2[21][2] = {
-    80, 16,
-    80, 16,
-    80, 16,
-    80, 16,
-    80, 16,
-    88, 16,
-    80, 16,
-    80, 16,
-    80, 16,
-    80, 16,
-    80, 16,
-    80, 16,
-    80, 16,
-    80, 16,
-    80, 16,
-    80, 16,
-    80, 16,
-    80, 16,
-    80, 16,
-    80, 16,
-    80, 16,
+    { 80, 16 },  /* Gill */
+    { 80, 16 },  /* Alex */
+    { 80, 16 },  /* Ryu */
+    { 80, 16 },  /* Yun */
+    { 80, 16 },  /* Dudley */
+    { 88, 16 },  /* Necro */
+    { 80, 16 },  /* Hugo */
+    { 80, 16 },  /* Ibuki */
+    { 80, 16 },  /* Elena */
+    { 80, 16 },  /* Oro */
+    { 80, 16 },  /* Yang */
+    { 80, 16 },  /* Ken */
+    { 80, 16 },  /* Sean */
+    { 80, 16 },  /* Urien */
+    { 80, 16 },  /* Gouki */
+    { 80, 16 },  /* Shin Gouki */
+    { 80, 16 },  /* Chun-Li */
+    { 80, 16 },  /* Makoto */
+    { 80, 16 },  /* Q */
+    { 80, 16 },  /* Twelve */
+    { 80, 16 },  /* Remy */
 };
 
 const s16 Width_Data_76[26] = {

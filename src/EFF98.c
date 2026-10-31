@@ -99,7 +99,7 @@ void EFF98_SLIDE_IN(WORK_Other* ewk) {
     default:
         ewk->wu.xyz[0].cal += ewk->wu.mvxy.a[0].sp;
         ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;
-        if (0 < ewk->wu.mvxy.a[0].sp) {
+        if (ewk->wu.mvxy.a[0].sp > 0) {
             if (ewk->wu.vital_new <= ewk->wu.xyz[0].disp.pos) {
                 Order[ewk->wu.dir_old] = R0_WAIT;
                 ewk->wu.routine_no[0] = R0_WAIT;
@@ -175,7 +175,7 @@ s32 effect_98_init(s16 PL_id, s16 dir_old, s16 master_player, s16 Target_BG) {
     ewk->wu.my_col_mode = 0x4200;
     ewk->wu.my_col_code = 0x2040;
     ewk->wu.my_family = Target_BG + 1;
-    *ewk->wu.char_table = sel_pl_char_table;
+    ewk->wu.char_table[0] = sel_pl_char_table;
     ewk->master_id = PL_id;
     ewk->wu.dir_old = dir_old;
     ewk->wu.char_index = 14;

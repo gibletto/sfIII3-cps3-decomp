@@ -79,7 +79,7 @@ s32 effect_80_init(WORK_Other* mwk, s16 PL_id, s16 Plate_id, s16 Target_BG) {
     ewk->wu.my_col_mode = 0x4200;
     ewk->wu.my_col_code = 0x2040;
     ewk->wu.my_family = Target_BG + 1;
-    *ewk->wu.char_table = sel_pl_char_table;
+    ewk->wu.char_table[0] = sel_pl_char_table;
     ewk->master_id = PL_id;
     ewk->master_player = Plate_id;
     ewk->my_master = (u32*)mwk;

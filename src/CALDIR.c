@@ -115,30 +115,29 @@ s16 caldir_wk_128(WORK* wk, WORK* emwk) {
 
 
 s16 caldir_wk_064(WORK* wk, WORK* emwk) {
-    return (caldir_pos_256(wk->xyz[0].disp.pos, wk->xyz[1].disp.pos, emwk->xyz[0].disp.pos, emwk->xyz[1].disp.pos) + 2) >>
-           2 & 0x3F;
+    return (caldir_pos_256(wk->xyz[0].disp.pos, wk->xyz[1].disp.pos,
+                           emwk->xyz[0].disp.pos, emwk->xyz[1].disp.pos) + 2) >> 2 & 0x3F;
 }
 
 
 
 s16 caldir_wk_032(WORK* wk, WORK* emwk) {
-    return (caldir_pos_256(wk->xyz[0].disp.pos, wk->xyz[1].disp.pos, emwk->xyz[0].disp.pos, emwk->xyz[1].disp.pos) + 4) >>
-           3 & 0x1F;
+    return (caldir_pos_256(wk->xyz[0].disp.pos, wk->xyz[1].disp.pos,
+                           emwk->xyz[0].disp.pos, emwk->xyz[1].disp.pos) + 4) >> 3 & 0x1F;
 }
 
 
 
 s16 caldir_wk_016(WORK* wk, WORK* emwk) {
-    return (caldir_pos_256(wk->xyz[0].disp.pos, wk->xyz[1].disp.pos, emwk->xyz[0].disp.pos, emwk->xyz[1].disp.pos) + 8) >>
-           4 & 0xF;
+    return (caldir_pos_256(wk->xyz[0].disp.pos, wk->xyz[1].disp.pos,
+                           emwk->xyz[0].disp.pos, emwk->xyz[1].disp.pos) + 8) >> 4 & 0xF;
 }
 
 
 
 s16 caldir_wk_008(WORK* wk, WORK* emwk) {
-    return (caldir_pos_256(wk->xyz[0].disp.pos, wk->xyz[1].disp.pos, emwk->xyz[0].disp.pos, emwk->xyz[1].disp.pos) +
-            16) >>
-           5 & 7;
+    return (caldir_pos_256(wk->xyz[0].disp.pos, wk->xyz[1].disp.pos,
+                           emwk->xyz[0].disp.pos, emwk->xyz[1].disp.pos) + 16) >> 5 & 7;
 }
 
 
@@ -264,7 +263,7 @@ s16 cal_move_quantity2(s16 x1, s16 x2, s16 y1, s16 y2) {
         }
     }
     kakudo = dir_sel_table[y1][y2];
-    ms.psi = (x1 * rate_256_table[kakudo][RATE_X]);
+    ms.psi = x1 * rate_256_table[kakudo][RATE_X];
     ms.psi += x2 * rate_256_table[kakudo][RATE_Y];
     return ms.pss.h;
 }
@@ -278,7 +277,7 @@ s16 cal_move_quantity3(WORK* wk, s16 tm) {
     }
     ltm = tm;
     ps.dy = ltm * ltm / 2 * wk->mvxy.d[1].sp;
-    ps.dy = (wk->mvxy.a[1].sp * ltm) + ps.dy + wk->xyz[1].cal;
+    ps.dy = wk->mvxy.a[1].sp * ltm + ps.dy + wk->xyz[1].cal;
     return ps.ry.h;
 }
 
@@ -421,7 +420,7 @@ s8 ysw;
     MotionState bb;
     wk->xyz[0].disp.low = wk->xyz[1].disp.low = -0x8000;
     bb.timer = tm;
-    bb.timer2 = bb.timer + (bb.timer * (bb.timer - 1) / 2);
+    bb.timer2 = bb.timer + bb.timer * (bb.timer - 1) / 2;
     bb.x.ps.h = x1 - wk->xyz[0].disp.pos;
     bb.y.ps.h = y1 - wk->xyz[1].disp.pos;
     bb.x.ps.l = bb.y.ps.l = 0;
@@ -607,7 +606,7 @@ s16 digits;
     u16 wk1;
     switch (digits) {
     case 2:
-        bcd = ((v % 100 / 10) << 4);
+        bcd = (v % 100 / 10) << 4;
         bcd += v % 10;
         break;
     case 3:

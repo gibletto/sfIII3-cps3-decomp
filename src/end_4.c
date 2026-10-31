@@ -260,7 +260,6 @@ void end_401_1000(void) {
 
 
 void end_401_2000(void) {
-
     switch (bgw_ptr->r_no_1) {
     case 0:
         bgw_ptr->r_no_1++;
@@ -302,7 +301,6 @@ void end_401_2000(void) {
 
 
 void end_401_3000(void) {
-
     switch (bgw_ptr->r_no_1) {
     case 0:
         bgw_ptr->r_no_1++;
@@ -338,7 +336,6 @@ void end_401_3000(void) {
 
 
 void end_401_4000(void) {
-
     switch (bgw_ptr->r_no_1) {
     case 0:
         bgw_ptr->r_no_1++;

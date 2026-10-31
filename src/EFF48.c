@@ -161,7 +161,7 @@ void eff48_1000(WORK_Other* ewk) {
         disp_pos_trans_entry(ewk);
         break;
     default:
-        all_cgps_put_back(ewk);
+        all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
         break;
     }
@@ -193,7 +193,7 @@ s32 effect_48_init(s16 type) {
         }
         ewk = (WORK_Other*)frw[ix];
         ewk->wu.be_flag = 1;
-        ewk->wu.id = 0x30;
+        ewk->wu.id = 48;
         ewk->wu.work_id = 0x10;
         ewk->wu.type = type;
         ewk->wu.my_col_mode = 0x4200;

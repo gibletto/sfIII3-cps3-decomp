@@ -141,6 +141,7 @@ void fall_data_restore(WORK_Other* ewk) {
 
 
 
+/* Create the object that drops from 138 dots above its parent effect. */
 s32 effect_D1_init(WORK_Other* oya, s32 _p1) {
     WORK_Other* ewk;
     s16 ix;
@@ -166,7 +167,7 @@ s32 effect_D1_init(WORK_Other* oya, s32 _p1) {
     } else {
         ewk->wu.my_col_code = 6;
     }
-    *ewk->wu.char_table = etc_char_table;
+    ewk->wu.char_table[0] = etc_char_table;
     ewk->wu.xyz[1].disp.pos = oya->wu.xyz[1].disp.pos + 138;
     ewk->wu.xyz[0].disp.pos = oya->wu.xyz[0].disp.pos;
     ewk->wu.no_death_attack = 0;

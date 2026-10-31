@@ -156,6 +156,8 @@ void stngauge_control(s32 player) {
 
 
 
+/* Draws a player's stun gauge on text row 3, eight points to a cell: full cells up to the stun value cstn, one
+   partly filled cell, then empty cells. */
 void stun_put(pl)
 s8 pl;
 {

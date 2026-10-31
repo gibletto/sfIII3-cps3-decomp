@@ -73,7 +73,7 @@ s32 effect_B9_init(WORK_Other* oya) {
     }
     ewk = (WORK_Other*)frw[ix];
     ewk->wu.be_flag = 1;
-    ewk->wu.id = 0x77;
+    ewk->wu.id = 119;
     ewk->wu.work_id = 0x10;
     ewk->wu.cgromtype = 1;
     ewk->my_master = (u32*)oya;
@@ -82,7 +82,7 @@ s32 effect_B9_init(WORK_Other* oya) {
     ewk->wu.my_col_mode = 0x4200;
     ewk->wu.my_col_code = 0x1E0;
     ewk->wu.my_priority = ewk->wu.position_z = 10;
-    *ewk->wu.char_table = etc_char_table;
+    ewk->wu.char_table[0] = etc_char_table;
     if (oya->wu.type) {
         ewk->wu.old_rno[0] = 2;
         ewk->wu.char_index = 2;

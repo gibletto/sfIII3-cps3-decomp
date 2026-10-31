@@ -34,7 +34,7 @@
 
 
 void effect_L4_move(WORK_Other* ewk) {
-    s16 v;
+    s16 disp;
 
     switch (ewk->wu.routine_no[0]) {
     case R0_INIT:
@@ -45,15 +45,15 @@ void effect_L4_move(WORK_Other* ewk) {
     case R0_MOVE:
         if (!EXE_flag && !Game_pause) {
             char_move(&ewk->wu);
-            v = (s8)ewk->wu.cg_type;
-            v &= 1;
-            ewk->wu.disp_flag = v;
+            disp = (s8)ewk->wu.cg_type;
+            disp &= 1;
+            ewk->wu.disp_flag = disp;
         }
         disp_pos_trans_entry_r(ewk);
         break;
     default:
-        all_cgps_put_back(ewk);
-        push_effect_work((WORK*)ewk);
+        all_cgps_put_back(&ewk->wu);
+        push_effect_work(&ewk->wu);
         break;
     }
 }

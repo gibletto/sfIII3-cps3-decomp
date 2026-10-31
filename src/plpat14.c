@@ -238,7 +238,7 @@ void Att_PL14_AT3(PLW* wk) {
             wk->wu.cg_type = 0;
         }
         if ((wk->wu.routine_no[3] != AT3_AIR) && wk->wu.cg_ja.caix) {
-            wk->wu.cg_ja.caix = pl14_HYAKKI_dat[(twk->player_number)];
+            wk->wu.cg_ja.caix = pl14_HYAKKI_dat[twk->player_number];
             wk->wu.h_cat = wk->wu.catch_adrs + wk->wu.cg_ja.caix;
         }
         break;

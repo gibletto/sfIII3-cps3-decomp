@@ -133,7 +133,7 @@ s32 effect_K4_init(WORK_Other* wk, WORK* dad) {
     ewk->master_player = wk->master_player;
     ewk->master_id = wk->master_id;
     ewk->master_work_id = wk->master_work_id;
-    *ewk->wu.char_table = bonus_char_table;
+    ewk->wu.char_table[0] = bonus_char_table;
     return 0;
 }
 

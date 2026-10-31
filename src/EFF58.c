@@ -167,7 +167,7 @@ void effect_58_move(WORK_Other* ewk) {
             }
             bg_w.bgw[ewk->wu.direction].wxy[0].cal += bg_mvxy.a[0].sp * xx;
             bg_mvxy.a[0].sp += bg_mvxy.d[0].sp;
-            if (0 < bg_mvxy.a[0].sp) {
+            if (bg_mvxy.a[0].sp > 0) {
                 if (Target_BG_X[ewk->wu.direction] + Offset_BG_X[ewk->wu.direction] <=
                     bg_w.bgw[ewk->wu.direction].wxy[0].disp.pos) {
                     Next_Step |= 1;
@@ -191,7 +191,7 @@ void effect_58_move(WORK_Other* ewk) {
             }
             bg_w.bgw[ewk->wu.direction].wxy[0].cal += bg_mvxy.a[0].sp * xx;
             bg_mvxy.a[0].sp += bg_mvxy.d[0].sp;
-            if (0 < bg_mvxy.a[0].sp) {
+            if (bg_mvxy.a[0].sp > 0) {
                 if (Target_BG_X[ewk->wu.direction] + Offset_BG_X[ewk->wu.direction] <=
                     bg_w.bgw[ewk->wu.direction].wxy[0].disp.pos) {
                     Next_Step |= 1;
@@ -210,7 +210,7 @@ void effect_58_move(WORK_Other* ewk) {
         case R1_SLIDE:
             bg_w.bgw[ewk->wu.direction].wxy[0].cal += bg_mvxy.a[0].sp;
             bg_mvxy.a[0].sp += bg_mvxy.d[0].sp;
-            if (0 < bg_mvxy.a[0].sp) {
+            if (bg_mvxy.a[0].sp > 0) {
                 if (Target_BG_X[ewk->wu.direction] + Offset_BG_X[ewk->wu.direction] <=
                     bg_w.bgw[ewk->wu.direction].wxy[0].disp.pos) {
                     Next_Step |= 1;
@@ -359,7 +359,7 @@ void EFF58_Type_02(WORK_Other* ewk) {
         ewk->wu.routine_no[2]++;
         return;
     default:
-        all_cgps_put_back(ewk);
+        all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
         break;
     }
@@ -394,7 +394,7 @@ void EFF58_Type_05(WORK_Other* ewk) {
         sort_push_request4(&ewk->wu);
         break;
     default:
-        all_cgps_put_back(ewk);
+        all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
         break;
     }

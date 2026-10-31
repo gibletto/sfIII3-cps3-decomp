@@ -155,12 +155,12 @@ void plcnt_b_init(void) {
             load_char_gfx(0xB498, 1);
         }
         if (plw[0].wu.operator) {
-            paring_ctr_vs[0][0] = ((s8)paring_ctr_ori[0]);
+            paring_ctr_vs[0][0] = (s8)paring_ctr_ori[0];
         } else {
             paring_ctr_vs[0][0] = 0;
         }
         if (plw[1].wu.operator) {
-            paring_ctr_vs[0][1] = ((s8)paring_ctr_ori[1]);
+            paring_ctr_vs[0][1] = (s8)paring_ctr_ori[1];
         } else {
             paring_ctr_vs[0][1] = 0;
         }

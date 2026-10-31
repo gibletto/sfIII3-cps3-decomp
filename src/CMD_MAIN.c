@@ -1243,7 +1243,7 @@ s32 debug_scene_outer_dispatch(void) {
         }
         break;
     }
-    if ((dbg_p2sw_0 & 0xF0) == 0xF0) {
+    if ((dbg_p2sw_0 & (BUTTON_PUNCHES | BUTTON_LK)) == (BUTTON_PUNCHES | BUTTON_LK)) {
         return 1;
     }
     return 0;
@@ -1457,14 +1457,14 @@ void debug_bg_select_init(void)
 /* provisional name */
 void debug_bg_select_navigate_updown(void) {
     s16 moved = 0;
-    if (debug_lever_repeat(dbg_p1sw_0, dbg_p1sw_1, 1, 0)) {
+    if (debug_lever_repeat(dbg_p1sw_0, dbg_p1sw_1, LEVER_UP, 0)) {
         dbg_stage_sel--;
         moved = 1;
         if (dbg_stage_sel < 0) {
             dbg_stage_sel = 23;
         }
     }
-    if (debug_lever_repeat(dbg_p1sw_0, dbg_p1sw_1, 2, 1)) {
+    if (debug_lever_repeat(dbg_p1sw_0, dbg_p1sw_1, LEVER_DOWN, 1)) {
         dbg_stage_sel++;
         moved = 1;
         if (dbg_stage_sel > 23) {
@@ -2709,25 +2709,25 @@ void debug_hit_a_judgement_run(void) {
         char_move_z(wk);
     } else {
         switch (dbg_p1sw_0 & BUTTON_PUNCHES) {
-        case 0x10:
+        case BUTTON_LP:
             char_move(wk);
             break;
-        case 0x30:
+        case BUTTON_LP | BUTTON_MP:
             if (!(wk->dir_timer & 1)) {
                 char_move(wk);
             }
             break;
-        case 0x20:
+        case BUTTON_MP:
             if (!(wk->dir_timer & 3)) {
                 char_move(wk);
             }
             break;
-        case 0x60:
+        case BUTTON_MP | BUTTON_HP:
             if (!(wk->dir_timer & 7)) {
                 char_move(wk);
             }
             break;
-        case 0x40:
+        case BUTTON_HP:
             if (!(wk->dir_timer & 0xF)) {
                 char_move(wk);
             }
@@ -2747,8 +2747,8 @@ void debug_hit_a_judgement_run(void) {
         char_move_z(wk);
     }
     debug_hit_a_draw_cursor(wk->dir_step, wk->dir_timer);
-    debug_hit_a_print_pattern_rows(wk, (GRID_REC*)(HITA_PAT*)wk->set_char_ad);
-    debug_hit_a_print_hit_ix_rows(wk, (GRID9_REC*)(HITA_IX*)wk->hit_ix_table);
+    debug_hit_a_print_pattern_rows(wk, (GRID_REC*)wk->set_char_ad);
+    debug_hit_a_print_hit_ix_rows(wk, (GRID9_REC*)wk->hit_ix_table);
     debug_hit_a_print_counts(wk);
     debug_hit_a_print_box_values(wk);
     group = debug_cg_group_index(wk->cg_number);
@@ -3617,7 +3617,7 @@ void debug_char_preview_run(void) {
     CharGfxSet* set;
     debug_position_by_pad();
     kind = debug_cg_bank_kind(dbg_pl->wu.cg_number);
-    if (debug_lever_repeat(dbg_p1sw_0, dbg_p1sw_1, 1, 0)) {
+    if (debug_lever_repeat(dbg_p1sw_0, dbg_p1sw_1, LEVER_UP, 0)) {
         dbg_pl->wu.cg_number -= 1;
         switch (kind) {
         case 0:
@@ -3637,7 +3637,7 @@ void debug_char_preview_run(void) {
             break;
         }
     }
-    if (debug_lever_repeat(dbg_p1sw_0, dbg_p1sw_1, 2, 1)) {
+    if (debug_lever_repeat(dbg_p1sw_0, dbg_p1sw_1, LEVER_DOWN, 1)) {
         dbg_pl->wu.cg_number += 1;
         switch (kind) {
         case 0:
@@ -3657,7 +3657,7 @@ void debug_char_preview_run(void) {
             break;
         }
     }
-    if (debug_lever_repeat(dbg_p1sw_0, dbg_p1sw_1, 4, 2)) {
+    if (debug_lever_repeat(dbg_p1sw_0, dbg_p1sw_1, LEVER_LEFT, 2)) {
         dbg_pl->wu.cg_number -= 0x80;
         switch (kind) {
         case 0:
@@ -3677,7 +3677,7 @@ void debug_char_preview_run(void) {
             break;
         }
     }
-    if (debug_lever_repeat(dbg_p1sw_0, dbg_p1sw_1, 8, 3)) {
+    if (debug_lever_repeat(dbg_p1sw_0, dbg_p1sw_1, LEVER_RIGHT, 3)) {
         dbg_pl->wu.cg_number += 0x80;
         switch (kind) {
         case 0:
@@ -3699,14 +3699,14 @@ void debug_char_preview_run(void) {
     }
     if (~dbg_p1sw_1 & dbg_p1sw_0 & BUTTON_MK) {
         dbg_col_no++;
-        if (((u16)dbg_col_no) > 14) {
+        if ((u16)dbg_col_no > 14) {
             dbg_col_no = 0;
         }
-        if (((u16)dbg_col_no) >= 7) {
-            load_player_color(dbg_col_char, 1, ((u16)dbg_col_no) - 7);
+        if ((u16)dbg_col_no >= 7) {
+            load_player_color(dbg_col_char, 1, (u16)dbg_col_no - 7);
             dbg_pl->wu.my_col_code = 0x2010;
         } else {
-            load_player_color(dbg_col_char, 0, ((u16)dbg_col_no));
+            load_player_color(dbg_col_char, 0, (u16)dbg_col_no);
             dbg_pl->wu.my_col_code = 0x2000;
         }
     }
@@ -3717,11 +3717,11 @@ void debug_char_preview_run(void) {
         }
         if (pal != dbg_col_char) {
             dbg_col_char = pal;
-            if (((u16)dbg_col_no) >= 7) {
-                load_player_color(dbg_col_char, 1, ((u16)dbg_col_no) - 7);
+            if ((u16)dbg_col_no >= 7) {
+                load_player_color(dbg_col_char, 1, (u16)dbg_col_no - 7);
                 dbg_pl->wu.my_col_code = 0x2010;
             } else {
-                load_player_color(dbg_col_char, 0, ((u16)dbg_col_no));
+                load_player_color(dbg_col_char, 0, (u16)dbg_col_no);
                 dbg_pl->wu.my_col_code = 0x2000;
             }
         }
@@ -3735,7 +3735,7 @@ void debug_char_preview_run(void) {
             }
         }
         if (dbg_pl->wu.cg_number >= 0xABF8 && dbg_pl->wu.cg_number <= 0xADF8) {
-            load_player_color(17, 0, ((u16)dbg_col_no));
+            load_player_color(17, 0, (u16)dbg_col_no);
         }
         if (dbg_pl->wu.cg_number >= 0xB478 && dbg_pl->wu.cg_number <= 0xB498) {
             load_any_color(9);
@@ -4065,13 +4065,13 @@ s32 debug_slot_all_select(u16 sw)
         return 0;
     }
     moved = 0;
-    if (debug_lever_repeat(dbg_p1sw_0, dbg_p1sw_1, 1, 0)) {
+    if (debug_lever_repeat(dbg_p1sw_0, dbg_p1sw_1, LEVER_UP, 0)) {
         dbg_slot->sel[0]--;
         if (dbg_slot->sel[0] < 1) {
             dbg_slot->sel[0] = dbg_slot->sel0_max;
         }
         moved = 1;
-    } else if (debug_lever_repeat(dbg_p1sw_0, dbg_p1sw_1, 2, 1)) {
+    } else if (debug_lever_repeat(dbg_p1sw_0, dbg_p1sw_1, LEVER_DOWN, 1)) {
         dbg_slot->sel[0]++;
         moved = 1;
         if (dbg_slot->sel[0] > dbg_slot->sel0_max) {
@@ -4101,13 +4101,13 @@ s32 debug_slot_all_select(u16 sw)
 
 /* provisional name */
 s32 debug_slot_motion_select(void) {
-    if (debug_lever_repeat(dbg_p1sw_0, dbg_p1sw_1, 8, 3)) {
+    if (debug_lever_repeat(dbg_p1sw_0, dbg_p1sw_1, LEVER_RIGHT, 3)) {
         dbg_slot->sel[1]++;
         if (dbg_slot->sel[1] > dbg_slot->sel1_max) {
             dbg_slot->sel[1] = 1;
         }
         return 2;
-    } else if (debug_lever_repeat(dbg_p1sw_0, dbg_p1sw_1, 4, 2)) {
+    } else if (debug_lever_repeat(dbg_p1sw_0, dbg_p1sw_1, LEVER_LEFT, 2)) {
         dbg_slot->sel[1]--;
         if (dbg_slot->sel[1] < 1) {
             dbg_slot->sel[1] = dbg_slot->sel1_max;
@@ -4146,7 +4146,7 @@ s32 debug_check_rec_step(void) {
 
 /* provisional name: command 5 on button 2, unreferenced */
 s32 debug_check_step_z(u16 sw) {
-    if (sw & 0x20) {
+    if (sw & BUTTON_MP) {
         return 5;
     }
     return 0;
@@ -4156,7 +4156,7 @@ s32 debug_check_step_z(u16 sw) {
 
 /* provisional name: command 7 (restart recorded frame) on button 2, unreferenced */
 s32 debug_check_rec_frame(u16 sw) {
-    if (Debug_Rec_Count != 0 && (sw & 0x20) != 0) {
+    if (Debug_Rec_Count != 0 && (sw & BUTTON_MP) != 0) {
         return 7;
     }
     return 0;
@@ -4167,7 +4167,7 @@ s32 debug_check_rec_frame(u16 sw) {
 /* provisional name */
 s32 debug_flip_cycle(u16 sw) {
     s8 keep;
-    if (sw & 0x80) {
+    if (sw & BUTTON_LK) {
         keep = dbg_pl->wu.cg_flip;
         keep &= 4;
         dbg_pl->wu.cg_flip++;
@@ -4188,7 +4188,7 @@ s32 debug_flip_cycle(u16 sw) {
 /* provisional name */
 s32 debug_parts_flip_cycle(u16 sw) {
     s8 keep;
-    if (sw & 0x80) {
+    if (sw & BUTTON_LK) {
         keep = dbg_pl->wu.cg_flip;
         keep &= 4;
         dbg_pl->wu.cg_flip++;
@@ -4196,7 +4196,7 @@ s32 debug_parts_flip_cycle(u16 sw) {
         dbg_pl->wu.cg_flip |= keep;
         if (!Debug_PL_id) {
             keep = Debug_Flip_Mask[dbg_pl->wu.id];
-        keep &= 4;
+            keep &= 4;
             Debug_Flip_Mask[dbg_pl->wu.id]++;
             Debug_Flip_Mask[dbg_pl->wu.id] &= 3;
             Debug_Flip_Mask[dbg_pl->wu.id] |= keep;
@@ -4210,7 +4210,7 @@ s32 debug_parts_flip_cycle(u16 sw) {
 
 /* provisional name */
 s32 debug_priority_swap(u16 sw) {
-    if (sw & 0x40) {
+    if (sw & BUTTON_HP) {
         if (plw[0].wu.my_priority == 50) {
             plw[0].wu.my_priority = 51;
             plw[1].wu.my_priority = 50;
@@ -4239,7 +4239,7 @@ s32 debug_priority_swap(u16 sw) {
 /* provisional name */
 void debug_move_record_start(u16 sw) {
     s16 n;
-    if (sw & 0x100) {
+    if (sw & BUTTON_MK) {
         if (Debug_Rec_Count != 0) {
             dbg_rec_menu = 15;
         } else {
@@ -4261,7 +4261,7 @@ void debug_move_record_start(u16 sw) {
 
 /* provisional name */
 void debug_pl_id_input(u16 sw) {
-    if (sw & 0x40) {
+    if (sw & BUTTON_HP) {
         Debug_PL_id ^= 1;
     }
 }
@@ -4269,7 +4269,7 @@ void debug_pl_id_input(u16 sw) {
 
 /* provisional name */
 s32 debug_record_sw_check(u16 sw) {
-    if (sw & 0x80) {
+    if (sw & BUTTON_LK) {
         return 8;
     }
     return 0;
@@ -4279,10 +4279,10 @@ s32 debug_record_sw_check(u16 sw) {
 
 /* provisional name */
 void debug_record_frame_adjust(u16 sw) {
-    if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, 0x100, 19)) {
+    if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, BUTTON_MK, 19)) {
         dbg_snap_ptr->cg_ctr++;
     }
-    if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, 0x200, 20)) {
+    if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, BUTTON_HK, 20)) {
         dbg_snap_ptr->cg_ctr--;
         if (dbg_snap_ptr->cg_ctr < 0) {
             dbg_snap_ptr->cg_ctr = 0;
@@ -4335,11 +4335,11 @@ void debug_move_record_menu(void)
 
 /* provisional name */
 void debug_playback_mode_cycle(u16 sw) {
-    if ((sw & 0x200) != 0) {
+    if ((sw & BUTTON_HK) != 0) {
         if (Debug_Rec_Count != 0) {
             dbg_rec_exist = 1;
             dbg_save_mode++;
-            if (2 < dbg_save_mode) {
+            if (dbg_save_mode > 2) {
                 dbg_save_mode = 0;
             }
         }
@@ -4359,16 +4359,16 @@ void debug_position_by_pad(void) {
             debug_bg_position_reset();
         }
     }
-    if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, 1, 4)) {
+    if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, LEVER_UP, 4)) {
         dbg_pl->wu.xyz[1].disp.pos++;
     }
-    if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, 2, 5)) {
+    if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, LEVER_DOWN, 5)) {
         dbg_pl->wu.xyz[1].disp.pos--;
     }
-    if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, 4, 6)) {
+    if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, LEVER_LEFT, 6)) {
         dbg_pl->wu.xyz[0].disp.pos--;
     }
-    if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, 8, 7)) {
+    if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, LEVER_RIGHT, 7)) {
         dbg_pl->wu.xyz[0].disp.pos++;
     }
 }
@@ -4582,35 +4582,35 @@ void debug_hit_box_edit(void) {
         dbg_edit_box = box;
         if (!Debug_Box_Edit) {
             if (pad & BUTTON_LP) {
-                if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, 1, 4)) {
+                if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, LEVER_UP, 4)) {
                     box[3]++;
                 }
-                if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, 2, 5)) {
+                if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, LEVER_DOWN, 5)) {
                     box[3]--;
                     if (box[3] < 0) {
                         box[3] = 0;
                     }
                 }
-                if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, 8, 7)) {
+                if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, LEVER_RIGHT, 7)) {
                     box[1]++;
                 }
-                if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, 4, 6)) {
+                if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, LEVER_LEFT, 6)) {
                     box[1]--;
                     if (box[1] < 0) {
                         box[1] = 0;
                     }
                 }
             } else {
-                if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, 1, 4)) {
+                if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, LEVER_UP, 4)) {
                     box[2]++;
                 }
-                if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, 2, 5)) {
+                if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, LEVER_DOWN, 5)) {
                     box[2]--;
                 }
-                if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, 4, 6)) {
+                if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, LEVER_LEFT, 6)) {
                     box[0] = box[0] - 1;
                 }
-                if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, 8, 7)) {
+                if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, LEVER_RIGHT, 7)) {
                     box[0] = box[0] + 1;
                 }
             }
@@ -4908,7 +4908,7 @@ void debug_edit_common_input(void)
 
 /* provisional name */
 void debug_kakusyuku_mode_cycle(u16 sw) {
-    if (sw & 0x200) {
+    if (sw & BUTTON_HK) {
         dbg_kakusyuku_mode++;
         dbg_kakusyuku_mode &= 3;
         switch (dbg_kakusyuku_mode) {
@@ -4949,7 +4949,7 @@ void debug_kakusyuku_mode_cycle(u16 sw) {
 
 /* provisional name */
 void debug_screen_zoom_by_pad(void) {
-    if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, 64, 16)) {
+    if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, BUTTON_HP, 16)) {
         dbg_zoom_x--;
         dbg_zoom_y--;
         if (dbg_zoom_x > 0) {
@@ -4959,7 +4959,7 @@ void debug_screen_zoom_by_pad(void) {
             dbg_zoom_y = 0;
         }
     }
-    if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, 0x200, 19)) {
+    if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, BUTTON_HK, 19)) {
         dbg_zoom_x++;
         dbg_zoom_y++;
         if (dbg_zoom_x < 38) {
@@ -4975,23 +4975,23 @@ void debug_screen_zoom_by_pad(void) {
 
 /* provisional name */
 void debug_char_scale_by_pad(void) {
-    if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, 16, 14)) {
+    if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, BUTTON_LP, 14)) {
         if (dbg_pl->wu.my_mr.size.x != 0) {
             dbg_pl->wu.my_mr.size.x--;
         }
     }
-    if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, 32, 15)) {
+    if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, BUTTON_MP, 15)) {
         if (dbg_pl->wu.my_mr.size.y != 0) {
             dbg_pl->wu.my_mr.size.y--;
         }
     }
-    if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, 128, 17)) {
+    if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, BUTTON_LK, 17)) {
         dbg_pl->wu.my_mr.size.x++;
         if (dbg_pl->wu.my_mr.size.x > 127) {
             dbg_pl->wu.my_mr.size.x = 127;
         }
     }
-    if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, 0x100, 18)) {
+    if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, BUTTON_MK, 18)) {
         dbg_pl->wu.my_mr.size.y++;
         if (dbg_pl->wu.my_mr.size.y > 127) {
             dbg_pl->wu.my_mr.size.y = 127;
@@ -5020,7 +5020,7 @@ void debug_kakusyuku_input(void) {
 
 /* provisional name */
 void debug_dec_disp_input(u16 sw) {
-    if (sw & 0x1000) {
+    if (sw & BUTTON_START) {
         Debug_Dec_Disp ^= 1;
     }
 }
@@ -5113,7 +5113,7 @@ void debug_cg_number_browse(void) {
     kind = debug_cg_bank_kind((s16)dbg_pl->wu.cg_number);
     moved = 0;
     if (dbg_p1sw_0 & BUTTON_START) {
-        if (debug_lever_repeat_fast(dbg_p1sw_0, dbg_p1sw_1, 1, 0)) {
+        if (debug_lever_repeat_fast(dbg_p1sw_0, dbg_p1sw_1, LEVER_UP, 0)) {
             dbg_pl->wu.cg_number--;
             moved = 1;
             switch (kind) {
@@ -5134,7 +5134,7 @@ void debug_cg_number_browse(void) {
                 break;
             }
         }
-        if (debug_lever_repeat_fast(dbg_p1sw_0, dbg_p1sw_1, 2, 1)) {
+        if (debug_lever_repeat_fast(dbg_p1sw_0, dbg_p1sw_1, LEVER_DOWN, 1)) {
             dbg_pl->wu.cg_number++;
             moved = 1;
             switch (kind) {
@@ -5155,7 +5155,7 @@ void debug_cg_number_browse(void) {
                 break;
             }
         }
-        if (debug_lever_repeat_fast(dbg_p1sw_0, dbg_p1sw_1, 4, 2)) {
+        if (debug_lever_repeat_fast(dbg_p1sw_0, dbg_p1sw_1, LEVER_LEFT, 2)) {
             dbg_pl->wu.cg_number -= 0x80;
             moved = 1;
             switch (kind) {
@@ -5176,7 +5176,7 @@ void debug_cg_number_browse(void) {
                 break;
             }
         }
-        if (debug_lever_repeat_fast(dbg_p1sw_0, dbg_p1sw_1, 8, 3)) {
+        if (debug_lever_repeat_fast(dbg_p1sw_0, dbg_p1sw_1, LEVER_RIGHT, 3)) {
             dbg_pl->wu.cg_number += 0x80;
             moved = 1;
             switch (kind) {
@@ -5443,7 +5443,7 @@ void debug_parts_input(void) {
     }
     debug_dec_disp_input(sw);
     debug_pl_id_input(sw);
-    if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, 1, 4)) {
+    if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, LEVER_UP, 4)) {
         if (!Debug_PL_id) {
             plw[0].wu.xyz[1].disp.pos++;
             for (i = 0; i < 4; i++) {
@@ -5453,7 +5453,7 @@ void debug_parts_input(void) {
             dbg_parts_plw[dbg_parts_sel].wu.dir_timer--;
         }
     }
-    if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, 2, 5)) {
+    if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, LEVER_DOWN, 5)) {
         if (!Debug_PL_id) {
             plw[0].wu.xyz[1].disp.pos--;
             for (i = 0; i < 4; i++) {
@@ -5463,7 +5463,7 @@ void debug_parts_input(void) {
             dbg_parts_plw[dbg_parts_sel].wu.dir_timer++;
         }
     }
-    if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, 4, 6)) {
+    if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, LEVER_LEFT, 6)) {
         if (!Debug_PL_id) {
             plw[0].wu.xyz[0].disp.pos--;
             for (i = 0; i < 4; i++) {
@@ -5473,7 +5473,7 @@ void debug_parts_input(void) {
             dbg_parts_plw[dbg_parts_sel].wu.dir_step--;
         }
     }
-    if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, 8, 7)) {
+    if (debug_lever_repeat(dbg_p2sw_0, dbg_p2sw_1, LEVER_RIGHT, 7)) {
         if (!Debug_PL_id) {
             plw[0].wu.xyz[0].disp.pos++;
             for (i = 0; i < 4; i++) {
@@ -5500,7 +5500,7 @@ u16 mask;
 s16 ix;
 {
     if (sw & mask) {
-        if (Debug_Menu_No == 5 && (sw & 0x10)) {
+        if (Debug_Menu_No == 5 && (sw & BUTTON_LP)) {
             return 1;
         }
         Debug_Rep_Timer[ix]++;
@@ -5541,7 +5541,7 @@ u16 mask;
 s16 ix;
 {
     if (sw & mask) {
-        if (sw & 0x10) {
+        if (sw & BUTTON_LP) {
             return 1;
         }
         Debug_Rep_Timer[ix]++;
@@ -5993,59 +5993,59 @@ void debug_pattern_count(void) {
 /* provisional name */
 void debug_pattern_entry_copy_dual(s16 n, s16 box) {
     u16* src;
-    u16* a;
-    u16* b;
+    u16* look;
+    u16* edit;
     s16 i;
     const HIT_IX* ix;
     src = (u16*)&dbg_pl->wu.hit_ix_table[box];
-    a = dbg_look_buf.hit_ix[n];
-    b = dbg_edit_buf.hit_ix[n];
+    look = dbg_look_buf.hit_ix[n];
+    edit = dbg_edit_buf.hit_ix[n];
     for (i = 0; i < 8; i++) {
-        *a++ = *src;
-        *b++ = *src++;
+        *look++ = *src;
+        *edit++ = *src++;
     }
     ix = &dbg_pl->wu.hit_ix_table[box];
     src = (u16*)&dbg_pl->wu.body_adrs[ix->boix];
-    a = (u16*)&dbg_look_buf.body_adrs[n];
-    b = (u16*)&dbg_edit_buf.body_adrs[n];
+    look = (u16*)&dbg_look_buf.body_adrs[n];
+    edit = (u16*)&dbg_edit_buf.body_adrs[n];
     for (i = 0; i < 16; i++) {
-        *a++ = *src;
-        *b++ = *src++;
+        *look++ = *src;
+        *edit++ = *src++;
     }
     src = (u16*)&dbg_pl->wu.hand_adrs[ix->bhix + ix->haix];
-    a = (u16*)&dbg_look_buf.hand_adrs[n];
-    b = (u16*)&dbg_edit_buf.hand_adrs[n];
+    look = (u16*)&dbg_look_buf.hand_adrs[n];
+    edit = (u16*)&dbg_edit_buf.hand_adrs[n];
     for (i = 0; i < 16; i++) {
-        *a++ = *src;
-        *b++ = *src++;
+        *look++ = *src;
+        *edit++ = *src++;
     }
     src = (u16*)&dbg_pl->wu.attack_adrs[ix->atix];
-    a = (u16*)&dbg_look_buf.attack_adrs[n];
-    b = (u16*)&dbg_edit_buf.attack_adrs[n];
+    look = (u16*)&dbg_look_buf.attack_adrs[n];
+    edit = (u16*)&dbg_edit_buf.attack_adrs[n];
     for (i = 0; i < 16; i++) {
-        *a++ = *src;
-        *b++ = *src++;
+        *look++ = *src;
+        *edit++ = *src++;
     }
     src = (u16*)&dbg_pl->wu.catch_adrs[ix->caix];
-    a = (u16*)&dbg_look_buf.catch_adrs[n];
-    b = (u16*)&dbg_edit_buf.catch_adrs[n];
+    look = (u16*)&dbg_look_buf.catch_adrs[n];
+    edit = (u16*)&dbg_edit_buf.catch_adrs[n];
     for (i = 0; i < 4; i++) {
-        *a++ = *src;
-        *b++ = *src++;
+        *look++ = *src;
+        *edit++ = *src++;
     }
     src = (u16*)&dbg_pl->wu.caught_adrs[ix->cuix];
-    a = (u16*)&dbg_look_buf.caught_adrs[n];
-    b = (u16*)&dbg_edit_buf.caught_adrs[n];
+    look = (u16*)&dbg_look_buf.caught_adrs[n];
+    edit = (u16*)&dbg_edit_buf.caught_adrs[n];
     for (i = 0; i < 4; i++) {
-        *a++ = *src;
-        *b++ = *src++;
+        *look++ = *src;
+        *edit++ = *src++;
     }
     src = (u16*)&dbg_pl->wu.hosei_adrs[ix->hoix];
-    a = (u16*)&dbg_look_buf.hosei_adrs[n];
-    b = (u16*)&dbg_edit_buf.hosei_adrs[n];
+    look = (u16*)&dbg_look_buf.hosei_adrs[n];
+    edit = (u16*)&dbg_edit_buf.hosei_adrs[n];
     for (i = 0; i < 4; i++) {
-        *a++ = *src;
-        *b++ = *src++;
+        *look++ = *src;
+        *edit++ = *src++;
     }
 }
 
@@ -6243,9 +6243,9 @@ s32 debug_hex4_to_bcd(s16 x) {
     s16 i;
     s32 n;
     s16 div = 1000;
-    s32 a;
-    s32 b;
-    s32 c;
+    s32 bcd;
+    s32 hund;
+    s32 tens;
     for (i = 0; i < 4; i++) {
         n = 0;
         while (1) {
@@ -6259,16 +6259,16 @@ s32 debug_hex4_to_bcd(s16 x) {
         x = x + div;
         div /= 10;
     }
-    a = digit[0] << 12;
-    a &= 0xF000;
-    b = digit[1] << 8;
-    b &= 0xF00;
-    c = digit[2] << 4;
-    c &= 0xF0;
-    a |= b;
-    a |= c;
-    a |= digit[3];
-    return (s16)a;
+    bcd = digit[0] << 12;
+    bcd &= 0xF000;
+    hund = digit[1] << 8;
+    hund &= 0xF00;
+    tens = digit[2] << 4;
+    tens &= 0xF0;
+    bcd |= hund;
+    bcd |= tens;
+    bcd |= digit[3];
+    return (s16)bcd;
 }
 
 
@@ -6463,6 +6463,7 @@ const char dbg_no_wca_str[8] = "NO WCA ";
 const char dbg_no_cmja_str[8] = "NO CMJA";
 
 
+/* By player_number: the character whose colours the debug slot player loads (load_player_color). */
 const u16 dbg_pl_color_tbl[24] = {
     0, 1, 2, 3, 4, 5, 6, 7,
     8, 9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF,

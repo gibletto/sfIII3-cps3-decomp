@@ -211,22 +211,22 @@ s32 range_xy_check(WORK_Other* ewk) {
 
 /* provisional name */
 s32 range_x_out_y_in_check(WORK_Other* ewk, s16 bg_no) {
-    s16 pos_y_work;
-    s16 work2;
+    s16 y;
+    s16 top;
     if (range_x_check(&ewk->wu)) {
         return 0;
     }
     if (bg_w.chase_flag & 0xF) {
-        pos_y_work = bg_w.bgw[bg_no].chase_xy[1].disp.pos;
+        y = bg_w.bgw[bg_no].chase_xy[1].disp.pos;
     } else {
-        pos_y_work = bg_w.bgw[bg_no].wxy[1].disp.pos;
+        y = bg_w.bgw[bg_no].wxy[1].disp.pos;
     }
-    work2 = pos_y_work + 256;
-    pos_y_work -= 32;
-    if (work2 < ewk->wu.xyz[1].disp.pos) {
+    top = y + 256;
+    y -= 32;
+    if (top < ewk->wu.xyz[1].disp.pos) {
         return 0;
     }
-    if (pos_y_work > ewk->wu.xyz[1].disp.pos) {
+    if (y > ewk->wu.xyz[1].disp.pos) {
         return 0;
     }
     return 1;

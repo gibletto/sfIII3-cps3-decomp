@@ -92,6 +92,8 @@ void sc_chr_load(u16 rows) {
 }
 
 
+/* Copies w * h font characters, stored one after another from character chr, into a w x h block of the text
+   character RAM at pos. */
 /* provisional name */
 void sc_chr_block_trans(chr, pos, w, h)
 u16 chr;
@@ -130,6 +132,8 @@ u16 h;
 }
 
 
+/* Copies a w x h block of font characters from character chr into a w x h block of the text character RAM at
+   pos; the font and the character RAM are both 16 characters to the row. */
 /* provisional name */
 void sc_chr_sheet_trans(chr, pos, w, h)
 u16 chr;
@@ -170,6 +174,7 @@ u16 h;
     }
 }
 
+/* Puts a w x h block of cells from the 16-wide font sheet, starting at code, on the text layer at x, y. */
 void scfont_sqput(s16 x, s16 y, u16 w, u16 h, u16 attr, s16 code)
 {
     u16 row;
@@ -183,6 +188,7 @@ void scfont_sqput(s16 x, s16 y, u16 w, u16 h, u16 attr, s16 code)
 }
 
 
+/* As scfont_sqput, mirrored: the columns run right to left and the attribute gets 0x80. */
 /* provisional name */
 void scfont_sqput_rev(s16 x, s16 y, u16 w, u16 h, s16 attr, s16 code) {
     u16 i;
@@ -194,6 +200,7 @@ void scfont_sqput_rev(s16 x, s16 y, u16 w, u16 h, s16 attr, s16 code) {
     }
 }
 
+/* Puts w x h cells on the text layer at x, y, numbered on one after another from code. */
 /* provisional name */
 void scfont_lnput(s16 x, s16 y, u16 w, u16 h, s16 attr, s16 code)
 {
@@ -210,6 +217,7 @@ void scfont_lnput(s16 x, s16 y, u16 w, u16 h, s16 attr, s16 code)
     }
 }
 
+/* As scfont_lnput, mirrored: the columns run right to left and the attribute gets 0x80. */
 /* provisional name */
 void scfont_lnput_rev(s16 x, s16 y, u16 w, u16 h, s16 attr, s16 code)
 {
@@ -250,6 +258,7 @@ void sq_paint_chenge(s16 x, s16 y, u16 w, u16 h, s16 attr) {
 }
 
 
+/* Fills n characters of the text character RAM, from character pos, with the blank character. */
 /* provisional name */
 void sc_chr_clear(pos, n)
 u16 pos;
@@ -608,6 +617,8 @@ void stun_mark_put(s8 pl) {
     }
 }
 
+/* Puts count cells of a player's max mark on text row 26 beside the player's super art gauge; mark picks the
+   six-cell set. */
 void max_mark_write(char side, s32 left, u32 count, s32 x, char mark)
 {
     u16 i;
@@ -622,6 +633,7 @@ void max_mark_write(char side, s32 left, u32 count, s32 x, char mark)
 }
 
 
+/* Copies the six font characters of max mark n into player pl's area of the text character RAM. */
 /* provisional name */
 void max_mark_chr_trans(pl, n)
 s8 pl;
@@ -632,6 +644,7 @@ s16 n;
     sc_chr_trans(6);
 }
 
+/* Clears the text-layer cells from x0, y0 to x1, y1 inclusive to blanks with attribute 0. */
 /* provisional name */
 void tilemap_clear_rect(x0, y0, x1, y1)
 u32 x0;
@@ -653,6 +666,8 @@ u32 y1;
     }
 }
 
+/* Fills a w x h rectangle of text-layer cells at x, y with code and attr; bit 8 of code goes into the
+   attribute. */
 /* provisional name */
 void sc_fill_rect(u32 x, u32 y, u16 w, u16 h, u16 code, u16 attr)
 {
@@ -673,6 +688,7 @@ void sc_fill_rect(u32 x, u32 y, u16 w, u16 h, u16 code, u16 attr)
     }
 }
 
+/* Clears text rows 25 to 27, the super art frame rows. */
 void Sa_frame_Clear(void)
 {
     tilemap_clear_rect(0, 0x19, 0x37, 0x1B);
@@ -991,6 +1007,7 @@ void player_face(void) {
     }
 }
 
+/* Puts the SF3 logo, a block of font cells, on the text layer below row y. */
 u32 SF3_logo(s16 y)
 {
     sc_chr_clear(384, 128);
@@ -1067,16 +1084,16 @@ s16 combo_pts_set(s8 PL, u32 pts) {
     s16 digit[4];
     s16 i;
     s16 first;
-    s32 xx;
+    s32 div;
     u16 x;
     s16 y;
     s16 y2;
     s16 x2;
-    xx = 100000;
+    div = 100000;
     first = -1;
-    for (i = 3; i >= 0; i--, xx = xx / 10) {
-        digit[i] = number / xx;
-        number -= digit[i] * xx;
+    for (i = 3; i >= 0; i--, div = div / 10) {
+        digit[i] = number / div;
+        number -= digit[i] * div;
         if (first < 0) {
             if (digit[i] != 0) {
                 first = i;

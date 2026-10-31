@@ -97,7 +97,7 @@ void effect_36_move(WORK_Other* ewk) {
         }
         break;
     default:
-        all_cgps_put_back(ewk);
+        all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
         return;
     }
@@ -300,7 +300,7 @@ s32 effect_36_init(u8 typenum) {
     }
     ewk = (WORK_Other*)frw[ix];
     data_ptr = eff36_data_tbl[0] + typenum * 9;
-    ewk->wu.id = 0x24;
+    ewk->wu.id = 36;
     ewk->wu.be_flag = 1;
     ewk->wu.work_id = 0x10;
     ewk->wu.type = typenum;

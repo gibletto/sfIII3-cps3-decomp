@@ -91,7 +91,7 @@ void effect_F1_move(WORK_Other* ewk) {
         break;
     case R0_KILL:
     default:
-        push_effect_work((WORK*)ewk);
+        push_effect_work(&ewk->wu);
         break;
     }
 }

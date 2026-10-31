@@ -20,6 +20,7 @@ void Switch_Priority_76(void) {
 
 
 
+/* Clears a player's ranking places and the places waiting to be shown. */
 void Clear_Disp_Ranking(PL_id)
 s16 PL_id;
 {

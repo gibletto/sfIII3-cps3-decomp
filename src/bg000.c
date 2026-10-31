@@ -191,7 +191,7 @@ s32 zoom_frame_judge(void) {
     PLW* p2;
     s16 left;
     s16 right;
-    s16 work;
+    s16 gap;
     bg_w.frame_flag = 0;
     if (bg_w.bgw[1].wxy[0].disp.pos <= bg_w.bgw[1].l_limit2 ||
         bg_w.bgw[1].wxy[0].disp.pos >= bg_w.bgw[1].r_limit2) {
@@ -207,8 +207,8 @@ s32 zoom_frame_judge(void) {
         left = p2->wu.scr_mv_x;
         right = p1->wu.scr_mv_x;
     }
-    work = right - left;
-    if (work > 368) {
+    gap = right - left;
+    if (gap > 368) {
         return 2;
     }
     return 1;
@@ -836,15 +836,15 @@ void Bg_Family_Set_appoint(s32 num_of_bg) {
 
 void Bg_Family_Set_2(void) {
     s32 i;
-    s32 a, b, x, y;
+    s32 fam_x, fam_y, x, y;
     for (i = 0; i < bg_w.scno; i++) {
         x = bg_w.bgw[i].position_x;
         y = bg_w.bgw[i].position_y;
         y += 8;
         Scrn_Move_Set(i, x, y);
-        a = -x & 0x3FF;
-        b = (0x300 - (y & 0x3FF)) & 0x3FF;
-        Family_Set_W(i + 1, a, b);
+        fam_x = -x & 0x3FF;
+        fam_y = (0x300 - (y & 0x3FF)) & 0x3FF;
+        Family_Set_W(i + 1, fam_x, fam_y);
     }
 }
 
@@ -1304,13 +1304,11 @@ void bg_etc_scr_write(s16 n) {
     s16 attr;
 
     for (i = 0; i < bg_w.scno; i++) {
-        j = 0;
-        while (j < etc_bg_cell_cnt_tbl[n][i]) {
+        for (j = 0; j < etc_bg_cell_cnt_tbl[n][i]; j++) {
             t = bg_etc_cell_tbl[n][i];
             t = t + j;
             attr = etc_bg_attr_tbl[n] + t->attr;
             bg_cell_write(i, t->ofs, t->cell, etc_bg_cg_src_tbl[n], 0, attr);
-            j++;
         }
     }
 }

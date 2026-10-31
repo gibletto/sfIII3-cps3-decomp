@@ -104,8 +104,8 @@ void Se_Shock(WORK_Other* ewk, u16 Code) {
     s16 pos;
     PLW* em;
     s32 uid;
-    s16 xx;
-    s32 zz;
+    s16 i;
+    s32 ofs;
 
     if ((Demo_Sound != 0 || Demo_Flag != 0) && (Combo_Demo_Flag & 0x80) == 0) {
         se = Check_Bonus_SE(Code);
@@ -117,15 +117,15 @@ void Se_Shock(WORK_Other* ewk, u16 Code) {
             uid = ewk->master_id;
         }
         if (em->wu.work_id == 1 && em->wu.vital_new < 0) {
-            xx = 0;
-            zz = 0x27;
-            for (; xx < 7; xx++) {
-                if (se == SE_Shock_Data[xx]) {
-                    zz = 0;
+            i = 0;
+            ofs = 0x27;
+            for (; i < 7; i++) {
+                if (se == SE_Shock_Data[i]) {
+                    ofs = 0;
                     break;
                 }
             }
-            se += zz;
+            se += ofs;
         }
         if (se) {
             se += uid * 0x300;
@@ -287,13 +287,13 @@ void Finish_SE(void) {
 
 
 s32 Check_Finish_SE(void) {
-    s16 xx;
-    for (xx = 0; xx < 7; xx++) {
-        if (Finish_SE_Data[0][xx] == Last_Called_SE) {
+    s16 i;
+    for (i = 0; i < 7; i++) {
+        if (Finish_SE_Data[0][i] == Last_Called_SE) {
         } else {
             continue;
         }
-        return Finish_SE_Data[1][xx];
+        return Finish_SE_Data[1][i];
     }
     return -1;
 }
@@ -301,17 +301,17 @@ s32 Check_Finish_SE(void) {
 
 
 s32 Get_Position(PLW* wk) {
-    u16 xx;
-    u16 yy;
-    xx = get_center_position();
-    xx -= 0xF8;
-    xx = wk->wu.position_x - xx;
-    xx /= 4;
-    if (xx < 0x80) {
-        return xx;
+    u16 pan;
+    u16 center;
+    pan = get_center_position();
+    pan -= 0xF8;
+    pan = wk->wu.position_x - pan;
+    pan /= 4;
+    if (pan < 0x80) {
+        return pan;
     }
-    yy = get_center_position();
-    if (yy > wk->wu.xyz[0].disp.pos) {
+    center = get_center_position();
+    if (center > wk->wu.xyz[0].disp.pos) {
         return 1;
     }
     return 0x7E;

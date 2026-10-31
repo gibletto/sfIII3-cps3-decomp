@@ -420,7 +420,7 @@ s32 effect_K5_init(PLW* wk) {
     }
     ewk = (WORK_Other*)frw[ix];
     ewk->wu.be_flag = 1;
-    ewk->wu.id = 0xCD;
+    ewk->wu.id = 205;
     ewk->wu.work_id = 0x10;
     ewk->my_master = (u32*)wk;
     wk->waku_ram_index = ewk->wu.myself;

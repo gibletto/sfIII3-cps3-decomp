@@ -1615,7 +1615,7 @@ void Passive20_0096(PLW* wk) {
         Keep_Away(wk, 127, 3);
         break;
     case 1:
-        EM_Term(wk, 32896, 32808, 6, 1, -1);
+        EM_Term(wk, 0x8080, 0x8028, 6, 1, -1);
         break;
     case 2:
         Normal_Attack(wk, 8, 0x202);
@@ -2646,7 +2646,6 @@ void Passive20_0160(PLW* wk) {
 
 void Passive20_0161(PLW* wk)
 {
-
     switch (CP_Index[wk->wu.id][0]) {
     case 0:
         Search_Back_Term(wk, 0x20, 2, 0x1B);

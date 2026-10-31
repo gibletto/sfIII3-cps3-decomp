@@ -522,6 +522,8 @@ void Setup_Win_Mark(void) {
     Finish_SE();
 }
 
+/* Counts how the winner finished a round against the CPU (super art, perfect or chip finish), for the game and
+   for the stage. */
 void Update_BI_Term(void)
 {
     if (Play_Type == PLAY_VS_PLAYER) {
@@ -1041,6 +1043,7 @@ void Pool_Score(s16 PL_id) {
 
 
 
+/* The completion bonus against the CPU by Straight_Counter, from one straight win (row 0) up. */
 const u32 Comp_Bonus_Data[11] = {
     30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000,
     110000, 120000, 130000,
@@ -1066,8 +1069,8 @@ void Additional_Bonus(s16 PL_id) {
    by 10000 with each such win in a row (Straight_Counter), from 30000 to 130000, and a lost round
    starts it again. */
 u32 Setup_Comp_Bonus(void) {
-    u32 xx;
-    u16 zz;
+    u32 bonus;
+    u16 count;
     if (Play_Type == PLAY_VS_PLAYER) {
         if (PL_Wins[Loser_id]) {
             return 0;
@@ -1081,9 +1084,9 @@ u32 Setup_Comp_Bonus(void) {
     if (Straight_Counter[Winner_id] >= 12) {
         Straight_Counter[Winner_id] = 11;
     }
-    zz = Straight_Counter[Winner_id];
-    xx = Comp_Bonus_Data[zz - 1];
-    return xx;
+    count = Straight_Counter[Winner_id];
+    bonus = Comp_Bonus_Data[count - 1];
+    return bonus;
 }
 
 
@@ -1250,6 +1253,7 @@ void Game_Manage_11th(void) {
 
 
 
+/* Clears a player's ranking places when the player is not going on to name entry. */
 void Check_Naming(id)
 s16 id;
 {
@@ -1524,7 +1528,7 @@ void Game_Manage_12_5(void) {
         }
         break;
     case CM12_5_WAIT2:
-        if (((s8)Scene_Cut)) {
+        if ((s8)Scene_Cut) {
             C_Timer = 1;
         }
         if (--C_Timer == 0) {
@@ -1825,37 +1829,37 @@ void Ck_Win_Record(void) {
 
 
 void Disp_Win_Record_Sub(s16 PL_id) {
-    s16 zz;
-    s16 xx;
+    s16 col;
+    s16 digit;
     s16 Wins_Buff;
     s16 First_Digit;
     if (PL_id) {
-        zz = 43;
+        col = 43;
     } else {
-        zz = 5;
+        col = 5;
     }
     switch (Win_Record[PL_id]) {
     case 1:
-        tilemap_print_string_attr(zz, Text_Page_Y, 18, Game_Manage_7_2_sub0_table);
+        tilemap_print_string_attr(col, Text_Page_Y, 18, Game_Manage_7_2_sub0_table);
         break;
     default:
-        tilemap_print_string_attr(zz, Text_Page_Y, 18, Wins_msg);
+        tilemap_print_string_attr(col, Text_Page_Y, 18, Wins_msg);
         break;
     }
     First_Digit = 0;
     Wins_Buff = Win_Record[PL_id];
-    xx = Wins_Buff / 100;
-    if (xx > 0) {
+    digit = Wins_Buff / 100;
+    if (digit > 0) {
         First_Digit = 1;
-        tilemap_print_hex_block(zz - 4, Text_Page_Y, 18, (s8)xx, 1, 1);
+        tilemap_print_hex_block(col - 4, Text_Page_Y, 18, (s8)digit, 1, 1);
     }
-    Wins_Buff -= xx * 100;
-    xx = Wins_Buff / 10;
-    if (First_Digit != 0 || xx > 0) {
-        tilemap_print_hex_block(zz - 3, Text_Page_Y, 18, (s8)xx, 1, 1);
+    Wins_Buff -= digit * 100;
+    digit = Wins_Buff / 10;
+    if (First_Digit != 0 || digit > 0) {
+        tilemap_print_hex_block(col - 3, Text_Page_Y, 18, (s8)digit, 1, 1);
     }
-    Wins_Buff -= xx * 10;
-    tilemap_print_hex_block(zz - 2, Text_Page_Y, 18, (s8)Wins_Buff, 1, 1);
+    Wins_Buff -= digit * 10;
+    tilemap_print_hex_block(col - 2, Text_Page_Y, 18, (s8)Wins_Buff, 1, 1);
 }
 
 
@@ -1945,16 +1949,14 @@ void Disp_Winner(void) {
         winner_name_put(My_char[Winner_id]);
         effect_89_init(1, DE_X[3] + 10, 9, 29, 4);
         sound_request(0x8D);
+    } else if (Round_Operator[Winner_id] != 0) {
+        sc_picture_put(5, 0, 0);
+        effect_89_init(1, DE_X[3] + 11, 9, 25, 4);
+        sound_request(0x8D);
     } else {
-        if (Round_Operator[Winner_id] != 0) {
-            sc_picture_put(5, 0, 0);
-            effect_89_init(1, DE_X[3] + 11, 9, 25, 4);
-            sound_request(0x8D);
-        } else {
-            sc_picture_put(6, 0, 0);
-            effect_89_init(2, DE_X[3] + 11, 9, 24, 4);
-            sound_request(0x8E);
-        }
+        sc_picture_put(6, 0, 0);
+        effect_89_init(2, DE_X[3] + 11, 9, 24, 4);
+        sound_request(0x8E);
     }
 }
 
@@ -1998,7 +2000,6 @@ s32 Judge_Next_Disposal(void) {
 
 
 void Check_Perfect(s16 PL_id) {
-
     if (plw[PL_id].wu.vitality == plw[PL_id].wu.vital_new) {
         Perfect_Flag = 1;
         Perfect_Counter[Winner_id]++;
@@ -2051,6 +2052,7 @@ s32 Check_Ending(void) {
     return 0;
 }
 
+/* Nonzero once the winner's VS_Index is past 9: the ending follows. */
 u32 Check_Ending_Sub(void)
 {
     if (VS_Index[WINNER] > 9) {
@@ -2204,6 +2206,7 @@ void Check_Fade_Out_BGM(s16 Time) {
     }
 }
 
+/* Silences the music; unless the music is off, it fades back in after time frames. */
 void Control_Music_Fade(s16 time)
 {
     Setup_BGM_Fade_In(time);
@@ -2278,6 +2281,7 @@ void Setup_BGM_Fade_In(u8 time) {
     BGM_Timer[1] = time;
 }
 
+/* Sets Complete_Victory, which ends the round-end waits of Game_Management at once. */
 void complete_victory_pause(void)
 {
     Complete_Victory = 1;
@@ -2318,6 +2322,7 @@ s32 Check_Break_Into_CPU(s16 PL_id) {
 
 
 
+/* Nonzero when each CPU fight so far was graded 9 or better: the last condition for Q to break in. */
 s32 Check_BI_Grade(PL_id)
 s16 PL_id;
 {
@@ -2325,8 +2330,6 @@ s16 PL_id;
     for (ix = 0; ix < VS_Index[PL_id]; ix++) {
         if (judge_final[PL_id][0].vs_cpu_grade[ix] < 9) {
             return 0;
-        } else {
-            continue;
         }
     }
     return 1;

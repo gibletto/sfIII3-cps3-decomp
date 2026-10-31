@@ -214,7 +214,6 @@ void effL1_k_graph_init(WORK_Other_CONN* ewk) {
 
 
 void effL1_f_stage_p_init(WORK_Other_CONN* ewk) {
-
     s16 i;
     for (i = 0; i < 10; i++) {
         ewk->conn[i] = gj_f_stage_p[i];
@@ -285,7 +284,6 @@ void effL1_f_grade_init(WORK_Other_CONN* ewk) {
 
 
 void effL1_f_mk_spp_init(WORK_Other_CONN* ewk) {
-
     s16 i;
     s16 k = 0;
     if (judge_final[WGJ_Target][Play_Type].vs_cpu_result[15] == -1) {

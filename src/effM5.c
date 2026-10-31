@@ -233,7 +233,7 @@ s32 effect_M5_init(PLW* oya) {
     ewk->wu.char_index = 103;
     ewk->wu.my_col_mode = 0x4200;
     ewk->wu.my_priority = ewk->wu.position_z = 57;
-    *ewk->wu.char_table = etc_char_table;
+    ewk->wu.char_table[0] = etc_char_table;
     ewk->wu.my_col_code = oya->wu.my_col_code + 4;
     ewk->wu.sync_suzi = 0;
     ewk->master_id = oya->wu.id;

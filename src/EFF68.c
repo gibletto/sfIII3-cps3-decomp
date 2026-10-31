@@ -448,7 +448,7 @@ s32 effect_67_init(s16 id, s16 X, s16 Y, s16 time0, s16 Char_Index, s16 Priority
             break;
         }
     } else {
-        *ewk->wu.char_table = sel_pl_char_table;
+        ewk->wu.char_table[0] = sel_pl_char_table;
         ewk->wu.char_index = id;
         ewk->wu.dir_step = Char_Index;
     }

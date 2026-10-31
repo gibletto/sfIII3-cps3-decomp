@@ -74,7 +74,7 @@ void effect_74_move(WORK_Other* ewk) {
         Scrn_Y_Set_W(1, y);
         break;
     default:
-        all_cgps_put_back(ewk);
+        all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
         simmram_block_free_40(eff_bg_adrs[1].no);
         simmram_block_free_40(eff_bg_adrs[2].no);

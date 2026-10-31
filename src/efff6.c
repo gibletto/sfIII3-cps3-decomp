@@ -241,7 +241,7 @@ u8 typenum;
     }
     ewk = (WORK_Other*)frw[ix];
     data_ptr = efff6_data_tbl00[typenum];
-    ewk->wu.id = 0x9C;
+    ewk->wu.id = 156;
     ewk->wu.be_flag = 1;
     ewk->wu.work_id = 0x10;
     ewk->wu.type = typenum;

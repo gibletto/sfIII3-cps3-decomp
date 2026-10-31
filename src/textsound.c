@@ -254,7 +254,7 @@ void tilemap_print_hex_block(u16 x, u16 y, u16 attr, u32 value, u16 digits, u16 
     u32 mask;
     s32 started;
     s32 i;
-    u16 d;
+    u16 digit;
     s32 cells;
     u16 code;
     cells = (((num_font_code & 0x7000) >> 12) + 1) * (((num_font_code & 0xE00) >> 9) + 1);
@@ -262,20 +262,20 @@ void tilemap_print_hex_block(u16 x, u16 y, u16 attr, u32 value, u16 digits, u16 
     started = 0;
     mask = 15 << ((digits - 1) * 4);
     for (i = digits; i > 0; i--) {
-        d = (value & mask) >> ((i - 1) * 4);
+        digit = (value & mask) >> ((i - 1) * 4);
         if (i == digits && (mode & 4) != 0) {
-            if (d < 0) {
+            if (digit < 0) {
                 p->code = '-';
-                d &= 0x7FFF;
+                digit &= 0x7FFF;
             } else {
                 p->code = '+';
             }
             p->attr = attr;
             p++;
         }
-        code = cells * d + (s16)num_font_code;
+        code = cells * digit + (s16)num_font_code;
         if (started == 0) {
-            if (d == 0) {
+            if (digit == 0) {
                 if (i == 1) {
                     p = (TEXT_CELL*)tilemap_put_block_next((u16*)p, attr, code);
                 } else {

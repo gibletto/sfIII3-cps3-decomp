@@ -55,8 +55,8 @@ void effect_J3_move(WORK_Other* ewk) {
         disp_pos_trans_entry(ewk);
         break;
     default:
-        all_cgps_put_back(ewk);
-        push_effect_work((WORK*)ewk);
+        all_cgps_put_back(&ewk->wu);
+        push_effect_work(&ewk->wu);
         break;
     }
 }
@@ -131,7 +131,7 @@ void effect_J4_move(WORK_Other* ewk) {
         break;
     case R0_KILL:
     default:
-        all_cgps_put_back(ewk);
+        all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
         break;
     }

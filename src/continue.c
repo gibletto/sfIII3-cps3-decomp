@@ -221,6 +221,7 @@ s32 Check_Exit_Continue(void) {
     return 1;
 }
 
+/* Prints a player's continue count beside the continue message on the text layer. */
 void Disp_Personal_Count(id, count)
 s16 id;
 char count;
@@ -230,29 +231,33 @@ char count;
 
 
 
+/* Nonzero when the player newly presses a button while Continue_Count is below Limit: the press cuts the
+   continue count short. */
 s32 Check_Count_Cut(PL_id, Limit)
 s16 PL_id;
 s16 Limit;
 {
-    s16 xx;
+    s16 sw;
     Continue_Cut[PL_id] = 0;
-    if (Continue_Count[PL_id] >= (Limit)) {
+    if (Continue_Count[PL_id] >= Limit) {
         return 0;
     }
     if (PL_id) {
-        xx = p2sw_0 & ~p2sw_1;
+        sw = p2sw_0 & ~p2sw_1;
     } else {
-        xx = p1sw_0 & ~p1sw_1;
+        sw = p1sw_0 & ~p1sw_1;
     }
-    return xx & BUTTON_SHOTS;
+    return sw & BUTTON_SHOTS;
 }
 
 
 
+/* Resets one player's personal game data (records, continue counts, selections and entry state) for a fresh
+   start. */
 s32 Clear_Personal_Data(PL_id)
 s16 PL_id;
 {
-    s16 xx;
+    s16 i;
     Lost_Round[PL_id] = 0;
     Super_Arts_Finish[PL_id] = 0;
     Perfect_Finish[PL_id] = 0;
@@ -301,8 +306,8 @@ s16 PL_id;
         Cursor_X[1] = 5;
         Cursor_Y[1] = 2;
     }
-    for (xx = 0; xx < 10; xx++) {
-        EM_History[PL_id][xx] = 0;
+    for (i = 0; i < 10; i++) {
+        EM_History[PL_id][i] = 0;
     }
 }
 
@@ -318,6 +323,8 @@ void Clear_Win_Type(void) {
 
 
 
+/* Nonzero when a coin dropped in the player's chute this frame; in chute modes 0 and 1 a coin in either chute
+   counts. */
 /* provisional name */
 s32 Check_Coin_In(pl)
 s16 pl;

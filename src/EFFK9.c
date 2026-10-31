@@ -81,6 +81,6 @@ s32 effect_K9_init(WORK* wk, u8 data) {
     ewk->wu.my_col_code = 0x148;
     ewk->wu.dir_old = wk->now_koc;
     ewk->wu.dir_step = wk->char_index;
-    *ewk->wu.char_table = plef_char_table;
+    ewk->wu.char_table[0] = plef_char_table;
     return 0;
 }

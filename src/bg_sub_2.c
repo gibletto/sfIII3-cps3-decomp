@@ -279,8 +279,8 @@ void bg_chase_move(void)
 
 
 void chase_start_check(void) {
-    s16 work;
-    s16 work2;
+    s16 ended;
+    s16 now_clear;
     if (zoom_request_flag & 0xF00) {
         if (chase_x != scr_req_x) {
             chase_x = scr_req_x;
@@ -296,10 +296,10 @@ void chase_start_check(void) {
             bg_w.old_chase_flag = 1;
         }
     } else {
-        work = zoom_req_flag_old & 0xF00;
-        work2 = ~(zoom_request_flag & 0xF00);
-        work &= work2;
-        if (work) {
+        ended = zoom_req_flag_old & 0xF00;
+        now_clear = ~(zoom_request_flag & 0xF00);
+        ended &= now_clear;
+        if (ended) {
             bg_w.chase_flag |= 2;
             bg_w.chase_flag &= 0xFFFE;
             chase_x = bgw_ptr->wxy[0].disp.pos;
@@ -323,10 +323,10 @@ void chase_start_check(void) {
             cal_bg_speed_data_y(bgw_ptr->fam_no, chase_time_y, chase_y);
         }
     } else {
-        work = zoom_req_flag_old & 0xF000;
-        work2 = ~(zoom_request_flag & 0xF000);
-        work &= work2;
-        if (work) {
+        ended = zoom_req_flag_old & 0xF000;
+        now_clear = ~(zoom_request_flag & 0xF000);
+        ended &= now_clear;
+        if (ended) {
             bg_w.chase_flag |= 0x20;
             bg_w.chase_flag &= 0xFFEF;
             chase_y = bgw_ptr->xy[1].disp.pos;
@@ -502,7 +502,7 @@ void scr_11_21(void) {
 void scr_11_22(void) {
     s16 meri;
     s16 meri2;
-    meri = (satse[plw[1].player_number] - satse[plw[0].player_number]);
+    meri = satse[plw[1].player_number] - satse[plw[0].player_number];
     meri >>= 1;
     meri2 = plw[0].wu.scr_mv_x + plw[1].wu.scr_mv_x;
     meri2 >>= 1;
@@ -531,7 +531,7 @@ void scr_12_20(void) {
 void scr_12_21(void) {
     s16 meri;
     s16 meri2;
-    meri = (satse[plw[0].player_number] - satse[plw[1].player_number]);
+    meri = satse[plw[0].player_number] - satse[plw[1].player_number];
     meri >>= 1;
     meri2 = plw[0].wu.scr_mv_x + plw[1].wu.scr_mv_x;
     meri2 >>= 1;
@@ -568,7 +568,7 @@ void scr_12_22() {
 void scr_11_22_2(void) {
     s16 meri;
     s16 meri2;
-    meri = (satse[plw[1].player_number] - satse[plw[0].player_number]);
+    meri = satse[plw[1].player_number] - satse[plw[0].player_number];
     meri >>= 1;
     meri2 = plw[0].wu.scr_mv_x + plw[1].wu.scr_mv_x;
     meri2 >>= 1;
@@ -589,7 +589,7 @@ void scr_11_22_2(void) {
 void scr_12_21_2(void) {
     s16 meri;
     s16 meri2;
-    meri = (satse[plw[0].player_number] - satse[plw[1].player_number]);
+    meri = satse[plw[0].player_number] - satse[plw[1].player_number];
     meri >>= 1;
     meri2 = plw[0].wu.scr_mv_x + plw[1].wu.scr_mv_x;
     meri2 >>= 1;

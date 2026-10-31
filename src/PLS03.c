@@ -451,6 +451,8 @@ air:
 
 
 
+/* Start the special move whose command has been entered, on the ground or in the air (its EX version
+ * when allowed); 1 when one starts. */
 s32 check_special_attack(PLW* wk) {
     s16 i;
     s16 j;

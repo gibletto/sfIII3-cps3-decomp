@@ -160,8 +160,8 @@ TMSCRIPT gcfg_title_scr_jp[1] = {
 
 /* provisional name */
 void game_config_init_jp(void) {
-    char *wk;
-    char *wk1;
+    char* wk;
+    char* wk1;
     Config_No_2++;
     Config_Exit_jp = 0;
     tilemap_fill_all(0, 32);

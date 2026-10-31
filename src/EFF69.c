@@ -73,7 +73,7 @@ void EFF69_SLIDE_IN(WORK_Other* ewk)
     default:
         ewk->wu.xyz[0].cal += ewk->wu.mvxy.a[0].sp;
         ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;
-        if (0 < ewk->wu.mvxy.a[0].sp) {
+        if (ewk->wu.mvxy.a[0].sp > 0) {
             if (ewk->wu.hit_quake <= ewk->wu.xyz[0].disp.pos) {
                 if (Order[ewk->wu.dir_old] == ewk->wu.routine_no[0]) {
                     Order[ewk->wu.dir_old] = R0_WAIT;
@@ -160,8 +160,8 @@ void EFF69_KILL(WORK_Other* ewk) {
         }
         break;
     default:
-        all_cgps_put_back(ewk);
-        push_effect_work((WORK*)ewk);
+        all_cgps_put_back(&ewk->wu);
+        push_effect_work(&ewk->wu);
         break;
     }
 }
@@ -182,7 +182,7 @@ s32 effect_69_init(s16 dir_old) {
     ewk->wu.my_col_mode = 0x4200;
     ewk->wu.my_col_code = 0x2040;
     ewk->wu.my_family = 3;
-    *ewk->wu.char_table = sel_pl_char_table;
+    ewk->wu.char_table[0] = sel_pl_char_table;
     ewk->wu.char_index = 16;
     ewk->wu.dir_step = dir_old + 2;
     ewk->wu.dir_old = dir_old;
@@ -196,7 +196,6 @@ s32 effect_69_init(s16 dir_old) {
 
 void Setup_Clear_OBJ(WORK_Other* ewk)
 {
-
     if (ewk->wu.dir_old < 3) {
         effect_59_init(ewk, ewk->wu.my_family, ewk->wu.dir_old, 1);
     }

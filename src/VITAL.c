@@ -31,11 +31,14 @@ VITAL_BAR vit_bar[1];  /* 02028648 */
 VITAL_BAR vit_bar_2p;  /* 02028660 */
 
 
+/* Cell columns of the 1P and 2P bars. */
 /* 020069B4 */
 const u16* vital_npos_tbl[2] = {
     vital_npos_0,
     vital_npos_1,
 };
+
+/* Cell attributes by bar colour: the 1P bar, the 2P bar, and vital_parts_allwrite with pl 0. */
 /* 020069BC */
 const u16* vital_attr_tbl[3] = {
     vital_attr_0,

@@ -116,7 +116,7 @@ s32 effect_L5_init(WORK_Other* oya) {
     }
     ewk = (WORK_Other*)frw[ix];
     ewk->wu.be_flag = 1;
-    ewk->wu.id = 0xD7;
+    ewk->wu.id = 215;
     ewk->wu.work_id = 0x10;
     ewk->wu.cgromtype = 1;
     ewk->my_master = (u32*)oya;
@@ -125,7 +125,7 @@ s32 effect_L5_init(WORK_Other* oya) {
     ewk->wu.my_col_mode = 0x4200;
     ewk->wu.my_col_code = 0x1E0;
     ewk->wu.my_priority = ewk->wu.position_z = 9;
-    *ewk->wu.char_table = etc_char_table;
+    ewk->wu.char_table[0] = etc_char_table;
     ewk->wu.xyz[0].disp.pos = bg_w.bgw[ewk->wu.my_family - 1].position_x + bg_w.pos_offset;
     ewk->wu.xyz[1].disp.pos = 0x90;
     return 0;

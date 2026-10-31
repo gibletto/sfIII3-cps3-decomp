@@ -69,15 +69,15 @@
 
 
 void cal_damage_vitality(PLW* as, PLW* ds) {
-    u16 xx = as->wu.att.pow;
-    s16 yy;
-    s16 power = Power_Data[xx];
+    u16 att_pow = as->wu.att.pow;
+    s16 rate;
+    s16 power = Power_Data[att_pow];
     if (as->player_number == PL_GOUKI2) {
-        yy = Pow_Control_Data_1[1][Round_Level];
+        rate = Pow_Control_Data_1[1][Round_Level];
     } else {
-        yy = Pow_Control_Data_1[0][Round_Level];
+        rate = Pow_Control_Data_1[0][Round_Level];
     }
-    ds->wu.dm_vital = power * yy / 100;
+    ds->wu.dm_vital = power * rate / 100;
     if (as->wu.work_id == 1) {
         ds->wu.dm_vital = ds->wu.dm_vital * as->att_plus / 8;
     }
@@ -89,15 +89,15 @@ void cal_damage_vitality(PLW* as, PLW* ds) {
 
 
 void cal_damage_vitality_eff(WORK_Other* as, PLW* ds) {
-    u16 xx = as->wu.att.pow;
-    s16 yy;
-    s16 power = Power_Data[xx];
+    u16 att_pow = as->wu.att.pow;
+    s16 rate;
+    s16 power = Power_Data[att_pow];
     if (((PLW*)as)->player_number == PL_GOUKI2) {
-        yy = Pow_Control_Data_1[1][Round_Level];
+        rate = Pow_Control_Data_1[1][Round_Level];
     } else {
-        yy = Pow_Control_Data_1[0][Round_Level];
+        rate = Pow_Control_Data_1[0][Round_Level];
     }
-    ds->wu.dm_vital = power * yy / 100;
+    ds->wu.dm_vital = power * rate / 100;
     if (as->wu.work_id == 1) {
         ds->wu.dm_vital = ds->wu.dm_vital * ((PLW*)as)->att_plus / 8;
     }

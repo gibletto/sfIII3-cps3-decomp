@@ -211,16 +211,16 @@ void Normal_normal_Loser(PLW* wk) {
 
 
 void Judge_normal_loser(PLW* wk) {
-    s16 work;
+    s16 pat;
     if (set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
         set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
     }
     switch (wk->wu.routine_no[3]) {
     case RN3_START:
         wk->wu.routine_no[3] += 1;
-        work = random_16_com();
-        work &= 3;
-        set_char_move_init(&wk->wu, 9, work + 0x38);
+        pat = random_16_com();
+        pat &= 3;
+        set_char_move_init(&wk->wu, 9, pat + 0x38);
         break;
     case POSE_RUN:
     case RN3_DONE:

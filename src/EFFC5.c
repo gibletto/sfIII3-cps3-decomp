@@ -131,6 +131,8 @@ void effect_C5_move(WORK_Other* ewk) {
 
 
 
+/* Create the car the player arrives in when the car entrance (Appear_06000) starts: from the
+ * player's own side, or from the other side when reverse_f is 1. */
 s32 effect_C5_init(PLW* oya, s16 reverse_f) {
     WORK_Other* ewk;
     s16 ix;
@@ -151,7 +153,7 @@ s32 effect_C5_init(PLW* oya, s16 reverse_f) {
     ewk->wu.char_index = 8;
     ewk->wu.my_col_mode = 0x4200;
     ewk->wu.my_priority = ewk->wu.position_z = 57;
-    *ewk->wu.char_table = etc_char_table;
+    ewk->wu.char_table[0] = etc_char_table;
     ewk->wu.my_col_code = oya->wu.my_col_code + 6;
     ewk->wu.sync_suzi = 0;
     ewk->master_id = oya->wu.id;

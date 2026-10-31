@@ -409,14 +409,11 @@ void Game0_1(void) {
 
 
 
-/* Title hand-off: step the game routine, save the screen and start wipe 0. */
-
-
-
 void Scrn_Move_Set(s32 n, s16 x, s16 y);
 
 
 
+/* Title hand-off: step the game routine, save the screen and start wipe 0. */
 void Game0_2(void)
 {
     G_No2++;
@@ -723,6 +720,7 @@ void Game2_1(void) {
 
 
 
+/* Step 2 of the fight routine (Game02_Jmp_Tbl) has no work. */
 void Game2_2(void)
 {
 }
@@ -826,6 +824,8 @@ void Game2_5(void) {
     }
 }
 
+/* The winner scene: runs Winner_Scene, then wipes out to the winner's next stage, or to game over in event
+   mode. */
 void Game03(void)
 {
     move_effect_work(4);
@@ -1315,6 +1315,7 @@ s32 Check_Disp_Rank_Request(void) {
 
 
 
+/* Puts a waiting break-in request (Request_Break) through Ck_Break_Into, making the player an operator. */
 void Request_Break_Sub(PL_id)
 s16 PL_id;
 {

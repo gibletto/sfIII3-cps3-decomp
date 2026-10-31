@@ -188,13 +188,14 @@ const s16 dead_voice_table[24][2] = {
     { 864, 865 },  /* 23 */
 };
 
+/* Limit, value: gauge_rank_value returns the value of the first row whose limit it reaches. */
 const s16 gauge_rank_table[6][2] = {
-    90, 1000,
-    80, 600,
-    60, 400,
-    40, 300,
-    20, 200,
-    0, 100,
+    { 90, 1000 },
+    { 80, 600 },
+    { 60, 400 },
+    { 40, 300 },
+    { 20, 200 },
+    { 0, 100 },
 };
 
 const u8 jump_pat_status_data[2][4] = {

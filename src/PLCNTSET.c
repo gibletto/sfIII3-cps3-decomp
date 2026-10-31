@@ -92,8 +92,8 @@ void effect_M8_move(WORK_Other* ewk) {
         pl_eff_trans_entry(ewk);
         break;
     default:
-        all_cgps_put_back(ewk);
-        push_effect_work((WORK*)ewk);
+        all_cgps_put_back(&ewk->wu);
+        push_effect_work(&ewk->wu);
         break;
     }
 }
@@ -203,7 +203,7 @@ s32 effect_M8_init(WORK* oya, u8 data) {
         ewk->wu.position_z = oya->my_priority;
         ewk->wu.position_z -= 2;
         ewk->wu.my_priority = ewk->wu.position_z;
-        *ewk->wu.char_table = etc2_char_table;
+        ewk->wu.char_table[0] = etc2_char_table;
         ewk->wu.char_index = 52;
         ewk->wu.kage_flag = 1;
         ewk->wu.kage_hx = -2;
@@ -243,7 +243,7 @@ s32 effect_M8_init(WORK* oya, u8 data) {
             ewk->wu.position_z = oya->my_priority;
             ewk->wu.position_z = ewk->wu.position_z - 2;
             ewk->wu.my_priority = ewk->wu.position_z;
-            *ewk->wu.char_table = etc2_char_table;
+            ewk->wu.char_table[0] = etc2_char_table;
             ewk->wu.char_index = 55;
             ewk->wu.kage_flag = 1;
             ewk->wu.kage_hx = -2;
@@ -284,7 +284,7 @@ s32 effect_M8_init(WORK* oya, u8 data) {
         ewk->wu.position_z = ewk->wu.position_z + 1;
         ewk->wu.my_priority = ewk->wu.position_z;
         ewk->wu.rl_flag = oya->rl_flag ^ 1;
-        *ewk->wu.char_table = etc2_char_table;
+        ewk->wu.char_table[0] = etc2_char_table;
         ewk->wu.char_index = 54;
         ewk->wu.kage_flag = 1;
         ewk->wu.kage_hx = -2;

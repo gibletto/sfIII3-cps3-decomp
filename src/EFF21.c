@@ -51,10 +51,10 @@ void effect_21_move(WORK_Other* ewk) {
         }
         ewk->wu.xyz[0].disp.pos = ewk->wu.old_rno[0];
         ewk->wu.xyz[0].disp.low = 0;
-        ewk->wu.xyz[0].cal -= (ewk->wu.mvxy.a[0].sp * bg_w.bg2_sp_x2);
+        ewk->wu.xyz[0].cal -= ewk->wu.mvxy.a[0].sp * bg_w.bg2_sp_x2;
         ewk->wu.xyz[1].disp.pos = ewk->wu.old_rno[2];
         ewk->wu.xyz[1].disp.low = 0;
-        ewk->wu.xyz[1].cal += (ewk->wu.mvxy.a[1].sp * bg_w.bg2_sp_y);
+        ewk->wu.xyz[1].cal += ewk->wu.mvxy.a[1].sp * bg_w.bg2_sp_y;
         if (ewk->wu.old_rno[3]) {
             disp_pos_trans_entry_rs(ewk);
         } else {

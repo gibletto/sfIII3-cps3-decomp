@@ -540,7 +540,7 @@ s32 check_renda_cancel(PLW* wk) {
         return 0;
     }
     wk->permited_koa |= 0x20;
-    if (wk->wu.pat_status == renda_status_table[(wk->cp->sw_new & 3)]) {
+    if (wk->wu.pat_status == renda_status_table[wk->cp->sw_new & 3]) {
         if (wk->current_attack == (wk->cp->sw_now & CMD_SW_SHOT)) {
             setup_comm_back((WORK*)wk);
             wk->wu.cg_ix = wk->wu.cg_eftype * wk->wu.cgd_type - (wk->wu.cgd_type * 2);

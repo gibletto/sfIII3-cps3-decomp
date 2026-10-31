@@ -117,7 +117,7 @@ s32 effect_50_init(s16 PL_id, s16 Direction, s16 dm_vital) {
     ewk->wu.my_col_code = 0x2040;
     ewk->wu.my_family = 3;
     ewk->master_id = PL_id;
-    *ewk->wu.char_table = sel_pl_char_table;
+    ewk->wu.char_table[0] = sel_pl_char_table;
     ewk->wu.dm_vital = dm_vital;
     ewk->wu.direction = Direction;
     if (dm_vital == 0) {

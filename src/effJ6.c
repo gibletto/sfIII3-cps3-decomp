@@ -109,7 +109,7 @@ s32 effect_J6_init(WORK_Other* oya) {
     ewk->wu.dead_f = 0;
     ewk->wu.my_family = 2;
     ewk->wu.my_col_code = 0x2080;
-    *ewk->wu.char_table = chn_char_table;
+    ewk->wu.char_table[0] = chn_char_table;
     ewk->wu.xyz[0].disp.pos = 904;
     ewk->wu.xyz[1].disp.pos = 16;
     ewk->wu.my_priority = ewk->wu.position_z = 10;

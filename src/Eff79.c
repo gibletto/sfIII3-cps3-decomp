@@ -400,7 +400,7 @@ s16 Option;
         return;
     }
     ewk->wu.routine_no[6] = R6_ARC;
-    if (0 < ewk->wu.mvxy.a[1].sp) {
+    if (ewk->wu.mvxy.a[1].sp > 0) {
         ewk->wu.vital_old = ewk->wu.xyz[1].disp.pos + 48;
     } else if (ewk->wu.dmcal_m == 0) {
         ewk->wu.vital_old = ewk->wu.xyz[1].disp.pos - 40;
@@ -492,7 +492,7 @@ s32 EFF79_Move_Y(WORK_Other* ewk) {
     case R6_ARC:
         ewk->wu.xyz[1].cal += ewk->wu.mvxy.a[1].sp;
         ewk->wu.mvxy.a[1].sp += ewk->wu.mvxy.d[1].sp;
-        if (0 > ewk->wu.mvxy.a[1].sp) {
+        if (ewk->wu.mvxy.a[1].sp < 0) {
             if (ewk->wu.vital_old >= ewk->wu.xyz[1].disp.pos) {
                 OK_Priority[ewk->master_id] = 1;
                 ewk->wu.routine_no[5] = R5_TURN;
@@ -609,7 +609,7 @@ s32 effect_79_init(s16 pl_id, s16 plate_id, s16 pos_id, s16 time, s16 Target_BG)
     ewk->wu.my_col_code = 0x2040;
     ewk->wu.my_family = Target_BG + 1;
     ewk->wu.dir_timer = time;
-    *ewk->wu.char_table = sel_pl_char_table;
+    ewk->wu.char_table[0] = sel_pl_char_table;
     ewk->master_id = pl_id;
     ewk->wu.char_index = 14;
     ewk->wu.dir_old = Play_Type;
@@ -684,7 +684,7 @@ s32 Move_X_Sub(WORK_Other* ewk, s16 Target_X, s16 cut) {
     if (Check_Depth_to_Before()) {
         return 0;
     }
-    if (0 > ewk->wu.mvxy.a[0].sp) {
+    if (ewk->wu.mvxy.a[0].sp < 0) {
         if (Target_X >= ewk->wu.xyz[0].disp.pos) {
             ewk->wu.xyz[0].disp.pos = Target_X;
             ewk->wu.mvxy.a[0].sp = 0;
@@ -703,7 +703,7 @@ s32 Move_X_Sub(WORK_Other* ewk, s16 Target_X, s16 cut) {
 
 
 s32 Check_Depth_to_Before(WORK_Other* ewk) {
-    if (0 <= ewk->wu.mvxy.a[1].sp) {
+    if (ewk->wu.mvxy.a[1].sp >= 0) {
         return 0;
     }
     if (ewk->wu.hit_quake == 2 && ewk->wu.dmcal_m == 0) {
@@ -717,7 +717,7 @@ s32 Check_Depth_to_Before(WORK_Other* ewk) {
 s32 Move_Y_Sub(WORK_Other* ewk, s16 Target_Y, u16 cut) {
     ewk->wu.xyz[1].cal += ewk->wu.mvxy.a[1].sp * cut;
     ewk->wu.mvxy.a[1].sp += ewk->wu.mvxy.d[1].sp;
-    if (0 > ewk->wu.mvxy.a[1].sp) {
+    if (ewk->wu.mvxy.a[1].sp < 0) {
         if (Target_Y >= ewk->wu.xyz[1].disp.pos) {
             ewk->wu.xyz[1].disp.pos = Target_Y;
             ewk->wu.mvxy.a[1].sp = 0;

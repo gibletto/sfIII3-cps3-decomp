@@ -208,6 +208,7 @@ s32 fight_col_chg_sub(WORK_Other* ewk) {
 }
 
 
+/* Create the round-start call at the start of each round: the final-round call or the normal one. */
 s32 effect_B2_init(void) {
     WORK_Other* ewk;
     s16 ix;
@@ -216,7 +217,7 @@ s32 effect_B2_init(void) {
     }
     ewk = (WORK_Other*)frw[ix];
     ewk->wu.be_flag = 1;
-    ewk->wu.id = 0x70;
+    ewk->wu.id = 112;
     ewk->wu.work_id = 0x10;
     ewk->wu.my_family = 4;
     load_char_gfx(0xA7F8, 1);

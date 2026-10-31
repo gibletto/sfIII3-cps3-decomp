@@ -54,17 +54,17 @@ void effect_86_move(WORK_Other* ewk) {
 
 
 void eff86_0000(WORK_Other* ewk) {
-    s16 work;
+    s16 mid;
     switch (ewk->wu.routine_no[2]) {
     case R2_INIT:
         ewk->wu.routine_no[2]++;
         ewk->wu.disp_flag = 1;
-        work = plw[0].wu.position_x + plw[1].wu.position_x;
-        work >>= 1;
-        ewk->wu.xyz[0].disp.pos = work;
-        work = plw[1].wu.position_y + plw[1].wu.position_y;
-        work >>= 1;
-        ewk->wu.xyz[1].disp.pos = work + 92;
+        mid = plw[0].wu.position_x + plw[1].wu.position_x;
+        mid >>= 1;
+        ewk->wu.xyz[0].disp.pos = mid;
+        mid = plw[1].wu.position_y + plw[1].wu.position_y;
+        mid >>= 1;
+        ewk->wu.xyz[1].disp.pos = mid + 92;
         set_char_move_init(&ewk->wu, 0, ewk->wu.char_index);
         break;
     case R2_MOVE:

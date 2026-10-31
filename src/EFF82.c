@@ -38,7 +38,7 @@
 
 void effect_82_move(WORK_Other* ewk) {
     WORK* oya_ptr = (WORK*)ewk->my_master;
-    s16 work;
+    s16 dist;
     switch (ewk->wu.routine_no[0]) {
     case R0_INIT:
         ewk->wu.routine_no[0]++;
@@ -57,11 +57,11 @@ void effect_82_move(WORK_Other* ewk) {
             ewk->wu.old_rno[0]--;
             add_x_sub(ewk);
             add_y_sub(ewk);
-            work = ewk->wu.xyz[0].disp.pos - oya_ptr->xyz[0].disp.pos;
-            if (work < 0) {
-                work = -work;
+            dist = ewk->wu.xyz[0].disp.pos - oya_ptr->xyz[0].disp.pos;
+            if (dist < 0) {
+                dist = -dist;
             }
-            if (work <= 112) {
+            if (dist <= 112) {
                 ewk->wu.routine_no[0]++;
                 Sound_SE((ewk->master_id * 768) + 350);
                 char_move_z(&ewk->wu);
@@ -133,7 +133,7 @@ s32 effect_82_init(WORK* wk) {
     ewk->wu.xyz[1].disp.pos = wk->xyz[1].disp.pos - 12;
     ewk->wu.my_priority = wk->my_priority - 12;
     ewk->wu.position_z = ewk->wu.my_priority - 12;
-    *ewk->wu.char_table = etc2_char_table;
+    ewk->wu.char_table[0] = etc2_char_table;
     ewk->wu.char_index = 33;
     ewk->wu.sync_suzi = 0;
     suzi_offset_set(&ewk->wu);

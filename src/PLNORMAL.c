@@ -790,7 +790,7 @@ void Normal_42000(PLW* wk) {
         }
         set_char_move_init((WORK*)wk, 0, dadr[0]);
         setup_mvxy_data((WORK*)wk, dadr[1]);
-        Flash_MT[(wk->wu.id)] = 2;
+        Flash_MT[wk->wu.id] = 2;
         add_sp_arts_gauge_paring(wk);
         set_hit_stop_hit_quake((WORK*)wk);
         if (wk->wu.hit_stop > 0) {

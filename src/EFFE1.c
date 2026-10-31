@@ -41,7 +41,7 @@ void effect_E1_move(WORK_Other* ewk) {
 
 
 
-s32 effect_E1_init(s16 id, s16 Time, s16 _p2) {
+s32 effect_E1_init(s16 id, s16 Time, s16 ready) {
     WORK_Other* ewk;
     s16 ix;
     if ((ix = pull_effect_work(4)) == -1) {
@@ -49,7 +49,7 @@ s32 effect_E1_init(s16 id, s16 Time, s16 _p2) {
     }
     ewk = (WORK_Other*)frw[ix];
     ewk->wu.be_flag = 1;
-    ewk->wu.id = 0x8D;
+    ewk->wu.id = 141;
     ewk->wu.work_id = 0x10;
     ewk->wu.cgromtype = 1;
     ewk->wu.my_col_mode = 0x4200;

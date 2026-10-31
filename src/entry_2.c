@@ -74,6 +74,7 @@ extern const s8 str_INSERT_COINS_6[];
 extern const s8 str_INSERT_COINS_7[];
 extern const s8 str_INSERT_COINS_8[];
 
+/* The insert coin line by coins per credit (coin_chute1_w.per_credit - 1). */
 /* 020000B0 */
 TM_STRING insert_coin_mes[9] = {
     { 0, 0, 0x12, str_INSERT_COIN },
@@ -88,6 +89,7 @@ TM_STRING insert_coin_mes[9] = {
 };
 
 
+/* The entry task: runs Entry_Task once a frame, for ever. */
 /* provisional name */
 void entry_task(void)
 {
@@ -755,6 +757,8 @@ void Entry_10_2nd(void) {
     }
 }
 
+/* One player's entry work for the frame, by E_Number[PL_id][0]: start checks, continue, name entry, game over
+   and the loser scene. Jump_Index tells Break_Into_Sub which entry scene a new challenger comes in from. */
 void Entry_Main_Sub(PL_id, Jump_Index)
 s16 PL_id;
 s16 Jump_Index;
@@ -879,6 +883,7 @@ s16 Jump_Index;
     }
 }
 
+/* Resets a player's name-entry work before the name input starts. */
 void Naming_Init(PL_id)
 s16 PL_id;
 {
@@ -950,6 +955,7 @@ void Naming_Cut_Sub_2P(void) {
     }
 }
 
+/* Writes the entered name into each ranking table the player placed in. */
 void Name_In_Sub(PL_id)
 s16 PL_id;
 {
@@ -969,6 +975,7 @@ s16 PL_id;
 
 
 
+/* Copies the player's three name characters into ranking entry xx. */
 void Name_In_Sub0(PL_id, xx)
 s16 PL_id;
 s16 xx;
@@ -978,6 +985,8 @@ s16 xx;
     Ranking_Data[xx].name[2] = rank_name_w[PL_id].code[2];
 }
 
+/* Watches a player who is not in the game for a paid start, and brings a new challenger in through
+   Break_Into_Sub. */
 void Entry_Common_Sub(PL_id, Jump_Index)
 s16 PL_id;
 s16 Jump_Index;
@@ -991,6 +1000,7 @@ s16 Jump_Index;
     }
 }
 
+/* The loser's start check in the loser scene: a paid start brings the player back in through Break_Into_Sub. */
 void Loser_Scene_Sub(PL_id, Jump_Index)
 s16 PL_id;
 s16 Jump_Index;
@@ -1182,6 +1192,8 @@ s32 Credit_Continue_2P(void) {
 
 
 
+/* Runs a player's continue count: a coin restarts it, a button press cuts it short, and when it runs out
+   Setup_Next_Step decides between name entry and game over. */
 void Entry_Continue_Sub(PL_id)
 s16 PL_id;
 {
@@ -1223,6 +1235,8 @@ s16 PL_id;
 
 
 
+/* Ends a player's continue: moves the entry on to name entry when the player made the rankings, otherwise to
+   game over. */
 void Setup_Next_Step(PL_id)
 s16 PL_id;
 {
@@ -1277,6 +1291,7 @@ s16 PL_id;
 
 
 
+/* Shows GAME OVER in a player's message space for a while during play, then clears the player's data. */
 void In_Game_Sub(PL_id)
 s16 PL_id;
 {
@@ -1327,6 +1342,7 @@ s16 PL_id;
 
 
 
+/* Shows GAME OVER in a player's message space during the game-over scene. */
 void In_Over_Sub(PL_id)
 s16 PL_id;
 {
@@ -1343,6 +1359,8 @@ s16 PL_id;
 
 
 
+/* Flashes the insert-coin message (with the coins per credit) in a player's message space, alternating with
+   the join-in message. */
 /* provisional name */
 s32 Flash_Insert_Coin(PL_id)
 s16 PL_id;
@@ -1393,6 +1411,8 @@ s16 PL_id;
     return 0;
 }
 
+/* Flashes the press-start (or free play) message in a player's message space; the loser of the loser scene is
+   shown the continue message instead. */
 s32 Flash_Start(PL_id, x)
 s16 PL_id;
 u16 x;
@@ -1440,6 +1460,7 @@ u16 x;
     return 0;
 }
 
+/* Flashes the please-wait message in a player's message space. */
 s32 Flash_Please(PL_id)
 s16 PL_id;
 {
@@ -1471,6 +1492,7 @@ s16 PL_id;
     return 0;
 }
 
+/* Flashes how many more coins a player needs to insert, in the player's message space. */
 /* provisional name */
 s32 Flash_More_Coins(PL_id, unused, coins)
 s16 PL_id;
@@ -1524,6 +1546,7 @@ s8 coins;
 
 
 
+/* Redraws the more-coins message at once when a coin drops in the player's chute; returns nonzero when it did. */
 /* provisional name */
 s32 Disp_More_Coins(PL_id, unused, coins)
 s16 PL_id;
@@ -1760,6 +1783,8 @@ void Disp_Start_Message(void) {
     }
 }
 
+/* Brings a new challenger in, by the entry scene the start came from (Jump_Index, passed down by the Entry_NN
+   scenes). */
 void Break_Into_Sub(PL_id, Jump_Index)
 s16 PL_id;
 s16 Jump_Index;
@@ -1795,6 +1820,8 @@ s16 Jump_Index;
     }
 }
 
+/* Checks a player who is not in the game for a paid start: when breaking in is allowed it pauses the game and
+   makes the player the new challenger (nonzero return), otherwise the request waits in Request_Break. */
 s32 Ck_Break_Into(Sw_0, Sw_1, PL_id)
 u16 Sw_0;
 u16 Sw_1;
@@ -1833,6 +1860,7 @@ s16 PL_id;
     }
 }
 
+/* The start check during name entry: a paid start press makes the player the new challenger at once. */
 s32 Ck_Break_Into_SP(Sw_0, Sw_1, PL_id)
 u16 Sw_0;
 u16 Sw_1;
@@ -1851,6 +1879,8 @@ s16 PL_id;
 
 
 
+/* Pays for a start, nonzero when paid: free play only books it, and with Two_Coin_Start a fresh start (not a
+   continue) takes two credits. */
 /* provisional name */
 s32 Pay_Start_Credit(PL_id)
 s16 PL_id;
@@ -1895,6 +1925,7 @@ s16 PL_id;
 
 
 
+/* A new challenger joins at player select: the player becomes an operator and the select timer restarts. */
 void Break_Into_02(PL_id)
 s16 PL_id;
 {
@@ -1914,6 +1945,8 @@ s16 PL_id;
 
 
 
+/* A new challenger breaks into an Entry_03 scene: sets Break_Into and moves the entry scene on after a
+   150-frame wait. */
 void Break_Into_04(PL_id)
 s16 PL_id;
 {
@@ -1933,6 +1966,8 @@ s16 PL_id;
 
 
 
+/* A new challenger breaks into a fight: against the CPU after the fight is decided the scene moves on at once,
+   otherwise as in Break_Into_04. */
 void Break_Into_05(PL_id)
 s16 PL_id;
 {
@@ -1965,6 +2000,8 @@ s16 PL_id;
 
 
 
+/* A new challenger breaks into the loser scene: the first of the two players to join sets Break_Into and moves
+   the entry scene on. */
 void Break_Into_07(PL_id)
 s16 PL_id;
 {
@@ -1983,6 +2020,8 @@ s16 PL_id;
 
 
 
+/* A new challenger breaks into the continue scene: the first of the two players to join sets Break_Into and
+   moves the entry scene on, waiting longer while the other player's continue count runs. */
 void Break_Into_08(PL_id)
 s16 PL_id;
 {
@@ -2006,6 +2045,8 @@ s16 PL_id;
 
 
 
+/* A new challenger breaks into the game-over scene: the first of the two players to join sets Break_Into,
+   moves the entry scene on and becomes the champion. */
 void Break_Into_09(PL_id)
 s16 PL_id;
 {
@@ -2026,6 +2067,8 @@ s16 PL_id;
 
 
 
+/* A new challenger breaks into the ending: the first of the two players to join sets Break_Into, moves the
+   entry scene on and becomes the champion. */
 void Break_Into_10(PL_id)
 s16 PL_id;
 {
@@ -2046,6 +2089,7 @@ s16 PL_id;
 
 
 
+/* Counts a continue (up to 99) when the player pays to come back from the continue or loser scene. */
 void Continue_Score_Sub(PL_id)
 s16 PL_id;
 {

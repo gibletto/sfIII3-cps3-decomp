@@ -204,7 +204,7 @@ s32 effect_93_init(s8 Move_Type, s16 Time) {
     }
     ewk = (WORK_Other*)frw[ix];
     ewk->wu.be_flag = 1;
-    ewk->wu.id = 0x5D;
+    ewk->wu.id = 93;
     ewk->wu.dir_timer = Time;
     ewk->wu.routine_no[0] = Move_Type;
     Appear_Cursor = 0;

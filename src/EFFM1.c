@@ -62,8 +62,8 @@ void effect_M1_move(WORK_Other* ewk) {
         ewk->wu.routine_no[0]++;
         break;
     default:
-        all_cgps_put_back(ewk);
-        push_effect_work((WORK*)ewk);
+        all_cgps_put_back(&ewk->wu);
+        push_effect_work(&ewk->wu);
         break;
     }
 }
@@ -139,7 +139,7 @@ s32 effect_M1_init(WORK* wk) {
     ewk->wu.xyz[1].disp.pos = wk->xyz[1].disp.pos - 2;
     ewk->wu.position_z = wk->my_priority - 12;
     ewk->wu.my_priority = wk->my_priority - 12;
-    *ewk->wu.char_table = etc3_char_table;
+    ewk->wu.char_table[0] = etc3_char_table;
     ewk->wu.sync_suzi = 0;
     if (wk->rl_flag) {
         ewk->wu.old_rno[1] = bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset - 32;

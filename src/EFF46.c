@@ -51,8 +51,8 @@ void effect_46_move(WORK_Other* ewk) {
         sort_push_request(&ewk->wu);
         break;
     default:
-        all_cgps_put_back(ewk);
-        push_effect_work((WORK*)ewk);
+        all_cgps_put_back(&ewk->wu);
+        push_effect_work(&ewk->wu);
         break;
     }
 }
@@ -102,18 +102,18 @@ void eff46_move(WORK_Other* ewk) {
 
 s16 eff46_appear_check(WORK_Other* ewk) {
     WORK* oya_ptr = (WORK*)ewk->my_master;
-    s16 work = oya_ptr->xyz[0].disp.pos - ewk->wu.xyz[0].disp.pos;
-    if (work < 0) {
-        work = -work;
+    s16 dist = oya_ptr->xyz[0].disp.pos - ewk->wu.xyz[0].disp.pos;
+    if (dist < 0) {
+        dist = -dist;
     }
-    if (work > 48) {
+    if (dist > 48) {
         return 0;
     }
-    work = oya_ptr->xyz[1].disp.pos - ewk->wu.xyz[1].disp.pos;
-    if (work < 0) {
-        work = -work;
+    dist = oya_ptr->xyz[1].disp.pos - ewk->wu.xyz[1].disp.pos;
+    if (dist < 0) {
+        dist = -dist;
     }
-    if (work > 80) {
+    if (dist > 80) {
         return 0;
     }
     return 1;
@@ -154,7 +154,7 @@ s32 effect_46_init(WORK* wk, s32 _p1) {
     ewk->wu.old_rno[0] = ewk->wu.xyz[1].disp.pos;
     ewk->wu.my_priority = wk->my_priority - 12;
     ewk->wu.position_z = ewk->wu.my_priority - 12;
-    *ewk->wu.char_table = etc2_char_table;
+    ewk->wu.char_table[0] = etc2_char_table;
     ewk->wu.char_index = 43;
     ewk->wu.sync_suzi = 0;
     suzi_offset_set(&ewk->wu);

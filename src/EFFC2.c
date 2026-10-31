@@ -725,7 +725,7 @@ s32 bs2_get_hit_stop(WORK* wk) {
     return ((WORK*)wk->my_effadrs)->hit_stop;
 }
 
-/* unreferenced */
+/* Unreferenced: the vital value of bs2_data_table entry ix. */
 s32 c3_hit_disp_check(s32 ix) {
     return bs2_data_table[(u8)ix].vital;
 }
@@ -895,7 +895,7 @@ s32 effect_C2_init(WORK* wk, u8 data) {
     }
     ewk = (WORK_Other*)frw[ix];
     ewk->wu.be_flag = 1;
-    ewk->wu.id = 0x7A;
+    ewk->wu.id = 122;
     ewk->wu.type = data;
     ewk->my_master = (u32*)wk;
     ewk->wu.target_adrs = wk->target_adrs;

@@ -106,7 +106,7 @@ void EFF38_SLIDE_IN(WORK_Other* ewk) {
     case R6_SLIDE:
         ewk->wu.xyz[0].cal += ewk->wu.mvxy.a[0].sp * cut;
         ewk->wu.mvxy.a[0].sp += ewk->wu.mvxy.d[0].sp;
-        if (0 < ewk->wu.mvxy.a[0].sp) {
+        if (ewk->wu.mvxy.a[0].sp > 0) {
             if (ewk->wu.hit_quake <= ewk->wu.xyz[0].disp.pos) {
                 Exit_Slide_in_38(ewk);
             }
@@ -277,7 +277,7 @@ s32 Move_X_Sub_38(WORK_Other* ewk) {
 s32 Move_Y_Sub_38(WORK_Other* ewk, s16 Target_Y) {
     ewk->wu.xyz[1].cal += ewk->wu.mvxy.a[1].sp;
     ewk->wu.mvxy.a[1].sp += ewk->wu.mvxy.d[1].sp;
-    if (0 > ewk->wu.mvxy.a[1].sp) {
+    if (ewk->wu.mvxy.a[1].sp < 0) {
         if (Target_Y >= ewk->wu.xyz[1].disp.pos) {
             ewk->wu.xyz[1].disp.pos = Target_Y;
             ewk->wu.mvxy.a[1].sp = 0;
@@ -351,7 +351,7 @@ s32 effect_38_init(s16 PL_id, s16 dir_old, s16 Your_Char, s16 Play_Status, s16 T
     y += bg_w.bgw[ewk->wu.my_family - 1].wxy[1].disp.pos;
     ewk->wu.xyz[1].disp.pos = y;
     ewk->wu.char_index = 2;
-    *ewk->wu.char_table = sel_pl_char_table;
+    ewk->wu.char_table[0] = sel_pl_char_table;
     ewk->master_id = PL_id;
     ewk->wu.dir_old = Play_Status;
     ewk->wu.dir_old = dir_old;

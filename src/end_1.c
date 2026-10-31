@@ -110,7 +110,7 @@ void end_100_0000(void) {
         break;
     case 2:
         bgw_ptr->xy[0].cal += 0x8000;
-        if (384 < bgw_ptr->xy[0].disp.pos) {
+        if (bgw_ptr->xy[0].disp.pos > 384) {
             bgw_ptr->r_no_1++;
             bgw_ptr->xy[0].cal = 0x1800000;
             bgw_ptr->free = 0x5A;

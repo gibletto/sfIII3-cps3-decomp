@@ -44,7 +44,7 @@ void effect_A7_move(WORK_Other* ewk) {
     switch (ewk->wu.routine_no[0]) {
     case R0_INIT:
         ewk->wu.routine_no[0]++;
-        *ewk->wu.char_table = ef01_char_table;
+        ewk->wu.char_table[0] = ef01_char_table;
         tad = &hmdt[ewk->wu.kohm];
         if (tad->hits == 0) {
             if (tad->se) {

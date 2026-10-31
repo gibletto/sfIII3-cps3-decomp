@@ -178,13 +178,13 @@ void Win_00000(PLW* wk) {
 
 
 void Win_01000(PLW* wk) {
-    s16 work;
+    s16 pose;
     bg_app_stop = 1;
     switch (wk->wu.routine_no[3]) {
     case RN3_START:
         win_rno[0] = win_rno[1] = 0;
         wk->wu.routine_no[3]++;
-        work = win_select(wk, 7);
+        pose = win_select(wk, 7);
         if ((Round_num >= Battle_Round[Play_Type] * 2) || (PL_Wins[wk->wu.id] >= Battle_Round[Play_Type] + 1)) {
             if (Round_Result & 0x800) {
                 wk->wu.cmwk[0] = 0;
@@ -197,13 +197,13 @@ void Win_01000(PLW* wk) {
                 win_rno[0] = OW_FLY_UP;
                 break;
             }
-            set_char_move_init(&wk->wu, 9, win_10000_tbl[1][work]);
-            if (work == 4) {
+            set_char_move_init(&wk->wu, 9, win_10000_tbl[1][pose]);
+            if (pose == 4) {
                 win_rno[0] = OW_JUMP;
             }
         } else {
-            set_char_move_init(&wk->wu, 9, win_10000_tbl[0][work]);
-            if (work == 4) {
+            set_char_move_init(&wk->wu, 9, win_10000_tbl[0][pose]);
+            if (pose == 4) {
                 win_rno[0] = OW_JUMP;
             }
         }
@@ -359,7 +359,7 @@ void jijii_full(PLW* wk) {
 
 
 void Win_02000(PLW* wk) {
-    s16 work;
+    s16 pose;
     bg_app_stop = 1;
     switch (wk->wu.routine_no[3]) {
     case RN3_START:
@@ -368,12 +368,12 @@ void Win_02000(PLW* wk) {
         }
         wk->wu.routine_no[3]++;
         win_rno[0] = win_rno[1] = 0;
-        work = win_select(wk, 3);
+        pose = win_select(wk, 3);
         if (Round_num >= (Battle_Round[Play_Type] * 2) ||
             PL_Wins[wk->wu.id] >= Battle_Round[Play_Type] + 1) {
             if (win_2000_tbl[bg_w.bg_index]) {
-                set_char_move_init(&wk->wu, 9, work + 36);
-            } else if (work & 1) {
+                set_char_move_init(&wk->wu, 9, pose + 36);
+            } else if (pose & 1) {
                 set_char_move_init(&wk->wu, 9, 32);
             } else {
                 set_char_move_init(&wk->wu, 9, 38);
@@ -391,7 +391,7 @@ void Win_02000(PLW* wk) {
 
 
 void Win_03000(PLW* wk) {
-    s16 work;
+    s16 pose;
     bg_app_stop = 1;
     if (set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
         set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
@@ -400,20 +400,20 @@ void Win_03000(PLW* wk) {
     case RN3_START:
         wk->wu.routine_no[3]++;
         win_rno[0] = win_rno[1] = 0;
-        work = win_select(wk, 15);
+        pose = win_select(wk, 15);
         if (Round_num >= (Battle_Round[Play_Type] * 2) ||
             PL_Wins[wk->wu.id] >= Battle_Round[Play_Type] + 1) {
             if (bg_w.stage == 7) {
                 set_char_move_init(&wk->wu, 9, 43);
                 break;
             }
-            set_char_move_init(&wk->wu, 9, Win_3001_tbl[work]);
-            if (Win_3001_tbl[work] == 41) {
+            set_char_move_init(&wk->wu, 9, Win_3001_tbl[pose]);
+            if (Win_3001_tbl[pose] == 41) {
                 win_rno[0] = 1;
             }
             break;
         }
-        set_char_move_init(&wk->wu, 9, Win_3000_tbl[work]);
+        set_char_move_init(&wk->wu, 9, Win_3000_tbl[pose]);
         break;
     default:
         if (win_rno[0]) {
@@ -432,8 +432,8 @@ void Win_03000(PLW* wk) {
 
 
 void Win_04000(PLW* wk) {
-    s16 work;
-    s16 work2;
+    s16 pose;
+    s16 ip;
     bg_app_stop = 1;
     if (set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
         set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
@@ -442,25 +442,25 @@ void Win_04000(PLW* wk) {
     case RN3_START:
         wk->wu.routine_no[3]++;
         win_rno[0] = win_rno[1] = 0;
-        work = win_select(wk, 3);
+        pose = win_select(wk, 3);
         if (Round_num >= (Battle_Round[Play_Type] * 2) ||
             PL_Wins[wk->wu.id] >= Battle_Round[Play_Type] + 1) {
-            set_char_move_init(&wk->wu, 9, work + 36);
+            set_char_move_init(&wk->wu, 9, pose + 36);
             break;
         }
-        switch (work) {
+        switch (pose) {
         case 1:
         case 3:
             if (wk->wu.now_koc == 0 && wk->wu.char_index == 0) {
-                work2 = wk->wu.cg_ix / wk->wu.cgd_type;
-                work2 += 2;
-                set_char_move_init2(&wk->wu, 9, work + 32, work2, 0);
+                ip = wk->wu.cg_ix / wk->wu.cgd_type;
+                ip += 2;
+                set_char_move_init2(&wk->wu, 9, pose + 32, ip, 0);
             } else {
-                set_char_move_init(&wk->wu, 9, work + 32);
+                set_char_move_init(&wk->wu, 9, pose + 32);
             }
             break;
         default:
-            set_char_move_init(&wk->wu, 9, work + 32);
+            set_char_move_init(&wk->wu, 9, pose + 32);
             break;
         }
         break;
@@ -474,7 +474,7 @@ void Win_04000(PLW* wk) {
 
 
 void Normal_normal_Winner(PLW* wk) {
-    s16 work;
+    s16 pose;
     bg_app_stop = 1;
     if (set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
         set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
@@ -482,8 +482,8 @@ void Normal_normal_Winner(PLW* wk) {
     switch (wk->wu.routine_no[3]) {
     case RN3_START:
         wk->wu.routine_no[3]++;
-        work = win_select(wk, 7);
-        set_char_move_init(&wk->wu, 9, work + 32);
+        pose = win_select(wk, 7);
+        set_char_move_init(&wk->wu, 9, pose + 32);
         break;
     case POSE_RUN:
     case RN3_DONE:
@@ -495,7 +495,7 @@ void Normal_normal_Winner(PLW* wk) {
 
 
 void Judge_normal_winner(PLW* wk) {
-    s16 work;
+    s16 pose;
     bg_app_stop = 1;
     if (set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
         set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
@@ -504,8 +504,8 @@ void Judge_normal_winner(PLW* wk) {
     case RN3_START:
         win_rno[0] = win_rno[1] = 0;
         wk->wu.routine_no[3]++;
-        work = win_select(wk, 3);
-        set_char_move_init(&wk->wu, 9, work + 52);
+        pose = win_select(wk, 3);
+        set_char_move_init(&wk->wu, 9, pose + 52);
         break;
     case POSE_RUN:
     case RN3_DONE:
@@ -517,7 +517,7 @@ void Judge_normal_winner(PLW* wk) {
 
 
 void Win_05000(PLW* wk) {
-    s16 work;
+    s16 pose;
     bg_app_stop = 1;
     if (set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
         set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
@@ -540,8 +540,8 @@ void Win_05000(PLW* wk) {
             win_rno[0] = 0;
             break;
         }
-        work = win_select(wk, 3);
-        set_char_move_init(&wk->wu, 9, work + 32);
+        pose = win_select(wk, 3);
+        set_char_move_init(&wk->wu, 9, pose + 32);
         win_rno[0] = 1;
         break;
     default:
@@ -570,7 +570,7 @@ void Win_05000(PLW* wk) {
 
 
 void Win_06000(PLW* wk) {
-    s16 work;
+    s16 pose;
     bg_app_stop = 1;
     switch (wk->wu.routine_no[3]) {
     case RN3_START:
@@ -581,11 +581,11 @@ void Win_06000(PLW* wk) {
         wk->wu.routine_no[3]++;
         if (Round_num >= (Battle_Round[Play_Type] * 2) ||
             PL_Wins[wk->wu.id] >= Battle_Round[Play_Type] + 1) {
-            work = win_select(wk, 3);
-            set_char_move_init(&wk->wu, 9, work + 36);
+            pose = win_select(wk, 3);
+            set_char_move_init(&wk->wu, 9, pose + 36);
         } else {
-            work = win_select(wk, 3);
-            set_char_move_init(&wk->wu, 9, work + 32);
+            pose = win_select(wk, 3);
+            set_char_move_init(&wk->wu, 9, pose + 32);
         }
         break;
     default:
@@ -597,7 +597,7 @@ void Win_06000(PLW* wk) {
 
 
 void Win_07000(PLW* wk) {
-    s16 work;
+    s16 pose;
     bg_app_stop = 1;
     if (set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
         set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
@@ -608,11 +608,11 @@ void Win_07000(PLW* wk) {
         wk->wu.routine_no[3]++;
         if (Round_num >= (Battle_Round[Play_Type] * 2) ||
             PL_Wins[wk->wu.id] >= Battle_Round[Play_Type] + 1) {
-            work = win_select(wk, 7);
-            if (work <= 3) {
+            pose = win_select(wk, 7);
+            if (pose <= 3) {
                 if (plw[0].player_number == PL_NECRO && plw[1].player_number == PL_NECRO) {
                     win_rno[0] = 0;
-                    set_char_move_init(&wk->wu, 9, work + 32);
+                    set_char_move_init(&wk->wu, 9, pose + 32);
                     break;
                 }
                 effect_82_init(&wk->wu);
@@ -623,7 +623,7 @@ void Win_07000(PLW* wk) {
             }
             if (plw[0].player_number == PL_NECRO && plw[1].player_number == PL_NECRO) {
                 win_rno[0] = 0;
-                set_char_move_init(&wk->wu, 9, work + 32);
+                set_char_move_init(&wk->wu, 9, pose + 32);
                 break;
             }
             effect_83_init(&wk->wu);
@@ -633,8 +633,8 @@ void Win_07000(PLW* wk) {
             return;
         } else {
             win_rno[0] = 0;
-            work = win_select(wk, 7);
-            set_char_move_init(&wk->wu, 9, work + 32);
+            pose = win_select(wk, 7);
+            set_char_move_init(&wk->wu, 9, pose + 32);
             break;
         }
     default:
@@ -665,7 +665,7 @@ void Win_07000(PLW* wk) {
 
 
 void Win_08000(PLW* wk) {
-    s16 work;
+    s16 pose;
     bg_app_stop = 1;
     switch (wk->wu.routine_no[3]) {
     case RN3_START:
@@ -678,11 +678,11 @@ void Win_08000(PLW* wk) {
             set_char_move_init(&wk->wu, 9, 40);
         } else if (Round_num >= (Battle_Round[Play_Type] * 2) ||
                    PL_Wins[wk->wu.id] >= Battle_Round[Play_Type] + 1) {
-            work = win_select(wk, 3);
-            set_char_move_init(&wk->wu, 9, work + 36);
+            pose = win_select(wk, 3);
+            set_char_move_init(&wk->wu, 9, pose + 36);
         } else {
-            work = win_select(wk, 3);
-            set_char_move_init(&wk->wu, 9, work + 32);
+            pose = win_select(wk, 3);
+            set_char_move_init(&wk->wu, 9, pose + 32);
         }
         break;
     default:
@@ -694,7 +694,7 @@ void Win_08000(PLW* wk) {
 
 
 void Win_09000(PLW* wk) {
-    s16 work;
+    s16 pose;
     bg_app_stop = 1;
     if (set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
         set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
@@ -703,18 +703,18 @@ void Win_09000(PLW* wk) {
     case RN3_START:
         win_rno[0] = win_rno[1] = 0;
         wk->wu.routine_no[3]++;
-        work = win_select(wk, 7);
-        if (work == 7) {
+        pose = win_select(wk, 7);
+        if (pose == 7) {
             set_char_move_init(&wk->wu, 9, 32);
         } else {
-            set_char_move_init(&wk->wu, 9, (work) + 32);
+            set_char_move_init(&wk->wu, 9, (pose) + 32);
         }
         if (Round_num < (Battle_Round[Play_Type] * 2) &&
             PL_Wins[wk->wu.id] < Battle_Round[Play_Type] + 1) {
             break;
         }
         if (!poison_flag[wk->wu.id]) {
-            switch (work) {
+            switch (pose) {
             case 0:
                 effect_L6_init(&wk->wu, 0);
                 break;
@@ -760,8 +760,8 @@ void Win_09000(PLW* wk) {
 
 
 void Win_10000(PLW* wk) {
-    s16 work;
-    s16 work2;
+    s16 pose;
+    s16 dist;
     s16 id_w;
     bg_app_stop = 1;
     id_w = wk->wu.id ^ 1;
@@ -773,21 +773,21 @@ void Win_10000(PLW* wk) {
         }
         win_rno[0] = win_rno[1] = 0;
         wk->wu.routine_no[3]++;
-        work = win_select(wk, 3);
+        pose = win_select(wk, 3);
         if (Round_num >= (Battle_Round[Play_Type] * 2) ||
             PL_Wins[wk->wu.id] >= Battle_Round[Play_Type] + 1) {
-            work2 = wk->wu.xyz[0].disp.pos - plw[id_w].wu.xyz[0].disp.pos;
-            if (work2 < 0) {
-                work2 = -work2;
+            dist = wk->wu.xyz[0].disp.pos - plw[id_w].wu.xyz[0].disp.pos;
+            if (dist < 0) {
+                dist = -dist;
             }
-            if (work2 > 224) {
-                if (work & 1) {
+            if (dist > 224) {
+                if (pose & 1) {
                     win_rno[0] = QW_KEEP;
                 } else {
                     win_rno[0] = QW_LEAVE;
                 }
-            } else if (work > 1) {
-                if (work & 1) {
+            } else if (pose > 1) {
+                if (pose & 1) {
                     if (plw[id_w].wu.char_index != 67) {
                         win_rno[0] = QW_KEEP;
                     } else {
@@ -798,13 +798,13 @@ void Win_10000(PLW* wk) {
                 } else {
                     win_rno[0] = QW_LEAVE_67;
                 }
-            } else if (work & 1) {
+            } else if (pose & 1) {
                 win_rno[0] = QW_KEEP;
             } else {
                 win_rno[0] = QW_LEAVE;
             }
         } else {
-            set_char_move_init(&wk->wu, 9, work + 32);
+            set_char_move_init(&wk->wu, 9, pose + 32);
         }
         break;
     default:
@@ -827,19 +827,19 @@ void Win_10000(PLW* wk) {
 
 
 s16 q_em_distance_chk(PLW* wk) {
-    s16 work;
+    s16 dist;
     s16 id_w;
     s16 rl_w;
     id_w = wk->wu.id ^ 1;
     rl_w = plw[id_w].wu.rl_flag ^ wk->wu.rl_flag;
     if (wk->wu.rl_flag) {
-        work = wk->wu.xyz[0].disp.pos - plw[id_w].wu.xyz[0].disp.pos;
-        if (work >= q_em_distance_tbl[plw[id_w].player_number][rl_w]) {
+        dist = wk->wu.xyz[0].disp.pos - plw[id_w].wu.xyz[0].disp.pos;
+        if (dist >= q_em_distance_tbl[plw[id_w].player_number][rl_w]) {
             return 1;
         }
     } else {
-        work = plw[id_w].wu.xyz[0].disp.pos - wk->wu.xyz[0].disp.pos;
-        if (work >= q_em_distance_tbl[plw[id_w].player_number][rl_w]) {
+        dist = plw[id_w].wu.xyz[0].disp.pos - wk->wu.xyz[0].disp.pos;
+        if (dist >= q_em_distance_tbl[plw[id_w].player_number][rl_w]) {
             return 1;
         }
     }
@@ -849,11 +849,11 @@ s16 q_em_distance_chk(PLW* wk) {
 
 
 s32 q_em_dir(PLW* wk) {
-    s16 work;
+    s16 dist;
     s16 pos_w;
     s16 id_w = wk->wu.id ^ 1;
-    work = wk->wu.xyz[0].disp.pos - plw[id_w].wu.xyz[0].disp.pos;
-    if (work < 0) {
+    dist = wk->wu.xyz[0].disp.pos - plw[id_w].wu.xyz[0].disp.pos;
+    if (dist < 0) {
         wk->wu.direction = 1;
     } else {
         wk->wu.direction = 0;
@@ -924,7 +924,7 @@ void q_keeping_action(PLW* wk) {
 
 
 void q_leave_after_action(PLW* wk) {
-    s16 work;
+    s16 edge;
     switch (win_rno[1]) {
     case Q_FACE:
         if (q_em_dir(wk)) {
@@ -982,15 +982,15 @@ void q_leave_after_action(PLW* wk) {
         char_move(&wk->wu);
         add_x_sub((WORK_Other*)wk);
         if (wk->wu.rl_flag) {
-            work = bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset;
-            work += 64;
-            if (work < wk->wu.xyz[0].disp.pos) {
+            edge = bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset;
+            edge += 64;
+            if (edge < wk->wu.xyz[0].disp.pos) {
                 win_rno[1]++;
             }
         } else {
-            work = bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset;
-            work -= 64;
-            if (work > wk->wu.xyz[0].disp.pos) {
+            edge = bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset;
+            edge -= 64;
+            if (edge > wk->wu.xyz[0].disp.pos) {
                 win_rno[1]++;
             }
         }
@@ -1046,7 +1046,7 @@ void q_walk_past_action(PLW* wk) {
 
 
 void Win_11000(PLW* wk) {
-    s16 work;
+    s16 pose;
     bg_app_stop = 1;
     switch (wk->wu.routine_no[3]) {
     case RN3_START:
@@ -1055,7 +1055,7 @@ void Win_11000(PLW* wk) {
         }
         win_rno[0] = win_rno[1] = 0;
         wk->wu.routine_no[3]++;
-        work = win_select(wk, 3);
+        pose = win_select(wk, 3);
         if (Round_num >= (Battle_Round[Play_Type] * 2) ||
             PL_Wins[wk->wu.id] >= Battle_Round[Play_Type] + 1) {
             if (Perfect_Flag) {
@@ -1063,8 +1063,8 @@ void Win_11000(PLW* wk) {
                 set_char_move_init(&wk->wu, 9, 38);
                 effect_L3_init(wk);
             } else {
-                set_char_move_init(&wk->wu, 9, work + 36);
-                switch (work) {
+                set_char_move_init(&wk->wu, 9, pose + 36);
+                switch (pose) {
                 case 0:
                     win_rno[0] = TW_BACKJUMP;
                     break;
@@ -1078,7 +1078,7 @@ void Win_11000(PLW* wk) {
             }
         } else {
             win_rno[0] = TW_NORMAL;
-            set_char_move_init(&wk->wu, 9, work + 32);
+            set_char_move_init(&wk->wu, 9, pose + 32);
         }
         break;
     default:
@@ -1189,7 +1189,7 @@ void twelve_win_backjump(PLW* wk) {
 
 
 void Win_12000(PLW* wk) {
-    s16 work;
+    s16 pose;
     bg_app_stop = 1;
     switch (wk->wu.routine_no[3]) {
     case RN3_START:
@@ -1198,8 +1198,8 @@ void Win_12000(PLW* wk) {
         }
         win_rno[0] = win_rno[1] = 0;
         wk->wu.routine_no[3]++;
-        work = win_select(wk, 7);
-        set_char_move_init(&wk->wu, 9, work + 32);
+        pose = win_select(wk, 7);
+        set_char_move_init(&wk->wu, 9, pose + 32);
         if (Round_num >= (Battle_Round[Play_Type] * 2) ||
             PL_Wins[wk->wu.id] >= Battle_Round[Play_Type] + 1) {
             effect_M2_init(&wk->wu, 1);
@@ -1214,7 +1214,7 @@ void Win_12000(PLW* wk) {
 
 
 void Win_13000(PLW* wk) {
-    s16 work;
+    s16 pose;
     bg_app_stop = 1;
     switch (wk->wu.routine_no[3]) {
     case RN3_START:
@@ -1236,11 +1236,11 @@ void Win_13000(PLW* wk) {
                     break;
                 }
             }
-            work = win_select(wk, 3);
-            set_char_move_init(&wk->wu, 9, work + 36);
+            pose = win_select(wk, 3);
+            set_char_move_init(&wk->wu, 9, pose + 36);
         } else {
-            work = win_select(wk, 3);
-            set_char_move_init(&wk->wu, 9, work + 32);
+            pose = win_select(wk, 3);
+            set_char_move_init(&wk->wu, 9, pose + 32);
         }
         break;
     default:
@@ -1252,7 +1252,7 @@ void Win_13000(PLW* wk) {
 
 
 void Win_14000(PLW* wk) {
-    s16 work;
+    s16 pose;
     bg_app_stop = 1;
     if (set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos + bg_w.pos_offset, 1)) {
         set_field_hosei_flag(&plw[wk->wu.id], bg_w.bgw[1].wxy[0].disp.pos - bg_w.pos_offset, 0);
@@ -1263,15 +1263,15 @@ void Win_14000(PLW* wk) {
         wk->wu.routine_no[3]++;
         if (Round_num >= (Battle_Round[Play_Type] * 2) ||
             PL_Wins[wk->wu.id] >= Battle_Round[Play_Type] + 1) {
-            work = win_select(wk, 3);
-            if (!(work & 1)) {
+            pose = win_select(wk, 3);
+            if (!(pose & 1)) {
                 win_rno[0] = 1;
             } else {
-                set_char_move_init(&wk->wu, 9, work + 36);
+                set_char_move_init(&wk->wu, 9, pose + 36);
             }
         } else {
-            work = win_select(wk, 3);
-            set_char_move_init(&wk->wu, 9, work + 32);
+            pose = win_select(wk, 3);
+            set_char_move_init(&wk->wu, 9, pose + 32);
         }
         break;
     default:
@@ -1366,7 +1366,7 @@ void urien_dash(PLW* wk) {
 
 
 void Win_15000(PLW* wk) {
-    s16 work;
+    s16 pose;
     bg_app_stop = 1;
     switch (wk->wu.routine_no[3]) {
     case RN3_START:
@@ -1377,11 +1377,11 @@ void Win_15000(PLW* wk) {
         wk->wu.routine_no[3]++;
         if (Round_num >= (Battle_Round[Play_Type] * 2) ||
             PL_Wins[wk->wu.id] >= Battle_Round[Play_Type] + 1) {
-            work = win_select(wk, 7);
-            set_char_move_init(&wk->wu, 9, Win_15000_tbl[work]);
+            pose = win_select(wk, 7);
+            set_char_move_init(&wk->wu, 9, Win_15000_tbl[pose]);
         } else {
-            work = win_select(wk, 3);
-            set_char_move_init(&wk->wu, 9, work + 32);
+            pose = win_select(wk, 3);
+            set_char_move_init(&wk->wu, 9, pose + 32);
         }
         break;
     default:

@@ -77,7 +77,7 @@ s32 effect_47_init(WORK* wk, s32 _p1) {
         ewk->wu.work_id = 16;
         ewk->wu.cgromtype = 1;
         ewk->wu.rl_flag = 0;
-        *ewk->wu.char_table = etc_char_table;
+        ewk->wu.char_table[0] = etc_char_table;
         ewk->wu.type = i;
         ewk->wu.my_family = 2;
         ewk->wu.char_index = i + 0x43;

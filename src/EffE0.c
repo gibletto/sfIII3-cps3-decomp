@@ -129,7 +129,7 @@ s32 effect_E0_init(s16 Direction, s16 dm_vital, s16 Pos_Type) {
     ewk->wu.my_col_mode = 0x4200;
     ewk->wu.my_col_code = 0x2040;
     ewk->wu.my_family = 4;
-    *ewk->wu.char_table = sel_pl_char_table;
+    ewk->wu.char_table[0] = sel_pl_char_table;
     ewk->wu.dm_vital = dm_vital;
     ewk->wu.direction = Direction;
     ewk->wu.xyz[0].disp.pos = Offset_BG_X[3] + bg_w.bgw[3].wxy[0].disp.pos + Plate_Pos_Data_E0[Pos_Type][0];

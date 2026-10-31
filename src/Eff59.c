@@ -96,7 +96,7 @@ void effect_59_move(WORK_Other* ewk) {
         sort_push_request4(&ewk->wu);
         return;
     default:
-        all_cgps_put_back(ewk);
+        all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
         return;
     }
@@ -135,7 +135,7 @@ s32 effect_59_init(WORK_Other* mwk, s16 Synchro_BG, s16 ID, s16 direction) {
     ewk->wu.my_col_mode = 0x4400;
     ewk->wu.my_col_code = 0x2000;
     ewk->wu.my_family = Synchro_BG;
-    *ewk->wu.char_table = sel_pl_char_table;
+    ewk->wu.char_table[0] = sel_pl_char_table;
     ewk->my_master = (u32*)mwk;
     ewk->wu.char_index = 19;
     ewk->wu.dir_step = ID;
@@ -210,8 +210,8 @@ void effect_60_move(WORK_Other* ewk) {
         ewk->wu.routine_no[0]++;
         break;
     default:
-        all_cgps_put_back(ewk);
-        push_effect_work((WORK*)ewk);
+        all_cgps_put_back(&ewk->wu);
+        push_effect_work(&ewk->wu);
         break;
     }
 }

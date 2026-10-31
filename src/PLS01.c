@@ -91,7 +91,7 @@ s32 check_rl_flag(WORK* wk) {
 
 
 void set_rl_waza(PLW* wk) {
-    s16 v;
+    s16 lever;
     s16 d;
     WORK_Other* p;
     if (Bonus_Game_Flag != BONUS_CAR) {
@@ -101,8 +101,8 @@ void set_rl_waza(PLW* wk) {
         if (wk->wu.xyz[0].disp.pos < bs2_hosei[0] || wk->wu.xyz[0].disp.pos > bs2_hosei[1]) {
             goto other;
         }
-        if ((v = wk->cp->sw_lvbt & LEVER_ALL) && !(v & 3)) {
-            wk->wu.rl_waza = (v & 8) != 0;
+        if ((lever = wk->cp->sw_lvbt & LEVER_ALL) && !(lever & (LEVER_UP | LEVER_DOWN))) {
+            wk->wu.rl_waza = (lever & LEVER_RIGHT) != 0;
             return;
         }
     }
@@ -606,7 +606,7 @@ s32 check_em_catt(PLW* wk) {
     if ((rlf = (wk->wu.rl_flag + em->wu.rl_flag) & 1) == 0) {
         return 0;
     }
-    if (wk->cp->lever_dir != LVDIR_BACK || wk->cp->sw_new & CMD_LV_UP) {
+    if (wk->cp->lever_dir != LVDIR_BACK || (wk->cp->sw_new & CMD_LV_UP)) {
         return 0;
     }
     xd = wk->wu.xyz[0].disp.pos - em->wu.xyz[0].disp.pos;

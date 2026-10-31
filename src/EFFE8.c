@@ -78,9 +78,9 @@ void effect_E8_move(WORK_Other* ewk) {
         break;
     default:
         if (ewk->wu.old_rno[3]) {
-            all_cgps_put_back(ewk);
+            all_cgps_put_back(&ewk->wu);
         }
-        push_effect_work((WORK*)ewk);
+        push_effect_work(&ewk->wu);
         break;
     }
 }

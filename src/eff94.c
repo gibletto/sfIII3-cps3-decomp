@@ -170,23 +170,23 @@ void eff94_2000_0(WORK_Other* ewk) {
 
 
 void eff94_2000_1(WORK_Other* ewk) {
-    s16 work;
+    s16 rnd;
     ewk->wu.routine_no[2]++;
     set_char_move_init(&ewk->wu, 0, ewk->wu.old_rno[0]);
     ewk->wu.disp_flag = 1;
-    work = random_16_com();
-    if (eff94_2000_1_tbl[work]) {
+    rnd = random_16_com();
+    if (eff94_2000_1_tbl[rnd]) {
         ewk->wu.routine_no[2] = R2_REST;
         ewk->wu.dir_timer = 8;
         return;
     }
-    if (work == 7 && ewk->wu.old_rno[3]) {
+    if (rnd == 7 && ewk->wu.old_rno[3]) {
         effect_94_init(4);
         effect_94_init(4);
         effect_94_init(4);
     }
-    work &= 7;
-    ewk->wu.xyz[0].disp.pos = eff94_2000_tbl[work];
+    rnd &= 7;
+    ewk->wu.xyz[0].disp.pos = eff94_2000_tbl[rnd];
     ewk->wu.xyz[1].cal = 0x1100000;
     ewk->wu.mvxy.a[1].sp = -0x68000;
     ewk->wu.mvxy.d[1].sp = -0x6000;

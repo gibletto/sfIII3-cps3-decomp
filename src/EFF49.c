@@ -82,7 +82,7 @@ s32 effect_49_init(s16 vital_new) {
     ewk->wu.cgromtype = 1;
     ewk->wu.my_col_mode = 0x4200;
     ewk->wu.my_col_code = 0x2040;
-    *ewk->wu.char_table = sel_pl_char_table;
+    ewk->wu.char_table[0] = sel_pl_char_table;
     ewk->wu.direction = 1;
     ewk->wu.vital_new = vital_new;
     ewk->wu.my_family = 2;

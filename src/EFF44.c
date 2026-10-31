@@ -63,8 +63,8 @@ void effect_43_move(WORK_Other* ewk) {
         char_move(&ewk->wu);
         break;
     default:
-        all_cgps_put_back(ewk);
-        push_effect_work((WORK*)ewk);
+        all_cgps_put_back(&ewk->wu);
+        push_effect_work(&ewk->wu);
         return;
     }
     ewk->wu.position_x = ewk->wu.xyz[0].disp.pos & 0x3FF;
@@ -122,8 +122,8 @@ void effect_44_move(WORK_Other* ewk) {
         disp_pos_trans_entry_rs(ewk);
         break;
     default:
-        all_cgps_put_back(ewk);
-        push_effect_work((WORK*)ewk);
+        all_cgps_put_back(&ewk->wu);
+        push_effect_work(&ewk->wu);
         break;
     }
 }

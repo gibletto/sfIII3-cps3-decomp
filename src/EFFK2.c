@@ -152,8 +152,8 @@ void effect_K1_move(WORK_Other* ewk) {
             ewk->wu.routine_no[1]++;
             return;
         default:
-            all_cgps_put_back(ewk);
-            push_effect_work((WORK*)ewk);
+            all_cgps_put_back(&ewk->wu);
+            push_effect_work(&ewk->wu);
             return;
         }
         break;
@@ -620,7 +620,7 @@ s32 effect_K2_init(WORK_Other* wk, u32* dad) {
     ewk->wu.hit_adrs = wk->wu.target_adrs;
     ewk->wu.xyz[0].disp.pos = 448;
     ewk->wu.xyz[1].disp.pos = 0;
-    *ewk->wu.char_table = bonus_char_table;
+    ewk->wu.char_table[0] = bonus_char_table;
     effect_K2_move(ewk);
     return 0;
 }

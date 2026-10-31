@@ -57,7 +57,7 @@
 
 
 
-/* provisional name */
+/* Clears the text layer and runs System_all_clear, then waits a frame. */
 /* provisional name */
 void Scr_all_clear_Wait(void)
 {
@@ -66,6 +66,7 @@ void Scr_all_clear_Wait(void)
     task_sleep(1);
 }
 
+/* Runs System_all_clear, then waits a frame. */
 /* provisional name */
 void System_all_clear_Wait(void)
 {
@@ -73,6 +74,7 @@ void System_all_clear_Wait(void)
     task_sleep(1);
 }
 
+/* Clears text page 0 and runs System_all_clear_Ex, then waits a frame. */
 /* provisional name */
 void System_all_clear_Ex_Wait(void)
 {
@@ -81,6 +83,8 @@ void System_all_clear_Ex_Wait(void)
     task_sleep(1);
 }
 
+/* Clears the render lists, character graphics tables, scroll layer state and all effect work, then reloads the
+   common character graphics and cells. */
 /* provisional name */
 void System_all_clear(void)
 {
@@ -97,6 +101,7 @@ void System_all_clear(void)
 
 
 
+/* As System_all_clear, but clears only effect lists 2 to 7. */
 /* provisional name */
 void System_all_clear_Ex(void) {
     s16 i;
@@ -113,6 +118,7 @@ void System_all_clear_Ex(void) {
     setup_GILL_exsa_obj();
 }
 
+/* Runs the palette fade for a frame (fade_cont_main). */
 /* provisional name */
 void Fade_Cont(void)
 {
@@ -217,26 +223,26 @@ u8 wipe_mode;
 
 /* One step of the wipe that covers the screen, drawn in Wipe_Mode; 1 when the wipe is complete. */
 s32 Switch_Screen(void) {
-    switch (((s8)Wipe_Mode)) {
+    switch ((s8)Wipe_Mode) {
     case 0:
-        wipe_pattern_set(((s8)Wipe_Kind), Wipe_Count, 0);
-        if (++Wipe_Count < ((s8)Wipe_Limit)) {
+        wipe_pattern_set((s8)Wipe_Kind, Wipe_Count, 0);
+        if (++Wipe_Count < (s8)Wipe_Limit) {
             return 0;
         }
         Exec_Wipe = 0;
         Stop_Combo = 0;
         return 1;
     case 1:
-        wipe_pattern_or_cols(((s8)Wipe_Kind), Wipe_Count);
-        if (++Wipe_Count < ((s8)Wipe_Limit)) {
+        wipe_pattern_or_cols((s8)Wipe_Kind, Wipe_Count);
+        if (++Wipe_Count < (s8)Wipe_Limit) {
             return 0;
         }
         Exec_Wipe = 0;
         Stop_Combo = 0;
         return 1;
     case 2:
-        wipe_pattern_and_low(((s8)Wipe_Kind), Wipe_Count);
-        if (++Wipe_Count < ((s8)Wipe_Limit)) {
+        wipe_pattern_and_low((s8)Wipe_Kind, Wipe_Count);
+        if (++Wipe_Count < (s8)Wipe_Limit) {
             return 0;
         }
         Exec_Wipe = 0;
@@ -244,16 +250,16 @@ s32 Switch_Screen(void) {
         return 1;
     case 3:
     case 4:
-        wipe_pattern_or_cols(((s8)Wipe_Kind), Wipe_Count);
-        if (++Wipe_Count < ((s8)Wipe_Limit)) {
+        wipe_pattern_or_cols((s8)Wipe_Kind, Wipe_Count);
+        if (++Wipe_Count < (s8)Wipe_Limit) {
             return 0;
         }
         Exec_Wipe = 0;
         Stop_Combo = 0;
         return 1;
     case 5:
-        wipe_mask_and_cols(((s8)Wipe_Kind), Wipe_Count);
-        if (++Wipe_Count < ((s8)Wipe_Limit)) {
+        wipe_mask_and_cols((s8)Wipe_Kind, Wipe_Count);
+        if (++Wipe_Count < (s8)Wipe_Limit) {
             return 0;
         }
         return 1;
@@ -265,18 +271,18 @@ s32 Switch_Screen(void) {
 
 /* One step of the wipe that uncovers the screen again; 1 when the wipe is complete. */
 s32 Switch_Screen_Revival(void) {
-    switch (((s8)Wipe_Mode)) {
+    switch ((s8)Wipe_Mode) {
     case 0:
-        wipe_pattern_set(((s8)Wipe_Kind), Wipe_Count, 1);
-        if (++Wipe_Count < ((s8)Wipe_Limit)) {
+        wipe_pattern_set((s8)Wipe_Kind, Wipe_Count, 1);
+        if (++Wipe_Count < (s8)Wipe_Limit) {
             return 0;
         }
         Exec_Wipe = 0;
         Escape_SS = 0;
         return 1;
     case 1:
-        wipe_pattern_restore_cols(((s8)Wipe_Kind), Wipe_Count);
-        if (++Wipe_Count < ((s8)Wipe_Limit)) {
+        wipe_pattern_restore_cols((s8)Wipe_Kind, Wipe_Count);
+        if (++Wipe_Count < (s8)Wipe_Limit) {
             return 0;
         }
         Exec_Wipe = 0;
@@ -284,16 +290,16 @@ s32 Switch_Screen_Revival(void) {
         return 1;
     case 3:
     case 4:
-        wipe_pattern_restore_cols(((s8)Wipe_Kind), Wipe_Count);
-        if (++Wipe_Count < ((s8)Wipe_Limit)) {
+        wipe_pattern_restore_cols((s8)Wipe_Kind, Wipe_Count);
+        if (++Wipe_Count < (s8)Wipe_Limit) {
             return 0;
         }
         Exec_Wipe = 0;
         Escape_SS = 0;
         return 1;
     case 5:
-        wipe_mask_set_cols(((s8)Wipe_Kind), Wipe_Count);
-        if (++Wipe_Count < ((s8)Wipe_Limit)) {
+        wipe_mask_set_cols((s8)Wipe_Kind, Wipe_Count);
+        if (++Wipe_Count < (s8)Wipe_Limit) {
             return 0;
         }
         Exec_Wipe = 0;
@@ -441,6 +447,8 @@ s16 PL_id;
 
 
 
+/* After PL_id's entry goes into ranking table dir_step at or above the partner's place, moves the partner's
+   place down one (off the table past the last place). */
 void Check_Partners_Rank(dir_step, PL_id)
 s16 dir_step;
 s16 PL_id;
@@ -456,6 +464,7 @@ s16 PL_id;
 
 
 
+/* Inserts the player's result into the score ranking: returns the place, or -1 when it did not make the table. */
 s32 Check_Sort_Score(PL_id)
 s16 PL_id;
 {
@@ -475,6 +484,7 @@ s16 PL_id;
 
 
 
+/* Inserts the player's result into the wins ranking: returns the place, or -1 when it did not make the table. */
 s32 Check_Sort_Wins(PL_id)
 s16 PL_id;
 {
@@ -496,6 +506,8 @@ s16 PL_id;
 
 
 
+/* Inserts the player's result into the CPU-grade ranking: returns the place, or -1 when it did not make the
+   table. */
 s32 Check_Sort_CPU_Grade(PL_id)
 s16 PL_id;
 {
@@ -516,6 +528,7 @@ s16 PL_id;
 
 
 
+/* Inserts the player's result into the grade ranking: returns the place, or -1 when it did not make the table. */
 s32 Check_Sort_Grade(PL_id)
 s16 PL_id;
 {
@@ -536,6 +549,8 @@ s16 PL_id;
 
 
 
+/* Nonzero when the player's result beats entry i of the CPU-grade ranking: a higher CPU grade, or the same
+   grade and a higher score. */
 s32 Check_CPU_Grade_Score(PL_id, i)
 s16 PL_id;
 s16 i;
@@ -554,6 +569,8 @@ s16 i;
 
 
 
+/* Nonzero when the player's result beats entry i of the grade ranking: a higher grade, or the same grade and
+   more wins. */
 s32 Check_Grade_Score(PL_id, i)
 s16 PL_id;
 s16 i;
@@ -670,15 +687,15 @@ int Setup_Target_PL(void)
 void Disp_Digit8x16(u32 value, s16 x, s16 y) {
     s16 i;
     s16 j;
-    s32 xx;
+    s32 div;
     s16 First_Digit;
     s16 Digit[8];
     if (value == 0) {
         score8x16_put(x, y, 16, 0);
     }
-    for (i = 7, xx = 10000000, First_Digit = -1; i > 0; i--, xx = xx / 10) {
-        Digit[i] = value / xx;
-        value -= xx * Digit[i];
+    for (i = 7, div = 10000000, First_Digit = -1; i > 0; i--, div = div / 10) {
+        Digit[i] = value / div;
+        value -= div * Digit[i];
         if (First_Digit < 0) {
             if (Digit[i]) {
                 First_Digit = i;
@@ -697,15 +714,15 @@ void Disp_Digit8x16(u32 value, s16 x, s16 y) {
 void Disp_Digit16x24(u32 value, s16 x, s16 y, u16 attr) {
     s16 i;
     s16 j;
-    s32 xx;
+    s32 div;
     s16 First_Digit;
     s16 Digit[8];
     if (value == 0) {
         score16x24_put(x, y, 30, 0);
     }
-    for (i = 7, xx = 10000000, First_Digit = -1; i > 0; i--, xx = xx / 10) {
-        Digit[i] = value / xx;
-        value -= xx * Digit[i];
+    for (i = 7, div = 10000000, First_Digit = -1; i > 0; i--, div = div / 10) {
+        Digit[i] = value / div;
+        value -= div * Digit[i];
         if (First_Digit < 0) {
             if (Digit[i]) {
                 First_Digit = i;

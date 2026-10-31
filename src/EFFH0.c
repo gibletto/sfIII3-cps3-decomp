@@ -66,7 +66,7 @@ void effect_H0_move(WORK_Other_CONN* ewk) {
         break;
     default:
         all_cgps_put_back((WORK_Other*)ewk);
-        push_effect_work((WORK*)ewk);
+        push_effect_work(&ewk->wu);
         break;
     }
 }

@@ -282,8 +282,8 @@ void effect_E6_move(WORK_Other* ewk) {
         ewk->wu.routine_no[2]++;
         break;
     case R2_KILL:
-        all_cgps_put_back(ewk);
-        push_effect_work((WORK*)ewk);
+        all_cgps_put_back(&ewk->wu);
+        push_effect_work(&ewk->wu);
         break;
     }
 }
@@ -1152,8 +1152,8 @@ void effe6_0025(WORK_Other* ewk) {
         disp_pos_trans_entry(ewk);
         break;
     default:
-        all_cgps_put_back(ewk);
-        push_effect_work((WORK*)ewk);
+        all_cgps_put_back(&ewk->wu);
+        push_effect_work(&ewk->wu);
         break;
     }
 }
@@ -1178,7 +1178,7 @@ void effe6_0026(WORK_Other* ewk) {
         disp_pos_trans_entry(ewk);
         break;
     default:
-        all_cgps_put_back(ewk);
+        all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
         break;
     }
@@ -1232,7 +1232,7 @@ void effe6_0028(WORK_Other* ewk) {
         disp_pos_trans_entry(ewk);
         break;
     default:
-        all_cgps_put_back(ewk);
+        all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
         break;
     }
@@ -1276,8 +1276,8 @@ void effe6_0029(WORK_Other* ewk) {
         disp_pos_trans_entry5(ewk);
         break;
     default:
-        all_cgps_put_back(ewk);
-        push_effect_work((WORK*)ewk);
+        all_cgps_put_back(&ewk->wu);
+        push_effect_work(&ewk->wu);
         break;
     }
 }
@@ -1311,7 +1311,7 @@ void effe6_0030(WORK_Other* ewk) {
         }
         break;
     default:
-        all_cgps_put_back(ewk);
+        all_cgps_put_back(&ewk->wu);
         push_effect_work(&ewk->wu);
         break;
     }

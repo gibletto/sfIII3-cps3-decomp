@@ -255,6 +255,7 @@ void Sel_PL_Cont_4th(void) {}
 
 
 
+/* Sets up the BG layers of the select screen. */
 void Initialize_BG(void)
 {
     Setup_BG_General();
@@ -319,10 +320,11 @@ void Setup_EFF69(void) {
 
 
 
+/* The characters Setup_Face_Sub makes an effect 70 face for, in order. */
 const s8 Face_Order_Data[19] = {
-    1, 2, 3, 4, 5, 6, 7, 8,
-    9, 10, 11, 12, 13, 14, 16, 17,
-    18, 19, 20,
+    PL_ALEX, PL_RYU, PL_YUN, PL_DUDLEY, PL_NECRO, PL_HUGO, PL_IBUKI, PL_ELENA,
+    PL_ORO, PL_YANG, PL_KEN, PL_SEAN, PL_URIEN, PL_GOUKI1, PL_CHUN, PL_KARATE,
+    PL_Q, PL_NO12, PL_BIKEI,
 };
 
 
@@ -400,7 +402,7 @@ void Sel_PL_2nd(void) {
 
 
 void Sel_PL_3rd(void) {
-    if (Stop_Cursor[ID] != 0 || ((u8)Face_Move) != 0) {
+    if (Stop_Cursor[ID] != 0 || (u8)Face_Move != 0) {
         return;
     }
     if (Demo_Flag == 0) {
@@ -492,7 +494,7 @@ void Sel_PL_4th(void) {
 
 
 void Sel_PL_5th(void) {
-    if (Stop_Cursor[ID] != 0 || ((u8)Face_Move) != 0) {
+    if (Stop_Cursor[ID] != 0 || (u8)Face_Move != 0) {
         return;
     }
     if (Demo_Flag == 0) {
@@ -541,6 +543,8 @@ s32 Disposal_Of_Diagonal(u16 sw) {
 
 
 
+/* One player's character select for the frame: the lever moves the cursor over the face grid (auto-repeating
+   while held) and a punch or kick picks the character. */
 void Sel_PL_Sub(PL_id, sw)
 s16 PL_id;
 u16 sw;
@@ -697,6 +701,7 @@ void Sel_PL_Sub_CD(s16 PL_id) {
 
 
 
+/* Lever auto-repeat waits: before the first repeat, the second, then every later one. */
 const s8 Repeat_Time_Data[3] = {
     26, 9, 7,
 };
@@ -707,6 +712,7 @@ const s8 Repeat_Time_Data_Wife[5] = {
 };
 
 
+/* Repeats a held lever on the select screen as further cursor moves, at the Repeat_Time_Data intervals. */
 void Auto_Repeat_Sub(PL_id)
 s16 PL_id;
 {
@@ -833,6 +839,8 @@ s32 Auto_Repeat_Sub_Wife(s16 pl) {
 
 
 
+/* One player's super art select for the frame: up and down move between the three arts, and a button picks
+   one. */
 void Sel_Arts_Sub(PL_id, sw)
 s16 PL_id;
 u16 sw;
@@ -1226,6 +1234,7 @@ void PL_Sel_4th(void) {}
 
 
 
+/* By the super art chosen: the row (0 to 2) each of the three plates takes. */
 const u8 Arts_Y_Data[3][3] = {
     { 0, 1, 2 }, { 2, 0, 1 }, { 1, 2, 0 },
 };
@@ -1363,6 +1372,7 @@ void Setup_BG_Layer3(void) {
 
 
 
+/* Cursor y of the three rows, for each player; Setup_Cursor_Y copies them into Cursor_Y_Pos. */
 const s16 Cursor_Y_Data[6] = {
     80, 104, 128, 80, 104, 128,
 };
@@ -1583,29 +1593,31 @@ void Setup_Face_ID(void) {
 
 
 
+/* Takes time off the player's select time (SC_Personal_Time, into Control_Time) for the player's continues,
+   more late in the game. */
 void Correct_Control_Time(PL_id)
 s16 PL_id;
 {
-    u8 xx;
-    u8 zz;
+    u8 cont;
+    u8 late;
     if (Play_Type == PLAY_VS_PLAYER) {
         return;
     }
     if (Stage_Continue[PL_id] == 0) {
         return;
     }
-    xx = Stage_Continue[PL_id];
+    cont = Stage_Continue[PL_id];
     if (VS_Index[PL_id] >= 9) {
-        zz = 1;
+        late = 1;
     } else {
-        zz = 0;
+        late = 0;
     }
     if (Stage_Continue[PL_id] >= 16) {
-        xx = 16;
+        cont = 16;
     } else {
-        xx = Stage_Continue[PL_id];
+        cont = Stage_Continue[PL_id];
     }
-    Control_Time = SC_Personal_Time[PL_id] - Correct_Cont_Time_Data[zz][xx];
+    Control_Time = SC_Personal_Time[PL_id] - Correct_Cont_Time_Data[late][cont];
     if (Control_Time < 0) {
         Control_Time = 0;
     }

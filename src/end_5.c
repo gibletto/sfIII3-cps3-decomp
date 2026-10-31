@@ -376,6 +376,7 @@ void end_5_bg1_move_sub2(void) {
 
 
 
+/* The ending background shake, 32 steps: x, y offset from its place (end_5_pos). */
 const s16 necro_quake_tbl[32][2] = {
     { 2, -2 }, { 4, -4 }, { 6, -8 }, { 8, -4 }, { 6, 0 }, { 8, -4 }, { 4, 0 }, { 0, 0 },
     { -2, 0 }, { -4, 4 }, { -4, 8 }, { -6, 2 }, { 0, 6 }, { 4, 0 }, { -5, -4 }, { -5, 2 },
@@ -384,6 +385,7 @@ const s16 necro_quake_tbl[32][2] = {
 };
 
 
+/* Frames each necro_quake_tbl step lasts. */
 const s16 necro_quake_timer[32] = {
     4, 4, 4, 4, 8, 4, 4, 4,
     4, 4, 4, 4, 8, 4, 4, 8,
@@ -392,6 +394,7 @@ const s16 necro_quake_timer[32] = {
 };
 
 
+/* y offset of the background by bg_w.quake_y_index. */
 const s16 end_500_quake_tbl[8] = {
     2, 4, -2, -4, -2, -4, 2, 4,
 };
