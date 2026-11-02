@@ -25,6 +25,8 @@
 #include "sys_test_3.h"
 #include "cps3.h"
 
+void tilemap_put_block();
+
 /* the CD-ROM drive's SCSI controller (WD33C93): a register number written to CD_SELECT picks the register
    that CD_DATA reads or writes (the number steps on after each access); reading CD_REG gives the auxiliary
    status */

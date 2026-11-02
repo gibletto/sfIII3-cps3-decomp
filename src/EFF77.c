@@ -22,6 +22,9 @@
 #include "effect_2.h"
 #include "aboutspr.h"
 #include "EFF77.h"
+#include "end_main.h"
+
+void Scrn_Move_Set(s32 n, s16 x, s16 y);
 
 /* routine_no[0] */
 #define R0_INIT         0       /* hide the players */

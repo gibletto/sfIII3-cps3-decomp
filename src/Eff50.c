@@ -18,6 +18,11 @@
 #include "effect_2.h"
 #include "Eff50.h"
 
+void char_move(WORK* wk);
+void char_move_z(WORK* wk);
+void set_char_move_init();
+void set_char_move_init2();
+
 /* routine_no[0] */
 #define R0_WAIT         0       /* wait for the art select to open */
 #define R0_MOVE         1       /* animate with the plates */

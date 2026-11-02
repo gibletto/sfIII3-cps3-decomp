@@ -107,6 +107,11 @@
 #include "fighter.h"
 #include "RANKING.h"
 
+void palette_bank_set(s32 offset);
+void palette_write(s32 offset, const u16 *src, s32 count);
+void tilemap_chunk_copy_16b(s16 *dst, char *src, s32 chunks);
+void tilemap_fill_all(u16 attr, u16 code);
+
 #define BOOT_TITLE_ATTR(palette) ((palette) * 2)
 #define BOOT_REGION_ATTR(palette) ((palette) << 1)
 #define BOOT_NO_CD_ATTR(palette) ((palette) * 2U)

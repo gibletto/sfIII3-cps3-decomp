@@ -21,6 +21,8 @@
 #include "charmove_2.h"
 #include "EffK6.h"
 
+void set_char_move_init2();
+
 /* routine_no[0], the order carried out (EFFK6_Jmp_Tbl) */
 #define R0_WAIT         0       /* wait for an order */
 #define R0_MOVE         4       /* follow the cursor */

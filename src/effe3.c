@@ -25,6 +25,9 @@
 #include "effect_2.h"
 #include "aboutspr.h"
 #include "effe3.h"
+#include "end_main.h"
+
+void Scrn_Move_Set(s32 n, s16 x, s16 y);
 
 /* routine_no[0] */
 #define R0_WAIT         0       /* wait for a flash request */

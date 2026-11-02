@@ -69,6 +69,8 @@
 #include "Win.h"
 #include "fighter.h"
 
+void sound_reg_level_set(s16 pitch, s8 volume);
+
 
 
 /* provisional name */

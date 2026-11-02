@@ -35,6 +35,7 @@
 #include "aboutspr.h"
 #include "cps3.h"
 #include "SHELL14.h"
+#include "textsound.h"
 
 CharGfxSlot cg_slot_tbl[512];  /* 0200E3BC */
 CharGfxEntry * cg_data_list;  /* 0200EBBC */

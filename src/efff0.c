@@ -30,6 +30,9 @@
 #include "textsound_2.h"
 #include "textsound_3.h"
 #include "efff0.h"
+#include "end_main.h"
+
+void Scrn_Move_Set(s32 n, s16 x, s16 y);
 
 /* routine_no[0] */
 #define R0_INIT         0       /* point BG 3 at the first page */

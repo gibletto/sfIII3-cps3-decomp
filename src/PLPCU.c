@@ -272,7 +272,7 @@ void scdmd_19000(PLW* wk) {
 
 
 
-void scdmd_20000(void) { setup_butt_own_data(); }
+void scdmd_20000(PLW* wk) { setup_butt_own_data(&wk->wu); }
 
 
 
@@ -302,7 +302,7 @@ void scdmd_25000(PLW* wk) {}
 
 
 
-void scdmd_26000(void) { setup_butt_own_data(); }
+void scdmd_26000(PLW* wk) { setup_butt_own_data(&wk->wu); }
 
 
 void scdmd_27000(PLW* wk) {
@@ -330,4 +330,4 @@ void scdmd_30000(PLW* wk) {
 
 
 
-void scdmd_31000(void) { setup_butt_own_data(); }
+void scdmd_31000(PLW* wk) { setup_butt_own_data(&wk->wu); }

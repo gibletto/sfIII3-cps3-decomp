@@ -68,6 +68,8 @@
 #include "win_2.h"
 #include "fighter.h"
 
+void Scrn_Move_Set(s32 n, s16 x, s16 y);
+
 /* M_No1 in Win_3rd and Lose_3rd */
 #define M1_COVER        0       /* after Cover_Timer, clear the screen and wipe in */
 #define M1_REVIVAL      1       /* finish the wipe */

@@ -29,6 +29,9 @@
 #include "sys_test.h"
 #include "cps3.h"
 
+u32 simmram_big_page_alloc_40(s32 kind);
+u32 simmram_small_page_alloc_40(s32 kind);
+
 /* the SS layer scroll position, written a byte at a time: the low byte, then the high byte */
 #define SS_SCROLL_X_LO      (*(volatile u16*)(SS_REG + 0x0E))
 #define SS_SCROLL_X_HI      (*(volatile u16*)(SS_REG + 0x10))

@@ -17,6 +17,7 @@
 #include "sys_config_2.h"
 #include "sys_config_3.h"
 #include "cps3.h"
+#include "cram_bank.h"
 
 /* video DMA status: the character DMA (bit 1) or the colour DMA (bit 2) is busy */
 #define VIDEO_DMA_STATUS    (*(volatile u16*)DMA_STATUS_REG)

@@ -59,6 +59,8 @@
 #include "cps3.h"
 #include "fighter.h"
 
+void set_kizetsu_status();
+
 /* provisional name */
 void debug_play13(void) {
     void (*jmp_tbl[2])() = { debug_play13_init, debug_play13_move };

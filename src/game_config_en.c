@@ -60,6 +60,8 @@ void tilemap_chunk_copy_16b(s16 *dst, char *src, s32 chunks);
 #include "CMD_MAIN.h"
 #include "cps3.h"
 
+void tilemap_put_block();
+
 extern const char str_NORMAL_2[];
 extern const s8 str_WIDE[];
 extern const s8 str_1_ROUND[];

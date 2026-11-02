@@ -19,6 +19,10 @@
 #include "effect_2.h"
 #include "EffE0.h"
 
+void char_move(WORK* wk);
+void set_char_move_init();
+void set_char_move_init2();
+
 /* routine_no[0] */
 #define R0_WAIT         0       /* wait until on the screen */
 #define R0_SELECT       1       /* follow the choice */

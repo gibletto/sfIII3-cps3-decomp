@@ -59,6 +59,8 @@
 #include "cps3.h"
 #include "fighter.h"
 
+void set_kizetsu_status();
+
 #pragma inline(card_pl_work_clear)
 
 

@@ -21,6 +21,10 @@
 #include "SYS_sub.h"
 #include "EFF42.h"
 
+s32 push_effect_work(WORK* wkhd);
+s32 pull_effect_work();
+s32 erase_my_shell_ix(WORK* wk, s16 ix);
+
 /* routine_no[0] */
 #define R0_INIT         0       /* set up and flash the gauge */
 #define R0_MOVE         1       /* animate beside the player */

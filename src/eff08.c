@@ -29,6 +29,7 @@
 #include "sys_config_2.h"
 #include "sys_config_3.h"
 #include "eff08.h"
+#include "end_main.h"
 
 /* routine_no[0] */
 #define R0_INIT         0       /* build the second page and show the first */

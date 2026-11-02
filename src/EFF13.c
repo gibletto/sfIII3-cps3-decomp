@@ -26,6 +26,7 @@
 #include "romdata.h"
 #include "extern.h"
 #include "PLS02.h"
+#include "CALDIR.h"
 #include "CHARMOVE.h"
 #include "charmove_2.h"
 #include "aboutspr.h"
@@ -47,6 +48,10 @@
 #include "EFFI4.h"
 #include "EFF13_KOTP.h"
 #include "fighter.h"
+
+s32 push_effect_work(WORK* wkhd);
+s32 pull_effect_work();
+s32 erase_my_shell_ix(WORK* wk, s16 ix);
 
 /* routine_no[0], effect_13_move */
 #define R0_INIT         0       /* set up from the tama data */

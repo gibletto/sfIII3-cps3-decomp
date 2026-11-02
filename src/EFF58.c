@@ -56,6 +56,8 @@
 #include "EFF58.h"
 #include "sc_logo.h"
 
+void Scrn_Move_Set(s32 n, s16 x, s16 y);
+
 /* routine_no[0] */
 #define R0_WAIT         0       /* count the start time down */
 #define R0_MOVE         1       /* carry out the command */

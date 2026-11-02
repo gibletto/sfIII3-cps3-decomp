@@ -23,6 +23,8 @@
 #include "se_3.h"
 #include "cps3.h"
 
+void sound_reg_level_set(s16 pitch, s8 volume);
+
 
 
 void Stage_BGM(Stage_Number, Round_Number)

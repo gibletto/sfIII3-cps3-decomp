@@ -106,6 +106,7 @@
 #include "cps3.h"
 #include "fighter.h"
 #include "RANKING.h"
+#include "textsound.h"
 
 FIFO32 task_req_queue;  /* 0200D9B4 */
 u8 task_req_buff[716];  /* 0200D9C8 */

@@ -77,6 +77,8 @@
 #include "next_cpu.h"
 #include "fighter.h"
 
+void Scrn_Move_Set(s32 n, s16 x, s16 y);
+
 /* SC_No[1] in Next_CPU_3rd */
 #define NC3_SELECT      0       /* choose the next opponent */
 #define NC3_WAIT        1       /* wait S_Timer, then the VS screen */

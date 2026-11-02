@@ -30,6 +30,8 @@
 #include "textsound_3.h"
 #include "efff7.h"
 
+void set_char_move_init2();
+
 /* routine_no[0] */
 #define R0_INIT         0       /* show the chosen object */
 #define R0_MOVE         1       /* edit it with player 2's controls */

@@ -20,6 +20,11 @@
 #include "effect_2.h"
 #include "EFFK3.h"
 
+void add_mvxy_speed(WORK* wk);
+void cal_mvxy_speed(WORK* wk);
+s32 random_16_com(void);
+s32 random_32_com(void);
+
 /* routine_no[0] */
 #define R0_INIT         0       /* place and launch the shard */
 #define R0_MOVE         1       /* fly, blink and run out */

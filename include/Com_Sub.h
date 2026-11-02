@@ -183,6 +183,7 @@ s32 ETC_Term_0001(PLW* wk, WORK* em);
 s32 Check_After_Attack(PLW* wk, WORK* em, s16 VS_Technique);
 s32 Check_Attack_Direction(PLW* wk, WORK* em);
 s32 Check_Special_Tech_ID(PLW* wk, WORK* em, s16 VS_Technique, u8 SP_Tech_ID, s16 Option);
+s32 Check_Special_Technique(PLW* wk, WORK* em, s16 VS_Technique, u8 Kind_of_Tech, u8 SP_Tech_ID, s16 Option, s16 Option2);
 s32 Check_Blow_Off(PLW* wk, WORK* em, s16 VS_Technique);
 s32 Check_Catch(PLW* wk, WORK* em, s16 VS_Technique);
 s32 Check_Dash(PLW* wk, WORK* em, s16 VS_Technique);

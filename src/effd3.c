@@ -41,6 +41,9 @@
 #include "textsound_2.h"
 #include "textsound_3.h"
 #include "effd3.h"
+#include "end_main.h"
+
+void Scrn_Move_Set(s32 n, s16 x, s16 y);
 
 /* routine_no[0], akebono_finish (R0_INIT in both) */
 #define R0_INIT         0       /* set up the screen */

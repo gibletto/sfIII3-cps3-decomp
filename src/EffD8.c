@@ -19,6 +19,10 @@
 #include "effect_2.h"
 #include "EffD8.h"
 
+void char_move(WORK* wk);
+void set_char_move_init();
+void set_char_move_init2();
+
 /* routine_no[0] */
 #define R0_WAIT         0       /* wait for the face screen */
 #define R0_DELAY        1       /* count 10 frames, then appear */

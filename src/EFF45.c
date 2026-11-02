@@ -24,6 +24,7 @@
 #include "sys_config_2.h"
 #include "sys_config_3.h"
 #include "EFF45.h"
+#include "end_main.h"
 
 /* routine_no[0] */
 #define R0_INIT         0       /* write the cells, start the animation */

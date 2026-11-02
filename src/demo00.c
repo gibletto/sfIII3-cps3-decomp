@@ -56,6 +56,8 @@
 #include "textsound_3.h"
 #include "demo00.h"
 
+void Scrn_Move_Set(s32 n, s16 x, s16 y);
+
 /* D_No1 in Logo_Capcom */
 #define LC_INIT         0       /* clear the screen and set up */
 #define LC_FADE         1       /* request the fade in */

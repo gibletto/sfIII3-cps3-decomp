@@ -24,6 +24,7 @@
 #include "CHARMOVE.h"
 #include "charmove_2.h"
 #include "EFFF4.h"
+#include "end_main.h"
 
 /* routine_no[0] */
 #define R0_INIT         0       /* show only BG 3 */

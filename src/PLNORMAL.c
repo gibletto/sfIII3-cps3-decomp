@@ -25,6 +25,8 @@
 #include "win_pl.h"
 #include "PLNORMAL.h"
 
+void jumping_union_process();
+
 /* routine_no[3], Normal_02000 */
 #define N02_RUN         1       /* run the animation */
 

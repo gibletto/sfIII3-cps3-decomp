@@ -34,6 +34,10 @@
 #include "bg_sub_5.h"
 #include "EFF61.h"
 
+void char_move(WORK* wk);
+void set_char_move_init();
+void set_char_move_init2();
+
 /* routine_no[0], effect 59 */
 #define R0_INIT         0       /* start the animation */
 #define R0_ENTER        1       /* wait to come into the bg range */

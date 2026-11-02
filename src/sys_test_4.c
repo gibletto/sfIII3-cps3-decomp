@@ -26,6 +26,8 @@
 #include "sys_test_4.h"
 #include "cps3.h"
 
+void tilemap_put_block();
+
 /* rewrite_no: the rewrite page step */
 #define REWRITE_INIT    0       /* rewrite_menu_init */
 #define REWRITE_SELECT  1       /* rewrite_menu_select */

@@ -83,6 +83,12 @@
 #include "sel_pl.h"
 #include "fighter.h"
 
+void All_Clear_Suicide(void);
+void Initialize_EM_Candidate(s16 PL_id);
+void clear_chainex_check();
+
+void Scrn_Move_Set(s32 n, s16 x, s16 y);
+
 /* Deley_Shot_No[pl]: the button delay in Deley_Shot_Sub */
 #define DELAY_NONE      0       /* until a button is pressed */
 #define DELAY_GATHER    1       /* gather buttons for Deley_Shot_Timer frames */
@@ -131,7 +137,7 @@ u16 Color7[2];  /* 02017032 */
 
 
 
-s16 Select_Player(void) {
+s32 Select_Player(void) {
     SEL_PL_X = 0;
     if (Break_Into) {
         return 0;

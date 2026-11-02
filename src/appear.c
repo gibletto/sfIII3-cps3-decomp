@@ -73,6 +73,11 @@
 #include "appear.h"
 #include "fighter.h"
 
+void char_move(WORK* wk);
+void char_move_z(WORK* wk);
+void set_char_move_init();
+void set_char_move_init2();
+
 /* routine_no[3], Appear_01000 */
 #define AP01_WAIT       1       /* until Appear_flag */
 #define AP01_NEXT       2       /* start the next animation */

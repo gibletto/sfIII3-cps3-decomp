@@ -58,6 +58,7 @@
 #include "cps3.h"
 #include "eff05.h"
 #include "EFFC9.h"
+#include "end_main.h"
 
 /* Debug_R_No: the debug menu routine (debug_scene_outer_dispatch) */
 #define DBG_INIT        0       /* debug_menu_work_init */
@@ -1209,7 +1210,9 @@ PLW dbg_parts_plw[4];  /* 020243D8 */
 u8 ixbfw_cut;  /* 02025638 */
 
 
-void bg_cell_write(s16 bg, s32 ofs, s32 cell, u32 src, u32 u5, s16 attr);
+void bg_cell_write(s16 bg, s32 ofs, s32 cell, u32 src, u16 u5, s16 attr);
+void bg_pos_hosei2(void);
+void scrn_attr_set(s16 n, u16 attr, u16 bits);
 
 #pragma inline(debug_menu_select_dispatch)
 
